@@ -1,0 +1,70 @@
+<?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
+ */
+
+namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\DataProvider;
+
+use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductOfferTransfer;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMerchantStockFacadeInterface;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToProductFacadeInterface;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToProductOfferFacadeInterface;
+
+class ProductOfferUpdateFormDataProvider extends AbstractProductOfferFormDataProvider implements ProductOfferUpdateFormDataProviderInterface
+{
+    /**
+     * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToProductOfferFacadeInterface
+     */
+    protected $productOfferFacade;
+
+    /**
+     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToProductFacadeInterface $productFacade
+     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToProductOfferFacadeInterface $productOfferFacade
+     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMerchantStockFacadeInterface $merchantStockFacade
+     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade
+     */
+    public function __construct(
+        ProductOfferMerchantPortalGuiToProductFacadeInterface $productFacade,
+        ProductOfferMerchantPortalGuiToProductOfferFacadeInterface $productOfferFacade,
+        ProductOfferMerchantPortalGuiToMerchantStockFacadeInterface $merchantStockFacade,
+        ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade
+    ) {
+        parent::__construct($productFacade, $merchantUserFacade, $merchantStockFacade);
+        $this->productOfferFacade = $productOfferFacade;
+    }
+
+    /**
+     * @param int $idProductOffer
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferTransfer|null
+     */
+    public function getData(int $idProductOffer): ?ProductOfferTransfer
+    {
+        /** @var int $currentMerchantId */
+        $currentMerchantId = $this->merchantUserFacade->getCurrentMerchantUser()->getIdMerchantOrFail();
+        $productOfferTransfer = $this->productOfferFacade->findOne(
+            (new ProductOfferCriteriaFilterTransfer())->setIdProductOffer($idProductOffer)
+                ->addIdMerchant($currentMerchantId)
+        );
+
+        if (!$productOfferTransfer) {
+            return null;
+        }
+
+        /** @var string $sku */
+        $sku = $productOfferTransfer->requireConcreteSku()->getConcreteSku();
+        /** @var int $idProductConcrete */
+        $idProductConcrete = $this->productFacade->findProductConcreteIdBySku($sku);
+        /** @var \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer */
+        $productConcreteTransfer = $this->productFacade->findProductConcreteById($idProductConcrete);
+
+        $productOfferTransfer->setIdProductConcrete($idProductConcrete);
+        $productOfferTransfer = $this->setDefaultMerchantStock($productOfferTransfer);
+
+        return $productOfferTransfer;
+    }
+}

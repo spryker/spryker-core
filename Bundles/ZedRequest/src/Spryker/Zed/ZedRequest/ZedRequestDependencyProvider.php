@@ -43,7 +43,7 @@ class ZedRequestDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addMessengerFacade(Container $container)
     {
-        $container[self::FACADE_MESSENGER] = function (Container $container) {
+        $container->set(static::FACADE_MESSENGER, function (Container $container) {
             try {
                 $messenger = $container->getLocator()->messenger()->facade();
             } catch (LogicException $exception) {
@@ -52,7 +52,7 @@ class ZedRequestDependencyProvider extends AbstractBundleDependencyProvider
             $zedRequestToMessengerBridge = new ZedRequestToMessengerBridge($messenger);
 
             return $zedRequestToMessengerBridge;
-        };
+        });
 
         return $container;
     }
@@ -64,9 +64,9 @@ class ZedRequestDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addStore(Container $container)
     {
-        $container[static::STORE] = function () {
+        $container->set(static::STORE, function () {
             return new ZedRequestToStoreBridge(Store::getInstance());
-        };
+        });
 
         return $container;
     }

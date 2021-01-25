@@ -1,6 +1,6 @@
 # UserExtension Module
 [![Build Status](https://travis-ci.org/spryker/user-extension.svg)](https://travis-ci.org/spryker/user-extension)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/user-extension/badge.svg)](https://coveralls.io/github/spryker/user-extension)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 UserExtension module provides plugin interfaces used by User module.
 

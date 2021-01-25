@@ -39,7 +39,7 @@ class CsvReaderAdapter implements CsvReaderInterface
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getHeader(): array
     {

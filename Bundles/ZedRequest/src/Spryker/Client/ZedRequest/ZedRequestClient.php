@@ -51,6 +51,8 @@ class ZedRequestClient extends AbstractClient implements ZedRequestClientInterfa
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Generated\Shared\Transfer\MessageTransfer[]
@@ -63,6 +65,8 @@ class ZedRequestClient extends AbstractClient implements ZedRequestClientInterfa
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Generated\Shared\Transfer\MessageTransfer[]
@@ -75,6 +79,8 @@ class ZedRequestClient extends AbstractClient implements ZedRequestClientInterfa
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Generated\Shared\Transfer\MessageTransfer[]
@@ -171,5 +177,29 @@ class ZedRequestClient extends AbstractClient implements ZedRequestClientInterfa
                 $plugin->getRequestMetaData($requestTransfer)
             );
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getAuthToken(): string
+    {
+        return $this->getFactory()->createAuthToken()->getAuthToken();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getRequestId(): string
+    {
+        return $this->getFactory()->createRequestId()->getRequestId();
     }
 }

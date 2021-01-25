@@ -45,7 +45,6 @@ class DiscountPromotionCollectorStrategy implements DiscountPromotionCollectorSt
         DiscountPromotionQueryContainerInterface $discountPromotionQueryContainer,
         PromotionAvailabilityCalculatorInterface $promotionAvailabilityCalculator
     ) {
-
         $this->productFacade = $productFacade;
         $this->discountPromotionQueryContainer = $discountPromotionQueryContainer;
         $this->promotionAvailabilityCalculator = $promotionAvailabilityCalculator;
@@ -59,28 +58,27 @@ class DiscountPromotionCollectorStrategy implements DiscountPromotionCollectorSt
      */
     public function collect(DiscountTransfer $discountTransfer, QuoteTransfer $quoteTransfer)
     {
+        $quoteTransfer
+            ->requireStore();
+
         $discountPromotionEntity = $this->findDiscountPromotionByIdDiscount($discountTransfer);
 
         if (!$discountPromotionEntity) {
             return [];
         }
 
-        $idProductAbstract = $this->productFacade->findProductAbstractIdBySku($discountPromotionEntity->getAbstractSku());
-        if (!$idProductAbstract) {
-            return [];
-        }
-
-        $discountPromotionTransfer = $this->hydrateDiscountPromotion($discountPromotionEntity);
-        $discountTransfer->setDiscountPromotion($discountPromotionTransfer);
-
         $promotionMaximumQuantity = $this->promotionAvailabilityCalculator->getMaximumQuantityBasedOnAvailability(
-            $idProductAbstract,
-            $discountPromotionEntity->getQuantity()
+            $discountPromotionEntity->getAbstractSku(),
+            $discountPromotionEntity->getQuantity(),
+            $quoteTransfer->getStore()
         );
 
         if ($promotionMaximumQuantity === 0) {
             return [];
         }
+
+        $discountPromotionTransfer = $this->hydrateDiscountPromotion($discountPromotionEntity);
+        $discountTransfer->setDiscountPromotion($discountPromotionTransfer);
 
         $promotionItemInQuote = $this->findPromotionItem($quoteTransfer, $discountPromotionEntity);
 
@@ -91,6 +89,7 @@ class DiscountPromotionCollectorStrategy implements DiscountPromotionCollectorSt
                 $discountPromotionEntity,
                 $promotionMaximumQuantity
             );
+
             $this->storeVoucherCode($discountTransfer, $quoteTransfer);
 
             return [];
@@ -115,13 +114,14 @@ class DiscountPromotionCollectorStrategy implements DiscountPromotionCollectorSt
      */
     protected function findPromotionItem(QuoteTransfer $quoteTransfer, SpyDiscountPromotion $discountPromotionEntity)
     {
-        $promotionItemTransfer = null;
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if (!$this->isPromotionItem(
-                $discountPromotionEntity->getAbstractSku(),
-                $itemTransfer,
-                $discountPromotionEntity->getIdDiscountPromotion()
-            )) {
+            if (
+                !$this->isPromotionItem(
+                    $discountPromotionEntity->getAbstractSku(),
+                    $itemTransfer,
+                    $discountPromotionEntity->getIdDiscountPromotion()
+                )
+            ) {
                 continue;
             }
 
@@ -141,19 +141,16 @@ class DiscountPromotionCollectorStrategy implements DiscountPromotionCollectorSt
     protected function createPromotionItemTransfer(
         SpyDiscountPromotion $discountPromotionEntity,
         DiscountTransfer $discountTransfer,
-        $promotionProductMaximumQuantity
-    ) {
-
+        int $promotionProductMaximumQuantity
+    ): PromotionItemTransfer {
         $idProductAbstract = $this->productFacade->findProductAbstractIdBySku($discountPromotionEntity->getAbstractSku());
 
         $promotionItemTransfer = (new PromotionItemTransfer())
-            ->setIdDiscountPromotion($discountPromotionEntity->getIdDiscountPromotion())
-            ->setAbstractSku($discountPromotionEntity->getAbstractSku())
             ->setIdProductAbstract($idProductAbstract)
             ->setMaxQuantity($promotionProductMaximumQuantity)
             ->setDiscount($discountTransfer);
 
-        return $promotionItemTransfer;
+        return $promotionItemTransfer->fromArray($discountPromotionEntity->toArray(), true);
     }
 
     /**
@@ -162,7 +159,7 @@ class DiscountPromotionCollectorStrategy implements DiscountPromotionCollectorSt
      *
      * @return int
      */
-    protected function adjustPromotionItemQuantity(ItemTransfer $promotionItemTransfer, $availableMaxQuantity)
+    protected function adjustPromotionItemQuantity(ItemTransfer $promotionItemTransfer, int $availableMaxQuantity): int
     {
         $currentQuantity = $promotionItemTransfer->getQuantity();
         if ($promotionItemTransfer->getQuantity() > $availableMaxQuantity) {
@@ -178,7 +175,7 @@ class DiscountPromotionCollectorStrategy implements DiscountPromotionCollectorSt
      *
      * @return \Generated\Shared\Transfer\DiscountableItemTransfer
      */
-    protected function createPromotionDiscountableItemTransfer(ItemTransfer $promotionItemTransfer, $currentQuantity)
+    protected function createPromotionDiscountableItemTransfer(ItemTransfer $promotionItemTransfer, int $currentQuantity): DiscountableItemTransfer
     {
         return (new DiscountableItemTransfer())
             ->setOriginalItem($promotionItemTransfer)
@@ -256,9 +253,8 @@ class DiscountPromotionCollectorStrategy implements DiscountPromotionCollectorSt
         DiscountTransfer $discountTransfer,
         QuoteTransfer $quoteTransfer,
         SpyDiscountPromotion $discountPromotionEntity,
-        $promotionMaximumQuantity
-    ) {
-
+        int $promotionMaximumQuantity
+    ): void {
         $promotionItemTransfer = $this->createPromotionItemTransfer(
             $discountPromotionEntity,
             $discountTransfer,

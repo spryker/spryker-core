@@ -11,8 +11,6 @@ use Codeception\Actor;
 use ReflectionClass;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -37,7 +35,7 @@ class InstallerCommunicationTester extends Actor
      *
      * @return mixed
      */
-    public function invokeMethod(&$object, string $methodName, array $parameters = [])
+    public function invokeMethod(object &$object, string $methodName, array $parameters = [])
     {
         $reflection = new ReflectionClass(get_class($object));
         $method = $reflection->getMethod($methodName);

@@ -55,9 +55,9 @@ class DependencyViolationFinderConsole extends AbstractCoreModuleAwareConsole
      * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
-     * @return int|null
+     * @return int
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $modulesToValidate = $this->getModulesToExecute($input);
 
@@ -142,8 +142,12 @@ class DependencyViolationFinderConsole extends AbstractCoreModuleAwareConsole
      *
      * @return void
      */
-    protected function printDependencyViolationErrors(string $moduleToValidate, ArrayObject $moduleDependencyTransferCollection, OutputInterface $output, ?string $dependencyType = null): void
-    {
+    protected function printDependencyViolationErrors(
+        string $moduleToValidate,
+        ArrayObject $moduleDependencyTransferCollection,
+        OutputInterface $output,
+        ?string $dependencyType = null
+    ): void {
         $tableRows = [];
         foreach ($moduleDependencyTransferCollection as $moduleDependencyTransfer) {
             if ($dependencyType !== null && !in_array($dependencyType, $moduleDependencyTransfer->getDependencyTypes())) {
@@ -186,7 +190,6 @@ class DependencyViolationFinderConsole extends AbstractCoreModuleAwareConsole
 
         return [
             'Composer name' => sprintf('<fg=%s>%s</>', $color, $composerName),
-            'Module name' => $moduleDependencyTransfer->getModuleName(),
             'is valid' => $this->getColoredYesOrNo($moduleDependencyTransfer->getIsValid()),
             'src dependency' => $this->getYesOrNo($moduleDependencyTransfer->getIsSrcDependency()),
             'test dependency' => $this->getYesOrNo($moduleDependencyTransfer->getIsTestDependency()),

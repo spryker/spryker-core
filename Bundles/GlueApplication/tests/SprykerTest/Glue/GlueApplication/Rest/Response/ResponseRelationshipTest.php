@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -43,7 +44,7 @@ class ResponseRelationshipTest extends Unit
         $relationshipPluginMock
             ->method('addResourceRelationships')
             ->willReturnCallback(
-                function (array $resources, RestRequestInterface $restRequest) use ($restResponseBuilder) {
+                function (array $resources, RestRequestInterface $restRequest) use ($restResponseBuilder): void {
                     foreach ($resources as $resource) {
                         $resource->addRelationship(
                             $restResponseBuilder->createRestResource('related', 1)
@@ -67,8 +68,8 @@ class ResponseRelationshipTest extends Unit
         $this->assertCount(1, $resource->getRelationships());
 
         $this->assertCount(1, $resource->getRelationships()['related']);
-        $this->assertEquals(1, $resource->getRelationships()['related'][0]->getId());
-        $this->assertEquals('related', $resource->getRelationships()['related'][0]->getType());
+        $this->assertSame('1', $resource->getRelationships()['related'][0]->getId());
+        $this->assertSame('related', $resource->getRelationships()['related'][0]->getType());
     }
 
     /**
@@ -88,8 +89,8 @@ class ResponseRelationshipTest extends Unit
         $included = $responseRelationship->processIncluded([$resource], $restRequest);
 
         $this->assertCount(1, $included);
-        $this->assertEquals('related', $included[0]->getType());
-        $this->assertEquals('1', $included[0]->getId());
+        $this->assertSame('related', $included[0]->getType());
+        $this->assertSame('1', $included[0]->getId());
     }
 
     /**

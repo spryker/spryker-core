@@ -1,0 +1,152 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 131,
+            "line_to": 131,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\QueryInterface' for Spryker\\Client\\ProductNew\\ProductNewDependencyProvider::getNewProductsQueryPlugin is incorrect, got 'Spryker\\Client\\ProductNew\\Plugin\\Elasticsearch\\Query\\NewProductsQueryPlugin'",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductNew/src/Spryker/Client/ProductNew/ProductNewDependencyProvider.php",
+            "snippet": "     * @return \\Spryker\\Client\\Search\\Dependency\\Plugin\\QueryInterface",
+            "selected_text": "\\Spryker\\Client\\Search\\Dependency\\Plugin\\QueryInterface",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 135,
+            "line_to": 135,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'Spryker\\Client\\ProductNew\\Plugin\\Elasticsearch\\Query\\NewProductsQueryPlugin' does not match the declared return type 'Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\QueryInterface' for Spryker\\Client\\ProductNew\\ProductNewDependencyProvider::getNewProductsQueryPlugin",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductNew/src/Spryker/Client/ProductNew/ProductNewDependencyProvider.php",
+            "snippet": "        return new NewProductsQueryPlugin();",
+            "selected_text": "new NewProductsQueryPlugin()",
+            "error_level": 6,
+            "shortcode": 128
+        },
+        {
+            "severity": "error",
+            "line_from": 44,
+            "line_to": 44,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'Orm\\Zed\\ProductLabel\\Persistence\\SpyProductLabelProductAbstractQuery' for Spryker\\Zed\\ProductNew\\Persistence\\ProductNewQueryContainer::queryRelationsBecomingInactive is incorrect, got 'Orm\\Zed\\CmsBlockProductConnector\\Persistence\\SpyCmsBlockProductConnectorQuery|Orm\\Zed\\GiftCard\\Persistence\\SpyGiftCardProductAbstractConfigurationLinkQuery|Orm\\Zed\\MerchantProduct\\Persistence\\SpyMerchantProductAbstractQuery|Orm\\Zed\\PriceProductMerchantRelationship\\Persistence\\SpyPriceProductMerchantRelationshipQuery|Orm\\Zed\\PriceProductSchedule\\Persistence\\SpyPriceProductScheduleQuery|Orm\\Zed\\PriceProduct\\Persistence\\SpyPriceProductQuery|Orm\\Zed\\ProductAlternative\\Persistence\\SpyProductAlternativeQuery|Orm\\Zed\\ProductCategory\\Persistence\\SpyProductCategoryQuery|Orm\\Zed\\ProductCustomerPermission\\Persistence\\SpyProductCustomerPermissionQuery|Orm\\Zed\\ProductGroup\\Persistence\\SpyProductAbstractGroupQuery|Orm\\Zed\\ProductImage\\Persistence\\SpyProductImageSetQuery|Orm\\Zed\\ProductLabel\\Persistence\\SpyProductLabelProductAbstractQuery|Orm\\Zed\\ProductMeasurementUnit\\Persistence\\SpyProductMeasurementBaseUnitQuery|Orm\\Zed\\ProductOption\\Persistence\\SpyProductAbstractProductOptionGroupQuery|Orm\\Zed\\ProductRelation\\Persistence\\SpyProductRelationProductAbstractQuery|Orm\\Zed\\ProductRelation\\Persistence\\SpyProductRelationQuery|Orm\\Zed\\ProductReview\\Persistence\\SpyProductReviewQuery|Orm\\Zed\\ProductSet\\Persistence\\SpyProductAbstractSetQuery|Orm\\Zed\\Product\\Persistence\\SpyProductAbstractLocalizedAttributesQuery|Orm\\Zed\\Product\\Persistence\\SpyProductAbstractStoreQuery|Orm\\Zed\\Product\\Persistence\\SpyProductQuery|Orm\\Zed\\Tax\\Persistence\\SpyTaxSetQuery|Orm\\Zed\\Url\\Persistence\\SpyUrlQuery'",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductNew/src/Spryker/Zed/ProductNew/Persistence/ProductNewQueryContainer.php",
+            "snippet": "     * @return \\Orm\\Zed\\ProductLabel\\Persistence\\SpyProductLabelProductAbstractQuery",
+            "selected_text": "\\Orm\\Zed\\ProductLabel\\Persistence\\SpyProductLabelProductAbstractQuery",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 50,
+            "line_to": 61,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'Orm\\Zed\\CmsBlockProductConnector\\Persistence\\SpyCmsBlockProductConnectorQuery|Orm\\Zed\\GiftCard\\Persistence\\SpyGiftCardProductAbstractConfigurationLinkQuery|Orm\\Zed\\MerchantProduct\\Persistence\\SpyMerchantProductAbstractQuery|Orm\\Zed\\PriceProductMerchantRelationship\\Persistence\\SpyPriceProductMerchantRelationshipQuery|Orm\\Zed\\PriceProductSchedule\\Persistence\\SpyPriceProductScheduleQuery|Orm\\Zed\\PriceProduct\\Persistence\\SpyPriceProductQuery|Orm\\Zed\\ProductAlternative\\Persistence\\SpyProductAlternativeQuery|Orm\\Zed\\ProductCategory\\Persistence\\SpyProductCategoryQuery|Orm\\Zed\\ProductCustomerPermission\\Persistence\\SpyProductCustomerPermissionQuery|Orm\\Zed\\ProductGroup\\Persistence\\SpyProductAbstractGroupQuery|Orm\\Zed\\ProductImage\\Persistence\\SpyProductImageSetQuery|Orm\\Zed\\ProductLabel\\Persistence\\SpyProductLabelProductAbstractQuery|Orm\\Zed\\ProductMeasurementUnit\\Persistence\\SpyProductMeasurementBaseUnitQuery|Orm\\Zed\\ProductOption\\Persistence\\SpyProductAbstractProductOptionGroupQuery|Orm\\Zed\\ProductRelation\\Persistence\\SpyProductRelationProductAbstractQuery|Orm\\Zed\\ProductRelation\\Persistence\\SpyProductRelationQuery|Orm\\Zed\\ProductReview\\Persistence\\SpyProductReviewQuery|Orm\\Zed\\ProductSet\\Persistence\\SpyProductAbstractSetQuery|Orm\\Zed\\Product\\Persistence\\SpyProductAbstractLocalizedAttributesQuery|Orm\\Zed\\Product\\Persistence\\SpyProductAbstractStoreQuery|Orm\\Zed\\Product\\Persistence\\SpyProductQuery|Orm\\Zed\\Tax\\Persistence\\SpyTaxSetQuery|Orm\\Zed\\Url\\Persistence\\SpyUrlQuery' does not match the declared return type 'Orm\\Zed\\ProductLabel\\Persistence\\SpyProductLabelProductAbstractQuery' for Spryker\\Zed\\ProductNew\\Persistence\\ProductNewQueryContainer::queryRelationsBecomingInactive",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductNew/src/Spryker/Zed/ProductNew/Persistence/ProductNewQueryContainer.php",
+            "snippet": "        return $this->getFactory()\n            ->getProductLabelQueryContainer()\n            ->queryProductAbstractRelationsByIdProductLabel($idProductLabel)\n            ->useSpyProductAbstractQuery()\n                ->mergeWith($timeRangeCriteria)\n                ->_or()\n                ->where(sprintf(\n                    '%s IS NULL AND %s IS NULL',\n                    SpyProductAbstractTableMap::COL_NEW_FROM,\n                    SpyProductAbstractTableMap::COL_NEW_TO\n                ))\n            ->endUse();",
+            "selected_text": "$this->getFactory()\n            ->getProductLabelQueryContainer()\n            ->queryProductAbstractRelationsByIdProductLabel($idProductLabel)\n            ->useSpyProductAbstractQuery()\n                ->mergeWith($timeRangeCriteria)\n                ->_or()\n                ->where(sprintf(\n                    '%s IS NULL AND %s IS NULL',\n                    SpyProductAbstractTableMap::COL_NEW_FROM,\n                    SpyProductAbstractTableMap::COL_NEW_TO\n                ))\n            ->endUse()",
+            "error_level": 6,
+            "shortcode": 128
+        },
+        {
+            "severity": "error",
+            "line_from": 71,
+            "line_to": 71,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'Orm\\Zed\\Product\\Persistence\\SpyProductAbstractQuery' for Spryker\\Zed\\ProductNew\\Persistence\\ProductNewQueryContainer::queryRelationsBecomingActive is incorrect, got 'Orm\\Zed\\ProductLabel\\Persistence\\SpyProductLabelQuery&static|Orm\\Zed\\Product\\Persistence\\SpyProductAbstractQuery&static'",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductNew/src/Spryker/Zed/ProductNew/Persistence/ProductNewQueryContainer.php",
+            "snippet": "     * @return \\Orm\\Zed\\Product\\Persistence\\SpyProductAbstractQuery",
+            "selected_text": "\\Orm\\Zed\\Product\\Persistence\\SpyProductAbstractQuery",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 77,
+            "line_to": 84,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'Orm\\Zed\\ProductLabel\\Persistence\\SpyProductLabelQuery&static|Orm\\Zed\\Product\\Persistence\\SpyProductAbstractQuery&static' does not match the declared return type 'Orm\\Zed\\Product\\Persistence\\SpyProductAbstractQuery' for Spryker\\Zed\\ProductNew\\Persistence\\ProductNewQueryContainer::queryRelationsBecomingActive",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductNew/src/Spryker/Zed/ProductNew/Persistence/ProductNewQueryContainer.php",
+            "snippet": "        return $this->getFactory()\n            ->getProductQueryContainer()\n            ->queryProductAbstract()\n                ->mergeWith($timeRangeCriteria)\n            ->useSpyProductLabelProductAbstractQuery('rel', Criteria::LEFT_JOIN)\n                ->filterByFkProductLabel(null, Criteria::ISNULL)\n            ->endUse()\n            ->addJoinCondition('rel', sprintf('rel.fk_product_label = %d', $idProductLabel));",
+            "selected_text": "$this->getFactory()\n            ->getProductQueryContainer()\n            ->queryProductAbstract()\n                ->mergeWith($timeRangeCriteria)\n            ->useSpyProductLabelProductAbstractQuery('rel', Criteria::LEFT_JOIN)\n                ->filterByFkProductLabel(null, Criteria::ISNULL)\n            ->endUse()\n            ->addJoinCondition('rel', sprintf('rel.fk_product_label = %d', $idProductLabel))",
+            "error_level": 6,
+            "shortcode": 128
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 148,
+            "line_to": 148,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Client\\ProductNew\\Plugin\\Elasticsearch\\Query\\NewProductsQueryPlugin::createStringFacetValueFilter cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductNew/src/Spryker/Client/ProductNew/Plugin/Elasticsearch/Query/NewProductsQueryPlugin.php",
+            "snippet": "        $stringFacetValueFilter = $this->createStringFacetValueFilter($labelId);",
+            "selected_text": "$labelId",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 179,
+            "line_to": 179,
+            "type": "InvalidScalarArgument",
+            "message": "Argument 2 of Elastica\\Query\\Term::setTerm expects array<array-key, mixed>|string, int provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductNew/src/Spryker/Client/ProductNew/Plugin/Elasticsearch/Query/NewProductsQueryPlugin.php",
+            "snippet": "        $termQuery->setTerm(PageIndexMap::STRING_FACET_FACET_VALUE, $idProductLabel);",
+            "selected_text": "$idProductLabel",
+            "error_level": 4,
+            "shortcode": 12
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 25,
+            "line_to": 25,
+            "type": "DeprecatedInterface",
+            "message": "Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\SearchContextAwareQueryInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductNew/src/Spryker/Client/ProductNew/Plugin/Elasticsearch/Query/NewProductsQueryPlugin.php",
+            "snippet": "class NewProductsQueryPlugin extends AbstractPlugin implements QueryInterface, SearchContextAwareQueryInterface",
+            "selected_text": "NewProductsQueryPlugin",
+            "error_level": 2,
+            "shortcode": 152
+        },
+        {
+            "severity": "info",
+            "line_from": 139,
+            "line_to": 139,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Client\\Search\\Dependency\\Plugin\\QueryExpanderPluginInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductNew/src/Spryker/Client/ProductNew/ProductNewDependencyProvider.php",
+            "snippet": "     * @return \\Spryker\\Client\\Search\\Dependency\\Plugin\\QueryExpanderPluginInterface[]|\\Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\QueryExpanderPluginInterface[]",
+            "selected_text": "\\Spryker\\Client\\Search\\Dependency\\Plugin\\QueryExpanderPluginInterface[]|\\Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\QueryExpanderPluginInterface[]",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 66,
+            "line_to": 66,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Client\\Search\\Dependency\\Plugin\\QueryExpanderPluginInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductNew/src/Spryker/Client/ProductNew/ProductNewFactory.php",
+            "snippet": "     * @return \\Spryker\\Client\\Search\\Dependency\\Plugin\\QueryExpanderPluginInterface[]",
+            "selected_text": "\\Spryker\\Client\\Search\\Dependency\\Plugin\\QueryExpanderPluginInterface[]",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 32,
+            "line_to": 32,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Zed\\ProductLabel\\Persistence\\ProductLabelQueryContainerInterface::queryProductLabelByName has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductNew/src/Spryker/Zed/ProductNew/Dependency/QueryContainer/ProductNewToProductLabelBridge.php",
+            "snippet": "        return $this->productLabelQueryContainer->queryProductLabelByName($labelName);",
+            "selected_text": "queryProductLabelByName",
+            "error_level": 2,
+            "shortcode": 1
+        }
+    ]
+}

@@ -7,16 +7,19 @@
 
 namespace Generated\Shared\Transfer;
 
-{% if hasArrayObject %}
-use ArrayObject;
-{% endif %}
-{% if entityNamespace is null %}
+{% for useStatement in useStatements %}
+use {{ useStatement }};
+{% endfor %}
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
+{% if entityNamespace is null %}
 {% set abstractClass = 'AbstractTransfer' %}
+{% set isEntityTransfer = false %}
 {% else %}
 use Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer;
 {% set abstractClass = 'AbstractEntityTransfer' %}
+{% set isEntityTransfer = true %}
 {% endif %}
+{% set isTypeAssertionEnabled = isDebugMode and not isEntityTransfer %}
 
 /**
  * !!! THIS FILE IS AUTO-GENERATED, EVERY CHANGE WILL BE LOST WITH THE NEXT RUN OF TRANSFER GENERATOR
@@ -28,6 +31,10 @@ use Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer;
  */
 class {{ className }} extends {{ abstractClass }}
 {
+{% if isTypeAssertionEnabled %}
+    use TransferTypeValidatorTrait;
+
+{% endif %}
 {% for constant in constants %}
 {{ macro.addConstant(constant) -}}
 {% endfor %}
@@ -46,8 +53,12 @@ class {{ className }} extends {{ abstractClass }}
 {% if methodName starts with 'set' %}
 {{ macro.addSet(method) -}}
 {% endif %}
-{% if methodName starts with 'get' %}
+{% if methodName starts with 'get' and not method.isItemGetter|default %}
+{% if methodName ends with 'OrFail' %}
+{{ macro.addGetOrFail(method) -}}
+{% else %}
 {{ macro.addGet(method) -}}
+{% endif %}
 {% endif %}
 {% if methodName starts with 'add' %}
 {% if not method.is_associative %}
@@ -56,8 +67,179 @@ class {{ className }} extends {{ abstractClass }}
 {{ macro.addAssociative(method) -}}
 {% endif %}
 {% endif %}
+{% if methodName starts with 'get' and method.isItemGetter|default %}
+{{ macro.addGetCollectionElement(method) }}
+{% endif %}
 {% if methodName starts with 'require' %}
 {{ macro.addRequire(method) -}}
 {% endif %}
 {% endfor %}
+
+    /**
+     * @param array $data
+     * @param bool $ignoreMissingProperty
+     * @return {{ className }}
+     */
+    public function fromArray(array $data, $ignoreMissingProperty = false)
+    {
+        foreach ($data as $property => $value) {
+            $normalizedPropertyName = $this->transferPropertyNameMap[$property] ?? null;
+{% if isTypeAssertionEnabled %}
+
+            if ($normalizedPropertyName !== null) {
+                $this->validateFromArrayValueType($normalizedPropertyName, $value);
+            }
+{% endif %}
+
+            switch ($normalizedPropertyName) {
+{% if primitives is not empty %}
+{% for value in primitives %}
+                case '{{ value.name }}':
+{% endfor %}
+                    $this->$normalizedPropertyName = $value;
+                    $this->modifiedProperties[$normalizedPropertyName] = true;
+                    break;
+{% endif %}
+{% if transfers is not empty %}
+{% for value in transfers %}
+                case '{{ value.name }}':
+{% endfor %}
+                    if (is_array($value)) {
+                        $type = $this->transferMetadata[$normalizedPropertyName]['type'];
+                        /** @var \Spryker\Shared\Kernel\Transfer\TransferInterface $transferObject */
+                        $value = (new $type())->fromArray($value, $ignoreMissingProperty);
+                    }
+                    $this->$normalizedPropertyName = $value;
+                    $this->modifiedProperties[$normalizedPropertyName] = true;
+
+                    break;
+{% endif %}
+{% if transferCollections is not empty %}
+{% for value in transferCollections %}
+                case '{{ value.name }}':
+{% endfor %}
+                    $elementType = $this->transferMetadata[$normalizedPropertyName]['type'];
+                    $this->$normalizedPropertyName = $this->processArrayObject($elementType, $value, $ignoreMissingProperty);
+                    $this->modifiedProperties[$normalizedPropertyName] = true;
+                    break;
+{% endif %}
+{% if valueObjects is not empty %}
+    {% for value in valueObjects %}
+            case '{{ value.name }}':
+    {% endfor %}
+                $this->assignValueObject($normalizedPropertyName, $value);
+                    break;
+{% endif %}
+                default:
+                    if (!$ignoreMissingProperty) {
+                        throw new \InvalidArgumentException(sprintf('Missing property `%s` in `%s`', $property, static::class));
+                    }
+{% if isEntityTransfer %}
+                    $this->virtualProperties[$property] = $value;
+{% endif %}
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+    * @param bool $isRecursive
+    * @param bool $camelCasedKeys
+    * @return array
+    */
+    public function modifiedToArray($isRecursive = true, $camelCasedKeys = false)
+    {
+        if ($isRecursive && !$camelCasedKeys) {
+            return $this->modifiedToArrayRecursiveNotCamelCased();
+        }
+        if ($isRecursive && $camelCasedKeys) {
+            return $this->modifiedToArrayRecursiveCamelCased();
+        }
+        if (!$isRecursive && $camelCasedKeys) {
+            return $this->modifiedToArrayNotRecursiveCamelCased();
+        }
+        if (!$isRecursive && !$camelCasedKeys) {
+            return $this->modifiedToArrayNotRecursiveNotCamelCased();
+        }
+    }
+
+    /**
+    * @param bool $isRecursive
+    * @param bool $camelCasedKeys
+    * @return array
+    */
+    public function toArray($isRecursive = true, $camelCasedKeys = false)
+    {
+        if ($isRecursive && !$camelCasedKeys) {
+            return $this->toArrayRecursiveNotCamelCased();
+        }
+        if ($isRecursive && $camelCasedKeys) {
+            return $this->toArrayRecursiveCamelCased();
+        }
+        if (!$isRecursive && !$camelCasedKeys) {
+            return $this->toArrayNotRecursiveNotCamelCased();
+        }
+        if (!$isRecursive && $camelCasedKeys) {
+            return $this->toArrayNotRecursiveCamelCased();
+        }
+    }
+
+    /**
+    * @param mixed $value
+    * @param bool $isRecursive
+    * @param bool $camelCasedKeys
+    * @return array
+    */
+    protected function addValuesToCollectionModified($value, $isRecursive, $camelCasedKeys)
+    {
+        $result = [];
+        foreach ($value as $elementKey => $arrayElement) {
+            if ($arrayElement instanceof AbstractTransfer) {
+                $result[$elementKey] = $arrayElement->modifiedToArray($isRecursive, $camelCasedKeys);
+                continue;
+            }
+            $result[$elementKey] = $arrayElement;
+        }
+
+        return $result;
+    }
+
+    /**
+    * @param mixed $value
+    * @param bool $isRecursive
+    * @param bool $camelCasedKeys
+    * @return array
+    */
+    protected function addValuesToCollection($value, $isRecursive, $camelCasedKeys)
+    {
+        $result = [];
+        foreach ($value as $elementKey => $arrayElement) {
+            if ($arrayElement instanceof AbstractTransfer) {
+                $result[$elementKey] = $arrayElement->toArray($isRecursive, $camelCasedKeys);
+                continue;
+            }
+            $result[$elementKey] = $arrayElement;
+        }
+
+        return $result;
+    }
+
+    {{ macro.addModifiedToArray('modifiedToArrayRecursiveCamelCased', true, true, primitives, transfers, transferCollections, valueObjects) }}
+
+    {{ macro.addModifiedToArray('modifiedToArrayRecursiveNotCamelCased', false, true, primitives, transfers, transferCollections, valueObjects) }}
+
+    {{ macro.addModifiedToArray('modifiedToArrayNotRecursiveNotCamelCased', false, false) }}
+
+    {{ macro.addModifiedToArray('modifiedToArrayNotRecursiveCamelCased', true, false) }}
+
+    {{ macro.addInitCollections(transferCollections) }}
+
+    {{ macro.addToArray('toArrayNotRecursiveCamelCased', false, true, primitives, transfers, transferCollections, valueObjects) }}
+
+    {{ macro.addToArray('toArrayNotRecursiveNotCamelCased', false, false, primitives, transfers, transferCollections, valueObjects) }}
+
+    {{ macro.addToArray('toArrayRecursiveNotCamelCased', true, false, primitives, transfers, transferCollections, valueObjects) }}
+
+    {{ macro.addToArray('toArrayRecursiveCamelCased', true, true, primitives, transfers, transferCollections, valueObjects) }}
 }

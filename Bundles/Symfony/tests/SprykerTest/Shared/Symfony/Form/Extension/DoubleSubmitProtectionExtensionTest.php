@@ -14,7 +14,7 @@ use Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTokenPro
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Forms;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Auto-generated group annotations
@@ -45,12 +45,12 @@ class DoubleSubmitProtectionExtensionTest extends Unit
     protected $generator;
 
     /**
-     * @var \Symfony\Component\OptionsResolver\OptionsResolverInterface
+     * @var \Symfony\Component\OptionsResolver\OptionsResolver
      */
     protected $optionResolver;
 
     /**
-     * @var \Symfony\Component\Translation\TranslatorInterface
+     * @var \Symfony\Contracts\Translation\TranslatorInterface
      */
     protected $translator;
 
@@ -62,13 +62,14 @@ class DoubleSubmitProtectionExtensionTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
         $this->generator = $this->getMockBuilder(TokenGeneratorInterface::class)->setMethods(['checkTokenEquals', 'generateToken'])->getMock();
         $this->storage = $this->getMockBuilder(StorageInterface::class)->setMethods(['getToken', 'setToken', 'deleteToken', 'checkTokenEquals'])->getMock();
-        $this->translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
+        $this->translator = $this->getMockBuilder(TranslatorInterface::class)->onlyMethods(['trans'])->getMock();
+        $this->translator->method('trans')->willReturnArgument(0);
 
         $this->formFactory = Forms::createFormFactoryBuilder()
             ->addExtensions($this->getFormExtensions())
@@ -78,7 +79,7 @@ class DoubleSubmitProtectionExtensionTest extends Unit
     /**
      * @return void
      */
-    public function testFinishViewIgnoredForNotFormRoot()
+    public function testFinishViewIgnoredForNotFormRoot(): void
     {
         $view = $this->formFactory
             ->createNamedBuilder('root', FormType::class)
@@ -100,7 +101,7 @@ class DoubleSubmitProtectionExtensionTest extends Unit
     /**
      * @return void
      */
-    public function testFinishFormViewSuccess()
+    public function testFinishFormViewSuccess(): void
     {
         $expectedToken = 'TOKEN';
         $this->generator->expects($this->once())
@@ -111,7 +112,7 @@ class DoubleSubmitProtectionExtensionTest extends Unit
             ->createNamed('FORM_NAME', FormType::class, null, ['token_field_name' => '_requestToken'])
             ->createView();
 
-        $this->assertEquals($expectedToken, $view['_requestToken']->vars['value']);
+        $this->assertSame($expectedToken, $view['_requestToken']->vars['value']);
     }
 
     /**
@@ -121,7 +122,7 @@ class DoubleSubmitProtectionExtensionTest extends Unit
      *
      * @return void
      */
-    public function testValidateTokenOnSubmit($valid)
+    public function testValidateTokenOnSubmit(bool $valid): void
     {
         $expectedToken = 'TOKEN';
 
@@ -151,7 +152,7 @@ class DoubleSubmitProtectionExtensionTest extends Unit
     /**
      * @return array
      */
-    protected function getFormExtensions()
+    protected function getFormExtensions(): array
     {
         return [
             new DoubleSubmitProtectionExtension($this->generator, $this->storage, $this->translator),
@@ -161,7 +162,7 @@ class DoubleSubmitProtectionExtensionTest extends Unit
     /**
      * @return array
      */
-    public function booleanDataProvider()
+    public function booleanDataProvider(): array
     {
         return [
             [true],

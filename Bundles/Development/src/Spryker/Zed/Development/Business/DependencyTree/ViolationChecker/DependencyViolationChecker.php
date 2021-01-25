@@ -20,30 +20,33 @@ class DependencyViolationChecker implements DependencyViolationCheckerInterface
     /**
      * @var \Spryker\Zed\Development\Business\DependencyTree\DependencyTreeReader\DependencyTreeReaderInterface
      */
-    private $treeReader;
+    protected $treeReader;
 
     /**
      * @var \Spryker\Zed\Development\Business\DependencyTree\ViolationFinder\ViolationFinderInterface
      */
-    private $violationFinder;
+    protected $violationFinder;
 
     /**
      * @var \Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\DependencyFilterInterface
      */
-    private $dependencyFilter;
+    protected $dependencyFilter;
 
     /**
      * @var array
      */
-    private $dependencyViolations = [];
+    protected $dependencyViolations = [];
 
     /**
      * @param \Spryker\Zed\Development\Business\DependencyTree\DependencyTreeReader\DependencyTreeReaderInterface $treeReader
      * @param \Spryker\Zed\Development\Business\DependencyTree\ViolationFinder\ViolationFinderInterface $violationFinder
      * @param \Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\DependencyFilterInterface $dependencyFilter
      */
-    public function __construct(DependencyTreeReaderInterface $treeReader, ViolationFinderInterface $violationFinder, DependencyFilterInterface $dependencyFilter)
-    {
+    public function __construct(
+        DependencyTreeReaderInterface $treeReader,
+        ViolationFinderInterface $violationFinder,
+        DependencyFilterInterface $dependencyFilter
+    ) {
         $this->treeReader = $treeReader;
         $this->violationFinder = $violationFinder;
         $this->dependencyFilter = $dependencyFilter;

@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CollectedDiscountTransfer;
 use Generated\Shared\Transfer\GiftCardTransfer;
+use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\PaymentMethodsTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
@@ -195,7 +196,7 @@ interface GiftCardFacadeInterface
      *
      * @api
      *
-     * @deprecated Use \Spryker\Zed\GiftCard\Business\GiftCardFacadeInterface::filterShipmentGroupMethods() instead.
+     * @deprecated Use {@link \Spryker\Zed\GiftCard\Business\GiftCardFacadeInterface::filterShipmentGroupMethods()} instead.
      *
      * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentMethodTransfer[] $shipmentMethods
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -253,4 +254,57 @@ interface GiftCardFacadeInterface
      * @return iterable|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
      */
     public function sanitizeShipmentGroupCollection(iterable $shipmentGroupCollection): iterable;
+
+    /**
+     * Specification:
+     * - Sets gift card to the quote if the code hasn't been added already.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $cartCode
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function addCartCode(QuoteTransfer $quoteTransfer, string $cartCode): QuoteTransfer;
+
+    /**
+     * Specification:
+     * - Removes matching applied gift card and gift card payment from quote.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $cartCode
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function removeCartCode(QuoteTransfer $quoteTransfer, string $cartCode): QuoteTransfer;
+
+    /**
+     * Specification:
+     * - Clears all gift cards and gift card payments from the quote.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function clearCartCodes(QuoteTransfer $quoteTransfer): QuoteTransfer;
+
+    /**
+     * Specification:
+     * - Returns gift card apply success message in case the given gift card code has been applied successfully.
+     * - Returns gift card apply failed message in case the given gift card code hasn't been applied successfully.
+     * - Returns an empty failed message if code is not relevant.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $cartCode
+     *
+     * @return \Generated\Shared\Transfer\MessageTransfer|null
+     */
+    public function findOperationResponseMessage(QuoteTransfer $quoteTransfer, string $cartCode): ?MessageTransfer;
 }

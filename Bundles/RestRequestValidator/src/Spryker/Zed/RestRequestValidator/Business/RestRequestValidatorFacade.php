@@ -19,10 +19,60 @@ class RestRequestValidatorFacade extends AbstractFacade implements RestRequestVa
      *
      * @api
      *
+     * @deprecated Use {@link buildValidationCacheForCodeBucket()} instead.
+     *
      * @return void
      */
     public function buildValidationCache(): void
     {
+        $this->removeValidationCache();
         $this->getFactory()->createRestRequestValidatorCacheBuilder()->build();
+    }
+
+    /**
+     * @inheritDoc
+     *
+     * @api
+     *
+     * @param string $codeBucket
+     *
+     * @return void
+     */
+    public function buildValidationCacheForCodeBucket(string $codeBucket): void
+    {
+        $this->removeValidationCacheForCodeBucket($codeBucket);
+        $this->getFactory()
+            ->createRestRequestValidatorCodeBucketCacheBuilder()
+            ->buildCacheForCodeBucket($codeBucket);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @deprecated Use {@link removeValidationCacheForCodeBucket()} instead.
+     *
+     * @return void
+     */
+    public function removeValidationCache(): void
+    {
+        $this->getFactory()->createRestRequestValidatorCacheRemover()->remove();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string $codeBucket
+     *
+     * @return void
+     */
+    public function removeValidationCacheForCodeBucket(string $codeBucket): void
+    {
+        $this->getFactory()
+            ->createRestRequestValidatorCodeBucketCacheRemover()
+            ->remove($codeBucket);
     }
 }

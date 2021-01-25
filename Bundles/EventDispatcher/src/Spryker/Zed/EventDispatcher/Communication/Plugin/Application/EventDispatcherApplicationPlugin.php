@@ -10,8 +10,10 @@ namespace Spryker\Zed\EventDispatcher\Communication\Plugin\Application;
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface;
 use Spryker\Shared\EventDispatcher\EventDispatcherInterface;
+use Spryker\Shared\EventDispatcher\TraceableEventDispatcher;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface as SymfonyEventDispatcherInterface;
+use Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher as SymfonyTraceableEventDispatcher;
 
 /**
  * @method \Spryker\Zed\EventDispatcher\Communication\EventDispatcherCommunicationFactory getFactory()
@@ -20,6 +22,8 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface as SymfonyEventDi
 class EventDispatcherApplicationPlugin extends AbstractPlugin implements ApplicationPluginInterface
 {
     public const SERVICE_DISPATCHER = 'dispatcher';
+
+    protected const SERVICE_STOPWATCH = 'stopwatch';
 
     /**
      * {@inheritDoc}
@@ -60,6 +64,10 @@ class EventDispatcherApplicationPlugin extends AbstractPlugin implements Applica
         $container->extend(static::SERVICE_DISPATCHER, function (SymfonyEventDispatcherInterface $existingEventDispatcher, ContainerInterface $container) {
             $eventDispatcher = $this->getFactory()->createEventDispatcher();
 
+            if ($existingEventDispatcher instanceof SymfonyTraceableEventDispatcher && $container->has(static::SERVICE_STOPWATCH)) {
+                $eventDispatcher = new TraceableEventDispatcher($eventDispatcher, $container->get(static::SERVICE_STOPWATCH));
+            }
+
             $eventDispatcher = $this->copyExistingListeners($eventDispatcher, $existingEventDispatcher);
 
             $eventDispatcher = $this->extendEventDispatcher($eventDispatcher, $container);
@@ -78,8 +86,10 @@ class EventDispatcherApplicationPlugin extends AbstractPlugin implements Applica
      *
      * @return \Spryker\Shared\EventDispatcher\EventDispatcherInterface
      */
-    protected function copyExistingListeners(EventDispatcherInterface $eventDispatcher, SymfonyEventDispatcherInterface $existingEventDispatcher): EventDispatcherInterface
-    {
+    protected function copyExistingListeners(
+        EventDispatcherInterface $eventDispatcher,
+        SymfonyEventDispatcherInterface $existingEventDispatcher
+    ): EventDispatcherInterface {
         $existingListeners = $existingEventDispatcher->getListeners();
 
         foreach ($existingListeners as $eventName => $eventListeners) {

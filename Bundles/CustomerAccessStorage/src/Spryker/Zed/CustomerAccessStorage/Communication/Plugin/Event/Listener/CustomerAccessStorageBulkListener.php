@@ -25,14 +25,14 @@ class CustomerAccessStorageBulkListener extends AbstractPlugin implements EventB
      *
      * @api
      *
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $transfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
      * @param string $eventName
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */
-    public function handleBulk(array $transfers, $eventName)
+    public function handleBulk(array $eventEntityTransfers, $eventName)
     {
         if (Propel::getConnection()->inTransaction()) {
             throw new PropelException('This operation is not allowed inside of transaction');

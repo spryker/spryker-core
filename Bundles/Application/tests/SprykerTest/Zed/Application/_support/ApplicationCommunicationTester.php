@@ -14,8 +14,6 @@ use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\SslServiceProvi
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -25,7 +23,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  *
  * @SuppressWarnings(PHPMD)
  */
@@ -39,7 +37,7 @@ class ApplicationCommunicationTester extends Actor
      *
      * @return \Silex\Application
      */
-    public function getApplicationForSslTest($controllerResponse = '', $isSslEnabled = true)
+    public function getApplicationForSslTest(string $controllerResponse = '', bool $isSslEnabled = true): Application
     {
         $this->setConfig(ApplicationConstants::ZED_SSL_ENABLED, $isSslEnabled);
         $this->setConfig(ApplicationConstants::ZED_TRUSTED_HOSTS, []);
@@ -57,7 +55,7 @@ class ApplicationCommunicationTester extends Actor
     /**
      * @return \Symfony\Component\HttpFoundation\Request
      */
-    public function getRequestForSslTest()
+    public function getRequestForSslTest(): Request
     {
         return Request::create('/foo');
     }

@@ -300,6 +300,8 @@ class UtilMeasurementUnitConversionConfig extends AbstractBundleConfig
     ];
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getMeasurementUnitExchangeRatioMap(): array

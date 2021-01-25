@@ -16,6 +16,8 @@ use Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTokenPro
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\Form\Communication\Plugin\Form\DoubleSubmitProtectionFormPlugin} instead.
+ *
  * @method \Spryker\Zed\Application\ApplicationConfig getConfig()
  * @method \Spryker\Zed\Application\Business\ApplicationFacadeInterface getFacade()
  * @method \Spryker\Zed\Application\Communication\ApplicationCommunicationFactory getFactory()

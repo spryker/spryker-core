@@ -65,7 +65,7 @@ class CustomerAccessStorageFacadeTest extends Unit
         $this->tester->getFacade()->publish();
         $customerAccessEntity = $this->getUnauthenticatedCustomerAccessEntity();
 
-        $this->assertContains(json_encode($customerAccessTransfer->getContentTypeAccess()[0]->toArray()), json_encode($customerAccessEntity->getData()));
+        $this->assertStringContainsString(json_encode($customerAccessTransfer->getContentTypeAccess()[0]->toArray()), json_encode($customerAccessEntity->getData()));
     }
 
     /**

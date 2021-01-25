@@ -53,9 +53,9 @@ class QuoteDependencyProvider extends AbstractDependencyProvider
      */
     protected function addSessionClient(Container $container)
     {
-        $container[static::CLIENT_SESSION] = function (Container $container) {
+        $container->set(static::CLIENT_SESSION, function (Container $container) {
             return $container->getLocator()->session()->client();
-        };
+        });
 
         return $container;
     }
@@ -67,9 +67,9 @@ class QuoteDependencyProvider extends AbstractDependencyProvider
      */
     protected function addCurrencyPlugin(Container $container)
     {
-        $container[static::CURRENCY_PLUGIN] = function (Container $container) {
+        $container->set(static::CURRENCY_PLUGIN, function (Container $container) {
             return new QuoteToCurrencyBridge(new CurrencyPlugin());
-        };
+        });
 
         return $container;
     }
@@ -81,9 +81,9 @@ class QuoteDependencyProvider extends AbstractDependencyProvider
      */
     protected function addQuoteTransferExpanderPlugins(Container $container)
     {
-        $container[static::QUOTE_TRANSFER_EXPANDER_PLUGINS] = function (Container $container) {
+        $container->set(static::QUOTE_TRANSFER_EXPANDER_PLUGINS, function (Container $container) {
             return $this->getQuoteTransferExpanderPlugins($container);
-        };
+        });
 
         return $container;
     }
@@ -95,9 +95,9 @@ class QuoteDependencyProvider extends AbstractDependencyProvider
      */
     protected function addDatabaseStrategyPreCheckPlugins(Container $container)
     {
-        $container[static::PLUGINS_DATABASE_STRATEGY_PRE_CHECK_PLUGINS] = function () {
+        $container->set(static::PLUGINS_DATABASE_STRATEGY_PRE_CHECK_PLUGINS, function () {
             return $this->getDatabaseStrategyPreCheckPlugins();
-        };
+        });
 
         return $container;
     }
@@ -109,9 +109,9 @@ class QuoteDependencyProvider extends AbstractDependencyProvider
      */
     protected function addCustomerClient(Container $container)
     {
-        $container[static::CLIENT_CUSTOMER] = function (Container $container) {
+        $container->set(static::CLIENT_CUSTOMER, function (Container $container) {
             return new QuoteToCustomerClientBridge($container->getLocator()->customer()->client());
-        };
+        });
 
         return $container;
     }
@@ -123,9 +123,9 @@ class QuoteDependencyProvider extends AbstractDependencyProvider
      */
     protected function addZedSevice(Container $container)
     {
-        $container[self::SERVICE_ZED] = function (Container $container) {
+        $container->set(static::SERVICE_ZED, function (Container $container) {
             return $container->getLocator()->zedRequest()->client();
-        };
+        });
 
         return $container;
     }
@@ -137,9 +137,9 @@ class QuoteDependencyProvider extends AbstractDependencyProvider
      */
     protected function addCurrencyClient(Container $container): Container
     {
-        $container[static::CLIENT_CURRENCY] = function (Container $container) {
+        $container->set(static::CLIENT_CURRENCY, function (Container $container) {
             return new QuoteToCurrencyClientBridge($container->getLocator()->currency()->client());
-        };
+        });
 
         return $container;
     }

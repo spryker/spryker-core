@@ -15,7 +15,7 @@ use Symfony\Component\Translation\Translator;
 use Twig\Environment;
 
 /**
- * @deprecated Use `Spryker\Zed\Translator\Communication\Plugin\Twig\TranslatorTwigPlugin` instead.
+ * @deprecated Use {@link \Spryker\Zed\Translator\Communication\Plugin\Twig\TranslatorTwigPlugin} instead.
  *
  * @method \Spryker\Zed\Application\Business\ApplicationFacadeInterface getFacade()
  * @method \Spryker\Zed\Application\Communication\ApplicationCommunicationFactory getFactory()

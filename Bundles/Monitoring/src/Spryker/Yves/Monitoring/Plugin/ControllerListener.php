@@ -11,7 +11,7 @@ use Spryker\Service\Monitoring\MonitoringServiceInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use Spryker\Yves\Monitoring\Dependency\Service\MonitoringToUtilNetworkServiceInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
+use Symfony\Component\HttpKernel\Event\ControllerEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
@@ -41,19 +41,22 @@ class ControllerListener extends AbstractPlugin implements EventSubscriberInterf
      * @param \Spryker\Yves\Monitoring\Dependency\Service\MonitoringToUtilNetworkServiceInterface $utilNetworkService
      * @param array $ignorableTransactions
      */
-    public function __construct(MonitoringServiceInterface $monitoringService, MonitoringToUtilNetworkServiceInterface $utilNetworkService, array $ignorableTransactions = [])
-    {
+    public function __construct(
+        MonitoringServiceInterface $monitoringService,
+        MonitoringToUtilNetworkServiceInterface $utilNetworkService,
+        array $ignorableTransactions = []
+    ) {
         $this->monitoringService = $monitoringService;
         $this->utilNetworkService = $utilNetworkService;
         $this->ignorableTransactions = $ignorableTransactions;
     }
 
     /**
-     * @param \Symfony\Component\HttpKernel\Event\FilterControllerEvent $event
+     * @param \Symfony\Component\HttpKernel\Event\ControllerEvent $event
      *
      * @return void
      */
-    public function onKernelController(FilterControllerEvent $event): void
+    public function onKernelController(ControllerEvent $event): void
     {
         if (!$event->isMasterRequest()) {
             return;

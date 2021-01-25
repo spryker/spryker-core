@@ -17,6 +17,8 @@ use Spryker\Zed\Queue\Dependency\Plugin\QueueMessageProcessorPluginInterface;
 class EventRetryQueueMessageProcessorPlugin extends AbstractPlugin implements QueueMessageProcessorPluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer[] $queueMessageTransfers
@@ -29,6 +31,8 @@ class EventRetryQueueMessageProcessorPlugin extends AbstractPlugin implements Qu
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return int

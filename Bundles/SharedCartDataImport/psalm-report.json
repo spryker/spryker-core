@@ -1,0 +1,18 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 23,
+            "line_to": 23,
+            "type": "MethodSignatureMismatch",
+            "message": "Method Spryker\\Zed\\SharedCartDataImport\\Business\\SharedCartDataImportBusinessFactory::createTransactionAwareDataSetStepBroker has fewer parameters than parent method Spryker\\Zed\\DataImport\\Business\\DataImportBusinessFactory::createTransactionAwareDataSetStepBroker",
+            "file_name": "vendor/spryker/spryker/Bundles/SharedCartDataImport/src/Spryker/Zed/SharedCartDataImport/Business/SharedCartDataImportBusinessFactory.php",
+            "snippet": "class SharedCartDataImportBusinessFactory extends DataImportBusinessFactory",
+            "selected_text": "SharedCartDataImportBusinessFactory",
+            "error_level": 7,
+            "shortcode": 42
+        }
+    ],
+    "warning": [],
+    "deprecation": []
+}

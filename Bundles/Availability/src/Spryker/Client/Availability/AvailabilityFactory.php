@@ -7,33 +7,36 @@
 
 namespace Spryker\Client\Availability;
 
+use Spryker\Client\Availability\Dependency\Client\AvailabilityToLocaleInterface;
+use Spryker\Client\Availability\Dependency\Client\AvailabilityToZedRequestClientInterface;
 use Spryker\Client\Availability\KeyBuilder\AvailabilityResourceKeyBuilder;
 use Spryker\Client\Availability\Storage\AvailabilityStorage;
+use Spryker\Client\Availability\Storage\AvailabilityStorageInterface;
 use Spryker\Client\Availability\Zed\AvailabilityStub;
+use Spryker\Client\Availability\Zed\AvailabilityStubInterface;
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Shared\KeyBuilder\KeyBuilderInterface;
 
 class AvailabilityFactory extends AbstractFactory
 {
     /**
-     * @deprecated Use AvailabilityFactory::createCurrentLocaleAvailabilityStorage
-     *
-     * @param string $locale
-     *
      * @return \Spryker\Client\Availability\Storage\AvailabilityStorageInterface
      */
-    public function createAvailabilityStorage($locale)
+    public function createCurrentLocaleAvailabilityStorage(): AvailabilityStorageInterface
     {
         return new AvailabilityStorage(
             $this->getStorage(),
             $this->createKeyBuilder(),
-            $locale
+            $this->getLocaleClient()->getCurrentLocale()
         );
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Client\Availability\Zed\AvailabilityStubInterface
      */
-    public function createAvailabilityStub()
+    public function createAvailabilityStub(): AvailabilityStubInterface
     {
         return new AvailabilityStub($this->getZedRequestClient());
     }
@@ -41,7 +44,7 @@ class AvailabilityFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\Availability\Dependency\Client\AvailabilityToStorageInterface
      */
-    protected function getStorage()
+    public function getStorage()
     {
         return $this->getProvidedDependency(AvailabilityDependencyProvider::KV_STORAGE);
     }
@@ -49,7 +52,7 @@ class AvailabilityFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\Availability\Dependency\Client\AvailabilityToZedRequestClientInterface
      */
-    protected function getZedRequestClient()
+    public function getZedRequestClient(): AvailabilityToZedRequestClientInterface
     {
         return $this->getProvidedDependency(AvailabilityDependencyProvider::CLIENT_ZED_REQUEST);
     }
@@ -57,7 +60,7 @@ class AvailabilityFactory extends AbstractFactory
     /**
      * @return \Spryker\Shared\KeyBuilder\KeyBuilderInterface
      */
-    protected function createKeyBuilder()
+    public function createKeyBuilder(): KeyBuilderInterface
     {
         return new AvailabilityResourceKeyBuilder();
     }
@@ -65,20 +68,8 @@ class AvailabilityFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\Availability\Dependency\Client\AvailabilityToLocaleInterface
      */
-    public function getLocaleClient()
+    public function getLocaleClient(): AvailabilityToLocaleInterface
     {
         return $this->getProvidedDependency(AvailabilityDependencyProvider::CLIENT_LOCALE);
-    }
-
-    /**
-     * @return \Spryker\Client\Availability\Storage\AvailabilityStorage
-     */
-    public function createCurrentLocaleAvailabilityStorage()
-    {
-        return new AvailabilityStorage(
-            $this->getStorage(),
-            $this->createKeyBuilder(),
-            $this->getLocaleClient()->getCurrentLocale()
-        );
     }
 }

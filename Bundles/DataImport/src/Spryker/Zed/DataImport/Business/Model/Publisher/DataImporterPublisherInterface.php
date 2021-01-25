@@ -9,8 +9,6 @@ namespace Spryker\Zed\DataImport\Business\Model\Publisher;
 
 interface DataImporterPublisherInterface
 {
-    public const FLUSH_CHUNK_SIZE = 10000000;
-
     /**
      * @param string $eventName
      * @param int $entityId
@@ -20,7 +18,7 @@ interface DataImporterPublisherInterface
     public static function addEvent($eventName, $entityId): void;
 
     /**
-     * @deprecated use addEvent() instead.
+     * @deprecated Use {@link addEvent()} instead.
      *
      * @param array $events
      *
@@ -29,9 +27,9 @@ interface DataImporterPublisherInterface
     public static function addImportedEntityEvents(array $events);
 
     /**
-     * @param int $flushChunkSize
+     * @param int|null $flushChunkSize
      *
      * @return void
      */
-    public static function triggerEvents($flushChunkSize = self::FLUSH_CHUNK_SIZE);
+    public static function triggerEvents(?int $flushChunkSize = null): void;
 }

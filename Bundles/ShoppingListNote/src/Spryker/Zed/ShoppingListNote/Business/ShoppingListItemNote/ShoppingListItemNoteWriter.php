@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ShoppingListNote\Business\ShoppingListItemNote;
 
+use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemNoteTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Spryker\Zed\ShoppingListNote\Persistence\ShoppingListNoteEntityManagerInterface;
@@ -56,6 +57,17 @@ class ShoppingListItemNoteWriter implements ShoppingListItemNoteWriterInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
+     */
+    public function saveShoppingListItemNoteForShoppingListItemBulk(
+        ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+    ): ShoppingListItemCollectionTransfer {
+        return $this->saveShoppingListItemNoteTransfersInBulk($shoppingListItemCollectionTransfer);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ShoppingListItemNoteTransfer $shoppingListItemNoteTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemNoteTransfer|null
@@ -81,5 +93,38 @@ class ShoppingListItemNoteWriter implements ShoppingListItemNoteWriterInterface
         if ($shoppingListItemNoteTransfer->getIdShoppingListItemNote()) {
             $this->shoppingListNoteEntityManager->deleteShoppingListItemNoteById($shoppingListItemNoteTransfer->getIdShoppingListItemNote());
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+     *
+     * @return void
+     */
+    protected function deleteShoppingListItemNotesWithoutNoteValueInBulk(ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer): void
+    {
+        $shoppingListItemNoteIds = [];
+        foreach ($shoppingListItemCollectionTransfer->getItems() as $shoppingListItemTransfer) {
+            $shoppingListItemNoteTransfer = $shoppingListItemTransfer->getShoppingListItemNote();
+            if (!$shoppingListItemNoteTransfer || $shoppingListItemNoteTransfer->getNote() || !$shoppingListItemNoteTransfer->getIdShoppingListItemNote()) {
+                continue;
+            }
+
+            $shoppingListItemNoteIds[] = $shoppingListItemNoteTransfer->getIdShoppingListItemNote();
+        }
+
+        $this->shoppingListNoteEntityManager->deleteShoppingListItemNoteByShoppingListItemNoteIds($shoppingListItemNoteIds);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
+     */
+    protected function saveShoppingListItemNoteTransfersInBulk(
+        ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+    ): ShoppingListItemCollectionTransfer {
+        $this->deleteShoppingListItemNotesWithoutNoteValueInBulk($shoppingListItemCollectionTransfer);
+
+        return $this->shoppingListNoteEntityManager->saveShoppingListItemNoteInBulk($shoppingListItemCollectionTransfer);
     }
 }

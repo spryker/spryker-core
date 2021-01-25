@@ -4,11 +4,14 @@
   "description": "CategoryExporter module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.3",
     "spryker/category": "^3.0.0 || ^4.0.0",
     "spryker/kernel": "^3.30.0",
     "spryker/key-builder": "^1.0.0",
     "spryker/storage": "^3.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*"
   },
   "autoload": {
     "psr-4": {
@@ -17,6 +20,10 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "3.0.x-dev"

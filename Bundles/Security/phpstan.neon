@@ -1,0 +1,17 @@
+parameters:
+    reportUnmatchedIgnoredErrors: false
+    checkMissingIterableValueType: false
+    ignoreErrors:
+        - '#Parameter \#3 \$eventDispatcher of class .+LogoutListener constructor expects .+EventDispatcherInterface, .+LogoutSuccessHandlerInterface|.+EventDispatcherInterface given.#'
+        - '#Class .+AuthenticationTrustResolver constructor invoked with 0 parameters, 2 required.#'
+        - '#Class .+AuthenticationTrustResolver does not have a constructor and must be instantiated without any parameters.#'
+        - '#Instantiated class .+DefaultLogoutListener not found.#'
+        - '#Instantiated class .+SessionLogoutListener not found.#'
+        - '#Instantiated class .+BCryptPasswordEncoder not found.#'
+        - '#Parameter \#1 \$subscriber of method .+EventDispatcherInterface::addSubscriber\(\) expects .+EventSubscriberInterface, .+DefaultLogoutListener given.#'
+        - '#Parameter \#1 \$subscriber of method .+EventDispatcherInterface::addSubscriber\(\) expects .+EventSubscriberInterface, .+SessionLogoutListener given.#'
+        - '#Method .+RouteCollection::add\(\) invoked with 3 parameters, 2 required.#'
+        - '#Method .+SecurityFactory::createPasswordEncoder\(\) should return .+PasswordEncoderInterface but returns .+NativePasswordEncoder.#'
+        - '#Method .+Factory::createPasswordEncoder\(\) should return .+PasswordEncoderInterface but returns .+BCryptPasswordEncoder.#'
+        - '#Instantiated class Symfony\\Component\\Security\\Http\\EventListener\\RememberMeLogoutListener not found.#'
+        - '#Parameter \#1 \$subscriber of method Symfony\\Component\\EventDispatcher\\EventDispatcherInterface::addSubscriber\(\) expects Symfony\\Component\\EventDispatcher\\EventSubscriberInterface, Symfony\\Component\\Security\\Http\\EventListener\\RememberMeLogoutListener given.#'

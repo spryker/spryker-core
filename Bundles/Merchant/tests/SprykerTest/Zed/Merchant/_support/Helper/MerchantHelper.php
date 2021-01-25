@@ -9,8 +9,11 @@ namespace SprykerTest\Zed\Merchant\Helper;
 
 use Codeception\Module;
 use Generated\Shared\DataBuilder\MerchantBuilder;
+use Generated\Shared\DataBuilder\StoreRelationBuilder;
 use Generated\Shared\Transfer\MerchantTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
+use Spryker\Zed\Merchant\MerchantConfig;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
@@ -26,18 +29,28 @@ class MerchantHelper extends Module
      */
     public function haveMerchant(array $seedData = []): MerchantTransfer
     {
+        /** @var \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer */
         $merchantTransfer = (new MerchantBuilder($seedData))->build();
+        $merchantTransfer->setIdMerchant(null);
+        $merchantTransfer = $this->addStoreRelation($merchantTransfer, $seedData);
 
-        $merchantTransfer = $this->getLocator()
+        $merchantResponseTransfer = $this->getLocator()
             ->merchant()
             ->facade()
             ->createMerchant($merchantTransfer);
+        $merchantTransfer = $merchantResponseTransfer->getMerchant();
 
-        $this->debug(sprintf('Created Merchant: %d', $merchantTransfer->getIdMerchant()));
+        if (isset($seedData[MerchantTransfer::STATUS])) {
+            $merchantTransfer->setStatus($seedData[MerchantTransfer::STATUS]);
+            $merchantTransfer = $this->getLocator()
+                ->merchant()
+                ->facade()
+                ->updateMerchant($merchantTransfer)
+                ->getMerchant();
+        }
 
         $this->getDataCleanupHelper()->_addCleanup(function () use ($merchantTransfer) {
-            $this->debug(sprintf('Deleting Merchant: %s', $merchantTransfer->getIdMerchant()));
-            $this->cleanupMerchant($merchantTransfer);
+            $this->getMerchantQuery()->filterByIdMerchant($merchantTransfer->getIdMerchant())->delete();
         });
 
         return $merchantTransfer;
@@ -45,17 +58,30 @@ class MerchantHelper extends Module
 
     /**
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     * @param array $seedData
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\MerchantTransfer
      */
-    protected function cleanupMerchant(MerchantTransfer $merchantTransfer): void
+    protected function addStoreRelation(MerchantTransfer $merchantTransfer, array $seedData): MerchantTransfer
     {
-        $this->debug(sprintf('Deleting Merchant: %d', $merchantTransfer->getIdMerchant()));
+        $storeRelationTransfer = $this->createStoreRelationTransfer($seedData);
+        $merchantTransfer->setStoreRelation($storeRelationTransfer->setIdEntity($merchantTransfer->getIdMerchant()));
 
-        $this->getLocator()
-            ->merchant()
-            ->facade()
-            ->deleteMerchant($merchantTransfer);
+        return $merchantTransfer;
+    }
+
+    /**
+     * @param array $seedData
+     *
+     * @return \Generated\Shared\Transfer\StoreRelationTransfer
+     */
+    protected function createStoreRelationTransfer(array $seedData): StoreRelationTransfer
+    {
+        if (isset($seedData[MerchantTransfer::STORE_RELATION])) {
+            return (new StoreRelationBuilder())->seed($seedData[MerchantTransfer::STORE_RELATION])->build();
+        }
+
+        return (new StoreRelationBuilder())->build();
     }
 
     /**
@@ -67,6 +93,14 @@ class MerchantHelper extends Module
     {
         $query = $this->getMerchantQuery()->filterByIdMerchant($idMerchant);
         $this->assertSame(0, $query->count());
+    }
+
+    /**
+     * @return \Spryker\Zed\Merchant\MerchantConfig
+     */
+    public function createMerchantConfig(): MerchantConfig
+    {
+        return new MerchantConfig();
     }
 
     /**

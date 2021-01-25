@@ -10,8 +10,8 @@ namespace Spryker\Zed\Kernel\Communication\Controller;
 use Generated\Shared\Transfer\MessageTransfer;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\KernelConstants;
+use Spryker\Zed\Kernel\ClassResolver\Communication\CommunicationFactoryResolver;
 use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeResolver;
-use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver;
 use Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerResolver;
 use Spryker\Zed\Kernel\Communication\Exception\ForbiddenRedirectException;
 use Spryker\Zed\Kernel\Dependency\Facade\KernelToMessengerBridge;
@@ -20,6 +20,7 @@ use Spryker\Zed\Kernel\Exception\Controller\InvalidIdException;
 use Spryker\Zed\Kernel\RepositoryResolverAwareTrait;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 abstract class AbstractController
@@ -32,24 +33,29 @@ abstract class AbstractController
     protected const SERVICE_MESSENGER = 'messenger';
 
     /**
+     * @uses \Spryker\Zed\Twig\Communication\Plugin\Application\TwigApplicationPlugin::SERVICE_TWIG
+     */
+    protected const SERVICE_TWIG = 'twig';
+
+    /**
      * @var \Silex\Application|\Spryker\Service\Container\ContainerInterface
      */
-    private $application;
+    protected $application;
 
     /**
      * @var \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory
      */
-    private $factory;
+    protected $factory;
 
     /**
      * @var \Spryker\Zed\Kernel\Business\AbstractFacade
      */
-    private $facade;
+    protected $facade;
 
     /**
      * @var \Spryker\Zed\Kernel\Persistence\AbstractQueryContainer
      */
-    private $queryContainer;
+    protected $queryContainer;
 
     /**
      * @return void
@@ -94,11 +100,11 @@ abstract class AbstractController
     }
 
     /**
-     * @return \Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver
+     * @return \Spryker\Zed\Kernel\ClassResolver\Communication\CommunicationFactoryResolver
      */
     private function getFactoryResolver()
     {
-        return new FactoryResolver();
+        return new CommunicationFactoryResolver();
     }
 
     /**
@@ -355,5 +361,39 @@ abstract class AbstractController
         }
 
         return $urlDomain;
+    }
+
+    /**
+     * @param string $view
+     * @param array $parameters
+     * @param \Symfony\Component\HttpFoundation\Response|null $response
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    protected function renderView(string $view, array $parameters = [], ?Response $response = null): Response
+    {
+        if ($response instanceof StreamedResponse) {
+            $response->setCallback(function () use ($view, $parameters) {
+                $this->getTwig()->display($view, $parameters);
+            });
+
+            return $response;
+        }
+
+        if ($response === null) {
+            $response = new Response();
+        }
+
+        $response->setContent($this->getTwig()->render($view, $parameters));
+
+        return $response;
+    }
+
+    /**
+     * @return \Twig\Environment
+     */
+    protected function getTwig()
+    {
+        return $this->getApplication()->get(static::SERVICE_TWIG);
     }
 }

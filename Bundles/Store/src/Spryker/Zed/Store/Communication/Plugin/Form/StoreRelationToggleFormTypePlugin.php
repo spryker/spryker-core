@@ -20,6 +20,8 @@ use Spryker\Zed\Store\Communication\Form\Type\StoreRelationToggleType;
 class StoreRelationToggleFormTypePlugin extends AbstractPlugin implements FormTypeInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string

@@ -12,6 +12,8 @@ use Spryker\Zed\Cart\Dependency\ItemExpanderPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\ShipmentCartConnector\Communication\Plugin\Cart\CartShipmentCartOperationPostSavePlugin} instead.
+ *
  * @method \Spryker\Zed\ShipmentCartConnector\Business\ShipmentCartConnectorFacadeInterface getFacade()
  * @method \Spryker\Zed\ShipmentCartConnector\ShipmentCartConnectorConfig getConfig()
  */

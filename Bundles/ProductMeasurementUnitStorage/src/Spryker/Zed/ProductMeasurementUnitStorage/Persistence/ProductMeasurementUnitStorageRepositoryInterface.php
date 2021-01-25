@@ -39,9 +39,9 @@ interface ProductMeasurementUnitStorageRepositoryInterface
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param int[] $productMeasurementUnitIds
      *
-     * @return \Generated\Shared\Transfer\SpyProductMeasurementUnitStorageEntityTransfer[]
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function findFilteredProductMeasurementUnitStorageEntities(FilterTransfer $filterTransfer, array $productMeasurementUnitIds = []): array;
+    public function findFilteredProductMeasurementUnitStorageDataTransfers(FilterTransfer $filterTransfer, array $productMeasurementUnitIds = []): array;
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer

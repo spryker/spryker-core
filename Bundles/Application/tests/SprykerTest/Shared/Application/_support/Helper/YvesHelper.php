@@ -40,7 +40,7 @@ class YvesHelper extends Module
      *
      * @return void
      */
-    public function clickButton($buttonName)
+    public function clickButton(string $buttonName): void
     {
         $i = $this->getWebDriver();
         $i->click("//*[text()[contains(.,'$buttonName')]]");

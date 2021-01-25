@@ -35,9 +35,9 @@ class TouchCleanDataConsole extends Console
      * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
-     * @return int|null
+     * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $output->writeln('<fg=yellow>----------------------------------------</fg=yellow>');
         $output->writeln('<fg=yellow>Cleaning up the touch table(s)<fg=yellow>');
@@ -48,5 +48,7 @@ class TouchCleanDataConsole extends Console
         $output->writeln("<fg=white>Removed $deleteCount Touch table entries (along with related touch data)</fg=white>");
         $output->writeln('');
         $output->writeln('<fg=green>Finished. All Done.</fg=green>');
+
+        return static::CODE_SUCCESS;
     }
 }

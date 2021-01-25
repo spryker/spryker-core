@@ -4,13 +4,12 @@
   "description": "WebProfilerExtension module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1"
+    "php": ">=7.3"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/container": "*",
-    "spryker/symfony": "*",
-    "spryker/testify": "*"
+    "spryker/symfony": "*"
   },
   "suggest": {
     "spryker/container": "If you want to use the Container module.",
@@ -23,6 +22,10 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/"
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"

@@ -8,9 +8,12 @@
 namespace SprykerTest\Shared\ZedRequest\Client;
 
 use Codeception\Test\Unit;
+use GuzzleHttp\Exception\RequestException as GuzzleRequestException;
 use GuzzleHttp\Psr7\Response;
+use Psr\Http\Message\RequestInterface;
 use Spryker\Service\UtilNetwork\UtilNetworkService;
 use Spryker\Shared\Config\Config;
+use Spryker\Shared\ZedRequest\Client\Exception\RequestException;
 use Spryker\Shared\ZedRequest\Client\ResponseInterface;
 use Spryker\Shared\ZedRequest\ZedRequestConstants;
 use SprykerTest\Shared\ZedRequest\Client\Fixture\AbstractHttpClient;
@@ -33,9 +36,9 @@ class AbstractHttpClientTest extends Unit
     /**
      * @return void
      */
-    public function testRequest()
+    public function testRequest(): void
     {
-        $abstractRequest = $this->getAbstractRequestMock();
+        $abstractRequest = $this->getAbstractRequestMock(['sendRequest']);
 
         $body = json_encode([
             ResponseInterface::TRANSFER => ['key' => static::TRANSFER_VALUE],
@@ -49,15 +52,34 @@ class AbstractHttpClientTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testRequestShouldLogExceptionWhenRequestExceptionOccures(): void
+    {
+        $abstractRequest = $this->getAbstractRequestMock(['sendRequest', 'logException']);
+        $requestInterfaceMock = $this->getMockBuilder(RequestInterface::class)->getMock();
+        $abstractRequest->expects($this->once())->method('sendRequest')->willThrowException(new GuzzleRequestException('Request exception test', $requestInterfaceMock));
+        $abstractRequest->expects($this->once())->method('logException');
+
+        $this->expectException(RequestException::class);
+        $abstractRequest->request('?foo=bar');
+    }
+
+    /**
+     * @param array $methods
+     *
      * @return \PHPUnit\Framework\MockObject\MockObject|\SprykerTest\Shared\ZedRequest\Client\Fixture\AbstractHttpClient
      */
-    protected function getAbstractRequestMock()
+    protected function getAbstractRequestMock(array $methods): AbstractHttpClient
     {
         $baseUrl = Config::get(ZedRequestConstants::BASE_URL_ZED_API);
         $url = $baseUrl . '/';
 
         $utilNetworkService = new UtilNetworkService();
 
-        return $this->getMockBuilder(AbstractHttpClient::class)->setMethods(['sendRequest'])->setConstructorArgs([$url, $utilNetworkService])->getMock();
+        return $this->getMockBuilder(AbstractHttpClient::class)
+            ->setMethods($methods)
+            ->setConstructorArgs([$url, $utilNetworkService])
+            ->getMock();
     }
 }

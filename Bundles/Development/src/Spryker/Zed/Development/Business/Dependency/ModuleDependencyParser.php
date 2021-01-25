@@ -9,6 +9,9 @@ namespace Spryker\Zed\Development\Business\Dependency;
 
 use Generated\Shared\Transfer\DependencyCollectionTransfer;
 use Generated\Shared\Transfer\ModuleTransfer;
+use Laminas\Filter\FilterChain;
+use Laminas\Filter\StringToLower;
+use Laminas\Filter\Word\CamelCaseToDash;
 use Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainerInterface;
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\Context\DependencyFinderContext;
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\DependencyFinderInterface;
@@ -36,8 +39,11 @@ class ModuleDependencyParser implements ModuleDependencyParserInterface
      * @param \Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainerInterface $dependencyContainer
      * @param \Spryker\Zed\Development\Business\Dependency\DependencyFinder\DependencyFinderInterface $dependencyFinder
      */
-    public function __construct(ModuleFileFinderInterface $moduleFileFinder, DependencyContainerInterface $dependencyContainer, DependencyFinderInterface $dependencyFinder)
-    {
+    public function __construct(
+        ModuleFileFinderInterface $moduleFileFinder,
+        DependencyContainerInterface $dependencyContainer,
+        DependencyFinderInterface $dependencyFinder
+    ) {
         $this->moduleFileFinder = $moduleFileFinder;
         $this->dependencyContainer = $dependencyContainer;
         $this->dependencyFinder = $dependencyFinder;
@@ -51,6 +57,10 @@ class ModuleDependencyParser implements ModuleDependencyParserInterface
      */
     public function parseOutgoingDependencies(ModuleTransfer $moduleTransfer, ?string $dependencyType = null): DependencyCollectionTransfer
     {
+        if ($moduleTransfer->getNameDashed() == null) {
+            $moduleTransfer->setNameDashed($this->dasherize($moduleTransfer->getName()));
+        }
+
         $dependencyContainer = $this->dependencyContainer->initialize($moduleTransfer);
 
         if (!$this->moduleFileFinder->hasFiles($moduleTransfer)) {
@@ -65,5 +75,20 @@ class ModuleDependencyParser implements ModuleDependencyParserInterface
         }
 
         return $dependencyContainer->getDependencyCollection();
+    }
+
+    /**
+     * @param string $value
+     *
+     * @return string
+     */
+    protected function dasherize(string $value): string
+    {
+        $filterChain = new FilterChain();
+        $filterChain
+            ->attach(new CamelCaseToDash())
+            ->attach(new StringToLower());
+
+        return $filterChain->filter($value);
     }
 }

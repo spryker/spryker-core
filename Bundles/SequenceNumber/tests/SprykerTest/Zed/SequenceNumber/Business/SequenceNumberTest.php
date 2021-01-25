@@ -35,7 +35,7 @@ class SequenceNumberTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -45,7 +45,7 @@ class SequenceNumberTest extends Unit
     /**
      * @return void
      */
-    public function testGetDefaultSettingsMergedWithCustomSettings()
+    public function testGetDefaultSettingsMergedWithCustomSettings(): void
     {
         $customSettings = new SequenceNumberSettingsTransfer();
         $customSettings->setIncrementMinimum(2);
@@ -61,7 +61,7 @@ class SequenceNumberTest extends Unit
     /**
      * @return void
      */
-    public function testGenerate()
+    public function testGenerate(): void
     {
         $config = $this->generateConfig();
         $sequenceNumberSettings = $config->getDefaultSettings();
@@ -84,7 +84,7 @@ class SequenceNumberTest extends Unit
     /**
      * @return void
      */
-    public function testGenerateWithPrefix()
+    public function testGenerateWithPrefix(): void
     {
         $config = $this->generateConfig();
         $sequenceNumberSettings = $config->getDefaultSettings();
@@ -97,7 +97,7 @@ class SequenceNumberTest extends Unit
     /**
      * @return void
      */
-    public function testGenerateOnSequenceNumber()
+    public function testGenerateOnSequenceNumber(): void
     {
         $generator = $this->generateGenerator();
 
@@ -136,7 +136,7 @@ class SequenceNumberTest extends Unit
     /**
      * @return \Spryker\Zed\SequenceNumber\SequenceNumberConfig
      */
-    protected function generateConfig()
+    protected function generateConfig(): SequenceNumberConfig
     {
         $config = new SequenceNumberConfig();
 
@@ -149,7 +149,7 @@ class SequenceNumberTest extends Unit
      *
      * @return \Spryker\Zed\SequenceNumber\Business\Generator\RandomNumberGenerator
      */
-    protected function generateGenerator($min = 1, $max = 1)
+    protected function generateGenerator(int $min = 1, int $max = 1): RandomNumberGenerator
     {
         return new RandomNumberGenerator(
             $min,

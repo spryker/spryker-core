@@ -22,6 +22,8 @@ class CustomerRestoredPasswordConfirmationMailTypePlugin extends AbstractPlugin 
     public const MAIL_TYPE = 'customer restored password confirmation';
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string
@@ -32,6 +34,8 @@ class CustomerRestoredPasswordConfirmationMailTypePlugin extends AbstractPlugin 
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilderInterface $mailBuilder
@@ -108,7 +112,7 @@ class CustomerRestoredPasswordConfirmationMailTypePlugin extends AbstractPlugin 
      */
     protected function setSender(MailBuilderInterface $mailBuilder)
     {
-        $mailBuilder->setSender('mail.sender.email', 'mail.sender.name');
+        $mailBuilder->useDefaultSender();
 
         return $this;
     }

@@ -91,12 +91,12 @@ class Drawer implements DrawerInterface
     /**
      * @var int|null
      */
-    protected $fontSizeBig = null;
+    protected $fontSizeBig;
 
     /**
      * @var int|null
      */
-    protected $fontSizeSmall = null;
+    protected $fontSizeSmall;
 
     /**
      * @var \Spryker\Shared\Graph\GraphInterface
@@ -289,6 +289,7 @@ class Drawer implements DrawerInterface
         foreach ($transitions as $transition) {
             if ($transition->getTargetState()->getName() !== $state->getName()) {
                 $hasOnlySelfReferences = false;
+
                 break;
             }
         }
@@ -327,9 +328,9 @@ class Drawer implements DrawerInterface
 
     /**
      * @param \Spryker\Zed\StateMachine\Business\Process\TransitionInterface $transition
-     * @param array $label
+     * @param string[] $label
      *
-     * @return array
+     * @return string[]
      */
     protected function addEdgeConditionText(TransitionInterface $transition, array $label)
     {
@@ -348,9 +349,9 @@ class Drawer implements DrawerInterface
 
     /**
      * @param \Spryker\Zed\StateMachine\Business\Process\TransitionInterface $transition
-     * @param array $label
+     * @param string[] $label
      *
-     * @return array
+     * @return string[]
      */
     protected function addEdgeEventText(TransitionInterface $transition, array $label)
     {

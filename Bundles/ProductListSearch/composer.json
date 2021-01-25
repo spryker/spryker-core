@@ -4,7 +4,7 @@
   "description": "ProductListSearch module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.3",
     "spryker/event-behavior": "^1.0.0",
     "spryker/kernel": "^3.30.0",
     "spryker/product": "^5.0.0 || ^6.0.0",
@@ -16,6 +16,7 @@
   "require-dev": {
     "spryker/category": "*",
     "spryker/code-sniffer": "*",
+    "spryker/elastica": "*",
     "spryker/event": "*",
     "spryker/propel": "*",
     "spryker/propel-orm": "*",
@@ -25,6 +26,7 @@
   "suggest": {
     "spryker/category": "If you want to use lists Category relations, minimum required version: 3.0.0",
     "spryker/customer": "If you want to use lists Customer plugins, minimum required version: 7.0.0",
+    "spryker/elastica": "If you want to use QueryExpander plugins, minimum required version: 4.0.0",
     "spryker/event": "If you want to use Event plugins, minimum required version: 2.1.0",
     "spryker/propel-orm": "If you want to use transaction functionality, minimum required version: 1.3.0",
     "spryker/search": "If you want to use Search plugins, minimum required version: 7.0.0"
@@ -41,9 +43,13 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+  },
   "extra": {
     "branch-alias": {
-      "dev-master": "1.0.x-dev"
+      "dev-master": "2.0.x-dev"
     }
   },
   "config": {

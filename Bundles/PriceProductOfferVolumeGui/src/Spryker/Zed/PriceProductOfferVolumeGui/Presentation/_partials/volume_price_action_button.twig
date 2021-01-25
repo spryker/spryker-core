@@ -1,0 +1,9 @@
+{% if priceData['volume_prices'] is defined and priceData['volume_prices'] is not null %}
+    <a
+        href="{{ url('/price-product-offer-volume-gui/view', {'id-product-offer': idProductOffer, 'store-name': storeName, 'currency-code': currencyCode}) }}"
+        class="btn btn-sm btn-outline safe-submit btn-view"
+    >
+        <i class="fa fa-eye"></i>
+        {{ 'View Offer Volume Price' | trans }}
+    </a>
+{% endif %}

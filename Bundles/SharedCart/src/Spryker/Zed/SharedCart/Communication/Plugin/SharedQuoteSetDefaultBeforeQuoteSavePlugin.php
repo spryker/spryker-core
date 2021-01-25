@@ -19,6 +19,8 @@ use Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteWritePluginInterface;
 class SharedQuoteSetDefaultBeforeQuoteSavePlugin extends AbstractPlugin implements QuoteWritePluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -27,7 +29,8 @@ class SharedQuoteSetDefaultBeforeQuoteSavePlugin extends AbstractPlugin implemen
      */
     public function execute(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        if (!$quoteTransfer->getIsDefault() || !$quoteTransfer->getCustomer()->getCompanyUserTransfer()
+        if (
+            !$quoteTransfer->getIsDefault() || !$quoteTransfer->getCustomer()->getCompanyUserTransfer()
         ) {
             return $quoteTransfer;
         }

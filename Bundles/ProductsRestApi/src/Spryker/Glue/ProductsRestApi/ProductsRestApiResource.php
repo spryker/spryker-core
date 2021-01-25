@@ -38,6 +38,23 @@ class ProductsRestApiResource extends AbstractRestResource implements ProductsRe
      *
      * @api
      *
+     * @param string[] $skus
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     */
+    public function getProductAbstractsBySkus(array $skus, RestRequestInterface $restRequest): array
+    {
+        return $this->getFactory()
+            ->createAbstractProductsReader()
+            ->getProductAbstractsBySkus($skus, $restRequest);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param string $sku
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
@@ -83,5 +100,40 @@ class ProductsRestApiResource extends AbstractRestResource implements ProductsRe
         return $this->getFactory()
             ->createConcreteProductsReader()
             ->findProductConcreteById($idProductConcrete, $restRequest);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int[] $productConcreteIds
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     */
+    public function getProductConcreteCollectionByIds(array $productConcreteIds, RestRequestInterface $restRequest): array
+    {
+        return $this->getFactory()
+            ->createConcreteProductsReader()
+            ->getProductConcreteCollectionByIds($productConcreteIds, $restRequest);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int[] $productAbstractIds
+     * @param string $localeName
+     * @param string $storeName
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     */
+    public function getProductAbstractsByIds(array $productAbstractIds, string $localeName, string $storeName): array
+    {
+        return $this->getFactory()
+            ->createAbstractProductsReader()
+            ->getProductAbstractsByIds($productAbstractIds, $localeName, $storeName);
     }
 }

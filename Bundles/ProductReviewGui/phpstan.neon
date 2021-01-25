@@ -1,4 +1,3 @@
 parameters:
+    checkMissingIterableValueType: false
     ignoreErrors:
-    - '#Call to an undefined method .+Criteria::withColumn\(\).#'
-    - '#Parameter \#1 \$status of method .+ProductReviewTransfer::setStatus\(\) expects int|null, string given.#'

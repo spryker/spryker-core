@@ -17,8 +17,11 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 class CmsBlockProductStorageQueryContainer extends AbstractQueryContainer implements CmsBlockProductStorageQueryContainerInterface
 {
     public const NAME = 'name';
+    protected const BLOCK_KEY = 'block_key';
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $productIds
@@ -33,6 +36,8 @@ class CmsBlockProductStorageQueryContainer extends AbstractQueryContainer implem
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $productIds
@@ -41,15 +46,22 @@ class CmsBlockProductStorageQueryContainer extends AbstractQueryContainer implem
      */
     public function queryCmsBlockProducts(array $productIds)
     {
-        return $this->getFactory()
+        $query = $this->getFactory()
             ->getCmsBlockProductConnectorQuery()
             ->queryCmsBlockProductConnector()
             ->innerJoinCmsBlock()
-            ->withColumn(SpyCmsBlockTableMap::COL_NAME, static::NAME)
-            ->filterByFkProductAbstract_In($productIds);
+            ->withColumn(SpyCmsBlockTableMap::COL_NAME, static::NAME);
+
+        if ($this->isCmsBlockKeyPropertyExists()) {
+            $query->withColumn(SpyCmsBlockTableMap::COL_KEY, static::BLOCK_KEY);
+        }
+
+        return $query->filterByFkProductAbstract_In($productIds);
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int[] $cmsBlockProductIds
@@ -67,8 +79,7 @@ class CmsBlockProductStorageQueryContainer extends AbstractQueryContainer implem
     }
 
     /**
-     * Specification:
-     * - Returns a a query for the table `spy_cms_block_product_connector` filtered by cms block product ids.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -82,5 +93,15 @@ class CmsBlockProductStorageQueryContainer extends AbstractQueryContainer implem
             ->getCmsBlockProductConnectorQuery()
             ->queryCmsBlockProductConnector()
             ->filterByIdCmsBlockProductConnector_In($cmsBlockProductIds);
+    }
+
+    /**
+     * This is added for BC reason to support previous versions of CmsBlock module.
+     *
+     * @return bool
+     */
+    protected function isCmsBlockKeyPropertyExists(): bool
+    {
+        return defined(SpyCmsBlockTableMap::class . '::COL_KEY');
     }
 }

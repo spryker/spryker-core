@@ -13,7 +13,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
+use Symfony\Component\HttpKernel\Event\ViewEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Twig\Environment;
 
@@ -53,11 +53,11 @@ class TwigEventSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param \Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent $event
+     * @param \Symfony\Component\HttpKernel\Event\ViewEvent $event
      *
      * @return void
      */
-    public function onKernelView(GetResponseForControllerResultEvent $event): void
+    public function onKernelView(ViewEvent $event): void
     {
         $response = $event->getControllerResult();
 

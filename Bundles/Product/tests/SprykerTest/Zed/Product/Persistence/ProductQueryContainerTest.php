@@ -28,7 +28,7 @@ class ProductQueryContainerTest extends Unit
     /**
      * @return void
      */
-    public function testQueryAllProductLocalizedAttributesReturnsCorrectQuery()
+    public function testQueryAllProductLocalizedAttributesReturnsCorrectQuery(): void
     {
         $productQueryContainer = new ProductQueryContainer();
         $productQueryContainer->setFactory(new ProductPersistenceFactory());
@@ -40,7 +40,7 @@ class ProductQueryContainerTest extends Unit
     /**
      * @return void
      */
-    public function testQueryAllProductAbstractLocalizedAttributesReturnsCorrectQuery()
+    public function testQueryAllProductAbstractLocalizedAttributesReturnsCorrectQuery(): void
     {
         $productQueryContainer = new ProductQueryContainer();
         $productQueryContainer->setFactory(new ProductPersistenceFactory());

@@ -13,7 +13,7 @@ use Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPlu
 use Spryker\Yves\Kernel\AbstractPlugin;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
@@ -48,7 +48,7 @@ class RouterSslRedirectEventDispatcherPlugin extends AbstractPlugin implements E
      */
     protected function addListener(EventDispatcherInterface $eventDispatcher): EventDispatcherInterface
     {
-        $eventDispatcher->addListener(KernelEvents::REQUEST, function (GetResponseEvent $event): void {
+        $eventDispatcher->addListener(KernelEvents::REQUEST, function (RequestEvent $event): void {
             $request = $event->getRequest();
             if ($this->shouldBeSsl($request)) {
                 $fakeRequest = clone $request;
@@ -86,6 +86,6 @@ class RouterSslRedirectEventDispatcherPlugin extends AbstractPlugin implements E
      */
     protected function isSslExcludedRouteName(Request $request): bool
     {
-        return in_array($request->getPathInfo(), $this->getConfig()->getSslExcludedRouteNames());
+        return in_array($request->getPathInfo(), $this->getConfig()->getSslExcludedRouteNames(), true);
     }
 }

@@ -18,7 +18,7 @@ use Spryker\Zed\Messenger\MessengerConfig;
 use Spryker\Zed\ZedRequest\Business\Client\Request;
 use Spryker\Zed\ZedRequest\Business\Client\Response;
 use Spryker\Zed\ZedRequest\Communication\Plugin\TransferObject\TransferServer;
-use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
+use Symfony\Component\HttpKernel\Event\ControllerEvent;
 
 /**
  * @method \Spryker\Zed\ZedRequest\Communication\ZedRequestCommunicationFactory getFactory()
@@ -28,13 +28,15 @@ use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayControllerListenerInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
-     * @param \Symfony\Component\HttpKernel\Event\FilterControllerEvent $event
+     * @param \Symfony\Component\HttpKernel\Event\ControllerEvent $event
      *
      * @return callable|null
      */
-    public function onKernelController(FilterControllerEvent $event)
+    public function onKernelController(ControllerEvent $event)
     {
         $currentController = $event->getController();
         if (!is_array($currentController)) {
@@ -49,7 +51,6 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
         }
 
         $newController = function () use ($controller, $action) {
-
             MessengerConfig::setMessageTray(MessengerConstants::IN_MEMORY_TRAY);
 
             $requestTransfer = $this->getRequestTransfer($controller, $action);
@@ -66,6 +67,8 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
         };
 
         $event->setController($newController);
+
+        return null;
     }
 
     /**

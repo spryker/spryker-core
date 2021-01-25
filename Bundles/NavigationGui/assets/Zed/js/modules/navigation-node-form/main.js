@@ -7,7 +7,7 @@
 
 var safeChecks = require('ZedGuiModules/libs/safe-checks');
 
-$(document).ready(function() {
+$(document).ready(function () {
     var $nodeTypeField = $('#navigation_node_node_type');
 
     displaySelectedNodeTypeField($nodeTypeField.val());
@@ -22,9 +22,9 @@ $(document).ready(function() {
         numberOfMonths: 3,
         maxDate: validTo.val(),
         defaultData: 0,
-        onClose: function(selectedDate) {
+        onClose: function (selectedDate) {
             validTo.datepicker('option', 'minDate', selectedDate);
-        }
+        },
     });
 
     validTo.datepicker({
@@ -33,14 +33,14 @@ $(document).ready(function() {
         changeMonth: true,
         numberOfMonths: 3,
         minDate: validFrom.val(),
-        onClose: function(selectedDate) {
+        onClose: function (selectedDate) {
             validFrom.datepicker('option', 'maxDate', selectedDate);
-        }
+        },
     });
 
     safeChecks.addSafeDatetimeCheck();
 
-    $('.spryker-form-autocomplete').each(function(key, value) {
+    $('.spryker-form-autocomplete').each(function (key, value) {
         var autoCompletedField = $(value);
         if (autoCompletedField.data('url') === 'undefined') {
             return;
@@ -52,9 +52,11 @@ $(document).ready(function() {
 
         autoCompletedField.autocomplete({
             source: autoCompletedField.data('url'),
-            minLength: 3
+            minLength: 3,
         });
     });
+
+    deleteNavigationNodeHandler();
 });
 
 /**
@@ -75,19 +77,31 @@ function changeNodeType() {
     triggerResize();
 }
 
-/**
- * @return {void}
- */
-function resetNodeTypeFields() {
-    $('.js-node-type-field')
-        .addClass('hidden')
-        .find('input[type="text"]').val('');
+function deleteNavigationNodeHandler() {
+    var $deleteSelectedNodeButton = $('#remove-selected-node-btn');
+    var $deleteNavigationNodeForm = $('form[name="delete_navigation_node_form"]');
+    var message = $deleteSelectedNodeButton.data('confirm-message');
+
+    $deleteSelectedNodeButton.on('click', function (event) {
+        event.preventDefault();
+
+        if (confirm(message)) {
+            $deleteNavigationNodeForm[0].submit();
+        }
+    });
 }
 
 /**
  * @return {void}
  */
-function triggerResize() { 
+function resetNodeTypeFields() {
+    $('.js-node-type-field').addClass('hidden').find('input[type="text"]').val('');
+}
+
+/**
+ * @return {void}
+ */
+function triggerResize() {
     var resizeEvent = new Event('resize');
     window.dispatchEvent(resizeEvent);
 }

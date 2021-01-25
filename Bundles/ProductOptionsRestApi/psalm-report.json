@@ -1,0 +1,211 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 34,
+            "line_to": 34,
+            "type": "ParamNameMismatch",
+            "message": "Argument 1 of Spryker\\Glue\\ProductOptionsRestApi\\Processor\\Expander\\ProductOptionByProductAbstractSkuExpander::addResourceRelationships has wrong name $restResources, expecting $resources as defined by Spryker\\Glue\\ProductOptionsRestApi\\Processor\\Expander\\ProductOptionByProductAbstractSkuExpanderInterface::addResourceRelationships",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOptionsRestApi/src/Spryker/Glue/ProductOptionsRestApi/Processor/Expander/ProductOptionByProductAbstractSkuExpander.php",
+            "snippet": "    public function addResourceRelationships(array $restResources, RestRequestInterface $restRequest): void",
+            "selected_text": "$restResources",
+            "error_level": 7,
+            "shortcode": 230
+        },
+        {
+            "severity": "error",
+            "line_from": 42,
+            "line_to": 42,
+            "type": "InvalidArgument",
+            "message": "Argument 1 of Spryker\\Glue\\ProductOptionsRestApi\\Processor\\Reader\\ProductOptionStorageReaderInterface::getProductOptionsByProductAbstractSkus expects array<array-key, string>, list<null|string> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOptionsRestApi/src/Spryker/Glue/ProductOptionsRestApi/Processor/Expander/ProductOptionByProductAbstractSkuExpander.php",
+            "snippet": "            $productAbstractSkus,",
+            "selected_text": "$productAbstractSkus",
+            "error_level": 6,
+            "shortcode": 4
+        },
+        {
+            "severity": "error",
+            "line_from": 42,
+            "line_to": 42,
+            "type": "InvalidArgument",
+            "message": "Argument 1 of Spryker\\Glue\\ProductOptionsRestApi\\Processor\\Reader\\ProductOptionStorageReaderInterface::getProductOptionsByProductConcreteSkus expects array<array-key, string>, list<null|string> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOptionsRestApi/src/Spryker/Glue/ProductOptionsRestApi/Processor/Expander/ProductOptionByProductConcreteSkuExpander.php",
+            "snippet": "            $productConcreteSkus,",
+            "selected_text": "$productConcreteSkus",
+            "error_level": 6,
+            "shortcode": 4
+        },
+        {
+            "severity": "error",
+            "line_from": 138,
+            "line_to": 138,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'array<array-key, string>' for Spryker\\Glue\\ProductOptionsRestApi\\Processor\\Translator\\ProductOptionTranslator::getGlossaryStorageKeysFromItemTransfer is incorrect, got 'list<mixed|null|string>'",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOptionsRestApi/src/Spryker/Glue/ProductOptionsRestApi/Processor/Translator/ProductOptionTranslator.php",
+            "snippet": "     * @return string[]",
+            "selected_text": "string[]",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 148,
+            "line_to": 148,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'list<mixed|null|string>' does not match the declared return type 'array<array-key, string>' for Spryker\\Glue\\ProductOptionsRestApi\\Processor\\Translator\\ProductOptionTranslator::getGlossaryStorageKeysFromItemTransfer",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOptionsRestApi/src/Spryker/Glue/ProductOptionsRestApi/Processor/Translator/ProductOptionTranslator.php",
+            "snippet": "        return $glossaryStorageKeys;",
+            "selected_text": "$glossaryStorageKeys",
+            "error_level": 6,
+            "shortcode": 128
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 30,
+            "line_to": 30,
+            "type": "LessSpecificImplementedReturnType",
+            "message": "The inherited return type 'array<array-key, int>' for Spryker\\Glue\\ProductOptionsRestApi\\Dependency\\Client\\ProductOptionsRestApiToProductStorageClientInterface::getBulkProductAbstractIdsByMapping is more specific than the implemented return type for Spryker\\Glue\\ProductOptionsRestApi\\Dependency\\Client\\ProductOptionsRestApiToProductStorageClientBridge::getbulkproductabstractidsbymapping 'array<array-key, mixed>'",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOptionsRestApi/src/Spryker/Glue/ProductOptionsRestApi/Dependency/Client/ProductOptionsRestApiToProductStorageClientBridge.php",
+            "snippet": "     * @return array",
+            "selected_text": "array",
+            "error_level": 5,
+            "shortcode": 166
+        },
+        {
+            "severity": "info",
+            "line_from": 34,
+            "line_to": 34,
+            "type": "MoreSpecificImplementedParamType",
+            "message": "Argument 2 of Spryker\\Glue\\ProductOptionsRestApi\\Dependency\\Client\\ProductOptionsRestApiToProductStorageClientBridge::getBulkProductAbstractIdsByMapping has the more specific type 'array<array-key, string>', expecting 'array<array-key, mixed>' as defined by Spryker\\Glue\\ProductOptionsRestApi\\Dependency\\Client\\ProductOptionsRestApiToProductStorageClientInterface::getBulkProductAbstractIdsByMapping",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOptionsRestApi/src/Spryker/Glue/ProductOptionsRestApi/Dependency/Client/ProductOptionsRestApiToProductStorageClientBridge.php",
+            "snippet": "        array $identifiers,",
+            "selected_text": "$identifiers",
+            "error_level": 5,
+            "shortcode": 140
+        },
+        {
+            "severity": "info",
+            "line_from": 41,
+            "line_to": 41,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Glue\\ProductOptionsRestApi\\Processor\\Reader\\ProductOptionStorageReaderInterface::getProductOptionIdsByProductConcreteSku cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOptionsRestApi/src/Spryker/Glue/ProductOptionsRestApi/Processor/Expander/CartItemExpander.php",
+            "snippet": "            $restCartItemsAttributesTransfer->getSku()",
+            "selected_text": "$restCartItemsAttributesTransfer->getSku()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 50,
+            "line_to": 50,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $productOptionIds using possibly null offset mixed|null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOptionsRestApi/src/Spryker/Glue/ProductOptionsRestApi/Processor/Expander/CartItemExpander.php",
+            "snippet": "                    ->setIdProductOptionValue($productOptionIds[$restCartItemsProductOptionTransfer->getSku()])",
+            "selected_text": "$productOptionIds",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 51,
+            "line_to": 51,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $productOptionRestResources using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOptionsRestApi/src/Spryker/Glue/ProductOptionsRestApi/Processor/Expander/ProductOptionByProductAbstractSkuExpander.php",
+            "snippet": "            foreach ($productOptionRestResources[$restResource->getId()] as $productOptionRestResource) {",
+            "selected_text": "$productOptionRestResources",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 51,
+            "line_to": 51,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $productOptionRestResources using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOptionsRestApi/src/Spryker/Glue/ProductOptionsRestApi/Processor/Expander/ProductOptionByProductConcreteSkuExpander.php",
+            "snippet": "            foreach ($productOptionRestResources[$restResource->getId()] as $productOptionRestResource) {",
+            "selected_text": "$productOptionRestResources",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 112,
+            "line_to": 112,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Glue\\ProductOptionsRestApi\\Processor\\RestResponseBuilder\\ProductOptionRestResponseBuilder::expandRestProductOptionsAttributesTransfersByCurrencyIsoCode cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOptionsRestApi/src/Spryker/Glue/ProductOptionsRestApi/Processor/RestResponseBuilder/ProductOptionRestResponseBuilder.php",
+            "snippet": "                    $currencyIsoCode",
+            "selected_text": "$currencyIsoCode",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 146,
+            "line_to": 146,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 3 of Spryker\\Glue\\ProductOptionsRestApi\\Processor\\RestResponseBuilder\\ProductOptionRestResponseBuilder::generateSelfLink cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOptionsRestApi/src/Spryker/Glue/ProductOptionsRestApi/Processor/RestResponseBuilder/ProductOptionRestResponseBuilder.php",
+            "snippet": "                $this->generateSelfLink($parentResourceType, $parentResourceId, $restProductOptionsAttributesTransfer->getSku())",
+            "selected_text": "$restProductOptionsAttributesTransfer->getSku()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 77,
+            "line_to": 77,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $translations using possibly null offset mixed|null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOptionsRestApi/src/Spryker/Glue/ProductOptionsRestApi/Processor/Translator/ProductOptionTranslator.php",
+            "snippet": "            $productOptionTransfer->setGroupName($translations[$productOptionTransfer->getGroupName()]);",
+            "selected_text": "$translations",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 78,
+            "line_to": 78,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $translations using possibly null offset mixed|null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOptionsRestApi/src/Spryker/Glue/ProductOptionsRestApi/Processor/Translator/ProductOptionTranslator.php",
+            "snippet": "            $productOptionTransfer->setValue($translations[$productOptionTransfer->getValue()]);",
+            "selected_text": "$translations",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 95,
+            "line_to": 95,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $translations using possibly null offset mixed|null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOptionsRestApi/src/Spryker/Glue/ProductOptionsRestApi/Processor/Translator/ProductOptionTranslator.php",
+            "snippet": "            $productOptionGroupStorageTransfer->setName($translations[$productOptionGroupStorageTransfer->getName()]);",
+            "selected_text": "$translations",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 116,
+            "line_to": 116,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ProductOptionGroupStorageTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOptionsRestApi/src/Spryker/Glue/ProductOptionsRestApi/Processor/Translator/ProductOptionTranslator.php",
+            "snippet": "                ->getArrayCopy();",
+            "selected_text": "getArrayCopy",
+            "error_level": 3,
+            "shortcode": 113
+        }
+    ],
+    "deprecation": []
+}

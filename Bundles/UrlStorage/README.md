@@ -1,7 +1,6 @@
 # UrlStorage Module
-[![Build Status](https://travis-ci.org/spryker/UrlStorage.svg)](https://travis-ci.org/spryker/UrlStorage)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/UrlStorage/badge.svg)](https://coveralls.io/github/spryker/UrlStorage)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/spryker/UrlStorage/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/spryker/UrlStorage/?branch=master)
+[![Build Status](https://travis-ci.org/spryker/url-storage.svg)](https://travis-ci.org/spryker/url-storage)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 ## Installation
 

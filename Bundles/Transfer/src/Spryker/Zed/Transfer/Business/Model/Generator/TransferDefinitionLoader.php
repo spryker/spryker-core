@@ -8,11 +8,11 @@
 namespace Spryker\Zed\Transfer\Business\Model\Generator;
 
 use InvalidArgumentException;
-use Zend\Config\Factory;
-use Zend\Filter\FilterChain;
-use Zend\Filter\Word\CamelCaseToUnderscore;
-use Zend\Filter\Word\DashToCamelCase;
-use Zend\Filter\Word\UnderscoreToCamelCase;
+use Laminas\Config\Factory;
+use Laminas\Filter\FilterChain;
+use Laminas\Filter\Word\CamelCaseToUnderscore;
+use Laminas\Filter\Word\DashToCamelCase;
+use Laminas\Filter\Word\UnderscoreToCamelCase;
 
 class TransferDefinitionLoader implements LoaderInterface
 {
@@ -37,7 +37,7 @@ class TransferDefinitionLoader implements LoaderInterface
     protected $transferDefinitions = [];
 
     /**
-     * @var \Zend\Filter\FilterChain
+     * @var \Laminas\Filter\FilterChain
      */
     protected static $filter;
 
@@ -110,28 +110,31 @@ class TransferDefinitionLoader implements LoaderInterface
 
     /**
      * @param array $definition
-     * @param string $bundle
-     * @param string $containingBundle
+     * @param string $module
+     * @param string $containingModule
      *
      * @return void
      */
-    protected function addDefinition(array $definition, $bundle, $containingBundle)
+    protected function addDefinition(array $definition, $module, $containingModule)
     {
         if (isset($definition[self::KEY_TRANSFER][0])) {
             foreach ($definition[self::KEY_TRANSFER] as $transfer) {
-                $this->assertCasing($transfer, $bundle);
+                $this->assertCasing($transfer, $module);
 
-                $transfer[self::KEY_BUNDLE] = $bundle;
-                $transfer[self::KEY_CONTAINING_BUNDLE] = $containingBundle;
+                $transfer[self::KEY_BUNDLE] = $module;
+                $transfer[self::KEY_CONTAINING_BUNDLE] = $containingModule;
 
+                $transfer = $this->normalize($transfer);
                 $this->transferDefinitions[] = $transfer;
             }
         } else {
             $transfer = $definition[self::KEY_TRANSFER];
-            $this->assertCasing($transfer, $bundle);
+            $this->assertCasing($transfer, $module);
 
-            $transfer[self::KEY_BUNDLE] = $bundle;
-            $transfer[self::KEY_CONTAINING_BUNDLE] = $containingBundle;
+            $transfer[self::KEY_BUNDLE] = $module;
+            $transfer[self::KEY_CONTAINING_BUNDLE] = $containingModule;
+
+            $transfer = $this->normalize($transfer);
             $this->transferDefinitions[] = $transfer;
         }
     }
@@ -153,7 +156,7 @@ class TransferDefinitionLoader implements LoaderInterface
         if ($name !== $filteredName) {
             throw new InvalidArgumentException(
                 sprintf(
-                    'Transfer name `%s` does not match expected name `%s` for bundle `%s`',
+                    'Transfer name `%s` does not match expected name `%s` for module `%s`',
                     $name,
                     $filteredName,
                     $bundle
@@ -163,7 +166,7 @@ class TransferDefinitionLoader implements LoaderInterface
     }
 
     /**
-     * @return \Zend\Filter\FilterChain
+     * @return \Laminas\Filter\FilterChain
      */
     protected function getFilter()
     {
@@ -176,5 +179,37 @@ class TransferDefinitionLoader implements LoaderInterface
         }
 
         return self::$filter;
+    }
+
+    /**
+     * We need to shim casing issues for property names or singular names for BC reasons.
+     *
+     * @param array $transfer
+     *
+     * @return array
+     */
+    protected function normalize(array $transfer): array
+    {
+        if (empty($transfer['property'])) {
+            return $transfer;
+        }
+
+        if (isset($transfer['property'][0])) {
+            foreach ($transfer['property'] as $key => $property) {
+                $transfer['property'][$key]['name'] = lcfirst($property['name']);
+                if (!empty($property['singular'])) {
+                    $transfer['property'][$key]['singular'] = lcfirst($property['singular']);
+                }
+            }
+
+            return $transfer;
+        }
+
+        $transfer['property']['name'] = lcfirst($transfer['property']['name']);
+        if (!empty($transfer['property']['singular'])) {
+            $transfer['property']['singular'] = lcfirst($transfer['property']['singular']);
+        }
+
+        return $transfer;
     }
 }

@@ -19,6 +19,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class FilesystemTwigLoaderPlugin extends AbstractPlugin implements TwigLoaderPluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Spryker\Shared\Twig\Loader\FilesystemLoaderInterface

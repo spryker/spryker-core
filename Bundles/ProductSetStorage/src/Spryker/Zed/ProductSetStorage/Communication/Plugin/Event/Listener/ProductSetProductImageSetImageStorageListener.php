@@ -24,15 +24,15 @@ class ProductSetProductImageSetImageStorageListener extends AbstractPlugin imple
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
      * @param string $eventName
      *
      * @return void
      */
-    public function handleBulk(array $eventTransfers, $eventName)
+    public function handleBulk(array $eventEntityTransfers, $eventName)
     {
         $this->preventTransaction();
-        $productImageSetToProductImageIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
+        $productImageSetToProductImageIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventEntityTransfers);
         $productSetIds = $this->getQueryContainer()->queryProductSetIdsByProductImageSetToProductImageIds($productImageSetToProductImageIds)->find()->getData();
 
         $this->getFacade()->publish($productSetIds);

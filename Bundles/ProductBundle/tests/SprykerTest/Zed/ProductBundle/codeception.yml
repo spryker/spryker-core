@@ -23,3 +23,14 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+                - \SprykerTest\Shared\Stock\Helper\StockDataHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDataHelper
+                - \SprykerTest\Shared\Product\Helper\ProductDataHelper
+                - \SprykerTest\Shared\Currency\Helper\CurrencyDataHelper
+                - \SprykerTest\Shared\PriceProduct\Helper\PriceProductDataHelper
+                - \SprykerTest\Shared\Availability\Helper\AvailabilityDataHelper
+                - \SprykerTest\Zed\Oms\Helper\OmsHelper
+                - \SprykerTest\Zed\Sales\Helper\BusinessHelper
+                - \SprykerTest\Shared\Sales\Helper\SalesDataHelper
+                - \SprykerTest\Shared\ProductBundle\Helper\ProductBundleHelper

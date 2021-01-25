@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Gui;
 
+use Spryker\Shared\Gui\GuiConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class GuiConfig extends AbstractBundleConfig
@@ -17,7 +18,21 @@ class GuiConfig extends AbstractBundleConfig
         'bootstrap_3_layout.html.twig',
     ];
 
+    protected const TABS_DEFAULT_TEMPLATE_PATH = '@Gui/Tabs/tabs.twig';
+
+    protected const SUBMIT_BUTTON_DEFAULT_TEMPLATE_PATH = '@Gui/Form/button/submit_button.twig';
+
+    protected const MODAL_DEFAULT_TEMPLATE_PATH = '@Gui/Modal/modal.twig';
+
+    protected const PANEL_DEFAULT_TEMPLATE_PATH = '@Gui/Panel/panel.twig';
+
+    protected const LIST_GROUP_DEFAULT_TEMPLATE_PATH = '@Gui/ListGroup/list-group.twig';
+
+    protected const LIST_GROUP_MULTI_DEFAULT_TEMPLATE_PATH = '@Gui/ListGroup/list-group-multidimensional.twig';
+
     /**
+     * @api
+     *
      * @return string
      */
     public function getFormResourcesPath(): string
@@ -26,6 +41,8 @@ class GuiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getTemplatePaths(): array
@@ -36,10 +53,82 @@ class GuiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getDefaultTemplateFileNames(): array
     {
         return static::FORM_DEFAULT_TEMPLATE_FILE_NAMES;
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getZedAssetsPath(): string
+    {
+        return $this->get(GuiConstants::ZED_ASSETS_BASE_URL, '/assets/');
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getTabsDefaultTemplatePath(): string
+    {
+        return static::TABS_DEFAULT_TEMPLATE_PATH;
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getSubmitButtonDefaultTemplatePath(): string
+    {
+        return static::SUBMIT_BUTTON_DEFAULT_TEMPLATE_PATH;
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getDefaultModalTemplatePath(): string
+    {
+        return static::MODAL_DEFAULT_TEMPLATE_PATH;
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getDefaultPanelTemplatePath(): string
+    {
+        return static::PANEL_DEFAULT_TEMPLATE_PATH;
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getDefaultListGroupTemplatePath(): string
+    {
+        return static::LIST_GROUP_DEFAULT_TEMPLATE_PATH;
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getDefaultMultiListGroupTemplatePath(): string
+    {
+        return static::LIST_GROUP_MULTI_DEFAULT_TEMPLATE_PATH;
     }
 }

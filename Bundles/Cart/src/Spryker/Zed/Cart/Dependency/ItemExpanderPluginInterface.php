@@ -7,20 +7,11 @@
 
 namespace Spryker\Zed\Cart\Dependency;
 
-use Generated\Shared\Transfer\CartChangeTransfer;
+use Spryker\Zed\CartExtension\Dependency\Plugin\ItemExpanderPluginInterface as SprykerItemExpanderPluginInterface;
 
-interface ItemExpanderPluginInterface
+/**
+ * @deprecated Use {@link \Spryker\Zed\CartExtension\Dependency\ItemExpanderPluginInterface} instead.
+ */
+interface ItemExpanderPluginInterface extends SprykerItemExpanderPluginInterface
 {
-    /**
-     * Specification:
-     * - This plugin is executed before cart add/remove items to persistence,
-     *   normally you would want to add more data (expand current cart) with details from Zed persistence (price, product details, options)
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
-     *
-     * @return \Generated\Shared\Transfer\CartChangeTransfer
-     */
-    public function expandItems(CartChangeTransfer $cartChangeTransfer);
 }

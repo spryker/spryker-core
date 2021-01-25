@@ -27,10 +27,10 @@ class CmsGuiViewCest
      *
      * @return void
      */
-    public function breadcrumbIsVisible(CmsGuiPresentationTester $i)
+    public function breadcrumbIsVisible(CmsGuiPresentationTester $i): void
     {
         $i->amOnPage(CmsGuiListPage::URL);
         $i->clickDataTableLinkInDropDownOfButton('View', 'In Zed');
-        $i->seeBreadcrumbNavigation('Dashboard / Content Management / Pages / View CMS Page');
+        $i->seeBreadcrumbNavigation('Content / Pages / View CMS Page');
     }
 }

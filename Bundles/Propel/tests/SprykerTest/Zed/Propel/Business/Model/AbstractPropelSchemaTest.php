@@ -26,7 +26,7 @@ abstract class AbstractPropelSchemaTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -38,7 +38,7 @@ abstract class AbstractPropelSchemaTest extends Unit
     /**
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         $filesystem = new Filesystem();
         $filesystem->remove($this->getFixtureDirectory());
@@ -47,7 +47,7 @@ abstract class AbstractPropelSchemaTest extends Unit
     /**
      * @return string
      */
-    protected function getFixtureDirectory()
+    protected function getFixtureDirectory(): string
     {
         return __DIR__ . '/TempFixtures';
     }

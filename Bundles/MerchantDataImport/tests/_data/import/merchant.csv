@@ -1,2 +1,2 @@
-merchant_key,merchant_name
-kudu-merchant-1,Kudu Merchant
+merchant_key,merchant_reference,merchant_name,registration_number,status,contact_person_title,contact_person_first_name,contact_person_last_name,contact_person_phone,email,is_active,url.de_DE,url.en_US
+sony-experts-test,MER000006-test,Sony Experts Test,123456,waiting-for-approval,Mr	,Tester,Tested,9183533523,tester@test.test,1,/de/merchant/sony-experts-test,/en/merchant/sony-experts-test

@@ -7,11 +7,13 @@
 
 namespace Spryker\Zed\Availability\Business\Model;
 
-use ArrayObject;
+use Generated\Shared\Transfer\CartItemQuantityTransfer;
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ProductAvailabilityCriteriaTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Availability\AvailabilityConfig;
 
 class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckoutPreConditionInterface
@@ -29,13 +31,23 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
     protected $availabilityConfig;
 
     /**
+     * @var \Spryker\Zed\AvailabilityExtension\Dependency\Plugin\CartItemQuantityCounterStrategyPluginInterface[]
+     */
+    protected $cartItemQuantityCounterStrategyPlugins;
+
+    /**
      * @param \Spryker\Zed\Availability\Business\Model\SellableInterface $sellable
      * @param \Spryker\Zed\Availability\AvailabilityConfig $availabilityConfig
+     * @param \Spryker\Zed\AvailabilityExtension\Dependency\Plugin\CartItemQuantityCounterStrategyPluginInterface[] $cartItemQuantityCounterStrategyPlugins
      */
-    public function __construct(SellableInterface $sellable, AvailabilityConfig $availabilityConfig)
-    {
+    public function __construct(
+        SellableInterface $sellable,
+        AvailabilityConfig $availabilityConfig,
+        array $cartItemQuantityCounterStrategyPlugins
+    ) {
         $this->sellable = $sellable;
         $this->availabilityConfig = $availabilityConfig;
+        $this->cartItemQuantityCounterStrategyPlugins = $cartItemQuantityCounterStrategyPlugins;
     }
 
     /**
@@ -47,17 +59,20 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
     public function checkCondition(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
         $quoteTransfer->requireStore();
-
         $isPassed = true;
-
         $storeTransfer = $quoteTransfer->getStore();
-        $groupedItemQuantities = $this->groupItemsBySku($quoteTransfer->getItems());
 
-        foreach ($groupedItemQuantities as $sku => $quantity) {
-            if ($this->isProductSellable($sku, $quantity, $storeTransfer) === true) {
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $quantity = $this->getAccumulatedItemQuantityForGivenItemSku($quoteTransfer, $itemTransfer);
+
+            $productAvailabilityCriteriaTransfer = (new ProductAvailabilityCriteriaTransfer())
+                ->fromArray($itemTransfer->toArray(), true);
+
+            if ($this->sellable->isProductSellableForStore($itemTransfer->getSku(), $quantity, $storeTransfer, $productAvailabilityCriteriaTransfer)) {
                 continue;
             }
-            $this->addAvailabilityErrorToCheckoutResponse($checkoutResponse, $sku);
+
+            $this->addAvailabilityErrorToCheckoutResponse($checkoutResponse, $itemTransfer->getSku());
             $isPassed = false;
         }
 
@@ -65,36 +80,77 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
     }
 
     /**
-     * @param string $sku
-     * @param int $quantity
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
-     * @return bool
+     * @return \Spryker\DecimalObject\Decimal
      */
-    protected function isProductSellable($sku, $quantity, StoreTransfer $storeTransfer)
-    {
-        return $this->sellable->isProductSellableForStore($sku, $quantity, $storeTransfer);
+    protected function getAccumulatedItemQuantityForGivenItemSku(
+        QuoteTransfer $quoteTransfer,
+        ItemTransfer $itemTransfer
+    ): Decimal {
+        $cartItemQuantity = $this->executeCartItemQuantityCounterStrategyPlugin($quoteTransfer, $itemTransfer);
+
+        if ($cartItemQuantity) {
+            return (new Decimal(0))->add($cartItemQuantity->getQuantity());
+        }
+
+        return $this->calculateCurrentCartQuantityForGivenSku($quoteTransfer, $itemTransfer->getSku());
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $sku
      *
-     * @return array
+     * @return \Spryker\DecimalObject\Decimal
      */
-    private function groupItemsBySku(ArrayObject $items)
+    protected function calculateCurrentCartQuantityForGivenSku(QuoteTransfer $quoteTransfer, string $sku): Decimal
     {
-        $result = [];
+        $quantity = new Decimal(0);
 
-        foreach ($items as $itemTransfer) {
-            $sku = $itemTransfer->getSku();
-
-            if (!isset($result[$sku])) {
-                $result[$sku] = 0;
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            if ($itemTransfer->getSku() !== $sku) {
+                continue;
             }
-            $result[$sku] += $itemTransfer->getQuantity();
+
+            $quantity = $quantity->add($itemTransfer->getQuantity());
         }
 
-        return $result;
+        return $quantity;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartItemQuantityTransfer|null
+     */
+    protected function executeCartItemQuantityCounterStrategyPlugin(
+        QuoteTransfer $quoteTransfer,
+        ItemTransfer $itemTransfer
+    ): ?CartItemQuantityTransfer {
+        foreach ($this->cartItemQuantityCounterStrategyPlugins as $cartItemQuantityCounterStrategyPlugin) {
+            if ($cartItemQuantityCounterStrategyPlugin->isApplicable($quoteTransfer->getItems(), $itemTransfer)) {
+                return $cartItemQuantityCounterStrategyPlugin->countCartItemQuantity(
+                    $quoteTransfer->getItems(),
+                    $itemTransfer
+                );
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    protected function filterItemsWithAmount(array $itemTransfers): array
+    {
+        return array_filter($itemTransfers, function (ItemTransfer $itemTransfer) {
+            return $itemTransfer->getAmount() === null;
+        });
     }
 
     /**
@@ -111,7 +167,7 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
      *
      * @return void
      */
-    protected function addAvailabilityErrorToCheckoutResponse(CheckoutResponseTransfer $checkoutResponse, string $sku)
+    protected function addAvailabilityErrorToCheckoutResponse(CheckoutResponseTransfer $checkoutResponse, string $sku): void
     {
         $checkoutErrorTransfer = $this->createCheckoutErrorTransfer();
         $checkoutErrorTransfer

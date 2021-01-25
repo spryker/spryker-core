@@ -25,21 +25,8 @@ class ProductViewAvailabilityStorageExpanderPlugin extends AbstractPlugin implem
      */
     public function expandProductViewTransfer(ProductViewTransfer $productViewTransfer, array $productData, $localeName)
     {
-        $storageAvailabilityTransfer = $this->getFactory()
-            ->createAvailabilityStorageReader()
-            ->getAvailabilityAbstractAsStorageTransfer($productViewTransfer->getIdProductAbstract());
-
-        if (!$productViewTransfer->getIdProductConcrete()) {
-            $productViewTransfer->setAvailable($storageAvailabilityTransfer->getIsAbstractProductAvailable());
-
-            return $productViewTransfer;
-        }
-
-        $concreteProductAvailableItems = $storageAvailabilityTransfer->getConcreteProductAvailableItems();
-        if (isset($concreteProductAvailableItems[$productViewTransfer->getSku()])) {
-            $productViewTransfer->setAvailable($concreteProductAvailableItems[$productViewTransfer->getSku()]);
-        }
-
-        return $productViewTransfer;
+        return $this->getFactory()
+            ->createProductViewAvailabilityExpander()
+            ->expandProductViewWithAvailability($productViewTransfer);
     }
 }

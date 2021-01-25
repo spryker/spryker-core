@@ -16,6 +16,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class MessengerFacade extends AbstractFacade implements MessengerFacadeInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\MessageTransfer $message
@@ -28,6 +30,8 @@ class MessengerFacade extends AbstractFacade implements MessengerFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\MessageTransfer $message
@@ -40,6 +44,8 @@ class MessengerFacade extends AbstractFacade implements MessengerFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\MessageTransfer $message
@@ -52,6 +58,8 @@ class MessengerFacade extends AbstractFacade implements MessengerFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Generated\Shared\Transfer\FlashMessagesTransfer

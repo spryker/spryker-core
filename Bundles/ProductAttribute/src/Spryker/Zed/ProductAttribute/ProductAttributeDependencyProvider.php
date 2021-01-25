@@ -13,7 +13,7 @@ use Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToGlossaryBri
 use Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToLocaleBridge;
 use Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToProductBridge;
 use Spryker\Zed\ProductAttribute\Dependency\Service\ProductAttributeToUtilEncodingBridge;
-use Spryker\Zed\ProductAttribute\Dependency\Service\ProductAttributeToUtilSanitizeServiceBridge;
+use Spryker\Zed\ProductAttribute\Dependency\Service\ProductAttributeToUtilSanitizeXssServiceBridge;
 
 /**
  * @method \Spryker\Zed\ProductAttribute\ProductAttributeConfig getConfig()
@@ -26,6 +26,7 @@ class ProductAttributeDependencyProvider extends AbstractBundleDependencyProvide
 
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
     public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
+    public const SERVICE_UTIL_SANITIZE_XSS = 'SERVICE_UTIL_SANITIZE_XSS';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -34,11 +35,13 @@ class ProductAttributeDependencyProvider extends AbstractBundleDependencyProvide
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
+        $container = parent::provideBusinessLayerDependencies($container);
+
         $container = $this->addUtilEncodingService($container);
         $container = $this->addLocaleFacade($container);
         $container = $this->addGlossaryFacade($container);
         $container = $this->addProductFacade($container);
-        $container = $this->addUtilSanitizeService($container);
+        $container = $this->addUtilSanitizeXssService($container);
 
         return $container;
     }
@@ -50,9 +53,9 @@ class ProductAttributeDependencyProvider extends AbstractBundleDependencyProvide
      */
     protected function addUtilEncodingService($container)
     {
-        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new ProductAttributeToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
-        };
+        });
 
         return $container;
     }
@@ -64,9 +67,9 @@ class ProductAttributeDependencyProvider extends AbstractBundleDependencyProvide
      */
     protected function addLocaleFacade(Container $container)
     {
-        $container[static::FACADE_LOCALE] = function (Container $container) {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new ProductAttributeToLocaleBridge($container->getLocator()->locale()->facade());
-        };
+        });
 
         return $container;
     }
@@ -78,9 +81,9 @@ class ProductAttributeDependencyProvider extends AbstractBundleDependencyProvide
      */
     protected function addGlossaryFacade(Container $container)
     {
-        $container[static::FACADE_GLOSSARY] = function (Container $container) {
+        $container->set(static::FACADE_GLOSSARY, function (Container $container) {
             return new ProductAttributeToGlossaryBridge($container->getLocator()->glossary()->facade());
-        };
+        });
 
         return $container;
     }
@@ -92,9 +95,9 @@ class ProductAttributeDependencyProvider extends AbstractBundleDependencyProvide
      */
     protected function addProductFacade(Container $container)
     {
-        $container[static::FACADE_PRODUCT] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT, function (Container $container) {
             return new ProductAttributeToProductBridge($container->getLocator()->product()->facade());
-        };
+        });
 
         return $container;
     }
@@ -104,11 +107,13 @@ class ProductAttributeDependencyProvider extends AbstractBundleDependencyProvide
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addUtilSanitizeService(Container $container): Container
+    protected function addUtilSanitizeXssService(Container $container): Container
     {
-        $container[static::SERVICE_UTIL_SANITIZE] = function (Container $container) {
-            return new ProductAttributeToUtilSanitizeServiceBridge($container->getLocator()->utilSanitize()->service());
-        };
+        $container->set(static::SERVICE_UTIL_SANITIZE_XSS, function (Container $container) {
+            return new ProductAttributeToUtilSanitizeXssServiceBridge(
+                $container->getLocator()->utilSanitizeXss()->service()
+            );
+        });
 
         return $container;
     }

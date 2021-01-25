@@ -7,8 +7,11 @@
 
 namespace Spryker\Zed\Sales\Persistence\Propel\Mapper;
 
+use Generated\Shared\Transfer\ItemStateTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
+use Propel\Runtime\Collection\ObjectCollection;
 
 class SalesOrderItemMapper implements SalesOrderItemMapperInterface
 {
@@ -38,5 +41,53 @@ class SalesOrderItemMapper implements SalesOrderItemMapperInterface
         $salesOrderItem->fromArray($salesOrderItemEntity->toArray(true));
 
         return $salesOrderItem;
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $salesOrderItemEntities
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function mapSalesOrderItemEntityCollectionToOrderItemTransfers(ObjectCollection $salesOrderItemEntities): array
+    {
+        $itemTransfers = [];
+
+        foreach ($salesOrderItemEntities as $salesOrderItemEntity) {
+            $itemTransfers[] = (new ItemTransfer())
+                ->fromArray($salesOrderItemEntity->toArray(), true)
+                ->setIsReturnable(true)
+                ->setOrderReference($salesOrderItemEntity->getOrder()->getOrderReference())
+                ->setSumGrossPrice($salesOrderItemEntity->getGrossPrice())
+                ->setSumNetPrice($salesOrderItemEntity->getNetPrice())
+                ->setSumPrice($salesOrderItemEntity->getPrice())
+                ->setSumSubtotalAggregation($salesOrderItemEntity->getSubtotalAggregation())
+                ->setSumDiscountAmountAggregation($salesOrderItemEntity->getDiscountAmountAggregation())
+                ->setSumDiscountAmountFullAggregation($salesOrderItemEntity->getDiscountAmountFullAggregation())
+                ->setSumExpensePriceAggregation($salesOrderItemEntity->getExpensePriceAggregation())
+                ->setSumTaxAmount($salesOrderItemEntity->getTaxAmount())
+                ->setSumTaxAmountFullAggregation($salesOrderItemEntity->getTaxAmountFullAggregation())
+                ->setSumPriceToPayAggregation($salesOrderItemEntity->getPriceToPayAggregation())
+                ->setProcess($salesOrderItemEntity->getProcess()->getName())
+                ->setState($this->mapSalesOrderItemEntityToItemStateTransfer($salesOrderItemEntity, new ItemStateTransfer()));
+        }
+
+        return $itemTransfers;
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $salesOrderItemEntity
+     * @param \Generated\Shared\Transfer\ItemStateTransfer $itemStateTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemStateTransfer
+     */
+    protected function mapSalesOrderItemEntityToItemStateTransfer(
+        SpySalesOrderItem $salesOrderItemEntity,
+        ItemStateTransfer $itemStateTransfer
+    ): ItemStateTransfer {
+        $itemStateTransfer = $itemStateTransfer
+            ->fromArray($salesOrderItemEntity->getState()->toArray(), true)
+            ->setIdSalesOrder($salesOrderItemEntity->getFkSalesOrder());
+
+        return $itemStateTransfer;
     }
 }

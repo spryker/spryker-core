@@ -4,21 +4,26 @@
   "description": "CmsBlockStorage module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
-    "spryker/cms-block": "^1.5.0 || ^2.0.0",
+    "php": ">=7.3",
+    "spryker/cms-block": "^3.0.0",
+    "spryker/cms-block-storage-extension": "^1.0.0",
     "spryker/event-behavior": "^1.1.0",
     "spryker/kernel": "^3.30.0",
     "spryker/propel-orm": "^1.5.0",
     "spryker/storage": "^3.4.0",
+    "spryker/store": "^1.5.0",
     "spryker/synchronization": "^0.2.0 || ^1.0.0",
     "spryker/synchronization-behavior": "^1.0.0",
     "spryker/synchronization-extension": "^1.0.0",
+    "spryker/util-encoding": "^1.0.0 || ^2.0.0",
     "spryker/util-sanitize": "^2.1.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/event": "*",
+    "spryker/locale": "*",
     "spryker/propel": "*",
+    "spryker/queue": "*",
     "spryker/testify": "*"
   },
   "suggest": {
@@ -36,9 +41,13 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+  },
   "extra": {
     "branch-alias": {
-      "dev-master": "0.1.x-dev"
+      "dev-master": "2.0.x-dev"
     }
   },
   "config": {

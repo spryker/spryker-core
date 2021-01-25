@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -15,6 +16,9 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @deprecated Use {@link \Spryker\Glue\AuthRestApi\Processor\AccessTokens\OauthAccessTokenValidator} instead.
+ */
 class AccessTokenValidator implements AccessTokenValidatorInterface
 {
     protected const REQUEST_ATTRIBUTE_IS_PROTECTED = 'is-protected';
@@ -130,10 +134,8 @@ class AccessTokenValidator implements AccessTokenValidatorInterface
             ->setAccessToken($accessToken)
             ->setType($type);
 
-        $authAccessTokenValidationResponseTransfer = $this->oauthClient->validateAccessToken(
+        return $this->oauthClient->validateAccessToken(
             $authAccessTokenValidationRequestTransfer
         );
-
-        return $authAccessTokenValidationResponseTransfer;
     }
 }

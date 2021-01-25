@@ -25,9 +25,9 @@ class TestStateMachineHandler implements StateMachineHandlerInterface
     /**
      * List of command plugins for this state machine for all processes.
      *
-     * @return array
+     * @return \Spryker\Zed\StateMachine\Dependency\Plugin\CommandPluginInterface[]
      */
-    public function getCommandPlugins()
+    public function getCommandPlugins(): array
     {
         return [
             'Test/CreateInvoice' => new TestCommandPlugin(),
@@ -38,9 +38,9 @@ class TestStateMachineHandler implements StateMachineHandlerInterface
     /**
      * List of condition plugins for this state machine for all processes.
      *
-     * @return array
+     * @return \Spryker\Zed\StateMachine\Dependency\Plugin\ConditionPluginInterface[]
      */
-    public function getConditionPlugins()
+    public function getConditionPlugins(): array
     {
         return [
             'Test/IsInvoiceSent' => new TestConditionPlugin(),
@@ -53,7 +53,7 @@ class TestStateMachineHandler implements StateMachineHandlerInterface
      *
      * @return string
      */
-    public function getStateMachineName()
+    public function getStateMachineName(): string
     {
         return 'TestingSm';
     }
@@ -63,7 +63,7 @@ class TestStateMachineHandler implements StateMachineHandlerInterface
      *
      * @return string[]
      */
-    public function getActiveProcesses()
+    public function getActiveProcesses(): array
     {
         return [
           'TestProcess',
@@ -77,7 +77,7 @@ class TestStateMachineHandler implements StateMachineHandlerInterface
      *
      * @return string
      */
-    public function getInitialStateForProcess($processName)
+    public function getInitialStateForProcess($processName): string
     {
         return 'new';
     }
@@ -90,7 +90,7 @@ class TestStateMachineHandler implements StateMachineHandlerInterface
      *
      * @return void
      */
-    public function itemStateUpdated(StateMachineItemTransfer $stateMachineItemTransfer)
+    public function itemStateUpdated(StateMachineItemTransfer $stateMachineItemTransfer): void
     {
         $this->itemStateUpdated = $stateMachineItemTransfer;
     }
@@ -98,11 +98,11 @@ class TestStateMachineHandler implements StateMachineHandlerInterface
     /**
      * This method should return all item identifiers which are in passed state ids.
      *
-     * @param array $stateIds
+     * @param int[] $stateIds
      *
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
      */
-    public function getStateMachineItemsByStateIds(array $stateIds = [])
+    public function getStateMachineItemsByStateIds(array $stateIds = []): array
     {
         $result = [];
         foreach ($this->stateMachineItemsByStateIds as $stateMachineItemTransfer) {
@@ -117,7 +117,7 @@ class TestStateMachineHandler implements StateMachineHandlerInterface
     /**
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer
      */
-    public function getItemStateUpdated()
+    public function getItemStateUpdated(): StateMachineItemTransfer
     {
         return $this->itemStateUpdated;
     }
@@ -127,7 +127,7 @@ class TestStateMachineHandler implements StateMachineHandlerInterface
      *
      * @return void
      */
-    public function setStateMachineItemsByStateIds(array $stateMachineItemsByStateIds)
+    public function setStateMachineItemsByStateIds(array $stateMachineItemsByStateIds): void
     {
         $this->stateMachineItemsByStateIds = $stateMachineItemsByStateIds;
     }

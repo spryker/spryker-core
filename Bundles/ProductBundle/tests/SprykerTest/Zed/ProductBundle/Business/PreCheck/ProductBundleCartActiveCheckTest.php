@@ -11,10 +11,9 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductForBundleTransfer;
-use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\PreCheck\ProductBundleCartActiveCheck;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\PreCheck\ProductBundleCartActiveCheckInterface;
-use Spryker\Zed\ProductBundle\Persistence\ProductBundleRepository;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReaderInterface;
 
 /**
  * Auto-generated group annotations
@@ -82,26 +81,8 @@ class ProductBundleCartActiveCheckTest extends Unit
     protected function createProductBundleCartActiveCheck(string $sku): ProductBundleCartActiveCheckInterface
     {
         return new ProductBundleCartActiveCheck(
-            $this->createProductBundleRepositoryMock($sku)
+            $this->createProductBundleReaderMock($sku)
         );
-    }
-
-    /**
-     * @param string $sku
-     *
-     * @return \PHPUnit\Framework\MockObject\MockObject
-     */
-    protected function createProductBundleRepositoryMock(string $sku): MockObject
-    {
-        $productBundleRepositoryMock = $this->getMockBuilder(ProductBundleRepository::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['findBundledProductsBySku'])
-            ->getMock();
-
-        $productBundleRepositoryMock->method('findBundledProductsBySku')
-            ->willReturn([$this->createProductForBundleTransfer($sku)]);
-
-        return $productBundleRepositoryMock;
     }
 
     /**
@@ -114,5 +95,22 @@ class ProductBundleCartActiveCheckTest extends Unit
         return (new ProductForBundleTransfer())
             ->setSku($sku)
             ->setIsActive($sku === static::PRODUCT_SKU_ACTIVE);
+    }
+
+    /**
+     * @param string $sku
+     *
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReaderInterface
+     */
+    protected function createProductBundleReaderMock(string $sku): ProductBundleReaderInterface
+    {
+        $productBundleReaderMock = $this->getMockBuilder(ProductBundleReaderInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $productBundleReaderMock->method('getProductForBundleTransfersByProductConcreteSkus')
+            ->willReturn([$sku => [$this->createProductForBundleTransfer($sku)]]);
+
+        return $productBundleReaderMock;
     }
 }

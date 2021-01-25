@@ -1,6 +1,6 @@
 # NavigationCollector Module
-[![Build Status](https://travis-ci.org/spryker/NavigationCollector.svg)](https://travis-ci.org/spryker/NavigationCollector)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/NavigationCollector/badge.svg)](https://coveralls.io/github/spryker/NavigationCollector)
+[![Build Status](https://travis-ci.org/spryker/navigation-collector.svg)](https://travis-ci.org/spryker/navigation-collector)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 NavigationCollector provides navigation menu data for Yves by exporting it to key-value storage.
 

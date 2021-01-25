@@ -4,6 +4,7 @@
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
+
 namespace Spryker\Service\UtilText;
 
 interface UtilTextServiceInterface
@@ -34,6 +35,18 @@ interface UtilTextServiceInterface
 
     /**
      * Specification:
+     * - Generates a random byte string which is suitable for usage in security relevant topics.
+     *
+     * @api
+     *
+     * @param int $length
+     *
+     * @return string
+     */
+    public function generateRandomByteString(int $length = 32): string;
+
+    /**
+     * Specification:
      * - Generates hash from value by specified algorithm.
      *
      * @api
@@ -60,6 +73,18 @@ interface UtilTextServiceInterface
 
     /**
      * Specification:
+     * - Converts a camel cased string into a string where every word is linked with the other by a dash (-) separator.
+     *
+     * @api
+     *
+     * @param string $string
+     *
+     * @return string
+     */
+    public function camelCaseToDash($string);
+
+    /**
+     * Specification:
      * - Converts a string with a given separator into a camel cased string.
      *
      * @api
@@ -71,6 +96,19 @@ interface UtilTextServiceInterface
      * @return string
      */
     public function separatorToCamelCase($string, $separator = '-', $upperCaseFirst = false);
+
+    /**
+     * Specification:
+     * - Converts a dashed string into a camel cased string.
+     *
+     * @api
+     *
+     * @param string $string
+     * @param bool $upperCaseFirst
+     *
+     * @return string
+     */
+    public function dashToCamelCase($string, $upperCaseFirst = false);
 
     /**
      * Specification:
@@ -88,6 +126,8 @@ interface UtilTextServiceInterface
     /**
      * Specification:
      * - Checks if a hash matches against a raw token that gets hashed internally.
+     *
+     * @api
      *
      * @param string $rawToken
      * @param string $hash

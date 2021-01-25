@@ -4,10 +4,11 @@
   "description": "Propel module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.3",
     "spryker/application-extension": "^1.0.0",
     "spryker/config": "^3.0.0",
-    "spryker/kernel": "^3.30.0",
+    "spryker/health-check-extension": "^1.0.0",
+    "spryker/kernel": "^3.48.0",
     "spryker/log": "^3.0.0",
     "spryker/monolog": "^2.0.0",
     "spryker/propel-orm": "^1.9.0",
@@ -19,6 +20,7 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/container": "*",
+    "spryker/laminas": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"
   },
@@ -39,6 +41,10 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "3.0.x-dev"

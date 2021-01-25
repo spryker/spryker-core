@@ -14,6 +14,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class RemovePaymentCartPostSavePlugin extends AbstractPlugin implements PostSavePluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

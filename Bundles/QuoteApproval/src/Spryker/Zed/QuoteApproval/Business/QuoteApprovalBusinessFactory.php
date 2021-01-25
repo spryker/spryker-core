@@ -10,10 +10,14 @@ namespace Spryker\Zed\QuoteApproval\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\QuoteApproval\Business\Permission\ContextProvider\PermissionContextProvider;
 use Spryker\Zed\QuoteApproval\Business\Permission\ContextProvider\PermissionContextProviderInterface;
+use Spryker\Zed\QuoteApproval\Business\Quote\QuoteFieldsProvider;
+use Spryker\Zed\QuoteApproval\Business\Quote\QuoteFieldsProviderInterface;
 use Spryker\Zed\QuoteApproval\Business\Quote\QuoteLocker;
 use Spryker\Zed\QuoteApproval\Business\Quote\QuoteLockerInterface;
 use Spryker\Zed\QuoteApproval\Business\Quote\QuoteStatusCalculator;
 use Spryker\Zed\QuoteApproval\Business\Quote\QuoteStatusCalculatorInterface;
+use Spryker\Zed\QuoteApproval\Business\Quote\QuoteStatusChecker;
+use Spryker\Zed\QuoteApproval\Business\Quote\QuoteStatusCheckerInterface;
 use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalCreator;
 use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalCreatorInterface;
 use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalMessageBuilder;
@@ -52,7 +56,8 @@ class QuoteApprovalBusinessFactory extends AbstractBusinessFactory
             $this->createQuoteLocker(),
             $this->getSharedCartFacade(),
             $this->createQuoteApprovalRequestValidator(),
-            $this->getEntityManager()
+            $this->getEntityManager(),
+            $this->getRepository()
         );
     }
 
@@ -86,7 +91,7 @@ class QuoteApprovalBusinessFactory extends AbstractBusinessFactory
      */
     public function createPermissionContextProvider(): PermissionContextProviderInterface
     {
-        return new PermissionContextProvider();
+        return new PermissionContextProvider($this->getConfig());
     }
 
     /**
@@ -98,7 +103,8 @@ class QuoteApprovalBusinessFactory extends AbstractBusinessFactory
             $this->createQuoteApprovalRequestValidator(),
             $this->createQuoteApprovalMessageBuilder(),
             $this->getEntityManager(),
-            $this->createQuoteLocker()
+            $this->createQuoteLocker(),
+            $this->getRepository()
         );
     }
 
@@ -119,7 +125,19 @@ class QuoteApprovalBusinessFactory extends AbstractBusinessFactory
             $this->createQuoteLocker(),
             $this->createQuoteApprovalRequestValidator(),
             $this->getSharedCartFacade(),
-            $this->getEntityManager()
+            $this->getEntityManager(),
+            $this->getRepository()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\QuoteApproval\Business\Quote\QuoteFieldsProviderInterface
+     */
+    public function createQuoteFieldsProvider(): QuoteFieldsProviderInterface
+    {
+        return new QuoteFieldsProvider(
+            $this->createQuoteStatusChecker(),
+            $this->getConfig()
         );
     }
 
@@ -153,6 +171,17 @@ class QuoteApprovalBusinessFactory extends AbstractBusinessFactory
         return new QuoteApprovalMessageBuilder(
             $this->getQuoteFacade(),
             $this->getCustomerFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\QuoteApproval\Business\Quote\QuoteStatusCheckerInterface
+     */
+    public function createQuoteStatusChecker(): QuoteStatusCheckerInterface
+    {
+        return new QuoteStatusChecker(
+            $this->createQuoteStatusCalculator(),
+            $this->createPermissionContextProvider()
         );
     }
 

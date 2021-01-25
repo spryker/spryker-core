@@ -18,5 +18,8 @@ interface CompanyUserStorageExpanderInterface
      *
      * @return \Generated\Shared\Transfer\CompanyUserStorageTransfer
      */
-    public function expandWithCompanyBusinessUnitId(CompanyUserStorageTransfer $companyUserStorageTransfer, CompanyUserTransfer $companyUserTransfer): CompanyUserStorageTransfer;
+    public function expandWithCompanyBusinessUnitId(
+        CompanyUserStorageTransfer $companyUserStorageTransfer,
+        CompanyUserTransfer $companyUserTransfer
+    ): CompanyUserStorageTransfer;
 }

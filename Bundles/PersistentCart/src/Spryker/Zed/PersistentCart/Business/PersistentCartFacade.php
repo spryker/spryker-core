@@ -10,6 +10,7 @@ namespace Spryker\Zed\PersistentCart\Business;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeQuantityTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
+use Generated\Shared\Transfer\PersistentItemReplaceTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteSyncRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -68,6 +69,20 @@ class PersistentCartFacade extends AbstractFacade implements PersistentCartFacad
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\PersistentItemReplaceTransfer $persistentItemReplaceTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function replaceItem(PersistentItemReplaceTransfer $persistentItemReplaceTransfer): QuoteResponseTransfer
+    {
+        return $this->getFactory()->createCartItemOperation()->replaceItem($persistentItemReplaceTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
@@ -89,6 +104,20 @@ class PersistentCartFacade extends AbstractFacade implements PersistentCartFacad
     public function changeItemQuantity(PersistentCartChangeQuantityTransfer $persistentCartChangeQuantityTransfer): QuoteResponseTransfer
     {
         return $this->getFactory()->createCartOperation()->changeItemQuantity($persistentCartChangeQuantityTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PersistentCartChangeTransfer $persistentCartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function updateQuantity(PersistentCartChangeTransfer $persistentCartChangeTransfer): QuoteResponseTransfer
+    {
+        return $this->getFactory()->createCartOperation()->updateQuantity($persistentCartChangeTransfer);
     }
 
     /**

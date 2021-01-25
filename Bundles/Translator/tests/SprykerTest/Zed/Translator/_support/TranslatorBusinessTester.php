@@ -12,8 +12,6 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -30,10 +28,6 @@ use Symfony\Component\Finder\Finder;
 class TranslatorBusinessTester extends Actor
 {
     use _generated\TranslatorBusinessTesterActions;
-
-    /**
-     * Define custom actions here
-     */
 
     /**
      * @return void

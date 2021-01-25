@@ -9,19 +9,19 @@ namespace Spryker\Zed\ProductLabelGui\Communication\Form;
 
 use DateTime;
 use Generated\Shared\Transfer\ProductLabelTransfer;
-use Spryker\Shared\ProductLabel\ProductLabelConstants;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
- * @method \Spryker\Zed\ProductLabelGui\Business\ProductLabelGuiFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductLabelGui\Communication\ProductLabelGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductLabelGui\Persistence\ProductLabelGuiQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductLabelGui\ProductLabelGuiConfig getConfig()
@@ -30,11 +30,16 @@ class ProductLabelFormType extends AbstractType
 {
     public const FIELD_NAME = 'name';
     public const FIELD_EXCLUSIVE_FLAG = 'isExclusive';
+    public const FIELD_DYNAMIC_FLAG = 'isDynamic';
+    public const FIELD_PRIORITY = 'position';
+    public const FIELD_STORE_RELATION = 'storeRelation';
     public const FIELD_STATUS_FLAG = 'isActive';
     public const FIELD_VALID_FROM_DATE = 'validFrom';
     public const FIELD_VALID_TO_DATE = 'validTo';
     public const FIELD_FRONT_END_REFERENCE = 'frontEndReference';
     public const FIELD_LOCALIZED_ATTRIBUTES = 'localizedAttributes';
+
+    protected const VALIDITY_DATE_FORMAT = 'Y-m-d';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -66,9 +71,12 @@ class ProductLabelFormType extends AbstractType
             ->addStatusFlagField($builder)
             ->addExclusiveFlagField($builder)
             ->addValidFromField($builder)
+            ->addPriorityField($builder)
             ->addValidToField($builder)
             ->addFontEndReferenceField($builder)
-            ->addLocalizedAttributesSubForm($builder);
+            ->addLocalizedAttributesSubForm($builder)
+            ->addDynamicFlagField($builder)
+            ->addStoreRelationField($builder);
     }
 
     /**
@@ -82,7 +90,7 @@ class ProductLabelFormType extends AbstractType
             static::FIELD_NAME,
             TextType::class,
             [
-                'label' => 'Name *',
+                'label' => 'Name',
                 'required' => true,
                 'constraints' => [
                     new NotBlank(),
@@ -124,6 +132,71 @@ class ProductLabelFormType extends AbstractType
             CheckboxType::class,
             [
                 'label' => 'Is Active',
+                'required' => false,
+            ]
+        );
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addDynamicFlagField(FormBuilderInterface $builder)
+    {
+        $builder->add(
+            static::FIELD_DYNAMIC_FLAG,
+            CheckboxType::class,
+            [
+              'label' => 'Is Dynamic',
+              'required' => false,
+              'disabled' => true,
+              'attr' => [
+                  'readonly' => true,
+              ],
+            ]
+        );
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addPriorityField(FormBuilderInterface $builder)
+    {
+        $builder->add(
+            static::FIELD_PRIORITY,
+            NumberType::class,
+            [
+                'label' => 'Priority',
+                'required' => true,
+                'constraints' => [
+                    new NotBlank(),
+                    new GreaterThanOrEqual(['value' => 1]),
+                ],
+            ]
+        );
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addStoreRelationField(FormBuilderInterface $builder)
+    {
+        $builder->add(
+            static::FIELD_STORE_RELATION,
+            $this->getFactory()->getStoreRelationFormTypePlugin()->getType(),
+            [
+                'label' => false,
                 'required' => false,
             ]
         );
@@ -204,7 +277,7 @@ class ProductLabelFormType extends AbstractType
                         return null;
                     }
 
-                    return $dateAsObject->format(ProductLabelConstants::VALIDITY_DATE_FORMAT);
+                    return $dateAsObject->format(static::VALIDITY_DATE_FORMAT);
                 }
             ));
     }
@@ -253,15 +326,5 @@ class ProductLabelFormType extends AbstractType
     public function getBlockPrefix()
     {
         return 'productLabel';
-    }
-
-    /**
-     * @deprecated Use `getBlockPrefix()` instead.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->getBlockPrefix();
     }
 }

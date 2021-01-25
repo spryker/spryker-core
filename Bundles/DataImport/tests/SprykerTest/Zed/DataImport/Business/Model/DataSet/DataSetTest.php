@@ -28,7 +28,7 @@ class DataSetTest extends Unit
     /**
      * @return void
      */
-    public function testGetValueWithUndefinedKeyThrowsException()
+    public function testGetValueWithUndefinedKeyThrowsException(): void
     {
         $dataSet = $this->tester->getFactory()->createDataSet();
         $this->expectException(DataKeyNotFoundInDataSetException::class);
@@ -38,7 +38,7 @@ class DataSetTest extends Unit
     /**
      * @return void
      */
-    public function testUnsetValueWithUndefinedKeyThrowsException()
+    public function testUnsetValueWithUndefinedKeyThrowsException(): void
     {
         $dataSet = $this->tester->getFactory()->createDataSet();
         $this->expectException(DataKeyNotFoundInDataSetException::class);
@@ -48,7 +48,7 @@ class DataSetTest extends Unit
     /**
      * @return void
      */
-    public function testExchangeArraySetsNewArray()
+    public function testExchangeArraySetsNewArray(): void
     {
         $oldData = ['old'];
         $newData = ['new'];

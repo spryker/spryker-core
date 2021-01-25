@@ -4,9 +4,21 @@
 "Company Users","Company Users"
 "Create Company User","Create Company User"
 "Customer Access","Customer Access"
+"Customer with id `%s` does not exist","Customer with id `%s` does not exist"
 E-Mail,E-Mail
 "Edit Company User","Edit Company User"
 "List of Company Users","List of Company Users"
 "Overview of Company Users","Overview of Company Users"
 "User ID","User ID"
-"Customer with id `%s` does not exist","Customer with id `%s` does not exist"
+"Business Unit name","Business Unit name"
+"Attach ""%customer%""","Attach ""%customer%"""
+Disable,Disable
+"Company user successfully disabled","Company user successfully disabled"
+"Company user successfully enabled","Company user successfully enabled"
+Disabled,Disabled
+Enabled,Enabled
+Enable,Enable
+"User Name","User Name"
+"Attach to BU","Attach to BU"
+"Company user has been created.","Company user has been created."
+"Company User Name","Company User Name"

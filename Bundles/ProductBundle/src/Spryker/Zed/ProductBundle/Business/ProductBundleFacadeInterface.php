@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductBundle\Business;
 
+use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
@@ -77,8 +78,8 @@ interface ProductBundleFacadeInterface
 
     /**
      * Specification:
-     * - Checks if items which being added to cart is available, for bundle it checks bundled items.
-     * - Even if same item added separately from bundle availability is checked together.
+     * - Checks if bundle product bundled items are available.
+     * - If bundled products are added separately, it gets checked together with bundled products.
      * - Sets error message if not available.
      *
      * @api
@@ -146,6 +147,18 @@ interface ProductBundleFacadeInterface
 
     /**
      * Specification:
+     *  - Calculates {@link \Generated\Shared\Transfer\CalculableObjectTransfer::$bundleItems} prices.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return \Generated\Shared\Transfer\CalculableObjectTransfer
+     */
+    public function calculateBundlePriceForCalculableObjectTransfer(CalculableObjectTransfer $calculableObjectTransfer): CalculableObjectTransfer;
+
+    /**
+     * Specification:
      * - Gets all items which belong to bundle.
      * - Updates bundle products with new availability, given sku belong.
      * - Touch abstract availability for bundle product.
@@ -188,11 +201,23 @@ interface ProductBundleFacadeInterface
 
     /**
      * Specification:
+     * - Deactivates product bundles related to product concrete in case it is inactive.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function deactivateRelatedProductBundles(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer;
+
+    /**
+     * Specification:
      * - Persists bundled product to sales database tables, from QuoteTransfer.
      *
      * @api
      *
-     * @deprecated Use saveOrderBundleItems() instead
+     * @deprecated Use {@link saveOrderBundleItems()} instead
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
@@ -250,7 +275,9 @@ interface ProductBundleFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductBundleCollectionTransfer
      */
-    public function getProductBundleCollectionByCriteriaFilter(ProductBundleCriteriaFilterTransfer $productBundleCriteriaFilterTransfer): ProductBundleCollectionTransfer;
+    public function getProductBundleCollectionByCriteriaFilter(
+        ProductBundleCriteriaFilterTransfer $productBundleCriteriaFilterTransfer
+    ): ProductBundleCollectionTransfer;
 
     /**
      * Specification:
@@ -369,4 +396,58 @@ interface ProductBundleFacadeInterface
      * @return \Generated\Shared\Transfer\ItemCollectionTransfer
      */
     public function extractQuoteItems(QuoteTransfer $quoteTransfer): ItemCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Expands sales order bundle items by product options.
+     * - Copies unique product options from related bundle items to bundle.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function expandOrderProductBundlesWithProductOptions(OrderTransfer $orderTransfer): OrderTransfer;
+
+    /**
+     * Specification:
+     * - Removes items from array related to bundles.
+     * - Expands provided array of ItemTransfers by product bundles.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function expandUniqueOrderItemsWithProductBundles(array $itemTransfers, OrderTransfer $orderTransfer): array;
+
+    /**
+     * Specification:
+     * - Expands items with product bundles.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function expandItemsWithProductBundles(array $itemTransfers): array;
+
+    /**
+     * Specification:
+     * - Expands item product bundle with product options.
+     * - Copies unique product options from related bundle items to bundle.
+     * - Expects ItemTransfer::productBundle to be set.
+     * - Expects ItemTransfer::relatedBundleItemIdentifier to be set.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function expandItemProductBundlesWithProductOptions(array $itemTransfers): array;
 }

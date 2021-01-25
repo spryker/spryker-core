@@ -17,8 +17,11 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
+/**
+ * @deprecated Use {@link \Spryker\Shared\Form\DoubleSubmitProtection\Type\DoubleSubmitFormType} instead.
+ */
 class DoubleSubmitFormType extends AbstractTypeExtension
 {
     public const OPTION_KEY_ERROR_MESSAGE = 'double_submit_error';
@@ -43,7 +46,7 @@ class DoubleSubmitFormType extends AbstractTypeExtension
     protected $fieldName;
 
     /**
-     * @var \Symfony\Component\Translation\TranslatorInterface|null
+     * @var \Symfony\Contracts\Translation\TranslatorInterface|null
      */
     protected $translator;
 
@@ -55,7 +58,7 @@ class DoubleSubmitFormType extends AbstractTypeExtension
     /**
      * @param \Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTokenProvider\TokenGeneratorInterface $tokenGenerator
      * @param \Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTokenProvider\StorageInterface $storage
-     * @param \Symfony\Component\Translation\TranslatorInterface|null $translator
+     * @param \Symfony\Contracts\Translation\TranslatorInterface|null $translator
      * @param string|null $translationDomain
      */
     public function __construct(
@@ -132,7 +135,7 @@ class DoubleSubmitFormType extends AbstractTypeExtension
     }
 
     /**
-     * @deprecated Use `configureOptions()` instead.
+     * @deprecated Use {@link configureOptions()} instead.
      *
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
@@ -149,6 +152,14 @@ class DoubleSubmitFormType extends AbstractTypeExtension
     public function getExtendedType()
     {
         return FormType::class;
+    }
+
+    /**
+     * @return string[]
+     */
+    public static function getExtendedTypes(): iterable
+    {
+        return [FormType::class];
     }
 
     /**

@@ -21,15 +21,6 @@ interface ShipmentQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
-     * @deprecated Not used anymore and obsolete.
-     *
-     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentCarrierQuery
-     */
-    public function queryActiveCarriers();
-
-    /**
-     * @api
-     *
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
      */
     public function queryMethods();
@@ -37,7 +28,7 @@ interface ShipmentQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
-     * @deprecated Use \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface::getActiveShipmentMethods() instead.
+     * @deprecated Use {@link \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface::getActiveShipmentMethods()} instead.
      *
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
      */
@@ -46,18 +37,7 @@ interface ShipmentQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
-     * @deprecated Use \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface::findShipmentMethodById() instead.
-     *
-     * @param int $idMethod
-     *
-     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
-     */
-    public function queryMethodByIdMethod($idMethod);
-
-    /**
-     * @api
-     *
-     * @deprecated Use \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface::findTaxSetByShipmentMethodAndCountryIso2Code() instead.
+     * @deprecated Use {@link \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface::findTaxSetByShipmentMethodAndCountryIso2Code()} instead.
      *
      * @param int $idShipmentMethod
      * @param string $countryIso2Code
@@ -69,7 +49,7 @@ interface ShipmentQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
-     * @deprecated Use \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface::findShipmentTransfersByOrder() instead.
+     * @deprecated Use {@link \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface::findShipmentTransfersByOrder()} instead.
      *
      * @param int $idSalesOrder
      *
@@ -79,6 +59,8 @@ interface ShipmentQueryContainerInterface extends QueryContainerInterface
 
     /**
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @param string $carrierName
      * @param int|null $idCarrier
@@ -102,15 +84,6 @@ interface ShipmentQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
      */
     public function queryMethodWithMethodPricesAndCarrierById($idShipmentMethod);
-
-    /**
-     * @api
-     *
-     * @deprecated Use \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface::getActiveShipmentMethods() instead.
-     *
-     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
-     */
-    public function queryActiveMethodsWithMethodPricesAndCarrier();
 
     /**
      * @api
@@ -147,15 +120,4 @@ interface ShipmentQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodPriceQuery
      */
     public function queryMethodPriceByShipmentMethodAndStoreCurrency($idShipmentMethod, $idStore, $idCurrency);
-
-    /**
-     * @api
-     *
-     * @deprecated Use \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface::findShipmentMethodByIdWithPricesAndCarrier() instead.
-     *
-     * @param int $idShipmentMethod
-     *
-     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
-     */
-    public function queryActiveShipmentMethodByIdShipmentMethod($idShipmentMethod);
 }

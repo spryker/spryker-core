@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -42,7 +42,7 @@ class LanguageNegotiationTest extends Unit
 
         $isoCode = $languageNegotiation->getLanguageIsoCode('en; de;q=0.5');
 
-        $this->assertEquals('en_US', $isoCode);
+        $this->assertSame('en_US', $isoCode);
     }
 
     /**
@@ -53,10 +53,10 @@ class LanguageNegotiationTest extends Unit
         $languageNegotiation = $this->createLanguageNegotiation();
 
         $isoCode = $languageNegotiation->getLanguageIsoCode('de;q=0.8, en;q=0.2');
-        $this->assertEquals('de_DE', $isoCode);
+        $this->assertSame('de_DE', $isoCode);
 
         $isoCode = $languageNegotiation->getLanguageIsoCode('de;q=0.2, en;q=0.8');
-        $this->assertEquals('en_US', $isoCode);
+        $this->assertSame('en_US', $isoCode);
     }
 
     /**
@@ -67,7 +67,7 @@ class LanguageNegotiationTest extends Unit
         $languageNegotiation = $this->createLanguageNegotiation();
 
         $isoCode = $languageNegotiation->getLanguageIsoCode('');
-        $this->assertEquals('de_DE', $isoCode);
+        $this->assertSame('de_DE', $isoCode);
     }
 
     /**
@@ -78,7 +78,7 @@ class LanguageNegotiationTest extends Unit
         $languageNegotiation = $this->createLanguageNegotiation();
 
         $isoCode = $languageNegotiation->getLanguageIsoCode('wrong');
-        $this->assertEquals('de_DE', $isoCode);
+        $this->assertSame('de_DE', $isoCode);
     }
 
     /**
@@ -92,7 +92,7 @@ class LanguageNegotiationTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Glue\GlueApplication\Dependency\Client\GlueApplicationToStoreClientInterface
      */
-    protected function createStoreClientMock()
+    protected function createStoreClientMock(): GlueApplicationToStoreClientInterface
     {
         $storeClientMock = $this->getMockBuilder(GlueApplicationToStoreClientInterface::class)
             ->setMethods(['getCurrentStore'])

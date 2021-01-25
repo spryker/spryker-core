@@ -28,11 +28,11 @@ class ProductAttributeGuiAttributeViewCest
      *
      * @return void
      */
-    public function breadcrumbIsVisible(ProductAttributeGuiCommunicationTester $i)
+    public function breadcrumbIsVisible(ProductAttributeGuiCommunicationTester $i): void
     {
         $i->listDataTable(ProductAttributeGuiAttributeListPage::URL . '/table');
         $i->clickDataTableViewButton();
 
-        $i->seeBreadcrumbNavigation('Dashboard / Products / Attributes / View Product Attribute');
+        $i->seeBreadcrumbNavigation('Catalog / Attributes / View Product Attribute');
     }
 }

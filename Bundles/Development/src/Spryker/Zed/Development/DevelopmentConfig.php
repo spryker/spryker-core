@@ -22,6 +22,7 @@ class DevelopmentConfig extends AbstractBundleConfig
     protected const NAMESPACE_SPRYKER_SHOP = 'SprykerShop';
     protected const NAMESPACE_SPRYKER_ECO = 'SprykerEco';
     protected const NAMESPACE_SPRYKER_SDK = 'SprykerSdk';
+    protected const NAMESPACE_SPRYKER_MIDDLEWARE = 'SprykerMiddleware';
     protected const NAMESPACE_SPRYKER_MERCHANT_PORTAL = 'SprykerMerchantPortal';
 
     protected const GROUP_SPRYKER_TEST = 'SprykerTest';
@@ -50,14 +51,17 @@ class DevelopmentConfig extends AbstractBundleConfig
         self::NAMESPACE_SPRYKER_SHOP => APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'vendor/spryker-shop/',
         self::NAMESPACE_SPRYKER_ECO => APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'vendor/spryker-eco/',
         self::NAMESPACE_SPRYKER_SDK => APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'vendor/spryker-sdk/',
+        self::NAMESPACE_SPRYKER_MIDDLEWARE => APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'vendor/spryker-middleware/',
         self::NAMESPACE_SPRYKER_MERCHANT_PORTAL => APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'vendor/spryker-merchant-portal/',
     ];
 
     protected const INTERNAL_PACKAGE_DIRECTORIES = ['spryker', 'spryker-shop', 'spryker-merchant-portal'];
 
-    protected const TIMEOUT_DEFAULT = 4800;
+    protected const TIMEOUT_DEFAULT = 9000;
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getPermissionMode(): int
@@ -66,6 +70,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getInternalNamespaces(): array
@@ -74,6 +80,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getTwigPathPatterns(): array
@@ -88,6 +96,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     /**
      * Gets path to application root directory.
      *
+     * @api
+     *
      * @return string
      */
     public function getPathToRoot()
@@ -97,6 +107,8 @@ class DevelopmentConfig extends AbstractBundleConfig
 
     /**
      * Gets Application layers.
+     *
+     * @api
      *
      * @return array
      */
@@ -108,6 +120,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     /**
      * Gets Application namespaces.
      *
+     * @api
+     *
      * @return array
      */
     public function getApplicationNamespaces()
@@ -116,7 +130,9 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
-     * @deprecated Use \Spryker\Zed\Development\Business\Module\PathBuilder\SprykerModulePathBuilder::buildPath() instead.
+     * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\Development\Business\Module\PathBuilder\SprykerModulePathBuilder::buildPath()} instead.
      *
      * Gets path to Spryker core modules.
      *
@@ -134,7 +150,9 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
-     * @deprecated Use \Spryker\Zed\Development\Business\Module\PathBuilder\SprykerSdkPathBuilder::buildPath() instead.
+     * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\Development\Business\Module\PathBuilder\SprykerSdkPathBuilder::buildPath()} instead.
      *
      * Gets path to SprykerSdk core modules.
      *
@@ -146,7 +164,9 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
-     * @deprecated Use \Spryker\Zed\Development\Business\Module\PathBuilder\SprykerShopModulePathBuilder::buildPath() instead.
+     * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\Development\Business\Module\PathBuilder\SprykerShopModulePathBuilder::buildPath()} instead.
      *
      * Gets path to SprykerShop core modules.
      *
@@ -158,7 +178,9 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
-     * @deprecated Use \Spryker\Zed\Development\Business\Module\PathBuilder\SprykerEcoModulePathBuilder::buildPath() instead.
+     * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\Development\Business\Module\PathBuilder\SprykerEcoModulePathBuilder::buildPath()} instead.
      *
      * Gets path to SprykerEco core modules.
      *
@@ -170,6 +192,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getOrganizationPathMap(): array
@@ -184,6 +208,8 @@ class DevelopmentConfig extends AbstractBundleConfig
      * Either a relative or full path to the ruleset.xml or a name of an installed
      * standard (see `phpcs -i` for a list of available ones).
      *
+     * @api
+     *
      * @return string
      */
     public function getCodingStandard()
@@ -197,6 +223,8 @@ class DevelopmentConfig extends AbstractBundleConfig
      * Either a relative or full path to the ruleset.xml or a name of an installed
      * standard. Can also be a comma separated list of multiple ones.
      *
+     * @api
+     *
      * @return string
      */
     public function getArchitectureStandard()
@@ -207,6 +235,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     /**
      * Gets path to Application's composer.lock file.
      *
+     * @api
+     *
      * @return string
      */
     public function getPathToComposerLock()
@@ -215,6 +245,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getPathToJsonDependencyTree()
@@ -229,6 +261,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getPhpstanConfigFilename(): string
@@ -237,6 +271,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getPathToPhpstanModuleTemporaryConfigFolder()
@@ -247,6 +283,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     /**
      * Gets path to module config that holds information about engine modules.
      *
+     * @api
+     *
      * @return string
      */
     public function getPathToBundleConfig()
@@ -255,63 +293,129 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getExternalToInternalNamespaceMap()
     {
         return [
-            'Psr\\Log\\' => 'spryker/log',
-            'Psr\\Container\\' => 'spryker/container',
-            'Propel\\' => 'spryker/propel-orm',
-            'Silex\\' => 'spryker/silex',
-            'Pimple' => 'spryker/container',
-            'Predis\\' => 'spryker/redis',
+            'Codeception\\' => 'spryker/testify',
+            'CodeItNow\\BarcodeBundle' => 'spryker/code-it-now',
+            'Doctrine\\Common\\Inflector' => 'spryker/doctrine-inflector',
+            'DMS\\PHPUnitExtensions\\' => 'spryker/testify',
+            'Egulias\\EmailValidator\\' => 'spryker/egulias',
+            'Elastica\\' => 'spryker/elastica',
+            'Faker\\' => 'spryker/testify',
             'Guzzle\\' => 'spryker/guzzle',
             'GuzzleHttp\\' => 'spryker/guzzle',
-            'League\\Csv\\' => 'spryker/csv',
-            'Monolog\\' => 'spryker/monolog',
-            'Elastica\\' => 'spryker/elastica',
-            'Symfony\\Component\\' => 'spryker/symfony',
-            'Twig_' => 'spryker/twig',
-            'Twig\\' => 'spryker/twig',
-            'Zend\\' => 'spryker/zend',
-            'phpDocumentor\\GraphViz\\' => 'spryker/graphviz',
-            'Egulias\\EmailValidator\\' => 'spryker/egulias',
-            'Ramsey\\Uuid' => 'spryker/ramsey-uuid',
-            'Doctrine\\Common\\Inflector' => 'spryker/doctrine-inflector',
             'JsonPath\\' => 'spryker/json-path',
             'JsonSchema\\' => 'spryker/json-schema',
+            'Laminas\\' => 'spryker/laminas',
+            'League\\Csv\\' => 'spryker/csv',
+            'Monolog\\' => 'spryker/monolog',
+            'org\\bovigo\\vfs\\' => 'spryker/testify',
+            'phpDocumentor\\GraphViz\\' => 'spryker/graphviz',
+            'Propel\\' => 'spryker/propel-orm',
+            'PHPUnit\\' => 'spryker/testify',
+            'Pimple' => 'spryker/container',
+            'Predis\\' => 'spryker/redis',
+            'Psr\\Log\\' => 'spryker/log',
+            'Psr\\Container\\' => 'spryker/container',
+            'Ramsey\\Uuid' => 'spryker/ramsey-uuid',
+            'Silex\\' => 'spryker/silex',
+            'Spryker\\DecimalObject\\' => 'spryker/decimal-object',
+            'Spryker\\ChecksumGenerator\\' => 'spryker/checksum-generator',
+            'Symfony\\Bridge\\Twig\\' => 'spryker/symfony',
+            'Symfony\\Bundle\\WebProfilerBundle\\' => 'spryker/symfony',
+            'Symfony\\Component\\' => 'spryker/symfony',
+            'Symfony\\Contracts\\' => 'spryker/symfony',
+            'Symfony\\Cmf\\' => 'spryker/symfony',
+            'Twig_' => 'spryker/twig',
+            'Twig\\' => 'spryker/twig',
+            'Webmozart\\Glob' => 'spryker/util-glob',
+            'Zend\\' => 'spryker/zend',
         ];
     }
 
     /**
-     * @return array
+     * @api
+     *
+     * @return string[]
      */
     public function getExternalToInternalMap()
     {
         return [
-            'psr/log' => 'spryker/log',
-            'propel/propel' => 'spryker/propel-orm',
-            'silex/silex' => 'spryker/silex',
-            'pimple/pimple' => 'spryker/container',
-            'mandrill/mandrill' => 'spryker/mandrill',
-            'predis/predis' => 'spryker/redis',
-            'guzzle/guzzle' => 'spryker/guzzle',
-            'guzzlehttp/guzzle' => 'spryker/guzzle',
-            'league/csv' => 'spryker/csv',
-            'monolog/monolog' => 'spryker/monolog',
-            'ruflin/elastica' => 'spryker/elastica',
-            '/symfony/' => 'spryker/symfony',
-            'twig/twig' => 'spryker/twig',
-            '/zendframework/' => 'spryker/zend',
-            'phpdocumentor/graphviz' => 'spryker/graphviz',
-            'egulias/email-validator' => 'spryker/egulias',
-            'ramsey/uuid' => 'spryker/ramsey-uuid',
+            'codeception/codeception' => 'spryker/testify',
+            'codeitnowin/barcode' => 'spryker/code-it-now',
+            'dms/phpunit-arraysubset-asserts' => 'spryker/testify',
             'doctrine/inflector' => 'spryker/doctrine-inflector',
+            'egulias/email-validator' => 'spryker/egulias',
+            'fzaninotto/faker' => 'spryker/testify',
+            'galbar/jsonpath' => 'spryker/json-path',
+            'guzzlehttp/guzzle' => 'spryker/guzzle',
+            'justinrainbow/json-schema' => 'spryker/json-schema',
+            'laminas/laminas-config' => 'spryker/laminas',
+            'laminas/laminas-filter' => 'spryker/laminas',
+            'laminas/laminas-servicemanager' => 'spryker/laminas',
+            'league/csv' => 'spryker/csv',
+            'league/oauth2-server' => 'spryker/oauth',
+            'mandrill/mandrill' => 'spryker/mandrill',
+            'mikey179/vfsstream' => 'spryker/testify',
+            'moneyphp/money' => 'spryker/money',
+            'monolog/monolog' => 'spryker/monolog',
+            'pimple/pimple' => 'spryker/container',
+            'phpbench/phpbench' => 'spryker-sdk/benchmark',
+            'phpdocumentor/graphviz' => 'spryker/graphviz',
+            'predis/predis' => 'spryker/redis',
+            'propel/propel' => 'spryker/propel-orm',
+            'psr/log' => 'spryker/log',
+            'psr/container' => 'spryker/container',
+            'ramsey/uuid' => 'spryker/ramsey-uuid',
+            'ruflin/elastica' => 'spryker/elastica',
+            'symfony-cmf/routing' => 'spryker/symfony',
+            'symfony/config' => 'spryker/symfony',
+            'symfony/console' => 'spryker/symfony',
+            'symfony/debug' => 'spryker/symfony',
+            'symfony/error-handler' => 'spryker/symfony',
+            'symfony/event-dispatcher' => 'spryker/symfony',
+            'symfony/filesystem' => 'spryker/symfony',
+            'symfony/finder' => 'spryker/symfony',
+            'symfony/form' => 'spryker/symfony',
+            'symfony/http-foundation' => 'spryker/symfony',
+            'symfony/http-kernel' => 'spryker/symfony',
+            'symfony/intl' => 'spryker/symfony',
+            'symfony/mime' => 'spryker/symfony',
+            'symfony/options-resolver' => 'spryker/symfony',
+            'symfony/process' => 'spryker/symfony',
+            'symfony/property-access' => 'spryker/symfony',
+            'symfony/routing' => 'spryker/symfony',
+            'symfony/security-core' => 'spryker/symfony',
+            'symfony/security-csrf' => 'spryker/symfony',
+            'symfony/security-guard' => 'spryker/symfony',
+            'symfony/security-http' => 'spryker/symfony',
+            'symfony/serializer' => 'spryker/symfony',
+            'symfony/stopwatch' => 'spryker/symfony',
+            'symfony/translation' => 'spryker/symfony',
+            'symfony/translation-contracts' => 'spryker/symfony',
+            'symfony/twig-bridge' => 'spryker/symfony',
+            'symfony/validator' => 'spryker/symfony',
+            'symfony/web-profiler-bundle' => 'spryker/web-profiler',
+            'symfony/yaml' => 'spryker/symfony',
+            'swiftmailer/swiftmailer' => 'spryker/mail',
+            'twig/twig' => 'spryker/twig',
+            'webmozart/glob' => 'spryker/util-glob',
+            'zendframework/zend-config' => 'spryker/zend',
+            'zendframework/zend-filter' => 'spryker/zend',
+            'zendframework/zend-servicemanager' => 'spryker/zend',
         ];
     }
 
     /**
+     * @api
+     *
+     * @deprecated Will be removed without replacement.
+     *
      * @return array
      */
     public function getIgnorableDependencies()
@@ -323,7 +427,6 @@ class DevelopmentConfig extends AbstractBundleConfig
             'phploc/phploc',
             'phpmd/phpmd',
             'sebastian/phpcpd',
-            'codeception/codeception',
             'fabpot/php-cs-fixer',
             'sensiolabs/security-checker',
             'sllh/composer-versions-check',
@@ -331,6 +434,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getYvesIdeAutoCompletionOptions()
@@ -342,6 +447,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getZedIdeAutoCompletionOptions()
@@ -353,6 +460,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getClientIdeAutoCompletionOptions()
@@ -364,6 +473,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getGlueIdeAutoCompletionOptions()
@@ -375,6 +486,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getServiceIdeAutoCompletionOptions()
@@ -405,6 +518,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getIdeAutoCompletionSourceDirectoryGlobPatterns()
@@ -416,6 +531,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getIdeAutoCompletionGeneratorTemplatePaths()
@@ -428,6 +545,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     /**
      * Returns CLI commmand to run the architecture sniffer with [BUNDLE] placeholder
      *
+     * @api
+     *
      * @return string
      */
     public function getArchitectureSnifferCommand()
@@ -437,6 +556,8 @@ class DevelopmentConfig extends AbstractBundleConfig
 
     /**
      * Either a relative or full path to the ruleset.xml
+     *
+     * @api
      *
      * @return string
      */
@@ -448,6 +569,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getPhpMdCommand()
@@ -456,6 +579,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getProjectNamespaces()
@@ -464,6 +589,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getCoreNamespaces()
@@ -473,6 +600,8 @@ class DevelopmentConfig extends AbstractBundleConfig
 
     /**
      * Gets default priority for architecture sniffer.
+     *
+     * @api
      *
      * @return int
      */
@@ -484,15 +613,21 @@ class DevelopmentConfig extends AbstractBundleConfig
     /**
      * Gets PHPStan default level. The higher, the better.
      *
+     * Recommended level is 8 (include nullable safety).
+     *
+     * @api
+     *
      * @return int
      */
     public function getPhpstanLevel()
     {
-        return 3;
+        return 7;
     }
 
     /**
      * Gets CodeSniffer default level. The higher, the better.
+     *
+     * @api
      *
      * @return int
      */
@@ -502,6 +637,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getInternalNamespacesList(): array
@@ -510,13 +647,16 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @param string $namespace
      *
      * @return string|null
      */
     public function getPathToInternalNamespace(string $namespace): ?string
     {
-        if ($pathToSprykerRoot = $this->checkPathToSprykerRoot($namespace)) {
+        $pathToSprykerRoot = $this->checkPathToSprykerRoot($namespace);
+        if ($pathToSprykerRoot) {
             return $pathToSprykerRoot;
         }
 
@@ -528,6 +668,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getPathsToInternalNamespace(): array
@@ -557,6 +699,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @deprecated Use `spryker/module-finder` instead.
      *
      * @return string[]
@@ -583,6 +727,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getProcessTimeout(): int

@@ -24,8 +24,9 @@ class CmsClient extends AbstractClient implements CmsClientInterface
      *
      * @return \Generated\Shared\Transfer\FlattenedLocaleCmsPageDataRequestTransfer
      */
-    public function getFlattenedLocaleCmsPageData(FlattenedLocaleCmsPageDataRequestTransfer $flattenedLocaleCmsPageDataRequestTransfer): FlattenedLocaleCmsPageDataRequestTransfer
-    {
+    public function getFlattenedLocaleCmsPageData(
+        FlattenedLocaleCmsPageDataRequestTransfer $flattenedLocaleCmsPageDataRequestTransfer
+    ): FlattenedLocaleCmsPageDataRequestTransfer {
         return $this->getFactory()->createCmsStub()->getFlattenedLocaleCmsPageData($flattenedLocaleCmsPageDataRequestTransfer);
     }
 }

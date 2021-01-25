@@ -38,7 +38,7 @@ class FlysystemLocalFileSystemTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->testDataFlysystemRootDirectory = Configuration::dataDir() . static::ROOT_DIRECTORY;
     }
@@ -46,7 +46,7 @@ class FlysystemLocalFileSystemTest extends Unit
     /**
      * @return void
      */
-    public function testLocalFilesystemBuilderPlugin()
+    public function testLocalFilesystemBuilderPlugin(): void
     {
         $localFilesystemBuilderPlugin = new LocalFilesystemBuilderPlugin();
 
@@ -67,7 +67,7 @@ class FlysystemLocalFileSystemTest extends Unit
     /**
      * @return void
      */
-    public function testLocalFilesystemBuilderPluginShouldAcceptType()
+    public function testLocalFilesystemBuilderPluginShouldAcceptType(): void
     {
         $localFilesystemBuilderPlugin = new LocalFilesystemBuilderPlugin();
 

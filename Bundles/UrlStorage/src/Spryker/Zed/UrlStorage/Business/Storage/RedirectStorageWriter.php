@@ -27,6 +27,8 @@ class RedirectStorageWriter implements RedirectStorageWriterInterface
     protected $queryContainer;
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()} instead.
+     *
      * @var bool
      */
     protected $isSendingToQueue = true;
@@ -57,7 +59,7 @@ class RedirectStorageWriter implements RedirectStorageWriterInterface
     }
 
     /**
-     * @param array $redirectIds
+     * @param int[] $redirectIds
      *
      * @return void
      */
@@ -108,7 +110,7 @@ class RedirectStorageWriter implements RedirectStorageWriterInterface
     }
 
     /**
-     * @param array $redirectIds
+     * @param int[] $redirectIds
      *
      * @return array
      */
@@ -118,7 +120,7 @@ class RedirectStorageWriter implements RedirectStorageWriterInterface
     }
 
     /**
-     * @param array $redirectIds
+     * @param int[] $redirectIds
      *
      * @return array
      */

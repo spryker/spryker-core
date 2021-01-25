@@ -21,6 +21,8 @@ class QuoteRequestConfig extends AbstractSharedConfig
     protected const INITIAL_VERSION_NUMBER = 1;
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getInitialVersion(): int
@@ -29,6 +31,8 @@ class QuoteRequestConfig extends AbstractSharedConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getCancelableStatuses(): array
@@ -41,6 +45,8 @@ class QuoteRequestConfig extends AbstractSharedConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getEditableStatuses(): array
@@ -51,6 +57,8 @@ class QuoteRequestConfig extends AbstractSharedConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getRevisableStatuses(): array
@@ -61,6 +69,8 @@ class QuoteRequestConfig extends AbstractSharedConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getUserCancelableStatuses(): array
@@ -74,6 +84,8 @@ class QuoteRequestConfig extends AbstractSharedConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getUserEditableStatuses(): array
@@ -84,6 +96,8 @@ class QuoteRequestConfig extends AbstractSharedConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getUserRevisableStatuses(): array

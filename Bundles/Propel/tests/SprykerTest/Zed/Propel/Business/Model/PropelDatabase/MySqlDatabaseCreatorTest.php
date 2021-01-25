@@ -29,7 +29,7 @@ class MySqlDatabaseCreatorTest extends Unit
     /**
      * @return void
      */
-    public function testGetEngine()
+    public function testGetEngine(): void
     {
         $mySqlDatabaseCreator = new MySqlDatabaseCreator();
 
@@ -39,7 +39,7 @@ class MySqlDatabaseCreatorTest extends Unit
     /**
      * @return void
      */
-    public function testCreateIfNotExists()
+    public function testCreateIfNotExists(): void
     {
         $mySqlDatabaseCreatorMock = $this->getMySqlDatabaseCreatorMock();
 
@@ -49,11 +49,25 @@ class MySqlDatabaseCreatorTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Propel\Business\Model\PropelDatabase\MySqlDatabaseCreator
      */
-    protected function getMySqlDatabaseCreatorMock()
+    protected function getMySqlDatabaseCreatorMock(): MySqlDatabaseCreator
     {
-        $mySqlDatabaseCreatorMock = $this->getMockBuilder(MySqlDatabaseCreator::class)->setMethods(['getConnection'])->getMock();
-        $pdo = new PDO('sqlite::memory:');
-        $mySqlDatabaseCreatorMock->expects($this->once())->method('getConnection')->willReturn($pdo);
+        $mySqlDatabaseCreatorMock = $this->getMockBuilder(MySqlDatabaseCreator::class)
+            ->onlyMethods(['getConnection', 'getQuery'])
+            ->getMock();
+        $pdoMock = $this->getMockBuilder(PDO::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['exec'])
+            ->getMock();
+
+        $mySqlDatabaseCreatorMock->expects($this->once())
+            ->method('getConnection')
+            ->willReturn($pdoMock);
+
+        $mySqlDatabaseCreatorMock->expects($this->once())
+            ->method('getQuery');
+
+        $pdoMock->expects($this->once())
+            ->method('exec');
 
         return $mySqlDatabaseCreatorMock;
     }

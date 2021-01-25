@@ -4,10 +4,10 @@
   "description": "EventDispatcher module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.3",
     "spryker/application-extension": "^1.0.0",
     "spryker/event-dispatcher-extension": "^1.0.0",
-    "spryker/kernel": "^3.30.0",
+    "spryker/kernel": "^3.52.0",
     "spryker/symfony": "^3.2.0"
   },
   "require-dev": {
@@ -20,7 +20,10 @@
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/"
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Shared\\EventDispatcher\\Helper\\": "tests/SprykerTest/Shared/EventDispatcher/_support/Helper/",
+      "SprykerTest\\Yves\\EventDispatcher\\Helper\\": "tests/SprykerTest/Yves/EventDispatcher/_support/Helper/",
+      "SprykerTest\\Zed\\EventDispatcher\\Helper\\": "tests/SprykerTest/Zed/EventDispatcher/_support/Helper/"
     }
   },
   "autoload-dev": {
@@ -30,6 +33,10 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"

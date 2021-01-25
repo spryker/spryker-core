@@ -5,11 +5,15 @@
 
     <transfer name="Discount">
         <property name="discountPromotion" type="DiscountPromotion"/>
+        <property name="idDiscount" type="int"/>
+        <property name="voucherCode" type="string"/>
     </transfer>
 
     <transfer name="Quote">
         <property name="promotionItems" type="PromotionItem[]" singular="promotionItem"/>
         <property name="usedNotAppliedVoucherCodes" type="array" singular="usedNotAppliedVoucherCode"/>
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="store" type="Store"/>
     </transfer>
 
     <transfer name="PromotionItem">
@@ -18,8 +22,8 @@
         <property name="maxQuantity" type="int"/>
         <property name="sku" type="string"/>
         <property name="abstractSku" type="string"/>
-        <property name="maxQuantity" type="int"/>
         <property name="discount" type="Discount"/>
+        <property name="uuid" type="string"/>
     </transfer>
 
     <transfer name="Item">
@@ -28,17 +32,24 @@
         <property name="abstractSku" type="string"/>
         <property name="maxQuantity" type="int"/>
         <property name="idDiscountPromotion" type="int"/>
+        <property name="quantity" type="int"/>
+        <property name="unitPrice" type="int"/>
+        <property name="unitGrossPrice" type="int"/>
+        <property name="groupKey" type="string"/>
+        <property name="sumGrossPrice" type="int"/>
     </transfer>
 
     <transfer name="DiscountableItem">
         <property name="quantity" type="int"/>
         <property name="unitGrossPrice" type="int"/>
-        <property name="originalItemCalculatedDiscounts" type="CalculatedDiscount[]"/>
+        <property name="originalItemCalculatedDiscounts" type="CalculatedDiscount[]" singular="originalItemCalculatedDiscounts"/>
         <property name="originalItem" type="Item"/>
+        <property name="unitPrice" type="int"/>
     </transfer>
 
     <transfer name="DiscountCalculator">
         <property name="discountPromotion" type="DiscountPromotion"/>
+        <property name="collectorStrategyType" type="string"/>
     </transfer>
 
     <transfer name="DiscountPromotion">
@@ -46,6 +57,7 @@
         <property name="abstractSku" type="string"/>
         <property name="quantity" type="int"/>
         <property name="fkDiscount" type="int"/>
+        <property name="uuid" type="string"/>
     </transfer>
 
     <transfer name="CalculableObject">
@@ -54,8 +66,56 @@
 
     <transfer name="StorageProduct">
          <property name="promotionItem" type="PromotionItem"/>
-         <property name="maxQuantity" type="int"/>
+    </transfer>
+
+    <transfer name="CartChange">
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="operation" type="string"/>
+        <property name="quote" type="Quote"/>
+    </transfer>
+
+    <transfer name="PersistentCartChange">
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="ProductAbstractAvailability">
+        <property name="isNeverOutOfStock" type="bool"/>
+        <property name="availability" type="decimal"/>
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="idLocale" type="int"/>
+    </transfer>
+
+    <transfer name="DiscountConfigurator">
+        <property name="discountGeneral" type="DiscountGeneral"/>
+        <property name="discountCalculator" type="DiscountCalculator"/>
+    </transfer>
+
+    <transfer name="CollectedDiscount">
+        <property name="discount" type="Discount"/>
+        <property name="discountableItems" type="DiscountableItem[]" singular="discountableItems"/>
+    </transfer>
+
+    <transfer name="DiscountGeneral">
+        <property name="idDiscount" type="int"/>
+    </transfer>
+
+    <transfer name="Store">
+    </transfer>
+
+    <transfer name="CalculatedDiscount">
+    </transfer>
+
+    <transfer name="CartPreCheckResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="messages" type="Message[]" singular="message"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="type" type="string"/>
+        <property name="value" type="string"/>
+        <property name="parameters" type="array" singular="parameters"/>
     </transfer>
 
 </transfers>
-

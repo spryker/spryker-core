@@ -14,6 +14,7 @@ use Orm\Zed\Locale\Persistence\SpyLocale;
 use Orm\Zed\Navigation\Persistence\SpyNavigation;
 use Orm\Zed\Navigation\Persistence\SpyNavigationNode;
 use Orm\Zed\Navigation\Persistence\SpyNavigationNodeLocalizedAttributes;
+use Orm\Zed\Touch\Persistence\SpyTouch;
 use Orm\Zed\Url\Persistence\SpyUrl;
 use Spryker\Shared\Navigation\NavigationConfig;
 use Spryker\Zed\Navigation\Business\NavigationFacade;
@@ -45,7 +46,7 @@ class NavigationTouchTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -56,7 +57,7 @@ class NavigationTouchTest extends Unit
     /**
      * @return void
      */
-    public function testTouchNavigationByUrlTouchesExpectedEntity()
+    public function testTouchNavigationByUrlTouchesExpectedEntity(): void
     {
         $navigationEntity = $this->createNavigationEntity('Test navigation 1', 'test-navigation-1', true);
         $navigationNodeEntity = $this->createNavigationNodeEntity($navigationEntity->getIdNavigation());
@@ -79,7 +80,7 @@ class NavigationTouchTest extends Unit
      *
      * @return \Orm\Zed\Navigation\Persistence\SpyNavigation
      */
-    protected function createNavigationEntity($key, $name, $isActive)
+    protected function createNavigationEntity(string $key, string $name, bool $isActive): SpyNavigation
     {
         $navigationEntity = new SpyNavigation();
         $navigationEntity
@@ -96,7 +97,7 @@ class NavigationTouchTest extends Unit
      *
      * @return \Orm\Zed\Navigation\Persistence\SpyNavigationNode
      */
-    protected function createNavigationNodeEntity($idNavigation)
+    protected function createNavigationNodeEntity(int $idNavigation): SpyNavigationNode
     {
         $navigationNodeEntity = new SpyNavigationNode();
         $navigationNodeEntity
@@ -114,8 +115,11 @@ class NavigationTouchTest extends Unit
      *
      * @return \Generated\Shared\Transfer\NavigationNodeLocalizedAttributesTransfer
      */
-    protected function createNavigationNodeLocalizedAttributesTransfer($idLocale, $nodeTitle, $externalUrl)
-    {
+    protected function createNavigationNodeLocalizedAttributesTransfer(
+        int $idLocale,
+        string $nodeTitle,
+        string $externalUrl
+    ): NavigationNodeLocalizedAttributesTransfer {
         $navigationNodeLocalizedAttributesTransfer = new NavigationNodeLocalizedAttributesTransfer();
         $navigationNodeLocalizedAttributesTransfer
             ->setFkLocale($idLocale)
@@ -130,7 +134,7 @@ class NavigationTouchTest extends Unit
      *
      * @return int
      */
-    protected function createLocale($localeName)
+    protected function createLocale(string $localeName): int
     {
         $localeEntity = new SpyLocale();
         $localeEntity
@@ -148,8 +152,12 @@ class NavigationTouchTest extends Unit
      *
      * @return \Orm\Zed\Navigation\Persistence\SpyNavigationNodeLocalizedAttributes
      */
-    protected function createNavigationNodeLocalizedAttributes($title, $idUrl, $idNavigationNode, $idLocale)
-    {
+    protected function createNavigationNodeLocalizedAttributes(
+        string $title,
+        int $idUrl,
+        int $idNavigationNode,
+        int $idLocale
+    ): SpyNavigationNodeLocalizedAttributes {
         $navigationNodeLocalizedAttributesEntity = new SpyNavigationNodeLocalizedAttributes();
         $navigationNodeLocalizedAttributesEntity
             ->setFkNavigationNode($idNavigationNode)
@@ -167,7 +175,7 @@ class NavigationTouchTest extends Unit
      *
      * @return \Orm\Zed\Url\Persistence\SpyUrl
      */
-    protected function createUrlEntity($url, $idLocale)
+    protected function createUrlEntity(string $url, int $idLocale): SpyUrl
     {
         $urlEntity = new SpyUrl();
         $urlEntity
@@ -183,7 +191,7 @@ class NavigationTouchTest extends Unit
      *
      * @return \Orm\Zed\Touch\Persistence\SpyTouch|null
      */
-    protected function findNavigationTouchEntries($idNavigation)
+    protected function findNavigationTouchEntries(int $idNavigation): ?SpyTouch
     {
         return $this->touchQueryContainer
             ->queryTouchEntriesByItemTypeAndItemIds(NavigationConfig::RESOURCE_TYPE_NAVIGATION_MENU, [$idNavigation])

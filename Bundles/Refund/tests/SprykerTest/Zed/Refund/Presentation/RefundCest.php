@@ -29,11 +29,11 @@ class RefundCest
      *
      * @return void
      */
-    public function testRefundOneItemOfOrderRefundedAmountShouldBeSameAsItemGrandTotal(RefundPresentationTester $i)
+    public function testRefundOneItemOfOrderRefundedAmountShouldBeSameAsItemGrandTotal(RefundPresentationTester $i): void
     {
         $idSalesOrder = $i->createOrder();
-        $idSalesOrderItemA = $i->createSalesOrderItemForOrder($idSalesOrder, ['process' => 'DummyPayment01']);
-        $idSalesOrderItemB = $i->createSalesOrderItemForOrder($idSalesOrder, ['process' => 'DummyPayment01']);
+        $idSalesOrderItemA = $i->createSalesOrderItemForOrder($idSalesOrder, ['process' => 'DummyPayment01'])->getIdSalesOrderItem();
+        $idSalesOrderItemB = $i->createSalesOrderItemForOrder($idSalesOrder, ['process' => 'DummyPayment01'])->getIdSalesOrderItem();
         $i->triggerEventForNewOrderItems([$idSalesOrderItemA, $idSalesOrderItemB]);
 
         $salesDetailPageUrl = SalesDetailPage::getOrderDetailsPageUrl($idSalesOrder);
@@ -57,11 +57,11 @@ class RefundCest
      *
      * @return void
      */
-    public function testRefundOneItemOfOrderWithDiscountRefundedAmountShouldBeSameAsItemGrandTotal(RefundPresentationTester $i)
+    public function testRefundOneItemOfOrderWithDiscountRefundedAmountShouldBeSameAsItemGrandTotal(RefundPresentationTester $i): void
     {
         $idSalesOrder = $i->createOrder();
-        $idSalesOrderItemA = $i->createSalesOrderItemForOrder($idSalesOrder, ['process' => 'DummyPayment01']);
-        $idSalesOrderItemB = $i->createSalesOrderItemForOrder($idSalesOrder, ['process' => 'DummyPayment01']);
+        $idSalesOrderItemA = $i->createSalesOrderItemForOrder($idSalesOrder, ['process' => 'DummyPayment01'])->getIdSalesOrderItem();
+        $idSalesOrderItemB = $i->createSalesOrderItemForOrder($idSalesOrder, ['process' => 'DummyPayment01'])->getIdSalesOrderItem();
 
         $i->createDiscountForSalesOrderItem($idSalesOrderItemA);
         $i->triggerEventForNewOrderItems([$idSalesOrderItemA, $idSalesOrderItemB]);
@@ -85,11 +85,11 @@ class RefundCest
      *
      * @return void
      */
-    public function testWhenRefundAllItemsOfOrderRefundedAmountShouldBeSameAsGrandTotal(RefundPresentationTester $i)
+    public function testWhenRefundAllItemsOfOrderRefundedAmountShouldBeSameAsGrandTotal(RefundPresentationTester $i): void
     {
         $idSalesOrder = $i->createOrder();
-        $idSalesOrderItemA = $i->createSalesOrderItemForOrder($idSalesOrder, ['process' => 'DummyPayment01']);
-        $idSalesOrderItemB = $i->createSalesOrderItemForOrder($idSalesOrder, ['process' => 'DummyPayment01']);
+        $idSalesOrderItemA = $i->createSalesOrderItemForOrder($idSalesOrder, ['process' => 'DummyPayment01'])->getIdSalesOrderItem();
+        $idSalesOrderItemB = $i->createSalesOrderItemForOrder($idSalesOrder, ['process' => 'DummyPayment01'])->getIdSalesOrderItem();
 
         $i->triggerEventForNewOrderItems([$idSalesOrderItemA, $idSalesOrderItemB]);
 

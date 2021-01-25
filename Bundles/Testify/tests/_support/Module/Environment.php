@@ -1,7 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Testify\Module;
@@ -11,7 +12,7 @@ use Codeception\Lib\ModuleContainer;
 use Codeception\Module;
 
 /**
- * @deprecated Use SprykerTest\Shared\Testify\Helper\Environment instead.
+ * @deprecated Use {@link \SprykerTest\Shared\Testify\Helper\Environment} instead.
  */
 class Environment extends Module
 {
@@ -24,7 +25,7 @@ class Environment extends Module
      * @param \Codeception\Lib\ModuleContainer $moduleContainer
      * @param array|null $config
      */
-    public function __construct(ModuleContainer $moduleContainer, $config)
+    public function __construct(ModuleContainer $moduleContainer, ?array $config)
     {
         parent::__construct($moduleContainer, $config);
 
@@ -34,7 +35,7 @@ class Environment extends Module
     /**
      * @return void
      */
-    private function initEnvironment()
+    private function initEnvironment(): void
     {
         $path = self::MODE_DEFAULT_ROOT;
 

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductOption\Business;
 
+use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductOptionCollectionTransfer;
@@ -82,15 +83,17 @@ interface ProductOptionFacadeInterface
      * Specification:
      * - Reads product option from persistence.
      * - Net and gross unit prices are calculated using current store, and current currency.
-     * - Uses default store (fkStore = NULL) prices when the option has no currency definition for the current store.
+     * - If currency code not provided it will use default store currency.
+     * - Uses default store (fkStore = null) prices when the option has no currency definition for the current store.
      *
      * @api
      *
      * @param int $idProductOptionValue
+     * @param string|null $currencyCode
      *
      * @return \Generated\Shared\Transfer\ProductOptionTransfer
      */
-    public function getProductOptionValueById($idProductOptionValue);
+    public function getProductOptionValueById($idProductOptionValue, ?string $currencyCode = null);
 
     /**
      * Specification:
@@ -148,6 +151,19 @@ interface ProductOptionFacadeInterface
 
     /**
      * Specification:
+     *  - Calculate tax rates for current quote level (BC) or item level shipping addresses.
+     *  - Set tax rate percentages for item product options.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return \Generated\Shared\Transfer\CalculableObjectTransfer
+     */
+    public function calculateProductOptionTaxRateForCalculableObject(CalculableObjectTransfer $calculableObjectTransfer): CalculableObjectTransfer;
+
+    /**
+     * Specification:
      *  - Toggle option active/inactive, option wont be diplayed in Yves when disabled. Collectors have to run first.
      *
      * @api
@@ -164,6 +180,8 @@ interface ProductOptionFacadeInterface
      *  - Hydrate product options for given order transfer
      *
      * @api
+     *
+     * @deprecated Use {@link expandOrderItemsWithProductOptions()} instead.
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
@@ -235,6 +253,8 @@ interface ProductOptionFacadeInterface
      * - Retrieves product options by provided product option IDs.
      * - Filters by product options group active flag using ProductOptionCriteriaTransfer::ProductOptionGroupIsActive.
      * - Filters by product options group assignment to products using ProductOptionCriteriaTransfer::productConcreteSku.
+     * - Sets ProductOptionTransfer::unitPrice based on ProductOptionCriteriaTransfer::currencyIsoCode and ProductOptionCriteriaTransfer::priceMode properties.
+     * - Uses default store currency and price mode if not specified.
      *
      * @api
      *
@@ -242,7 +262,9 @@ interface ProductOptionFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductOptionCollectionTransfer
      */
-    public function getProductOptionCollectionByProductOptionCriteria(ProductOptionCriteriaTransfer $productOptionCriteriaTransfer): ProductOptionCollectionTransfer;
+    public function getProductOptionCollectionByProductOptionCriteria(
+        ProductOptionCriteriaTransfer $productOptionCriteriaTransfer
+    ): ProductOptionCollectionTransfer;
 
     /**
      * Specification:
@@ -262,7 +284,7 @@ interface ProductOptionFacadeInterface
      *
      * @api
      *
-     * @deprecated Use checkProductOptionGroupExistenceByProductOptionValueId() instead
+     * @deprecated Use {@link checkProductOptionGroupExistenceByProductOptionValueId()} instead
      *
      * @param int $idProductOptionValue
      *
@@ -294,4 +316,17 @@ interface ProductOptionFacadeInterface
      * @return \Generated\Shared\Transfer\ProductAbstractOptionGroupStatusTransfer[]
      */
     public function getProductAbstractOptionGroupStatusesByProductAbstractIds(array $productAbstractIds): array;
+
+    /**
+     * Specification:
+     * - Hydrates product options for given order items.
+     * - Sets ItemTransfer::sumProductOptionPriceAggregation, ItemTransfer::unitProductOptionPriceAggregation.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function expandOrderItemsWithProductOptions(array $itemTransfers): array;
 }

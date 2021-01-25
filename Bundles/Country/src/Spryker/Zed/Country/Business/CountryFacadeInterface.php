@@ -32,7 +32,7 @@ interface CountryFacadeInterface
     /**
      * @api
      *
-     * @deprecated Use getCountryByIso2Code() instead.
+     * @deprecated Use {@link getCountryByIso2Code()} instead.
      *
      * @param string $iso2Code
      *
@@ -55,6 +55,7 @@ interface CountryFacadeInterface
     /**
      * Specification:
      * - Verifies if countries can be found by countryIso2Codes given in CheckoutDataTransfer.billingAddress and CheckoutDataTransfer.shippingAddress.
+     * - Verifies if countries can be found by countryIso2Codes given in CheckoutDataTransfer.shipments.shippingAddress.
      *
      * @api
      *

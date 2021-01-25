@@ -12,19 +12,11 @@ use Generated\Shared\Transfer\PriceProductFilterTransfer;
 interface ProductBundleToPriceProductFacadeInterface
 {
     /**
-     * @param string $sku
-     * @param string|null $priceType
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceFilterTransfer
      *
      * @return int|null
      */
-    public function findPriceBySku($sku, $priceType = null);
-
-    /**
-     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
-     *
-     * @return int|null
-     */
-    public function findPriceFor(PriceProductFilterTransfer $priceProductFilterTransfer);
+    public function findPriceFor(PriceProductFilterTransfer $priceFilterTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceFilterTransfer

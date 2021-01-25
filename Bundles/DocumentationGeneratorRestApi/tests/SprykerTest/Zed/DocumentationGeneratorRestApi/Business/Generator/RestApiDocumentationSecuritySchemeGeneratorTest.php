@@ -49,11 +49,10 @@ class RestApiDocumentationSecuritySchemeGeneratorTest extends Unit
 
         $this->assertNotEmpty($securitySchemes);
         $this->assertArrayHasKey(static::BEARER_AUTH, $securitySchemes);
-        $this->assertArraySubset([
-            static::BEARER_AUTH => [
-                'type' => 'http',
-                'scheme' => 'bearer',
-            ],
-        ], $securitySchemes);
+        $this->assertArrayHasKey(static::BEARER_AUTH, $securitySchemes);
+        $this->assertSame([
+            'type' => 'http',
+            'scheme' => 'bearer',
+        ], $securitySchemes[static::BEARER_AUTH]);
     }
 }

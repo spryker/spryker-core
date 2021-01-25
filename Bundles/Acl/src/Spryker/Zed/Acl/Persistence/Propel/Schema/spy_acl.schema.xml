@@ -6,7 +6,7 @@
           namespace="Orm\Zed\Acl\Persistence"
           package="src.Orm.Zed.Acl.Persistence">
 
-    <table name="spy_acl_role" idMethod="native" phpName="SpyAclRole">
+    <table name="spy_acl_role" idMethod="native">
         <column name="id_acl_role" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="name" required="true" size="255" type="VARCHAR"/>
         <unique name="spy_acl_role-name">
@@ -17,7 +17,7 @@
         <id-method-parameter value="spy_acl_role_pk_seq"/>
     </table>
 
-    <table name="spy_acl_rule" idMethod="native" phpName="SpyAclRule">
+    <table name="spy_acl_rule" idMethod="native">
         <column name="id_acl_rule" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_acl_role" required="true" type="INTEGER"/>
         <column name="bundle" required="true" size="45" type="VARCHAR"/>
@@ -32,7 +32,7 @@
         <id-method-parameter value="spy_acl_rule_pk_seq"/>
     </table>
 
-    <table name="spy_acl_group" idMethod="native" phpName="SpyAclGroup">
+    <table name="spy_acl_group" idMethod="native">
         <column name="id_acl_group" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="name" required="true" size="255" type="VARCHAR"/>
         <unique name="spy_acl_group-name">

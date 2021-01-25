@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 
 /**
- * @deprecated Use \Spryker\Zed\Shipment\Business\Checkout\MultiShipmentOrderSaverInterface instead
+ * @deprecated Use {@link \Spryker\Zed\Shipment\Business\Checkout\MultiShipmentOrderSaverInterface} instead
  */
 interface ShipmentOrderSaverInterface
 {

@@ -43,7 +43,7 @@ class TestTransfer extends AbstractTransfer
      *
      * @return $this
      */
-    public function setFoo($foo)
+    public function setFoo(string $foo)
     {
         $this->foo = $foo;
         $this->modifiedProperties[self::FOO] = true;
@@ -54,7 +54,7 @@ class TestTransfer extends AbstractTransfer
     /**
      * @return string
      */
-    public function getFoo()
+    public function getFoo(): string
     {
         return $this->foo;
     }

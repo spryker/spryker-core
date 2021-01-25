@@ -42,4 +42,12 @@
         <property name="title" type="string"/>
     </transfer>
 
+    <transfer name="Locale">
+        <property name="idLocale" type="int"/>
+    </transfer>
+
+    <transfer name="LocalizedAttributes">
+        <property name="locale" type="Locale"/>
+    </transfer>
+
 </transfers>

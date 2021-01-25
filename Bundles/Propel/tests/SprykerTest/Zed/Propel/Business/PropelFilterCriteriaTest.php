@@ -27,7 +27,7 @@ class PropelFilterCriteriaTest extends Unit
     /**
      * @return void
      */
-    public function testToCriteriaShouldReturnEmptyCriteriaWhenNothingWasSet()
+    public function testToCriteriaShouldReturnEmptyCriteriaWhenNothingWasSet(): void
     {
         $filterTransfer = new FilterTransfer();
 
@@ -35,15 +35,15 @@ class PropelFilterCriteriaTest extends Unit
         $propelCriteria = $filterCriteria->toCriteria();
 
         $this->assertInstanceOf(Criteria::class, $propelCriteria);
-        $this->assertEquals(-1, $propelCriteria->getLimit());
-        $this->assertEquals(0, $propelCriteria->getOffset());
-        $this->assertEquals([], $propelCriteria->getOrderByColumns());
+        $this->assertSame(-1, $propelCriteria->getLimit());
+        $this->assertSame(0, $propelCriteria->getOffset());
+        $this->assertSame([], $propelCriteria->getOrderByColumns());
     }
 
     /**
      * @return void
      */
-    public function testToCriteriaShouldReturnCriteriaWithParameters()
+    public function testToCriteriaShouldReturnCriteriaWithParameters(): void
     {
         $filterTransfer = new FilterTransfer();
         $filterTransfer->setLimit(10);
@@ -55,8 +55,8 @@ class PropelFilterCriteriaTest extends Unit
         $propelCriteria = $filterCriteria->toCriteria();
 
         $this->assertInstanceOf(Criteria::class, $propelCriteria);
-        $this->assertEquals(10, $propelCriteria->getLimit());
-        $this->assertEquals(0, $propelCriteria->getOffset());
+        $this->assertSame(10, $propelCriteria->getLimit());
+        $this->assertSame(0, $propelCriteria->getOffset());
         $this->assertEquals(['foobar DESC'], $propelCriteria->getOrderByColumns());
     }
 }

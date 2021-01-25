@@ -7,13 +7,13 @@
 
 namespace Spryker\Zed\Config\Communication\Plugin\WebProfiler;
 
-use Exception;
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\WebProfilerExtension\Dependency\Plugin\WebProfilerDataCollectorPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\DataCollector\DataCollectorInterface;
+use Throwable;
 
 /**
  * @method \Spryker\Zed\Config\Business\ConfigFacadeInterface getFacade()
@@ -74,11 +74,11 @@ class WebProfilerConfigDataCollectorPlugin extends AbstractPlugin implements Web
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Symfony\Component\HttpFoundation\Response $response
-     * @param \Exception|null $exception
+     * @param \Throwable|null $exception
      *
      * @return array
      */
-    public function collect(Request $request, Response $response, ?Exception $exception = null)
+    public function collect(Request $request, Response $response, ?Throwable $exception = null)
     {
         $this->data = $this->getFacade()->getProfileData();
 
@@ -86,6 +86,8 @@ class WebProfilerConfigDataCollectorPlugin extends AbstractPlugin implements Web
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return array

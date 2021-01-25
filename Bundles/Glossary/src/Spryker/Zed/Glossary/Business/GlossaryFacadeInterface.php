@@ -71,7 +71,7 @@ interface GlossaryFacadeInterface
      *
      * @param array $idKeys
      *
-     * @return bool
+     * @return void
      */
     public function deleteKeys(array $idKeys);
 
@@ -310,4 +310,29 @@ interface GlossaryFacadeInterface
      * @return \Generated\Shared\Transfer\TranslationTransfer[]
      */
     public function getTranslationsByGlossaryKeyAndLocales(string $glossaryKey, array $localeTransfers): array;
+
+    /**
+     * Specifications:
+     * - Finds all translations for specified keys and locale transfers.
+     *
+     * @api
+     *
+     * @param string[] $glossaryKeys
+     * @param \Generated\Shared\Transfer\LocaleTransfer[] $localeTransfers
+     *
+     * @return \Generated\Shared\Transfer\TranslationTransfer[]
+     */
+    public function getTranslationsByGlossaryKeysAndLocaleTransfers(array $glossaryKeys, array $localeTransfers): array;
+
+    /**
+     * Specifications:
+     * - Returns glossary key transfers by array of glossary keys.
+     *
+     * @api
+     *
+     * @param string[] $glossaryKeys
+     *
+     * @return \Generated\Shared\Transfer\GlossaryKeyTransfer[]
+     */
+    public function getGlossaryKeyTransfersByGlossaryKeys(array $glossaryKeys): array;
 }

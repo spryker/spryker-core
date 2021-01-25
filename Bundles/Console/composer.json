@@ -4,13 +4,15 @@
   "description": "Console module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.3",
+    "spryker/application": "^3.23.0",
+    "spryker/application-extension": "^1.0.0",
     "spryker/config": "^3.0.0",
+    "spryker/container": "^1.4.0",
     "spryker/error-handler": "^2.0.0",
-    "spryker/kernel": "^3.30.0"
+    "spryker/kernel": "^3.52.0"
   },
   "require-dev": {
-    "spryker/application": "*",
     "spryker/code-sniffer": "*",
     "spryker/log": "^3.0.0",
     "spryker/propel": "*",
@@ -32,15 +34,21 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+  },
   "extra": {
     "branch-alias": {
-      "dev-master": "3.0.x-dev"
+      "dev-master": "4.0.x-dev"
     }
   },
   "config": {
     "sort-packages": true
   },
   "bin": [
-    "bin/console"
+    "bin/console",
+    "bin/yves",
+    "bin/glue"
   ]
 }

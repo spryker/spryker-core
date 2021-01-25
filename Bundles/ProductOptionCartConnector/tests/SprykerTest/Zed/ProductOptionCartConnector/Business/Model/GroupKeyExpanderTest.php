@@ -29,7 +29,7 @@ class GroupKeyExpanderTest extends Unit
     /**
      * @return void
      */
-    public function testKeyGroupByProvidedOptions()
+    public function testKeyGroupByProvidedOptions(): void
     {
         $changeTransfer = $this->createCartChangeTransfer(
             [
@@ -44,13 +44,13 @@ class GroupKeyExpanderTest extends Unit
         $groupKeyExpander->expand($changeTransfer);
 
         $cartItem = $changeTransfer->getItems()[0];
-        $this->assertEquals('1-2', $cartItem->getGroupKey());
+        $this->assertSame('1-2', $cartItem->getGroupKey());
     }
 
     /**
      * @return void
      */
-    public function testWithExistingGroupKey()
+    public function testWithExistingGroupKey(): void
     {
         $changeTransfer = $this->createCartChangeTransfer(
             [
@@ -67,13 +67,13 @@ class GroupKeyExpanderTest extends Unit
         $groupKeyExpander->expand($changeTransfer);
 
         $cartItem = $changeTransfer->getItems()[0];
-        $this->assertEquals('SKU-1-2', $cartItem->getGroupKey());
+        $this->assertSame('SKU-1-2', $cartItem->getGroupKey());
     }
 
     /**
      * @return void
      */
-    public function testWithDifferentOptionsOrder()
+    public function testWithDifferentOptionsOrder(): void
     {
         $changeTransfer = $this->createCartChangeTransfer(
             [
@@ -96,10 +96,10 @@ class GroupKeyExpanderTest extends Unit
         $groupKeyExpander->expand($changeTransfer);
 
         $cartItem = $changeTransfer->getItems()[0];
-        $this->assertEquals('A-1-2-3', $cartItem->getGroupKey());
+        $this->assertSame('A-1-2-3', $cartItem->getGroupKey());
 
         $cartItem = $changeTransfer->getItems()[1];
-        $this->assertEquals('A-1-2-3', $cartItem->getGroupKey());
+        $this->assertSame('A-1-2-3', $cartItem->getGroupKey());
     }
 
     /**
@@ -107,7 +107,7 @@ class GroupKeyExpanderTest extends Unit
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    protected function createCartChangeTransfer(array $cartItems)
+    protected function createCartChangeTransfer(array $cartItems): CartChangeTransfer
     {
         $changeTransfer = new CartChangeTransfer();
 

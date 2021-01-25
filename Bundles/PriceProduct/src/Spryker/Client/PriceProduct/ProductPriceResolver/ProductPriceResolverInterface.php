@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\PriceProductFilterTransfer;
 interface ProductPriceResolverInterface
 {
     /**
-     * @deprecated Please use resolveTransfer() instead
+     * @deprecated Use resolveTransfer() instead
      *
      * @param array $priceMap
      *
@@ -22,7 +22,7 @@ interface ProductPriceResolverInterface
     public function resolve(array $priceMap);
 
     /**
-     * @param array $priceProductTransfers
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      *
      * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
      */

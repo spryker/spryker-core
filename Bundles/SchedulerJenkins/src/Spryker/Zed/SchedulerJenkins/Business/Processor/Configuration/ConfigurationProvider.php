@@ -41,10 +41,12 @@ class ConfigurationProvider implements ConfigurationProviderInterface
     {
         $schedulerJenkinsConfiguration = $this->getJenkinsConfigurationBySchedulerId($this->idScheduler);
 
-        if (!array_key_exists(
-            SharedSchedulerJenkinsConfig::SCHEDULER_JENKINS_CREDENTIALS,
-            $schedulerJenkinsConfiguration
-        )) {
+        if (
+            !array_key_exists(
+                SharedSchedulerJenkinsConfig::SCHEDULER_JENKINS_CREDENTIALS,
+                $schedulerJenkinsConfiguration
+            )
+        ) {
             return [];
         }
 
@@ -62,10 +64,12 @@ class ConfigurationProvider implements ConfigurationProviderInterface
     {
         $schedulerJenkinsConfiguration = $this->getJenkinsConfigurationBySchedulerId($this->idScheduler);
 
-        if (!array_key_exists(
-            SharedSchedulerJenkinsConfig::SCHEDULER_JENKINS_BASE_URL,
-            $schedulerJenkinsConfiguration
-        )) {
+        if (
+            !array_key_exists(
+                SharedSchedulerJenkinsConfig::SCHEDULER_JENKINS_BASE_URL,
+                $schedulerJenkinsConfiguration
+            )
+        ) {
             throw new InvalidJenkinsConfiguration('');
         }
 
@@ -79,10 +83,12 @@ class ConfigurationProvider implements ConfigurationProviderInterface
     {
         $schedulerJenkinsConfiguration = $this->getJenkinsConfigurationBySchedulerId($this->idScheduler);
 
-        if (array_key_exists(
-            SharedSchedulerJenkinsConfig::SCHEDULER_JENKINS_CSRF_ENABLED,
-            $schedulerJenkinsConfiguration
-        )) {
+        if (
+            array_key_exists(
+                SharedSchedulerJenkinsConfig::SCHEDULER_JENKINS_CSRF_ENABLED,
+                $schedulerJenkinsConfiguration
+            )
+        ) {
             return $schedulerJenkinsConfiguration[SharedSchedulerJenkinsConfig::SCHEDULER_JENKINS_CSRF_ENABLED];
         }
 

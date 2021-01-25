@@ -14,6 +14,14 @@ interface DataImportConstants
 {
     /**
      * Specification:
+     * - Switches bulk mode of data import process.
+     *
+     * @api
+     */
+    public const IS_BULK_MODE_ENABLED = 'DATA_IMPORT:IS_BULK_MODE_ENABLED';
+
+    /**
+     * Specification:
      * - Root path to the import files.
      * - Can be used to have a small set of import data for e.g. testing or development.
      */
@@ -34,4 +42,20 @@ interface DataImportConstants
      * @api
      */
     public const QUEUE_WRITER_CHUNK_SIZE = 'DATA_IMPORT:QUEUE_WRITER_CHUNK_SIZE';
+
+    /**
+     * Specification:
+     * - Defines the size of the chunk to be used in publisher for triggering events to the queue.
+     *
+     * @api
+     */
+    public const PUBLISHER_TRIGGER_CHUNK_SIZE = 'DATA_IMPORT:PUBLISHER_TRIGGER_CHUNK_SIZE';
+
+    /**
+     * Specification:
+     * - Defines the size of the chunk to be used in publisher for flushing local cache of events.
+     *
+     * @api
+     */
+    public const PUBLISHER_FLUSH_CHUNK_SIZE = 'DATA_IMPORT:PUBLISHER_FLUSH_CHUNK_SIZE';
 }

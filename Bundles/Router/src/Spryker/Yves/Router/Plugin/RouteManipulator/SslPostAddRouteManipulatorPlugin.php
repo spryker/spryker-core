@@ -41,7 +41,7 @@ class SslPostAddRouteManipulatorPlugin extends AbstractPlugin implements PostAdd
             $route->setSchemes(static::SCHEME_HTTPS);
         }
 
-        if (in_array($routeName, $this->getSslExcludedRouteNames())) {
+        if (in_array($routeName, $this->getSslExcludedRouteNames(), true)) {
             $route->setSchemes(static::SCHEME_HTTP);
         }
 

@@ -1,0 +1,187 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 52,
+            "line_to": 52,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getPriceMode on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOptionCartConnector/src/Spryker/Zed/ProductOptionCartConnector/Business/Model/ProductOptionValueExpander.php",
+            "snippet": "        $priceMode = $changeTransfer->getQuote()->getPriceMode();",
+            "selected_text": "getPriceMode",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 53,
+            "line_to": 53,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getCurrency on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOptionCartConnector/src/Spryker/Zed/ProductOptionCartConnector/Business/Model/ProductOptionValueExpander.php",
+            "snippet": "        $currencyCode = $changeTransfer->getQuote()->getCurrency()->getCode();",
+            "selected_text": "getCurrency",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 53,
+            "line_to": 53,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getCode on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOptionCartConnector/src/Spryker/Zed/ProductOptionCartConnector/Business/Model/ProductOptionValueExpander.php",
+            "snippet": "        $currencyCode = $changeTransfer->getQuote()->getCurrency()->getCode();",
+            "selected_text": "getCode",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 56,
+            "line_to": 56,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Zed\\ProductOptionCartConnector\\Business\\Model\\ProductOptionValueExpander::expandProductOptionTransfers cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOptionCartConnector/src/Spryker/Zed/ProductOptionCartConnector/Business/Model/ProductOptionValueExpander.php",
+            "snippet": "            $this->expandProductOptionTransfers($itemTransfer, $priceMode, $currencyCode);",
+            "selected_text": "$priceMode",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 56,
+            "line_to": 56,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 3 of Spryker\\Zed\\ProductOptionCartConnector\\Business\\Model\\ProductOptionValueExpander::expandProductOptionTransfers cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOptionCartConnector/src/Spryker/Zed/ProductOptionCartConnector/Business/Model/ProductOptionValueExpander.php",
+            "snippet": "            $this->expandProductOptionTransfers($itemTransfer, $priceMode, $currencyCode);",
+            "selected_text": "$currencyCode",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 77,
+            "line_to": 77,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ProductOptionCartConnector\\Dependency\\Facade\\ProductOptionCartConnectorToProductOptionFacadeInterface::getProductOptionValueById cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOptionCartConnector/src/Spryker/Zed/ProductOptionCartConnector/Business/Model/ProductOptionValueExpander.php",
+            "snippet": "                $productOptionTransfer->getIdProductOptionValue(),",
+            "selected_text": "$productOptionTransfer->getIdProductOptionValue()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 61,
+            "line_to": 61,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ProductOptionCartConnector\\Business\\Validator\\ProductOptionValuePriceValidator::createMissingPriceViolationMessage cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOptionCartConnector/src/Spryker/Zed/ProductOptionCartConnector/Business/Validator/ProductOptionValuePriceValidator.php",
+            "snippet": "                $responseTransfer->addMessage($this->createMissingPriceViolationMessage($itemTransfer->getSku()));",
+            "selected_text": "$itemTransfer->getSku()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 66,
+            "line_to": 66,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\MessageTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOptionCartConnector/src/Spryker/Zed/ProductOptionCartConnector/Business/Validator/ProductOptionValuePriceValidator.php",
+            "snippet": "        $responseTransfer->setIsSuccess($responseTransfer->getMessages()->count() === 0);",
+            "selected_text": "count",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 80,
+            "line_to": 80,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ProductOptionCartConnector\\Dependency\\Facade\\ProductOptionCartConnectorToProductOptionFacadeInterface::getProductOptionValueById cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOptionCartConnector/src/Spryker/Zed/ProductOptionCartConnector/Business/Validator/ProductOptionValuePriceValidator.php",
+            "snippet": "            $productOptionTransfer->getIdProductOptionValue(),",
+            "selected_text": "$productOptionTransfer->getIdProductOptionValue()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 81,
+            "line_to": 81,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getCurrency on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOptionCartConnector/src/Spryker/Zed/ProductOptionCartConnector/Business/Validator/ProductOptionValuePriceValidator.php",
+            "snippet": "            $cartChangeTransfer->getQuote()->getCurrency()->getCode()",
+            "selected_text": "getCurrency",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 81,
+            "line_to": 81,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getCode on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOptionCartConnector/src/Spryker/Zed/ProductOptionCartConnector/Business/Validator/ProductOptionValuePriceValidator.php",
+            "snippet": "            $cartChangeTransfer->getQuote()->getCurrency()->getCode()",
+            "selected_text": "getCode",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 126,
+            "line_to": 126,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getPriceMode on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOptionCartConnector/src/Spryker/Zed/ProductOptionCartConnector/Business/Validator/ProductOptionValuePriceValidator.php",
+            "snippet": "        $priceMode = $cartChangeTransfer->getQuote()->getPriceMode();",
+            "selected_text": "getPriceMode",
+            "error_level": 3,
+            "shortcode": 83
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 19,
+            "line_to": 19,
+            "type": "DeprecatedInterface",
+            "message": "Spryker\\Zed\\Cart\\Dependency\\ItemExpanderPluginInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOptionCartConnector/src/Spryker/Zed/ProductOptionCartConnector/Communication/Plugin/CartItemGroupKeyOptionPlugin.php",
+            "snippet": "class CartItemGroupKeyOptionPlugin extends AbstractPlugin implements ItemExpanderPluginInterface",
+            "selected_text": "CartItemGroupKeyOptionPlugin",
+            "error_level": 2,
+            "shortcode": 152
+        },
+        {
+            "severity": "info",
+            "line_from": 19,
+            "line_to": 19,
+            "type": "DeprecatedInterface",
+            "message": "Spryker\\Zed\\Cart\\Dependency\\ItemExpanderPluginInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOptionCartConnector/src/Spryker/Zed/ProductOptionCartConnector/Communication/Plugin/CartItemProductOptionPlugin.php",
+            "snippet": "class CartItemProductOptionPlugin extends AbstractPlugin implements ItemExpanderPluginInterface",
+            "selected_text": "CartItemProductOptionPlugin",
+            "error_level": 2,
+            "shortcode": 152
+        },
+        {
+            "severity": "info",
+            "line_from": 19,
+            "line_to": 19,
+            "type": "DeprecatedInterface",
+            "message": "Spryker\\Zed\\Cart\\Dependency\\PostSavePluginInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOptionCartConnector/src/Spryker/Zed/ProductOptionCartConnector/Communication/Plugin/ChangeProductOptionQuantityPlugin.php",
+            "snippet": "class ChangeProductOptionQuantityPlugin extends AbstractPlugin implements PostSavePluginInterface",
+            "selected_text": "ChangeProductOptionQuantityPlugin",
+            "error_level": 2,
+            "shortcode": 152
+        }
+    ]
+}

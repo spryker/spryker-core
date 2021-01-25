@@ -4,7 +4,7 @@
   "description": "Store module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.3",
     "spryker/application-extension": "^1.0.0",
     "spryker/kernel": "^3.30.0",
     "spryker/propel-orm": "^1.0.0",
@@ -14,6 +14,7 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/container": "*",
+    "spryker/propel": "*",
     "spryker/quote": "*",
     "spryker/testify": "*"
   },
@@ -30,14 +31,15 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Testify\\Module\\": "vendor/spryker/testify/tests/_support/Module",
-      "Transfer\\Module\\": "vendor/spryker/transfer/tests/_support/Module",
-      "Config\\Module\\": "vendor/spryker/config/tests/_support/Module",
       "SprykerTest\\": "tests/SprykerTest/"
     }
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"

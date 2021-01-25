@@ -23,8 +23,6 @@ use Spryker\Zed\ProductSetStorage\Business\ProductSetStorageFacade;
 use Spryker\Zed\ProductSetStorage\Communication\Plugin\Event\Listener\ProductSetStoragePublishListener;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -34,17 +32,13 @@ use Spryker\Zed\ProductSetStorage\Communication\Plugin\Event\Listener\ProductSet
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  *
  * @SuppressWarnings(PHPMD)
  */
 class ProductSetStorageCommunicationTester extends Actor
 {
     use _generated\ProductSetStorageCommunicationTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 
     public const PARAM_PROJECT = 'PROJECT';
 
@@ -53,7 +47,7 @@ class ProductSetStorageCommunicationTester extends Actor
     /**
      * @return bool
      */
-    public function isSuiteProject()
+    public function isSuiteProject(): bool
     {
         if (getenv(static::PARAM_PROJECT) === static::PROJECT_SUITE) {
             return true;
@@ -129,7 +123,7 @@ class ProductSetStorageCommunicationTester extends Actor
     /**
      * @param int $idProductSet
      *
-     * @return array[]
+     * @return array
      */
     public function getProductSetImages(int $idProductSet): array
     {

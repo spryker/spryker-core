@@ -17,11 +17,11 @@ interface TestifyFacadeInterface
     /**
      * Specification:
      * - Removes all files in configured directories.
-     * - Directories are configured in `\Spryker\Zed\Testify\TestifyConfig::getOutputDirectoriesForCleanup()`.
+     * - Directories are configured in {@link \Spryker\Zed\Testify\TestifyConfig::getOutputDirectoriesForCleanup()}.
      *
      * @api
      *
-     * @return array
+     * @return string[]
      */
     public function cleanUpOutputDirectories(): array;
 }

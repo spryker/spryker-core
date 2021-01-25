@@ -33,7 +33,7 @@ class TemplateNameBuilderYvesTest extends Unit
      *
      * @return void
      */
-    public function testBuildTemplateName($path, $expectedTemplateName)
+    public function testBuildTemplateName(string $path, string $expectedTemplateName): void
     {
         $templateNameBuilder = new TemplateNameBuilderYves();
 
@@ -43,7 +43,7 @@ class TemplateNameBuilderYvesTest extends Unit
     /**
      * @return array
      */
-    public function pathDataProvider()
+    public function pathDataProvider(): array
     {
         return [
             ['src/Organization/Yves/Module/Theme/theme-name/Controller/index.twig', '@Module/Controller/index.twig'],
@@ -61,7 +61,7 @@ class TemplateNameBuilderYvesTest extends Unit
      *
      * @return void
      */
-    public function testBuildNamespacedTemplateName($path, $expectedTemplateName)
+    public function testBuildNamespacedTemplateName(string $path, string $expectedTemplateName): void
     {
         $templateNameBuilder = new TemplateNameBuilderYves();
 
@@ -71,7 +71,7 @@ class TemplateNameBuilderYvesTest extends Unit
     /**
      * @return array
      */
-    public function namespacedPathDataProvider()
+    public function namespacedPathDataProvider(): array
     {
         return [
             ['src/Organization/Yves/Module/Theme/theme-name/Controller/index.twig', '@Organization:Module/Controller/index.twig'],

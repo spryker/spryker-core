@@ -19,7 +19,7 @@ use Spryker\Zed\Sales\Dependency\Plugin\OrderExpanderPreSavePluginInterface;
 class OrderSourceExpanderPreSavePlugin extends AbstractPlugin implements OrderExpanderPreSavePluginInterface
 {
     /**
-     * {@inerhitdoc}
+     * {@inheritDoc}
      *
      * @api
      *

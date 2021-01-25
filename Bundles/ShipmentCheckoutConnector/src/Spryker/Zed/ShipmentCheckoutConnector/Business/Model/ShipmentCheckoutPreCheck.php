@@ -14,7 +14,7 @@ use Spryker\Shared\ShipmentCheckoutConnector\ShipmentCheckoutConnectorConfig;
 use Spryker\Zed\ShipmentCheckoutConnector\Dependency\Facade\ShipmentCheckoutConnectorToShipmentFacadeInterface;
 
 /**
- * @deprecated Use \Spryker\Zed\ShipmentCheckoutConnector\Business\Shipment\ShipmentCheckoutPreCheck instead.
+ * @deprecated Use {@link \Spryker\Zed\ShipmentCheckoutConnector\Business\Shipment\ShipmentCheckoutPreCheck} instead.
  */
 class ShipmentCheckoutPreCheck implements ShipmentCheckoutPreCheckInterface
 {

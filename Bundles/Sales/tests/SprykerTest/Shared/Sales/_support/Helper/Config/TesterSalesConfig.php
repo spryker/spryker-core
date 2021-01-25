@@ -23,7 +23,7 @@ class TesterSalesConfig extends SalesConfig
      *
      * @return void
      */
-    public function setStateMachineProcessName($stateMachineProcessName)
+    public function setStateMachineProcessName(string $stateMachineProcessName): void
     {
         $this->stateMachineProcessName = $stateMachineProcessName;
     }
@@ -34,7 +34,7 @@ class TesterSalesConfig extends SalesConfig
      *
      * @return string
      */
-    public function determineProcessForOrderItem(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer)
+    public function determineProcessForOrderItem(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer): string
     {
         return $this->stateMachineProcessName;
     }

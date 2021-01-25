@@ -1,7 +1,6 @@
 # ProductCustomerPermission Module
-[![Build Status](https://travis-ci.org/spryker/ProductCustomerPermission.svg)](https://travis-ci.org/spryker/ProductCustomerPermission)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/ProductCustomerPermission/badge.svg)](https://coveralls.io/github/spryker/ProductCustomerPermission)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/spryker/ProductCustomerPermission/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/spryker/ProductCustomerPermission/?branch=master)
+[![Build Status](https://travis-ci.org/spryker/product-customer-permission.svg)](https://travis-ci.org/spryker/product-customer-permission)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 ## Installation
 

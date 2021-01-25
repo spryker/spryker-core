@@ -4,13 +4,14 @@
   "description": "ProductNew module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.3",
     "spryker/kernel": "^3.30.0",
     "spryker/product": "^5.0.0 || ^6.0.0",
-    "spryker/product-label": "^2.1.0",
-    "spryker/product-label-storage": "^0.1.0 || ^1.0.0",
+    "spryker/product-label": "^2.1.0 || ^3.0.0",
+    "spryker/product-label-storage": "^0.1.2 || ^1.7.0 || ^2.0.0",
     "spryker/propel-orm": "^1.1.0",
-    "spryker/search": "^7.0.0 || ^8.0.0"
+    "spryker/search": "^7.0.0 || ^8.0.0",
+    "spryker/search-extension": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
@@ -33,6 +34,10 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"

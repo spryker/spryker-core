@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\Quote\Session;
 
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Quote\Dependency\Client\QuoteToCurrencyClientInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -29,6 +30,11 @@ class QuoteSession implements QuoteSessionInterface
      * @var \Spryker\Client\Quote\Dependency\Client\QuoteToCurrencyClientInterface
      */
     protected $currencyClient;
+
+    /**
+     * @var \Generated\Shared\Transfer\CurrencyTransfer|null
+     */
+    protected static $currencyTransfer;
 
     /**
      * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
@@ -111,7 +117,19 @@ class QuoteSession implements QuoteSessionInterface
             return;
         }
 
-        $quoteTransfer->setCurrency($this->currencyClient->getCurrent());
+        $quoteTransfer->setCurrency($this->getCurrencyTransfer());
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CurrencyTransfer
+     */
+    protected function getCurrencyTransfer(): CurrencyTransfer
+    {
+        if (!static::$currencyTransfer) {
+            static::$currencyTransfer = $this->currencyClient->getCurrent();
+        }
+
+        return static::$currencyTransfer;
     }
 
     /**

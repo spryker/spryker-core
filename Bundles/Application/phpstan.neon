@@ -1,9 +1,13 @@
 parameters:
+    checkMissingIterableValueType: false
+    reportUnmatchedIgnoredErrors: false
     dynamicConstantNames:
         - APPLICATION
         - APPLICATION_ENV
         - APPLICATION_STORE
+        - APPLICATION_CODE_BUCKET
     ignoreErrors:
         - '#Call to an undefined method .+ActiveRecordInterface::toArray\(\).#'
         - '#Call to an undefined method Silex\\Application::getTransferSession\(\).#'
-        - '#Class Symfony\\Bridge\\Twig\\Form\\TwigRenderer not found.#'
+        - '#Instantiated class Symfony\\Component\\HttpKernel\\EventListener\\ExceptionListener not found.#'
+        - '#Method Spryker\\Yves\\Application\\Plugin\\Provider\\ExceptionServiceProvider::getListener\(\) should return Symfony\\Component\\EventDispatcher\\EventSubscriberInterface but returns Symfony\\Component\\HttpKernel\\EventListener\\ExceptionListener.#'

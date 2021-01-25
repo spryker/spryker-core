@@ -11,7 +11,7 @@ use Spryker\Service\Kernel\ClassResolver\AbstractClassResolver;
 
 class ServiceResolver extends AbstractClassResolver
 {
-    public const CLASS_NAME_PATTERN = '\\%1$s\\Service\\%2$s%3$s\\%2$sService';
+    protected const RESOLVABLE_TYPE = 'ServiceService';
 
     /**
      * @param object|string $callerClass
@@ -22,28 +22,12 @@ class ServiceResolver extends AbstractClassResolver
      */
     public function resolve($callerClass)
     {
-        $this->setCallerClass($callerClass);
+        $resolved = $this->doResolve($callerClass);
 
-        if ($this->canResolve()) {
-            /** @var \Spryker\Service\Kernel\AbstractService $class */
-            $class = $this->getResolvedClassInstance();
-
-            return $class;
+        if ($resolved !== null) {
+            return $resolved;
         }
 
         throw new ServiceNotFoundException($this->getClassInfo());
-    }
-
-    /**
-     * @return string
-     */
-    public function getClassPattern()
-    {
-        return sprintf(
-            self::CLASS_NAME_PATTERN,
-            self::KEY_NAMESPACE,
-            self::KEY_BUNDLE,
-            self::KEY_STORE
-        );
     }
 }

@@ -25,7 +25,7 @@ class SetupBusinessFactoryTest extends Unit
     /**
      * @return \Spryker\Zed\Setup\Business\SetupBusinessFactory
      */
-    private function getFactory()
+    private function getFactory(): SetupBusinessFactory
     {
         return new SetupBusinessFactory();
     }
@@ -33,7 +33,7 @@ class SetupBusinessFactoryTest extends Unit
     /**
      * @return void
      */
-    public function testCreateModelCronjobsShouldReturnFullyConfiguredInstance()
+    public function testCreateModelCronjobsShouldReturnFullyConfiguredInstance(): void
     {
         $instance = $this->getFactory()->createModelCronjobs();
 
@@ -43,7 +43,7 @@ class SetupBusinessFactoryTest extends Unit
     /**
      * @return void
      */
-    public function testCreateModelGeneratedDirectoryRemoverShouldReturnFullyConfiguredInstance()
+    public function testCreateModelGeneratedDirectoryRemoverShouldReturnFullyConfiguredInstance(): void
     {
         $instance = $this->getFactory()->createModelGeneratedDirectoryRemover();
 

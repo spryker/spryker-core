@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ShoppingList\Business\Model;
 
+use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListResponseTransfer;
@@ -15,11 +16,20 @@ use Generated\Shared\Transfer\ShoppingListTransfer;
 interface ShoppingListItemOperationInterface
 {
     /**
+     * @deprecated Use {@link addShoppingListItem()} instead. Will be removed with next major release.
+     *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
     public function addItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
+     */
+    public function addShoppingListItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
@@ -50,6 +60,8 @@ interface ShoppingListItemOperationInterface
     public function removeItemById(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemResponseTransfer;
 
     /**
+     * @deprecated Use {@link updateShoppingListItem()} instead. Will be removed with next major release.
+     *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
@@ -59,7 +71,25 @@ interface ShoppingListItemOperationInterface
     /**
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
+     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
+     */
+    public function updateShoppingListItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
     public function saveShoppingListItemWithoutPermissionsCheck(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return void
+     */
+    public function saveShoppingListItemBulk(
+        ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer,
+        ShoppingListTransfer $shoppingListTransfer
+    ): void;
 }

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -39,7 +39,7 @@ class HttpRequestValidatorTest extends Unit
         $httpRequestValidator = $this->createHttpRequestValidator();
         $restErrorMessageTransfer = $httpRequestValidator->validate($request);
 
-        $this->assertEquals(Response::HTTP_UNSUPPORTED_MEDIA_TYPE, $restErrorMessageTransfer->getStatus());
+        $this->assertSame(Response::HTTP_UNSUPPORTED_MEDIA_TYPE, $restErrorMessageTransfer->getStatus());
     }
 
     /**

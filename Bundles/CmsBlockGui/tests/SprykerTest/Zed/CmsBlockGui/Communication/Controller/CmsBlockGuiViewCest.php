@@ -28,10 +28,10 @@ class CmsBlockGuiViewCest
      *
      * @return void
      */
-    public function breadcrumbIsVisible(CmsBlockGuiCommunicationTester $i)
+    public function breadcrumbIsVisible(CmsBlockGuiCommunicationTester $i): void
     {
         $i->listDataTable(CmsBlockGuiListPage::URL . '/table');
         $i->clickDataTableButton('View Block');
-        $i->seeBreadcrumbNavigation('Dashboard / Content Management / Blocks / View CMS Block');
+        $i->seeBreadcrumbNavigation('Content / Blocks / View CMS Block');
     }
 }

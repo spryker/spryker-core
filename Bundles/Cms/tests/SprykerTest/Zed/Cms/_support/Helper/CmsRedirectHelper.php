@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\Cms\Helper;
 
 use Codeception\Module;
 use Generated\Shared\DataBuilder\UrlRedirectBuilder;
+use Spryker\Zed\Url\Persistence\UrlQueryContainerInterface;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
@@ -39,7 +40,7 @@ class CmsRedirectHelper extends Module
             $urlRedirectTransfer->getIdUrlRedirect()
         ));
 
-        $this->getDataCleanupHelper()->_addCleanup(function () use ($urlRedirectTransfer) {
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($urlRedirectTransfer): void {
             $this->cleanupUrlRedirect($urlRedirectTransfer->getSource()->getIdUrl());
         });
 
@@ -49,7 +50,7 @@ class CmsRedirectHelper extends Module
     /**
      * @return \Spryker\Zed\Url\Persistence\UrlQueryContainerInterface
      */
-    private function getUrlQuery()
+    private function getUrlQuery(): UrlQueryContainerInterface
     {
         return $this->getLocator()->url()->queryContainer();
     }
@@ -59,7 +60,7 @@ class CmsRedirectHelper extends Module
      *
      * @return void
      */
-    private function cleanupUrlRedirect($idUrl)
+    private function cleanupUrlRedirect(int $idUrl): void
     {
         $this->debug(sprintf('Deleting URL redirect: %d', $idUrl));
 

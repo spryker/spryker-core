@@ -1,7 +1,8 @@
 # ProductPageSearch Module
-[![Build Status](https://travis-ci.org/spryker/ProductPageSearch.svg)](https://travis-ci.org/spryker/ProductPageSearch)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/ProductPageSearch/badge.svg)](https://coveralls.io/github/spryker/ProductPageSearch)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/spryker/ProductPageSearch/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/spryker/ProductPageSearch/?branch=master)
+[![Build Status](https://travis-ci.org/spryker/product-page-search.svg)](https://travis-ci.org/spryker/product-page-search)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
+
+This module manages Elasticsearch documents for product entities.
 
 ## Installation
 

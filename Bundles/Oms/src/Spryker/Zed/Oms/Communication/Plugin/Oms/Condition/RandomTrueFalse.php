@@ -18,6 +18,6 @@ class RandomTrueFalse extends AbstractCondition
      */
     public function check(SpySalesOrderItem $orderItem)
     {
-        return (bool)mt_rand(0, 1);
+        return (bool)random_int(0, 1);
     }
 }

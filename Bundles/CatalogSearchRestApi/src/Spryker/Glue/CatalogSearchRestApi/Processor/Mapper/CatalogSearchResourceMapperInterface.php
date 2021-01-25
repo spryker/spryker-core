@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -12,11 +13,11 @@ use Generated\Shared\Transfer\RestCatalogSearchAttributesTransfer;
 interface CatalogSearchResourceMapperInterface
 {
     /**
-     * @param array $restSearchResponse
+     * @param array $searchResult
      *
      * @return \Generated\Shared\Transfer\RestCatalogSearchAttributesTransfer
      */
-    public function mapSearchResultToRestAttributesTransfer(array $restSearchResponse): RestCatalogSearchAttributesTransfer;
+    public function mapSearchResultToRestAttributesTransfer(array $searchResult): RestCatalogSearchAttributesTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\RestCatalogSearchAttributesTransfer $restSearchAttributesTransfer

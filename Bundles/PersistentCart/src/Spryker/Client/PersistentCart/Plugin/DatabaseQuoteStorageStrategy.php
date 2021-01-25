@@ -10,15 +10,19 @@ namespace Spryker\Client\PersistentCart\Plugin;
 use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\ItemReplaceTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeQuantityTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
+use Generated\Shared\Transfer\PersistentItemReplaceTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\QuoteUpdateRequestAttributesTransfer;
 use Generated\Shared\Transfer\QuoteUpdateRequestTransfer;
+use Spryker\Client\CartExtension\Dependency\Plugin\CartOperationQuoteStorageStrategyPluginInterface;
 use Spryker\Client\CartExtension\Dependency\Plugin\QuoteResetLockQuoteStorageStrategyPluginInterface;
 use Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface;
+use Spryker\Client\CartExtension\Dependency\Plugin\ReplaceableQuoteItemStorageStrategyPluginInterface;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Shared\Quote\QuoteConfig;
 
@@ -26,7 +30,7 @@ use Spryker\Shared\Quote\QuoteConfig;
  * @method \Spryker\Client\PersistentCart\PersistentCartFactory getFactory()
  * @method \Spryker\Client\PersistentCart\PersistentCartClientInterface getClient()
  */
-class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorageStrategyPluginInterface, QuoteResetLockQuoteStorageStrategyPluginInterface
+class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorageStrategyPluginInterface, QuoteResetLockQuoteStorageStrategyPluginInterface, CartOperationQuoteStorageStrategyPluginInterface, ReplaceableQuoteItemStorageStrategyPluginInterface
 {
     /**
      * @return string
@@ -218,6 +222,107 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
 
     /**
      * Specification:
+     *  - Makes Zed request with items and customer.
+     *  - Loads customer quote from database.
+     *  - Adds items to quote.
+     *  - Recalculates quote totals.
+     *  - Saves updated quote to database.
+     *  - Stores quote in session internally after zed request.
+     *  - Returns quote response.
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function addToCart(CartChangeTransfer $cartChangeTransfer): QuoteResponseTransfer
+    {
+        $persistentCartChangeTransfer = $this->createPersistentCartChangeTransfer()
+            ->setItems($cartChangeTransfer->getItems());
+
+        $quoteResponseTransfer = $this->getZedStub()->addItem($persistentCartChangeTransfer);
+        $this->updateQuote($quoteResponseTransfer);
+
+        return $quoteResponseTransfer;
+    }
+
+    /**
+     * Specification:
+     *  - Makes Zed request with items and customer.
+     *  - Loads customer quote from database.
+     *  - Removes items from quote.
+     *  - Recalculates quote totals.
+     *  - Saves updated quote to database.
+     *  - Stores quote in session internally after zed request.
+     *  - Returns quote response.
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function removeFromCart(CartChangeTransfer $cartChangeTransfer): QuoteResponseTransfer
+    {
+        $persistentCartChangeTransfer = $this->createPersistentCartChangeTransfer()
+            ->setItems($cartChangeTransfer->getItems());
+
+        $quoteResponseTransfer = $this->getZedStub()->removeItem($persistentCartChangeTransfer);
+        $this->updateQuote($quoteResponseTransfer);
+
+        return $quoteResponseTransfer;
+    }
+
+    /**
+     * Specification:
+     *  - Makes Zed request with items and customer.
+     *  - Loads customer quote from database.
+     *  - Changes quantity for given items.
+     *  - Recalculates quote totals.
+     *  - Saves updated quote to database.
+     *  - Stores quote in session internally after zed request.
+     *  - Returns quote response.
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function updateQuantity(CartChangeTransfer $cartChangeTransfer): QuoteResponseTransfer
+    {
+        $persistentCartChangeTransfer = $this->createPersistentCartChangeTransfer()
+            ->setItems($cartChangeTransfer->getItems());
+
+        $quoteResponseTransfer = $this->getZedStub()->updateQuantity($persistentCartChangeTransfer);
+        $this->updateQuote($quoteResponseTransfer);
+
+        return $quoteResponseTransfer;
+    }
+
+    /**
+     * Specification:
+     * - Makes Zed request with items and customer.
+     * - Loads customer quote from database.
+     * - Replaces item from quote.
+     * - Recalculates quote totals.
+     * - Saves updated quote to database.
+     * - Stores quote in session internally after zed request.
+     * - Returns quote response.
+     *
+     * @param \Generated\Shared\Transfer\ItemReplaceTransfer $itemReplaceTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function replaceItem(ItemReplaceTransfer $itemReplaceTransfer): QuoteResponseTransfer
+    {
+        $persistentItemReplaceTransfer = $this->createPersistentItemReplaceTransfer()
+            ->setNewItem($itemReplaceTransfer->getNewItem())
+            ->setItemToBeReplaced($itemReplaceTransfer->getItemToBeReplaced());
+
+        $quoteResponseTransfer = $this->getZedStub()->replaceItem($persistentItemReplaceTransfer);
+        $this->updateQuote($quoteResponseTransfer);
+
+        return $quoteResponseTransfer;
+    }
+
+    /**
+     * Specification:
      *  - Makes zed request with items and customer.
      *  - Loads customer quote from database.
      *  - Decreases quantity for given item.
@@ -382,6 +487,21 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
         $persistentQuoteChange->setQuote($sessionQuoteTransfer);
 
         return $persistentQuoteChange;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\PersistentItemReplaceTransfer
+     */
+    protected function createPersistentItemReplaceTransfer(): PersistentItemReplaceTransfer
+    {
+        $persistentItemReplaceTransfer = new PersistentItemReplaceTransfer();
+        $persistentItemReplaceTransfer->setCustomer($this->getFactory()->getCustomerClient()->getCustomer());
+
+        $sessionQuoteTransfer = $this->getQuoteClient()->getQuote();
+        $persistentItemReplaceTransfer->setIdQuote($sessionQuoteTransfer->getIdQuote());
+        $persistentItemReplaceTransfer->setQuote($sessionQuoteTransfer);
+
+        return $persistentItemReplaceTransfer;
     }
 
     /**

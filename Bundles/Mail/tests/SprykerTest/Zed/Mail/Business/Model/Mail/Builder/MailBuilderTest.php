@@ -17,6 +17,7 @@ use Spryker\Zed\Mail\Business\Exception\MissingMailTransferException;
 use Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilder;
 use Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilderInterface;
 use Spryker\Zed\Mail\Dependency\Facade\MailToGlossaryInterface;
+use Spryker\Zed\Mail\MailConfig;
 
 /**
  * Auto-generated group annotations
@@ -33,16 +34,18 @@ use Spryker\Zed\Mail\Dependency\Facade\MailToGlossaryInterface;
  */
 class MailBuilderTest extends Unit
 {
-    public const SUBJECT = 'subject';
-    public const TEMPLATE_NAME_HTML = 'html.template.name';
-    public const TEMPLATE_NAME_TEXT = 'text.template.name';
-    public const EMAIL = 'email';
-    public const NAME = 'name';
+    protected const SUBJECT = 'subject';
+    protected const TEMPLATE_NAME_HTML = 'html.template.name';
+    protected const TEMPLATE_NAME_TEXT = 'text.template.name';
+    protected const EMAIL = 'email';
+    protected const NAME = 'name';
+    protected const BCC_EMAIL = 'bcc@email.com';
+    protected const BCC_NAME = 'bccName';
 
     /**
      * @return void
      */
-    public function testInstantiation()
+    public function testInstantiation(): void
     {
         $mailBuilder = $this->getMailBuilder();
 
@@ -52,7 +55,7 @@ class MailBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testSetMailTransferWillReturnFluentInterface()
+    public function testSetMailTransferWillReturnFluentInterface(): void
     {
         $mailTransfer = new MailTransfer();
         $mailBuilder = $this->getMailBuilder();
@@ -63,7 +66,7 @@ class MailBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testGetMailTransferWillReturnMailTransfer()
+    public function testGetMailTransferWillReturnMailTransfer(): void
     {
         $mailTransfer = new MailTransfer();
         $mailBuilder = $this->getMailBuilder();
@@ -75,7 +78,7 @@ class MailBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testGetMailTransferWillThrowExceptionWhenMailTransferNotSet()
+    public function testGetMailTransferWillThrowExceptionWhenMailTransferNotSet(): void
     {
         $this->expectException(MissingMailTransferException::class);
 
@@ -86,7 +89,7 @@ class MailBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testSetSubjectWillSetSubjectOnMailTransfer()
+    public function testSetSubjectWillSetSubjectOnMailTransfer(): void
     {
         $mailBuilder = $this->getMailBuilder();
         $mailBuilder->setSubject(static::SUBJECT);
@@ -97,7 +100,7 @@ class MailBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testSetSubjectWillReturnFluentInterface()
+    public function testSetSubjectWillReturnFluentInterface(): void
     {
         $mailBuilder = $this->getMailBuilder();
         $this->assertInstanceOf(MailBuilderInterface::class, $mailBuilder->setSubject(static::SUBJECT));
@@ -106,7 +109,7 @@ class MailBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testSetHtmlTemplateWillReturnFluentInterface()
+    public function testSetHtmlTemplateWillReturnFluentInterface(): void
     {
         $mailBuilder = $this->getMailBuilder();
         $this->assertInstanceOf(MailBuilderInterface::class, $mailBuilder->setHtmlTemplate(static::TEMPLATE_NAME_HTML));
@@ -115,7 +118,7 @@ class MailBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testSetHtmlTemplateWillAddMailTemplateTransferToMailTransfer()
+    public function testSetHtmlTemplateWillAddMailTemplateTransferToMailTransfer(): void
     {
         $mailBuilder = $this->getMailBuilder();
         $mailBuilder->setHtmlTemplate(static::TEMPLATE_NAME_HTML);
@@ -126,7 +129,7 @@ class MailBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testSetTextTemplateWillReturnFluentInterface()
+    public function testSetTextTemplateWillReturnFluentInterface(): void
     {
         $mailBuilder = $this->getMailBuilder();
         $this->assertInstanceOf(MailBuilderInterface::class, $mailBuilder->setTextTemplate(static::TEMPLATE_NAME_TEXT));
@@ -135,7 +138,7 @@ class MailBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testSetTextTemplateWillAddMailTemplateTransferToMailTransfer()
+    public function testSetTextTemplateWillAddMailTemplateTransferToMailTransfer(): void
     {
         $mailBuilder = $this->getMailBuilder();
         $mailBuilder->setTextTemplate(static::TEMPLATE_NAME_TEXT);
@@ -146,7 +149,7 @@ class MailBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testSetSenderWillReturnFluentInterface()
+    public function testSetSenderWillReturnFluentInterface(): void
     {
         $mailBuilder = $this->getMailBuilder();
         $this->assertInstanceOf(MailBuilderInterface::class, $mailBuilder->setSender(static::EMAIL, static::NAME));
@@ -155,7 +158,7 @@ class MailBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testSetSenderWillSetSenderTransferToMailTransfer()
+    public function testSetSenderWillSetSenderTransferToMailTransfer(): void
     {
         $mailBuilder = $this->getMailBuilder();
         $mailBuilder->setSender(static::EMAIL, static::NAME);
@@ -166,7 +169,7 @@ class MailBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testAddRecipientWillReturnFluentInterface()
+    public function testAddRecipientWillReturnFluentInterface(): void
     {
         $mailBuilder = $this->getMailBuilder();
         $this->assertInstanceOf(MailBuilderInterface::class, $mailBuilder->addRecipient(static::EMAIL, static::NAME));
@@ -175,7 +178,7 @@ class MailBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testAddRecipientWillAddMailRecipientTransferToMailTransfer()
+    public function testAddRecipientWillAddMailRecipientTransferToMailTransfer(): void
     {
         $mailBuilder = $this->getMailBuilder();
         $mailBuilder->addRecipient(static::EMAIL, static::NAME);
@@ -186,7 +189,24 @@ class MailBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testBuildWillReturnMailTransfer()
+    public function testAddRecipientBccAddsBccToMailTransfer(): void
+    {
+        // Assign
+        $mailBuilder = $this->getMailBuilder();
+        $expectedBccCount = 1;
+
+        // Act
+        $mailBuilder->addRecipientBcc(static::BCC_EMAIL, static::BCC_NAME);
+
+        // Assert
+        $actualBccCount = $mailBuilder->getMailTransfer()->getRecipientBccs()->count();
+        $this->assertSame($expectedBccCount, $actualBccCount);
+    }
+
+    /**
+     * @return void
+     */
+    public function testBuildWillReturnMailTransfer(): void
     {
         $mailBuilder = $this->getMailBuilder();
 
@@ -196,10 +216,13 @@ class MailBuilderTest extends Unit
     /**
      * @return \Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilder
      */
-    protected function getMailBuilderWithoutMailTransfer()
+    protected function getMailBuilderWithoutMailTransfer(): MailBuilder
     {
         $glossaryFacadeMock = $this->getGlossaryFacadeMock();
-        $mailBuilder = new MailBuilder($glossaryFacadeMock);
+        $mailBuilder = new MailBuilder(
+            $glossaryFacadeMock,
+            $this->getConfigMock()
+        );
 
         return $mailBuilder;
     }
@@ -207,10 +230,13 @@ class MailBuilderTest extends Unit
     /**
      * @return \Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilder
      */
-    protected function getMailBuilder()
+    protected function getMailBuilder(): MailBuilder
     {
         $glossaryFacadeMock = $this->getGlossaryFacadeMock();
-        $mailBuilder = new MailBuilder($glossaryFacadeMock);
+        $mailBuilder = new MailBuilder(
+            $glossaryFacadeMock,
+            $this->getConfigMock()
+        );
 
         $localeTransfer = new LocaleTransfer();
         $localeTransfer->setLocaleName('en_US');
@@ -226,12 +252,30 @@ class MailBuilderTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Mail\Dependency\Facade\MailToGlossaryInterface
      */
-    protected function getGlossaryFacadeMock()
+    protected function getGlossaryFacadeMock(): MailToGlossaryInterface
     {
         $glossaryFacadeMock = $this->getMockBuilder(MailToGlossaryInterface::class)->setMethods(['hasTranslation', 'translate'])->getMock();
         $glossaryFacadeMock->method('hasTranslation')->willReturn(true);
         $glossaryFacadeMock->method('translate')->willReturnArgument(0);
 
         return $glossaryFacadeMock;
+    }
+
+    /**
+     * @return \Spryker\Zed\Mail\MailConfig|\PHPUnit\Framework\MockObject\MockObject
+     */
+    protected function getConfigMock(): MailConfig
+    {
+        $configMock = $this->getMockBuilder(MailConfig::class)
+            ->setMethods([
+                'getSenderName',
+                'getSenderEmail',
+            ])
+            ->getMock();
+
+        $configMock->method('getSenderName')->willReturn(static::NAME);
+        $configMock->method('getSenderEmail')->willReturn(static::EMAIL);
+
+        return $configMock;
     }
 }

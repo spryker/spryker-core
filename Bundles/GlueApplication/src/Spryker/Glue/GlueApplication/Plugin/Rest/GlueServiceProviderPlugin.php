@@ -14,6 +14,8 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
+ * @deprecated Use {@link \Spryker\Glue\GlueApplication\Plugin\EventDispatcher\GlueRestControllerListenerEventDispatcherPlugin} instead.
+ *
  * @method \Spryker\Glue\GlueApplication\GlueApplicationFactory getFactory()
  */
 class GlueServiceProviderPlugin extends AbstractPlugin implements ServiceProviderInterface
@@ -25,15 +27,6 @@ class GlueServiceProviderPlugin extends AbstractPlugin implements ServiceProvide
      */
     public function register(Application $app): void
     {
-        $eventDispatcher = $this->getEventDispatcher($app);
-
-        $eventDispatcher->addListener(
-            KernelEvents::CONTROLLER,
-            [
-                $this->getFactory()->createRestControllerListener(),
-                'onKernelController',
-            ]
-        );
     }
 
     /**
@@ -43,6 +36,15 @@ class GlueServiceProviderPlugin extends AbstractPlugin implements ServiceProvide
      */
     public function boot(Application $app): void
     {
+        $eventDispatcher = $this->getEventDispatcher($app);
+
+        $eventDispatcher->addListener(
+            KernelEvents::CONTROLLER,
+            [
+                $this->getFactory()->createRestControllerListener(),
+                'onKernelController',
+            ]
+        );
     }
 
     /**

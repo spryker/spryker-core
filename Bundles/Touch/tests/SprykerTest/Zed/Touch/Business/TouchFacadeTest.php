@@ -55,7 +55,7 @@ class TouchFacadeTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -69,7 +69,7 @@ class TouchFacadeTest extends Unit
     /**
      * @return array
      */
-    public function bulkTouchMethodsDataProvider()
+    public function bulkTouchMethodsDataProvider(): array
     {
         return [
             ['bulkTouchActive', [self::ITEM_ID_1], 1],
@@ -96,7 +96,7 @@ class TouchFacadeTest extends Unit
      *
      * @return void
      */
-    public function testBulkTouchSetMethods($method, array $itemIds, $expectedAffectedRows, $expectedItemEvent)
+    public function testBulkTouchSetMethods(string $method, array $itemIds, int $expectedAffectedRows, string $expectedItemEvent): void
     {
         $affectedRows = $this->touchFacade->$method(self::ITEM_TYPE, $itemIds);
 
@@ -110,7 +110,7 @@ class TouchFacadeTest extends Unit
     /**
      * @return array
      */
-    public function bulkTouchSetMethodsDataProvider()
+    public function bulkTouchSetMethodsDataProvider(): array
     {
         return [
             ['bulkTouchSetActive', [self::ITEM_ID_1], 1, self::ITEM_EVENT_ACTIVE],
@@ -134,7 +134,7 @@ class TouchFacadeTest extends Unit
      *
      * @return \Orm\Zed\Touch\Persistence\SpyTouch
      */
-    protected function createTouchEntity($itemEvent, $itemId, $itemType = self::ITEM_TYPE)
+    protected function createTouchEntity(string $itemEvent, int $itemId, string $itemType = self::ITEM_TYPE): SpyTouch
     {
         $date = new DateTime();
         $date->sub(new DateInterval('PT1M'));

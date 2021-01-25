@@ -20,8 +20,10 @@ class ProductAttributeMapper implements ProductAttributeMapperInterface
      *
      * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer
      */
-    public function mapProductManagementAttributeEntityToTransfer(SpyProductManagementAttribute $productManagementAttributeEntity, ProductManagementAttributeTransfer $productManagementAttributeTransfer)
-    {
+    public function mapProductManagementAttributeEntityToTransfer(
+        SpyProductManagementAttribute $productManagementAttributeEntity,
+        ProductManagementAttributeTransfer $productManagementAttributeTransfer
+    ) {
         $productManagementAttributeTransfer->fromArray($productManagementAttributeEntity->toArray(), true);
         $productManagementAttributeTransfer->fromArray($productManagementAttributeEntity->getSpyProductAttributeKey()->toArray(), true);
 

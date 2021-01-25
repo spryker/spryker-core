@@ -15,6 +15,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 class CustomerApiQueryContainer extends AbstractQueryContainer implements CustomerApiQueryContainerInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery
@@ -25,6 +27,8 @@ class CustomerApiQueryContainer extends AbstractQueryContainer implements Custom
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idCustomer
@@ -39,6 +43,8 @@ class CustomerApiQueryContainer extends AbstractQueryContainer implements Custom
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idCustomer

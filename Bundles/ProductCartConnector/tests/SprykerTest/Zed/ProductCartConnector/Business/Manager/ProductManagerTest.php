@@ -38,7 +38,7 @@ class ProductManagerTest extends Unit
     /**
      * @return void
      */
-    public function testExpandItemsMustAddProductIdToAllCartItems()
+    public function testExpandItemsMustAddProductIdToAllCartItems(): void
     {
         $changeTransfer = $this->getChangeTransfer();
 
@@ -57,7 +57,7 @@ class ProductManagerTest extends Unit
     /**
      * @return void
      */
-    public function testExpandItemsMustAddAbstractSkuToAllCartItems()
+    public function testExpandItemsMustAddAbstractSkuToAllCartItems(): void
     {
         $changeTransfer = $this->getChangeTransfer();
 
@@ -77,7 +77,7 @@ class ProductManagerTest extends Unit
     /**
      * @return void
      */
-    public function testExpandItemsMustAddAbstractIdToAllCartItems()
+    public function testExpandItemsMustAddAbstractIdToAllCartItems(): void
     {
         $changeTransfer = $this->getChangeTransfer();
 
@@ -97,7 +97,7 @@ class ProductManagerTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    private function getChangeTransfer()
+    private function getChangeTransfer(): CartChangeTransfer
     {
         $changeTransfer = new CartChangeTransfer();
         $itemTransfer = new ItemTransfer();
@@ -113,7 +113,7 @@ class ProductManagerTest extends Unit
      *
      * @return \Spryker\Zed\ProductCartConnector\Business\Expander\ProductExpander
      */
-    public function getProductManager(ProductConcreteTransfer $returnValue, $localizedName)
+    public function getProductManager(ProductConcreteTransfer $returnValue, string $localizedName): ProductExpander
     {
         $mockProductFacade = $this->getMockProductFacade();
 
@@ -136,7 +136,7 @@ class ProductManagerTest extends Unit
     /**
      * @return \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    private function getMockProductFacade()
+    private function getMockProductFacade(): ProductCartConnectorToProductInterface
     {
         return $this->getMockBuilder(ProductCartConnectorToProductInterface::class)
             ->setMethods([
@@ -147,6 +147,9 @@ class ProductManagerTest extends Unit
                 'isProductConcreteActive',
                 'getRawProductConcreteBySku',
                 'getRawProductConcreteTransfersByConcreteSkus',
+                'getProductUrls',
+                'getRawProductAbstractTransfersByAbstractSkus',
+                'getProductConcretesByCriteria',
             ])
             ->disableOriginalConstructor()
             ->getMock();
@@ -155,7 +158,7 @@ class ProductManagerTest extends Unit
     /**
      * @return \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToLocaleInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    private function getMockLocaleFacade()
+    private function getMockLocaleFacade(): ProductCartConnectorToLocaleInterface
     {
         return $this->getMockBuilder(ProductCartConnectorToLocaleInterface::class)
             ->setMethods(['getCurrentLocale'])

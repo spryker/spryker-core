@@ -18,8 +18,6 @@ use Orm\Zed\FileManager\Persistence\SpyMimeType;
 use Orm\Zed\FileManager\Persistence\SpyMimeTypeQuery;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -29,7 +27,7 @@ use Orm\Zed\FileManager\Persistence\SpyMimeTypeQuery;
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  *
  * @SuppressWarnings(PHPMD)
  */
@@ -79,7 +77,7 @@ class FileManagerBusinessTester extends Actor
     /**
      * @return void
      */
-    public function insertDbRecords()
+    public function insertDbRecords(): void
     {
         $this->resetDb();
 
@@ -92,7 +90,7 @@ class FileManagerBusinessTester extends Actor
     /**
      * @return void
      */
-    public function resetDb()
+    public function resetDb(): void
     {
         SpyFileQuery::create()->deleteAll();
         SpyMimeTypeQuery::create()->deleteAll();
@@ -104,7 +102,7 @@ class FileManagerBusinessTester extends Actor
      *
      * @return string
      */
-    public function getDocumentFullFileName($fileName)
+    public function getDocumentFullFileName(string $fileName): string
     {
         $rootDirectory = Configuration::dataDir() . static::ROOT_DIRECTORY . static::PATH_DOCUMENT;
         if (!is_dir($rootDirectory)) {
@@ -117,7 +115,7 @@ class FileManagerBusinessTester extends Actor
     /**
      * @return void
      */
-    public function clearFiles()
+    public function clearFiles(): void
     {
         exec('rm -rf ' . $this->getDocumentFullFileName('*'));
     }
@@ -125,7 +123,7 @@ class FileManagerBusinessTester extends Actor
     /**
      * @return int
      */
-    public function getIdFile()
+    public function getIdFile(): int
     {
         return $this->idFile;
     }
@@ -133,7 +131,7 @@ class FileManagerBusinessTester extends Actor
     /**
      * @return int
      */
-    public function getIdFirstFileInfo()
+    public function getIdFirstFileInfo(): int
     {
         return $this->idFirstFileInfo;
     }
@@ -141,7 +139,7 @@ class FileManagerBusinessTester extends Actor
     /**
      * @return int
      */
-    public function getIdSecondFileInfo()
+    public function getIdSecondFileInfo(): int
     {
         return $this->idSecondFileInfo;
     }
@@ -149,7 +147,7 @@ class FileManagerBusinessTester extends Actor
     /**
      * @return int
      */
-    public function getIdMimeType()
+    public function getIdMimeType(): int
     {
         return $this->idMimeType;
     }
@@ -157,7 +155,7 @@ class FileManagerBusinessTester extends Actor
     /**
      * @return int
      */
-    public function getIdFirstFileDirectory()
+    public function getIdFirstFileDirectory(): int
     {
         return $this->idFirstFileDirectory;
     }
@@ -165,7 +163,7 @@ class FileManagerBusinessTester extends Actor
     /**
      * @return int
      */
-    public function getIdSecondFileDirectory()
+    public function getIdSecondFileDirectory(): int
     {
         return $this->idSecondFileDirectory;
     }
@@ -173,7 +171,7 @@ class FileManagerBusinessTester extends Actor
     /**
      * @return int
      */
-    public function getIdSubFileDirectory()
+    public function getIdSubFileDirectory(): int
     {
         return $this->idSubFileDirectory;
     }
@@ -212,7 +210,7 @@ class FileManagerBusinessTester extends Actor
     /**
      * @return \Orm\Zed\FileManager\Persistence\SpyFile
      */
-    protected function insertFile()
+    protected function insertFile(): SpyFile
     {
         $file = new SpyFile();
         $file->setFileName('customer.txt');
@@ -227,7 +225,7 @@ class FileManagerBusinessTester extends Actor
     /**
      * @return void
      */
-    protected function insertMimeType()
+    protected function insertMimeType(): void
     {
         $mimeType = new SpyMimeType();
         $mimeType->setName('text/plain');
@@ -243,7 +241,7 @@ class FileManagerBusinessTester extends Actor
      *
      * @return void
      */
-    protected function insertFileInfos(SpyFile $file)
+    protected function insertFileInfos(SpyFile $file): void
     {
         $fileInfo = new SpyFileInfo();
         $fileInfo->setFile($file);
@@ -277,7 +275,7 @@ class FileManagerBusinessTester extends Actor
     /**
      * @return void
      */
-    protected function insertFileDirectories()
+    protected function insertFileDirectories(): void
     {
         $fileDirectory = new SpyFileDirectory();
         $fileDirectory->setName('first_directory');

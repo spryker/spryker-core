@@ -1,0 +1,54 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 32,
+            "line_to": 32,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ProductStorage\\Persistence\\SpyProductAbstractStorage> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductResourceAliasStorage/src/Spryker/Zed/ProductResourceAliasStorage/Persistence/ProductResourceAliasStorageRepository.php",
+            "snippet": "            ->getData();",
+            "selected_text": "getData",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 47,
+            "line_to": 47,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Product\\Persistence\\SpyProductAbstract> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductResourceAliasStorage/src/Spryker/Zed/ProductResourceAliasStorage/Persistence/ProductResourceAliasStorageRepository.php",
+            "snippet": "            ->toArray(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT);",
+            "selected_text": "toArray",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 61,
+            "line_to": 61,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ProductStorage\\Persistence\\SpyProductConcreteStorage> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductResourceAliasStorage/src/Spryker/Zed/ProductResourceAliasStorage/Persistence/ProductResourceAliasStorageRepository.php",
+            "snippet": "            ->getData();",
+            "selected_text": "getData",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 76,
+            "line_to": 76,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Product\\Persistence\\SpyProduct> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductResourceAliasStorage/src/Spryker/Zed/ProductResourceAliasStorage/Persistence/ProductResourceAliasStorageRepository.php",
+            "snippet": "            ->toArray(SpyProductTableMap::COL_ID_PRODUCT);",
+            "selected_text": "toArray",
+            "error_level": 3,
+            "shortcode": 113
+        }
+    ],
+    "deprecation": []
+}

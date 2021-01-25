@@ -12,7 +12,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @deprecated Use Spryker\Zed\Setup\Communication\Console\EmptyGeneratedDirectoryConsole instead.
+ * @deprecated Use {@link \Spryker\Zed\Setup\Communication\Console\EmptyGeneratedDirectoryConsole} instead.
  *
  * @method \Spryker\Zed\Setup\Business\SetupFacadeInterface getFacade()
  * @method \Spryker\Zed\Setup\Communication\SetupCommunicationFactory getFactory()
@@ -37,10 +37,12 @@ class RemoveGeneratedDirectoryConsole extends Console
      * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
-     * @return int|null|void
+     * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->getFacade()->removeGeneratedDirectory();
+
+        return static::CODE_SUCCESS;
     }
 }

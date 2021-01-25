@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CmsBlock\Business;
 
 use Generated\Shared\Transfer\CmsBlockGlossaryTransfer;
+use Generated\Shared\Transfer\CmsBlockTemplateTransfer;
 use Generated\Shared\Transfer\CmsBlockTransfer;
 
 interface CmsBlockFacadeInterface
@@ -22,7 +23,7 @@ interface CmsBlockFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CmsBlockTransfer|null
      */
-    public function findCmsBlockById($idCmsBlock);
+    public function findCmsBlockById(int $idCmsBlock): ?CmsBlockTransfer;
 
     /**
      * Specification:
@@ -34,7 +35,7 @@ interface CmsBlockFacadeInterface
      *
      * @return void
      */
-    public function activateById($idCmsBlock);
+    public function activateById(int $idCmsBlock): void;
 
     /**
      * Specification:
@@ -46,7 +47,7 @@ interface CmsBlockFacadeInterface
      *
      * @return void
      */
-    public function deactivateById($idCmsBlock);
+    public function deactivateById(int $idCmsBlock): void;
 
     /**
      * Specification:
@@ -62,7 +63,7 @@ interface CmsBlockFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CmsBlockTransfer
      */
-    public function updateCmsBlock(CmsBlockTransfer $cmsBlockTransfer);
+    public function updateCmsBlock(CmsBlockTransfer $cmsBlockTransfer): CmsBlockTransfer;
 
     /**
      * Specification:
@@ -76,7 +77,7 @@ interface CmsBlockFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CmsBlockTransfer
      */
-    public function createCmsBlock(CmsBlockTransfer $cmsBlockTransfer);
+    public function createCmsBlock(CmsBlockTransfer $cmsBlockTransfer): CmsBlockTransfer;
 
     /**
      * Specification:
@@ -89,7 +90,7 @@ interface CmsBlockFacadeInterface
      *
      * @return void
      */
-    public function syncTemplate($templatePath);
+    public function syncTemplate(string $templatePath): void;
 
     /**
      * Specification:
@@ -103,7 +104,7 @@ interface CmsBlockFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CmsBlockGlossaryTransfer
      */
-    public function findGlossary($idCmsBlock);
+    public function findGlossary(int $idCmsBlock): CmsBlockGlossaryTransfer;
 
     /**
      * Specification:
@@ -118,7 +119,7 @@ interface CmsBlockFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CmsBlockGlossaryTransfer
      */
-    public function saveGlossary(CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer);
+    public function saveGlossary(CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer): CmsBlockGlossaryTransfer;
 
     /**
      * Specification:
@@ -134,7 +135,7 @@ interface CmsBlockFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CmsBlockTemplateTransfer
      */
-    public function createTemplate($name, $path);
+    public function createTemplate(string $name, string $path): CmsBlockTemplateTransfer;
 
     /**
      * Specification:
@@ -147,7 +148,7 @@ interface CmsBlockFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CmsBlockTemplateTransfer|null
      */
-    public function findTemplate($path);
+    public function findTemplate(string $path): ?CmsBlockTemplateTransfer;
 
     /**
      * Specification:
@@ -160,5 +161,5 @@ interface CmsBlockFacadeInterface
      *
      * @return bool
      */
-    public function hasTemplateFileById($idCmsBlockTemplate);
+    public function hasTemplateFileById(int $idCmsBlockTemplate): bool;
 }

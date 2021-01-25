@@ -31,7 +31,7 @@ class MailTypeCollectionTest extends Unit
     /**
      * @return void
      */
-    public function testAddMailTypeReturnFluentInterface()
+    public function testAddMailTypeReturnFluentInterface(): void
     {
         $mailTypeCollection = $this->getMailCollection();
         $mailTypeMock = $this->getMailTypeMock();
@@ -42,7 +42,7 @@ class MailTypeCollectionTest extends Unit
     /**
      * @return void
      */
-    public function testHasShouldReturnFalseWhenMailTypeNotInCollection()
+    public function testHasShouldReturnFalseWhenMailTypeNotInCollection(): void
     {
         $mailTypeCollection = $this->getMailCollection();
 
@@ -52,7 +52,7 @@ class MailTypeCollectionTest extends Unit
     /**
      * @return void
      */
-    public function testHasShouldReturnTrueWhenMailTypeInCollection()
+    public function testHasShouldReturnTrueWhenMailTypeInCollection(): void
     {
         $mailTypeMock = $this->getMailTypeMock();
         $mailTypeCollection = $this->getMailCollection();
@@ -64,7 +64,7 @@ class MailTypeCollectionTest extends Unit
     /**
      * @return void
      */
-    public function testGetByMailTypeShouldReturnMailTypeWhenMailTypeInCollection()
+    public function testGetByMailTypeShouldReturnMailTypeWhenMailTypeInCollection(): void
     {
         $mailTypeMock = $this->getMailTypeMock();
         $mailTypeCollection = $this->getMailCollection();
@@ -76,7 +76,7 @@ class MailTypeCollectionTest extends Unit
     /**
      * @return void
      */
-    public function testGetByMailTypeShouldThrowExceptionWhenMailTypeNotInCollection()
+    public function testGetByMailTypeShouldThrowExceptionWhenMailTypeNotInCollection(): void
     {
         $mailTypeCollection = $this->getMailCollection();
 
@@ -87,7 +87,7 @@ class MailTypeCollectionTest extends Unit
     /**
      * @return \Spryker\Zed\Mail\Business\Model\Mail\MailTypeCollection
      */
-    protected function getMailCollection()
+    protected function getMailCollection(): MailTypeCollection
     {
         return new MailTypeCollection();
     }
@@ -95,7 +95,7 @@ class MailTypeCollectionTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Mail\Dependency\Plugin\MailTypePluginInterface
      */
-    protected function getMailTypeMock()
+    protected function getMailTypeMock(): MailTypePluginInterface
     {
         $mailTypeMock = $this->getMockBuilder(MailTypePluginInterface::class)->setMethods(['getName', 'build'])->getMock();
         $mailTypeMock->method('getName')->willReturn(static::MAIL_TYPE_A);

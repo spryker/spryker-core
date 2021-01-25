@@ -1,0 +1,199 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 192,
+            "line_to": 192,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'Generated\\Shared\\Transfer\\ApiCollectionTransfer' for Spryker\\Zed\\CustomerApi\\Business\\Model\\CustomerApi::find is incorrect, got 'Generated\\Shared\\Transfer\\ApiCollectionTransfer|array<array-key, mixed>'",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomerApi/src/Spryker/Zed/CustomerApi/Business/Model/CustomerApi.php",
+            "snippet": "     * @return \\Generated\\Shared\\Transfer\\ApiCollectionTransfer",
+            "selected_text": "\\Generated\\Shared\\Transfer\\ApiCollectionTransfer",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 209,
+            "line_to": 209,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'Generated\\Shared\\Transfer\\ApiCollectionTransfer|array<array-key, mixed>' does not match the declared return type 'Generated\\Shared\\Transfer\\ApiCollectionTransfer' for Spryker\\Zed\\CustomerApi\\Business\\Model\\CustomerApi::find",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomerApi/src/Spryker/Zed/CustomerApi/Business/Model/CustomerApi.php",
+            "snippet": "        return $apiCollectionTransfer;",
+            "selected_text": "$apiCollectionTransfer",
+            "error_level": 6,
+            "shortcode": 128
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 199,
+            "line_to": 199,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Product\\Persistence\\SpyProduct|Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomerApi/src/Spryker/Zed/CustomerApi/Business/Model/CustomerApi.php",
+            "snippet": "            $query->find()->toArray()",
+            "selected_text": "toArray",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 203,
+            "line_to": 203,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\CustomerApi\\Business\\Model\\CustomerApi::get cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomerApi/src/Spryker/Zed/CustomerApi/Business/Model/CustomerApi.php",
+            "snippet": "            $collection[$k] = $this->get($customerApiTransfer->getIdCustomer())->getData();",
+            "selected_text": "$customerApiTransfer->getIdCustomer()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 228,
+            "line_to": 228,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getLimit on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomerApi/src/Spryker/Zed/CustomerApi/Business/Model/CustomerApi.php",
+            "snippet": "        $page = $apiRequestTransfer->getFilter()->getLimit() ? ($apiRequestTransfer->getFilter()->getOffset() / $apiRequestTransfer->getFilter()->getLimit() + 1) : 1;",
+            "selected_text": "getLimit",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 228,
+            "line_to": 228,
+            "type": "PossiblyNullOperand",
+            "message": "Left operand cannot be nullable, got int|null",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomerApi/src/Spryker/Zed/CustomerApi/Business/Model/CustomerApi.php",
+            "snippet": "        $page = $apiRequestTransfer->getFilter()->getLimit() ? ($apiRequestTransfer->getFilter()->getOffset() / $apiRequestTransfer->getFilter()->getLimit() + 1) : 1;",
+            "selected_text": "$apiRequestTransfer->getFilter()->getOffset()",
+            "error_level": 1,
+            "shortcode": 80
+        },
+        {
+            "severity": "info",
+            "line_from": 228,
+            "line_to": 228,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getOffset on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomerApi/src/Spryker/Zed/CustomerApi/Business/Model/CustomerApi.php",
+            "snippet": "        $page = $apiRequestTransfer->getFilter()->getLimit() ? ($apiRequestTransfer->getFilter()->getOffset() / $apiRequestTransfer->getFilter()->getLimit() + 1) : 1;",
+            "selected_text": "getOffset",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 228,
+            "line_to": 228,
+            "type": "PossiblyNullOperand",
+            "message": "Right operand cannot be nullable, got int|null",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomerApi/src/Spryker/Zed/CustomerApi/Business/Model/CustomerApi.php",
+            "snippet": "        $page = $apiRequestTransfer->getFilter()->getLimit() ? ($apiRequestTransfer->getFilter()->getOffset() / $apiRequestTransfer->getFilter()->getLimit() + 1) : 1;",
+            "selected_text": "$apiRequestTransfer->getFilter()->getLimit()",
+            "error_level": 1,
+            "shortcode": 80
+        },
+        {
+            "severity": "info",
+            "line_from": 228,
+            "line_to": 228,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getLimit on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomerApi/src/Spryker/Zed/CustomerApi/Business/Model/CustomerApi.php",
+            "snippet": "        $page = $apiRequestTransfer->getFilter()->getLimit() ? ($apiRequestTransfer->getFilter()->getOffset() / $apiRequestTransfer->getFilter()->getLimit() + 1) : 1;",
+            "selected_text": "getLimit",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 229,
+            "line_to": 229,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getLimit on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomerApi/src/Spryker/Zed/CustomerApi/Business/Model/CustomerApi.php",
+            "snippet": "        $pageTotal = ($total && $apiRequestTransfer->getFilter()->getLimit()) ? (int)ceil($total / $apiRequestTransfer->getFilter()->getLimit()) : 1;",
+            "selected_text": "getLimit",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 229,
+            "line_to": 229,
+            "type": "PossiblyNullOperand",
+            "message": "Right operand cannot be nullable, got int|null",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomerApi/src/Spryker/Zed/CustomerApi/Business/Model/CustomerApi.php",
+            "snippet": "        $pageTotal = ($total && $apiRequestTransfer->getFilter()->getLimit()) ? (int)ceil($total / $apiRequestTransfer->getFilter()->getLimit()) : 1;",
+            "selected_text": "$apiRequestTransfer->getFilter()->getLimit()",
+            "error_level": 1,
+            "shortcode": 80
+        },
+        {
+            "severity": "info",
+            "line_from": 229,
+            "line_to": 229,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getLimit on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomerApi/src/Spryker/Zed/CustomerApi/Business/Model/CustomerApi.php",
+            "snippet": "        $pageTotal = ($total && $apiRequestTransfer->getFilter()->getLimit()) ? (int)ceil($total / $apiRequestTransfer->getFilter()->getLimit()) : 1;",
+            "selected_text": "getLimit",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 235,
+            "line_to": 235,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getLimit on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomerApi/src/Spryker/Zed/CustomerApi/Business/Model/CustomerApi.php",
+            "snippet": "        $apiPaginationTransfer->setItemsPerPage($apiRequestTransfer->getFilter()->getLimit());",
+            "selected_text": "getLimit",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 236,
+            "line_to": 236,
+            "type": "InvalidScalarArgument",
+            "message": "Argument 1 of Generated\\Shared\\Transfer\\ApiPaginationTransfer::setPage expects int|null, float|int provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomerApi/src/Spryker/Zed/CustomerApi/Business/Model/CustomerApi.php",
+            "snippet": "        $apiPaginationTransfer->setPage($page);",
+            "selected_text": "$page",
+            "error_level": 4,
+            "shortcode": 12
+        },
+        {
+            "severity": "info",
+            "line_from": 316,
+            "line_to": 316,
+            "type": "InvalidNullableReturnType",
+            "message": "The declared return type 'Generated\\Shared\\Transfer\\CustomerTransfer' for Spryker\\Zed\\CustomerApi\\Business\\Model\\CustomerApi::getCustomerFromResponse is not nullable, but 'Generated\\Shared\\Transfer\\CustomerTransfer|null' contains null",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomerApi/src/Spryker/Zed/CustomerApi/Business/Model/CustomerApi.php",
+            "snippet": "     * @return \\Generated\\Shared\\Transfer\\CustomerTransfer",
+            "selected_text": "\\Generated\\Shared\\Transfer\\CustomerTransfer",
+            "error_level": 5,
+            "shortcode": 144
+        },
+        {
+            "severity": "info",
+            "line_from": 330,
+            "line_to": 330,
+            "type": "NullableReturnStatement",
+            "message": "The declared return type 'Generated\\Shared\\Transfer\\CustomerTransfer' for Spryker\\Zed\\CustomerApi\\Business\\Model\\CustomerApi::getCustomerFromResponse is not nullable, but the function returns 'Generated\\Shared\\Transfer\\CustomerTransfer|null'",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomerApi/src/Spryker/Zed/CustomerApi/Business/Model/CustomerApi.php",
+            "snippet": "        return $this->customerFacade->findCustomerById($customerTransfer);",
+            "selected_text": "$this->customerFacade->findCustomerById($customerTransfer)",
+            "error_level": 5,
+            "shortcode": 139
+        }
+    ],
+    "deprecation": []
+}

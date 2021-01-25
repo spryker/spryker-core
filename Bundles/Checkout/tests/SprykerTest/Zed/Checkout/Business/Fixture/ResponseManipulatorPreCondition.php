@@ -32,7 +32,7 @@ class ResponseManipulatorPreCondition implements CheckoutPreConditionInterface
      *
      * @return bool
      */
-    public function checkCondition(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
+    public function checkCondition(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool
     {
         $checkoutResponseTransfer->fromArray($this->checkoutResponse->toArray(true), true);
 

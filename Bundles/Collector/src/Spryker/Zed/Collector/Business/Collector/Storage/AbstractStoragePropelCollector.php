@@ -20,7 +20,7 @@ abstract class AbstractStoragePropelCollector extends AbstractPropelCollector
     /**
      * @var \Spryker\Zed\Collector\CollectorConfig|null
      */
-    protected $config = null;
+    protected $config;
 
     /**
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $touchQuery

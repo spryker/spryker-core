@@ -1,6 +1,6 @@
 # ProductList Module
 [![Build Status](https://travis-ci.org/spryker/product-list.svg)](https://travis-ci.org/spryker/product-list)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/product-list/badge.svg)](https://coveralls.io/github/spryker/product-list)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 ProductList provides infrastructure and functionality to handle white/black lists of a concrete products for a specific merchants.
 

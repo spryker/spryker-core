@@ -12,6 +12,9 @@ use Spryker\Yves\Kernel\AbstractBundleConfig;
 use Spryker\Yves\Router\Generator\UrlGenerator;
 use Spryker\Yves\Router\UrlMatcher\CompiledUrlMatcher;
 
+/**
+ * @method \Spryker\Shared\Router\RouterConfig getSharedConfig()
+ */
 class RouterConfig extends AbstractBundleConfig
 {
     /**
@@ -30,7 +33,6 @@ class RouterConfig extends AbstractBundleConfig
             'cache_dir' => $this->getCachePathIfCacheEnabled(),
             'generator_class' => UrlGenerator::class,
             'matcher_class' => CompiledUrlMatcher::class,
-            'matcher_base_class' => CompiledUrlMatcher::class,
         ];
     }
 
@@ -59,9 +61,7 @@ class RouterConfig extends AbstractBundleConfig
     protected function getCachePathIfCacheEnabled(): ?string
     {
         if ($this->get(RouterConstants::YVES_IS_CACHE_ENABLED, true)) {
-            $defaultCachePath = sprintf('%s/data/%s/cache/%s/routing', APPLICATION_ROOT_DIR, APPLICATION_STORE, APPLICATION);
-
-            return $this->get(RouterConstants::YVES_CACHE_PATH, $defaultCachePath);
+            return $this->get(RouterConstants::YVES_CACHE_PATH, $this->getSharedConfig()->getDefaultRouterCachePath());
         }
 
         return null;
@@ -106,7 +106,7 @@ class RouterConfig extends AbstractBundleConfig
      *
      * @see \Spryker\Yves\Router\Plugin\RouterEnhancer\LanguagePrefixRouterEnhancerPlugin
      *
-     * @return array
+     * @return string[]
      */
     public function getAllowedLanguages(): array
     {
@@ -120,6 +120,8 @@ class RouterConfig extends AbstractBundleConfig
      * Specification:
      * - Returns a list of supported stores for Route manipulation.
      * - Will be used to strip of store information from a route before a route is matched.
+     *
+     * @api
      *
      * @example Incoming URL `/DE/home` will be manipulated to `/home` because the router only knows URL's without any optional pre/suffix.
      *

@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -77,11 +78,11 @@ class RequestMetadataExtractorTest extends Unit
 
         $metadata = $requestMetadataExtractor->extract($request);
 
-        $this->assertEquals('json', $metadata->getAcceptFormat());
-        $this->assertEquals('json', $metadata->getContentTypeFormat());
+        $this->assertSame('json', $metadata->getAcceptFormat());
+        $this->assertSame('json', $metadata->getContentTypeFormat());
         $this->assertFalse($metadata->isProtected());
-        $this->assertEquals('de_DE', $metadata->getLocale());
-        $this->assertEquals(Request::METHOD_GET, $metadata->getMethod());
+        $this->assertSame('de_DE', $metadata->getLocale());
+        $this->assertSame(Request::METHOD_GET, $metadata->getMethod());
     }
 
     /**

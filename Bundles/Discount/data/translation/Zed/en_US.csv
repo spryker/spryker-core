@@ -51,6 +51,7 @@ Name:,Name:
 No,No
 "No additional random characters","No additional random characters"
 "No conditions, discount always applied.","No conditions, discount always applied."
+"No returns for this order","No returns for this order"
 "No voucher codes were deleted.","No voucher codes were deleted."
 Operation,Operation
 Overview,Overview
@@ -69,4 +70,27 @@ Value,Value
 Voucher,Voucher
 "Voucher Code","Voucher Code"
 Yes,Yes
-"No returns for this order","No returns for this order"
+"Add code","Add code"
+Active,Active
+Inactive,Inactive
+"Create Discount","Create Discount"
+"Discount Type","Discount Type"
+"Cart rules","Cart rules"
+"Voucher codes","Voucher codes"
+"Calculator percentage",Percentage
+"Calculator fixed","Fixed amount"
+"Discount application type","Discount application type"
+Delete,Delete
+"Apply when","Apply when"
+"The discount can be applied if the query applies for at least X item(s).","The discount can be applied if the query applies for at least X item(s)."
+"Discount successfully activated.","Discount successfully activated."
+"Discount successfully deactivated.","Discount successfully deactivated."
+"Custom code","Custom code"
+Generate,Generate
+"You must provide length or custom code values.","You must provide length or custom code values."
+"No available codes to generate. Select higher code length.","No available codes to generate. Select higher code length."
+"Edit Discount","Edit Discount"
+"Voucher codes successfully generated.","Voucher codes successfully generated."
+"Voucher code successfully deleted.","Voucher code successfully deleted."
+"Apply to","Apply to"
+"CSRF token is not valid.","CSRF token is not valid."

@@ -1,6 +1,6 @@
 # CmsCollector Module
-[![Build Status](https://travis-ci.org/spryker/CmsCollector.svg)](https://travis-ci.org/spryker/CmsCollector)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/CmsCollector/badge.svg)](https://coveralls.io/github/spryker/CmsCollector)
+[![Build Status](https://travis-ci.org/spryker/cms-collector.svg)](https://travis-ci.org/spryker/cms-collector)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 CmsCollector provides CMS data for Yves by exporting it to key-value storage and search.
 

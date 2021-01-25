@@ -53,11 +53,6 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-sm-10"><p>{{ 'Cancelled amount' | trans }}</p></div>
-                    <div class="col-sm-2">{{ order.totals.canceledTotal | default(0) | money(true, order.currencyIsoCode) }}</div>
-                </div>
-
-                <div class="row">
                     <div class="col-sm-12 grandTotal-row">
                         <div class="row">
                             <div class="col-sm-10"><p><b>{{ 'GRAND TOTAL' | trans }}</b></p></div>
@@ -66,6 +61,16 @@
                         <div class="row">
                             <div class="col-sm-10"><p>{{ 'Total taxes' | trans }}</p></div>
                             <div class="col-sm-2">{{ order.totals.taxTotal.amount | money(true, order.currencyIsoCode) }}</div>
+                        </div>
+                        {% if order.totals.remunerationTotal is defined and order.totals.remunerationTotal %}
+                            <div class="row">
+                                <div class="col-sm-10"><p>{{ 'Remuneration total' | trans }}</p></div>
+                                <div class="col-sm-2">- {{ order.totals.remunerationTotal | money(true, order.currencyIsoCode) }}</div>
+                            </div>
+                        {% endif %}
+                        <div class="row">
+                            <div class="col-sm-10"><p>{{ 'Refund total' | trans }}</p></div>
+                            <div class="col-sm-2">{{ order.totals.canceledTotal | default(0) | money(true, order.currencyIsoCode) }}</div>
                         </div>
                     </div>
                 </div>

@@ -35,11 +35,11 @@ class BaseRuleTester extends Unit
     }
 
     /**
-     * @param string $value
+     * @param mixed $value
      *
      * @return \Generated\Shared\Transfer\ClauseTransfer
      */
-    protected function createClauseTransfer($value)
+    protected function createClauseTransfer($value): ClauseTransfer
     {
         $clauseTransfer = new ClauseTransfer();
         $clauseTransfer->setValue($value);
@@ -52,7 +52,7 @@ class BaseRuleTester extends Unit
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function createQuoteTransfer(array $items = [])
+    protected function createQuoteTransfer(array $items = []): QuoteTransfer
     {
         $quoteTransfer = new QuoteTransfer();
         $quoteTransfer->setPriceMode('GROSS_MODE');
@@ -72,7 +72,7 @@ class BaseRuleTester extends Unit
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    protected function createItemTransfer($price = 0, $quantity = 0, $sku = '')
+    protected function createItemTransfer(int $price = 0, int $quantity = 0, string $sku = ''): ItemTransfer
     {
         $itemTransfer = new ItemTransfer();
         $itemTransfer->setUnitPrice($price);

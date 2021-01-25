@@ -15,6 +15,8 @@ use Spryker\Client\Kernel\AbstractBundleConfig;
 class PriceProductConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @return string
      */
     public function getPriceTypeDefaultName()
@@ -23,6 +25,8 @@ class PriceProductConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getPriceModeIdentifierForNetType()
@@ -31,6 +35,8 @@ class PriceProductConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getPriceDimensionDefault(): string

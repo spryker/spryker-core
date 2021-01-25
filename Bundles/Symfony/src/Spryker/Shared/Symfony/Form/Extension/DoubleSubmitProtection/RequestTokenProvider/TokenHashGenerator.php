@@ -7,6 +7,9 @@
 
 namespace Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTokenProvider;
 
+/**
+ * @deprecated Use {@link \Spryker\Shared\Form\DoubleSubmitProtection\RequestTokenProvider\TokenHashGenerator} instead.
+ */
 class TokenHashGenerator implements TokenGeneratorInterface
 {
     /**
@@ -29,12 +32,12 @@ class TokenHashGenerator implements TokenGeneratorInterface
      */
     public function generateToken()
     {
-        return hash($this->algorithm, microtime() . mt_rand());
+        return hash($this->algorithm, microtime() . random_int(0, PHP_INT_MAX));
     }
 
     /**
-     * @param mixed $expected
-     * @param mixed $actual
+     * @param string $expected
+     * @param string $actual
      *
      * @return bool
      */

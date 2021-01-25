@@ -9,22 +9,47 @@ namespace SprykerTest\Zed\ProductLabel\Helper;
 
 use Codeception\Module;
 use Generated\Shared\DataBuilder\ProductLabelBuilder;
+use Generated\Shared\DataBuilder\ProductLabelLocalizedAttributesBuilder;
+use Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer;
+use Generated\Shared\Transfer\ProductLabelTransfer;
+use Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface;
+use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class ProductLabelDataHelper extends Module
 {
     use LocatorHelperTrait;
+    use DataCleanupHelperTrait;
 
     /**
      * @param array $seedData
      *
      * @return \Generated\Shared\Transfer\ProductLabelTransfer
      */
-    public function haveProductLabel(array $seedData = [])
+    public function haveProductLabel(array $seedData = []): ProductLabelTransfer
     {
-        $productLabelTransfer = (new ProductLabelBuilder($seedData))->build();
+        /** @var \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer */
+        $productLabelTransfer = (new ProductLabelBuilder($seedData + [
+                ProductLabelTransfer::VALID_FROM => null,
+                ProductLabelTransfer::VALID_TO => null,
+            ]))->build();
         $productLabelTransfer->setIdProductLabel(null);
+        $productLabelTransfer->setPosition($seedData[ProductLabelTransfer::POSITION] ?? 0);
+
+        foreach ($this->getLocator()->locale()->facade()->getLocaleCollection() as $localeTransfer) {
+            $productLabelLocalizedAttributesTransfer = (new ProductLabelLocalizedAttributesBuilder([
+                ProductLabelLocalizedAttributesTransfer::FK_LOCALE => $localeTransfer->getIdLocale(),
+            ]))->build();
+            $productLabelTransfer->addLocalizedAttributes($productLabelLocalizedAttributesTransfer);
+        }
+
         $this->getProductLabelFacade()->createLabel($productLabelTransfer);
+
+        $productLabelTransfer = $this->getProductLabelFacade()->findLabelByLabelName($productLabelTransfer->getName());
+
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($productLabelTransfer): void {
+            $this->getProductLabelFacade()->removeLabel($productLabelTransfer);
+        });
 
         return $productLabelTransfer;
     }
@@ -35,17 +60,23 @@ class ProductLabelDataHelper extends Module
      *
      * @return void
      */
-    public function haveProductLabelToAbstractProductRelation($idProductLabel, $idProductAbstract)
+    public function haveProductLabelToAbstractProductRelation(int $idProductLabel, int $idProductAbstract): void
     {
-        $this
-            ->getProductLabelFacade()
+        $this->getProductLabelFacade()
             ->addAbstractProductRelationsForLabel($idProductLabel, [$idProductAbstract]);
+
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($idProductLabel, $idProductAbstract): void {
+            $this->getProductLabelFacade()->removeProductAbstractRelationsForLabel(
+                $idProductLabel,
+                [$idProductAbstract]
+            );
+        });
     }
 
     /**
      * @return \Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface
      */
-    protected function getProductLabelFacade()
+    protected function getProductLabelFacade(): ProductLabelFacadeInterface
     {
         return $this->getLocator()->productLabel()->facade();
     }

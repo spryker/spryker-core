@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="Store">
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="localeName" type="string"/>
+    </transfer>
+
+    <transfer name="Url">
+        <property name="url" type="string"/>
+    </transfer>
+
+    <transfer name="UrlCollectorStorage">
+        <property name="localeUrls" type="Url[]" singular="localeUrls"/>
+        <property name="referenceKey" type="string"/>
+        <property name="type" type="string"/>
+    </transfer>
+
+</transfers>

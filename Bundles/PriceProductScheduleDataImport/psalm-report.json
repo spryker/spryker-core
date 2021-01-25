@@ -1,0 +1,30 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 60,
+            "line_to": 60,
+            "type": "RedundantCondition",
+            "message": "int can never contain null",
+            "file_name": "vendor/spryker/spryker/Bundles/PriceProductScheduleDataImport/src/Spryker/Zed/PriceProductScheduleDataImport/Business/Model/Step/PreparePriceDataStep.php",
+            "snippet": "        return $price === null || ($price !== null && $price > 0);",
+            "selected_text": "$price !== null",
+            "error_level": 4,
+            "shortcode": 122
+        },
+        {
+            "severity": "info",
+            "line_from": 33,
+            "line_to": 33,
+            "type": "PossiblyUndefinedMethod",
+            "message": "Method Spryker\\Zed\\DataImport\\Business\\Model\\DataImporterAfterImportAwareInterface::import does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/PriceProductScheduleDataImport/src/Spryker/Zed/PriceProductScheduleDataImport/Business/PriceProductScheduleDataImportFacade.php",
+            "snippet": "            ->import($dataImporterConfigurationTransfer);",
+            "selected_text": "import",
+            "error_level": 3,
+            "shortcode": 108
+        }
+    ],
+    "deprecation": []
+}

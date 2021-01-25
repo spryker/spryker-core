@@ -4,7 +4,7 @@
   "description": "ProductOptionStorage module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.3",
     "spryker/currency": "^3.2.0",
     "spryker/event-behavior": "^1.10.0",
     "spryker/kernel": "^3.30.0",
@@ -16,7 +16,8 @@
     "spryker/store": "^1.7.0",
     "spryker/synchronization": "^0.2.0 || ^1.0.0",
     "spryker/synchronization-behavior": "^1.0.0",
-    "spryker/synchronization-extension": "^1.0.0"
+    "spryker/synchronization-extension": "^1.0.0",
+    "spryker/util-encoding": "^1.0.0 || ^2.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
@@ -40,6 +41,10 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"

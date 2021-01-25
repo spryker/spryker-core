@@ -62,8 +62,8 @@ class SalesOrderThresholdTranslationHydrator implements SalesOrderThresholdTrans
 
     /**
      * @param \Generated\Shared\Transfer\SalesOrderThresholdTransfer $salesOrderThresholdTransfer
-     * @param array $translationTransfers
-     * @param array $availableLocaleTransfers
+     * @param \Generated\Shared\Transfer\TranslationTransfer[] $translationTransfers
+     * @param \Generated\Shared\Transfer\LocaleTransfer[] $availableLocaleTransfers
      *
      * @return \Generated\Shared\Transfer\SalesOrderThresholdTransfer
      */

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\PriceProduct\Persistence" package="src.Orm.Zed.PriceProduct.Persistence">
 
-    <table name="spy_price_product" phpName="SpyPriceProduct">
+    <table name="spy_price_product">
         <column name="id_price_product" type="INTEGER" required="true" primaryKey="true" autoIncrement="true"/>
         <column name="price" type="INTEGER" defaultValue="0" comment="deprecated"/>
         <column name="fk_product" type="INTEGER" required="false"/>
@@ -39,7 +39,7 @@
         <id-method-parameter value="spy_price_product_pk_seq"/>
     </table>
 
-    <table name="spy_price_type" phpName="SpyPriceType">
+    <table name="spy_price_type">
         <column name="id_price_type" type="INTEGER" required="true" primaryKey="true" autoIncrement="true"/>
         <column name="name" type="VARCHAR" size="255" required="true"/>
         <column name="price_mode_configuration" type="ENUM" valueSet="NET_MODE, GROSS_MODE, BOTH"/>
@@ -59,7 +59,7 @@
         <column name="net_price" type="INTEGER"/>
         <column name="gross_price" type="INTEGER"/>
         <column name="price_data" required="false" type="LONGVARCHAR"/>
-        <column name="price_data_checksum" required="false" type="VARCHAR"/>
+        <column name="price_data_checksum" required="false" type="VARCHAR" size="255"/>
 
         <index name="spy_price_product_store-index-fk_pr_pro-fk_cur-fk_st">
             <index-column name="fk_currency"/>

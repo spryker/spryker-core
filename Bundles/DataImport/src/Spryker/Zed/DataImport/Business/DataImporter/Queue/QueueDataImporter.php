@@ -90,8 +90,9 @@ class QueueDataImporter extends DataImporterDataSetWriterAware implements QueueD
      *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
      */
-    protected function importByDataImporterConfiguration(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
-    {
+    protected function importByDataImporterConfiguration(
+        ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
+    ): DataImporterReportTransfer {
         $dataReader = $this->getDataReader($dataImporterConfigurationTransfer);
         $dataImporterReportTransfer = $this->prepareDataImportReport($dataReader);
 

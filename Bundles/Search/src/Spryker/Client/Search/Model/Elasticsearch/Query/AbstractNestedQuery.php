@@ -7,6 +7,9 @@
 
 namespace Spryker\Client\Search\Model\Elasticsearch\Query;
 
+/**
+ * @deprecated Use {@link \Spryker\Client\SearchElasticsearch\Query\AbstractNestedQuery} instead.
+ */
 abstract class AbstractNestedQuery implements NestedQueryInterface
 {
     public const FACET_NAME_SUFFIX = '.facet-name';

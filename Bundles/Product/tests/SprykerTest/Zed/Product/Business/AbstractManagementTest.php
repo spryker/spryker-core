@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\Product\Business;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Spryker\Shared\Product\ProductConfig;
 use Spryker\Zed\Product\Business\Exception\MissingProductException;
 
@@ -26,7 +27,7 @@ class AbstractManagementTest extends FacadeTestAbstract
     /**
      * @return void
      */
-    public function testCreateProductAbstractShouldCreateProductAbstract()
+    public function testCreateProductAbstractShouldCreateProductAbstract(): void
     {
         $idProductAbstract = $this->productFacade->createProductAbstract($this->productAbstractTransfer);
 
@@ -38,7 +39,7 @@ class AbstractManagementTest extends FacadeTestAbstract
     /**
      * @return void
      */
-    public function testSaveProductAbstractShouldUpdateProductAbstract()
+    public function testSaveProductAbstractShouldUpdateProductAbstract(): void
     {
         $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
         $this->productAbstractTransfer->setIdProductAbstract($idProductAbstract);
@@ -58,7 +59,7 @@ class AbstractManagementTest extends FacadeTestAbstract
     /**
      * @return void
      */
-    public function testHasProductAbstractShouldReturnFalse()
+    public function testHasProductAbstractShouldReturnFalse(): void
     {
         $this->assertFalse(
             $this->productFacade->hasProductAbstract('sku that does not exist')
@@ -68,9 +69,9 @@ class AbstractManagementTest extends FacadeTestAbstract
     /**
      * @return void
      */
-    public function testHasProductAbstractShouldReturnTrue()
+    public function testHasProductAbstractShouldReturnTrue(): void
     {
-        $idProductAbstract = $this->createNewProductAbstractAndAssertNoTouchExists();
+        $this->createNewProductAbstractAndAssertNoTouchExists();
 
         $this->assertTrue(
             $this->productFacade->hasProductAbstract(self::ABSTRACT_SKU)
@@ -80,7 +81,7 @@ class AbstractManagementTest extends FacadeTestAbstract
     /**
      * @return void
      */
-    public function testGetProductAbstractIdBySku()
+    public function testGetProductAbstractIdBySku(): void
     {
         $expectedId = $this->createNewProductAbstractAndAssertNoTouchExists();
         $idProductAbstract = $this->productFacade->findProductAbstractIdBySku(self::ABSTRACT_SKU);
@@ -94,7 +95,7 @@ class AbstractManagementTest extends FacadeTestAbstract
     /**
      * @return void
      */
-    public function testGetProductAbstractIdBySkuShouldReturnNull()
+    public function testGetProductAbstractIdBySkuShouldReturnNull(): void
     {
         $idProductAbstract = $this->productFacade->findProductAbstractIdBySku('INVALIDSKU');
 
@@ -104,19 +105,19 @@ class AbstractManagementTest extends FacadeTestAbstract
     /**
      * @return void
      */
-    public function testGetProductAbstractById()
+    public function testGetProductAbstractById(): void
     {
         $idProductAbstract = $this->createNewProductAbstractAndAssertNoTouchExists();
         $productAbstract = $this->productFacade->findProductAbstractById($idProductAbstract);
 
         $this->assertInstanceOf(ProductAbstractTransfer::class, $productAbstract);
-        $this->assertEquals(self::ABSTRACT_SKU, $productAbstract->getSku());
+        $this->assertSame(static::ABSTRACT_SKU, $productAbstract->getSku());
     }
 
     /**
      * @return void
      */
-    public function testGetProductAbstractByIdShouldReturnNull()
+    public function testGetProductAbstractByIdShouldReturnNull(): void
     {
         $productAbstract = $this->productFacade->findProductAbstractById(1010001);
 
@@ -126,7 +127,7 @@ class AbstractManagementTest extends FacadeTestAbstract
     /**
      * @return void
      */
-    public function testGetAbstractSkuFromProductConcrete()
+    public function testGetAbstractSkuFromProductConcrete(): void
     {
         $idProductAbstract = $this->createNewProductAbstractAndAssertNoTouchExists();
         $this->productConcreteTransfer->setFkProductAbstract($idProductAbstract);
@@ -134,13 +135,13 @@ class AbstractManagementTest extends FacadeTestAbstract
 
         $abstractSku = $this->productFacade->getAbstractSkuFromProductConcrete(self::CONCRETE_SKU);
 
-        $this->assertEquals(self::ABSTRACT_SKU, $abstractSku);
+        $this->assertSame(static::ABSTRACT_SKU, $abstractSku);
     }
 
     /**
      * @return void
      */
-    public function testGetAbstractSkuFromProductConcreteShouldThrowException()
+    public function testGetAbstractSkuFromProductConcreteShouldThrowException(): void
     {
         $this->expectException(MissingProductException::class);
         $this->expectExceptionMessage('Tried to retrieve a product concrete with sku INVALIDSKU, but it does not exist.');
@@ -153,7 +154,7 @@ class AbstractManagementTest extends FacadeTestAbstract
     /**
      * @return void
      */
-    public function testGetLocalizedProductAbstractName()
+    public function testGetLocalizedProductAbstractName(): void
     {
         $nameEN = $this->productFacade->getLocalizedProductAbstractName(
             $this->productAbstractTransfer,
@@ -165,14 +166,14 @@ class AbstractManagementTest extends FacadeTestAbstract
             $this->locales['de_DE']
         );
 
-        $this->assertEquals(self::PRODUCT_ABSTRACT_NAME['en_US'], $nameEN);
-        $this->assertEquals(self::PRODUCT_ABSTRACT_NAME['de_DE'], $nameDE);
+        $this->assertSame(static::PRODUCT_ABSTRACT_NAME['en_US'], $nameEN);
+        $this->assertSame(static::PRODUCT_ABSTRACT_NAME['de_DE'], $nameDE);
     }
 
     /**
      * @return void
      */
-    public function testTouchProductAbstractShouldAlsoTouchItsVariants()
+    public function testTouchProductAbstractShouldAlsoTouchItsVariants(): void
     {
         $idProductAbstract = $this->createNewProductAbstractAndAssertNoTouchExists();
         $this->productConcreteTransfer->setFkProductAbstract($idProductAbstract);
@@ -188,7 +189,7 @@ class AbstractManagementTest extends FacadeTestAbstract
     /**
      * @return void
      */
-    public function testTouchProductActiveShouldTouchActiveLogic()
+    public function testTouchProductActiveShouldTouchActiveLogic(): void
     {
         $idProductAbstract = $this->createNewProductAbstractAndAssertNoTouchExists();
 
@@ -201,7 +202,7 @@ class AbstractManagementTest extends FacadeTestAbstract
     /**
      * @return void
      */
-    public function testTouchProductInactiveShouldTouchInactiveLogic()
+    public function testTouchProductInactiveShouldTouchInactiveLogic(): void
     {
         $idProductAbstract = $this->createNewProductAbstractAndAssertNoTouchExists();
 
@@ -217,7 +218,7 @@ class AbstractManagementTest extends FacadeTestAbstract
     /**
      * @return void
      */
-    public function testTouchProductDeletedShouldTouchDeletedLogic()
+    public function testTouchProductDeletedShouldTouchDeletedLogic(): void
     {
         $idProductAbstract = $this->createNewProductAbstractAndAssertNoTouchExists();
 
@@ -230,7 +231,7 @@ class AbstractManagementTest extends FacadeTestAbstract
     /**
      * @return int
      */
-    protected function createNewProductAbstractAndAssertNoTouchExists()
+    protected function createNewProductAbstractAndAssertNoTouchExists(): int
     {
         $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
 
@@ -245,12 +246,12 @@ class AbstractManagementTest extends FacadeTestAbstract
      *
      * @return void
      */
-    protected function assertCreateProductAbstract(ProductAbstractTransfer $productAbstractTransfer)
+    protected function assertCreateProductAbstract(ProductAbstractTransfer $productAbstractTransfer): void
     {
         $createdProductEntity = $this->getProductAbstractEntityById($productAbstractTransfer->getIdProductAbstract());
 
         $this->assertNotNull($createdProductEntity);
-        $this->assertEquals($productAbstractTransfer->getSku(), $createdProductEntity->getSku());
+        $this->assertSame($productAbstractTransfer->getSku(), $createdProductEntity->getSku());
     }
 
     /**
@@ -258,17 +259,17 @@ class AbstractManagementTest extends FacadeTestAbstract
      *
      * @return void
      */
-    protected function assertSaveProductAbstract(ProductAbstractTransfer $productAbstractTransfer)
+    protected function assertSaveProductAbstract(ProductAbstractTransfer $productAbstractTransfer): void
     {
         $updatedProductEntity = $this->getProductAbstractEntityById($productAbstractTransfer->getIdProductAbstract());
 
         $this->assertNotNull($updatedProductEntity);
-        $this->assertEquals($this->productAbstractTransfer->getSku(), $updatedProductEntity->getSku());
+        $this->assertSame($this->productAbstractTransfer->getSku(), $updatedProductEntity->getSku());
 
         foreach ($productAbstractTransfer->getLocalizedAttributes() as $localizedAttribute) {
             $expectedProductName = self::UPDATED_PRODUCT_ABSTRACT_NAME[$localizedAttribute->getLocale()->getLocaleName()];
 
-            $this->assertEquals($expectedProductName, $localizedAttribute->getName());
+            $this->assertSame($expectedProductName, $localizedAttribute->getName());
         }
     }
 
@@ -277,7 +278,7 @@ class AbstractManagementTest extends FacadeTestAbstract
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstract|null
      */
-    protected function getProductAbstractEntityById($idProductAbstract)
+    protected function getProductAbstractEntityById(int $idProductAbstract): ?SpyProductAbstract
     {
         return $this->productQueryContainer
             ->queryProductAbstract()

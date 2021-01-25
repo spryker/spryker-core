@@ -11,47 +11,45 @@
  *
  * @return {void}
  */
-function save(serializedNodeList, progressBar)
-{
+function save(serializedNodeList, progressBar) {
     progressBar.show();
 
-    var promise = jQuery.post(
-        '/category/re-sort/save',
-        {
-            nodes: serializedNodeList
-        }
-    );
+    var csrfToken = document.getElementById('category-nodes-re-sort-token').value;
+    var promise = jQuery.post('/category/re-sort/save', {
+        nodes: serializedNodeList,
+        token: csrfToken,
+    });
 
-    promise.done(function(response) {
+    promise.done(function (response) {
         if (response.code === 200) {
             window.sweetAlert({
-                title: "Success",
+                title: 'Success',
                 text: response.message,
-                type: "success"
+                type: 'success',
             });
             return true;
         }
 
         window.sweetAlert({
-            title: "Error",
+            title: 'Error',
             text: response.message,
-            type: "error"
+            type: 'error',
         });
     });
 
-    promise.fail(function(xhr, statusMessage, errorMessage) {
+    promise.fail(function (xhr, statusMessage, errorMessage) {
         window.sweetAlert({
-            title: "Error",
+            title: 'Error',
             text: errorMessage,
-            type: "error"
+            type: 'error',
         });
     });
 
-    promise.always(function() {
+    promise.always(function () {
         progressBar.hide();
     });
 }
 
 module.exports = {
-    save: save
+    save: save,
 };

@@ -28,10 +28,10 @@ class CmsGuiCreateCest
      *
      * @return void
      */
-    public function breadcrumbIsVisible(CmsGuiCommunicationTester $i)
+    public function breadcrumbIsVisible(CmsGuiCommunicationTester $i): void
     {
         $i->registerCmsBlockStoreRelationFormTypePlugin();
         $i->amOnPage(CmsGuiCreatePage::URL);
-        $i->seeBreadcrumbNavigation('Dashboard / Content Management / Pages / Create new CMS Page');
+        $i->seeBreadcrumbNavigation('Content / Pages / Create new CMS Page');
     }
 }

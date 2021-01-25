@@ -56,7 +56,7 @@ class ShipmentTaxRateCalculatorForItemLevelShipmentTest extends Test
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -211,7 +211,7 @@ class ShipmentTaxRateCalculatorForItemLevelShipmentTest extends Test
      * @param string $defaultCountryIso2Code
      * @param float $defaultTaxRate
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Shipment\Dependency\ShipmentToTaxInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Shipment\Dependency\ShipmentToTaxInterface
      */
     protected function createShipmentToTaxFacadeBridgeMock(string $defaultCountryIso2Code, float $defaultTaxRate): ShipmentToTaxInterface
     {
@@ -235,7 +235,7 @@ class ShipmentTaxRateCalculatorForItemLevelShipmentTest extends Test
     /**
      * @param string $defaultCountryIso2Code
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\Kernel\Store
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Kernel\Store
      */
     protected function createTaxStoreMock(string $defaultCountryIso2Code): Store
     {
@@ -262,7 +262,8 @@ class ShipmentTaxRateCalculatorForItemLevelShipmentTest extends Test
         $itemShipmentKey = $this->tester->getShipmentService()->getShipmentHashKey($shipmentTransfer);
         foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
             $expenseShipmentKey = $this->tester->getShipmentService()->getShipmentHashKey($expenseTransfer->getShipment());
-            if ($expenseTransfer->getType() === ShipmentConfig::SHIPMENT_EXPENSE_TYPE
+            if (
+                $expenseTransfer->getType() === ShipmentConfig::SHIPMENT_EXPENSE_TYPE
                 && $expenseTransfer->getShipment() !== null
                 && $expenseShipmentKey === $itemShipmentKey
             ) {

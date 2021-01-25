@@ -1,0 +1,102 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 58,
+            "line_to": 58,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdStock on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantStock/src/Spryker/Zed/MerchantStock/Business/Writer/MerchantStockWriter.php",
+            "snippet": "            ->setIdStock($stockTransfer->getIdStock())",
+            "selected_text": "getIdStock",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 78,
+            "line_to": 78,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantStock/src/Spryker/Zed/MerchantStock/Business/Writer/MerchantStockWriter.php",
+            "snippet": "            $merchantTransfer->requireName()->getName(),",
+            "selected_text": "$merchantTransfer->requireName()->getName()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 79,
+            "line_to": 79,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 3 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantStock/src/Spryker/Zed/MerchantStock/Business/Writer/MerchantStockWriter.php",
+            "snippet": "            $merchantTransfer->requireMerchantReference()->getMerchantReference(),",
+            "selected_text": "$merchantTransfer->requireMerchantReference()->getMerchantReference()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 81,
+            "line_to": 81,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\StockTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantStock/src/Spryker/Zed/MerchantStock/Business/Writer/MerchantStockWriter.php",
+            "snippet": "            $merchantTransfer->getStocks()->count() + 1",
+            "selected_text": "count",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 56,
+            "line_to": 56,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Orm\\Zed\\MerchantStock\\Persistence\\SpyMerchantStock::setIdMerchantStock cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantStock/src/Spryker/Zed/MerchantStock/Persistence/Mapper/MerchantStockMapper.php",
+            "snippet": "        return $merchantStockEntity->setIdMerchantStock($merchantStockTransfer->getIdMerchantStock())",
+            "selected_text": "$merchantStockTransfer->getIdMerchantStock()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 57,
+            "line_to": 57,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Orm\\Zed\\MerchantStock\\Persistence\\SpyMerchantStock::setFkMerchant cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantStock/src/Spryker/Zed/MerchantStock/Persistence/Mapper/MerchantStockMapper.php",
+            "snippet": "            ->setFkMerchant($merchantStockTransfer->getIdMerchant())",
+            "selected_text": "$merchantStockTransfer->getIdMerchant()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 58,
+            "line_to": 58,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Orm\\Zed\\MerchantStock\\Persistence\\SpyMerchantStock::setFkStock cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantStock/src/Spryker/Zed/MerchantStock/Persistence/Mapper/MerchantStockMapper.php",
+            "snippet": "            ->setFkStock($merchantStockTransfer->getIdStock())",
+            "selected_text": "$merchantStockTransfer->getIdStock()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 59,
+            "line_to": 59,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Orm\\Zed\\MerchantStock\\Persistence\\SpyMerchantStock::setIsDefault cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantStock/src/Spryker/Zed/MerchantStock/Persistence/Mapper/MerchantStockMapper.php",
+            "snippet": "            ->setIsDefault($merchantStockTransfer->getIsDefault());",
+            "selected_text": "$merchantStockTransfer->getIsDefault()",
+            "error_level": 3,
+            "shortcode": 78
+        }
+    ],
+    "deprecation": []
+}

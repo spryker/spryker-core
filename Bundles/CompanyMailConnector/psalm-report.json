@@ -1,0 +1,78 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 48,
+            "line_to": 48,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\CompanyMailConnector\\Dependency\\Facade\\CompanyMailConnectorToCompanyUserFacadeInterface::findInitialCompanyUserByCompanyId cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyMailConnector/src/Spryker/Zed/CompanyMailConnector/Business/Company/CompanyStatusMailer.php",
+            "snippet": "        $companyUserTransfer = $this->companyUserFacade->findInitialCompanyUserByCompanyId($companyTransfer->getIdCompany());",
+            "selected_text": "$companyTransfer->getIdCompany()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 34,
+            "line_to": 34,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method isPropertyModified on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyMailConnector/src/Spryker/Zed/CompanyMailConnector/Communication/Plugin/Company/SendCompanyStatusChangePlugin.php",
+            "snippet": "        if ($companyTransfer->isPropertyModified(CompanyTransfer::STATUS)) {",
+            "selected_text": "isPropertyModified",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 99,
+            "line_to": 99,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\Mail\\Business\\Model\\Mail\\Builder\\MailBuilderInterface::addRecipient cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyMailConnector/src/Spryker/Zed/CompanyMailConnector/Communication/Plugin/Mail/CompanyStatusMailTypePlugin.php",
+            "snippet": "            $customerTransfer->getEmail(),",
+            "selected_text": "$customerTransfer->getEmail()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 99,
+            "line_to": 99,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getEmail on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyMailConnector/src/Spryker/Zed/CompanyMailConnector/Communication/Plugin/Mail/CompanyStatusMailTypePlugin.php",
+            "snippet": "            $customerTransfer->getEmail(),",
+            "selected_text": "getEmail",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 100,
+            "line_to": 100,
+            "type": "PossiblyNullOperand",
+            "message": "Cannot concatenate with a possibly null null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyMailConnector/src/Spryker/Zed/CompanyMailConnector/Communication/Plugin/Mail/CompanyStatusMailTypePlugin.php",
+            "snippet": "            $customerTransfer->getFirstName() . ' ' . $customerTransfer->getLastName()",
+            "selected_text": "$customerTransfer->getFirstName()",
+            "error_level": 1,
+            "shortcode": 80
+        },
+        {
+            "severity": "info",
+            "line_from": 100,
+            "line_to": 100,
+            "type": "PossiblyNullOperand",
+            "message": "Cannot concatenate with a possibly null null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyMailConnector/src/Spryker/Zed/CompanyMailConnector/Communication/Plugin/Mail/CompanyStatusMailTypePlugin.php",
+            "snippet": "            $customerTransfer->getFirstName() . ' ' . $customerTransfer->getLastName()",
+            "selected_text": "$customerTransfer->getLastName()",
+            "error_level": 1,
+            "shortcode": 80
+        }
+    ],
+    "deprecation": []
+}

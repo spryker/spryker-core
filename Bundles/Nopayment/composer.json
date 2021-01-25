@@ -4,13 +4,14 @@
   "description": "Nopayment module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.3",
     "spryker/kernel": "^3.30.0",
     "spryker/sales": "^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0 || ^10.0.0 || ^11.0.0"
   },
   "require-dev": {
+    "spryker/code-sniffer": "*",
     "spryker/oms": "*",
-    "spryker/payment": "^4.0.0",
+    "spryker/payment": "*",
     "spryker/step-engine": "^3.1.0",
     "spryker/symfony": "*"
   },
@@ -27,9 +28,13 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
+  },
   "extra": {
     "branch-alias": {
-      "dev-master": "3.0.x-dev"
+      "dev-master": "4.0.x-dev"
     }
   },
   "config": {

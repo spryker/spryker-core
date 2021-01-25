@@ -265,7 +265,6 @@ class CmsPageFormType extends AbstractType
     {
         return new Callback([
            'callback' => function ($dateTimeTo, ExecutionContextInterface $context) {
-
                 $cmsPageTransfer = $context->getRoot()->getData();
 
             if (!$dateTimeTo) {
@@ -309,7 +308,7 @@ class CmsPageFormType extends AbstractType
     }
 
     /**
-     * @deprecated Use `getBlockPrefix()` instead.
+     * @deprecated Use {@link getBlockPrefix()} instead.
      *
      * @return string
      */

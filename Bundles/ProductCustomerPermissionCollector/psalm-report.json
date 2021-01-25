@@ -1,0 +1,115 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 57,
+            "line_to": 57,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Zed\\ProductCustomerPermissionCollector\\Business\\Search\\ProductCustomerPermissionSearchCollector::generateKeyForProduct cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCustomerPermissionCollector/src/Spryker/Zed/ProductCustomerPermissionCollector/Business/Search/ProductCustomerPermissionSearchCollector.php",
+            "snippet": "        $productAbstractKey = $this->generateKeyForProduct($collectItemData[ProductCustomerPermissionSearchCollectorQuery::FIELD_FK_PRODUCT_ABSTRACT], $this->locale->getLocaleName());",
+            "selected_text": "$this->locale->getLocaleName()",
+            "error_level": 3,
+            "shortcode": 78
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 31,
+            "line_to": 31,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCustomerPermissionCollector/src/Spryker/Zed/ProductCustomerPermissionCollector/Business/ProductCustomerPermissionCollectorFacade.php",
+            "snippet": "     * @param \\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface $result",
+            "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 71,
+            "line_to": 71,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCustomerPermissionCollector/src/Spryker/Zed/ProductCustomerPermissionCollector/Business/ProductCustomerPermissionCollectorFacade.php",
+            "snippet": "     * @param \\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface $result",
+            "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 28,
+            "line_to": 28,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCustomerPermissionCollector/src/Spryker/Zed/ProductCustomerPermissionCollector/Business/ProductCustomerPermissionCollectorFacadeInterface.php",
+            "snippet": "     * @param \\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface $result",
+            "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 54,
+            "line_to": 54,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCustomerPermissionCollector/src/Spryker/Zed/ProductCustomerPermissionCollector/Business/ProductCustomerPermissionCollectorFacadeInterface.php",
+            "snippet": "     * @param \\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface $result",
+            "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 31,
+            "line_to": 31,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCustomerPermissionCollector/src/Spryker/Zed/ProductCustomerPermissionCollector/Communication/Plugin/ProductCustomerPermissionCollectorSearchPlugin.php",
+            "snippet": "     * @param \\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface $result",
+            "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 31,
+            "line_to": 31,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCustomerPermissionCollector/src/Spryker/Zed/ProductCustomerPermissionCollector/Communication/Plugin/ProductCustomerPermissionCollectorStoragePlugin.php",
+            "snippet": "     * @param \\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface $result",
+            "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 38,
+            "line_to": 38,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCustomerPermissionCollector/src/Spryker/Zed/ProductCustomerPermissionCollector/Dependency/Facade/ProductCustomerPermissionCollectorToCollectorFacadeBridge.php",
+            "snippet": "     * @param \\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface $result",
+            "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 25,
+            "line_to": 25,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCustomerPermissionCollector/src/Spryker/Zed/ProductCustomerPermissionCollector/Dependency/Facade/ProductCustomerPermissionCollectorToCollectorFacadeInterface.php",
+            "snippet": "     * @param \\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface $result",
+            "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface",
+            "error_level": 2,
+            "shortcode": 98
+        }
+    ]
+}

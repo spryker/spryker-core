@@ -10,10 +10,8 @@ namespace SprykerTest\Glue\CatalogSearchRestApi\Processor\Mapper;
 use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\RestCatalogSearchSuggestionsAttributesTransfer;
-use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Glue\CatalogSearchRestApi\Processor\Mapper\CatalogSearchSuggestionsResourceMapper;
 use Spryker\Glue\CatalogSearchRestApi\Processor\Mapper\CatalogSearchSuggestionsResourceMapperInterface;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilder;
 
 /**
  * Auto-generated group annotations
@@ -86,6 +84,8 @@ class CatalogSearchSuggestionsResourceMapperTest extends Unit
         $this->assertEmpty($this->getProductsFromRestCatalogSearchAttributesTransfer($attributes));
         $this->assertEmpty($attributes->getCategories());
         $this->assertEmpty($attributes->getCmsPages());
+        $this->assertEmpty($attributes->getCategoryCollection());
+        $this->assertEmpty($attributes->getCmsPageCollection());
     }
 
     /**
@@ -122,6 +122,16 @@ class CatalogSearchSuggestionsResourceMapperTest extends Unit
             $this->assertArrayHasKey('name', $cmsPage);
             $this->assertArrayNotHasKey('id_cms_page', $cmsPage);
         }
+
+        foreach ($restCatalogSearchSuggestionsAttributes->getCategoryCollection() as $category) {
+            $this->assertArrayHasKey('name', $category->toArray());
+            $this->assertArrayHasKey('url', $category->toArray());
+        }
+
+        foreach ($restCatalogSearchSuggestionsAttributes->getCmsPageCollection() as $cmsPage) {
+            $this->assertArrayHasKey('name', $cmsPage->toArray());
+            $this->assertArrayHasKey('url', $cmsPage->toArray());
+        }
     }
 
     /**
@@ -143,16 +153,6 @@ class CatalogSearchSuggestionsResourceMapperTest extends Unit
     protected function getMapper(): CatalogSearchSuggestionsResourceMapperInterface
     {
         return $this->catalogSearchSuggestionsResourceMapper;
-    }
-
-    /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
-     */
-    protected function getResourceBuilder(): MockObject
-    {
-        return $this->getMockBuilder(RestResourceBuilder::class)
-            ->enableProxyingToOriginalMethods()
-            ->getMock();
     }
 
     /**

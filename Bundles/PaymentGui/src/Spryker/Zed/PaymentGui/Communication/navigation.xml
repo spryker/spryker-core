@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<config>
+    <administration>
+        <label>Administration</label>
+        <title>Administration</title>
+        <icon>fa-angle-double-right</icon>
+        <pages>
+            <payments>
+                <label>Payment Management</label>
+                <title>Payment Management</title>
+                <pages>
+                    <payment-method>
+                        <label>Payment Methods</label>
+                        <title>Payment Methods</title>
+                        <bundle>payment-gui</bundle>
+                        <controller>payment-method</controller>
+                        <action>index</action>
+                        <icon>fa-angle-right</icon>
+                        <pages>
+                            <payment-method-view>
+                                <label>View</label>
+                                <title>View</title>
+                                <bundle>payment-gui</bundle>
+                                <controller>view-payment-method</controller>
+                                <action>index</action>
+                                <visible>0</visible>
+                            </payment-method-view>
+                            <payment-method-update>
+                                <label>Edit</label>
+                                <title>Edit Payment Method</title>
+                                <bundle>payment-gui</bundle>
+                                <controller>update-payment-method</controller>
+                                <action>index</action>
+                                <visible>0</visible>
+                            </payment-method-update>
+                        </pages>
+                    </payment-method>
+                </pages>
+            </payments>
+        </pages>
+    </administration>
+</config>

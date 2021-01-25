@@ -37,8 +37,11 @@ class CmsGlossaryKeyMappingMigration implements MigrationInterface
      * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleFacadeInterface $localeFacade
      * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface $queryContainer
      */
-    public function __construct(CmsGlossarySaverInterface $cmsGlossarySaver, CmsToLocaleFacadeInterface $localeFacade, CmsQueryContainerInterface $queryContainer)
-    {
+    public function __construct(
+        CmsGlossarySaverInterface $cmsGlossarySaver,
+        CmsToLocaleFacadeInterface $localeFacade,
+        CmsQueryContainerInterface $queryContainer
+    ) {
         $this->cmsGlossarySaver = $cmsGlossarySaver;
         $this->localeFacade = $localeFacade;
         $this->queryContainer = $queryContainer;

@@ -14,6 +14,15 @@ interface ErrorHandlerConstants
 {
     /**
      * Specification:
+     * - Defines if the pretty error handler is enabled.
+     * - Should only be enabled in development mode.
+     *
+     * @api
+     */
+    public const IS_PRETTY_ERROR_HANDLER_ENABLED = 'ERROR_HANDLER:IS_PRETTY_ERROR_HANDLER_ENABLED';
+
+    /**
+     * Specification:
      * - Absolute path to an HTML file which contains the error page for Zed. E.g. /var/www/public/Zed/error-page.html
      *
      * @api

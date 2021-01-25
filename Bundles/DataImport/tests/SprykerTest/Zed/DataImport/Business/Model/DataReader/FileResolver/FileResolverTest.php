@@ -30,7 +30,7 @@ class FileResolverTest extends Unit
     /**
      * @return void
      */
-    public function testResolveFileThrowsExceptionWhenFileNotFound()
+    public function testResolveFileThrowsExceptionWhenFileNotFound(): void
     {
         $this->expectException(FileResolverFileNotFoundException::class);
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
@@ -43,7 +43,7 @@ class FileResolverTest extends Unit
     /**
      * @return void
      */
-    public function testResolveFileReturnsFilePathIfFileNameIsFile()
+    public function testResolveFileReturnsFilePathIfFileNameIsFile(): void
     {
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
         $dataImporterReaderConfigurationTransfer->setFileName(__FILE__);
@@ -55,7 +55,7 @@ class FileResolverTest extends Unit
     /**
      * @return void
      */
-    public function testResolveFileReturnsFilePathIfFileNameFoundInOneDirectory()
+    public function testResolveFileReturnsFilePathIfFileNameFoundInOneDirectory(): void
     {
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
         $dataImporterReaderConfigurationTransfer->setFileName(basename(__FILE__));

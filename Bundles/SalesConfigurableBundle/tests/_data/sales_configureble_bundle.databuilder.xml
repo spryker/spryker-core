@@ -11,7 +11,7 @@
     </transfer>
 
     <transfer name="ConfigurableBundleTemplate">
-        <property name="name" dataBuilderRule="unique()->sentence(2)"/>
+        <property name="name" dataBuilderRule="word"/>
     </transfer>
 
 </transfers>

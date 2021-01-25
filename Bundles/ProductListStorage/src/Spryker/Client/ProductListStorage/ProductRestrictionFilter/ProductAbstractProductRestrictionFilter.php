@@ -25,8 +25,10 @@ class ProductAbstractProductRestrictionFilter extends AbstractProductRestriction
      * @param \Spryker\Client\ProductListStorage\Dependency\Client\ProductListStorageToCustomerClientInterface $customerClient
      * @param \Spryker\Client\ProductListStorage\ProductListProductAbstractStorage\ProductListProductAbstractStorageReaderInterface $productListProductAbstractStorageReader
      */
-    public function __construct(ProductListStorageToCustomerClientInterface $customerClient, ProductListProductAbstractStorageReaderInterface $productListProductAbstractStorageReader)
-    {
+    public function __construct(
+        ProductListStorageToCustomerClientInterface $customerClient,
+        ProductListProductAbstractStorageReaderInterface $productListProductAbstractStorageReader
+    ) {
         parent::__construct($customerClient);
         $this->productListProductAbstractStorageReader = $productListProductAbstractStorageReader;
     }
@@ -57,7 +59,7 @@ class ProductAbstractProductRestrictionFilter extends AbstractProductRestriction
 
             throw new NotSupportedProductListTransferTypeException(sprintf(static::ERROR_MESSAGE_WRONG_PRODUCT_LIST_TRANSFER_TYPE, $actualType, ProductAbstractProductListStorageTransfer::class));
         }
-        /** @var \Generated\Shared\Transfer\ProductAbstractProductListStorageTransfer $productAbstractProductListStorageTransfer */
+        /** @var \Generated\Shared\Transfer\ProductAbstractProductListStorageTransfer $productListStorageTransfer */
         $productListStorageTransfer->requireIdProductAbstract();
 
         return $productListStorageTransfer->getIdProductAbstract();

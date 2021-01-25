@@ -26,7 +26,7 @@ class WebErrorRendererTest extends Unit
     /**
      * @return void
      */
-    public function testRenderExceptionShouldReturnString()
+    public function testRenderExceptionShouldReturnString(): void
     {
         $errorRenderer = new WebExceptionErrorRenderer();
         $exception = new Exception('ExceptionMessage');

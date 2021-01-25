@@ -11,7 +11,6 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\PriceDataFeedTransfer;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery;
 use Spryker\Zed\PriceDataFeed\Persistence\PriceDataFeedQueryContainer;
-use Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainer;
 
 /**
  * Auto-generated group annotations
@@ -38,7 +37,7 @@ class PriceDataFeedQueryContainerTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -49,7 +48,7 @@ class PriceDataFeedQueryContainerTest extends Unit
     /**
      * @return void
      */
-    public function testGetPriceDataFeedQuery()
+    public function testGetPriceDataFeedQuery(): void
     {
         $query = $this->priceDataFeedQueryContainer
             ->queryPriceDataFeed($this->priceDataFeedTransfer);
@@ -64,7 +63,7 @@ class PriceDataFeedQueryContainerTest extends Unit
     /**
      * @return void
      */
-    public function testGetPriceDataFeedQueryWithJoinedTypes()
+    public function testGetPriceDataFeedQueryWithJoinedTypes(): void
     {
         $this->priceDataFeedTransfer->setJoinPriceType(true);
         $query = $this->priceDataFeedQueryContainer
@@ -84,10 +83,9 @@ class PriceDataFeedQueryContainerTest extends Unit
     /**
      * @return \Spryker\Zed\PriceDataFeed\Persistence\PriceDataFeedQueryContainer
      */
-    protected function createPriceDataFeedQueryContainer()
+    protected function createPriceDataFeedQueryContainer(): PriceDataFeedQueryContainer
     {
-        $priceQueryContainer = new PriceProductQueryContainer();
-        $priceDataFeedQueryContainer = new PriceDataFeedQueryContainer($priceQueryContainer);
+        $priceDataFeedQueryContainer = new PriceDataFeedQueryContainer();
 
         return $priceDataFeedQueryContainer;
     }
@@ -95,7 +93,7 @@ class PriceDataFeedQueryContainerTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\PriceDataFeedTransfer
      */
-    protected function createPriceDataFeedTransfer()
+    protected function createPriceDataFeedTransfer(): PriceDataFeedTransfer
     {
         $priceDataFeedTransfer = new PriceDataFeedTransfer();
 
@@ -107,7 +105,7 @@ class PriceDataFeedQueryContainerTest extends Unit
      *
      * @return array
      */
-    protected function getJoinedTablesNames(SpyPriceProductQuery $query)
+    protected function getJoinedTablesNames(SpyPriceProductQuery $query): array
     {
         $tablesNames = [];
         $joins = $query->getJoins();
@@ -126,7 +124,7 @@ class PriceDataFeedQueryContainerTest extends Unit
      *
      * @return array
      */
-    protected function getSortedExpectedJoinedTables($tablesArray)
+    protected function getSortedExpectedJoinedTables(array $tablesArray): array
     {
         asort($tablesArray);
         $tablesArray = array_values($tablesArray);
@@ -137,7 +135,7 @@ class PriceDataFeedQueryContainerTest extends Unit
     /**
      * @return array
      */
-    protected function getDefaultJoinedTables()
+    protected function getDefaultJoinedTables(): array
     {
         return [];
     }
@@ -145,7 +143,7 @@ class PriceDataFeedQueryContainerTest extends Unit
     /**
      * @return array
      */
-    protected function getTypeJoinedTables()
+    protected function getTypeJoinedTables(): array
     {
         return [
             'spy_price_type',

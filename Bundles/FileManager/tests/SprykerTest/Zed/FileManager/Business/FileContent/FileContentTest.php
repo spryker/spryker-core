@@ -29,7 +29,7 @@ class FileContentTest extends Unit
     /**
      * @return \Spryker\Zed\FileManager\Dependency\Service\FileManagerToFileSystemServiceInterface
      */
-    protected function getFileSystemServiceMock()
+    protected function getFileSystemServiceMock(): FileManagerToFileSystemServiceInterface
     {
         return $this->getMockBuilder(FileManagerToFileSystemServiceInterface::class)->getMock();
     }
@@ -37,7 +37,7 @@ class FileContentTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\FileManager\FileManagerConfig
      */
-    protected function getConfigMock()
+    protected function getConfigMock(): FileManagerConfig
     {
         return $this->getMockBuilder(FileManagerConfig::class)->getMock();
     }
@@ -45,7 +45,7 @@ class FileContentTest extends Unit
     /**
      * @return void
      */
-    public function testSave()
+    public function testSave(): void
     {
         $fileSystemServiceMock = $this->getFileSystemServiceMock();
         $fileSystemServiceMock->expects($this->once())
@@ -67,7 +67,7 @@ class FileContentTest extends Unit
     /**
      * @return void
      */
-    public function testDelete()
+    public function testDelete(): void
     {
         $fileSystemServiceMock = $this->getFileSystemServiceMock();
         $fileSystemServiceMock->expects($this->any())
@@ -85,7 +85,7 @@ class FileContentTest extends Unit
     /**
      * @return void
      */
-    public function testRead()
+    public function testRead(): void
     {
         $fileSystemServiceMock = $this->getFileSystemServiceMock();
         $fileSystemServiceMock->expects($this->once())
@@ -98,6 +98,6 @@ class FileContentTest extends Unit
         );
 
         $fileContent = $fileContent->read('report.txt');
-        $this->assertEquals('this is the report', $fileContent);
+        $this->assertSame('this is the report', $fileContent);
     }
 }

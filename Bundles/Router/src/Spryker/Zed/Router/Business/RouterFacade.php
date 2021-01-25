@@ -21,6 +21,8 @@ class RouterFacade extends AbstractFacade implements RouterFacadeInterface
      *
      * @api
      *
+     * @internal
+     *
      * @return \Spryker\Zed\Router\Business\Router\ChainRouter
      */
     public function getRouter(): ChainRouter
@@ -32,6 +34,8 @@ class RouterFacade extends AbstractFacade implements RouterFacadeInterface
      * {@inheritDoc}
      *
      * @api
+     *
+     * @internal
      *
      * @return \Spryker\Zed\Router\Business\Router\RouterInterface
      */
@@ -45,10 +49,24 @@ class RouterFacade extends AbstractFacade implements RouterFacadeInterface
      *
      * @api
      *
+     * @internal
+     *
      * @return \Spryker\Zed\Router\Business\Router\RouterInterface
      */
     public function getZedFallbackRouter(): RouterInterface
     {
         return $this->getFactory()->createZedDevelopmentRouter();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function cacheWarmUp(): void
+    {
+        $this->getFactory()->createCache()->warmUp();
     }
 }

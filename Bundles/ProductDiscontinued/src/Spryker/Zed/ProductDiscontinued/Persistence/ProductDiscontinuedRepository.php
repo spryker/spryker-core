@@ -11,14 +11,17 @@ use Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
-use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
+use Spryker\Zed\Kernel\Persistence\EntityManager\InstancePoolingTrait;
 
 /**
  * @method \Spryker\Zed\ProductDiscontinued\Persistence\ProductDiscontinuedPersistenceFactory getFactory()
  */
 class ProductDiscontinuedRepository extends AbstractRepository implements ProductDiscontinuedRepositoryInterface
 {
+    use InstancePoolingTrait;
+
     /**
      * @uses Product
      *
@@ -72,19 +75,32 @@ class ProductDiscontinuedRepository extends AbstractRepository implements Produc
     }
 
     /**
+     * @param int $batchSize
+     *
      * @return \Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer
      */
-    public function findProductsToDeactivate(): ProductDiscontinuedCollectionTransfer
+    public function findProductsToDeactivate(int $batchSize = 1000): ProductDiscontinuedCollectionTransfer
     {
+        $isPoolingEnabled = $this->isInstancePoolingEnabled();
+        if ($isPoolingEnabled) {
+            $this->disableInstancePooling();
+        }
+
         $productDiscontinuedEntityCollection = $this->getFactory()
             ->createProductDiscontinuedQuery()
+            ->joinWithProduct()
             ->filterByActiveUntil(['max' => time()], Criteria::LESS_THAN)
+            ->limit($batchSize)
             ->find();
 
         if ($productDiscontinuedEntityCollection->count()) {
             return $this->getFactory()
                 ->createProductDiscontinuedMapper()
                 ->mapTransferCollection($productDiscontinuedEntityCollection);
+        }
+
+        if ($isPoolingEnabled) {
+            $this->enableInstancePooling();
         }
 
         return new ProductDiscontinuedCollectionTransfer();
@@ -108,6 +124,13 @@ class ProductDiscontinuedRepository extends AbstractRepository implements Produc
         if ($criteriaFilterTransfer->getIds()) {
             $productDiscontinuedQuery
                 ->filterByIdProductDiscontinued_In($criteriaFilterTransfer->getIds());
+        }
+
+        if ($criteriaFilterTransfer->getSkus()) {
+            $productDiscontinuedQuery
+                ->useProductQuery()
+                    ->filterBySku_In($criteriaFilterTransfer->getSkus())
+                ->endUse();
         }
 
         $productDiscontinuedEntityCollection = $productDiscontinuedQuery->find();

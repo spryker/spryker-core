@@ -1,0 +1,42 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 36,
+            "line_to": 36,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ProductAlternativeGui\\Dependency\\Facade\\ProductAlternativeGuiToProductFacadeInterface::suggestProductAbstract cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductAlternativeGui/src/Spryker/Zed/ProductAlternativeGui/Communication/Controller/SuggestController.php",
+            "snippet": "            ->suggestProductAbstract($suggestion);",
+            "selected_text": "$suggestion",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 33,
+            "line_to": 33,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ProductAlternativeCreateRequestTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductAlternativeGui/src/Spryker/Zed/ProductAlternativeGui/Communication/Plugin/Product/ProductConcretePluginUpdate.php",
+            "snippet": "        if (!$productConcreteTransfer->getProductAlternativeCreateRequests()->count()) {",
+            "selected_text": "count",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 34,
+            "line_to": 34,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ProductAlternativeGui\\Dependency\\Facade\\ProductAlternativeGuiToProductAlternativeFacadeInterface::getProductAlternativeListByIdProductConcrete cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductAlternativeGui/src/Spryker/Zed/ProductAlternativeGui/Communication/Plugin/ProductManagement/ProductConcreteFormEditDataProviderExpanderPlugin.php",
+            "snippet": "                $productConcrete->getIdProductConcrete()",
+            "selected_text": "$productConcrete->getIdProductConcrete()",
+            "error_level": 3,
+            "shortcode": 78
+        }
+    ],
+    "deprecation": []
+}

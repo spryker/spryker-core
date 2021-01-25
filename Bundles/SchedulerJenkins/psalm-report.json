@@ -1,0 +1,127 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 52,
+            "line_to": 52,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Zed\\SchedulerJenkins\\Business\\Api\\JenkinsApiInterface::createJob cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/SchedulerJenkins/src/Spryker/Zed/SchedulerJenkins/Business/Executor/CreateExecutor.php",
+            "snippet": "        return $this->jenkinsApi->createJob($configurationProvider, $jobTransfer->getName(), $jobXmlTemplate);",
+            "selected_text": "$jobTransfer->getName()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 40,
+            "line_to": 40,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Zed\\SchedulerJenkins\\Business\\Api\\JenkinsApiInterface::deleteJob cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/SchedulerJenkins/src/Spryker/Zed/SchedulerJenkins/Business/Executor/DeleteExecutor.php",
+            "snippet": "        return $this->jenkinsApi->deleteJob($configurationProvider, $jobTransfer->getName());",
+            "selected_text": "$jobTransfer->getName()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 40,
+            "line_to": 40,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Zed\\SchedulerJenkins\\Business\\Api\\JenkinsApiInterface::disableJob cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/SchedulerJenkins/src/Spryker/Zed/SchedulerJenkins/Business/Executor/DisableExecutor.php",
+            "snippet": "        return $this->jenkinsApi->disableJob($configurationProvider, $jobTransfer->getName());",
+            "selected_text": "$jobTransfer->getName()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 40,
+            "line_to": 40,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Zed\\SchedulerJenkins\\Business\\Api\\JenkinsApiInterface::enableJob cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/SchedulerJenkins/src/Spryker/Zed/SchedulerJenkins/Business/Executor/EnableExecutor.php",
+            "snippet": "        return $this->jenkinsApi->enableJob($configurationProvider, $jobTransfer->getName());",
+            "selected_text": "$jobTransfer->getName()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 54,
+            "line_to": 54,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Zed\\SchedulerJenkins\\Business\\Api\\JenkinsApiInterface::updateJob cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/SchedulerJenkins/src/Spryker/Zed/SchedulerJenkins/Business/Executor/UpdateExecutor.php",
+            "snippet": "        return $this->jenkinsApi->updateJob($configurationProvider, $jobTransfer->getName(), $jobXmlTemplate);",
+            "selected_text": "$jobTransfer->getName()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 107,
+            "line_to": 107,
+            "type": "TypeDoesNotContainType",
+            "message": "Found a contradiction when evaluating $schedulerJenkinsConfiguration and trying to reconcile type 'array<array-key, mixed>' to !array",
+            "file_name": "vendor/spryker/spryker/Bundles/SchedulerJenkins/src/Spryker/Zed/SchedulerJenkins/Business/Processor/Configuration/ConfigurationProvider.php",
+            "snippet": "        if (!is_array($schedulerJenkinsConfiguration)) {",
+            "selected_text": "is_array($schedulerJenkinsConfiguration)",
+            "error_level": 4,
+            "shortcode": 56
+        },
+        {
+            "severity": "info",
+            "line_from": 47,
+            "line_to": 47,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\SchedulerJenkins\\Business\\Processor\\Builder\\ConfigurationProviderBuilderInterface::build cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/SchedulerJenkins/src/Spryker/Zed/SchedulerJenkins/Business/Processor/ScheduleProcessor.php",
+            "snippet": "        $configurationProvider = $this->configurationProviderBuilder->build($idScheduler);",
+            "selected_text": "$idScheduler",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 105,
+            "line_to": 105,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\SchedulerJenkins\\Dependency\\Service\\SchedulerJenkinsToUtilEncodingServiceInterface::decodeJson cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/SchedulerJenkins/src/Spryker/Zed/SchedulerJenkins/Business/Processor/Strategy/ExecutionStrategyBuilder.php",
+            "snippet": "        $jobs = $this->utilEncodingService->decodeJson($response->getPayload(), true);",
+            "selected_text": "$response->getPayload()",
+            "error_level": 3,
+            "shortcode": 78
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 91,
+            "line_to": 91,
+            "type": "DeprecatedClass",
+            "message": "Spryker\\Zed\\Kernel\\Communication\\Plugin\\Pimple is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/SchedulerJenkins/src/Spryker/Zed/SchedulerJenkins/SchedulerJenkinsDependencyProvider.php",
+            "snippet": "        $pimplePlugin = new Pimple();",
+            "selected_text": "new Pimple()",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 93,
+            "line_to": 93,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Service\\Container\\Container::offsetGet has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/SchedulerJenkins/src/Spryker/Zed/SchedulerJenkins/SchedulerJenkinsDependencyProvider.php",
+            "snippet": "        $twig = $pimplePlugin->getApplication()['twig'];",
+            "selected_text": "$pimplePlugin->getApplication()",
+            "error_level": 2,
+            "shortcode": 1
+        }
+    ]
+}

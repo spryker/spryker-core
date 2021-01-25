@@ -1,0 +1,162 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 90,
+            "line_to": 90,
+            "type": "MismatchingDocblockParamType",
+            "message": "Parameter $messageTransfers has wrong type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\MessageTransfer>', should be 'ArrayObject'",
+            "file_name": "vendor/spryker/spryker/Bundles/ResourceShare/src/Spryker/Client/ResourceShare/Activator/ResourceShareActivator.php",
+            "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\MessageTransfer[] $messageTransfers",
+            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\MessageTransfer[]",
+            "error_level": 4,
+            "shortcode": 141
+        },
+        {
+            "severity": "info",
+            "line_from": 111,
+            "line_to": 111,
+            "type": "MismatchingDocblockParamType",
+            "message": "Parameter $messageTransfers has wrong type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\MessageTransfer>', should be 'ArrayObject'",
+            "file_name": "vendor/spryker/spryker/Bundles/ResourceShare/src/Spryker/Client/ResourceShare/Activator/ResourceShareActivator.php",
+            "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\MessageTransfer[] $messageTransfers",
+            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\MessageTransfer[]",
+            "error_level": 4,
+            "shortcode": 141
+        },
+        {
+            "severity": "info",
+            "line_from": 162,
+            "line_to": 162,
+            "type": "MismatchingDocblockParamType",
+            "message": "Parameter $targetMessageTransfers has wrong type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\MessageTransfer>', should be 'ArrayObject'",
+            "file_name": "vendor/spryker/spryker/Bundles/ResourceShare/src/Spryker/Client/ResourceShare/Activator/ResourceShareActivator.php",
+            "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\MessageTransfer[] $targetMessageTransfers",
+            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\MessageTransfer[]",
+            "error_level": 4,
+            "shortcode": 141
+        },
+        {
+            "severity": "info",
+            "line_from": 163,
+            "line_to": 163,
+            "type": "MismatchingDocblockParamType",
+            "message": "Parameter $messageTransfers has wrong type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\MessageTransfer>', should be 'ArrayObject'",
+            "file_name": "vendor/spryker/spryker/Bundles/ResourceShare/src/Spryker/Client/ResourceShare/Activator/ResourceShareActivator.php",
+            "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\MessageTransfer[] $messageTransfers",
+            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\MessageTransfer[]",
+            "error_level": 4,
+            "shortcode": 141
+        },
+        {
+            "severity": "info",
+            "line_from": 165,
+            "line_to": 165,
+            "type": "MismatchingDocblockReturnType",
+            "message": "Docblock has incorrect return type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\MessageTransfer>', should be 'ArrayObject'",
+            "file_name": "vendor/spryker/spryker/Bundles/ResourceShare/src/Spryker/Client/ResourceShare/Activator/ResourceShareActivator.php",
+            "snippet": "     * @return \\ArrayObject|\\Generated\\Shared\\Transfer\\MessageTransfer[]",
+            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\MessageTransfer[]",
+            "error_level": 4,
+            "shortcode": 142
+        },
+        {
+            "severity": "info",
+            "line_from": 172,
+            "line_to": 172,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\MessageTransfer> variable $targetMessageTransfers",
+            "file_name": "vendor/spryker/spryker/Bundles/ResourceShare/src/Spryker/Client/ResourceShare/Activator/ResourceShareActivator.php",
+            "snippet": "            $targetMessageTransfers->append($messageTransfer);",
+            "selected_text": "append",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 50,
+            "line_to": 50,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method requireUuid on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ResourceShare/src/Spryker/Zed/ResourceShare/Business/ResourceShare/ResourceShareReader.php",
+            "snippet": "        $resourceShareTransfer->requireUuid();",
+            "selected_text": "requireUuid",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 54,
+            "line_to": 54,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ResourceShare\\Persistence\\ResourceShareRepositoryInterface::findResourceShareByUuid cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ResourceShare/src/Spryker/Zed/ResourceShare/Business/ResourceShare/ResourceShareReader.php",
+            "snippet": "            $resourceShareTransfer->getUuid()",
+            "selected_text": "$resourceShareTransfer->getUuid()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 69,
+            "line_to": 69,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of strtotime cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ResourceShare/src/Spryker/Zed/ResourceShare/Business/ResourceShare/ResourceShareValidator.php",
+            "snippet": "        return time() >= strtotime($resourceShareTransfer->getExpiryDate());",
+            "selected_text": "$resourceShareTransfer->getExpiryDate()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 58,
+            "line_to": 58,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ResourceShare\\Business\\ResourceShare\\ResourceShareValidatorInterface::validateResourceShareTransfer cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ResourceShare/src/Spryker/Zed/ResourceShare/Business/ResourceShare/ResourceShareWriter.php",
+            "snippet": "        $resourceShareResponseTransfer = $this->resourceShareValidator->validateResourceShareTransfer($resourceShareTransfer);",
+            "selected_text": "$resourceShareTransfer",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 91,
+            "line_to": 91,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ResourceShare\\Persistence\\ResourceShareRepositoryInterface::findResourceShareByUuid cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ResourceShare/src/Spryker/Zed/ResourceShare/Business/ResourceShare/ResourceShareWriter.php",
+            "snippet": "            $this->resourceShareEntityManager->buildResourceShare($resourceShareTransfer)->getUuid()",
+            "selected_text": "$this->resourceShareEntityManager->buildResourceShare($resourceShareTransfer)->getUuid()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 45,
+            "line_to": 45,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ResourceShare\\Persistence\\Propel\\Mapper\\ResourceShareMapper::mapResourceDataToResourceShareDataTransfer cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ResourceShare/src/Spryker/Zed/ResourceShare/Persistence/Propel/Mapper/ResourceShareMapper.php",
+            "snippet": "            $this->mapResourceDataToResourceShareDataTransfer($resourceShareEntity->getResourceData())",
+            "selected_text": "$resourceShareEntity->getResourceData()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 91,
+            "line_to": 91,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Generated\\Shared\\Transfer\\ResourceShareDataTransfer::fromArray cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ResourceShare/src/Spryker/Zed/ResourceShare/Persistence/Propel/Mapper/ResourceShareMapper.php",
+            "snippet": "            ->fromArray($decodedResourceData, true);",
+            "selected_text": "$decodedResourceData",
+            "error_level": 3,
+            "shortcode": 78
+        }
+    ],
+    "deprecation": []
+}

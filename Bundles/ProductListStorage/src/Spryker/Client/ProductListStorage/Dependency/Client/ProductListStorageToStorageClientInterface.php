@@ -17,7 +17,7 @@ interface ProductListStorageToStorageClientInterface
     public function get(string $key);
 
     /**
-     * @param array $keys
+     * @param string[] $keys
      *
      * @return array
      */

@@ -25,7 +25,7 @@ class LocatorTest extends Unit
     /**
      * @return void
      */
-    public function testCallShouldReturnBundleProxy()
+    public function testCallShouldReturnBundleProxy(): void
     {
         $locator = Locator::getInstance();
 

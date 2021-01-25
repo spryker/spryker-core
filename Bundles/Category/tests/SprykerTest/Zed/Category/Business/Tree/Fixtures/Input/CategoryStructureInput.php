@@ -14,7 +14,7 @@ class CategoryStructureInput
     /**
      * @return array
      */
-    public function getOrderedCategoriesArray()
+    public function getOrderedCategoriesArray(): array
     {
         $categories = [
             [
@@ -55,7 +55,7 @@ class CategoryStructureInput
     /**
      * @return array
      */
-    public function getSecondOrderedCategoriesArray()
+    public function getSecondOrderedCategoriesArray(): array
     {
         $categories = [
             [
@@ -96,7 +96,7 @@ class CategoryStructureInput
     /**
      * @return array
      */
-    public function getCategoryStructureWithChildrenBeforeParent()
+    public function getCategoryStructureWithChildrenBeforeParent(): array
     {
         $categories = [
             [
@@ -137,7 +137,7 @@ class CategoryStructureInput
     /**
      * @return array
      */
-    public function getCategoryStructureWithNonexistentParent()
+    public function getCategoryStructureWithNonexistentParent(): array
     {
         $categories = [
             [

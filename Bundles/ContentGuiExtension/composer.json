@@ -4,12 +4,11 @@
   "description": "ContentGuiExtension module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1"
+    "php": ">=7.3"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/kernel": "*",
-    "spryker/testify": "*"
+    "spryker/kernel": "*"
   },
   "suggest": {
     "spryker/kernel": "If you want to use content plugin"
@@ -21,6 +20,10 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/"
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"

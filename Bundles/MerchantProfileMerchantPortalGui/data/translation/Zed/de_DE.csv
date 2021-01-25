@@ -1,0 +1,58 @@
+"About Your Store","Ihr Shop"
+"Addition to address",Adresszusatz
+"Average Delivery Time","Durchschnittliche Lieferzeit"
+"Banner URL","Banner URL"
+"Business Info",Geschäftsinformation
+"Cancellation Policy",Widerrufsbelehrung
+City,Stadt
+Company,Firma
+"Company Name","Name der Firma"
+"Contact Details & Address","Kontaktdaten und Adresse"
+"Contact Person",Kontaktperson
+Country,Land
+"Data Privacy",Datenschutz
+Description,Beschreibung
+Dr,Dr.
+Email,E-Mail
+"Fax number",Faxnummer
+"First Name",Vorname
+Imprint,Impressum
+"Is Active","Ist Aktiv"
+"Last Name",Nachname
+Latitude,Längengrad
+"Logo URL","Logo URL"
+Longitude,Breitengrad
+"Merchant Reference",Händler-Referenznummer
+Mr,Herr
+Mrs,Fr.
+Ms,Fr.
+Number,Nummer
+"Online Profile","Online Profil"
+"Online Status","Online Status"
+"Phone Number",Telefonnummer
+Profile,Profil
+profile.status.message.online,"<p><br>Dies bedeutet, dass ihr Shop online verfügbar und somit sichtbar ist.</p>"
+profile.status.message.offline,"<p><br>Dies bedeutet, dass ihr Shop nicht online verfügbar ist und somit für niemand sichtbar ist.</p>"
+"Provide a logo URL","URL eines Logos einfügen"
+"Provide a banner URL","URL eines Banners einfügen"
+"Provide Average Delivery Time","Durchschnittliche Lieferzeit einfügen"
+"Provide Data Privacy","Datenschutzbedingungen einfügen"
+"Provide Imprint","Impressum einfügen"
+"Provide Cancellation Policy","Widerrufsbelehrung einfügen"
+"Provide Terms & Conditions","AGB einfügen"
+"Provide the URL of your Store","URL Ihres Shops einfügen"
+"Registration number",Registriernummer
+Role,Position
+Save,Speichern
+select.default.placeholder,Auswählen
+"Store Profile URL",Shopprofil-URL
+store.state.online,"Ihr Shop ist online."
+store.state.offline,"Ihr Shop ist offline."
+Street,Straße
+"Tell us about your store","Beschreiben Sie den Shop"
+"Terms & Conditions",AGB
+"The Profile has been changed successfully.","Das Profil wurde erfolgreich geändert."
+Title,Titel
+"Your Store is online","Ihr Shop ist online"
+"Visual assets","Visuelle Elemente"
+"Zip Code",Postleitzahl

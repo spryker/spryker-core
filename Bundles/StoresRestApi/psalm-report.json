@@ -1,0 +1,18 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 52,
+            "line_to": 52,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Glue\\StoresRestApi\\Processor\\Mapper\\StoresResourceMapper::addDefaultCurrencyToStoresRestAttributes cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/StoresRestApi/src/Spryker/Glue/StoresRestApi/Processor/Mapper/StoresResourceMapper.php",
+            "snippet": "            $this->storeClient->getCurrentStore()->getDefaultCurrencyIsoCode()",
+            "selected_text": "$this->storeClient->getCurrentStore()->getDefaultCurrencyIsoCode()",
+            "error_level": 3,
+            "shortcode": 78
+        }
+    ],
+    "deprecation": []
+}

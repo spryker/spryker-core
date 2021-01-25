@@ -4,7 +4,7 @@
   "description": "SalesOrderThreshold module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.3",
     "spryker/calculation-extension": "^1.0.0",
     "spryker/cart-extension": "^1.6.0 || ^2.2.1 || ^4.0.0",
     "spryker/checkout-extension": "^1.0.0",
@@ -22,6 +22,7 @@
   "require-dev": {
     "spryker/checkout": "*",
     "spryker/code-sniffer": "*",
+    "spryker/country": "*",
     "spryker/installer": "*",
     "spryker/propel": "*",
     "spryker/testify": "*"
@@ -45,6 +46,10 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"

@@ -50,7 +50,26 @@ interface SalesConfigurableBundleFacadeInterface
     /**
      * Specification:
      * - Expands sales order by configured bundles.
+     * - Expands configured bundle items with translations for current locale.
      * - Expands ItemTransfer by configured bundle item.
+     *
+     * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\SalesConfigurableBundle\Business\SalesConfigurableBundleFacadeInterface::expandItemsWithSalesOrderConfiguredBundles()} instead.
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function expandOrderWithConfiguredBundles(OrderTransfer $orderTransfer): OrderTransfer;
+
+    /**
+     * Specification:
+     * - Splits configurable bundles by configurable bundle quantity.
+     * - Applied for configurable bundles when configurable bundle quantity is more than 1.
+     * - Duplicates items for each split configurable bundle.
+     * - Adjusts items and product options quantity per split.
+     * - Alters groupkey for each split configurable bundle.
      *
      * @api
      *
@@ -58,5 +77,18 @@ interface SalesConfigurableBundleFacadeInterface
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function expandOrderWithConfiguredBundles(OrderTransfer $orderTransfer): OrderTransfer;
+    public function transformConfiguredBundleOrderItems(OrderTransfer $orderTransfer): OrderTransfer;
+
+    /**
+     * Specification:
+     * - Expands items with sales order configured bundles.
+     * - Expects ItemTransfer::ID_SALES_ORDER_ITEM to be set.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function expandOrderItemsWithSalesOrderConfiguredBundles(array $itemTransfers): array;
 }

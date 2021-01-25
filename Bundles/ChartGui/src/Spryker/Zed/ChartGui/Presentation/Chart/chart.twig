@@ -1,0 +1,51 @@
+{% set chartType = 'chart' %}
+{% set chartData = [] %}
+{% set maxLabeLength = 10 %}
+
+{% for trace in data.traces %}
+    {% set isPie = (trace.type == 'pie') %}
+    {% set xLabels = isPie ? 'labels' : 'x' %}
+    {% set yValues = isPie ? 'values' : 'y' %}
+    {% set dataTrace = {
+        name: (trace.name),
+        type: (trace.type | default('bar')),
+        (xLabels): (trace.labels),
+        (yValues): (trace.values)
+    } %}
+
+    {% if trace.type == 'bar' and data.key == 'top-orders' %}
+        {% set values = [] %}
+        {% set titles = [] %}
+
+        {% for key, value in trace.values %}
+            {% set values = values|merge([value|length > 20 ? value|slice(0, 20) ~ '… ' : value ~ ' ']) %}
+            {% set titles = titles|merge([
+                'Count orders' | trans ~ ': ' ~ trace.labels[key] ~
+                '<br>' ~ 'Title' | trans ~ ': ' ~ (value|length > 35 ? value|slice(0, 35) ~ '…' : value) ~
+                '<br>' ~ 'SKU' | trans ~ ': ' ~ trace.options[key]
+            ]) %}
+        {% endfor %}
+
+        {% set dataTrace = {
+            name: trace.name,
+            type: trace.type,
+            x: trace.labels,
+            y: values,
+            text: titles,
+            hoverinfo: 'text',
+            orientation: 'h'
+        } %}
+
+        {% set maxLabeLength = 24 %}
+    {% endif %}
+
+    {% set chartData = chartData | merge([dataTrace]) %}
+{% endfor %}
+
+{% include '@ChartGui/Chart/_partials/plotly-chart.twig' with {
+    chartType: chartType,
+    layout: layout,
+    data: data,
+    maxLabeLength: maxLabeLength,
+    chartData: chartData
+} %}

@@ -10,8 +10,6 @@ namespace SprykerTest\Zed\MultiCart;
 use Codeception\Actor;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -21,7 +19,7 @@ use Codeception\Actor;
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  * @method \Spryker\Zed\MultiCart\Business\MultiCartFacadeInterface getFacade()
  *
  * @SuppressWarnings(PHPMD)
@@ -29,8 +27,4 @@ use Codeception\Actor;
 class MultiCartBusinessTester extends Actor
 {
     use _generated\MultiCartBusinessTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 }

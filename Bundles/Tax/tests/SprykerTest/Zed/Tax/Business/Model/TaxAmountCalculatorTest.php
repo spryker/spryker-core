@@ -36,7 +36,7 @@ class TaxAmountCalculatorTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -58,7 +58,7 @@ class TaxAmountCalculatorTest extends Unit
         int $price,
         int $quantity,
         int $expected
-    ) {
+    ): void {
         // Assign
         $nonSplitItemTransferCollection = $this->tester->createItemTransferCollection($taxRate, $price, $price * $quantity, TaxBusinessTester::DEFAULT_QUANTITY);
         $calculableObjectTransfer = $this->tester->createCalculableObjectTransfer($nonSplitItemTransferCollection);
@@ -68,7 +68,7 @@ class TaxAmountCalculatorTest extends Unit
         $recalculatedNonSplitSumTaxAmount = $this->tester->sumTaxAmount($calculableObjectTransfer);
 
         // Assert
-        $this->assertEquals($expected, $recalculatedNonSplitSumTaxAmount);
+        $this->assertSame($expected, $recalculatedNonSplitSumTaxAmount);
     }
 
     /**
@@ -86,7 +86,7 @@ class TaxAmountCalculatorTest extends Unit
         int $price,
         int $quantity,
         int $expected
-    ) {
+    ): void {
         // Assign
         $splitItemTransferCollection = $this->tester->createItemTransferCollection($taxRate, $price, $price, $quantity);
         $calculableObjectTransfer = $this->tester->createCalculableObjectTransfer($splitItemTransferCollection);
@@ -96,7 +96,7 @@ class TaxAmountCalculatorTest extends Unit
         $recalculatedSplitSumTaxAmount = $this->tester->sumTaxAmount($calculableObjectTransfer);
 
         // Assert
-        $this->assertEquals($expected, $recalculatedSplitSumTaxAmount);
+        $this->assertSame($expected, $recalculatedSplitSumTaxAmount);
     }
 
     /**
@@ -112,7 +112,7 @@ class TaxAmountCalculatorTest extends Unit
         float $taxRate,
         int $price,
         int $quantity
-    ) {
+    ): void {
         // Assign
         $nonSplitItemTransferCollection = $this->tester->createItemTransferCollection($taxRate, $price, $price * $quantity, TaxBusinessTester::DEFAULT_QUANTITY);
         $splitItemTransferCollection = $this->tester->createItemTransferCollection($taxRate, $price, $price, $quantity);
@@ -128,13 +128,13 @@ class TaxAmountCalculatorTest extends Unit
         $recalculatedSplitSumTaxAmount = $this->tester->sumTaxAmount($calculableSplitObjectTransfer);
 
         // Assert
-        $this->assertEquals($recalculatedNonSplitSumTaxAmount, $recalculatedSplitSumTaxAmount);
+        $this->assertSame($recalculatedNonSplitSumTaxAmount, $recalculatedSplitSumTaxAmount);
     }
 
     /**
      * @return array
      */
-    public function getGroupTestData()
+    public function getGroupTestData(): array
     {
         return [
             [7.25, 3400, 20],
@@ -148,7 +148,7 @@ class TaxAmountCalculatorTest extends Unit
     /**
      * @return array
      */
-    public function getSeparateTestData()
+    public function getSeparateTestData(): array
     {
         return [
             [7.25, 124, 20, 180],

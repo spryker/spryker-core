@@ -7,67 +7,81 @@
 
 namespace Spryker\Zed\Transfer\Business\Model\Generator;
 
+use ArrayObject;
+use Laminas\Filter\Word\CamelCaseToUnderscore;
+use Laminas\Filter\Word\UnderscoreToCamelCase;
+use Spryker\DecimalObject\Decimal;
+use Spryker\Shared\Transfer\TypeValidation\TransferTypeValidatorTrait;
 use Spryker\Zed\Transfer\Business\Exception\InvalidAssociativeTypeException;
 use Spryker\Zed\Transfer\Business\Exception\InvalidAssociativeValueException;
 use Spryker\Zed\Transfer\Business\Exception\InvalidNameException;
+use Spryker\Zed\Transfer\Business\Exception\InvalidSingularPropertyNameException;
 use Spryker\Zed\Transfer\TransferConfig;
-use Zend\Filter\Word\CamelCaseToUnderscore;
-use Zend\Filter\Word\UnderscoreToCamelCase;
 
 class ClassDefinition implements ClassDefinitionInterface
 {
     public const TYPE_FULLY_QUALIFIED = 'type_fully_qualified';
     public const DEFAULT_ASSOCIATIVE_ARRAY_TYPE = 'string|int';
 
+    protected const EXTRA_TYPE_HINTS = 'extra_type_hints';
+    protected const SUPPORTED_VALUE_OBJECTS = [
+        'decimal' => [
+            self::TYPE_FULLY_QUALIFIED => Decimal::class,
+            self::EXTRA_TYPE_HINTS => 'string|int|float',
+        ],
+    ];
+
+    protected const SHIM_NOTICE_TEMPLATE = 'Forward compatibility warning: %s is the actual type (please use that, %s is kept for BC).';
+
     /**
      * @var string
      */
-    private $name;
+    protected $name;
 
     /**
      * @var array
      */
-    private $constants = [];
+    protected $constants = [];
 
     /**
      * @var array
      */
-    private $properties = [];
+    protected $properties = [];
 
     /**
      * @var array
      */
-    private $normalizedProperties = [];
+    protected $normalizedProperties = [];
 
     /**
      * @var array
      */
-    private $methods = [];
+    protected $methods = [];
 
     /**
      * @var array
      */
-    private $constructorDefinition = [];
+    protected $constructorDefinition = [];
 
     /**
      * @var string|null
      */
-    private $deprecationDescription;
+    protected $deprecationDescription;
 
     /**
-     * @var bool
+     * @var string[]
      */
-    private $hasArrayObject = false;
+    protected $useStatements = [];
 
     /**
      * @var array
      */
-    private $propertyNameMap = [];
+    protected $propertyNameMap = [];
 
     /**
      * @var string|null
      */
-    private $entityNamespace;
+    protected $entityNamespace;
 
     /**
      * @var \Spryker\Zed\Transfer\TransferConfig
@@ -96,8 +110,10 @@ class ClassDefinition implements ClassDefinitionInterface
         }
 
         $this->addEntityNamespace($definition);
+        $this->addExtraUseStatements();
 
         if (isset($definition['property'])) {
+            $definition = $this->shimTransferDefinitionPropertyTypes($definition);
             $properties = $this->normalizePropertyTypes($definition['property']);
             $this->addConstants($properties);
             $this->addProperties($properties);
@@ -113,10 +129,12 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return $this
      */
-    private function setName($name)
+    protected function setName($name)
     {
         if (!$this->transferConfig->isTransferNameValidated()) {
-            return $this->setNameWithoutValidation($name);
+            $this->setNameWithoutValidation($name);
+
+            return $this;
         }
 
         $this->assertValidName($name);
@@ -136,7 +154,7 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return $this
      */
-    private function setNameWithoutValidation(string $name)
+    protected function setNameWithoutValidation(string $name)
     {
         if (strpos($name, 'Transfer') === false) {
             $name .= 'Transfer';
@@ -150,17 +168,17 @@ class ClassDefinition implements ClassDefinitionInterface
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
     /**
-     * @return bool
+     * @return string[]
      */
-    public function hasArrayObject()
+    public function getUseStatements(): array
     {
-        return $this->hasArrayObject;
+        return $this->useStatements;
     }
 
     /**
@@ -168,7 +186,7 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return void
      */
-    private function addConstants(array $properties)
+    protected function addConstants(array $properties): void
     {
         foreach ($properties as $property) {
             $this->addConstant($property);
@@ -180,7 +198,7 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return void
      */
-    private function addConstant(array $property)
+    protected function addConstant(array $property): void
     {
         $property['name'] = lcfirst($property['name']);
         $propertyInfo = [
@@ -197,7 +215,7 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return void
      */
-    private function addProperties(array $properties)
+    protected function addProperties(array $properties): void
     {
         foreach ($properties as $property) {
             $this->addProperty($property);
@@ -209,15 +227,15 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return void
      */
-    private function addProperty(array $property)
+    protected function addProperty(array $property): void
     {
         $property['name'] = lcfirst($property['name']);
         $propertyInfo = [
             'name' => $property['name'],
-            'type' => $this->getPropertyType($property),
-            'is_typed_array' => $property['is_typed_array'],
+            'type' => $this->buildPropertyType($property),
             'bundles' => $property['bundles'],
             'is_associative' => $property['is_associative'],
+            'is_array_collection' => $this->isArrayCollection($property),
         ];
 
         $this->properties[$property['name']] = $propertyInfo;
@@ -228,7 +246,7 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return void
      */
-    private function setPropertyNameMap(array $properties)
+    protected function setPropertyNameMap(array $properties): void
     {
         foreach ($properties as $property) {
             $nameCamelCase = $this->getPropertyName($property);
@@ -245,15 +263,16 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return array
      */
-    private function normalizePropertyTypes(array $properties)
+    protected function normalizePropertyTypes(array $properties): array
     {
         $normalizedProperties = [];
         foreach ($properties as $property) {
             $this->assertProperty($property);
 
-            $property[self::TYPE_FULLY_QUALIFIED] = $property['type'];
+            $property[static::TYPE_FULLY_QUALIFIED] = $property['type'];
             $property['is_collection'] = false;
             $property['is_transfer'] = false;
+            $property['is_value_object'] = false;
             $property['propertyConst'] = $this->getPropertyConstantName($property);
             $property['name_underscore'] = mb_strtolower($property['propertyConst']);
 
@@ -261,9 +280,8 @@ class ClassDefinition implements ClassDefinitionInterface
                 $property = $this->buildTransferPropertyDefinition($property);
             }
 
-            $property['is_typed_array'] = false;
-            if ($this->isTypedArray($property)) {
-                $property['is_typed_array'] = true;
+            if ($this->isValueObject($property)) {
+                $property = $this->buildValueObjectPropertyDefinition($property);
             }
 
             $property['is_associative'] = $this->isAssociativeArray($property);
@@ -281,20 +299,33 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return array
      */
-    private function buildTransferPropertyDefinition(array $property)
+    protected function buildTransferPropertyDefinition(array $property): array
     {
         $property['is_transfer'] = true;
-        $property[self::TYPE_FULLY_QUALIFIED] = 'Generated\\Shared\\Transfer\\';
+        $property[static::TYPE_FULLY_QUALIFIED] = 'Generated\\Shared\\Transfer\\';
 
         if (preg_match('/\[\]$/', $property['type'])) {
             $property['type'] = str_replace('[]', '', $property['type']) . 'Transfer[]';
-            $property[self::TYPE_FULLY_QUALIFIED] = 'Generated\\Shared\\Transfer\\' . str_replace('[]', '', $property['type']);
+            $property[static::TYPE_FULLY_QUALIFIED] = 'Generated\\Shared\\Transfer\\' . str_replace('[]', '', $property['type']);
             $property['is_collection'] = true;
 
             return $property;
         }
         $property['type'] .= 'Transfer';
-        $property[self::TYPE_FULLY_QUALIFIED] .= $property['type'];
+        $property[static::TYPE_FULLY_QUALIFIED] .= $property['type'];
+
+        return $property;
+    }
+
+    /**
+     * @param array $property
+     *
+     * @return array
+     */
+    protected function buildValueObjectPropertyDefinition(array $property): array
+    {
+        $property['is_value_object'] = true;
+        $property[static::TYPE_FULLY_QUALIFIED] = $this->getValueObjectFullyQualifiedClassName($property);
 
         return $property;
     }
@@ -304,9 +335,19 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return bool
      */
-    private function isTransferOrTransferArray($type)
+    protected function isTransferOrTransferArray($type): bool
     {
-        return (!preg_match('/^int|^integer|^float|^string|^array|^\[\]|^bool|^boolean|^callable|^iterable|^iterator|^mixed|^resource|^object/', $type));
+        return (bool)preg_match('/^[A-Z].*/', $type);
+    }
+
+    /**
+     * @param array $property
+     *
+     * @return bool
+     */
+    protected function isValueObject(array $property): bool
+    {
+        return isset(static::SUPPORTED_VALUE_OBJECTS[$property['type']]);
     }
 
     /**
@@ -314,15 +355,23 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return string
      */
-    private function getPropertyType(array $property)
+    protected function getPropertyType(array $property): string
     {
+        if ($this->isValueObject($property)) {
+            return sprintf('\%s|null', $this->getValueObjectFullyQualifiedClassName($property));
+        }
+
         if ($this->isTypedArray($property)) {
             $type = preg_replace('/\[\]/', '', $property['type']);
 
             return $type . '[]';
         }
 
-        if ($this->isArray($property)) {
+        if ($this->isPrimitiveArray($property)) {
+            return 'array|null';
+        }
+
+        if ($this->isArrayCollection($property)) {
             return 'array';
         }
 
@@ -342,7 +391,7 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return bool
      */
-    private function isTypeTransferObject(array $property)
+    protected function isTypeTransferObject(array $property): bool
     {
         return ($property['is_transfer']);
     }
@@ -352,8 +401,20 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return string
      */
-    private function getSetVar(array $property)
+    protected function getSetVar(array $property): string
     {
+        if ($this->isValueObject($property)) {
+            if (empty(static::SUPPORTED_VALUE_OBJECTS[$property['type']][static::EXTRA_TYPE_HINTS])) {
+                return sprintf('\%s', $this->getValueObjectFullyQualifiedClassName($property));
+            }
+
+            return sprintf(
+                '%s|\%s',
+                static::SUPPORTED_VALUE_OBJECTS[$property['type']][static::EXTRA_TYPE_HINTS],
+                $this->getValueObjectFullyQualifiedClassName($property)
+            );
+        }
+
         if ($this->isTypedArray($property)) {
             $type = preg_replace('/\[\]/', '', $property['type']);
 
@@ -372,6 +433,10 @@ class ClassDefinition implements ClassDefinitionInterface
             return '\Generated\Shared\Transfer\\' . $property['type'];
         }
 
+        if ($this->isStrictProperty($property)) {
+            return $property['type'];
+        }
+
         return $property['type'] . '|null';
     }
 
@@ -380,7 +445,7 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return string
      */
-    private function getAddVar(array $property)
+    protected function getAddVar(array $property): string
     {
         if ($this->isTypedArray($property)) {
             return preg_replace('/\[\]/', '', $property['type']);
@@ -400,7 +465,7 @@ class ClassDefinition implements ClassDefinitionInterface
     /**
      * @return array
      */
-    public function getConstants()
+    public function getConstants(): array
     {
         return $this->constants;
     }
@@ -408,7 +473,7 @@ class ClassDefinition implements ClassDefinitionInterface
     /**
      * @return array
      */
-    public function getProperties()
+    public function getProperties(): array
     {
         return $this->properties;
     }
@@ -416,7 +481,7 @@ class ClassDefinition implements ClassDefinitionInterface
     /**
      * @return array
      */
-    public function getPropertyNameMap()
+    public function getPropertyNameMap(): array
     {
         return $this->propertyNameMap;
     }
@@ -426,7 +491,7 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return void
      */
-    private function addMethods(array $properties)
+    protected function addMethods(array $properties): void
     {
         foreach ($properties as $property) {
             $this->addPropertyMethods($property);
@@ -438,7 +503,7 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return void
      */
-    private function addPropertyMethods(array $property)
+    protected function addPropertyMethods(array $property): void
     {
         $this->buildGetterAndSetter($property);
 
@@ -447,12 +512,29 @@ class ClassDefinition implements ClassDefinitionInterface
         }
 
         $this->buildRequireMethod($property);
+        $this->buildStrictPropertyMethods($property);
+    }
+
+    /**
+     * @param array $property
+     *
+     * @return void
+     */
+    protected function buildStrictPropertyMethods(array $property): void
+    {
+        if (!$this->isStrictProperty($property)) {
+            return;
+        }
+
+        if ($this->isAssociativeArray($property)) {
+            $this->buildGetCollectionElementMethod($property);
+        }
     }
 
     /**
      * @return array
      */
-    public function getConstructorDefinition()
+    public function getConstructorDefinition(): array
     {
         return $this->constructorDefinition;
     }
@@ -460,7 +542,7 @@ class ClassDefinition implements ClassDefinitionInterface
     /**
      * @return array
      */
-    public function getMethods()
+    public function getMethods(): array
     {
         return $this->methods;
     }
@@ -468,7 +550,7 @@ class ClassDefinition implements ClassDefinitionInterface
     /**
      * @return array
      */
-    public function getNormalizedProperties()
+    public function getNormalizedProperties(): array
     {
         return $this->normalizedProperties;
     }
@@ -476,7 +558,7 @@ class ClassDefinition implements ClassDefinitionInterface
     /**
      * @return string|null
      */
-    public function getDeprecationDescription()
+    public function getDeprecationDescription(): ?string
     {
         return $this->deprecationDescription;
     }
@@ -486,10 +568,36 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return void
      */
-    private function buildGetterAndSetter(array $property)
+    protected function buildGetterAndSetter(array $property): void
     {
         $this->buildSetMethod($property);
         $this->buildGetMethod($property);
+
+        if (!$this->isArrayCollection($property) && !$this->isCollection($property)) {
+            $this->buildGetOrFailMethod($property);
+        }
+    }
+
+    /**
+     * @param array $property
+     *
+     * @return void
+     */
+    protected function buildGetOrFailMethod(array $property): void
+    {
+        $propertyName = $this->getPropertyName($property);
+        $methodName = sprintf('get%sOrFail', ucfirst($propertyName));
+        $method = [
+            'name' => $methodName,
+            'property' => $propertyName,
+            'propertyConst' => $this->getPropertyConstantName($property),
+            'return' => preg_replace('/\|null$/', '', $this->getReturnType($property)),
+            'bundles' => $property['bundles'],
+            'deprecationDescription' => $this->getPropertyDeprecationDescription($property),
+        ];
+
+        $method = $this->addGetOrFailTypeHint($method, $property);
+        $this->methods[$methodName] = $method;
     }
 
     /**
@@ -497,7 +605,7 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return string
      */
-    private function getPropertyConstantName(array $property)
+    protected function getPropertyConstantName(array $property): string
     {
         $filter = new CamelCaseToUnderscore();
 
@@ -509,7 +617,7 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return string
      */
-    private function getPropertyName(array $property)
+    protected function getPropertyName(array $property): string
     {
         $filter = new UnderscoreToCamelCase();
 
@@ -521,15 +629,23 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return string
      */
-    private function getReturnType(array $property)
+    protected function getReturnType(array $property): string
     {
+        if ($this->isValueObject($property)) {
+            return sprintf('\%s|null', $this->getValueObjectFullyQualifiedClassName($property));
+        }
+
         if ($this->isTypedArray($property)) {
             $type = preg_replace('/\[\]/', '', $property['type']);
 
             return $type . '[]';
         }
 
-        if ($this->isArray($property)) {
+        if ($this->isPrimitiveArray($property)) {
+            return 'array|null';
+        }
+
+        if ($this->isArrayCollection($property)) {
             return 'array';
         }
 
@@ -549,7 +665,7 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return bool
      */
-    private function isCollection(array $property)
+    protected function isCollection(array $property): bool
     {
         return (bool)preg_match('/((.*?)\[\])/', $property['type']);
     }
@@ -559,7 +675,7 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return bool
      */
-    private function isArray(array $property)
+    protected function isArray(array $property): bool
     {
         return ($property['type'] === 'array' || $property['type'] === '[]' || $this->isTypedArray($property));
     }
@@ -569,7 +685,35 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return bool
      */
-    private function isAssociativeArray(array $property)
+    protected function isPrimitiveArray(array $property): bool
+    {
+        if (!$this->isStrictProperty($property)) {
+            return false;
+        }
+
+        return $property['type'] === 'array' && !isset($property['singular']) && !$this->isAssociativeArray($property);
+    }
+
+    /**
+     * @param array $property
+     *
+     * @return bool
+     */
+    protected function isArrayCollection(array $property): bool
+    {
+        if ($this->isStrictProperty($property)) {
+            return $this->isArray($property) && !$this->isPrimitiveArray($property);
+        }
+
+        return $this->isArray($property);
+    }
+
+    /**
+     * @param array $property
+     *
+     * @return bool
+     */
+    protected function isAssociativeArray(array $property): bool
     {
         return isset($property['associative']) && filter_var($property['associative'], FILTER_VALIDATE_BOOLEAN);
     }
@@ -579,9 +723,9 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return bool
      */
-    private function isTypedArray(array $property)
+    protected function isTypedArray(array $property): bool
     {
-        return (bool)preg_match('/array\[\]|callable\[\]|int\[\]|integer\[\]|float\[\]|string\[\]|bool\[\]|boolean\[\]|iterable\[\]|object\[\]|resource\[\]|mixed\[\]/', $property['type']);
+        return (bool)preg_match('/array\[\]|callable\[\]|int\[\]|integer\[\]|float\[\]|decimal\[\]|string\[\]|bool\[\]|boolean\[\]|iterable\[\]|object\[\]|resource\[\]|mixed\[\]/', $property['type']);
     }
 
     /**
@@ -589,8 +733,12 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return bool|string
      */
-    private function getTypeHint(array $property)
+    protected function getSetTypeHint(array $property)
     {
+        if ($this->isStrictProperty($property)) {
+            return $this->getStrictSetTypeHint($property);
+        }
+
         if ($this->isArray($property) && isset($property['associative'])) {
             return false;
         }
@@ -599,12 +747,18 @@ class ClassDefinition implements ClassDefinitionInterface
             return 'array';
         }
 
+        if ($this->isValueObject($property)) {
+            $this->addUseStatement($this->getValueObjectFullyQualifiedClassName($property));
+
+            return false;
+        }
+
         if (preg_match('/^(string|int|integer|float|bool|boolean)$/', $property['type'])) {
             return false;
         }
 
         if ($this->isCollection($property)) {
-            $this->hasArrayObject = true;
+            $this->addUseStatement(ArrayObject::class);
 
             return 'ArrayObject';
         }
@@ -617,9 +771,27 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return bool|string
      */
-    private function getAddTypeHint(array $property)
+    protected function getAddTypeHint(array $property)
     {
+        if ($this->isStrictProperty($property)) {
+            return $this->getStrictCollectionElementTypeHint($property);
+        }
+
         if (preg_match('/^(string|int|integer|float|bool|boolean|mixed|resource|callable|iterable|array|\[\])/', $property['type'])) {
+            return false;
+        }
+
+        return str_replace('[]', '', $property['type']);
+    }
+
+    /**
+     * @param array $property
+     *
+     * @return bool|string
+     */
+    protected function getStrictCollectionElementTypeHint(array $property)
+    {
+        if ($property['type'] === 'array' || $property['type'] === 'mixed') {
             return false;
         }
 
@@ -631,7 +803,7 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return void
      */
-    private function buildGetMethod(array $property)
+    protected function buildGetMethod(array $property): void
     {
         $propertyName = $this->getPropertyName($property);
         $methodName = 'get' . ucfirst($propertyName);
@@ -639,10 +811,20 @@ class ClassDefinition implements ClassDefinitionInterface
             'name' => $methodName,
             'property' => $propertyName,
             'propertyConst' => $this->getPropertyConstantName($property),
-            'return' => $this->getReturnType($property),
+            'return' => $this->buildGetReturnTypeData($property),
             'bundles' => $property['bundles'],
             'deprecationDescription' => $this->getPropertyDeprecationDescription($property),
         ];
+
+        if ($this->propertyHasTypeShim($property)) {
+            $method['typeShimNotice'] = $this->buildTypeShimNotice(
+                $property['type'],
+                $this->getPropertyTypeShim($property)
+            );
+        }
+
+        $method = $this->addGetReturnTypeHint($method, $property);
+
         $this->methods[$methodName] = $method;
     }
 
@@ -651,7 +833,7 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return void
      */
-    private function buildSetMethod(array $property)
+    protected function buildSetMethod(array $property): void
     {
         $propertyName = $this->getPropertyName($property);
         $methodName = 'set' . ucfirst($propertyName);
@@ -659,13 +841,37 @@ class ClassDefinition implements ClassDefinitionInterface
             'name' => $methodName,
             'property' => $propertyName,
             'propertyConst' => $this->getPropertyConstantName($property),
-            'var' => $this->getSetVar($property),
+            'var' => $this->buildSetArgumentType($property),
+            'valueObject' => false,
             'bundles' => $property['bundles'],
             'typeHint' => null,
             'deprecationDescription' => $this->getPropertyDeprecationDescription($property),
         ];
-        $method = $this->addTypeHint($property, $method);
-        $method = $this->addDefaultNull($method['typeHint'], $property, $method);
+        $method = $this->addSetTypeHint($method, $property);
+        $method = $this->addDefaultNull($method, $property);
+        $method = $this->setTypeAssertionMode($method);
+
+        if ($this->isArrayCollection($property)) {
+            $method['setsArrayCollection'] = true;
+        }
+
+        if ($this->isCollectionPropertyTypeCheckNeeded($property)) {
+            $method['isCollectionPropertyTypeCheckNeeded'] = true;
+            $method['addMethodName'] = 'add' . ucfirst($this->getPropertySingularName($property));
+        }
+
+        if ($this->propertyHasTypeShim($property)) {
+            $method['typeShimNotice'] = $this->buildTypeShimNotice(
+                $property['type'],
+                $this->getPropertyTypeShim($property)
+            );
+        }
+
+        if ($this->isValueObject($property)) {
+            $method['valueObject'] = $this->getShortClassName(
+                $this->getValueObjectFullyQualifiedClassName($property)
+            );
+        }
 
         $this->methods[$methodName] = $method;
     }
@@ -675,14 +881,11 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return void
      */
-    private function buildAddMethod(array $property)
+    protected function buildAddMethod(array $property): void
     {
         $parent = $this->getPropertyName($property);
         $propertyConstant = $this->getPropertyConstantName($property);
-        if (isset($property['singular'])) {
-            $property['name'] = $property['singular'];
-        }
-        $propertyName = $this->getPropertyName($property);
+        $propertyName = $this->getPropertySingularName($property);
         $methodName = 'add' . ucfirst($propertyName);
 
         $method = [
@@ -690,11 +893,18 @@ class ClassDefinition implements ClassDefinitionInterface
             'property' => $propertyName,
             'propertyConst' => $propertyConstant,
             'parent' => $parent,
-            'var' => $this->getAddVar($property),
+            'var' => $this->buildAddArgumentType($property),
             'bundles' => $property['bundles'],
             'deprecationDescription' => $this->getPropertyDeprecationDescription($property),
             'is_associative' => $this->isAssociativeArray($property),
         ];
+
+        if ($this->propertyHasTypeShim($property)) {
+            $method['typeShimNotice'] = $this->buildAddTypeShimNotice(
+                $property['type'],
+                $this->getPropertyTypeShim($property)
+            );
+        }
 
         $typeHint = $this->getAddTypeHint($property);
         if ($typeHint) {
@@ -704,22 +914,24 @@ class ClassDefinition implements ClassDefinitionInterface
         if ($method['is_associative']) {
             $method['var'] = static::DEFAULT_ASSOCIATIVE_ARRAY_TYPE;
             $method['typeHint'] = null;
-            $method['varValue'] = $this->getAddVar($property);
+            $method['varValue'] = $this->buildAddArgumentType($property);
             $method['typeHintValue'] = $this->getAddTypeHint($property);
         }
 
+        $method = $this->setTypeAssertionMode($method);
         $this->methods[$methodName] = $method;
     }
 
     /**
-     * @param array $property
      * @param array $method
+     * @param array $property
      *
      * @return array
      */
-    private function addTypeHint(array $property, array $method)
+    protected function addSetTypeHint(array $method, array $property): array
     {
-        $typeHint = $this->getTypeHint($property);
+        $typeHint = $this->getSetTypeHint($property);
+
         if ($typeHint) {
             $method['typeHint'] = $typeHint;
         }
@@ -728,17 +940,16 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param string $typeHint
-     * @param array $property
      * @param array $method
+     * @param array $property
      *
      * @return array
      */
-    private function addDefaultNull($typeHint, array $property, array $method)
+    protected function addDefaultNull(array $method, array $property): array
     {
         $method['hasDefaultNull'] = false;
 
-        if ($typeHint && (!$this->isCollection($property) || $typeHint === 'array')) {
+        if ($this->isValueObject($property) || ($method['typeHint'] && (!$this->isCollection($property) || $method['typeHint'] === 'array'))) {
             $method['hasDefaultNull'] = true;
         }
 
@@ -750,7 +961,7 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return void
      */
-    private function buildRequireMethod(array $property)
+    protected function buildRequireMethod(array $property): void
     {
         $propertyName = $this->getPropertyName($property);
         $methodName = 'require' . ucfirst($propertyName);
@@ -768,9 +979,19 @@ class ClassDefinition implements ClassDefinitionInterface
     /**
      * @param array $property
      *
+     * @return bool
+     */
+    protected function isStrictProperty(array $property): bool
+    {
+        return $property[DefinitionNormalizer::KEY_STRICT_MODE] ?? false;
+    }
+
+    /**
+     * @param array $property
+     *
      * @return void
      */
-    private function assertProperty(array $property)
+    protected function assertProperty(array $property): void
     {
         $this->assertPropertyName($property['name']);
         $this->assertPropertyAssociative($property);
@@ -783,7 +1004,7 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return void
      */
-    private function assertPropertyName($propertyName)
+    protected function assertPropertyName($propertyName): void
     {
         if (!preg_match('/^[a-zA-Z][a-zA-Z0-9]+$/', $propertyName)) {
             throw new InvalidNameException(sprintf(
@@ -799,7 +1020,7 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return void
      */
-    private function assertPropertyAssociative(array $property)
+    protected function assertPropertyAssociative(array $property): void
     {
         if (isset($property['associative'])) {
             $this->assertPropertyAssociativeType($property);
@@ -814,7 +1035,7 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return void
      */
-    private function assertPropertyAssociativeValue(array $property)
+    protected function assertPropertyAssociativeValue(array $property): void
     {
         if (!preg_match('(true|false|1|0)', $property['associative'])) {
             throw new InvalidAssociativeValueException(
@@ -830,7 +1051,7 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return void
      */
-    private function assertPropertyAssociativeType(array $property)
+    protected function assertPropertyAssociativeType(array $property): void
     {
         if (!$this->isArray($property) && !$this->isCollection($property)) {
             throw new InvalidAssociativeTypeException(sprintf(
@@ -845,7 +1066,7 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return string|null
      */
-    private function getPropertyDeprecationDescription(array $property)
+    protected function getPropertyDeprecationDescription(array $property): ?string
     {
         return isset($property['deprecated']) ? $property['deprecated'] : null;
     }
@@ -855,7 +1076,7 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return void
      */
-    protected function addEntityNamespace(array $definition)
+    protected function addEntityNamespace(array $definition): void
     {
         if (isset($definition['entity-namespace'])) {
             $this->entityNamespace = $definition['entity-namespace'];
@@ -863,9 +1084,9 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getEntityNamespace()
+    public function getEntityNamespace(): ?string
     {
         return $this->entityNamespace;
     }
@@ -885,5 +1106,433 @@ class ClassDefinition implements ClassDefinitionInterface
                 $name
             ));
         }
+    }
+
+    /**
+     * @param array $property
+     *
+     * @return string
+     */
+    public function getValueObjectFullyQualifiedClassName(array $property): string
+    {
+        return static::SUPPORTED_VALUE_OBJECTS[$property['type']][static::TYPE_FULLY_QUALIFIED];
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDebugMode(): bool
+    {
+        return $this->transferConfig->isDebugEnabled();
+    }
+
+    /**
+     * @param string $fullyQualifiedClassName
+     *
+     * @return string
+     */
+    protected function getShortClassName(string $fullyQualifiedClassName): string
+    {
+        return substr(strrchr($fullyQualifiedClassName, '\\'), 1);
+    }
+
+    /**
+     * @param string $fullyQualifiedClassName
+     *
+     * @return void
+     */
+    protected function addUseStatement(string $fullyQualifiedClassName): void
+    {
+        if (isset($this->useStatements[$fullyQualifiedClassName])) {
+            return;
+        }
+
+        $this->useStatements[$fullyQualifiedClassName] = $fullyQualifiedClassName;
+        ksort($this->useStatements, SORT_STRING);
+    }
+
+    /**
+     * @param array $transferDefinition
+     *
+     * @return array
+     */
+    protected function shimTransferDefinitionPropertyTypes(array $transferDefinition): array
+    {
+        $transferName = $transferDefinition['name'];
+        $shim = $this->transferConfig->getTypeShims()[$transferName] ?? null;
+
+        if (!isset($transferDefinition['property']) || !$shim) {
+            return $transferDefinition;
+        }
+
+        foreach ($shim as $propertyName => $shimChange) {
+            foreach ($transferDefinition['property'] as $propertyKey => $propertyDefinition) {
+                if ($propertyDefinition['name'] !== $propertyName) {
+                    continue;
+                }
+
+                $propertyDefinition = $this->shimPropertyType($propertyDefinition, $shimChange);
+                $transferDefinition['property'][$propertyKey] = $propertyDefinition;
+            }
+        }
+
+        return $transferDefinition;
+    }
+
+    /**
+     * @param array $propertyDefinition
+     * @param string[] $shimChange
+     *
+     * @return array
+     */
+    protected function shimPropertyType(array $propertyDefinition, array $shimChange): array
+    {
+        $toType = $shimChange[$propertyDefinition['type']] ?? null;
+
+        if ($toType !== null) {
+            $propertyDefinition['typeShim'] = $toType;
+        }
+
+        return $propertyDefinition;
+    }
+
+    /**
+     * @param array $property
+     *
+     * @return string|null
+     */
+    protected function getPropertyTypeShim(array $property): ?string
+    {
+        return $property['typeShim'] ?? null;
+    }
+
+    /**
+     * @param array $property
+     *
+     * @return bool
+     */
+    protected function propertyHasTypeShim(array $property): bool
+    {
+        return (bool)$this->getPropertyTypeShim($property);
+    }
+
+    /**
+     * @param array $property
+     *
+     * @return string
+     */
+    protected function buildPropertyType(array $property): string
+    {
+        return $this->buildType(
+            $this->getPropertyType($property),
+            $this->getPropertyTypeShim($property)
+        );
+    }
+
+    /**
+     * @param array $property
+     *
+     * @return string
+     */
+    protected function buildSetArgumentType(array $property): string
+    {
+        return $this->buildType(
+            $this->getSetVar($property),
+            $this->getPropertyTypeShim($property)
+        );
+    }
+
+    /**
+     * @param array $property
+     *
+     * @return string
+     */
+    protected function buildGetReturnTypeData(array $property): string
+    {
+        return $this->buildType(
+            $this->getReturnType($property),
+            $this->getPropertyTypeShim($property)
+        );
+    }
+
+    /**
+     * @param array $property
+     *
+     * @return string
+     */
+    protected function buildAddArgumentType(array $property): string
+    {
+        $type = $this->getAddVar($property);
+        $typeShim = $this->getPropertyTypeShim($property);
+
+        if ($typeShim !== null) {
+            $typeShim = str_replace('[]', '', $typeShim);
+        }
+
+        return $this->buildType($type, $typeShim);
+    }
+
+    /**
+     * @param string $type
+     * @param string|null $typeShim
+     *
+     * @return string
+     */
+    protected function buildType(string $type, ?string $typeShim = null): string
+    {
+        if ($typeShim === null) {
+            return $type;
+        }
+
+        return sprintf('%s|%s', $typeShim, $type);
+    }
+
+    /**
+     * @param string $type
+     * @param string $typeShim
+     *
+     * @return string
+     */
+    protected function buildAddTypeShimNotice(string $type, string $typeShim): string
+    {
+        $type = str_replace('[]', '', $type);
+        $typeShim = str_replace('[]', '', $typeShim);
+
+        return $this->buildTypeShimNotice($type, $typeShim);
+    }
+
+    /**
+     * @param string $type
+     * @param string|null $typeShim
+     *
+     * @return string
+     */
+    protected function buildTypeShimNotice(string $type, ?string $typeShim): string
+    {
+        return sprintf(static::SHIM_NOTICE_TEMPLATE, $typeShim, $type);
+    }
+
+    /**
+     * @param array $method
+     *
+     * @return array
+     */
+    protected function setTypeAssertionMode(array $method): array
+    {
+        $method['isTypeAssertionEnabled'] = false;
+        $methodArgumentType = $method['varValue'] ?? $method['var'];
+
+        if (!$this->isDebugMode() || $this->getEntityNamespace() || $methodArgumentType === 'mixed') {
+            return $method;
+        }
+
+        $methodArgumentTypeHint = $method['typeHintValue'] ?? $method['typeHint'] ?? null;
+        $method['isTypeAssertionEnabled'] = empty($methodArgumentTypeHint) || $methodArgumentTypeHint === 'array';
+
+        return $method;
+    }
+
+    /**
+     * @return void
+     */
+    protected function addExtraUseStatements(): void
+    {
+        if ($this->isDebugMode() && !$this->getEntityNamespace()) {
+            $this->addUseStatement(TransferTypeValidatorTrait::class);
+        }
+    }
+
+    /**
+     * @param array $method
+     * @param array $property
+     *
+     * @return array
+     */
+    protected function addGetReturnTypeHint(array $method, array $property): array
+    {
+        if ($this->isStrictProperty($property)) {
+            $method['returnTypeHint'] = $this->buildGetReturnTypeHint($property);
+        }
+
+        return $method;
+    }
+
+    /**
+     * @param array $method
+     * @param array $property
+     *
+     * @return array
+     */
+    protected function addGetOrFailTypeHint(array $method, array $property): array
+    {
+        if ($this->isStrictProperty($property)) {
+            $method['returnTypeHint'] = ltrim($this->buildGetReturnTypeHint($property), '?');
+        }
+
+        return $method;
+    }
+
+    /**
+     * @param array $property
+     *
+     * @return string
+     */
+    protected function buildGetReturnTypeHint(array $property): string
+    {
+        if ($this->isPrimitiveArray($property)) {
+            return '?array';
+        }
+
+        if ($this->isArrayCollection($property)) {
+            return 'array';
+        }
+
+        if ($this->isCollection($property)) {
+            return 'ArrayObject';
+        }
+
+        $type = $property['type'];
+
+        if ($this->isValueObject($property)) {
+            $type = $this->getShortClassName(
+                $this->getValueObjectFullyQualifiedClassName($property)
+            );
+        }
+
+        return sprintf('?%s', $type);
+    }
+
+    /**
+     * @param array $property
+     *
+     * @return string|bool
+     */
+    protected function getStrictSetTypeHint(array $property)
+    {
+        if ($this->isPrimitiveArray($property)) {
+            return '?array';
+        }
+
+        if ($this->isArrayCollection($property)) {
+            return 'array';
+        }
+
+        if ($this->isValueObject($property)) {
+            $this->addUseStatement($this->getValueObjectFullyQualifiedClassName($property));
+
+            return false;
+        }
+
+        if ($this->isCollection($property)) {
+            $this->addUseStatement(ArrayObject::class);
+
+            return 'ArrayObject';
+        }
+
+        return sprintf('?%s', $property['type']);
+    }
+
+    /**
+     * @param array $property
+     *
+     * @return void
+     */
+    protected function buildGetCollectionElementMethod(array $property): void
+    {
+        $this->assertSingularPropertyNameIsValid($property);
+
+        $originalPropertyName = $this->getPropertyName($property);
+        $property['name'] = $property['singular'];
+        $singularPropertyName = $this->getPropertyName($property);
+        $methodName = 'get' . ucfirst($singularPropertyName);
+
+        $method = [
+            'name' => $methodName,
+            'property' => $originalPropertyName,
+            'var' => static::DEFAULT_ASSOCIATIVE_ARRAY_TYPE,
+            'bundles' => $property['bundles'],
+            'deprecationDescription' => $this->getPropertyDeprecationDescription($property),
+            'return' => $this->getGetCollectionElementReturnType($property),
+            'isItemGetter' => true,
+        ];
+
+        $typeHint = $this->getStrictCollectionElementTypeHint($property);
+        if ($typeHint) {
+            $method['returnTypeHint'] = $typeHint;
+        }
+
+        $this->methods[$methodName] = $method;
+    }
+
+    /**
+     * @param array $property
+     *
+     * @return string
+     */
+    protected function getGetCollectionElementReturnType(array $property): string
+    {
+        $propertyReturnType = str_replace('[]', '', $property['type']);
+
+        if ($propertyReturnType === 'array') {
+            return 'mixed';
+        }
+
+        if ($this->isCollection($property)) {
+            return '\Generated\Shared\Transfer\\' . $propertyReturnType;
+        }
+
+        return $propertyReturnType;
+    }
+
+    /**
+     * @param array $property
+     *
+     * @throws \Spryker\Zed\Transfer\Business\Exception\InvalidSingularPropertyNameException
+     *
+     * @return void
+     */
+    protected function assertSingularPropertyNameIsValid(array $property): void
+    {
+        if ($this->isStrictProperty($property) && $this->isAssociativeArray($property) && !isset($property['singular'])) {
+            throw new InvalidSingularPropertyNameException(
+                sprintf(
+                    'No singular form for the property %s.%s is found. Please add "singular" attribute to this property\'s definition.',
+                    $this->name,
+                    $property['name']
+                )
+            );
+        }
+
+        if ($this->isStrictProperty($property) && $this->isAssociativeArray($property) && $property['name'] === $property['singular']) {
+            throw new InvalidSingularPropertyNameException(
+                sprintf(
+                    'Values of the "name" and "singular" attributes of the property %s.%s must not match.',
+                    $this->name,
+                    $property['name']
+                )
+            );
+        }
+    }
+
+    /**
+     * @param array $property
+     *
+     * @return string
+     */
+    protected function getPropertySingularName(array $property): string
+    {
+        $property['name'] = isset($property['singular']) ? $property['singular'] : $property['name'];
+
+        return $this->getPropertyName($property);
+    }
+
+    /**
+     * @param array $property
+     *
+     * @return bool
+     */
+    protected function isCollectionPropertyTypeCheckNeeded(array $property): bool
+    {
+        return $this->isStrictProperty($property) && $this->isCollection($property);
     }
 }

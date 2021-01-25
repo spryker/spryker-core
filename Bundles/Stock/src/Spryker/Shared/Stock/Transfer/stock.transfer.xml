@@ -7,18 +7,57 @@
         <property name="sku" type="string"/>
         <property name="stockType" type="string"/>
         <property name="fkStock" type="int"/>
-        <property name="quantity" type="int"/>
+        <property name="quantity" type="decimal"/>
         <property name="isNeverOutOfStock" type="string"/>
         <property name="idStockProduct" type="int"/>
     </transfer>
 
-    <transfer name="Type">
+    <transfer name="Type" deprecated="Use StockTransfer instead">
         <property name="idStock" type="int"/>
         <property name="name" type="string"/>
     </transfer>
 
+    <transfer name="Stock">
+        <property name="idStock" type="int"/>
+        <property name="name" type="string"/>
+        <property name="isActive" type="bool"/>
+        <property name="storeRelation" type="StoreRelation"/>
+    </transfer>
+
+    <transfer name="StoreRelation">
+        <property name="idEntity" type="int"/>
+        <property name="idStores" type="int[]" singular="idStores"/>
+        <property name="stores" type="Store[]" singular="stores"/>
+    </transfer>
+
+    <transfer name="StockCriteriaFilter">
+        <property name="idStock" type="int"/>
+        <property name="isActive" type="bool"/>
+        <property name="storeNames" type="string[]" singular="storeName"/>
+    </transfer>
+
+    <transfer name="StockResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="stock" type="Stock"/>
+        <property name="messages" type="Message[]" singular="message"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
+        <property name="type" type="string"/>
+        <property name="parameters" type="array" singular="parameters"/>
+    </transfer>
+
     <transfer name="ProductConcrete">
         <property name="stocks" type="StockProduct[]" singular="stock"/>
+        <property name="idProductConcrete" type="int"/>
+        <property name="sku" type="string"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="idStore" type="int"/>
+        <property name="name" type="string"/>
+        <property name="storesWithSharedPersistence" type="array" singular="storeWithSharedPersistence"/>
     </transfer>
 
 </transfers>

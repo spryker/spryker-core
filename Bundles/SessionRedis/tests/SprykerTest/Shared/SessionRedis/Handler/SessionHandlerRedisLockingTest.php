@@ -9,6 +9,7 @@ namespace SprykerTest\Shared\SessionRedis\Handler;
 
 use Codeception\Test\Unit;
 use Spryker\Shared\SessionRedis\Handler\KeyBuilder\SessionKeyBuilder;
+use Spryker\Shared\SessionRedis\Handler\LifeTime\SessionRedisLifeTimeCalculator;
 use Spryker\Shared\SessionRedis\Handler\Lock\SessionSpinLockLocker;
 use Spryker\Shared\SessionRedis\Handler\SessionHandlerRedisLocking;
 use Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface;
@@ -43,6 +44,11 @@ class SessionHandlerRedisLockingTest extends Unit
     protected $spinLockLockerMock;
 
     /**
+     * @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\SessionRedis\Handler\LifeTime\SessionRedisLifeTimeCalculator
+     */
+    protected $sessionRedisLifeTimeCalculatorMock;
+
+    /**
      * @return void
      */
     public function testReadReturnsEmptyStringOnMissingSessionKey(): void
@@ -72,12 +78,11 @@ class SessionHandlerRedisLockingTest extends Unit
     }
 
     /**
-     * @expectedException \Spryker\Shared\SessionRedis\Handler\Exception\LockCouldNotBeAcquiredException
-     *
      * @return void
      */
     public function testReadingSessionDataWillThrowExceptionWhenImpossibleToAcquireLock(): void
     {
+        $this->expectException('Spryker\Shared\SessionRedis\Handler\Exception\LockCouldNotBeAcquiredException');
         $this->spinLockLockerMock
             ->expects($this->once())
             ->method('lock')
@@ -95,7 +100,7 @@ class SessionHandlerRedisLockingTest extends Unit
             ->expects($this->once())
             ->method('del')
             ->with(['session:session_key'])
-            ->willReturn(true);
+            ->willReturn(1);
 
         $this->spinLockLockerMock
             ->expects($this->once())
@@ -182,6 +187,7 @@ class SessionHandlerRedisLockingTest extends Unit
 
         $this->setupRedisClientMock();
         $this->setupRedisSpinLockLockerMock();
+        $this->setupSessionRedisLifeTimeCalculatorMock();
         $this->setupSessionHandlerRedisLocking();
     }
 
@@ -209,13 +215,26 @@ class SessionHandlerRedisLockingTest extends Unit
     /**
      * @return void
      */
+    protected function setupSessionRedisLifeTimeCalculatorMock(): void
+    {
+        $this->sessionRedisLifeTimeCalculatorMock = $this->getMockBuilder(SessionRedisLifeTimeCalculator::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->sessionRedisLifeTimeCalculatorMock->method('getSessionLifeTime')
+            ->willReturn(static::TIME_TO_LIVE);
+    }
+
+    /**
+     * @return void
+     */
     protected function setupSessionHandlerRedisLocking(): void
     {
         $this->sessionHandler = new SessionHandlerRedisLocking(
             $this->redisClientMock,
             $this->spinLockLockerMock,
             new SessionKeyBuilder(),
-            static::TIME_TO_LIVE
+            $this->sessionRedisLifeTimeCalculatorMock
         );
     }
 }

@@ -51,7 +51,7 @@ class SalesOrderThresholdHelper extends Module
     public function assertSalesOrderThresholdTypeTableHasRecords(int $recordsNum): void
     {
         $entriesFound = $this->getSalesOrderThresholdTypeQuery()->count();
-        $this->assertEquals($entriesFound, $recordsNum, sprintf(static::ERROR_MESSAGE_EXPECTED, $recordsNum, SpySalesOrderThresholdTypeTableMap::TABLE_NAME, $entriesFound));
+        $this->assertSame($entriesFound, $recordsNum, sprintf(static::ERROR_MESSAGE_EXPECTED, $recordsNum, SpySalesOrderThresholdTypeTableMap::TABLE_NAME, $entriesFound));
     }
 
     /**
@@ -63,7 +63,7 @@ class SalesOrderThresholdHelper extends Module
     {
         $salesOrderThresholdTypeTransfer = $this->getFacade()->saveSalesOrderThresholdType($salesOrderThresholdTypeTransfer);
 
-        $this->getDataCleanupHelper()->_addCleanup(function () use ($salesOrderThresholdTypeTransfer) {
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($salesOrderThresholdTypeTransfer): void {
             $this->getSalesOrderThresholdTypeQuery()
                 ->filterByKey($salesOrderThresholdTypeTransfer->getKey())
                 ->filterByThresholdGroup($salesOrderThresholdTypeTransfer->getThresholdGroup())

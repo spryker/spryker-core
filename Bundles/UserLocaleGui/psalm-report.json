@@ -1,0 +1,18 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 47,
+            "line_to": 47,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $options[null|string] using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/UserLocaleGui/src/Spryker/Zed/UserLocaleGui/Communication/FormExpander/DataProvider/LocaleChoiceFormDataProvider.php",
+            "snippet": "            $options[$localeTransfer->getLocaleName()] = $localeTransfer->getIdLocale();",
+            "selected_text": "$options",
+            "error_level": 3,
+            "shortcode": 125
+        }
+    ],
+    "deprecation": []
+}

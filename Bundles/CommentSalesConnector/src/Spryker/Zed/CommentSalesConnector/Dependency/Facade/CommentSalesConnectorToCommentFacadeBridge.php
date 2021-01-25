@@ -43,8 +43,10 @@ class CommentSalesConnectorToCommentFacadeBridge implements CommentSalesConnecto
      *
      * @return \Generated\Shared\Transfer\CommentThreadResponseTransfer
      */
-    public function duplicateCommentThread(CommentFilterTransfer $commentFilterTransfer, CommentRequestTransfer $commentRequestTransfer): CommentThreadResponseTransfer
-    {
+    public function duplicateCommentThread(
+        CommentFilterTransfer $commentFilterTransfer,
+        CommentRequestTransfer $commentRequestTransfer
+    ): CommentThreadResponseTransfer {
         return $this->commentFacade->duplicateCommentThread($commentFilterTransfer, $commentRequestTransfer);
     }
 }

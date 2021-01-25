@@ -5,8 +5,8 @@
 
     <transfer name="CsvFile">
         <property name="fileName" type="string"/>
-        <property name="header" type="array"/>
-        <property name="data" type="array"/>
+        <property name="header" type="array" singular="header"/>
+        <property name="data" type="array" singular="data"/>
     </transfer>
 
 </transfers>

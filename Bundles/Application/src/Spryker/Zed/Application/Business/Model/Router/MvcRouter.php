@@ -23,12 +23,12 @@ class MvcRouter implements RouterInterface
     /**
      * @var \Symfony\Component\Routing\RequestContext
      */
-    private $context;
+    protected $context;
 
     /**
      * @var \Silex\Application
      */
-    private $app;
+    protected $app;
 
     /**
      * @param \Silex\Application $app
@@ -67,9 +67,13 @@ class MvcRouter implements RouterInterface
     }
 
     /**
-     * @inheritDoc
+     * @param string $name
+     * @param array $parameters
+     * @param int $referenceType
      *
      * @throws \Symfony\Component\Routing\Exception\RouteNotFoundException
+     *
+     * @return string|void
      */
     public function generate($name, $parameters = [], $referenceType = self::ABSOLUTE_PATH)
     {

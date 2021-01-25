@@ -14,7 +14,7 @@ use Spryker\Shared\Application\Business\Routing\SilexRouter;
 use Symfony\Cmf\Component\Routing\ChainRouter;
 
 /**
- * @deprecated Use `\Spryker\Yves\Router\Plugin\Router\YvesRouterPlugin` instead.
+ * @deprecated Use {@link \Spryker\Yves\Router\Plugin\Router\YvesRouterPlugin} instead.
  */
 class SilexRoutingServiceProvider implements ServiceProviderInterface
 {

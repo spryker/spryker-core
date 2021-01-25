@@ -14,6 +14,7 @@ use Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductFormTransfer
 class DiscontinuedNotesProductFormTransferMapperExpanderPlugin implements ProductFormTransferMapperExpanderPluginInterface
 {
     /**
+     * {@inheritDoc}
      * Specification:
      * - Expands ProductConcreteTransfer with discontinued notes.
      *

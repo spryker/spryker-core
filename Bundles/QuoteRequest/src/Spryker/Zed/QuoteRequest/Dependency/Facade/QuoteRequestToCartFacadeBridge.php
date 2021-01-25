@@ -29,7 +29,7 @@ class QuoteRequestToCartFacadeBridge implements QuoteRequestToCartFacadeInterfac
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function reloadItems(QuoteTransfer $quoteTransfer)
+    public function reloadItems(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         return $this->cartFacade->reloadItems($quoteTransfer);
     }

@@ -12,9 +12,9 @@ class TestStateMachineHandlerException extends TestStateMachineHandler
     /**
      * List of command plugins for this state machine for all processes.
      *
-     * @return array
+     * @return \Spryker\Zed\StateMachine\Dependency\Plugin\CommandPluginInterface[]
      */
-    public function getCommandPlugins()
+    public function getCommandPlugins(): array
     {
         return [
             'Test/CreateInvoice' => new TestCommandPlugin(),
@@ -25,9 +25,9 @@ class TestStateMachineHandlerException extends TestStateMachineHandler
     /**
      * List of condition plugins for this state machine for all processes.
      *
-     * @return array
+     * @return \Spryker\Zed\StateMachine\Dependency\Plugin\ConditionPluginInterface[]
      */
-    public function getConditionPlugins()
+    public function getConditionPlugins(): array
     {
         return [
             'Test/IsInvoiceSent' => new TestConditionPlugin(),

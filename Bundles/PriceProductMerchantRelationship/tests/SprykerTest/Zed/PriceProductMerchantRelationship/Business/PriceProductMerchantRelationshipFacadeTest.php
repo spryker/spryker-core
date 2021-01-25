@@ -33,7 +33,7 @@ class PriceProductMerchantRelationshipFacadeTest extends Unit
      *
      * @return void
      */
-    public function testDeletePriceProductMerchantRelationshipByIdPriceProductStore()
+    public function testDeletePriceProductMerchantRelationshipByIdPriceProductStore(): void
     {
         $idPriceProductStore = $this
             ->tester
@@ -47,7 +47,7 @@ class PriceProductMerchantRelationshipFacadeTest extends Unit
         $priceProductMerchantRelationshipQuery = $this->getPriceProductMerchantRelationshipQuery()
             ->filterByFkPriceProductStore($idPriceProductStore);
 
-        $this->assertEquals(0, $priceProductMerchantRelationshipQuery->count());
+        $this->assertSame(0, $priceProductMerchantRelationshipQuery->count());
     }
 
     /**

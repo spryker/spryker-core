@@ -113,7 +113,9 @@ class PriceConcreteStorageReader implements PriceConcreteStorageReaderInterface
             /** @var \Spryker\Client\Product\ProductClientInterface $productClient */
             $productClient = $clientLocatorClassName::getInstance()->product()->client();
             $collectorData = $productClient->getProductConcreteByIdForCurrentLocale($idProductConcrete);
-            $priceData['prices'] = $collectorData['prices'];
+            $priceData = [
+                'prices' => $collectorData['prices'],
+            ];
 
             return $priceData;
         }

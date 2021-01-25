@@ -55,7 +55,6 @@ class EventQueueConsumer implements EventQueueConsumerInterface
         EventToUtilEncodingInterface $utilEncodingService,
         EventConfig $eventConfig
     ) {
-
         $this->eventLogger = $eventLogger;
         $this->utilEncodingService = $utilEncodingService;
         $this->eventConfig = $eventConfig;
@@ -76,6 +75,7 @@ class EventQueueConsumer implements EventQueueConsumerInterface
 
             if (!$this->isMessageBodyValid($eventQueueSentMessageBodyTransfer)) {
                 $this->markMessageAsFailed($queueMessageTransfer, 'Message body is not valid');
+
                 continue;
             }
 

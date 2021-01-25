@@ -17,6 +17,8 @@ class SchedulerJenkinsConfig extends AbstractBundleConfig
     protected const DEFAULT_JENKINS_TEMPLATE_PATH = __DIR__ . '/Business/TemplateGenerator/Template/jenkins-job.default.xml.twig';
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getJenkinsConfiguration(): array
@@ -25,6 +27,8 @@ class SchedulerJenkinsConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @param string $schedulerId
      *
      * @return string
@@ -35,6 +39,8 @@ class SchedulerJenkinsConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getAmountOfDaysForLogFileRotation(): int
@@ -43,6 +49,8 @@ class SchedulerJenkinsConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getJenkinsTemplateFolders(): array
@@ -54,6 +62,8 @@ class SchedulerJenkinsConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getJenkinsTemplateName(): string

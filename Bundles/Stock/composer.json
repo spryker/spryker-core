@@ -4,14 +4,18 @@
   "description": "Stock module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.3",
+    "spryker/decimal-object": "^1.0.0",
     "spryker/kernel": "^3.30.0",
     "spryker/product": "^5.0.0 || ^6.0.0",
     "spryker/propel-orm": "^1.0.0",
+    "spryker/stock-extension": "^1.0.0",
     "spryker/store": "^1.5.0",
-    "spryker/touch": "^3.0.0 || ^4.0.0"
+    "spryker/touch": "^3.0.0 || ^4.0.0",
+    "spryker/transfer": "^3.18.0"
   },
   "require-dev": {
+    "spryker/code-sniffer": "*",
     "spryker/propel": "*",
     "spryker/testify": "*"
   },
@@ -28,9 +32,13 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+  },
   "extra": {
     "branch-alias": {
-      "dev-master": "4.0.x-dev"
+      "dev-master": "8.0.x-dev"
     }
   },
   "config": {

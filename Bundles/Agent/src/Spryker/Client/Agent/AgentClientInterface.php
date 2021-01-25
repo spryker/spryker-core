@@ -61,7 +61,7 @@ interface AgentClientInterface
     /**
      * Specification:
      * - Returns CustomerAutocompleteResponseTransfer with list of customers found by query.
-     * - Search works by first name, last name and email.
+     * - Search matches by partial first name, last name, email or exact customer reference.
      * - If customers by query are not exist, collection will be empty.
      *
      * @api
@@ -71,4 +71,15 @@ interface AgentClientInterface
      * @return \Generated\Shared\Transfer\CustomerAutocompleteResponseTransfer
      */
     public function findCustomersByQuery(CustomerQueryTransfer $customerQueryTransfer): CustomerAutocompleteResponseTransfer;
+
+    /**
+     * Specification:
+     * - Executes ImpersonationSessionFinisherPluginInterface plugins.
+     * - Removes customer information from session.
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function finishImpersonationSession(): void;
 }

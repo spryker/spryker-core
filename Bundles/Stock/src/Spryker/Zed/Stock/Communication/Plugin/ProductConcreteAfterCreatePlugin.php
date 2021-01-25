@@ -20,6 +20,8 @@ use Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginCreateInterface;
 class ProductConcreteAfterCreatePlugin extends AbstractPlugin implements ProductConcretePluginCreateInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer

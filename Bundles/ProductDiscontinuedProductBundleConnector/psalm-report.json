@@ -1,0 +1,115 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 70,
+            "line_to": 70,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'array<array-key, int>' for Spryker\\Zed\\ProductDiscontinuedProductBundleConnector\\Business\\ProductBundleDiscontinued\\ProductBundleDiscontinuedReader::getBundledProductConcreteIds is incorrect, got 'list<int|mixed|null>'",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscontinuedProductBundleConnector/src/Spryker/Zed/ProductDiscontinuedProductBundleConnector/Business/ProductBundleDiscontinued/ProductBundleDiscontinuedReader.php",
+            "snippet": "     * @return int[]",
+            "selected_text": "int[]",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 83,
+            "line_to": 83,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'list<int|mixed|null>' does not match the declared return type 'array<array-key, int>' for Spryker\\Zed\\ProductDiscontinuedProductBundleConnector\\Business\\ProductBundleDiscontinued\\ProductBundleDiscontinuedReader::getBundledProductConcreteIds",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscontinuedProductBundleConnector/src/Spryker/Zed/ProductDiscontinuedProductBundleConnector/Business/ProductBundleDiscontinued/ProductBundleDiscontinuedReader.php",
+            "snippet": "        return $bundledProductConcreteIds;",
+            "selected_text": "$bundledProductConcreteIds",
+            "error_level": 6,
+            "shortcode": 128
+        },
+        {
+            "severity": "error",
+            "line_from": 94,
+            "line_to": 94,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'array<array-key, int>' for Spryker\\Zed\\ProductDiscontinuedProductBundleConnector\\Business\\ProductBundleDiscontinued\\ProductBundleDiscontinuedWriter::getBundledProductConcreteIds is incorrect, got 'list<int|mixed|null>'",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscontinuedProductBundleConnector/src/Spryker/Zed/ProductDiscontinuedProductBundleConnector/Business/ProductBundleDiscontinued/ProductBundleDiscontinuedWriter.php",
+            "snippet": "     * @return int[]",
+            "selected_text": "int[]",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 108,
+            "line_to": 108,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'list<int|mixed|null>' does not match the declared return type 'array<array-key, int>' for Spryker\\Zed\\ProductDiscontinuedProductBundleConnector\\Business\\ProductBundleDiscontinued\\ProductBundleDiscontinuedWriter::getBundledProductConcreteIds",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscontinuedProductBundleConnector/src/Spryker/Zed/ProductDiscontinuedProductBundleConnector/Business/ProductBundleDiscontinued/ProductBundleDiscontinuedWriter.php",
+            "snippet": "        return $bundledProductConcreteIds;",
+            "selected_text": "$bundledProductConcreteIds",
+            "error_level": 6,
+            "shortcode": 128
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 76,
+            "line_to": 76,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ProductDiscontinuedProductBundleConnector\\Dependency\\Facade\\ProductDiscontinuedProductBundleConnectorToProductBundleFacadeInterface::findBundledProductsByIdProductConcrete cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscontinuedProductBundleConnector/src/Spryker/Zed/ProductDiscontinuedProductBundleConnector/Business/ProductBundleDiscontinued/ProductBundleDiscontinuedReader.php",
+            "snippet": "            $productDiscontinuedTransfer->getFkProduct()",
+            "selected_text": "$productDiscontinuedTransfer->getFkProduct()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 48,
+            "line_to": 48,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ProductDiscontinuedProductBundleConnector\\Persistence\\ProductDiscontinuedProductBundleConnectorRepositoryInterface::findRelatedBundleProductsIds cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscontinuedProductBundleConnector/src/Spryker/Zed/ProductDiscontinuedProductBundleConnector/Business/ProductBundleDiscontinued/ProductBundleDiscontinuedWriter.php",
+            "snippet": "            ->findRelatedBundleProductsIds($productDiscontinuedTransfer->getIdProductDiscontinued());",
+            "selected_text": "$productDiscontinuedTransfer->getIdProductDiscontinued()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 73,
+            "line_to": 73,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ProductDiscontinuedProductBundleConnector\\Business\\ProductBundleDiscontinued\\ProductBundleDiscontinuedWriter::discontinueProduct cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscontinuedProductBundleConnector/src/Spryker/Zed/ProductDiscontinuedProductBundleConnector/Business/ProductBundleDiscontinued/ProductBundleDiscontinuedWriter.php",
+            "snippet": "        $this->discontinueProduct($productConcreteTransfer->getIdProductConcrete());",
+            "selected_text": "$productConcreteTransfer->getIdProductConcrete()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 104,
+            "line_to": 104,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getBundledProducts on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscontinuedProductBundleConnector/src/Spryker/Zed/ProductDiscontinuedProductBundleConnector/Business/ProductBundleDiscontinued/ProductBundleDiscontinuedWriter.php",
+            "snippet": "        foreach ($productConcreteTransfer->getProductBundle()->getBundledProducts() as $productForBundleTransfer) {",
+            "selected_text": "getBundledProducts",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 43,
+            "line_to": 43,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ProductDiscontinued\\Persistence\\SpyProductDiscontinued> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscontinuedProductBundleConnector/src/Spryker/Zed/ProductDiscontinuedProductBundleConnector/Persistence/ProductDiscontinuedProductBundleConnectorRepository.php",
+            "snippet": "            ->toArray();",
+            "selected_text": "toArray",
+            "error_level": 3,
+            "shortcode": 113
+        }
+    ],
+    "deprecation": []
+}

@@ -56,7 +56,7 @@ class FlysystemServiceTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -88,7 +88,7 @@ class FlysystemServiceTest extends Unit
     /**
      * @return void
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->directoryCleanup();
     }
@@ -96,7 +96,7 @@ class FlysystemServiceTest extends Unit
     /**
      * @return void
      */
-    public function testHasShouldReturnFalseWithNonExistingFile()
+    public function testHasShouldReturnFalseWithNonExistingFile(): void
     {
         $result = $this->flysystemService->has(
             static::FILE_SYSTEM_DOCUMENT,
@@ -109,7 +109,7 @@ class FlysystemServiceTest extends Unit
     /**
      * @return void
      */
-    public function testHasShouldReturnTrueWithExistingFile()
+    public function testHasShouldReturnTrueWithExistingFile(): void
     {
         $this->createDocumentFile();
 
@@ -124,7 +124,7 @@ class FlysystemServiceTest extends Unit
     /**
      * @return void
      */
-    public function testReadWithNonExistingFileShouldThrowFileSystemException()
+    public function testReadWithNonExistingFileShouldThrowFileSystemException(): void
     {
         $this->expectException(FileSystemReadException::class);
 
@@ -139,7 +139,7 @@ class FlysystemServiceTest extends Unit
     /**
      * @return void
      */
-    public function testReadWithExistingFileShouldReturnContent()
+    public function testReadWithExistingFileShouldReturnContent(): void
     {
         $this->createDocumentFile();
 
@@ -154,7 +154,7 @@ class FlysystemServiceTest extends Unit
     /**
      * @return void
      */
-    public function testPut()
+    public function testPut(): void
     {
         $this->createDocumentFile('Lorem Ipsum');
 
@@ -172,7 +172,7 @@ class FlysystemServiceTest extends Unit
     /**
      * @return void
      */
-    public function testWrite()
+    public function testWrite(): void
     {
         $this->flysystemService->write(
             static::FILE_SYSTEM_DOCUMENT,
@@ -188,7 +188,7 @@ class FlysystemServiceTest extends Unit
     /**
      * @return void
      */
-    public function testDelete()
+    public function testDelete(): void
     {
         $this->createDocumentFile();
 
@@ -204,7 +204,7 @@ class FlysystemServiceTest extends Unit
     /**
      * @return void
      */
-    public function testRename()
+    public function testRename(): void
     {
         $this->createDocumentFile();
 
@@ -224,7 +224,7 @@ class FlysystemServiceTest extends Unit
     /**
      * @return void
      */
-    public function testCopy()
+    public function testCopy(): void
     {
         $this->createDocumentFile();
 
@@ -244,7 +244,7 @@ class FlysystemServiceTest extends Unit
     /**
      * @return void
      */
-    public function testGetMetadata()
+    public function testGetMetadata(): void
     {
         $this->createDocumentFile();
 
@@ -259,7 +259,7 @@ class FlysystemServiceTest extends Unit
     /**
      * @return void
      */
-    public function testGetMimeType()
+    public function testGetMimeType(): void
     {
         $this->createDocumentFile();
 
@@ -274,7 +274,7 @@ class FlysystemServiceTest extends Unit
     /**
      * @return void
      */
-    public function testGetTimestamp()
+    public function testGetTimestamp(): void
     {
         $timestampExpected = time();
         $this->createDocumentFile(null, $timestampExpected);
@@ -290,7 +290,7 @@ class FlysystemServiceTest extends Unit
     /**
      * @return void
      */
-    public function testGetSize()
+    public function testGetSize(): void
     {
         $this->createDocumentFile();
         $file = $this->getLocalDocumentFile();
@@ -307,7 +307,7 @@ class FlysystemServiceTest extends Unit
     /**
      * @return void
      */
-    public function testIsPrivate()
+    public function testIsPrivate(): void
     {
         $this->createDocumentFile();
 
@@ -322,7 +322,7 @@ class FlysystemServiceTest extends Unit
     /**
      * @return void
      */
-    public function testMarkAsPrivate()
+    public function testMarkAsPrivate(): void
     {
         $this->createDocumentFile();
 
@@ -349,7 +349,7 @@ class FlysystemServiceTest extends Unit
     /**
      * @return void
      */
-    public function testIsPublic()
+    public function testIsPublic(): void
     {
         $this->createDocumentFile();
 
@@ -364,7 +364,7 @@ class FlysystemServiceTest extends Unit
     /**
      * @return void
      */
-    public function testMarkAsPublic()
+    public function testMarkAsPublic(): void
     {
         $this->createDocumentFile();
 
@@ -384,7 +384,7 @@ class FlysystemServiceTest extends Unit
     /**
      * @return void
      */
-    public function testCreateDir()
+    public function testCreateDir(): void
     {
         $this->flysystemService->createDir(
             static::FILE_SYSTEM_DOCUMENT,
@@ -398,7 +398,7 @@ class FlysystemServiceTest extends Unit
     /**
      * @return void
      */
-    public function testDeleteDir()
+    public function testDeleteDir(): void
     {
         $dir = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/bar';
         mkdir($dir, 0777, true);
@@ -414,7 +414,7 @@ class FlysystemServiceTest extends Unit
     /**
      * @return void
      */
-    public function testPutStream()
+    public function testPutStream(): void
     {
         $stream = tmpfile();
         fwrite($stream, static::FILE_CONTENT);
@@ -426,7 +426,7 @@ class FlysystemServiceTest extends Unit
             $stream
         );
 
-        if (is_resource($stream)) {
+        if ($stream !== false) {
             fclose($stream);
         }
 
@@ -440,7 +440,7 @@ class FlysystemServiceTest extends Unit
     /**
      * @return void
      */
-    public function testReadStream()
+    public function testReadStream(): void
     {
         $this->createDocumentFile();
 
@@ -450,7 +450,7 @@ class FlysystemServiceTest extends Unit
         );
 
         $content = stream_get_contents($stream);
-        if (is_resource($stream)) {
+        if ($stream !== false) {
             fclose($stream);
         }
 
@@ -460,7 +460,7 @@ class FlysystemServiceTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateStream()
+    public function testUpdateStream(): void
     {
         $this->createDocumentFile();
         $this->createDocumentFileInRoot('Lorem Ipsum');
@@ -474,7 +474,7 @@ class FlysystemServiceTest extends Unit
             $stream
         );
 
-        if (is_resource($stream)) {
+        if ($stream !== false) {
             fclose($stream);
         }
 
@@ -488,7 +488,7 @@ class FlysystemServiceTest extends Unit
     /**
      * @return void
      */
-    public function testWriteStream()
+    public function testWriteStream(): void
     {
         $this->createDocumentFileInRoot();
         $file = $this->testDataFileSystemRootDirectory . static::FILE_DOCUMENT;
@@ -500,7 +500,7 @@ class FlysystemServiceTest extends Unit
             $stream
         );
 
-        if (is_resource($stream)) {
+        if ($stream !== false) {
             fclose($stream);
         }
 
@@ -514,7 +514,7 @@ class FlysystemServiceTest extends Unit
     /**
      * @return void
      */
-    public function testListContents()
+    public function testListContents(): void
     {
         $this->createDocumentFile();
 
@@ -533,7 +533,7 @@ class FlysystemServiceTest extends Unit
      *
      * @return void
      */
-    protected function createDocumentFile($content = null, $modifiedTimestamp = null)
+    protected function createDocumentFile(?string $content = null, ?string $modifiedTimestamp = null): void
     {
         $dir = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo';
         if (!is_dir($dir)) {
@@ -557,7 +557,7 @@ class FlysystemServiceTest extends Unit
      *
      * @return void
      */
-    protected function createDocumentFileInRoot($content = null, $modifiedTimestamp = null)
+    protected function createDocumentFileInRoot(?string $content = null, ?string $modifiedTimestamp = null): void
     {
         $file = $this->testDataFileSystemRootDirectory . static::FILE_DOCUMENT;
 
@@ -586,7 +586,7 @@ class FlysystemServiceTest extends Unit
     /**
      * @return void
      */
-    protected function directoryCleanup()
+    protected function directoryCleanup(): void
     {
         $file = $this->getLocalDocumentFile();
         if (is_file($file)) {
@@ -642,7 +642,7 @@ class FlysystemServiceTest extends Unit
     /**
      * @return string
      */
-    protected function getLocalDocumentFile()
+    protected function getLocalDocumentFile(): string
     {
         return $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/' . static::FILE_DOCUMENT;
     }

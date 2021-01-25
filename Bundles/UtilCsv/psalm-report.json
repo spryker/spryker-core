@@ -1,0 +1,43 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 17,
+            "line_to": 17,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'array<array-key, array<array-key, string>>' for Spryker\\Service\\UtilCsv\\Reader\\FileReader::readFile is incorrect, got 'list<array<int, null|string>|false|null>'",
+            "file_name": "vendor/spryker/spryker/Bundles/UtilCsv/src/Spryker/Service/UtilCsv/Reader/FileReader.php",
+            "snippet": "     * @return string[][]",
+            "selected_text": "string[][]",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 28,
+            "line_to": 28,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'list<array<int, null|string>|false|null>' does not match the declared return type 'array<array-key, array<array-key, string>>' for Spryker\\Service\\UtilCsv\\Reader\\FileReader::readFile",
+            "file_name": "vendor/spryker/spryker/Bundles/UtilCsv/src/Spryker/Service/UtilCsv/Reader/FileReader.php",
+            "snippet": "        return $result;",
+            "selected_text": "$result",
+            "error_level": 6,
+            "shortcode": 128
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 40,
+            "line_to": 40,
+            "type": "PossiblyNullOperand",
+            "message": "Cannot concatenate with a possibly null null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/UtilCsv/src/Spryker/Service/UtilCsv/Exporter/FileExporter.php",
+            "snippet": "        $streamedResponse->headers->set('Content-Disposition', 'attachment; filename=\"' . $csvFileTransfer->getFileName() . '\"');",
+            "selected_text": "$csvFileTransfer->getFileName()",
+            "error_level": 1,
+            "shortcode": 80
+        }
+    ],
+    "deprecation": []
+}

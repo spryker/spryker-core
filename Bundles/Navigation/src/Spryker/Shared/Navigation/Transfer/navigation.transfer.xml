@@ -10,6 +10,27 @@
         <property name="isActive" type="bool"/>
     </transfer>
 
+    <transfer name="NavigationCriteria">
+        <property name="idNavigation" type="int"/>
+        <property name="key" type="string"/>
+    </transfer>
+
+    <transfer name="DuplicateNavigation">
+        <property name="idBaseNavigation" type="int"/>
+        <property name="key" type="string"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="NavigationResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="navigation" type="Navigation"/>
+        <property name="errors" type="NavigationError[]" singular="error"/>
+    </transfer>
+
+    <transfer name="NavigationError">
+        <property name="message" type="string"/>
+    </transfer>
+
     <transfer name="NavigationNode">
         <property name="idNavigationNode" type="int"/>
         <property name="fkNavigation" type="int"/>
@@ -42,6 +63,14 @@
     <transfer name="NavigationTreeNode">
         <property name="navigationNode" type="NavigationNode"/>
         <property name="children" type="NavigationTreeNode[]" singular="child"/>
+    </transfer>
+
+    <transfer name="Url">
+        <property name="idUrl" type="int"/>
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="idLocale" type="int"/>
     </transfer>
 
 </transfers>

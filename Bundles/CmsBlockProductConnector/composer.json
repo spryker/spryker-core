@@ -4,8 +4,9 @@
   "description": "CmsBlockProductConnector module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
-    "spryker/cms-block": "^1.2.0 || ^2.0.0",
+    "php": ">=7.3",
+    "spryker/cms-block": "^1.2.0 || ^2.0.0 || ^3.0.0",
+    "spryker/cms-block-extension": "^1.0.0",
     "spryker/collector": "^5.0.0 || ^6.0.0",
     "spryker/gui": "^3.24.0",
     "spryker/kernel": "^3.30.0",
@@ -39,6 +40,10 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"

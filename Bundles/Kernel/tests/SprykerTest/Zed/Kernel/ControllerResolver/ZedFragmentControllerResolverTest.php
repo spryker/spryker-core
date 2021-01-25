@@ -31,7 +31,7 @@ class ZedFragmentControllerResolverTest extends Unit
      *
      * @return void
      */
-    public function testCreateController($controller, $expectedServiceName)
+    public function testCreateController(string $controller, string $expectedServiceName): void
     {
         $request = $this->getRequest($controller);
         $controllerResolver = $this->getFragmentControllerProvider($request);
@@ -45,7 +45,7 @@ class ZedFragmentControllerResolverTest extends Unit
     /**
      * @return array
      */
-    public function getController()
+    public function getController(): array
     {
         return [
             ['index/index/index', 'controller.service.index.index.index:indexAction'],
@@ -62,7 +62,7 @@ class ZedFragmentControllerResolverTest extends Unit
      *
      * @return void
      */
-    public function __call($name, $arguments = [])
+    public function __call(string $name, array $arguments = []): void
     {
     }
 
@@ -71,7 +71,7 @@ class ZedFragmentControllerResolverTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Kernel\ControllerResolver\ZedFragmentControllerResolver
      */
-    protected function getFragmentControllerProvider(Request $request)
+    protected function getFragmentControllerProvider(Request $request): ZedFragmentControllerResolver
     {
         $controllerResolverMock = $this->getMockBuilder(ZedFragmentControllerResolver::class)
             ->setMethods(['resolveController', 'getCurrentRequest'])
@@ -89,7 +89,7 @@ class ZedFragmentControllerResolverTest extends Unit
      *
      * @return \Symfony\Component\HttpFoundation\Request
      */
-    private function getRequest($controller)
+    private function getRequest(string $controller): Request
     {
         return new Request([], [], ['_controller' => $controller]);
     }

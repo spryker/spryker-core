@@ -1,6 +1,6 @@
 # UtilMeasurementUnitConversion Module
 [![Build Status](https://travis-ci.org/spryker/util-measurement-unit-conversion.svg)](https://travis-ci.org/spryker/util-measurement-unit-conversion)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/util-measurement-unit-conversion/badge.svg)](https://coveralls.io/github/spryker/util-measurement-unit-conversion)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 UtilMeasurementUnitConversion provides low level measurement unit conversion related functionality.
 

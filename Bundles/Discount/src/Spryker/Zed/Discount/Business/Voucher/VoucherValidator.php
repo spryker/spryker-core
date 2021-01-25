@@ -38,7 +38,6 @@ class VoucherValidator implements VoucherValidatorInterface
         DiscountQueryContainerInterface $discountQueryContainer,
         DiscountToMessengerInterface $messengerFacade
     ) {
-
         $this->discountQueryContainer = $discountQueryContainer;
         $this->messengerFacade = $messengerFacade;
     }
@@ -162,8 +161,10 @@ class VoucherValidator implements VoucherValidatorInterface
      */
     protected function isValidNumberOfUses(SpyDiscountVoucher $discountVoucherEntity)
     {
-        if ($discountVoucherEntity->getMaxNumberOfUses() > 0 &&
-            $discountVoucherEntity->getNumberOfUses() >= $discountVoucherEntity->getMaxNumberOfUses()) {
+        if (
+            $discountVoucherEntity->getMaxNumberOfUses() > 0 &&
+            $discountVoucherEntity->getNumberOfUses() >= $discountVoucherEntity->getMaxNumberOfUses()
+        ) {
             return false;
         }
 

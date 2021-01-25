@@ -15,28 +15,28 @@ class StepMockWithBreadcrumbs extends StepMock implements StepWithBreadcrumbInte
     /**
      * @return string
      */
-    public function getBreadcrumbItemTitle()
+    public function getBreadcrumbItemTitle(): string
     {
         return $this->getStepRoute();
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
-    public function isBreadcrumbItemEnabled(AbstractTransfer $dataTransfer)
+    public function isBreadcrumbItemEnabled(AbstractTransfer $quoteTransfer): bool
     {
-        return $this->postCondition($dataTransfer);
+        return $this->postCondition($quoteTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
-    public function isBreadcrumbItemHidden(AbstractTransfer $dataTransfer)
+    public function isBreadcrumbItemHidden(AbstractTransfer $quoteTransfer): bool
     {
-        return !$this->requireInput($dataTransfer);
+        return !$this->requireInput($quoteTransfer);
     }
 }

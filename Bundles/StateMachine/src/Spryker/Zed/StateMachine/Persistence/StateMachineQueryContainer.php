@@ -21,6 +21,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 class StateMachineQueryContainer extends AbstractQueryContainer implements StateMachineQueryContainerInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idState
@@ -36,6 +38,8 @@ class StateMachineQueryContainer extends AbstractQueryContainer implements State
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
@@ -54,6 +58,8 @@ class StateMachineQueryContainer extends AbstractQueryContainer implements State
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \DateTime $expirationDate
@@ -73,6 +79,8 @@ class StateMachineQueryContainer extends AbstractQueryContainer implements State
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $identifier
@@ -94,6 +102,8 @@ class StateMachineQueryContainer extends AbstractQueryContainer implements State
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $stateMachineName
@@ -110,6 +120,8 @@ class StateMachineQueryContainer extends AbstractQueryContainer implements State
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $stateMachineName
@@ -136,6 +148,8 @@ class StateMachineQueryContainer extends AbstractQueryContainer implements State
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $stateMachineName
@@ -162,10 +176,13 @@ class StateMachineQueryContainer extends AbstractQueryContainer implements State
             ->filterByName($states, Criteria::IN)
             ->useStateHistoryQuery()
                 ->orderByCreatedAt($historySortDirection)
+                ->orderByIdStateMachineItemStateHistory($historySortDirection)
             ->endUse();
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idProcess
@@ -182,6 +199,8 @@ class StateMachineQueryContainer extends AbstractQueryContainer implements State
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Not used, will be removed in the next major release.
@@ -200,6 +219,8 @@ class StateMachineQueryContainer extends AbstractQueryContainer implements State
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \DateTime $expirationDate
@@ -214,6 +235,8 @@ class StateMachineQueryContainer extends AbstractQueryContainer implements State
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $identifier
@@ -228,6 +251,8 @@ class StateMachineQueryContainer extends AbstractQueryContainer implements State
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $processName
@@ -242,6 +267,8 @@ class StateMachineQueryContainer extends AbstractQueryContainer implements State
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $identifier
@@ -258,6 +285,8 @@ class StateMachineQueryContainer extends AbstractQueryContainer implements State
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer

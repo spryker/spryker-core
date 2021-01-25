@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\Translator\Business;
 
 use Codeception\TestCase\Test;
-use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Translator\Business\TranslatorBusinessFactory;
 use Spryker\Zed\Translator\Business\TranslatorFacadeInterface;
@@ -45,7 +44,7 @@ class TranslatorFacadeTest extends Test
         $this->getFacadeMock()->generateTranslationCache();
 
         // Assert
-        $this->tester->assertEquals(2, $this->tester->findFiles(codecept_output_dir())->count());
+        $this->tester->assertSame(2, $this->tester->findFiles(codecept_output_dir())->count());
     }
 
     /**
@@ -62,7 +61,7 @@ class TranslatorFacadeTest extends Test
         $this->getFacadeMock()->cleanTranslationCache();
 
         // Assert
-        $this->tester->assertEquals(0, $this->tester->findFiles(codecept_output_dir())->count());
+        $this->tester->assertSame(0, $this->tester->findFiles(codecept_output_dir())->count());
     }
 
     /**
@@ -80,7 +79,7 @@ class TranslatorFacadeTest extends Test
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Translator\Business\TranslatorBusinessFactory
      */
-    protected function getFactoryMock()
+    protected function getFactoryMock(): TranslatorBusinessFactory
     {
         $factoryMock = $this->getMockBuilder(TranslatorBusinessFactory::class)
             ->setMethods(['getConfig', 'getStore', 'getLocaleFacade'])
@@ -101,7 +100,7 @@ class TranslatorFacadeTest extends Test
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Kernel\Store
      */
-    protected function getStoreMock()
+    protected function getStoreMock(): Store
     {
         $storeMock = $this->getMockBuilder(Store::class)
             ->disableOriginalConstructor()
@@ -117,7 +116,7 @@ class TranslatorFacadeTest extends Test
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Translator\TranslatorConfig
      */
-    protected function getConfigMock()
+    protected function getConfigMock(): TranslatorConfig
     {
         $configMock = $this->getMockBuilder(TranslatorConfig::class)
             ->setMethods(['getTranslationFilePathPatterns', 'getTranslatorCacheDirectory'])
@@ -133,9 +132,9 @@ class TranslatorFacadeTest extends Test
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\Translator\Dependency\Facade\TranslatorToLocaleFacadeBridge|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function getLocaleFacadeMock(): MockObject
+    protected function getLocaleFacadeMock(): TranslatorToLocaleFacadeBridge
     {
         $localeFacadeMock = $this->getMockBuilder(TranslatorToLocaleFacadeBridge::class)
             ->enableOriginalConstructor()

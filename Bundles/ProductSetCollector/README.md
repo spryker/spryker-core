@@ -1,6 +1,6 @@
 # ProductSetCollector Module
-[![Build Status](https://travis-ci.org/spryker/ProductSetCollector.svg)](https://travis-ci.org/spryker/ProductSetCollector)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/ProductSetCollector/badge.svg)](https://coveralls.io/github/spryker/ProductSetCollector)
+[![Build Status](https://travis-ci.org/spryker/product-set-collector.svg)](https://travis-ci.org/spryker/product-set-collector)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 ProductSetCollector provides product set data for Yves by exporting it to key-value storage and search.
 

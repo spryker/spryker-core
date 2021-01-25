@@ -45,13 +45,13 @@ class ProductAbstractDataFeedDependencyProvider extends AbstractBundleDependency
      */
     public function providePersistenceLayerDependencies(Container $container)
     {
-        $container[self::PRODUCT_QUERY_CONTAINER] = function (Container $container) {
+        $container->set(static::PRODUCT_QUERY_CONTAINER, function (Container $container) {
             $productQueryContainer = $container->getLocator()
                 ->product()
                 ->queryContainer();
 
             return new ProductAbstractDataFeedToProductBridge($productQueryContainer);
-        };
+        });
 
         return $container;
     }

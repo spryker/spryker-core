@@ -1,0 +1,18 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 48,
+            "line_to": 48,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\UserLocale\\Business\\UserLocaleReader\\UserLocaleReader::getLocaleTransferByLocaleName cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/UserLocale/src/Spryker/Zed/UserLocale/Business/UserLocaleReader/UserLocaleReader.php",
+            "snippet": "        return $this->getLocaleTransferByLocaleName($this->getCurrentUser()->getLocaleName());",
+            "selected_text": "$this->getCurrentUser()->getLocaleName()",
+            "error_level": 3,
+            "shortcode": 78
+        }
+    ],
+    "deprecation": []
+}

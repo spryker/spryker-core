@@ -1,0 +1,140 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="Merchant">
+        <property name="idMerchant" type="int"/>
+        <property name="merchantProfile" type="MerchantProfile"/>
+    </transfer>
+
+    <transfer name="MerchantProfile">
+        <property name="idMerchantProfile" type="int"/>
+        <property name="contactPersonRole" type="string"/>
+        <property name="contactPersonTitle" type="string"/>
+        <property name="contactPersonFirstName" type="string"/>
+        <property name="contactPersonLastName" type="string"/>
+        <property name="contactPersonPhone" type="string"/>
+        <property name="logoUrl" type="string"/>
+        <property name="publicEmail" type="string"/>
+        <property name="publicPhone" type="string"/>
+        <property name="descriptionGlossaryKey" type="string"/>
+        <property name="bannerUrlGlossaryKey" type="string"/>
+        <property name="deliveryTimeGlossaryKey" type="string"/>
+        <property name="termsConditionsGlossaryKey" type="string"/>
+        <property name="cancellationPolicyGlossaryKey" type="string"/>
+        <property name="imprintGlossaryKey" type="string"/>
+        <property name="dataPrivacyGlossaryKey" type="string"/>
+        <property name="fkMerchant" type="int"/>
+        <property name="merchantName" type="string"/>
+        <property name="latitude" type="string"/>
+        <property name="longitude" type="string"/>
+        <property name="faxNumber" type="string"/>
+        <property name="merchantReference" type="string"/>
+        <property name="merchantProfileLocalizedGlossaryAttributes" type="MerchantProfileLocalizedGlossaryAttributes[]" singular="merchantProfileLocalizedGlossaryAttribute"/>
+        <property name="addressCollection" type="MerchantProfileAddressCollection" singular="address"/>
+    </transfer>
+
+    <transfer name="MerchantProfileCollection">
+        <property name="merchantProfiles" type="MerchantProfile[]"  singular="merchantProfile"/>
+    </transfer>
+
+    <transfer name="MerchantProfileLocalizedGlossaryAttributes">
+        <property name="locale" type="Locale"/>
+        <property name="merchantProfileGlossaryAttributeValues" type="MerchantProfileGlossaryAttributeValues"/>
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="idLocale" type="int"/>
+        <property name="localeName" type="string"/>
+    </transfer>
+
+    <transfer name="MerchantProfileGlossaryAttributeValues">
+        <property name="descriptionGlossaryKey" type="string"/>
+        <property name="bannerUrlGlossaryKey" type="string"/>
+        <property name="deliveryTimeGlossaryKey" type="string"/>
+        <property name="termsConditionsGlossaryKey" type="string"/>
+        <property name="cancellationPolicyGlossaryKey" type="string"/>
+        <property name="imprintGlossaryKey" type="string"/>
+        <property name="dataPrivacyGlossaryKey" type="string"/>
+    </transfer>
+
+    <transfer name="MerchantProfileCriteriaFilter">
+        <property name="fkMerchant" type="int"/>
+        <property name="idMerchantProfile" type="int"/>
+        <property name="merchantIds" type="int[]" singular="idMerchant"/>
+        <property name="merchantProfileIds" type="int[]" singular="idMerchantProfile"/>
+        <property name="merchantReference" type="string"/>
+        <property name="filter" type="Filter"/>
+    </transfer>
+
+    <transfer name="Filter">
+        <property name="limit" type="int"/>
+        <property name="offset" type="int"/>
+    </transfer>
+
+    <transfer name="MerchantProfileAddressCollection">
+        <property name="addresses" type="MerchantProfileAddress[]" singular="address"/>
+    </transfer>
+
+    <transfer name="MerchantProfileAddress">
+        <property name="idMerchantProfileAddress" type="int"/>
+        <property name="fkCountry" type="int"/>
+        <property name="countryName" type="string"/>
+        <property name="address1" type="string"/>
+        <property name="address2" type="string"/>
+        <property name="address3" type="string"/>
+        <property name="city" type="string"/>
+        <property name="zipCode" type="string"/>
+        <property name="email" type="string"/>
+        <property name="fkMerchantProfile" type="int"/>
+    </transfer>
+
+    <transfer name="Translation">
+    </transfer>
+
+    <transfer name="CartChange">
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="type" type="string"/>
+        <property name="value" type="string"/>
+        <property name="parameters" type="array" singular="parameters"/>
+    </transfer>
+
+    <transfer name="CartPreCheckResponse">
+        <property name="messages" type="Message[]" singular="message"/>
+        <property name="isSuccess" type="bool"/>
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="CheckoutError">
+        <property name="message" type="string"/>
+        <property name="parameters" type="array" singular="parameters"/>
+    </transfer>
+
+    <transfer name="CheckoutResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="errors" type="CheckoutError[]" singular="error"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="merchantReference" type="string"/>
+        <property name="sku" type="string"/>
+    </transfer>
+
+    <transfer name="MerchantResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="merchant" type="Merchant"/>
+    </transfer>
+
+    <transfer name="Url">
+        <property name="fkLocale" type="int"/>
+        <property name="url" type="string"/>
+    </transfer>
+
+</transfers>

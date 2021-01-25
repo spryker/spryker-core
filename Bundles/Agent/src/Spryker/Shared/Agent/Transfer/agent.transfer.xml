@@ -5,19 +5,43 @@
 
     <transfer name="User">
         <property name="isAgent" type="bool"/>
+        <property name="username" type="string"/>
     </transfer>
 
     <transfer name="CustomerAutocompleteResponse">
-        <property name="customers" type="Customer[]" singular="Customer"/>
+        <property name="customers" type="Customer[]" singular="customer"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="page" type="int"/>
+        <property name="maxPerPage" type="int"/>
+        <property name="nbResults" type="int"/>
+        <property name="firstIndex" type="int"/>
+        <property name="lastIndex" type="int"/>
+        <property name="firstPage" type="int"/>
+        <property name="lastPage" type="int"/>
+        <property name="nextPage" type="int"/>
+        <property name="previousPage" type="int"/>
     </transfer>
 
     <transfer name="CustomerQuery">
         <property name="query" type="string"/>
         <property name="limit" type="int"/>
+        <property name="offset" type="int"/>
     </transfer>
 
     <transfer name="FindAgentResponse">
         <property name="agent" type="User"/>
         <property name="isAgentFound" type="bool"/>
     </transfer>
+
+    <transfer name="Customer">
+        <property name="idCustomer" type="int"/>
+        <property name="firstName" type="string"/>
+        <property name="lastName" type="string"/>
+        <property name="email" type="string"/>
+        <property name="customerReference" type="string"/>
+    </transfer>
+
 </transfers>

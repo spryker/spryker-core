@@ -21,6 +21,11 @@
 
     <transfer name="Category">
         <property name="imageSets" type="CategoryImageSet[]" singular="imageSet"/>
+        <property name="idCategory" type="int"/>
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="idLocale" type="int"/>
     </transfer>
 
 </transfers>

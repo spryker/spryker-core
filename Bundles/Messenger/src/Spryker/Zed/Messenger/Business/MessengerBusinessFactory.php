@@ -15,7 +15,7 @@ use Spryker\Zed\Messenger\Business\Model\MessageTranslatorInterface;
 use Spryker\Zed\Messenger\Business\Model\SessionMessageTray;
 use Spryker\Zed\Messenger\MessengerDependencyProvider;
 use Symfony\Component\Translation\Translator;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @method \Spryker\Zed\Messenger\MessengerConfig getConfig()
@@ -62,7 +62,7 @@ class MessengerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Symfony\Component\Translation\TranslatorInterface
+     * @return \Symfony\Contracts\Translation\TranslatorInterface
      */
     public function createSymfonyTranslator(): TranslatorInterface
     {

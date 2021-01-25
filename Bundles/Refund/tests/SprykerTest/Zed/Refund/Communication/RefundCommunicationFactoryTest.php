@@ -26,7 +26,7 @@ class RefundCommunicationFactoryTest extends Unit
     /**
      * @return void
      */
-    public function testCreateRefundTableShouldReturnRefundTable()
+    public function testCreateRefundTableShouldReturnRefundTable(): void
     {
         $refundCommunicationFactor = new RefundCommunicationFactory();
 

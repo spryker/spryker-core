@@ -93,7 +93,6 @@ class DiscountOrderHydrate implements DiscountOrderHydrateInterface
         SpySalesDiscount $salesOrderDiscountEntity,
         CalculatedDiscountTransfer $calculatedDiscountTransfer
     ) {
-
         if ($salesOrderDiscountEntity->getFkSalesExpense()) {
             $this->addCalculatedDiscountToExpense($orderTransfer, $calculatedDiscountTransfer, $salesOrderDiscountEntity->getFkSalesExpense());
 
@@ -206,8 +205,10 @@ class DiscountOrderHydrate implements DiscountOrderHydrateInterface
      *
      * @return void
      */
-    protected function deriveCalculatedDiscountUnitAmounts(CalculatedDiscountTransfer $calculatedDiscountTransfer, SpySalesDiscount $salesOrderDiscountEntity): void
-    {
+    protected function deriveCalculatedDiscountUnitAmounts(
+        CalculatedDiscountTransfer $calculatedDiscountTransfer,
+        SpySalesDiscount $salesOrderDiscountEntity
+    ): void {
         $quantity = $this->getCalculatedDiscountQuantity($salesOrderDiscountEntity);
 
         $calculatedDiscountTransfer->setUnitAmount((int)round($salesOrderDiscountEntity->getAmount() / $quantity));

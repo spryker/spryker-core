@@ -8,11 +8,11 @@
 namespace Spryker\Zed\ModuleFinder\Business\Package\PackageFinder;
 
 use Generated\Shared\Transfer\PackageTransfer;
+use Laminas\Filter\FilterChain;
+use Laminas\Filter\Word\DashToCamelCase;
 use Spryker\Zed\ModuleFinder\ModuleFinderConfig;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
-use Zend\Filter\FilterChain;
-use Zend\Filter\Word\DashToCamelCase;
 
 class PackageFinder implements PackageFinderInterface
 {
@@ -127,6 +127,6 @@ class PackageFinder implements PackageFinderInterface
         $composerJsonAsArray = $this->getComposerJsonAsArray($packageTransfer->getPath());
         $description = $composerJsonAsArray['description'];
 
-        return preg_match('/\smodule$/', $description);
+        return (bool)preg_match('/\smodule$/', $description);
     }
 }

@@ -1,0 +1,24 @@
+version: 1
+
+defaults:
+    destination: '{timestamp}/{data_entity}{split_hook}.{extension}'
+    overwrite: true
+    operation: export
+    format:
+        type: csv
+    connection:
+        type: local
+        params:
+            export_root_dir: '{application_root_dir}/data/export'
+    filter_criteria: &default_filter_criteria
+        order_created_at:
+            type: between
+            from: '2020-04-01 00:00:00'
+            to: '2020-04-30 23:59:59'
+
+actions:
+    - data_entity: test-entity
+      destination: '{data_entity}_{timestamp}.{extension}'
+      filter_criteria:
+          <<: *default_filter_criteria
+          store_name: [DE]

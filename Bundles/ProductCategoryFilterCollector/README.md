@@ -1,6 +1,6 @@
 # ProductCategoryFilterCollector Module
-[![Build Status](https://travis-ci.org/spryker/ProductCategoryFilterCollector.svg)](https://travis-ci.org/spryker/ProductCategoryFilterCollector)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/ProductCategoryFilterCollector/badge.svg)](https://coveralls.io/github/spryker/ProductCategoryFilterCollector)
+[![Build Status](https://travis-ci.org/spryker/product-category-filter-collector.svg)](https://travis-ci.org/spryker/product-category-filter-collector)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 ProductCategoryFilterCollector provides product category filter data for Yves by exporting it to key-value storage.
 

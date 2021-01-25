@@ -15,6 +15,8 @@ use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInt
 use Spryker\Zed\Search\Dependency\Plugin\NamedPageMapInterface;
 
 /**
+ * @deprecated Will be removed without replacement. Search data mapping is now done inside of this module.
+ *
  * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductPageSearch\Communication\ProductPageSearchCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacadeInterface getFacade()
@@ -23,15 +25,17 @@ use Spryker\Zed\Search\Dependency\Plugin\NamedPageMapInterface;
 class ProductPageMapPlugin extends AbstractPlugin implements NamedPageMapInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
      * @param array $data
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Generated\Shared\Transfer\PageMapTransfer
      */
-    public function buildPageMap(PageMapBuilderInterface $pageMapBuilder, array $data, LocaleTransfer $locale)
+    public function buildPageMap(PageMapBuilderInterface $pageMapBuilder, array $data, LocaleTransfer $localeTransfer)
     {
         $pageMapTransfer = (new PageMapTransfer())
             ->setStore($data['store'])
@@ -55,7 +59,7 @@ class ProductPageMapPlugin extends AbstractPlugin implements NamedPageMapInterfa
             ->addCompletionTerms($pageMapTransfer, $data['name'])
             ->addStringSort($pageMapTransfer, 'name', $data['name']);
 
-        $this->expandProductPageMap($pageMapTransfer, $pageMapBuilder, $data, $locale);
+        $this->expandProductPageMap($pageMapTransfer, $pageMapBuilder, $data, $localeTransfer);
 
         $pageMapTransfer = $this
             ->getFactory()->getProductSearchFacade()
@@ -72,8 +76,12 @@ class ProductPageMapPlugin extends AbstractPlugin implements NamedPageMapInterfa
      *
      * @return \Generated\Shared\Transfer\PageMapTransfer
      */
-    protected function expandProductPageMap(PageMapTransfer $pageMapTransfer, PageMapBuilderInterface $pageMapBuilder, array $productData, LocaleTransfer $localeTransfer)
-    {
+    protected function expandProductPageMap(
+        PageMapTransfer $pageMapTransfer,
+        PageMapBuilderInterface $pageMapBuilder,
+        array $productData,
+        LocaleTransfer $localeTransfer
+    ) {
         foreach ($this->getFactory()->getProductPageMapExpanderPlugins() as $productPageMapExpander) {
             $pageMapTransfer = $productPageMapExpander->expandProductPageMap($pageMapTransfer, $pageMapBuilder, $productData, $localeTransfer);
         }
@@ -82,6 +90,8 @@ class ProductPageMapPlugin extends AbstractPlugin implements NamedPageMapInterfa
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string

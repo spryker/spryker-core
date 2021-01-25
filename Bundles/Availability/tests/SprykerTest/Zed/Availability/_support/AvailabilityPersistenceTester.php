@@ -8,6 +8,14 @@
 namespace SprykerTest\Zed\Availability;
 
 use Codeception\Actor;
+use Generated\Shared\DataBuilder\LocalizedAttributesBuilder;
+use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\LocalizedAttributesTransfer;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\StockProductTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\DecimalObject\Decimal;
 
 /**
  * Inherited Methods
@@ -21,7 +29,7 @@ use Codeception\Actor;
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method void pause()
  *
  * @SuppressWarnings(PHPMD)
  */
@@ -29,7 +37,39 @@ class AvailabilityPersistenceTester extends Actor
 {
     use _generated\AvailabilityPersistenceTesterActions;
 
-   /**
-    * Define custom actions here
-    */
+    /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\StockTransfer[] $stockTransfers
+     * @param int $productQuantity
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function haveProductWithStockAndAvailability(
+        StoreTransfer $storeTransfer,
+        LocaleTransfer $localeTransfer,
+        array $stockTransfers,
+        int $productQuantity
+    ): ProductConcreteTransfer {
+        $localizedAttributes = (new LocalizedAttributesBuilder([
+            LocalizedAttributesTransfer::LOCALE => $localeTransfer,
+        ]))->build()->toArray();
+
+        $productConcreteTransfer = $this->haveProduct(
+            [ProductConcreteTransfer::LOCALIZED_ATTRIBUTES => [$localizedAttributes]],
+            [ProductAbstractTransfer::LOCALIZED_ATTRIBUTES => [$localizedAttributes]]
+        );
+
+        foreach ($stockTransfers as $stockTransfer) {
+            $this->haveStockProduct([
+                StockProductTransfer::SKU => $productConcreteTransfer->getSku(),
+                StockProductTransfer::QUANTITY => $productQuantity,
+                StockProductTransfer::STOCK_TYPE => $stockTransfer->getName(),
+            ]);
+        }
+
+        $this->haveAvailabilityConcrete($productConcreteTransfer->getSku(), $storeTransfer, new Decimal(20));
+
+        return $productConcreteTransfer;
+    }
 }

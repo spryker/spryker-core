@@ -10,6 +10,7 @@ namespace SprykerTest\Client\Availability;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\StorageAvailabilityTransfer;
 use Spryker\Client\Availability\AvailabilityClient;
+use Spryker\Client\Availability\AvailabilityClientInterface;
 use Spryker\Client\Availability\AvailabilityDependencyProvider;
 use Spryker\Client\Availability\Dependency\Client\AvailabilityToStorageInterface;
 use Spryker\Client\Availability\Exception\ProductAvailabilityNotFoundException;
@@ -35,7 +36,7 @@ class AvailabilityClientTest extends Unit
     /**
      * @return void
      */
-    public function testFindProductAvailabilityByIdProductAbstractReturnsProductAvailabilityTransferObject()
+    public function testFindProductAvailabilityByIdProductAbstractReturnsProductAvailabilityTransferObject(): void
     {
         // Arrange
         $productAvailability = [];
@@ -45,13 +46,13 @@ class AvailabilityClientTest extends Unit
         $actualProductAvailability = $this->createAvailabilityClient()->findProductAvailabilityByIdProductAbstract(static::ID_PRODUCT_ABSTRACT);
 
         // Assert
-        $this->assertEquals(StorageAvailabilityTransfer::class, get_class($actualProductAvailability));
+        $this->assertSame(StorageAvailabilityTransfer::class, get_class($actualProductAvailability));
     }
 
     /**
      * @return void
      */
-    public function testFindProductAvailabilityByIdProductAbstractReturnsNullWhenProductAvailabilityWasNotFoundInStorage()
+    public function testFindProductAvailabilityByIdProductAbstractReturnsNullWhenProductAvailabilityWasNotFoundInStorage(): void
     {
         // Arrange
         $productAvailability = null;
@@ -67,7 +68,7 @@ class AvailabilityClientTest extends Unit
     /**
      * @return void
      */
-    public function testGetProductAvailabilityByIdProductAbstractReturnsProductAvailabilityTransferObject()
+    public function testGetProductAvailabilityByIdProductAbstractReturnsProductAvailabilityTransferObject(): void
     {
         // Arrange
         $productAvailability = [];
@@ -77,13 +78,13 @@ class AvailabilityClientTest extends Unit
         $actualProductAvailability = $this->createAvailabilityClient()->getProductAvailabilityByIdProductAbstract(static::ID_PRODUCT_ABSTRACT);
 
         // Assert
-        $this->assertEquals(StorageAvailabilityTransfer::class, get_class($actualProductAvailability));
+        $this->assertSame(StorageAvailabilityTransfer::class, get_class($actualProductAvailability));
     }
 
     /**
      * @return void
      */
-    public function testGetProductAvailabilityByIdProductAbstractThrowsExceptionWhenProductAvailabilityWasNotFoundInStorage()
+    public function testGetProductAvailabilityByIdProductAbstractThrowsExceptionWhenProductAvailabilityWasNotFoundInStorage(): void
     {
         // Arrange
         $productAvailability = null;
@@ -101,7 +102,7 @@ class AvailabilityClientTest extends Unit
      *
      * @return void
      */
-    protected function setStorageReturn($returnedProductAvailability)
+    protected function setStorageReturn(?array $returnedProductAvailability): void
     {
         $availabilityToStorageBridge = $this->getMockBuilder(AvailabilityToStorageInterface::class)->getMock();
         $availabilityToStorageBridge->method('get')->willReturn($returnedProductAvailability);
@@ -111,7 +112,7 @@ class AvailabilityClientTest extends Unit
     /**
      * @return \Spryker\Client\Availability\AvailabilityClientInterface
      */
-    protected function createAvailabilityClient()
+    protected function createAvailabilityClient(): AvailabilityClientInterface
     {
         return new AvailabilityClient();
     }

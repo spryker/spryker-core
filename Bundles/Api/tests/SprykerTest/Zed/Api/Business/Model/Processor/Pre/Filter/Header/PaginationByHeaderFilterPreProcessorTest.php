@@ -33,7 +33,7 @@ class PaginationByHeaderFilterPreProcessorTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
     }
@@ -41,7 +41,7 @@ class PaginationByHeaderFilterPreProcessorTest extends Unit
     /**
      * @return void
      */
-    public function testProcessWithDefaultsPageOne()
+    public function testProcessWithDefaultsPageOne(): void
     {
         $config = new ApiConfig();
         $processor = new PaginationByHeaderFilterPreProcessor($config);
@@ -61,7 +61,7 @@ class PaginationByHeaderFilterPreProcessorTest extends Unit
     /**
      * @return void
      */
-    public function testProcessWithDefaultsPageTwo()
+    public function testProcessWithDefaultsPageTwo(): void
     {
         $config = new ApiConfig();
         $processor = new PaginationByHeaderFilterPreProcessor($config);
@@ -80,7 +80,7 @@ class PaginationByHeaderFilterPreProcessorTest extends Unit
     /**
      * @return void
      */
-    public function testProcessWithCustomLimit()
+    public function testProcessWithCustomLimit(): void
     {
         $config = new ApiConfig();
         $processor = new PaginationByHeaderFilterPreProcessor($config);
@@ -97,12 +97,11 @@ class PaginationByHeaderFilterPreProcessorTest extends Unit
     }
 
     /**
-     * @expectedException \Spryker\Zed\Api\Business\Exception\ApiDispatchingException
-     *
      * @return void
      */
-    public function testProcessWithInvalidOffsetPagination()
+    public function testProcessWithInvalidOffsetPagination(): void
     {
+        $this->expectException('Spryker\Zed\Api\Business\Exception\ApiDispatchingException');
         $config = new ApiConfig();
         $processor = new PaginationByHeaderFilterPreProcessor($config);
 

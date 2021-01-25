@@ -304,14 +304,15 @@ class QuoteShipmentExpander implements QuoteShipmentExpanderInterface
      */
     protected function updateQuoteLevelShipment(QuoteTransfer $quoteTransfer, iterable $shipmentGroupCollection): QuoteTransfer
     {
+        $shipmentGroupCollection = (array)$shipmentGroupCollection;
         if (count($shipmentGroupCollection) > 1) {
             return $quoteTransfer->setShipment(null);
         }
 
-        $firstShipmentGroup = current($shipmentGroupCollection);
-        $firstShipmentGroup->requireShipment();
+        $firstShipmentGroupTransfer = current($shipmentGroupCollection);
+        $firstShipmentGroupTransfer->requireShipment();
 
-        return $quoteTransfer->setShipment($firstShipmentGroup->getShipment());
+        return $quoteTransfer->setShipment($firstShipmentGroupTransfer->getShipment());
     }
 
     /**

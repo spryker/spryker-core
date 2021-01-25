@@ -134,9 +134,26 @@ class PriceProductDimensionQueryExpander implements PriceProductDimensionQueryEx
         SpyPriceProductStoreQuery $priceProductStoreQuery,
         PriceProductCriteriaTransfer $priceProductCriteriaTransfer
     ): void {
+        $dimensionConditionNames = [];
         foreach ($this->priceDimensionQueryCriteriaPlugins as $priceDimensionQueryCriteriaPlugin) {
-            $this->runPlugin($priceProductStoreQuery, $priceProductCriteriaTransfer, $priceDimensionQueryCriteriaPlugin);
+            $queryCriteriaTransfer = $this->runPlugin(
+                $priceProductStoreQuery,
+                $priceProductCriteriaTransfer,
+                $priceDimensionQueryCriteriaPlugin
+            );
+
+            if (!$queryCriteriaTransfer) {
+                continue;
+            }
+
+            $dimensionConditionNames = array_merge($dimensionConditionNames, $this->addConditionToFilterOrphans(
+                $priceProductStoreQuery,
+                $queryCriteriaTransfer,
+                $priceDimensionQueryCriteriaPlugin->getDimensionName()
+            ));
         }
+
+        $priceProductStoreQuery->combine($dimensionConditionNames, Criteria::LOGICAL_OR);
     }
 
     /**
@@ -209,6 +226,7 @@ class PriceProductDimensionQueryExpander implements PriceProductDimensionQueryEx
                 if ($queryJoinTransfer->getCondition()) {
                     $priceProductStoreQuery->addJoinCondition($queryJoinTransfer->getRelation(), $queryJoinTransfer->getCondition());
                 }
+
                 continue;
             }
             $priceProductStoreQuery->addJoin(
@@ -247,5 +265,35 @@ class PriceProductDimensionQueryExpander implements PriceProductDimensionQueryEx
         foreach ($queryCriteriaTransfer->getWithColumns() as $field => $value) {
             $priceProductStoreQuery->addAnd($field, null, Criteria::ISNULL);
         }
+    }
+
+    /**
+     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery $priceProductStoreQuery
+     * @param \Generated\Shared\Transfer\QueryCriteriaTransfer $queryCriteriaTransfer
+     * @param string $dimensionName
+     *
+     * @return string[]
+     */
+    protected function addConditionToFilterOrphans(
+        SpyPriceProductStoreQuery $priceProductStoreQuery,
+        QueryCriteriaTransfer $queryCriteriaTransfer,
+        string $dimensionName
+    ): array {
+        $conditionNames = [];
+        $i = 0;
+        foreach ($queryCriteriaTransfer->getWithColumns() as $field => $value) {
+            $conditionName = sprintf('%s_%s', $dimensionName, $i);
+            $priceProductStoreQuery->addCond(
+                $conditionName,
+                $field,
+                null,
+                Criteria::ISNOTNULL
+            );
+
+            $conditionNames[] = $conditionName;
+            $i++;
+        }
+
+        return $conditionNames;
     }
 }

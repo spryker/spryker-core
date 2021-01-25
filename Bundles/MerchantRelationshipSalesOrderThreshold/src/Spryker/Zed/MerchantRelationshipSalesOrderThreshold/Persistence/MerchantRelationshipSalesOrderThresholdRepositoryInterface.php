@@ -27,9 +27,9 @@ interface MerchantRelationshipSalesOrderThresholdRepositoryInterface
     ): array;
 
     /**
-     * @param \Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Persistence\MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer
+     * @param \Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer
      *
-     * @return \Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Persistence\MerchantRelationshipSalesOrderThresholdTransfer|null
+     * @return \Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer|null
      */
     public function findMerchantRelationshipSalesOrderThreshold(
         MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer

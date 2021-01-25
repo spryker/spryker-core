@@ -1,0 +1,18 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 74,
+            "line_to": 74,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Client\\OauthPermission\\Dependency\\Service\\OauthPermissionToUtilEncodingServiceInterface::decodeJson cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/OauthPermission/src/Spryker/Client/OauthPermission/OauthPermission/OauthPermissionReader.php",
+            "snippet": "        $oauthUserIdDecoded = $this->utilEncodingService->decodeJson($oauthAccessTokenDataTransfer->getOauthUserId(), true);",
+            "selected_text": "$oauthAccessTokenDataTransfer->getOauthUserId()",
+            "error_level": 3,
+            "shortcode": 78
+        }
+    ],
+    "deprecation": []
+}

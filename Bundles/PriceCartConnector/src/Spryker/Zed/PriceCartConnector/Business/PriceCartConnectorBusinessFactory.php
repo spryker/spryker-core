@@ -18,6 +18,7 @@ use Spryker\Zed\PriceCartConnector\Business\Sanitizer\SourcePriceSanitizerInterf
 use Spryker\Zed\PriceCartConnector\Business\Validator\PriceProductValidator;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartConnectorToCurrencyFacadeInterface;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToMessengerInterface;
+use Spryker\Zed\PriceCartConnector\Dependency\Service\PriceCartConnectorToPriceProductServiceInterface;
 use Spryker\Zed\PriceCartConnector\PriceCartConnectorDependencyProvider;
 
 /**
@@ -34,7 +35,9 @@ class PriceCartConnectorBusinessFactory extends AbstractBusinessFactory
         return new PriceManager(
             $this->getPriceProductFacade(),
             $this->getPriceFacade(),
-            $this->createPriceProductFilter()
+            $this->createPriceProductFilter(),
+            $this->getPriceProductService(),
+            $this->getPriceProductExpanderPlugins()
         );
     }
 
@@ -57,7 +60,8 @@ class PriceCartConnectorBusinessFactory extends AbstractBusinessFactory
         return new PriceProductFilter(
             $this->getPriceProductFacade(),
             $this->getPriceFacade(),
-            $this->getCurrencyFacade()
+            $this->getCurrencyFacade(),
+            $this->getCartItemQuantityCounterStrategyPlugins()
         );
     }
 
@@ -69,7 +73,8 @@ class PriceCartConnectorBusinessFactory extends AbstractBusinessFactory
         return new ItemsWithoutPriceFilter(
             $this->getPriceFacade(),
             $this->getPriceProductFacade(),
-            $this->getMessengerFacade()
+            $this->getMessengerFacade(),
+            $this->getPriceProductService()
         );
     }
 
@@ -111,5 +116,29 @@ class PriceCartConnectorBusinessFactory extends AbstractBusinessFactory
     public function getCurrencyFacade(): PriceCartConnectorToCurrencyFacadeInterface
     {
         return $this->getProvidedDependency(PriceCartConnectorDependencyProvider::FACADE_CURRENCY);
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceCartConnector\Dependency\Service\PriceCartConnectorToPriceProductServiceInterface
+     */
+    public function getPriceProductService(): PriceCartConnectorToPriceProductServiceInterface
+    {
+        return $this->getProvidedDependency(PriceCartConnectorDependencyProvider::SERVICE_PRICE_PRODUCT);
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceCartConnectorExtension\Dependency\Plugin\PriceProductExpanderPluginInterface[]
+     */
+    public function getPriceProductExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(PriceCartConnectorDependencyProvider::PLUGINS_PRICE_PRODUCT_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceCartConnectorExtension\Dependency\Plugin\CartItemQuantityCounterStrategyPluginInterface[]
+     */
+    public function getCartItemQuantityCounterStrategyPlugins(): array
+    {
+        return $this->getProvidedDependency(PriceCartConnectorDependencyProvider::PLUGINS_CART_ITEM_QUANTITY_COUNTER_STRATEGY);
     }
 }

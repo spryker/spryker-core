@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\ProductPackagingUnit\Dependency\Facade;
 
-use Generated\Shared\Transfer\LocaleTransfer;
-
 class ProductPackagingUnitToLocaleFacadeBridge implements ProductPackagingUnitToLocaleFacadeInterface
 {
     /**
@@ -27,10 +25,9 @@ class ProductPackagingUnitToLocaleFacadeBridge implements ProductPackagingUnitTo
     /**
      * @return \Generated\Shared\Transfer\LocaleTransfer[]
      */
-    public function getLocaleCollection(): array
+    public function getLocaleCollection()
     {
-        return $this->localeFacade
-            ->getLocaleCollection();
+        return $this->localeFacade->getLocaleCollection();
     }
 
     /**
@@ -38,9 +35,8 @@ class ProductPackagingUnitToLocaleFacadeBridge implements ProductPackagingUnitTo
      *
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    public function getLocaleByCode(string $localeCode): LocaleTransfer
+    public function getLocaleByCode($localeCode)
     {
-        return $this->localeFacade
-            ->getLocaleByCode($localeCode);
+        return $this->localeFacade->getLocaleByCode($localeCode);
     }
 }

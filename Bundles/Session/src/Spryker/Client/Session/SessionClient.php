@@ -16,9 +16,11 @@ class SessionClient extends AbstractClient implements SessionClientInterface
     /**
      * @var \Symfony\Component\HttpFoundation\Session\SessionInterface|null
      */
-    protected static $container = null;
+    protected static $container;
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $container
@@ -39,7 +41,7 @@ class SessionClient extends AbstractClient implements SessionClientInterface
     }
 
     /**
-     * Returns an attribute.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -54,7 +56,7 @@ class SessionClient extends AbstractClient implements SessionClientInterface
     }
 
     /**
-     * Sets an attribute.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -69,7 +71,7 @@ class SessionClient extends AbstractClient implements SessionClientInterface
     }
 
     /**
-     * Removes an attribute.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -83,7 +85,7 @@ class SessionClient extends AbstractClient implements SessionClientInterface
     }
 
     /**
-     * Starts the session storage.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -95,7 +97,7 @@ class SessionClient extends AbstractClient implements SessionClientInterface
     }
 
     /**
-     * Returns the session ID.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -107,7 +109,7 @@ class SessionClient extends AbstractClient implements SessionClientInterface
     }
 
     /**
-     * Sets the session ID.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -121,7 +123,7 @@ class SessionClient extends AbstractClient implements SessionClientInterface
     }
 
     /**
-     * Returns the session name.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -133,7 +135,7 @@ class SessionClient extends AbstractClient implements SessionClientInterface
     }
 
     /**
-     * Sets the session name.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -147,10 +149,7 @@ class SessionClient extends AbstractClient implements SessionClientInterface
     }
 
     /**
-     * Invalidates the current session.
-     *
-     * Clears all session attributes and flashes and regenerates the
-     * session and deletes the old session from persistence.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -167,8 +166,7 @@ class SessionClient extends AbstractClient implements SessionClientInterface
     }
 
     /**
-     * Migrates the current session to a new session id while maintaining all
-     * session attributes.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -186,11 +184,7 @@ class SessionClient extends AbstractClient implements SessionClientInterface
     }
 
     /**
-     * Force the session to be saved and closed.
-     *
-     * This method is generally not required for real sessions as
-     * the session will be automatically saved at the end of
-     * code execution.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -202,7 +196,7 @@ class SessionClient extends AbstractClient implements SessionClientInterface
     }
 
     /**
-     * Checks if an attribute is defined.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -220,7 +214,7 @@ class SessionClient extends AbstractClient implements SessionClientInterface
     }
 
     /**
-     * Returns attributes.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -232,7 +226,7 @@ class SessionClient extends AbstractClient implements SessionClientInterface
     }
 
     /**
-     * Sets attributes.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -246,7 +240,7 @@ class SessionClient extends AbstractClient implements SessionClientInterface
     }
 
     /**
-     * Clears all attributes.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -258,7 +252,7 @@ class SessionClient extends AbstractClient implements SessionClientInterface
     }
 
     /**
-     * Checks if the session was started.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -270,7 +264,7 @@ class SessionClient extends AbstractClient implements SessionClientInterface
     }
 
     /**
-     * Registers a SessionBagInterface with the session.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -284,7 +278,7 @@ class SessionClient extends AbstractClient implements SessionClientInterface
     }
 
     /**
-     * Gets a bag instance by name.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -298,7 +292,7 @@ class SessionClient extends AbstractClient implements SessionClientInterface
     }
 
     /**
-     * Gets session meta.
+     * {@inheritDoc}
      *
      * @api
      *

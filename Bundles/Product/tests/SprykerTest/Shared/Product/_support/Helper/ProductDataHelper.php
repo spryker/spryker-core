@@ -20,6 +20,8 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Locale\Business\LocaleFacadeInterface;
+use Spryker\Zed\Product\Business\ProductFacadeInterface;
+use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Spryker\Zed\Store\Business\StoreFacadeInterface;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
@@ -35,7 +37,7 @@ class ProductDataHelper extends Module
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function haveProduct(array $productConcreteOverride = [], array $productAbstractOverride = [])
+    public function haveProduct(array $productConcreteOverride = [], array $productAbstractOverride = []): ProductConcreteTransfer
     {
         $productAbstractTransfer = (new ProductAbstractBuilder($productAbstractOverride))->build();
 
@@ -55,7 +57,7 @@ class ProductDataHelper extends Module
             $productConcreteTransfer->getIdProductConcrete()
         ));
 
-        $this->getDataCleanupHelper()->_addCleanup(function () use ($productConcreteTransfer) {
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($productConcreteTransfer): void {
             $this->cleanupProductConcrete($productConcreteTransfer->getIdProductConcrete());
             $this->cleanupProductAbstract($productConcreteTransfer->getFkProductAbstract());
         });
@@ -68,7 +70,7 @@ class ProductDataHelper extends Module
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
-    public function haveProductAbstract(array $productAbstractOverride = [])
+    public function haveProductAbstract(array $productAbstractOverride = []): ProductAbstractTransfer
     {
         $productAbstractTransfer = (new ProductAbstractBuilder($productAbstractOverride))->build();
 
@@ -80,7 +82,7 @@ class ProductDataHelper extends Module
             $abstractProductId
         ));
 
-        $this->getDataCleanupHelper()->_addCleanup(function () use ($productAbstractTransfer) {
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($productAbstractTransfer): void {
             $this->cleanupProductAbstract($productAbstractTransfer->getIdProductAbstract());
         });
 
@@ -101,7 +103,8 @@ class ProductDataHelper extends Module
 
         $localizedAttributes = (new LocalizedAttributesBuilder([
             LocalizedAttributesTransfer::NAME => uniqid('Product #', true),
-        ]))->withLocale($this->getCurrentLocale()->toArray())->build()->toArray();
+            LocalizedAttributesTransfer::LOCALE => $this->getCurrentLocale(),
+        ]))->build()->toArray();
 
         /** @var \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer */
         $productAbstractTransfer = (new ProductAbstractBuilder($productAbstractOverride))
@@ -131,7 +134,7 @@ class ProductDataHelper extends Module
             $productConcreteTransfer->getIdProductConcrete()
         ));
 
-        $this->getDataCleanupHelper()->_addCleanup(function () use ($productConcreteTransfer) {
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($productConcreteTransfer): void {
             $this->cleanupProductConcrete($productConcreteTransfer->getIdProductConcrete());
             $this->cleanupProductAbstract($productConcreteTransfer->getFkProductAbstract());
         });
@@ -212,7 +215,7 @@ class ProductDataHelper extends Module
     /**
      * @return \Spryker\Zed\Product\Business\ProductFacadeInterface
      */
-    private function getProductFacade()
+    private function getProductFacade(): ProductFacadeInterface
     {
         return $this->getLocator()->product()->facade();
     }
@@ -220,7 +223,7 @@ class ProductDataHelper extends Module
     /**
      * @return \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
      */
-    private function getProductQuery()
+    private function getProductQuery(): ProductQueryContainerInterface
     {
         return $this->getLocator()->product()->queryContainer();
     }
@@ -230,7 +233,7 @@ class ProductDataHelper extends Module
      *
      * @return void
      */
-    private function cleanupProductConcrete($idProductConcrete)
+    private function cleanupProductConcrete(int $idProductConcrete): void
     {
         $this->debug(sprintf('Deleting Concrete Product: %d', $idProductConcrete));
 
@@ -245,7 +248,7 @@ class ProductDataHelper extends Module
      *
      * @return void
      */
-    private function cleanupProductAbstract($idProductAbstract)
+    private function cleanupProductAbstract(int $idProductAbstract): void
     {
         $this->debug(sprintf('Deleting Abstract Product: %d', $idProductAbstract));
 

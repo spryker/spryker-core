@@ -42,17 +42,21 @@ interface CollectorConstants
      * Specification:
      * - DB engine reference to MySql.
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @api
      */
-    public const ZED_DB_ENGINE_MYSQL = PropelConstants::ZED_DB_ENGINE_MYSQL;
+    public const ZED_DB_ENGINE_MYSQL = 'ZED_DB_ENGINE_MYSQL';
 
     /**
      * Specification:
      * - DB engine reference to Pgsql.
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @api
      */
-    public const ZED_DB_ENGINE_PGSQL = PropelConstants::ZED_DB_ENGINE_PGSQL;
+    public const ZED_DB_ENGINE_PGSQL = 'ZED_DB_ENGINE_PGSQL';
 
     /**
      * Specification:

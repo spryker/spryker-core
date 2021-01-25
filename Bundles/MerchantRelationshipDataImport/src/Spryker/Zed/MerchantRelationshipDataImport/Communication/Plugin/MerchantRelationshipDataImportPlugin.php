@@ -20,6 +20,8 @@ use Spryker\Zed\MerchantRelationshipDataImport\MerchantRelationshipDataImportCon
 class MerchantRelationshipDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
@@ -33,6 +35,8 @@ class MerchantRelationshipDataImportPlugin extends AbstractPlugin implements Dat
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string

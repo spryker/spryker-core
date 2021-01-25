@@ -34,7 +34,7 @@ class StorePrefixRouterEnhancerPlugin extends AbstractRouterEnhancerPlugin
         }
 
         $pathinfoFragments = explode('/', trim($pathinfo, '/'));
-        if (in_array($pathinfoFragments[0], $this->getConfig()->getAllowedStores())) {
+        if (in_array($pathinfoFragments[0], $this->getConfig()->getAllowedStores(), true)) {
             $this->currentStore = array_shift($pathinfoFragments);
 
             return '/' . implode('/', $pathinfoFragments);

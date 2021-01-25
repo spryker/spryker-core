@@ -10,12 +10,18 @@ namespace Spryker\Zed\RestRequestValidator\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\RestRequestValidator\Business\Builder\RestRequestValidatorCacheBuilder;
 use Spryker\Zed\RestRequestValidator\Business\Builder\RestRequestValidatorCacheBuilderInterface;
+use Spryker\Zed\RestRequestValidator\Business\Builder\RestRequestValidatorCodeBucketCacheBuilder;
+use Spryker\Zed\RestRequestValidator\Business\Builder\RestRequestValidatorCodeBucketCacheBuilderInterface;
 use Spryker\Zed\RestRequestValidator\Business\Collector\RestRequestValidatorCacheCollector;
 use Spryker\Zed\RestRequestValidator\Business\Collector\RestRequestValidatorCacheCollectorInterface;
 use Spryker\Zed\RestRequestValidator\Business\Collector\SchemaFinder\RestRequestValidatorSchemaFinder;
 use Spryker\Zed\RestRequestValidator\Business\Collector\SchemaFinder\RestRequestValidatorSchemaFinderInterface;
 use Spryker\Zed\RestRequestValidator\Business\Merger\RestRequestValidatorSchemaMerger;
 use Spryker\Zed\RestRequestValidator\Business\Merger\RestRequestValidatorSchemaMergerInterface;
+use Spryker\Zed\RestRequestValidator\Business\Remover\RestRequestValidatorCacheRemover;
+use Spryker\Zed\RestRequestValidator\Business\Remover\RestRequestValidatorCacheRemoverInterface;
+use Spryker\Zed\RestRequestValidator\Business\Remover\RestRequestValidatorCodeBucketCacheRemover;
+use Spryker\Zed\RestRequestValidator\Business\Remover\RestRequestValidatorCodeBucketCacheRemoverInterface;
 use Spryker\Zed\RestRequestValidator\Business\Saver\RestRequestValidatorCacheSaver;
 use Spryker\Zed\RestRequestValidator\Business\Saver\RestRequestValidatorCacheSaverInterface;
 use Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToFilesystemAdapterInterface;
@@ -39,6 +45,18 @@ class RestRequestValidatorBusinessFactory extends AbstractBusinessFactory
             $this->createRestRequestValidatorSchemaMerger(),
             $this->createRestRequestValidatorCacheSaver(),
             $this->getStore()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\RestRequestValidator\Business\Builder\RestRequestValidatorCodeBucketCacheBuilderInterface
+     */
+    public function createRestRequestValidatorCodeBucketCacheBuilder(): RestRequestValidatorCodeBucketCacheBuilderInterface
+    {
+        return new RestRequestValidatorCodeBucketCacheBuilder(
+            $this->createRestRequestValidatorCacheCollector(),
+            $this->createRestRequestValidatorSchemaMerger(),
+            $this->createRestRequestValidatorCacheSaver()
         );
     }
 
@@ -83,6 +101,29 @@ class RestRequestValidatorBusinessFactory extends AbstractBusinessFactory
             $this->getFinderAdapter(),
             $this->getConfig(),
             $this->getStore()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\RestRequestValidator\Business\Remover\RestRequestValidatorCacheRemoverInterface
+     */
+    public function createRestRequestValidatorCacheRemover(): RestRequestValidatorCacheRemoverInterface
+    {
+        return new RestRequestValidatorCacheRemover(
+            $this->getStore(),
+            $this->getFilesystemAdapter(),
+            $this->getConfig()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\RestRequestValidator\Business\Remover\RestRequestValidatorCodeBucketCacheRemoverInterface
+     */
+    public function createRestRequestValidatorCodeBucketCacheRemover(): RestRequestValidatorCodeBucketCacheRemoverInterface
+    {
+        return new RestRequestValidatorCodeBucketCacheRemover(
+            $this->getFilesystemAdapter(),
+            $this->getConfig()
         );
     }
 

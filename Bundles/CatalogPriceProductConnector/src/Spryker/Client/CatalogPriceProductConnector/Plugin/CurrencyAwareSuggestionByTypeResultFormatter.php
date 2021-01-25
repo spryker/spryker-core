@@ -17,12 +17,12 @@ use Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\AbstractElasticse
 class CurrencyAwareSuggestionByTypeResultFormatter extends AbstractElasticsearchResultFormatterPlugin
 {
     /**
-     * @var \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface
+     * @var \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface|\Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface
      */
     protected $rawCatalogSearchResultFormatterPlugin;
 
     /**
-     * @param \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface $rawCatalogSearchResultFormatterPlugin
+     * @param \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface|\Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface $rawCatalogSearchResultFormatterPlugin
      */
     public function __construct(ResultFormatterPluginInterface $rawCatalogSearchResultFormatterPlugin)
     {

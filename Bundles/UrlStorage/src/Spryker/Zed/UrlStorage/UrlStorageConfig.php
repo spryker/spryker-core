@@ -12,6 +12,10 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class UrlStorageConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()} instead.
+     *
      * @return bool
      */
     public function isSendingToQueue(): bool
@@ -20,6 +24,8 @@ class UrlStorageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string|null
      */
     public function getUrlSynchronizationPoolName(): ?string
@@ -28,9 +34,31 @@ class UrlStorageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string|null
      */
     public function getUrlRedirectSynchronizationPoolName(): ?string
+    {
+        return null;
+    }
+
+    /**
+     * @api
+     *
+     * @return string|null
+     */
+    public function getUrlEventQueueName(): ?string
+    {
+        return null;
+    }
+
+    /**
+     * @api
+     *
+     * @return string|null
+     */
+    public function getUrlRedirectEventQueueName(): ?string
     {
         return null;
     }

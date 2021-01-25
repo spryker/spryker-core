@@ -7,7 +7,9 @@
 
 namespace Spryker\Client\ProductStorage;
 
+use Generated\Shared\Transfer\ProductConcreteStorageTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductStorageCriteriaTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 
 interface ProductStorageClientInterface
@@ -108,7 +110,10 @@ interface ProductStorageClientInterface
     public function findProductConcreteStorageData(int $idProductConcrete, string $localeName): ?array;
 
     /**
-     * {@inheritDoc}
+     * Specification:
+     * - Filters restricted products.
+     * - Retrieves product concrete storage data by given product concrete ids.
+     * - Returns an array of ProductConcreteStorageTransfers mapped from product concrete storage data.
      *
      * @api
      *
@@ -163,10 +168,16 @@ interface ProductStorageClientInterface
      * @param array $data
      * @param string $localeName
      * @param array $selectedAttributes
+     * @param \Generated\Shared\Transfer\ProductStorageCriteriaTransfer|null $productStorageCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
-    public function mapProductStorageData(array $data, $localeName, array $selectedAttributes = []);
+    public function mapProductStorageData(
+        array $data,
+        $localeName,
+        array $selectedAttributes = [],
+        ?ProductStorageCriteriaTransfer $productStorageCriteriaTransfer = null
+    );
 
     /**
      * Specification:
@@ -208,7 +219,10 @@ interface ProductStorageClientInterface
     public function isProductConcreteRestricted(int $idProductConcrete): bool;
 
     /**
-     * {@inheritDoc}
+     * Specification:
+     * - Filters restricted products.
+     * - Retrieves product concrete storage data by given mapping type and identifier.
+     * - Returns null if product concrete storage data was not found.
      *
      * @api
      *
@@ -239,12 +253,33 @@ interface ProductStorageClientInterface
      *
      * @api
      *
+     * @deprecated Use getBulkProductAbstractStorageDataByProductAbstractIdsForLocaleNameAndStore instead.
+     *
      * @param int[] $productAbstractIds
      * @param string $localeName
      *
      * @return array
      */
     public function getBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleName(array $productAbstractIds, string $localeName): array;
+
+    /**
+     * Specification:
+     * - Finds product abstract data by the list of product abstract ids for given locale name and store name.
+     * - Result will be indexed by product abstract id, e.g. `[%product_abstract_id% => [%product_abstract_storage_data%]]`.
+     *
+     * @api
+     *
+     * @param int[] $productAbstractIds
+     * @param string $localeName
+     * @param string $storeName
+     *
+     * @return array
+     */
+    public function getBulkProductAbstractStorageDataByProductAbstractIdsForLocaleNameAndStore(
+        array $productAbstractIds,
+        string $localeName,
+        string $storeName
+    ): array;
 
     /**
      * Specification:
@@ -279,4 +314,106 @@ interface ProductStorageClientInterface
      * @return \Generated\Shared\Transfer\ProductViewTransfer[]
      */
     public function getProductConcreteViewTransfers(array $productConcreteIds, string $localeName, array $selectedAttributes = []): array;
+
+    /**
+     * Specification:
+     * - Retrieves a current Store specific ProductAbstract resources from Storage using specified mapping.
+     * - Skips restricted product abstract records.
+     * - Filter the restricted product variants (product concrete) in `attribute_map`.
+     *
+     * @api
+     *
+     * @param string $mappingType
+     * @param string[] $identifiers
+     * @param string $localeName
+     *
+     * @return array
+     */
+    public function findBulkProductAbstractStorageDataByMapping(string $mappingType, array $identifiers, string $localeName): array;
+
+    /**
+     * Specification:
+     * - Retrieves a current Store specific ProductConcrete resources from Storage using specified mapping.
+     *
+     * @api
+     *
+     * @param string $mappingType
+     * @param string[] $identifiers
+     * @param string $localeName
+     *
+     * @return array
+     */
+    public function getBulkProductConcreteStorageDataByMapping(
+        string $mappingType,
+        array $identifiers,
+        string $localeName
+    ): array;
+
+    /**
+     * Specification:
+     * - Retrieves a current Store specific product abstract ids from Storage using specified mapping.
+     *
+     * @api
+     *
+     * @param string $mappingType
+     * @param string[] $identifiers
+     * @param string $localeName
+     *
+     * @return int[]
+     */
+    public function getBulkProductAbstractIdsByMapping(
+        string $mappingType,
+        array $identifiers,
+        string $localeName
+    ): array;
+
+    /**
+     * Specification:
+     * - Retrieves product concrete ids from Storage using specified mapping type and locale name.
+     * - Returned product IDs are indexed by the SKUs.
+     *
+     * @api
+     *
+     * @param string $mappingType
+     * @param string[] $identifiers
+     * @param string $localeName
+     *
+     * @return int[]
+     */
+    public function getProductConcreteIdsByMapping(
+        string $mappingType,
+        array $identifiers,
+        string $localeName
+    ): array;
+
+    /**
+     * Specification:
+     * - Requires ProductConcreteStorageTransfer.url, ProductConcreteStorageTransfer.attributes and ProductConcreteStorageTransfer.superAttributesDefinition properties to be set.
+     * - Builds product concrete URL.
+     * - Returns resolved URL.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteStorageTransfer $productConcreteStorageTransfer
+     *
+     * @return string
+     */
+    public function buildProductConcreteUrl(ProductConcreteStorageTransfer $productConcreteStorageTransfer): string;
+
+    /**
+     * Specification:
+     * - Filters restricted products.
+     * - Retrieves product concrete resources from storage in bulk by ids and locale name.
+     *
+     * @api
+     *
+     * @param int[] $productConcreteIds
+     * @param string $localeName
+     *
+     * @return array
+     */
+    public function getBulkProductConcreteStorageData(
+        array $productConcreteIds,
+        string $localeName
+    ): array;
 }

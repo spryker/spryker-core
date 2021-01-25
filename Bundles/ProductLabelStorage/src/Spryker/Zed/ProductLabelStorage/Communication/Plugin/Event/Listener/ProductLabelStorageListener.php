@@ -13,6 +13,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\ProductLabelStorage\Communication\Plugin\Publisher\ProductLabelProductAbstract\ProductLabelProductAbstractWritePublisherPlugin} instead.
+ *
  * @method \Spryker\Zed\ProductLabelStorage\Persistence\ProductLabelStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductLabelStorage\Communication\ProductLabelStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductLabelStorage\Business\ProductLabelStorageFacadeInterface getFacade()
@@ -25,17 +27,17 @@ class ProductLabelStorageListener extends AbstractPlugin implements EventBulkHan
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
      * @param string $eventName
      *
      * @return void
      */
-    public function handleBulk(array $eventTransfers, $eventName)
+    public function handleBulk(array $eventEntityTransfers, $eventName)
     {
         $this->preventTransaction();
         $productAbstractIds = $this->getFactory()
             ->getEventBehaviorFacade()
-            ->getEventTransferForeignKeys($eventTransfers, SpyProductLabelProductAbstractTableMap::COL_FK_PRODUCT_ABSTRACT);
+            ->getEventTransferForeignKeys($eventEntityTransfers, SpyProductLabelProductAbstractTableMap::COL_FK_PRODUCT_ABSTRACT);
 
         $this->getFacade()->publishProductLabel($productAbstractIds);
     }

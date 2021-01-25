@@ -1,0 +1,138 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 63,
+            "line_to": 63,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method modifiedToArray on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CartNote/src/Spryker/Client/CartNote/QuoteStorageStrategy/DatabaseQuoteStorageStrategy.php",
+            "snippet": "            $quoteTransfer->fromArray($quoteResponseTransfer->getQuoteTransfer()->modifiedToArray());",
+            "selected_text": "modifiedToArray",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 90,
+            "line_to": 90,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method modifiedToArray on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CartNote/src/Spryker/Client/CartNote/QuoteStorageStrategy/DatabaseQuoteStorageStrategy.php",
+            "snippet": "            $quoteTransfer->fromArray($quoteResponseTransfer->getQuoteTransfer()->modifiedToArray());",
+            "selected_text": "modifiedToArray",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 41,
+            "line_to": 41,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\CartNote\\Business\\Model\\CartNoteSaver::saveOrderNote cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CartNote/src/Spryker/Zed/CartNote/Business/Model/CartNoteSaver.php",
+            "snippet": "        $this->saveOrderNote($saveOrderTransfer->getIdSalesOrder(), $quoteTransfer->getCartNote());",
+            "selected_text": "$saveOrderTransfer->getIdSalesOrder()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 41,
+            "line_to": 41,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Zed\\CartNote\\Business\\Model\\CartNoteSaver::saveOrderNote cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CartNote/src/Spryker/Zed/CartNote/Business/Model/CartNoteSaver.php",
+            "snippet": "        $this->saveOrderNote($saveOrderTransfer->getIdSalesOrder(), $quoteTransfer->getCartNote());",
+            "selected_text": "$quoteTransfer->getCartNote()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 46,
+            "line_to": 46,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\CartNote\\Dependency\\Facade\\CartNoteToQuoteFacadeInterface::findQuoteById cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CartNote/src/Spryker/Zed/CartNote/Business/Model/QuoteCartNoteSetter.php",
+            "snippet": "        $quoteResponseTransfer = $this->quoteFacade->findQuoteById($quoteCartNoteRequestTransfer->getIdQuote());",
+            "selected_text": "$quoteCartNoteRequestTransfer->getIdQuote()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 51,
+            "line_to": 51,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method setCustomer on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CartNote/src/Spryker/Zed/CartNote/Business/Model/QuoteCartNoteSetter.php",
+            "snippet": "        $quoteTransfer->setCustomer($quoteCartNoteRequestTransfer->getCustomer())",
+            "selected_text": "setCustomer",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 64,
+            "line_to": 64,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\CartNote\\Dependency\\Facade\\CartNoteToQuoteFacadeInterface::findQuoteById cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CartNote/src/Spryker/Zed/CartNote/Business/Model/QuoteCartNoteSetter.php",
+            "snippet": "        $quoteResponseTransfer = $this->quoteFacade->findQuoteById($quoteItemCartNoteRequestTransfer->getIdQuote());",
+            "selected_text": "$quoteItemCartNoteRequestTransfer->getIdQuote()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 69,
+            "line_to": 69,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method setCustomer on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CartNote/src/Spryker/Zed/CartNote/Business/Model/QuoteCartNoteSetter.php",
+            "snippet": "        $quoteTransfer->setCustomer($quoteItemCartNoteRequestTransfer->getCustomer());",
+            "selected_text": "setCustomer",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 72,
+            "line_to": 72,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Zed\\CartNote\\Business\\Model\\QuoteCartNoteSetter::findQuoteItems cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CartNote/src/Spryker/Zed/CartNote/Business/Model/QuoteCartNoteSetter.php",
+            "snippet": "            $quoteItemCartNoteRequestTransfer->getSku(),",
+            "selected_text": "$quoteItemCartNoteRequestTransfer->getSku()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 81,
+            "line_to": 81,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Zed\\CartNote\\Business\\Model\\QuoteCartNoteSetter::updateItemsCartNote cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CartNote/src/Spryker/Zed/CartNote/Business/Model/QuoteCartNoteSetter.php",
+            "snippet": "        $this->updateItemsCartNote($itemTransferCollection, $quoteItemCartNoteRequestTransfer->getCartNote());",
+            "selected_text": "$quoteItemCartNoteRequestTransfer->getCartNote()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 27,
+            "line_to": 27,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method setCartNote on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CartNote/src/Spryker/Zed/CartNote/Persistence/CartNoteEntityManager.php",
+            "snippet": "        $salesOrderEntity->setCartNote($note);",
+            "selected_text": "setCartNote",
+            "error_level": 3,
+            "shortcode": 83
+        }
+    ],
+    "deprecation": []
+}

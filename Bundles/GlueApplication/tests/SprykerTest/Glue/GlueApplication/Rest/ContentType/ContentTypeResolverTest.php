@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -41,8 +41,8 @@ class ContentTypeResolverTest extends Unit
 
         $contentTypeParts = $contentTypeResolver->matchContentType($this->contentType);
 
-        $this->assertEquals('json', $contentTypeParts[1]);
-        $this->assertEquals('1.1', $contentTypeParts[2]);
+        $this->assertSame('json', $contentTypeParts[1]);
+        $this->assertSame('1.1', $contentTypeParts[2]);
     }
 
     /**
@@ -59,7 +59,7 @@ class ContentTypeResolverTest extends Unit
 
         $contentType = $httpResponse->headers->get('Content-Type');
 
-        $this->assertEquals($this->contentType, $contentType);
+        $this->assertSame($this->contentType, $contentType);
     }
 
     /**

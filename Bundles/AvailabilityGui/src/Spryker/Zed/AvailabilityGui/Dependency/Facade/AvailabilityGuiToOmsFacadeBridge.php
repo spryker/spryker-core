@@ -8,6 +8,7 @@
 namespace Spryker\Zed\AvailabilityGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\DecimalObject\Decimal;
 
 class AvailabilityGuiToOmsFacadeBridge implements AvailabilityGuiToOmsFacadeInterface
 {
@@ -28,9 +29,9 @@ class AvailabilityGuiToOmsFacadeBridge implements AvailabilityGuiToOmsFacadeInte
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return int
+     * @return \Spryker\DecimalObject\Decimal
      */
-    public function getReservationsFromOtherStores($sku, StoreTransfer $storeTransfer)
+    public function getReservationsFromOtherStores(string $sku, StoreTransfer $storeTransfer): Decimal
     {
         return $this->omsFacade->getReservationsFromOtherStores($sku, $storeTransfer);
     }

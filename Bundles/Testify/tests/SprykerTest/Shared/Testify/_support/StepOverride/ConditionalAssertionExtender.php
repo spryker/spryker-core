@@ -42,7 +42,7 @@ class ConditionalAssertionExtender extends ConditionalAssertion implements StepD
      *
      * @return string
      */
-    protected function humanize($text): string
+    protected function humanize(string $text): string
     {
         return $this->getStepDescription() . parent::humanize($text);
     }

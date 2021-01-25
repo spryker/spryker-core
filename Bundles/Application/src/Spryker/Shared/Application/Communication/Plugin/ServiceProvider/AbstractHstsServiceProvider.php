@@ -9,7 +9,7 @@ namespace Spryker\Shared\Application\Communication\Plugin\ServiceProvider;
 
 use Silex\Application;
 use Silex\ServiceProviderInterface;
-use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
@@ -17,7 +17,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
  *
  * @see https://www.owasp.org/index.php/HTTP_Strict_Transport_Security
  *
- * @deprecated Use Spryker\Shared\Application\ServiceProvider\AbstractHstsServiceProvider instead
+ * @deprecated Use {@link \Spryker\Shared\Application\ServiceProvider\AbstractHstsServiceProvider} instead
  */
 abstract class AbstractHstsServiceProvider implements ServiceProviderInterface
 {
@@ -61,11 +61,11 @@ abstract class AbstractHstsServiceProvider implements ServiceProviderInterface
     /**
      * Sets security headers.
      *
-     * @param \Symfony\Component\HttpKernel\Event\FilterResponseEvent $event
+     * @param \Symfony\Component\HttpKernel\Event\ResponseEvent $event
      *
      * @return void
      */
-    public function onKernelResponse(FilterResponseEvent $event)
+    public function onKernelResponse(ResponseEvent $event)
     {
         if (!$event->isMasterRequest() || !$this->getIsHstsEnabled()) {
             return;
@@ -85,15 +85,15 @@ abstract class AbstractHstsServiceProvider implements ServiceProviderInterface
     {
         $headerParts = [];
         if (!empty($hstsConfig[static::HSTS_CONFIG_MAXAGE])) {
-            $headerParts[] = "max-age=" . $hstsConfig[static::HSTS_CONFIG_MAXAGE];
+            $headerParts[] = 'max-age=' . $hstsConfig[static::HSTS_CONFIG_MAXAGE];
         }
 
         if (!empty($hstsConfig[static::HSTS_CONFIG_INCLUDE_SUBDOMAINS])) {
-            $headerParts[] = "includeSubDomains";
+            $headerParts[] = 'includeSubDomains';
         }
 
         if (!empty($hstsConfig[static::HSTS_CONFIG_PRELOAD])) {
-            $headerParts[] = "preload";
+            $headerParts[] = 'preload';
         }
 
         if ($headerParts) {

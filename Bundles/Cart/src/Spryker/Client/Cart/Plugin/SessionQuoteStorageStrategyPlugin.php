@@ -10,11 +10,14 @@ namespace Spryker\Client\Cart\Plugin;
 use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\ItemReplaceTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Client\CartExtension\Dependency\Plugin\CartOperationQuoteStorageStrategyPluginInterface;
 use Spryker\Client\CartExtension\Dependency\Plugin\QuoteResetLockQuoteStorageStrategyPluginInterface;
 use Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface;
+use Spryker\Client\CartExtension\Dependency\Plugin\ReplaceableQuoteItemStorageStrategyPluginInterface;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Shared\Quote\QuoteConfig;
 
@@ -22,7 +25,7 @@ use Spryker\Shared\Quote\QuoteConfig;
  * @method \Spryker\Client\Cart\CartClientInterface getClient()
  * @method \Spryker\Client\Cart\CartFactory getFactory()
  */
-class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteStorageStrategyPluginInterface, QuoteResetLockQuoteStorageStrategyPluginInterface
+class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteStorageStrategyPluginInterface, QuoteResetLockQuoteStorageStrategyPluginInterface, CartOperationQuoteStorageStrategyPluginInterface, ReplaceableQuoteItemStorageStrategyPluginInterface
 {
     /**
      * @return string
@@ -208,6 +211,79 @@ class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteS
 
     /**
      * Specification:
+     * - Makes Zed request.
+     * - Adds items to quote.
+     * - Stores quote in session internally after success zed request.
+     * - Returns response with updated quote.
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function addToCart(CartChangeTransfer $cartChangeTransfer): QuoteResponseTransfer
+    {
+        return $this->getFactory()
+            ->createCartOperation()
+            ->addToCart($cartChangeTransfer);
+    }
+
+    /**
+     * Specification:
+     * - Makes Zed request.
+     * - Adds items to quote.
+     * - Stores quote in session internally after success zed request.
+     * - Returns response with updated quote.
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function removeFromCart(CartChangeTransfer $cartChangeTransfer): QuoteResponseTransfer
+    {
+        return $this->getFactory()
+            ->createCartOperation()
+            ->removeFromCart($cartChangeTransfer);
+    }
+
+    /**
+     * Specification:
+     * - Makes Zed request.
+     * - Updates quantity for given items.
+     * - Stores quote in session internally after successful zed request.
+     * - Returns response with updated quote.
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function updateQuantity(CartChangeTransfer $cartChangeTransfer): QuoteResponseTransfer
+    {
+        return $this->getFactory()
+            ->createCartOperation()
+            ->updateQuantity($cartChangeTransfer);
+    }
+
+    /**
+     * Specification:
+     * - Makes Zed request.
+     * - Removes `ItemReplaceTransfer::itemToBeReplaced` from the cart.
+     * - Adds `ItemReplaceTransfer::newItem` to cart.
+     * - Stores quote in session internally after zed request.
+     * - Returns response with updated quote.
+     *
+     * @param \Generated\Shared\Transfer\ItemReplaceTransfer $itemReplaceTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function replaceItem(ItemReplaceTransfer $itemReplaceTransfer): QuoteResponseTransfer
+    {
+        return $this->getFactory()
+            ->createCartItemOperation()
+            ->replaceItem($itemReplaceTransfer);
+    }
+
+    /**
+     * Specification:
      *  - Decreases quantity for given item.
      *  - Makes zed request.
      *  - Stores quote in session internally after zed request.
@@ -333,7 +409,7 @@ class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteS
      */
     public function setQuoteCurrency(CurrencyTransfer $currencyTransfer): QuoteResponseTransfer
     {
-        $quoteTransfer = $this->getQuote();
+        $quoteTransfer = (new QuoteTransfer())->fromArray($this->getQuote()->modifiedToArray(), true);
         $quoteTransfer->setCurrency($currencyTransfer);
         if (count($quoteTransfer->getItems())) {
             $quoteTransfer = $this->getCartZedStub()->reloadItems($quoteTransfer);

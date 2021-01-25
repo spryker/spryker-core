@@ -4,9 +4,9 @@
   "description": "Cart module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
-    "spryker/calculation": "^4.0.0",
-    "spryker/cart-extension": "^1.8.0 || ^2.4.0 || ^4.0.0",
+    "php": ">=7.3",
+    "spryker/calculation": "^4.9.0",
+    "spryker/cart-extension": "^1.11.0 || ^2.7.0 || ^4.3.0",
     "spryker/kernel": "^3.30.0",
     "spryker/messenger": "^3.1.0",
     "spryker/quote": "^2.10.0",
@@ -14,8 +14,11 @@
   },
   "require-dev": {
     "spryker/application": "*",
+    "spryker/code-sniffer": "*",
     "spryker/customer": "*",
+    "spryker/price-cart-connector": "*",
     "spryker/price-product": "*",
+    "spryker/price-product-volume": "*",
     "spryker/product": "*",
     "spryker/propel": "*",
     "spryker/testify": "*"
@@ -36,9 +39,13 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+  },
   "extra": {
     "branch-alias": {
-      "dev-master": "3.0.x-dev"
+      "dev-master": "7.0.x-dev"
     }
   },
   "config": {

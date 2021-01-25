@@ -14,6 +14,7 @@ use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\ProductBundle\Persistence\Map\SpyProductBundleTableMap;
 use Orm\Zed\Stock\Persistence\Map\SpyStockProductTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Spryker\DecimalObject\Decimal;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
@@ -22,6 +23,7 @@ use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToAvailabil
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToMoneyInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceProductInterface;
+use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStoreFacadeInterface;
 use Spryker\Zed\ProductManagement\Dependency\Service\ProductManagementToUtilEncodingInterface;
 
 class BundledProductTable extends AbstractTable
@@ -75,6 +77,11 @@ class BundledProductTable extends AbstractTable
     protected $priceFacade;
 
     /**
+     * @var \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStoreFacadeInterface
+     */
+    protected $storeFacade;
+
+    /**
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
      * @param \Spryker\Zed\ProductManagement\Dependency\Service\ProductManagementToUtilEncodingInterface $utilEncodingService
      * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceProductInterface $priceProductFacade
@@ -82,6 +89,7 @@ class BundledProductTable extends AbstractTable
      * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToAvailabilityInterface $availabilityFacade
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceInterface $priceFacade
+     * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStoreFacadeInterface $storeFacade
      * @param int|null $idProductConcrete
      */
     public function __construct(
@@ -92,6 +100,7 @@ class BundledProductTable extends AbstractTable
         ProductManagementToAvailabilityInterface $availabilityFacade,
         LocaleTransfer $localeTransfer,
         ProductManagementToPriceInterface $priceFacade,
+        ProductManagementToStoreFacadeInterface $storeFacade,
         $idProductConcrete = null
     ) {
         $this->setTableIdentifier('bundled-product-table');
@@ -103,6 +112,7 @@ class BundledProductTable extends AbstractTable
         $this->idProductConcrete = $idProductConcrete;
         $this->localeTransfer = $localeTransfer;
         $this->priceFacade = $priceFacade;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -169,28 +179,29 @@ class BundledProductTable extends AbstractTable
             ->leftJoinSpyProductBundleRelatedByFkProduct()
             ->joinSpyProductLocalizedAttributes()
             ->joinStockProduct()
-            ->withColumn(SpyProductLocalizedAttributesTableMap::COL_NAME, self::SPY_PRODUCT_LOCALIZED_ATTRIBUTE_ALIAS_NAME)
+            ->withColumn(SpyProductLocalizedAttributesTableMap::COL_NAME, static::SPY_PRODUCT_LOCALIZED_ATTRIBUTE_ALIAS_NAME)
             ->withColumn(sprintf('SUM(%s)', SpyStockProductTableMap::COL_QUANTITY), static::SPY_STOCK_PRODUCT_ALIAS_QUANTITY)
-            ->withColumn(SpyStockProductTableMap::COL_IS_NEVER_OUT_OF_STOCK, self::IS_NEVER_OUT_OF_STOCK)
+            ->withColumn(SpyStockProductTableMap::COL_IS_NEVER_OUT_OF_STOCK, static::IS_NEVER_OUT_OF_STOCK)
             ->where(SpyProductLocalizedAttributesTableMap::COL_FK_LOCALE . ' = ?', $this->localeTransfer->getIdLocale())
             ->add(SpyProductBundleTableMap::COL_ID_PRODUCT_BUNDLE, null, Criteria::ISNULL)
             ->groupBy(SpyProductTableMap::COL_ID_PRODUCT)
-            ->addGroupByColumn(self::SPY_PRODUCT_LOCALIZED_ATTRIBUTE_ALIAS_NAME)
-            ->addGroupByColumn(self::IS_NEVER_OUT_OF_STOCK);
+            ->addGroupByColumn(static::SPY_PRODUCT_LOCALIZED_ATTRIBUTE_ALIAS_NAME)
+            ->addGroupByColumn(static::IS_NEVER_OUT_OF_STOCK);
 
+        /** @var \Orm\Zed\Product\Persistence\SpyProduct[] $queryResults */
         $queryResults = $this->runQuery($query, $config, true);
 
         $productAbstractCollection = [];
-        foreach ($queryResults as $item) {
+        foreach ($queryResults as $productEntity) {
             $productAbstractCollection[] = [
-                static::COL_SELECT => $this->addCheckBox($item),
-                static::COL_ID_PRODUCT_CONCRETE => $item->getIdProduct(),
-                SpyProductLocalizedAttributesTableMap::COL_NAME => $item->getName(),
-                SpyProductTableMap::COL_SKU => $this->getProductEditPageLink($item->getSku(), $item->getFkProductAbstract(), $item->getIdProduct()),
-                static::COL_PRICE => $this->getFormattedPrice($item->getSku()),
-                static::SPY_STOCK_PRODUCT_ALIAS_QUANTITY => $item->getStockQuantity(),
-                static::COL_AVAILABILITY => $this->getAvailability($item),
-                SpyStockProductTableMap::COL_IS_NEVER_OUT_OF_STOCK => $item->getIsNeverOutOfStock(),
+                static::COL_SELECT => $this->addCheckBox($productEntity),
+                static::COL_ID_PRODUCT_CONCRETE => $productEntity->getIdProduct(),
+                SpyProductLocalizedAttributesTableMap::COL_NAME => $productEntity->getVirtualColumn(static::SPY_PRODUCT_LOCALIZED_ATTRIBUTE_ALIAS_NAME),
+                SpyProductTableMap::COL_SKU => $this->getProductEditPageLink($productEntity->getSku(), $productEntity->getFkProductAbstract(), $productEntity->getIdProduct()),
+                static::COL_PRICE => $this->getFormattedPrice($productEntity->getSku()),
+                static::SPY_STOCK_PRODUCT_ALIAS_QUANTITY => (new Decimal($productEntity->getVirtualColumn(static::SPY_STOCK_PRODUCT_ALIAS_QUANTITY) ?? 0))->trim(),
+                static::COL_AVAILABILITY => $this->getAvailability($productEntity)->trim(),
+                SpyStockProductTableMap::COL_IS_NEVER_OUT_OF_STOCK => $productEntity->getIsNeverOutOfStock(),
             ];
         }
 
@@ -262,15 +273,18 @@ class BundledProductTable extends AbstractTable
     /**
      * @param \Orm\Zed\Product\Persistence\SpyProduct $productConcreteEntity
      *
-     * @return int
+     * @return \Spryker\DecimalObject\Decimal
      */
-    protected function getAvailability(SpyProduct $productConcreteEntity)
+    protected function getAvailability(SpyProduct $productConcreteEntity): Decimal
     {
-        $availability = 0;
         if (!$productConcreteEntity->getIsNeverOutOfStock()) {
-            $availability = $this->availabilityFacade->calculateStockForProduct($productConcreteEntity->getSku());
+            return $this->availabilityFacade
+                ->calculateAvailabilityForProductWithStore(
+                    $productConcreteEntity->getSku(),
+                    $this->storeFacade->getCurrentStore()
+                );
         }
 
-        return $availability;
+        return new Decimal(0);
     }
 }

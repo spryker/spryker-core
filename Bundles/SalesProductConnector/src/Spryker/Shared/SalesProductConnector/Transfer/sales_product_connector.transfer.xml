@@ -5,10 +5,11 @@
 
     <transfer name="Order">
         <property name="items" type="Item[]" singular="item"/>
+        <property name="idSalesOrder" type="int"/>
     </transfer>
 
     <transfer name="ItemMetadata">
-        <property name="superAttributes" type="array"/>
+        <property name="superAttributes" type="array" singular="superAttributes"/>
         <property name="image" type="string"/>
         <property name="fkSalesOrderItem" type="int"/>
     </transfer>
@@ -18,6 +19,10 @@
         <property name="id" type="int"/>
         <property name="idProductAbstract" type="int"/>
         <property name="metadata" type="ItemMetadata"/>
+        <property name="images" type="ProductImage[]" singular="image"/>
+        <property name="concreteAttributes" type="array" singular="concreteAttribute"/>
+        <property name="idSalesOrderItem" type="int"/>
+        <property name="fkSalesOrder" type="int"/>
     </transfer>
 
     <transfer name="Quote">
@@ -28,6 +33,21 @@
         <property name="isSuccess" type="bool"/>
         <property name="errors" type="CheckoutError[]" singular="error"/>
         <property name="saveOrder" type="SaveOrder"/>
+    </transfer>
+
+    <transfer name="SaveOrder">
+    </transfer>
+
+    <transfer name="ProductImage">
+    </transfer>
+
+    <transfer name="CheckoutError">
+    </transfer>
+
+    <transfer name="ProductConcrete">
+        <property name="idProductConcrete" type="int"/>
+        <property name="fkProductAbstract" type="int"/>
+        <property name="sku" type="string"/>
     </transfer>
 
 </transfers>

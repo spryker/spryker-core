@@ -13,7 +13,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Shipment\Dependency\Plugin\ShipmentMethodFilterPluginInterface;
 
 /**
- * @deprecated Use \Spryker\Zed\GiftCard\Communication\Plugin\Shipment\GiftCardShipmentGroupMethodFilterPlugin instead.
+ * @deprecated Use {@link \Spryker\Zed\GiftCard\Communication\Plugin\Shipment\GiftCardShipmentGroupMethodFilterPlugin} instead.
  *
  * @method \Spryker\Zed\GiftCard\Business\GiftCardFacadeInterface getFacade()
  * @method \Spryker\Zed\GiftCard\Communication\GiftCardCommunicationFactory getFactory()
@@ -23,6 +23,8 @@ use Spryker\Zed\Shipment\Dependency\Plugin\ShipmentMethodFilterPluginInterface;
 class OnlyGiftCardShipmentMethodFilterPlugin extends AbstractPlugin implements ShipmentMethodFilterPluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentMethodTransfer[] $shipmentMethods

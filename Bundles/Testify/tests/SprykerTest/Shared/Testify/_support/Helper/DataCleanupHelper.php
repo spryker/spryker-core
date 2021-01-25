@@ -28,9 +28,19 @@ class DataCleanupHelper extends Module
      *
      * @return void
      */
-    public function _addCleanup(Closure $closure)
+    public function _addCleanup(Closure $closure): void
     {
         $this->cleanups[] = $closure;
+    }
+
+    /**
+     * @param \Closure $closure
+     *
+     * @return void
+     */
+    public function addCleanup(Closure $closure): void
+    {
+        $this->_addCleanup($closure);
     }
 
     /**
@@ -38,7 +48,7 @@ class DataCleanupHelper extends Module
      *
      * @return void
      */
-    public function _afterSuite()
+    public function _afterSuite(): void
     {
         if (!$this->config['cleanup']) {
             return;

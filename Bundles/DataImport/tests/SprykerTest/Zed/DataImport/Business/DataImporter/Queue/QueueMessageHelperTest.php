@@ -39,14 +39,14 @@ class QueueMessageHelperTest extends Unit
     protected $tester;
 
     /**
-     * @var \Spryker\Zed\DataImport\Business\DataImporter\Queue\QueueMessageHelperInterface;
+     * @var \Spryker\Zed\DataImport\Business\DataImporter\Queue\QueueMessageHelperInterface
      */
     protected $queueMessageHelper;
 
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -62,7 +62,7 @@ class QueueMessageHelperTest extends Unit
     {
         $queueReceiveMessageTransfer = $this->getQueueReceiveMessageTransfer();
 
-        $this->assertEquals(static::DUMMY_MESSAGE_BODY, $this->queueMessageHelper->getDecodedMessageBody($queueReceiveMessageTransfer));
+        $this->assertSame(static::DUMMY_MESSAGE_BODY, $this->queueMessageHelper->getDecodedMessageBody($queueReceiveMessageTransfer));
     }
 
     /**
@@ -77,7 +77,7 @@ class QueueMessageHelperTest extends Unit
         $this->assertSame(static::DUMMY_ERROR_MESSAGE, $resultBody[static::ERROR_MESSAGE_TYPE]);
         $this->assertTrue($result->getHasError());
         $this->assertTrue($result->getReject());
-        $this->assertEquals('error', $result->getRoutingKey());
+        $this->assertSame('error', $result->getRoutingKey());
     }
 
     /**

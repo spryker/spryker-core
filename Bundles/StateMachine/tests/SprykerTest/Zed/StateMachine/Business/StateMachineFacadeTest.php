@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\StateMachine\Business;
 use Codeception\Test\Unit;
 use DateTime;
 use Generated\Shared\Transfer\StateMachineItemTransfer;
+use Generated\Shared\Transfer\StateMachineProcessCriteriaTransfer;
 use Generated\Shared\Transfer\StateMachineProcessTransfer;
 use Orm\Zed\StateMachine\Persistence\SpyStateMachineEventTimeoutQuery;
 use Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateQuery;
@@ -21,6 +22,7 @@ use Spryker\Shared\Config\Config;
 use Spryker\Shared\Propel\PropelConstants;
 use Spryker\Zed\Graph\Communication\Plugin\GraphPlugin;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Propel\PropelConfig;
 use Spryker\Zed\StateMachine\Business\StateMachineBusinessFactory;
 use Spryker\Zed\StateMachine\Business\StateMachineFacade;
 use Spryker\Zed\StateMachine\Business\StateMachineFacadeInterface;
@@ -45,14 +47,12 @@ class StateMachineFacadeTest extends Unit
     public const TESTING_SM = 'TestingSm';
     public const TEST_PROCESS_NAME = 'TestProcess';
     public const TEST_PROCESS_WITH_LOOP_NAME = 'TestProcessWithLoop';
+    public const TEST_NOT_EXISTING_STATE_MACHINE_PROCESS_ID = 0;
 
     /**
-     * @return void
+     * @var \SprykerTest\Zed\StateMachine\StateMachineBusinessTester
      */
-    protected function setUp()
-    {
-        parent::setUp();
-    }
+    protected $tester;
 
     /**
      * @return void
@@ -85,10 +85,10 @@ class StateMachineFacadeTest extends Unit
             ->findOne();
 
         $this->assertNotEmpty($stateMachineItemStateEntity);
-        $this->assertEquals(3, $triggerResult);
-        $this->assertEquals($identifier, $stateMachineItemTransfer->getIdentifier());
-        $this->assertEquals('order exported', $stateMachineItemTransfer->getStateName());
-        $this->assertEquals($processName, $stateMachineItemTransfer->getProcessName());
+        $this->assertSame(3, $triggerResult);
+        $this->assertSame($identifier, $stateMachineItemTransfer->getIdentifier());
+        $this->assertSame('order exported', $stateMachineItemTransfer->getStateName());
+        $this->assertSame($processName, $stateMachineItemTransfer->getProcessName());
     }
 
     /**
@@ -114,10 +114,10 @@ class StateMachineFacadeTest extends Unit
 
         $stateMachineItemTransfer = $stateMachineHandler->getItemStateUpdated();
 
-        $this->assertEquals(2, $triggerResult);
-        $this->assertEquals('waiting for payment', $stateMachineItemTransfer->getStateName());
-        $this->assertEquals($processName, $stateMachineItemTransfer->getProcessName());
-        $this->assertEquals($identifier, $stateMachineItemTransfer->getIdentifier());
+        $this->assertSame(2, $triggerResult);
+        $this->assertSame('waiting for payment', $stateMachineItemTransfer->getStateName());
+        $this->assertSame($processName, $stateMachineItemTransfer->getProcessName());
+        $this->assertSame($identifier, $stateMachineItemTransfer->getIdentifier());
     }
 
     /**
@@ -140,7 +140,7 @@ class StateMachineFacadeTest extends Unit
 
         /** @var \Generated\Shared\Transfer\StateMachineProcessTransfer $process */
         $process = array_pop($processList);
-        $this->assertEquals($processName, $process->getProcessName());
+        $this->assertSame($processName, $process->getProcessName());
     }
 
     /**
@@ -164,7 +164,7 @@ class StateMachineFacadeTest extends Unit
             ->filterByStateMachineName(static::TESTING_SM)
             ->findOne();
 
-        $this->assertEquals($stateMachineProcessEntity->getIdStateMachineProcess(), $processId);
+        $this->assertSame($stateMachineProcessEntity->getIdStateMachineProcess(), $processId);
     }
 
     /**
@@ -188,14 +188,14 @@ class StateMachineFacadeTest extends Unit
 
         $manualEvents = $stateMachineFacade->getManualEventsForStateMachineItem($stateMachineItemTransfer);
 
-        $this->assertEquals('order exported', $stateMachineItemTransfer->getStateName());
+        $this->assertSame('order exported', $stateMachineItemTransfer->getStateName());
         $this->assertCount(2, $manualEvents);
 
         $manualEvent = array_pop($manualEvents);
-        $this->assertEquals('check with condition', $manualEvent);
+        $this->assertSame('check with condition', $manualEvent);
 
         $manualEvent = array_pop($manualEvents);
-        $this->assertEquals('ship order', $manualEvent);
+        $this->assertSame('ship order', $manualEvent);
     }
 
     /**
@@ -235,13 +235,13 @@ class StateMachineFacadeTest extends Unit
         $secondItemManualEvents = $manualEvents[$secondItemIdentifier];
 
         $manualEvent = array_pop($firstItemManualEvents);
-        $this->assertEquals('check with condition', $manualEvent);
+        $this->assertSame('check with condition', $manualEvent);
 
         $manualEvent = array_pop($firstItemManualEvents);
-        $this->assertEquals('ship order', $manualEvent);
+        $this->assertSame('ship order', $manualEvent);
 
         $manualEvent = array_pop($secondItemManualEvents);
-        $this->assertEquals('payment received', $manualEvent);
+        $this->assertSame('payment received', $manualEvent);
     }
 
     /**
@@ -280,46 +280,46 @@ class StateMachineFacadeTest extends Unit
 
         $firstUpdatedStateMachineItemTransfer = $updatedStateMachineItems[0];
         $firstBeforeUpdateStateMachineItemTransfer = $stateMachineItems[0];
-        $this->assertEquals(
+        $this->assertSame(
             $firstUpdatedStateMachineItemTransfer->getIdItemState(),
             $firstBeforeUpdateStateMachineItemTransfer->getIdItemState()
         );
-        $this->assertEquals(
+        $this->assertSame(
             $firstUpdatedStateMachineItemTransfer->getProcessName(),
             $firstBeforeUpdateStateMachineItemTransfer->getProcessName()
         );
-        $this->assertEquals(
+        $this->assertSame(
             $firstUpdatedStateMachineItemTransfer->getIdStateMachineProcess(),
             $firstBeforeUpdateStateMachineItemTransfer->getIdStateMachineProcess()
         );
-        $this->assertEquals(
+        $this->assertSame(
             $firstUpdatedStateMachineItemTransfer->getStateName(),
             $firstBeforeUpdateStateMachineItemTransfer->getStateName()
         );
-        $this->assertEquals(
+        $this->assertSame(
             $firstUpdatedStateMachineItemTransfer->getIdentifier(),
             $firstBeforeUpdateStateMachineItemTransfer->getIdentifier()
         );
 
         $secondUpdatedStateMachineItemTransfer = $updatedStateMachineItems[1];
         $secondBeforeUpdateStateMachineItemTransfer = $stateMachineItems[1];
-        $this->assertEquals(
+        $this->assertSame(
             $secondUpdatedStateMachineItemTransfer->getIdItemState(),
             $secondBeforeUpdateStateMachineItemTransfer->getIdItemState()
         );
-        $this->assertEquals(
+        $this->assertSame(
             $secondUpdatedStateMachineItemTransfer->getProcessName(),
             $secondBeforeUpdateStateMachineItemTransfer->getProcessName()
         );
-        $this->assertEquals(
+        $this->assertSame(
             $secondUpdatedStateMachineItemTransfer->getIdStateMachineProcess(),
             $secondBeforeUpdateStateMachineItemTransfer->getIdStateMachineProcess()
         );
-        $this->assertEquals(
+        $this->assertSame(
             $secondUpdatedStateMachineItemTransfer->getStateName(),
             $secondBeforeUpdateStateMachineItemTransfer->getStateName()
         );
-        $this->assertEquals(
+        $this->assertSame(
             $secondUpdatedStateMachineItemTransfer->getIdentifier(),
             $secondBeforeUpdateStateMachineItemTransfer->getIdentifier()
         );
@@ -349,23 +349,23 @@ class StateMachineFacadeTest extends Unit
         $updatedStateMachineItemTransfer = $stateMachineFacade
             ->getProcessedStateMachineItemTransfer($stateMachineItemTransfer);
 
-        $this->assertEquals(
+        $this->assertSame(
             $updatedStateMachineItemTransfer->getIdItemState(),
             $stateMachineItemTransfer->getIdItemState()
         );
-        $this->assertEquals(
+        $this->assertSame(
             $updatedStateMachineItemTransfer->getProcessName(),
             $stateMachineItemTransfer->getProcessName()
         );
-        $this->assertEquals(
+        $this->assertSame(
             $updatedStateMachineItemTransfer->getIdStateMachineProcess(),
             $stateMachineItemTransfer->getIdStateMachineProcess()
         );
-        $this->assertEquals(
+        $this->assertSame(
             $updatedStateMachineItemTransfer->getStateName(),
             $stateMachineItemTransfer->getStateName()
         );
-        $this->assertEquals(
+        $this->assertSame(
             $updatedStateMachineItemTransfer->getIdentifier(),
             $stateMachineItemTransfer->getIdentifier()
         );
@@ -398,13 +398,13 @@ class StateMachineFacadeTest extends Unit
         $this->assertCount(3, $stateMachineItemTransfers);
 
         $stateMachineItemTransfer = array_shift($stateMachineItemTransfers);
-        $this->assertEquals('invoice created', $stateMachineItemTransfer->getStateName());
+        $this->assertSame('invoice created', $stateMachineItemTransfer->getStateName());
 
         $stateMachineItemTransfer = array_shift($stateMachineItemTransfers);
-        $this->assertEquals('invoice sent', $stateMachineItemTransfer->getStateName());
+        $this->assertSame('invoice sent', $stateMachineItemTransfer->getStateName());
 
         $stateMachineItemTransfer = array_shift($stateMachineItemTransfers);
-        $this->assertEquals('order exported', $stateMachineItemTransfer->getStateName());
+        $this->assertSame('order exported', $stateMachineItemTransfer->getStateName());
     }
 
     /**
@@ -435,12 +435,12 @@ class StateMachineFacadeTest extends Unit
 
         $this->assertContainsOnlyInstancesOf(StateMachineItemTransfer::class, $stateMachineItemsWithGivenFlag);
         $stateMachineItemTransfer = $stateMachineItemsWithGivenFlag[0];
-        $this->assertEquals('invoice created', $stateMachineItemTransfer->getStateName());
-        $this->assertEquals($identifier, $stateMachineItemTransfer->getIdentifier());
+        $this->assertSame('invoice created', $stateMachineItemTransfer->getStateName());
+        $this->assertSame($identifier, $stateMachineItemTransfer->getIdentifier());
 
         $stateMachineItemTransfer = $stateMachineItemsWithGivenFlag[1];
-        $this->assertEquals('invoice sent', $stateMachineItemTransfer->getStateName());
-        $this->assertEquals($identifier, $stateMachineItemTransfer->getIdentifier());
+        $this->assertSame('invoice sent', $stateMachineItemTransfer->getStateName());
+        $this->assertSame($identifier, $stateMachineItemTransfer->getIdentifier());
 
         $stateMachineItemsWithGivenFlag = $stateMachineFacade->getItemsWithFlag(
             $stateMachineProcessTransfer,
@@ -476,7 +476,7 @@ class StateMachineFacadeTest extends Unit
         );
 
         foreach ($stateMachineItemsWithGivenFlag as $stateMachineItemTransfer) {
-            $this->assertEquals($identifier, $stateMachineItemTransfer->getIdentifier());
+            $this->assertSame($identifier, $stateMachineItemTransfer->getIdentifier());
         }
 
         $stateMachineItemsWithGivenFlag = $stateMachineFacade->getItemsWithFlag(
@@ -486,7 +486,7 @@ class StateMachineFacadeTest extends Unit
         );
 
         foreach ($stateMachineItemsWithGivenFlag as $stateMachineItemTransfer) {
-            $this->assertEquals($identifier2, $stateMachineItemTransfer->getIdentifier());
+            $this->assertSame($identifier2, $stateMachineItemTransfer->getIdentifier());
         }
     }
 
@@ -517,8 +517,8 @@ class StateMachineFacadeTest extends Unit
 
         $stateMachineItemTransfer = $stateMachineItemsWithoutGivenFlag[0];
         $this->assertInstanceOf(StateMachineItemTransfer::class, $stateMachineItemTransfer);
-        $this->assertEquals('order exported', $stateMachineItemTransfer->getStateName());
-        $this->assertEquals($identifier, $stateMachineItemTransfer->getIdentifier());
+        $this->assertSame('order exported', $stateMachineItemTransfer->getStateName());
+        $this->assertSame($identifier, $stateMachineItemTransfer->getIdentifier());
 
         $stateMachineItemsWithoutGivenFlag = $stateMachineFacade->getItemsWithoutFlag(
             $stateMachineProcessTransfer,
@@ -526,12 +526,12 @@ class StateMachineFacadeTest extends Unit
         );
 
         $stateMachineItemTransfer = $stateMachineItemsWithoutGivenFlag[0];
-        $this->assertEquals('invoice created', $stateMachineItemTransfer->getStateName());
-        $this->assertEquals($identifier, $stateMachineItemTransfer->getIdentifier());
+        $this->assertSame('invoice created', $stateMachineItemTransfer->getStateName());
+        $this->assertSame($identifier, $stateMachineItemTransfer->getIdentifier());
 
         $stateMachineItemTransfer = $stateMachineItemsWithoutGivenFlag[1];
-        $this->assertEquals('order exported', $stateMachineItemTransfer->getStateName());
-        $this->assertEquals($identifier, $stateMachineItemTransfer->getIdentifier());
+        $this->assertSame('order exported', $stateMachineItemTransfer->getStateName());
+        $this->assertSame($identifier, $stateMachineItemTransfer->getIdentifier());
 
         $this->assertCount(2, $stateMachineItemsWithoutGivenFlag);
     }
@@ -563,7 +563,7 @@ class StateMachineFacadeTest extends Unit
 
         $stateMachineItemTransfer = $stateMachineHandler->getItemStateUpdated();
 
-        $this->assertEquals('waiting for payment', $stateMachineItemTransfer->getStateName());
+        $this->assertSame('waiting for payment', $stateMachineItemTransfer->getStateName());
     }
 
     /**
@@ -601,8 +601,8 @@ class StateMachineFacadeTest extends Unit
 
         $stateMachineItemTransfer = $stateMachineHandler->getItemStateUpdated();
 
-        $this->assertEquals(1, $affectedItems);
-        $this->assertEquals('reminder I sent', $stateMachineItemTransfer->getStateName());
+        $this->assertSame(1, $affectedItems);
+        $this->assertSame('reminder I sent', $stateMachineItemTransfer->getStateName());
     }
 
     /**
@@ -623,7 +623,7 @@ class StateMachineFacadeTest extends Unit
 
         $numberOfItems = SpyStateMachineLockQuery::create()->filterByIdentifier($identifier)->count();
 
-        $this->assertEquals(0, $numberOfItems);
+        $this->assertSame(0, $numberOfItems);
     }
 
     /**
@@ -650,10 +650,10 @@ class StateMachineFacadeTest extends Unit
 
         $stateMachineItemTransfer = $stateMachineHandler->getItemStateUpdated();
 
-        $this->assertEquals(1, $triggerResult);
-        $this->assertEquals('done', $stateMachineItemTransfer->getStateName());
-        $this->assertEquals($processName, $stateMachineItemTransfer->getProcessName());
-        $this->assertEquals($identifier, $stateMachineItemTransfer->getIdentifier());
+        $this->assertSame(1, $triggerResult);
+        $this->assertSame('done', $stateMachineItemTransfer->getStateName());
+        $this->assertSame($processName, $stateMachineItemTransfer->getProcessName());
+        $this->assertSame($identifier, $stateMachineItemTransfer->getIdentifier());
     }
 
     /**
@@ -681,7 +681,7 @@ class StateMachineFacadeTest extends Unit
     {
         // Assign
         $stateMachineHandler = new TestStateMachineHandler();
-        $stateMachineName = $stateMachineHandler->getStateMachineName() . "SomethingElse";
+        $stateMachineName = $stateMachineHandler->getStateMachineName() . 'SomethingElse';
         $stateMachineFacade = $this->createStateMachineFacade($stateMachineHandler);
         $expectedResult = false;
 
@@ -690,6 +690,72 @@ class StateMachineFacadeTest extends Unit
 
         // Assert
         $this->assertEquals($expectedResult, $actualResult);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindStateMachineProcessReturnsCorrectData(): void
+    {
+        // Arrange
+        $stateMachineProcessEntity = $this->tester->haveStateMachineProcess();
+        $stateMachineProcessCriteriaTransfer = (new StateMachineProcessCriteriaTransfer())
+            ->setIdStateMachineProcess($stateMachineProcessEntity->getIdStateMachineProcess());
+
+        $stateMachineHandler = new TestStateMachineHandler();
+        $stateMachineFacade = $this->createStateMachineFacade($stateMachineHandler);
+
+        // Act
+        $stateMachineProcessTransfer = $stateMachineFacade->findStateMachineProcess($stateMachineProcessCriteriaTransfer);
+
+        // Assert
+        $this->assertNotNull($stateMachineProcessTransfer);
+        $this->assertSame($stateMachineProcessTransfer->getProcessName(), $stateMachineProcessEntity->getName());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindStateMachineProcessReturnsNullWithIncorrectFilter(): void
+    {
+        // Arrange
+        $stateMachineProcessCriteriaTransfer = (new StateMachineProcessCriteriaTransfer())
+            ->setIdStateMachineProcess(static::TEST_NOT_EXISTING_STATE_MACHINE_PROCESS_ID);
+        $stateMachineHandler = new TestStateMachineHandler();
+        $stateMachineFacade = $this->createStateMachineFacade($stateMachineHandler);
+
+        // Act
+        $stateMachineProcessTransfer = $stateMachineFacade->findStateMachineProcess($stateMachineProcessCriteriaTransfer);
+
+        // Assert
+        $this->assertNull($stateMachineProcessTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProcessStateNamesReturnsArrayOfStateNames(): void
+    {
+        // Arrange
+        $processName = static::TEST_PROCESS_NAME;
+        $identifier = 1985;
+
+        $stateMachineProcessTransfer = new StateMachineProcessTransfer();
+        $stateMachineProcessTransfer->setProcessName($processName);
+        $stateMachineProcessTransfer->setStateMachineName(static::TESTING_SM);
+
+        $stateMachineHandler = new TestStateMachineHandler();
+        $stateMachineFacade = $this->createStateMachineFacade($stateMachineHandler);
+
+        $stateMachineFacade->triggerForNewStateMachineItem($stateMachineProcessTransfer, $identifier);
+
+        // Act
+        $stateNames = $stateMachineFacade->getProcessStateNames($stateMachineProcessTransfer);
+
+        // Assert
+        $this->assertSame('completed', array_pop($stateNames));
+        $this->assertSame('state with condition', array_pop($stateNames));
+        $this->assertSame('new', array_shift($stateNames));
     }
 
     /**
@@ -732,7 +798,7 @@ class StateMachineFacadeTest extends Unit
      */
     protected function sleepIfMySql(int $seconds): void
     {
-        if (Config::get(PropelConstants::ZED_DB_ENGINE) === Config::get(PropelConstants::ZED_DB_ENGINE_MYSQL)) {
+        if (Config::get(PropelConstants::ZED_DB_ENGINE) === PropelConfig::DB_ENGINE_MYSQL) {
             sleep($seconds);
         }
     }

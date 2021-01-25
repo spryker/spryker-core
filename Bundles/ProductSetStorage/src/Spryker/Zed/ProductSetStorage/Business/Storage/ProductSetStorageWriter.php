@@ -25,6 +25,8 @@ class ProductSetStorageWriter implements ProductSetStorageWriterInterface
     protected $queryContainer;
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()} instead.
+     *
      * @var bool
      */
     protected $isSendingToQueue = true;
@@ -106,7 +108,6 @@ class ProductSetStorageWriter implements ProductSetStorageWriterInterface
         array $spyProductSetLocalizedEntity,
         ?SpyProductSetStorage $spyProductSetStorageEntity = null
     ) {
-
         if (!$spyProductSetLocalizedEntity['SpyProductSet'][static::COL_IS_ACTIVE]) {
             if (!$spyProductSetStorageEntity) {
                 return;

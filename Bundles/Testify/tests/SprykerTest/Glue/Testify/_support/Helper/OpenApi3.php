@@ -1,8 +1,8 @@
 <?php
 
 /**
- * This file is part of the Spryker Suite.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerTest\Glue\Testify\Helper;
@@ -13,13 +13,13 @@ use JsonSchema\Constraints\Constraint;
 use JsonSchema\Validator;
 use PHPUnit\Framework\AssertionFailedError;
 use Spryker\Glue\Testify\OpenApi3\Exception\ParseException;
-use Spryker\Glue\Testify\OpenApi3\Object\OpenApi;
-use Spryker\Glue\Testify\OpenApi3\Object\Operation;
-use Spryker\Glue\Testify\OpenApi3\Object\PathItem;
-use Spryker\Glue\Testify\OpenApi3\Object\Response;
-use Spryker\Glue\Testify\OpenApi3\Object\Schema;
 use Spryker\Glue\Testify\OpenApi3\OpenApiSchemaParser;
 use Spryker\Glue\Testify\OpenApi3\Reader\YamlFileReader;
+use Spryker\Glue\Testify\OpenApi3\SchemaObject\OpenApi;
+use Spryker\Glue\Testify\OpenApi3\SchemaObject\Operation;
+use Spryker\Glue\Testify\OpenApi3\SchemaObject\PathItem;
+use Spryker\Glue\Testify\OpenApi3\SchemaObject\Response;
+use Spryker\Glue\Testify\OpenApi3\SchemaObject\Schema;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Testify\TestifyConstants;
 
@@ -50,7 +50,7 @@ modules:
 EOF;
 
     /**
-     * @var \Spryker\Glue\Testify\OpenApi3\Object\OpenApi|null
+     * @var \Spryker\Glue\Testify\OpenApi3\SchemaObject\OpenApi|null
      */
     protected $schema;
 
@@ -98,7 +98,7 @@ EOF;
      * @part json
      *
      * @param array $responseData
-     * @param \Spryker\Glue\Testify\OpenApi3\Object\Schema $responseSchema
+     * @param \Spryker\Glue\Testify\OpenApi3\SchemaObject\Schema $responseSchema
      *
      * @return void
      */
@@ -111,7 +111,7 @@ EOF;
     /**
      * @throws \Codeception\Exception\ModuleException
      *
-     * @return \Spryker\Glue\Testify\OpenApi3\Object\OpenApi|null
+     * @return \Spryker\Glue\Testify\OpenApi3\SchemaObject\OpenApi|null
      */
     protected function readOpenApiSchemaIfDefined(): ?OpenApi
     {
@@ -131,12 +131,12 @@ EOF;
     }
 
     /**
-     * @param \Spryker\Glue\Testify\OpenApi3\Object\OpenApi $schema
+     * @param \Spryker\Glue\Testify\OpenApi3\SchemaObject\OpenApi $schema
      * @param string $url
      *
      * @throws \PHPUnit\Framework\AssertionFailedError
      *
-     * @return \Spryker\Glue\Testify\OpenApi3\Object\PathItem
+     * @return \Spryker\Glue\Testify\OpenApi3\SchemaObject\PathItem
      */
     protected function findPathDefinition(OpenApi $schema, string $url): PathItem
     {
@@ -155,12 +155,12 @@ EOF;
     }
 
     /**
-     * @param \Spryker\Glue\Testify\OpenApi3\Object\PathItem $pathItem
+     * @param \Spryker\Glue\Testify\OpenApi3\SchemaObject\PathItem $pathItem
      * @param string $method
      *
      * @throws \PHPUnit\Framework\AssertionFailedError
      *
-     * @return \Spryker\Glue\Testify\OpenApi3\Object\Operation
+     * @return \Spryker\Glue\Testify\OpenApi3\SchemaObject\Operation
      */
     protected function findMethodDefinition(PathItem $pathItem, string $method): Operation
     {
@@ -172,12 +172,12 @@ EOF;
     }
 
     /**
-     * @param \Spryker\Glue\Testify\OpenApi3\Object\Operation $operation
+     * @param \Spryker\Glue\Testify\OpenApi3\SchemaObject\Operation $operation
      * @param int $responseCode
      *
      * @throws \PHPUnit\Framework\AssertionFailedError
      *
-     * @return \Spryker\Glue\Testify\OpenApi3\Object\Response
+     * @return \Spryker\Glue\Testify\OpenApi3\SchemaObject\Response
      */
     protected function findResponseDefinition(Operation $operation, int $responseCode): Response
     {
@@ -199,12 +199,12 @@ EOF;
     }
 
     /**
-     * @param \Spryker\Glue\Testify\OpenApi3\Object\Response $responseDefinition
+     * @param \Spryker\Glue\Testify\OpenApi3\SchemaObject\Response $responseDefinition
      * @param string $contentType
      *
      * @throws \PHPUnit\Framework\AssertionFailedError
      *
-     * @return \Spryker\Glue\Testify\OpenApi3\Object\Schema
+     * @return \Spryker\Glue\Testify\OpenApi3\SchemaObject\Schema
      */
     protected function findResponseSchema(Response $responseDefinition, string $contentType): Schema
     {

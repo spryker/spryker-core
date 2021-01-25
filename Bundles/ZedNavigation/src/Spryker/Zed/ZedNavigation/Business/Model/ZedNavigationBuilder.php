@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ZedNavigation\Business\Model;
 
+use Spryker\Zed\ZedNavigation\Business\Filter\NavigationItemFilterInterface;
 use Spryker\Zed\ZedNavigation\Business\Model\Collector\ZedNavigationCollectorInterface;
 use Spryker\Zed\ZedNavigation\Business\Model\Extractor\PathExtractorInterface;
 use Spryker\Zed\ZedNavigation\Business\Model\Formatter\MenuFormatterInterface;
@@ -19,31 +20,39 @@ class ZedNavigationBuilder
     /**
      * @var \Spryker\Zed\ZedNavigation\Business\Model\Collector\ZedNavigationCollectorInterface
      */
-    private $navigationCollector;
+    protected $navigationCollector;
 
     /**
      * @var \Spryker\Zed\ZedNavigation\Business\Model\Formatter\MenuFormatterInterface
      */
-    private $menuFormatter;
+    protected $menuFormatter;
 
     /**
      * @var \Spryker\Zed\ZedNavigation\Business\Model\Extractor\PathExtractorInterface
      */
-    private $pathExtractor;
+    protected $pathExtractor;
+
+    /**
+     * @var \Spryker\Zed\ZedNavigation\Business\Filter\NavigationItemFilterInterface
+     */
+    protected $navigationItemFilter;
 
     /**
      * @param \Spryker\Zed\ZedNavigation\Business\Model\Collector\ZedNavigationCollectorInterface $navigationCollector
      * @param \Spryker\Zed\ZedNavigation\Business\Model\Formatter\MenuFormatterInterface $menuFormatter
      * @param \Spryker\Zed\ZedNavigation\Business\Model\Extractor\PathExtractorInterface $pathExtractor
+     * @param \Spryker\Zed\ZedNavigation\Business\Filter\NavigationItemFilterInterface $navigationItemFilter
      */
     public function __construct(
         ZedNavigationCollectorInterface $navigationCollector,
         MenuFormatterInterface $menuFormatter,
-        PathExtractorInterface $pathExtractor
+        PathExtractorInterface $pathExtractor,
+        NavigationItemFilterInterface $navigationItemFilter
     ) {
         $this->navigationCollector = $navigationCollector;
         $this->menuFormatter = $menuFormatter;
         $this->pathExtractor = $pathExtractor;
+        $this->navigationItemFilter = $navigationItemFilter;
     }
 
     /**
@@ -53,10 +62,11 @@ class ZedNavigationBuilder
      */
     public function build($pathInfo)
     {
-        $navigationPages = $this->navigationCollector->getNavigation();
+        $navigationItems = $this->navigationCollector->getNavigation();
+        $navigationItems = $this->navigationItemFilter->filterNavigationItems($navigationItems);
 
-        $menu = $this->menuFormatter->formatMenu($navigationPages, $pathInfo, false);
-        $breadcrumb = $this->menuFormatter->formatMenu($navigationPages, $pathInfo, true);
+        $menu = $this->menuFormatter->formatMenu($navigationItems, $pathInfo, false);
+        $breadcrumb = $this->menuFormatter->formatMenu($navigationItems, $pathInfo, true);
         $path = $this->pathExtractor->extractPathFromMenu($breadcrumb);
 
         return [

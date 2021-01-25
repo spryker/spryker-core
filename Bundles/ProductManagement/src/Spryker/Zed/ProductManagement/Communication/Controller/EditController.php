@@ -48,12 +48,14 @@ class EditController extends AddController
             return new RedirectResponse('/product-management');
         }
 
+        /** @var array|null $priceDimension */
+        $priceDimension = $request->query->get(static::PARAM_PRICE_DIMENSION);
         $dataProvider = $this->getFactory()->createProductFormEditDataProvider();
         $form = $this
             ->getFactory()
             ->createProductFormEdit(
-                $dataProvider->getData($idProductAbstract, $request->query->get(static::PARAM_PRICE_DIMENSION)),
-                $dataProvider->getOptions($idProductAbstract)
+                $dataProvider->getData($productAbstractTransfer, $priceDimension),
+                $dataProvider->getOptions($productAbstractTransfer)
             )
             ->handleRequest($request);
 
@@ -142,6 +144,12 @@ class EditController extends AddController
             return new RedirectResponse('/product-management/edit?id-product-abstract=' . $idProductAbstract);
         }
 
+        $productAbstractTransfer = $this->getFactory()
+            ->getProductFacade()
+            ->findProductAbstractById($productTransfer->getFkProductAbstract());
+
+        $productTransfer = $this->getFactory()->createProductStockHelper()->trimStockQuantities($productTransfer);
+
         $type = ProductManagementConfig::PRODUCT_TYPE_REGULAR;
         if ($productTransfer->getProductBundle() !== null) {
             $type = ProductManagementConfig::PRODUCT_TYPE_BUNDLE;
@@ -149,12 +157,14 @@ class EditController extends AddController
 
         $localeProvider = $this->getFactory()->createLocaleProvider();
 
+        /** @var array|null $priceDimension */
+        $priceDimension = $request->query->get(static::PARAM_PRICE_DIMENSION);
         $dataProvider = $this->getFactory()->createProductVariantFormEditDataProvider();
         $form = $this
             ->getFactory()
             ->createProductVariantFormEdit(
-                $dataProvider->getData($idProductAbstract, $idProduct, $request->query->get(static::PARAM_PRICE_DIMENSION)),
-                $dataProvider->getOptions($idProductAbstract, $type)
+                $dataProvider->getData($productAbstractTransfer, $idProduct, $priceDimension),
+                $dataProvider->getOptions($productAbstractTransfer, $type)
             )
             ->handleRequest($request);
 
@@ -163,10 +173,6 @@ class EditController extends AddController
 
         if ($form->isSubmitted() && $form->isValid()) {
             try {
-                $productAbstractTransfer = $this->getFactory()
-                    ->getProductFacade()
-                    ->findProductAbstractById($idProductAbstract);
-
                 $productConcreteTransfer = $this->getFactory()
                     ->createProductFormTransferGenerator()
                     ->buildProductConcreteTransfer($productAbstractTransfer, $form, $idProduct);

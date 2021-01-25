@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\Kernel;
 
+/**
+ * @method \Spryker\Zed\Kernel\KernelConfig getConfig()
+ */
 class KernelDependencyProvider extends AbstractBundleDependencyProvider
 {
 }

@@ -8,12 +8,11 @@
 namespace SprykerTest\Zed\Session\Business;
 
 use Codeception\Test\Unit;
-use Silex\Application;
 use Spryker\Shared\Session\SessionConstants;
 use Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Session\Business\Exception\NotALockingSessionHandlerException;
-use Spryker\Zed\Session\Communication\Plugin\ServiceProvider\SessionServiceProvider;
+use Spryker\Zed\Session\Communication\Plugin\Application\SessionApplicationPlugin;
 use Spryker\Zed\Session\SessionDependencyProvider;
 use Spryker\Zed\SessionExtension\Dependency\Plugin\SessionLockReleaserPluginInterface;
 
@@ -48,7 +47,7 @@ class SessionFacadeTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -57,10 +56,7 @@ class SessionFacadeTest extends Unit
 
         $this->setupSessionPluginDependencies();
 
-        $application = new Application();
-        $application['session.test'] = false;
-        $sessionServiceProvider = new SessionServiceProvider();
-        $sessionServiceProvider->register($application);
+        $this->tester->addApplicationPlugin(new SessionApplicationPlugin());
     }
 
     /**
@@ -70,7 +66,7 @@ class SessionFacadeTest extends Unit
      *
      * @return void
      */
-    public function testRemoveYvesSessionLockForReleasesLockWhenHandlerSupportsLocking($sessionHandler)
+    public function testRemoveYvesSessionLockForReleasesLockWhenHandlerSupportsLocking(string $sessionHandler): void
     {
         $this->supportingLockReleaserPlugin
             ->expects($this->once())
@@ -90,7 +86,7 @@ class SessionFacadeTest extends Unit
      *
      * @return void
      */
-    public function testRemoveYvesSessionLockForThrowsExceptionWhenSessionHandlerDoesNotSupportLocking($sessionHandler)
+    public function testRemoveYvesSessionLockForThrowsExceptionWhenSessionHandlerDoesNotSupportLocking(string $sessionHandler): void
     {
         $this->tester->setConfig(SessionConstants::YVES_SESSION_SAVE_HANDLER, $sessionHandler);
 
@@ -107,7 +103,7 @@ class SessionFacadeTest extends Unit
      *
      * @return void
      */
-    public function testRemoveZedSessionLockForReleasesLockWhenHandlerSupportsLocking($sessionHandler)
+    public function testRemoveZedSessionLockForReleasesLockWhenHandlerSupportsLocking(string $sessionHandler): void
     {
         $this->supportingLockReleaserPlugin
             ->expects($this->once())
@@ -127,7 +123,7 @@ class SessionFacadeTest extends Unit
      *
      * @return void
      */
-    public function testRemoveZedSessionLockForThrowsExceptionWhenSessionHandlerDoesNotSupportLocking($sessionHandler)
+    public function testRemoveZedSessionLockForThrowsExceptionWhenSessionHandlerDoesNotSupportLocking(string $sessionHandler): void
     {
         $this->tester->setConfig(SessionConstants::ZED_SESSION_SAVE_HANDLER, $sessionHandler);
 
@@ -140,7 +136,7 @@ class SessionFacadeTest extends Unit
     /**
      * @return array
      */
-    public function supportingLockSessionHandler()
+    public function supportingLockSessionHandler(): array
     {
         return [
             [static::SUPPORTING_LOCK_SESSION_HANDLER_NAME],
@@ -150,7 +146,7 @@ class SessionFacadeTest extends Unit
     /**
      * @return array
      */
-    public function notSupportingLockSessionHandler()
+    public function notSupportingLockSessionHandler(): array
     {
         return [
             [static::NOT_SUPPORTING_LOCK_SESSION_HANDLER_NAME],
@@ -161,7 +157,7 @@ class SessionFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\SessionExtension\Dependency\Plugin\SessionLockReleaserPluginInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createSupportingLockReleaserPluginMock()
+    protected function createSupportingLockReleaserPluginMock(): SessionLockReleaserPluginInterface
     {
         $supportingLockReleaserPluginMock = $this->createMock(SessionLockReleaserPluginInterface::class);
         $supportingLockReleaserPluginMock->method('getSessionHandlerName')
@@ -173,7 +169,7 @@ class SessionFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\SessionExtension\Dependency\Plugin\SessionLockReleaserPluginInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createNotSupportingLockReleaserPluginMock()
+    protected function createNotSupportingLockReleaserPluginMock(): SessionLockReleaserPluginInterface
     {
         $notSupportingLockReleaserPluginMock = $this->createMock(SessionLockReleaserPluginInterface::class);
         $notSupportingLockReleaserPluginMock->method('getSessionHandlerName')

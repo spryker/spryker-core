@@ -8,8 +8,9 @@
 namespace SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Generator;
 
 use Codeception\Test\Unit;
+use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 use Generated\Shared\Transfer\AnnotationTransfer;
-use PHPUnit\Framework\MockObject\MockObject;
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Exception\InvalidTransferClassException;
 use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\DocumentationGeneratorRestApiTestFactory;
 use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\Plugin\TestResourceRoutePlugin;
@@ -29,6 +30,8 @@ use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\RestTestAlternat
  */
 class RestApiDocumentationSchemaGeneratorTest extends Unit
 {
+    use ArraySubsetAsserts;
+
     protected const SCHEMA_REF_REST_ERROR_MESSAGE = '#/components/schemas/RestErrorMessage';
     protected const SCHEMA_NAME_REST_ERROR_MESSAGE = 'RestErrorMessage';
     protected const SCHEMA_NAME_REST_LINKS = 'RestLinks';
@@ -73,7 +76,7 @@ class RestApiDocumentationSchemaGeneratorTest extends Unit
     {
         $errorSchemaRef = $this->schemaGenerator->getRestErrorSchemaData();
 
-        $this->assertEquals(static::SCHEMA_REF_REST_ERROR_MESSAGE, $errorSchemaRef);
+        $this->assertSame(static::SCHEMA_REF_REST_ERROR_MESSAGE, $errorSchemaRef);
     }
 
     /**
@@ -230,7 +233,7 @@ class RestApiDocumentationSchemaGeneratorTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface
      */
-    protected function getResourceRoutePluginWithInvalidResourceAttributesClassName(): MockObject
+    protected function getResourceRoutePluginWithInvalidResourceAttributesClassName(): ResourceRoutePluginInterface
     {
         $mock = $this->getMockBuilder(TestResourceRoutePlugin::class)
             ->setMethods(['getResourceAttributesClassName'])

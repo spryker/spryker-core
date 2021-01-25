@@ -17,6 +17,7 @@ use Generated\Shared\Transfer\ShipmentCarrierTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Shared\ShipmentDiscountConnector\ShipmentDiscountConnectorConfig;
+use Spryker\Zed\ShipmentDiscountConnector\Business\ShipmentDiscountConnectorFacadeInterface;
 use Spryker\Zed\ShipmentDiscountConnector\Communication\Plugin\DecisionRule\ShipmentCarrierDecisionRulePlugin;
 use Spryker\Zed\ShipmentDiscountConnector\Communication\Plugin\DecisionRule\ShipmentMethodDecisionRulePlugin;
 
@@ -41,7 +42,7 @@ class ShipmentDiscountConnectorFacadeTest extends Test
     /**
      * @return void
      */
-    public function testIsCarrierSatisfiedBy()
+    public function testIsCarrierSatisfiedBy(): void
     {
         $shipmentCarrierTransfer = (new ShipmentCarrierTransfer())
             ->setIdShipmentCarrier(1);
@@ -77,7 +78,7 @@ class ShipmentDiscountConnectorFacadeTest extends Test
     /**
      * @return void
      */
-    public function testIsMethodSatisfiedBy()
+    public function testIsMethodSatisfiedBy(): void
     {
         $shipmentMethodTransfer = (new ShipmentMethodTransfer())
             ->setIdShipmentMethod(1);
@@ -113,7 +114,7 @@ class ShipmentDiscountConnectorFacadeTest extends Test
     /**
      * @return void
      */
-    public function testIsPriceSatisfiedBy()
+    public function testIsPriceSatisfiedBy(): void
     {
         $itemTransfer = new ItemTransfer();
         $expenseTransfer = new ExpenseTransfer();
@@ -145,7 +146,7 @@ class ShipmentDiscountConnectorFacadeTest extends Test
     /**
      * @return void
      */
-    public function testCollectDiscountByShipmentCarrier()
+    public function testCollectDiscountByShipmentCarrier(): void
     {
         $shipmentCarrierTransfer = (new ShipmentCarrierTransfer())
             ->setIdShipmentCarrier(1);
@@ -181,7 +182,7 @@ class ShipmentDiscountConnectorFacadeTest extends Test
     /**
      * @return void
      */
-    public function testCollectDiscountByShipmentMethod()
+    public function testCollectDiscountByShipmentMethod(): void
     {
         $shipmentMethodTransfer = (new ShipmentMethodTransfer())
             ->setIdShipmentMethod(1);
@@ -216,7 +217,7 @@ class ShipmentDiscountConnectorFacadeTest extends Test
     /**
      * @return void
      */
-    public function testCollectDiscountByShipmentPrice()
+    public function testCollectDiscountByShipmentPrice(): void
     {
         $itemTransfer = new ItemTransfer();
         $expenseTransfer = new ExpenseTransfer();
@@ -246,7 +247,7 @@ class ShipmentDiscountConnectorFacadeTest extends Test
     /**
      * @return void
      */
-    public function testCollectDiscountByShipmentCarrierNegative()
+    public function testCollectDiscountByShipmentCarrierNegative(): void
     {
         $shipmentCarrierTransfer = (new ShipmentCarrierTransfer())
             ->setIdShipmentCarrier(1);
@@ -282,7 +283,7 @@ class ShipmentDiscountConnectorFacadeTest extends Test
     /**
      * @return void
      */
-    public function testCollectDiscountByShipmentMethodNegative()
+    public function testCollectDiscountByShipmentMethodNegative(): void
     {
         $shipmentMethodTransfer = (new ShipmentMethodTransfer())
             ->setIdShipmentMethod(1);
@@ -317,7 +318,7 @@ class ShipmentDiscountConnectorFacadeTest extends Test
     /**
      * @return void
      */
-    public function testCollectDiscountByShipmentPriceNegative()
+    public function testCollectDiscountByShipmentPriceNegative(): void
     {
         $itemTransfer = new ItemTransfer();
         $expenseTransfer = new ExpenseTransfer();
@@ -347,7 +348,7 @@ class ShipmentDiscountConnectorFacadeTest extends Test
     /**
      * @return \Spryker\Zed\ShipmentDiscountConnector\Business\ShipmentDiscountConnectorFacadeInterface
      */
-    protected function createFacade()
+    protected function createFacade(): ShipmentDiscountConnectorFacadeInterface
     {
         return $this->tester->getLocator()->shipmentDiscountConnector()->facade();
     }

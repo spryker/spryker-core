@@ -1,4 +1,4 @@
 parameters:
+    checkMissingIterableValueType: false
     ignoreErrors:
-    - '#Method .+StateMachineQueryContainer::query.+\(\) should return .+Spy.+Query but returns Propel\\Runtime\\ActiveQuery\\ModelCriteria.#'
-    - '#If condition is always true.#'
+        - '#If condition is always true.#'

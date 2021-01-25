@@ -2,6 +2,11 @@
 
 {% block action %}
     {{ backActionButton('/sales', 'Back to Orders' | trans) }}
+    {% include '@SalesReturnGui/Sales/create-return-link.twig' ignore missing with {
+        data: {
+            order: order,
+        },
+    } only %}
 {% endblock %}
 
 {% block section_title %}
@@ -11,6 +16,12 @@
 {% block content %}
 
     <div id="order-overview">{% include '@Sales/Detail/boxes/order-overview.twig' %}</div>
+    <div id="order-custom-reference">{% include '@OrderCustomReferenceGui/Sales/order-custom-reference.twig' ignore missing with {
+            data: {
+                backUrl: changeStatusRedirectUrl,
+                order: order,
+            },
+        } only %}</div>
     <div id="customer">{% include '@Sales/Detail/boxes/customer.twig' %}</div>
     <div id="items">{% include [
         '@ShipmentGui/Sales/boxes/items.twig',
@@ -27,5 +38,5 @@
 
 {% block head_css %}
     {{ parent() }}
-    <link rel="stylesheet" href="/assets/css/spryker-zed-sales-main.css">
+    <link rel="stylesheet" href="{{ assetsPath('css/spryker-zed-sales-main.css') }}">
 {% endblock %}

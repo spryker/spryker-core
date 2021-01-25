@@ -1,0 +1,115 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 99,
+            "line_to": 99,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 3 of Spryker\\Shared\\EventDispatcher\\EventDispatcherInterface::addListener cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/EventDispatcher/src/Spryker/Glue/EventDispatcher/Plugin/Application/EventDispatcherApplicationPlugin.php",
+            "snippet": "                    $existingEventDispatcher->getListenerPriority($eventName, $listener)",
+            "selected_text": "$existingEventDispatcher->getListenerPriority($eventName, $listener)",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 99,
+            "line_to": 99,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 3 of Spryker\\Shared\\EventDispatcher\\EventDispatcherInterface::addListener cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/EventDispatcher/src/Spryker/Yves/EventDispatcher/Plugin/Application/EventDispatcherApplicationPlugin.php",
+            "snippet": "                    $existingEventDispatcher->getListenerPriority($eventName, $listener)",
+            "selected_text": "$existingEventDispatcher->getListenerPriority($eventName, $listener)",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 100,
+            "line_to": 100,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 3 of Spryker\\Shared\\EventDispatcher\\EventDispatcherInterface::addListener cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/EventDispatcher/src/Spryker/Zed/EventDispatcher/Communication/Plugin/Application/EventDispatcherApplicationPlugin.php",
+            "snippet": "                    $existingEventDispatcher->getListenerPriority($eventName, $listener)",
+            "selected_text": "$existingEventDispatcher->getListenerPriority($eventName, $listener)",
+            "error_level": 3,
+            "shortcode": 78
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 40,
+            "line_to": 40,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Glue\\EventDispatcher\\Plugin\\Application\\EventDispatcherApplicationPlugin::extendExistingEventDispatcher has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/EventDispatcher/src/Spryker/Glue/EventDispatcher/Plugin/Application/EventDispatcherApplicationPlugin.php",
+            "snippet": "            return $this->extendExistingEventDispatcher($container);",
+            "selected_text": "extendExistingEventDispatcher",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 70,
+            "line_to": 70,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Glue\\EventDispatcher\\Plugin\\Application\\EventDispatcherApplicationPlugin::copyExistingListeners has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/EventDispatcher/src/Spryker/Glue/EventDispatcher/Plugin/Application/EventDispatcherApplicationPlugin.php",
+            "snippet": "            $eventDispatcher = $this->copyExistingListeners($eventDispatcher, $existingEventDispatcher);",
+            "selected_text": "copyExistingListeners",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 40,
+            "line_to": 40,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Yves\\EventDispatcher\\Plugin\\Application\\EventDispatcherApplicationPlugin::extendExistingEventDispatcher has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/EventDispatcher/src/Spryker/Yves/EventDispatcher/Plugin/Application/EventDispatcherApplicationPlugin.php",
+            "snippet": "            return $this->extendExistingEventDispatcher($container);",
+            "selected_text": "extendExistingEventDispatcher",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 70,
+            "line_to": 70,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Yves\\EventDispatcher\\Plugin\\Application\\EventDispatcherApplicationPlugin::copyExistingListeners has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/EventDispatcher/src/Spryker/Yves/EventDispatcher/Plugin/Application/EventDispatcherApplicationPlugin.php",
+            "snippet": "            $eventDispatcher = $this->copyExistingListeners($eventDispatcher, $existingEventDispatcher);",
+            "selected_text": "copyExistingListeners",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 41,
+            "line_to": 41,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Zed\\EventDispatcher\\Communication\\Plugin\\Application\\EventDispatcherApplicationPlugin::extendExistingEventDispatcher has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/EventDispatcher/src/Spryker/Zed/EventDispatcher/Communication/Plugin/Application/EventDispatcherApplicationPlugin.php",
+            "snippet": "            return $this->extendExistingEventDispatcher($container);",
+            "selected_text": "extendExistingEventDispatcher",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 71,
+            "line_to": 71,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Zed\\EventDispatcher\\Communication\\Plugin\\Application\\EventDispatcherApplicationPlugin::copyExistingListeners has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/EventDispatcher/src/Spryker/Zed/EventDispatcher/Communication/Plugin/Application/EventDispatcherApplicationPlugin.php",
+            "snippet": "            $eventDispatcher = $this->copyExistingListeners($eventDispatcher, $existingEventDispatcher);",
+            "selected_text": "copyExistingListeners",
+            "error_level": 2,
+            "shortcode": 1
+        }
+    ]
+}

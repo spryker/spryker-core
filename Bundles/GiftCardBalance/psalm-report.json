@@ -1,0 +1,151 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 62,
+            "line_to": 62,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\GiftCardBalance\\Business\\Checker\\GiftCardBalanceChecker::getTransactionLogBalanceSum cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/GiftCardBalance/src/Spryker/Zed/GiftCardBalance/Business/Checker/GiftCardBalanceChecker.php",
+            "snippet": "        $transactionLogBalanceSum = $this->getTransactionLogBalanceSum($giftCardTransfer->getCode());",
+            "selected_text": "$giftCardTransfer->getCode()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 64,
+            "line_to": 64,
+            "type": "PossiblyNullOperand",
+            "message": "Left operand cannot be nullable, got int|null",
+            "file_name": "vendor/spryker/spryker/Bundles/GiftCardBalance/src/Spryker/Zed/GiftCardBalance/Business/Checker/GiftCardBalanceChecker.php",
+            "snippet": "        return $giftCardTransfer->getValue() - $transactionLogBalanceSum;",
+            "selected_text": "$giftCardTransfer->getValue()",
+            "error_level": 1,
+            "shortcode": 80
+        },
+        {
+            "severity": "info",
+            "line_from": 25,
+            "line_to": 25,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method requireIdGiftCard on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/GiftCardBalance/src/Spryker/Zed/GiftCardBalance/Business/Saver/GiftCardBalanceSaver.php",
+            "snippet": "        $paymentTransfer->getGiftCard()->requireIdGiftCard();",
+            "selected_text": "requireIdGiftCard",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 27,
+            "line_to": 27,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdSalesOrder on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/GiftCardBalance/src/Spryker/Zed/GiftCardBalance/Business/Saver/GiftCardBalanceSaver.php",
+            "snippet": "        $idSalesOrder = $checkoutResponseTransfer->getSaveOrder()->getIdSalesOrder();",
+            "selected_text": "getIdSalesOrder",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 28,
+            "line_to": 28,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdGiftCard on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/GiftCardBalance/src/Spryker/Zed/GiftCardBalance/Business/Saver/GiftCardBalanceSaver.php",
+            "snippet": "        $idGiftCard = $paymentTransfer->getGiftCard()->getIdGiftCard();",
+            "selected_text": "getIdGiftCard",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 31,
+            "line_to": 31,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Orm\\Zed\\GiftCardBalance\\Persistence\\SpyGiftCardBalanceLog::setFkSalesOrder cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/GiftCardBalance/src/Spryker/Zed/GiftCardBalance/Business/Saver/GiftCardBalanceSaver.php",
+            "snippet": "        $transactionLogEntity->setFkSalesOrder($idSalesOrder);",
+            "selected_text": "$idSalesOrder",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 32,
+            "line_to": 32,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Orm\\Zed\\GiftCardBalance\\Persistence\\SpyGiftCardBalanceLog::setFkGiftCard cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/GiftCardBalance/src/Spryker/Zed/GiftCardBalance/Business/Saver/GiftCardBalanceSaver.php",
+            "snippet": "        $transactionLogEntity->setFkGiftCard($idGiftCard);",
+            "selected_text": "$idGiftCard",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 33,
+            "line_to": 33,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Orm\\Zed\\GiftCardBalance\\Persistence\\SpyGiftCardBalanceLog::setValue cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/GiftCardBalance/src/Spryker/Zed/GiftCardBalance/Business/Saver/GiftCardBalanceSaver.php",
+            "snippet": "        $transactionLogEntity->setValue($paymentTransfer->getAmount());",
+            "selected_text": "$paymentTransfer->getAmount()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 80,
+            "line_to": 80,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/GiftCardBalance/src/Spryker/Zed/GiftCardBalance/Communication/Table/GiftCardBalanceTable.php",
+            "snippet": "        $config->setUrl(sprintf('table?id-gift-card=%d', $this->idGiftCard));",
+            "selected_text": "$this->idGiftCard",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 96,
+            "line_to": 96,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, mixed> variable $customersCollection",
+            "file_name": "vendor/spryker/spryker/Bundles/GiftCardBalance/src/Spryker/Zed/GiftCardBalance/Communication/Table/GiftCardBalanceTable.php",
+            "snippet": "        if ($customersCollection->count() < 1) {",
+            "selected_text": "count",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 100,
+            "line_to": 100,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\GiftCardBalance\\Communication\\Table\\GiftCardBalanceTable::formatCollection expects Propel\\Runtime\\Collection\\ObjectCollection, possibly different type Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, mixed> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/GiftCardBalance/src/Spryker/Zed/GiftCardBalance/Communication/Table/GiftCardBalanceTable.php",
+            "snippet": "        return $this->formatCollection($customersCollection);",
+            "selected_text": "$customersCollection",
+            "error_level": 3,
+            "shortcode": 92
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 27,
+            "line_to": 27,
+            "type": "DeprecatedMethod",
+            "message": "The method Generated\\Shared\\Transfer\\CheckoutResponseTransfer::getSaveOrder has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/GiftCardBalance/src/Spryker/Zed/GiftCardBalance/Business/Saver/GiftCardBalanceSaver.php",
+            "snippet": "        $idSalesOrder = $checkoutResponseTransfer->getSaveOrder()->getIdSalesOrder();",
+            "selected_text": "getSaveOrder",
+            "error_level": 2,
+            "shortcode": 1
+        }
+    ]
+}

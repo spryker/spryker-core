@@ -11,8 +11,6 @@ use Codeception\Actor;
 use ReflectionClass;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -22,7 +20,8 @@ use ReflectionClass;
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
+ * @method \Spryker\Client\Storage\StorageConfig getModuleConfig()
  *
  * @SuppressWarnings(PHPMD)
  */
@@ -37,7 +36,7 @@ class StorageClientTester extends Actor
      *
      * @return void
      */
-    public function setProtectedProperty($object, $propertyName, $value)
+    public function setProtectedProperty($object, string $propertyName, $value): void
     {
         $storageClientReflection = new ReflectionClass($object);
         $bufferedValuesReflection = $storageClientReflection->getProperty($propertyName);

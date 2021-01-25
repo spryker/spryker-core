@@ -1,0 +1,20 @@
+{# constant #}
+{% macro addConstant(constantName, constantValue) %}
+    const {{ constantName }} = '{{ constantValue }}';
+{% endmacro %}
+
+{# metadata #}
+{% macro addMetadata(metadata) %}
+    /**
+     * @var array
+     */
+    protected $metadata = [
+{% for propertyName,property in metadata %}
+        self::{{ propertyName }} => [
+{% for key, value in property  %}
+            '{{ key }}' => '{{ value }}',
+{% endfor %}
+        ],
+{% endfor %}
+    ];
+{%- endmacro %}

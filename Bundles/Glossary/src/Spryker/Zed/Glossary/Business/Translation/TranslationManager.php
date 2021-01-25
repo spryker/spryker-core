@@ -23,9 +23,14 @@ use Spryker\Zed\Glossary\Dependency\Facade\GlossaryToLocaleInterface;
 use Spryker\Zed\Glossary\Dependency\Facade\GlossaryToMessengerInterface;
 use Spryker\Zed\Glossary\Dependency\Facade\GlossaryToTouchInterface;
 use Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
+use Symfony\Contracts\Translation\TranslatorTrait;
 
 class TranslationManager implements TranslationManagerInterface
 {
+    use TransactionTrait;
+    use TranslatorTrait;
+
     public const TOUCH_TRANSLATION = 'translation';
     public const GLOSSARY_KEY = 'glossary_key';
     public const LOCALE_PREFIX = 'locale_';
@@ -89,6 +94,7 @@ class TranslationManager implements TranslationManagerInterface
             throw new MissingKeyException('Glossary Key cannot be empty');
         }
 
+        /** @var string|null $translationKey */
         $translationKey = $keyTranslationTransfer->getGlossaryKey();
         try {
             if (!$this->keyManager->hasKey($translationKey)) {
@@ -372,7 +378,7 @@ class TranslationManager implements TranslationManagerInterface
 
         $translation = $this->getTranslationByKeyName($keyName, $localeTransfer);
 
-        return str_replace(array_keys($data), array_values($data), $translation->getValue());
+        return $this->trans($translation->getValue(), $data, null, $localeTransfer->getLocaleName());
     }
 
     /**
@@ -417,6 +423,7 @@ class TranslationManager implements TranslationManagerInterface
             Propel::getConnection()->commit();
         } catch (Exception $e) {
             Propel::getConnection()->rollBack();
+
             throw $e;
         }
 
@@ -500,11 +507,10 @@ class TranslationManager implements TranslationManagerInterface
      */
     public function translateByKeyId($idKey, array $data = [])
     {
-        $idLocale = $this->localeFacade->getCurrentLocale()
-            ->getIdLocale();
-        $translation = $this->getTranslationByIds($idKey, $idLocale);
+        $localeTransfer = $this->localeFacade->getCurrentLocale();
+        $translation = $this->getTranslationByIds($idKey, $localeTransfer->getIdLocale());
 
-        return str_replace(array_keys($data), array_values($data), $translation->getValue());
+        return $this->trans($translation->getValue(), $data, null, $localeTransfer->getLocaleName());
     }
 
     /**
@@ -534,17 +540,9 @@ class TranslationManager implements TranslationManagerInterface
      */
     public function createAndTouchTranslation($keyName, LocaleTransfer $locale, $value, $isActive = true)
     {
-        Propel::getConnection()
-            ->beginTransaction();
-
-        $translation = $this->createTranslation($keyName, $locale, $value, $isActive);
-        if ($isActive) {
-            $this->insertActiveTouchRecord($translation->getIdGlossaryTranslation());
-        }
-        Propel::getConnection()
-            ->commit();
-
-        return $translation;
+        return $this->getTransactionHandler()->handleTransaction(function () use ($keyName, $locale, $value, $isActive): TranslationTransfer {
+            return $this->executeCreateAndTouchTranslationTransaction($keyName, $locale, $value, $isActive);
+        });
     }
 
     /**
@@ -560,6 +558,28 @@ class TranslationManager implements TranslationManagerInterface
         $translation = $this->getUpdatedTranslationEntity($keyName, $locale, $value, $isActive);
 
         return $this->doUpdateAndTouchTranslation($translation);
+    }
+
+    /**
+     * @param string $keyName
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param string $value
+     * @param bool $isActive
+     *
+     * @return \Generated\Shared\Transfer\TranslationTransfer
+     */
+    protected function executeCreateAndTouchTranslationTransaction(
+        string $keyName,
+        LocaleTransfer $localeTransfer,
+        string $value,
+        bool $isActive = true
+    ): TranslationTransfer {
+        $translation = $this->createTranslation($keyName, $localeTransfer, $value, $isActive);
+        if ($isActive) {
+            $this->insertActiveTouchRecord($translation->getIdGlossaryTranslation());
+        }
+
+        return $translation;
     }
 
     /**
@@ -587,9 +607,18 @@ class TranslationManager implements TranslationManagerInterface
             return $this->convertEntityToTranslationTransfer($translation);
         }
 
-        Propel::getConnection()
-            ->beginTransaction();
+        return $this->getTransactionHandler()->handleTransaction(function () use ($translation): TranslationTransfer {
+            return $this->executeUpdateAndTouchTranslationTransaction($translation);
+        });
+    }
 
+    /**
+     * @param \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslation $translation
+     *
+     * @return \Generated\Shared\Transfer\TranslationTransfer
+     */
+    protected function executeUpdateAndTouchTranslationTransaction(SpyGlossaryTranslation $translation): TranslationTransfer
+    {
         $isActiveModified = $translation->isColumnModified(SpyGlossaryTranslationTableMap::COL_IS_ACTIVE);
 
         $translation->save();
@@ -599,9 +628,6 @@ class TranslationManager implements TranslationManagerInterface
         } elseif ($isActiveModified) {
             $this->insertDeletedTouchRecord($translation->getIdGlossaryTranslation());
         }
-
-        Propel::getConnection()
-            ->commit();
 
         return $this->convertEntityToTranslationTransfer($translation);
     }

@@ -29,7 +29,7 @@ class MonthDecisionRuleTest extends BaseRuleTester
     /**
      * @return void
      */
-    public function testDecisionRuleShouldReturnTrueIfGivenDateMatchesClause()
+    public function testDecisionRuleShouldReturnTrueIfGivenDateMatchesClause(): void
     {
         $dateTime = new DateTime();
 
@@ -52,16 +52,19 @@ class MonthDecisionRuleTest extends BaseRuleTester
      * @param \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface $comparatorMock
      * @param \DateTime $currentDateTime
      *
-     * @return \Spryker\Zed\Discount\Business\DecisionRule\CalendarWeekDecisionRule
+     * @return \Spryker\Zed\Discount\Business\DecisionRule\MonthDecisionRule|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function createMonthDecisionRule(
         ComparatorOperatorsInterface $comparatorMock,
         DateTime $currentDateTime
-    ) {
-        $calendarWeekDecisionRule = $this->getMockBuilder(MonthDecisionRule::class)->setMethods(['getCurrentDateTime'])->setConstructorArgs([$comparatorMock])->getMock();
+    ): MonthDecisionRule {
+        /** @var \Spryker\Zed\Discount\Business\DecisionRule\MonthDecisionRule|\PHPUnit\Framework\MockObject\MockObject $monthDecisionRule */
+        $monthDecisionRule = $this->getMockBuilder(MonthDecisionRule::class)
+            ->setMethods(['getCurrentDateTime'])
+            ->setConstructorArgs([$comparatorMock])
+            ->getMock();
+        $monthDecisionRule->method('getCurrentDateTime')->willReturn($currentDateTime);
 
-        $calendarWeekDecisionRule->method('getCurrentDateTime')->willReturn($currentDateTime);
-
-        return $calendarWeekDecisionRule;
+        return $monthDecisionRule;
     }
 }

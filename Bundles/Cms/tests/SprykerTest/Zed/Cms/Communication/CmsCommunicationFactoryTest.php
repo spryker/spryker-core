@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\Cms\Communication;
 
 use Codeception\Test\Unit;
+use Spryker\Zed\Cms\Communication\CmsCommunicationFactory;
 
 /**
  * Auto-generated group annotations
@@ -50,7 +51,7 @@ class CmsCommunicationFactoryTest extends Unit
     /**
      * @return \Spryker\Zed\Cms\Communication\CmsCommunicationFactory
      */
-    protected function getFactory()
+    protected function getFactory(): CmsCommunicationFactory
     {
         return $this->tester->getFactory();
     }

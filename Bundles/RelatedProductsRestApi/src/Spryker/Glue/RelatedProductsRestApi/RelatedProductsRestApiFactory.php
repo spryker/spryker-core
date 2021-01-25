@@ -10,7 +10,8 @@ namespace Spryker\Glue\RelatedProductsRestApi;
 use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Glue\RelatedProductsRestApi\Dependency\Client\RelatedProductsRestApiToProductRelationStorageClientInterface;
 use Spryker\Glue\RelatedProductsRestApi\Dependency\Client\RelatedProductsRestApiToProductStorageClientInterface;
-use Spryker\Glue\RelatedProductsRestApi\Dependency\Resource\RelatedProductsRestApiToProductsRestApiResourceInterface;
+use Spryker\Glue\RelatedProductsRestApi\Dependency\Client\RelatedProductsRestApiToStoreClientInterface;
+use Spryker\Glue\RelatedProductsRestApi\Dependency\RestApiResource\RelatedProductsRestApiToProductsRestApiResourceInterface;
 use Spryker\Glue\RelatedProductsRestApi\Processor\RelatedProduct\RelatedProductReader;
 use Spryker\Glue\RelatedProductsRestApi\Processor\RelatedProduct\RelatedProductReaderInterface;
 use Spryker\Glue\RelatedProductsRestApi\Processor\RestResponseBuilder\RelatedProductRestResponseBuilder;
@@ -26,7 +27,8 @@ class RelatedProductsRestApiFactory extends AbstractFactory
         return new RelatedProductReader(
             $this->getProductStorageClient(),
             $this->getProductRelationStorageClient(),
-            $this->createRelatedProductRestResponseBuilder()
+            $this->createRelatedProductRestResponseBuilder(),
+            $this->getStoreClient()
         );
     }
 
@@ -58,10 +60,18 @@ class RelatedProductsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\RelatedProductsRestApi\Dependency\Resource\RelatedProductsRestApiToProductsRestApiResourceInterface
+     * @return \Spryker\Glue\RelatedProductsRestApi\Dependency\RestApiResource\RelatedProductsRestApiToProductsRestApiResourceInterface
      */
     public function getProductsRestApiResource(): RelatedProductsRestApiToProductsRestApiResourceInterface
     {
         return $this->getProvidedDependency(RelatedProductsRestApiDependencyProvider::RESOURCE_PRODUCTS_REST_API);
+    }
+
+    /**
+     * @return \Spryker\Glue\RelatedProductsRestApi\Dependency\Client\RelatedProductsRestApiToStoreClientInterface
+     */
+    public function getStoreClient(): RelatedProductsRestApiToStoreClientInterface
+    {
+        return $this->getProvidedDependency(RelatedProductsRestApiDependencyProvider::CLIENT_STORE);
     }
 }

@@ -31,7 +31,7 @@ class ReadQuoteTest extends Unit
     /**
      * @return void
      */
-    public function testReadQuoteFromDatabaseByCustomer()
+    public function testReadQuoteFromDatabaseByCustomer(): void
     {
         // Arrange
         $customerTransfer = $this->tester->haveCustomer();
@@ -46,6 +46,6 @@ class ReadQuoteTest extends Unit
 
         // Assert
         $this->assertTrue($quoteResponseTransfer->getIsSuccessful(), 'Quote response transfer should have ben successful.');
-        $this->assertEquals($quoteTransfer->getIdQuote(), $quoteResponseTransfer->getQuoteTransfer()->getIdQuote(), 'Quote response should have expected quote ID from database.');
+        $this->assertSame($quoteTransfer->getIdQuote(), $quoteResponseTransfer->getQuoteTransfer()->getIdQuote(), 'Quote response should have expected quote ID from database.');
     }
 }

@@ -12,6 +12,7 @@ use Codeception\TestInterface;
 use Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
+use Orm\Zed\Category\Persistence\SpyCategory;
 use Orm\Zed\Category\Persistence\SpyCategoryQuery;
 use Silex\Application;
 use Spryker\Service\Container\Container;
@@ -26,7 +27,7 @@ class CategoryHelper extends Module
     /**
      * @return void
      */
-    public function _initialize()
+    public function _initialize(): void
     {
         if (class_exists(PropelApplicationPlugin::class)) {
             $propelApplicationPlugin = new PropelApplicationPlugin();
@@ -39,7 +40,7 @@ class CategoryHelper extends Module
     }
 
     /**
-     * @deprecated Will be removed in favor of `\Spryker\Zed\Propel\Communication\Plugin\Application\PropelApplicationPlugin`.
+     * @deprecated Will be removed in favor of {@link \Spryker\Zed\Propel\Communication\Plugin\Application\PropelApplicationPlugin}.
      *
      * @return void
      */
@@ -54,7 +55,7 @@ class CategoryHelper extends Module
      *
      * @return void
      */
-    public function _before(TestInterface $test)
+    public function _before(TestInterface $test): void
     {
         parent::_before($test);
 
@@ -64,7 +65,7 @@ class CategoryHelper extends Module
     /**
      * @return void
      */
-    public function _afterSuite()
+    public function _afterSuite(): void
     {
         parent::_afterSuite();
 
@@ -77,7 +78,7 @@ class CategoryHelper extends Module
      *
      * @return void
      */
-    public function _failed(TestInterface $test, $fail)
+    public function _failed(TestInterface $test, $fail): void
     {
         parent::_failed($test, $fail);
 
@@ -87,7 +88,7 @@ class CategoryHelper extends Module
     /**
      * @return void
      */
-    private function cleanUpDatabase()
+    private function cleanUpDatabase(): void
     {
         $this->removeCategory(CategoryCreatePage::CATEGORY_A);
         $this->removeCategory(CategoryCreatePage::CATEGORY_B);
@@ -98,7 +99,7 @@ class CategoryHelper extends Module
      *
      * @return void
      */
-    protected function removeCategory($categoryKey)
+    protected function removeCategory(string $categoryKey): void
     {
         $categoryQuery = new SpyCategoryQuery();
         $categoryEntity = $categoryQuery->findOneByCategoryKey($categoryKey);
@@ -129,7 +130,7 @@ class CategoryHelper extends Module
      *
      * @return \Generated\Shared\Transfer\CategoryTransfer
      */
-    public function createCategory($categoryKey)
+    public function createCategory(string $categoryKey): CategoryTransfer
     {
         $categoryTransfer = new CategoryTransfer();
         $categoryTransfer->setCategoryKey($categoryKey);
@@ -156,7 +157,7 @@ class CategoryHelper extends Module
      *
      * @return void
      */
-    protected function addLocalizedAttributesToCategoryTransfer(CategoryTransfer $categoryTransfer)
+    protected function addLocalizedAttributesToCategoryTransfer(CategoryTransfer $categoryTransfer): void
     {
         $localeTransferCollection = $this->getLocaleTransferCollection();
 
@@ -179,7 +180,7 @@ class CategoryHelper extends Module
     /**
      * @return \Generated\Shared\Transfer\LocaleTransfer[]
      */
-    protected function getLocaleTransferCollection()
+    protected function getLocaleTransferCollection(): array
     {
         $localeFacade = new LocaleFacade();
         $localeTransferCollection = $localeFacade->getLocaleCollection();
@@ -192,7 +193,7 @@ class CategoryHelper extends Module
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategory
      */
-    public function loadCategoryByCategoryKey($categoryKey)
+    public function loadCategoryByCategoryKey(string $categoryKey): SpyCategory
     {
         $categoryQuery = new SpyCategoryQuery();
 

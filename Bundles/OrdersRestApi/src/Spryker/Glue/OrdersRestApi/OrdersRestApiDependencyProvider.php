@@ -18,6 +18,9 @@ class OrdersRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_SALES = 'CLIENT_SALES';
 
+    public const PLUGINS_REST_ORDER_ITEMS_ATTRIBUTES_MAPPER = 'PLUGINS_REST_ORDER_ITEMS_ATTRIBUTES_MAPPER';
+    public const PLUGINS_REST_ORDER_DETAILS_ATTRIBUTES_MAPPER = 'PLUGINS_REST_ORDER_DETAILS_ATTRIBUTES_MAPPER';
+
     /**
      * @param \Spryker\Glue\Kernel\Container $container
      *
@@ -27,6 +30,8 @@ class OrdersRestApiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = parent::provideDependencies($container);
         $container = $this->addSalesClient($container);
+        $container = $this->addRestOrderItemsAttributesMapperPlugins($container);
+        $container = $this->addRestOrderDetailsAttributesMapperPlugins($container);
 
         return $container;
     }
@@ -38,10 +43,54 @@ class OrdersRestApiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addSalesClient(Container $container): Container
     {
-        $container[static::CLIENT_SALES] = function (Container $container) {
+        $container->set(static::CLIENT_SALES, function (Container $container) {
             return new OrdersRestApiToSalesClientBridge($container->getLocator()->sales()->client());
-        };
+        });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addRestOrderItemsAttributesMapperPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_REST_ORDER_ITEMS_ATTRIBUTES_MAPPER, function () {
+            return $this->getRestOrderItemsAttributesMapperPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Glue\OrdersRestApiExtension\Dependency\Plugin\RestOrderItemsAttributesMapperPluginInterface[]
+     */
+    protected function getRestOrderItemsAttributesMapperPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addRestOrderDetailsAttributesMapperPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_REST_ORDER_DETAILS_ATTRIBUTES_MAPPER, function () {
+            return $this->getRestOrderDetailsAttributesMapperPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Glue\OrdersRestApiExtension\Dependency\Plugin\RestOrderDetailsAttributesMapperPluginInterface[]
+     */
+    protected function getRestOrderDetailsAttributesMapperPlugins(): array
+    {
+        return [];
     }
 }

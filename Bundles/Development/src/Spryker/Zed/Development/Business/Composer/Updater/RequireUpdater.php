@@ -13,7 +13,7 @@ class RequireUpdater implements UpdaterInterface
 {
     public const KEY_REQUIRE = 'require';
     public const KEY_REQUIRE_PHP = 'php';
-    public const PHP_MINIMUM = '>=7.1';
+    public const PHP_MINIMUM = '>=7.3';
 
     /**
      * @param array $composerJson
@@ -21,7 +21,7 @@ class RequireUpdater implements UpdaterInterface
      *
      * @return array
      */
-    public function update(array $composerJson, SplFileInfo $composerJsonFile)
+    public function update(array $composerJson, SplFileInfo $composerJsonFile): array
     {
         $composerJson = $this->requirePhpVersion($composerJson);
 

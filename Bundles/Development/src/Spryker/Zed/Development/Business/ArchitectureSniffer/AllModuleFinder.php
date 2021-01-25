@@ -8,9 +8,9 @@
 namespace Spryker\Zed\Development\Business\ArchitectureSniffer;
 
 use InvalidArgumentException;
+use Laminas\Filter\FilterInterface;
 use Spryker\Zed\Development\DevelopmentConfig;
 use Symfony\Component\Finder\Finder;
-use Zend\Filter\FilterInterface;
 
 class AllModuleFinder implements AllModuleFinderInterface
 {
@@ -25,14 +25,14 @@ class AllModuleFinder implements AllModuleFinderInterface
     protected $developmentConfig;
 
     /**
-     * @var \Zend\Filter\FilterInterface
+     * @var \Laminas\Filter\FilterInterface
      */
     protected $filter;
 
     /**
      * @param \Symfony\Component\Finder\Finder $finder
      * @param \Spryker\Zed\Development\DevelopmentConfig $developmentConfig
-     * @param \Zend\Filter\FilterInterface $filter
+     * @param \Laminas\Filter\FilterInterface $filter
      */
     public function __construct(Finder $finder, DevelopmentConfig $developmentConfig, FilterInterface $filter)
     {
@@ -114,16 +114,17 @@ class AllModuleFinder implements AllModuleFinderInterface
      */
     protected function findModules($path, $namespace): array
     {
-        $directories = [];
         $finder = clone $this->finder;
 
         try {
+            /** @var \SplFileInfo[] $directories */
             $directories = $finder
                 ->directories()
                 ->in($path)
                 ->depth('== 0');
         } catch (InvalidArgumentException $e) {
             // ~ Directory does not exist. It's not an error.
+            return [];
         }
 
         if (!$directories) {

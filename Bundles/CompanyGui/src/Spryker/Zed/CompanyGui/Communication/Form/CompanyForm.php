@@ -13,7 +13,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Required;
 
 /**
  * @method \Spryker\Zed\CompanyGui\Communication\CompanyGuiCommunicationFactory getFactory()
@@ -78,7 +77,6 @@ class CompanyForm extends AbstractType
     protected function getTextFieldConstraints(): array
     {
         return [
-            new Required(),
             new NotBlank(),
             new Length(['max' => 100]),
         ];

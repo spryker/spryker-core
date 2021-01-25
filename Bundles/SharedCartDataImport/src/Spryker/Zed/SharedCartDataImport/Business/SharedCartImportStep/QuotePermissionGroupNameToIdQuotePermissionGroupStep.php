@@ -33,6 +33,7 @@ class QuotePermissionGroupNameToIdQuotePermissionGroupStep implements DataImport
         $quotePermissionGroupName = $dataSet[SharedCartDataSetInterface::PERMISSION_GROUP_NAME];
         if (!isset($this->idPermissionGroupCache[$quotePermissionGroupName])) {
             $quotePermissionGroupQuery = new SpyQuotePermissionGroupQuery();
+            /** @var int|null $idPermissionGroup */
             $idPermissionGroup = $quotePermissionGroupQuery
                 ->select(SpyQuotePermissionGroupTableMap::COL_ID_QUOTE_PERMISSION_GROUP)
                 ->findOneByName($quotePermissionGroupName);

@@ -1,0 +1,67 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 64,
+            "line_to": 64,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getName on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/Monitoring/src/Spryker/Yves/Monitoring/EventHandler/EventHandler.php",
+            "snippet": "        return static::TRANSACTION_NAME_PREFIX . $event->getCommand()->getName();",
+            "selected_text": "getName",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 64,
+            "line_to": 64,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getName on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/Monitoring/src/Spryker/Zed/Monitoring/Business/EventHandler/EventHandler.php",
+            "snippet": "        return static::TRANSACTION_NAME_PREFIX . $event->getCommand()->getName();",
+            "selected_text": "getName",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 56,
+            "line_to": 56,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getName on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/Monitoring/src/Spryker/Zed/Monitoring/Communication/Plugin/MonitoringConsolePlugin.php",
+            "snippet": "        return static::TRANSACTION_NAME_PREFIX . $event->getCommand()->getName();",
+            "selected_text": "getName",
+            "error_level": 3,
+            "shortcode": 83
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 60,
+            "line_to": 60,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Service\\Container\\Container::offsetGet has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Monitoring/src/Spryker/Yves/Monitoring/Plugin/ServiceProvider/MonitoringRequestTransactionServiceProvider.php",
+            "snippet": "        return $app['dispatcher'];",
+            "selected_text": "$app",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 75,
+            "line_to": 75,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Service\\Container\\Container::offsetGet has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Monitoring/src/Spryker/Zed/Monitoring/Communication/Plugin/ServiceProvider/MonitoringRequestTransactionServiceProvider.php",
+            "snippet": "        return $app['dispatcher'];",
+            "selected_text": "$app",
+            "error_level": 2,
+            "shortcode": 1
+        }
+    ]
+}

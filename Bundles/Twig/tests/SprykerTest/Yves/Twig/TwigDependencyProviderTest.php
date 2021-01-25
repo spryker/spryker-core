@@ -25,7 +25,7 @@ class TwigDependencyProviderTest extends Unit
     /**
      * @return void
      */
-    public function testUtilTextServiceIsAdded()
+    public function testUtilTextServiceIsAdded(): void
     {
         $container = new Container();
         $twigDependencyProvider = new TwigDependencyProvider();

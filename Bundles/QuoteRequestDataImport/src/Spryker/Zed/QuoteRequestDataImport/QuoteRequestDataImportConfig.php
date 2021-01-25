@@ -16,6 +16,8 @@ class QuoteRequestDataImportConfig extends DataImportConfig
     public const IMPORT_TYPE_QUOTE_REQUEST_VERSION = 'quote-request-version';
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getQuoteRequestDataImporterConfiguration(): DataImporterConfigurationTransfer
@@ -29,6 +31,8 @@ class QuoteRequestDataImportConfig extends DataImportConfig
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getQuoteRequestVersionDataImporterConfiguration(): DataImporterConfigurationTransfer

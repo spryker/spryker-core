@@ -3,6 +3,10 @@
 {% set widget_title = 'Warehouses' %}
 {% block section_title %}{{ widget_title | trans }}{% endblock %}
 
+{% block action %}
+    {{ createActionButton('/stock-gui/create-warehouse', 'Create Warehouse' | trans) }}
+{% endblock %}
+
 {% block content %}
 
     {% embed '@Gui/Partials/widget.twig' with { widget_title: widget_title | trans } %}

@@ -50,7 +50,7 @@ class ProductItemTaxRateCalculatorForItemLevelShippingAddressTest extends Test
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -151,7 +151,7 @@ class ProductItemTaxRateCalculatorForItemLevelShippingAddressTest extends Test
      * @param string $defaultCountryIso2Code
      * @param float $defaultTaxRate
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\TaxProductConnector\Dependency\Facade\TaxProductConnectorToTaxInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\TaxProductConnector\Dependency\Facade\TaxProductConnectorToTaxInterface
      */
     protected function createTaxProductConnectorToTaxFacadeBridgeMock(string $defaultCountryIso2Code, float $defaultTaxRate): TaxProductConnectorToTaxInterface
     {

@@ -48,4 +48,8 @@
         <property name="productAlternatives" type="ProductAlternativeListItem[]" singular="productAlternative"/>
     </transfer>
 
+    <transfer name="Locale">
+        <property name="idLocale" type="int"/>
+    </transfer>
+
 </transfers>

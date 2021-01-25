@@ -8,10 +8,12 @@
 namespace Spryker\Zed\Oms\Business\OrderStateMachine;
 
 use Exception;
+use Generated\Shared\Transfer\ItemTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Spryker\Shared\Oms\OmsConfig;
 use Spryker\Zed\Oms\Business\Exception\StateNotFoundException;
+use Spryker\Zed\Oms\Business\Process\StateInterface;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
 
 class Finder implements FinderInterface
@@ -168,30 +170,6 @@ class Finder implements FinderInterface
     public function isOrderFlaggedExcludeFromCustomer($idOrder)
     {
         return $this->isOrderFlaggedAll($idOrder, OmsConfig::STATE_TYPE_FLAG_EXCLUDE_FROM_CUSTOMER);
-    }
-
-    /**
-     * @param string $sku
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
-     */
-    public function getReservedOrderItemsForSku($sku)
-    {
-        return $this->getOrderItemsForSku($this->retrieveReservedStates(), $sku, false);
-    }
-
-    /**
-     * @param array $states
-     * @param string $sku
-     * @param bool $returnTest
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
-     */
-    protected function getOrderItemsForSku(array $states, $sku, $returnTest = true)
-    {
-        $orderItems = $this->queryContainer->querySalesOrderItemsForSku($states, $sku, $returnTest);
-
-        return $orderItems;
     }
 
     /**
@@ -381,5 +359,20 @@ class Finder implements FinderInterface
         $state = $allStates[$stateName];
 
         return $state->getDisplay();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Spryker\Zed\Oms\Business\Process\StateInterface|null
+     */
+    public function findStateByName(ItemTransfer $itemTransfer): ?StateInterface
+    {
+        $processName = $itemTransfer->requireProcess()->getProcess();
+        $process = $this->builder->createProcess($processName);
+        $stateName = $itemTransfer->requireState()->getState()->getName();
+        $allStates = $process->getAllStates();
+
+        return $allStates[$stateName] ?? null;
     }
 }

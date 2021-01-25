@@ -32,7 +32,7 @@ class GraphTest extends Unit
     /**
      * @return void
      */
-    public function testCreateInstance()
+    public function testCreateInstance(): void
     {
         $this->assertInstanceOf(Graph::class, $this->getGraph(self::GRAPH_NAME));
     }
@@ -40,7 +40,7 @@ class GraphTest extends Unit
     /**
      * @return void
      */
-    public function testCreateInstanceWithAttributes()
+    public function testCreateInstanceWithAttributes(): void
     {
         $this->assertInstanceOf(Graph::class, $this->getGraph(self::GRAPH_NAME, self::ATTRIBUTES));
     }
@@ -48,7 +48,7 @@ class GraphTest extends Unit
     /**
      * @return void
      */
-    public function testCreateInstanceUnDirectedGraph()
+    public function testCreateInstanceUnDirectedGraph(): void
     {
         $this->assertInstanceOf(Graph::class, $this->getGraph(self::GRAPH_NAME, [], false));
     }
@@ -56,7 +56,7 @@ class GraphTest extends Unit
     /**
      * @return void
      */
-    public function testCreateInstanceTolerantGraph()
+    public function testCreateInstanceTolerantGraph(): void
     {
         $this->assertInstanceOf(Graph::class, $this->getGraph(self::GRAPH_NAME, [], true, false));
     }
@@ -64,7 +64,7 @@ class GraphTest extends Unit
     /**
      * @return void
      */
-    public function testAddNode()
+    public function testAddNode(): void
     {
         $this->assertInstanceOf(Graph::class, $this->getGraph()->addNode(self::NODE_A));
     }
@@ -72,7 +72,7 @@ class GraphTest extends Unit
     /**
      * @return void
      */
-    public function testAddNodeWithAttributes()
+    public function testAddNodeWithAttributes(): void
     {
         $this->assertInstanceOf(Graph::class, $this->getGraph()->addNode(self::NODE_A, self::ATTRIBUTES));
     }
@@ -80,7 +80,7 @@ class GraphTest extends Unit
     /**
      * @return void
      */
-    public function testAddNodeWithGroup()
+    public function testAddNodeWithGroup(): void
     {
         $this->assertInstanceOf(Graph::class, $this->getGraph()->addNode(self::NODE_A, [], self::GROUP_NAME));
     }
@@ -88,7 +88,7 @@ class GraphTest extends Unit
     /**
      * @return void
      */
-    public function testAddEdge()
+    public function testAddEdge(): void
     {
         $adapter = $this->getGraphWithNodes();
 
@@ -98,7 +98,7 @@ class GraphTest extends Unit
     /**
      * @return void
      */
-    public function testAddEdgeWithAttributes()
+    public function testAddEdgeWithAttributes(): void
     {
         $adapter = $this->getGraphWithNodes();
 
@@ -108,7 +108,7 @@ class GraphTest extends Unit
     /**
      * @return void
      */
-    public function testAddCluster()
+    public function testAddCluster(): void
     {
         $this->assertInstanceOf(Graph::class, $this->getGraph()->addCluster(self::CLUSTER_NAME));
     }
@@ -116,7 +116,7 @@ class GraphTest extends Unit
     /**
      * @return void
      */
-    public function testAddClusterWithAttributes()
+    public function testAddClusterWithAttributes(): void
     {
         $this->assertInstanceOf(Graph::class, $this->getGraph()->addCluster(self::CLUSTER_NAME, self::ATTRIBUTES));
     }
@@ -124,7 +124,7 @@ class GraphTest extends Unit
     /**
      * @return void
      */
-    public function testRender()
+    public function testRender(): void
     {
         $this->assertIsString($this->getGraph()->render('svg'));
     }
@@ -132,7 +132,7 @@ class GraphTest extends Unit
     /**
      * @return void
      */
-    public function testRenderWithFileName()
+    public function testRenderWithFileName(): void
     {
         $this->assertIsString($this->getGraph()->render('svg', 'filename'));
     }
@@ -145,7 +145,7 @@ class GraphTest extends Unit
      *
      * @return \Spryker\Shared\Graph\Graph
      */
-    private function getGraph($name = self::GRAPH_NAME, array $attributes = [], $directed = true, $strict = true)
+    private function getGraph(string $name = self::GRAPH_NAME, array $attributes = [], bool $directed = true, bool $strict = true): Graph
     {
         $adapterMock = $this->createAdapterMock();
 
@@ -155,7 +155,7 @@ class GraphTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Graph\GraphAdapterInterface
      */
-    private function createAdapterMock()
+    private function createAdapterMock(): GraphAdapterInterface
     {
         $adapterMock = $this->getMockBuilder(GraphAdapterInterface::class)->setMethods(['create', 'addNode', 'addEdge', 'addCluster', 'render'])->getMock();
         $adapterMock->method('render')->willReturn('');
@@ -166,7 +166,7 @@ class GraphTest extends Unit
     /**
      * @return \Spryker\Shared\Graph\Graph
      */
-    private function getGraphWithNodes()
+    private function getGraphWithNodes(): Graph
     {
         $adapter = $this->getGraph();
         $adapter->addNode(self::NODE_A);

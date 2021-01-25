@@ -1,5 +1,6 @@
 {
-  "include": {
-    "spryker/uuid-behavior": "Used to generate UUIDs for entities."
-  }
+    "include": {
+        "spryker/uuid-behavior": "Used to generate UUIDs for entities.",
+        "spryker/event": "Required to use Event plugins."
+    }
 }

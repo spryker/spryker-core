@@ -10,9 +10,9 @@
 
 {% block content %}
 
-    {% include '@AvailabilityGui/_partials/store_switcher.twig' %}
+    {% include '@AvailabilityGui/_partials/filters.twig' %}
 
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Abstract product availability' } %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Abstract product availability' | trans } %}
         {% block widget_content %}
             <div class="row">
 
@@ -25,7 +25,7 @@
                 </div>
                 <div class="col-lg-2">
                     <p><b>{{ 'Availability' | trans }}:</b></p><p>
-                        {% if productAbstractAvailability.availability > 0 or productAbstractAvailability.isNeverOutOfStock %}
+                        {% if productAbstractAvailability.availability.greaterThan(0) or productAbstractAvailability.isNeverOutOfStock %}
                             <span class="label label-info"> {{ "Available" | trans }}</span>
                         {% else  %}
                             <span class="label label-info"> {{ "Not available" | trans }}</span>
@@ -90,7 +90,7 @@
 
 {% block footer_js %}
     {{ parent() }}
-    <script src="/assets/js/spryker-zed-availability-gui-main.js"></script>
+    <script src="{{ assetsPath('js/spryker-zed-availability-gui-main.js') }}"></script>
 {% endblock %}
 
 

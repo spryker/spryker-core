@@ -1,0 +1,27 @@
+namespace: SprykerTest\Zed\CmsSlotBlockDataImport
+paths:
+    tests: .
+    data: ../../../_data
+    support: _support
+    log: ../../../_output
+coverage:
+    enabled: true
+    remote: false
+    whitelist:
+        include:
+            - '../../../../src/*'
+suites:
+    Communication:
+        path: Communication
+        class_name: CmsSlotBlockDataImportCommunicationTester
+        modules:
+            enabled:
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+                - \SprykerTest\Zed\CmsBlock\Helper\CmsBlockDataHelper
+                - \SprykerTest\Zed\CmsSlot\Helper\CmsSlotHelper
+                - \SprykerTest\Zed\CmsSlotBlock\Helper\CmsSlotBlockHelper
+                - \SprykerTest\Shared\Product\Helper\ProductDataHelper
+                - \SprykerTest\Zed\Category\Helper\CategoryDataHelper
+                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper

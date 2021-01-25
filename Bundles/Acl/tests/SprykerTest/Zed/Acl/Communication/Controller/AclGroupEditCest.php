@@ -28,10 +28,10 @@ class AclGroupEditCest
      *
      * @return void
      */
-    public function breadcrumbIsVisible(AclCommunicationTester $i)
+    public function breadcrumbIsVisible(AclCommunicationTester $i): void
     {
         $i->listDataTable(AclGroupListPage::URL . '/table');
         $i->clickDataTableEditButton();
-        $i->seeBreadcrumbNavigation('Dashboard / Users Control / Groups / Edit Group');
+        $i->seeBreadcrumbNavigation('Users / User Groups / Edit Group');
     }
 }

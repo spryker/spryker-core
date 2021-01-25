@@ -26,14 +26,6 @@ class CheckoutRestApiToPaymentFacadeBridge implements CheckoutRestApiToPaymentFa
     }
 
     /**
-     * @return \Generated\Shared\Transfer\PaymentProviderCollectionTransfer
-     */
-    public function getAvailablePaymentProviders(): PaymentProviderCollectionTransfer
-    {
-        return $this->paymentFacade->getAvailablePaymentProviders();
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\PaymentMethodsTransfer
@@ -41,5 +33,15 @@ class CheckoutRestApiToPaymentFacadeBridge implements CheckoutRestApiToPaymentFa
     public function getAvailableMethods(QuoteTransfer $quoteTransfer)
     {
         return $this->paymentFacade->getAvailableMethods($quoteTransfer);
+    }
+
+    /**
+     * @param string $storeName
+     *
+     * @return \Generated\Shared\Transfer\PaymentProviderCollectionTransfer
+     */
+    public function getAvailablePaymentProvidersForStore(string $storeName): PaymentProviderCollectionTransfer
+    {
+        return $this->paymentFacade->getAvailablePaymentProvidersForStore($storeName);
     }
 }

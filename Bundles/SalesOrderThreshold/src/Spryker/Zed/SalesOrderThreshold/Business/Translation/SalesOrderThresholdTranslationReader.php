@@ -14,7 +14,7 @@ use Spryker\Zed\SalesOrderThreshold\Dependency\Facade\SalesOrderThresholdToGloss
 use Spryker\Zed\SalesOrderThreshold\Dependency\Facade\SalesOrderThresholdToStoreFacadeInterface;
 
 /**
- * @deprecated Use `Spryker\Zed\SalesOrderThreshold\Business\Translation\Hydrator\SalesOrderThresholdTranslationHydratorInterface` instead.
+ * @deprecated Use {@link \Spryker\Zed\SalesOrderThreshold\Business\Translation\Hydrator\SalesOrderThresholdTranslationHydratorInterface} instead.
  */
 class SalesOrderThresholdTranslationReader implements SalesOrderThresholdTranslationReaderInterface
 {

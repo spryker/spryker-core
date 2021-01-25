@@ -7,6 +7,11 @@
 
 namespace Spryker\Zed\ProductRelation\Dependency;
 
+/**
+ * @deprecated Use {@link \Spryker\Shared\ProductRelationStorage\ProductRelationStorageConfig} instead.
+ *
+ * @see \Spryker\Shared\ProductRelationStorage\ProductRelationStorageConfig
+ */
 interface ProductRelationEvents
 {
     /**
@@ -16,6 +21,14 @@ interface ProductRelationEvents
      * @api
      */
     public const PRODUCT_ABSTRACT_RELATION_PUBLISH = 'ProductRelation.product_abstract_relation.publish';
+
+    /**
+     * Specification
+     * - This events will be used for product_relation_store publishing
+     *
+     * @api
+     */
+    public const ENTITY_SPY_PRODUCT_RELATION_STORE_PUBLISH = 'ProductRelation.product_relation_store.publish';
 
     /**
      * Specification

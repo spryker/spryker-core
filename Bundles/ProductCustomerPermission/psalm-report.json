@@ -1,0 +1,236 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 127,
+            "line_to": 127,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'array<array-key, string>' for Spryker\\Zed\\ProductCustomerPermission\\Business\\Model\\ProductCustomerPermissionCheckoutPreCondition::getDeniedProductAbstractNames is incorrect, got 'list<mixed|null|string>'",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCustomerPermission/src/Spryker/Zed/ProductCustomerPermission/Business/Model/ProductCustomerPermissionCheckoutPreCondition.php",
+            "snippet": "     * @return string[]",
+            "selected_text": "string[]",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 140,
+            "line_to": 140,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'list<mixed|null|string>' does not match the declared return type 'array<array-key, string>' for Spryker\\Zed\\ProductCustomerPermission\\Business\\Model\\ProductCustomerPermissionCheckoutPreCondition::getDeniedProductAbstractNames",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCustomerPermission/src/Spryker/Zed/ProductCustomerPermission/Business/Model/ProductCustomerPermissionCheckoutPreCondition.php",
+            "snippet": "        return $deniedProductAbstractNames;",
+            "selected_text": "$deniedProductAbstractNames",
+            "error_level": 6,
+            "shortcode": 128
+        },
+        {
+            "severity": "error",
+            "line_from": 146,
+            "line_to": 146,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'array<array-key, int>' for Spryker\\Zed\\ProductCustomerPermission\\Business\\Model\\ProductCustomerPermissionCheckoutPreCondition::getIdProductAbstracts is incorrect, got 'array<array-key|mixed, int|mixed|null>'",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCustomerPermission/src/Spryker/Zed/ProductCustomerPermission/Business/Model/ProductCustomerPermissionCheckoutPreCondition.php",
+            "snippet": "     * @return int[]",
+            "selected_text": "int[]",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 159,
+            "line_to": 159,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'array<array-key|mixed, int|mixed|null>' does not match the declared return type 'array<array-key, int>' for Spryker\\Zed\\ProductCustomerPermission\\Business\\Model\\ProductCustomerPermissionCheckoutPreCondition::getIdProductAbstracts",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCustomerPermission/src/Spryker/Zed/ProductCustomerPermission/Business/Model/ProductCustomerPermissionCheckoutPreCondition.php",
+            "snippet": "        return $idProductAbstracts;",
+            "selected_text": "$idProductAbstracts",
+            "error_level": 6,
+            "shortcode": 128
+        },
+        {
+            "severity": "error",
+            "line_from": 66,
+            "line_to": 66,
+            "type": "ParamNameMismatch",
+            "message": "Argument 2 of Spryker\\Zed\\ProductCustomerPermission\\Business\\Model\\ProductCustomerPermissionSaver::savePermissions has wrong name $idProductAbstracts, expecting $idProductAbstractAbstracts as defined by Spryker\\Zed\\ProductCustomerPermission\\Business\\Model\\ProductCustomerPermissionSaverInterface::savePermissions",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCustomerPermission/src/Spryker/Zed/ProductCustomerPermission/Business/Model/ProductCustomerPermissionSaver.php",
+            "snippet": "    public function savePermissions(int $idCustomer, array $idProductAbstracts): void",
+            "selected_text": "$idProductAbstracts",
+            "error_level": 7,
+            "shortcode": 230
+        },
+        {
+            "severity": "error",
+            "line_from": 123,
+            "line_to": 123,
+            "type": "ParamNameMismatch",
+            "message": "Argument 2 of Spryker\\Zed\\ProductCustomerPermission\\Business\\Model\\ProductCustomerPermissionSaver::deletePermissions has wrong name $idProductAbstracts, expecting $idProductAbstractAbstracts as defined by Spryker\\Zed\\ProductCustomerPermission\\Business\\Model\\ProductCustomerPermissionSaverInterface::deletePermissions",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCustomerPermission/src/Spryker/Zed/ProductCustomerPermission/Business/Model/ProductCustomerPermissionSaver.php",
+            "snippet": "    public function deletePermissions(int $idCustomer, array $idProductAbstracts): void",
+            "selected_text": "$idProductAbstracts",
+            "error_level": 7,
+            "shortcode": 230
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 45,
+            "line_to": 45,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Client\\ProductCustomerPermission\\Plugin\\ProductCustomerPermissionQueryExpanderPlugin::createCustomerFilter cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCustomerPermission/src/Spryker/Client/ProductCustomerPermission/Plugin/ProductCustomerPermissionQueryExpanderPlugin.php",
+            "snippet": "            $productPriceFilter = $this->createCustomerFilter($customerTransfer->getIdCustomer());",
+            "selected_text": "$customerTransfer->getIdCustomer()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 67,
+            "line_to": 67,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of get_class expects object, possibly different type Elastica\\Query\\AbstractQuery|array<array-key, mixed> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCustomerPermission/src/Spryker/Client/ProductCustomerPermission/Plugin/ProductCustomerPermissionQueryExpanderPlugin.php",
+            "snippet": "                get_class($boolQuery)",
+            "selected_text": "$boolQuery",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 53,
+            "line_to": 53,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getCustomer on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCustomerPermission/src/Spryker/Zed/ProductCustomerPermission/Business/Model/ProductCustomerPermissionCartValidator.php",
+            "snippet": "        $customerTransfer = $cartChangeTransfer->getQuote()->getCustomer();",
+            "selected_text": "getCustomer",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 59,
+            "line_to": 59,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ProductCustomerPermission\\Business\\Model\\ProductCustomerPermissionCartValidator::hasPermission cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCustomerPermission/src/Spryker/Zed/ProductCustomerPermission/Business/Model/ProductCustomerPermissionCartValidator.php",
+            "snippet": "            if (!$this->hasPermission($customerTransfer->getIdCustomer(), $itemTransfer->getSku())) {",
+            "selected_text": "$customerTransfer->getIdCustomer()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 59,
+            "line_to": 59,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Zed\\ProductCustomerPermission\\Business\\Model\\ProductCustomerPermissionCartValidator::hasPermission cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCustomerPermission/src/Spryker/Zed/ProductCustomerPermission/Business/Model/ProductCustomerPermissionCartValidator.php",
+            "snippet": "            if (!$this->hasPermission($customerTransfer->getIdCustomer(), $itemTransfer->getSku())) {",
+            "selected_text": "$itemTransfer->getSku()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 81,
+            "line_to": 81,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdCustomer on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCustomerPermission/src/Spryker/Zed/ProductCustomerPermission/Business/Model/ProductCustomerPermissionCheckoutPreCondition.php",
+            "snippet": "        $idCustomer = $quoteTransfer->getCustomer()->getIdCustomer();",
+            "selected_text": "getIdCustomer",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 104,
+            "line_to": 104,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdCustomer on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCustomerPermission/src/Spryker/Zed/ProductCustomerPermission/Business/Model/ProductCustomerPermissionCheckoutPreCondition.php",
+            "snippet": "        $idCustomer = $quoteTransfer->getCustomer()->getIdCustomer();",
+            "selected_text": "getIdCustomer",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 156,
+            "line_to": 156,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $idProductAbstracts[$idProductAbstract] using possibly null offset int|mixed|null",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCustomerPermission/src/Spryker/Zed/ProductCustomerPermission/Business/Model/ProductCustomerPermissionCheckoutPreCondition.php",
+            "snippet": "            $idProductAbstracts[$idProductAbstract] = $idProductAbstract;",
+            "selected_text": "$idProductAbstracts",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 77,
+            "line_to": 77,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ProductCustomerPermission\\Persistence\\SpyProductCustomerPermission> variable $existingPermissionEntityCollection",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCustomerPermission/src/Spryker/Zed/ProductCustomerPermission/Business/Model/ProductCustomerPermissionSaver.php",
+            "snippet": "        if ($existingPermissionEntityCollection->count() === count($idProductAbstracts)) {",
+            "selected_text": "count",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 147,
+            "line_to": 147,
+            "type": "MismatchingDocblockParamType",
+            "message": "Parameter $existingEntities has wrong type 'Traversable|array<array-key, Orm\\Zed\\ProductCustomerPermission\\Persistence\\SpyProductCustomerPermission>', should be 'Traversable'",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCustomerPermission/src/Spryker/Zed/ProductCustomerPermission/Business/Model/ProductCustomerPermissionSaver.php",
+            "snippet": "     * @param \\Traversable|\\Orm\\Zed\\ProductCustomerPermission\\Persistence\\SpyProductCustomerPermission[] $existingEntities",
+            "selected_text": "\\Traversable|\\Orm\\Zed\\ProductCustomerPermission\\Persistence\\SpyProductCustomerPermission[]",
+            "error_level": 4,
+            "shortcode": 141
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 23,
+            "line_to": 23,
+            "type": "DeprecatedInterface",
+            "message": "Spryker\\Client\\Search\\Dependency\\Plugin\\QueryExpanderPluginInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCustomerPermission/src/Spryker/Client/ProductCustomerPermission/Plugin/ProductCustomerPermissionQueryExpanderPlugin.php",
+            "snippet": "class ProductCustomerPermissionQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface",
+            "selected_text": "ProductCustomerPermissionQueryExpanderPlugin",
+            "error_level": 2,
+            "shortcode": 152
+        },
+        {
+            "severity": "info",
+            "line_from": 21,
+            "line_to": 21,
+            "type": "DeprecatedInterface",
+            "message": "Spryker\\Zed\\Cart\\Dependency\\CartPreCheckPluginInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCustomerPermission/src/Spryker/Zed/ProductCustomerPermission/Communication/Plugin/ProductCustomerPermissionCartPreCheckPlugin.php",
+            "snippet": "class ProductCustomerPermissionCartPreCheckPlugin extends AbstractPlugin implements CartPreCheckPluginInterface, TerminationAwareCartPreCheckPluginInterface",
+            "selected_text": "ProductCustomerPermissionCartPreCheckPlugin",
+            "error_level": 2,
+            "shortcode": 152
+        },
+        {
+            "severity": "info",
+            "line_from": 20,
+            "line_to": 20,
+            "type": "DeprecatedInterface",
+            "message": "Spryker\\Zed\\Checkout\\Dependency\\Plugin\\CheckoutPreConditionInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCustomerPermission/src/Spryker/Zed/ProductCustomerPermission/Communication/Plugin/ProductCustomerPermissionPreConditionCheckerPlugin.php",
+            "snippet": "class ProductCustomerPermissionPreConditionCheckerPlugin extends AbstractPlugin implements CheckoutPreConditionInterface",
+            "selected_text": "ProductCustomerPermissionPreConditionCheckerPlugin",
+            "error_level": 2,
+            "shortcode": 152
+        }
+    ]
+}

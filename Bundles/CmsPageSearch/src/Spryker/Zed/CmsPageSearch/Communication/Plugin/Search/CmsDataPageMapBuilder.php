@@ -16,6 +16,8 @@ use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInt
 use Spryker\Zed\Search\Dependency\Plugin\NamedPageMapInterface;
 
 /**
+ * @deprecated Will be removed without replacement.
+ *
  * @method \Spryker\Zed\Collector\Communication\CollectorCommunicationFactory getFactory()
  */
 class CmsDataPageMapBuilder implements NamedPageMapInterface
@@ -34,15 +36,15 @@ class CmsDataPageMapBuilder implements NamedPageMapInterface
 
     /**
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
-     * @param array $cmsPageData
+     * @param array $data
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Generated\Shared\Transfer\PageMapTransfer
      */
-    public function buildPageMap(PageMapBuilderInterface $pageMapBuilder, array $cmsPageData, LocaleTransfer $localeTransfer)
+    public function buildPageMap(PageMapBuilderInterface $pageMapBuilder, array $data, LocaleTransfer $localeTransfer)
     {
-        $isActive = $cmsPageData['is_active'] && $cmsPageData['is_searchable'];
-        $storeName = $cmsPageData['store_name'] ?? Store::getInstance()->getStoreName();
+        $isActive = $data['is_active'] && $data['is_searchable'];
+        $storeName = $data['store_name'] ?? Store::getInstance()->getStoreName();
 
         $pageMapTransfer = (new PageMapTransfer())
             ->setStore($storeName)
@@ -50,22 +52,22 @@ class CmsDataPageMapBuilder implements NamedPageMapInterface
             ->setType(static::TYPE_CMS_PAGE)
             ->setIsActive($isActive);
 
-        $this->setActiveInDateRange($cmsPageData, $pageMapTransfer);
+        $this->setActiveInDateRange($data, $pageMapTransfer);
 
         $pageMapBuilder
-            ->addSearchResultData($pageMapTransfer, static::ID_CMS_PAGE, $cmsPageData['id_cms_page'])
-            ->addSearchResultData($pageMapTransfer, static::NAME, $cmsPageData['name'])
+            ->addSearchResultData($pageMapTransfer, static::ID_CMS_PAGE, $data['id_cms_page'])
+            ->addSearchResultData($pageMapTransfer, static::NAME, $data['name'])
             ->addSearchResultData($pageMapTransfer, static::TYPE, static::TYPE_CMS_PAGE)
-            ->addSearchResultData($pageMapTransfer, static::COL_URL, $cmsPageData[static::COL_URL])
-            ->addFullTextBoosted($pageMapTransfer, $cmsPageData['name'])
-            ->addFullText($pageMapTransfer, $cmsPageData['meta_title'])
-            ->addFullText($pageMapTransfer, $cmsPageData['meta_keywords'])
-            ->addFullText($pageMapTransfer, $cmsPageData['meta_description'])
-            ->addFullText($pageMapTransfer, implode(',', array_values($cmsPageData['placeholders'])))
-            ->addSuggestionTerms($pageMapTransfer, $cmsPageData['name'])
-            ->addCompletionTerms($pageMapTransfer, $cmsPageData['name']);
+            ->addSearchResultData($pageMapTransfer, static::COL_URL, $data[static::COL_URL])
+            ->addFullTextBoosted($pageMapTransfer, $data['name'])
+            ->addFullText($pageMapTransfer, $data['meta_title'])
+            ->addFullText($pageMapTransfer, $data['meta_keywords'])
+            ->addFullText($pageMapTransfer, $data['meta_description'])
+            ->addFullText($pageMapTransfer, implode(',', array_values($data['placeholders'])))
+            ->addSuggestionTerms($pageMapTransfer, $data['name'])
+            ->addCompletionTerms($pageMapTransfer, $data['name']);
 
-        $pageMapTransfer = $this->addSort($pageMapBuilder, $pageMapTransfer, $cmsPageData);
+        $pageMapTransfer = $this->addSort($pageMapBuilder, $pageMapTransfer, $data);
 
         return $pageMapTransfer;
     }

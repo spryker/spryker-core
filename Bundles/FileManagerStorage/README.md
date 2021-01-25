@@ -1,6 +1,6 @@
 # FileManagerStorage Module
 [![Build Status](https://travis-ci.org/spryker/file-manager-storage.svg)](https://travis-ci.org/spryker/file-manager-storage)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/file-manager-storage/badge.svg)](https://coveralls.io/github/spryker/file-manager-storage)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 Manages storage for file entities.
 

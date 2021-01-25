@@ -1,0 +1,6 @@
+{
+    "include": {
+        "spryker/zed-ui": "Zed Ui provides layout templates and frontend infrastructure.",
+        "spryker/transfer": "Provides transfer objects definition with associative functionality."
+    }
+}

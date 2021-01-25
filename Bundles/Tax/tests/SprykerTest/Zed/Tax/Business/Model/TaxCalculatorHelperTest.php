@@ -26,43 +26,43 @@ class TaxCalculatorHelperTest extends Unit
     /**
      * @return void
      */
-    public function testTaxValueFromTax()
+    public function testTaxValueFromTax(): void
     {
         $taxCalculatorHelper = $this->createPriceCalculationHelper();
 
         $netValueFromPrice = $taxCalculatorHelper->getNetValueFromPrice(100, 19);
 
-        $this->assertEquals(84, $netValueFromPrice);
+        $this->assertSame(84, $netValueFromPrice);
     }
 
     /**
      * @return void
      */
-    public function testTaxValueFroPrice()
+    public function testTaxValueFroPrice(): void
     {
         $taxCalculatorHelper = $this->createPriceCalculationHelper();
 
         $netValueFromPrice = $taxCalculatorHelper->getTaxValueFromPrice(100, 19);
 
-        $this->assertEquals(16, $netValueFromPrice);
+        $this->assertSame(16, $netValueFromPrice);
     }
 
     /**
      * @return void
      */
-    public function testTaxRateFromPrice()
+    public function testTaxRateFromPrice(): void
     {
         $taxCalculatorHelper = $this->createPriceCalculationHelper();
 
         $netValueFromPrice = $taxCalculatorHelper->getTaxValueFromPrice(100, 84);
 
-        $this->assertEquals(46, $netValueFromPrice);
+        $this->assertSame(46, $netValueFromPrice);
     }
 
     /**
      * @return \Spryker\Zed\Tax\Business\Model\PriceCalculationHelper
      */
-    protected function createPriceCalculationHelper()
+    protected function createPriceCalculationHelper(): PriceCalculationHelper
     {
         return new PriceCalculationHelper();
     }

@@ -17,6 +17,7 @@ use Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface;
 use Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
 use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 use Spryker\Zed\Collector\Business\Model\BatchResultInterface;
+use Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface as ProductSearchExtensionPageMapBuilderInterface;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -30,6 +31,8 @@ interface ProductSearchFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link mapDynamicProductAttributes()} instead.
+     *
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
      * @param array $attributes
@@ -39,6 +42,28 @@ interface ProductSearchFacadeInterface
      * @return \Generated\Shared\Transfer\PageMapTransfer
      */
     public function mapDynamicProductAttributes(PageMapBuilderInterface $pageMapBuilder, PageMapTransfer $pageMapTransfer, array $attributes);
+
+    /**
+     * Specification:
+     * - Iterates through the given product attribute associative array where the key is the name and the value is the value of the attributes.
+     * - If an attribute is configured to be mapped in the page map builder, then it's value will be added to the page map.
+     * - The data of the returned page map represents a hydrated Elasticsearch document with all the necessary attribute values.
+     *
+     * @api
+     *
+     * @param \Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface $pageMapBuilder
+     * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
+     * @param array $attributes
+     *
+     * @throws \Spryker\Zed\ProductSearch\Business\Exception\InvalidFilterTypeException
+     *
+     * @return \Generated\Shared\Transfer\PageMapTransfer
+     */
+    public function mapDynamicProductAttributesToSearchData(
+        ProductSearchExtensionPageMapBuilderInterface $pageMapBuilder,
+        PageMapTransfer $pageMapTransfer,
+        array $attributes
+    ): PageMapTransfer;
 
     /**
      * Specification:
@@ -88,7 +113,7 @@ interface ProductSearchFacadeInterface
      *
      * @param \Generated\Shared\Transfer\ProductSearchPreferencesTransfer $productSearchPreferencesTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductSearchPreferencesTransfer
      */
     public function createProductSearchPreferences(ProductSearchPreferencesTransfer $productSearchPreferencesTransfer);
 
@@ -100,7 +125,7 @@ interface ProductSearchFacadeInterface
      *
      * @param \Generated\Shared\Transfer\ProductSearchPreferencesTransfer $productSearchPreferencesTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductSearchPreferencesTransfer
      */
     public function updateProductSearchPreferences(ProductSearchPreferencesTransfer $productSearchPreferencesTransfer);
 

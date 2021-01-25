@@ -16,7 +16,7 @@ class KeyBuilder
     /**
      * @return string
      */
-    public function getBundleName()
+    public function getBundleName(): string
     {
         return 'key-builder';
     }
@@ -26,7 +26,7 @@ class KeyBuilder
      *
      * @return string
      */
-    protected function buildKey($data)
+    protected function buildKey(string $data): string
     {
         return 'identifier.' . $data;
     }

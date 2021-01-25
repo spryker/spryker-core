@@ -27,6 +27,13 @@ class DeleteController extends AbstractController
      */
     public function indexAction(Request $request)
     {
+        $deleteForm = $this->getFactory()->createDeleteProductSetForm()->handleRequest($request);
+
+        if (!$deleteForm->isSubmitted() || !$deleteForm->isValid()) {
+            $this->addErrorMessage('CSRF token is not valid');
+
+            return $this->redirectResponse(Url::generate('/product-set-gui')->build());
+        }
         $idProductSet = $this->castId($request->query->get(static::PARAM_ID));
 
         $productSetTransfer = new ProductSetTransfer();

@@ -57,7 +57,7 @@ class CategoryImageStorageListenerTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -208,7 +208,7 @@ class CategoryImageStorageListenerTest extends Unit
     /**
      * @return void
      */
-    public function _after()
+    public function _after(): void
     {
         parent::_after();
 
@@ -230,7 +230,7 @@ class CategoryImageStorageListenerTest extends Unit
      *
      * @return void
      */
-    protected function assertCategoryImageStorage($beforeCount)
+    protected function assertCategoryImageStorage(int $beforeCount): void
     {
         $afterCount = SpyCategoryImageStorageQuery::create()->count();
         $this->assertGreaterThan($beforeCount, $afterCount);

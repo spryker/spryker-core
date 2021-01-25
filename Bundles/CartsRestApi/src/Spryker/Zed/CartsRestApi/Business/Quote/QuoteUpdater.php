@@ -203,7 +203,8 @@ class QuoteUpdater implements QuoteUpdaterInterface
         QuoteTransfer $quoteTransfer,
         QuoteResponseTransfer $quoteResponseTransfer
     ): QuoteResponseTransfer {
-        if ($originalQuoteTransfer->getItems()->count() > 0
+        if (
+            $originalQuoteTransfer->getItems()->count() > 0
             && ($quoteTransfer->getPriceMode() && $quoteTransfer->getPriceMode() !== $originalQuoteTransfer->getPriceMode())
         ) {
             return $quoteResponseTransfer

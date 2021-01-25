@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\CategoryStorage;
 
+use ArrayObject;
+
 interface CategoryStorageClientInterface
 {
     /**
@@ -33,4 +35,31 @@ interface CategoryStorageClientInterface
      * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer
      */
     public function getCategoryNodeById($idCategoryNode, $localeName);
+
+    /**
+     * Specification:
+     * - Returns category nodes storage data by array of id category node and locale name.
+     *
+     * @api
+     *
+     * @param int[] $categoryNodeIds
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[]
+     */
+    public function getCategoryNodeByIds(array $categoryNodeIds, string $localeName): array;
+
+    /**
+     * Specification:
+     * - Returns category nodes with the `docCount` relevant for the result set.
+     * - Retrieves category tree from storage by locale name.
+     * - Recursively merges each category node in the category tree with `docCount` taken from the `ResultSet` aggregations.
+     *
+     * @api
+     *
+     * @param array $docCountAggregation
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\CategoryNodeSearchResultTransfer[]
+     */
+    public function formatCategoryTreeFilter(array $docCountAggregation): ArrayObject;
 }

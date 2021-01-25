@@ -17,7 +17,7 @@ interface CmsBlockMapperInterface
      *
      * @return \Generated\Shared\Transfer\CmsBlockTransfer
      */
-    public function mapCmsBlockEntityToTransfer(SpyCmsBlock $spyCmsBlock);
+    public function mapCmsBlockEntityToTransfer(SpyCmsBlock $spyCmsBlock): CmsBlockTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
@@ -25,5 +25,5 @@ interface CmsBlockMapperInterface
      *
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlock
      */
-    public function mapCmsBlockTransferToEntity(CmsBlockTransfer $cmsBlockTransfer, SpyCmsBlock $spyCmsBlock);
+    public function mapCmsBlockTransferToEntity(CmsBlockTransfer $cmsBlockTransfer, SpyCmsBlock $spyCmsBlock): SpyCmsBlock;
 }

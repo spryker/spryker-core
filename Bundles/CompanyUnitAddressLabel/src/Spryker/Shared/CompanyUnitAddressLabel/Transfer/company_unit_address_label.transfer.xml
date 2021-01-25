@@ -4,15 +4,21 @@
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="CompanyUnitAddressLabelCollection">
-        <property name="labels" type="SpyCompanyUnitAddressLabelEntity[]"/>
+        <property name="labels" type="SpyCompanyUnitAddressLabelEntity[]" singular="labels"/>
     </transfer>
 
     <transfer name="CompanyUnitAddress">
         <property name="labelCollection" type="CompanyUnitAddressLabelCollection"/>
+        <property name="idCompanyUnitAddress" type="int"/>
     </transfer>
 
     <transfer name="CompanyUnitAddressLabel">
         <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="CompanyUnitAddressResponse">
+        <property name="companyUnitAddressTransfer" type="CompanyUnitAddress"/>
+        <property name="isSuccessful" type="bool"/>
     </transfer>
 
 </transfers>

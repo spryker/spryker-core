@@ -13,7 +13,8 @@ use Spryker\Zed\Kernel\Container;
 
 class AvailabilityCartConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const FACADE_AVAILABILITY = 'availability facade';
+    public const FACADE_AVAILABILITY = 'FACADE_AVAILABILITY';
+    public const PLUGINS_CART_ITEM_QUANTITY_COUNTER_STRATEGY = 'PLUGINS_CART_ITEM_QUANTITY_COUNTER_STRATEGY';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -23,6 +24,7 @@ class AvailabilityCartConnectorDependencyProvider extends AbstractBundleDependen
     public function provideBusinessLayerDependencies(Container $container)
     {
         $container = $this->addAvailabilityFacade($container);
+        $container = $this->addCartItemQuantityCounterStrategyPlugins($container);
 
         return $container;
     }
@@ -34,10 +36,32 @@ class AvailabilityCartConnectorDependencyProvider extends AbstractBundleDependen
      */
     protected function addAvailabilityFacade(Container $container): Container
     {
-        $container[static::FACADE_AVAILABILITY] = function (Container $container) {
+        $container->set(static::FACADE_AVAILABILITY, function (Container $container) {
             return new AvailabilityCartConnectorToAvailabilityBridge($container->getLocator()->availability()->facade());
-        };
+        });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCartItemQuantityCounterStrategyPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_CART_ITEM_QUANTITY_COUNTER_STRATEGY, function () {
+            return $this->getCartItemQuantityCounterStrategyPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\AvailabilityCartConnectorExtension\Dependency\Plugin\CartItemQuantityCounterStrategyPluginInterface[]
+     */
+    public function getCartItemQuantityCounterStrategyPlugins(): array
+    {
+        return [];
     }
 }

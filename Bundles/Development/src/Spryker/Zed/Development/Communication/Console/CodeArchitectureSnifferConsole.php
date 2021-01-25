@@ -10,15 +10,15 @@ namespace Spryker\Zed\Development\Communication\Console;
 use Generated\Shared\Transfer\ModuleFilterTransfer;
 use Generated\Shared\Transfer\ModuleTransfer;
 use Generated\Shared\Transfer\OrganizationTransfer;
+use Laminas\Filter\FilterChain;
+use Laminas\Filter\StringToLower;
+use Laminas\Filter\Word\CamelCaseToDash;
+use Laminas\Filter\Word\UnderscoreToCamelCase;
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Zend\Filter\FilterChain;
-use Zend\Filter\StringToLower;
-use Zend\Filter\Word\CamelCaseToDash;
-use Zend\Filter\Word\UnderscoreToCamelCase;
 
 /**
  * @method \Spryker\Zed\Development\Business\DevelopmentFacadeInterface getFacade()
@@ -251,6 +251,7 @@ class CodeArchitectureSnifferConsole extends Console
                 }
                 if (!is_dir($path)) {
                     $output->writeln('Path not found, skipping: ' . $path, OutputInterface::VERBOSITY_VERY_VERBOSE);
+
                     continue;
                 }
                 $output->writeln('Checking path: ' . $path, OutputInterface::VERBOSITY_VERBOSE);
@@ -359,7 +360,7 @@ class CodeArchitectureSnifferConsole extends Console
      */
     protected function isVerboseModeEnabled(): bool
     {
-        return $this->input->getOption(static::OPTION_VERBOSE);
+        return (bool)$this->input->getOption(static::OPTION_VERBOSE);
     }
 
     /**

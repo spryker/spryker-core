@@ -27,7 +27,7 @@ class ZedNavigationCacheBuilderTest extends ZedNavigationBusinessTester
     /**
      * @return void
      */
-    public function testWriteNavigationCacheMustReadNavigationFromCollectorAndPassItToTheCache()
+    public function testWriteNavigationCacheMustReadNavigationFromCollectorAndPassItToTheCache(): void
     {
         //prepare
         $navigationCacheMock = $this->getZedNavigationCacheMock();

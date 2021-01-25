@@ -22,7 +22,7 @@ interface ContentGuiToLocaleFacadeInterface
     public function getLocaleCollection(): array;
 
     /**
-     * @return \Generated\Shared\Transfer\LocaleTransfer[]
+     * @return string[]
      */
     public function getAvailableLocales(): array;
 }

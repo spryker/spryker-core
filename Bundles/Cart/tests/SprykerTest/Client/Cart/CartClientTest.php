@@ -34,7 +34,7 @@ class CartClientTest extends Unit
     /**
      * @return void
      */
-    public function testGetCartMustReturnInstanceOfQuoteTransfer()
+    public function testGetCartMustReturnInstanceOfQuoteTransfer(): void
     {
         $quoteTransfer = new QuoteTransfer();
         $quoteMock = $this->getQuoteMock();
@@ -51,7 +51,7 @@ class CartClientTest extends Unit
     /**
      * @return void
      */
-    public function testClearCartMustSetItemCountInSessionToZero()
+    public function testClearCartMustSetItemCountInSessionToZero(): void
     {
         $quoteMock = $this->getQuoteMock();
         $quoteMock->expects($this->once())
@@ -67,7 +67,7 @@ class CartClientTest extends Unit
     /**
      * @return void
      */
-    public function testClearCartMustSetCartTransferInSessionToAnEmptyInstance()
+    public function testClearCartMustSetCartTransferInSessionToAnEmptyInstance(): void
     {
         $quoteMock = $this->getQuoteMock();
         $quoteMock->expects($this->once())
@@ -83,7 +83,7 @@ class CartClientTest extends Unit
     /**
      * @return void
      */
-    public function testAddItemMustOnlyExceptTransferInterfaceAsArgument()
+    public function testAddItemMustOnlyExceptTransferInterfaceAsArgument(): void
     {
         $itemTransfer = new ItemTransfer();
         $quoteTransfer = new QuoteTransfer();
@@ -109,7 +109,7 @@ class CartClientTest extends Unit
     /**
      * @return void
      */
-    public function testChangeItemQuantityMustCallRemoveItemQuantityWhenPassedItemQuantityIsLowerThenInCartGivenItem()
+    public function testChangeItemQuantityMustCallRemoveItemQuantityWhenPassedItemQuantityIsLowerThenInCartGivenItem(): void
     {
         $itemTransfer = new ItemTransfer();
         $itemTransfer->setQuantity(2);
@@ -146,7 +146,7 @@ class CartClientTest extends Unit
     /**
      * @return void
      */
-    public function testChangeItemQuantityMustCallAddItemQuantityWhenPassedItemQuantityIsLowerThenInCartGivenItem()
+    public function testChangeItemQuantityMustCallAddItemQuantityWhenPassedItemQuantityIsLowerThenInCartGivenItem(): void
     {
         $itemTransfer = new ItemTransfer();
         $itemTransfer->setQuantity(1);
@@ -183,7 +183,7 @@ class CartClientTest extends Unit
     /**
      * @return void
      */
-    public function testGetItemCountReturnNumberOfItemsInCart()
+    public function testGetItemCountReturnNumberOfItemsInCart(): void
     {
         $itemTransfer = new ItemTransfer();
         $itemTransfer->setQuantity(1);
@@ -194,6 +194,7 @@ class CartClientTest extends Unit
 
         $mockBuilder = $this->getMockBuilder(CartClient::class);
         $mockBuilder->setMethods(['getQuote', 'getItemCounter']);
+        /** @var \Spryker\Client\Cart\CartClientInterface|\PHPUnit\Framework\MockObject\MockObject $cartClientMock */
         $cartClientMock = $mockBuilder->getMock();
         $cartClientMock->method('getQuote')->willReturn($quoteTransfer);
         $cartClientMock->method('getItemCounter')->willReturn(new ItemCountPlugin());
@@ -206,13 +207,13 @@ class CartClientTest extends Unit
      * @param \Spryker\Client\Cart\Zed\CartStubInterface|null $cartStub
      * @param \Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface|null $quoteStorageStrategyPlugin
      *
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Client\Kernel\AbstractFactory|\PHPUnit\Framework\MockObject\MockObject
      */
     private function getFactoryMock(
         ?CartToQuoteInterface $quote = null,
         ?CartStubInterface $cartStub = null,
         ?QuoteStorageStrategyPluginInterface $quoteStorageStrategyPlugin = null
-    ) {
+    ): AbstractFactory {
         $factoryMock = $this->getMockBuilder(AbstractFactory::class)
             ->setMethods(['getQuoteClient', 'createZedStub', 'createQuoteStorageStrategyProxy', 'createCartChangeRequestExpander', 'getQuoteItemFinderPlugin'])
             ->disableOriginalConstructor()->getMock();
@@ -248,11 +249,9 @@ class CartClientTest extends Unit
     }
 
     /**
-     * @param \PHPUnit\Framework\MockObject\MockObject $factoryMock
-     *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface
      */
-    private function getSessionQuoteStorageStrategyPluginMock()
+    private function getSessionQuoteStorageStrategyPluginMock(): QuoteStorageStrategyPluginInterface
     {
         $sessionQuoteStorageStrategyPluginMock = $this->getMockBuilder(SessionQuoteStorageStrategyPlugin::class)
             ->setMethods(['getFactory'])->disableOriginalConstructor()->getMock();
@@ -261,11 +260,11 @@ class CartClientTest extends Unit
     }
 
     /**
-     * @param \PHPUnit\Framework\MockObject\MockObject $factoryMock
+     * @param \Spryker\Client\Kernel\AbstractFactory|\PHPUnit\Framework\MockObject\MockObject $factoryMock
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\Cart\CartClient
      */
-    private function getCartClientMock($factoryMock)
+    private function getCartClientMock($factoryMock): CartClient
     {
         $cartClientMock = $this->getMockBuilder(CartClient::class)->setMethods(['getFactory'])->disableOriginalConstructor()->getMock();
 
@@ -277,9 +276,9 @@ class CartClientTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Client\Cart\Dependency\Client\CartToQuoteInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    private function getQuoteMock()
+    private function getQuoteMock(): CartToQuoteInterface
     {
         $quoteMock = $this->getMockBuilder(CartToQuoteInterface::class)->setMethods([
             'getQuote',
@@ -300,7 +299,7 @@ class CartClientTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\Cart\Zed\CartStubInterface
      */
-    private function getStubMock()
+    private function getStubMock(): CartStubInterface
     {
         return $this->getMockBuilder(CartStubInterface::class)->setMethods([
             'addValidItems',
@@ -312,6 +311,9 @@ class CartClientTest extends Unit
             'addFlashMessagesFromLastZedRequest',
             'addResponseMessagesToMessenger',
             'resetQuoteLock',
+            'addToCart',
+            'removeFromCart',
+            'replaceItem',
         ])->getMock();
     }
 }

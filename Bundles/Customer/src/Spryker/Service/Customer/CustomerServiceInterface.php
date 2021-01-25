@@ -13,7 +13,7 @@ interface CustomerServiceInterface
 {
     /**
      * Specification:
-     * - Generates unique key for address based on address transfer properties without excluded properties list.
+     * - Generates unique key for address based on address transfer properties using allowed properties list.
      *
      * @api
      *

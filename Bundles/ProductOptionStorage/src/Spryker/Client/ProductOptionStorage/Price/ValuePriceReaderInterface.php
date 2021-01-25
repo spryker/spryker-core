@@ -7,14 +7,25 @@
 
 namespace Spryker\Client\ProductOptionStorage\Price;
 
-use Generated\Shared\Transfer\ProductOptionGroupStorageTransfer;
+use Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer;
 
 interface ValuePriceReaderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ProductOptionGroupStorageTransfer $productOptionGroupStorageTransfer
+     * @param \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer $productAbstractOptionStorageTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductOptionGroupStorageTransfer
+     * @return \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer
      */
-    public function resolvePrices(ProductOptionGroupStorageTransfer $productOptionGroupStorageTransfer);
+    public function resolveProductAbstractOptionStorageTransferProductOptionValuePrices(
+        ProductAbstractOptionStorageTransfer $productAbstractOptionStorageTransfer
+    ): ProductAbstractOptionStorageTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer[] $productAbstractOptionStorageTransfers
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer[]
+     */
+    public function resolveProductAbstractOptionStorageTransfersProductOptionValuePrices(
+        array $productAbstractOptionStorageTransfers
+    ): array;
 }

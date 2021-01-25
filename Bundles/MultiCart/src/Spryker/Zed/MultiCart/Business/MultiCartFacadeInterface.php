@@ -91,4 +91,17 @@ interface MultiCartFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
     public function getQuoteCollectionByCriteria(QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Checks if quote is default for provided QuoteTransfer::$customer.
+     * - Adds info message if quote was not default.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    public function addDefaultQuoteChangedMessage(QuoteTransfer $quoteTransfer): void;
 }

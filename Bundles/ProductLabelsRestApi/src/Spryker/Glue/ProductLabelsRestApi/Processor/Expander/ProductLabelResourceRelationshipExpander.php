@@ -36,7 +36,7 @@ class ProductLabelResourceRelationshipExpander implements ProductLabelResourceRe
         foreach ($resources as $resource) {
             $abstractSku = $resource->getId();
 
-            $productLabels = $this->productLabelReader->findByAbstractSku(
+            $productLabels = $this->productLabelReader->getProductLabelsByAbstractSku(
                 $abstractSku,
                 $restRequest->getMetadata()->getLocale()
             );

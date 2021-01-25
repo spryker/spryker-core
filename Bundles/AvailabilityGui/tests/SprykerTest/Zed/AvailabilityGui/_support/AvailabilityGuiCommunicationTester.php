@@ -10,8 +10,6 @@ namespace SprykerTest\Zed\AvailabilityGui;
 use Codeception\Actor;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -21,7 +19,7 @@ use Codeception\Actor;
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  *
  * @SuppressWarnings(PHPMD)
  */
@@ -32,7 +30,7 @@ class AvailabilityGuiCommunicationTester extends Actor
     /**
      * @return void
      */
-    public function assertTableWithDataExists()
+    public function assertTableWithDataExists(): void
     {
         $showingEntries = $this->grabTextFrom('//*[@class="dataTables_info"]');
         preg_match('/^Showing\s{1}\d+\s{1}to\s{1}(\d+)/', $showingEntries, $matches);

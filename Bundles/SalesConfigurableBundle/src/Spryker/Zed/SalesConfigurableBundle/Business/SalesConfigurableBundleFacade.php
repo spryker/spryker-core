@@ -57,6 +57,8 @@ class SalesConfigurableBundleFacade extends AbstractFacade implements SalesConfi
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\SalesConfigurableBundle\Business\SalesConfigurableBundleFacadeInterface::expandItemsWithSalesOrderConfiguredBundles()} instead.
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
@@ -66,5 +68,37 @@ class SalesConfigurableBundleFacade extends AbstractFacade implements SalesConfi
         return $this->getFactory()
             ->createSalesOrderConfiguredBundleExpander()
             ->expandOrderWithConfiguredBundles($orderTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function transformConfiguredBundleOrderItems(OrderTransfer $orderTransfer): OrderTransfer
+    {
+        return $this->getFactory()
+            ->createConfigurableBundleItemTransformer()
+            ->transformConfiguredBundleOrderItems($orderTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function expandOrderItemsWithSalesOrderConfiguredBundles(array $itemTransfers): array
+    {
+        return $this->getFactory()
+            ->createOrderItemExpander()
+            ->expandOrderItemsWithSalesOrderConfiguredBundles($itemTransfers);
     }
 }

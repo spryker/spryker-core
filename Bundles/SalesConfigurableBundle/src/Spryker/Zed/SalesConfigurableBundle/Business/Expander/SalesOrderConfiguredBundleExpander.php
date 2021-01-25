@@ -10,8 +10,13 @@ namespace Spryker\Zed\SalesConfigurableBundle\Business\Expander;
 use ArrayObject;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\SalesOrderConfiguredBundleFilterTransfer;
+use Generated\Shared\Transfer\SalesOrderConfiguredBundleTranslationTransfer;
+use Spryker\Zed\SalesConfigurableBundle\Dependency\Facade\SalesConfigurableBundleToGlossaryFacadeInterface;
 use Spryker\Zed\SalesConfigurableBundle\Persistence\SalesConfigurableBundleRepositoryInterface;
 
+/**
+ * @deprecated Use {@link \Spryker\Zed\SalesConfigurableBundle\Business\Expander\ItemExpander} instead.
+ */
 class SalesOrderConfiguredBundleExpander implements SalesOrderConfiguredBundleExpanderInterface
 {
     /**
@@ -20,12 +25,20 @@ class SalesOrderConfiguredBundleExpander implements SalesOrderConfiguredBundleEx
     protected $salesConfigurableBundleRepository;
 
     /**
+     * @var \Spryker\Zed\SalesConfigurableBundle\Dependency\Facade\SalesConfigurableBundleToGlossaryFacadeInterface
+     */
+    protected $glossaryFacade;
+
+    /**
      * @param \Spryker\Zed\SalesConfigurableBundle\Persistence\SalesConfigurableBundleRepositoryInterface $salesConfigurableBundleRepository
+     * @param \Spryker\Zed\SalesConfigurableBundle\Dependency\Facade\SalesConfigurableBundleToGlossaryFacadeInterface $glossaryFacade
      */
     public function __construct(
-        SalesConfigurableBundleRepositoryInterface $salesConfigurableBundleRepository
+        SalesConfigurableBundleRepositoryInterface $salesConfigurableBundleRepository,
+        SalesConfigurableBundleToGlossaryFacadeInterface $glossaryFacade
     ) {
         $this->salesConfigurableBundleRepository = $salesConfigurableBundleRepository;
+        $this->glossaryFacade = $glossaryFacade;
     }
 
     /**
@@ -44,11 +57,34 @@ class SalesOrderConfiguredBundleExpander implements SalesOrderConfiguredBundleEx
             ->getSalesOrderConfiguredBundleCollectionByFilter($salesOrderConfiguredBundleFilterTransfer)
             ->getSalesOrderConfiguredBundles();
 
+        $salesOrderConfiguredBundleTransfers = $this->translateConfigurableBundleTemplateNames($salesOrderConfiguredBundleTransfers);
+
         $orderTransfer->setSalesOrderConfiguredBundles($salesOrderConfiguredBundleTransfers);
 
         $orderTransfer = $this->expandOrderItemsWithSalesOrderConfiguredBundleItems($orderTransfer, $salesOrderConfiguredBundleTransfers);
 
         return $orderTransfer;
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer[] $salesOrderConfiguredBundleTransfers
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer[]
+     */
+    protected function translateConfigurableBundleTemplateNames(ArrayObject $salesOrderConfiguredBundleTransfers): ArrayObject
+    {
+        foreach ($salesOrderConfiguredBundleTransfers as $salesOrderConfiguredBundleTransfer) {
+            $salesOrderConfiguredBundleTransfer->addTranslation(
+                (new SalesOrderConfiguredBundleTranslationTransfer())
+                    ->setName(
+                        $this->glossaryFacade->translate(
+                            $salesOrderConfiguredBundleTransfer->getName()
+                        )
+                    )
+            );
+        }
+
+        return $salesOrderConfiguredBundleTransfers;
     }
 
     /**

@@ -17,9 +17,9 @@ class AbstractServiceFactory
     use ContainerMocker;
 
     /**
-     * @var \Spryker\Service\Kernel\Container $container
+     * @var \Spryker\Service\Kernel\Container[]
      */
-    private $container;
+    protected static $containers = [];
 
     /**
      * @param \Spryker\Service\Kernel\Container $container
@@ -28,7 +28,7 @@ class AbstractServiceFactory
      */
     public function setContainer(Container $container)
     {
-        $this->container = $container;
+        static::$containers[static::class] = $container;
 
         return $this;
     }
@@ -42,15 +42,27 @@ class AbstractServiceFactory
      */
     public function getProvidedDependency($key)
     {
-        if ($this->container === null) {
-            $this->container = $this->createContainerWithProvidedDependencies();
-        }
+        $container = $this->getContainer();
 
-        if ($this->container->has($key) === false) {
+        if ($container->has($key) === false) {
             throw new ContainerKeyNotFoundException($this, $key);
         }
 
-        return $this->container->get($key);
+        return $container->get($key);
+    }
+
+    /**
+     * @return \Spryker\Service\Kernel\Container
+     */
+    protected function getContainer(): Container
+    {
+        $containerKey = static::class;
+
+        if (!isset(static::$containers[$containerKey])) {
+            static::$containers[$containerKey] = $this->createContainerWithProvidedDependencies();
+        }
+
+        return static::$containers[$containerKey];
     }
 
     /**

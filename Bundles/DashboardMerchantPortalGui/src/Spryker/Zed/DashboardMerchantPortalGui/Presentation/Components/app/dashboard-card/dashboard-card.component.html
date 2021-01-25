@@ -1,0 +1,13 @@
+<spy-card [spyTitle]="title" [extra]="actions">
+    <ng-content></ng-content>
+</spy-card>
+
+<ng-template #title>
+    <ng-content select="[title]"></ng-content>
+
+    <spy-chips *ngIf="count" color="grey">{{ count }}</spy-chips>
+</ng-template>
+
+<ng-template #actions>
+    <ng-content select="[actions]"></ng-content>
+</ng-template>

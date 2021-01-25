@@ -26,6 +26,8 @@ class ProductsRestApiConfig extends AbstractBundleConfig
     protected const ALLOW_PRODUCT_CONCRETE_EAGER_RELATIONSHIP = true;
 
     /**
+     * @api
+     *
      * @return bool
      */
     public function getAllowedProductConcreteEagerRelationship(): bool

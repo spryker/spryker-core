@@ -7,7 +7,10 @@
 
 namespace Spryker\Zed\Shipment\Business\Shipment;
 
+use ArrayObject;
+use Closure;
 use Generated\Shared\Transfer\ExpenseTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Shared\Shipment\ShipmentConfig;
@@ -60,7 +63,7 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
             $orderTransfer = $this->hydrateShipmentMethodToOrderTransfer($shipmentTransfers, $orderTransfer);
         }
 
-        $orderTransfer = $this->setShipmentToOrderExpenses($orderTransfer);
+        $orderTransfer = $this->setShipmentToOrderExpenses($orderTransfer, $shipmentTransfers);
 
         return $orderTransfer;
     }
@@ -85,6 +88,7 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
         iterable $shipmentTransfers,
         OrderTransfer $orderTransfer
     ): OrderTransfer {
+        $shipmentTransfers = (array)$shipmentTransfers;
         /** @var \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer */
         $shipmentTransfer = current($shipmentTransfers);
         $orderTransfer = $this->addShipmentToOrderItems($orderTransfer, $shipmentTransfer);
@@ -137,7 +141,7 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
             );
         }
 
-        return $orderTransfer;
+        return $this->sortOrderItemsByIdShipment($orderTransfer);
     }
 
     /**
@@ -165,17 +169,18 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\ShipmentTransfer[] $shipmentTransfers
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    protected function setShipmentToOrderExpenses(OrderTransfer $orderTransfer): OrderTransfer
+    protected function setShipmentToOrderExpenses(OrderTransfer $orderTransfer, array $shipmentTransfers): OrderTransfer
     {
         foreach ($orderTransfer->getExpenses() as $expenseTransfer) {
             if ($expenseTransfer->getType() !== ShipmentConfig::SHIPMENT_EXPENSE_TYPE) {
                 continue;
             }
 
-            $shipmentTransfer = $this->findShipmentByOrderExpense($orderTransfer, $expenseTransfer);
+            $shipmentTransfer = $this->findShipmentByOrderExpense($expenseTransfer, $shipmentTransfers);
             $expenseTransfer->setShipment($shipmentTransfer);
         }
 
@@ -183,22 +188,17 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
+     * @param \Generated\Shared\Transfer\ShipmentTransfer[] $shipmentTransfers
      *
      * @return \Generated\Shared\Transfer\ShipmentTransfer|null
      */
-    protected function findShipmentByOrderExpense(OrderTransfer $orderTransfer, ExpenseTransfer $expenseTransfer): ?ShipmentTransfer
+    protected function findShipmentByOrderExpense(ExpenseTransfer $expenseTransfer, array $shipmentTransfers): ?ShipmentTransfer
     {
-        foreach ($orderTransfer->getItems() as $itemTransfer) {
-            $itemShipmentTransfer = $itemTransfer->getShipment();
-            if ($itemShipmentTransfer === null) {
-                continue;
-            }
-
-            $itemShipmentTransfer->requireMethod();
-            if ($itemShipmentTransfer->getMethod()->getFkSalesExpense() === $expenseTransfer->getIdSalesExpense()) {
-                return $itemTransfer->getShipment();
+        foreach ($shipmentTransfers as $shipmentTransfer) {
+            $shipmentTransfer->requireMethod();
+            if ($shipmentTransfer->getMethod()->getFkSalesExpense() === $expenseTransfer->getIdSalesExpense()) {
+                return $shipmentTransfer;
             }
         }
 
@@ -214,7 +214,8 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
      */
     protected function setOrderLevelShipmentMethod(OrderTransfer $orderTransfer): OrderTransfer
     {
-        $firstItemTransfer = current($orderTransfer->getItems());
+        /** @var \Generated\Shared\Transfer\ItemTransfer $firstItemTransfer */
+        $firstItemTransfer = $orderTransfer->getItems()->getIterator()->current();
         $firstItemTransfer->requireShipment()
             ->getShipment()->requireMethod();
 
@@ -276,5 +277,36 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
         }
 
         return null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    protected function sortOrderItemsByIdShipment(OrderTransfer $orderTransfer): OrderTransfer
+    {
+        $orderItemTransfers = $orderTransfer->getItems()->getArrayCopy();
+        if ($orderItemTransfers === []) {
+            return $orderTransfer;
+        }
+
+        uasort($orderItemTransfers, $this->getOrderItemTransfersSortCallback());
+
+        return $orderTransfer->setItems(new ArrayObject($orderItemTransfers));
+    }
+
+    /**
+     * @return \Closure
+     */
+    protected function getOrderItemTransfersSortCallback(): Closure
+    {
+        return function (ItemTransfer $itemTransferA, ItemTransfer $itemTransferB) {
+            if ($itemTransferA->getShipment() === null || $itemTransferB->getShipment() === null) {
+                return 0;
+            }
+
+            return $itemTransferA->getShipment()->getIdSalesShipment() <=> $itemTransferB->getShipment()->getIdSalesShipment();
+        };
     }
 }

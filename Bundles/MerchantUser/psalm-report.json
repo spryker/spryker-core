@@ -1,0 +1,138 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 50,
+            "line_to": 50,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\MerchantUser\\Dependency\\Facade\\MerchantUserToAclFacadeInterface::addUserToGroup cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantUser/src/Spryker/Zed/MerchantUser/Business/AclGroup/AclGroupAdder.php",
+            "snippet": "        $this->aclFacade->addUserToGroup($merchantUserTransfer->getUser()->getIdUser(), $groupTransfer->getIdAclGroup());",
+            "selected_text": "$merchantUserTransfer->getUser()->getIdUser()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 50,
+            "line_to": 50,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdUser on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantUser/src/Spryker/Zed/MerchantUser/Business/AclGroup/AclGroupAdder.php",
+            "snippet": "        $this->aclFacade->addUserToGroup($merchantUserTransfer->getUser()->getIdUser(), $groupTransfer->getIdAclGroup());",
+            "selected_text": "getIdUser",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 50,
+            "line_to": 50,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Zed\\MerchantUser\\Dependency\\Facade\\MerchantUserToAclFacadeInterface::addUserToGroup cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantUser/src/Spryker/Zed/MerchantUser/Business/AclGroup/AclGroupAdder.php",
+            "snippet": "        $this->aclFacade->addUserToGroup($merchantUserTransfer->getUser()->getIdUser(), $groupTransfer->getIdAclGroup());",
+            "selected_text": "$groupTransfer->getIdAclGroup()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 95,
+            "line_to": 95,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\MerchantUser\\Business\\Creator\\MerchantUserCreator::persistUserByMerchantUser cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantUser/src/Spryker/Zed/MerchantUser/Business/Creator/MerchantUserCreator.php",
+            "snippet": "        $userTransfer = $this->persistUserByMerchantUser($merchantUserTransfer->getUser());",
+            "selected_text": "$merchantUserTransfer->getUser()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 39,
+            "line_to": 39,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\MerchantUser\\Dependency\\Facade\\MerchantUserToUserFacadeInterface::removeUser cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantUser/src/Spryker/Zed/MerchantUser/Business/Deleter/MerchantUserDeleter.php",
+            "snippet": "            $merchantUserTransfer->getIdUser()",
+            "selected_text": "$merchantUserTransfer->getIdUser()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 80,
+            "line_to": 80,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\MerchantUser\\Dependency\\Facade\\MerchantUserToUserFacadeInterface::updateUser cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantUser/src/Spryker/Zed/MerchantUser/Business/Updater/MerchantUserUpdater.php",
+            "snippet": "        $userTransfer = $this->userFacade->updateUser($merchantUserTransfer->getUser());",
+            "selected_text": "$merchantUserTransfer->getUser()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 97,
+            "line_to": 97,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\MerchantUser\\Dependency\\Facade\\MerchantUserToUserFacadeInterface::deactivateUser cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantUser/src/Spryker/Zed/MerchantUser/Business/Updater/MerchantUserUpdater.php",
+            "snippet": "            $this->userFacade->deactivateUser($merchantUserTransfer->getIdUser());",
+            "selected_text": "$merchantUserTransfer->getIdUser()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 113,
+            "line_to": 113,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\MerchantUser\\Dependency\\Facade\\MerchantUserToAuthFacadeInterface::requestPasswordReset cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantUser/src/Spryker/Zed/MerchantUser/Business/Updater/MerchantUserUpdater.php",
+            "snippet": "            $this->authFacade->requestPasswordReset($updatedUserTransfer->getUsername());",
+            "selected_text": "$updatedUserTransfer->getUsername()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 78,
+            "line_to": 78,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\MerchantUser\\Persistence\\Propel\\Mapper\\MerchantUserMapper::mapMerchantUserEntitiesToMerchantUserTransfers expects Propel\\Runtime\\Collection\\Collection, possibly different type Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\MerchantUser\\Persistence\\SpyMerchantUser> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantUser/src/Spryker/Zed/MerchantUser/Persistence/MerchantUserRepository.php",
+            "snippet": "            ->mapMerchantUserEntitiesToMerchantUserTransfers($merchantUserEntities);",
+            "selected_text": "$merchantUserEntities",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 47,
+            "line_to": 47,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Orm\\Zed\\MerchantUser\\Persistence\\SpyMerchantUser::setFkUser cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantUser/src/Spryker/Zed/MerchantUser/Persistence/Propel/Mapper/MerchantUserMapper.php",
+            "snippet": "        return $merchantUserEntity->setFkUser($merchantUserTransfer->getIdUser())",
+            "selected_text": "$merchantUserTransfer->getIdUser()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 48,
+            "line_to": 48,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Orm\\Zed\\MerchantUser\\Persistence\\SpyMerchantUser::setFkMerchant cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantUser/src/Spryker/Zed/MerchantUser/Persistence/Propel/Mapper/MerchantUserMapper.php",
+            "snippet": "            ->setFkMerchant($merchantUserTransfer->getIdMerchant());",
+            "selected_text": "$merchantUserTransfer->getIdMerchant()",
+            "error_level": 3,
+            "shortcode": 78
+        }
+    ],
+    "deprecation": []
+}

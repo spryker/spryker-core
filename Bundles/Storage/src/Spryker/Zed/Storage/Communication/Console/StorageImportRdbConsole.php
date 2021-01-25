@@ -13,7 +13,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @deprecated Use `Spryker\Zed\StorageRedis\Communication\Console\StorageRedisImportRdbConsole` instead.
+ * @deprecated Use {@link \Spryker\Zed\StorageRedis\Communication\Console\StorageRedisImportRdbConsole} instead.
  *
  * @method \Spryker\Zed\Storage\Business\StorageFacadeInterface getFacade()
  * @method \Spryker\Zed\Storage\Communication\StorageCommunicationFactory getFactory()
@@ -44,7 +44,7 @@ class StorageImportRdbConsole extends Console
      *
      * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $source = $input->getArgument(static::ARGUMENT_SOURCE);
 

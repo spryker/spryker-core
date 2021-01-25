@@ -1,0 +1,30 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 44,
+            "line_to": 44,
+            "type": "InvalidNullableReturnType",
+            "message": "The declared return type 'string' for Spryker\\Zed\\ProductOfferReservationGui\\Communication\\Plugin\\ProductOfferStock\\ProductOfferReservationProductOfferStockTableExpanderPlugin::getColumnData is not nullable, but 'Spryker\\DecimalObject\\Decimal|null' contains null",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOfferReservationGui/src/Spryker/Zed/ProductOfferReservationGui/Communication/Plugin/ProductOfferStock/ProductOfferReservationProductOfferStockTableExpanderPlugin.php",
+            "snippet": "     * @return string",
+            "selected_text": "string",
+            "error_level": 5,
+            "shortcode": 144
+        },
+        {
+            "severity": "info",
+            "line_from": 52,
+            "line_to": 55,
+            "type": "NullableReturnStatement",
+            "message": "The declared return type 'string' for Spryker\\Zed\\ProductOfferReservationGui\\Communication\\Plugin\\ProductOfferStock\\ProductOfferReservationProductOfferStockTableExpanderPlugin::getColumnData is not nullable, but the function returns 'Spryker\\DecimalObject\\Decimal|null'",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOfferReservationGui/src/Spryker/Zed/ProductOfferReservationGui/Communication/Plugin/ProductOfferStock/ProductOfferReservationProductOfferStockTableExpanderPlugin.php",
+            "snippet": "        return $this->getFactory()\n            ->getOmsProductOfferReservationFacade()\n            ->getQuantity($omsProductOfferReservationCriteriaTransfer)\n            ->getReservationQuantity();",
+            "selected_text": "$this->getFactory()\n            ->getOmsProductOfferReservationFacade()\n            ->getQuantity($omsProductOfferReservationCriteriaTransfer)\n            ->getReservationQuantity()",
+            "error_level": 5,
+            "shortcode": 139
+        }
+    ],
+    "deprecation": []
+}

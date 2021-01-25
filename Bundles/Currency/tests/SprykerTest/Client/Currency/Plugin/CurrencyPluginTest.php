@@ -26,7 +26,7 @@ class CurrencyPluginTest extends Unit
     /**
      * @return void
      */
-    public function testFromIsoCodeShouldReturnCurrencyTransfer()
+    public function testFromIsoCodeShouldReturnCurrencyTransfer(): void
     {
         $currencyPlugin = new CurrencyPlugin();
         $currencyTransfer = $currencyPlugin->fromIsoCode('EUR');
@@ -36,7 +36,7 @@ class CurrencyPluginTest extends Unit
     /**
      * @return void
      */
-    public function testGetCurrentShouldReturnCurrencyTransfer()
+    public function testGetCurrentShouldReturnCurrencyTransfer(): void
     {
         $currencyPlugin = new CurrencyPlugin();
         $currencyTransfer = $currencyPlugin->getCurrent();

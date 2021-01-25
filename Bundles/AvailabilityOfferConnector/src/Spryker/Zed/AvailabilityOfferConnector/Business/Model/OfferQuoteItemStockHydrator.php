@@ -52,7 +52,7 @@ class OfferQuoteItemStockHydrator implements OfferQuoteItemStockHydratorInterfac
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $stock = $this->availabilityFacade
-                ->calculateStockForProductWithStore(
+                ->calculateAvailabilityForProductWithStore(
                     $itemTransfer->getSku(),
                     $storeTransfer
                 );

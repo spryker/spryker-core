@@ -74,6 +74,7 @@ class GeneralForm extends AbstractSubForm
         $builder
             ->add(self::FIELD_DESCRIPTION, TextareaType::class, [
                 'required' => false,
+                'sanitize_xss' => false,
             ]);
 
         return $this;

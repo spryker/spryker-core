@@ -11,7 +11,6 @@ use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
-use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterface;
 use Spryker\Zed\Permission\Business\PermissionFacadeInterface;
 use Spryker\Zed\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface;
@@ -68,7 +67,7 @@ class PermissionFacadeTest extends Unit
 
         //Assert
         $this->assertCount(1, $permissionCollectionTransfer->getPermissions());
-        $this->assertEquals(
+        $this->assertSame(
             static::PERMISSION_PLUGIN_KEY,
             $permissionCollectionTransfer->getPermissions()->offsetGet(0)->getKey()
         );
@@ -93,7 +92,7 @@ class PermissionFacadeTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterface
      */
-    protected function createPermissionPluginMock(): MockObject
+    protected function createPermissionPluginMock(): PermissionPluginInterface
     {
         $mock = $this->getMockBuilder(PermissionPluginInterface::class)
             ->setMethods(['getKey'])
@@ -129,7 +128,7 @@ class PermissionFacadeTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\Kernel\Business\AbstractFacade|\Spryker\Zed\Permission\Business\PermissionFacadeInterface
+     * @return \Spryker\Zed\Permission\Business\PermissionFacadeInterface
      */
     protected function getPermissionFacade(): PermissionFacadeInterface
     {

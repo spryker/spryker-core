@@ -10,8 +10,8 @@ namespace Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\PreCheck
 use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
-use Propel\Runtime\Collection\ObjectCollection;
-use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface;
+use Spryker\DecimalObject\Decimal;
+use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityFacadeInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 use Spryker\Zed\ProductBundle\ProductBundleConfig;
@@ -23,7 +23,7 @@ class BasePreCheck
     protected const ERROR_BUNDLE_ITEM_UNAVAILABLE_PARAMETER_PRODUCT_SKU = '%productSku%';
 
     /**
-     * @var \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface
+     * @var \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityFacadeInterface
      */
     protected $availabilityFacade;
 
@@ -43,13 +43,13 @@ class BasePreCheck
     protected $productBundleConfig;
 
     /**
-     * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface $availabilityFacade
+     * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityFacadeInterface $availabilityFacade
      * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface $productBundleQueryContainer
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\ProductBundle\ProductBundleConfig $productBundleConfig
      */
     public function __construct(
-        ProductBundleToAvailabilityInterface $availabilityFacade,
+        ProductBundleToAvailabilityFacadeInterface $availabilityFacade,
         ProductBundleQueryContainerInterface $productBundleQueryContainer,
         ProductBundleToStoreFacadeInterface $storeFacade,
         ProductBundleConfig $productBundleConfig
@@ -63,26 +63,27 @@ class BasePreCheck
     /**
      * @param string $sku
      *
-     * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]
      */
-    protected function findBundledProducts($sku)
+    protected function findBundledProducts(string $sku): array
     {
         return $this->productBundleQueryContainer
             ->queryBundleProductBySku($sku)
-            ->find();
+            ->find()
+            ->getData();
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
-     * @param \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]|\Propel\Runtime\Collection\ObjectCollection $bundledProducts
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[] $bundledProducts
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return array
      */
     protected function getUnavailableBundleItems(
-        ArrayObject $items,
-        ObjectCollection $bundledProducts,
+        ArrayObject $itemTransfers,
+        array $bundledProducts,
         ItemTransfer $itemTransfer,
         StoreTransfer $storeTransfer
     ) {
@@ -93,7 +94,7 @@ class BasePreCheck
 
             $sku = $bundledProductConcreteEntity->getSku();
             $totalBundledItemQuantity = $productBundleEntity->getQuantity() * $itemTransfer->getQuantity();
-            if ($this->checkIfItemIsSellable($items, $sku, $storeTransfer, $totalBundledItemQuantity) && $bundledProductConcreteEntity->getIsActive()) {
+            if ($this->checkIfItemIsSellable($itemTransfers, $sku, $storeTransfer, new Decimal($totalBundledItemQuantity)) && $bundledProductConcreteEntity->getIsActive()) {
                 continue;
             }
             $unavailableBundleItems[] = [
@@ -106,41 +107,61 @@ class BasePreCheck
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     * @param int $itemQuantity
+     * @param \Spryker\DecimalObject\Decimal|null $itemQuantity
      *
      * @return bool
      */
     protected function checkIfItemIsSellable(
-        ArrayObject $items,
-        $sku,
+        iterable $itemTransfers,
+        string $sku,
         StoreTransfer $storeTransfer,
-        $itemQuantity = 0
-    ) {
-        $currentItemQuantity = $this->getAccumulatedItemQuantityForGivenSku($items, $sku);
-        $currentItemQuantity += $itemQuantity;
+        ?Decimal $itemQuantity = null
+    ): bool {
+        if ($itemQuantity === null) {
+            $itemQuantity = new Decimal(0);
+        }
+
+        $currentItemQuantity = $this->getAccumulatedItemQuantityForGivenSku($itemTransfers, $sku);
+        $currentItemQuantity = $currentItemQuantity->add($itemQuantity);
 
         return $this->availabilityFacade->isProductSellableForStore($sku, $currentItemQuantity, $storeTransfer);
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      * @param string $sku
      *
-     * @return int
+     * @return \Spryker\DecimalObject\Decimal
      */
-    protected function getAccumulatedItemQuantityForGivenSku(ArrayObject $items, $sku)
+    protected function getAccumulatedItemQuantityForGivenSku(iterable $itemTransfers, string $sku): Decimal
     {
-        $quantity = 0;
-        foreach ($items as $itemTransfer) {
+        $quantity = new Decimal(0);
+        foreach ($itemTransfers as $itemTransfer) {
             if ($itemTransfer->getSku() !== $sku) {
                 continue;
             }
-            $quantity += $itemTransfer->getQuantity();
+            $quantity = $quantity->add($itemTransfer->getQuantity());
         }
 
         return $quantity;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return bool
+     */
+    protected function isProductBundle(ItemTransfer $itemTransfer): bool
+    {
+        if ($itemTransfer->getBundleItemIdentifier() !== null) {
+            return true;
+        }
+
+        return $this->productBundleQueryContainer
+            ->queryBundleProductBySku($itemTransfer->getSku())
+            ->exists();
     }
 }

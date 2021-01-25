@@ -24,5 +24,5 @@ class FilterPreferencesPage
     public const SELECTOR_ATTRIBUTE_KEY = '#attributeForm_key';
     public const SELECTOR_COPY_ATTRIBUTE_NAME_TRANSLATION_BUTTON = '.name-translation ~ span > button';
     public const SELECTOR_BUTTON_EDIT = '.title-action > .btn-edit';
-    public const SELECTOR_BUTTON_DELETE = '.title-action > .btn-remove';
+    public const SELECTOR_BUTTON_DELETE = '//form[@name="delete_filter_preferences_form"]/button';
 }

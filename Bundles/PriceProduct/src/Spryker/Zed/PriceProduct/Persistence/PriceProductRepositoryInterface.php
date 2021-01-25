@@ -60,7 +60,7 @@ interface PriceProductRepositoryInterface
     ): ObjectCollection;
 
     /**
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore[]|\Propel\Runtime\Collection\ObjectCollection
      */
@@ -112,7 +112,10 @@ interface PriceProductRepositoryInterface
      *
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore[]|\Propel\Runtime\Collection\ObjectCollection
      */
-    public function findProductAbstractPricesByIdInAndCriteria(array $productAbstractIds, ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null): ObjectCollection;
+    public function findProductAbstractPricesByIdInAndCriteria(
+        array $productAbstractIds,
+        ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null
+    ): ObjectCollection;
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer

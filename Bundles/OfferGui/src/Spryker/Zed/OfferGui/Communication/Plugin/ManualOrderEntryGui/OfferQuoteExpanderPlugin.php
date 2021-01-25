@@ -21,6 +21,8 @@ class OfferQuoteExpanderPlugin extends AbstractPlugin implements QuoteExpanderPl
     public const PARAM_ID_OFFER = 'id-offer';
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

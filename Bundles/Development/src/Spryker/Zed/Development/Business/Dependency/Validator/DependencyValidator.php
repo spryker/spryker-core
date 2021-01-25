@@ -91,15 +91,15 @@ class DependencyValidator implements DependencyValidatorInterface
      */
     protected function getComposerDependencies(DependencyValidationRequestTransfer $dependencyValidationRequestTransfer): array
     {
-        $moduleDependencies = $this->moduleDependencyParser->parseOutgoingDependencies(
+        $dependencyCollectionTransfer = $this->moduleDependencyParser->parseOutgoingDependencies(
             $dependencyValidationRequestTransfer->getModule(),
             $dependencyValidationRequestTransfer->getDependencyType()
         );
-        foreach ($moduleDependencies->getDependencyModules() as $dependencyModuleTransfer) {
+        foreach ($dependencyCollectionTransfer->getDependencyModules() as $dependencyModuleTransfer) {
             $composerName = $dependencyModuleTransfer->getComposerName() ?? $this->composerNameFinder->findComposerNameByModuleName($dependencyModuleTransfer->getModule());
             $dependencyModuleTransfer->setComposerName($composerName);
         }
-        $composerDependencies = $this->composerDependencyParser->getComposerDependencyComparison($moduleDependencies);
+        $composerDependencies = $this->composerDependencyParser->getComposerDependencyComparison($dependencyCollectionTransfer);
 
         return $composerDependencies;
     }
@@ -115,7 +115,6 @@ class DependencyValidator implements DependencyValidatorInterface
         foreach ($composerDependencies as $composerDependency) {
             $moduleDependencyTransfer = new ModuleDependencyTransfer();
             $moduleDependencyTransfer
-                ->setModuleName($composerDependency['moduleName'])
                 ->setComposerName($composerDependency['composerName'])
                 ->setIsValid(true)
                 ->setDependencyTypes($this->getDependencyTypes($composerDependency))

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright© 2016-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -38,16 +38,26 @@ class ConcreteProductsRelationshipExpander implements ConcreteProductsRelationsh
      */
     public function addResourceRelationshipsBySku(array $resources, RestRequestInterface $restRequest): array
     {
+        $productConcreteSkus = [];
         foreach ($resources as $resource) {
-            $skuProductConcrete = $this->findSku($resource->getAttributes());
-            if (!$skuProductConcrete) {
+            $productConcreteSku = $this->findSku($resource->getAttributes());
+            if (!$productConcreteSku) {
                 continue;
             }
 
-            $concreteProductsResource = $this->concreteProductsReader->findProductConcreteBySku($skuProductConcrete, $restRequest);
-            if ($concreteProductsResource) {
-                $resource->addRelationship($concreteProductsResource);
+            $productConcreteSkus[] = $productConcreteSku;
+        }
+
+        $concreteProductRestResources = $this->concreteProductsReader
+            ->getProductConcretesBySkus($productConcreteSkus, $restRequest);
+
+        foreach ($resources as $resource) {
+            $productConcreteSku = $this->findSku($resource->getAttributes());
+            if (!$productConcreteSku || !isset($concreteProductRestResources[$productConcreteSku])) {
+                continue;
             }
+
+            $resource->addRelationship($concreteProductRestResources[$productConcreteSku]);
         }
 
         return $resources;
@@ -66,11 +76,12 @@ class ConcreteProductsRelationshipExpander implements ConcreteProductsRelationsh
             if (!$productConcreteSkus) {
                 continue;
             }
-            foreach ($productConcreteSkus as $skuProductConcrete) {
-                $concreteProductsResource = $this->concreteProductsReader->findProductConcreteBySku($skuProductConcrete, $restRequest);
-                if ($concreteProductsResource) {
-                    $resource->addRelationship($concreteProductsResource);
-                }
+
+            $concreteProductRestResources = $this->concreteProductsReader
+                ->getProductConcretesBySkus($productConcreteSkus, $restRequest);
+
+            foreach ($concreteProductRestResources as $concreteProductRestResource) {
+                $resource->addRelationship($concreteProductRestResource);
             }
         }
 
@@ -84,7 +95,8 @@ class ConcreteProductsRelationshipExpander implements ConcreteProductsRelationsh
      */
     protected function findProductConcreteSkus(?AbstractTransfer $attributes): ?array
     {
-        if ($attributes
+        if (
+            $attributes
             && $attributes instanceof AbstractProductsRestAttributesTransfer
             && !empty($attributes->getAttributeMap()[static::KEY_PRODUCT_CONCRETE_IDS])
         ) {
@@ -101,7 +113,8 @@ class ConcreteProductsRelationshipExpander implements ConcreteProductsRelationsh
      */
     protected function findSku(?AbstractTransfer $attributes): ?string
     {
-        if ($attributes
+        if (
+            $attributes
             && $attributes->offsetExists(static::KEY_SKU)
             && $attributes->offsetGet(static::KEY_SKU)
         ) {

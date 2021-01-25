@@ -16,15 +16,15 @@ class Locator implements LocatorLocatorInterface
     /**
      * @var \Spryker\Shared\Kernel\BundleProxy
      */
-    private $bundleProxy;
+    protected $bundleProxy;
 
     /**
-     * @var array
+     * @var \Spryker\Shared\Kernel\AbstractLocator[]
      */
     protected $locator;
 
     /**
-     * @var self
+     * @var static
      */
     private static $instance;
 

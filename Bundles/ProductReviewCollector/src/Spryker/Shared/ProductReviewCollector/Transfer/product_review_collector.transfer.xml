@@ -23,5 +23,14 @@
         <property name="reviewCount" type="int"/>
     </transfer>
 
+    <transfer name="Locale">
+        <property name="localeName" type="string"/>
+        <property name="idLocale" type="int"/>
+    </transfer>
+
+    <transfer name="SearchCollectorConfiguration">
+        <property name="typeName" type="string"/>
+    </transfer>
+
 </transfers>
 

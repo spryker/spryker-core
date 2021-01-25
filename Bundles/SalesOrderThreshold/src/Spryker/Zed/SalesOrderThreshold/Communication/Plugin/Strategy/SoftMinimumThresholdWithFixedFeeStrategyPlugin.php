@@ -47,7 +47,7 @@ class SoftMinimumThresholdWithFixedFeeStrategyPlugin extends AbstractSalesOrderT
      */
     public function isValid(SalesOrderThresholdValueTransfer $salesOrderThresholdValueTransfer): bool
     {
-        if ($salesOrderThresholdValueTransfer->getSalesOrderThresholdValue() < 1 || $salesOrderThresholdValueTransfer->getFee() < 1) {
+        if ($salesOrderThresholdValueTransfer->getValue() < 1 || $salesOrderThresholdValueTransfer->getFee() < 1) {
             return false;
         }
 

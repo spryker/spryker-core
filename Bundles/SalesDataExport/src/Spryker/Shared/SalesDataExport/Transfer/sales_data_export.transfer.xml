@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="DataExportReport">
+        <property name="isSuccessful" type="bool"/>
+        <property name="dataExportResults" type="DataExportResult[]" singular="dataExportResult"/>
+    </transfer>
+
+    <transfer name="DataExportResult">
+        <property name="isSuccessful" type="bool"/>
+        <property name="dataEntity" type="string"/>
+        <property name="fileName" type="string"/>
+        <property name="exportCount" type="int"/>
+    </transfer>
+
+    <transfer name="DataExportConfigurations">
+        <property name="defaults" type="DataExportConfiguration"/>
+        <property name="actions" type="DataExportConfiguration[]" singular="action"/>
+    </transfer>
+
+    <transfer name="DataExportConfiguration">
+        <property name="dataEntity" type="string"/>
+        <property name="fields" type="array" singular="field"/>
+        <property name="format" type="DataExportFormatConfiguration"/>
+        <property name="filterCriteria" type="array" singular="filterCriterion" associative="true"/>
+    </transfer>
+
+    <transfer name="DataExportWriteResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="fileName" type="string"/>
+    </transfer>
+
+    <transfer name="Comment">
+        <property name="username" type="string"/>
+        <property name="message" type="string"/>
+        <property name="createdAt" type="string"/>
+        <property name="updatedAt" type="string"/>
+    </transfer>
+
+    <transfer name="DataExportFormatConfiguration">
+        <property name="type" type="string"/>
+    </transfer>
+
+    <transfer name="DataExportBatch">
+        <property name="offset" type="int"/>
+        <property name="data" type="array" singular="dataItem"/>
+        <property name="fields" type="string[]" singular="field"/>
+    </transfer>
+
+</transfers>

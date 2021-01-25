@@ -38,7 +38,9 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_PRODUCT_LIST_TABLE_DATA_EXPANDER = 'PLUGINS_PRODUCT_LIST_TABLE_DATA_EXPANDER';
     public const PLUGINS_PRODUCT_LIST_TABLE_HEADER_EXPANDER = 'PLUGINS_PRODUCT_LIST_TABLE_DATA_EXPANDER';
 
-    public const PLUGINS_PRODUCT_LIST_OWNER_TYPE_FORM_EXPANDER = 'PLUGINS_PRODUCT_LIST_FORM_EXPANDER';
+    public const PLUGINS_PRODUCT_LIST_TOP_BUTTONS_EXPANDER = 'PLUGINS_PRODUCT_LIST_TOP_BUTTONS_EXPANDER';
+
+    public const PLUGINS_PRODUCT_LIST_USED_BY_TABLE_EXPANDER = 'PLUGINS_PRODUCT_LIST_USED_BY_TABLE_EXPANDER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -64,7 +66,8 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addProductListTableQueryCriteriaExpanderPlugins($container);
         $container = $this->addProductListTableDataExpanderPlugins($container);
         $container = $this->addProductListTableHeaderExpanderPlugins($container);
-        $container = $this->addProductListOwnerTypeFormExpanderPlugins($container);
+        $container = $this->addProductListTopButtonsExpanderPlugins($container);
+        $container = $this->addProductListUsedByTableExpanderPlugins($container);
 
         return $container;
     }
@@ -76,9 +79,9 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductListPropelQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_PRODUCT_LIST] = function () {
+        $container->set(static::PROPEL_QUERY_PRODUCT_LIST, $container->factory(function () {
             return SpyProductListQuery::create();
-        };
+        }));
 
         return $container;
     }
@@ -90,9 +93,9 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductPropelQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_PRODUCT] = function () {
+        $container->set(static::PROPEL_QUERY_PRODUCT, $container->factory(function () {
             return SpyProductQuery::create();
-        };
+        }));
 
         return $container;
     }
@@ -104,9 +107,9 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductListFacade(Container $container): Container
     {
-        $container[static::FACADE_PRODUCT_LIST] = function ($container) {
+        $container->set(static::FACADE_PRODUCT_LIST, function ($container) {
             return new ProductListGuiToProductListFacadeBridge($container->getLocator()->productList()->facade());
-        };
+        });
 
         return $container;
     }
@@ -118,9 +121,9 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCategoryFacade(Container $container): Container
     {
-        $container[static::FACADE_CATEGORY] = function ($container) {
+        $container->set(static::FACADE_CATEGORY, function ($container) {
             return new ProductListGuiToCategoryFacadeBridge($container->getLocator()->category()->facade());
-        };
+        });
 
         return $container;
     }
@@ -132,9 +135,9 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductFacade(Container $container): Container
     {
-        $container[static::FACADE_PRODUCT] = function ($container) {
+        $container->set(static::FACADE_PRODUCT, function ($container) {
             return new ProductListGuiToProductFacadeBridge($container->getLocator()->product()->facade());
-        };
+        });
 
         return $container;
     }
@@ -146,11 +149,11 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUtilCsvService(Container $container): Container
     {
-        $container[static::SERVICE_UTIL_CSV] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_CSV, function (Container $container) {
             return new ProductListGuiToUtilCsvServiceBridge(
                 $container->getLocator()->utilCsv()->service()
             );
-        };
+        });
 
         return $container;
     }
@@ -162,9 +165,9 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addLocaleFacade(Container $container): Container
     {
-        $container[static::FACADE_LOCALE] = function ($container) {
+        $container->set(static::FACADE_LOCALE, function ($container) {
             return new ProductListGuiToLocaleFacadeBridge($container->getLocator()->locale()->facade());
-        };
+        });
 
         return $container;
     }
@@ -176,9 +179,9 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductListTableActionExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_PRODUCT_LIST_TABLE_ACTION_EXPANDER] = function () {
+        $container->set(static::PLUGINS_PRODUCT_LIST_TABLE_ACTION_EXPANDER, function () {
             return $this->getProductListTableActionExpanderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -190,9 +193,9 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductListTableConfigExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_PRODUCT_LIST_TABLE_CONFIG_EXPANDER] = function () {
+        $container->set(static::PLUGINS_PRODUCT_LIST_TABLE_CONFIG_EXPANDER, function () {
             return $this->getProductListTableConfigExpanderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -204,9 +207,9 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductListTableQueryCriteriaExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_PRODUCT_LIST_TABLE_QUERY_CRITERIA_EXPANDER] = function () {
+        $container->set(static::PLUGINS_PRODUCT_LIST_TABLE_QUERY_CRITERIA_EXPANDER, function () {
             return $this->getProductListTableQueryCriteriaExpanderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -218,9 +221,9 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductListTableDataExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_PRODUCT_LIST_TABLE_DATA_EXPANDER] = function () {
+        $container->set(static::PLUGINS_PRODUCT_LIST_TABLE_DATA_EXPANDER, function () {
             return $this->getProductListTableDataExpanderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -232,9 +235,9 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductListTableHeaderExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_PRODUCT_LIST_TABLE_HEADER_EXPANDER] = function () {
+        $container->set(static::PLUGINS_PRODUCT_LIST_TABLE_HEADER_EXPANDER, function () {
             return $this->getProductListTableHeaderExpanderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -244,21 +247,27 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addProductListOwnerTypeFormExpanderPlugins(Container $container): Container
+    protected function addProductListTopButtonsExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_PRODUCT_LIST_OWNER_TYPE_FORM_EXPANDER] = function () {
-            return $this->getProductListOwnerTypeFormExpanderPlugins();
-        };
+        $container->set(static::PLUGINS_PRODUCT_LIST_TOP_BUTTONS_EXPANDER, function () {
+            return $this->getProductListTopButtonsExpanderPlugins();
+        });
 
         return $container;
     }
 
     /**
-     * @return \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListOwnerTypeFormExpanderPluginInterface[]
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
      */
-    protected function getProductListOwnerTypeFormExpanderPlugins(): array
+    protected function addProductListUsedByTableExpanderPlugins(Container $container): Container
     {
-        return [];
+        $container->set(static::PLUGINS_PRODUCT_LIST_USED_BY_TABLE_EXPANDER, function () {
+            return $this->getProductListUsedByTableExpanderPlugins();
+        });
+
+        return $container;
     }
 
     /**
@@ -297,6 +306,22 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableDataExpanderPluginInterface[]
      */
     protected function getProductListTableHeaderExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTopButtonsExpanderPluginInterface[]
+     */
+    protected function getProductListTopButtonsExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListUsedByTableExpanderPluginInterface[]
+     */
+    protected function getProductListUsedByTableExpanderPlugins(): array
     {
         return [];
     }

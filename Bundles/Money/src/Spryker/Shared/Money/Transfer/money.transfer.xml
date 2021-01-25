@@ -11,6 +11,9 @@
 
     <transfer name="Currency">
         <property name="code" type="string"/>
+        <property name="idCurrency" type="int"/>
+        <property name="fractionDigits" type="int"/>
+        <property name="symbol" type="string"/>
     </transfer>
 
     <transfer name="Locale">
@@ -24,6 +27,16 @@
         <property name="currency" type="Currency"/>
         <property name="netAmount" type="int"/>
         <property name="grossAmount" type="int"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="idStore" type="int"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="StoreWithCurrency">
+        <property name="currencies" type="Currency[]" singular="currency"/>
+        <property name="store" type="Store"/>
     </transfer>
 
 </transfers>

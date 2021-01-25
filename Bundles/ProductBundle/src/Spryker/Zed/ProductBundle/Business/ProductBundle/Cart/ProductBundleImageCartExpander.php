@@ -11,30 +11,30 @@ use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToLocaleInterface;
-use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductImageInterface;
+use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToLocaleFacadeInterface;
+use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductImageFacadeInterface;
 
 class ProductBundleImageCartExpander implements ProductBundleCartExpanderInterface
 {
     public const DEFAULT_IMAGE_SET_NAME = 'default';
 
     /**
-     * @var \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductImageInterface
+     * @var \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductImageFacadeInterface
      */
     protected $productImageFacade;
 
     /**
-     * @var \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToLocaleInterface
+     * @var \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToLocaleFacadeInterface
      */
     protected $localeFacade;
 
     /**
-     * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductImageInterface $productImageFacade
-     * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToLocaleInterface $localeFacade
+     * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductImageFacadeInterface $productImageFacade
+     * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToLocaleFacadeInterface $localeFacade
      */
     public function __construct(
-        ProductBundleToProductImageInterface $productImageFacade,
-        ProductBundleToLocaleInterface $localeFacade
+        ProductBundleToProductImageFacadeInterface $productImageFacade,
+        ProductBundleToLocaleFacadeInterface $localeFacade
     ) {
         $this->productImageFacade = $productImageFacade;
         $this->localeFacade = $localeFacade;

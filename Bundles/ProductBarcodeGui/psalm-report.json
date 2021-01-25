@@ -1,0 +1,55 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 92,
+            "line_to": 92,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'Orm\\Zed\\Product\\Persistence\\SpyProductQuery' for Spryker\\Zed\\ProductBarcodeGui\\Communication\\Table\\ProductBarcodeTable::prepareTableQuery is incorrect, got 'Orm\\Zed\\Locale\\Persistence\\SpyLocaleQuery&static|Orm\\Zed\\Product\\Persistence\\SpyProductQuery&static'",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductBarcodeGui/src/Spryker/Zed/ProductBarcodeGui/Communication/Table/ProductBarcodeTable.php",
+            "snippet": "     * @return \\Orm\\Zed\\Product\\Persistence\\SpyProductQuery",
+            "selected_text": "\\Orm\\Zed\\Product\\Persistence\\SpyProductQuery",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 105,
+            "line_to": 105,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'Orm\\Zed\\Locale\\Persistence\\SpyLocaleQuery&static|Orm\\Zed\\Product\\Persistence\\SpyProductQuery&static' does not match the declared return type 'Orm\\Zed\\Product\\Persistence\\SpyProductQuery' for Spryker\\Zed\\ProductBarcodeGui\\Communication\\Table\\ProductBarcodeTable::prepareTableQuery",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductBarcodeGui/src/Spryker/Zed/ProductBarcodeGui/Communication/Table/ProductBarcodeTable.php",
+            "snippet": "        return $query;",
+            "selected_text": "$query",
+            "error_level": 6,
+            "shortcode": 128
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 171,
+            "line_to": 171,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductBarcodeGui/src/Spryker/Zed/ProductBarcodeGui/Communication/Table/ProductBarcodeTable.php",
+            "snippet": "            $barcodeResponseTransfer->getEncoding(),",
+            "selected_text": "$barcodeResponseTransfer->getEncoding()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 172,
+            "line_to": 172,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 3 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductBarcodeGui/src/Spryker/Zed/ProductBarcodeGui/Communication/Table/ProductBarcodeTable.php",
+            "snippet": "            $barcodeResponseTransfer->getCode()",
+            "selected_text": "$barcodeResponseTransfer->getCode()",
+            "error_level": 3,
+            "shortcode": 78
+        }
+    ],
+    "deprecation": []
+}

@@ -25,14 +25,16 @@ class AvailabilityNotificationListener extends AbstractPlugin implements EventBu
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\AvailabilityNotificationDataTransfer[] $transfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
      * @param string $eventName
      *
      * @return void
      */
-    public function handleBulk(array $transfers, $eventName)
+    public function handleBulk(array $eventEntityTransfers, $eventName)
     {
-        foreach ($transfers as $availabilityNotificationDataTransfer) {
+        /** @var \Generated\Shared\Transfer\EventEntityTransfer|\Generated\Shared\Transfer\AvailabilityNotificationDataTransfer $availabilityNotificationDataTransfer */
+        foreach ($eventEntityTransfers as $availabilityNotificationDataTransfer) {
+            //FIXME: This must be throwing exceptions instead, and the whole listener requires refactor to avoid inline annotation hack
             if (!$availabilityNotificationDataTransfer instanceof AvailabilityNotificationDataTransfer) {
                 continue;
             }

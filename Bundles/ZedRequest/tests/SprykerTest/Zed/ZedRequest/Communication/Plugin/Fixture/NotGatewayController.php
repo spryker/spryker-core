@@ -11,14 +11,10 @@ use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
 class NotGatewayController
 {
-    public function __construct()
-    {
-    }
-
     /**
      * @return string
      */
-    public function badAction()
+    public function badAction(): string
     {
         return 'bad';
     }
@@ -29,7 +25,7 @@ class NotGatewayController
      *
      * @return int
      */
-    public function bazAction(TransferInterface $foo, $bar = 0)
+    public function bazAction(TransferInterface $foo, int $bar = 0): int
     {
         if ($foo) {
             $bar = 0;

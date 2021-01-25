@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Customer;
 
 use Spryker\Service\Customer\CustomerServiceInterface;
+use Spryker\Shared\Kernel\ContainerInterface;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToCountryBridge;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleBridge;
@@ -17,7 +18,6 @@ use Spryker\Zed\Customer\Dependency\Service\CustomerToUtilDateTimeServiceBridge;
 use Spryker\Zed\Customer\Dependency\Service\CustomerToUtilSanitizeServiceBridge;
 use Spryker\Zed\Customer\Dependency\Service\CustomerToUtilValidateServiceBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
-use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 use Spryker\Zed\Kernel\Container;
 
 /**
@@ -38,6 +38,11 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
     public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
     public const SERVICE_UTIL_DATE_TIME = 'SERVICE_UTIL_DATE_TIME';
     public const SERVICE_CUSTOMER = 'SERVICE_CUSTOMER';
+
+    /**
+     * @uses \Spryker\Zed\Http\Communication\Plugin\Application\HttpApplicationPlugin::SERVICE_SUB_REQUEST
+     */
+    protected const SERVICE_SUB_REQUEST = 'sub_request';
 
     public const QUERY_CONTAINER_LOCALE = 'QUERY_CONTAINER_LOCALE';
 
@@ -98,9 +103,9 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCustomerAnonymizerPlugins(Container $container)
     {
-        $container[static::PLUGINS_CUSTOMER_ANONYMIZER] = function (Container $container) {
+        $container->set(static::PLUGINS_CUSTOMER_ANONYMIZER, function (Container $container) {
             return $this->getCustomerAnonymizerPlugins();
-        };
+        });
 
         return $container;
     }
@@ -112,9 +117,9 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addPostCustomerRegistrationPlugins($container)
     {
-        $container[static::PLUGINS_POST_CUSTOMER_REGISTRATION] = function () {
+        $container->set(static::PLUGINS_POST_CUSTOMER_REGISTRATION, function () {
             return $this->getPostCustomerRegistrationPlugins();
-        };
+        });
 
         return $container;
     }
@@ -134,9 +139,9 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addStore(Container $container)
     {
-        $container[static::STORE] = function (Container $container) {
+        $container->set(static::STORE, function (Container $container) {
             return Store::getInstance();
-        };
+        });
 
         return $container;
     }
@@ -148,9 +153,9 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUtilValidateService(Container $container)
     {
-        $container[static::SERVICE_UTIL_VALIDATE] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_VALIDATE, function (Container $container) {
             return new CustomerToUtilValidateServiceBridge($container->getLocator()->utilValidate()->service());
-        };
+        });
 
         return $container;
     }
@@ -162,9 +167,9 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function addCustomerTransferExpanderPlugins(Container $container)
     {
-        $container[static::PLUGINS_CUSTOMER_TRANSFER_EXPANDER] = function (Container $container) {
+        $container->set(static::PLUGINS_CUSTOMER_TRANSFER_EXPANDER, function (Container $container) {
             return $this->getCustomerTransferExpanderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -184,9 +189,9 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUtilSanitizeService(Container $container)
     {
-        $container[static::SERVICE_UTIL_SANITIZE] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_SANITIZE, function (Container $container) {
             return new CustomerToUtilSanitizeServiceBridge($container->getLocator()->utilSanitize()->service());
-        };
+        });
 
         return $container;
     }
@@ -198,9 +203,9 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addLocaleFacade(Container $container)
     {
-        $container[static::FACADE_LOCALE] = function (Container $container) {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new CustomerToLocaleBridge($container->getLocator()->locale()->facade());
-        };
+        });
 
         return $container;
     }
@@ -212,9 +217,9 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addSequenceNumberFacade(Container $container): Container
     {
-        $container[static::FACADE_SEQUENCE_NUMBER] = function (Container $container) {
+        $container->set(static::FACADE_SEQUENCE_NUMBER, function (Container $container) {
             return new CustomerToSequenceNumberBridge($container->getLocator()->sequenceNumber()->facade());
-        };
+        });
 
         return $container;
     }
@@ -226,9 +231,9 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCountryFacade(Container $container): Container
     {
-        $container[static::FACADE_COUNTRY] = function (Container $container) {
+        $container->set(static::FACADE_COUNTRY, function (Container $container) {
             return new CustomerToCountryBridge($container->getLocator()->country()->facade());
-        };
+        });
 
         return $container;
     }
@@ -240,9 +245,9 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addMailFacade(Container $container): Container
     {
-        $container[static::FACADE_MAIL] = function (Container $container) {
+        $container->set(static::FACADE_MAIL, function (Container $container) {
             return new CustomerToMailBridge($container->getLocator()->mail()->facade());
-        };
+        });
 
         return $container;
     }
@@ -254,9 +259,9 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addLocaleQueryConainer(Container $container): Container
     {
-        $container[static::QUERY_CONTAINER_LOCALE] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_LOCALE, function (Container $container) {
             return $container->getLocator()->locale()->queryContainer();
-        };
+        });
 
         return $container;
     }
@@ -268,9 +273,9 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addDateFormatterService(Container $container): Container
     {
-        $container[static::SERVICE_DATE_FORMATTER] = function (Container $container) {
+        $container->set(static::SERVICE_DATE_FORMATTER, function (Container $container) {
             return $container->getLocator()->utilDateTime()->service();
-        };
+        });
 
         return $container;
     }
@@ -282,9 +287,9 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUtilDateTimeService($container): Container
     {
-        $container[static::SERVICE_UTIL_DATE_TIME] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_DATE_TIME, function (Container $container) {
             return new CustomerToUtilDateTimeServiceBridge($container->getLocator()->utilDateTime()->service());
-        };
+        });
 
         return $container;
     }
@@ -296,11 +301,9 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addSubRequestHandler(Container $container): Container
     {
-        $container[static::SUB_REQUEST_HANDLER] = function () {
-            $pimple = new Pimple();
-
-            return $pimple->getApplication()['sub_request'];
-        };
+        $container->set(static::SUB_REQUEST_HANDLER, function (ContainerInterface $container) {
+            return $container->getApplicationService(static::SERVICE_SUB_REQUEST);
+        });
 
         return $container;
     }
@@ -320,9 +323,9 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function provideCustomerTableActionPlugins($container): Container
     {
-        $container[static::PLUGINS_CUSTOMER_TABLE_ACTION_EXPANDER] = function () {
+        $container->set(static::PLUGINS_CUSTOMER_TABLE_ACTION_EXPANDER, function () {
             return $this->getCustomerTableActionExpanderPlugins();
-        };
+        });
 
         return $container;
     }

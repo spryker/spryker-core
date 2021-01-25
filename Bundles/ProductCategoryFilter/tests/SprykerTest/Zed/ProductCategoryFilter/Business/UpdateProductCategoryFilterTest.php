@@ -29,7 +29,7 @@ class UpdateProductCategoryFilterTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateProductCategoryFilterChangesDataInDatabase()
+    public function testUpdateProductCategoryFilterChangesDataInDatabase(): void
     {
         // Arrange
         $newFilterData = [

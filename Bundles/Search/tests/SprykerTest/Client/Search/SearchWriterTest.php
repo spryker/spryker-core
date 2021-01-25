@@ -44,7 +44,7 @@ class SearchWriterTest extends Unit
     /**
      * @return void
      */
-    public function testWriteCreateDocumentsWithValidDataSet()
+    public function testWriteCreateDocumentsWithValidDataSet(): void
     {
         $dataSet = $this->getValidTestDataSet();
         $writer = $this->getElasticsearchWriter();
@@ -52,12 +52,11 @@ class SearchWriterTest extends Unit
     }
 
     /**
-     * @expectedException \Spryker\Client\Search\Exception\InvalidDataSetException
-     *
      * @return void
      */
-    public function testWriteCreateDocumentsWithInvalidDataSet()
+    public function testWriteCreateDocumentsWithInvalidDataSet(): void
     {
+        $this->expectException('Spryker\Client\Search\Exception\InvalidDataSetException');
         $dataSet = $this->getInvalidTestDataSet();
         $writer = $this->getElasticsearchWriter();
         $writer->write($dataSet);
@@ -68,8 +67,10 @@ class SearchWriterTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
+        $this->skipIfElasticsearch7();
+
         $this->type = $this->getMockType();
         $this->index = $this->getMockIndex();
         $this->client = $this->getMockClient();
@@ -83,7 +84,7 @@ class SearchWriterTest extends Unit
      *
      * @return array
      */
-    protected function getValidTestDataSet()
+    protected function getValidTestDataSet(): array
     {
         return [
             'key1' => 'value1',
@@ -96,7 +97,7 @@ class SearchWriterTest extends Unit
      *
      * @return array
      */
-    protected function getInvalidTestDataSet()
+    protected function getInvalidTestDataSet(): array
     {
         return ['value1', 'value2'];
     }
@@ -104,7 +105,7 @@ class SearchWriterTest extends Unit
     /**
      * @return \Spryker\Client\Search\Model\Elasticsearch\Writer\Writer
      */
-    protected function getElasticsearchWriter()
+    protected function getElasticsearchWriter(): Writer
     {
         return new Writer($this->client, '', '');
     }
@@ -112,7 +113,7 @@ class SearchWriterTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Elastica\Client
      */
-    protected function getMockClient()
+    protected function getMockClient(): Client
     {
         $mockClient = $this->getMockBuilder(Client::class)
             ->disableOriginalConstructor()
@@ -126,7 +127,7 @@ class SearchWriterTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Elastica\Index
      */
-    protected function getMockIndex()
+    protected function getMockIndex(): Index
     {
         $mockIndex = $this->getMockBuilder(Index::class)
             ->disableOriginalConstructor()
@@ -141,7 +142,7 @@ class SearchWriterTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Elastica\Type
      */
-    protected function getMockType()
+    protected function getMockType(): Type
     {
         $mockType = $this->getMockBuilder(Type::class)
             ->disableOriginalConstructor()
@@ -155,7 +156,7 @@ class SearchWriterTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Elastica\Response
      */
-    protected function getResponse()
+    protected function getResponse(): Response
     {
         $mockResponse = $this->getMockBuilder(Response::class)
             ->disableOriginalConstructor()
@@ -164,5 +165,15 @@ class SearchWriterTest extends Unit
         $mockResponse->method('isOk')->willReturn(true);
 
         return $mockResponse;
+    }
+
+    /**
+     * @return void
+     */
+    protected function skipIfElasticsearch7(): void
+    {
+        if (!method_exists(Index::class, 'getType')) {
+            $this->markTestSkipped('This test is not suitable for Elasticsearch 7 or higher');
+        }
     }
 }

@@ -13,7 +13,8 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 use Spryker\Zed\Url\Dependency\UrlEvents;
 
 /**
- * @deprecated Use `\Spryker\Bundles\UrlStorage\src\Spryker\Zed\UrlStorage\Communication\Plugin\Event\Listener\RedirectStoragePublishListener` and `\Spryker\Bundles\UrlStorage\src\Spryker\Zed\UrlStorage\Communication\Plugin\Event\Listener\RedirectStorageUnpublishListener` instead.
+ * @deprecated Use {@link \Spryker\Zed\UrlStorage\Communication\Plugin\Event\Listener\RedirectStoragePublishListener}
+ *   and {@link \Spryker\Zed\UrlStorage\Communication\Plugin\Event\Listener\RedirectStorageUnpublishListener} instead.
  *
  * @method \Spryker\Zed\UrlStorage\Persistence\UrlStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\UrlStorage\Communication\UrlStorageCommunicationFactory getFactory()
@@ -27,15 +28,15 @@ class RedirectStorageListener extends AbstractPlugin implements EventBulkHandler
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
      * @param string $eventName
      *
      * @return void
      */
-    public function handleBulk(array $eventTransfers, $eventName)
+    public function handleBulk(array $eventEntityTransfers, $eventName)
     {
         $this->preventTransaction();
-        $redirectIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
+        $redirectIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventEntityTransfers);
 
         if ($eventName === UrlEvents::ENTITY_SPY_URL_REDIRECT_CREATE || $eventName === UrlEvents::ENTITY_SPY_URL_REDIRECT_UPDATE) {
             $this->getFacade()->publishRedirect($redirectIds);

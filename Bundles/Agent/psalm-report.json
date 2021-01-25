@@ -1,0 +1,66 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 56,
+            "line_to": 56,
+            "type": "InvalidNullableReturnType",
+            "message": "The declared return type 'Generated\\Shared\\Transfer\\UserTransfer' for Spryker\\Client\\Agent\\AgentClient::getAgent is not nullable, but 'Generated\\Shared\\Transfer\\UserTransfer|null' contains null",
+            "file_name": "vendor/spryker/spryker/Bundles/Agent/src/Spryker/Client/Agent/AgentClient.php",
+            "snippet": "     * @return \\Generated\\Shared\\Transfer\\UserTransfer",
+            "selected_text": "\\Generated\\Shared\\Transfer\\UserTransfer",
+            "error_level": 5,
+            "shortcode": 144
+        },
+        {
+            "severity": "info",
+            "line_from": 60,
+            "line_to": 62,
+            "type": "NullableReturnStatement",
+            "message": "The declared return type 'Generated\\Shared\\Transfer\\UserTransfer' for Spryker\\Client\\Agent\\AgentClient::getAgent is not nullable, but the function returns 'Generated\\Shared\\Transfer\\UserTransfer|null'",
+            "file_name": "vendor/spryker/spryker/Bundles/Agent/src/Spryker/Client/Agent/AgentClient.php",
+            "snippet": "        return $this->getFactory()\n            ->createAgentSession()\n            ->getAgent();",
+            "selected_text": "$this->getFactory()\n            ->createAgentSession()\n            ->getAgent()",
+            "error_level": 5,
+            "shortcode": 139
+        },
+        {
+            "severity": "info",
+            "line_from": 29,
+            "line_to": 29,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\Agent\\Business\\AgentFacadeInterface::findAgentByUsername cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Agent/src/Spryker/Zed/Agent/Communication/Controller/GatewayController.php",
+            "snippet": "            ->findAgentByUsername($userTransfer->getUsername());",
+            "selected_text": "$userTransfer->getUsername()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 76,
+            "line_to": 76,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Customer\\Persistence\\SpyCustomer> variable $pager",
+            "file_name": "vendor/spryker/spryker/Bundles/Agent/src/Spryker/Zed/Agent/Persistence/AgentRepository.php",
+            "snippet": "        $customers = $pager->getResults()->getData();",
+            "selected_text": "getResults",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 79,
+            "line_to": 79,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 2 of Spryker\\Zed\\Agent\\Persistence\\Propel\\Mapper\\AgentMapper::mapCustomerDataToCustomerAutocompleteResponseTransfer expects Propel\\Runtime\\Util\\PropelModelPager, possibly different type Propel\\Runtime\\Util\\PropelModelPager|array<array-key, Orm\\Zed\\Customer\\Persistence\\SpyCustomer> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Agent/src/Spryker/Zed/Agent/Persistence/AgentRepository.php",
+            "snippet": "            ->mapCustomerDataToCustomerAutocompleteResponseTransfer($customers, $pager);",
+            "selected_text": "$pager",
+            "error_level": 3,
+            "shortcode": 92
+        }
+    ],
+    "deprecation": []
+}

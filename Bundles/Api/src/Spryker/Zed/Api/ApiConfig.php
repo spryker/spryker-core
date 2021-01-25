@@ -39,6 +39,8 @@ class ApiConfig extends AbstractBundleConfig
     public const HTTP_CODE_INTERNAL_ERROR = 500;
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getLimitPerPage()
@@ -47,6 +49,8 @@ class ApiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getMaxLimitPerPage()
@@ -56,6 +60,8 @@ class ApiConfig extends AbstractBundleConfig
 
     /**
      * All REST API resources will not be available, routes will be disabled.
+     *
+     * @api
      *
      * @return bool
      */
@@ -69,6 +75,8 @@ class ApiConfig extends AbstractBundleConfig
      *
      * Modify if you want to include host and schema/protocol.
      *
+     * @api
+     *
      * @return string
      */
     public function getBaseUri()
@@ -78,6 +86,8 @@ class ApiConfig extends AbstractBundleConfig
 
     /**
      * Defines HTTP methods for an item request. OPTIONS are added automatically.
+     *
+     * @api
      *
      * @return array
      */
@@ -92,6 +102,8 @@ class ApiConfig extends AbstractBundleConfig
 
     /**
      * Defines HTTP methods for a collection request. OPTIONS are added automatically.
+     *
+     * @api
      *
      * @return array
      */
@@ -109,6 +121,8 @@ class ApiConfig extends AbstractBundleConfig
      * Use null to always set to current "Origin" given, or "*" for all.
      * You can also specify concrete URLs, e.g. "http://example.org".
      *
+     * @api
+     *
      * @return string|null
      */
     public function getAllowedOrigin()
@@ -121,6 +135,8 @@ class ApiConfig extends AbstractBundleConfig
      *
      * You can also set to custom ones, e.g. "X-PINGOTHER, Content-Type"
      *
+     * @api
+     *
      * @return string
      */
     public function getAllowedRequestHeaders()
@@ -130,6 +146,8 @@ class ApiConfig extends AbstractBundleConfig
 
     /**
      * Defines the CORS Access-Control-Request-Methods types.
+     *
+     * @api
      *
      * @return array
      */
@@ -143,7 +161,9 @@ class ApiConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return array
+     * @api
+     *
+     * @return string[]
      */
     public function getSafeHeaderDataKeys(): array
     {
@@ -154,7 +174,9 @@ class ApiConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return array
+     * @api
+     *
+     * @return string[]
      */
     public function getSafeServerDataKeys(): array
     {
@@ -164,6 +186,8 @@ class ApiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return bool
      */
     public function isApiDebugEnabled(): bool

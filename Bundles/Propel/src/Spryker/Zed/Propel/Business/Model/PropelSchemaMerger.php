@@ -12,24 +12,48 @@ use DOMDocument;
 use DOMElement;
 use DOMNodeList;
 use SimpleXMLElement;
-use Spryker\Service\UtilText\UtilTextService;
 use Spryker\Zed\Propel\Business\Exception\SchemaMergeException;
+use Spryker\Zed\Propel\Business\SchemaElementFilter\SchemaElementFilterInterface;
+use Spryker\Zed\Propel\Dependency\Service\PropelToUtilTextServiceInterface;
 use Spryker\Zed\Propel\PropelConfig;
 use Symfony\Component\Finder\SplFileInfo;
 
 class PropelSchemaMerger implements PropelSchemaMergerInterface
 {
+    protected const RANDOM_STRING_LENGTH = 32;
+    protected const PATTERN_ANONYMOUS_ELEMENT = 'anonymous_%s';
+
+    protected const SOURCE_CORE = 'core';
+    protected const SOURCE_PROJECT = 'project';
+
     /**
      * @var \Spryker\Zed\Propel\PropelConfig|null
      */
     protected $config;
 
     /**
+     * @var \Spryker\Zed\Propel\Dependency\Service\PropelToUtilTextServiceInterface
+     */
+    protected $utilTextService;
+
+    /**
+     * @var \Spryker\Zed\Propel\Business\SchemaElementFilter\SchemaElementFilterInterface
+     */
+    protected $schemaElementFilter;
+
+    /**
+     * @param \Spryker\Zed\Propel\Dependency\Service\PropelToUtilTextServiceInterface $utilTextService
+     * @param \Spryker\Zed\Propel\Business\SchemaElementFilter\SchemaElementFilterInterface $schemaElementFilter
      * @param \Spryker\Zed\Propel\PropelConfig|null $config
      */
-    public function __construct(?PropelConfig $config = null)
-    {
+    public function __construct(
+        PropelToUtilTextServiceInterface $utilTextService,
+        SchemaElementFilterInterface $schemaElementFilter,
+        ?PropelConfig $config = null
+    ) {
         $this->config = $config;
+        $this->utilTextService = $utilTextService;
+        $this->schemaElementFilter = $schemaElementFilter;
     }
 
     /**
@@ -70,6 +94,7 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
 
         if (count($childArray) !== 1) {
             $fileIdentifier = $schemaFiles[0]->getFilename();
+
             throw new SchemaMergeException('Ambiguous use of name, package and namespace in schema file "' . $fileIdentifier . '"');
         }
     }
@@ -144,10 +169,26 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
     {
         $mergeSourceXmlElements = new ArrayObject();
         foreach ($schemaFiles as $schemaFile) {
-            $mergeSourceXmlElements[] = $this->createXmlElement($schemaFile);
+            $simpleXmlElement = $this->createXmlElement($schemaFile);
+            $simpleXmlElement->addAttribute('source', $this->getSourceFromFilePath($schemaFile));
+            $mergeSourceXmlElements[] = $simpleXmlElement;
         }
 
         return $mergeSourceXmlElements;
+    }
+
+    /**
+     * @param string $fileName
+     *
+     * @return string
+     */
+    protected function getSourceFromFilePath(string $fileName): string
+    {
+        if (strpos($fileName, DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR) !== false) {
+            return static::SOURCE_CORE;
+        }
+
+        return static::SOURCE_PROJECT;
     }
 
     /**
@@ -159,9 +200,11 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
     private function mergeSchema(SimpleXMLElement $mergeTargetXmlElement, $schemaXmlElements)
     {
         foreach ($schemaXmlElements as $schemaXmlElement) {
-            $mergeTargetXmlElement = $this->mergeSchemasRecursive($mergeTargetXmlElement, $schemaXmlElement);
+            $source = (string)$schemaXmlElement->attributes()['source'];
+            $mergeTargetXmlElement = $this->mergeSchemasRecursive($mergeTargetXmlElement, $schemaXmlElement, $source);
         }
 
+        $mergeTargetXmlElement = $this->schemaElementFilter->filter($mergeTargetXmlElement);
         $content = $this->prettyPrint($mergeTargetXmlElement);
 
         return $content;
@@ -192,31 +235,103 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
     /**
      * @param \SimpleXMLElement $toXmlElement
      * @param \SimpleXMLElement $fromXmlElement
+     * @param string $source
      *
      * @return \SimpleXMLElement
      */
-    private function mergeSchemasRecursive(SimpleXMLElement $toXmlElement, SimpleXMLElement $fromXmlElement)
+    private function mergeSchemasRecursive(SimpleXMLElement $toXmlElement, SimpleXMLElement $fromXmlElement, string $source)
     {
-        $toXmlElements = $this->retrieveToXmlElements($toXmlElement);
-
         foreach ($fromXmlElement->children() as $fromXmlChildTagName => $fromXmlChildElement) {
-            $fromXmlElementName = $this->getElementName($fromXmlChildElement, $fromXmlChildTagName);
-            if (isset($toXmlElements[$fromXmlElementName])) {
-                $toXmlElementChild = $toXmlElements[$fromXmlElementName];
-            } else {
-                $toXmlElementChild = $toXmlElement->addChild($fromXmlChildTagName, $fromXmlChildElement);
+            $toXmlElementChild = $this->getToXmlElementChild($toXmlElement, $fromXmlChildElement, $fromXmlChildTagName, $source);
+
+            if ($toXmlElementChild === null) {
+                continue;
             }
+
             $this->mergeAttributes($toXmlElementChild, $fromXmlChildElement);
-            $this->mergeSchemasRecursive($toXmlElementChild, $fromXmlChildElement);
+            $this->mergeSchemasRecursive($toXmlElementChild, $fromXmlChildElement, $source);
         }
 
         return $toXmlElement;
     }
 
     /**
+     * If a child by the given name doesn't exists, a new SimpleXmlElement will be returned.
+     * If a child by the given name exists, this SimpleXmlElement child will be returned.
+     * If the child name is `index` and it does already exists (comes from core), then the core SimpleXmlElement definition gets replaced with the one from the project.
+     * If the node doesn't contain any columns, it will just be removed.
+     *
+     * @param \SimpleXMLElement $toXmlElement
+     * @param \SimpleXMLElement $fromXmlChildElement
+     * @param string $fromXmlChildTagName
+     * @param string $source
+     *
+     * @return \SimpleXMLElement|null
+     */
+    protected function getToXmlElementChild(
+        SimpleXMLElement $toXmlElement,
+        SimpleXMLElement $fromXmlChildElement,
+        string $fromXmlChildTagName,
+        string $source
+    ): ?SimpleXMLElement {
+        $toXmlElements = $this->retrieveToXmlElements($toXmlElement);
+        $fromXmlElementName = $this->getElementName($fromXmlChildElement, $fromXmlChildTagName);
+
+        if ($this->allowIndexOverriding($toXmlElement, $fromXmlChildTagName, $source) && $this->haveSameAttribute($toXmlElement->$fromXmlChildTagName, $fromXmlChildElement, 'name')) {
+            $this->removeChild($toXmlElement, $fromXmlChildTagName);
+
+            if ($fromXmlChildElement->children()->count() === 0) {
+                return null;
+            }
+
+            return $toXmlElement->addChild($fromXmlChildTagName, $fromXmlChildElement);
+        }
+
+        if (isset($toXmlElements[$fromXmlElementName])) {
+            return $toXmlElements[$fromXmlElementName];
+        }
+
+        return $toXmlElement->addChild($fromXmlChildTagName, $fromXmlChildElement);
+    }
+
+    /**
+     * Returns true if projects enabled overriding of index definitions which come from core.
+     *
+     * @param \SimpleXMLElement $toXmlElement
+     * @param string $childName
+     * @param string $source
+     *
+     * @return bool
+     */
+    protected function allowIndexOverriding(SimpleXMLElement $toXmlElement, string $childName, string $source): bool
+    {
+        return $this->hasConfig() && $this->config->allowIndexOverriding() && $childName === 'index' && isset($toXmlElement->$childName) && $source === static::SOURCE_PROJECT;
+    }
+
+    /**
+     * @param \SimpleXMLElement $firstXmlElement
+     * @param \SimpleXMLElement $secondXmlElement
+     * @param string $attributeName
+     *
+     * @return bool
+     */
+    protected function haveSameAttribute(SimpleXMLElement $firstXmlElement, SimpleXMLElement $secondXmlElement, string $attributeName): bool
+    {
+        if (!isset($firstXmlElement->attributes()[$attributeName]) || !isset($secondXmlElement->attributes()[$attributeName])) {
+            return false;
+        }
+
+        if ((string)$firstXmlElement->attributes()[$attributeName] === (string)$secondXmlElement->attributes()[$attributeName]) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * @param \SimpleXMLElement $toXmlElement
      *
-     * @return \ArrayObject
+     * @return \ArrayObject|\SimpleXMLElement[]
      */
     private function retrieveToXmlElements(SimpleXMLElement $toXmlElement)
     {
@@ -246,11 +361,26 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
         }
 
         if (empty($elementName) || is_array($elementName)) {
-            $utilTextService = new UtilTextService();
-            $elementName = 'anonymous_' . $utilTextService->generateRandomString(32);
+            $elementName = sprintf(
+                static::PATTERN_ANONYMOUS_ELEMENT,
+                $this->utilTextService->generateRandomString(static::RANDOM_STRING_LENGTH)
+            );
         }
 
         return $elementName;
+    }
+
+    /**
+     * @param \SimpleXMLElement $simpleXMLElement
+     * @param string $childName
+     *
+     * @return void
+     */
+    protected function removeChild(SimpleXMLElement $simpleXMLElement, string $childName): void
+    {
+        $childNode = dom_import_simplexml($simpleXMLElement->$childName);
+        $dom = dom_import_simplexml($simpleXMLElement);
+        $dom->removeChild($childNode);
     }
 
     /**
@@ -351,10 +481,12 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
             $columnName = $node->attributes['name']->value;
             if (strpos($columnName, 'id_') === 0) {
                 $idColumns[$columnName] = $node;
+
                 continue;
             }
             if (strpos($columnName, 'fk_') === 0) {
                 $fkColumns[$columnName] = $node;
+
                 continue;
             }
 

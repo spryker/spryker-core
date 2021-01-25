@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\ProductLabelDiscountConnector\Business;
 
 use Codeception\Test\Unit;
+use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 use Generated\Shared\Transfer\ProductLabelTransfer;
 
 /**
@@ -23,6 +24,8 @@ use Generated\Shared\Transfer\ProductLabelTransfer;
  */
 class ProductLabelDiscountConnectorFacadeTest extends Unit
 {
+    use ArraySubsetAsserts;
+
     /**
      * @var \SprykerTest\Zed\ProductLabelDiscountConnector\ProductLabelDiscountConnectorBusinessTester
      */
@@ -31,7 +34,7 @@ class ProductLabelDiscountConnectorFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindAllLabelsShoulsReturnListOfExistingLabels()
+    public function testFindAllLabelsShoulsReturnListOfExistingLabels(): void
     {
         // Arrange
         $this->tester->haveProductLabel([
@@ -55,7 +58,7 @@ class ProductLabelDiscountConnectorFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testIsProductLabelSatisfiedByShouldReturnTrueWhenLabelIsPresent()
+    public function testIsProductLabelSatisfiedByShouldReturnTrueWhenLabelIsPresent(): void
     {
         // Arrange
         $productLabelTransfer = $this->tester->haveProductLabel([
@@ -87,7 +90,7 @@ class ProductLabelDiscountConnectorFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testIsProductLabelSatisfiedByShouldReturnFalseWhenLabelIsNotPresent()
+    public function testIsProductLabelSatisfiedByShouldReturnFalseWhenLabelIsNotPresent(): void
     {
         // Arrange
         $productLabelTransfer = $this->tester->haveProductLabel([
@@ -114,7 +117,7 @@ class ProductLabelDiscountConnectorFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCollectByProductLabelShouldCollectAllItemsMatchingLabel()
+    public function testCollectByProductLabelShouldCollectAllItemsMatchingLabel(): void
     {
         // Arrange
         $productLabelTransfer = $this->tester->haveProductLabel([
@@ -154,7 +157,7 @@ class ProductLabelDiscountConnectorFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCollectByExclusiveProductLabelShouldCollectItemsMatchingOnlyExclusiveLabel()
+    public function testCollectByExclusiveProductLabelShouldCollectItemsMatchingOnlyExclusiveLabel(): void
     {
         // Arrange
         $productLabelTransfer1 = $this->tester->haveProductLabel([

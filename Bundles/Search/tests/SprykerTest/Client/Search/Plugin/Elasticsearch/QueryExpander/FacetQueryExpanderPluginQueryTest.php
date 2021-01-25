@@ -26,7 +26,7 @@ class FacetQueryExpanderPluginQueryTest extends AbstractFacetQueryExpanderPlugin
     /**
      * @return array
      */
-    public function facetQueryExpanderDataProvider()
+    public function facetQueryExpanderDataProvider(): array
     {
         return [
             'single string facet' => $this->createStringFacetData(),
@@ -42,7 +42,7 @@ class FacetQueryExpanderPluginQueryTest extends AbstractFacetQueryExpanderPlugin
     /**
      * @return array
      */
-    protected function createStringFacetData()
+    protected function createStringFacetData(): array
     {
         $searchConfig = $this->createStringSearchConfig();
         $expectedQuery = new BoolQuery();
@@ -53,7 +53,7 @@ class FacetQueryExpanderPluginQueryTest extends AbstractFacetQueryExpanderPlugin
     /**
      * @return array
      */
-    protected function createMultiStringFacetData()
+    protected function createMultiStringFacetData(): array
     {
         $searchConfig = $this->createMultiStringSearchConfig();
         $expectedQuery = new BoolQuery();
@@ -64,7 +64,7 @@ class FacetQueryExpanderPluginQueryTest extends AbstractFacetQueryExpanderPlugin
     /**
      * @return array
      */
-    protected function createIntegerFacetData()
+    protected function createIntegerFacetData(): array
     {
         $searchConfig = $this->createIntegerSearchConfig();
         $expectedQuery = new BoolQuery();
@@ -75,7 +75,7 @@ class FacetQueryExpanderPluginQueryTest extends AbstractFacetQueryExpanderPlugin
     /**
      * @return array
      */
-    protected function createMultiIntegerFacetData()
+    protected function createMultiIntegerFacetData(): array
     {
         $searchConfig = $this->createMultiIntegerSearchConfig();
         $expectedQuery = new BoolQuery();
@@ -86,7 +86,7 @@ class FacetQueryExpanderPluginQueryTest extends AbstractFacetQueryExpanderPlugin
     /**
      * @return array
      */
-    protected function createCategoryFacetData()
+    protected function createCategoryFacetData(): array
     {
         $searchConfig = $this->createCategorySearchConfig();
         $expectedQuery = new BoolQuery();
@@ -97,7 +97,7 @@ class FacetQueryExpanderPluginQueryTest extends AbstractFacetQueryExpanderPlugin
     /**
      * @return array
      */
-    protected function createMultiCategoryFacetData()
+    protected function createMultiCategoryFacetData(): array
     {
         $searchConfig = $this->createMultiCategorySearchConfig();
         $expectedQuery = new BoolQuery();
@@ -108,7 +108,7 @@ class FacetQueryExpanderPluginQueryTest extends AbstractFacetQueryExpanderPlugin
     /**
      * @return array
      */
-    protected function createMixedFacetData()
+    protected function createMixedFacetData(): array
     {
         $searchConfig = $this->createMixedSearchConfig();
         $expectedQuery = new BoolQuery();

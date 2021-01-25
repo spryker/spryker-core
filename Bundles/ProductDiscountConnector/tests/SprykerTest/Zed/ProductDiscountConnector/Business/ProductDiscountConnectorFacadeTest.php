@@ -44,7 +44,7 @@ class ProductDiscountConnectorFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testIsProductAttributeSatisfiedByShouldReturnTrueWhenAttributePresent()
+    public function testIsProductAttributeSatisfiedByShouldReturnTrueWhenAttributePresent(): void
     {
         $abstractProductEntity = $this->createAbstractProductWithAttributes();
 
@@ -66,7 +66,7 @@ class ProductDiscountConnectorFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testIsProductAttributeSatisfiedByShouldReturnFalseWhenAttributeIsNotSet()
+    public function testIsProductAttributeSatisfiedByShouldReturnFalseWhenAttributeIsNotSet(): void
     {
         $abstractProductEntity = $this->createAbstractProductWithAttributes();
 
@@ -88,7 +88,7 @@ class ProductDiscountConnectorFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCollectByProductAttributeShouldCollectAllItemsMatchingAttribute()
+    public function testCollectByProductAttributeShouldCollectAllItemsMatchingAttribute(): void
     {
         $abstractProductEntity = $this->createAbstractProductWithAttributes();
 
@@ -105,7 +105,7 @@ class ProductDiscountConnectorFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCollectByProductAttributeWhenNoItemsMatchedShouldReturnEmptySet()
+    public function testCollectByProductAttributeWhenNoItemsMatchedShouldReturnEmptySet(): void
     {
         $abstractProductEntity = $this->createAbstractProductWithAttributes();
 
@@ -122,7 +122,7 @@ class ProductDiscountConnectorFacadeTest extends Unit
     /**
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstract
      */
-    protected function createAbstractProductWithAttributes()
+    protected function createAbstractProductWithAttributes(): SpyProductAbstract
     {
         $taxSet = new SpyTaxSet();
         $taxSet->setName('DEFAULT');
@@ -172,7 +172,7 @@ class ProductDiscountConnectorFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\ProductDiscountConnector\Business\ProductDiscountConnectorFacade
      */
-    protected function createProductDiscountConnectorFacade()
+    protected function createProductDiscountConnectorFacade(): ProductDiscountConnectorFacade
     {
         $productDiscountConnectorFacade = new ProductDiscountConnectorFacade();
 
@@ -208,7 +208,7 @@ class ProductDiscountConnectorFacadeTest extends Unit
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function createQuoteTransfer(SpyProductAbstract $abstractProductEntity)
+    protected function createQuoteTransfer(SpyProductAbstract $abstractProductEntity): QuoteTransfer
     {
         $quoteTransfer = new QuoteTransfer();
 
@@ -226,7 +226,7 @@ class ProductDiscountConnectorFacadeTest extends Unit
      *
      * @return \Generated\Shared\Transfer\ClauseTransfer
      */
-    protected function createClauseTransfer($value)
+    protected function createClauseTransfer(string $value): ClauseTransfer
     {
         $clauseTransfer = new ClauseTransfer();
         $clauseTransfer->setOperator('=');

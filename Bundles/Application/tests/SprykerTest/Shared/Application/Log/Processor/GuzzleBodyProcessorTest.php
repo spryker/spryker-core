@@ -27,7 +27,7 @@ class GuzzleBodyProcessorTest extends Unit
     /**
      * @return void
      */
-    public function testInvokeShouldAddGuzzleBodyToRecordsExtra()
+    public function testInvokeShouldAddGuzzleBodyToRecordsExtra(): void
     {
         $sanitizer = new Sanitizer([], '***');
         $processor = new GuzzleBodyProcessor($sanitizer);
@@ -40,7 +40,7 @@ class GuzzleBodyProcessorTest extends Unit
     /**
      * @return void
      */
-    public function testInvokeWithoutGuzzleBodyShouldNotAddToRecordsExtra()
+    public function testInvokeWithoutGuzzleBodyShouldNotAddToRecordsExtra(): void
     {
         $sanitizer = new Sanitizer([], '***');
         $processor = new GuzzleBodyProcessor($sanitizer);
@@ -54,11 +54,11 @@ class GuzzleBodyProcessorTest extends Unit
      * @dataProvider guzzleBodies()
      *
      * @param mixed $body
-     * @param string $expected
+     * @param array $expected
      *
      * @return void
      */
-    public function testInvokeWithDifferentGuzzleBody($body, $expected)
+    public function testInvokeWithDifferentGuzzleBody($body, array $expected): void
     {
         $sanitizer = new Sanitizer(['replace'], '***');
         $processor = new GuzzleBodyProcessor($sanitizer);
@@ -71,7 +71,7 @@ class GuzzleBodyProcessorTest extends Unit
     /**
      * @return array
      */
-    public function guzzleBodies()
+    public function guzzleBodies(): array
     {
         return [
             ['string body', ['transfer-response' => 'string body']],

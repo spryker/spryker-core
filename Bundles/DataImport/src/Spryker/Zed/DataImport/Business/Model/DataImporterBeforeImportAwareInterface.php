@@ -12,7 +12,7 @@ interface DataImporterBeforeImportAwareInterface extends DataImporterBeforeImpor
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataImporterBeforeImportInterface $beforeImportHook
      *
-     * @return void
+     * @return $this
      */
     public function addBeforeImportHook(DataImporterBeforeImportInterface $beforeImportHook);
 }

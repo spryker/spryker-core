@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\ProductOfferValidity\Persistence" package="src.Orm.Zed.ProductOfferValidity.Persistence">
+  <table name="spy_product_offer_validity" phpName="SpyProductOfferValidity" idMethod="native" allowPkInsert="true" identifierQuoting="true">
+    <column name="id_product_offer_validity" primaryKey="true" type="INTEGER" autoIncrement="true"/>
+    <column name="fk_product_offer" required="true" type="INTEGER"/>
+    <column name="valid_from" type="TIMESTAMP"/>
+    <column name="valid_to" type="TIMESTAMP"/>
+
+    <unique name="spy_product_offer_validity-fk_product_offer-unique">
+      <unique-column name="fk_product_offer"/>
+    </unique>
+
+    <foreign-key name="spy_product_offer_validity-fk_product_offer" foreignTable="spy_product_offer">
+      <reference local="fk_product_offer" foreign="id_product_offer"/>
+    </foreign-key>
+
+    <id-method-parameter value="spy_product_offer_validity_pk_seq"/>
+  </table>
+</database>

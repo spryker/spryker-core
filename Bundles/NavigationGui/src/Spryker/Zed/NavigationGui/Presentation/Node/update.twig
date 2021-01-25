@@ -3,6 +3,14 @@
 {% block content %}
 
     <div class="ibox float-e-margins">
+        {% if idNavigationNode %}
+            {{ form_start(deleteNavigationNodeForm, {
+                action: url('/navigation-gui/node/delete')
+            }) }}
+                <input type="hidden" name="id-navigation" value="{{ idNavigation }}" />
+                <input type="hidden" name="id-navigation-node" value="{{ idNavigationNode }}" />
+            {{ form_end(deleteNavigationNodeForm) }}
+        {% endif %}
         {{ form_start(navigationNodeForm) }}
 
             <div class="ibox-title">
@@ -14,13 +22,10 @@
                     </a>
 
                     {% if idNavigationNode %}
-                        <a href="{{ url('/navigation-gui/node/delete', {'id-navigation': idNavigation, 'id-navigation-node': idNavigationNode}) }}"
-                           id="remove-selected-node-btn"
-                           class="btn btn-xs btn-danger"
-                           onclick="return confirm('{{ 'Are you sure you remove the selected node and all its children?' | trans }}')"
-                        >
-                            <i class="fa fa-trash"></i> {{ 'Delete selected node' | trans }}
-                        </a>
+                        <button id="remove-selected-node-btn" class="btn btn-xs btn-danger" data-confirm-message="{{ 'Are you sure you remove the selected node and all its children?' | trans }}">
+                            <i class="fa fa-trash"></i>
+                            {{ 'Delete selected node' | trans }}
+                        </button>
                     {% endif %}
                 </div>
             </div>
@@ -41,9 +46,9 @@
 
 {% block head_css %}
     {{ parent() }}
-    <link rel="stylesheet" href="/assets/css/spryker-zed-navigation.css" />
+    <link rel="stylesheet" href="{{ assetsPath('css/spryker-zed-navigation.css') }}" />
 {% endblock %}
 {% block footer_js %}
     {{ parent() }}
-    <script src="/assets/js/spryker-zed-navigation-node-form.js"></script>
+    <script src="{{ assetsPath('js/spryker-zed-navigation-node-form.js') }}"></script>
 {% endblock %}

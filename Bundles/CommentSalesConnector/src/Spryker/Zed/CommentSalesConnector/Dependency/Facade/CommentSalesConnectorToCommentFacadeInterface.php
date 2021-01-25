@@ -27,5 +27,8 @@ interface CommentSalesConnectorToCommentFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CommentThreadResponseTransfer
      */
-    public function duplicateCommentThread(CommentFilterTransfer $commentFilterTransfer, CommentRequestTransfer $commentRequestTransfer): CommentThreadResponseTransfer;
+    public function duplicateCommentThread(
+        CommentFilterTransfer $commentFilterTransfer,
+        CommentRequestTransfer $commentRequestTransfer
+    ): CommentThreadResponseTransfer;
 }

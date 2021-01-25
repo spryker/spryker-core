@@ -1,0 +1,55 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 26,
+            "line_to": 26,
+            "type": "InvalidNullableReturnType",
+            "message": "The declared return type 'string' for Spryker\\Client\\Price\\PriceModeCache\\PriceModeCache::get is not nullable, but 'null|string' contains null",
+            "file_name": "vendor/spryker/spryker/Bundles/Price/src/Spryker/Client/Price/PriceModeCache/PriceModeCache.php",
+            "snippet": "     * @return string",
+            "selected_text": "string",
+            "error_level": 5,
+            "shortcode": 144
+        },
+        {
+            "severity": "info",
+            "line_from": 30,
+            "line_to": 30,
+            "type": "NullableReturnStatement",
+            "message": "The declared return type 'string' for Spryker\\Client\\Price\\PriceModeCache\\PriceModeCache::get is not nullable, but the function returns 'null|string'",
+            "file_name": "vendor/spryker/spryker/Bundles/Price/src/Spryker/Client/Price/PriceModeCache/PriceModeCache.php",
+            "snippet": "        return static::$priceModeCache;",
+            "selected_text": "static::$priceModeCache",
+            "error_level": 5,
+            "shortcode": 139
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 35,
+            "line_to": 35,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Service\\Container\\Container::offsetSet has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Price/src/Spryker/Yves/Price/Plugin/PriceModeSwitcherServiceProvider.php",
+            "snippet": "        $app['twig'] = $app->share(",
+            "selected_text": "$app",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 35,
+            "line_to": 35,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Service\\Container\\Container::share has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Price/src/Spryker/Yves/Price/Plugin/PriceModeSwitcherServiceProvider.php",
+            "snippet": "        $app['twig'] = $app->share(",
+            "selected_text": "share",
+            "error_level": 2,
+            "shortcode": 1
+        }
+    ]
+}

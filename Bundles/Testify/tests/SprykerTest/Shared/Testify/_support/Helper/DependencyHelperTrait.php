@@ -15,7 +15,7 @@ trait DependencyHelperTrait
      *
      * @return void
      */
-    private function setDependency($key, $value)
+    private function setDependency(string $key, $value): void
     {
         $this->getDependencyHelper()->setDependency($key, $value);
     }

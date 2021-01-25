@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\ProductLabelStorage;
 
+use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -21,15 +22,34 @@ class ProductLabelStorageClient extends AbstractClient implements ProductLabelSt
      *
      * @param int $idProductAbstract
      * @param string $localeName
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]
      */
-    public function findLabelsByIdProductAbstract($idProductAbstract, $localeName)
+    public function findLabelsByIdProductAbstract($idProductAbstract, $localeName, string $storeName)
     {
         return $this
             ->getFactory()
             ->createProductAbstractLabelStorageReader()
-            ->findLabelsByIdProductAbstract($idProductAbstract, $localeName);
+            ->findLabelsByIdProductAbstract($idProductAbstract, $localeName, $storeName);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int[] $productAbstractIds
+     * @param string $localeName
+     * @param string $storeName
+     *
+     * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[][]
+     */
+    public function getProductLabelsByProductAbstractIds(array $productAbstractIds, string $localeName, string $storeName): array
+    {
+        return $this->getFactory()
+            ->createProductAbstractLabelStorageReader()
+            ->getProductLabelsByProductAbstractIds($productAbstractIds, $localeName, $storeName);
     }
 
     /**
@@ -39,15 +59,16 @@ class ProductLabelStorageClient extends AbstractClient implements ProductLabelSt
      *
      * @param array $idProductLabels
      * @param string $localeName
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]
      */
-    public function findLabels(array $idProductLabels, $localeName)
+    public function findLabels(array $idProductLabels, $localeName, string $storeName)
     {
         return $this
             ->getFactory()
             ->createLabelDictionaryReader()
-            ->findSortedLabelsByIdsProductLabel($idProductLabels, $localeName);
+            ->findSortedLabelsByIdsProductLabel($idProductLabels, $localeName, $storeName);
     }
 
     /**
@@ -57,14 +78,36 @@ class ProductLabelStorageClient extends AbstractClient implements ProductLabelSt
      *
      * @param string $labelName
      * @param string $localeName
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer|null
      */
-    public function findLabelByName($labelName, $localeName)
+    public function findLabelByName($labelName, $localeName, string $storeName)
     {
         return $this
             ->getFactory()
             ->createLabelDictionaryReader()
-            ->findLabelByName($labelName, $localeName);
+            ->findLabelByName($labelName, $localeName, $storeName);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     * @param string $localeName
+     * @param string $storeName
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer
+     */
+    public function expandProductView(
+        ProductViewTransfer $productViewTransfer,
+        string $localeName,
+        string $storeName
+    ): ProductViewTransfer {
+        return $this->getFactory()
+            ->createProductViewExpander()
+            ->expand($productViewTransfer, $localeName, $storeName);
     }
 }

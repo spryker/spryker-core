@@ -27,7 +27,7 @@ class RequestIdTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->resetRequestIdHandler();
     }
@@ -35,7 +35,7 @@ class RequestIdTest extends Unit
     /**
      * @return void
      */
-    public function testGetRequestIdShouldReturnSameRequestId()
+    public function testGetRequestIdShouldReturnSameRequestId(): void
     {
         $this->assertSame(
             (new RequestId())->getRequestId(),
@@ -46,7 +46,7 @@ class RequestIdTest extends Unit
     /**
      * @return void
      */
-    public function testGetRequestIdShouldReturnGivenRequestId()
+    public function testGetRequestIdShouldReturnGivenRequestId(): void
     {
         $_SERVER[RequestId::REQUEST_ID_HEADER_KEY] = 'requestId';
 
@@ -59,7 +59,7 @@ class RequestIdTest extends Unit
     /**
      * @return void
      */
-    protected function resetRequestIdHandler()
+    protected function resetRequestIdHandler(): void
     {
         $reflectionClass = new ReflectionClass(RequestId::class);
         $reflectionProperty = $reflectionClass->getProperty('requestId');

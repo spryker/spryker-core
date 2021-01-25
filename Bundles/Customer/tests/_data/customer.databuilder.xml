@@ -20,11 +20,11 @@
     </transfer>
 
     <transfer name="Customer">
-        <property name="email" dataBuilderRule="email"/>
+        <property name="email" dataBuilderRule="unique()->email"/>
         <property name="firstName" dataBuilderRule="firstName"/>
         <property name="lastName" dataBuilderRule="lastName"/>
         <property name="company" dataBuilderRule="company"/>
-        <property name="password" dataBuilderRule="password"/>
+        <property name="password" dataBuilderRule="=testPassword1_"/>
         <property name="gender" dataBuilderRule="randomElement(['Male', 'Female'])"/>
         <property name="dateOfBirth" dataBuilderRule="date('Y-m-d', '-20 years')"/>
         <property name="salutation" dataBuilderRule="randomElement(['Mr', 'Mrs'])"/>

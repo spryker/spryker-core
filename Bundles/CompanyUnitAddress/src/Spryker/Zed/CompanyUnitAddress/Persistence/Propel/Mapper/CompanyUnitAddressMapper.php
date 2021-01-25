@@ -9,6 +9,7 @@ namespace Spryker\Zed\CompanyUnitAddress\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
+use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 use Generated\Shared\Transfer\SpyCompanyUnitAddressEntityTransfer;
 use Generated\Shared\Transfer\SpyCompanyUnitAddressToCompanyBusinessUnitEntityTransfer;
@@ -44,8 +45,9 @@ class CompanyUnitAddressMapper implements CompanyUnitAddressMapperInterface
      *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer
      */
-    protected function mapCompanyBusinessUnitCollection(SpyCompanyUnitAddressEntityTransfer $companyUnitAddressEntityTransfer): CompanyBusinessUnitCollectionTransfer
-    {
+    protected function mapCompanyBusinessUnitCollection(
+        SpyCompanyUnitAddressEntityTransfer $companyUnitAddressEntityTransfer
+    ): CompanyBusinessUnitCollectionTransfer {
         $companyBusinessUnitCollectionTransfer = new CompanyBusinessUnitCollectionTransfer();
         foreach ($companyUnitAddressEntityTransfer->getSpyCompanyUnitAddressToCompanyBusinessUnits() as $companyUnitAddressToCompanyBusinessUnit) {
             $companyBusinessUnitEntityTransfer = $companyUnitAddressToCompanyBusinessUnit->getCompanyBusinessUnit();
@@ -93,6 +95,11 @@ class CompanyUnitAddressMapper implements CompanyUnitAddressMapperInterface
         );
 
         $companyUnitAddressTransfer->setIso2Code($companyUnitAddressEntity->getCountry()->getIso2Code());
+        if ($companyUnitAddressEntity->getFkCompany()) {
+            $companyUnitAddressTransfer->setCompany(
+                (new CompanyTransfer())->fromArray($companyUnitAddressEntity->getCompany()->toArray(), true)
+            );
+        }
 
         return $companyUnitAddressTransfer;
     }

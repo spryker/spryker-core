@@ -24,7 +24,7 @@ class Factory extends AbstractFactory
     protected function provideExternalDependencies(
         AbstractBundleDependencyProvider $dependencyProvider,
         Container $container
-    ) {
+    ): void {
         $container->set(AbstractFactoryTest::CONTAINER_KEY, AbstractFactoryTest::CONTAINER_VALUE);
     }
 

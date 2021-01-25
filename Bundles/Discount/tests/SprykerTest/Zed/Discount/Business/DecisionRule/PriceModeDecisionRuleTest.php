@@ -28,7 +28,7 @@ class PriceModeDecisionRuleTest extends BaseRuleTester
     /**
      * @return void
      */
-    public function testDecisionRuleWhenPriceModeMatchesShouldReturnTrue()
+    public function testDecisionRuleWhenPriceModeMatchesShouldReturnTrue(): void
     {
         $comparatorMock = $this->createComparatorMock();
         $comparatorMock->method('compare')->willReturnCallback(function (ClauseTransfer $clauseTransfer, $currency) {
@@ -50,7 +50,7 @@ class PriceModeDecisionRuleTest extends BaseRuleTester
      *
      * @return \Spryker\Zed\Discount\Business\DecisionRule\PriceModeDecisionRule
      */
-    protected function createCurrencyDecisionRuleMock(?ComparatorOperatorsInterface $comparatorMock = null)
+    protected function createCurrencyDecisionRuleMock(?ComparatorOperatorsInterface $comparatorMock = null): PriceModeDecisionRule
     {
         if ($comparatorMock === null) {
             $comparatorMock = $this->createComparatorMock();

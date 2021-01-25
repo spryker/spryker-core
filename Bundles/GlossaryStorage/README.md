@@ -1,7 +1,6 @@
 # GlossaryStorage Module
-[![Build Status](https://travis-ci.org/spryker/GlossaryStorage.svg)](https://travis-ci.org/spryker/GlossaryStorage)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/GlossaryStorage/badge.svg)](https://coveralls.io/github/spryker/GlossaryStorage)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/spryker/GlossaryStorage/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/spryker/GlossaryStorage/?branch=master)
+[![Build Status](https://travis-ci.org/spryker/glossary-storage.svg)](https://travis-ci.org/spryker/glossary-storage)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 ## Installation
 

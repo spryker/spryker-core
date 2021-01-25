@@ -52,7 +52,7 @@ class ProductDiscontinuedFacadeTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -175,5 +175,34 @@ class ProductDiscontinuedFacadeTest extends Unit
         // Assert
         $this->assertCount(1, $productDiscontinuedResponseTransfer->getProductDiscontinued()->getProductDiscontinuedNotes());
         $this->assertInstanceOf(ProductDiscontinuedNoteTransfer::class, $productDiscontinuedNoteTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindProductAbstractIdsWithDiscontinuedConcreteReturnsCorrectDataWhenProductIsDiscontinued(): void
+    {
+        // Arrange
+        $productDiscontinueRequestTransfer = (new ProductDiscontinueRequestTransfer())
+            ->setIdProduct($this->productConcrete->getIdProductConcrete());
+        $this->tester->getFacade()->markProductAsDiscontinued($productDiscontinueRequestTransfer);
+
+        // Act
+        $result = $this->tester->getFacade()->findProductAbstractIdsWithDiscontinuedConcrete();
+
+        // Assert
+        $this->assertContains($this->productConcrete->getFkProductAbstract(), $result);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindProductAbstractIdsWithDiscontinuedConcreteReturnsCorrectDataWhenProductIsNotDiscontinued(): void
+    {
+        // Act
+        $result = $this->tester->getFacade()->findProductAbstractIdsWithDiscontinuedConcrete();
+
+        // Assert
+        $this->assertNotContains($this->productConcrete->getFkProductAbstract(), $result);
     }
 }

@@ -28,11 +28,11 @@ class TaxRateEditCest
      *
      * @return void
      */
-    public function breadcrumbIsVisible(TaxCommunicationTester $i)
+    public function breadcrumbIsVisible(TaxCommunicationTester $i): void
     {
         $i->listDataTable(TaxRateListPage::TABLE_DATA_URL);
         $i->clickDataTableEditButton();
-        $i->seeBreadcrumbNavigation('Dashboard / Taxes / Tax Rates / Edit Tax Rate');
+        $i->seeBreadcrumbNavigation('Administration / Tax Rates / Edit Tax Rate');
     }
 
     /**
@@ -40,7 +40,7 @@ class TaxRateEditCest
      *
      * @return void
      */
-    public function dataIsProvided(TaxCommunicationTester $i)
+    public function dataIsProvided(TaxCommunicationTester $i): void
     {
         $i->listDataTable(TaxRateListPage::TABLE_DATA_URL);
         $i->clickDataTableEditButton();

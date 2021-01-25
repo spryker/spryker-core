@@ -5,7 +5,7 @@
 
         <transfer name="ProductConcrete">
             <property name="idProductConcrete" type="int"/>
-            <property name="ProductBundle" type="ProductBundle"/>
+            <property name="productBundle" type="ProductBundle"/>
         </transfer>
 
         <transfer name="ProductBundle">
@@ -29,7 +29,11 @@
 
         <transfer name="Message">
             <property name="value" type="string"/>
-            <property name="parameters" type="array"/>
+            <property name="parameters" type="array" singular="parameters"/>
         </transfer>
+
+    <transfer name="ProductDiscontinueRequest">
+        <property name="idProduct" type="int"/>
+    </transfer>
 
 </transfers>

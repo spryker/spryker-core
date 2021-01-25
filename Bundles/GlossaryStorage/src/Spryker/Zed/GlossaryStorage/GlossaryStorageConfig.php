@@ -12,6 +12,10 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class GlossaryStorageConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()} instead.
+     *
      * @return bool
      */
     public function isSendingToQueue(): bool
@@ -20,6 +24,8 @@ class GlossaryStorageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string|null
      */
     public function getGlossarySynchronizationPoolName(): ?string

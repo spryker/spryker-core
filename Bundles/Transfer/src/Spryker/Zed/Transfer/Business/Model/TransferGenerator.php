@@ -16,17 +16,17 @@ class TransferGenerator implements TransferGeneratorInterface
     /**
      * @var \Psr\Log\LoggerInterface
      */
-    private $messenger;
+    protected $messenger;
 
     /**
      * @var \Spryker\Zed\Transfer\Business\Model\Generator\GeneratorInterface
      */
-    private $generator;
+    protected $generator;
 
     /**
      * @var \Spryker\Zed\Transfer\Business\Model\Generator\DefinitionBuilderInterface
      */
-    private $definitionBuilder;
+    protected $definitionBuilder;
 
     /**
      * @param \Psr\Log\LoggerInterface $messenger

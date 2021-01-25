@@ -8,66 +8,66 @@
 namespace SprykerTest\Zed\ProductPackagingUnit\Helper;
 
 use Codeception\Module;
-use Generated\Shared\Transfer\SpyProductPackagingUnitTypeEntityTransfer;
+use Generated\Shared\DataBuilder\ProductPackagingUnitTypeBuilder;
+use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
 use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitTypeQuery;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
-use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class ProductPackagingUnitTypeHelper extends Module
 {
-    use LocatorHelperTrait;
     use DataCleanupHelperTrait;
 
     /**
      * @param array $override
      *
-     * @return \Generated\Shared\Transfer\SpyProductPackagingUnitTypeEntityTransfer
+     * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer
      */
-    public function haveProductPackagingUnitType(array $override = []): SpyProductPackagingUnitTypeEntityTransfer
+    public function haveProductPackagingUnitType(array $override = []): ProductPackagingUnitTypeTransfer
     {
-        $productPackagingUnitTypeTransfer = (new SpyProductPackagingUnitTypeEntityTransfer());
-        $productPackagingUnitTypeTransfer->fromArray($override, true);
+        $productPackagingUnitTypeTransfer = (new ProductPackagingUnitTypeBuilder())
+            ->seed($override)
+            ->build();
 
-        $productPackagingUnitTypeEntity = $this->storeProductPackagingUnitType($productPackagingUnitTypeTransfer);
+        $productPackagingUnitTypeTransfer = $this->storeProductPackagingUnitType($productPackagingUnitTypeTransfer);
 
-        $this->getDataCleanupHelper()->_addCleanup(function () use ($productPackagingUnitTypeEntity) {
-            $this->cleanupProductPackagingUnitType($productPackagingUnitTypeEntity);
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($productPackagingUnitTypeTransfer): void {
+            $this->cleanupProductPackagingUnitType($productPackagingUnitTypeTransfer);
         });
 
-        return $productPackagingUnitTypeEntity;
+        return $productPackagingUnitTypeTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyProductPackagingUnitTypeEntityTransfer $productPackagingUnitTypeEntity
+     * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
      *
-     * @return \Generated\Shared\Transfer\SpyProductPackagingUnitTypeEntityTransfer
+     * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer
      */
-    protected function storeProductPackagingUnitType(SpyProductPackagingUnitTypeEntityTransfer $productPackagingUnitTypeEntity)
+    protected function storeProductPackagingUnitType(ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer): ProductPackagingUnitTypeTransfer
     {
         $spyProductPackagingUnitTypeEntity = $this->getProductPackagingUnitTypeQuery()
-            ->filterByName($productPackagingUnitTypeEntity->getName())
+            ->filterByName($productPackagingUnitTypeTransfer->getName())
             ->findOneOrCreate();
 
         $spyProductPackagingUnitTypeEntity->save();
 
-        $this->debug(sprintf('Inserted product packaging unit type with name: %s', $productPackagingUnitTypeEntity->getName()));
+        $this->debug(sprintf('Inserted product packaging unit type with name: %s', $productPackagingUnitTypeTransfer->getName()));
 
-        $productPackagingUnitTypeEntity->fromArray($spyProductPackagingUnitTypeEntity->toArray(), true);
+        $productPackagingUnitTypeTransfer->fromArray($spyProductPackagingUnitTypeEntity->toArray(), true);
 
-        return $productPackagingUnitTypeEntity;
+        return $productPackagingUnitTypeTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyProductPackagingUnitTypeEntityTransfer $productPackagingUnitTypeEntity
+     * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
      *
      * @return void
      */
-    protected function cleanupProductPackagingUnitType(SpyProductPackagingUnitTypeEntityTransfer $productPackagingUnitTypeEntity)
+    protected function cleanupProductPackagingUnitType(ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer): void
     {
-        $this->debug(sprintf('Deleting product packaging unit type with name: %s', $productPackagingUnitTypeEntity->getName()));
+        $this->debug(sprintf('Deleting product packaging unit type with name: %s', $productPackagingUnitTypeTransfer->getName()));
 
         $this->getProductPackagingUnitTypeQuery()
-            ->findByName($productPackagingUnitTypeEntity->getIdProductPackagingUnitType())
+            ->findByName($productPackagingUnitTypeTransfer->getIdProductPackagingUnitType())
             ->delete();
     }
 

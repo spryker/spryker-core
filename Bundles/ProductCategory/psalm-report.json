@@ -1,0 +1,272 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 170,
+            "line_to": 170,
+            "type": "ParamNameMismatch",
+            "message": "Argument 3 of Spryker\\Zed\\ProductCategory\\Persistence\\ProductCategoryQueryContainer::queryProductsAbstractBySearchTermForAssignment has wrong name $localeTransfer, expecting $locale as defined by Spryker\\Zed\\ProductCategory\\Persistence\\ProductCategoryQueryContainerInterface::queryProductsAbstractBySearchTermForAssignment",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCategory/src/Spryker/Zed/ProductCategory/Persistence/ProductCategoryQueryContainer.php",
+            "snippet": "    public function queryProductsAbstractBySearchTermForAssignment($term, $idCategory, LocaleTransfer $localeTransfer)",
+            "selected_text": "$localeTransfer",
+            "error_level": 7,
+            "shortcode": 230
+        },
+        {
+            "severity": "error",
+            "line_from": 255,
+            "line_to": 255,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'Orm\\Zed\\ProductCategory\\Persistence\\SpyProductCategoryQuery' for Spryker\\Zed\\ProductCategory\\Persistence\\ProductCategoryQueryContainer::queryProductCategoryChildrenMappingsByCategoryNodeId is incorrect, got 'Orm\\Zed\\CategoryImage\\Persistence\\SpyCategoryImageSetQuery|Orm\\Zed\\Category\\Persistence\\SpyCategoryAttributeQuery|Orm\\Zed\\Category\\Persistence\\SpyCategoryClosureTableQuery|Orm\\Zed\\Category\\Persistence\\SpyCategoryNodeQuery|Orm\\Zed\\Category\\Persistence\\SpyCategoryQuery|Orm\\Zed\\Category\\Persistence\\SpyCategoryTemplateQuery|Orm\\Zed\\CmsBlockCategoryConnector\\Persistence\\SpyCmsBlockCategoryConnectorQuery|Orm\\Zed\\Cms\\Persistence\\SpyCmsPageQuery|Orm\\Zed\\Locale\\Persistence\\SpyLocaleQuery|Orm\\Zed\\MerchantCategory\\Persistence\\SpyMerchantCategoryQuery|Orm\\Zed\\Merchant\\Persistence\\SpyMerchantQuery|Orm\\Zed\\Navigation\\Persistence\\SpyNavigationNodeLocalizedAttributesQuery|Orm\\Zed\\ProductCategoryFilter\\Persistence\\SpyProductCategoryFilterQuery|Orm\\Zed\\ProductCategory\\Persistence\\SpyProductCategoryQuery|Orm\\Zed\\ProductList\\Persistence\\SpyProductListCategoryQuery|Orm\\Zed\\ProductSet\\Persistence\\SpyProductSetQuery|Orm\\Zed\\Product\\Persistence\\SpyProductAbstractQuery|Orm\\Zed\\Url\\Persistence\\SpyUrlQuery|Orm\\Zed\\Url\\Persistence\\SpyUrlRedirectQuery'",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCategory/src/Spryker/Zed/ProductCategory/Persistence/ProductCategoryQueryContainer.php",
+            "snippet": "     * @return \\Orm\\Zed\\ProductCategory\\Persistence\\SpyProductCategoryQuery",
+            "selected_text": "\\Orm\\Zed\\ProductCategory\\Persistence\\SpyProductCategoryQuery",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 259,
+            "line_to": 268,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'Orm\\Zed\\CategoryImage\\Persistence\\SpyCategoryImageSetQuery|Orm\\Zed\\Category\\Persistence\\SpyCategoryAttributeQuery|Orm\\Zed\\Category\\Persistence\\SpyCategoryClosureTableQuery|Orm\\Zed\\Category\\Persistence\\SpyCategoryNodeQuery|Orm\\Zed\\Category\\Persistence\\SpyCategoryQuery|Orm\\Zed\\Category\\Persistence\\SpyCategoryTemplateQuery|Orm\\Zed\\CmsBlockCategoryConnector\\Persistence\\SpyCmsBlockCategoryConnectorQuery|Orm\\Zed\\Cms\\Persistence\\SpyCmsPageQuery|Orm\\Zed\\Locale\\Persistence\\SpyLocaleQuery|Orm\\Zed\\MerchantCategory\\Persistence\\SpyMerchantCategoryQuery|Orm\\Zed\\Merchant\\Persistence\\SpyMerchantQuery|Orm\\Zed\\Navigation\\Persistence\\SpyNavigationNodeLocalizedAttributesQuery|Orm\\Zed\\ProductCategoryFilter\\Persistence\\SpyProductCategoryFilterQuery|Orm\\Zed\\ProductCategory\\Persistence\\SpyProductCategoryQuery|Orm\\Zed\\ProductList\\Persistence\\SpyProductListCategoryQuery|Orm\\Zed\\ProductSet\\Persistence\\SpyProductSetQuery|Orm\\Zed\\Product\\Persistence\\SpyProductAbstractQuery|Orm\\Zed\\Url\\Persistence\\SpyUrlQuery|Orm\\Zed\\Url\\Persistence\\SpyUrlRedirectQuery' does not match the declared return type 'Orm\\Zed\\ProductCategory\\Persistence\\SpyProductCategoryQuery' for Spryker\\Zed\\ProductCategory\\Persistence\\ProductCategoryQueryContainer::queryProductCategoryChildrenMappingsByCategoryNodeId",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCategory/src/Spryker/Zed/ProductCategory/Persistence/ProductCategoryQueryContainer.php",
+            "snippet": "        return $this\n            ->getFactory()\n            ->createProductCategoryQuery()\n            ->useSpyCategoryQuery()\n                ->useNodeQuery()\n                    ->useDescendantQuery()\n                        ->filterByFkCategoryNode($idCategoryNode)\n                    ->endUse()\n                ->endUse()\n            ->endUse();",
+            "selected_text": "$this\n            ->getFactory()\n            ->createProductCategoryQuery()\n            ->useSpyCategoryQuery()\n                ->useNodeQuery()\n                    ->useDescendantQuery()\n                        ->filterByFkCategoryNode($idCategoryNode)\n                    ->endUse()\n                ->endUse()\n            ->endUse()",
+            "error_level": 6,
+            "shortcode": 128
+        },
+        {
+            "severity": "error",
+            "line_from": 279,
+            "line_to": 279,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'Orm\\Zed\\ProductCategory\\Persistence\\SpyProductCategoryQuery' for Spryker\\Zed\\ProductCategory\\Persistence\\ProductCategoryQueryContainer::queryProductCategoryMappingsByIdAbstractProductAndIdsCategoryNode is incorrect, got 'Orm\\Zed\\CategoryImage\\Persistence\\SpyCategoryImageSetQuery|Orm\\Zed\\Category\\Persistence\\SpyCategoryAttributeQuery|Orm\\Zed\\Category\\Persistence\\SpyCategoryClosureTableQuery|Orm\\Zed\\Category\\Persistence\\SpyCategoryNodeQuery|Orm\\Zed\\Category\\Persistence\\SpyCategoryQuery|Orm\\Zed\\Category\\Persistence\\SpyCategoryTemplateQuery|Orm\\Zed\\CmsBlockCategoryConnector\\Persistence\\SpyCmsBlockCategoryConnectorQuery|Orm\\Zed\\Cms\\Persistence\\SpyCmsPageQuery|Orm\\Zed\\Locale\\Persistence\\SpyLocaleQuery|Orm\\Zed\\MerchantCategory\\Persistence\\SpyMerchantCategoryQuery|Orm\\Zed\\Merchant\\Persistence\\SpyMerchantQuery|Orm\\Zed\\Navigation\\Persistence\\SpyNavigationNodeLocalizedAttributesQuery|Orm\\Zed\\ProductCategoryFilter\\Persistence\\SpyProductCategoryFilterQuery|Orm\\Zed\\ProductCategory\\Persistence\\SpyProductCategoryQuery|Orm\\Zed\\ProductList\\Persistence\\SpyProductListCategoryQuery|Orm\\Zed\\ProductSet\\Persistence\\SpyProductSetQuery|Orm\\Zed\\Product\\Persistence\\SpyProductAbstractQuery|Orm\\Zed\\Url\\Persistence\\SpyUrlQuery|Orm\\Zed\\Url\\Persistence\\SpyUrlRedirectQuery'",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCategory/src/Spryker/Zed/ProductCategory/Persistence/ProductCategoryQueryContainer.php",
+            "snippet": "     * @return \\Orm\\Zed\\ProductCategory\\Persistence\\SpyProductCategoryQuery",
+            "selected_text": "\\Orm\\Zed\\ProductCategory\\Persistence\\SpyProductCategoryQuery",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 285,
+            "line_to": 296,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'Orm\\Zed\\CategoryImage\\Persistence\\SpyCategoryImageSetQuery|Orm\\Zed\\Category\\Persistence\\SpyCategoryAttributeQuery|Orm\\Zed\\Category\\Persistence\\SpyCategoryClosureTableQuery|Orm\\Zed\\Category\\Persistence\\SpyCategoryNodeQuery|Orm\\Zed\\Category\\Persistence\\SpyCategoryQuery|Orm\\Zed\\Category\\Persistence\\SpyCategoryTemplateQuery|Orm\\Zed\\CmsBlockCategoryConnector\\Persistence\\SpyCmsBlockCategoryConnectorQuery|Orm\\Zed\\Cms\\Persistence\\SpyCmsPageQuery|Orm\\Zed\\Locale\\Persistence\\SpyLocaleQuery|Orm\\Zed\\MerchantCategory\\Persistence\\SpyMerchantCategoryQuery|Orm\\Zed\\Merchant\\Persistence\\SpyMerchantQuery|Orm\\Zed\\Navigation\\Persistence\\SpyNavigationNodeLocalizedAttributesQuery|Orm\\Zed\\ProductCategoryFilter\\Persistence\\SpyProductCategoryFilterQuery|Orm\\Zed\\ProductCategory\\Persistence\\SpyProductCategoryQuery|Orm\\Zed\\ProductList\\Persistence\\SpyProductListCategoryQuery|Orm\\Zed\\ProductSet\\Persistence\\SpyProductSetQuery|Orm\\Zed\\Product\\Persistence\\SpyProductAbstractQuery|Orm\\Zed\\Url\\Persistence\\SpyUrlQuery|Orm\\Zed\\Url\\Persistence\\SpyUrlRedirectQuery' does not match the declared return type 'Orm\\Zed\\ProductCategory\\Persistence\\SpyProductCategoryQuery' for Spryker\\Zed\\ProductCategory\\Persistence\\ProductCategoryQueryContainer::queryProductCategoryMappingsByIdAbstractProductAndIdsCategoryNode",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCategory/src/Spryker/Zed/ProductCategory/Persistence/ProductCategoryQueryContainer.php",
+            "snippet": "        return $this\n            ->queryProductCategoryMappings()\n            ->filterByFkProductAbstract($idProductAbstract)\n            ->useSpyCategoryQuery()\n                ->useNodeQuery()\n                    ->withColumn(\n                        SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE,\n                        static::VIRTUAL_COLUMN_ID_CATEGORY_NODE\n                    )\n                    ->filterByIdCategoryNode($idsCategoryNode, Criteria::IN)\n                ->endUse()\n            ->endUse();",
+            "selected_text": "$this\n            ->queryProductCategoryMappings()\n            ->filterByFkProductAbstract($idProductAbstract)\n            ->useSpyCategoryQuery()\n                ->useNodeQuery()\n                    ->withColumn(\n                        SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE,\n                        static::VIRTUAL_COLUMN_ID_CATEGORY_NODE\n                    )\n                    ->filterByIdCategoryNode($idsCategoryNode, Criteria::IN)\n                ->endUse()\n            ->endUse()",
+            "error_level": 6,
+            "shortcode": 128
+        },
+        {
+            "severity": "error",
+            "line_from": 44,
+            "line_to": 44,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'Orm\\Zed\\ProductCategory\\Persistence\\SpyProductCategoryQuery' for Spryker\\Zed\\ProductCategory\\Persistence\\ProductCategoryRepository::queryCategoriesByIdProductAbstract is incorrect, got 'Orm\\Zed\\CategoryImage\\Persistence\\SpyCategoryImageSetQuery&static|Orm\\Zed\\Category\\Persistence\\SpyCategoryAttributeQuery&static|Orm\\Zed\\Category\\Persistence\\SpyCategoryNodeQuery&static|Orm\\Zed\\CmsBlockCategoryConnector\\Persistence\\SpyCmsBlockCategoryConnectorQuery&static|Orm\\Zed\\MerchantCategory\\Persistence\\SpyMerchantCategoryQuery&static|Orm\\Zed\\ProductCategoryFilter\\Persistence\\SpyProductCategoryFilterQuery&static|Orm\\Zed\\ProductCategory\\Persistence\\SpyProductCategoryQuery&static|Orm\\Zed\\ProductList\\Persistence\\SpyProductListCategoryQuery&static'",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCategory/src/Spryker/Zed/ProductCategory/Persistence/ProductCategoryRepository.php",
+            "snippet": "     * @return \\Orm\\Zed\\ProductCategory\\Persistence\\SpyProductCategoryQuery",
+            "selected_text": "\\Orm\\Zed\\ProductCategory\\Persistence\\SpyProductCategoryQuery",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 48,
+            "line_to": 66,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'Orm\\Zed\\CategoryImage\\Persistence\\SpyCategoryImageSetQuery&static|Orm\\Zed\\Category\\Persistence\\SpyCategoryAttributeQuery&static|Orm\\Zed\\Category\\Persistence\\SpyCategoryNodeQuery&static|Orm\\Zed\\CmsBlockCategoryConnector\\Persistence\\SpyCmsBlockCategoryConnectorQuery&static|Orm\\Zed\\MerchantCategory\\Persistence\\SpyMerchantCategoryQuery&static|Orm\\Zed\\ProductCategoryFilter\\Persistence\\SpyProductCategoryFilterQuery&static|Orm\\Zed\\ProductCategory\\Persistence\\SpyProductCategoryQuery&static|Orm\\Zed\\ProductList\\Persistence\\SpyProductListCategoryQuery&static' does not match the declared return type 'Orm\\Zed\\ProductCategory\\Persistence\\SpyProductCategoryQuery' for Spryker\\Zed\\ProductCategory\\Persistence\\ProductCategoryRepository::queryCategoriesByIdProductAbstract",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCategory/src/Spryker/Zed/ProductCategory/Persistence/ProductCategoryRepository.php",
+            "snippet": "        return $this->getFactory()->createProductCategoryQuery()\n            ->innerJoinWithSpyCategory()\n            ->useSpyCategoryQuery()\n            ->joinAttribute()\n            ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, 'name')\n            ->addAnd(\n                SpyCategoryAttributeTableMap::COL_FK_LOCALE,\n                $idLocale,\n                Criteria::EQUAL\n            )\n            ->addAscendingOrderByColumn(SpyCategoryAttributeTableMap::COL_NAME)\n            ->endUse()\n            ->addAnd(\n                SpyProductCategoryTableMap::COL_FK_PRODUCT_ABSTRACT,\n                $idProductAbstract,\n                Criteria::EQUAL\n            )\n            ->groupByFkCategory()\n            ->groupBy(SpyCategoryAttributeTableMap::COL_NAME);",
+            "selected_text": "$this->getFactory()->createProductCategoryQuery()\n            ->innerJoinWithSpyCategory()\n            ->useSpyCategoryQuery()\n            ->joinAttribute()\n            ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, 'name')\n            ->addAnd(\n                SpyCategoryAttributeTableMap::COL_FK_LOCALE,\n                $idLocale,\n                Criteria::EQUAL\n            )\n            ->addAscendingOrderByColumn(SpyCategoryAttributeTableMap::COL_NAME)\n            ->endUse()\n            ->addAnd(\n                SpyProductCategoryTableMap::COL_FK_PRODUCT_ABSTRACT,\n                $idProductAbstract,\n                Criteria::EQUAL\n            )\n            ->groupByFkCategory()\n            ->groupBy(SpyCategoryAttributeTableMap::COL_NAME)",
+            "error_level": 6,
+            "shortcode": 128
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 58,
+            "line_to": 58,
+            "type": "PossiblyNullPropertyAssignmentValue",
+            "message": "$this->eventFacade with non-nullable declared type 'Spryker\\Zed\\ProductCategory\\Dependency\\Facade\\ProductCategoryToEventInterface' cannot be assigned nullable type 'Spryker\\Zed\\ProductCategory\\Dependency\\Facade\\ProductCategoryToEventInterface|null'",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCategory/src/Spryker/Zed/ProductCategory/Business/Manager/ProductCategoryManager.php",
+            "snippet": "        $this->eventFacade = $eventFacade;",
+            "selected_text": "$eventFacade",
+            "error_level": 3,
+            "shortcode": 148
+        },
+        {
+            "severity": "info",
+            "line_from": 270,
+            "line_to": 270,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdCategoryNode on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCategory/src/Spryker/Zed/ProductCategory/Business/Manager/ProductCategoryManager.php",
+            "snippet": "        $idCategoryNode = $categoryTransfer->getCategoryNode()->getIdCategoryNode();",
+            "selected_text": "getIdCategoryNode",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 271,
+            "line_to": 271,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ProductCategory\\Business\\Manager\\ProductCategoryManager::findProductMappingsOfChildCategories cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCategory/src/Spryker/Zed/ProductCategory/Business/Manager/ProductCategoryManager.php",
+            "snippet": "        $productMappings = $this->findProductMappingsOfChildCategories($idCategoryNode);",
+            "selected_text": "$idCategoryNode",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 47,
+            "line_to": 47,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Zed\\ProductCategory\\Persistence\\ProductCategoryRepositoryInterface::getCategoryTransferCollectionByIdProductAbstract cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCategory/src/Spryker/Zed/ProductCategory/Business/Model/CategoryReader.php",
+            "snippet": "        return $this->categoryRepository->getCategoryTransferCollectionByIdProductAbstract($idProductAbstract, $localeTransfer->getIdLocale());",
+            "selected_text": "$localeTransfer->getIdLocale()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 50,
+            "line_to": 50,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ProductCategory\\Business\\ProductCategoryFacadeInterface::getAbstractProductsByIdCategory cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCategory/src/Spryker/Zed/ProductCategory/Communication/Plugin/ReadProductCategoryRelationPlugin.php",
+            "snippet": "            ->getAbstractProductsByIdCategory($categoryTransfer->getIdCategory(), $localeTransfer);",
+            "selected_text": "$categoryTransfer->getIdCategory()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 55,
+            "line_to": 55,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCategory/src/Spryker/Zed/ProductCategory/Communication/Plugin/ReadProductCategoryRelationPlugin.php",
+            "snippet": "                $productTransfer->getLocalizedAttributes()[0]->getName(),",
+            "selected_text": "$productTransfer->getLocalizedAttributes()[0]->getName()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 56,
+            "line_to": 56,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 3 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCategory/src/Spryker/Zed/ProductCategory/Communication/Plugin/ReadProductCategoryRelationPlugin.php",
+            "snippet": "                $productTransfer->getSku()",
+            "selected_text": "$productTransfer->getSku()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 30,
+            "line_to": 30,
+            "type": "InvalidNullableReturnType",
+            "message": "The declared return type 'string' for Spryker\\Zed\\ProductCategory\\Dependency\\Service\\ProductCategoryToUtilEncodingBridge::encodeJson is not nullable, but 'null|string' contains null",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCategory/src/Spryker/Zed/ProductCategory/Dependency/Service/ProductCategoryToUtilEncodingBridge.php",
+            "snippet": "     * @return string",
+            "selected_text": "string",
+            "error_level": 5,
+            "shortcode": 144
+        },
+        {
+            "severity": "info",
+            "line_from": 34,
+            "line_to": 34,
+            "type": "NullableReturnStatement",
+            "message": "The declared return type 'string' for Spryker\\Zed\\ProductCategory\\Dependency\\Service\\ProductCategoryToUtilEncodingBridge::encodeJson is not nullable, but the function returns 'null|string'",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCategory/src/Spryker/Zed/ProductCategory/Dependency/Service/ProductCategoryToUtilEncodingBridge.php",
+            "snippet": "        return $this->utilEncodingService->encodeJson($value, $options, $depth);",
+            "selected_text": "$this->utilEncodingService->encodeJson($value, $options, $depth)",
+            "error_level": 5,
+            "shortcode": 139
+        },
+        {
+            "severity": "info",
+            "line_from": 51,
+            "line_to": 51,
+            "type": "MismatchingDocblockParamType",
+            "message": "Parameter $productCategoryEntities has wrong type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\ProductCategory\\Persistence\\SpyProductCategory>', should be 'Propel\\Runtime\\Collection\\ObjectCollection'",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCategory/src/Spryker/Zed/ProductCategory/Persistence/Mapper/CategoryMapper.php",
+            "snippet": "     * @param \\Orm\\Zed\\ProductCategory\\Persistence\\SpyProductCategory[]|\\Propel\\Runtime\\Collection\\ObjectCollection $productCategoryEntities",
+            "selected_text": "\\Orm\\Zed\\ProductCategory\\Persistence\\SpyProductCategory[]|\\Propel\\Runtime\\Collection\\ObjectCollection",
+            "error_level": 4,
+            "shortcode": 141
+        },
+        {
+            "severity": "info",
+            "line_from": 16,
+            "line_to": 16,
+            "type": "MismatchingDocblockParamType",
+            "message": "Parameter $productCategoryEntities has wrong type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\ProductCategory\\Persistence\\SpyProductCategory>', should be 'Propel\\Runtime\\Collection\\ObjectCollection'",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCategory/src/Spryker/Zed/ProductCategory/Persistence/Mapper/CategoryMapperInterface.php",
+            "snippet": "     * @param \\Orm\\Zed\\ProductCategory\\Persistence\\SpyProductCategory[]|\\Propel\\Runtime\\Collection\\ObjectCollection $productCategoryEntities",
+            "selected_text": "\\Orm\\Zed\\ProductCategory\\Persistence\\SpyProductCategory[]|\\Propel\\Runtime\\Collection\\ObjectCollection",
+            "error_level": 4,
+            "shortcode": 141
+        },
+        {
+            "severity": "info",
+            "line_from": 237,
+            "line_to": 237,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of trim cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCategory/src/Spryker/Zed/ProductCategory/Persistence/ProductCategoryQueryContainer.php",
+            "snippet": "        if (trim($term) !== '') {",
+            "selected_text": "$term",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 238,
+            "line_to": 238,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of mb_strtoupper cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCategory/src/Spryker/Zed/ProductCategory/Persistence/ProductCategoryQueryContainer.php",
+            "snippet": "            $term = '%' . mb_strtoupper($term) . '%';",
+            "selected_text": "$term",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 86,
+            "line_to": 86,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\CmsBlockProductConnector\\Persistence\\SpyCmsBlockProductConnector|Orm\\Zed\\GiftCard\\Persistence\\SpyGiftCardProductAbstractConfigurationLink|Orm\\Zed\\MerchantProduct\\Persistence\\SpyMerchantProductAbstract|Orm\\Zed\\PriceProductMerchantRelationship\\Persistence\\SpyPriceProductMerchantRelationship|Orm\\Zed\\PriceProductSchedule\\Persistence\\SpyPriceProductSchedule|Orm\\Zed\\PriceProduct\\Persistence\\SpyPriceProduct|Orm\\Zed\\ProductAlternative\\Persistence\\SpyProductAlternative|Orm\\Zed\\ProductCategory\\Persistence\\SpyProductCategory|Orm\\Zed\\ProductCustomerPermission\\Persistence\\SpyProductCustomerPermission|Orm\\Zed\\ProductGroup\\Persistence\\SpyProductAbstractGroup|Orm\\Zed\\ProductImage\\Persistence\\SpyProductImageSet|Orm\\Zed\\ProductLabel\\Persistence\\SpyProductLabelProductAbstract|Orm\\Zed\\ProductMeasurementUnit\\Persistence\\SpyProductMeasurementBaseUnit|Orm\\Zed\\ProductOption\\Persistence\\SpyProductAbstractProductOptionGroup|Orm\\Zed\\ProductRelation\\Persistence\\SpyProductRelation|Orm\\Zed\\ProductRelation\\Persistence\\SpyProductRelationProductAbstract|Orm\\Zed\\ProductReview\\Persistence\\SpyProductReview|Orm\\Zed\\ProductSet\\Persistence\\SpyProductAbstractSet|Orm\\Zed\\Product\\Persistence\\SpyProduct|Orm\\Zed\\Product\\Persistence\\SpyProductAbstractLocalizedAttributes|Orm\\Zed\\Product\\Persistence\\SpyProductAbstractStore|Orm\\Zed\\Tax\\Persistence\\SpyTaxSet|Orm\\Zed\\Url\\Persistence\\SpyUrl> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCategory/src/Spryker/Zed/ProductCategory/Persistence/ProductCategoryRepository.php",
+            "snippet": "            ->toArray();",
+            "selected_text": "toArray",
+            "error_level": 3,
+            "shortcode": 113
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 19,
+            "line_to": 19,
+            "type": "DeprecatedInterface",
+            "message": "Spryker\\Zed\\Category\\Dependency\\Plugin\\CategoryRelationDeletePluginInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCategory/src/Spryker/Zed/ProductCategory/Communication/Plugin/RemoveProductCategoryRelationPlugin.php",
+            "snippet": "class RemoveProductCategoryRelationPlugin extends AbstractPlugin implements CategoryRelationDeletePluginInterface",
+            "selected_text": "RemoveProductCategoryRelationPlugin",
+            "error_level": 2,
+            "shortcode": 152
+        }
+    ]
+}

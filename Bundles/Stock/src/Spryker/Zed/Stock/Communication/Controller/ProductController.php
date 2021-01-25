@@ -13,6 +13,7 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
  * @method \Spryker\Zed\Stock\Business\StockFacadeInterface getFacade()
  * @method \Spryker\Zed\Stock\Persistence\StockQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Stock\Communication\StockCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Stock\Persistence\StockRepositoryInterface getRepository()
  */
 class ProductController extends AbstractController
 {

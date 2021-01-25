@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\ConfigurableBundleStorage;
 
-use Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateQuery;
+use Spryker\Zed\ConfigurableBundleStorage\Dependency\Facade\ConfigurableBundleStorageToConfigurableBundleFacadeBridge;
 use Spryker\Zed\ConfigurableBundleStorage\Dependency\Facade\ConfigurableBundleStorageToEventBehaviorFacadeBridge;
+use Spryker\Zed\ConfigurableBundleStorage\Dependency\Facade\ConfigurableBundleStorageToLocaleFacadeBridge;
+use Spryker\Zed\ConfigurableBundleStorage\Dependency\Facade\ConfigurableBundleStorageToProductImageFacadeBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -19,17 +21,20 @@ class ConfigurableBundleStorageDependencyProvider extends AbstractBundleDependen
 {
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
     public const FACADE_CONFIGURABLE_BUNDLE = 'FACADE_CONFIGURABLE_BUNDLE';
-    public const PROPEL_QUERY_CONFIGURABLE_BUNDLE_TEMPLATE = 'PROPEL_QUERY_CONFIGURABLE_BUNDLE_TEMPLATE';
+    public const FACADE_LOCALE = 'FACADE_LOCALE';
+    public const FACADE_PRODUCT_IMAGE = 'FACADE_PRODUCT_IMAGE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function providePersistenceLayerDependencies(Container $container): Container
+    public function provideBusinessLayerDependencies(Container $container): Container
     {
-        $container = parent::providePersistenceLayerDependencies($container);
-        $container = $this->addConfigurableBundleTemplatePropelQuery($container);
+        $container = parent::provideBusinessLayerDependencies($container);
+        $container = $this->addConfigurableBundleFacade($container);
+        $container = $this->addLocaleFacade($container);
+        $container = $this->addProductImageFacade($container);
 
         return $container;
     }
@@ -43,22 +48,7 @@ class ConfigurableBundleStorageDependencyProvider extends AbstractBundleDependen
     {
         $container = parent::provideCommunicationLayerDependencies($container);
         $container = $this->addEventBehaviorFacade($container);
-
-        return $container;
-    }
-
-    /**
-     * @module ConfigurableBundle
-     *
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addConfigurableBundleTemplatePropelQuery(Container $container): Container
-    {
-        $container->set(static::PROPEL_QUERY_CONFIGURABLE_BUNDLE_TEMPLATE, $container->factory(function () {
-            return SpyConfigurableBundleTemplateQuery::create();
-        }));
+        $container = $this->addConfigurableBundleFacade($container);
 
         return $container;
     }
@@ -73,6 +63,54 @@ class ConfigurableBundleStorageDependencyProvider extends AbstractBundleDependen
         $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
             return new ConfigurableBundleStorageToEventBehaviorFacadeBridge(
                 $container->getLocator()->eventBehavior()->facade()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addConfigurableBundleFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_CONFIGURABLE_BUNDLE, function (Container $container) {
+            return new ConfigurableBundleStorageToConfigurableBundleFacadeBridge(
+                $container->getLocator()->configurableBundle()->facade()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addLocaleFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
+            return new ConfigurableBundleStorageToLocaleFacadeBridge(
+                $container->getLocator()->locale()->facade()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductImageFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_PRODUCT_IMAGE, function (Container $container) {
+            return new ConfigurableBundleStorageToProductImageFacadeBridge(
+                $container->getLocator()->productImage()->facade()
             );
         });
 

@@ -14,7 +14,8 @@ use Spryker\Zed\ProductLabel\Dependency\ProductLabelEvents;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
- * @deprecated Use `\Spryker\Zed\ProductLabelStorage\Communication\Plugin\Event\Listener\ProductLabelDictionaryStoragePublishListener` and `\Spryker\Zed\ProductLabelStorage\Communication\Plugin\Event\Listener\ProductLabelDictionaryStorageUnpublishListener` instead.
+ * @deprecated Use {@link \Spryker\Zed\ProductLabelStorage\Communication\Plugin\Publisher\ProductLabelDictionary\ProductLabelDictionaryWritePublisherPlugin}
+ *             and {@link \Spryker\Zed\ProductLabelStorage\Communication\Plugin\Publisher\ProductLabelDictionary\ProductLabelDictionaryDeletePublisherPlugin} instead.
  *
  * @method \Spryker\Zed\ProductLabelStorage\Persistence\ProductLabelStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductLabelStorage\Communication\ProductLabelStorageCommunicationFactory getFactory()
@@ -28,17 +29,18 @@ class ProductLabelDictionaryStorageListener extends AbstractPlugin implements Ev
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
      * @param string $eventName
      *
      * @return void
      */
-    public function handleBulk(array $eventTransfers, $eventName)
+    public function handleBulk(array $eventEntityTransfers, $eventName)
     {
         $this->preventTransaction();
         $productLabelsCount = SpyProductLabelQuery::create()->count();
 
-        if (($eventName === ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_DELETE || $eventName === ProductLabelEvents::PRODUCT_LABEL_DICTIONARY_UNPUBLISH) &&
+        if (
+            ($eventName === ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_DELETE || $eventName === ProductLabelEvents::PRODUCT_LABEL_DICTIONARY_UNPUBLISH) &&
             $productLabelsCount === 0
         ) {
             $this->getFacade()->unpublishLabelDictionary();

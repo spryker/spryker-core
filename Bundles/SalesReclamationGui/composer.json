@@ -4,10 +4,10 @@
   "description": "SalesReclamationGui module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
-    "spryker/gui": "^3.17.0",
+    "php": ">=7.3",
+    "spryker/gui": "^3.31.0",
     "spryker/kernel": "^3.30.0",
-    "spryker/oms": "^8.0.0 || ^10.0.0",
+    "spryker/oms": "^8.0.0 || ^10.0.0 || ^11.0.0",
     "spryker/sales": "^8.0.0 || ^10.0.0 || ^11.0.0",
     "spryker/sales-extension": "^1.0.0",
     "spryker/sales-reclamation": "^1.0.0",
@@ -16,10 +16,8 @@
     "spryker/util-text": "^1.1.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
+    "spryker/code-sniffer": "*"
   },
-  "suggest": [],
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"
@@ -27,6 +25,10 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"

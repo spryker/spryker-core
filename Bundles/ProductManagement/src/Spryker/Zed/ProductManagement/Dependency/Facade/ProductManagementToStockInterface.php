@@ -7,34 +7,8 @@
 
 namespace Spryker\Zed\ProductManagement\Dependency\Facade;
 
-use Generated\Shared\Transfer\StockProductTransfer;
-
 interface ProductManagementToStockInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\StockProductTransfer $stockProductTransfer
-     *
-     * @throws \Spryker\Zed\Stock\Business\Exception\StockProductAlreadyExistsException
-     *
-     * @return int
-     */
-    public function createStockProduct(StockProductTransfer $stockProductTransfer);
-
-    /**
-     * @param \Generated\Shared\Transfer\StockProductTransfer $stockProductTransfer
-     *
-     * @return int
-     */
-    public function updateStockProduct(StockProductTransfer $stockProductTransfer);
-
-    /**
-     * @param string $sku
-     * @param string $stockType
-     *
-     * @return bool
-     */
-    public function hasStockProduct($sku, $stockType);
-
     /**
      * @return array
      */

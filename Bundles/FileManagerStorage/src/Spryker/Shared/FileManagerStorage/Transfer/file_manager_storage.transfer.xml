@@ -9,7 +9,7 @@
         <property name="type" type="string"/>
         <property name="size" type="int"/>
         <property name="version" type="int"/>
-        <property name="versions" type="FileInfo[]"/>
+        <property name="versions" type="FileInfo[]" singular="versions"/>
         <property name="storageName" type="string"/>
         <property name="storageFileName" type="string"/>
         <property name="title" type="string"/>
@@ -26,5 +26,42 @@
         <property name="data" type="FileStorageData"/>
         <property name="locale" type="string"/>
         <property name="key" type="string"/>
+    </transfer>
+
+    <transfer name="Filter">
+        <property name="offset" type="int"/>
+        <property name="limit" type="int"/>
+        <property name="orderBy" type="string"/>
+        <property name="orderDirection" type="string"/>
+    </transfer>
+
+    <transfer name="SynchronizationData">
+        <property name="reference" type="string"/>
+        <property name="locale" type="string"/>
+        <property name="data" type="string"/>
+        <property name="key" type="string"/>
+    </transfer>
+
+    <transfer name="File">
+        <property name="idFile" type="int"/>
+        <property name="fileInfo" type="FileInfo[]" singular="fileInfo"/>
+        <property name="fileName" type="string"/>
+        <property name="localizedAttributes" type="FileLocalizedAttributes[]" singular="localizedAttributes"/>
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="localeName" type="string"/>
+        <property name="idLocale" type="int"/>
+    </transfer>
+
+    <transfer name="FileInfo">
+        <property name="type" type="string"/>
+        <property name="version" type="int"/>
+        <property name="size" type="int"/>
+        <property name="storageName" type="string"/>
+        <property name="storageFileName" type="string"/>
+    </transfer>
+
+    <transfer name="FileLocalizedAttributes">
     </transfer>
 </transfers>

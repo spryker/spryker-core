@@ -4,16 +4,18 @@
   "description": "ShipmentCartConnector module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.3",
+    "spryker/cart-extension": "^4.2.0",
     "spryker/kernel": "^3.33.0",
     "spryker/price": "^5.0.0",
-    "spryker/shipment": "^7.0.0"
+    "spryker/shipment": "^7.0.0 || ^8.0.0"
   },
   "require-dev": {
     "spryker/cart": "*",
     "spryker/code-sniffer": "*",
     "spryker/currency": "*",
     "spryker/propel": "*",
+    "spryker/store": "*",
     "spryker/testify": "*"
   },
   "suggest": {
@@ -31,9 +33,13 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+  },
   "extra": {
     "branch-alias": {
-      "dev-master": "1.0.x-dev"
+      "dev-master": "2.0.x-dev"
     }
   },
   "config": {

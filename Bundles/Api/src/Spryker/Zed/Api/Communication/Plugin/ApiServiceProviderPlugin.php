@@ -14,6 +14,10 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\Api\Communication\Plugin\ApiControllerEventDispatcherPlugin} instead.
+ *
+ * @see \Spryker\Zed\Api\Communication\Plugin\ApiControllerEventDispatcherPlugin
+ *
  * @method \Spryker\Zed\Api\Communication\ApiCommunicationFactory getFactory()
  * @method \Spryker\Zed\Api\Business\ApiFacadeInterface getFacade()
  * @method \Spryker\Zed\Api\ApiConfig getConfig()
@@ -29,6 +33,8 @@ class ApiServiceProviderPlugin extends AbstractPlugin implements ServiceProvider
     protected $controllerListener;
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Please remove usage of this setter. The needed ControllerListenerInterface is now retrieved by the Factory.
@@ -43,6 +49,8 @@ class ApiServiceProviderPlugin extends AbstractPlugin implements ServiceProvider
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Silex\Application $app
@@ -77,6 +85,8 @@ class ApiServiceProviderPlugin extends AbstractPlugin implements ServiceProvider
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Silex\Application $app

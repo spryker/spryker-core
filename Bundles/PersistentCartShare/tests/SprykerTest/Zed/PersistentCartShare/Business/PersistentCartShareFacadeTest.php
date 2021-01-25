@@ -245,7 +245,7 @@ class PersistentCartShareFacadeTest extends Test
     }
 
     /**
-     * @return \Spryker\Zed\Kernel\Business\AbstractFacade|\Spryker\Zed\PersistentCartShare\Business\PersistentCartShareFacadeInterface
+     * @return \Spryker\Zed\PersistentCartShare\Business\PersistentCartShareFacadeInterface
      */
     protected function getFacade()
     {

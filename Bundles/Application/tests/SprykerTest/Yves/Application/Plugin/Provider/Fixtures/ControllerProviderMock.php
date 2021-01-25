@@ -17,7 +17,7 @@ class ControllerProviderMock extends YvesControllerProvider
      *
      * @return void
      */
-    public function defineControllers(Application $app)
+    public function defineControllers(Application $app): void
     {
         $this->createController('/foo', 'foo', 'foo', 'index');
     }

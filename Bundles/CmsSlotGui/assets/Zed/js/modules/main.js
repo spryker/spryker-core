@@ -8,7 +8,7 @@
 var TemplateTable = require('./template-table');
 var SlotTable = require('./slot-table');
 
-$(document).ready(function() {
+$(document).ready(function () {
     var slotTable = new SlotTable({
         ajaxBaseUrl: '/cms-slot-gui/slot-list/table',
         paramIdCmsSlotTemplate: 'id-cms-slot-template',
@@ -17,10 +17,12 @@ $(document).ready(function() {
     });
 
     slotTable.init();
+    global.CmsSlotGui_SlotTable = slotTable;
 
     var templateTable = new TemplateTable({
         templateTableId: '#template-list-table',
-        slotTable: slotTable
+        slotTemplateNameClass: '.js-slot-template-name',
+        slotTable: slotTable,
     });
 
     templateTable.init();

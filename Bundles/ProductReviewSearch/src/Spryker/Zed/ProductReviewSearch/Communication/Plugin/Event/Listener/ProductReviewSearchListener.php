@@ -26,18 +26,18 @@ class ProductReviewSearchListener extends AbstractPlugin implements EventBulkHan
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
      * @param string $eventName
      *
      * @return void
      */
-    public function handleBulk(array $eventTransfers, $eventName)
+    public function handleBulk(array $eventEntityTransfers, $eventName)
     {
         $this->preventTransaction();
-        $productReviewIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
+        $productReviewIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventEntityTransfers);
         $productAbstractIds = $this->getFactory()
             ->getEventBehaviorFacade()
-            ->getEventTransferForeignKeys($eventTransfers, SpyProductReviewTableMap::COL_FK_PRODUCT_ABSTRACT);
+            ->getEventTransferForeignKeys($eventEntityTransfers, SpyProductReviewTableMap::COL_FK_PRODUCT_ABSTRACT);
 
         $this->getFacade()->publish($productReviewIds);
 

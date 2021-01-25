@@ -18,7 +18,7 @@ abstract class AbstractDataBuilder
     /**
      * @var \Faker\Generator
      */
-    protected $faker;
+    protected static $faker;
 
     /**
      * @var array
@@ -66,7 +66,10 @@ abstract class AbstractDataBuilder
     {
         $this->seedData = $seed;
         $this->rules = $this->defaultRules;
-        $this->faker = Factory::create();
+
+        if (static::$faker === null) {
+            static::$faker = Factory::create();
+        }
     }
 
     /**
@@ -223,24 +226,29 @@ abstract class AbstractDataBuilder
         foreach ($this->nestedBuilders as $builderInfo) {
             [$name, $dependencyBuilder, $randomize] = $builderInfo;
 
-            if (!$randomize) { // add currently generated values
+            // add currently generated values
+            if (!$randomize) {
                 $dependencyBuilder->seed($this->seedData);
             }
             $nestedTransfer = $dependencyBuilder->build();
 
-            if (!$randomize) { // reuse generated values from nested objects
+            // reuse generated values from nested objects
+            if (!$randomize) {
                 $this->seedData = array_merge($this->seedData, $dependencyBuilder->getSeedData());
             }
 
             if (method_exists($transfer, 'add' . $name)) {
                 call_user_func([$transfer, 'add' . $name], $nestedTransfer);
+
                 continue;
             }
 
             if (method_exists($transfer, 'set' . $name)) {
                 call_user_func([$transfer, 'set' . $name], $nestedTransfer);
+
                 continue;
             }
+
             throw new DependencyNotDefinedException(sprintf('Dependency "%s" not defined in "%s"', $name, static::class));
         }
     }
@@ -259,7 +267,7 @@ abstract class AbstractDataBuilder
         }
 
         // @codingStandardsIgnoreStart
-        return eval("return \$this->faker->$rule;");
+        return eval("return static::\$faker->$rule;");
         // @codingStandardsIgnoreEnd
     }
 

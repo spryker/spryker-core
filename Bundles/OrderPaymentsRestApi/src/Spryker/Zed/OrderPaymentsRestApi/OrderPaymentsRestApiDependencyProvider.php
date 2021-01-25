@@ -37,9 +37,9 @@ class OrderPaymentsRestApiDependencyProvider extends AbstractBundleDependencyPro
      */
     protected function addOrderPaymentUpdaterPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_ORDER_PAYMENT_UPDATER] = function (Container $container) {
+        $container->set(static::PLUGINS_ORDER_PAYMENT_UPDATER, function (Container $container) {
             return $this->getOrderPaymentUpdaterPlugins();
-        };
+        });
 
         return $container;
     }

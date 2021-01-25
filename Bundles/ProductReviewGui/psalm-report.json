@@ -1,0 +1,91 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 33,
+            "line_to": 33,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'Orm\\Zed\\ProductReview\\Persistence\\SpyProductReviewQuery' for Spryker\\Zed\\ProductReviewGui\\Persistence\\ProductReviewGuiQueryContainer::queryProductReview is incorrect, got 'Orm\\Zed\\AvailabilityNotification\\Persistence\\SpyAvailabilityNotificationSubscriptionQuery&static|Orm\\Zed\\CategoryImage\\Persistence\\SpyCategoryImageSetQuery&static|Orm\\Zed\\Category\\Persistence\\SpyCategoryAttributeQuery&static|Orm\\Zed\\CmsBlockProductConnector\\Persistence\\SpyCmsBlockProductConnectorQuery&static|Orm\\Zed\\Cms\\Persistence\\SpyCmsPageLocalizedAttributesQuery&static|Orm\\Zed\\Content\\Persistence\\SpyContentLocalizedQuery&static|Orm\\Zed\\Customer\\Persistence\\SpyCustomerQuery&static|Orm\\Zed\\Dataset\\Persistence\\SpyDatasetLocalizedAttributesQuery&static|Orm\\Zed\\FileManager\\Persistence\\SpyFileDirectoryLocalizedAttributesQuery&static|Orm\\Zed\\FileManager\\Persistence\\SpyFileLocalizedAttributesQuery&static|Orm\\Zed\\GiftCard\\Persistence\\SpyGiftCardProductAbstractConfigurationLinkQuery&static|Orm\\Zed\\Glossary\\Persistence\\SpyGlossaryTranslationQuery&static|Orm\\Zed\\MerchantProduct\\Persistence\\SpyMerchantProductAbstractQuery&static|Orm\\Zed\\Navigation\\Persistence\\SpyNavigationNodeLocalizedAttributesQuery&static|Orm\\Zed\\PriceProductMerchantRelationship\\Persistence\\SpyPriceProductMerchantRelationshipQuery&static|Orm\\Zed\\PriceProductSchedule\\Persistence\\SpyPriceProductScheduleQuery&static|Orm\\Zed\\PriceProduct\\Persistence\\SpyPriceProductQuery&static|Orm\\Zed\\ProductAlternative\\Persistence\\SpyProductAlternativeQuery&static|Orm\\Zed\\ProductAttribute\\Persistence\\SpyProductManagementAttributeValueTranslationQuery&static|Orm\\Zed\\ProductCategory\\Persistence\\SpyProductCategoryQuery&static|Orm\\Zed\\ProductCustomerPermission\\Persistence\\SpyProductCustomerPermissionQuery&static|Orm\\Zed\\ProductDiscontinued\\Persistence\\SpyProductDiscontinuedNoteQuery&static|Orm\\Zed\\ProductGroup\\Persistence\\SpyProductAbstractGroupQuery&static|Orm\\Zed\\ProductImage\\Persistence\\SpyProductImageSetQuery&static|Orm\\Zed\\ProductLabel\\Persistence\\SpyProductLabelLocalizedAttributesQuery&static|Orm\\Zed\\ProductLabel\\Persistence\\SpyProductLabelProductAbstractQuery&static|Orm\\Zed\\ProductMeasurementUnit\\Persistence\\SpyProductMeasurementBaseUnitQuery&static|Orm\\Zed\\ProductOption\\Persistence\\SpyProductAbstractProductOptionGroupQuery&static|Orm\\Zed\\ProductRelation\\Persistence\\SpyProductRelationProductAbstractQuery&static|Orm\\Zed\\ProductRelation\\Persistence\\SpyProductRelationQuery&static|Orm\\Zed\\ProductReview\\Persistence\\SpyProductReviewQuery&static|Orm\\Zed\\ProductSearch\\Persistence\\SpyProductSearchQuery&static|Orm\\Zed\\ProductSet\\Persistence\\SpyProductAbstractSetQuery&static|Orm\\Zed\\ProductSet\\Persistence\\SpyProductSetDataQuery&static|Orm\\Zed\\Product\\Persistence\\SpyProductAbstractLocalizedAttributesQuery&static|Orm\\Zed\\Product\\Persistence\\SpyProductAbstractStoreQuery&static|Orm\\Zed\\Product\\Persistence\\SpyProductLocalizedAttributesQuery&static|Orm\\Zed\\Product\\Persistence\\SpyProductQuery&static|Orm\\Zed\\Sales\\Persistence\\SpySalesOrderQuery&static|Orm\\Zed\\Tax\\Persistence\\SpyTaxSetQuery&static|Orm\\Zed\\Touch\\Persistence\\SpyTouchSearchQuery&static|Orm\\Zed\\Touch\\Persistence\\SpyTouchStorageQuery&static|Orm\\Zed\\Url\\Persistence\\SpyUrlQuery&static|Orm\\Zed\\User\\Persistence\\SpyUserQuery&static'",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewGui/src/Spryker/Zed/ProductReviewGui/Persistence/ProductReviewGuiQueryContainer.php",
+            "snippet": "     * @return \\Orm\\Zed\\ProductReview\\Persistence\\SpyProductReviewQuery",
+            "selected_text": "\\Orm\\Zed\\ProductReview\\Persistence\\SpyProductReviewQuery",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 37,
+            "line_to": 50,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'Orm\\Zed\\AvailabilityNotification\\Persistence\\SpyAvailabilityNotificationSubscriptionQuery&static|Orm\\Zed\\CategoryImage\\Persistence\\SpyCategoryImageSetQuery&static|Orm\\Zed\\Category\\Persistence\\SpyCategoryAttributeQuery&static|Orm\\Zed\\CmsBlockProductConnector\\Persistence\\SpyCmsBlockProductConnectorQuery&static|Orm\\Zed\\Cms\\Persistence\\SpyCmsPageLocalizedAttributesQuery&static|Orm\\Zed\\Content\\Persistence\\SpyContentLocalizedQuery&static|Orm\\Zed\\Customer\\Persistence\\SpyCustomerQuery&static|Orm\\Zed\\Dataset\\Persistence\\SpyDatasetLocalizedAttributesQuery&static|Orm\\Zed\\FileManager\\Persistence\\SpyFileDirectoryLocalizedAttributesQuery&static|Orm\\Zed\\FileManager\\Persistence\\SpyFileLocalizedAttributesQuery&static|Orm\\Zed\\GiftCard\\Persistence\\SpyGiftCardProductAbstractConfigurationLinkQuery&static|Orm\\Zed\\Glossary\\Persistence\\SpyGlossaryTranslationQuery&static|Orm\\Zed\\MerchantProduct\\Persistence\\SpyMerchantProductAbstractQuery&static|Orm\\Zed\\Navigation\\Persistence\\SpyNavigationNodeLocalizedAttributesQuery&static|Orm\\Zed\\PriceProductMerchantRelationship\\Persistence\\SpyPriceProductMerchantRelationshipQuery&static|Orm\\Zed\\PriceProductSchedule\\Persistence\\SpyPriceProductScheduleQuery&static|Orm\\Zed\\PriceProduct\\Persistence\\SpyPriceProductQuery&static|Orm\\Zed\\ProductAlternative\\Persistence\\SpyProductAlternativeQuery&static|Orm\\Zed\\ProductAttribute\\Persistence\\SpyProductManagementAttributeValueTranslationQuery&static|Orm\\Zed\\ProductCategory\\Persistence\\SpyProductCategoryQuery&static|Orm\\Zed\\ProductCustomerPermission\\Persistence\\SpyProductCustomerPermissionQuery&static|Orm\\Zed\\ProductDiscontinued\\Persistence\\SpyProductDiscontinuedNoteQuery&static|Orm\\Zed\\ProductGroup\\Persistence\\SpyProductAbstractGroupQuery&static|Orm\\Zed\\ProductImage\\Persistence\\SpyProductImageSetQuery&static|Orm\\Zed\\ProductLabel\\Persistence\\SpyProductLabelLocalizedAttributesQuery&static|Orm\\Zed\\ProductLabel\\Persistence\\SpyProductLabelProductAbstractQuery&static|Orm\\Zed\\ProductMeasurementUnit\\Persistence\\SpyProductMeasurementBaseUnitQuery&static|Orm\\Zed\\ProductOption\\Persistence\\SpyProductAbstractProductOptionGroupQuery&static|Orm\\Zed\\ProductRelation\\Persistence\\SpyProductRelationProductAbstractQuery&static|Orm\\Zed\\ProductRelation\\Persistence\\SpyProductRelationQuery&static|Orm\\Zed\\ProductReview\\Persistence\\SpyProductReviewQuery&static|Orm\\Zed\\ProductSearch\\Persistence\\SpyProductSearchQuery&static|Orm\\Zed\\ProductSet\\Persistence\\SpyProductAbstractSetQuery&static|Orm\\Zed\\ProductSet\\Persistence\\SpyProductSetDataQuery&static|Orm\\Zed\\Product\\Persistence\\SpyProductAbstractLocalizedAttributesQuery&static|Orm\\Zed\\Product\\Persistence\\SpyProductAbstractStoreQuery&static|Orm\\Zed\\Product\\Persistence\\SpyProductLocalizedAttributesQuery&static|Orm\\Zed\\Product\\Persistence\\SpyProductQuery&static|Orm\\Zed\\Sales\\Persistence\\SpySalesOrderQuery&static|Orm\\Zed\\Tax\\Persistence\\SpyTaxSetQuery&static|Orm\\Zed\\Touch\\Persistence\\SpyTouchSearchQuery&static|Orm\\Zed\\Touch\\Persistence\\SpyTouchStorageQuery&static|Orm\\Zed\\Url\\Persistence\\SpyUrlQuery&static|Orm\\Zed\\User\\Persistence\\SpyUserQuery&static' does not match the declared return type 'Orm\\Zed\\ProductReview\\Persistence\\SpyProductReviewQuery' for Spryker\\Zed\\ProductReviewGui\\Persistence\\ProductReviewGuiQueryContainer::queryProductReview",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewGui/src/Spryker/Zed/ProductReviewGui/Persistence/ProductReviewGuiQueryContainer.php",
+            "snippet": "        return $this->getFactory()\n            ->getProductReviewQueryContainer()\n            ->queryProductReview()\n            ->useSpyProductAbstractQuery()\n                ->useSpyProductAbstractLocalizedAttributesQuery()\n                    ->filterByFkLocale($idLocale)\n                ->endUse()\n            ->endUse()\n            ->addJoin(SpyProductReviewTableMap::COL_CUSTOMER_REFERENCE, SpyCustomerTableMap::COL_CUSTOMER_REFERENCE)\n            ->withColumn(SpyProductReviewTableMap::COL_CREATED_AT, static::FIELD_CREATED)\n            ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME, static::FIELD_PRODUCT_NAME)\n            ->withColumn(SpyCustomerTableMap::COL_ID_CUSTOMER, static::FIELD_ID_CUSTOMER)\n            ->withColumn(SpyCustomerTableMap::COL_FIRST_NAME, static::FIELD_CUSTOMER_FIRST_NAME)\n            ->withColumn(SpyCustomerTableMap::COL_LAST_NAME, static::FIELD_CUSTOMER_LAST_NAME);",
+            "selected_text": "$this->getFactory()\n            ->getProductReviewQueryContainer()\n            ->queryProductReview()\n            ->useSpyProductAbstractQuery()\n                ->useSpyProductAbstractLocalizedAttributesQuery()\n                    ->filterByFkLocale($idLocale)\n                ->endUse()\n            ->endUse()\n            ->addJoin(SpyProductReviewTableMap::COL_CUSTOMER_REFERENCE, SpyCustomerTableMap::COL_CUSTOMER_REFERENCE)\n            ->withColumn(SpyProductReviewTableMap::COL_CREATED_AT, static::FIELD_CREATED)\n            ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME, static::FIELD_PRODUCT_NAME)\n            ->withColumn(SpyCustomerTableMap::COL_ID_CUSTOMER, static::FIELD_ID_CUSTOMER)\n            ->withColumn(SpyCustomerTableMap::COL_FIRST_NAME, static::FIELD_CUSTOMER_FIRST_NAME)\n            ->withColumn(SpyCustomerTableMap::COL_LAST_NAME, static::FIELD_CUSTOMER_LAST_NAME)",
+            "error_level": 6,
+            "shortcode": 128
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 36,
+            "line_to": 36,
+            "type": "InvalidScalarArgument",
+            "message": "Argument 1 of Generated\\Shared\\Transfer\\ProductReviewTransfer::setStatus expects int|null, string(approved) provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewGui/src/Spryker/Zed/ProductReviewGui/Communication/Controller/UpdateController.php",
+            "snippet": "            ->setStatus(SpyProductReviewTableMap::COL_STATUS_APPROVED);",
+            "selected_text": "SpyProductReviewTableMap::COL_STATUS_APPROVED",
+            "error_level": 4,
+            "shortcode": 12
+        },
+        {
+            "severity": "info",
+            "line_from": 61,
+            "line_to": 61,
+            "type": "InvalidScalarArgument",
+            "message": "Argument 1 of Generated\\Shared\\Transfer\\ProductReviewTransfer::setStatus expects int|null, string(rejected) provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewGui/src/Spryker/Zed/ProductReviewGui/Communication/Controller/UpdateController.php",
+            "snippet": "            ->setStatus(SpyProductReviewTableMap::COL_STATUS_REJECTED);",
+            "selected_text": "SpyProductReviewTableMap::COL_STATUS_REJECTED",
+            "error_level": 4,
+            "shortcode": 12
+        },
+        {
+            "severity": "info",
+            "line_from": 125,
+            "line_to": 125,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ProductReviewGui\\Persistence\\ProductReviewGuiQueryContainerInterface::queryProductReview cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewGui/src/Spryker/Zed/ProductReviewGui/Communication/Table/ProductReviewTable.php",
+            "snippet": "        $query = $this->productReviewGuiQueryContainer->queryProductReview($this->localeTransfer->getIdLocale());",
+            "selected_text": "$this->localeTransfer->getIdLocale()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 288,
+            "line_to": 288,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ProductReviewGui\\Dependency\\Service\\ProductReviewGuiToUtilSanitizeInterface::escapeHtml cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewGui/src/Spryker/Zed/ProductReviewGui/Communication/Table/ProductReviewTable.php",
+            "snippet": "            $this->utilSanitizeService->escapeHtml($productReviewEntity->getSummary()),",
+            "selected_text": "$productReviewEntity->getSummary()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 289,
+            "line_to": 289,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ProductReviewGui\\Dependency\\Service\\ProductReviewGuiToUtilSanitizeInterface::escapeHtml cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewGui/src/Spryker/Zed/ProductReviewGui/Communication/Table/ProductReviewTable.php",
+            "snippet": "            $this->utilSanitizeService->escapeHtml($productReviewEntity->getDescription())",
+            "selected_text": "$productReviewEntity->getDescription()",
+            "error_level": 3,
+            "shortcode": 78
+        }
+    ],
+    "deprecation": []
+}

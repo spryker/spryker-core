@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * MIT License
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace SprykerTest\Zed\ConfigurableBundleDataImport\Helper;
@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\ConfigurableBundleDataImport\Helper;
 use Codeception\Module;
 use Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateQuery;
 use Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateSlotQuery;
+use Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery;
 
 class ConfigurableBundleDataImportHelper extends Module
 {
@@ -40,6 +41,19 @@ class ConfigurableBundleDataImportHelper extends Module
     }
 
     /**
+     * @return void
+     */
+    public function assertProductImageSetDatabaseTablesContainsData(): void
+    {
+        $productImageSetQuery = $this->getProductImageSetQuery();
+
+        $this->assertTrue(
+            $productImageSetQuery->count() > 0,
+            'Expected at least one entry in the database table but database table is empty.'
+        );
+    }
+
+    /**
      * @return \Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateQuery
      */
     protected function getConfigurableBundleTemplateQuery(): SpyConfigurableBundleTemplateQuery
@@ -53,5 +67,13 @@ class ConfigurableBundleDataImportHelper extends Module
     protected function getConfigurableBundleTemplateSlotQuery(): SpyConfigurableBundleTemplateSlotQuery
     {
         return SpyConfigurableBundleTemplateSlotQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery
+     */
+    protected function getProductImageSetQuery(): SpyProductImageSetQuery
+    {
+        return SpyProductImageSetQuery::create();
     }
 }

@@ -26,6 +26,8 @@ class GlobalSoftThresholdFlexibleFeeFormExpanderPlugin extends AbstractPlugin im
     protected const FIELD_SOFT_FLEXIBLE_FEE = 'flexibleFee';
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string
@@ -36,6 +38,8 @@ class GlobalSoftThresholdFlexibleFeeFormExpanderPlugin extends AbstractPlugin im
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string
@@ -46,6 +50,8 @@ class GlobalSoftThresholdFlexibleFeeFormExpanderPlugin extends AbstractPlugin im
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string
@@ -56,6 +62,8 @@ class GlobalSoftThresholdFlexibleFeeFormExpanderPlugin extends AbstractPlugin im
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -71,6 +79,8 @@ class GlobalSoftThresholdFlexibleFeeFormExpanderPlugin extends AbstractPlugin im
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\SalesOrderThresholdValueTransfer $salesOrderThresholdValueTransfer
@@ -86,6 +96,8 @@ class GlobalSoftThresholdFlexibleFeeFormExpanderPlugin extends AbstractPlugin im
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $data

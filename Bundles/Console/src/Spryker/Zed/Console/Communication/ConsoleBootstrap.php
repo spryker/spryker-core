@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Console\Communication;
 
+use Spryker\Shared\ApplicationExtension\Dependency\Plugin\BootableApplicationPluginInterface;
 use Spryker\Shared\Kernel\Communication\Application as SprykerApplication;
 use Spryker\Zed\Console\Business\Model\Environment;
 use Spryker\Zed\Kernel\BundleConfigResolverAwareTrait;
@@ -19,6 +20,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\Console\Communication\Bootstrap\ConsoleBootstrap}
+ *
  * @method \Spryker\Zed\Console\ConsoleConfig getConfig()
  */
 class ConsoleBootstrap extends Application
@@ -34,6 +37,16 @@ class ConsoleBootstrap extends Application
      * @var \Spryker\Shared\Kernel\Communication\Application
      */
     protected $application;
+
+    /**
+     * @var \Spryker\Shared\ApplicationExtension\Dependency\Plugin\BootableApplicationPluginInterface[]
+     */
+    protected $bootablePlugins = [];
+
+    /**
+     * @var bool
+     */
+    protected $booted = false;
 
     /**
      * @param string $name
@@ -77,11 +90,15 @@ class ConsoleBootstrap extends Application
 
         foreach ($applicationPlugins as $applicationPlugin) {
             $applicationPlugin->provide($this->application);
+
+            if ($applicationPlugin instanceof BootableApplicationPluginInterface) {
+                $this->bootablePlugins[] = $applicationPlugin;
+            }
         }
     }
 
     /**
-     * @deprecated Use `\Spryker\Zed\Console\Communication\ConsoleBootstrap::provideApplicationPlugins()` instead.
+     * @deprecated Use {@link \Spryker\Zed\Console\Communication\ConsoleBootstrap::provideApplicationPlugins()} instead.
      *
      * @return void
      */
@@ -120,6 +137,7 @@ class ConsoleBootstrap extends Application
         $inputDefinitions = parent::getDefaultInputDefinition();
         $inputDefinitions->addOption(new InputOption('--no-pre', '', InputOption::VALUE_NONE, 'Will not execute pre run hooks'));
         $inputDefinitions->addOption(new InputOption('--no-post', '', InputOption::VALUE_NONE, 'Will not execute post run hooks'));
+        $inputDefinitions->addOption(new InputOption('--quiet-meta', '', InputOption::VALUE_NONE, 'Disables meta output of store and environment'));
 
         return $inputDefinitions;
     }
@@ -165,11 +183,16 @@ class ConsoleBootstrap extends Application
     {
         $this->setDecorated($output);
 
-        if (!$input->hasParameterOption(['--format'], true)) {
+        if (!$input->hasParameterOption(['--format'], true) && !$input->hasParameterOption('--quiet-meta', true)) {
             $output->writeln($this->getInfoText());
         }
 
         $this->application->boot();
+
+        if (!$this->booted) {
+            $this->booted = true;
+            $this->bootPlugins();
+        }
 
         if (!$input->hasParameterOption(['--no-pre'], true)) {
             $this->getFacade()->preRun($input, $output);
@@ -185,13 +208,24 @@ class ConsoleBootstrap extends Application
     }
 
     /**
+     * @return void
+     */
+    protected function bootPlugins(): void
+    {
+        foreach ($this->bootablePlugins as $bootablePlugin) {
+            $bootablePlugin->boot($this->application);
+        }
+    }
+
+    /**
      * @return string
      */
     protected function getInfoText()
     {
         return sprintf(
-            '<fg=yellow>Store</fg=yellow>: <info>%s</info> | <fg=yellow>Environment</fg=yellow>: <info>%s</info>',
-            APPLICATION_STORE,
+            '<fg=yellow>Code bucket</fg=yellow>: <info>%s</info> | <fg=yellow>Store</fg=yellow>: <info>%s</info> | <fg=yellow>Environment</fg=yellow>: <info>%s</info>',
+            APPLICATION_CODE_BUCKET !== '' ? APPLICATION_CODE_BUCKET : 'N/A',
+            defined('APPLICATION_STORE') ? APPLICATION_STORE : 'N/A',
             APPLICATION_ENV
         );
     }

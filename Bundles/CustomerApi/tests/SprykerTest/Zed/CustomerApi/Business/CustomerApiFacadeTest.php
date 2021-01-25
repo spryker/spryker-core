@@ -41,7 +41,7 @@ class CustomerApiFacadeTest extends Unit
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -59,7 +59,7 @@ class CustomerApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGet()
+    public function testGet(): void
     {
         $customerApiFacade = new CustomerApiFacade();
 
@@ -79,7 +79,7 @@ class CustomerApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetInvalid()
+    public function testGetInvalid(): void
     {
         $customerApiFacade = new CustomerApiFacade();
 
@@ -93,7 +93,7 @@ class CustomerApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFind()
+    public function testFind(): void
     {
         $customerApiFacade = new CustomerApiFacade();
 
@@ -112,7 +112,7 @@ class CustomerApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testAdd()
+    public function testAdd(): void
     {
         $customerApiFacade = new CustomerApiFacade();
 
@@ -136,7 +136,7 @@ class CustomerApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testEdit()
+    public function testEdit(): void
     {
         $customerApiFacade = new CustomerApiFacade();
 
@@ -161,7 +161,7 @@ class CustomerApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testDelete()
+    public function testDelete(): void
     {
         $customerApiFacade = new CustomerApiFacade();
 
@@ -175,7 +175,7 @@ class CustomerApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testDeleteInvalid()
+    public function testDeleteInvalid(): void
     {
         $customerApiFacade = new CustomerApiFacade();
 

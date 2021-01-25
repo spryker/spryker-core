@@ -25,12 +25,12 @@ class LocatorTest extends Unit
     /**
      * @var \Spryker\Zed\Kernel\Locator
      */
-    private $locator;
+    protected $locator;
 
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -40,7 +40,7 @@ class LocatorTest extends Unit
     /**
      * @return void
      */
-    public function testCallShouldReturnBundleProxy()
+    public function testCallShouldReturnBundleProxy(): void
     {
         $this->assertInstanceOf(BundleProxy::class, $this->locator->foo());
     }

@@ -1,5 +1,4 @@
 parameters:
+    checkMissingIterableValueType: false
     ignoreErrors:
         - '#Call to an undefined method Propel\\Runtime\\ActiveQuery\\ModelCriteria::#'
-
-    bootstrap: %rootDir%/../../../phpstan-bootstrap.php

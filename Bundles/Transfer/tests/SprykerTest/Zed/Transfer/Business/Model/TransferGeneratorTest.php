@@ -10,7 +10,9 @@ namespace SprykerTest\Zed\Transfer\Business\Model;
 use Codeception\Test\Unit;
 use Spryker\Zed\Transfer\Business\Model\Generator\ClassDefinition;
 use Spryker\Zed\Transfer\Business\Model\Generator\ClassGenerator;
+use Spryker\Zed\Transfer\Business\Model\Generator\DefinitionBuilderInterface;
 use Spryker\Zed\Transfer\Business\Model\Generator\DefinitionNormalizer;
+use Spryker\Zed\Transfer\Business\Model\Generator\GeneratorInterface;
 use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionBuilder;
 use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionFinder;
 use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionLoader;
@@ -31,18 +33,19 @@ use Symfony\Component\Console\Output\OutputInterface;
  * @group Model
  * @group TransferGeneratorTest
  * Add your own group annotations below this line
+ * @property \SprykerTest\Zed\Transfer\TransferBusinessTester $tester
  */
 class TransferGeneratorTest extends Unit
 {
     /**
      * @return void
      */
-    public function testExecuteShouldGenerateExpectedTransfer()
+    public function testExecuteShouldGenerateExpectedTransfer(): void
     {
         $sourceDirectories = [
             codecept_data_dir('Shared/Test/Transfer/'),
         ];
-        $transferDefinitionBuilder = $this->getTransferDefinitionBuilder($sourceDirectories);
+        $transferDefinitionBuilder = $this->getTransferDefinitionBuilder($sourceDirectories, $this->getTransferConfigMock());
         $this->assertCount(1, $transferDefinitionBuilder->getDefinitions(), 'Expected to get 1 class definition.');
 
         $messenger = $this->getMessenger();
@@ -61,7 +64,7 @@ class TransferGeneratorTest extends Unit
     /**
      * @return void
      */
-    public function testExecuteWithStrictnessTransfer()
+    public function testExecuteWithStrictnessTransfer(): void
     {
         $sourceDirectories = [
             codecept_data_dir('Shared/Test/Transfer/'),
@@ -88,13 +91,13 @@ class TransferGeneratorTest extends Unit
     /**
      * @return void
      */
-    public function testExecuteShouldGenerateExpectedMergedTransfer()
+    public function testExecuteShouldGenerateExpectedMergedTransfer(): void
     {
         $sourceDirectories = [
             codecept_data_dir('Project/Test/Transfer/'),
             codecept_data_dir('Vendor/Test2/Transfer/'),
         ];
-        $definitionBuilder = $this->getTransferDefinitionBuilder($sourceDirectories);
+        $definitionBuilder = $this->getTransferDefinitionBuilder($sourceDirectories, $this->getTransferConfigMock());
         $this->assertCount(2, $definitionBuilder->getDefinitions(), 'Expected to get 2 class definitions.');
 
         $messenger = $this->getMessenger();
@@ -115,12 +118,12 @@ class TransferGeneratorTest extends Unit
     /**
      * @return void
      */
-    public function testExecuteShouldGenerateExpectedDeprecatedTransfer()
+    public function testExecuteShouldGenerateExpectedDeprecatedTransfer(): void
     {
         $sourceDirectories = [
             codecept_data_dir('Shared/Deprecated/Transfer/'),
         ];
-        $definitionBuilder = $this->getTransferDefinitionBuilder($sourceDirectories);
+        $definitionBuilder = $this->getTransferDefinitionBuilder($sourceDirectories, $this->getTransferConfigMock());
         $this->assertCount(1, $definitionBuilder->getDefinitions(), 'Expected to get 1 class definition.');
 
         $messenger = $this->getMessenger();
@@ -139,13 +142,13 @@ class TransferGeneratorTest extends Unit
     /**
      * @return void
      */
-    public function testExecuteShouldGenerateExpectedMergedDeprecatedTransfer()
+    public function testExecuteShouldGenerateExpectedMergedDeprecatedTransfer(): void
     {
         $sourceDirectories = [
             codecept_data_dir('Vendor/Deprecated/Transfer/'),
             codecept_data_dir('Project/Deprecated/Transfer/'),
         ];
-        $definitionBuilder = $this->getTransferDefinitionBuilder($sourceDirectories);
+        $definitionBuilder = $this->getTransferDefinitionBuilder($sourceDirectories, $this->getTransferConfigMock());
         $this->assertCount(1, $definitionBuilder->getDefinitions(), 'Expected to get 1 class definition.');
 
         $messenger = $this->getMessenger();
@@ -163,9 +166,118 @@ class TransferGeneratorTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testTypeShimShouldBeAppliedToDocblock(): void
+    {
+        $sourceDirectories = [
+            codecept_data_dir('Shared/Test/Transfer/'),
+        ];
+        $configMock = $this->getTransferConfigMock();
+        $configMock->method('getTypeShims')->willReturn([
+            'CatFace' => [
+                'name' => [
+                    'string' => 'int',
+                ],
+                'typedArray' => [
+                    'string[]' => 'int[]',
+                ],
+            ],
+        ]);
+        $transferDefinitionBuilder = $this->getTransferDefinitionBuilder($sourceDirectories, $configMock);
+
+        $messenger = $this->getMessenger();
+        $generator = $this->getClassGenerator();
+
+        $transferGenerator = new TransferGenerator($messenger, $generator, $transferDefinitionBuilder);
+        $transferGenerator->execute();
+
+        $this->assertFileExists($this->getTargetDirectory() . 'CatFaceTransfer.php');
+        $this->assertSame(
+            file_get_contents(codecept_data_dir('test_files/expected.shimmed.transfer.php')),
+            file_get_contents($this->getTargetDirectory() . 'CatFaceTransfer.php')
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testTypeAssertionShouldBeInjectedIfConfigured(): void
+    {
+        $sourceDirectories = [
+            codecept_data_dir('Shared/Test/Transfer/'),
+        ];
+        $configMock = $this->createMock(TransferConfig::class);
+        $configMock->method('isDebugEnabled')->willReturn(true);
+        $transferDefinitionBuilder = $this->getTransferDefinitionBuilder($sourceDirectories, $configMock);
+
+        $messenger = $this->getMessenger();
+        $generator = $this->getClassGenerator();
+
+        $transferGenerator = new TransferGenerator($messenger, $generator, $transferDefinitionBuilder);
+        $transferGenerator->execute();
+
+        $this->assertFileExists($this->getTargetDirectory() . 'CatFaceTransfer.php');
+        $this->assertSame(
+            file_get_contents(codecept_data_dir('test_files/expected.typecheck.transfer.php')),
+            file_get_contents($this->getTargetDirectory() . 'CatFaceTransfer.php')
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testStrictTransferCodeLayoutIsCorrect(): void
+    {
+        $sourceDirectories = [
+            codecept_data_dir('Shared/Strict/Transfer/'),
+        ];
+
+        $transferDefinitionBuilder = $this->getTransferDefinitionBuilder($sourceDirectories);
+        $messenger = $this->getMessenger();
+        $generator = $this->getClassGenerator();
+
+        $transferGenerator = new TransferGenerator($messenger, $generator, $transferDefinitionBuilder);
+        $transferGenerator->execute();
+
+        $this->assertTransferClassContent(
+            'expected.partially_strict.transfer.php',
+            'PartiallyStrictTransfer.php',
+            'Partially strict transfer has incorrect content'
+        );
+        $this->assertTransferClassContent(
+            'expected.fully_strict.transfer.php',
+            'FullyStrictTransfer.php',
+            'Fully strict transfer has incorrect content'
+        );
+    }
+
+    /**
+     * @param string $expectedTransferFileName
+     * @param string $actualTransferClassName
+     * @param string $message
+     *
+     * @return void
+     */
+    protected function assertTransferClassContent(
+        string $expectedTransferFileName,
+        string $actualTransferClassName,
+        string $message = ''
+    ): void {
+        $generatedTransferFilePath = $this->getTargetDirectory() . $actualTransferClassName;
+        $this->assertFileExists($generatedTransferFilePath);
+
+        $this->assertSame(
+            file_get_contents(codecept_data_dir('test_files/' . $expectedTransferFileName)),
+            file_get_contents($generatedTransferFilePath),
+            $message
+        );
+    }
+
+    /**
      * @return string
      */
-    protected function getTargetDirectory()
+    protected function getTargetDirectory(): string
     {
         return codecept_output_dir();
     }
@@ -173,7 +285,7 @@ class TransferGeneratorTest extends Unit
     /**
      * @return \Symfony\Component\Console\Logger\ConsoleLogger
      */
-    protected function getMessenger()
+    protected function getMessenger(): ConsoleLogger
     {
         $messenger = new ConsoleLogger(new ConsoleOutput(OutputInterface::VERBOSITY_QUIET));
 
@@ -183,7 +295,7 @@ class TransferGeneratorTest extends Unit
     /**
      * @return \Spryker\Zed\Transfer\Business\Model\Generator\GeneratorInterface
      */
-    protected function getClassGenerator()
+    protected function getClassGenerator(): GeneratorInterface
     {
         $targetDirectory = $this->getTargetDirectory();
 
@@ -196,7 +308,7 @@ class TransferGeneratorTest extends Unit
      *
      * @return \Spryker\Zed\Transfer\Business\Model\Generator\DefinitionBuilderInterface
      */
-    protected function getTransferDefinitionBuilder($sourceDirectories, ?TransferConfig $config = null)
+    protected function getTransferDefinitionBuilder(array $sourceDirectories, ?TransferConfig $config = null): DefinitionBuilderInterface
     {
         $finder = new TransferDefinitionFinder($sourceDirectories);
         $normalizer = new DefinitionNormalizer();
@@ -213,8 +325,11 @@ class TransferGeneratorTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Transfer\TransferConfig
      */
-    protected function getTransferConfigMock()
+    protected function getTransferConfigMock(): TransferConfig
     {
-        return $this->getMockBuilder(TransferConfig::class)->setMethods(['isTransferNameValidated'])->getMock();
+        $configMock = $this->createMock(TransferConfig::class);
+        $configMock->method('isDebugEnabled')->willReturn(false);
+
+        return $configMock;
     }
 }

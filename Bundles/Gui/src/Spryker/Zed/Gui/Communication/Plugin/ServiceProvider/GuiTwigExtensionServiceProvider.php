@@ -15,6 +15,10 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Twig\Environment;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\Gui\Communication\Plugin\Twig\GuiFilterTwigPlugin} instead.
+ *
+ * @deprecated Use {@link \Spryker\Zed\Gui\Communication\Plugin\Twig\GuiTwigPlugin} instead.
+ *
  * @method \Spryker\Zed\Gui\Communication\GuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\Gui\GuiConfig getConfig()
  */
@@ -31,7 +35,6 @@ class GuiTwigExtensionServiceProvider extends AbstractPlugin implements ServiceP
 
         $app['twig'] = $app->share(
             $app->extend('twig', function (Environment $twig) {
-
                 $this->registerTwigFunctions($twig);
                 $this->registerTwigFilters($twig);
 

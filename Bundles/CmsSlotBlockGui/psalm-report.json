@@ -1,0 +1,139 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 56,
+            "line_to": 56,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\CmsSlotBlockGui\\Communication\\Finder\\CmsBlockSuggestionFinder::getPaginationData cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlockGui/src/Spryker/Zed/CmsSlotBlockGui/Communication/Finder/CmsBlockSuggestionFinder.php",
+            "snippet": "                $cmsBlockSuggestionCollectionTransfer->getPagination()",
+            "selected_text": "$cmsBlockSuggestionCollectionTransfer->getPagination()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 83,
+            "line_to": 83,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Zed\\CmsSlotBlockGui\\Communication\\Finder\\CmsBlockSuggestionFinder::isCmsBlockAssignedToSlotAndTemplate cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlockGui/src/Spryker/Zed/CmsSlotBlockGui/Communication/Finder/CmsBlockSuggestionFinder.php",
+            "snippet": "                'disabled' => $this->isCmsBlockAssignedToSlotAndTemplate($cmsBlockTransfer, $idCmsSlotTemplate, $idCmsSlot),",
+            "selected_text": "$idCmsSlotTemplate",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 83,
+            "line_to": 83,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 3 of Spryker\\Zed\\CmsSlotBlockGui\\Communication\\Finder\\CmsBlockSuggestionFinder::isCmsBlockAssignedToSlotAndTemplate cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlockGui/src/Spryker/Zed/CmsSlotBlockGui/Communication/Finder/CmsBlockSuggestionFinder.php",
+            "snippet": "                'disabled' => $this->isCmsBlockAssignedToSlotAndTemplate($cmsBlockTransfer, $idCmsSlotTemplate, $idCmsSlot),",
+            "selected_text": "$idCmsSlot",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 102,
+            "line_to": 102,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getCmsSlotBlocks on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlockGui/src/Spryker/Zed/CmsSlotBlockGui/Communication/Finder/CmsBlockSuggestionFinder.php",
+            "snippet": "        $cmsBlockTransfers = $cmsBlockTransfer->getCmsSlotBlockCollection()->getCmsSlotBlocks();",
+            "selected_text": "getCmsSlotBlocks",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 63,
+            "line_to": 63,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\CmsSlotBlockGui\\Dependency\\Facade\\CmsSlotBlockGuiToCmsSlotBlockFacadeInterface::getTemplateConditionsByPath cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlockGui/src/Spryker/Zed/CmsSlotBlockGui/Communication/Form/DataProvider/CmsSlotBlockCollectionFormDataProvider.php",
+            "snippet": "        $templateConditions = $this->cmsSlotBlockFacade->getTemplateConditionsByPath($cmsSlotTemplateTransfer->getPath());",
+            "selected_text": "$cmsSlotTemplateTransfer->getPath()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 21,
+            "line_to": 21,
+            "type": "MoreSpecificImplementedParamType",
+            "message": "Argument 1 of Spryker\\Zed\\CmsSlotBlockGui\\Communication\\Form\\Transformer\\CmsSlotBlockTransformer::transform has the more specific type 'Generated\\Shared\\Transfer\\CmsSlotBlockTransfer|null', expecting 'mixed' as defined by Symfony\\Component\\Form\\DataTransformerInterface::transform",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlockGui/src/Spryker/Zed/CmsSlotBlockGui/Communication/Form/Transformer/CmsSlotBlockTransformer.php",
+            "snippet": "    public function transform($cmsSlotBlockTransfer): ?array",
+            "selected_text": "$cmsSlotBlockTransfer",
+            "error_level": 5,
+            "shortcode": 140
+        },
+        {
+            "severity": "info",
+            "line_from": 31,
+            "line_to": 31,
+            "type": "MoreSpecificImplementedParamType",
+            "message": "Argument 1 of Spryker\\Zed\\CmsSlotBlockGui\\Communication\\Form\\Transformer\\CmsSlotBlockTransformer::reverseTransform has the more specific type 'array<array-key, mixed>|null', expecting 'mixed' as defined by Symfony\\Component\\Form\\DataTransformerInterface::reverseTransform",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlockGui/src/Spryker/Zed/CmsSlotBlockGui/Communication/Form/Transformer/CmsSlotBlockTransformer.php",
+            "snippet": "    public function reverseTransform($cmsSlotBlock): ?CmsSlotBlockTransfer",
+            "selected_text": "$cmsSlotBlock",
+            "error_level": 5,
+            "shortcode": 140
+        },
+        {
+            "severity": "info",
+            "line_from": 204,
+            "line_to": 204,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getStoreRelation on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlockGui/src/Spryker/Zed/CmsSlotBlockGui/Communication/Table/CmsSlotBlockTable.php",
+            "snippet": "        $stores = $this->cmsBlockFacade->findCmsBlockById($idCmsBlock)->getStoreRelation()->getStores();",
+            "selected_text": "getStoreRelation",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 204,
+            "line_to": 204,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getStores on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlockGui/src/Spryker/Zed/CmsSlotBlockGui/Communication/Table/CmsSlotBlockTable.php",
+            "snippet": "        $stores = $this->cmsBlockFacade->findCmsBlockById($idCmsBlock)->getStoreRelation()->getStores();",
+            "selected_text": "getStores",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 210,
+            "line_to": 210,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlockGui/src/Spryker/Zed/CmsSlotBlockGui/Communication/Table/CmsSlotBlockTable.php",
+            "snippet": "                $store->getName()",
+            "selected_text": "$store->getName()",
+            "error_level": 3,
+            "shortcode": 78
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 68,
+            "line_to": 68,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Zed\\CmsSlotBlock\\Business\\CmsSlotBlockFacadeInterface::getTemplateConditionsByPath has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlockGui/src/Spryker/Zed/CmsSlotBlockGui/Dependency/Facade/CmsSlotBlockGuiToCmsSlotBlockFacadeBridge.php",
+            "snippet": "        return $this->cmsSlotBlockFacade->getTemplateConditionsByPath($twigPath);",
+            "selected_text": "getTemplateConditionsByPath",
+            "error_level": 2,
+            "shortcode": 1
+        }
+    ]
+}

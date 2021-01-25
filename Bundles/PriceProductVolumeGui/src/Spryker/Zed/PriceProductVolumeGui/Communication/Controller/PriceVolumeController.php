@@ -122,8 +122,11 @@ class PriceVolumeController extends AbstractController
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    protected function getPriceVolumeCollectionFormType(Request $request, PriceVolumeCollectionDataProvider $dataProvider, PriceProductTransfer $priceProductTransfer): FormInterface
-    {
+    protected function getPriceVolumeCollectionFormType(
+        Request $request,
+        PriceVolumeCollectionDataProvider $dataProvider,
+        PriceProductTransfer $priceProductTransfer
+    ): FormInterface {
         $priceVolumeCollectionFormType = $this->getFactory()
             ->getPriceVolumeCollectionFormType(
                 $dataProvider->getData(

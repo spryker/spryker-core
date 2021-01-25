@@ -39,7 +39,12 @@
     <transfer name="UrlCollectorStorage">
         <property name="referenceKey" type="string"/>
         <property name="type" type="string"/>
-        <property name="localeUrls" type="Url[]"/>
+        <property name="localeUrls" type="Url[]" singular="localeUrls"/>
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="idLocale" type="int"/>
+        <property name="localeName" type="string"/>
     </transfer>
 
 </transfers>

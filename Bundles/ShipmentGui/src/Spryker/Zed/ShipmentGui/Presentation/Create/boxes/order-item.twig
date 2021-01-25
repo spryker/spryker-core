@@ -6,7 +6,11 @@
 
 <td class="item-checker"><input type="checkbox" name="order-item" value="{{ orderItem.idSalesOrderItem }}" class="item-check" /></td>
 {% if displayImage %}
-    <td {% if group %}rowspan="{{ itemCount }}" {% endif %}><img class="product-image" src="{{ image }}"/></td>
+    <td {% if group %}rowspan="{{ itemCount }}"{% endif %}>
+        <div class="image-wrap">
+            <img class="product-image" src="{{ image }}" alt="{{ orderItem.name }}">
+        </div>
+    </td>
 {% endif %}
 <td>
     <div>
@@ -36,10 +40,10 @@
       {% endif %}
     </div>
   {% endif %}
-  {% embed '@Sales/Detail/boxes/item-packaging-unit.twig' with {orderItem: orderItem} %}{% endembed %}
+  {% include ['@ProductPackagingUnitGui/Sales/Detail/boxes/item-packaging-unit.twig', '@Sales/Detail/boxes/item-packaging-unit.twig'] with {orderItem: orderItem} %}
 </td>
 <td>
-  {{ orderItem.quantity }}
+  x {{ orderItem.quantity }}
   {% embed '@Sales/Detail/boxes/item-measurement-unit.twig' with {orderItem: orderItem} %}{% endembed %}
 </td>
 <td>

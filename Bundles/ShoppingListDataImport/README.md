@@ -1,6 +1,6 @@
 # ShoppingListDataImport Module
 [![Build Status](https://travis-ci.org/spryker/shopping-list-data-import.svg)](https://travis-ci.org/spryker/shopping-list-data-import)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/shopping-list-data-import/badge.svg)](https://coveralls.io/github/spryker/shopping-list-data-import)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 DataImport for Shopping Lists
 

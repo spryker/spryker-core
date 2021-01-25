@@ -29,7 +29,7 @@ class VoucherCodeTest extends Unit
     /**
      * @return void
      */
-    public function testUseCodesShouldPersistIncrementedNumberOfUses()
+    public function testUseCodesShouldPersistIncrementedNumberOfUses(): void
     {
         $discountVoucherEntity = $this->createDiscountVoucherMock();
 
@@ -63,13 +63,13 @@ class VoucherCodeTest extends Unit
         $voucherCode = $this->createVoucherCode($discountQueryContainerMock);
         $updated = $voucherCode->useCodes(['123']);
 
-        $this->assertEquals(1, $updated);
+        $this->assertSame(1, $updated);
     }
 
     /**
      * @return void
      */
-    public function testUseVoucherCodesWhenThereIsNoVoucherShouldReturnFalse()
+    public function testUseVoucherCodesWhenThereIsNoVoucherShouldReturnFalse(): void
     {
         $discountQueryMock = $this->createDiscountQueryMock();
         $discountQueryMock->method('find')->willReturn([]);
@@ -81,13 +81,13 @@ class VoucherCodeTest extends Unit
         $voucherCode = $this->createVoucherCode($discountQueryContainerMock);
         $updated = $voucherCode->useCodes(['123']);
 
-        $this->assertEquals(0, $updated);
+        $this->assertSame(0, $updated);
     }
 
     /**
      * @return void
      */
-    public function testUseVoucherWhenVoucherNotActiveShouldNotUpdate()
+    public function testUseVoucherWhenVoucherNotActiveShouldNotUpdate(): void
     {
         $discountVoucherEntity = $this->createDiscountVoucherMock();
 
@@ -105,13 +105,13 @@ class VoucherCodeTest extends Unit
         $voucherCode = $this->createVoucherCode($discountQueryContainerMock);
         $updated = $voucherCode->useCodes(['123']);
 
-        $this->assertEquals(0, $updated);
+        $this->assertSame(0, $updated);
     }
 
     /**
      * @return void
      */
-    public function testUseVoucherShouldUpdateCounterForUnlimited()
+    public function testUseVoucherShouldUpdateCounterForUnlimited(): void
     {
         $discountVoucherEntity = $this->createDiscountVoucherMock();
 
@@ -141,13 +141,13 @@ class VoucherCodeTest extends Unit
         $voucherCode = $this->createVoucherCode($discountQueryContainerMock);
         $updated = $voucherCode->useCodes(['123']);
 
-        $this->assertEquals(1, $updated);
+        $this->assertSame(1, $updated);
     }
 
     /**
      * @return void
      */
-    public function testReleaseCodesShouldPersistDecrementedNumberOfUses()
+    public function testReleaseCodesShouldPersistDecrementedNumberOfUses(): void
     {
         $discountVoucherEntity = $this->createDiscountVoucherMock();
 
@@ -177,13 +177,13 @@ class VoucherCodeTest extends Unit
         $voucherCode = $this->createVoucherCode($discountQueryContainerMock);
         $updated = $voucherCode->releaseUsedCodes(['123']);
 
-        $this->assertEquals(1, $updated);
+        $this->assertSame(1, $updated);
     }
 
     /**
      * @return void
      */
-    public function testReleaseCodesNotVouchersFoundShouldReturnZeroUpdatedItems()
+    public function testReleaseCodesNotVouchersFoundShouldReturnZeroUpdatedItems(): void
     {
         $discountQueryMock = $this->createDiscountQueryMock();
         $discountQueryMock->method('find')->willReturn([]);
@@ -195,13 +195,13 @@ class VoucherCodeTest extends Unit
         $voucherCode = $this->createVoucherCode($discountQueryContainerMock);
         $updated = $voucherCode->releaseUsedCodes(['123']);
 
-        $this->assertEquals(0, $updated);
+        $this->assertSame(0, $updated);
     }
 
     /**
      * @return void
      */
-    public function testReleaseCodeWhenVoucherIsWithoutCounterShouldReturnZeroUpdatedItems()
+    public function testReleaseCodeWhenVoucherIsWithoutCounterShouldReturnZeroUpdatedItems(): void
     {
         $discountVoucherEntity = $this->createDiscountVoucherMock();
 
@@ -219,7 +219,7 @@ class VoucherCodeTest extends Unit
         $voucherCode = $this->createVoucherCode($discountQueryContainerMock);
         $updated = $voucherCode->releaseUsedCodes(['123']);
 
-        $this->assertEquals(0, $updated);
+        $this->assertSame(0, $updated);
     }
 
     /**
@@ -229,8 +229,7 @@ class VoucherCodeTest extends Unit
      */
     protected function createVoucherCode(
         ?DiscountQueryContainerInterface $discountQueryContainerMock = null
-    ) {
-
+    ): VoucherCode {
         if (!$discountQueryContainerMock) {
             $discountQueryContainerMock = $this->createDiscountQueryContainerMock();
         }
@@ -241,7 +240,7 @@ class VoucherCodeTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
      */
-    protected function createDiscountQueryContainerMock()
+    protected function createDiscountQueryContainerMock(): DiscountQueryContainerInterface
     {
         return $this->getMockBuilder(DiscountQueryContainerInterface::class)->getMock();
     }
@@ -249,7 +248,7 @@ class VoucherCodeTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\Discount\Persistence\SpyDiscountQuery
      */
-    protected function createDiscountQueryMock()
+    protected function createDiscountQueryMock(): SpyDiscountQuery
     {
         return $this->getMockBuilder(SpyDiscountQuery::class)->getMock();
     }
@@ -257,7 +256,7 @@ class VoucherCodeTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\Discount\Persistence\SpyDiscountVoucher
      */
-    protected function createDiscountVoucherMock()
+    protected function createDiscountVoucherMock(): SpyDiscountVoucher
     {
         $discountVoucherEntity = $this->getMockBuilder(SpyDiscountVoucher::class)->getMock();
 

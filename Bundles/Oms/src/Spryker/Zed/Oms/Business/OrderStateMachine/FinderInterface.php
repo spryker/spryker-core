@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\Oms\Business\OrderStateMachine;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
+use Spryker\Zed\Oms\Business\Process\StateInterface;
 
 interface FinderInterface
 {
@@ -34,13 +36,6 @@ interface FinderInterface
      * @return bool
      */
     public function isOrderFlaggedAll($idOrder, $flag);
-
-    /**
-     * @param string $sku
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
-     */
-    public function getReservedOrderItemsForSku($sku);
 
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
@@ -99,4 +94,11 @@ interface FinderInterface
      * @return bool
      */
     public function isOrderFlaggedExcludeFromCustomer($idOrder);
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Spryker\Zed\Oms\Business\Process\StateInterface|null
+     */
+    public function findStateByName(ItemTransfer $itemTransfer): ?StateInterface;
 }

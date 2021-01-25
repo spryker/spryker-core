@@ -1,0 +1,90 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 43,
+            "line_to": 43,
+            "type": "MoreSpecificImplementedParamType",
+            "message": "Argument 3 of Spryker\\Zed\\MerchantProductSearch\\Communication\\Plugin\\ProductPageSearch\\MerchantProductAbstractMapExpanderPlugin::expandProductMap has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Spryker\\Zed\\ProductPageSearchExtension\\Dependency\\Plugin\\ProductAbstractMapExpanderPluginInterface::expandProductMap",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProductSearch/src/Spryker/Zed/MerchantProductSearch/Communication/Plugin/ProductPageSearch/MerchantProductAbstractMapExpanderPlugin.php",
+            "snippet": "        array $productData,",
+            "selected_text": "$productData",
+            "error_level": 5,
+            "shortcode": 140
+        },
+        {
+            "severity": "info",
+            "line_from": 54,
+            "line_to": 54,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $productData[static::KEY_MERCHANT_NAMES] using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProductSearch/src/Spryker/Zed/MerchantProductSearch/Communication/Plugin/ProductPageSearch/MerchantProductAbstractMapExpanderPlugin.php",
+            "snippet": "        foreach ($productData[static::KEY_MERCHANT_NAMES][$pageMapTransfer->getStore()] as $merchantName) {",
+            "selected_text": "$productData[static::KEY_MERCHANT_NAMES]",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 34,
+            "line_to": 34,
+            "type": "MoreSpecificImplementedParamType",
+            "message": "Argument 1 of Spryker\\Zed\\MerchantProductSearch\\Communication\\Plugin\\ProductPageSearch\\MerchantProductPageDataExpanderPlugin::expandProductPageData has the more specific type 'array<string, Generated\\Shared\\Transfer\\ProductPayloadTransfer>', expecting 'array<array-key, mixed>' as defined by Spryker\\Zed\\ProductPageSearch\\Dependency\\Plugin\\ProductPageDataExpanderInterface::expandProductPageData",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProductSearch/src/Spryker/Zed/MerchantProductSearch/Communication/Plugin/ProductPageSearch/MerchantProductPageDataExpanderPlugin.php",
+            "snippet": "    public function expandProductPageData(array $productData, ProductPageSearchTransfer $productAbstractPageSearchTransfer): void",
+            "selected_text": "$productData",
+            "error_level": 5,
+            "shortcode": 140
+        },
+        {
+            "severity": "info",
+            "line_from": 57,
+            "line_to": 57,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $updatedPayLoadTransfers[int|null] using possibly null offset int|null",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProductSearch/src/Spryker/Zed/MerchantProductSearch/Communication/Plugin/ProductPageSearch/MerchantProductPageDataLoaderPlugin.php",
+            "snippet": "            $updatedPayLoadTransfers[$payloadTransfer->getIdProductAbstract()] = $this->setMerchantDataToPayloadTransfer($payloadTransfer, $productAbstractMerchantData);",
+            "selected_text": "$updatedPayLoadTransfers",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 39,
+            "line_to": 39,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\MerchantProduct\\Persistence\\SpyMerchantProductAbstract> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProductSearch/src/Spryker/Zed/MerchantProductSearch/Persistence/MerchantProductSearchRepository.php",
+            "snippet": "            ->getData();",
+            "selected_text": "getData",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 56,
+            "line_to": 56,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\MerchantProduct\\Persistence\\SpyMerchantProductAbstract> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProductSearch/src/Spryker/Zed/MerchantProductSearch/Persistence/MerchantProductSearchRepository.php",
+            "snippet": "            ->getData();",
+            "selected_text": "getData",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 86,
+            "line_to": 86,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\MerchantCategory\\Persistence\\SpyMerchantCategory|Orm\\Zed\\MerchantOpeningHours\\Persistence\\SpyMerchantOpeningHoursDateSchedule|Orm\\Zed\\MerchantOpeningHours\\Persistence\\SpyMerchantOpeningHoursWeekdaySchedule|Orm\\Zed\\MerchantProduct\\Persistence\\SpyMerchantProductAbstract|Orm\\Zed\\MerchantProfile\\Persistence\\SpyMerchantProfile|Orm\\Zed\\MerchantRelationship\\Persistence\\SpyMerchantRelationship|Orm\\Zed\\MerchantStock\\Persistence\\SpyMerchantStock|Orm\\Zed\\MerchantUser\\Persistence\\SpyMerchantUser|Orm\\Zed\\Merchant\\Persistence\\SpyMerchantStore|Orm\\Zed\\ProductOffer\\Persistence\\SpyProductOffer|Orm\\Zed\\StateMachine\\Persistence\\SpyStateMachineProcess|Orm\\Zed\\Url\\Persistence\\SpyUrl> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProductSearch/src/Spryker/Zed/MerchantProductSearch/Persistence/MerchantProductSearchRepository.php",
+            "snippet": "            ->getData();",
+            "selected_text": "getData",
+            "error_level": 3,
+            "shortcode": 113
+        }
+    ],
+    "deprecation": []
+}

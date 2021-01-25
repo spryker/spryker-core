@@ -4,8 +4,8 @@
   "description": "Config module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
-    "spryker/kernel": "^3.30.0",
+    "php": ">=7.3",
+    "spryker/kernel": "^3.48.0",
     "spryker/symfony": "^3.0.0",
     "spryker/web-profiler-extension": "^1.0.0"
   },
@@ -35,6 +35,10 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "3.0.x-dev"

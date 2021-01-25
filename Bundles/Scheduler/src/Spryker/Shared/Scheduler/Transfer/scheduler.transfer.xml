@@ -9,7 +9,7 @@
         <property name="command" type="string"/>
         <property name="repeatPattern" type="string"/>
         <property name="store" type="string"/>
-        <property name="payload" type="array"/>
+        <property name="payload" type="array" singular="payload"/>
     </transfer>
 
     <transfer name="SchedulerSchedule">

@@ -17,6 +17,8 @@ class UuidConfig extends AbstractBundleConfig
      * Specification:
      * - Returns the batch size for the uuid generation operation.
      *
+     * @api
+     *
      * @return int
      */
     public function getUuidGeneratorBatchSize(): int

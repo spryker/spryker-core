@@ -4,12 +4,15 @@
   "description": "ProductBundle module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
-    "spryker/availability": "^5.0.1 || ^6.0.0 || ^8.0.0",
+    "php": ">=7.3",
+    "spryker/availability": "^9.0.0",
+    "spryker/calculation-extension": "^1.1.0",
     "spryker/cart-extension": "^1.0.0 || ^2.0.0 || ^4.0.0",
+    "spryker/decimal-object": "^1.0.0",
     "spryker/kernel": "^3.30.0",
     "spryker/locale": "^3.0.0",
     "spryker/messenger": "^3.0.0",
+    "spryker/oms-extension": "^1.2.0",
     "spryker/persistent-cart-extension": "^1.0.0",
     "spryker/price": "^5.0.0",
     "spryker/price-product": "^1.0.0 || ^2.0.0 || ^4.0.0",
@@ -17,14 +20,20 @@
     "spryker/product-image": "^3.3.0",
     "spryker/propel-orm": "^1.0.0",
     "spryker/sales": "^6.0.0 || ^7.0.0 || ^8.0.0 || ^10.0.0 || ^11.0.0",
+    "spryker/sales-extension": "^1.6.0",
+    "spryker/sales-return-gui-extension": "^1.0.0",
     "spryker/shopping-list-extension": "^1.0.0",
-    "spryker/stock": "^4.0.0 || ^5.0.0 || ^7.0.0",
-    "spryker/store": "^1.5.0"
+    "spryker/stock": "^8.0.0",
+    "spryker/store": "^1.5.0",
+    "spryker/symfony": "^3.0.0",
+    "spryker/transfer": "^3.18.0"
   },
   "require-dev": {
     "spryker/calculation": "*",
     "spryker/cart": "*",
     "spryker/checkout": "*",
+    "spryker/code-sniffer": "*",
+    "spryker/currency": "*",
     "spryker/oms": "*",
     "spryker/propel": "*",
     "spryker/testify": "*"
@@ -38,7 +47,8 @@
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/"
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Shared\\ProductBundle\\Helper\\": "tests/SprykerTest/Shared/ProductBundle/_support/Helper/"
     }
   },
   "autoload-dev": {
@@ -48,9 +58,13 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+  },
   "extra": {
     "branch-alias": {
-      "dev-master": "2.0.x-dev"
+      "dev-master": "7.0.x-dev"
     }
   },
   "config": {

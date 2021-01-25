@@ -6,21 +6,41 @@
     <transfer name="ItemState">
         <property name="idSalesOrder" type="int"/>
         <property name="name" type="string"/>
+        <property name="displayName" type="string"/>
         <property name="createdAt" type="string"/>
+        <property name="idSalesOrderItem" type="int"/>
+    </transfer>
+
+    <transfer name="AggregatedItemState">
+        <property name="name" type="string"/>
+        <property name="displayName" type="string"/>
     </transfer>
 
     <transfer name="Mail">
         <property name="order" type="Order"/>
         <property name="shipmentGroups" type="ShipmentGroup[]" singular="shipmentGroup"/>
+        <property name="type" type="string"/>
+        <property name="locale" type="Locale"/>
     </transfer>
 
     <transfer name="Order">
+        <property name="idSalesOrder" type="int"/>
         <property name="locale" type="Locale"/>
+        <property name="shippingAddress" type="Address" deprecated="Use item level shipping addresses (item.shipment.shippingAddress) instead."/>
+        <property name="billingAddress" type="Address"/>
+        <property name="itemStates" type="string[]" singular="itemState"/>
+        <property name="aggregatedItemStates" type="AggregatedItemState[]" singular="aggregatedItemState"/>
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="email" type="string"/>
+        <property name="firstName" type="string"/>
+        <property name="lastName" type="string"/>
+        <property name="orderReference" type="string"/>
+        <property name="isCancellable" type="bool"/>
     </transfer>
 
     <transfer name="OmsAvailabilityReservationRequest">
         <property name="sku" type="string"/>
-        <property name="reservationAmount" type="int"/>
+        <property name="reservationAmount" type="decimal"/>
         <property name="originStore" type="Store"/>
         <property name="synchronizeToStore" type="Store"/>
         <property name="version" type="string"/>
@@ -45,7 +65,7 @@
         <property name="sku" type="string"/>
         <property name="processName" type="string"/>
         <property name="stateName" type="string"/>
-        <property name="sumAmount" type="int"/>
+        <property name="sumAmount" type="decimal"/>
     </transfer>
 
     <transfer name="ShipmentGroup">
@@ -83,6 +103,85 @@
         <property name="sku" type="string"/>
         <property name="quantity" type="int"/>
         <property name="unitPrice" type="int"/>
+        <property name="idSalesOrderItem" type="int"/>
+        <property name="state" type="ItemState"/>
+        <property name="process" type="string"/>
+        <property name="stateHistory" type="ItemState[]" singular="stateHistory"/>
+        <property name="fkSalesOrder" type="int"/>
+    </transfer>
+
+    <transfer name="Locale">
+    </transfer>
+
+    <transfer name="OmsProductReservation">
+        <property name="idOmsProductReservation" type="int"/>
+        <property name="reservationQuantity" type="decimal"/>
+        <property name="sku" type="string"/>
+        <property name="fkStore" type="int"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="idStore" type="int"/>
+        <property name="name" type="string"/>
+        <property name="storesWithSharedPersistence" type="array" singular="storeWithSharedPersistence"/>
+    </transfer>
+
+    <transfer name="CheckoutResponse">
+        <property name="saveOrder" type="SaveOrder"/>
+    </transfer>
+
+    <transfer name="SaveOrder">
+        <property name="orderItems" type="Item[]" singular="orderItem"/>
+    </transfer>
+
+    <transfer name="Quote">
+    </transfer>
+
+    <transfer name="ShipmentCarrier">
+    </transfer>
+
+    <transfer name="OrderItemFilter">
+        <property name="salesOrderItemIds" type="int[]" singular="salesOrderItemId"/>
+        <property name="orderReferences" type="string[]" singular="orderReference"/>
+        <property name="salesOrderIds" type="int[]" singular="salesOrderId"/>
+    </transfer>
+
+    <transfer name="ReservationRequest">
+        <property name="reservedStates" type="OmsStateCollection"/>
+        <property name="sku" type="string"/>
+        <property name="store" type="Store"/>
+        <property name="reservationQuantity" type="decimal"/>
+    </transfer>
+
+    <transfer name="ReservationResponse">
+        <property name="reservationQuantity" type="decimal"/>
+        <property name="storeName" type="string"/>
+    </transfer>
+
+    <transfer name="OmsCheckTimeoutsQueryCriteria">
+        <property name="storeName" type="string"/>
+        <property name="limit" type="int"/>
+        <property name="omsProcessorIdentifiers" type="int[]" singular="omsProcessorIdentifier"/>
+    </transfer>
+
+    <transfer name="OmsCheckConditionsQueryCriteria">
+        <property name="storeName" type="string"/>
+        <property name="limit" type="int"/>
+        <property name="omsProcessorIdentifiers" type="int[]" singular="omsProcessorIdentifier"/>
+    </transfer>
+
+    <transfer name="OmsEvent">
+        <property name="timeout" type="string"/>
+    </transfer>
+
+    <transfer name="TimeoutProcessorTimeoutRequest">
+        <property name="salesOrderItemEntity" type="SpySalesOrderItemEntity"/>
+        <property name="timestamp" type="int"/>
+        <property name="omsEvent" type="OmsEvent"/>
+    </transfer>
+
+    <transfer name="TimeoutProcessorTimeoutResponse">
+        <property name="timeoutTimestamp" type="int"/>
     </transfer>
 
 </transfers>

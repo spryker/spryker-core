@@ -1,6 +1,6 @@
 # CmsSlotGui Module
 [![Build Status](https://travis-ci.org/spryker/cms-slot-gui.svg)](https://travis-ci.org/spryker/cms-slot-gui)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/cms-slot-gui/badge.svg)](https://coveralls.io/github/spryker/cms-slot-gui)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 This module provides Zed UI interface for slots management
 

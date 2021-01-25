@@ -29,7 +29,7 @@ class CreateProductCategoryFilterTest extends Unit
     /**
      * @return void
      */
-    public function testCreateProductCategoryFilterPersistNewEntitiesToDatabase()
+    public function testCreateProductCategoryFilterPersistNewEntitiesToDatabase(): void
     {
         // Arrange
         $productCategory = $this->tester->haveCategory();

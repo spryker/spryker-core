@@ -10,6 +10,11 @@
         <property name="priceMode" type="string"/>
     </transfer>
 
+    <transfer name="OrderListRequest">
+        <property name="customerReference" type="string"/>
+        <property name="filter" type="Filter"/>
+    </transfer>
+
     <transfer name="RestOrderDetailsAttributes">
         <property name="createdAt" type="string"/>
         <property name="totals" type="RestOrderTotalsAttributes"/>
@@ -20,6 +25,7 @@
         <property name="shippingAddress" type="RestOrderAddress"/>
         <property name="priceMode" type="string"/>
         <property name="payments" type="RestOrderPayment[]" singular="payment"/>
+        <property name="shipments" type="RestOrderShipment[]" singular="shipment"/>
         <property name="calculatedDiscounts" type="RestCalculatedDiscount[]" singular="calculatedDiscount"/>
     </transfer>
 
@@ -27,7 +33,6 @@
         <property name="name" type="string"/>
         <property name="sku" type="string"/>
         <property name="sumPrice" type="int"/>
-        <property name="sumPriceToPayAggregation" type="int"/>
         <property name="quantity" type="int"/>
         <property name="metadata" type="RestOrderItemMetadata"/>
         <property name="calculatedDiscounts" type="RestCalculatedDiscount[]" singular="calculatedDiscount"/>
@@ -37,7 +42,6 @@
         <property name="unitNetPrice" type="int"/>
         <property name="sumNetPrice" type="int"/>
         <property name="unitPrice" type="int"/>
-        <property name="sumPrice" type="int"/>
         <property name="unitTaxAmountFullAggregation" type="int"/>
         <property name="sumTaxAmountFullAggregation" type="int"/>
         <property name="refundableAmount" type="int"/>
@@ -56,6 +60,10 @@
         <property name="sumPriceToPayAggregation" type="int"/>
         <property name="taxRateAverageAggregation" type="float"/>
         <property name="taxAmountAfterCancellation" type="int"/>
+        <property name="orderReference" type="string"/>
+        <property name="uuid" type="string"/>
+        <property name="isReturnable" type="bool"/>
+        <property name="idShipment" type="int"/>
     </transfer>
 
     <transfer name="RestOrderTotalsAttributes">
@@ -65,6 +73,7 @@
         <property name="subtotal" type="int"/>
         <property name="grandTotal" type="int"/>
         <property name="canceledTotal" type="int"/>
+        <property name="remunerationTotal" type="int"/>
     </transfer>
 
     <transfer name="RestOrderExpensesAttributes">
@@ -84,6 +93,8 @@
         <property name="unitPriceToPayAggregation" type="int"/>
         <property name="sumPriceToPayAggregation" type="int"/>
         <property name="taxAmountAfterCancellation" type="int"/>
+        <property name="idShipment" type="int"/>
+        <property name="idSalesExpense" type="int"/>
     </transfer>
 
     <transfer name="RestOrderAddress">
@@ -113,6 +124,15 @@
         <property name="paymentMethod" type="string"/>
     </transfer>
 
+    <transfer name="RestOrderShipment">
+        <property name="shipmentMethodName" type="string"/>
+        <property name="carrierName" type="string"/>
+        <property name="deliveryTime" type="int"/>
+        <property name="defaultGrossPrice" type="int"/>
+        <property name="defaultNetPrice" type="int"/>
+        <property name="currencyIsoCode" type="string"/>
+    </transfer>
+
     <transfer name="RestOrderItemMetadata">
         <property name="superAttributes" type="array" singular="superAttribute"/>
         <property name="image" type="string"/>
@@ -129,6 +149,8 @@
 
     <transfer name="Item">
         <property name="shipment" type="Shipment"/>
+        <property name="uuid" type="string"/>
+        <property name="orderReference" type="string"/>
     </transfer>
 
     <transfer name="Shipment">
@@ -161,6 +183,10 @@
         <property name="totals" type="Totals"/>
         <property name="billingAddress" type="Address"/>
         <property name="shippingAddress" type="Address"/>
+        <property name="shipmentMethods" type="ShipmentMethod[]" singular="shipmentMethod"/>
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="expenses" type="Expense[]" singular="expense"/>
+        <property name="currencyIsoCode" type="string"/>
     </transfer>
 
     <transfer name="Totals">
@@ -171,4 +197,40 @@
         <property name="amount" type="int"/>
     </transfer>
 
+    <transfer name="OrderList">
+        <property name="idCustomer" type="int"/>
+        <property name="pagination" type="Pagination"/>
+        <property name="orders" type="Order[]" singular="order"/>
+        <property name="filter" type="Filter"/>
+    </transfer>
+
+    <transfer name="RestErrorMessage">
+        <property name="code" type="string"/>
+        <property name="status" type="int"/>
+        <property name="detail" type="string"/>
+    </transfer>
+
+    <transfer name="ShipmentMethod">
+        <property name="name" type="string"/>
+        <property name="fkSalesExpense" type="int"/>
+    </transfer>
+
+    <transfer name="Expense">
+        <property name="idSalesExpense" type="int"/>
+        <property name="sumNetPrice" type="int"/>
+        <property name="sumGrossPrice" type="int"/>
+    </transfer>
+
+    <transfer name="RestUser">
+        <property name="naturalIdentifier" type="string"/>
+    </transfer>
+
+    <transfer name="OrderItemFilter">
+        <property name="salesOrderItemUuids" type="string[]" singular="salesOrderItemUuid"/>
+        <property name="customerReferences" type="string[]" singular="customerReference"/>
+    </transfer>
+
+    <transfer name="ItemCollection">
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
 </transfers>

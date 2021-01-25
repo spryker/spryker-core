@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="SynchronizationData">
+        <property name="reference" type="string"/>
+        <property name="key" type="string"/>
+        <property name="data" type="string"/>
+        <property name="store" type="string"/>
+    </transfer>
+
+    <transfer name="Filter">
+        <property name="orderBy" type="string"/>
+        <property name="offset" type="int"/>
+        <property name="limit" type="int"/>
+    </transfer>
+
+    <transfer name="ProductOfferAvailabilityStorage">
+        <property name="productOfferReference" type="string"/>
+        <property name="availability" type="decimal"/>
+        <property name="isNeverOutOfStock" type="bool"/>
+        <property name="isAvailable" type="bool"/>
+    </transfer>
+
+    <transfer name="ProductView">
+        <property name="productOfferReference" type="string"/>
+        <property name="available" type="bool"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="name" type="string"/>
+        <property name="idStore" type="int"/>
+    </transfer>
+
+    <transfer name="ProductOfferAvailabilityRequest">
+        <property name="productOfferReference" type="string"/>
+        <property name="store" type="Store"/>
+        <property name="sku" type="string"/>
+        <property name="quantity" type="decimal"/>
+    </transfer>
+
+    <transfer name="ProductConcreteAvailability">
+        <property name="availability" type="decimal"/>
+        <property name="isNeverOutOfStock" type="bool"/>
+    </transfer>
+
+    <transfer name="ProductOfferCriteriaFilter">
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="page" type="int"/>
+        <property name="nbResults" type="int"/>
+        <property name="maxPerPage" type="int"/>
+    </transfer>
+
+    <transfer name="ProductOfferCollection">
+        <property name="productOffers" type="ProductOffer[]" singular="productOffer"/>
+    </transfer>
+
+    <transfer name="ProductOffer">
+        <property name="productOfferReference" type="string"/>
+    </transfer>
+
+</transfers>

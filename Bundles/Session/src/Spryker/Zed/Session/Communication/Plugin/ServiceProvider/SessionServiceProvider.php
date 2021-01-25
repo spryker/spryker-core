@@ -11,10 +11,13 @@ use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\HttpFoundation\Cookie;
-use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
+ * @deprecated Use {@link \Spryker\Yves\Session\Plugin\Application\SessionApplicationPlugin} instead.
+ * @deprecated Use {@link \Spryker\Yves\Session\Plugin\EventDispatcher\SessionEventDispatcherPlugin} instead.
+ *
  * @method \Spryker\Zed\Session\Communication\SessionCommunicationFactory getFactory()
  * @method \Spryker\Zed\Session\Business\SessionFacadeInterface getFacade()
  * @method \Spryker\Zed\Session\SessionConfig getConfig()
@@ -71,11 +74,11 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
     }
 
     /**
-     * @param \Symfony\Component\HttpKernel\Event\FilterResponseEvent $event
+     * @param \Symfony\Component\HttpKernel\Event\ResponseEvent $event
      *
      * @return void
      */
-    public function extendCookieLifetime(FilterResponseEvent $event): void
+    public function extendCookieLifetime(ResponseEvent $event): void
     {
         if ($event->isMasterRequest() === false) {
             return;

@@ -27,7 +27,7 @@ class State implements StateInterface
     protected $process;
 
     /**
-     * @var array
+     * @var string[]
      */
     protected $flags = [];
 
@@ -358,7 +358,7 @@ class State implements StateInterface
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getFlags()
     {

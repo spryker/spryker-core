@@ -29,7 +29,7 @@ class CacheWarmerConsoleTest extends Unit
     /**
      * @return void
      */
-    public function testCommandIsExecutable()
+    public function testCommandIsExecutable(): void
     {
         $application = new Application();
         $application->add($this->getCacheWarmerConsoleMock());
@@ -45,7 +45,7 @@ class CacheWarmerConsoleTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Twig\Communication\Console\CacheWarmerConsole
      */
-    protected function getCacheWarmerConsoleMock()
+    protected function getCacheWarmerConsoleMock(): CacheWarmerConsole
     {
         $mockBuilder = $this->getMockBuilder(CacheWarmerConsole::class)
             ->setMethods(['getFacade']);
@@ -57,9 +57,9 @@ class CacheWarmerConsoleTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Kernel\Business\AbstractFacade
+     * @return \Spryker\Zed\Twig\Business\TwigFacadeInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function getFacadeMock()
+    protected function getFacadeMock(): TwigFacadeInterface
     {
         $mockBuilder = $this->getMockBuilder(TwigFacadeInterface::class);
 

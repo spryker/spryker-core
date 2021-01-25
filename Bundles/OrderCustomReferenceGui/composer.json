@@ -1,0 +1,38 @@
+{
+  "name": "spryker/order-custom-reference-gui",
+  "type": "library",
+  "description": "OrderCustomReferenceGui module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.3",
+    "spryker/gui": "^3.0.0",
+    "spryker/kernel": "^3.30.0",
+    "spryker/order-custom-reference": "^1.0.0",
+    "spryker/symfony": "^3.3.5"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*"
+  },
+  "suggest": {
+    "spryker/sales": "Upgrade to following version to have order custom reference support in Sales, minimum required version: 11.6.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/"
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

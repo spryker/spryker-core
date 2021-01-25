@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="DummyMarketplacePayment">
+        <property name="paymentMethod" type="string"/>
+        <property name="dateOfBirth" type="string"/>
+    </transfer>
+
+    <transfer name="Payment">
+        <property name="dummyMarketplacePaymentInvoice" type="DummyMarketplacePayment"/>
+        <property name="paymentProvider" type="string"/>
+        <property name="paymentMethod" type="string"/>
+    </transfer>
+
+    <transfer name="Order">
+        <property name="dummyMarketplacePaymentInvoice" type="DummyMarketplacePayment"/>
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="payment" type="Payment" deprecated="Use payments property instead."/>
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="PaymentMethods">
+        <property name="methods" singular="method" type="PaymentMethod[]"/>
+    </transfer>
+
+    <transfer name="PaymentMethod">
+        <property name="methodName" type="string"/>
+        <property name="paymentProvider" type="PaymentProvider"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="merchantReference" type="string"/>
+    </transfer>
+
+    <transfer name="PaymentProvider">
+        <property name="name" type="string"/>
+        <property name="paymentProviderKey" type="string"/>
+    </transfer>
+
+</transfers>

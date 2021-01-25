@@ -1,6 +1,6 @@
 # ProductRelationCollector Module
-[![Build Status](https://travis-ci.org/spryker/ProductRelationCollector.svg)](https://travis-ci.org/spryker/ProductRelationCollector)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/ProductRelationCollector/badge.svg)](https://coveralls.io/github/spryker/ProductRelationCollector)
+[![Build Status](https://travis-ci.org/spryker/product-relation-collector.svg)](https://travis-ci.org/spryker/product-relation-collector)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 ProductRelationCollector provides product relation data for Yves by exporting it to key-value storage.
 

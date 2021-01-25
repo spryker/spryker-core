@@ -13,6 +13,7 @@ use Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\Touch\Persistence\TouchEntityManagerInterface;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface;
+use Spryker\Zed\Touch\TouchConfig;
 
 class TouchWriter implements TouchWriterInterface
 {
@@ -44,18 +45,26 @@ class TouchWriter implements TouchWriterInterface
     protected $utilDataReaderService;
 
     /**
+     * @var \Spryker\Zed\Touch\TouchConfig
+     */
+    protected $touchConfig;
+
+    /**
      * @param \Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface $touchQueryContainer
      * @param \Spryker\Zed\Touch\Persistence\TouchEntityManagerInterface $touchEntityManager
      * @param \Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface $utilDataReaderService
+     * @param \Spryker\Zed\Touch\TouchConfig $touchConfig
      */
     public function __construct(
         TouchQueryContainerInterface $touchQueryContainer,
         TouchEntityManagerInterface $touchEntityManager,
-        UtilDataReaderServiceInterface $utilDataReaderService
+        UtilDataReaderServiceInterface $utilDataReaderService,
+        TouchConfig $touchConfig
     ) {
         $this->touchQueryContainer = $touchQueryContainer;
         $this->touchEntityManager = $touchEntityManager;
         $this->utilDataReaderService = $utilDataReaderService;
+        $this->touchConfig = $touchConfig;
     }
 
     /**
@@ -63,6 +72,10 @@ class TouchWriter implements TouchWriterInterface
      */
     public function cleanTouchEntitiesForDeletedItemEvent(): int
     {
+        if (!$this->touchConfig->isTouchEnabled()) {
+            return 0;
+        }
+
         return $this->getTransactionHandler()->handleTransaction(function () {
             return $this->executeCleanTouchEntitiesForDeletedItemEventTransaction();
         });

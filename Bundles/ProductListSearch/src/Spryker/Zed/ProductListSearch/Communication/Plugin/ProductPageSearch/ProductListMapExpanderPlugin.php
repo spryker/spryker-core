@@ -15,6 +15,8 @@ use Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageMapExpanderInterf
 use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\ProductListSearch\Communication\Plugin\ProductPageSearch\Elasticsearch\ProductListMapExpanderPlugin} instead.
+ *
  * @method \Spryker\Zed\ProductListSearch\Business\ProductListSearchFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductListSearch\Communication\ProductListSearchCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductListSearch\ProductListSearchConfig getConfig()
@@ -35,8 +37,12 @@ class ProductListMapExpanderPlugin extends AbstractPlugin implements ProductPage
      *
      * @return \Generated\Shared\Transfer\PageMapTransfer
      */
-    public function expandProductPageMap(PageMapTransfer $pageMapTransfer, PageMapBuilderInterface $pageMapBuilder, array $productData, LocaleTransfer $localeTransfer): PageMapTransfer
-    {
+    public function expandProductPageMap(
+        PageMapTransfer $pageMapTransfer,
+        PageMapBuilderInterface $pageMapBuilder,
+        array $productData,
+        LocaleTransfer $localeTransfer
+    ): PageMapTransfer {
         if (!isset($productData[static::KEY_PRODUCT_LIST_MAP])) {
             return $pageMapTransfer;
         }

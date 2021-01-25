@@ -8,8 +8,10 @@
 namespace SprykerTest\Zed\Business\MerchantRelationship;
 
 use Codeception\Test\Unit;
+use Exception;
 use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
+use Generated\Shared\Transfer\MerchantRelationshipFilterTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 
 /**
@@ -31,6 +33,11 @@ class MerchantRelationshipFacadeTest extends Unit
     protected const BU_KEY_UNIT_2 = 'unit-2';
 
     /**
+     * @uses \Spryker\Zed\MerchantRelationship\Business\Mapper\ProductListUsedByTableMapper::ENTITY_TITLE
+     */
+    protected const MR_ENTITY_TITLE = 'Merchant Relationship';
+
+    /**
      * @var \SprykerTest\Zed\MerchantRelationship\MerchantRelationshipBusinessTester
      */
     protected $tester;
@@ -47,8 +54,6 @@ class MerchantRelationshipFacadeTest extends Unit
     }
 
     /**
-     * @expectedException \Exception
-     *
      * @return void
      */
     public function testCreateMerchantRelationshipWithNotUniqueKeyThrowsException(): void
@@ -57,6 +62,8 @@ class MerchantRelationshipFacadeTest extends Unit
         $merchantRelationshipTransfer = $this->tester->createMerchantRelationship(static::MR_KEY_TEST);
         $newMerchantRelationshipTransfer = clone $merchantRelationshipTransfer;
         $newMerchantRelationshipTransfer->setIdMerchantRelationship(null);
+
+        $this->expectException(Exception::class);
 
         // Action
         $this->tester->getFacade()
@@ -181,8 +188,7 @@ class MerchantRelationshipFacadeTest extends Unit
             ->getMerchantRelationshipById($merchantRelationship);
 
         // Assert
-        $this->assertNotNull($actualMerchantRelationship->getIdMerchantRelationship());
-        $this->assertEquals($expectedMerchantRelationship->toArray(), $actualMerchantRelationship->toArray());
+        $this->assertSame($expectedMerchantRelationship->getIdMerchantRelationship(), $actualMerchantRelationship->getIdMerchantRelationship());
     }
 
     /**
@@ -224,5 +230,38 @@ class MerchantRelationshipFacadeTest extends Unit
 
         // Assert
         $this->tester->assertMerchantRelationshipToCompanyBusinessUnitNotExists($idMerchantRelationship);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetMerchantRelationshipCollectionWillReturnAllAvailableRelationships(): void
+    {
+        // Arrange
+        $this->tester->createMerchantRelationship(static::MR_KEY_TEST);
+
+        // Act
+        $merhcantRelationTransfers = $this->tester->getFacade()->getMerchantRelationshipCollection();
+
+        // Assert
+        $this->assertCount($this->tester->getMerchantRelationsCount(), $merhcantRelationTransfers);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetMerchantRelationshipCollectionWillReturnRelationshipsFilteredByIds(): void
+    {
+        // Arrange
+        $merchantRelationshipTransfer = $this->tester->createMerchantRelationship(static::MR_KEY_TEST);
+        $merchantRelationshipFilterTransfer = (new MerchantRelationshipFilterTransfer())->setMerchantRelationshipIds(
+            [$merchantRelationshipTransfer->getIdMerchantRelationship()]
+        );
+
+        // Act
+        $merhcantRelationTransfers = $this->tester->getFacade()->getMerchantRelationshipCollection($merchantRelationshipFilterTransfer);
+
+        // Assert
+        $this->assertCount(1, $merhcantRelationTransfers);
     }
 }

@@ -38,6 +38,7 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
     {
         $query = $this->getFactory()
             ->createCompanyUserQuery()
+            ->joinWithCompany()
             ->filterByFkCustomer($idCustomer);
 
         $entityTransfer = $this->buildQueryFromCriteria($query)->findOne();
@@ -64,7 +65,7 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
             ->createCompanyUserQuery()
             ->filterByIsActive(true)
             ->filterByFkCustomer($idCustomer)
-            ->joinCompany()
+            ->joinWithCompany()
             ->useCompanyQuery()
                 ->filterByIsActive(true)
             ->endUse();
@@ -219,6 +220,7 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
         $query = $this->getFactory()
             ->createCompanyUserQuery()
             ->joinWithCustomer()
+            ->joinWithCompany()
             ->useCompanyQuery()
                 ->filterByStatus(SpyCompanyTableMap::COL_STATUS_APPROVED)
                 ->filterByIsActive(true)
@@ -281,6 +283,7 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
         $query = $this->getFactory()
             ->createCompanyUserQuery()
             ->joinWithCustomer()
+            ->joinWithCompany()
             ->filterByFkCompany($idCompany)
             ->orderBy(SpyCompanyUserTableMap::COL_ID_COMPANY_USER, Criteria::ASC);
         $entityTransfer = $this->buildQueryFromCriteria($query)->findOne();
@@ -365,7 +368,7 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
      * @module Customer
      * @module Company
      *
-     * @param array $companyUserIds
+     * @param int[] $companyUserIds
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer[]
      */

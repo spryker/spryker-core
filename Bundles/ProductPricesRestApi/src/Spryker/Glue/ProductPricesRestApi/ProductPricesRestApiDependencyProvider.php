@@ -28,6 +28,8 @@ class ProductPricesRestApiDependencyProvider extends AbstractBundleDependencyPro
     public const CLIENT_CURRENCY = 'CLIENT_CURRENCY';
     public const CLIENT_STORE = 'CLIENT_STORE';
 
+    public const PLUGINS_REST_PRODUCT_PRICES_ATTRIBUTES_MAPPER = 'PLUGINS_REST_PRODUCT_PRICES_ATTRIBUTES_MAPPER';
+
     /**
      * @param \Spryker\Glue\Kernel\Container $container
      *
@@ -42,6 +44,7 @@ class ProductPricesRestApiDependencyProvider extends AbstractBundleDependencyPro
         $container = $this->addPriceClient($container);
         $container = $this->addCurrencyClient($container);
         $container = $this->addStoreClient($container);
+        $container = $this->addRestProductPricesAttributesMapperPlugins($container);
 
         return $container;
     }
@@ -53,11 +56,11 @@ class ProductPricesRestApiDependencyProvider extends AbstractBundleDependencyPro
      */
     protected function addPriceProductStorageClient(Container $container): Container
     {
-        $container[static::CLIENT_PRICE_PRODUCT_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_PRICE_PRODUCT_STORAGE, function (Container $container) {
             return new ProductPricesRestApiToPriceProductStorageClientBridge(
                 $container->getLocator()->priceProductStorage()->client()
             );
-        };
+        });
 
         return $container;
     }
@@ -69,11 +72,11 @@ class ProductPricesRestApiDependencyProvider extends AbstractBundleDependencyPro
      */
     protected function addProductStorageClient(Container $container): Container
     {
-        $container[static::CLIENT_PRODUCT_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_PRODUCT_STORAGE, function (Container $container) {
             return new ProductPricesRestApiToProductStorageClientBridge(
                 $container->getLocator()->productStorage()->client()
             );
-        };
+        });
 
         return $container;
     }
@@ -85,11 +88,11 @@ class ProductPricesRestApiDependencyProvider extends AbstractBundleDependencyPro
      */
     protected function addPriceProductClient(Container $container): Container
     {
-        $container[static::CLIENT_PRICE_PRODUCT] = function (Container $container) {
+        $container->set(static::CLIENT_PRICE_PRODUCT, function (Container $container) {
             return new ProductPricesRestApiToPriceProductClientBridge(
                 $container->getLocator()->priceProduct()->client()
             );
-        };
+        });
 
         return $container;
     }
@@ -101,11 +104,11 @@ class ProductPricesRestApiDependencyProvider extends AbstractBundleDependencyPro
      */
     protected function addPriceClient(Container $container): Container
     {
-        $container[static::CLIENT_PRICE] = function (Container $container) {
+        $container->set(static::CLIENT_PRICE, function (Container $container) {
             return new ProductPricesRestApiToPriceClientBridge(
                 $container->getLocator()->price()->client()
             );
-        };
+        });
 
         return $container;
     }
@@ -117,11 +120,11 @@ class ProductPricesRestApiDependencyProvider extends AbstractBundleDependencyPro
      */
     protected function addCurrencyClient(Container $container): Container
     {
-        $container[static::CLIENT_CURRENCY] = function (Container $container) {
+        $container->set(static::CLIENT_CURRENCY, function (Container $container) {
             return new ProductPricesRestApiToCurrencyClientBridge(
                 $container->getLocator()->currency()->client()
             );
-        };
+        });
 
         return $container;
     }
@@ -133,10 +136,32 @@ class ProductPricesRestApiDependencyProvider extends AbstractBundleDependencyPro
      */
     protected function addStoreClient(Container $container): Container
     {
-        $container[static::CLIENT_STORE] = function (Container $container) {
+        $container->set(static::CLIENT_STORE, function (Container $container) {
             return new ProductPricesRestApiToStoreClientBridge($container->getLocator()->store()->client());
-        };
+        });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addRestProductPricesAttributesMapperPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_REST_PRODUCT_PRICES_ATTRIBUTES_MAPPER, function () {
+            return $this->getRestProductPricesAttributesMapperPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductPricesRestApiExtension\Dependency\Plugin\RestProductPricesAttributesMapperPluginInterface[]
+     */
+    protected function getRestProductPricesAttributesMapperPlugins(): array
+    {
+        return [];
     }
 }

@@ -1,6 +1,6 @@
 # Merchant Module
 [![Build Status](https://travis-ci.org/spryker/merchant.svg)](https://travis-ci.org/spryker/merchant)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/merchant/badge.svg)](https://coveralls.io/github/spryker/merchant)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 This module has DB structure and facade methods to save/update/remove Merchants.
 

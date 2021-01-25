@@ -79,7 +79,7 @@ class ProductViewVariantRestrictionExpander implements ProductViewVariantRestric
     {
         $attributeVariantsIterator = $this->createRecursiveIterator($attributeVariants);
 
-        $unRestrictedAttributeVariants = [];
+        $unrestrictedAttributeVariants = [];
         foreach ($attributeVariantsIterator as $attributeVariantKey => $attributeVariantValue) {
             if (!$attributeVariantsIterator->callHasChildren()) {
                 continue;
@@ -94,10 +94,10 @@ class ProductViewVariantRestrictionExpander implements ProductViewVariantRestric
             }
 
             $attributeVariantPath = $this->buildAttributeVariantPath($attributeVariantsIterator, $attributeVariantKey, $attributeVariantValue);
-            $unRestrictedAttributeVariants = array_merge_recursive($unRestrictedAttributeVariants, $attributeVariantPath);
+            $unrestrictedAttributeVariants = array_merge_recursive($unrestrictedAttributeVariants, $attributeVariantPath);
         }
 
-        return $unRestrictedAttributeVariants;
+        return $unrestrictedAttributeVariants;
     }
 
     /**
@@ -151,19 +151,20 @@ class ProductViewVariantRestrictionExpander implements ProductViewVariantRestric
 
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     * @param array $unRestrictedAttributeVariants
+     * @param array $unrestrictedAttributeVariants
      *
      * @return array
      */
-    protected function getAvailableAttributes(ProductViewTransfer $productViewTransfer, array $unRestrictedAttributeVariants): array
+    protected function getAvailableAttributes(ProductViewTransfer $productViewTransfer, array $unrestrictedAttributeVariants): array
     {
-        $availableAttributes = $this->getAvailableAttributesForSelectedOptions($unRestrictedAttributeVariants, $productViewTransfer->getSelectedAttributes());
+        $availableAttributes = $this->getAvailableAttributesForSelectedOptions($unrestrictedAttributeVariants, $productViewTransfer->getSelectedAttributes());
 
         foreach ($productViewTransfer->getAvailableAttributes() as $attributeKey => $attributeValues) {
-            $availableValues = $this->getAvailableAttributeValues($attributeKey, $attributeValues, $unRestrictedAttributeVariants);
+            $availableValues = $this->getAvailableAttributeValues($attributeKey, $attributeValues, $unrestrictedAttributeVariants);
 
             if (isset($availableAttributes[$attributeKey])) {
                 $availableAttributes[$attributeKey] = array_intersect($availableAttributes[$attributeKey], $availableValues);
+
                 continue;
             }
 
@@ -174,20 +175,20 @@ class ProductViewVariantRestrictionExpander implements ProductViewVariantRestric
     }
 
     /**
-     * @param array $unRestrictedAttributeVariants
+     * @param array $unrestrictedAttributeVariants
      * @param array $selectedAttributes
      *
      * @return array
      */
-    protected function getAvailableAttributesForSelectedOptions(array $unRestrictedAttributeVariants, array $selectedAttributes = []): array
+    protected function getAvailableAttributesForSelectedOptions(array $unrestrictedAttributeVariants, array $selectedAttributes = []): array
     {
         $availableAttributes = $availableAttributesForSelectedOptions = [];
 
         foreach ($selectedAttributes as $key => $selectedAttribute) {
             $selectedAttributeKey = $this->getAttributeKeyValue($key, $selectedAttributes[$key]);
 
-            if (isset($unRestrictedAttributeVariants[$selectedAttributeKey])) {
-                $availableAttributes = array_merge($availableAttributes, array_keys($unRestrictedAttributeVariants[$selectedAttributeKey]));
+            if (isset($unrestrictedAttributeVariants[$selectedAttributeKey])) {
+                $availableAttributes = array_merge($availableAttributes, array_keys($unrestrictedAttributeVariants[$selectedAttributeKey]));
             }
         }
 
@@ -202,21 +203,21 @@ class ProductViewVariantRestrictionExpander implements ProductViewVariantRestric
     /**
      * @param string $attributeKey
      * @param array $attributeValues
-     * @param array $unRestrictedAttributeVariants
+     * @param array $unrestrictedAttributeVariants
      *
      * @return array
      */
     protected function getAvailableAttributeValues(
         string $attributeKey,
         array $attributeValues,
-        array $unRestrictedAttributeVariants
+        array $unrestrictedAttributeVariants
     ): array {
         $availableAttributeValues = [];
 
         foreach ($attributeValues as $attributeValue) {
             $attributeKeyValue = $this->getAttributeKeyValue($attributeKey, $attributeValue);
 
-            if ($this->isAttributeKeyValueAvailable($attributeKeyValue, $unRestrictedAttributeVariants)) {
+            if ($this->isAttributeKeyValueAvailable($attributeKeyValue, $unrestrictedAttributeVariants)) {
                 $availableAttributeValues[] = $attributeValue;
             }
         }
@@ -226,13 +227,13 @@ class ProductViewVariantRestrictionExpander implements ProductViewVariantRestric
 
     /**
      * @param string $attributeKeyValue
-     * @param array $unRestrictedAttributeVariants
+     * @param array $unrestrictedAttributeVariants
      *
      * @return bool
      */
-    protected function isAttributeKeyValueAvailable(string $attributeKeyValue, array $unRestrictedAttributeVariants): bool
+    protected function isAttributeKeyValueAvailable(string $attributeKeyValue, array $unrestrictedAttributeVariants): bool
     {
-        return array_key_exists($attributeKeyValue, $unRestrictedAttributeVariants);
+        return array_key_exists($attributeKeyValue, $unrestrictedAttributeVariants);
     }
 
     /**
@@ -247,7 +248,9 @@ class ProductViewVariantRestrictionExpander implements ProductViewVariantRestric
         string $attributeVariantKey,
         array $attributeVariantValue
     ): array {
-        $attributeVariantPath[$attributeVariantKey] = $attributeVariantValue;
+        $attributeVariantPath = [
+            $attributeVariantKey => $attributeVariantValue,
+        ];
         for ($i = $iterator->getDepth() - 1; $i >= 0; $i--) {
             $attributeVariantPath = [
                 $iterator->getSubIterator($i)->key() => $attributeVariantPath,

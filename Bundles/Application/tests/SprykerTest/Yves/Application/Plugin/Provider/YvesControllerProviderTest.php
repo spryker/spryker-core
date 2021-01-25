@@ -31,7 +31,7 @@ class YvesControllerProviderTest extends Unit
     /**
      * @return void
      */
-    public function testWithoutSslConfigurationRequireHttpIsNotCalled()
+    public function testWithoutSslConfigurationRequireHttpIsNotCalled(): void
     {
         $app = new Application();
         $controllerMock = $this->getControllerMock(self::METHOD_REQUIRE_HTTP, $this->never());
@@ -42,7 +42,7 @@ class YvesControllerProviderTest extends Unit
     /**
      * @return void
      */
-    public function testWithoutSslConfigurationRequireHttpsIsNotCalled()
+    public function testWithoutSslConfigurationRequireHttpsIsNotCalled(): void
     {
         $app = new Application();
         $controllerMock = $this->getControllerMock(self::METHOD_REQUIRE_HTTPS, $this->never());
@@ -53,7 +53,7 @@ class YvesControllerProviderTest extends Unit
     /**
      * @return void
      */
-    public function testWhenSslEnabledFalseRequireHttpIsCalled()
+    public function testWhenSslEnabledFalseRequireHttpIsCalled(): void
     {
         $app = new Application();
         $controllerMock = $this->getControllerMock(self::METHOD_REQUIRE_HTTP, $this->once());
@@ -64,7 +64,7 @@ class YvesControllerProviderTest extends Unit
     /**
      * @return void
      */
-    public function testWhenSslEnabledTrueRequireHttpsIsCalled()
+    public function testWhenSslEnabledTrueRequireHttpsIsCalled(): void
     {
         $app = new Application();
         $controllerMock = $this->getControllerMock(self::METHOD_REQUIRE_HTTPS, $this->once());
@@ -75,7 +75,7 @@ class YvesControllerProviderTest extends Unit
     /**
      * @return void
      */
-    public function testWhenSslEnabledTrueRequireHttpsWithExcludedUrlIsNotCalled()
+    public function testWhenSslEnabledTrueRequireHttpsWithExcludedUrlIsNotCalled(): void
     {
         $app = new Application();
         $controllerMock = $this->getControllerMock(self::METHOD_REQUIRE_HTTPS, $this->never());
@@ -84,13 +84,13 @@ class YvesControllerProviderTest extends Unit
     }
 
     /**
-     * @param bool $ssl
+     * @param bool|null $ssl
      * @param \Silex\Controller $controller
      * @param array $urls
      *
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Unit\Spryker\Yves\Application\Plugin\Provider\Fixtures\ControllerProviderMock
+     * @return \PHPUnit\Framework\MockObject\MockObject|\SprykerTest\Yves\Application\Plugin\Provider\Fixtures\ControllerProviderMock
      */
-    protected function createControllerProviderMock($ssl, $controller, array $urls = [])
+    protected function createControllerProviderMock($ssl, $controller, array $urls = []): ControllerProviderMock
     {
         $controllerProviderMock = $this->getMockBuilder(ControllerProviderMock::class)->setMethods(['getService', 'getController', 'getExcludedUrls'])->setConstructorArgs([$ssl])->getMock();
         $controllerProviderMock->method('getService')->willReturn('');
@@ -106,7 +106,7 @@ class YvesControllerProviderTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Silex\Controller
      */
-    private function getControllerMock($methodName, $callTimes)
+    private function getControllerMock(string $methodName, $callTimes): Controller
     {
         $controllerMock = $this->getMockBuilder(Controller::class)->disableOriginalConstructor()->getMock();
         $controllerMock

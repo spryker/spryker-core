@@ -4,9 +4,14 @@
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
+
 namespace Spryker\Zed\CustomersRestApi\Business;
 
+use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\CheckoutDataTransfer;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\RestAddressTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 
 interface CustomersRestApiFacadeInterface
@@ -56,4 +61,39 @@ interface CustomersRestApiFacadeInterface
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
         QuoteTransfer $quoteTransfer
     ): QuoteTransfer;
+
+    /**
+     * Specification:
+     * - Finds customer address based on the UUID provided in `RestAddressTransfer.id`.
+     * - Returns customer address if it was found.
+     * - If customer address was found then address information provided in `RestAddressTransfer` will be skipped.
+     * - Returns `AddressTransfer` filled with attributes from `RestAddressTransfer` otherwise.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\RestAddressTransfer $restAddressTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    public function getCustomerAddress(
+        RestAddressTransfer $restAddressTransfer,
+        QuoteTransfer $quoteTransfer
+    ): AddressTransfer;
+
+    /**
+     * Specification:
+     * - Expects `checkoutDataTransfer.quote.customer.idCustomer` to be set.
+     * - Collects shipping address uuids from `checkoutDataTransfer.shipments`.
+     * - Returns CheckoutResponseTransfer with error when customer address uuid was provided for non-logged customer.
+     * - Checks if customer addresses exists.
+     * - Returns CheckoutResponseTransfer with error if any check was failed.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CheckoutDataTransfer $checkoutDataTransfer
+     *
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
+     */
+    public function validateCustomerAddressesInCheckoutData(CheckoutDataTransfer $checkoutDataTransfer): CheckoutResponseTransfer;
 }

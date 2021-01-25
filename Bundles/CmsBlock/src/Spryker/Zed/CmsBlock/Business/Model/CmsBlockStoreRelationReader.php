@@ -39,7 +39,7 @@ class CmsBlockStoreRelationReader implements CmsBlockStoreRelationReaderInterfac
      *
      * @return \Generated\Shared\Transfer\StoreRelationTransfer
      */
-    public function getStoreRelation(StoreRelationTransfer $storeRelationTransfer)
+    public function getStoreRelation(StoreRelationTransfer $storeRelationTransfer): StoreRelationTransfer
     {
         $storeRelationTransfer->requireIdEntity();
 

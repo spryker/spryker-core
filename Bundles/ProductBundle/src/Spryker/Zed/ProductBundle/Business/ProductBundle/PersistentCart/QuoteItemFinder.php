@@ -81,8 +81,10 @@ class QuoteItemFinder implements QuoteItemFinderInterface
     protected function findQuoteItem(QuoteTransfer $quoteTransfer, string $sku, ?string $groupKey = null): ?ItemTransfer
     {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if (($itemTransfer->getSku() === $sku && $groupKey === null) ||
-                $itemTransfer->getGroupKey() === $groupKey) {
+            if (
+                ($itemTransfer->getSku() === $sku && $groupKey === null) ||
+                $itemTransfer->getGroupKey() === $groupKey
+            ) {
                 return $itemTransfer;
             }
         }

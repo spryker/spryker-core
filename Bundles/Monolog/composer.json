@@ -4,11 +4,12 @@
   "description": "Monolog module",
   "license": "proprietary",
   "require": {
-    "monolog/monolog": "^1.21.0",
-    "php": ">=7.1"
+    "monolog/monolog": "^1.25.0 || ^2.0.0",
+    "php": ">=7.3"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {},
   "extra": {
     "branch-alias": {
       "dev-master": "2.0.x-dev"

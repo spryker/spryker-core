@@ -4,31 +4,45 @@
   "description": "Acl module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.3",
+    "spryker/acl-extension": "^1.0.0",
     "spryker/config": "^3.0.0",
-    "spryker/gui": "^3.0.0",
-    "spryker/kernel": "^3.30.0",
+    "spryker/event-dispatcher-extension": "^1.0.0",
+    "spryker/gui": "^3.33.0",
+    "spryker/kernel": "^3.52.0",
     "spryker/propel-orm": "^1.0.0",
-    "spryker/symfony": "^3.0.0",
+    "spryker/symfony": "^3.5.0",
+    "spryker/transfer": "^3.8.0",
     "spryker/user": "^3.0.0",
     "spryker/util-date-time": "^1.0.0",
-    "spryker/util-text": "^1.1.0"
+    "spryker/util-text": "^1.1.0",
+    "spryker/zed-navigation-extension": "^1.1.0"
   },
   "require-dev": {
     "spryker/application": "*",
+    "spryker/code-sniffer": "*",
+    "spryker/container": "*",
+    "spryker/event-dispatcher": "*",
+    "spryker/form": "*",
     "spryker/installer": "*",
     "spryker/propel": "*",
+    "spryker/router": "*",
     "spryker/silex": "*",
     "spryker/testify": "*",
+    "spryker/twig": "*",
+    "spryker/validator": "*",
     "spryker/zed-navigation": "*"
   },
   "suggest": {
+    "spryker/container": "Add this module when you want to use the Container.",
+    "spryker/event-dispatcher": "Add this module when you want to use the EVentDispatcher.",
     "spryker/installer": "If you want to use Installer plugins.",
     "spryker/silex": "If you want to use ServiceProvider."
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/"
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Zed\\Acl\\Helper\\": "tests/SprykerTest/Zed/Acl/_support/Helper/"
     }
   },
   "autoload-dev": {
@@ -38,6 +52,10 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "3.0.x-dev"

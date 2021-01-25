@@ -11,10 +11,14 @@ use Spryker\Glue\CompanyUsersRestApi\Dependency\Client\CompanyUsersRestApiToComp
 use Spryker\Glue\CompanyUsersRestApi\Dependency\Client\CompanyUsersRestApiToCompanyUserStorageClientInterface;
 use Spryker\Glue\CompanyUsersRestApi\Processor\CompanyUser\CompanyUserReader;
 use Spryker\Glue\CompanyUsersRestApi\Processor\CompanyUser\CompanyUserReaderInterface;
+use Spryker\Glue\CompanyUsersRestApi\Processor\CompanyUser\CompanyUserValidator;
+use Spryker\Glue\CompanyUsersRestApi\Processor\CompanyUser\CompanyUserValidatorInterface;
 use Spryker\Glue\CompanyUsersRestApi\Processor\CompanyUser\Relationship\CompanyUserByShareDetailResourceRelationshipExpander;
 use Spryker\Glue\CompanyUsersRestApi\Processor\CompanyUser\Relationship\CompanyUserResourceRelationshipExpanderInterface;
 use Spryker\Glue\CompanyUsersRestApi\Processor\Customer\CustomerExpander;
 use Spryker\Glue\CompanyUsersRestApi\Processor\Customer\CustomerExpanderInterface;
+use Spryker\Glue\CompanyUsersRestApi\Processor\Expander\CheckoutRequestExpander;
+use Spryker\Glue\CompanyUsersRestApi\Processor\Expander\CheckoutRequestExpanderInterface;
 use Spryker\Glue\CompanyUsersRestApi\Processor\Mapper\CompanyUserMapper;
 use Spryker\Glue\CompanyUsersRestApi\Processor\Mapper\CompanyUserMapperInterface;
 use Spryker\Glue\CompanyUsersRestApi\Processor\RestResponseBuilder\CompanyUserRestResponseBuilder;
@@ -22,6 +26,7 @@ use Spryker\Glue\CompanyUsersRestApi\Processor\RestResponseBuilder\CompanyUserRe
 use Spryker\Glue\Kernel\AbstractFactory;
 
 /**
+ * @method \Spryker\Glue\CompanyUsersRestApi\CompanyUsersRestApiConfig getConfig()
  * @method \Spryker\Client\CompanyUsersRestApi\CompanyUsersRestApiClientInterface getClient()
  */
 class CompanyUsersRestApiFactory extends AbstractFactory
@@ -75,6 +80,24 @@ class CompanyUsersRestApiFactory extends AbstractFactory
             $this->createCompanyUserRestResponseBuilder(),
             $this->createCompanyUserMapper()
         );
+    }
+
+    /**
+     * @return \Spryker\Glue\CompanyUsersRestApi\Processor\CompanyUser\CompanyUserValidatorInterface
+     */
+    public function createCompanyUserValidator(): CompanyUserValidatorInterface
+    {
+        return new CompanyUserValidator(
+            $this->getConfig()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\CompanyUsersRestApi\Processor\Expander\CheckoutRequestExpanderInterface
+     */
+    public function createCheckoutRequestExpander(): CheckoutRequestExpanderInterface
+    {
+        return new CheckoutRequestExpander();
     }
 
     /**

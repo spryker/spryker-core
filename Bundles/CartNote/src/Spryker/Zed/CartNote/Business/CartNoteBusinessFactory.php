@@ -12,6 +12,7 @@ use Spryker\Zed\CartNote\Business\Model\CartNoteSaverInterface;
 use Spryker\Zed\CartNote\Business\Model\QuoteCartNoteSetter;
 use Spryker\Zed\CartNote\Business\Model\QuoteCartNoteSetterInterface;
 use Spryker\Zed\CartNote\CartNoteDependencyProvider;
+use Spryker\Zed\CartNote\Dependency\Facade\CartNoteToQuoteFacadeInterface;
 use Spryker\Zed\CartNoteExtension\Dependency\Plugin\QuoteItemFinderPluginInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
@@ -39,7 +40,7 @@ class CartNoteBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\CartNote\Dependency\Facade\CartNoteToQuoteFacadeInterface
      */
-    public function getQuoteFacade()
+    public function getQuoteFacade(): CartNoteToQuoteFacadeInterface
     {
         return $this->getProvidedDependency(CartNoteDependencyProvider::FACADE_QUOTE);
     }

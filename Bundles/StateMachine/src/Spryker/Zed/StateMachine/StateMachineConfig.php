@@ -14,6 +14,8 @@ class StateMachineConfig extends AbstractBundleConfig
     public const GRAPH_NAME = 'Statemachine';
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getGraphDefaults()
@@ -27,6 +29,8 @@ class StateMachineConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getStateMachineItemLockExpirationInterval()
@@ -35,6 +39,8 @@ class StateMachineConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getPathToStateMachineXmlFiles()
@@ -43,6 +49,8 @@ class StateMachineConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getGraphDefaultFormat()
@@ -51,6 +59,8 @@ class StateMachineConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getGraphDefaultFontSize()
@@ -59,6 +69,8 @@ class StateMachineConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getGraphFormatContentTypes()
@@ -70,6 +82,8 @@ class StateMachineConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getSubProcessPrefixDelimiter()

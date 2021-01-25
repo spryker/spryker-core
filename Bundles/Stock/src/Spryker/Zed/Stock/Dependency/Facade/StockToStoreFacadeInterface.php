@@ -10,6 +10,11 @@ namespace Spryker\Zed\Stock\Dependency\Facade;
 interface StockToStoreFacadeInterface
 {
     /**
+     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     */
+    public function getAllStores();
+
+    /**
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
     public function getCurrentStore();

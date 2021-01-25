@@ -25,7 +25,7 @@ class TwigFactoryTest extends Unit
     /**
      * @return void
      */
-    public function testCreateFilesystemLoaderReturnsLoaderInterface()
+    public function testCreateFilesystemLoaderReturnsLoaderInterface(): void
     {
         $twigFactory = new TwigFactory();
         $filesystemLoader = $twigFactory->createFilesystemLoader();

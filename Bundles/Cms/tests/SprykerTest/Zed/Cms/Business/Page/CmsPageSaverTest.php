@@ -39,7 +39,7 @@ class CmsPageSaverTest extends CmsMocks
     /**
      * @return void
      */
-    public function testCreatePageShouldPersistGivenTransfer()
+    public function testCreatePageShouldPersistGivenTransfer(): void
     {
         $cmsPageSaverMock = $this->createCmsPageSaverMock();
 
@@ -65,13 +65,13 @@ class CmsPageSaverTest extends CmsMocks
 
         $idCmsPage = $cmsPageSaverMock->createPage($cmsPageTransfer);
 
-        $this->assertEquals($cmsPageEntityMock->getIdCmsPage(), $idCmsPage);
+        $this->assertSame($cmsPageEntityMock->getIdCmsPage(), $idCmsPage);
     }
 
     /**
      * @return void
      */
-    public function testUpdatePageShouldUpdateExistingEntityWithNewData()
+    public function testUpdatePageShouldUpdateExistingEntityWithNewData(): void
     {
         $touchFacadeMock = $this->createTouchFacadeMock();
         $touchFacadeMock->expects($this->once())
@@ -119,7 +119,7 @@ class CmsPageSaverTest extends CmsMocks
 
         $cmsPageAttributesEntity = $cmsPageEntityMock->getSpyCmsPageLocalizedAttributess()[0];
         $this->assertEquals($cmsPageAttributesEntity->getName(), $cmsPageAttributesTransfer->getName());
-        $this->assertEquals($urlEntity->getUrl(), $cmsPageAttributesTransfer->getUrlPrefix());
+        $this->assertSame($urlEntity->getUrl(), $cmsPageAttributesTransfer->getUrlPrefix());
         $this->assertEquals($cmsPageTransfer->getStoreRelation()->getIdStores(), $idStores);
     }
 
@@ -142,7 +142,7 @@ class CmsPageSaverTest extends CmsMocks
         ?CmsGlossarySaverInterface $cmsGlossarySaverMock = null,
         ?TemplateManagerInterface $templateManagerMock = null,
         ?CmsPageStoreRelationWriterInterface $cmsPageStoreRelationWriterMock = null
-    ) {
+    ): CmsPageSaver {
         if ($urlFacadeMock === null) {
             $urlFacadeMock = $this->createUrlFacadeMock();
         }

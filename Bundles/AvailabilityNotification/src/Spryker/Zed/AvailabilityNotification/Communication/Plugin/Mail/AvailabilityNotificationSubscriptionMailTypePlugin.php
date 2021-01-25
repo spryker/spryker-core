@@ -21,6 +21,8 @@ class AvailabilityNotificationSubscriptionMailTypePlugin extends AbstractPlugin 
     public const AVAILABILITY_NOTIFICATION_SUBSCRIPTION_MAIL = 'AVAILABILITY_NOTIFICATION_SUBSCRIPTION_MAIL';
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string
@@ -31,6 +33,8 @@ class AvailabilityNotificationSubscriptionMailTypePlugin extends AbstractPlugin 
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilderInterface $mailBuilder
@@ -106,7 +110,7 @@ class AvailabilityNotificationSubscriptionMailTypePlugin extends AbstractPlugin 
      */
     protected function setSender(MailBuilderInterface $mailBuilder)
     {
-        $mailBuilder->setSender('mail.sender.email', 'mail.sender.name');
+        $mailBuilder->useDefaultSender();
 
         return $this;
     }

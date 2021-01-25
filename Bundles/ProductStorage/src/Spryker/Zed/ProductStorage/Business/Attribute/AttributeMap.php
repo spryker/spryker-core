@@ -33,7 +33,7 @@ class AttributeMap implements AttributeMapInterface
     /**
      * @var array|null
      */
-    protected static $superAttributesCache = null;
+    protected static $superAttributesCache;
 
     /**
      * @param \Spryker\Zed\ProductStorage\Dependency\Facade\ProductStorageToProductInterface $productFacade
@@ -59,7 +59,7 @@ class AttributeMap implements AttributeMapInterface
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      * @param array $localeIds
      *
      * @throws \Spryker\Zed\ProductStorage\Exception\InvalidArgumentException

@@ -128,6 +128,7 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
             ->filterByFkProduct_In($productIds)
             ->innerJoinSpyProductList()
             ->groupByFkProductList()
+            ->groupByFkProduct()
             ->find()
             ->toArray();
     }
@@ -177,7 +178,7 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
             ->useSpyProductListQuery(null, Criteria::LEFT_JOIN)
                 ->filterByType($listType)
             ->endUse()
-            ->groupByFkProductList(SpyProductListProductConcreteTableMap::COL_FK_PRODUCT_LIST)
+            ->groupByFkProductList()
             ->find()
             ->toArray();
     }
@@ -354,11 +355,15 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
         $query = $this->getFactory()
             ->createProductListQuery()
             ->filterByIdProductList($idProductList);
-        $spyProductListEntityTransfer = $this->buildQueryFromCriteria($query)->findOne();
+        $productListEntityTransfer = $this->buildQueryFromCriteria($query)->findOne();
+
+        if (!$productListEntityTransfer) {
+            return $productListTransfer;
+        }
 
         return $this->getFactory()
             ->createProductListMapper()
-            ->mapEntityTransferToProductListTransfer($spyProductListEntityTransfer, $productListTransfer);
+            ->mapEntityTransferToProductListTransfer($productListEntityTransfer, $productListTransfer);
     }
 
     /**

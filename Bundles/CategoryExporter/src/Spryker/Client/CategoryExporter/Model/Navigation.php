@@ -15,12 +15,12 @@ class Navigation
     /**
      * @var \Spryker\Client\Storage\StorageClientInterface
      */
-    private $keyValueReader;
+    protected $keyValueReader;
 
     /**
      * @var \Spryker\Shared\KeyBuilder\KeyBuilderInterface
      */
-    private $urlBuilder;
+    protected $urlBuilder;
 
     /**
      * @param \Spryker\Client\Storage\StorageClientInterface $keyValueReader

@@ -13,8 +13,8 @@ use Generated\Shared\DataBuilder\ProductImageSetBuilder;
 use Generated\Shared\DataBuilder\ProductSetBuilder;
 use Generated\Shared\DataBuilder\ProductSetDataBuilder;
 use Generated\Shared\Transfer\ProductSetTransfer;
-use Propel\Runtime\Propel;
 use Spryker\Shared\ProductSet\ProductSetConfig;
+use SprykerTest\Shared\Propel\Helper\InstancePoolingHelperTrait;
 
 /**
  * Auto-generated group annotations
@@ -31,20 +31,22 @@ use Spryker\Shared\ProductSet\ProductSetConfig;
  */
 class UpdateProductSetTest extends Unit
 {
+    use InstancePoolingHelperTrait;
+
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
-        Propel::disableInstancePooling();
+        $this->disableInstancePooling();
     }
 
     /**
      * @return void
      */
-    public function testUpdateProductSetAbstractProductsPersistChangesToDatabase()
+    public function testUpdateProductSetAbstractProductsPersistChangesToDatabase(): void
     {
         // Arrange
         $productAbstractTransfer1 = $this->tester->haveProductAbstract();
@@ -81,7 +83,7 @@ class UpdateProductSetTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateProductSetDataPersistChangesToDatabase()
+    public function testUpdateProductSetDataPersistChangesToDatabase(): void
     {
         // Arrange
         $productSetTransfer = $this->tester->generateProductSetTransfer();
@@ -107,7 +109,7 @@ class UpdateProductSetTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateProductSetUrlPersistChangesToDatabase()
+    public function testUpdateProductSetUrlPersistChangesToDatabase(): void
     {
         // Arrange
         $productSetTransfer = $this->tester->generateProductSetTransfer();
@@ -132,7 +134,7 @@ class UpdateProductSetTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateProductSetImagesPersistChangesToDatabase()
+    public function testUpdateProductSetImagesPersistChangesToDatabase(): void
     {
         // Arrange
         $productSetTransfer = $this->tester->generateProductSetTransfer();
@@ -163,7 +165,7 @@ class UpdateProductSetTest extends Unit
     /**
      * @return void
      */
-    public function testAddProductsToSetPersistsChangesToDatabase()
+    public function testAddProductsToSetPersistsChangesToDatabase(): void
     {
         // Arrange
         $productAbstractTransfer1 = $this->tester->haveProductAbstract();
@@ -202,7 +204,7 @@ class UpdateProductSetTest extends Unit
     /**
      * @return void
      */
-    public function testRemoveProductsFromSetPersistsChangesToDatabase()
+    public function testRemoveProductsFromSetPersistsChangesToDatabase(): void
     {
         // Arrange
         $productAbstractTransfer1 = $this->tester->haveProductAbstract();
@@ -243,7 +245,7 @@ class UpdateProductSetTest extends Unit
     /**
      * @return void
      */
-    public function testPartiallyUpdateProductSetPersistsOnlyRequestedChangesToDatabase()
+    public function testPartiallyUpdateProductSetPersistsOnlyRequestedChangesToDatabase(): void
     {
         // Arrange
         $productAbstractTransfer1 = $this->tester->haveProductAbstract();

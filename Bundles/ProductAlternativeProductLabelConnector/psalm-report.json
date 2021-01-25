@@ -1,0 +1,78 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 78,
+            "line_to": 78,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ProductAlternativeProductLabelConnector\\Dependency\\Facade\\ProductAlternativeProductLabelConnectorToProductLabelFacadeInterface::findProductAbstractRelationsByIdProductLabel cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductAlternativeProductLabelConnector/src/Spryker/Zed/ProductAlternativeProductLabelConnector/Business/ProductAlternativeProductLabelReader/ProductAbstractRelationReader.php",
+            "snippet": "        $labeledProductAbstractIds = $this->productLabelFacade->findProductAbstractRelationsByIdProductLabel($idProductLabel);",
+            "selected_text": "$idProductLabel",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 71,
+            "line_to": 71,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ProductAlternativeProductLabelConnector\\Dependency\\Facade\\ProductAlternativeProductLabelConnectorToProductLabelFacadeInterface::removeProductAbstractRelationsForLabel cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductAlternativeProductLabelConnector/src/Spryker/Zed/ProductAlternativeProductLabelConnector/Business/ProductAlternativeProductLabelWriter/ProductAlternativeProductLabelWriter.php",
+            "snippet": "            $this->productLabelFacade->removeProductAbstractRelationsForLabel($idProductLabel, [$idProductAbstract]);",
+            "selected_text": "$idProductLabel",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 77,
+            "line_to": 77,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ProductAlternativeProductLabelConnector\\Dependency\\Facade\\ProductAlternativeProductLabelConnectorToProductLabelFacadeInterface::addAbstractProductRelationsForLabel cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductAlternativeProductLabelConnector/src/Spryker/Zed/ProductAlternativeProductLabelConnector/Business/ProductAlternativeProductLabelWriter/ProductAlternativeProductLabelWriter.php",
+            "snippet": "            $this->productLabelFacade->addAbstractProductRelationsForLabel($idProductLabel, [$idProductAbstract]);",
+            "selected_text": "$idProductLabel",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 125,
+            "line_to": 125,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ProductAlternativeProductLabelConnector\\Dependency\\Facade\\ProductAlternativeProductLabelConnectorToProductLabelFacadeInterface::removeProductAbstractRelationsForLabel cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductAlternativeProductLabelConnector/src/Spryker/Zed/ProductAlternativeProductLabelConnector/Business/ProductAlternativeProductLabelWriter/ProductAlternativeProductLabelWriter.php",
+            "snippet": "        $this->productLabelFacade->removeProductAbstractRelationsForLabel($productLabelTransfer->getIdProductLabel(), [$idProductAbstract]);",
+            "selected_text": "$productLabelTransfer->getIdProductLabel()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 31,
+            "line_to": 31,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ProductAlternativeProductLabelConnector\\Business\\ProductAlternativeProductLabelConnectorFacadeInterface::updateAbstractProductWithAlternativesAvailableLabel cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductAlternativeProductLabelConnector/src/Spryker/Zed/ProductAlternativeProductLabelConnector/Communication/Plugin/PostProductAlternativeCreatePlugin.php",
+            "snippet": "        $this->getFacade()->updateAbstractProductWithAlternativesAvailableLabel($productAlternativeTransfer->getIdProduct());",
+            "selected_text": "$productAlternativeTransfer->getIdProduct()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 31,
+            "line_to": 31,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ProductAlternativeProductLabelConnector\\Business\\ProductAlternativeProductLabelConnectorFacadeInterface::removeProductAbstractRelationsForLabel cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductAlternativeProductLabelConnector/src/Spryker/Zed/ProductAlternativeProductLabelConnector/Communication/Plugin/PostProductAlternativeDeletePlugin.php",
+            "snippet": "        $this->getFacade()->removeProductAbstractRelationsForLabel($productAlternativeTransfer->getIdProduct());",
+            "selected_text": "$productAlternativeTransfer->getIdProduct()",
+            "error_level": 3,
+            "shortcode": 78
+        }
+    ],
+    "deprecation": []
+}

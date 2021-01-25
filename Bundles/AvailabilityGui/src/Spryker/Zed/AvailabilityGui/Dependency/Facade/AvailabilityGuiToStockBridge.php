@@ -26,26 +26,6 @@ class AvailabilityGuiToStockBridge implements AvailabilityGuiToStockInterface
     }
 
     /**
-     * @param string $sku
-     *
-     * @return int
-     */
-    public function calculateStockForProduct($sku)
-    {
-        return $this->stockFacade->calculateStockForProduct($sku);
-    }
-
-    /**
-     * @param string $sku
-     *
-     * @return bool
-     */
-    public function isNeverOutOfStock($sku)
-    {
-        return $this->stockFacade->isNeverOutOfStock($sku);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\StockProductTransfer $transferStockProduct
      *
      * @return int
@@ -66,14 +46,6 @@ class AvailabilityGuiToStockBridge implements AvailabilityGuiToStockInterface
     }
 
     /**
-     * @return string[]
-     */
-    public function getAvailableStockTypes()
-    {
-        return $this->stockFacade->getAvailableStockTypes();
-    }
-
-    /**
      * @param int $idProductConcrete
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
@@ -85,7 +57,7 @@ class AvailabilityGuiToStockBridge implements AvailabilityGuiToStockInterface
     }
 
     /**
-     * @return array
+     * @return string[][]
      */
     public function getWarehouseToStoreMapping()
     {
@@ -93,7 +65,7 @@ class AvailabilityGuiToStockBridge implements AvailabilityGuiToStockInterface
     }
 
     /**
-     * @return array
+     * @return string[][]
      */
     public function getStoreToWarehouseMapping()
     {
@@ -103,10 +75,20 @@ class AvailabilityGuiToStockBridge implements AvailabilityGuiToStockInterface
     /**
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return array
+     * @return string[]
      */
     public function getStockTypesForStore(StoreTransfer $storeTransfer)
     {
         return $this->stockFacade->getStockTypesForStore($storeTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\StockTransfer[]
+     */
+    public function getAvailableWarehousesForStore(StoreTransfer $storeTransfer): array
+    {
+        return $this->stockFacade->getAvailableWarehousesForStore($storeTransfer);
     }
 }

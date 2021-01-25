@@ -27,7 +27,7 @@ class FilesystemCacheLoaderTest extends Unit
     /**
      * @return string
      */
-    protected function getCacheFile()
+    protected function getCacheFile(): string
     {
         $cacheDirectory = $this->getCacheDirectory();
 
@@ -37,7 +37,7 @@ class FilesystemCacheLoaderTest extends Unit
     /**
      * @return string
      */
-    protected function getCacheDirectory()
+    protected function getCacheDirectory(): string
     {
         return __DIR__ . DIRECTORY_SEPARATOR . 'test_files' . DIRECTORY_SEPARATOR;
     }
@@ -45,7 +45,7 @@ class FilesystemCacheLoaderTest extends Unit
     /**
      * @return void
      */
-    public function testCanBeInstantiatedWithPathToCacheFile()
+    public function testCanBeInstantiatedWithPathToCacheFile(): void
     {
         $cacheLoader = new FilesystemCacheLoader($this->getCacheFile());
 
@@ -55,7 +55,7 @@ class FilesystemCacheLoaderTest extends Unit
     /**
      * @return void
      */
-    public function testLoadReturnsEmptyArrayIfCacheFileNotPresent()
+    public function testLoadReturnsEmptyArrayIfCacheFileNotPresent(): void
     {
         $cacheLoader = new FilesystemCacheLoader(__DIR__ . '/invalidFile');
 
@@ -65,7 +65,7 @@ class FilesystemCacheLoaderTest extends Unit
     /**
      * @return void
      */
-    public function testLoadReturnsCacheArrayIfCacheFilePresent()
+    public function testLoadReturnsCacheArrayIfCacheFilePresent(): void
     {
         $cacheLoader = new FilesystemCacheLoader($this->getCacheFile());
 

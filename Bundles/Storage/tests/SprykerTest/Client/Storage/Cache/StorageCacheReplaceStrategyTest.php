@@ -27,7 +27,7 @@ class StorageCacheReplaceStrategyTest extends AbstractStorageCacheStrategyTest
      *
      * @return void
      */
-    protected function testStrategy($testType)
+    protected function testStrategy(string $testType): void
     {
         $this->setCachedKeysByType($testType);
 
@@ -46,7 +46,7 @@ class StorageCacheReplaceStrategyTest extends AbstractStorageCacheStrategyTest
     /**
      * @return void
      */
-    public function testReplaceStrategyWithNewKeys()
+    public function testReplaceStrategyWithNewKeys(): void
     {
         $this->testStrategy(CacheDataProvider::TEST_TYPE_NEW_KEYS);
     }
@@ -54,7 +54,7 @@ class StorageCacheReplaceStrategyTest extends AbstractStorageCacheStrategyTest
     /**
      * @return void
      */
-    public function testReplaceStrategyWithUsedKeys()
+    public function testReplaceStrategyWithUsedKeys(): void
     {
         $this->testStrategy(CacheDataProvider::TEST_TYPE_USED_KEYS);
     }
@@ -62,7 +62,7 @@ class StorageCacheReplaceStrategyTest extends AbstractStorageCacheStrategyTest
     /**
      * @return void
      */
-    public function testReplaceStrategyWithUnusedKeys()
+    public function testReplaceStrategyWithUnusedKeys(): void
     {
         $this->testStrategy(CacheDataProvider::TEST_TYPE_UNUSED_KEYS);
     }
@@ -70,7 +70,7 @@ class StorageCacheReplaceStrategyTest extends AbstractStorageCacheStrategyTest
     /**
      * @return void
      */
-    public function testReplaceStrategyWithNewAndUsedKeys()
+    public function testReplaceStrategyWithNewAndUsedKeys(): void
     {
         $this->testStrategy(CacheDataProvider::TEST_TYPE_NEW_AND_USED_KEYS);
     }
@@ -78,7 +78,7 @@ class StorageCacheReplaceStrategyTest extends AbstractStorageCacheStrategyTest
     /**
      * @return void
      */
-    public function testReplaceStrategyWithNewAndUsedAndUnusedKeys()
+    public function testReplaceStrategyWithNewAndUsedAndUnusedKeys(): void
     {
         $this->testStrategy(CacheDataProvider::TEST_TYPE_NEW_AND_USED_AND_UNUSED_KEYS);
     }
@@ -86,7 +86,7 @@ class StorageCacheReplaceStrategyTest extends AbstractStorageCacheStrategyTest
     /**
      * @return void
      */
-    public function testReplaceStrategyWithNoKeys()
+    public function testReplaceStrategyWithNoKeys(): void
     {
         $this->testStrategy(CacheDataProvider::TEST_TYPE_NO_KEYS);
     }

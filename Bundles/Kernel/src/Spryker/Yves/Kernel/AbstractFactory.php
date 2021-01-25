@@ -22,14 +22,14 @@ abstract class AbstractFactory implements FactoryInterface
     use ContainerMocker;
 
     /**
-     * @var \Spryker\Yves\Kernel\Container $container
-     */
-    private $container;
-
-    /**
      * @var \Spryker\Client\Kernel\AbstractClient
      */
-    private $client;
+    protected $client;
+
+    /**
+     * @var \Spryker\Yves\Kernel\Container[]
+     */
+    protected static $containers = [];
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -38,7 +38,7 @@ abstract class AbstractFactory implements FactoryInterface
      */
     public function setContainer(Container $container)
     {
-        $this->container = $container;
+        static::$containers[static::class] = $container;
 
         return $this;
     }
@@ -99,15 +99,27 @@ abstract class AbstractFactory implements FactoryInterface
      */
     protected function getProvidedDependency($key)
     {
-        if ($this->container === null) {
-            $this->container = $this->createContainerWithProvidedDependencies();
-        }
+        $container = $this->getContainer();
 
-        if ($this->container->has($key) === false) {
+        if ($container->has($key) === false) {
             throw new ContainerKeyNotFoundException($this, $key);
         }
 
-        return $this->container->get($key);
+        return $container->get($key);
+    }
+
+    /**
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function getContainer(): Container
+    {
+        $containerKey = static::class;
+
+        if (!isset(static::$containers[$containerKey])) {
+            static::$containers[$containerKey] = $this->createContainerWithProvidedDependencies();
+        }
+
+        return static::$containers[$containerKey];
     }
 
     /**

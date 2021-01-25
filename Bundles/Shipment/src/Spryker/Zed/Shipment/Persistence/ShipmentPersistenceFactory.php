@@ -13,7 +13,9 @@ use Orm\Zed\Sales\Persistence\SpySalesShipmentQuery;
 use Orm\Zed\Shipment\Persistence\SpyShipmentCarrierQuery;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodPriceQuery;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
+use Orm\Zed\Shipment\Persistence\SpyShipmentMethodStoreQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\Shipment\Persistence\Propel\Mapper\ShipmentCarrierMapper;
 use Spryker\Zed\Shipment\Persistence\Propel\Mapper\ShipmentExpenseMapper;
 use Spryker\Zed\Shipment\Persistence\Propel\Mapper\ShipmentExpenseMapperInterface;
 use Spryker\Zed\Shipment\Persistence\Propel\Mapper\ShipmentMapper;
@@ -25,6 +27,7 @@ use Spryker\Zed\Shipment\Persistence\Propel\Mapper\ShipmentSalesOrderItemMapper;
 use Spryker\Zed\Shipment\Persistence\Propel\Mapper\ShipmentSalesOrderItemMapperInterface;
 use Spryker\Zed\Shipment\Persistence\Propel\Mapper\ShipmentTaxSetMapper;
 use Spryker\Zed\Shipment\Persistence\Propel\Mapper\ShipmentTaxSetMapperInterface;
+use Spryker\Zed\Shipment\Persistence\Propel\Mapper\StoreRelationMapper;
 
 /**
  * @method \Spryker\Zed\Shipment\ShipmentConfig getConfig()
@@ -48,6 +51,14 @@ class ShipmentPersistenceFactory extends AbstractPersistenceFactory
     public function createShipmentMethodQuery()
     {
         return SpyShipmentMethodQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodStoreQuery
+     */
+    public function createShipmentMethodStoreQuery(): SpyShipmentMethodStoreQuery
+    {
+        return SpyShipmentMethodStoreQuery::create();
     }
 
     /**
@@ -95,7 +106,15 @@ class ShipmentPersistenceFactory extends AbstractPersistenceFactory
      */
     public function createShipmentMethodMapper(): ShipmentMethodMapperInterface
     {
-        return new ShipmentMethodMapper();
+        return new ShipmentMethodMapper($this->createStoreRelationMapper());
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Persistence\Propel\Mapper\StoreRelationMapper
+     */
+    public function createStoreRelationMapper(): StoreRelationMapper
+    {
+        return new StoreRelationMapper();
     }
 
     /**
@@ -128,5 +147,13 @@ class ShipmentPersistenceFactory extends AbstractPersistenceFactory
     public function createShipmentSalesOrderItemMapper(): ShipmentSalesOrderItemMapperInterface
     {
         return new ShipmentSalesOrderItemMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Persistence\Propel\Mapper\ShipmentCarrierMapper
+     */
+    public function createShipmentCarrierMapper(): ShipmentCarrierMapper
+    {
+        return new ShipmentCarrierMapper();
     }
 }

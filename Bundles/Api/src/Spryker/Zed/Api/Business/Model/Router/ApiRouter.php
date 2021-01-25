@@ -24,12 +24,12 @@ class ApiRouter implements RouterInterface
     /**
      * @var \Symfony\Component\Routing\RequestContext
      */
-    private $context;
+    protected $context;
 
     /**
      * @var \Silex\Application
      */
-    private $app;
+    protected $app;
 
     /**
      * @param \Silex\Application $app
@@ -76,7 +76,7 @@ class ApiRouter implements RouterInterface
      *
      * @throws \Symfony\Component\Routing\Exception\RouteNotFoundException
      *
-     * @return void
+     * @return string The generated URL
      */
     public function generate($name, $parameters = [], $referenceType = self::ABSOLUTE_PATH)
     {

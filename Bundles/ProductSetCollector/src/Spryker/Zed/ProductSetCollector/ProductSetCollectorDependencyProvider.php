@@ -49,9 +49,9 @@ class ProductSetCollectorDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addCollectorFacade(Container $container)
     {
-        $container[static::FACADE_COLLECTOR] = function (Container $container) {
+        $container->set(static::FACADE_COLLECTOR, function (Container $container) {
             return new ProductSetCollectorToCollectorBridge($container->getLocator()->collector()->facade());
-        };
+        });
     }
 
     /**
@@ -61,9 +61,9 @@ class ProductSetCollectorDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addSearchFacade(Container $container)
     {
-        $container[static::FACADE_SEARCH] = function (Container $container) {
+        $container->set(static::FACADE_SEARCH, function (Container $container) {
             return new ProductSetCollectorToSearchBridge($container->getLocator()->search()->facade());
-        };
+        });
     }
 
     /**
@@ -73,9 +73,9 @@ class ProductSetCollectorDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addProductSetFacade(Container $container)
     {
-        $container[static::FACADE_PRODUCT_SET] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT_SET, function (Container $container) {
             return new ProductSetCollectorToProductSetBridge($container->getLocator()->productSet()->facade());
-        };
+        });
     }
 
     /**
@@ -85,9 +85,9 @@ class ProductSetCollectorDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addDataReaderService(Container $container)
     {
-        $container[static::SERVICE_DATA_READER] = function (Container $container) {
+        $container->set(static::SERVICE_DATA_READER, function (Container $container) {
             return $container->getLocator()->utilDataReader()->service();
-        };
+        });
     }
 
     /**
@@ -97,8 +97,8 @@ class ProductSetCollectorDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addTouchQueryContainer(Container $container)
     {
-        $container[static::QUERY_CONTAINER_TOUCH] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_TOUCH, function (Container $container) {
             return $container->getLocator()->touch()->queryContainer();
-        };
+        });
     }
 }

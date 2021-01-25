@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -10,6 +11,7 @@ use Generated\Shared\Transfer\OauthAccessTokenValidationRequestTransfer;
 use Generated\Shared\Transfer\OauthAccessTokenValidationResponseTransfer;
 use Generated\Shared\Transfer\OauthRequestTransfer;
 use Generated\Shared\Transfer\OauthResponseTransfer;
+use Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer;
 
 interface AuthRestApiToOauthClientInterface
 {
@@ -21,9 +23,37 @@ interface AuthRestApiToOauthClientInterface
     public function processAccessTokenRequest(OauthRequestTransfer $oauthRequestTransfer): OauthResponseTransfer;
 
     /**
+     * @deprecated Use {@link \Spryker\Glue\AuthRestApi\Dependency\Client\AuthRestApiToOauthClientBridge::validateOauthAccessToken()} instead.
+     *
      * @param \Generated\Shared\Transfer\OauthAccessTokenValidationRequestTransfer $authAccessTokenValidationRequestTransfer
      *
      * @return \Generated\Shared\Transfer\OauthAccessTokenValidationResponseTransfer
      */
-    public function validateAccessToken(OauthAccessTokenValidationRequestTransfer $authAccessTokenValidationRequestTransfer): OauthAccessTokenValidationResponseTransfer;
+    public function validateAccessToken(
+        OauthAccessTokenValidationRequestTransfer $authAccessTokenValidationRequestTransfer
+    ): OauthAccessTokenValidationResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\OauthAccessTokenValidationRequestTransfer $authAccessTokenValidationRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\OauthAccessTokenValidationResponseTransfer
+     */
+    public function validateOauthAccessToken(
+        OauthAccessTokenValidationRequestTransfer $authAccessTokenValidationRequestTransfer
+    ): OauthAccessTokenValidationResponseTransfer;
+
+    /**
+     * @param string $refreshTokenIdentifier
+     * @param string $customerReference
+     *
+     * @return \Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer
+     */
+    public function revokeRefreshToken(string $refreshTokenIdentifier, string $customerReference): RevokeRefreshTokenResponseTransfer;
+
+    /**
+     * @param string $customerReference
+     *
+     * @return \Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer
+     */
+    public function revokeAllRefreshTokens(string $customerReference): RevokeRefreshTokenResponseTransfer;
 }

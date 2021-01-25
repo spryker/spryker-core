@@ -18,5 +18,8 @@ interface CmsBlockProductConnectorToProductFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductAbstractSuggestionCollectionTransfer
      */
-    public function getPaginatedProductAbstractSuggestions(string $suggestion, PaginationTransfer $paginationTransfer): ProductAbstractSuggestionCollectionTransfer;
+    public function getPaginatedProductAbstractSuggestions(
+        string $suggestion,
+        PaginationTransfer $paginationTransfer
+    ): ProductAbstractSuggestionCollectionTransfer;
 }

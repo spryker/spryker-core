@@ -1,0 +1,24 @@
+<div class="list-group">
+    {% for item in items %}
+        {% set className = item.class and item.class is defined ? item.class %}
+        {% set target = item.target is defined ? item.target %}
+        {% set extraAttributes = item.extras is defined and item.extras is iterable ? item.extras  %}
+        {% set dataAttributes = item.data is defined and item.data is iterable ? item.data %}
+        {% if item.href is defined %}
+            <a href="{{ item.href }}" class="list-group-item {{ className }}" {% if target %}target="{{ target }}"{% endif %} {{ _self.anchorAttributes(extraAttributes) | raw }} {{ _self.anchorAttributes(dataAttributes, 'data-') }}>
+                {{ item.label }}
+            </a>
+        {% endif %}
+    {% endfor %}
+</div>
+
+{% macro anchorAttributes(attributes, attributePrefix = '') %}
+    {% set extras = '' %}
+    {% for key,value in attributes %}
+        {% if value is iterable %}
+            {% set value = value|json_encode() %}
+        {% endif %}
+        {% set extras = extras ~ ' ' ~ attributePrefix ~ key ~ '=' ~ value  %}
+    {% endfor %}
+    {{ extras }}
+{% endmacro anchorAttributes %}

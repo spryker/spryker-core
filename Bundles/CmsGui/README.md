@@ -1,4 +1,6 @@
 # CmsGui Module
+[![Build Status](https://travis-ci.org/spryker/cms-gui.svg)](https://travis-ci.org/spryker/cms-gui)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 CmsGui is a user interface module to manage CMS functionality in the Zed Administration Interface.
 
@@ -20,11 +22,10 @@ The main difference that each page entity is now holding multiple url so it mean
 
 Old behaviour was that each page belongs to one url.
 
-Each page may have prefix appended (/en/url /de/url, etc..) this is disabled by default in CMS bundle config for BC reasons. 
+Each page may have prefix appended (/en/url /de/url, etc..) this is disabled by default in CMS bundle config for BC reasons.
 To enable it overwrite `CmsConfig::appendPrefixToCmsPageUrl` method in project and return `true` value.
 
 ## Documentation
 
 [Module Documentation](https://academy.spryker.com/developing_with_spryker/module_guide/content_management/cms/cms.html)
-
 

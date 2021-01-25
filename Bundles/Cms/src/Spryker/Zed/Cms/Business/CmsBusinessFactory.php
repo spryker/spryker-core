@@ -113,8 +113,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
             $this->getGlossaryFacade(),
             $this->getQueryContainer(),
             $this->createTemplateManager(),
-            $this->createPageManager(),
-            $this->getProvidedDependency(CmsDependencyProvider::PLUGIN_PROPEL_CONNECTION)
+            $this->createPageManager()
         );
     }
 
@@ -165,7 +164,9 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     {
         return new PageRemover(
             $this->getQueryContainer(),
-            $this->getTouchFacade()
+            $this->getTouchFacade(),
+            $this->getCmsPageBeforeDeletePlugins(),
+            $this->createCmsPageMapper()
         );
     }
 
@@ -462,5 +463,13 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     public function createTemplatePlaceholderParser(): TemplatePlaceholderParserInterface
     {
         return new TemplatePlaceholderParser($this->getConfig());
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsExtension\Dependency\Plugin\CmsPageBeforeDeletePluginInterface[]
+     */
+    public function getCmsPageBeforeDeletePlugins(): array
+    {
+        return $this->getProvidedDependency(CmsDependencyProvider::PLUGINS_CMS_PAGE_BEFORE_DELETE);
     }
 }

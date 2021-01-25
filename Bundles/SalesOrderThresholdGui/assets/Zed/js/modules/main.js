@@ -7,11 +7,11 @@
 
 require('../../scss/main.scss');
 
-var thresholdStrategyToggle = function(thresholdGroup) {
+var thresholdStrategyToggle = function (thresholdGroup) {
     var strategyKey = $('input[name="global-threshold[' + thresholdGroup + 'Threshold][strategy]"]:checked').val();
 
     $('.threshold-key-' + strategyKey).removeClass('hidden');
-    $('.threshold_group_' + thresholdGroup + ':not(.threshold-key-'+ strategyKey +')').addClass('hidden');
+    $('.threshold_group_' + thresholdGroup + ':not(.threshold-key-' + strategyKey + ')').addClass('hidden');
 };
 
 $(document).ready(function () {
@@ -22,8 +22,12 @@ $(document).ready(function () {
         thresholdStrategyToggle('hard');
     });
 
-    $('input[name="global-threshold[softThreshold][strategy]"]').click(function() {
+    $('input[name="global-threshold[softThreshold][strategy]"]').click(function () {
         thresholdStrategyToggle('soft');
+    });
+
+    $('input[name="global-threshold[hardMaximumThreshold][strategy]"]').click(function () {
+        thresholdStrategyToggle('hardMaximumThreshold');
     });
 
     if ($('input[name="global-threshold[hardThreshold][strategy]"][value!=""]').length === 1) {
@@ -34,7 +38,11 @@ $(document).ready(function () {
         $('input[name="global-threshold[softThreshold][strategy]"]').parents('.form-group').addClass('hidden');
     }
 
-    $('#global-threshold_storeCurrency').change(function() {
-        window.location.href = '/sales-order-threshold-gui/global?store_currency='+$(this).val();
-    })
+    if ($('input[name="global-threshold[hardMaximumThreshold][strategy]"][value!=""]').length === 1) {
+        $('input[name="global-threshold[hardMaximumThreshold][strategy]"]').parents('.form-group').addClass('hidden');
+    }
+
+    $('#global-threshold_storeCurrency').change(function () {
+        window.location.href = '/sales-order-threshold-gui/global?store_currency=' + $(this).val();
+    });
 });

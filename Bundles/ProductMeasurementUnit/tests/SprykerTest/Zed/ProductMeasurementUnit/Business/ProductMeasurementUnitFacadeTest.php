@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SpyProductMeasurementUnitEntityTransfer;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 
@@ -28,6 +29,9 @@ use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
  */
 class ProductMeasurementUnitFacadeTest extends Unit
 {
+    protected const PRODUCT_MEASUREMENT_SALES_UNIT_ID = 777;
+    protected const NON_EXISTING_PRODUCT_MEASUREMENT_SALES_UNIT_ID = 9999;
+
     /**
      * @var \SprykerTest\Zed\ProductMeasurementUnit\ProductMeasurementUnitBusinessTester
      */
@@ -41,7 +45,7 @@ class ProductMeasurementUnitFacadeTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -99,28 +103,31 @@ class ProductMeasurementUnitFacadeTest extends Unit
      *
      * @return void
      */
-    public function testCalculateQuantityNormalizedSalesUnitValueCalculatesCorrectValues($quantity, $conversion, $precision, $expectedResult)
+    public function testCalculateQuantitySalesUnitValueCalculatesCorrectValues(int $quantity, float $conversion, int $precision, int $expectedResult): void
     {
         // Assign
-        $itemTransfer = (new ItemTransfer())
-            ->setQuantity($quantity)
-            ->setQuantitySalesUnit(
-                (new ProductMeasurementSalesUnitTransfer())
-                    ->setConversion($conversion)
-                    ->setPrecision($precision)
+        $quoteTransfer = (new QuoteTransfer())
+            ->addItem(
+                (new ItemTransfer())
+                    ->setQuantity($quantity)
+                    ->setQuantitySalesUnit(
+                        (new ProductMeasurementSalesUnitTransfer())
+                            ->setConversion($conversion)
+                            ->setPrecision($precision)
+                    )
             );
 
         // Act
-        $actualResult = $this->productMeasurementUnitFacade->calculateQuantityNormalizedSalesUnitValue($itemTransfer);
+        $actualResult = $this->productMeasurementUnitFacade->calculateQuantitySalesUnitValueInQuote($quoteTransfer);
 
         // Assert
-        $this->assertSame($expectedResult, $actualResult);
+        $this->assertSame($expectedResult, $actualResult->getItems()[0]->getQuantitySalesUnit()->getValue());
     }
 
     /**
      * @return array
      */
-    public function calculateQuantityNormalizedSalesUnitValues()
+    public function calculateQuantityNormalizedSalesUnitValues(): array
     {
         // round(1st / 2nd * 3rd) = 4th
         return [
@@ -139,7 +146,7 @@ class ProductMeasurementUnitFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindProductMeasurementUnitEntitiesReturnsProductMeasurementUnitEntities()
+    public function testFindProductMeasurementUnitEntitiesReturnsProductMeasurementUnitEntities(): void
     {
         // Assign
         $code = 'MYCODE' . random_int(1, 100);
@@ -159,7 +166,7 @@ class ProductMeasurementUnitFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetSalesUnitsByIdProductRetrievesAllProductRelatedSalesUnits()
+    public function testGetSalesUnitsByIdProductRetrievesAllProductRelatedSalesUnits(): void
     {
         // Assign
         $code = 'MYCODE' . random_int(1, 100);
@@ -199,7 +206,7 @@ class ProductMeasurementUnitFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testExpandCartChangeWithQuantitySalesUnitExpandsCartChangeWithQuantitySalesUnit()
+    public function testExpandCartChangeWithQuantitySalesUnitExpandsCartChangeWithQuantitySalesUnit(): void
     {
         // Assign
         $code = 'MYCODE' . random_int(1, 100);
@@ -392,5 +399,96 @@ class ProductMeasurementUnitFacadeTest extends Unit
 
         //Assert
         $this->assertCount(1, $productMeasurementSalesUnitTransfers);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCheckItemProductMeasurementSalesUnitWillReturnSuccessfulResponseWithEmptyCartChangeTransfer(): void
+    {
+        // Arrange
+        $cartChangeTransfer = $this->tester->createEmptyCartChangeTransfer();
+
+        // Act
+        $cartPreCheckResponseTransfer = $this->productMeasurementUnitFacade->checkItemProductMeasurementSalesUnit($cartChangeTransfer);
+
+        // Assert
+        $this->assertTrue($cartPreCheckResponseTransfer->getIsSuccess());
+        $this->assertCount(0, $cartPreCheckResponseTransfer->getMessages());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCheckItemProductMeasurementSalesUnitWillReturnSuccessfulResponseWithCorrectSalesUnitId(): void
+    {
+        // Arrange
+        $productConcreteTransfer = $this->tester->haveProduct();
+        $sku = $productConcreteTransfer->getSku();
+        $productMeasurementUnitTransfer = $this->tester->haveProductMeasurementUnit();
+        $productMeasurementBaseUnitTransfer = $this->tester->haveProductMeasurementBaseUnit(
+            $productConcreteTransfer->getFkProductAbstract(),
+            $productMeasurementUnitTransfer->getIdProductMeasurementUnit()
+        );
+        $this->tester->haveProductMeasurementSalesUnit(
+            $productConcreteTransfer->getIdProductConcrete(),
+            $productMeasurementUnitTransfer->getIdProductMeasurementUnit(),
+            $productMeasurementBaseUnitTransfer->getIdProductMeasurementBaseUnit(),
+            [
+                ProductMeasurementSalesUnitTransfer::ID_PRODUCT_MEASUREMENT_SALES_UNIT => static::PRODUCT_MEASUREMENT_SALES_UNIT_ID,
+                ProductMeasurementSalesUnitTransfer::IS_DEFAULT => true,
+                ProductMeasurementSalesUnitTransfer::PRODUCT_MEASUREMENT_BASE_UNIT => $productMeasurementBaseUnitTransfer->toArray(),
+                ProductMeasurementSalesUnitTransfer::PRODUCT_MEASUREMENT_UNIT => $productMeasurementUnitTransfer->toArray(),
+            ]
+        );
+
+        $cartChangeTransfer = $this->tester->createCartChangeTransferWithItem(
+            static::PRODUCT_MEASUREMENT_SALES_UNIT_ID,
+            $sku
+        );
+
+        // Act
+        $cartPreCheckResponseTransfer = $this->productMeasurementUnitFacade->checkItemProductMeasurementSalesUnit($cartChangeTransfer);
+
+        // Assert
+        $this->assertTrue($cartPreCheckResponseTransfer->getIsSuccess());
+        $this->assertCount(0, $cartPreCheckResponseTransfer->getMessages());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCheckItemProductMeasurementSalesUnitWillReturnResponseWithErrorWithWrongSalesUnitId(): void
+    {
+        // Arrange
+        $productConcreteTransfer = $this->tester->haveProduct();
+        $sku = $productConcreteTransfer->getSku();
+        $productMeasurementUnitTransfer = $this->tester->haveProductMeasurementUnit();
+        $productMeasurementBaseUnitTransfer = $this->tester->haveProductMeasurementBaseUnit(
+            $productConcreteTransfer->getFkProductAbstract(),
+            $productMeasurementUnitTransfer->getIdProductMeasurementUnit()
+        );
+        $this->tester->haveProductMeasurementSalesUnit(
+            $productConcreteTransfer->getIdProductConcrete(),
+            $productMeasurementUnitTransfer->getIdProductMeasurementUnit(),
+            $productMeasurementBaseUnitTransfer->getIdProductMeasurementBaseUnit(),
+            [
+                ProductMeasurementSalesUnitTransfer::IS_DEFAULT => true,
+                ProductMeasurementSalesUnitTransfer::PRODUCT_MEASUREMENT_BASE_UNIT => $productMeasurementBaseUnitTransfer->toArray(),
+                ProductMeasurementSalesUnitTransfer::PRODUCT_MEASUREMENT_UNIT => $productMeasurementUnitTransfer->toArray(),
+            ]
+        );
+
+        $cartChangeTransfer = $this->tester->createCartChangeTransferWithItem(
+            static::NON_EXISTING_PRODUCT_MEASUREMENT_SALES_UNIT_ID,
+            $sku
+        );
+
+        // Act
+        $cartPreCheckResponseTransfer = $this->productMeasurementUnitFacade->checkItemProductMeasurementSalesUnit($cartChangeTransfer);
+
+        // Assert
+        $this->assertFalse($cartPreCheckResponseTransfer->getIsSuccess());
+        $this->assertCount(1, $cartPreCheckResponseTransfer->getMessages());
     }
 }

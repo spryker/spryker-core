@@ -27,7 +27,7 @@ class CmsContentWidgetProductSetConnectorFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testMapProductKeyListShouldMapSetKeyToPrimaryKey()
+    public function testMapProductKeyListShouldMapSetKeyToPrimaryKey(): void
     {
         $productAbstractTransfer1 = $this->tester->haveProductAbstract();
         $productAbstractTransfer2 = $this->tester->haveProductAbstract();
@@ -44,6 +44,7 @@ class CmsContentWidgetProductSetConnectorFacadeTest extends Unit
 
         $this->assertCount(1, $mappedProductSets);
         $this->assertArrayHasKey($productSetTransfer->getProductSetKey(), $mappedProductSets);
+        // TODO: use assertSame() once the actual return result is of int, and not string
         $this->assertEquals(
             $productSetTransfer->getIdProductSet(),
             $mappedProductSets[$productSetTransfer->getProductSetKey()]
@@ -53,7 +54,7 @@ class CmsContentWidgetProductSetConnectorFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\CmsContentWidgetProductSetConnector\Business\CmsContentWidgetProductSetConnectorFacade
      */
-    protected function createCmsProductSetConnectorFacade()
+    protected function createCmsProductSetConnectorFacade(): CmsContentWidgetProductSetConnectorFacade
     {
         return new CmsContentWidgetProductSetConnectorFacade();
     }

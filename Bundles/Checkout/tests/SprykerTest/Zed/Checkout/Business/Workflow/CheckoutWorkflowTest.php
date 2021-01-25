@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\Checkout\Business\Workflow;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
@@ -18,6 +17,7 @@ use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutDoSaveOrderInterface;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPostSaveHookInterface;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface;
+use Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutPreConditionPluginInterface;
 use Spryker\Zed\Oms\Business\OmsFacade;
 use SprykerTest\Zed\Checkout\Business\Fixture\MockPostHook;
 use SprykerTest\Zed\Checkout\Business\Fixture\ResponseManipulatorPreCondition;
@@ -38,7 +38,58 @@ class CheckoutWorkflowTest extends Unit
     /**
      * @return void
      */
-    public function testWorkflowCallsAllPreConditions()
+    public function testIsPlaceableOrderResponseIsSuccessful(): void
+    {
+        // Arrange
+        $checkoutResponse = $this->createBaseCheckoutResponse();
+        $checkoutWorkflow = new CheckoutWorkflow(
+            new CheckoutToOmsFacadeBridge(new OmsFacade()),
+            [],
+            [],
+            [new MockPostHook($checkoutResponse)]
+        );
+        $quoteTransfer = new QuoteTransfer();
+
+        // Act
+        $checkoutResponseTransfer = $checkoutWorkflow->isPlaceableOrder($quoteTransfer);
+
+        // Assert
+        $this->assertTrue($checkoutResponseTransfer->getIsSuccess());
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsPlaceableOrderResponseIsNotSuccessful(): void
+    {
+        // Arrange
+        $mockBuilder = $this->getMockBuilder(CheckoutPreConditionPluginInterface::class)->getMock();
+
+        $mockBuilder->expects($this->once())->method('checkCondition')->with(
+            $this->isInstanceOf(QuoteTransfer::class),
+            $this->isInstanceOf(CheckoutResponseTransfer::class)
+        );
+
+        $checkoutResponse = $this->createBaseCheckoutResponse();
+        $checkoutWorkflow = new CheckoutWorkflow(
+            new CheckoutToOmsFacadeBridge(new OmsFacade()),
+            [$mockBuilder],
+            [],
+            [new MockPostHook($checkoutResponse)]
+        );
+        $quoteTransfer = new QuoteTransfer();
+
+        // Act
+        $checkoutResponseTransfer = $checkoutWorkflow->isPlaceableOrder($quoteTransfer);
+
+        // Assert
+        $this->assertFalse($checkoutResponseTransfer->getIsSuccess());
+    }
+
+    /**
+     * @return void
+     */
+    public function testWorkflowCallsAllPreConditions(): void
     {
         $mock1 = $this->getMockBuilder(CheckoutPreConditionInterface::class)->getMock();
         $mock2 = $this->getMockBuilder(CheckoutPreConditionInterface::class)->getMock();
@@ -68,7 +119,7 @@ class CheckoutWorkflowTest extends Unit
     /**
      * @return void
      */
-    public function testWorkflowCallsAllOrderSavers()
+    public function testWorkflowCallsAllOrderSavers(): void
     {
         $mock1 = $this->getMockBuilder(CheckoutDoSaveOrderInterface::class)->getMock();
         $mock2 = $this->getMockBuilder(CheckoutDoSaveOrderInterface::class)->getMock();
@@ -98,7 +149,7 @@ class CheckoutWorkflowTest extends Unit
     /**
      * @return void
      */
-    public function testWorkflowCallsAllDeprecatedOrderSavers()
+    public function testWorkflowCallsAllDeprecatedOrderSavers(): void
     {
         $mock1 = $this->getMockBuilder(CheckoutDoSaveOrderInterface::class)->getMock();
         $mock2 = $this->getMockBuilder(CheckoutSaveOrderInterface::class)->getMock();
@@ -135,7 +186,7 @@ class CheckoutWorkflowTest extends Unit
     /**
      * @return void
      */
-    public function testWorkflowCallsAllPostHooks()
+    public function testWorkflowCallsAllPostHooks(): void
     {
         $mock1 = $this->getMockBuilder(CheckoutPostSaveHookInterface::class)->getMock();
         $mock2 = $this->getMockBuilder(CheckoutPostSaveHookInterface::class)->getMock();
@@ -158,15 +209,13 @@ class CheckoutWorkflowTest extends Unit
             [],
             [$mock1, $mock2]
         );
-        $checkoutResponse = new CheckoutResponseTransfer();
-
-        $checkoutWorkflow->placeOrder($quoteTransfer, $checkoutResponse);
+        $checkoutWorkflow->placeOrder($quoteTransfer);
     }
 
     /**
      * @return void
      */
-    public function testWorkflowPassesResponseOn()
+    public function testWorkflowPassesResponseOn(): void
     {
         $checkoutResponse = $this->createBaseCheckoutResponse();
         $checkoutResponse
@@ -196,10 +245,9 @@ class CheckoutWorkflowTest extends Unit
     /**
      * @return void
      */
-    public function testPostHookResultIsReturned()
+    public function testPostHookResultIsReturned(): void
     {
         $checkoutResponse = $this->createBaseCheckoutResponse();
-        $error = new CheckoutErrorTransfer();
 
         $checkoutResponse
             ->setIsSuccess(true);
@@ -222,7 +270,7 @@ class CheckoutWorkflowTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
-    protected function createBaseCheckoutResponse()
+    protected function createBaseCheckoutResponse(): CheckoutResponseTransfer
     {
         $checkoutResponseTransfer = new CheckoutResponseTransfer();
 

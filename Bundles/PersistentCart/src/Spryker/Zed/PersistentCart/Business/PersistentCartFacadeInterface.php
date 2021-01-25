@@ -10,6 +10,7 @@ namespace Spryker\Zed\PersistentCart\Business;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeQuantityTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
+use Generated\Shared\Transfer\PersistentItemReplaceTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteSyncRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -116,6 +117,23 @@ interface PersistentCartFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function changeItemQuantity(PersistentCartChangeQuantityTransfer $persistentCartChangeQuantityTransfer): QuoteResponseTransfer;
+
+    /**
+     * Specification:
+     *  - Loads quote from db.
+     *  - Merges loaded quote with quote from change request if is provided.
+     *  - Calls calculate quantity to add or remove.
+     *  - Removes or add items to achieve provided quantities.
+     *  - Saves quote to DB in case success result.
+     *  - Calls quote response extend plugins.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PersistentCartChangeTransfer $persistentCartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function updateQuantity(PersistentCartChangeTransfer $persistentCartChangeTransfer): QuoteResponseTransfer;
 
     /**
      * Specification:
@@ -292,4 +310,21 @@ interface PersistentCartFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function resetQuoteLock(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
+
+    /**
+     * Specification:
+     * - Loads customer quote from database.
+     * - Removes `PersistentItemReplaceTransfer::itemToBeReplaced` from quote.
+     * - Adds `PersistentItemReplaceTransfer::newItem` to quote.
+     * - Recalculates quote totals.
+     * - Saves updated quote to database.
+     * - Returns quote response.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PersistentItemReplaceTransfer $persistentItemReplaceTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function replaceItem(PersistentItemReplaceTransfer $persistentItemReplaceTransfer): QuoteResponseTransfer;
 }

@@ -4,7 +4,7 @@
   "description": "QuoteRequest module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.3",
     "spryker/calculation": "^4.0.0",
     "spryker/cart": "^5.9.0 || ^7.0.0",
     "spryker/cart-extension": "^2.4.0 || ^4.0.0",
@@ -30,12 +30,14 @@
     "spryker/code-sniffer": "*",
     "spryker/company-business-unit": "*",
     "spryker/propel": "*",
+    "spryker/shipment": "*",
     "spryker/testify": "*"
   },
   "suggest": {
     "spryker/checkout": "If you want to use Checkout plugins.",
     "spryker/multi-cart": "If you want to use multicart functionality, min version 1.5.0",
-    "spryker/quote-approval": "If you want to use quote approval functionality, min version 1.0.0"
+    "spryker/quote-approval": "If you want to use quote approval functionality, min version 1.0.0",
+    "spryker/shipment-cart-connector": "If you use source price functionality or SanitizeCartShipmentItemExpanderPlugin: ^2.1.0"
   },
   "autoload": {
     "psr-4": {
@@ -50,9 +52,13 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+  },
   "extra": {
     "branch-alias": {
-      "dev-master": "1.0.x-dev"
+      "dev-master": "2.0.x-dev"
     }
   },
   "config": {

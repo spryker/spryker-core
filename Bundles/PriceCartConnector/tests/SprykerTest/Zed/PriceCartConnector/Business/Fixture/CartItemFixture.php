@@ -15,12 +15,12 @@ class CartItemFixture extends AbstractTransfer
     /**
      * @var string
      */
-    private $id;
+    protected $id;
 
     /**
      * @return string
      */
-    public function getId()
+    public function getId(): string
     {
         return $this->id;
     }
@@ -30,7 +30,7 @@ class CartItemFixture extends AbstractTransfer
      *
      * @return $this
      */
-    public function setId($identifier)
+    public function setId(string $identifier)
     {
         $this->id = $identifier;
 
@@ -42,7 +42,7 @@ class CartItemFixture extends AbstractTransfer
      *
      * @return int
      */
-    public function getQuantity()
+    public function getQuantity(): int
     {
         throw new RuntimeException('Implement getQuantity() method');
     }
@@ -54,7 +54,7 @@ class CartItemFixture extends AbstractTransfer
      *
      * @return $this
      */
-    public function setQuantity($quantity = 1)
+    public function setQuantity(int $quantity = 1)
     {
         throw new RuntimeException('Implement setQuantity() method');
     }

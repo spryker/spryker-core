@@ -12,6 +12,8 @@ use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Zed\Collector\Business\Exporter\Writer\Storage\TouchUpdaterSet;
 use Spryker\Zed\Collector\Business\Model\BulkTouchQueryBuilder;
 use Spryker\Zed\Collector\CollectorConfig;
+use Spryker\Zed\Collector\Persistence\Pdo\BulkDeleteTouchByIdQueryInterface;
+use Spryker\Zed\Collector\Persistence\Pdo\BulkUpdateTouchKeyByIdQueryInterface;
 use SprykerTest\Zed\Collector\Business\Fixture\CollectorConfigWithNotDefinedDbEngineFake;
 use SprykerTest\Zed\Collector\Business\Fixture\TouchUpdaterStub;
 
@@ -47,7 +49,7 @@ class AbstractTouchUpdaterTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->collectorConfig = $this->createCollectorConfig();
@@ -56,7 +58,7 @@ class AbstractTouchUpdaterTest extends Unit
     /**
      * @return void
      */
-    public function testBulkUpdateBuildsAndExecutesQueries()
+    public function testBulkUpdateBuildsAndExecutesQueries(): void
     {
         $touchUpdaterSet = $this->createTouchUpdaterSet();
         $idLocale = 1;
@@ -91,7 +93,7 @@ class AbstractTouchUpdaterTest extends Unit
     /**
      * @return void
      */
-    public function testBulkDeleteBuildsAndExecutesQueries()
+    public function testBulkDeleteBuildsAndExecutesQueries(): void
     {
         $touchUpdaterSet = $this->createTouchUpdaterSet();
         $idLocale = 1;
@@ -119,25 +121,23 @@ class AbstractTouchUpdaterTest extends Unit
     }
 
     /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Can't resolve bulk touch class name: BulkUpdateTouchKeyByIdQuery
-     *
      * @return void
      */
-    public function testBulkUpdateIsFailingWithWrongTouchQueryConfigured()
+    public function testBulkUpdateIsFailingWithWrongTouchQueryConfigured(): void
     {
+        $this->expectException('InvalidArgumentException');
+        $this->expectExceptionMessage('Can\'t resolve bulk touch class name: BulkUpdateTouchKeyByIdQuery');
         $this->collectorConfig = $this->createWrongCollectorConfig();
         $this->createTouchUpdater();
     }
 
     /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Can't resolve bulk touch class name: BulkDeleteTouchByIdQuery
-     *
      * @return void
      */
-    public function testBulkDeleteIsFailingWithWrongTouchQueryConfigured()
+    public function testBulkDeleteIsFailingWithWrongTouchQueryConfigured(): void
     {
+        $this->expectException('InvalidArgumentException');
+        $this->expectExceptionMessage('Can\'t resolve bulk touch class name: BulkDeleteTouchByIdQuery');
         $this->collectorConfig = $this->createWrongCollectorConfig();
         $this->createBulkTouchDeleteQuery();
     }
@@ -145,7 +145,7 @@ class AbstractTouchUpdaterTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\SprykerTest\Zed\Collector\Business\Fixture\TouchUpdaterStub
      */
-    protected function createTouchUpdater()
+    protected function createTouchUpdater(): TouchUpdaterStub
     {
         return new TouchUpdaterStub($this->createBulkTouchUpdateQuery(), $this->createBulkTouchDeleteQuery());
     }
@@ -153,7 +153,7 @@ class AbstractTouchUpdaterTest extends Unit
     /**
      * @return \Spryker\Zed\Collector\Persistence\Pdo\BulkUpdateTouchKeyByIdQueryInterface
      */
-    protected function createBulkTouchUpdateQuery()
+    protected function createBulkTouchUpdateQuery(): BulkUpdateTouchKeyByIdQueryInterface
     {
         $this->bulkTouchUpdateQuery = $this->createBulkTouchQueryBuilder()
             ->createBulkTouchUpdateQuery();
@@ -164,7 +164,7 @@ class AbstractTouchUpdaterTest extends Unit
     /**
      * @return \Spryker\Zed\Collector\Persistence\Pdo\BulkDeleteTouchByIdQueryInterface
      */
-    protected function createBulkTouchDeleteQuery()
+    protected function createBulkTouchDeleteQuery(): BulkDeleteTouchByIdQueryInterface
     {
         $this->bulkTouchDeleteQuery = $this->createBulkTouchQueryBuilder()
             ->createBulkTouchDeleteQuery();
@@ -175,15 +175,15 @@ class AbstractTouchUpdaterTest extends Unit
     /**
      * @return \Spryker\Zed\Collector\Business\Model\BulkTouchQueryBuilder
      */
-    protected function createBulkTouchQueryBuilder()
+    protected function createBulkTouchQueryBuilder(): BulkTouchQueryBuilder
     {
         return new BulkTouchQueryBuilder($this->collectorConfig);
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Propel\Runtime\Connection\ConnectionInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createConnectionMock()
+    protected function createConnectionMock(): ConnectionInterface
     {
         return $this->getMockForAbstractClass(ConnectionInterface::class, [], '', true, true, true, ['exec']);
     }
@@ -191,7 +191,7 @@ class AbstractTouchUpdaterTest extends Unit
     /**
      * @return \Spryker\Zed\Collector\Business\Exporter\Writer\Storage\TouchUpdaterSet
      */
-    protected function createTouchUpdaterSet()
+    protected function createTouchUpdaterSet(): TouchUpdaterSet
     {
         $touchUpdaterSet = new TouchUpdaterSet('collector_touch_id');
         $touchUpdaterSet->add(
@@ -218,7 +218,7 @@ class AbstractTouchUpdaterTest extends Unit
     /**
      * @return \Spryker\Zed\Collector\CollectorConfig
      */
-    protected function createCollectorConfig()
+    protected function createCollectorConfig(): CollectorConfig
     {
         return new CollectorConfig();
     }
@@ -226,7 +226,7 @@ class AbstractTouchUpdaterTest extends Unit
     /**
      * @return \Spryker\Zed\Collector\CollectorConfig
      */
-    protected function createWrongCollectorConfig()
+    protected function createWrongCollectorConfig(): CollectorConfig
     {
         return new CollectorConfigWithNotDefinedDbEngineFake();
     }

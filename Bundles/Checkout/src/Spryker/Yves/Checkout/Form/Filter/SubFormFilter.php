@@ -32,7 +32,7 @@ class SubFormFilter implements SubFormFilterInterface
     /**
      * @var \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection|null
      */
-    protected $filteredSubFormPlugins = null;
+    protected $filteredSubFormPlugins;
 
     /**
      * @param \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection $subFormPlugins

@@ -1,11 +1,11 @@
 language: php
-dist: trusty
+dist: bionic
 
 git:
   depth: 3
 
 php:
-  - 7.1
+  - 7.3
 
 cache:
   directories:
@@ -21,9 +21,12 @@ before_install:
 
 install:
   - composer install --no-interaction --prefer-dist --optimize-autoloader
+  - npm ci
 
 script:
   - vendor/bin/phpcs Bundles --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml -p
+  - npm run formatter
+  - npm run mp:tslint
 
 notifications:
   email: false

@@ -1,0 +1,24 @@
+Actions,Actions
+Active,Active
+"Available in Store","Available in Store"
+"Available in the following store(s)","Available in the following store(s)"
+Configuration,Configuration
+Edit,Edit
+"Edit Payment Method: %s","Edit Payment Method: %s"
+Inactive,Inactive
+"Is the Payment Method active?","Is the Payment Method active?"
+"Is this payment method active?","Is this payment method active?"
+"List Payment Methods","List Payment Methods"
+Name,Name
+"Payment Method Key","Payment Method Key"
+"Payment method not found","Payment method not found"
+"Payment Methods","Payment Methods"
+"Payment Provider","Payment Provider"
+Provider,Provider
+Save,Save
+Status,Status
+"Store relation","Store relation"
+View,View
+"View Payment Method: %s","View Payment Method: %s"
+"Payment method has been successfully updated","Payment method has been successfully updated"
+"Payment Management","Payment Management"

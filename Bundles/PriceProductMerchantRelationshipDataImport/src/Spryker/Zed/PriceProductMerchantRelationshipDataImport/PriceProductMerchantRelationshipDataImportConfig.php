@@ -15,6 +15,8 @@ class PriceProductMerchantRelationshipDataImportConfig extends DataImportConfig
     public const IMPORT_TYPE_PRICE_PRODUCT_MERCHANT_RELATIONSHIP = 'product-price-merchant-relationship';
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getPriceProductMerchantRelationshipDataImporterConfiguration(): DataImporterConfigurationTransfer

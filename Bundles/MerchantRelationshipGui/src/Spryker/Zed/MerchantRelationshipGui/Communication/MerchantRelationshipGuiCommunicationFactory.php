@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 use Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipQuery;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\MerchantRelationshipGui\Communication\Form\DataProvider\MerchantRelationshipFormDataProvider;
+use Spryker\Zed\MerchantRelationshipGui\Communication\Form\DeleteMerchantRelationshipForm;
 use Spryker\Zed\MerchantRelationshipGui\Communication\Form\MerchantRelationshipCreateForm;
 use Spryker\Zed\MerchantRelationshipGui\Communication\Form\MerchantRelationshipEditForm;
 use Spryker\Zed\MerchantRelationshipGui\Communication\Table\MerchantRelationshipTable;
@@ -69,6 +70,16 @@ class MerchantRelationshipGuiCommunicationFactory extends AbstractCommunicationF
     }
 
     /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createDeleteMerchantRelationshipForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(DeleteMerchantRelationshipForm::class, [], [
+            'fields' => [],
+        ]);
+    }
+
+    /**
      * @return \Spryker\Zed\MerchantRelationshipGui\Dependency\Facade\MerchantRelationshipGuiToCompanyFacadeInterface
      */
     public function getCompanyFacade(): MerchantRelationshipGuiToCompanyFacadeInterface
@@ -106,5 +117,21 @@ class MerchantRelationshipGuiCommunicationFactory extends AbstractCommunicationF
     public function getPropelMerchantRelationshipQuery(): SpyMerchantRelationshipQuery
     {
         return $this->getProvidedDependency(MerchantRelationshipGuiDependencyProvider::PROPEL_MERCHANT_RELATIONSHIP_QUERY);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantRelationshipGuiExtension\Dependency\Plugin\MerchantRelationshipCreateFormExpanderPluginInterface[]
+     */
+    public function getMerchantRelationshipCreateFormExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(MerchantRelationshipGuiDependencyProvider::PLUGINS_MERCHANT_RELATIONSHIP_CREATE_FORM_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantRelationshipGuiExtension\Dependency\Plugin\MerchantRelationshipEditFormExpanderPluginInterface[]
+     */
+    public function getMerchantRelationshipEditFormExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(MerchantRelationshipGuiDependencyProvider::PLUGINS_MERCHANT_RELATIONSHIP_EDIT_FORM_EXPANDER);
     }
 }

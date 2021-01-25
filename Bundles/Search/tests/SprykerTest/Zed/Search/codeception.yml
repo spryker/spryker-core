@@ -1,16 +1,15 @@
 namespace: SprykerTest\Zed\Search
-
 paths:
     tests: .
     data: ../../../_data
     support: _support
     log: ../../../_output
-
 coverage:
     enabled: true
     remote: false
-    whitelist: { include: ['../../../../src/*'] }
-
+    whitelist:
+        include:
+            - '../../../../src/*'
 suites:
     Business:
         path: Business
@@ -24,6 +23,8 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
                 - \SprykerTest\Shared\Testify\Helper\VirtualFilesystemHelper
+                - \SprykerTest\Shared\SearchElasticsearch\Helper\ElasticsearchHelper
+                - \SprykerTest\Zed\Testify\Helper\BusinessHelper
 
     Communication:
         path: Communication
@@ -36,8 +37,4 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
-                - \SprykerTest\Shared\Application\Helper\ZedHelper:
-                - \SprykerTest\Shared\Testify\Helper\ZedControllerTable:
-                    depends: \SprykerTest\Shared\Testify\Helper\ZedBootstrap
-                - \SprykerTest\Shared\Testify\Helper\ZedBootstrap:
-                    depends: \SprykerTest\Shared\Testify\Helper\BundleConfig
+                - \SprykerTest\Shared\Application\Helper\ZedHelper

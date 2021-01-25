@@ -1,0 +1,30 @@
+{
+    "error": [],
+    "warning": [],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 14,
+            "line_to": 14,
+            "type": "DeprecatedInterface",
+            "message": "Spryker\\Zed\\Cart\\Dependency\\PostSavePluginInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/PaymentCartConnector/src/Spryker/Zed/PaymentCartConnector/Communication/Plugin/Cart/RemovePaymentCartPostSavePlugin.php",
+            "snippet": "class RemovePaymentCartPostSavePlugin extends AbstractPlugin implements PostSavePluginInterface",
+            "selected_text": "RemovePaymentCartPostSavePlugin",
+            "error_level": 2,
+            "shortcode": 152
+        },
+        {
+            "severity": "info",
+            "line_from": 27,
+            "line_to": 27,
+            "type": "DeprecatedMethod",
+            "message": "The method Generated\\Shared\\Transfer\\QuoteTransfer::setPayment has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/PaymentCartConnector/src/Spryker/Zed/PaymentCartConnector/Communication/Plugin/Cart/RemovePaymentCartPostSavePlugin.php",
+            "snippet": "        $quoteTransfer->setPayment(null);",
+            "selected_text": "setPayment",
+            "error_level": 2,
+            "shortcode": 1
+        }
+    ]
+}

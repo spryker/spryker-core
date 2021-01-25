@@ -31,6 +31,8 @@ class ProductSearchConfigStorageWriter implements ProductSearchConfigStorageWrit
     protected $productSearchConfig;
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()} instead.
+     *
      * @var bool
      */
     protected $isSendingToQueue = true;
@@ -91,8 +93,10 @@ class ProductSearchConfigStorageWriter implements ProductSearchConfigStorageWrit
      *
      * @return void
      */
-    protected function storeDataSet(ProductSearchConfigStorageTransfer $searchConfigExtensionTransfer, ?SpyProductSearchConfigStorage $spyProductSearchConfigStorageEntity = null)
-    {
+    protected function storeDataSet(
+        ProductSearchConfigStorageTransfer $searchConfigExtensionTransfer,
+        ?SpyProductSearchConfigStorage $spyProductSearchConfigStorageEntity = null
+    ) {
         if ($spyProductSearchConfigStorageEntity === null) {
             $spyProductSearchConfigStorageEntity = new SpyProductSearchConfigStorage();
         }

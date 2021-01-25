@@ -4,11 +4,12 @@
   "description": "FlysystemAws3v3FileSystem module",
   "license": "proprietary",
   "require": {
-    "league/flysystem-aws-s3-v3": "^1.0",
-    "php": ">=7.1",
+    "league/flysystem-aws-s3-v3": "^1.0.1",
+    "php": ">=7.3",
     "spryker/kernel": "^3.30.0"
   },
   "require-dev": {
+    "spryker/code-sniffer": "*",
     "spryker/flysystem": "*",
     "spryker/propel": "*",
     "spryker/testify": "*"
@@ -28,6 +29,10 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"

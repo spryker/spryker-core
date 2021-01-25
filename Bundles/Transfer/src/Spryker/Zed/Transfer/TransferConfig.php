@@ -7,27 +7,35 @@
 
 namespace Spryker\Zed\Transfer;
 
+use RuntimeException;
+use Spryker\Shared\Transfer\TransferConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class TransferConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @return string
      */
     public function getClassTargetDirectory()
     {
-        return APPLICATION_SOURCE_DIR . '/Generated/Shared/Transfer/';
+        return rtrim(APPLICATION_SOURCE_DIR, DIRECTORY_SEPARATOR) . '/Generated/Shared/Transfer/';
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getDataBuilderTargetDirectory()
     {
-        return APPLICATION_SOURCE_DIR . '/Generated/Shared/DataBuilder/';
+        return rtrim(APPLICATION_SOURCE_DIR, DIRECTORY_SEPARATOR) . '/Generated/Shared/DataBuilder/';
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getSourceDirectories()
@@ -41,19 +49,33 @@ class TransferConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getDataBuilderSourceDirectories()
     {
         $globPatterns = $this->getSourceDirectories();
 
-        $globPatterns[] = APPLICATION_ROOT_DIR . '/tests/_data';
-        $globPatterns[] = APPLICATION_VENDOR_DIR . '/*/*/tests/_data/';
+        $globPatterns[] = rtrim(APPLICATION_ROOT_DIR, DIRECTORY_SEPARATOR) . '/tests/_data';
+        $globPatterns[] = rtrim(APPLICATION_VENDOR_DIR, DIRECTORY_SEPARATOR) . '/*/*/tests/_data/';
 
         return $globPatterns;
     }
 
     /**
+     * @api
+     *
+     * @return string
+     */
+    public function getTransferFileNamePattern(): string
+    {
+        return '/(.*?).transfer.xml/';
+    }
+
+    /**
+     * @api
+     *
      * @return string
      */
     public function getDataBuilderFileNamePattern()
@@ -62,6 +84,8 @@ class TransferConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getEntityFileNamePattern()
@@ -76,7 +100,7 @@ class TransferConfig extends AbstractBundleConfig
      */
     protected function getSprykerCoreSourceDirectoryGlobPattern()
     {
-        return APPLICATION_VENDOR_DIR . '/*/*/src/*/Shared/*/Transfer/';
+        return rtrim(APPLICATION_VENDOR_DIR, DIRECTORY_SEPARATOR) . '/*/*/src/*/Shared/*/Transfer/';
     }
 
     /**
@@ -99,7 +123,7 @@ class TransferConfig extends AbstractBundleConfig
      */
     protected function getApplicationSourceDirectoryGlobPattern()
     {
-        return APPLICATION_SOURCE_DIR . '/*/Shared/*/Transfer/';
+        return rtrim(APPLICATION_SOURCE_DIR, DIRECTORY_SEPARATOR) . '/*/Shared/*/Transfer/';
     }
 
     /**
@@ -116,12 +140,16 @@ class TransferConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\Propel\Business\PropelFacadeInterface::getSchemaDirectory()} instead.
+     *
      * @return string[]
      */
     public function getEntitiesSourceDirectories()
     {
         return [
-            APPLICATION_SOURCE_DIR . '/Orm/Propel/' . APPLICATION_STORE . '/Schema/',
+            rtrim(APPLICATION_SOURCE_DIR, DIRECTORY_SEPARATOR) . '/Orm/Propel/' . APPLICATION_STORE . '/Schema/',
         ];
     }
 
@@ -132,9 +160,142 @@ class TransferConfig extends AbstractBundleConfig
      * Defaults to false for BC reasons. Enable on project level if all modules in question
      * have been upgraded to the version they are fixed in.
      *
+     * @api
+     *
      * @return bool
      */
     public function isTransferNameValidated(): bool
+    {
+        return false;
+    }
+
+    /**
+     * This will enable strict validation for case sensitive declaration.
+     * Mainly for property names, and singular definition.
+     *
+     * Defaults to false for BC reasons. Enable on project level if all modules in question
+     * have been upgraded to the version they are fixed in.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isCaseValidated(): bool
+    {
+        return false;
+    }
+
+    /**
+     * This will enable strict validation for collections and singular definition.
+     * The singular here is important to specify to avoid it being generated without inflection.
+     *
+     * Defaults to false for BC reasons. Enable on project level if all modules in question
+     * have been upgraded to the version they comply with this rule.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isSingularRequired(): bool
+    {
+        return false;
+    }
+
+    /**
+     * Gets shim from=>to map per transfer field that was wrongly set up in core level.
+     * Since transfers are not "owned" by a particular module, this applies here transfer internal on a core level
+     * as a whole.
+     *
+     * This list can be reduced on project level where needed (e.g. to preserve full BC in edge cases).
+     * But we recommend to fix the project code instead to use the same intended type as the actual type
+     * going in and out on core level here.
+     *
+     * Only scalar values and arrays are allowed to be shimmed and this list is only used from core level perspective.
+     * Do not increase this list from project level, it is intended to help projects adapt early to the actual
+     * type of core methods.
+     *
+     * @api
+     *
+     * @phpstan-return array<string, array<string, array<string, string>>>
+     *
+     * @return string[][][]
+     */
+    public function getTypeShims(): array
+    {
+        return [
+            'KeyTranslation' => [
+                'glossaryKey' => [
+                    'int' => 'string',
+                ],
+            ],
+            'ProductReview' => [
+                'status' => [
+                    'int' => 'string',
+                ],
+            ],
+            'CheckoutError' => [
+                'errorCode' => [
+                    'int' => 'string',
+                ],
+            ],
+            'SynchronizationData' => [
+                'data' => [
+                    'string' => 'array',
+                ],
+            ],
+            'SpyProductQuantityStorageEntity' => [
+                'data' => [
+                    'string' => 'array',
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * Specification:
+     * - When enabled, some extra integrity checks are performed.
+     *
+     * @api
+     *
+     * @internal Only for core level introspection.
+     *
+     * @return bool
+     */
+    public function isDebugEnabled(): bool
+    {
+        return $this->get(TransferConstants::IS_DEBUG_ENABLED, false);
+    }
+
+    /**
+     * Specification:
+     * - Returns the path to XSD schema used to validated transfer XML files.
+     *
+     * @api
+     *
+     * @throws \RuntimeException
+     *
+     * @return string
+     */
+    public function getXsdSchemaFilePath(): string
+    {
+        $xsdSchemaFilePath = realpath(__DIR__ . '/../../../../data/definition/transfer-01.xsd');
+
+        if ($xsdSchemaFilePath === false) {
+            throw new RuntimeException('Cannot find path to XSD schema.');
+        }
+
+        return $xsdSchemaFilePath;
+    }
+
+    /**
+     * Specification:
+     * - When enabled, all the available transfer XML files will be checked for validity during transfer validation.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isTransferXmlValidationEnabled(): bool
     {
         return false;
     }

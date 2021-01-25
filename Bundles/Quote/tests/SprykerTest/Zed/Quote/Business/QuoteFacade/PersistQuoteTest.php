@@ -44,7 +44,7 @@ class PersistQuoteTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -59,7 +59,7 @@ class PersistQuoteTest extends Unit
      *
      * @return void
      */
-    public function testPersistQuote(QuoteTransfer $quoteTransfer, QuoteTransfer $expectedQuoteTransfer)
+    public function testPersistQuote(QuoteTransfer $quoteTransfer, QuoteTransfer $expectedQuoteTransfer): void
     {
         // Arrange
         $customerTransfer = $this->tester->haveCustomer();
@@ -96,13 +96,13 @@ class PersistQuoteTest extends Unit
         $this->assertNotNull($actualQuoteTransfer->getIdQuote());
         $this->assertEquals($actualQuoteTransfer->getCurrency(), $expectedQuoteTransfer->getCurrency());
         $this->assertEquals($actualQuoteTransfer->getStore(), $expectedQuoteTransfer->getStore());
-        $this->assertEquals($actualQuoteTransfer->getCustomerReference(), $expectedQuoteTransfer->getCustomerReference());
+        $this->assertSame($actualQuoteTransfer->getCustomerReference(), $expectedQuoteTransfer->getCustomerReference());
     }
 
     /**
      * @return array
      */
-    public function persistQuoteDataProvider()
+    public function persistQuoteDataProvider(): array
     {
         return [
             'persist empty quote' => $this->providePersistEmptyQuoteData(),
@@ -113,7 +113,7 @@ class PersistQuoteTest extends Unit
     /**
      * @return array
      */
-    protected function providePersistEmptyQuoteData()
+    protected function providePersistEmptyQuoteData(): array
     {
         $quoteTransfer = (new QuoteBuilder())->build();
         $expectedQuoteTransfer = clone $quoteTransfer;
@@ -124,7 +124,7 @@ class PersistQuoteTest extends Unit
     /**
      * @return array
      */
-    protected function providePersistFilteredQuoteData()
+    protected function providePersistFilteredQuoteData(): array
     {
         /** @var \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer */
         $quoteTransfer = (new QuoteBuilder())->build();

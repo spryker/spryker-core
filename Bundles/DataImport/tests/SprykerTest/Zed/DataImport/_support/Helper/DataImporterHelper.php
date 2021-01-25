@@ -18,6 +18,7 @@ use Spryker\Zed\DataImport\Business\Model\DataImporterAfterImportInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImporterBeforeImportInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImporterInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
+use Spryker\Zed\DataImport\Business\Model\DataReader\DataReaderInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSet;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerInterface;
 use Spryker\Zed\DataImport\Dependency\Plugin\DataImportPluginInterface;
@@ -31,8 +32,11 @@ class DataImporterHelper extends Module
      *
      * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
      */
-    public function getDataImporterMock($importType, $isCalled = false, ?DataImporterReportTransfer $dataImporterReportTransfer = null)
-    {
+    public function getDataImporterMock(
+        string $importType,
+        bool $isCalled = false,
+        ?DataImporterReportTransfer $dataImporterReportTransfer = null
+    ): DataImporterInterface {
         if (!$dataImporterReportTransfer) {
             $dataImporterReportTransfer = new DataImporterReportTransfer();
             $dataImporterReportTransfer->setImportType($importType)
@@ -58,17 +62,21 @@ class DataImporterHelper extends Module
      * @param bool $isCalled
      * @param \Generated\Shared\Transfer\DataImporterReportTransfer|null $dataImporterReportTransfer
      *
-     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface|\Spryker\Zed\DataImport\Business\DataImporter\DataImporterImportGroupAwareInterface
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
      */
-    public function getDataImporterImportGroupAwareMock(string $importType, string $importGroup, bool $isCalled = false, ?DataImporterReportTransfer $dataImporterReportTransfer = null)
-    {
+    public function getDataImporterImportGroupAwareMock(
+        string $importType,
+        string $importGroup,
+        bool $isCalled = false,
+        ?DataImporterReportTransfer $dataImporterReportTransfer = null
+    ) {
         if (!$dataImporterReportTransfer) {
             $dataImporterReportTransfer = new DataImporterReportTransfer();
             $dataImporterReportTransfer->setImportType($importType)
                 ->setImportedDataSetCount(0);
         }
 
-        /** @var \Spryker\Zed\DataImport\Business\Model\DataImporter $dataImporterStub */
+        /** @var \Spryker\Zed\DataImport\Business\Model\DataImporterInterface $dataImporterStub */
         $dataImporterStub = Stub::makeEmpty(DataImporter::class, [
             'import' => Expected::exactly(($isCalled ? 1 : 0), function () use ($dataImporterReportTransfer) {
                 return $dataImporterReportTransfer;
@@ -91,8 +99,11 @@ class DataImporterHelper extends Module
      *
      * @return \Spryker\Zed\DataImport\Dependency\Plugin\DataImportPluginInterface
      */
-    public function getDataImporterPluginMock($importType, $isCalled = false, ?DataImporterReportTransfer $dataImporterReportTransfer = null)
-    {
+    public function getDataImporterPluginMock(
+        string $importType,
+        bool $isCalled = false,
+        ?DataImporterReportTransfer $dataImporterReportTransfer = null
+    ): DataImportPluginInterface {
         if (!$dataImporterReportTransfer) {
             $dataImporterReportTransfer = new DataImporterReportTransfer();
             $dataImporterReportTransfer->setImportType($importType)
@@ -115,7 +126,7 @@ class DataImporterHelper extends Module
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
      */
-    public function getDataImportStepMock()
+    public function getDataImportStepMock(): DataImportStepInterface
     {
         /** @var \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface $dataSetStub */
         $dataSetStub = Stub::makeEmpty(DataImportStepInterface::class);
@@ -124,13 +135,11 @@ class DataImporterHelper extends Module
     }
 
     /**
-     * @throws \Spryker\Zed\DataImport\Business\Exception\DataImportException
-     *
      * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
      */
-    public function getFailingDataImportStepMock()
+    public function getFailingDataImportStepMock(): DataImportStepInterface
     {
-        $executeCallback = function () {
+        $executeCallback = function (): void {
             throw new DataImportException('ExceptionMessage');
         };
         /** @var \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface $dataSetStub */
@@ -142,7 +151,7 @@ class DataImporterHelper extends Module
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerInterface
      */
-    public function getDataSetMock()
+    public function getDataSetMock(): DataSetStepBrokerInterface
     {
         /** @var \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerInterface $dataSetStub */
         $dataSetStub = Stub::makeEmpty(DataSetStepBrokerInterface::class);
@@ -153,7 +162,7 @@ class DataImporterHelper extends Module
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImporterBeforeImportInterface
      */
-    public function getBeforeImportHookMock()
+    public function getBeforeImportHookMock(): DataImporterBeforeImportInterface
     {
         /** @var \Spryker\Zed\DataImport\Business\Model\DataImporterBeforeImportInterface $beforeHook */
         $beforeHook = Stub::makeEmpty(DataImporterBeforeImportInterface::class, [
@@ -166,7 +175,7 @@ class DataImporterHelper extends Module
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImporterAfterImportInterface
      */
-    public function getAfterImportHookMock()
+    public function getAfterImportHookMock(): DataImporterAfterImportInterface
     {
         /** @var \Spryker\Zed\DataImport\Business\Model\DataImporterAfterImportInterface $beforeHook */
         $beforeHook = Stub::makeEmpty(DataImporterAfterImportInterface::class, [
@@ -182,7 +191,7 @@ class DataImporterHelper extends Module
      *
      * @return \Spryker\Zed\DataImport\Business\Model\DataReader\DataReaderInterface
      */
-    public function getDataReader(?array $dataSets = null, $numberOfDataSets = 3)
+    public function getDataReader(?array $dataSets = null, int $numberOfDataSets = 3): DataReaderInterface
     {
         if (!$dataSets) {
             $faker = Factory::create();

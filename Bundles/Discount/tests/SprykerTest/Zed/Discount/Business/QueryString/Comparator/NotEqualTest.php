@@ -29,7 +29,7 @@ class NotEqualTest extends Unit
     /**
      * @return void
      */
-    public function testAcceptShouldReturnTrueWhenNotEaualExpressionProvided()
+    public function testAcceptShouldReturnTrueWhenNotEaualExpressionProvided(): void
     {
         $notEqual = $this->createNotEqual();
 
@@ -44,7 +44,7 @@ class NotEqualTest extends Unit
     /**
      * @return void
      */
-    public function testCompareWhenClauseValueIsNotEqualToProvidedShouldReturnTrue()
+    public function testCompareWhenClauseValueIsNotEqualToProvidedShouldReturnTrue(): void
     {
         $notEqual = $this->createNotEqual();
 
@@ -59,7 +59,7 @@ class NotEqualTest extends Unit
     /**
      * @return void
      */
-    public function testCompareWhenClauseValueIsEqualToProvidedProvidedShouldReturnFalse()
+    public function testCompareWhenClauseValueIsEqualToProvidedProvidedShouldReturnFalse(): void
     {
         $more = $this->createNotEqual();
 
@@ -74,7 +74,7 @@ class NotEqualTest extends Unit
     /**
      * @return void
      */
-    public function testCompareWhenNonNumericValueUsedShouldThrowException()
+    public function testCompareWhenNonNumericValueUsedShouldThrowException(): void
     {
         $this->expectException(ComparatorException::class);
 
@@ -88,7 +88,7 @@ class NotEqualTest extends Unit
     /**
      * @return \Spryker\Zed\Discount\Business\QueryString\Comparator\NotEqual
      */
-    protected function createNotEqual()
+    protected function createNotEqual(): NotEqual
     {
         return new NotEqual();
     }

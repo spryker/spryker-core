@@ -43,7 +43,7 @@ class Fixture extends Test implements ScenarioDriven
      * @param string $methodName
      * @param string $fileName
      */
-    public function __construct($testClass, string $methodName, string $fileName)
+    public function __construct(object $testClass, string $methodName, string $fileName)
     {
         $metadata = new Metadata();
         $metadata->setName($methodName);
@@ -58,7 +58,7 @@ class Fixture extends Test implements ScenarioDriven
     /**
      * @return void
      */
-    public function preload()
+    public function preload(): void
     {
         $this->scenario->setFeature($this->getSpecificationFromMethod());
         $code = $this->getSourceCode();
@@ -75,7 +75,7 @@ class Fixture extends Test implements ScenarioDriven
     /**
      * @return string
      */
-    public function getSourceCode()
+    public function getSourceCode(): string
     {
         $method = new ReflectionMethod($this->testClassInstance, $this->testMethod);
         $start_line = $method->getStartLine() - 1; // it's actually - 1, otherwise you wont get the function() block
@@ -101,7 +101,7 @@ class Fixture extends Test implements ScenarioDriven
     /**
      * @return void
      */
-    public function test()
+    public function test(): void
     {
         $actorClass = $this->getMetadata()->getCurrent('actor');
         /** @var \Codeception\Actor $actor */
@@ -133,7 +133,7 @@ class Fixture extends Test implements ScenarioDriven
     /**
      * @return string
      */
-    public function toString()
+    public function toString(): string
     {
         return sprintf(
             '%s: %s',
@@ -145,7 +145,7 @@ class Fixture extends Test implements ScenarioDriven
     /**
      * @return string
      */
-    public function getSignature()
+    public function getSignature(): string
     {
         return get_class($this->getTestClass()) . ':' . $this->getTestMethod();
     }
@@ -153,7 +153,7 @@ class Fixture extends Test implements ScenarioDriven
     /**
      * @return object
      */
-    public function getTestClass()
+    public function getTestClass(): object
     {
         return $this->testClassInstance;
     }
@@ -169,7 +169,7 @@ class Fixture extends Test implements ScenarioDriven
     /**
      * @return \Codeception\Lib\Parser
      */
-    protected function getParser()
+    protected function getParser(): Parser
     {
         return $this->parser;
     }

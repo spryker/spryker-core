@@ -22,10 +22,12 @@ class FixturesCommand extends Run implements CustomCommandInterface
 {
     use CommandConfig;
 
+    public const CODE_SUCCESS = 0;
+
     /**
      * @return string
      */
-    public static function getCommandName()
+    public static function getCommandName(): string
     {
         return 'fixtures';
     }
@@ -33,7 +35,7 @@ class FixturesCommand extends Run implements CustomCommandInterface
     /**
      * @return string
      */
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'Builds fixtures and serializes them into files';
     }
@@ -43,7 +45,7 @@ class FixturesCommand extends Run implements CustomCommandInterface
      *
      * @return void
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this->setDefinition([
             new InputOption(
@@ -95,9 +97,9 @@ class FixturesCommand extends Run implements CustomCommandInterface
      *
      * @throws \Codeception\Exception\TestRuntimeException
      *
-     * @return void
+     * @return int
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->options = $input->getOptions();
         $this->output = $output;
@@ -110,11 +112,11 @@ class FixturesCommand extends Run implements CustomCommandInterface
                 Codecept::versionString() . "\nPowered by " . Version::getVersionString()
             );
             $output->writeln(
-                "Running with seed: " . $this->options['seed'] . "\n"
+                'Running with seed: ' . $this->options['seed'] . "\n"
             );
         }
         if ($this->options['group']) {
-            $output->writeln(sprintf("[Groups] <info>%s</info> ", implode(', ', $this->options['group'])));
+            $output->writeln(sprintf('[Groups] <info>%s</info> ', implode(', ', $this->options['group'])));
         }
         if ($this->options['debug']) {
             $output->setVerbosity(OutputInterface::VERBOSITY_VERY_VERBOSE);
@@ -149,5 +151,7 @@ class FixturesCommand extends Run implements CustomCommandInterface
         if (!$input->getOption('no-exit') && !$this->codecept->getResult()->wasSuccessful()) {
             exit(1);
         }
+
+        return static::CODE_SUCCESS;
     }
 }

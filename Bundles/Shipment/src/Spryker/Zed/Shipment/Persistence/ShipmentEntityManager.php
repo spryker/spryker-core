@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\ShipmentTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesExpense;
 use Orm\Zed\Sales\Persistence\SpySalesShipment;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
+use Orm\Zed\Shipment\Persistence\SpyShipmentMethodStore;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -100,6 +101,31 @@ class ShipmentEntityManager extends AbstractEntityManager implements ShipmentEnt
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer
+     */
+    public function updateShipmentMethod(ShipmentMethodTransfer $shipmentMethodTransfer): ShipmentMethodTransfer
+    {
+        $shipmentMethodTransfer->requireIdShipmentMethod();
+
+        $shipmentMethodEntity = $this->getFactory()
+            ->createShipmentMethodQuery()
+            ->filterByIdShipmentMethod($shipmentMethodTransfer->getIdShipmentMethod())
+            ->findOne();
+
+        $shipmentMethodMapper = $this->getFactory()->createShipmentMethodMapper();
+
+        $shipmentMethodEntity = $shipmentMethodMapper
+            ->mapShipmentMethodTransferToShipmentMethodEntity($shipmentMethodTransfer, $shipmentMethodEntity);
+
+        $shipmentMethodEntity->save();
+
+        return $shipmentMethodMapper
+            ->mapShipmentMethodEntityToShipmentMethodTransfer($shipmentMethodEntity, $shipmentMethodTransfer);
+    }
+
+    /**
      * @param int $idShipmentMethod
      *
      * @return void
@@ -110,6 +136,32 @@ class ShipmentEntityManager extends AbstractEntityManager implements ShipmentEnt
             ->createShipmentMethodQuery()
             ->filterByIdShipmentMethod($idShipmentMethod)
             ->findOne()
+            ->delete();
+    }
+
+    /**
+     * @param int $idShipmentMethod
+     *
+     * @return void
+     */
+    public function deleteShipmentMethodStoreRelationsByIdShipmentMethod(int $idShipmentMethod): void
+    {
+        $this->getFactory()
+            ->createShipmentMethodStoreQuery()
+            ->filterByFkShipmentMethod($idShipmentMethod)
+            ->delete();
+    }
+
+    /**
+     * @param int $idShipmentMethod
+     *
+     * @return void
+     */
+    public function deleteShipmentMethodPricesByIdShipmentMethod(int $idShipmentMethod): void
+    {
+        $this->getFactory()
+            ->createShipmentMethodPriceQuery()
+            ->filterByFkShipmentMethod($idShipmentMethod)
             ->delete();
     }
 
@@ -131,5 +183,40 @@ class ShipmentEntityManager extends AbstractEntityManager implements ShipmentEnt
 
         return $expenseMapper
             ->mapOrderSalesExpenseEntityToExpenseTransfer($salesOrderExpenseEntity, $expenseTransfer);
+    }
+
+    /**
+     * @param array $idStores
+     * @param int $idShipmentMethod
+     *
+     * @return void
+     */
+    public function removeShipmentMethodStoreRelationsForStores(array $idStores, int $idShipmentMethod): void
+    {
+        if ($idStores === []) {
+            return;
+        }
+
+        $this->getFactory()
+            ->createShipmentMethodStoreQuery()
+            ->filterByFkShipmentMethod($idShipmentMethod)
+            ->filterByFkStore_In($idStores)
+            ->delete();
+    }
+
+    /**
+     * @param array $idStores
+     * @param int $idShipmentMethod
+     *
+     * @return void
+     */
+    public function addShipmentMethodStoreRelationsForStores(array $idStores, int $idShipmentMethod): void
+    {
+        foreach ($idStores as $idStore) {
+            $shipmentMethodStoreEntity = new SpyShipmentMethodStore();
+            $shipmentMethodStoreEntity->setFkStore($idStore)
+                ->setFkShipmentMethod($idShipmentMethod)
+                ->save();
+        }
     }
 }

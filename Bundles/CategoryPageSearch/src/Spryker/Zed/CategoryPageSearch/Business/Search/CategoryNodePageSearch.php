@@ -11,9 +11,8 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;
 use Orm\Zed\CategoryPageSearch\Persistence\SpyCategoryNodePageSearch;
 use Propel\Runtime\Map\TableMap;
-use Spryker\Shared\CategoryPageSearch\CategoryPageSearchConstants;
-use Spryker\Shared\Kernel\Store;
-use Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToSearchInterface;
+use Spryker\Zed\CategoryPageSearch\Business\Search\DataMapper\CategoryNodePageSearchDataMapperInterface;
+use Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToStoreFacadeInterface;
 use Spryker\Zed\CategoryPageSearch\Dependency\Service\CategoryPageSearchToUtilEncodingInterface;
 use Spryker\Zed\CategoryPageSearch\Persistence\CategoryPageSearchQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
@@ -28,9 +27,9 @@ class CategoryNodePageSearch implements CategoryNodePageSearchInterface
     protected $utilEncoding;
 
     /**
-     * @var \Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToSearchInterface
+     * @var \Spryker\Zed\CategoryPageSearch\Business\Search\DataMapper\CategoryNodePageSearchDataMapperInterface
      */
-    protected $searchFacade;
+    protected $categoryNodePageSearchDataMapper;
 
     /**
      * @var \Spryker\Zed\CategoryPageSearch\Persistence\CategoryPageSearchQueryContainerInterface
@@ -38,33 +37,35 @@ class CategoryNodePageSearch implements CategoryNodePageSearchInterface
     protected $queryContainer;
 
     /**
-     * @var \Spryker\Shared\Kernel\Store
+     * @var \Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToStoreFacadeInterface
      */
-    protected $store;
+    protected $storeFacade;
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()} instead.
+     *
      * @var bool
      */
     protected $isSendingToQueue = true;
 
     /**
      * @param \Spryker\Zed\CategoryPageSearch\Dependency\Service\CategoryPageSearchToUtilEncodingInterface $utilEncoding
-     * @param \Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToSearchInterface $searchFacade
+     * @param \Spryker\Zed\CategoryPageSearch\Business\Search\DataMapper\CategoryNodePageSearchDataMapperInterface $categoryNodePageSearchDataMapper
      * @param \Spryker\Zed\CategoryPageSearch\Persistence\CategoryPageSearchQueryContainerInterface $queryContainer
-     * @param \Spryker\Shared\Kernel\Store $store
+     * @param \Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToStoreFacadeInterface $storeFacade
      * @param bool $isSendingToQueue
      */
     public function __construct(
         CategoryPageSearchToUtilEncodingInterface $utilEncoding,
-        CategoryPageSearchToSearchInterface $searchFacade,
+        CategoryNodePageSearchDataMapperInterface $categoryNodePageSearchDataMapper,
         CategoryPageSearchQueryContainerInterface $queryContainer,
-        Store $store,
+        CategoryPageSearchToStoreFacadeInterface $storeFacade,
         $isSendingToQueue
     ) {
         $this->utilEncoding = $utilEncoding;
-        $this->searchFacade = $searchFacade;
+        $this->categoryNodePageSearchDataMapper = $categoryNodePageSearchDataMapper;
         $this->queryContainer = $queryContainer;
-        $this->store = $store;
+        $this->storeFacade = $storeFacade;
         $this->isSendingToQueue = $isSendingToQueue;
     }
 
@@ -171,11 +172,10 @@ class CategoryNodePageSearch implements CategoryNodePageSearchInterface
      */
     public function mapToSearchData(array $categoryNodeData, $localeName)
     {
-        return $this->searchFacade
-            ->transformPageMapToDocumentByMapperName(
+        return $this->categoryNodePageSearchDataMapper
+            ->mapCategoryNodeDataToSearchData(
                 $categoryNodeData,
-                (new LocaleTransfer())->setLocaleName($localeName),
-                CategoryPageSearchConstants::CATEGORY_NODE_RESOURCE_NAME
+                (new LocaleTransfer())->setLocaleName($localeName)
             );
     }
 
@@ -226,13 +226,13 @@ class CategoryNodePageSearch implements CategoryNodePageSearchInterface
      */
     protected function getSharedPersistenceLocaleNames(): array
     {
-        $localeNames = $this->store->getLocales();
-        foreach ($this->store->getStoresWithSharedPersistence() as $storeName) {
-            foreach ($this->store->getLocalesPerStore($storeName) as $localeName) {
-                $localeNames[] = $localeName;
-            }
+        $currentStoreTransfer = $this->storeFacade->getCurrentStore();
+        $localeNames = $currentStoreTransfer->getAvailableLocaleIsoCodes();
+
+        foreach ($this->storeFacade->getStoresWithSharedPersistence($currentStoreTransfer) as $storeTransfer) {
+            $localeNames = array_merge($localeNames, $storeTransfer->getAvailableLocaleIsoCodes());
         }
 
-        return array_unique($localeNames);
+        return $localeNames;
     }
 }

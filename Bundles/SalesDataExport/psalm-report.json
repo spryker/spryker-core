@@ -1,0 +1,126 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 33,
+            "line_to": 33,
+            "type": "MoreSpecificReturnType",
+            "message": "The declared return type 'Spryker\\Zed\\SalesDataExport\\SalesDataExportConfig' for Spryker\\Zed\\Kernel\\BundleConfigResolverAwareTrait::getConfig is more specific than the inferred return type 'Spryker\\Zed\\Kernel\\AbstractBundleConfig'",
+            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Zed/Kernel/BundleConfigResolverAwareTrait.php",
+            "snippet": "     * @return \\Spryker\\Zed\\Kernel\\AbstractBundleConfig",
+            "selected_text": "\\Spryker\\Zed\\Kernel\\AbstractBundleConfig",
+            "error_level": 3,
+            "shortcode": 70
+        },
+        {
+            "severity": "info",
+            "line_from": 45,
+            "line_to": 45,
+            "type": "MoreSpecificReturnType",
+            "message": "The declared return type 'Spryker\\Zed\\Kernel\\AbstractBundleConfig' for Spryker\\Zed\\Kernel\\BundleConfigResolverAwareTrait::resolveBundleConfig is more specific than the inferred return type 'Spryker\\Shared\\Kernel\\AbstractBundleConfig'",
+            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Zed/Kernel/BundleConfigResolverAwareTrait.php",
+            "snippet": "     * @return \\Spryker\\Zed\\Kernel\\AbstractBundleConfig",
+            "selected_text": "\\Spryker\\Zed\\Kernel\\AbstractBundleConfig",
+            "error_level": 3,
+            "shortcode": 70
+        },
+        {
+            "severity": "info",
+            "line_from": 30,
+            "line_to": 30,
+            "type": "MismatchingDocblockParamType",
+            "message": "Parameter $salesOrderCommentEntities has wrong type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\Sales\\Persistence\\Base\\SpySalesOrderComment>', should be 'Propel\\Runtime\\Collection\\ObjectCollection'",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesDataExport/src/Spryker/Zed/SalesDataExport/Persistence/Propel/Mapper/SalesOrderCommentMapper.php",
+            "snippet": "     * @param \\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\Sales\\Persistence\\Base\\SpySalesOrderComment[] $salesOrderCommentEntities",
+            "selected_text": "\\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\Sales\\Persistence\\Base\\SpySalesOrderComment[]",
+            "error_level": 4,
+            "shortcode": 141
+        },
+        {
+            "severity": "info",
+            "line_from": 52,
+            "line_to": 52,
+            "type": "InvalidNullableReturnType",
+            "message": "The declared return type 'string' for Spryker\\Zed\\SalesDataExport\\Persistence\\Propel\\Mapper\\SalesOrderCommentMapper::mapSalesOrderCommentTransfersToJson is not nullable, but 'null|string' contains null",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesDataExport/src/Spryker/Zed/SalesDataExport/Persistence/Propel/Mapper/SalesOrderCommentMapper.php",
+            "snippet": "     * @return string",
+            "selected_text": "string",
+            "error_level": 5,
+            "shortcode": 144
+        },
+        {
+            "severity": "info",
+            "line_from": 66,
+            "line_to": 66,
+            "type": "NullableReturnStatement",
+            "message": "The declared return type 'string' for Spryker\\Zed\\SalesDataExport\\Persistence\\Propel\\Mapper\\SalesOrderCommentMapper::mapSalesOrderCommentTransfersToJson is not nullable, but the function returns 'null|string'",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesDataExport/src/Spryker/Zed/SalesDataExport/Persistence/Propel/Mapper/SalesOrderCommentMapper.php",
+            "snippet": "        return $this->utilEncodingService->encodeJson($orderComments);",
+            "selected_text": "$this->utilEncodingService->encodeJson($orderComments)",
+            "error_level": 5,
+            "shortcode": 139
+        },
+        {
+            "severity": "info",
+            "line_from": 77,
+            "line_to": 77,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Sales\\Persistence\\SpySalesOrder> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesDataExport/src/Spryker/Zed/SalesDataExport/Persistence/SalesDataExportRepository.php",
+            "snippet": "        $salesOrderData = $salesOrderQuery->find()->getArrayCopy();",
+            "selected_text": "getArrayCopy",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 144,
+            "line_to": 144,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 2 of Spryker\\Zed\\SalesDataExport\\Persistence\\SalesDataExportRepository::applyFilterCriteriaToSalesOrderItemQuery expects Orm\\Zed\\Sales\\Persistence\\SpySalesOrderItemQuery, possibly different type Orm\\Zed\\GiftCardBalance\\Persistence\\SpyGiftCardBalanceLogQuery&static|Orm\\Zed\\MerchantSalesOrder\\Persistence\\SpyMerchantSalesOrderQuery&static|Orm\\Zed\\Oms\\Persistence\\SpyOmsTransitionLogQuery&static|Orm\\Zed\\Payment\\Persistence\\SpySalesPaymentQuery&static|Orm\\Zed\\Payone\\Persistence\\SpyPaymentPayoneQuery&static|Orm\\Zed\\Refund\\Persistence\\SpyRefundQuery&static|Orm\\Zed\\SalesInvoice\\Persistence\\SpySalesOrderInvoiceQuery&static|Orm\\Zed\\SalesReclamation\\Persistence\\SpySalesReclamationQuery&static|Orm\\Zed\\Sales\\Persistence\\SpySalesDiscountQuery&static|Orm\\Zed\\Sales\\Persistence\\SpySalesExpenseQuery&static|Orm\\Zed\\Sales\\Persistence\\SpySalesOrderCommentQuery&static|Orm\\Zed\\Sales\\Persistence\\SpySalesOrderItemQuery&static|Orm\\Zed\\Sales\\Persistence\\SpySalesOrderNoteQuery&static|Orm\\Zed\\Sales\\Persistence\\SpySalesOrderTotalsQuery&static|Orm\\Zed\\Sales\\Persistence\\SpySalesShipmentQuery&static provided",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesDataExport/src/Spryker/Zed/SalesDataExport/Persistence/SalesDataExportRepository.php",
+            "snippet": "            $salesOrderItemQuery",
+            "selected_text": "$salesOrderItemQuery",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 149,
+            "line_to": 149,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Sales\\Persistence\\SpySalesOrderItem> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesDataExport/src/Spryker/Zed/SalesDataExport/Persistence/SalesDataExportRepository.php",
+            "snippet": "        $salesOrderItemData = $salesOrderItemQuery->find()->getArrayCopy();",
+            "selected_text": "getArrayCopy",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 196,
+            "line_to": 196,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Sales\\Persistence\\SpySalesExpense> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesDataExport/src/Spryker/Zed/SalesDataExport/Persistence/SalesDataExportRepository.php",
+            "snippet": "        $orderExpenseData = $salesExpenseQuery->find()->toArray();",
+            "selected_text": "toArray",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 371,
+            "line_to": 371,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Sales\\Persistence\\SpySalesOrderComment> variable $salesOrderCommentEntities",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesDataExport/src/Spryker/Zed/SalesDataExport/Persistence/SalesDataExportRepository.php",
+            "snippet": "        if ($salesOrderCommentEntities->count() === 0) {",
+            "selected_text": "count",
+            "error_level": 3,
+            "shortcode": 113
+        }
+    ],
+    "deprecation": []
+}

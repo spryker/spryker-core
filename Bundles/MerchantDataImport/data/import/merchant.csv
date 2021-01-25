@@ -1,6 +1,1 @@
-merchant_key,merchant_name
-kudu-merchant-1,Kudu Merchant
-oryx-merchant-1,Oryx Merchant
-impala-merchant-1,Impala Merchant
-sugar-monster,Sugar Monster
-restrictions-merchant,Restrictions Merchant
+merchant_key,merchant_reference,merchant_name,registration_number,status,email,is_active,url.de_DE,url.en_US

@@ -1,0 +1,18 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 38,
+            "line_to": 38,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\CategoryDataFeed\\Dependency\\QueryContainer\\CategoryDataFeedToCategoryInterface::queryCategory cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoryDataFeed/src/Spryker/Zed/CategoryDataFeed/Persistence/CategoryDataFeedQueryContainer.php",
+            "snippet": "            ->queryCategory($categoryDataFeedTransfer->getIdLocale());",
+            "selected_text": "$categoryDataFeedTransfer->getIdLocale()",
+            "error_level": 3,
+            "shortcode": 78
+        }
+    ],
+    "deprecation": []
+}

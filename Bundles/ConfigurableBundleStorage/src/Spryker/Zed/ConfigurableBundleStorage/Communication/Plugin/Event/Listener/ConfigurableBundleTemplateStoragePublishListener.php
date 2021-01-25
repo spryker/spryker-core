@@ -18,20 +18,23 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class ConfigurableBundleTemplateStoragePublishListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     /**
+     * {@inheritDoc}
+     * - Publishes active configurable bundle template changes to Storage.
+     * - Unpublish inactive configurable bundle templates Storage.
+     *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
      * @param string $eventName
      *
      * @return void
      */
-    public function handleBulk(array $eventTransfers, $eventName)
+    public function handleBulk(array $eventEntityTransfers, $eventName)
     {
         $configurableBundleTemplateIds = $this->getFactory()
             ->getEventBehaviorFacade()
-            ->getEventTransferIds($eventTransfers);
+            ->getEventTransferIds($eventEntityTransfers);
 
-        $this->getFacade()
-            ->publishConfigurableBundleTemplate($configurableBundleTemplateIds);
+        $this->getFacade()->publishConfigurableBundleTemplate($configurableBundleTemplateIds);
     }
 }

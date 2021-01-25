@@ -18,6 +18,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class ZedLoggerConfigPlugin extends AbstractPlugin implements LoggerConfigInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string
@@ -28,6 +30,8 @@ class ZedLoggerConfigPlugin extends AbstractPlugin implements LoggerConfigInterf
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Monolog\Handler\HandlerInterface[]
@@ -38,6 +42,8 @@ class ZedLoggerConfigPlugin extends AbstractPlugin implements LoggerConfigInterf
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return callable[]

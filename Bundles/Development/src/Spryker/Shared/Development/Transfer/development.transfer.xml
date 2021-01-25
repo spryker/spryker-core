@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <transfers
     xmlns="spryker:transfer-01"
-    xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="spryker:transfer-01 https://static.spryker.com/transfer-01.xsd"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd"
 >
 
     <transfer name="IdeAutoCompletionBundle">
@@ -72,7 +72,7 @@
         <property name="toModule" type="string"/>
         <property name="toModuleLayer" type="string"/>
         <property name="toType" type="string"/>
-        <property name="methods" type="string[]"/>
+        <property name="methods" type="string[]" singular="methods"/>
     </transfer>
 
     <transfer name="DependencyValidationRequest">
@@ -96,7 +96,7 @@
         <property name="isOwnExtensionModule" type="bool"/>
         <property name="isInComposerRequire" type="bool"/>
         <property name="isInComposerRequireDev" type="bool"/>
-        <property name="dependencyTypes" type="string[]"/>
+        <property name="dependencyTypes" type="string[]" singular="dependencyTypes"/>
         <property name="validationMessages" type="ValidationMessage[]" singular="validationMessage"/>
     </transfer>
 
@@ -156,7 +156,7 @@
     </transfer>
 
     <transfer name="DependencyProviderCollection">
-        <property name="dependencyProvider" type="DependencyProvider[]"/>
+        <property name="dependencyProvider" type="DependencyProvider[]" singular="dependencyProvider"/>
     </transfer>
 
     <transfer name="Plugin">
@@ -169,6 +169,13 @@
         <property name="moduleName" type="string"/>
         <property name="existsCoreModule" type="bool"/>
         <property name="existsProjectModule" type="bool"/>
+    </transfer>
+
+    <transfer name="DependencyModuleView">
+        <property name="name" type="string"/>
+        <property name="totalDependencyCount" type="int"/>
+        <property name="testDependencyCount" type="int"/>
+        <property name="optionalDependencyCount" type="int"/>
     </transfer>
 
 </transfers>

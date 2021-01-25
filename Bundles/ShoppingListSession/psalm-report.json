@@ -1,0 +1,42 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 49,
+            "line_to": 49,
+            "type": "InvalidNullableReturnType",
+            "message": "The declared return type 'Generated\\Shared\\Transfer\\ShoppingListCollectionTransfer' for Spryker\\Client\\ShoppingListSession\\ShoppingList\\ShoppingListSessionReader::getCustomerShoppingListCollection is not nullable, but 'Generated\\Shared\\Transfer\\ShoppingListCollectionTransfer|null' contains null",
+            "file_name": "vendor/spryker/spryker/Bundles/ShoppingListSession/src/Spryker/Client/ShoppingListSession/ShoppingList/ShoppingListSessionReader.php",
+            "snippet": "     * @return \\Generated\\Shared\\Transfer\\ShoppingListCollectionTransfer",
+            "selected_text": "\\Generated\\Shared\\Transfer\\ShoppingListCollectionTransfer",
+            "error_level": 5,
+            "shortcode": 144
+        },
+        {
+            "severity": "info",
+            "line_from": 58,
+            "line_to": 58,
+            "type": "NullableReturnStatement",
+            "message": "The declared return type 'Generated\\Shared\\Transfer\\ShoppingListCollectionTransfer' for Spryker\\Client\\ShoppingListSession\\ShoppingList\\ShoppingListSessionReader::getCustomerShoppingListCollection is not nullable, but the function returns 'Generated\\Shared\\Transfer\\ShoppingListCollectionTransfer|null'",
+            "file_name": "vendor/spryker/spryker/Bundles/ShoppingListSession/src/Spryker/Client/ShoppingListSession/ShoppingList/ShoppingListSessionReader.php",
+            "snippet": "        return $shoppingListSessionTransfer->getShoppingLists();",
+            "selected_text": "$shoppingListSessionTransfer->getShoppingLists()",
+            "error_level": 5,
+            "shortcode": 139
+        },
+        {
+            "severity": "info",
+            "line_from": 58,
+            "line_to": 58,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getShoppingLists on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ShoppingListSession/src/Spryker/Client/ShoppingListSession/ShoppingList/ShoppingListSessionReader.php",
+            "snippet": "        return $shoppingListSessionTransfer->getShoppingLists();",
+            "selected_text": "getShoppingLists",
+            "error_level": 3,
+            "shortcode": 83
+        }
+    ],
+    "deprecation": []
+}

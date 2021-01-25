@@ -148,7 +148,8 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
             $this->getPersistentCartFacade(),
             $this->createQuoteReader(),
             $this->createQuoteItemMapper(),
-            $this->createQuotePermissionChecker()
+            $this->createQuotePermissionChecker(),
+            $this->getCartItemMapperPlugins()
         );
     }
 
@@ -172,7 +173,8 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
     {
         return new QuoteItemReader(
             $this->createQuoteReader(),
-            $this->createQuoteItemMapper()
+            $this->createQuoteItemMapper(),
+            $this->getQuoteItemReadValidatorPlugins()
         );
     }
 
@@ -275,7 +277,7 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionExpanderPluginInterface[]
      */
-    protected function getQuoteCollectionExpanderPlugins(): array
+    public function getQuoteCollectionExpanderPlugins(): array
     {
         return $this->getProvidedDependency(CartsRestApiDependencyProvider::PLUGINS_QUOTE_COLLECTION_EXPANDER);
     }
@@ -283,8 +285,24 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteExpanderPluginInterface[]
      */
-    protected function getQuoteExpanderPlugins(): array
+    public function getQuoteExpanderPlugins(): array
     {
         return $this->getProvidedDependency(CartsRestApiDependencyProvider::PLUGINS_QUOTE_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\CartItemMapperPluginInterface[]
+     */
+    public function getCartItemMapperPlugins(): array
+    {
+        return $this->getProvidedDependency(CartsRestApiDependencyProvider::PLUGINS_CART_ITEM_MAPPER);
+    }
+
+    /**
+     * @return \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteItemReadValidatorPluginInterface[]
+     */
+    public function getQuoteItemReadValidatorPlugins(): array
+    {
+        return $this->getProvidedDependency(CartsRestApiDependencyProvider::PLUGINS_QUOTE_ITEM_READ_VALIDATOR);
     }
 }

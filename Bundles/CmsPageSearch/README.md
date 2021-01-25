@@ -1,7 +1,8 @@
 # CmsPageSearch Module
-[![Build Status](https://travis-ci.org/spryker/CmsPageSearch.svg)](https://travis-ci.org/spryker/CmsPageSearch)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/CmsPageSearch/badge.svg)](https://coveralls.io/github/spryker/CmsPageSearch)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/spryker/CmsPageSearch/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/spryker/CmsPageSearch/?branch=master)
+[![Build Status](https://travis-ci.org/spryker/cms-page-search.svg)](https://travis-ci.org/spryker/cms-page-search)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
+
+This module manages Elasticsearch documents for CMS entities.
 
 ## Installation
 

@@ -28,10 +28,10 @@ class TaxSetViewCest
      *
      * @return void
      */
-    public function breadcrumbIsVisible(TaxCommunicationTester $i)
+    public function breadcrumbIsVisible(TaxCommunicationTester $i): void
     {
         $i->listDataTable(TaxSetListPage::DATA_TABLE_URL);
         $i->clickDataTableViewButton();
-        $i->seeBreadcrumbNavigation('Dashboard / Taxes / Tax Sets / View Tax Set');
+        $i->seeBreadcrumbNavigation('Administration / Tax Sets / View Tax Set');
     }
 }

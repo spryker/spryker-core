@@ -29,7 +29,7 @@ class PathPreProcessorTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
     }
@@ -37,7 +37,7 @@ class PathPreProcessorTest extends Unit
     /**
      * @return void
      */
-    public function testProcess()
+    public function testProcess(): void
     {
         $processor = new PathPreProcessor();
 
@@ -53,7 +53,7 @@ class PathPreProcessorTest extends Unit
     /**
      * @return void
      */
-    public function testProcessWithAdditionalParams()
+    public function testProcessWithAdditionalParams(): void
     {
         $processor = new PathPreProcessor();
 
@@ -69,7 +69,7 @@ class PathPreProcessorTest extends Unit
     /**
      * @return void
      */
-    public function testProcessWithQueryString()
+    public function testProcessWithQueryString(): void
     {
         $processor = new PathPreProcessor();
 

@@ -1,0 +1,164 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 41,
+            "line_to": 41,
+            "type": "ParamNameMismatch",
+            "message": "Argument 2 of Spryker\\Zed\\ProductLabelCollector\\Communication\\Plugin\\ProductLabelDictionaryCollectorStoragePlugin::run has wrong name $localeTransfer, expecting $locale as defined by Spryker\\Zed\\Collector\\Dependency\\Plugin\\CollectorPluginInterface::run",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelCollector/src/Spryker/Zed/ProductLabelCollector/Communication/Plugin/ProductLabelDictionaryCollectorStoragePlugin.php",
+            "snippet": "        LocaleTransfer $localeTransfer,",
+            "selected_text": "$localeTransfer",
+            "error_level": 7,
+            "shortcode": 230
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 107,
+            "line_to": 107,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of DateTime::__construct cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelCollector/src/Spryker/Zed/ProductLabelCollector/Business/Collector/Storage/LabelDictionaryCollector.php",
+            "snippet": "        $validFromDate = new DateTime($productLabelTransfer->getValidFrom());",
+            "selected_text": "$productLabelTransfer->getValidFrom()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 128,
+            "line_to": 128,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of DateTime::__construct cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelCollector/src/Spryker/Zed/ProductLabelCollector/Business/Collector/Storage/LabelDictionaryCollector.php",
+            "snippet": "        $validToDate = new DateTime($productLabelTransfer->getValidTo());",
+            "selected_text": "$productLabelTransfer->getValidTo()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 147,
+            "line_to": 147,
+            "type": "NullableReturnStatement",
+            "message": "The declared return type 'string' for Spryker\\Zed\\ProductLabelCollector\\Business\\Collector\\Storage\\LabelDictionaryCollector::getNameAttributeForCurrentLocale is not nullable, but the function returns 'mixed|null|string'",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelCollector/src/Spryker/Zed/ProductLabelCollector/Business/Collector/Storage/LabelDictionaryCollector.php",
+            "snippet": "                return $attributesTransfer->getName();",
+            "selected_text": "$attributesTransfer->getName()",
+            "error_level": 5,
+            "shortcode": 139
+        },
+        {
+            "severity": "info",
+            "line_from": 151,
+            "line_to": 151,
+            "type": "NullableReturnStatement",
+            "message": "The declared return type 'string' for Spryker\\Zed\\ProductLabelCollector\\Business\\Collector\\Storage\\LabelDictionaryCollector::getNameAttributeForCurrentLocale is not nullable, but the function returns 'null|string'",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelCollector/src/Spryker/Zed/ProductLabelCollector/Business/Collector/Storage/LabelDictionaryCollector.php",
+            "snippet": "        return $productLabelTransfer->getName();",
+            "selected_text": "$productLabelTransfer->getName()",
+            "error_level": 5,
+            "shortcode": 139
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 31,
+            "line_to": 31,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelCollector/src/Spryker/Zed/ProductLabelCollector/Business/ProductLabelCollectorFacade.php",
+            "snippet": "     * @param \\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface $result",
+            "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 74,
+            "line_to": 74,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelCollector/src/Spryker/Zed/ProductLabelCollector/Business/ProductLabelCollectorFacade.php",
+            "snippet": "     * @param \\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface $result",
+            "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 29,
+            "line_to": 29,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelCollector/src/Spryker/Zed/ProductLabelCollector/Business/ProductLabelCollectorFacadeInterface.php",
+            "snippet": "     * @param \\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface $result",
+            "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 56,
+            "line_to": 56,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelCollector/src/Spryker/Zed/ProductLabelCollector/Business/ProductLabelCollectorFacadeInterface.php",
+            "snippet": "     * @param \\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface $result",
+            "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 31,
+            "line_to": 31,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelCollector/src/Spryker/Zed/ProductLabelCollector/Communication/Plugin/ProductLabelDictionaryCollectorStoragePlugin.php",
+            "snippet": "     * @param \\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface $result",
+            "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 31,
+            "line_to": 31,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelCollector/src/Spryker/Zed/ProductLabelCollector/Communication/Plugin/ProductLabelProductAbstractRelationCollectorStoragePlugin.php",
+            "snippet": "     * @param \\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface $result",
+            "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 38,
+            "line_to": 38,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelCollector/src/Spryker/Zed/ProductLabelCollector/Dependency/Facade/ProductLabelCollectorToCollectorBridge.php",
+            "snippet": "     * @param \\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface $result",
+            "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 25,
+            "line_to": 25,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelCollector/src/Spryker/Zed/ProductLabelCollector/Dependency/Facade/ProductLabelCollectorToCollectorInterface.php",
+            "snippet": "     * @param \\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface $result",
+            "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface",
+            "error_level": 2,
+            "shortcode": 98
+        }
+    ]
+}

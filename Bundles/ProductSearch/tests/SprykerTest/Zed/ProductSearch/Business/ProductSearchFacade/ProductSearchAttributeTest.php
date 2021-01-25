@@ -28,7 +28,7 @@ class ProductSearchAttributeTest extends AbstractProductSearchFacadeTest
     /**
      * @return void
      */
-    public function testCreateProductSearchAttribute()
+    public function testCreateProductSearchAttribute(): void
     {
         $productSearchAttributeTransfer = new ProductSearchAttributeTransfer();
         $productSearchAttributeTransfer
@@ -45,7 +45,7 @@ class ProductSearchAttributeTest extends AbstractProductSearchFacadeTest
     /**
      * @return void
      */
-    public function testUpdateProductSearchAttribute()
+    public function testUpdateProductSearchAttribute(): void
     {
         $productSearchAttributeEntity = $this->createProductSearchAttributeEntity(
             'updateProductSearchAttribute',
@@ -68,7 +68,7 @@ class ProductSearchAttributeTest extends AbstractProductSearchFacadeTest
     /**
      * @return void
      */
-    public function testDeleteProductSearchAttribute()
+    public function testDeleteProductSearchAttribute(): void
     {
         $productSearchAttributeEntity = $this->createProductSearchAttributeEntity(
             'deleteProductSearchAttribute',
@@ -85,13 +85,13 @@ class ProductSearchAttributeTest extends AbstractProductSearchFacadeTest
             ->findByIdProductSearchAttribute($productSearchAttributeTransfer->getIdProductSearchAttribute())
             ->count();
 
-        $this->assertEquals(0, $count, 'Deletion failed!');
+        $this->assertSame(0, $count, 'Deletion failed!');
     }
 
     /**
      * @return void
      */
-    public function testGetProductSearchAttribute()
+    public function testGetProductSearchAttribute(): void
     {
         $productSearchAttributeEntity = $this->createProductSearchAttributeEntity(
             'getProductSearchAttribute',
@@ -102,13 +102,13 @@ class ProductSearchAttributeTest extends AbstractProductSearchFacadeTest
         $productSearchAttributeTransfer = $this->productSearchFacade
             ->getProductSearchAttribute($productSearchAttributeEntity->getIdProductSearchAttribute());
 
-        $this->assertEquals($productSearchAttributeEntity->getFilterType(), $productSearchAttributeTransfer->getFilterType());
+        $this->assertSame($productSearchAttributeEntity->getFilterType(), $productSearchAttributeTransfer->getFilterType());
     }
 
     /**
      * @return void
      */
-    public function testGetProductSearchAttributeList()
+    public function testGetProductSearchAttributeList(): void
     {
         SpyProductSearchAttributeQuery::create()->deleteAll();
 
@@ -137,7 +137,7 @@ class ProductSearchAttributeTest extends AbstractProductSearchFacadeTest
     /**
      * @return void
      */
-    public function testUpdateProductSearchAttributeOrder()
+    public function testUpdateProductSearchAttributeOrder(): void
     {
         $entity1 = $this->createProductSearchAttributeEntity(
             'getProductSearchAttributeList-1',
@@ -186,7 +186,7 @@ class ProductSearchAttributeTest extends AbstractProductSearchFacadeTest
     /**
      * @return array
      */
-    public function touchProductAbstractByAsynchronousAttributesDataProvider()
+    public function touchProductAbstractByAsynchronousAttributesDataProvider(): array
     {
         return [
             'product abstract has attribute' => [
@@ -219,7 +219,7 @@ class ProductSearchAttributeTest extends AbstractProductSearchFacadeTest
         array $abstractLocalizedAttrs,
         array $concreteAttrs,
         array $concreteLocalizedAttrs
-    ) {
+    ): void {
         $productAbstractEntity = $this->createProduct($abstractAttrs, $abstractLocalizedAttrs, $concreteAttrs, $concreteLocalizedAttrs);
 
         $productSearchAttributeEntity = $this->createProductSearchAttributeEntity(
@@ -235,7 +235,7 @@ class ProductSearchAttributeTest extends AbstractProductSearchFacadeTest
             ->filterByItemId($productAbstractEntity->getIdProductAbstract())
             ->filterByItemType('product_abstract')
             ->count();
-        $this->assertEquals(1, $touchCount, 'Failed to touch abstract product!');
+        $this->assertSame(1, $touchCount, 'Failed to touch abstract product!');
 
         $productSearchAttributeEntity->reload();
         $this->assertTrue($productSearchAttributeEntity->getSynced(), 'Product search attribute is not marked as synced!');
@@ -256,7 +256,7 @@ class ProductSearchAttributeTest extends AbstractProductSearchFacadeTest
         array $abstractLocalizedAttrs,
         array $concreteAttrs,
         array $concreteLocalizedAttrs
-    ) {
+    ): void {
         $productAbstractEntity = $this->createProduct($abstractAttrs, $abstractLocalizedAttrs, $concreteAttrs, $concreteLocalizedAttrs);
 
         $productSearchAttributeEntity = $this->createProductSearchAttributeEntity(
@@ -278,7 +278,7 @@ class ProductSearchAttributeTest extends AbstractProductSearchFacadeTest
             ->filterByItemId($productAbstractEntity->getIdProductAbstract())
             ->filterByItemType('product_abstract')
             ->count();
-        $this->assertEquals(1, $touchCount, 'Failed to touch abstract product!');
+        $this->assertSame(1, $touchCount, 'Failed to touch abstract product!');
 
         $productSearchAttributeEntity->reload();
         $this->assertTrue($productSearchAttributeEntity->getSynced(), 'Product search attribute is not marked as synced!');
@@ -299,7 +299,7 @@ class ProductSearchAttributeTest extends AbstractProductSearchFacadeTest
         array $abstractLocalizedAttrs,
         array $concreteAttrs,
         array $concreteLocalizedAttrs
-    ) {
+    ): void {
         $productAbstractEntity = $this->createProduct($abstractAttrs, $abstractLocalizedAttrs, $concreteAttrs, $concreteLocalizedAttrs);
 
         $productSearchAttributeEntity = $this->createProductSearchAttributeEntity(
@@ -318,7 +318,7 @@ class ProductSearchAttributeTest extends AbstractProductSearchFacadeTest
             ->filterByItemId($productAbstractEntity->getIdProductAbstract())
             ->filterByItemType('product_abstract')
             ->count();
-        $this->assertEquals(1, $touchCount, 'Failed to touch abstract product!');
+        $this->assertSame(1, $touchCount, 'Failed to touch abstract product!');
     }
 
     /**
@@ -328,8 +328,11 @@ class ProductSearchAttributeTest extends AbstractProductSearchFacadeTest
      *
      * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttribute
      */
-    protected function createProductSearchAttributeEntity($attributeKey, ProductSearchAttributeTransfer $productSearchAttributeTransfer, $synced = false)
-    {
+    protected function createProductSearchAttributeEntity(
+        string $attributeKey,
+        ProductSearchAttributeTransfer $productSearchAttributeTransfer,
+        bool $synced = false
+    ): SpyProductSearchAttribute {
         $productAttributeKeyEntity = $this->createProductAttributeKeyEntity($attributeKey);
         $productSearchAttributeEntity = new SpyProductSearchAttribute();
         $productSearchAttributeEntity->fromArray($productSearchAttributeTransfer->toArray());

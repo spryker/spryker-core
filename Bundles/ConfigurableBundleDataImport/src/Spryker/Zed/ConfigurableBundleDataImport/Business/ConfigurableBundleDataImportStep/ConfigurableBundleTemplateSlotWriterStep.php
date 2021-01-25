@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * MIT License
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace Spryker\Zed\ConfigurableBundleDataImport\Business\ConfigurableBundleDataImportStep;
@@ -28,6 +28,7 @@ class ConfigurableBundleTemplateSlotWriterStep extends PublishAwareStep implemen
             ->findOneOrCreate();
 
         $configurableBundleTemplateSlotEntity
+            ->setName($dataSet[ConfigurableBundleTemplateSlotDataSetInterface::COLUMN_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_NAME])
             ->setUuid($dataSet[ConfigurableBundleTemplateSlotDataSetInterface::COLUMN_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_UUID] ?: null)
             ->setFkConfigurableBundleTemplate($dataSet[ConfigurableBundleTemplateSlotDataSetInterface::ID_CONFIGURABLE_BUNDLE_TEMPLATE])
             ->setFkProductList($dataSet[ConfigurableBundleTemplateSlotDataSetInterface::ID_PRODUCT_LIST])

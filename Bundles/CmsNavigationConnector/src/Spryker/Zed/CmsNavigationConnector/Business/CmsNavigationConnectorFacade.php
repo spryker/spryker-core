@@ -30,4 +30,20 @@ class CmsNavigationConnectorFacade extends AbstractFacade implements CmsNavigati
             ->createNavigationNodesIsActiveUpdater()
             ->updateCmsPageNavigationNodes($cmsPageTransfer->getFkPage(), $cmsPageTransfer->getIsActive());
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CmsPageTransfer $cmsPageTransfer
+     *
+     * @return void
+     */
+    public function deleteCmsPageNavigationNodes(CmsPageTransfer $cmsPageTransfer): void
+    {
+        $this->getFactory()
+            ->createNavigationNodesWriter()
+            ->deleteNavigationNodesByIdCmsPage($cmsPageTransfer->getFkPage());
+    }
 }

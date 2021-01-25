@@ -12,6 +12,22 @@ coverage:
     whitelist: { include: ['../../../../src/*'] }
 
 suites:
+    Persistence:
+        path: Persistence
+        class_name: PriceProductPersistenceTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+                - \SprykerTest\Shared\Product\Helper\ProductDataHelper
+                - \SprykerTest\Shared\Currency\Helper\CurrencyDataHelper
+                - \SprykerTest\Shared\PriceProduct\Helper\PriceProductDataHelper
+
     Business:
         path: Business
         class_name: PriceProductBusinessTester

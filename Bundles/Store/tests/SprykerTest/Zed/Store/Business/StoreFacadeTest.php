@@ -35,7 +35,7 @@ class StoreFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetCurrentStoreShouldReturnCurrentStoreTransfer()
+    public function testGetCurrentStoreShouldReturnCurrentStoreTransfer(): void
     {
         $storeFacade = $this->createStoreFacade();
 
@@ -49,7 +49,7 @@ class StoreFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetAllStoresShouldReturnAllStore()
+    public function testGetAllStoresShouldReturnAllStore(): void
     {
         $storeFacade = $this->createStoreFacade();
 
@@ -61,7 +61,7 @@ class StoreFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetStoreByIdShouldReturnStoreFromPersistence()
+    public function testGetStoreByIdShouldReturnStoreFromPersistence(): void
     {
         $storeFacade = $this->createStoreFacade();
 
@@ -75,14 +75,14 @@ class StoreFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetStoreByNameShouldReturnStore()
+    public function testGetStoreByNameShouldReturnStore(): void
     {
         $storeFacade = $this->createStoreFacade();
         $storeTransfer = $storeFacade->getStoreByName(static::DEFAULT_STORE_NAME);
 
         $this->assertInstanceOf(StoreTransfer::class, $storeTransfer);
 
-        $this->assertEquals(static::DEFAULT_STORE_NAME, $storeTransfer->getName());
+        $this->assertSame(static::DEFAULT_STORE_NAME, $storeTransfer->getName());
         $this->assertNotEmpty($storeTransfer->getIdStore());
     }
 
@@ -100,7 +100,7 @@ class StoreFacadeTest extends Unit
 
         //Assert
         $this->assertFalse($quoteValidationTransfer->getIsSuccessful());
-        $this->assertEquals(1, $quoteValidationTransfer->getErrors()->count());
+        $this->assertSame(1, $quoteValidationTransfer->getErrors()->count());
     }
 
     /**
@@ -117,7 +117,7 @@ class StoreFacadeTest extends Unit
 
         //Assert
         $this->assertFalse($quoteValidationTransfer->getIsSuccessful());
-        $this->assertEquals(1, $quoteValidationTransfer->getErrors()->count());
+        $this->assertSame(1, $quoteValidationTransfer->getErrors()->count());
     }
 
     /**
@@ -134,7 +134,7 @@ class StoreFacadeTest extends Unit
 
         //Assert
         $this->assertFalse($quoteValidationTransfer->getIsSuccessful());
-        $this->assertEquals(1, $quoteValidationTransfer->getErrors()->count());
+        $this->assertSame(1, $quoteValidationTransfer->getErrors()->count());
     }
 
     /**
@@ -151,13 +151,13 @@ class StoreFacadeTest extends Unit
 
         //Assert
         $this->assertTrue($quoteValidationTransfer->getIsSuccessful());
-        $this->assertEquals(0, $quoteValidationTransfer->getErrors()->count());
+        $this->assertSame(0, $quoteValidationTransfer->getErrors()->count());
     }
 
     /**
      * @return \Spryker\Zed\Store\Business\StoreFacade
      */
-    protected function createStoreFacade()
+    protected function createStoreFacade(): StoreFacade
     {
         return new StoreFacade();
     }

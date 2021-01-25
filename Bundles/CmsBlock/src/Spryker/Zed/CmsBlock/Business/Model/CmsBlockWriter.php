@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CmsBlockTransfer;
 use Orm\Zed\CmsBlock\Persistence\SpyCmsBlock;
 use Spryker\Shared\CmsBlock\CmsBlockConfig;
 use Spryker\Zed\CmsBlock\Business\Exception\CmsBlockNotFoundException;
+use Spryker\Zed\CmsBlock\Business\KeyProvider\CmsBlockKeyProviderInterface;
 use Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToTouchInterface;
 use Spryker\Zed\CmsBlock\Persistence\CmsBlockQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
@@ -45,9 +46,14 @@ class CmsBlockWriter implements CmsBlockWriterInterface
     protected $templateManager;
 
     /**
-     * @var \Spryker\Zed\CmsBlock\Communication\Plugin\CmsBlockUpdatePluginInterface[]
+     * @var \Spryker\Zed\CmsBlockExtension\Dependency\Plugin\CmsBlockUpdatePluginInterface[]
      */
     protected $cmsBlockUpdatePlugins;
+
+    /**
+     * @var \Spryker\Zed\CmsBlock\Business\KeyProvider\CmsBlockKeyProviderInterface
+     */
+    protected $cmsBlockKeyProvider;
 
     /**
      * @param \Spryker\Zed\CmsBlock\Persistence\CmsBlockQueryContainerInterface $cmsBlockQueryContainer
@@ -56,7 +62,8 @@ class CmsBlockWriter implements CmsBlockWriterInterface
      * @param \Spryker\Zed\CmsBlock\Business\Model\CmsBlockStoreRelationWriterInterface $cmsBlockStoreRelationWriter
      * @param \Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToTouchInterface $touchFacade
      * @param \Spryker\Zed\CmsBlock\Business\Model\CmsBlockTemplateManagerInterface $cmsBlockTemplateManager
-     * @param \Spryker\Zed\CmsBlock\Communication\Plugin\CmsBlockUpdatePluginInterface[] $updatePlugins
+     * @param \Spryker\Zed\CmsBlockExtension\Dependency\Plugin\CmsBlockUpdatePluginInterface[] $updatePlugins
+     * @param \Spryker\Zed\CmsBlock\Business\KeyProvider\CmsBlockKeyProviderInterface $cmsBlockKeyProvider
      */
     public function __construct(
         CmsBlockQueryContainerInterface $cmsBlockQueryContainer,
@@ -65,7 +72,8 @@ class CmsBlockWriter implements CmsBlockWriterInterface
         CmsBlockStoreRelationWriterInterface $cmsBlockStoreRelationWriter,
         CmsBlockToTouchInterface $touchFacade,
         CmsBlockTemplateManagerInterface $cmsBlockTemplateManager,
-        array $updatePlugins
+        array $updatePlugins,
+        CmsBlockKeyProviderInterface $cmsBlockKeyProvider
     ) {
         $this->cmsBlockQueryContainer = $cmsBlockQueryContainer;
         $this->cmsBlockMapper = $cmsBlockMapper;
@@ -74,6 +82,7 @@ class CmsBlockWriter implements CmsBlockWriterInterface
         $this->touchFacade = $touchFacade;
         $this->templateManager = $cmsBlockTemplateManager;
         $this->cmsBlockUpdatePlugins = $updatePlugins;
+        $this->cmsBlockKeyProvider = $cmsBlockKeyProvider;
     }
 
     /**
@@ -86,7 +95,7 @@ class CmsBlockWriter implements CmsBlockWriterInterface
      *
      * @return void
      */
-    public function activateById($idCmsBlock)
+    public function activateById(int $idCmsBlock): void
     {
         $this->handleDatabaseTransaction(function () use ($idCmsBlock) {
             $this->updateIsActiveByIdTransaction($idCmsBlock, true);
@@ -99,7 +108,7 @@ class CmsBlockWriter implements CmsBlockWriterInterface
      *
      * @return void
      */
-    public function deactivateById($idCmsBlock)
+    public function deactivateById(int $idCmsBlock): void
     {
         $this->handleDatabaseTransaction(function () use ($idCmsBlock) {
             $this->updateIsActiveByIdTransaction($idCmsBlock, false);
@@ -112,14 +121,20 @@ class CmsBlockWriter implements CmsBlockWriterInterface
      *
      * @return \Generated\Shared\Transfer\CmsBlockTransfer
      */
-    public function updateCmsBlock(CmsBlockTransfer $cmsBlockTransfer)
+    public function updateCmsBlock(CmsBlockTransfer $cmsBlockTransfer): CmsBlockTransfer
     {
         $cmsBlockTransfer->requireIdCmsBlock();
 
         $spyCmsBlock = $this->getCmsBlockById($cmsBlockTransfer->getIdCmsBlock());
 
-        if ($spyCmsBlock->getFkTemplate() != $cmsBlockTransfer->getFkTemplate()) {
+        if ($spyCmsBlock->getFkTemplate() !== $cmsBlockTransfer->getFkTemplate()) {
             $this->checkTemplateFileExists($cmsBlockTransfer->getFkTemplate());
+        }
+
+        if (!$cmsBlockTransfer->getKey()) {
+            $cmsBlockTransfer->setKey(
+                $this->cmsBlockKeyProvider->generateKeyByIdCmsBlock($cmsBlockTransfer->getIdCmsBlock())
+            );
         }
 
         $this->handleDatabaseTransaction(function () use ($cmsBlockTransfer, $spyCmsBlock) {
@@ -135,9 +150,13 @@ class CmsBlockWriter implements CmsBlockWriterInterface
      *
      * @return \Generated\Shared\Transfer\CmsBlockTransfer
      */
-    public function createCmsBlock(CmsBlockTransfer $cmsBlockTransfer)
+    public function createCmsBlock(CmsBlockTransfer $cmsBlockTransfer): CmsBlockTransfer
     {
         $cmsBlockTransfer->requireFkTemplate();
+
+        if (!$cmsBlockTransfer->getKey()) {
+            $cmsBlockTransfer->setKey($this->cmsBlockKeyProvider->generateKey());
+        }
 
         $this->handleDatabaseTransaction(function () use ($cmsBlockTransfer) {
             $this->createCmsBlockTransaction($cmsBlockTransfer);
@@ -154,7 +173,7 @@ class CmsBlockWriter implements CmsBlockWriterInterface
      *
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlock
      */
-    protected function getCmsBlockById($idCmsBlock)
+    protected function getCmsBlockById(int $idCmsBlock): SpyCmsBlock
     {
         $spyCmsBlock = $this->cmsBlockQueryContainer
             ->queryCmsBlockById($idCmsBlock)
@@ -174,7 +193,7 @@ class CmsBlockWriter implements CmsBlockWriterInterface
      *
      * @return void
      */
-    protected function checkTemplateFileExists($idCmsBlockTemplate)
+    protected function checkTemplateFileExists(int $idCmsBlockTemplate): void
     {
         $templateTransfer = $this->templateManager
             ->getTemplateById($idCmsBlockTemplate);
@@ -189,12 +208,8 @@ class CmsBlockWriter implements CmsBlockWriterInterface
      *
      * @return void
      */
-    protected function updateCmsBlockTransaction(CmsBlockTransfer $cmsBlockTransfer, SpyCmsBlock $spyCmsBlock)
+    protected function updateCmsBlockTransaction(CmsBlockTransfer $cmsBlockTransfer, SpyCmsBlock $spyCmsBlock): void
     {
-        if ($spyCmsBlock->getFkTemplate() !== $cmsBlockTransfer->getFkTemplate()) {
-            $this->cmsBlockGlossaryWriter->deleteByCmsBlockId($spyCmsBlock->getIdCmsBlock());
-        }
-
         $spyCmsBlock = $this->cmsBlockMapper->mapCmsBlockTransferToEntity($cmsBlockTransfer, $spyCmsBlock);
         $spyCmsBlock->save();
 
@@ -211,7 +226,7 @@ class CmsBlockWriter implements CmsBlockWriterInterface
      *
      * @return void
      */
-    protected function persistStoreRelation(CmsBlockTransfer $cmsBlockTransfer, $idCmsBlock)
+    protected function persistStoreRelation(CmsBlockTransfer $cmsBlockTransfer, int $idCmsBlock): void
     {
         if ($cmsBlockTransfer->getStoreRelation() === null) {
             return;
@@ -226,7 +241,7 @@ class CmsBlockWriter implements CmsBlockWriterInterface
      *
      * @return void
      */
-    protected function updateCmsBlockPluginsTransaction(CmsBlockTransfer $cmsBlockTransfer)
+    protected function updateCmsBlockPluginsTransaction(CmsBlockTransfer $cmsBlockTransfer): void
     {
         foreach ($this->cmsBlockUpdatePlugins as $updatePlugin) {
             $updatePlugin->handleUpdate($cmsBlockTransfer);
@@ -238,7 +253,7 @@ class CmsBlockWriter implements CmsBlockWriterInterface
      *
      * @return void
      */
-    protected function createCmsBlockTransaction(CmsBlockTransfer $cmsBlockTransfer)
+    protected function createCmsBlockTransaction(CmsBlockTransfer $cmsBlockTransfer): void
     {
         $spyCmsBlock = new SpyCmsBlock();
         $spyCmsBlock = $this->cmsBlockMapper->mapCmsBlockTransferToEntity($cmsBlockTransfer, $spyCmsBlock);
@@ -259,7 +274,7 @@ class CmsBlockWriter implements CmsBlockWriterInterface
      *
      * @return void
      */
-    protected function updateIsActiveByIdTransaction($idCmsBlock, $isActive)
+    protected function updateIsActiveByIdTransaction(int $idCmsBlock, bool $isActive): void
     {
         $spyCmsBlock = $this->getCmsBlockById($idCmsBlock);
         $spyCmsBlock->setIsActive($isActive);

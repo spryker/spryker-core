@@ -11,4 +11,8 @@ use Spryker\Glue\Kernel\AbstractBundleConfig;
 
 class CatalogSearchProductsResourceRelationshipConfig extends AbstractBundleConfig
 {
+    /**
+     * @uses \Spryker\Glue\ProductsRestApi\ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS
+     */
+    public const RESOURCE_ABSTRACT_PRODUCTS = 'abstract-products';
 }

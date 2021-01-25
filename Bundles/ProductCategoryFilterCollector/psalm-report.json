@@ -1,0 +1,66 @@
+{
+    "error": [],
+    "warning": [],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 33,
+            "line_to": 33,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCategoryFilterCollector/src/Spryker/Zed/ProductCategoryFilterCollector/Business/ProductCategoryFilterCollectorFacade.php",
+            "snippet": "     * @param \\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface $result",
+            "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 28,
+            "line_to": 28,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCategoryFilterCollector/src/Spryker/Zed/ProductCategoryFilterCollector/Business/ProductCategoryFilterCollectorFacadeInterface.php",
+            "snippet": "     * @param \\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface $result",
+            "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 31,
+            "line_to": 31,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCategoryFilterCollector/src/Spryker/Zed/ProductCategoryFilterCollector/Communication/Plugin/ProductCategoryFilterCollectorPlugin.php",
+            "snippet": "     * @param \\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface $result",
+            "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 38,
+            "line_to": 38,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCategoryFilterCollector/src/Spryker/Zed/ProductCategoryFilterCollector/Dependency/Facade/ProductCategoryFilterCollectorToCollectorFacadeBridge.php",
+            "snippet": "     * @param \\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface $result",
+            "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 25,
+            "line_to": 25,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCategoryFilterCollector/src/Spryker/Zed/ProductCategoryFilterCollector/Dependency/Facade/ProductCategoryFilterCollectorToCollectorFacadeInterface.php",
+            "snippet": "     * @param \\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface $result",
+            "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface",
+            "error_level": 2,
+            "shortcode": 98
+        }
+    ]
+}

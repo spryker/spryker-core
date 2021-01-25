@@ -12,12 +12,12 @@ class Bar
     /**
      * @var mixed
      */
-    private $foo;
+    protected $foo;
 
     /**
      * @var mixed
      */
-    private $bar;
+    protected $bar;
 
     /**
      * @param mixed $foo

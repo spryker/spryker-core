@@ -7,15 +7,15 @@
 
 namespace Spryker\Zed\Development\Business\CodeStyleSniffer;
 
+use Laminas\Filter\FilterChain;
+use Laminas\Filter\StringToLower;
+use Laminas\Filter\Word\CamelCaseToDash;
 use RuntimeException;
 use Spryker\Zed\Development\Business\CodeStyleSniffer\Config\CodeStyleSnifferConfigurationInterface;
 use Spryker\Zed\Development\Business\CodeStyleSniffer\Config\CodeStyleSnifferConfigurationLoaderInterface;
 use Spryker\Zed\Development\Business\Exception\CodeStyleSniffer\PathDoesNotExistException;
 use Spryker\Zed\Development\DevelopmentConfig;
 use Symfony\Component\Process\Process;
-use Zend\Filter\FilterChain;
-use Zend\Filter\StringToLower;
-use Zend\Filter\Word\CamelCaseToDash;
 
 class CodeStyleSniffer
 {
@@ -83,7 +83,7 @@ class CodeStyleSniffer
      */
     protected function resolvePath($module, $namespace = null, $path = null)
     {
-        $path = $path !== null ? trim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR : null;
+        $path = $path !== null ? trim($path, DIRECTORY_SEPARATOR) : null;
 
         if ($namespace) {
             if ($module === 'all') {

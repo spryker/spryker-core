@@ -13,7 +13,8 @@ use Spryker\Zed\PriceProduct\Dependency\PriceProductEvents;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
- * @deprecated Use `\Spryker\Zed\PriceProductStorage\Communication\Plugin\Event\Listener\PriceProductAbstractStoragePublishListener` and `\Spryker\Zed\PriceProductStorage\Communication\Plugin\Event\Listener\PriceProductAbstractStorageUnpublishListener` instead.
+ * @deprecated Use {@link \Spryker\Zed\PriceProductStorage\Communication\Plugin\Event\Listener\PriceProductAbstractStoragePublishListener}
+ *   and {@link \Spryker\Zed\PriceProductStorage\Communication\Plugin\Event\Listener\PriceProductAbstractStorageUnpublishListener} instead.
  *
  * @method \Spryker\Zed\PriceProductStorage\Persistence\PriceProductStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\PriceProductStorage\Communication\PriceProductStorageCommunicationFactory getFactory()
@@ -27,16 +28,17 @@ class PriceProductAbstractPublishStorageListener extends AbstractPlugin implemen
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
      * @param string $eventName
      *
      * @return void
      */
-    public function handleBulk(array $eventTransfers, $eventName)
+    public function handleBulk(array $eventEntityTransfers, $eventName)
     {
         $this->preventTransaction();
-        $productAbstractIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
-        if ($eventName === PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_DELETE ||
+        $productAbstractIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventEntityTransfers);
+        if (
+            $eventName === PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_DELETE ||
             $eventName === PriceProductEvents::ENTITY_SPY_PRICE_TYPE_DELETE ||
             $eventName === PriceProductEvents::PRICE_ABSTRACT_UNPUBLISH
         ) {

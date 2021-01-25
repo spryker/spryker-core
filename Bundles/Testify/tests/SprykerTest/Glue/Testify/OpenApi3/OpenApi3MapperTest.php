@@ -1,8 +1,8 @@
 <?php
 
 /**
- * This file is part of the Spryker Suite.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerTest\Glue\Testify\OpenApi3;
@@ -52,8 +52,8 @@ class OpenApi3MapperTest extends Unit
 
         $mapper->mapObjectFromPayload($document, $payload);
 
-        $this->assertEquals('value 1', $document->foo1->bar[0]);
-        $this->assertEquals('value 6', $document->foo2->bar['key3']);
+        $this->assertSame('value 1', $document->foo1->bar[0]);
+        $this->assertSame('value 6', $document->foo2->bar['key3']);
         $this->assertEquals(['value 1', 'value 2', 'value 3'], $document->foo1->bar->toArray());
     }
 
@@ -82,6 +82,6 @@ class OpenApi3MapperTest extends Unit
         $mapper->mapObjectFromPayload($document, $payload);
 
         $this->assertEquals($document->foo1->bar->toArray(), $document->foo2->bar->toArray());
-        $this->assertEquals('value 2', $document->foo2->bar[1]);
+        $this->assertSame('value 2', $document->foo2->bar[1]);
     }
 }

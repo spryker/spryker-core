@@ -27,13 +27,13 @@ class ProductManagementProductViewCest
      *
      * @return void
      */
-    public function breadcrumbIsVisible(ProductManagementPresentationTester $i)
+    public function breadcrumbIsVisible(ProductManagementPresentationTester $i): void
     {
         $i->registerMoneyCollectionFormTypePlugin();
 
         $i->amOnPage(ProductManagementProductListPage::URL);
         $i->clickDataTableViewButton();
 
-        $i->seeBreadcrumbNavigation('Dashboard / Products / Products / View Product');
+        $i->seeBreadcrumbNavigation('Catalog / Products / View Product');
     }
 }

@@ -28,10 +28,10 @@ class ProductAttributeGuiAttributeEditCest
      *
      * @return void
      */
-    public function breadcrumbIsVisible(ProductAttributeGuiCommunicationTester $i)
+    public function breadcrumbIsVisible(ProductAttributeGuiCommunicationTester $i): void
     {
         $i->listDataTable(ProductAttributeGuiAttributeListPage::URL . '/table');
         $i->clickDataTableEditButton();
-        $i->seeBreadcrumbNavigation('Dashboard / Products / Attributes / Edit Product Attribute');
+        $i->seeBreadcrumbNavigation('Catalog / Attributes / Edit Product Attribute');
     }
 }

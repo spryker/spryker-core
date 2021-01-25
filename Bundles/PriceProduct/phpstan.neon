@@ -1,10 +1,8 @@
 parameters:
+    checkMissingIterableValueType: false
     ignoreErrors:
-        - '#Method .+PriceProductQueryContainer::queryPriceEntityForProductAbstract\(\) should return Orm\\Zed\\PriceProduct\\Persistence\\SpyPriceProductQuery but returns Propel\\Runtime\\ActiveQuery\\Criteria#'
-        - '#Method .+PriceProductQueryContainer::queryPriceEntityForProductConcrete\(\) should return Orm\\Zed\\PriceProduct\\Persistence\\SpyPriceProductQuery but returns Propel\\Runtime\\ActiveQuery\\Criteria#'
-        - '#Call to an undefined method .+Criteria::.+\(\).#'
         - '#Call to an undefined method .+SpyPriceProductQuery::joinWithPriceProductDefault\(\)#'
-        - '#Parameter \#1 \$idPriceProductDefault of method .+SpyPriceProductDefaultEntityTransfer::setIdPriceProductDefault\(\) expects string|null, int given#'
-        - '#Parameter \#1 \$fkPriceProductStore of method .+SpyPriceProductDefaultEntityTransfer::setFkPriceProductStore\(\) expects string|null, int given#'
-        - '#Parameter \#1 \$idEntity of method .+MoneyValueTransfer::setIdEntity\(\) expects int|null, string given#'
-        - '#Parameter \#1 \$idPriceProductDefault of method .+PriceProductDimensionTransfer::setIdPriceProductDefault() expects int|null, string|null given.#'
+        - '#Parameter \#1 \$idPriceProductDefault of method .+SpyPriceProductDefaultEntityTransfer::setIdPriceProductDefault\(\) expects string\|null, int\|null given#'
+        - '#Parameter \#1 \$fkPriceProductStore of method .+SpyPriceProductDefaultEntityTransfer::setFkPriceProductStore\(\) expects string\|null, int\|null given#'
+        - '#Parameter \#1 \$idEntity of method .+MoneyValueTransfer::setIdEntity\(\) expects int\|null, string given#'
+        - '#Parameter \#1 \$idPriceProductDefault of method .+PriceProductDimensionTransfer::setIdPriceProductDefault\(\) expects int\|null, string\|null given.#'

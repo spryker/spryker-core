@@ -51,7 +51,7 @@ class AbstractTransfer extends ParentAbstractTransfer
     protected $transfer;
 
     /**
-     * @var \ArrayObject[]
+     * @var \ArrayObject|\Spryker\Shared\Kernel\Transfer\TransferInterface[]
      */
     protected $transferCollection;
 
@@ -115,7 +115,7 @@ class AbstractTransfer extends ParentAbstractTransfer
      *
      * @return $this
      */
-    public function setString($string)
+    public function setString(string $string)
     {
         $this->string = $string;
         $this->modifiedProperties[self::STRING] = true;
@@ -126,7 +126,7 @@ class AbstractTransfer extends ParentAbstractTransfer
     /**
      * @return string
      */
-    public function getString()
+    public function getString(): string
     {
         return $this->string;
     }
@@ -146,7 +146,7 @@ class AbstractTransfer extends ParentAbstractTransfer
      *
      * @return $this
      */
-    public function setInt($int)
+    public function setInt(int $int)
     {
         $this->int = $int;
         $this->modifiedProperties[self::INT] = true;
@@ -157,7 +157,7 @@ class AbstractTransfer extends ParentAbstractTransfer
     /**
      * @return int
      */
-    public function getInt()
+    public function getInt(): int
     {
         return $this->int;
     }
@@ -177,7 +177,7 @@ class AbstractTransfer extends ParentAbstractTransfer
      *
      * @return $this
      */
-    public function setBool($bool)
+    public function setBool(bool $bool)
     {
         $this->bool = $bool;
         $this->modifiedProperties[self::BOOL] = true;
@@ -188,7 +188,7 @@ class AbstractTransfer extends ParentAbstractTransfer
     /**
      * @return bool
      */
-    public function getBool()
+    public function getBool(): bool
     {
         return $this->bool;
     }
@@ -219,7 +219,7 @@ class AbstractTransfer extends ParentAbstractTransfer
     /**
      * @return array
      */
-    public function getArray()
+    public function getArray(): array
     {
         return $this->array;
     }
@@ -229,7 +229,7 @@ class AbstractTransfer extends ParentAbstractTransfer
      *
      * @return $this
      */
-    public function addArr($arr)
+    public function addArr(array $arr)
     {
         $this->array[] = $arr;
         $this->modifiedProperties[self::ARRAY_PROPERTY] = true;
@@ -263,7 +263,7 @@ class AbstractTransfer extends ParentAbstractTransfer
     /**
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
-    public function getTransfer()
+    public function getTransfer(): TransferInterface
     {
         return $this->transfer;
     }
@@ -279,7 +279,7 @@ class AbstractTransfer extends ParentAbstractTransfer
     }
 
     /**
-     * @param \ArrayObject[] $transferCollection
+     * @param \ArrayObject|\Spryker\Shared\Kernel\Transfer\TransferInterface[] $transferCollection
      *
      * @return $this
      */
@@ -292,7 +292,7 @@ class AbstractTransfer extends ParentAbstractTransfer
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface[]
+     * @return \ArrayObject|\Spryker\Shared\Kernel\Transfer\TransferInterface[]
      */
     public function getTransferCollection()
     {

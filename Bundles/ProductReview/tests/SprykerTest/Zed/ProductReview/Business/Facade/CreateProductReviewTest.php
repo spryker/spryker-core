@@ -35,7 +35,7 @@ class CreateProductReviewTest extends Unit
     /**
      * @return void
      */
-    public function testCreateProductReviewPersistsToDatabase()
+    public function testCreateProductReviewPersistsToDatabase(): void
     {
         // Arrange
         $productReviewTransfer = $this->tester->haveProductReview();
@@ -51,11 +51,11 @@ class CreateProductReviewTest extends Unit
     /**
      * @dataProvider statusDataProvider
      *
-     * @param string $inputStatus
+     * @param string|null $inputStatus
      *
      * @return void
      */
-    public function testCreateProductReviewIsCreatedAlwaysWithPendingStatus($inputStatus)
+    public function testCreateProductReviewIsCreatedAlwaysWithPendingStatus(?string $inputStatus): void
     {
         // Arrange
         $productReviewTransfer = $this->tester->haveProductReview([
@@ -73,7 +73,7 @@ class CreateProductReviewTest extends Unit
     /**
      * @return array
      */
-    public function statusDataProvider()
+    public function statusDataProvider(): array
     {
         return [
             'status not defined' => [null],
@@ -86,7 +86,7 @@ class CreateProductReviewTest extends Unit
     /**
      * @return void
      */
-    public function testCreateProductReviewReturnsUpdatedTransfer()
+    public function testCreateProductReviewReturnsUpdatedTransfer(): void
     {
         // Arrange
         $productReviewTransfer = $this->tester->haveProductReview();
@@ -106,7 +106,7 @@ class CreateProductReviewTest extends Unit
     /**
      * @return void
      */
-    public function testCreateProductReviewThrowsExceptionWhenRatingExceedsRange()
+    public function testCreateProductReviewThrowsExceptionWhenRatingExceedsRange(): void
     {
         // Arrange
         $productReviewClientMock = $this->getProductReviewClientMock();
@@ -126,7 +126,7 @@ class CreateProductReviewTest extends Unit
     /**
      * @return \Spryker\Client\ProductReview\ProductReviewClientInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function getProductReviewClientMock()
+    protected function getProductReviewClientMock(): ProductReviewClientInterface
     {
         $productReviewClientInterfaceMock = $this->getMockBuilder(ProductReviewClientInterface::class)->getMock();
 

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -57,8 +57,8 @@ class ResponseBuilderTest extends Unit
         $response = $responseBuilder->buildResponse($restResponse, $restRequest);
 
         $this->assertArrayHasKey('data', $response);
-        $this->assertEquals('1', $response['data']['id']);
-        $this->assertEquals('tests', $response['data']['type']);
+        $this->assertSame('1', $response['data']['id']);
+        $this->assertSame('tests', $response['data']['type']);
     }
 
     /**

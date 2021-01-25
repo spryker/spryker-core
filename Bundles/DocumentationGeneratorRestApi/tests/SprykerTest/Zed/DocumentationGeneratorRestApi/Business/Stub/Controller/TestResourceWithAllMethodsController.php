@@ -16,8 +16,7 @@ class TestResourceWithAllMethodsController
      *              "getResource summary"
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "404": "Item not found"
@@ -27,7 +26,7 @@ class TestResourceWithAllMethodsController
      *
      * @return void
      */
-    public function getAction()
+    public function getAction(): void
     {
     }
 
@@ -45,7 +44,7 @@ class TestResourceWithAllMethodsController
      *
      * @return void
      */
-    public function postAction()
+    public function postAction(): void
     {
     }
 
@@ -63,7 +62,7 @@ class TestResourceWithAllMethodsController
      *
      * @return void
      */
-    public function patchAction()
+    public function patchAction(): void
     {
     }
 
@@ -81,7 +80,7 @@ class TestResourceWithAllMethodsController
      *
      * @return void
      */
-    public function deleteAction()
+    public function deleteAction(): void
     {
     }
 }

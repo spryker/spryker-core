@@ -56,10 +56,15 @@ class CompanyBusinessUnitReader implements CompanyBusinessUnitReaderInterface
      *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer
      */
-    public function getCompanyBusinessUnitCollection(CompanyBusinessUnitCriteriaFilterTransfer $companyBusinessUnitCriteriaFilterTransfer): CompanyBusinessUnitCollectionTransfer
-    {
+    public function getCompanyBusinessUnitCollection(
+        CompanyBusinessUnitCriteriaFilterTransfer $companyBusinessUnitCriteriaFilterTransfer
+    ): CompanyBusinessUnitCollectionTransfer {
         $companyBusinessUnitCollectionTransfer = $this->companyBusinessUnitRepository
             ->getCompanyBusinessUnitCollection($companyBusinessUnitCriteriaFilterTransfer);
+
+        if ($companyBusinessUnitCriteriaFilterTransfer->getWithoutExpanders()) {
+            return $companyBusinessUnitCollectionTransfer;
+        }
 
         foreach ($companyBusinessUnitCollectionTransfer->getCompanyBusinessUnits() as $companyBusinessUnitTransferIndex => $companyBusinessUnitTransfer) {
             $companyBusinessUnitCollectionTransfer->getCompanyBusinessUnits()->offsetSet(

@@ -1,0 +1,10 @@
+<div class="mp-manage-order-totals">
+    <div
+        class="mp-manage-order-totals__item"
+        *ngFor="let orderTotal of orderTotals"
+        [ngClass]="{ 'mp-manage-order-totals__item--title': orderTotal.isTitle }"
+    >
+        <div class="mp-manage-order-totals__col">{{ orderTotal.title }}</div>
+        <div class="mp-manage-order-totals__col">{{ orderTotal.value }}</div>
+    </div>
+</div>

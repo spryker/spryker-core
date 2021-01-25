@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Propel\Business;
 
+use Generated\Shared\Transfer\HealthCheckServiceResponseTransfer;
 use Generated\Shared\Transfer\SchemaValidationTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -28,6 +29,20 @@ class PropelFacade extends AbstractFacade implements PropelFacadeInterface
     }
 
     /**
+     * @inheritDoc
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getSchemaDirectory(): string
+    {
+        return $this->getFactory()
+            ->createPropelConfigReader()
+            ->getSchemaDirectory();
+    }
+
+    /**
      * {@inheritDoc}
      *
      * @api
@@ -44,7 +59,7 @@ class PropelFacade extends AbstractFacade implements PropelFacadeInterface
      *
      * @api
      *
-     * @deprecated Use `createDatabase()` instead.
+     * @deprecated Use {@link createDatabase()} instead.
      *
      * @return void
      */
@@ -145,6 +160,8 @@ class PropelFacade extends AbstractFacade implements PropelFacadeInterface
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @return string
      */
@@ -254,5 +271,17 @@ class PropelFacade extends AbstractFacade implements PropelFacadeInterface
             ->createPropelDatabaseAdapterCollection()
             ->getAdapter()
             ->dropTables();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\HealthCheckServiceResponseTransfer
+     */
+    public function executeDatabaseHealthCheck(): HealthCheckServiceResponseTransfer
+    {
+        return $this->getFactory()->createPropelHealthChecker()->executeHealthCheck();
     }
 }

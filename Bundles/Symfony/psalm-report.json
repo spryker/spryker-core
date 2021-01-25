@@ -1,0 +1,223 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 59,
+            "line_to": 59,
+            "type": "LessSpecificImplementedReturnType",
+            "message": "The inherited return type 'array<array-key, Symfony\\Component\\Form\\FormTypeExtensionInterface>' for Symfony\\Component\\Form\\AbstractExtension::loadTypeExtensions is more specific than the implemented return type for Spryker\\Shared\\Symfony\\Form\\Extension\\DoubleSubmitProtection\\DoubleSubmitProtectionExtension::loadtypeextensions 'array<array-key, mixed>'",
+            "file_name": "vendor/spryker/spryker/Bundles/Symfony/src/Spryker/Shared/Symfony/Form/Extension/DoubleSubmitProtection/DoubleSubmitProtectionExtension.php",
+            "snippet": "     * @return array",
+            "selected_text": "array",
+            "error_level": 5,
+            "shortcode": 166
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 21,
+            "line_to": 21,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Shared\\Symfony\\Form\\Extension\\DoubleSubmitProtection\\RequestTokenProvider\\TokenGeneratorInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Symfony/src/Spryker/Shared/Symfony/Form/Extension/DoubleSubmitProtection/DoubleSubmitProtectionExtension.php",
+            "snippet": "     * @var \\Spryker\\Shared\\Symfony\\Form\\Extension\\DoubleSubmitProtection\\RequestTokenProvider\\TokenGeneratorInterface $tokenProvider",
+            "selected_text": "\\Spryker\\Shared\\Symfony\\Form\\Extension\\DoubleSubmitProtection\\RequestTokenProvider\\TokenGeneratorInterface",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 26,
+            "line_to": 26,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Shared\\Symfony\\Form\\Extension\\DoubleSubmitProtection\\RequestTokenProvider\\StorageInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Symfony/src/Spryker/Shared/Symfony/Form/Extension/DoubleSubmitProtection/DoubleSubmitProtectionExtension.php",
+            "snippet": "     * @var \\Spryker\\Shared\\Symfony\\Form\\Extension\\DoubleSubmitProtection\\RequestTokenProvider\\StorageInterface $tokenProvider",
+            "selected_text": "\\Spryker\\Shared\\Symfony\\Form\\Extension\\DoubleSubmitProtection\\RequestTokenProvider\\StorageInterface",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 41,
+            "line_to": 41,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Shared\\Symfony\\Form\\Extension\\DoubleSubmitProtection\\RequestTokenProvider\\TokenGeneratorInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Symfony/src/Spryker/Shared/Symfony/Form/Extension/DoubleSubmitProtection/DoubleSubmitProtectionExtension.php",
+            "snippet": "     * @param \\Spryker\\Shared\\Symfony\\Form\\Extension\\DoubleSubmitProtection\\RequestTokenProvider\\TokenGeneratorInterface $tokenGenerator",
+            "selected_text": "\\Spryker\\Shared\\Symfony\\Form\\Extension\\DoubleSubmitProtection\\RequestTokenProvider\\TokenGeneratorInterface",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 42,
+            "line_to": 42,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Shared\\Symfony\\Form\\Extension\\DoubleSubmitProtection\\RequestTokenProvider\\StorageInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Symfony/src/Spryker/Shared/Symfony/Form/Extension/DoubleSubmitProtection/DoubleSubmitProtectionExtension.php",
+            "snippet": "     * @param \\Spryker\\Shared\\Symfony\\Form\\Extension\\DoubleSubmitProtection\\RequestTokenProvider\\StorageInterface $tokenStorage",
+            "selected_text": "\\Spryker\\Shared\\Symfony\\Form\\Extension\\DoubleSubmitProtection\\RequestTokenProvider\\StorageInterface",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 64,
+            "line_to": 69,
+            "type": "DeprecatedClass",
+            "message": "Spryker\\Shared\\Symfony\\Form\\Extension\\DoubleSubmitProtection\\Type\\DoubleSubmitFormType is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Symfony/src/Spryker/Shared/Symfony/Form/Extension/DoubleSubmitProtection/DoubleSubmitProtectionExtension.php",
+            "snippet": "            new DoubleSubmitFormType(\n                $this->tokenGenerator,\n                $this->tokenStorage,\n                $this->translator,\n                $this->translationDomain\n            ),",
+            "selected_text": "new DoubleSubmitFormType(\n                $this->tokenGenerator,\n                $this->tokenStorage,\n                $this->translator,\n                $this->translationDomain\n            )",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 26,
+            "line_to": 26,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Shared\\Symfony\\Form\\Extension\\DoubleSubmitProtection\\RequestTokenProvider\\TokenGeneratorInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Symfony/src/Spryker/Shared/Symfony/Form/Extension/DoubleSubmitProtection/FormEventSubscriber.php",
+            "snippet": "     * @var \\Spryker\\Shared\\Symfony\\Form\\Extension\\DoubleSubmitProtection\\RequestTokenProvider\\TokenGeneratorInterface",
+            "selected_text": "\\Spryker\\Shared\\Symfony\\Form\\Extension\\DoubleSubmitProtection\\RequestTokenProvider\\TokenGeneratorInterface",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 31,
+            "line_to": 31,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Shared\\Symfony\\Form\\Extension\\DoubleSubmitProtection\\RequestTokenProvider\\StorageInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Symfony/src/Spryker/Shared/Symfony/Form/Extension/DoubleSubmitProtection/FormEventSubscriber.php",
+            "snippet": "     * @var \\Spryker\\Shared\\Symfony\\Form\\Extension\\DoubleSubmitProtection\\RequestTokenProvider\\StorageInterface",
+            "selected_text": "\\Spryker\\Shared\\Symfony\\Form\\Extension\\DoubleSubmitProtection\\RequestTokenProvider\\StorageInterface",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 71,
+            "line_to": 71,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Shared\\Symfony\\Form\\Extension\\DoubleSubmitProtection\\RequestTokenProvider\\TokenGeneratorInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Symfony/src/Spryker/Shared/Symfony/Form/Extension/DoubleSubmitProtection/FormEventSubscriber.php",
+            "snippet": "     * @param \\Spryker\\Shared\\Symfony\\Form\\Extension\\DoubleSubmitProtection\\RequestTokenProvider\\TokenGeneratorInterface $generator",
+            "selected_text": "\\Spryker\\Shared\\Symfony\\Form\\Extension\\DoubleSubmitProtection\\RequestTokenProvider\\TokenGeneratorInterface",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 72,
+            "line_to": 72,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Shared\\Symfony\\Form\\Extension\\DoubleSubmitProtection\\RequestTokenProvider\\StorageInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Symfony/src/Spryker/Shared/Symfony/Form/Extension/DoubleSubmitProtection/FormEventSubscriber.php",
+            "snippet": "     * @param \\Spryker\\Shared\\Symfony\\Form\\Extension\\DoubleSubmitProtection\\RequestTokenProvider\\StorageInterface $storage",
+            "selected_text": "\\Spryker\\Shared\\Symfony\\Form\\Extension\\DoubleSubmitProtection\\RequestTokenProvider\\StorageInterface",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 15,
+            "line_to": 15,
+            "type": "DeprecatedInterface",
+            "message": "Spryker\\Shared\\Symfony\\Form\\Extension\\DoubleSubmitProtection\\RequestTokenProvider\\StorageInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Symfony/src/Spryker/Shared/Symfony/Form/Extension/DoubleSubmitProtection/RequestTokenProvider/SessionStorage.php",
+            "snippet": "class SessionStorage implements StorageInterface",
+            "selected_text": "SessionStorage",
+            "error_level": 2,
+            "shortcode": 152
+        },
+        {
+            "severity": "info",
+            "line_from": 13,
+            "line_to": 13,
+            "type": "DeprecatedInterface",
+            "message": "Spryker\\Shared\\Symfony\\Form\\Extension\\DoubleSubmitProtection\\RequestTokenProvider\\TokenGeneratorInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Symfony/src/Spryker/Shared/Symfony/Form/Extension/DoubleSubmitProtection/RequestTokenProvider/TokenHashGenerator.php",
+            "snippet": "class TokenHashGenerator implements TokenGeneratorInterface",
+            "selected_text": "TokenHashGenerator",
+            "error_level": 2,
+            "shortcode": 152
+        },
+        {
+            "severity": "info",
+            "line_from": 34,
+            "line_to": 34,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Shared\\Symfony\\Form\\Extension\\DoubleSubmitProtection\\RequestTokenProvider\\TokenGeneratorInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Symfony/src/Spryker/Shared/Symfony/Form/Extension/DoubleSubmitProtection/Type/DoubleSubmitFormType.php",
+            "snippet": "     * @var \\Spryker\\Shared\\Symfony\\Form\\Extension\\DoubleSubmitProtection\\RequestTokenProvider\\TokenGeneratorInterface $tokenProvider",
+            "selected_text": "\\Spryker\\Shared\\Symfony\\Form\\Extension\\DoubleSubmitProtection\\RequestTokenProvider\\TokenGeneratorInterface",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 39,
+            "line_to": 39,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Shared\\Symfony\\Form\\Extension\\DoubleSubmitProtection\\RequestTokenProvider\\StorageInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Symfony/src/Spryker/Shared/Symfony/Form/Extension/DoubleSubmitProtection/Type/DoubleSubmitFormType.php",
+            "snippet": "     * @var \\Spryker\\Shared\\Symfony\\Form\\Extension\\DoubleSubmitProtection\\RequestTokenProvider\\StorageInterface $storage",
+            "selected_text": "\\Spryker\\Shared\\Symfony\\Form\\Extension\\DoubleSubmitProtection\\RequestTokenProvider\\StorageInterface",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 59,
+            "line_to": 59,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Shared\\Symfony\\Form\\Extension\\DoubleSubmitProtection\\RequestTokenProvider\\TokenGeneratorInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Symfony/src/Spryker/Shared/Symfony/Form/Extension/DoubleSubmitProtection/Type/DoubleSubmitFormType.php",
+            "snippet": "     * @param \\Spryker\\Shared\\Symfony\\Form\\Extension\\DoubleSubmitProtection\\RequestTokenProvider\\TokenGeneratorInterface $tokenGenerator",
+            "selected_text": "\\Spryker\\Shared\\Symfony\\Form\\Extension\\DoubleSubmitProtection\\RequestTokenProvider\\TokenGeneratorInterface",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 60,
+            "line_to": 60,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Shared\\Symfony\\Form\\Extension\\DoubleSubmitProtection\\RequestTokenProvider\\StorageInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Symfony/src/Spryker/Shared/Symfony/Form/Extension/DoubleSubmitProtection/Type/DoubleSubmitFormType.php",
+            "snippet": "     * @param \\Spryker\\Shared\\Symfony\\Form\\Extension\\DoubleSubmitProtection\\RequestTokenProvider\\StorageInterface $storage",
+            "selected_text": "\\Spryker\\Shared\\Symfony\\Form\\Extension\\DoubleSubmitProtection\\RequestTokenProvider\\StorageInterface",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 166,
+            "line_to": 166,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Shared\\Symfony\\Form\\Extension\\DoubleSubmitProtection\\FormEventSubscriber is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Symfony/src/Spryker/Shared/Symfony/Form/Extension/DoubleSubmitProtection/Type/DoubleSubmitFormType.php",
+            "snippet": "     * @return \\Spryker\\Shared\\Symfony\\Form\\Extension\\DoubleSubmitProtection\\FormEventSubscriber",
+            "selected_text": "\\Spryker\\Shared\\Symfony\\Form\\Extension\\DoubleSubmitProtection\\FormEventSubscriber",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 170,
+            "line_to": 175,
+            "type": "DeprecatedClass",
+            "message": "Spryker\\Shared\\Symfony\\Form\\Extension\\DoubleSubmitProtection\\FormEventSubscriber is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Symfony/src/Spryker/Shared/Symfony/Form/Extension/DoubleSubmitProtection/Type/DoubleSubmitFormType.php",
+            "snippet": "        return new FormEventSubscriber(\n            $this->tokenGenerator,\n            $this->storage,\n            $this->translator,\n            $this->translationDomain\n        );",
+            "selected_text": "new FormEventSubscriber(\n            $this->tokenGenerator,\n            $this->storage,\n            $this->translator,\n            $this->translationDomain\n        )",
+            "error_level": 2,
+            "shortcode": 98
+        }
+    ]
+}

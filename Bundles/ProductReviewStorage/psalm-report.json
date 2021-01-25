@@ -1,0 +1,127 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 44,
+            "line_to": 44,
+            "type": "InvalidScalarArgument",
+            "message": "Argument 1 of Generated\\Shared\\Transfer\\SynchronizationDataTransfer::setReference expects null|string, int provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewStorage/src/Spryker/Client/ProductReviewStorage/Storage/ProductReviewStorageKeyGenerator.php",
+            "snippet": "            ->setReference($resourceId);",
+            "selected_text": "$resourceId",
+            "error_level": 4,
+            "shortcode": 12
+        },
+        {
+            "severity": "info",
+            "line_from": 47,
+            "line_to": 47,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ProductReview\\Persistence\\SpyProductReview> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewStorage/src/Spryker/Zed/ProductReviewStorage/Business/Storage/ProductReviewStorageWriter.php",
+            "snippet": "        $productReviewEntities = $this->queryContainer->queryProductReviewsByIdProductAbstracts($productAbstractIds)->find()->toArray();",
+            "selected_text": "toArray",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 115,
+            "line_to": 115,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of round cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewStorage/src/Spryker/Zed/ProductReviewStorage/Business/Storage/ProductReviewStorageWriter.php",
+            "snippet": "        $productReviewStorageTransfer->setAverageRating(round($productReviewStorageTransfer->getAverageRating(), 1));",
+            "selected_text": "$productReviewStorageTransfer->getAverageRating()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 46,
+            "line_to": 46,
+            "type": "MoreSpecificImplementedParamType",
+            "message": "Argument 1 of Spryker\\Zed\\ProductReviewStorage\\Communication\\Plugin\\Event\\ProductReviewEventResourceQueryContainerPlugin::queryData has the more specific type 'array<array-key, int>', expecting 'array<array-key, int|string>' as defined by Spryker\\Zed\\EventBehavior\\Dependency\\Plugin\\EventResourceQueryContainerPluginInterface::queryData",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewStorage/src/Spryker/Zed/ProductReviewStorage/Communication/Plugin/Event/ProductReviewEventResourceQueryContainerPlugin.php",
+            "snippet": "    public function queryData(array $ids = []): ?ModelCriteria",
+            "selected_text": "$ids",
+            "error_level": 5,
+            "shortcode": 140
+        },
+        {
+            "severity": "info",
+            "line_from": 54,
+            "line_to": 54,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Orm\\Zed\\ProductReview\\Persistence\\SpyProductReviewQuery::orderBy cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewStorage/src/Spryker/Zed/ProductReviewStorage/Communication/Plugin/Event/ProductReviewEventResourceQueryContainerPlugin.php",
+            "snippet": "        return $query->orderBy($this->getIdColumnName());",
+            "selected_text": "$this->getIdColumnName()",
+            "error_level": 3,
+            "shortcode": 78
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 26,
+            "line_to": 26,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Zed\\ProductReviewStorage\\ProductReviewStorageConfig::isSendingToQueue has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewStorage/src/Spryker/Zed/ProductReviewStorage/Business/ProductReviewStorageBusinessFactory.php",
+            "snippet": "            $this->getConfig()->isSendingToQueue()",
+            "selected_text": "isSendingToQueue",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 37,
+            "line_to": 37,
+            "type": "DeprecatedProperty",
+            "message": "Spryker\\Zed\\ProductReviewStorage\\Business\\Storage\\ProductReviewStorageWriter::$isSendingToQueue is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewStorage/src/Spryker/Zed/ProductReviewStorage/Business/Storage/ProductReviewStorageWriter.php",
+            "snippet": "        $this->isSendingToQueue = $isSendingToQueue;",
+            "selected_text": "$this->isSendingToQueue",
+            "error_level": 2,
+            "shortcode": 99
+        },
+        {
+            "severity": "info",
+            "line_from": 118,
+            "line_to": 118,
+            "type": "DeprecatedMethod",
+            "message": "The method Orm\\Zed\\ProductReviewStorage\\Persistence\\Base\\SpyProductAbstractReviewStorage::setIsSendingToQueue has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewStorage/src/Spryker/Zed/ProductReviewStorage/Business/Storage/ProductReviewStorageWriter.php",
+            "snippet": "        $spyProductAbstractReviewStorageEntity->setIsSendingToQueue($this->isSendingToQueue);",
+            "selected_text": "setIsSendingToQueue",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 22,
+            "line_to": 22,
+            "type": "DeprecatedTrait",
+            "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewStorage/src/Spryker/Zed/ProductReviewStorage/Communication/Plugin/Event/Listener/ProductReviewPublishStorageListener.php",
+            "snippet": "    use DatabaseTransactionHandlerTrait;",
+            "selected_text": "DatabaseTransactionHandlerTrait",
+            "error_level": 2,
+            "shortcode": 171
+        },
+        {
+            "severity": "info",
+            "line_from": 23,
+            "line_to": 23,
+            "type": "DeprecatedTrait",
+            "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewStorage/src/Spryker/Zed/ProductReviewStorage/Communication/Plugin/Event/Listener/ProductReviewStorageListener.php",
+            "snippet": "    use DatabaseTransactionHandlerTrait;",
+            "selected_text": "DatabaseTransactionHandlerTrait",
+            "error_level": 2,
+            "shortcode": 171
+        }
+    ]
+}

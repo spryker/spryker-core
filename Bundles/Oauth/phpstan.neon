@@ -1,5 +1,6 @@
 parameters:
+    checkGenericClassInNonGenericObjectType: false
+    checkMissingIterableValueType: false
     ignoreErrors:
-    	    - '#Method .+UserRepository::getUserEntityByUserCredentials\(\) should return .+UserEntityInterface but returns null.#'
-    	    - '#Method .+ClientRepository::getClientEntity\(\) should return .+ClientEntityInterface but empty return statement found.#'
-    	    - '#Method .+ScopeRepository::getScopeEntityByIdentifier\(\) should return .+ScopeEntityInterface but returns null.#'
+        - '#Method .+UserRepository::getUserEntityByUserCredentials\(\) should return .+UserEntityInterface but returns null.#'
+        - '#Method .+ScopeRepository::getScopeEntityByIdentifier\(\) should return .+ScopeEntityInterface but returns null.#'

@@ -43,7 +43,7 @@ class CategoryDataFeedQueryContainerTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -55,7 +55,7 @@ class CategoryDataFeedQueryContainerTest extends Unit
     /**
      * @return void
      */
-    public function testGetCategoryDataFeedQuery()
+    public function testGetCategoryDataFeedQuery(): void
     {
         $query = $this->categoryDataFeedQueryContainer
             ->queryCategoryDataFeed($this->categoryDataFeedTransfer);
@@ -70,7 +70,7 @@ class CategoryDataFeedQueryContainerTest extends Unit
     /**
      * @return void
      */
-    public function testGetCategoryDataFeedQueryWithJoinedProducts()
+    public function testGetCategoryDataFeedQueryWithJoinedProducts(): void
     {
         $this->categoryDataFeedTransfer->setJoinAbstractProduct(true);
         $query = $this->categoryDataFeedQueryContainer
@@ -90,7 +90,7 @@ class CategoryDataFeedQueryContainerTest extends Unit
     /**
      * @return void
      */
-    public function testGetCategoryDataFeedQueryWithJoinedProductsAndLocaleFilter()
+    public function testGetCategoryDataFeedQueryWithJoinedProductsAndLocaleFilter(): void
     {
         $this->categoryDataFeedTransfer->setJoinAbstractProduct(true);
         $this->categoryDataFeedTransfer->setIdLocale($this->getIdLocale());
@@ -104,7 +104,7 @@ class CategoryDataFeedQueryContainerTest extends Unit
     /**
      * @return \Spryker\Zed\CategoryDataFeed\Persistence\CategoryDataFeedQueryContainer
      */
-    protected function createCategoryDataFeedQueryContainer()
+    protected function createCategoryDataFeedQueryContainer(): CategoryDataFeedQueryContainer
     {
         $categoryDataFeedQueryContainer = new CategoryDataFeedQueryContainer();
 
@@ -114,7 +114,7 @@ class CategoryDataFeedQueryContainerTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\CategoryDataFeedTransfer
      */
-    protected function createCategoryDataFeedTransfer()
+    protected function createCategoryDataFeedTransfer(): CategoryDataFeedTransfer
     {
         $categoryDataFeedTransfer = new CategoryDataFeedTransfer();
 
@@ -124,7 +124,7 @@ class CategoryDataFeedQueryContainerTest extends Unit
     /**
      * @return int
      */
-    protected function getIdLocale()
+    protected function getIdLocale(): int
     {
         $locale = SpyLocaleQuery::create()
             ->filterByLocaleName('de_DE')
@@ -138,7 +138,7 @@ class CategoryDataFeedQueryContainerTest extends Unit
      *
      * @return array
      */
-    protected function getJoinedTablesNames(SpyCategoryQuery $query)
+    protected function getJoinedTablesNames(SpyCategoryQuery $query): array
     {
         $tablesNames = [];
         $joins = $query->getJoins();
@@ -157,7 +157,7 @@ class CategoryDataFeedQueryContainerTest extends Unit
      *
      * @return array
      */
-    protected function getSortedExpectedJoinedTables($tablesArray)
+    protected function getSortedExpectedJoinedTables(array $tablesArray): array
     {
         asort($tablesArray);
         $tablesArray = array_values($tablesArray);
@@ -168,7 +168,7 @@ class CategoryDataFeedQueryContainerTest extends Unit
     /**
      * @return array
      */
-    protected function getDefaultJoinedTables()
+    protected function getDefaultJoinedTables(): array
     {
         return [
             'spy_category_attribute',
@@ -179,7 +179,7 @@ class CategoryDataFeedQueryContainerTest extends Unit
     /**
      * @return array
      */
-    protected function getProductJoinedTables()
+    protected function getProductJoinedTables(): array
     {
         return [
             'spy_product_abstract',
@@ -191,7 +191,7 @@ class CategoryDataFeedQueryContainerTest extends Unit
     /**
      * @return array
      */
-    protected function getParamsForLocaleFilter()
+    protected function getParamsForLocaleFilter(): array
     {
         return [
             [

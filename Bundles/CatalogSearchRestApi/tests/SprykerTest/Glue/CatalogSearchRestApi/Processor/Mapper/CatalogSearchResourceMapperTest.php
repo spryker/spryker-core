@@ -9,6 +9,7 @@ namespace SprykerTest\Glue\CatalogSearchRestApi\Processor\Mapper;
 
 use ArrayObject;
 use Codeception\Test\Unit;
+use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\FacetConfigTransfer;
 use Generated\Shared\Transfer\FacetSearchResultTransfer;
@@ -19,6 +20,8 @@ use Generated\Shared\Transfer\RangeSearchResultTransfer;
 use Generated\Shared\Transfer\RestCatalogSearchAttributesTransfer;
 use Generated\Shared\Transfer\SortSearchResultTransfer;
 use Spryker\Client\Currency\CurrencyClient;
+use Spryker\Client\ProductLabelStorage\Plugin\ProductLabelFacetValueTransformerPlugin;
+use Spryker\Client\ProductReview\Plugin\ProductRatingValueTransformer;
 use Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToCurrencyClientBridge;
 use Spryker\Glue\CatalogSearchRestApi\Processor\Mapper\CatalogSearchResourceMapper;
 
@@ -35,6 +38,8 @@ use Spryker\Glue\CatalogSearchRestApi\Processor\Mapper\CatalogSearchResourceMapp
  */
 class CatalogSearchResourceMapperTest extends Unit
 {
+    use ArraySubsetAsserts;
+
     protected const REQUESTED_CURRENCY = 'CHF';
     protected const GROSS_AMOUNT = 'grossAmount';
     protected const GROSS_MODE = 'GROSS_MODE';
@@ -92,33 +97,35 @@ class CatalogSearchResourceMapperTest extends Unit
             ->mapPrices($this->restSearchAttributesTransfer, $this->getPriceModeInformation());
 
         $products = $this->getProductsFromRestCatalogSearchAttributesTransfer();
-        $this->assertEquals(1, $products->count());
-        $this->assertEquals("cameras", $this->restSearchAttributesTransfer->getSpellingSuggestion());
+        $this->assertSame(1, $products->count());
+        $this->assertSame('cameras', $this->restSearchAttributesTransfer->getSpellingSuggestion());
 
-        $this->assertEquals("Toshiba CAMILEO S20", $products[0]->getAbstractName());
-        $this->assertEquals(19568, $products[0]->getPrice());
-        $this->assertEquals("209", $products[0]->getAbstractSku());
-        $this->assertEquals(19568, $products[0]->getPrices()[0][static::GROSS_AMOUNT]);
-        $this->assertArrayNotHasKey("id_product_abstract", $products[0]);
-        $this->assertArrayNotHasKey("id_product_labels", $products[0]);
+        $product = $products[0];
+        $this->assertSame('Toshiba CAMILEO S20', $product->getAbstractName());
+        $this->assertSame(19568, $product->getPrice());
+        $this->assertSame('209', $product->getAbstractSku());
+        $this->assertSame(19568, $product->getPrices()[0][static::GROSS_AMOUNT]);
+        $this->assertArrayNotHasKey('id_product_abstract', $product);
+        $this->assertArrayNotHasKey('id_product_labels', $product);
 
-        $this->assertArrayNotHasKey("fk_product_image_set", $products[0]->getImages()[0]);
-        $this->assertArrayNotHasKey("id_product_image", $products[0]->getImages()[0]);
-        $this->assertArrayNotHasKey("id_product_image_set_to_product_image", $products[0]->getImages()[0]);
-        $this->assertArrayNotHasKey("fk_product_image", $products[0]->getImages()[0]);
+        $this->assertArrayNotHasKey('fk_product_image_set', $product->getImages()[0]);
+        $this->assertArrayNotHasKey('id_product_image', $product->getImages()[0]);
+        $this->assertArrayNotHasKey('id_product_image_set_to_product_image', $product->getImages()[0]);
+        $this->assertArrayNotHasKey('fk_product_image', $product->getImages()[0]);
 
-        $this->assertEquals("//images.icecat.biz/img/norm/medium/15743_12554247-9579.jpg", $products[0]->getImages()[0]['externalUrlSmall']);
-        $this->assertEquals("//images.icecat.biz/img/norm/high/15743_12554247-9579.jpg", $products[0]->getImages()[0]['externalUrlLarge']);
+        $this->assertSame('//images.icecat.biz/img/norm/medium/15743_12554247-9579.jpg', $product->getImages()[0]['externalUrlSmall']);
+        $this->assertSame('//images.icecat.biz/img/norm/high/15743_12554247-9579.jpg', $product->getImages()[0]['externalUrlLarge']);
 
-        $this->assertEquals("name_asc", $this->restSearchAttributesTransfer->getSort()->getCurrentSortOrder());
-        $this->assertEquals("1", $this->restSearchAttributesTransfer->getSort()->getCurrentSortParam());
-        $this->assertArraySubset($this->restSearchAttributesTransfer->getSort()->getSortParamNames(), ["rating", "name_asc", "name_desc", "price_asc", "price_desc"]);
-        $this->assertArraySubset(["rating", "name_asc", "name_desc", "price_asc", "price_desc"], $this->restSearchAttributesTransfer->getSort()->getSortParamNames());
+        $this->assertSame('name_asc', $this->restSearchAttributesTransfer->getSort()->getCurrentSortOrder());
+        $this->assertSame('1', $this->restSearchAttributesTransfer->getSort()->getCurrentSortParam());
+        $fields = ['rating', 'name_asc', 'name_desc', 'price_asc', 'price_desc'];
+        $this->assertArraySubset($this->restSearchAttributesTransfer->getSort()->getSortParamNames(), $fields);
+        $this->assertTrue(array_intersect($fields, $this->restSearchAttributesTransfer->getSort()->getSortParamNames()) === $fields);
 
-        $this->assertEquals(1, $this->restSearchAttributesTransfer->getPagination()->getCurrentPage());
-        $this->assertEquals(12, $this->restSearchAttributesTransfer->getPagination()->getCurrentItemsPerPage());
-        $this->assertEquals(1, $this->restSearchAttributesTransfer->getPagination()->getMaxPage());
-        $this->assertEquals(3, $this->restSearchAttributesTransfer->getPagination()->getNumFound());
+        $this->assertSame(1, $this->restSearchAttributesTransfer->getPagination()->getCurrentPage());
+        $this->assertSame(12, $this->restSearchAttributesTransfer->getPagination()->getCurrentItemsPerPage());
+        $this->assertSame(1, $this->restSearchAttributesTransfer->getPagination()->getMaxPage());
+        $this->assertSame(3, $this->restSearchAttributesTransfer->getPagination()->getNumFound());
 
         $this->assertCount(1, $this->restSearchAttributesTransfer->getValueFacets());
         $this->assertSame('label', $this->restSearchAttributesTransfer->getValueFacets()[0]['name']);
@@ -157,7 +164,7 @@ class CatalogSearchResourceMapperTest extends Unit
     }
 
     /**
-     * @return \ArrayObject
+     * @return \ArrayObject|\Generated\Shared\Transfer\RestCatalogSearchAbstractProductsTransfer[]
      */
     protected function getProductsFromRestCatalogSearchAttributesTransfer(): ArrayObject
     {
@@ -213,27 +220,27 @@ class CatalogSearchResourceMapperTest extends Unit
     {
         $products = [];
         $products[] = [
-            "images" => [
+            'images' => [
                 [
-                    "fk_product_image_set" => 423,
-                    "id_product_image" => 204,
-                    "external_url_small" => "//images.icecat.biz/img/norm/medium/15743_12554247-9579.jpg",
-                    "external_url_large" => "//images.icecat.biz/img/norm/high/15743_12554247-9579.jpg",
-                    "id_product_image_set_to_product_image" => 423,
-                    "fk_product_image" => 204],
+                    'fk_product_image_set' => 423,
+                    'id_product_image' => 204,
+                    'external_url_small' => '//images.icecat.biz/img/norm/medium/15743_12554247-9579.jpg',
+                    'external_url_large' => '//images.icecat.biz/img/norm/high/15743_12554247-9579.jpg',
+                    'id_product_image_set_to_product_image' => 423,
+                    'fk_product_image' => 204],
             ],
-            "id_product_labels" => [
+            'id_product_labels' => [
                 0 => 2,
             ],
-            "price" => 19568,
-            "abstract_name" => "Toshiba CAMILEO S20",
-            "id_product_abstract" => 209,
-            "type" => "product_abstract",
-            "prices" => [
-                "DEFAULT" => 19568,
+            'price' => 19568,
+            'abstract_name' => 'Toshiba CAMILEO S20',
+            'id_product_abstract' => 209,
+            'type' => 'product_abstract',
+            'prices' => [
+                'DEFAULT' => 19568,
             ],
-            "abstract_sku" => "209",
-            "url" => "/en/toshiba-camileo-s20-209",
+            'abstract_sku' => '209',
+            'url' => '/en/toshiba-camileo-s20-209',
         ];
 
         return $products;
@@ -246,14 +253,14 @@ class CatalogSearchResourceMapperTest extends Unit
     {
         $sort = new SortSearchResultTransfer();
         $sort->setSortParamNames([
-            "rating",
-            "name_asc",
-            "name_desc",
-            "price_asc",
-            "price_desc",
+            'rating',
+            'name_asc',
+            'name_desc',
+            'price_asc',
+            'price_desc',
         ]);
-        $sort->setCurrentSortOrder("name_asc");
-        $sort->setCurrentSortParam("1");
+        $sort->setCurrentSortOrder('name_asc');
+        $sort->setCurrentSortParam('1');
 
         return $sort;
     }
@@ -311,7 +318,7 @@ class CatalogSearchResourceMapperTest extends Unit
         $facetConfig->setFieldName('string-facet');
         $facetConfig->setType('enumeration');
         $facetConfig->setIsMultiValued(true);
-        $facetConfig->setValueTransformer('Spryker\Client\ProductLabelStorage\Plugin\ProductLabelFacetValueTransformerPlugin');
+        $facetConfig->setValueTransformer(ProductLabelFacetValueTransformerPlugin::class);
         $facetSearchResultTransfer->setConfig($facetConfig);
 
         return $facetSearchResultTransfer;
@@ -337,7 +344,7 @@ class CatalogSearchResourceMapperTest extends Unit
         $facetConfig->setFieldName('integer-facet');
         $facetConfig->setType('range');
         $facetConfig->setIsMultiValued(null);
-        $facetConfig->setValueTransformer('Spryker\Client\ProductReview\Plugin\ProductRatingValueTransformer');
+        $facetConfig->setValueTransformer(ProductRatingValueTransformer::class);
         $facetSearchResultTransfer->setConfig($facetConfig);
 
         return $facetSearchResultTransfer;
@@ -346,7 +353,7 @@ class CatalogSearchResourceMapperTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\PriceModeConfigurationTransfer
      */
-    protected function getPriceModeInformation()
+    protected function getPriceModeInformation(): PriceModeConfigurationTransfer
     {
         return (new PriceModeConfigurationTransfer())
             ->setCurrentPriceMode(static::GROSS_MODE)

@@ -1,0 +1,18 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 258,
+            "line_to": 258,
+            "type": "PossiblyUndefinedVariable",
+            "message": "Possibly undefined variable $buttons, first seen on line 258",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsSlotGui/src/Spryker/Zed/CmsSlotGui/Communication/Table/SlotTable.php",
+            "snippet": "        $buttons[] = $statusToggleButton;",
+            "selected_text": "$buttons",
+            "error_level": 3,
+            "shortcode": 18
+        }
+    ],
+    "deprecation": []
+}

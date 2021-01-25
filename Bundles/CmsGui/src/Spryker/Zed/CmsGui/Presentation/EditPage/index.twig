@@ -14,20 +14,20 @@
 
 {% block action %}
     {% set redirectUrl = url('/cms-gui/edit-page', {'id-cms-page' : idCmsPage}) %}
-    {{ include ('@CmsGui/_template/version-button.twig', { 'id-cms-page': idCmsPage, 'redirect-url' : redirectUrl}) }}
+    {% include '@CmsGui/_template/version-button.twig' %}
     {%  if isPageTemplateWithPlaceholders is not defined or isPageTemplateWithPlaceholders %}
         {{ editActionButton(url('/cms-gui/create-glossary', {'id-cms-page': idCmsPage}), 'Edit placeholders' | trans) }}
     {% endif %}
     {% if cmsVersion is not null %}
         {{ removeActionButton(url('/cms-gui/version-page/discard', {'id-cms-page': idCmsPage, 'redirect-url' : redirectUrl}), 'Discard Draft' | trans) }}
     {% endif %}
-    {{ include ('@CmsGui/_template/activate-button.twig', { 'id-cms-page': idCmsPage, 'isActive': pageForm.vars.data.isActive}) }}
+    {% include '@CmsGui/_template/activate-button.twig' %}
     {{ backActionButton('/cms-gui/list-page', 'Back to CMS' | trans) }}
 {% endblock %}
 
 {% block content %}
 
-    {{ include ('@CmsGui/_template/edit-notes.twig') }}
+    {% include '@CmsGui/_template/edit-notes.twig' %}
 
     {{ form_start(pageForm, {attr: {novalidate: 'novalidate'}}) }}
 
@@ -39,11 +39,11 @@
 
 {% block head_css %}
     {{ parent() }}
-    <link rel="stylesheet" href="/assets/css/spryker-zed-cms-gui-main.css">
+    <link rel="stylesheet" href="{{ assetsPath('css/spryker-zed-cms-gui-main.css') }}">
 {% endblock %}
 
 {% block footer_js %}
     {{ parent() }}
-    <script src="/assets/js/spryker-zed-cms-gui-main.js"></script>
+    <script src="{{ assetsPath('js/spryker-zed-cms-gui-main.js') }}"></script>
 {% endblock %}
 

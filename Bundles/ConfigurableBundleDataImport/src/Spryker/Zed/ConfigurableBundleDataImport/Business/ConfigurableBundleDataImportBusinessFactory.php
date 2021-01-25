@@ -1,12 +1,13 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * MIT License
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace Spryker\Zed\ConfigurableBundleDataImport\Business;
 
+use Spryker\Zed\ConfigurableBundleDataImport\Business\ConfigurableBundleDataImportStep\ConfigurableBundleTemplateImageWriterStep;
 use Spryker\Zed\ConfigurableBundleDataImport\Business\ConfigurableBundleDataImportStep\ConfigurableBundleTemplateKeyToIdConfigurableBundleTemplate;
 use Spryker\Zed\ConfigurableBundleDataImport\Business\ConfigurableBundleDataImportStep\ConfigurableBundleTemplateSlotWriterStep;
 use Spryker\Zed\ConfigurableBundleDataImport\Business\ConfigurableBundleDataImportStep\ConfigurableBundleTemplateWriterStep;
@@ -57,6 +58,23 @@ class ConfigurableBundleDataImportBusinessFactory extends DataImportBusinessFact
     }
 
     /**
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
+     */
+    public function getConfigurableBundleTemplateImageDataImporter(): DataImporterInterface
+    {
+        $dataImporter = $this->getCsvDataImporterFromConfig($this->getConfig()->getConfigurableBundleTemplateImageDataImporterConfiguration());
+
+        $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
+        $dataSetStepBroker
+            ->addStep($this->createConfigurableBundleTemplateKeyToIdConfigurableBundleTemplateStep())
+            ->addStep($this->createConfigurableBundleTemplateImageWriterStep());
+
+        $dataImporter->addDataSetStepBroker($dataSetStepBroker);
+
+        return $dataImporter;
+    }
+
+    /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
      */
     public function createConfigurableBundleTemplateWriterStep(): DataImportStepInterface
@@ -70,6 +88,14 @@ class ConfigurableBundleDataImportBusinessFactory extends DataImportBusinessFact
     public function createConfigurableBundleTemplateSlotWriterStep(): DataImportStepInterface
     {
         return new ConfigurableBundleTemplateSlotWriterStep();
+    }
+
+    /**
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
+     */
+    public function createConfigurableBundleTemplateImageWriterStep(): DataImportStepInterface
+    {
+        return new ConfigurableBundleTemplateImageWriterStep();
     }
 
     /**

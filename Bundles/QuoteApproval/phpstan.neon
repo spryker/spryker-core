@@ -1,2 +1,3 @@
 parameters:
-    bootstrap: %rootDir%/../../../phpstan-bootstrap.php
+    checkGenericClassInNonGenericObjectType: false
+    checkMissingIterableValueType: false

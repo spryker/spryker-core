@@ -20,7 +20,7 @@ class DependencyInjectorResolver extends AbstractClassResolver
     /**
      * @var string
      */
-    private $fromBundle;
+    protected $fromBundle;
 
     /**
      * @param object|string $callerClass
@@ -32,7 +32,7 @@ class DependencyInjectorResolver extends AbstractClassResolver
         $dependencyInjectorCollection = $this->getDependencyInjectorCollection();
 
         $this->setCallerClass($callerClass);
-        $injectToBundle = $this->getClassInfo()->getBundle();
+        $injectToBundle = $this->getClassInfo()->getModule();
         $injectFromBundles = $this->getInjectorBundles($injectToBundle);
 
         foreach ($injectFromBundles as $injectFromBundle) {
@@ -69,24 +69,24 @@ class DependencyInjectorResolver extends AbstractClassResolver
             self::CLASS_NAME_PATTERN,
             self::KEY_NAMESPACE,
             self::KEY_FROM_BUNDLE,
-            self::KEY_STORE,
+            static::KEY_CODE_BUCKET,
             self::KEY_BUNDLE
         );
     }
 
     /**
      * @param string $namespace
-     * @param string|null $store
+     * @param string|null $codeBucket
      *
      * @return string
      */
-    protected function buildClassName($namespace, $store = null)
+    protected function buildClassName($namespace, $codeBucket = null)
     {
         $searchAndReplace = [
             self::KEY_NAMESPACE => $namespace,
-            self::KEY_BUNDLE => $this->getClassInfo()->getBundle(),
+            self::KEY_BUNDLE => $this->getClassInfo()->getModule(),
             self::KEY_FROM_BUNDLE => $this->fromBundle,
-            self::KEY_STORE => $store,
+            static::KEY_CODE_BUCKET => $codeBucket,
         ];
 
         $className = str_replace(

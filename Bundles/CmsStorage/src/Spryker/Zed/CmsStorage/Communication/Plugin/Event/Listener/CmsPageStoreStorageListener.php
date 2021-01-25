@@ -28,17 +28,17 @@ class CmsPageStoreStorageListener extends AbstractPlugin implements EventBulkHan
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
      * @param string $eventName
      *
      * @return void
      */
-    public function handleBulk(array $eventTransfers, $eventName)
+    public function handleBulk(array $eventEntityTransfers, $eventName)
     {
         $this->preventTransaction();
 
         $cmsPageIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys(
-            $eventTransfers,
+            $eventEntityTransfers,
             SpyCmsPageStoreTableMap::COL_FK_CMS_PAGE
         );
 

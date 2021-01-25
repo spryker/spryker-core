@@ -19,7 +19,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class ValidatorConsole extends Console
 {
     public const COMMAND_NAME = 'transfer:validate';
-    public const COMMAND_DESCRIPTION = 'Validates transfer XML definition files';
+    public const COMMAND_DESCRIPTION = 'Validates transfer XML definition files.';
     public const OPTION_BUNDLE = 'bundle';
 
     /**
@@ -28,12 +28,16 @@ class ValidatorConsole extends Console
     protected function configure()
     {
         parent::configure();
+
+        $description = static::COMMAND_DESCRIPTION;
+        $description .= ' Use -vv for detailed debug output.';
+
         $this
             ->setName(static::COMMAND_NAME)
-            ->setDescription(static::COMMAND_DESCRIPTION)
+            ->setDescription($description)
             ->setHelp('<info>' . static::COMMAND_NAME . ' -h</info>');
 
-        $this->addOption(static::OPTION_BUNDLE, 'b', InputOption::VALUE_OPTIONAL, 'Name of core bundle to run validation for (defaults to all)');
+        $this->addOption(static::OPTION_BUNDLE, 'b', InputOption::VALUE_OPTIONAL, 'Name of core module to run validation for (defaults to all).');
     }
 
     /**

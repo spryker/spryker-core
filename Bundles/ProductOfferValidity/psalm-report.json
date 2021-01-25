@@ -1,0 +1,139 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 22,
+            "line_to": 22,
+            "type": "TooManyTemplateParams",
+            "message": "Orm\\Zed\\ProductOfferValidity\\Persistence\\SpyProductOfferValidityQuery<mixed> has too many template params, expecting 0",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOfferValidity/src/Spryker/Zed/ProductOfferValidity/Persistence/ProductOfferValidityPersistenceFactory.php",
+            "snippet": "     * @phpstan-return \\Orm\\Zed\\ProductOfferValidity\\Persistence\\SpyProductOfferValidityQuery<mixed>",
+            "selected_text": "\\Orm\\Zed\\ProductOfferValidity\\Persistence\\SpyProductOfferValidityQuery<mixed>",
+            "error_level": 6,
+            "shortcode": 184
+        },
+        {
+            "severity": "error",
+            "line_from": 25,
+            "line_to": 27,
+            "type": "TooManyTemplateParams",
+            "message": "Orm\\Zed\\ProductOfferValidity\\Persistence\\SpyProductOfferValidityQuery<mixed> has too many template params, expecting 0",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOfferValidity/src/Spryker/Zed/ProductOfferValidity/Persistence/ProductOfferValidityRepository.php",
+            "snippet": "        $productOfferValidityEntities = $this->getFactory()\n            ->createProductOfferValidityPropelQuery()\n            ->filterByValidFrom('now', Criteria::LESS_EQUAL)",
+            "selected_text": "$this->getFactory()\n            ->createProductOfferValidityPropelQuery()\n            ->filterByValidFrom('now', Criteria::LESS_EQUAL)",
+            "error_level": 6,
+            "shortcode": 184
+        },
+        {
+            "severity": "error",
+            "line_from": 44,
+            "line_to": 46,
+            "type": "TooManyTemplateParams",
+            "message": "Orm\\Zed\\ProductOfferValidity\\Persistence\\SpyProductOfferValidityQuery<mixed> has too many template params, expecting 0",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOfferValidity/src/Spryker/Zed/ProductOfferValidity/Persistence/ProductOfferValidityRepository.php",
+            "snippet": "        $productOfferValidityEntities = $this->getFactory()\n            ->createProductOfferValidityPropelQuery()\n            ->filterByValidFrom('now', Criteria::GREATER_THAN)",
+            "selected_text": "$this->getFactory()\n            ->createProductOfferValidityPropelQuery()\n            ->filterByValidFrom('now', Criteria::GREATER_THAN)",
+            "error_level": 6,
+            "shortcode": 184
+        },
+        {
+            "severity": "error",
+            "line_from": 66,
+            "line_to": 68,
+            "type": "TooManyTemplateParams",
+            "message": "Orm\\Zed\\ProductOfferValidity\\Persistence\\SpyProductOfferValidityQuery<mixed> has too many template params, expecting 0",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOfferValidity/src/Spryker/Zed/ProductOfferValidity/Persistence/ProductOfferValidityRepository.php",
+            "snippet": "        $productOfferValidityEntity = $this->getFactory()\n            ->createProductOfferValidityPropelQuery()\n            ->filterByFkProductOffer($idProductOffer)",
+            "selected_text": "$this->getFactory()\n            ->createProductOfferValidityPropelQuery()\n            ->filterByFkProductOffer($idProductOffer)",
+            "error_level": 6,
+            "shortcode": 184
+        },
+        {
+            "severity": "error",
+            "line_from": 18,
+            "line_to": 18,
+            "type": "TooManyTemplateParams",
+            "message": "Propel\\Runtime\\Collection\\ObjectCollection<mixed> has too many template params, expecting 0",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOfferValidity/src/Spryker/Zed/ProductOfferValidity/Persistence/Propel/Mapper/ProductOfferValidityMapper.php",
+            "snippet": "     * @phpstan-param \\Propel\\Runtime\\Collection\\ObjectCollection<mixed> $productOfferValidityEntities",
+            "selected_text": "\\Propel\\Runtime\\Collection\\ObjectCollection<mixed>",
+            "error_level": 6,
+            "shortcode": 184
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 39,
+            "line_to": 39,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ProductOfferValidity\\Persistence\\ProductOfferValidityRepositoryInterface::findProductOfferValidityByIdProductOffer cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOfferValidity/src/Spryker/Zed/ProductOfferValidity/Business/Expander/ProductOfferExpander.php",
+            "snippet": "                $productOfferTransfer->getIdProductOffer()",
+            "selected_text": "$productOfferTransfer->getIdProductOffer()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 52,
+            "line_to": 52,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of findOneByFkProductOffer cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOfferValidity/src/Spryker/Zed/ProductOfferValidity/Persistence/ProductOfferValidityEntityManager.php",
+            "snippet": "            ->findOneByFkProductOffer($productOfferValidityTransfer->getIdProductOffer());",
+            "selected_text": "$productOfferValidityTransfer->getIdProductOffer()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 57,
+            "line_to": 57,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Zed\\ProductOfferValidity\\Persistence\\Propel\\Mapper\\ProductOfferValidityMapper::mapProductOfferValidityTransferToProductOfferValidityEntity cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOfferValidity/src/Spryker/Zed/ProductOfferValidity/Persistence/ProductOfferValidityEntityManager.php",
+            "snippet": "            $productOfferValidityEntity",
+            "selected_text": "$productOfferValidityEntity",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 34,
+            "line_to": 34,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ProductOfferValidity\\Persistence\\Propel\\Mapper\\ProductOfferValidityMapper::productOfferValidityEntitiesToProductOfferValidityCollectionTransfer expects Propel\\Runtime\\Collection\\ObjectCollection<mixed>, possibly different type Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\ProductOfferValidity\\Persistence\\SpyProductOfferValidity> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOfferValidity/src/Spryker/Zed/ProductOfferValidity/Persistence/ProductOfferValidityRepository.php",
+            "snippet": "                $productOfferValidityEntities,",
+            "selected_text": "$productOfferValidityEntities",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 54,
+            "line_to": 54,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ProductOfferValidity\\Persistence\\Propel\\Mapper\\ProductOfferValidityMapper::productOfferValidityEntitiesToProductOfferValidityCollectionTransfer expects Propel\\Runtime\\Collection\\ObjectCollection<mixed>, possibly different type Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\ProductOfferValidity\\Persistence\\SpyProductOfferValidity> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOfferValidity/src/Spryker/Zed/ProductOfferValidity/Persistence/ProductOfferValidityRepository.php",
+            "snippet": "                $productOfferValidityEntities,",
+            "selected_text": "$productOfferValidityEntities",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 68,
+            "line_to": 68,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Orm\\Zed\\ProductOfferValidity\\Persistence\\SpyProductOfferValidity::setFkProductOffer cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOfferValidity/src/Spryker/Zed/ProductOfferValidity/Persistence/Propel/Mapper/ProductOfferValidityMapper.php",
+            "snippet": "        $productOfferValidityEntity->setFkProductOffer($productOfferValidityTransfer->getIdProductOffer());",
+            "selected_text": "$productOfferValidityTransfer->getIdProductOffer()",
+            "error_level": 3,
+            "shortcode": 78
+        }
+    ],
+    "deprecation": []
+}

@@ -1,0 +1,17 @@
+<section class="panel panel-{{ options.class }} {% if options.collapsed %}is:collapsed{% endif %}" {% if options.id is defined %}id="{{ options.id }}"{% endif %} {% if options.collapsable %}data-collapsable{% endif %}>
+    {% if title %}
+        <header class="panel-heading" data-collapse-trigger>
+            <h1 class="panel-title">{{ title }}</h1>
+        </header>
+    {% endif %}
+
+    {% if options.noWrap is defined and options.noWrap %}
+        {{ content }}
+    {% else %}
+        <div class="panel-body">{{ content }}</div>
+    {% endif %}
+
+    {% if footer is defined %}
+        <footer class="panel-footer">{{ footer }}</footer>
+    {% endif %}
+</section>

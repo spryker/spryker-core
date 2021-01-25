@@ -84,9 +84,13 @@ class CheckoutProcessor implements CheckoutProcessorInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function placeOrder(RestRequestInterface $restRequest, RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): RestResponseInterface
-    {
-        $restErrorCollectionTransfer = $this->checkoutRequestValidator->validateCheckoutRequest($restRequest, $restCheckoutRequestAttributesTransfer);
+    public function placeOrder(
+        RestRequestInterface $restRequest,
+        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
+    ): RestResponseInterface {
+        $restErrorCollectionTransfer = $this->checkoutRequestValidator
+            ->validateCheckoutRequest($restRequest, $restCheckoutRequestAttributesTransfer);
+
         if ($restErrorCollectionTransfer->getRestErrors()->count()) {
             return $this->createValidationErrorResponse($restErrorCollectionTransfer);
         }
@@ -95,6 +99,7 @@ class CheckoutProcessor implements CheckoutProcessorInterface
             ->expandCheckoutRequestAttributes($restRequest, $restCheckoutRequestAttributesTransfer);
 
         $restCheckoutResponseTransfer = $this->checkoutRestApiClient->placeOrder($restCheckoutRequestAttributesTransfer);
+
         if (!$restCheckoutResponseTransfer->getIsSuccess()) {
             return $this->createPlaceOrderFailedErrorResponse($restCheckoutResponseTransfer->getErrors(), $restRequest->getMetadata()->getLocale());
         }

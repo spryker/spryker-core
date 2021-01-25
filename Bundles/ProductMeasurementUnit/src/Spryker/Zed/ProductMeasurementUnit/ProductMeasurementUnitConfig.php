@@ -29,6 +29,8 @@ class ProductMeasurementUnitConfig extends AbstractBundleConfig
     ];
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
      */
     public function getInfrastructuralMeasurementUnits(): array
@@ -43,6 +45,8 @@ class ProductMeasurementUnitConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getDefaultMeasurementUnitCode(): string

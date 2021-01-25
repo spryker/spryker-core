@@ -9,6 +9,8 @@ namespace Spryker\Client\Storage;
 
 use Predis\Client;
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\Storage\Cache\CacheKey\CacheKeyGenerator;
+use Spryker\Client\Storage\Cache\CacheKey\CacheKeyGeneratorInterface;
 use Spryker\Client\Storage\Cache\StorageCacheStrategyFactory;
 use Spryker\Client\Storage\Dependency\Client\StorageToLocaleClientInterface;
 use Spryker\Client\Storage\Dependency\Client\StorageToStoreClientInterface;
@@ -30,7 +32,7 @@ class StorageFactory extends AbstractFactory
     protected static $storageService;
 
     /**
-     * @deprecated Use `Spryker\Client\StorageExtension\Dependency\Plugin\StoragePluginInterface` instead.
+     * @deprecated Use {@link \Spryker\Client\StorageExtension\Dependency\Plugin\StoragePluginInterface} instead.
      *
      * @return \Spryker\Client\Storage\Redis\ServiceInterface
      */
@@ -67,7 +69,7 @@ class StorageFactory extends AbstractFactory
     }
 
     /**
-     * @deprecated Use getConnectionParameters() instead.
+     * @deprecated Use {@link getConnectionParameters()} instead.
      *
      * @return array
      */
@@ -140,6 +142,18 @@ class StorageFactory extends AbstractFactory
         return $this
             ->createStorageClientStrategyFactory()
             ->createStorageCacheStrategy($storageCacheStrategy);
+    }
+
+    /**
+     * @return \Spryker\Client\Storage\Cache\CacheKey\CacheKeyGeneratorInterface
+     */
+    public function createCacheKeyGenerator(): CacheKeyGeneratorInterface
+    {
+        return new CacheKeyGenerator(
+            $this->getStoreClient(),
+            $this->getLocaleClient(),
+            $this->getStorageClientConfig()
+        );
     }
 
     /**

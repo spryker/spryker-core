@@ -10,6 +10,7 @@ namespace Spryker\Client\Cart;
 use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\ItemReplaceTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -178,6 +179,48 @@ class CartClient extends AbstractClient implements CartClientInterface
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function addToCart(CartChangeTransfer $cartChangeTransfer): QuoteResponseTransfer
+    {
+        return $this->getFactory()->createQuoteStorageStrategyProxy()->addToCart($cartChangeTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function removeFromCart(CartChangeTransfer $cartChangeTransfer): QuoteResponseTransfer
+    {
+        return $this->getFactory()->createQuoteStorageStrategyProxy()->removeFromCart($cartChangeTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function updateQuantity(CartChangeTransfer $cartChangeTransfer): QuoteResponseTransfer
+    {
+        return $this->getFactory()->createQuoteStorageStrategyProxy()->updateQuantity($cartChangeTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param string $sku
      * @param string|null $groupKey
      * @param int $quantity
@@ -335,5 +378,19 @@ class CartClient extends AbstractClient implements CartClientInterface
         return $this->getFactory()
             ->getQuoteClient()
             ->lockQuote($quoteTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemReplaceTransfer $itemReplaceTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function replaceItem(ItemReplaceTransfer $itemReplaceTransfer): QuoteResponseTransfer
+    {
+        return $this->getFactory()->createQuoteStorageStrategyProxy()->replaceItem($itemReplaceTransfer);
     }
 }

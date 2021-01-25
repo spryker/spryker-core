@@ -15,6 +15,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  * @method \Spryker\Zed\ProductRelation\Business\ProductRelationFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductRelation\Persistence\ProductRelationQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductRelation\Communication\ProductRelationCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductRelation\Persistence\ProductRelationRepositoryInterface getRepository()
  */
 class ProductRelationUpdaterConsole extends Console
 {
@@ -34,10 +35,12 @@ class ProductRelationUpdaterConsole extends Console
      * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
-     * @return int|null
+     * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->getFacade()->rebuildRelations();
+
+        return static::CODE_SUCCESS;
     }
 }

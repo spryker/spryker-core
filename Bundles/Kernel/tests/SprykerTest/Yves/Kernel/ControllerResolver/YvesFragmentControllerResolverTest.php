@@ -31,7 +31,7 @@ class YvesFragmentControllerResolverTest extends Unit
      *
      * @return void
      */
-    public function testCreateController($controller, $expectedServiceName)
+    public function testCreateController(string $controller, string $expectedServiceName): void
     {
         $request = $this->getRequest($controller);
         $controllerResolver = $this->getFragmentControllerProvider($request);
@@ -45,14 +45,14 @@ class YvesFragmentControllerResolverTest extends Unit
     /**
      * @return array
      */
-    public function getController()
+    public function getController(): array
     {
         return [
-            ['index/index/index', 'SprykerTest\Yves\Kernel\ControllerResolver\YvesFragmentControllerResolverTest::indexAction'],
-            ['/index/index/index', 'SprykerTest\Yves\Kernel\ControllerResolver\YvesFragmentControllerResolverTest::indexAction'],
-            ['Index/Index/Index', 'SprykerTest\Yves\Kernel\ControllerResolver\YvesFragmentControllerResolverTest::indexAction'],
-            ['/Index/Index/Index', 'SprykerTest\Yves\Kernel\ControllerResolver\YvesFragmentControllerResolverTest::indexAction'],
-            ['foo-bar/baz-bat/zip-zap', 'SprykerTest\Yves\Kernel\ControllerResolver\YvesFragmentControllerResolverTest::zipZapAction'],
+            ['index/index/index', self::class . '::indexAction'],
+            ['/index/index/index', self::class . '::indexAction'],
+            ['Index/Index/Index', self::class . '::indexAction'],
+            ['/Index/Index/Index', self::class . '::indexAction'],
+            ['foo-bar/baz-bat/zip-zap', self::class . '::zipZapAction'],
         ];
     }
 
@@ -62,7 +62,7 @@ class YvesFragmentControllerResolverTest extends Unit
      *
      * @return void
      */
-    public function __call($name, $arguments = [])
+    public function __call(string $name, array $arguments = []): void
     {
     }
 
@@ -71,7 +71,7 @@ class YvesFragmentControllerResolverTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Yves\Kernel\ControllerResolver\YvesFragmentControllerResolver
      */
-    protected function getFragmentControllerProvider(Request $request)
+    protected function getFragmentControllerProvider(Request $request): YvesFragmentControllerResolver
     {
         $controllerResolverMock = $this->getMockBuilder(YvesFragmentControllerResolver::class)
             ->setMethods(['resolveController', 'getCurrentRequest'])
@@ -89,7 +89,7 @@ class YvesFragmentControllerResolverTest extends Unit
      *
      * @return \Symfony\Component\HttpFoundation\Request
      */
-    private function getRequest($controller)
+    private function getRequest(string $controller): Request
     {
         return new Request([], [], ['_controller' => $controller]);
     }

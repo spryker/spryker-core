@@ -96,21 +96,19 @@ class ShipmentDataProvider implements FormDataProviderInterface
     }
 
     /**
-     * @deprecated Exists for Backward Compatibility reasons only.
-     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
      */
     protected function resolveShipmentMethods(QuoteTransfer $quoteTransfer): ShipmentMethodsTransfer
     {
-        if ($this->hasItemLevelShipments($quoteTransfer)) {
-            $shipmentMethodsCollectionTransfer = $this->shipmentFacade->getAvailableMethodsByShipment($quoteTransfer);
+        $this->setItemLevelEmptyShipmentFromQuote($quoteTransfer);
 
-            return current($shipmentMethodsCollectionTransfer->getShipmentMethods());
-        }
+        $shipmentMethodsCollectionTransfer = $this->shipmentFacade->getAvailableMethodsByShipment($quoteTransfer);
+        /** @var \Generated\Shared\Transfer\ShipmentMethodsTransfer $shipmentMethodsTransfer */
+        $shipmentMethodsTransfer = $shipmentMethodsCollectionTransfer->getShipmentMethods()->getIterator()->current();
 
-        return $this->shipmentFacade->getAvailableMethods($quoteTransfer);
+        return $shipmentMethodsTransfer;
     }
 
     /**
@@ -118,16 +116,23 @@ class ShipmentDataProvider implements FormDataProviderInterface
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function hasItemLevelShipments(QuoteTransfer $quoteTransfer): bool
+    protected function setItemLevelEmptyShipmentFromQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
+        $quoteShipmentTransfer = $quoteTransfer->getShipment();
+        if ($quoteShipmentTransfer === null) {
+            return $quoteTransfer;
+        }
+
+        $quoteShipmentTransfer->setShippingAddress($quoteTransfer->getShippingAddress());
+
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             if ($itemTransfer->getShipment() === null) {
-                return false;
+                $itemTransfer->setShipment($quoteShipmentTransfer);
             }
         }
 
-        return true;
+        return $quoteTransfer;
     }
 }

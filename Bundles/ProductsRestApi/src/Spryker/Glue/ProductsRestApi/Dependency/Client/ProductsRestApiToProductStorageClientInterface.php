@@ -42,4 +42,50 @@ interface ProductsRestApiToProductStorageClientInterface
      * @return array|null
      */
     public function findProductConcreteStorageDataByMapping(string $mappingType, string $identifier, string $localeName): ?array;
+
+    /**
+     * @param string $mappingType
+     * @param string[] $identifiers
+     * @param string $localeName
+     *
+     * @return array
+     */
+    public function findBulkProductAbstractStorageDataByMapping(string $mappingType, array $identifiers, string $localeName): array;
+
+    /**
+     * @param int[] $productAbstractIds
+     * @param string $localeName
+     * @param string $storeName
+     *
+     * @return array
+     */
+    public function getBulkProductAbstractStorageDataByProductAbstractIdsForLocaleNameAndStore(
+        array $productAbstractIds,
+        string $localeName,
+        string $storeName
+    ): array;
+
+    /**
+     * @param string $mappingType
+     * @param string[] $identifiers
+     * @param string $localeName
+     *
+     * @return array
+     */
+    public function getBulkProductConcreteStorageDataByMapping(
+        string $mappingType,
+        array $identifiers,
+        string $localeName
+    ): array;
+
+    /**
+     * @param int[] $productConcreteIds
+     * @param string $localeName
+     *
+     * @return array
+     */
+    public function getBulkProductConcreteStorageData(
+        array $productConcreteIds,
+        string $localeName
+    ): array;
 }

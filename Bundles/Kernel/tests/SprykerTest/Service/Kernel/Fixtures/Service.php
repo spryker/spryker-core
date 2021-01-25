@@ -8,13 +8,14 @@
 namespace SprykerTest\Service\Kernel\Fixtures;
 
 use Spryker\Service\Kernel\AbstractService;
+use Spryker\Service\Kernel\AbstractServiceFactory;
 
 class Service extends AbstractService
 {
     /**
      * @return \Spryker\Service\Kernel\AbstractServiceFactory
      */
-    public function getFactory()
+    public function getFactory(): AbstractServiceFactory
     {
         return parent::getFactory();
     }

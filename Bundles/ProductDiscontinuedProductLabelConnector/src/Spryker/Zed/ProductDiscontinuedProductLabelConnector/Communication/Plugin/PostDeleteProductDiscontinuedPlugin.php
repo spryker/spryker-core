@@ -12,8 +12,11 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin\PostDeleteProductDiscontinuedPluginInterface;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\ProductDiscontinuedProductLabelConnector\Communication\Plugin\ProductLabelRelationPostDeleteBulkProductDiscontinuedPlugin} instead.
+ *
  * @method \Spryker\Zed\ProductDiscontinuedProductLabelConnector\Business\ProductDiscontinuedProductLabelConnectorFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductDiscontinuedProductLabelConnector\ProductDiscontinuedProductLabelConnectorConfig getConfig()
+ * @method \Spryker\Zed\ProductDiscontinuedProductLabelConnector\Persistence\ProductDiscontinuedProductLabelConnectorRepositoryInterface getRepository()
  */
 class PostDeleteProductDiscontinuedPlugin extends AbstractPlugin implements PostDeleteProductDiscontinuedPluginInterface
 {

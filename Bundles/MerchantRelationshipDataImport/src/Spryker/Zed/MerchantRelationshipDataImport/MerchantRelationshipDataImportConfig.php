@@ -15,6 +15,8 @@ class MerchantRelationshipDataImportConfig extends DataImportConfig
     public const IMPORT_TYPE_MERCHANT_RELATIONSHIP = 'merchant-relationship';
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getMerchantRelationshipDataImporterConfiguration(): DataImporterConfigurationTransfer

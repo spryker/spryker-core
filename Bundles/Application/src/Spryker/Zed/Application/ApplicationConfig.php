@@ -12,7 +12,7 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method \Spryker\Zed\Application\ApplicationConfig getSharedConfig()
+ * @method \Spryker\Shared\Application\ApplicationConfig getSharedConfig()
  */
 class ApplicationConfig extends AbstractBundleConfig
 {
@@ -47,6 +47,10 @@ class ApplicationConfig extends AbstractBundleConfig
     protected const HEADER_FEATURE_POLICY_VALUE = '';
 
     /**
+     * @api
+     *
+     * @deprecated Will be removed without replacement.
+     *
      * @return string
      */
     public function getHostName()
@@ -55,6 +59,8 @@ class ApplicationConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getYvesHostName(): string
@@ -63,7 +69,9 @@ class ApplicationConfig extends AbstractBundleConfig
     }
 
     /**
-     * @deprecated Use `\Spryker\Shared\Router\RouterConstants::ZED_IS_SSL_ENABLED` instead.
+     * @api
+     *
+     * @deprecated Use {@link \Spryker\Shared\Router\RouterConstants::ZED_IS_SSL_ENABLED} instead.
      *
      * @return bool
      */
@@ -73,7 +81,9 @@ class ApplicationConfig extends AbstractBundleConfig
     }
 
     /**
-     * @deprecated Use `\Spryker\Shared\Router\RouterConstants::ZED_SSL_EXCLUDED_ROUTE_NAMES` instead.
+     * @api
+     *
+     * @deprecated Use {@link \Spryker\Shared\Router\RouterConstants::ZED_SSL_EXCLUDED_ROUTE_NAMES} instead.
      *
      * @return array
      */
@@ -83,6 +93,8 @@ class ApplicationConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getTrustedProxies()
@@ -91,6 +103,8 @@ class ApplicationConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getTrustedHeader(): int
@@ -99,6 +113,8 @@ class ApplicationConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getTrustedHosts()
@@ -107,6 +123,8 @@ class ApplicationConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getProjectNamespace(): string
@@ -115,6 +133,8 @@ class ApplicationConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getTwigEnvironmentName(): string
@@ -133,6 +153,10 @@ class ApplicationConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
+     * @deprecated The WhoopsErrorHandler is deprecated and replaced by a new ErrorHandlerApplicationPlugin.
+     *
      * @return bool
      */
     public function isPrettyErrorHandlerEnabled(): bool
@@ -151,6 +175,8 @@ class ApplicationConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getSecurityHeaders(): array
@@ -163,5 +189,15 @@ class ApplicationConfig extends AbstractBundleConfig
             'Referrer-Policy' => static::HEADER_REFERRER_POLICY_VALUE,
             'Feature-Policy' => static::HEADER_FEATURE_POLICY_VALUE,
         ];
+    }
+
+    /**
+     * @api
+     *
+     * @return bool
+     */
+    public function isDebugModeEnabled(): bool
+    {
+        return $this->getSharedConfig()->isDebugModeEnabled();
     }
 }

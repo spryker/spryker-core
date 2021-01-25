@@ -25,7 +25,7 @@ class BundleConfigResolverAwareTraitTest extends Unit
     /**
      * @return void
      */
-    public function testSetConfigMustReturnFluentInterface()
+    public function testSetConfigMustReturnFluentInterface(): void
     {
         $bundleConfigResolverAwareTraitMock = $this->getBundleConfigResolverAwareTraitMock();
         $returned = $bundleConfigResolverAwareTraitMock->setConfig(
@@ -46,7 +46,7 @@ class BundleConfigResolverAwareTraitTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Glue\Kernel\AbstractBundleConfig
      */
-    private function getAbstractBundleConfigMock()
+    private function getAbstractBundleConfigMock(): AbstractBundleConfig
     {
         return $this->getMockForAbstractClass(AbstractBundleConfig::class);
     }

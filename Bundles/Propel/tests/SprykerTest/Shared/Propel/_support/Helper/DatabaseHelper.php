@@ -18,7 +18,7 @@ class DatabaseHelper extends Db
      * @param \Codeception\Lib\ModuleContainer $moduleContainer
      * @param array|null $config
      */
-    public function __construct(ModuleContainer $moduleContainer, $config)
+    public function __construct(ModuleContainer $moduleContainer, ?array $config)
     {
         $propelConfig = Config::get(PropelConstants::PROPEL);
         $defaultConfig = $propelConfig['database']['connections']['default'];

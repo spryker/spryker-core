@@ -38,7 +38,7 @@ interface EventFacadeInterface
      * @api
      *
      * @param string $eventName
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $transfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $transfers
      *
      * @return void
      */

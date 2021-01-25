@@ -28,7 +28,7 @@ class PropelGroupedSchemaFinderTest extends AbstractPropelSchemaTest
     /**
      * @return void
      */
-    public function testGetSchemasShouldReturnArrayWithOneEntryGroupedByFileNameIfFileWithSameNameOnlyExistsOnce()
+    public function testGetSchemasShouldReturnArrayWithOneEntryGroupedByFileNameIfFileWithSameNameOnlyExistsOnce(): void
     {
         $schemaFinder = new PropelSchemaFinder(
             [$this->getFixtureDirectory()]
@@ -47,7 +47,7 @@ class PropelGroupedSchemaFinderTest extends AbstractPropelSchemaTest
     /**
      * @return void
      */
-    public function testGetSchemasShouldReturnArrayWithTwoEntriesGroupedByFileNameIfFileWithSameNameExistsMoreThenOnce()
+    public function testGetSchemasShouldReturnArrayWithTwoEntriesGroupedByFileNameIfFileWithSameNameExistsMoreThenOnce(): void
     {
         $subDirectory = $this->getFixtureDirectory() . DIRECTORY_SEPARATOR . 'subDir';
         if (!is_dir($subDirectory)) {

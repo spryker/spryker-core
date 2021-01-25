@@ -10,6 +10,8 @@ namespace SprykerTest\Zed\Product\Business;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
+use Orm\Zed\Product\Persistence\SpyProduct;
+use Orm\Zed\Product\Persistence\SpyProductAbstract;
 
 /**
  * Auto-generated group annotations
@@ -26,7 +28,7 @@ class ProductManagementTest extends FacadeTestAbstract
     /**
      * @return void
      */
-    public function testAddProductShouldCreateProductAbstractAndConcrete()
+    public function testAddProductShouldCreateProductAbstractAndConcrete(): void
     {
         $this->productAbstractTransfer->setSku('new-sku');
         $this->productConcreteTransfer->setSku('new-concrete-sku');
@@ -47,7 +49,7 @@ class ProductManagementTest extends FacadeTestAbstract
     /**
      * @return void
      */
-    public function testSaveProductShouldUpdateProductAbstractAndCreateProductConcrete()
+    public function testSaveProductShouldUpdateProductAbstractAndCreateProductConcrete(): void
     {
         $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
         $this->productAbstractTransfer->setIdProductAbstract($idProductAbstract);
@@ -77,7 +79,7 @@ class ProductManagementTest extends FacadeTestAbstract
     /**
      * @return void
      */
-    public function testSaveProductShouldUpdateProductAbstractAndSaveProductConcrete()
+    public function testSaveProductShouldUpdateProductAbstractAndSaveProductConcrete(): void
     {
         $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
         $this->productAbstractTransfer->setIdProductAbstract($idProductAbstract);
@@ -103,7 +105,7 @@ class ProductManagementTest extends FacadeTestAbstract
     /**
      * @return void
      */
-    public function testIsProductActiveShouldReturnTrue()
+    public function testIsProductActiveShouldReturnTrue(): void
     {
         $this->productConcreteTransfer->setIsActive(true);
         $this->setupDefaultProducts();
@@ -116,7 +118,7 @@ class ProductManagementTest extends FacadeTestAbstract
     /**
      * @return void
      */
-    public function testIsProductActiveShouldReturnFalse()
+    public function testIsProductActiveShouldReturnFalse(): void
     {
         $this->productConcreteTransfer->setIsActive(false);
         $this->setupDefaultProducts();
@@ -129,7 +131,7 @@ class ProductManagementTest extends FacadeTestAbstract
     /**
      * @return void
      */
-    public function testIsProductConcreteActiveShouldReturnTrue()
+    public function testIsProductConcreteActiveShouldReturnTrue(): void
     {
         // Arrange
         $this->productConcreteTransfer->setIsActive(true);
@@ -145,7 +147,7 @@ class ProductManagementTest extends FacadeTestAbstract
     /**
      * @return void
      */
-    public function testIsProductConcreteActiveShouldReturnFalse()
+    public function testIsProductConcreteActiveShouldReturnFalse(): void
     {
         // Arrange
         $this->productConcreteTransfer->setIsActive(false);
@@ -161,7 +163,7 @@ class ProductManagementTest extends FacadeTestAbstract
     /**
      * @return void
      */
-    public function testCreateProductAbstractSavesStoreRelation()
+    public function testCreateProductAbstractSavesStoreRelation(): void
     {
         // Assign
         $expectedIdStores = [1, 3];
@@ -184,7 +186,7 @@ class ProductManagementTest extends FacadeTestAbstract
     /**
      * @return void
      */
-    public function testSaveProductAbstractUpdatesStoreRelation()
+    public function testSaveProductAbstractUpdatesStoreRelation(): void
     {
         // Assign
         $expectedIdStores = [1, 3];
@@ -210,7 +212,7 @@ class ProductManagementTest extends FacadeTestAbstract
     /**
      * @return void
      */
-    public function testFindProductAbstractByIdRetrievesStoreRelation()
+    public function testFindProductAbstractByIdRetrievesStoreRelation(): void
     {
         // Assign
         $expectedIdStores = [1, 3];
@@ -235,12 +237,12 @@ class ProductManagementTest extends FacadeTestAbstract
      *
      * @return void
      */
-    protected function assertAddProductAbstract(ProductAbstractTransfer $productAbstractTransfer)
+    protected function assertAddProductAbstract(ProductAbstractTransfer $productAbstractTransfer): void
     {
         $createdProductEntity = $this->getProductAbstractEntityById($productAbstractTransfer->getIdProductAbstract());
 
         $this->assertNotNull($createdProductEntity);
-        $this->assertEquals($productAbstractTransfer->getSku(), $createdProductEntity->getSku());
+        $this->assertSame($productAbstractTransfer->getSku(), $createdProductEntity->getSku());
     }
 
     /**
@@ -248,7 +250,7 @@ class ProductManagementTest extends FacadeTestAbstract
      *
      * @return void
      */
-    protected function assertSaveProductAbstract(ProductAbstractTransfer $productAbstractTransfer)
+    protected function assertSaveProductAbstract(ProductAbstractTransfer $productAbstractTransfer): void
     {
         $updatedProductEntity = $this->getProductAbstractEntityById($productAbstractTransfer->getIdProductAbstract());
 
@@ -267,7 +269,7 @@ class ProductManagementTest extends FacadeTestAbstract
      *
      * @return void
      */
-    protected function assertAddProductConcrete(ProductConcreteTransfer $productConcreteTransfer)
+    protected function assertAddProductConcrete(ProductConcreteTransfer $productConcreteTransfer): void
     {
         $createdProductEntity = $this->getProductConcreteEntityByAbstractId(
             $productConcreteTransfer->getFkProductAbstract()
@@ -282,7 +284,7 @@ class ProductManagementTest extends FacadeTestAbstract
      *
      * @return void
      */
-    protected function assertSaveProductConcrete(ProductConcreteTransfer $productConcreteTransfer)
+    protected function assertSaveProductConcrete(ProductConcreteTransfer $productConcreteTransfer): void
     {
         $updatedProductEntity = $this->getProductConcreteEntityByAbstractId(
             $productConcreteTransfer->getFkProductAbstract()
@@ -300,7 +302,7 @@ class ProductManagementTest extends FacadeTestAbstract
         foreach ($productConcreteTransferExpected->getLocalizedAttributes() as $localizedAttribute) {
             $expectedProductName = self::UPDATED_PRODUCT_CONCRETE_NAME[$localizedAttribute->getLocale()->getLocaleName()];
 
-            $this->assertEquals($expectedProductName, $localizedAttribute->getName());
+            $this->assertSame($expectedProductName, $localizedAttribute->getName());
         }
     }
 
@@ -309,7 +311,7 @@ class ProductManagementTest extends FacadeTestAbstract
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstract|null
      */
-    protected function getProductAbstractEntityById($idProductAbstract)
+    protected function getProductAbstractEntityById(int $idProductAbstract): ?SpyProductAbstract
     {
         return $this->productQueryContainer
             ->queryProductAbstract()
@@ -322,7 +324,7 @@ class ProductManagementTest extends FacadeTestAbstract
      *
      * @return \Orm\Zed\Product\Persistence\SpyProduct|null
      */
-    protected function getProductConcreteEntityByAbstractId($idProductAbstract)
+    protected function getProductConcreteEntityByAbstractId(int $idProductAbstract): ?SpyProduct
     {
         return $this->productQueryContainer
             ->queryProduct()

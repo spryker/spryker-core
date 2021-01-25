@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Sales\Communication\Controller;
 
 use Generated\Shared\Transfer\CommentTransfer;
+use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\Sales\SalesConfig;
 use Symfony\Component\Form\FormInterface;
@@ -22,13 +23,22 @@ use Symfony\Component\HttpFoundation\Request;
 class CommentController extends AbstractController
 {
     /**
+     * @uses \Spryker\Zed\Sales\Communication\Controller\DetailController::indexAction()
+     */
+    protected const ROUTE_REDIRECT = '/sales/detail';
+    /**
+     * @uses \Spryker\Zed\Sales\Communication\Controller\DetailController::PARAM_ID_SALES_ORDER
+     */
+    protected const PARAM_ID_SALES_ORDER = 'id-sales-order';
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function addAction(Request $request)
     {
-        $idSalesOrder = $request->query->get(SalesConfig::PARAM_ID_SALES_ORDER);
+        $idSalesOrder = $request->query->getInt(SalesConfig::PARAM_ID_SALES_ORDER);
 
         $formDataProvider = $this->getFactory()->createCommentFormDataProvider();
         $form = $this->getFactory()->getCommentForm(
@@ -52,7 +62,7 @@ class CommentController extends AbstractController
      */
     public function listAction(Request $request)
     {
-        $idSalesOrder = $request->query->get(SalesConfig::PARAM_ID_SALES_ORDER);
+        $idSalesOrder = $request->query->getInt(SalesConfig::PARAM_ID_SALES_ORDER);
 
         $comments = $this->getFacade()->getOrderCommentsByIdSalesOrder($idSalesOrder);
 
@@ -72,26 +82,24 @@ class CommentController extends AbstractController
         $formData = $form->getData();
         $idSalesOrder = $formData[CommentTransfer::FK_SALES_ORDER];
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $commentTransfer = new CommentTransfer();
-            $commentTransfer->setMessage($formData[CommentTransfer::MESSAGE]);
-            $commentTransfer->setFkSalesOrder($idSalesOrder);
+        $commentTransfer = new CommentTransfer();
+        $commentTransfer->setMessage($formData[CommentTransfer::MESSAGE]);
+        $commentTransfer->setFkSalesOrder($idSalesOrder);
 
-            $currentUserTransfer = $this->getFactory()->getUserFacade()->getCurrentUser();
+        $currentUserTransfer = $this->getFactory()->getUserFacade()->getCurrentUser();
 
-            $commentTransfer->setUsername(
-                $currentUserTransfer->getFirstName() . ' ' . $currentUserTransfer->getLastName()
-            );
+        $commentTransfer->setUsername(
+            $currentUserTransfer->getFirstName() . ' ' . $currentUserTransfer->getLastName()
+        );
 
-            $this->getFacade()->saveComment($commentTransfer);
+        $this->getFacade()->saveComment($commentTransfer);
 
-            $this->addSuccessMessage('Comment successfully added');
+        $this->addSuccessMessage('Comment successfully added');
 
-            return $this->redirectResponseExternal($request->headers->get('referer'));
-        }
-
-        foreach ($form->getErrors(true) as $error) {
-            $this->addErrorMessage($error->getMessage());
-        }
+        return $this->redirectResponse(
+            Url::generate(static::ROUTE_REDIRECT, [
+                static::PARAM_ID_SALES_ORDER => $idSalesOrder,
+            ])
+        );
     }
 }

@@ -12,6 +12,10 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class ProductPackagingUnitStorageConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()} instead.
+     *
      * @return bool
      */
     public function isSendingToQueue(): bool
@@ -20,7 +24,7 @@ class ProductPackagingUnitStorageConfig extends AbstractBundleConfig
     }
 
     /**
-     * @deprecated Use ProductPackagingUnitStorageConfig::getProductAbstractPackagingSynchronizationPoolName() instead.
+     * @api
      *
      * @return string|null
      */
@@ -30,9 +34,11 @@ class ProductPackagingUnitStorageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string|null
      */
-    public function getProductAbstractPackagingSynchronizationPoolName(): ?string
+    public function getEventQueueName(): ?string
     {
         return null;
     }

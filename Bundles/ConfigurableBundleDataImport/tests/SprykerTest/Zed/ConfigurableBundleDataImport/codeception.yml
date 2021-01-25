@@ -27,3 +27,4 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\TableRelationsCleanupHelper
                 - \SprykerTest\Zed\ConfigurableBundleDataImport\Helper\ConfigurableBundleDataImportHelper
                 - \SprykerTest\Zed\ProductList\Helper\ProductListHelper
+                - \SprykerTest\Shared\ProductImage\Helper\ProductImageDataHelper

@@ -25,8 +25,9 @@ class AvailabilityNotificationClient extends AbstractClient implements Availabil
      *
      * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer
      */
-    public function subscribe(AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer): AvailabilityNotificationSubscriptionResponseTransfer
-    {
+    public function subscribe(
+        AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
+    ): AvailabilityNotificationSubscriptionResponseTransfer {
         return $this->getFactory()
             ->createZedAvailabilityNotificationStub()
             ->subscribe($availabilityNotificationSubscriptionTransfer);
@@ -41,8 +42,9 @@ class AvailabilityNotificationClient extends AbstractClient implements Availabil
      *
      * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer
      */
-    public function unsubscribeByCustomerReferenceAndSku(AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer): AvailabilityNotificationSubscriptionResponseTransfer
-    {
+    public function unsubscribeByCustomerReferenceAndSku(
+        AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
+    ): AvailabilityNotificationSubscriptionResponseTransfer {
         return $this->getFactory()
             ->createZedAvailabilityNotificationStub()
             ->unsubscribeByCustomerReferenceAndSku($availabilityNotificationSubscriptionTransfer);
@@ -57,8 +59,9 @@ class AvailabilityNotificationClient extends AbstractClient implements Availabil
      *
      * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer
      */
-    public function unsubscribeBySubscriptionKey(AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer): AvailabilityNotificationSubscriptionResponseTransfer
-    {
+    public function unsubscribeBySubscriptionKey(
+        AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
+    ): AvailabilityNotificationSubscriptionResponseTransfer {
         return $this->getFactory()
             ->createZedAvailabilityNotificationStub()
             ->unsubscribeBySubscriptionKey($availabilityNotificationSubscriptionTransfer);

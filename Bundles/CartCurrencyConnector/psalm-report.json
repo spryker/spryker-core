@@ -1,0 +1,55 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 27,
+            "line_to": 27,
+            "type": "InvalidNullableReturnType",
+            "message": "The declared return type 'bool' for Spryker\\Client\\CartCurrencyConnector\\CurrencyChange\\CartUpdateCurrencyOnCurrencyChangePlugin::execute is not nullable, but 'bool|null' contains null",
+            "file_name": "vendor/spryker/spryker/Bundles/CartCurrencyConnector/src/Spryker/Client/CartCurrencyConnector/CurrencyChange/CartUpdateCurrencyOnCurrencyChangePlugin.php",
+            "snippet": "     * @return bool",
+            "selected_text": "bool",
+            "error_level": 5,
+            "shortcode": 144
+        },
+        {
+            "severity": "info",
+            "line_from": 34,
+            "line_to": 34,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getCode on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CartCurrencyConnector/src/Spryker/Client/CartCurrencyConnector/CurrencyChange/CartUpdateCurrencyOnCurrencyChangePlugin.php",
+            "snippet": "        if ($quoteTransfer->getCurrency()->getCode() !== $currency->getCode()) {",
+            "selected_text": "getCode",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 37,
+            "line_to": 37,
+            "type": "NullableReturnStatement",
+            "message": "The declared return type 'bool' for Spryker\\Client\\CartCurrencyConnector\\CurrencyChange\\CartUpdateCurrencyOnCurrencyChangePlugin::execute is not nullable, but the function returns 'bool|null'",
+            "file_name": "vendor/spryker/spryker/Bundles/CartCurrencyConnector/src/Spryker/Client/CartCurrencyConnector/CurrencyChange/CartUpdateCurrencyOnCurrencyChangePlugin.php",
+            "snippet": "            return $quoteResponseTransfer->getIsSuccessful();",
+            "selected_text": "$quoteResponseTransfer->getIsSuccessful()",
+            "error_level": 5,
+            "shortcode": 139
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 18,
+            "line_to": 18,
+            "type": "DeprecatedInterface",
+            "message": "Spryker\\Yves\\Currency\\Dependency\\CurrencyPostChangePluginInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/CartCurrencyConnector/src/Spryker/Yves/CartCurrencyConnector/CurrencyChange/RebuildCartOnCurrencyChangePlugin.php",
+            "snippet": "class RebuildCartOnCurrencyChangePlugin extends AbstractPlugin implements CurrencyPostChangePluginInterface",
+            "selected_text": "RebuildCartOnCurrencyChangePlugin",
+            "error_level": 2,
+            "shortcode": 152
+        }
+    ]
+}

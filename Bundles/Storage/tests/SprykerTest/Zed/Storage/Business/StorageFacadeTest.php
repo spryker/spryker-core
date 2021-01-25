@@ -44,7 +44,7 @@ class StorageFacadeTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\Kernel\Business\AbstractFacade|\Spryker\Zed\Storage\Business\StorageFacadeInterface
+     * @return \Spryker\Zed\Storage\Business\StorageFacadeInterface
      */
     protected function getStorageFacade()
     {

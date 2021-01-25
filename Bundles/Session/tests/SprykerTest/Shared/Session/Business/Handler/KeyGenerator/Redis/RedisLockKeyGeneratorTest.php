@@ -29,7 +29,7 @@ class RedisLockKeyGeneratorTest extends Unit
     /**
      * @return void
      */
-    public function testGenerateAddsSuffix()
+    public function testGenerateAddsSuffix(): void
     {
         $generator = new RedisLockKeyGenerator(new RedisSessionKeyGenerator());
         $generatedKey = $generator->generateLockKey('foo-session-123');

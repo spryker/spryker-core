@@ -15,6 +15,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 class LocaleQueryContainer extends AbstractQueryContainer implements LocaleQueryContainerInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $localeName
@@ -30,6 +32,8 @@ class LocaleQueryContainer extends AbstractQueryContainer implements LocaleQuery
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\Locale\Persistence\SpyLocaleQuery

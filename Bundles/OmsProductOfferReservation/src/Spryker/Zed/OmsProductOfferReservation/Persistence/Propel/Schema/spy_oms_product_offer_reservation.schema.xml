@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<database xmlns="spryker:schema-01"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          name="zed"
+          xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd"
+          namespace="Orm\Zed\OmsProductOfferReservation\Persistence"
+          package="src.Orm.Zed.OmsProductOfferReservation.Persistence">
+
+    <table name="spy_oms_product_offer_reservation" identifierQuoting="true">
+        <column name="id_oms_product_offer_reservation" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="product_offer_reference" required="true" type="VARCHAR" size="255"/>
+        <column name="reservation_quantity" type="DECIMAL" size="20" scale="10" required="true" default="0"/>
+        <column name="fk_store" required="false" type="INTEGER"/>
+
+        <unique name="spy_oms_product_offer_reservation-product_offer_reference">
+            <unique-column name="product_offer_reference"/>
+            <unique-column name="fk_store"/>
+        </unique>
+
+        <foreign-key name="spy_oms_product_offer_reservation-fk_store" foreignTable="spy_store" phpName="Store" refPhpName="OmsProductOfferReservation">
+            <reference local="fk_store" foreign="id_store"/>
+        </foreign-key>
+
+        <id-method-parameter value="spy_oms_product_offer_reservation_pk_seq"/>
+    </table>
+
+</database>

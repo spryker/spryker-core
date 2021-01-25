@@ -13,6 +13,9 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 use Spryker\Zed\Router\Business\Generator\UrlGenerator;
 use Spryker\Zed\Router\Business\UrlMatcher\CompiledUrlMatcher;
 
+/**
+ * @method \Spryker\Shared\Router\RouterConfig getSharedConfig()
+ */
 class RouterConfig extends AbstractBundleConfig
 {
     /**
@@ -31,7 +34,6 @@ class RouterConfig extends AbstractBundleConfig
             'cache_dir' => $this->getCachePathIfCacheEnabled(),
             'generator_class' => UrlGenerator::class,
             'matcher_class' => CompiledUrlMatcher::class,
-            'matcher_base_class' => CompiledUrlMatcher::class,
         ];
     }
 
@@ -60,9 +62,7 @@ class RouterConfig extends AbstractBundleConfig
     protected function getCachePathIfCacheEnabled(): ?string
     {
         if ($this->get(RouterConstants::ZED_IS_CACHE_ENABLED, true)) {
-            $defaultCachePath = sprintf('%s/data/%s/cache/%s/routing', APPLICATION_ROOT_DIR, APPLICATION_STORE, APPLICATION);
-
-            return $this->get(RouterConstants::ZED_CACHE_PATH, $defaultCachePath);
+            return $this->get(RouterConstants::ZED_CACHE_PATH, $this->getSharedConfig()->getDefaultRouterCachePath());
         }
 
         return null;
@@ -71,25 +71,60 @@ class RouterConfig extends AbstractBundleConfig
     /**
      * Specification:
      * - Returns an array of directories where Controller are placed.
-     * - Used to build to Router cache.
+     * - Used to build the Router cache.
      *
      * @api
      *
-     * @return array
+     * @return string[]
      */
     public function getControllerDirectories(): array
     {
         $controllerDirectories = [];
+        $srcDirectory = $this->getSourceDirectory();
+        $vendorDirectory = $this->getVendorDirectory();
 
         foreach ($this->get(KernelConstants::PROJECT_NAMESPACES) as $projectNamespace) {
-            $controllerDirectories[] = sprintf('%s/%s/Zed/*/Communication/Controller/', APPLICATION_SOURCE_DIR, $projectNamespace);
+            $controllerDirectories[] = sprintf('%s/%s/Zed/*/Communication/Controller/', $srcDirectory, $projectNamespace);
         }
 
         foreach ($this->get(KernelConstants::CORE_NAMESPACES) as $coreNamespace) {
-            $controllerDirectories[] = sprintf('%s/spryker/*/src/%s/Zed/*/Communication/Controller/', APPLICATION_VENDOR_DIR, $coreNamespace);
+            $composerPackageNamespace = strtolower(preg_replace('/([a-z0-9]|[A-Z0-9])([A-Z0-9])/', '$1-$2', $coreNamespace));
+
+            $controllerDirectories[] = sprintf(
+                '%s/%s/*/src/%s/Zed/*/Communication/Controller/',
+                $vendorDirectory,
+                $composerPackageNamespace,
+                $coreNamespace
+            );
         }
 
-        return array_filter($controllerDirectories, 'glob');
+        return $this->filterDirectories($controllerDirectories);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getSourceDirectory(): string
+    {
+        return rtrim(APPLICATION_SOURCE_DIR, '/');
+    }
+
+    /**
+     * @return string
+     */
+    protected function getVendorDirectory(): string
+    {
+        return rtrim(APPLICATION_VENDOR_DIR, '/');
+    }
+
+    /**
+     * @param array $directories
+     *
+     * @return array
+     */
+    protected function filterDirectories(array $directories): array
+    {
+        return array_filter($directories, 'glob');
     }
 
     /**

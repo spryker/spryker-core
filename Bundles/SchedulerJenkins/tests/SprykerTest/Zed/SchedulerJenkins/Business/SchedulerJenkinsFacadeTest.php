@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\SchedulerResponseTransfer;
 use Generated\Shared\Transfer\SchedulerScheduleTransfer;
 use Spryker\Service\UtilEncoding\UtilEncodingService;
 use Spryker\Zed\SchedulerJenkins\Business\Api\JenkinsApi;
+use Spryker\Zed\SchedulerJenkins\Business\Api\JenkinsApiInterface;
 use Spryker\Zed\SchedulerJenkins\Business\Processor\Builder\ConfigurationProviderBuilderInterface;
 use Spryker\Zed\SchedulerJenkins\Business\Processor\Configuration\ConfigurationProvider;
 use Spryker\Zed\SchedulerJenkins\Business\SchedulerJenkinsBusinessFactory;
@@ -126,7 +127,7 @@ class SchedulerJenkinsFacadeTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\SchedulerJenkins\Business\SchedulerJenkinsBusinessFactory
      */
-    protected function getSchedulerBusinessFactoryMock()
+    protected function getSchedulerBusinessFactoryMock(): SchedulerJenkinsBusinessFactory
     {
         $schedulerJenkinsBusinessFactoryMock = $this->getMockBuilder(SchedulerJenkinsBusinessFactory::class)
             ->setMethods(
@@ -157,7 +158,7 @@ class SchedulerJenkinsFacadeTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\SchedulerJenkins\Business\Processor\Builder\ConfigurationProviderBuilderInterface
      */
-    protected function createConfigurationProviderBuilder()
+    protected function createConfigurationProviderBuilder(): ConfigurationProviderBuilderInterface
     {
         $configurationProviderBuilderMock = $this->getMockBuilder(ConfigurationProviderBuilderInterface::class)
             ->setMethods([
@@ -175,7 +176,7 @@ class SchedulerJenkinsFacadeTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\SchedulerJenkins\Business\Api\JenkinsApiInterface
      */
-    protected function createJenkinsApiMock()
+    protected function createJenkinsApiMock(): JenkinsApiInterface
     {
         $jenkinsApiMock = $this->getMockBuilder(JenkinsApi::class)
             ->disableOriginalConstructor()
@@ -221,7 +222,7 @@ class SchedulerJenkinsFacadeTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\SchedulerJenkins\SchedulerJenkinsConfig
      */
-    protected function createSchedulerJenkinsConfigMock()
+    protected function createSchedulerJenkinsConfigMock(): SchedulerJenkinsConfig
     {
         $schedulerJenkinsConfigMock = $this->getMockBuilder(SchedulerJenkinsConfig::class)
             ->setMethods(['getJenkinsConfiguration'])
@@ -229,7 +230,7 @@ class SchedulerJenkinsFacadeTest extends Unit
 
         $schedulerJenkinsConfigMock
             ->method('getJenkinsConfiguration')
-            ->willReturn('test');
+            ->willReturn(['test']);
 
         return $schedulerJenkinsConfigMock;
     }

@@ -1,6 +1,6 @@
 # UserLocale Module
 [![Build Status](https://travis-ci.org/spryker/user-locale.svg)](https://travis-ci.org/spryker/user-locale)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/user-locale/badge.svg)](https://coveralls.io/github/spryker/user-locale)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 UserLocale module allows to assign locale to Zed user
 

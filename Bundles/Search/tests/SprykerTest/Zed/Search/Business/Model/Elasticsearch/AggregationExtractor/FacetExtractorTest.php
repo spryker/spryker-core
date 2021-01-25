@@ -32,7 +32,7 @@ class FacetExtractorTest extends Unit
     /**
      * @return void
      */
-    public function testExtractDataFromAggregations()
+    public function testExtractDataFromAggregations(): void
     {
         $testFieldName = 'field1';
 
@@ -59,7 +59,7 @@ class FacetExtractorTest extends Unit
     /**
      * @return void
      */
-    public function testExtractDataFromAggregationsStandaloneAggregation()
+    public function testExtractDataFromAggregationsStandaloneAggregation(): void
     {
         $testFieldName = 'field1';
 
@@ -91,21 +91,21 @@ class FacetExtractorTest extends Unit
      *
      * @return array
      */
-    protected function getStandaloneAggregationFixture($fieldName)
+    protected function getStandaloneAggregationFixture(string $fieldName): array
     {
         return [
-            "doc_count" => 50,
+            'doc_count' => 50,
             PageIndexMap::STRING_FACET . StringFacetAggregation::PATH_SEPARATOR . $fieldName . StringFacetAggregation::NAME_SUFFIX => [
-                "doc_count" => 40,
+                'doc_count' => 40,
                 PageIndexMap::STRING_FACET . StringFacetAggregation::PATH_SEPARATOR . $fieldName . StringFacetAggregation::VALUE_SUFFIX => [
-                    "buckets" => [
+                    'buckets' => [
                         [
-                            "key" => "1",
-                            "doc_count" => 10,
+                            'key' => '1',
+                            'doc_count' => 10,
                         ],
                         [
-                            "key" => "3",
-                            "doc_count" => 30,
+                            'key' => '3',
+                            'doc_count' => 30,
                         ],
                     ],
                 ],
@@ -118,24 +118,24 @@ class FacetExtractorTest extends Unit
      *
      * @return array
      */
-    protected function getAggregationFixture($fieldName)
+    protected function getAggregationFixture(string $fieldName): array
     {
         return [
-            "doc_count" => 50,
+            'doc_count' => 50,
             PageIndexMap::STRING_FACET . StringFacetAggregation::NAME_SUFFIX => [
-                "buckets" => [
+                'buckets' => [
                     [
-                        "key" => $fieldName,
-                        "doc_count" => 40,
+                        'key' => $fieldName,
+                        'doc_count' => 40,
                         PageIndexMap::STRING_FACET . StringFacetAggregation::VALUE_SUFFIX => [
-                            "buckets" => [
+                            'buckets' => [
                                 [
-                                    "key" => "1",
-                                    "doc_count" => 10,
+                                    'key' => '1',
+                                    'doc_count' => 10,
                                 ],
                                 [
-                                    "key" => "3",
-                                    "doc_count" => 30,
+                                    'key' => '3',
+                                    'doc_count' => 30,
                                 ],
                             ],
                         ],

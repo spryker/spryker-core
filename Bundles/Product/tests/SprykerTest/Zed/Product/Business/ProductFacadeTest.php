@@ -10,6 +10,8 @@ namespace SprykerTest\Zed\Product\Business;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductCriteriaTransfer;
+use Generated\Shared\Transfer\ProductUrlCriteriaFilterTransfer;
 use Spryker\Zed\Product\Business\Product\Sku\SkuGenerator;
 use Spryker\Zed\Product\Business\ProductFacade;
 
@@ -39,7 +41,7 @@ class ProductFacadeTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -50,7 +52,7 @@ class ProductFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGenerateProductConcreteSku()
+    public function testGenerateProductConcreteSku(): void
     {
         $sku = $this->productFacade->generateProductConcreteSku(
             $this->createProductAbstractTransfer(),
@@ -96,7 +98,7 @@ class ProductFacadeTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
-    protected function createProductAbstractTransfer()
+    protected function createProductAbstractTransfer(): ProductAbstractTransfer
     {
         $productAbstractTransfer = new ProductAbstractTransfer();
         $productAbstractTransfer->setSku('abstract_sku');
@@ -107,7 +109,7 @@ class ProductFacadeTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    protected function createProductConcreteTransfer()
+    protected function createProductConcreteTransfer(): ProductConcreteTransfer
     {
         $productConcreteTransfer = new ProductConcreteTransfer();
         $productConcreteTransfer->setAttributes([
@@ -121,7 +123,7 @@ class ProductFacadeTest extends Unit
     /**
      * @return string
      */
-    protected function getExpectedProductConcreteSku()
+    protected function getExpectedProductConcreteSku(): string
     {
         return 'abstract_sku' .
             SkuGenerator::SKU_ABSTRACT_SEPARATOR .
@@ -132,5 +134,93 @@ class ProductFacadeTest extends Unit
             'processor_cache' .
             SkuGenerator::SKU_TYPE_SEPARATOR .
             '12MB';
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductUrlsByOneProductAbstractIdAndLocale(): void
+    {
+        // Arrange
+        $this->tester->createProductUrls();
+
+        $idProductAbstract = $this->tester->getProductAbstractIds()[0];
+
+        $productUrlCriteriaFilterTransfer = (new ProductUrlCriteriaFilterTransfer())
+            ->setProductAbstractIds([$idProductAbstract])
+            ->setIdLocale($this->tester->getLocaleFacade()->getCurrentLocale()->getIdLocale());
+
+        $correctUrl = $this->tester->getProductUrl($idProductAbstract, $this->tester->getLocaleFacade()->getCurrentLocale()->getLocaleName());
+
+        // Act
+        $productUrls = $this->tester->getProductFacade()->getProductUrls($productUrlCriteriaFilterTransfer);
+
+        // Assert
+        $this->assertCount(1, $productUrls);
+        $this->assertSame($correctUrl, $productUrls[0]->getUrl());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductUrlsByLocaleAndWithoutProductAbstractIds(): void
+    {
+        // Arrange
+        $idLocale = $this->tester->getLocaleFacade()->getCurrentLocale()->getIdLocale();
+        $this->tester->createProductUrls();
+
+        $expectedProductUrlsCount = $this->tester->getUrlsCount($idLocale);
+        $productUrlCriteriaFilterTransfer = (new ProductUrlCriteriaFilterTransfer())->setIdLocale($idLocale);
+
+        // Act
+        $productUrls = $this->tester->getProductFacade()->getProductUrls($productUrlCriteriaFilterTransfer);
+
+        // Assert
+        $this->assertCount($expectedProductUrlsCount, $productUrls);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductUrlsByProductAbstractIdAndWithoutLocale(): void
+    {
+        // Arrange
+        $this->tester->createProductUrls();
+
+        $productUrlCriteriaFilterTransfer = (new ProductUrlCriteriaFilterTransfer())
+            ->setProductAbstractIds([$this->tester->getProductAbstractIds()[0]]);
+
+        // Act
+        $productUrls = $this->tester->getProductFacade()->getProductUrls($productUrlCriteriaFilterTransfer);
+
+        // Assert
+        $this->assertCount(2, $productUrls);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductConcretesByCriteria(): void
+    {
+        // Arrange
+        $productConcreteIds = $this->tester->getProductConcreteIds();
+        $productConcreteTransfer = $this->productFacade->findProductConcreteById($productConcreteIds[0]);
+        $productCriteriaTransferWithExistingStore = new ProductCriteriaTransfer();
+        $productCriteriaTransferWithExistingStore->setIdStore(
+            $this->tester->getStoreFacade()->getCurrentStore()->getIdStore()
+        );
+        $productCriteriaTransferWithExistingStore->setIsActive(true);
+        $productCriteriaTransferWithExistingStore->setSkus([$productConcreteTransfer->getSku()]);
+
+        $productCriteriaTransferWithNotExistingStore = clone $productCriteriaTransferWithExistingStore;
+        $productCriteriaTransferWithNotExistingStore->setIdStore(9999);
+
+        // Act
+        $productConcreteTransfersWithStore = $this->productFacade->getProductConcretesByCriteria($productCriteriaTransferWithExistingStore);
+        $productConcreteTransfersWithoutStore = $this->productFacade->getProductConcretesByCriteria($productCriteriaTransferWithNotExistingStore);
+
+        // Assert
+        $this->assertCount(1, $productConcreteTransfersWithStore);
+        $this->assertCount(0, $productConcreteTransfersWithoutStore);
     }
 }

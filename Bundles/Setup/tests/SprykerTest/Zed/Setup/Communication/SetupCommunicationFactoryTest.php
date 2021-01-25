@@ -25,7 +25,7 @@ class SetupCommunicationFactoryTest extends Unit
     /**
      * @return void
      */
-    public function testGetSetupInstallCommandNamesMustReturnArray()
+    public function testGetSetupInstallCommandNamesMustReturnArray(): void
     {
         $communicationFactory = new SetupCommunicationFactory();
 

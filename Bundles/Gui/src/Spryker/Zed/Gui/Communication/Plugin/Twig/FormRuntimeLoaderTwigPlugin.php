@@ -50,6 +50,7 @@ class FormRuntimeLoaderTwigPlugin extends AbstractPlugin implements TwigPluginIn
      */
     protected function getTwigTemplateFileNames(): array
     {
+        /** @var \SplFileInfo[] $files */
         $files = new FilesystemIterator(
             $this->getConfig()->getFormResourcesPath(),
             FilesystemIterator::SKIP_DOTS | FilesystemIterator::KEY_AS_PATHNAME

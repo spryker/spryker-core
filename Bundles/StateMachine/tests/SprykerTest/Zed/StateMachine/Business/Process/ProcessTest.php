@@ -28,7 +28,7 @@ class ProcessTest extends Unit
     /**
      * @return void
      */
-    public function testThatManualEventsIncludeOnEnterEvents()
+    public function testThatManualEventsIncludeOnEnterEvents(): void
     {
         $process = $this->createProcess();
         $process->setTransitions($this->getTransitionsWithManualAndOnEnterEvents());
@@ -43,7 +43,7 @@ class ProcessTest extends Unit
     /**
      * @return array
      */
-    protected function getTransitionsWithManualAndOnEnterEvents()
+    protected function getTransitionsWithManualAndOnEnterEvents(): array
     {
         $transitions = [];
 
@@ -73,7 +73,7 @@ class ProcessTest extends Unit
     /**
      * @return \Spryker\Zed\StateMachine\Business\Process\Process
      */
-    protected function createProcess()
+    protected function createProcess(): Process
     {
         return new Process();
     }

@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="MerchantOrder">
+        <property name="merchantOrderItems" type="MerchantOrderItem[]" singular="merchantOrderItem"/>
+        <property name="merchantReference" type="string"/>
+        <property name="itemStates" type="string[]" singular="itemState"/>
+        <property name="manualEvents" type="string[]" singular="manualEvent"/>
+        <property name="process" type="string"/>
+    </transfer>
+
+    <transfer name="Merchant">
+        <property name="fkStateMachineProcess" type="int"/>
+        <property name="merchantReference" type="string"/>
+    </transfer>
+
+    <transfer name="MerchantOrderItem">
+        <property name="fkStateMachineItemState" type="int"/>
+        <property name="idMerchantOrderItem" type="int"/>
+        <property name="manualEvents" type="string[]" singular="manualEvent"/>
+        <property name="stateHistory" type="StateMachineItem[]" singular="stateHistory"/>
+    </transfer>
+
+    <transfer name="StateMachineProcess">
+        <property name="processName" type="string"/>
+        <property name="stateMachineName" type="string"/>
+        <property name="stateNames" type="string[]" singular="stateName"/>
+    </transfer>
+
+    <transfer name="StateMachineItem">
+        <property name="idItemState" type="int"/>
+        <property name="identifier" type="int"/>
+        <property name="stateName" type="string"/>
+        <property name="processName" type="string"/>
+        <property name="stateMachineName" type="string"/>
+    </transfer>
+
+    <transfer name="MerchantOmsTriggerRequest">
+        <property name="merchantReference" type="string"/>
+        <property name="merchantOmsEventName" type="string"/>
+        <property name="merchantOrderItemReference" type="string"/>
+        <property name="merchantOrderItems" type="MerchantOrderItem[]" singular="merchantOrderItem"/>
+    </transfer>
+
+    <transfer name="MerchantOmsTriggerResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="MerchantCriteria">
+        <property name="merchantReference" type="string"/>
+    </transfer>
+
+    <transfer name="StateMachineProcessCriteria">
+        <property name="idStateMachineProcess" type="int"/>
+    </transfer>
+
+    <transfer name="MerchantOrderItemResponse">
+        <property name="isSuccessful" type="bool"/>
+    </transfer>
+
+    <transfer name="MerchantOrderItemCriteria">
+        <property name="merchantOrderItemReference" type="string"/>
+    </transfer>
+
+    <transfer name="FilePathResolverResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="filePath" type="string"/>
+        <property name="message" type="Message"/>
+    </transfer>
+
+    <transfer name="HeaderValidatorResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="message" type="Message"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="MerchantOrderItemCollection">
+        <property name="merchantOrderItems" type="MerchantOrderItem[]" singular="merchantOrderItem"/>
+    </transfer>
+
+    <transfer name="MerchantOrderCriteria">
+        <property name="idMerchantOrder" type="int"/>
+        <property name="idMerchant" type="int"/>
+        <property name="withItems" type="bool"/>
+        <property name="withOrder" type="bool"/>
+    </transfer>
+</transfers>

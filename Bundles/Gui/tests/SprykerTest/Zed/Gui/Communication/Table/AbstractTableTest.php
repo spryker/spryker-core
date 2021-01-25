@@ -36,7 +36,7 @@ class AbstractTableTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -49,7 +49,7 @@ class AbstractTableTest extends Unit
     /**
      * @return void
      */
-    public function testGetOrdersDefault()
+    public function testGetOrdersDefault(): void
     {
         $config = new TableConfiguration();
         $config->setHeader([
@@ -74,7 +74,7 @@ class AbstractTableTest extends Unit
     /**
      * @return void
      */
-    public function testGetOrdersWithCustomSortField()
+    public function testGetOrdersWithCustomSortField(): void
     {
         $config = new TableConfiguration();
         $config->setHeader([
@@ -101,7 +101,7 @@ class AbstractTableTest extends Unit
     /**
      * @return void
      */
-    public function testGetOrdersWithCustomSortFieldAndCustomDirection()
+    public function testGetOrdersWithCustomSortFieldAndCustomDirection(): void
     {
         $config = new TableConfiguration();
         $config->setHeader([
@@ -128,7 +128,7 @@ class AbstractTableTest extends Unit
     /**
      * @return void
      */
-    public function testGetOrdersWithDeprecatedIndexAndDirection()
+    public function testGetOrdersWithDeprecatedIndexAndDirection(): void
     {
         $config = new TableConfiguration();
         $config->setHeader([

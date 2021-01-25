@@ -13,9 +13,12 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\ProductLabelSearch\Communication\Plugin\Publisher\ProductLabel\ProductLabelWritePublisherPlugin} instead.
+ *
  * @method \Spryker\Zed\ProductLabelSearch\Communication\ProductLabelSearchCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductLabelSearch\Persistence\ProductLabelSearchQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductLabelSearch\ProductLabelSearchConfig getConfig()
+ * @method \Spryker\Zed\ProductLabelSearch\Business\ProductLabelSearchFacadeInterface getFacade()
  */
 class ProductLabelSearchListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
@@ -24,15 +27,15 @@ class ProductLabelSearchListener extends AbstractPlugin implements EventBulkHand
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
      * @param string $eventName
      *
      * @return void
      */
-    public function handleBulk(array $eventTransfers, $eventName)
+    public function handleBulk(array $eventEntityTransfers, $eventName)
     {
         $this->preventTransaction();
-        $productLabelIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
+        $productLabelIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventEntityTransfers);
         $productAbstractIds = $this->getQueryContainer()->queryProductLabelByProductLabelIds($productLabelIds)->find()->getData();
 
         $this->getFactory()->getProductPageSearchFacade()->refresh($productAbstractIds, [ProductLabelSearchConfig::PLUGIN_PRODUCT_LABEL_DATA]);

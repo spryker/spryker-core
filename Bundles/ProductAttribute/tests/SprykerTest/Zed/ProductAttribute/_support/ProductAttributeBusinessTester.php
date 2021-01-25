@@ -15,14 +15,14 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
 use Orm\Zed\Locale\Persistence\SpyLocaleQuery;
+use Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttribute;
 use Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValue;
+use Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValueTranslation;
 use Spryker\Zed\ProductAttribute\Business\ProductAttributeFacadeInterface;
 use Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToProductInterface;
 use Spryker\Zed\ProductAttribute\ProductAttributeConfig;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -32,7 +32,8 @@ use Spryker\Zed\ProductAttribute\ProductAttributeConfig;
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
+ * @method \Spryker\Zed\ProductAttribute\Business\ProductAttributeFacadeInterface getFacade()
  *
  * @SuppressWarnings(PHPMD)
  */
@@ -79,7 +80,7 @@ class ProductAttributeBusinessTester extends Actor
     /**
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    public function getLocaleOne()
+    public function getLocaleOne(): LocaleTransfer
     {
         if ($this->localeTransferOne === null) {
             $this->localeTransferOne = $this->haveLocale(['locale_name' => static::LOCALE_ONE_NAME]);
@@ -91,7 +92,7 @@ class ProductAttributeBusinessTester extends Actor
     /**
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    public function getLocaleTwo()
+    public function getLocaleTwo(): LocaleTransfer
     {
         if ($this->localeTransferTwo === null) {
             $this->localeTransferTwo = $this->haveLocale(['locale_name' => static::LOCALE_TWO_NAME]);
@@ -103,7 +104,7 @@ class ProductAttributeBusinessTester extends Actor
     /**
      * @return array
      */
-    public function getSampleLocalizedProductAttributeValues()
+    public function getSampleLocalizedProductAttributeValues(): array
     {
         $localeTransfer = $this->getLocaleOne();
         $localeTransfer2 = $this->getLocaleTwo();
@@ -131,7 +132,7 @@ class ProductAttributeBusinessTester extends Actor
      *
      * @return void
      */
-    public function setProductFacade(ProductAttributeToProductInterface $productFacade)
+    public function setProductFacade(ProductAttributeToProductInterface $productFacade): void
     {
         $this->productFacade = $productFacade;
     }
@@ -141,7 +142,7 @@ class ProductAttributeBusinessTester extends Actor
      *
      * @return void
      */
-    public function setProductAttributeFacade(ProductAttributeFacadeInterface $productAttributeFacade)
+    public function setProductAttributeFacade(ProductAttributeFacadeInterface $productAttributeFacade): void
     {
         $this->productAttributeFacade = $productAttributeFacade;
     }
@@ -151,18 +152,20 @@ class ProductAttributeBusinessTester extends Actor
      *
      * @return \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttribute
      */
-    public function createProductManagementAttributeEntity(array $values = [])
+    public function createProductManagementAttributeEntity(array $values = []): SpyProductManagementAttribute
     {
         $productManagementAttributeEntity = $this->haveProductManagementAttributeEntity();
 
-        if (!empty($values)) {
-            foreach ($values as $value) {
-                $productManagementAttributeValueEntity = new SpyProductManagementAttributeValue();
-                $productManagementAttributeValueEntity
-                    ->setFkProductManagementAttribute($productManagementAttributeEntity->getIdProductManagementAttribute())
-                    ->setValue($value);
-                $productManagementAttributeValueEntity->save();
-            }
+        if (!$values) {
+            return $productManagementAttributeEntity;
+        }
+
+        foreach ($values as $value) {
+            $productManagementAttributeValueEntity = (new SpyProductManagementAttributeValue())
+                ->setFkProductManagementAttribute($productManagementAttributeEntity->getIdProductManagementAttribute())
+                ->setValue($value);
+
+            $productManagementAttributeValueEntity->save();
         }
 
         return $productManagementAttributeEntity;
@@ -173,7 +176,7 @@ class ProductAttributeBusinessTester extends Actor
      *
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    public function getLocale($localeName)
+    public function getLocale(string $localeName): LocaleTransfer
     {
         $localeEntity = SpyLocaleQuery::create()
             ->filterByLocaleName($localeName)
@@ -189,7 +192,7 @@ class ProductAttributeBusinessTester extends Actor
     /**
      * @return array
      */
-    public function generateLocalizedAttributes()
+    public function generateLocalizedAttributes(): array
     {
         $results = [];
         $data = $this->getSampleLocalizedProductAttributeValues();
@@ -215,9 +218,9 @@ class ProductAttributeBusinessTester extends Actor
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
-    public function createSampleAbstractProduct($sku, $data = null)
+    public function createSampleAbstractProduct(string $sku, ?array $data = null): ProductAbstractTransfer
     {
-        $data = (!is_array($data)) ? ProductAttributeBusinessTester::DATA_PRODUCT_ATTRIBUTES_VALUES : $data;
+        $data = (!is_array($data)) ? self::DATA_PRODUCT_ATTRIBUTES_VALUES : $data;
 
         $productAbstractTransfer = $this->haveProductAbstract([
             'attributes' => $data,
@@ -240,9 +243,9 @@ class ProductAttributeBusinessTester extends Actor
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function createSampleProduct(ProductAbstractTransfer $productAbstractTransfer, $sku, $data = null)
+    public function createSampleProduct(ProductAbstractTransfer $productAbstractTransfer, string $sku, ?array $data = null): ProductConcreteTransfer
     {
-        $data = (!is_array($data)) ? ProductAttributeBusinessTester::DATA_PRODUCT_ATTRIBUTES_VALUES : $data;
+        $data = (!is_array($data)) ? self::DATA_PRODUCT_ATTRIBUTES_VALUES : $data;
 
         $productConcreteTransfer = new ProductConcreteTransfer();
         $productConcreteTransfer->setSku($sku);
@@ -262,29 +265,51 @@ class ProductAttributeBusinessTester extends Actor
      *
      * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer
      */
-    public function createSampleAttributeMetadata($key, $isSuper = false)
+    public function createSampleAttributeMetadata(string $key, bool $isSuper = false): ProductManagementAttributeTransfer
     {
         $productManagementAttributeTransfer = (new ProductManagementAttributeTransfer())
             ->setIsSuper($isSuper)
             ->setKey($key)
             ->setInputType('text');
 
-        $this->productAttributeFacade->createProductManagementAttribute($productManagementAttributeTransfer);
-
-        return $productManagementAttributeTransfer;
+        return $this->productAttributeFacade->createProductManagementAttribute($productManagementAttributeTransfer);
     }
 
     /**
      * @return array
      */
-    public function createSampleAttributeMetadataWithSuperAttributeData()
+    public function createSampleAttributeMetadataWithSuperAttributeData(): array
     {
-        $this->createSampleAttributeMetadata(ProductAttributeBusinessTester::FOO_ATTRIBUTE_KEY, false);
-        $this->createSampleAttributeMetadata(ProductAttributeBusinessTester::SUPER_ATTRIBUTE_KEY, true);
+        $this->createSampleAttributeMetadata(self::FOO_ATTRIBUTE_KEY, false);
+        $this->createSampleAttributeMetadata(self::SUPER_ATTRIBUTE_KEY, true);
 
-        $data = ProductAttributeBusinessTester::DATA_PRODUCT_ATTRIBUTES_VALUES;
-        $data[ProductAttributeBusinessTester::SUPER_ATTRIBUTE_KEY] = ProductAttributeBusinessTester::SUPER_ATTRIBUTE_VALUE;
+        $data = self::DATA_PRODUCT_ATTRIBUTES_VALUES;
+        $data[self::SUPER_ATTRIBUTE_KEY] = self::SUPER_ATTRIBUTE_VALUE;
 
         return $data;
+    }
+
+    /**
+     * @param \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttribute $productManagementAttributeEntity
+     *
+     * @return void
+     */
+    public function addAttributeValueTranslations(SpyProductManagementAttribute $productManagementAttributeEntity): void
+    {
+        foreach ($productManagementAttributeEntity->getSpyProductManagementAttributeValues() as $productManagementAttributeValueEntity) {
+            $attributeValueTranslationEntity = new SpyProductManagementAttributeValueTranslation();
+            $attributeValueTranslationEntity
+                ->setFkProductManagementAttributeValue($productManagementAttributeValueEntity->getIdProductManagementAttributeValue())
+                ->setFkLocale($this->getLocale(static::LOCALE_ONE_NAME)->getIdLocale())
+                ->setTranslation($productManagementAttributeValueEntity->getValue() . ' translated to a language')
+                ->save();
+
+            $attributeValueTranslationEntity = new SpyProductManagementAttributeValueTranslation();
+            $attributeValueTranslationEntity
+                ->setFkProductManagementAttributeValue($productManagementAttributeValueEntity->getIdProductManagementAttributeValue())
+                ->setFkLocale($this->getLocale(static::LOCALE_TWO_NAME)->getIdLocale())
+                ->setTranslation($productManagementAttributeValueEntity->getValue() . ' translated to another language')
+                ->save();
+        }
     }
 }

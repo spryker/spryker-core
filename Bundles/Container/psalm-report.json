@@ -1,0 +1,115 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 239,
+            "line_to": 239,
+            "type": "InvalidFunctionCall",
+            "message": "Cannot treat type object{__invoke()} as callable",
+            "file_name": "vendor/spryker/spryker/Bundles/Container/src/Spryker/Service/Container/Container.php",
+            "snippet": "        $resolvedService = static::$globalServices[$id] = $rawService($this);",
+            "selected_text": "$rawService($this)",
+            "error_level": 6,
+            "shortcode": 64
+        },
+        {
+            "severity": "error",
+            "line_from": 269,
+            "line_to": 269,
+            "type": "InvalidFunctionCall",
+            "message": "Cannot treat type object{__invoke()} as callable",
+            "file_name": "vendor/spryker/spryker/Bundles/Container/src/Spryker/Service/Container/Container.php",
+            "snippet": "            return $this->services[$id]($this);",
+            "selected_text": "$this->services[$id]($this)",
+            "error_level": 6,
+            "shortcode": 64
+        },
+        {
+            "severity": "error",
+            "line_from": 273,
+            "line_to": 273,
+            "type": "InvalidFunctionCall",
+            "message": "Cannot treat type object{__invoke()} as callable",
+            "file_name": "vendor/spryker/spryker/Bundles/Container/src/Spryker/Service/Container/Container.php",
+            "snippet": "        $resolvedService = $this->services[$id] = $rawService($this);",
+            "selected_text": "$rawService($this)",
+            "error_level": 6,
+            "shortcode": 64
+        },
+        {
+            "severity": "error",
+            "line_from": 421,
+            "line_to": 421,
+            "type": "InvalidFunctionCall",
+            "message": "Cannot treat type object{__invoke()} as callable",
+            "file_name": "vendor/spryker/spryker/Bundles/Container/src/Spryker/Service/Container/Container.php",
+            "snippet": "            return $service($factory($container), $container);",
+            "selected_text": "$factory($container)",
+            "error_level": 6,
+            "shortcode": 64
+        },
+        {
+            "severity": "error",
+            "line_from": 462,
+            "line_to": 462,
+            "type": "InvalidFunctionCall",
+            "message": "Cannot treat type object{__invoke()} as callable",
+            "file_name": "vendor/spryker/spryker/Bundles/Container/src/Spryker/Service/Container/Container.php",
+            "snippet": "            return $service($factory($container), $container);",
+            "selected_text": "$factory($container)",
+            "error_level": 6,
+            "shortcode": 64
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 155,
+            "line_to": 155,
+            "type": "MoreSpecificImplementedParamType",
+            "message": "Argument 2 of Spryker\\Service\\Container\\Container::setGlobal has the more specific type 'callable|string', expecting 'mixed' as defined by Spryker\\Service\\Container\\ContainerInterface::setGlobal",
+            "file_name": "vendor/spryker/spryker/Bundles/Container/src/Spryker/Service/Container/Container.php",
+            "snippet": "    public function setGlobal(string $id, $service): void",
+            "selected_text": "$service",
+            "error_level": 5,
+            "shortcode": 140
+        },
+        {
+            "severity": "info",
+            "line_from": 641,
+            "line_to": 641,
+            "type": "ArgumentTypeCoercion",
+            "message": "Argument 1 of method_exists expects class-string|object, parent type object|string provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Container/src/Spryker/Service/Container/Container.php",
+            "snippet": "        if ($value && (is_string($value) || is_object($value)) && method_exists($value, '__invoke') && !isset($this->sharedServiceHashes[spl_object_hash($value)])) {",
+            "selected_text": "$value",
+            "error_level": 3,
+            "shortcode": 193
+        },
+        {
+            "severity": "info",
+            "line_from": 641,
+            "line_to": 641,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of spl_object_hash expects object, possibly different type object{__invoke()}|string provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Container/src/Spryker/Service/Container/Container.php",
+            "snippet": "        if ($value && (is_string($value) || is_object($value)) && method_exists($value, '__invoke') && !isset($this->sharedServiceHashes[spl_object_hash($value)])) {",
+            "selected_text": "$value",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 642,
+            "line_to": 642,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Service\\Container\\Container::factory expects object, possibly different type object{__invoke()}|string provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Container/src/Spryker/Service/Container/Container.php",
+            "snippet": "            $value = $this->factory($value);",
+            "selected_text": "$value",
+            "error_level": 3,
+            "shortcode": 92
+        }
+    ],
+    "deprecation": []
+}

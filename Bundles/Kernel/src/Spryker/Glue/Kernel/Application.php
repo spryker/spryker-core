@@ -7,28 +7,11 @@
 
 namespace Spryker\Glue\Kernel;
 
-use Silex\Application as SilexApplication;
+use Spryker\Shared\Kernel\Communication\Application as SharedApplication;
 
-class Application extends SilexApplication
+/**
+ * @deprecated Use {@link \Spryker\Shared\Kernel\Communication\Application} instead.
+ */
+class Application extends SharedApplication
 {
-    /**
-     * Instantiate a new Application.
-     *
-     * Objects and parameters can be passed as argument to the constructor.
-     *
-     * @param array $values The parameters or objects.
-     */
-    public function __construct(array $values = [])
-    {
-        parent::__construct($values);
-        $this->unsetSilexExceptionHandler();
-    }
-
-    /**
-     * @return void
-     */
-    private function unsetSilexExceptionHandler(): void
-    {
-        unset($this['exception_handler']);
-    }
 }

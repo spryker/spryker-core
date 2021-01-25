@@ -136,7 +136,7 @@ class Install implements InstallInterface
         $countries = array_filter(
             array_flip($countries),
             function ($value) {
-                return preg_match('~^(?!' . implode('|', $this->countrySettings->getTerritoriesBlacklist()) . '$)[A-Z]{2}$~i', $value);
+                return (bool)preg_match('~^(?!' . implode('|', $this->countrySettings->getTerritoriesBlacklist()) . '$)[A-Z]{2}$~i', $value);
             }
         );
 
@@ -198,7 +198,7 @@ class Install implements InstallInterface
         }
 
         $mappings = $json['supplemental']['postalCodeData'];
-        unset($rawFileInput, $json);
+        unset($json);
 
         foreach ($countries as $iso2 => $country) {
             if (!isset($mappings[$iso2])) {

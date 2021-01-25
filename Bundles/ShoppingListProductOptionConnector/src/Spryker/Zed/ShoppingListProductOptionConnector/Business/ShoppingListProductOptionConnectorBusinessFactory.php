@@ -56,7 +56,8 @@ class ShoppingListProductOptionConnectorBusinessFactory extends AbstractBusiness
     public function createShoppingListItemExpander(): ShoppingListItemExpanderInterface
     {
         return new ShoppingListItemExpander(
-            $this->createShoppingListItemProductOptionReader()
+            $this->createShoppingListItemProductOptionReader(),
+            $this->getProductOptionFacade()
         );
     }
 

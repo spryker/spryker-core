@@ -9,22 +9,26 @@ namespace Spryker\Zed\AvailabilityGui\Communication\Form;
 
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Validator\Constraints\Regex;
-use Symfony\Component\Validator\Constraints\Required;
+use Symfony\Component\Validator\Constraints\Type;
 
 /**
  * @method \Spryker\Zed\AvailabilityGui\Communication\AvailabilityGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\AvailabilityGui\AvailabilityGuiConfig getConfig()
+ * @method \Spryker\Zed\AvailabilityGui\Persistence\AvailabilityGuiRepositoryInterface getRepository()
  */
 class StockSubForm extends AbstractType
 {
     public const FIELD_QUANTITY = 'quantity';
     public const FIELD_STOCK_TYPE = 'stockType';
     public const FIELD_IS_NEVER_OUT_OF_STOCK = 'is_never_out_of_stock';
+
+    protected const DECIMAL_QUANTITY_VALIDATION_PATTERN = '/^\d{1,10}(\.\d{1,20})?$/';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -46,13 +50,20 @@ class StockSubForm extends AbstractType
      */
     protected function addQuantityField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_QUANTITY, TextType::class, [
+        $builder->add(static::FIELD_QUANTITY, NumberType::class, [
             'label' => 'Quantity',
+            'attr' => ['min' => PHP_INT_MIN, 'max' => PHP_INT_MAX],
+            'html5' => true,
             'constraints' => [
-                new Required(),
-                new Regex(['pattern' => '/[\d]+/']),
+                new Type('numeric'),
+                new Regex([
+                    'pattern' => static::DECIMAL_QUANTITY_VALIDATION_PATTERN,
+                ]),
             ],
         ]);
+
+        $builder->get(static::FIELD_QUANTITY)
+            ->resetViewTransformers();
 
         return $this;
     }
@@ -114,7 +125,7 @@ class StockSubForm extends AbstractType
     }
 
     /**
-     * @deprecated Use `getBlockPrefix()` instead.
+     * @deprecated Use {@link getBlockPrefix()} instead.
      *
      * @return string
      */

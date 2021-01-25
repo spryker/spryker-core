@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\User\Communication\Controller;
 
+use Generated\Shared\Transfer\UserCriteriaTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
@@ -32,6 +33,7 @@ class EditController extends AbstractController
     public const MESSAGE_USER_DEACTIVATE_SUCCESS = 'User was deactivated successfully.';
     public const MESSAGE_USER_DELETE_SUCCESS = 'User was deleted successfully.';
     public const MESSAGE_PASSWORD_UPDATE_SUCCESS = 'User password was updated successfully.';
+    public const MESSAGE_CSRF_FORM_PROTECTION_ERROR = 'CSRF token is not valid!';
 
     public const MESSAGE_USER_CREATE_ERROR = 'User entity was not created.';
     public const MESSAGE_USER_UPDATE_ERROR = 'User entity was not updated.';
@@ -143,6 +145,14 @@ class EditController extends AbstractController
      */
     public function activateUserAction(Request $request)
     {
+        $activateForm = $this->getFactory()->createActivateUserForm()->handleRequest($request);
+
+        if (!$activateForm->isSubmitted() || !$activateForm->isValid()) {
+            $this->addErrorMessage(static::MESSAGE_CSRF_FORM_PROTECTION_ERROR);
+
+            return $this->redirectResponse(static::USER_LISTING_URL);
+        }
+
         $idUser = $this->castId($request->get(static::PARAM_ID_USER));
 
         if (empty($idUser)) {
@@ -171,6 +181,14 @@ class EditController extends AbstractController
      */
     public function deactivateUserAction(Request $request)
     {
+        $activateForm = $this->getFactory()->createDeactivateUserForm()->handleRequest($request);
+
+        if (!$activateForm->isSubmitted() || !$activateForm->isValid()) {
+            $this->addErrorMessage(static::MESSAGE_CSRF_FORM_PROTECTION_ERROR);
+
+            return $this->redirectResponse(static::USER_LISTING_URL);
+        }
+
         $idUser = $this->castId($request->get(static::PARAM_ID_USER));
 
         if (empty($idUser)) {
@@ -219,7 +237,9 @@ class EditController extends AbstractController
             return $this->redirectResponse(static::USER_LISTING_URL);
         }
 
-        $userTransfer = $this->getFacade()->findUserById($idUser);
+        $userTransfer = $this->getFacade()->findUser(
+            (new UserCriteriaTransfer())->setIdUser($idUser)
+        );
 
         if (!$userTransfer) {
             $this->addErrorMessage(static::MESSAGE_USER_NOT_FOUND);
@@ -246,6 +266,14 @@ class EditController extends AbstractController
     {
         if (!$request->isMethod(Request::METHOD_DELETE)) {
             throw new MethodNotAllowedHttpException([Request::METHOD_DELETE], 'This action requires a DELETE request.');
+        }
+
+        $userDeleteConfirmForm = $this->getFactory()->getUserDeleteConfirmForm()->handleRequest($request);
+
+        if (!$userDeleteConfirmForm->isSubmitted() || !$userDeleteConfirmForm->isValid()) {
+            $this->addErrorMessage(static::MESSAGE_CSRF_FORM_PROTECTION_ERROR);
+
+            return $this->redirectResponse(static::USER_LISTING_URL);
         }
 
         $idUser = $this->castId($request->request->get(static::PARAM_ID_USER));

@@ -11,4 +11,7 @@
         <property name="touched" type="string"/>
     </transfer>
 
+    <transfer name="Locale">
+    </transfer>
+
 </transfers>

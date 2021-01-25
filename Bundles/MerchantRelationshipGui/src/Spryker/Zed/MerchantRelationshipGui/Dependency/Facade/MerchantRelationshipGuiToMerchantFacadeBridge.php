@@ -8,6 +8,7 @@
 namespace Spryker\Zed\MerchantRelationshipGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\MerchantCollectionTransfer;
+use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 
 class MerchantRelationshipGuiToMerchantFacadeBridge implements MerchantRelationshipGuiToMerchantFacadeInterface
 {
@@ -25,10 +26,19 @@ class MerchantRelationshipGuiToMerchantFacadeBridge implements MerchantRelations
     }
 
     /**
+     * This shim exists for BC reasons, will be removed when this module gets a major.
+     * It will be highlighted because the refactoring of MerchantFacade removed the getMerchants function.
+     *
+     * @param \Generated\Shared\Transfer\MerchantCriteriaTransfer $merchantCriteriaTransfer
+     *
      * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
      */
-    public function getMerchants(): MerchantCollectionTransfer
+    public function get(MerchantCriteriaTransfer $merchantCriteriaTransfer): MerchantCollectionTransfer
     {
-        return $this->merchantFacade->getMerchants();
+        if (method_exists($this->merchantFacade, 'getMerchants')) {
+            return $this->merchantFacade->getMerchants();
+        }
+
+        return $this->merchantFacade->get($merchantCriteriaTransfer);
     }
 }

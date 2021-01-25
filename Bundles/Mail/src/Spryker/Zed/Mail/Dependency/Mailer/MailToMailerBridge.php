@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Mail\Dependency\Mailer;
 
+use Swift_Attachment;
+
 class MailToMailerBridge implements MailToMailerInterface
 {
     /**
@@ -62,6 +64,17 @@ class MailToMailerBridge implements MailToMailerInterface
     }
 
     /**
+     * @param string $email
+     * @param string|null $name
+     *
+     * @return void
+     */
+    public function addBcc(string $email, ?string $name = null): void
+    {
+        $this->message->addBcc($email, $name);
+    }
+
+    /**
      * @param string $content
      *
      * @return void
@@ -87,5 +100,15 @@ class MailToMailerBridge implements MailToMailerInterface
     public function send()
     {
         $this->mailer->send($this->message);
+    }
+
+    /**
+     * @param string $attachmentUrl
+     *
+     * @return void
+     */
+    public function attach(string $attachmentUrl): void
+    {
+        $this->message->attach(Swift_Attachment::fromPath($attachmentUrl));
     }
 }

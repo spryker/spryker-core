@@ -12,13 +12,16 @@ use Codeception\Util\Stub;
 use DateTime;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface;
 use Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
 use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 use Spryker\Zed\Collector\Business\Model\BatchResult;
 use Spryker\Zed\Collector\CollectorConfig;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\Locale\Business\LocaleFacadeInterface;
 use Spryker\Zed\PropelOrm\Business\Model\Formatter\PropelArraySetFormatter;
+use Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 use Symfony\Component\Console\Output\NullOutput;
 
@@ -36,10 +39,10 @@ class CollectorDataHelper extends Module
      */
     public function runCollector(
         AbstractFacade $facade,
-        $facadeCollectorMethod,
-        $resourceType,
+        string $facadeCollectorMethod,
+        string $resourceType,
         DateTime $lastTouchedAt
-    ) {
+    ): array {
         $localeTransfer = $this->getLocaleFacade()->getCurrentLocale();
 
         $baseQuery = $this->createTouchBaseQuery($resourceType, $localeTransfer, $lastTouchedAt);
@@ -73,7 +76,7 @@ class CollectorDataHelper extends Module
     /**
      * @return \Spryker\Zed\Locale\Business\LocaleFacadeInterface
      */
-    public function getLocaleFacade()
+    public function getLocaleFacade(): LocaleFacadeInterface
     {
         return $this->getLocator()->locale()->facade();
     }
@@ -81,7 +84,7 @@ class CollectorDataHelper extends Module
     /**
      * @return \Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface
      */
-    public function getTouchQueryContainer()
+    public function getTouchQueryContainer(): TouchQueryContainerInterface
     {
         return $this->getLocator()->touch()->queryContainer();
     }
@@ -89,7 +92,7 @@ class CollectorDataHelper extends Module
     /**
      * @return \Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface
      */
-    protected function getDataReaderMock()
+    protected function getDataReaderMock(): ReaderInterface
     {
         return Stub::constructEmpty(ReaderInterface::class);
     }
@@ -97,7 +100,7 @@ class CollectorDataHelper extends Module
     /**
      * @return \Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface
      */
-    protected function getTouchUpdaterMock()
+    protected function getTouchUpdaterMock(): TouchUpdaterInterface
     {
         return Stub::constructEmpty(TouchUpdaterInterface::class);
     }
@@ -109,7 +112,7 @@ class CollectorDataHelper extends Module
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    protected function createTouchBaseQuery($resourceType, LocaleTransfer $localeTransfer, DateTime $lastTouchedAt)
+    protected function createTouchBaseQuery(string $resourceType, LocaleTransfer $localeTransfer, DateTime $lastTouchedAt): ModelCriteria
     {
         return $this->getTouchQueryContainer()
             ->createBasicExportableQuery(
@@ -124,7 +127,7 @@ class CollectorDataHelper extends Module
     /**
      * @return \Symfony\Component\Console\Output\NullOutput
      */
-    protected function createNullOutput()
+    protected function createNullOutput(): NullOutput
     {
         return new NullOutput();
     }
@@ -132,7 +135,7 @@ class CollectorDataHelper extends Module
     /**
      * @return \Spryker\Zed\Collector\Business\Model\BatchResult
      */
-    protected function createBatchResult()
+    protected function createBatchResult(): BatchResult
     {
         return new BatchResult();
     }

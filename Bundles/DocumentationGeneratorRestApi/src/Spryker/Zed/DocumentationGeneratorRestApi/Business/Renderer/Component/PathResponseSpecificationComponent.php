@@ -45,6 +45,7 @@ class PathResponseSpecificationComponent implements PathResponseSpecificationCom
             return [];
         }
 
+        $result = [];
         $result[PathResponseComponentTransfer::DESCRIPTION] = $this->pathResponseComponentTransfer->getDescription();
         if ($this->pathResponseComponentTransfer->getJsonSchemaRef()) {
             $result[static::KEY_CONTENT][static::KEY_APPLICATION_JSON][static::KEY_SCHEMA][static::KEY_REF] = $this->pathResponseComponentTransfer->getJsonSchemaRef();

@@ -87,7 +87,7 @@ class EditController extends AbstractController
      */
     public function availableCustomerTableAction(Request $request)
     {
-        $idUser = $request->query->get(static::PARAM_ID_USER);
+        $idUser = $request->query->getInt(static::PARAM_ID_USER);
 
         return $this->jsonResponse(
             $this->getFactory()->createAvailableCustomerTable((new UserTransfer())->setIdUser($idUser))->fetchData()
@@ -101,7 +101,7 @@ class EditController extends AbstractController
      */
     public function assignedCustomerTableAction(Request $request)
     {
-        $idUser = $request->query->get(static::PARAM_ID_USER);
+        $idUser = $request->query->getInt(static::PARAM_ID_USER);
 
         return $this->jsonResponse(
             $this->getFactory()->createAssignedCustomerTable((new UserTransfer())->setIdUser($idUser))->fetchData()

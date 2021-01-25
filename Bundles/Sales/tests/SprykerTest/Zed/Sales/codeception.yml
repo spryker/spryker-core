@@ -30,6 +30,8 @@ suites:
                 - \SprykerTest\Zed\Oms\Helper\OmsHelper
                 - \SprykerTest\Zed\Sales\Helper\BusinessHelper
                 - \SprykerTest\Shared\Sales\Helper\SalesDataHelper
+                - \SprykerTest\Shared\Customer\Helper\CustomerDataHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDataHelper
 
     Communication:
         path: Communication
@@ -42,11 +44,7 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
-                - \SprykerTest\Shared\Application\Helper\ZedHelper:
-                - \SprykerTest\Shared\Testify\Helper\ZedControllerTable:
-                    depends: \SprykerTest\Shared\Testify\Helper\ZedBootstrap
-                - \SprykerTest\Shared\Testify\Helper\ZedBootstrap:
-                    depends: \SprykerTest\Shared\Testify\Helper\BundleConfig
+                - \SprykerTest\Shared\Application\Helper\ZedHelper
                 - \SprykerTest\Zed\Sales\Helper\CommunicationHelper
 
     Presentation:

@@ -14,6 +14,8 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class NopaymentConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @return array
      */
     public function getNopaymentMethods()
@@ -24,6 +26,8 @@ class NopaymentConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getWhitelistMethods()

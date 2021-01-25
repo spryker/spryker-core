@@ -20,6 +20,7 @@ use Spryker\Zed\Scheduler\Business\SchedulerFacadeInterface;
 use Spryker\Zed\Scheduler\Communication\Plugin\Scheduler\PhpScheduleReaderPlugin;
 use Spryker\Zed\Scheduler\SchedulerConfig;
 use Spryker\Zed\SchedulerExtension\Dependency\Plugin\SchedulerAdapterPluginInterface;
+use Spryker\Zed\SchedulerExtension\Dependency\Plugin\ScheduleReaderPluginInterface;
 
 /**
  * Auto-generated group annotations
@@ -50,7 +51,7 @@ class SchedulerFacadeTest extends Unit
         $this->assertSame(1, $scheduleTransfer->getJobs()->count());
 
         foreach ($scheduleTransfer->getJobs() as $jobTransfer) {
-            $this->assertContains(APPLICATION_STORE, $jobTransfer->getName());
+            $this->assertStringContainsString(APPLICATION_STORE, $jobTransfer->getName());
         }
     }
 
@@ -65,7 +66,7 @@ class SchedulerFacadeTest extends Unit
         $this->assertNotEmpty($responseCollectionTransfer->getResponses());
 
         foreach ($responseCollectionTransfer->getResponses() as $responseTransfer) {
-            $this->assertEquals(static::TEST_SCHEDULER, $responseTransfer->getSchedule()->getIdScheduler());
+            $this->assertSame(static::TEST_SCHEDULER, $responseTransfer->getSchedule()->getIdScheduler());
         }
     }
 
@@ -80,7 +81,7 @@ class SchedulerFacadeTest extends Unit
         $this->assertNotEmpty($responseCollectionTransfer->getResponses());
 
         foreach ($responseCollectionTransfer->getResponses() as $responseTransfer) {
-            $this->assertEquals(static::TEST_SCHEDULER, $responseTransfer->getSchedule()->getIdScheduler());
+            $this->assertSame(static::TEST_SCHEDULER, $responseTransfer->getSchedule()->getIdScheduler());
         }
     }
 
@@ -95,7 +96,7 @@ class SchedulerFacadeTest extends Unit
         $this->assertNotEmpty($responseCollectionTransfer->getResponses());
 
         foreach ($responseCollectionTransfer->getResponses() as $responseTransfer) {
-            $this->assertEquals(static::TEST_SCHEDULER, $responseTransfer->getSchedule()->getIdScheduler());
+            $this->assertSame(static::TEST_SCHEDULER, $responseTransfer->getSchedule()->getIdScheduler());
         }
     }
 
@@ -110,7 +111,7 @@ class SchedulerFacadeTest extends Unit
         $this->assertNotEmpty($responseCollectionTransfer->getResponses());
 
         foreach ($responseCollectionTransfer->getResponses() as $responseTransfer) {
-            $this->assertEquals(static::TEST_SCHEDULER, $responseTransfer->getSchedule()->getIdScheduler());
+            $this->assertSame(static::TEST_SCHEDULER, $responseTransfer->getSchedule()->getIdScheduler());
         }
     }
 
@@ -146,7 +147,7 @@ class SchedulerFacadeTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Scheduler\Business\SchedulerBusinessFactory
      */
-    protected function getSchedulerBusinessFactoryMock()
+    protected function getSchedulerBusinessFactoryMock(): SchedulerBusinessFactory
     {
         $schedulerBusinessFactoryMock = $this->getMockBuilder(SchedulerBusinessFactory::class)
             ->setMethods([
@@ -179,7 +180,7 @@ class SchedulerFacadeTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Scheduler\SchedulerConfig
      */
-    protected function getSchedulerConfigMock()
+    protected function getSchedulerConfigMock(): SchedulerConfig
     {
         $schedulerConfigMock = $this->getMockBuilder(SchedulerConfig::class)
             ->setMethods([
@@ -212,7 +213,7 @@ class SchedulerFacadeTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\SchedulerExtension\Dependency\Plugin\ScheduleReaderPluginInterface
      */
-    protected function getPhpSchedulerReaderPluginMock()
+    protected function getPhpSchedulerReaderPluginMock(): ScheduleReaderPluginInterface
     {
         $phpSchedulerReaderPluginMock = $this->getMockBuilder(PhpScheduleReaderPlugin::class)
             ->setMethods(['readSchedule'])
@@ -261,7 +262,7 @@ class SchedulerFacadeTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\SchedulerExtension\Dependency\Plugin\SchedulerAdapterPluginInterface
      */
-    protected function getSchedulerAdapterPluginMock()
+    protected function getSchedulerAdapterPluginMock(): SchedulerAdapterPluginInterface
     {
         $schedulerAdapterPluginMock = $this->getMockBuilder(SchedulerAdapterPluginInterface::class)
             ->setMethods([

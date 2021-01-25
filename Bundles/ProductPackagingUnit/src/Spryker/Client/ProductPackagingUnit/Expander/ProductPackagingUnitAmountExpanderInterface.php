@@ -18,7 +18,10 @@ interface ProductPackagingUnitAmountExpanderInterface
      *
      * @return \Generated\Shared\Transfer\PersistentCartChangeTransfer
      */
-    public function expandAmountForPersistentCartChange(PersistentCartChangeTransfer $persistentCartChangeTransfer, array $params = []): PersistentCartChangeTransfer;
+    public function expandAmountForPersistentCartChange(
+        PersistentCartChangeTransfer $persistentCartChangeTransfer,
+        array $params = []
+    ): PersistentCartChangeTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer

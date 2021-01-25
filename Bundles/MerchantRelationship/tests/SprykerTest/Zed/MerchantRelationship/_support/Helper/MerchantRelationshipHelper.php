@@ -30,7 +30,7 @@ class MerchantRelationshipHelper extends Module
 
         $merchantRelationshipTransfer = $this->createOrUpdateMerchantRelationship($merchantRelationshipTransfer);
 
-        $this->getDataCleanupHelper()->_addCleanup(function () use ($merchantRelationshipTransfer) {
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($merchantRelationshipTransfer): void {
             $this->cleanupMerchantRelationship($merchantRelationshipTransfer);
         });
 

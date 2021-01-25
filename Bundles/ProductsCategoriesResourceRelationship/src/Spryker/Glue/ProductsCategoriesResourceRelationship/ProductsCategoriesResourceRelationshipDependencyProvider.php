@@ -44,11 +44,11 @@ class ProductsCategoriesResourceRelationshipDependencyProvider extends AbstractB
      */
     protected function addCategoriesResource(Container $container): Container
     {
-        $container[static::RESOURCE_CATEGORY] = function (Container $container) {
+        $container->set(static::RESOURCE_CATEGORY, function (Container $container) {
             return new ProductsCategoriesResourceRelationToCategoriesRestApiResourceBridge(
                 $container->getLocator()->categoriesRestApi()->resource()
             );
-        };
+        });
 
         return $container;
     }
@@ -60,11 +60,11 @@ class ProductsCategoriesResourceRelationshipDependencyProvider extends AbstractB
      */
     protected function addProductStorageClient(Container $container): Container
     {
-        $container[static::CLIENT_PRODUCT_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_PRODUCT_STORAGE, function (Container $container) {
             return new ProductsCategoriesResourceRelationshipToProductStorageClientBridge(
                 $container->getLocator()->productStorage()->client()
             );
-        };
+        });
 
         return $container;
     }
@@ -76,11 +76,11 @@ class ProductsCategoriesResourceRelationshipDependencyProvider extends AbstractB
      */
     protected function addProductCategoryStorageClient(Container $container): Container
     {
-        $container[static::CLIENT_PRODUCT_CATEGORY_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_PRODUCT_CATEGORY_STORAGE, function (Container $container) {
             return new ProductsCategoriesResourceRelationshipToProductCategoryStorageClientBridge(
                 $container->getLocator()->productCategoryStorage()->client()
             );
-        };
+        });
 
         return $container;
     }

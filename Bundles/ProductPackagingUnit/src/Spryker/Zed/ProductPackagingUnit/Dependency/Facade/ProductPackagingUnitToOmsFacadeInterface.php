@@ -7,30 +7,23 @@
 
 namespace Spryker\Zed\ProductPackagingUnit\Dependency\Facade;
 
-use Generated\Shared\Transfer\OmsStateCollectionTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
+use Generated\Shared\Transfer\ReservationRequestTransfer;
 
 interface ProductPackagingUnitToOmsFacadeInterface
 {
     /**
-     * @param string $sku
-     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
+     * @deprecated Use {@link updateReservation()} instead.
      *
-     * @return int
-     */
-    public function sumReservedProductQuantitiesForSku($sku, ?StoreTransfer $storeTransfer = null);
-
-    /**
      * @param string $sku
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     * @param int $reservationQuantity
      *
      * @return void
      */
-    public function saveReservation(string $sku, StoreTransfer $storeTransfer, int $reservationQuantity): void;
+    public function updateReservationQuantity(string $sku): void;
 
     /**
-     * @return \Generated\Shared\Transfer\OmsStateCollectionTransfer
+     * @param \Generated\Shared\Transfer\ReservationRequestTransfer $reservationRequestTransfer
+     *
+     * @return void
      */
-    public function getOmsReservedStateCollection(): OmsStateCollectionTransfer;
+    public function updateReservation(ReservationRequestTransfer $reservationRequestTransfer): void;
 }

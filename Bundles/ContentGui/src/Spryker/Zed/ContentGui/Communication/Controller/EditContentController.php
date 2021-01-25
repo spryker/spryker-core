@@ -48,7 +48,7 @@ class EditContentController extends AbstractController
             )
             ->handleRequest($request);
 
-        /** @var \Generated\Shared\Transfer\ContentTransfer $data */
+        /** @var \Generated\Shared\Transfer\ContentTransfer $contentFormData */
         $contentFormData = $contentForm->getData();
 
         if ($contentForm->isSubmitted() && $contentForm->isValid()) {

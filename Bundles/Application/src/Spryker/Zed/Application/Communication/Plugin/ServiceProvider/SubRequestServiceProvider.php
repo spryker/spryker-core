@@ -13,6 +13,8 @@ use Spryker\Zed\Application\Business\Model\Request\SubRequestHandler;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\Http\Communication\Plugin\Application\HttpApplicationPlugin} instead.
+ *
  * @method \Spryker\Zed\Application\Business\ApplicationFacadeInterface getFacade()
  * @method \Spryker\Zed\Application\Communication\ApplicationCommunicationFactory getFactory()
  * @method \Spryker\Zed\Application\ApplicationConfig getConfig()

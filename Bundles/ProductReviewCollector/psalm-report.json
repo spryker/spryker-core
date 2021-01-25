@@ -1,0 +1,163 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 41,
+            "line_to": 41,
+            "type": "ParamNameMismatch",
+            "message": "Argument 2 of Spryker\\Zed\\ProductReviewCollector\\Communication\\Plugin\\ProductAbstractReviewCollectorStoragePlugin::run has wrong name $localeTransfer, expecting $locale as defined by Spryker\\Zed\\Collector\\Dependency\\Plugin\\CollectorPluginInterface::run",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewCollector/src/Spryker/Zed/ProductReviewCollector/Communication/Plugin/ProductAbstractReviewCollectorStoragePlugin.php",
+            "snippet": "        LocaleTransfer $localeTransfer,",
+            "selected_text": "$localeTransfer",
+            "error_level": 7,
+            "shortcode": 230
+        },
+        {
+            "severity": "error",
+            "line_from": 41,
+            "line_to": 41,
+            "type": "ParamNameMismatch",
+            "message": "Argument 2 of Spryker\\Zed\\ProductReviewCollector\\Communication\\Plugin\\ProductReviewCollectorSearchPlugin::run has wrong name $localeTransfer, expecting $locale as defined by Spryker\\Zed\\Collector\\Dependency\\Plugin\\CollectorPluginInterface::run",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewCollector/src/Spryker/Zed/ProductReviewCollector/Communication/Plugin/ProductReviewCollectorSearchPlugin.php",
+            "snippet": "        LocaleTransfer $localeTransfer,",
+            "selected_text": "$localeTransfer",
+            "error_level": 7,
+            "shortcode": 230
+        }
+    ],
+    "warning": [],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 31,
+            "line_to": 31,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewCollector/src/Spryker/Zed/ProductReviewCollector/Business/ProductReviewCollectorFacade.php",
+            "snippet": "     * @param \\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface $result",
+            "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 69,
+            "line_to": 69,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewCollector/src/Spryker/Zed/ProductReviewCollector/Business/ProductReviewCollectorFacade.php",
+            "snippet": "     * @param \\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface $result",
+            "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 28,
+            "line_to": 28,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewCollector/src/Spryker/Zed/ProductReviewCollector/Business/ProductReviewCollectorFacadeInterface.php",
+            "snippet": "     * @param \\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface $result",
+            "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 56,
+            "line_to": 56,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewCollector/src/Spryker/Zed/ProductReviewCollector/Business/ProductReviewCollectorFacadeInterface.php",
+            "snippet": "     * @param \\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface $result",
+            "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 31,
+            "line_to": 31,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewCollector/src/Spryker/Zed/ProductReviewCollector/Communication/Plugin/ProductAbstractReviewCollectorStoragePlugin.php",
+            "snippet": "     * @param \\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface $result",
+            "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 31,
+            "line_to": 31,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewCollector/src/Spryker/Zed/ProductReviewCollector/Communication/Plugin/ProductReviewCollectorSearchPlugin.php",
+            "snippet": "     * @param \\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface $result",
+            "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 38,
+            "line_to": 38,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewCollector/src/Spryker/Zed/ProductReviewCollector/Dependency/Facade/ProductReviewCollectorToCollectorBridge.php",
+            "snippet": "     * @param \\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface $result",
+            "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 25,
+            "line_to": 25,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewCollector/src/Spryker/Zed/ProductReviewCollector/Dependency/Facade/ProductReviewCollectorToCollectorInterface.php",
+            "snippet": "     * @param \\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface $result",
+            "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 29,
+            "line_to": 29,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Zed\\Search\\Dependency\\Plugin\\PageMapInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewCollector/src/Spryker/Zed/ProductReviewCollector/Dependency/Facade/ProductReviewCollectorToSearchBridge.php",
+            "snippet": "     * @param \\Spryker\\Zed\\Search\\Dependency\\Plugin\\PageMapInterface $pageMap",
+            "selected_text": "\\Spryker\\Zed\\Search\\Dependency\\Plugin\\PageMapInterface",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 37,
+            "line_to": 37,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Zed\\Search\\Business\\SearchFacadeInterface::transformPageMapToDocument has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewCollector/src/Spryker/Zed/ProductReviewCollector/Dependency/Facade/ProductReviewCollectorToSearchBridge.php",
+            "snippet": "        return $this->searchFacade->transformPageMapToDocument($pageMap, $data, $localeTransfer);",
+            "selected_text": "transformPageMapToDocument",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 16,
+            "line_to": 16,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Zed\\Search\\Dependency\\Plugin\\PageMapInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewCollector/src/Spryker/Zed/ProductReviewCollector/Dependency/Facade/ProductReviewCollectorToSearchInterface.php",
+            "snippet": "     * @param \\Spryker\\Zed\\Search\\Dependency\\Plugin\\PageMapInterface $pageMap",
+            "selected_text": "\\Spryker\\Zed\\Search\\Dependency\\Plugin\\PageMapInterface",
+            "error_level": 2,
+            "shortcode": 98
+        }
+    ]
+}

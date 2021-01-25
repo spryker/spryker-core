@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -78,13 +78,13 @@ class RestResponse implements RestResponseInterface
 
     /**
      * @param string $name
-     * @param string $href
+     * @param string $uri
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function addLink(string $name, string $href): RestResponseInterface
+    public function addLink(string $name, string $uri): RestResponseInterface
     {
-        $this->links[$name] = new RestLink($name, $href);
+        $this->links[$name] = new RestLink($name, $uri);
 
         return $this;
     }

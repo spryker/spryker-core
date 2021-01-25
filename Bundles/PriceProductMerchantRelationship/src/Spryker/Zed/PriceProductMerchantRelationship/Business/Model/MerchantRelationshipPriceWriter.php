@@ -102,8 +102,9 @@ class MerchantRelationshipPriceWriter implements MerchantRelationshipPriceWriter
      *
      * @return \Generated\Shared\Transfer\SpyPriceProductMerchantRelationshipEntityTransfer
      */
-    protected function getPriceProductMerchantRelationshipEntityTransfer(PriceProductTransfer $priceProductTransfer): SpyPriceProductMerchantRelationshipEntityTransfer
-    {
+    protected function getPriceProductMerchantRelationshipEntityTransfer(
+        PriceProductTransfer $priceProductTransfer
+    ): SpyPriceProductMerchantRelationshipEntityTransfer {
         $idPriceProductMerchantRelationship = $this->priceProductMerchantRelationshipRepository
             ->findIdByPriceProductTransfer($priceProductTransfer);
 

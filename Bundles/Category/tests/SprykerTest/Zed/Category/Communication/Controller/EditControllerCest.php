@@ -28,7 +28,7 @@ class EditControllerCest
      *
      * @return void
      */
-    public function updateCategoryWithAlreadyExistingKeyShowsValidationMessage(CategoryCommunicationTester $i)
+    public function updateCategoryWithAlreadyExistingKeyShowsValidationMessage(CategoryCommunicationTester $i): void
     {
         $categoryTransferA = $i->haveLocalizedCategory();
         $categoryTransferB = $i->haveLocalizedCategory();
@@ -57,7 +57,7 @@ class EditControllerCest
      *
      * @return void
      */
-    protected function mockGlobalGet(CategoryTransfer $categoryTransferB)
+    protected function mockGlobalGet(CategoryTransfer $categoryTransferB): void
     {
         $_GET['id-category'] = $categoryTransferB->getIdCategory();
     }

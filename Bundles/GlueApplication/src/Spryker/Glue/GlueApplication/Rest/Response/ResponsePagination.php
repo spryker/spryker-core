@@ -1,28 +1,25 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Glue\GlueApplication\Rest\Response;
 
 use Generated\Shared\Transfer\RestPageOffsetsTransfer;
+use Spryker\Glue\GlueApplication\GlueApplicationConfig;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
+use Spryker\Glue\GlueApplication\Rest\RequestConstantsInterface;
 
 class ResponsePagination implements ResponsePaginationInterface
 {
-    protected const KEY_PAGE = 'page';
-
-    protected const DOMAIN_LINK_TEMPLATE = '%s/%s?%spage[offset]=';
-
-    protected const LINK_PATTERN = '%s%s%s';
-
     /**
-     * @var string
+     * @var \Spryker\Glue\GlueApplication\GlueApplicationConfig
      */
-    protected $domainName;
+    protected $config;
 
     /**
      * @param string $domainName
@@ -30,11 +27,11 @@ class ResponsePagination implements ResponsePaginationInterface
     public const HARD_LIMIT = 500;
 
     /**
-     * @param string $domainName
+     * @param \Spryker\Glue\GlueApplication\GlueApplicationConfig $config
      */
-    public function __construct(string $domainName)
+    public function __construct(GlueApplicationConfig $config)
     {
-        $this->domainName = $domainName;
+        $this->config = $config;
     }
 
     /**
@@ -53,25 +50,25 @@ class ResponsePagination implements ResponsePaginationInterface
             return [];
         }
 
-        $domain = $this->buildDomainLink($restRequest);
-        $limit = $this->buildLimitParameter($pageOffsetsTransfer);
+        $resourceLink = $this->buildResourceLink($restRequest);
+        $limitParameter = $this->buildLimitParameter($pageOffsetsTransfer);
 
-        $offsetLinks = [
-            RestLinkInterface::LINK_LAST => sprintf(static::LINK_PATTERN, $domain, $pageOffsetsTransfer->getLastOffset(), $limit),
-            RestLinkInterface::LINK_FIRST => sprintf(static::LINK_PATTERN, $domain, 0, $limit),
+        $paginationLinks = [
+            RestLinkInterface::LINK_LAST => $this->getPaginationLink($resourceLink, $pageOffsetsTransfer->getLastOffset(), $limitParameter),
+            RestLinkInterface::LINK_FIRST => $this->getPaginationLink($resourceLink, $pageOffsetsTransfer->getFirstOffset(), $limitParameter),
         ];
 
         if ($restRequest->getPage()->getOffset() > 0) {
-            $offsetLinks[RestLinkInterface::LINK_PREV]
-                = sprintf(static::LINK_PATTERN, $domain, $pageOffsetsTransfer->getPrevOffset(), $limit);
+            $paginationLinks[RestLinkInterface::LINK_PREV]
+                = $this->getPaginationLink($resourceLink, $pageOffsetsTransfer->getPrevOffset(), $limitParameter);
         }
         if ($pageOffsetsTransfer->getNextOffset() < $restResponse->getTotals()) {
-            $offsetLinks[RestLinkInterface::LINK_NEXT]
-                = sprintf(static::LINK_PATTERN, $domain, $pageOffsetsTransfer->getNextOffset(), $limit);
+            $paginationLinks[RestLinkInterface::LINK_NEXT]
+                = $this->getPaginationLink($resourceLink, $pageOffsetsTransfer->getNextOffset(), $limitParameter);
         }
 
         return array_merge(
-            $offsetLinks,
+            $paginationLinks,
             $restResponse->getLinks()
         );
     }
@@ -102,6 +99,7 @@ class ResponsePagination implements ResponsePaginationInterface
             ->setLimit($limit)
             ->setLastOffset($lastOffset)
             ->setNextOffset($nextOffset)
+            ->setFirstOffset(0)
             ->setPrevOffset($prevOffset);
     }
 
@@ -132,7 +130,7 @@ class ResponsePagination implements ResponsePaginationInterface
     {
         $nextOffset = $offset + $limit;
         if ($nextOffset > $totalPages * $limit) {
-            $nextOffset = (int)(($totalPages / $limit) * $limit);
+            $nextOffset = (int)($totalPages * $limit);
         }
 
         return $nextOffset;
@@ -181,15 +179,24 @@ class ResponsePagination implements ResponsePaginationInterface
      *
      * @return string
      */
-    protected function buildDomainLink(RestRequestInterface $restRequest): string
+    protected function buildResourceLink(RestRequestInterface $restRequest): string
     {
-        $queryString = $restRequest->getQueryString([static::KEY_PAGE]);
-        if (strlen($queryString)) {
-            $queryString .= '&';
-        }
-        $domain = sprintf(static::DOMAIN_LINK_TEMPLATE, $this->domainName, $restRequest->getResource()->getType(), $queryString);
+        $queryString = $restRequest->getQueryString([RequestConstantsInterface::QUERY_PAGE]);
 
-        return $domain;
+        $resourceLinks = [];
+        $parentResources = $restRequest->getParentResources();
+        foreach ($parentResources as $parentResource) {
+            $resourceLinks[] = sprintf('%s/%s', $parentResource->getType(), $parentResource->getId());
+        }
+
+        $resourceLinks[] = $restRequest->getResource()->getType();
+
+        return sprintf(
+            '%s/%s?%s',
+            $this->config->getGlueDomainName(),
+            implode('/', $resourceLinks),
+            ($queryString ? $queryString . '&' : '')
+        );
     }
 
     /**
@@ -197,13 +204,45 @@ class ResponsePagination implements ResponsePaginationInterface
      *
      * @return string
      */
-    protected function buildLimitParameter($pageOffsetsTransfer): string
+    protected function buildLimitParameter(RestPageOffsetsTransfer $pageOffsetsTransfer): string
     {
         $limit = '';
         if ($pageOffsetsTransfer->getLimit()) {
-            $limit = '&page[limit]=' . $pageOffsetsTransfer->getLimit();
+            $limit = sprintf(
+                '&%s[%s]=%s',
+                RequestConstantsInterface::QUERY_PAGE,
+                RequestConstantsInterface::QUERY_LIMIT,
+                $pageOffsetsTransfer->getLimit()
+            );
         }
 
         return $limit;
+    }
+
+    /**
+     * @param int $offset
+     *
+     * @return string
+     */
+    protected function buildOffsetParameter(int $offset): string
+    {
+        return sprintf(
+            '%s[%s]=%s',
+            RequestConstantsInterface::QUERY_PAGE,
+            RequestConstantsInterface::QUERY_OFFSET,
+            (string)$offset
+        );
+    }
+
+    /**
+     * @param string $domain
+     * @param int $offset
+     * @param string $limit
+     *
+     * @return string
+     */
+    protected function getPaginationLink(string $domain, int $offset, string $limit): string
+    {
+        return sprintf('%s%s%s', $domain, $this->buildOffsetParameter($offset), $limit);
     }
 }

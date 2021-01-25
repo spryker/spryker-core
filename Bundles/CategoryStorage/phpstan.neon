@@ -1,4 +1,5 @@
 parameters:
+    checkGenericClassInNonGenericObjectType: false
+    checkMissingIterableValueType: false
     ignoreErrors:
-        - '#Method .+CategoryStorageQueryContainer::query.+\(\) should return .+Spy.+Query but returns Propel\\Runtime\\ActiveQuery\\ModelCriteria.#'
-        - '#Parameter \#1 \$reference of method .+SynchronizationDataTransfer::setReference\(\) expects string|null, int given.#'
+        - '#Parameter \#1 \$reference of method .+SynchronizationDataTransfer::setReference\(\) expects string\|null, int given.#'

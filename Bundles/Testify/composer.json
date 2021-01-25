@@ -4,18 +4,18 @@
   "description": "Testify module",
   "license": "proprietary",
   "require": {
-    "codeception/codeception": "^2.3.5 || ^3.0.0",
-    "mikey179/vfsStream": "^1.6",
-    "php": ">=7.1",
+    "codeception/codeception": "^2.3.5 || ^3.0.0 ||  ^4.0.0",
+    "dms/phpunit-arraysubset-asserts": "^0.1.0",
+    "fzaninotto/faker": "^1.6.0",
+    "mikey179/vfsstream": "^1.6",
+    "php": ">=7.3",
     "spryker/application": "^3.12.0",
     "spryker/application-extension": "^1.0.0",
     "spryker/config": "^3.0.0",
     "spryker/container": "^1.0.0",
     "spryker/error-handler": "^2.0.0",
-    "spryker/kernel": "^3.30.0",
+    "spryker/kernel": "^3.49.0",
     "spryker/propel": "^3.0.4",
-    "spryker/propel-orm": "^1.0.0",
-    "spryker/silex": "^2.0.0",
     "spryker/symfony": "^3.0.0"
   },
   "require-dev": {
@@ -23,14 +23,17 @@
     "spryker/console": "*",
     "spryker/json-path": "^1.0.0",
     "spryker/json-schema": "^1.0.0",
+    "spryker/propel-orm": "*",
+    "spryker/silex": "*",
     "spryker/twig": "^3.0.0"
   },
   "suggest": {
-    "spryker-sdk/codeception-phantoman": "If you want to use WebDriverHelper."
+    "spryker/silex": "Add this when you still want to use the abandoned Silex."
   },
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Client\\Testify\\Helper\\": "tests/SprykerTest/Client/Testify/_support/Helper/",
       "SprykerTest\\Shared\\Testify\\Helper\\": "tests/SprykerTest/Shared/Testify/_support/Helper/",
       "SprykerTest\\Glue\\Testify\\Helper\\": "tests/SprykerTest/Glue/Testify/_support/Helper/",
       "SprykerTest\\Glue\\Testify\\Tester\\": "tests/SprykerTest/Glue/Testify/_support/Tester/",
@@ -49,6 +52,10 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "3.0.x-dev"

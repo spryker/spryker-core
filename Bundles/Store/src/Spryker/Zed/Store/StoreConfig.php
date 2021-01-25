@@ -12,6 +12,8 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class StoreConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @return bool
      */
     public function isMultiStorePerZedEnabled()

@@ -7,11 +7,16 @@
 
 namespace SprykerTest\Zed\Shipment;
 
+use ArrayObject;
 use Codeception\Actor;
+use Generated\Shared\DataBuilder\AddressBuilder;
 use Generated\Shared\DataBuilder\CalculableObjectBuilder;
+use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\DataBuilder\ShipmentBuilder;
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
+use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -19,17 +24,18 @@ use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\ShipmentMethodsTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\TaxRateTransfer;
+use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\Country\Persistence\SpyCountryQuery;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
 use Spryker\Service\Shipment\ShipmentServiceInterface;
+use Spryker\Shared\Shipment\ShipmentConfig as SharedShipmentConfig;
 use Spryker\Shared\Tax\TaxConstants;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
+use Spryker\Zed\Shipment\Business\ShipmentFacadeInterface;
 use Spryker\Zed\Shipment\Communication\Plugin\Checkout\OrderShipmentSavePlugin;
 use Spryker\Zed\Shipment\Communication\Plugin\ShipmentOrderHydratePlugin;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -39,7 +45,7 @@ use Spryker\Zed\Shipment\Communication\Plugin\ShipmentOrderHydratePlugin;
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  * @method \Spryker\Zed\Shipment\Business\ShipmentFacadeInterface getFacade()
  *
  * @SuppressWarnings(PHPMD)
@@ -48,14 +54,12 @@ class ShipmentBusinessTester extends Actor
 {
     use _generated\ShipmentBusinessTesterActions;
 
-   /**
-    * Define custom actions here
-    */
+    protected const FAKE_EXPENSE_TYPE = 'FAKE_EXPENSE_TYPE';
 
     /**
      * @return \Spryker\Zed\Shipment\Business\ShipmentFacadeInterface
      */
-    public function getShipmentFacade()
+    public function getShipmentFacade(): ShipmentFacadeInterface
     {
         return $this->getLocator()->shipment()->facade();
     }
@@ -73,7 +77,7 @@ class ShipmentBusinessTester extends Actor
      *
      * @return int[]
      */
-    public function getIdShipmentMethodCollection(ShipmentMethodsTransfer $shipmentMethodsTransfer)
+    public function getIdShipmentMethodCollection(ShipmentMethodsTransfer $shipmentMethodsTransfer): array
     {
         $idShipmentMethodCollection = [];
 
@@ -92,7 +96,7 @@ class ShipmentBusinessTester extends Actor
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|mixed|null
      */
-    public function findShipmentMethod(ShipmentMethodsTransfer $shipmentMethodsTransfer, $idShipmentMethod)
+    public function findShipmentMethod(ShipmentMethodsTransfer $shipmentMethodsTransfer, int $idShipmentMethod)
     {
         foreach ($shipmentMethodsTransfer->getMethods() as $shipmentMethodTransfer) {
             if ($shipmentMethodTransfer->getIdShipmentMethod() === $idShipmentMethod) {
@@ -109,7 +113,7 @@ class ShipmentBusinessTester extends Actor
      *
      * @return void
      */
-    public function updateShipmentMethod(array $data, ?array $idFilter = null)
+    public function updateShipmentMethod(array $data, ?array $idFilter = null): void
     {
         $shipmentMethodQuery = SpyShipmentMethodQuery::create();
 
@@ -127,7 +131,7 @@ class ShipmentBusinessTester extends Actor
     /**
      * @return void
      */
-    public function disableAllShipmentMethods()
+    public function disableAllShipmentMethods(): void
     {
         $this->updateShipmentMethod(['is_active' => false]);
     }
@@ -137,7 +141,7 @@ class ShipmentBusinessTester extends Actor
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer[]
      */
-    public function haveActiveShipmentMethods($shipmentMethodCount)
+    public function haveActiveShipmentMethods(int $shipmentMethodCount): array
     {
         $shipmentMethodTransferCollection = [];
         for ($i = 0; $i < $shipmentMethodCount; $i++) {
@@ -150,7 +154,7 @@ class ShipmentBusinessTester extends Actor
     /**
      * @return string
      */
-    public function getDefaultStoreName()
+    public function getDefaultStoreName(): string
     {
         return $this->getLocator()->store()->facade()->getCurrentStore()->getName();
     }
@@ -287,5 +291,54 @@ class ShipmentBusinessTester extends Actor
         return (new CalculableObjectBuilder())
             ->build()
             ->setOriginalQuote($originalQuoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $iso2Code
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function addNewItemIntoQuoteTransfer(
+        QuoteTransfer $quoteTransfer,
+        string $iso2Code,
+        ShipmentMethodTransfer $shipmentMethodTransfer
+    ): QuoteTransfer {
+        $addressBuilder = (new AddressBuilder([AddressTransfer::ISO2_CODE => $iso2Code]));
+        $shipmentTransfer = (new ShipmentBuilder())
+            ->withShippingAddress($addressBuilder)
+            ->build();
+
+        $shipmentTransfer->setMethod($shipmentMethodTransfer);
+
+        $itemTransfer = (new ItemBuilder())->build();
+        $itemTransfer->setShipment($shipmentTransfer);
+
+        $quoteTransfer->addItem($itemTransfer);
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CalculableObjectTransfer
+     */
+    public function createCalculableObjectWithFakeExpenses(): CalculableObjectTransfer
+    {
+        $expenseTransfers = [
+            (new ExpenseTransfer())
+                ->setType(SharedShipmentConfig::SHIPMENT_EXPENSE_TYPE)
+                ->setSumPrice(100),
+            (new ExpenseTransfer())
+                ->setType(SharedShipmentConfig::SHIPMENT_EXPENSE_TYPE)
+                ->setSumPrice(200),
+            (new ExpenseTransfer())
+                ->setType(static::FAKE_EXPENSE_TYPE)
+                ->setSumPrice(300),
+        ];
+
+        return (new CalculableObjectTransfer())
+            ->setExpenses(new ArrayObject($expenseTransfers))
+            ->setTotals(new TotalsTransfer());
     }
 }

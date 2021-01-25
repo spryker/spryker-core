@@ -4,14 +4,14 @@
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="RestCategoryTrees">
-        <property name="categoryNodesStorage" type="RestCategoryTreesAttributes[]"/>
+        <property name="categoryNodesStorage" type="RestCategoryTreesAttributes[]" singular="categoryNodesStorage"/>
     </transfer>
 
     <transfer name="RestCategoryTreesAttributes">
         <property name="nodeId" type="int"/>
         <property name="order" type="int"/>
         <property name="name" type="string"/>
-        <property name="children" type="RestCategoryTreesAttributes[]"/>
+        <property name="children" type="RestCategoryTreesAttributes[]" singular="children"/>
         <property name="url" type="string"/>
     </transfer>
 
@@ -22,8 +22,8 @@
         <property name="metaKeywords" type="string"/>
         <property name="metaDescription" type="string"/>
         <property name="isActive" type="bool"/>
-        <property name="children" type="RestCategoryNodesAttributes[]"/>
-        <property name="parents" type="RestCategoryNodesAttributes[]"/>
+        <property name="children" type="RestCategoryNodesAttributes[]" singular="children"/>
+        <property name="parents" type="RestCategoryNodesAttributes[]" singular="parents"/>
         <property name="order" type="int"/>
         <property name="url" type="string"/>
     </transfer>

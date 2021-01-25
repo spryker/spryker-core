@@ -16,37 +16,42 @@ class StepMock implements StepInterface
     /**
      * @var bool
      */
-    private $postCondition;
+    protected $postCondition;
 
     /**
      * @var bool
      */
-    private $preCondition;
+    protected $preCondition;
 
     /**
      * @var bool
      */
-    private $requireInput;
+    protected $requireInput;
 
     /**
      * @var string
      */
-    private $stepRoute;
+    protected $stepRoute;
 
     /**
-     * @var string
+     * @var string|null
      */
-    private $escapeRoute;
+    protected $escapeRoute;
 
     /**
      * @param bool $preCondition
      * @param bool $postCondition
      * @param bool $requireInput
      * @param string $stepRoute
-     * @param string $escapeRoute
+     * @param string|null $escapeRoute
      */
-    public function __construct($preCondition = true, $postCondition = true, $requireInput = true, $stepRoute = '', $escapeRoute = '')
-    {
+    public function __construct(
+        bool $preCondition = true,
+        bool $postCondition = true,
+        bool $requireInput = true,
+        string $stepRoute = '',
+        ?string $escapeRoute = null
+    ) {
         $this->preCondition = $preCondition;
         $this->postCondition = $postCondition;
         $this->requireInput = $requireInput;
@@ -59,38 +64,38 @@ class StepMock implements StepInterface
      *
      * @return bool
      */
-    public function preCondition(AbstractTransfer $quoteTransfer)
+    public function preCondition(AbstractTransfer $quoteTransfer): bool
     {
         return $this->preCondition;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
-    public function requireInput(AbstractTransfer $dataTransfer)
+    public function requireInput(AbstractTransfer $quoteTransfer): bool
     {
         return $this->requireInput;
     }
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
-    public function execute(Request $request, AbstractTransfer $dataTransfer)
+    public function execute(Request $request, AbstractTransfer $quoteTransfer): AbstractTransfer
     {
-        return $dataTransfer;
+        return $quoteTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
-    public function postCondition(AbstractTransfer $dataTransfer)
+    public function postCondition(AbstractTransfer $quoteTransfer): bool
     {
         return $this->postCondition;
     }
@@ -98,15 +103,15 @@ class StepMock implements StepInterface
     /**
      * @return string
      */
-    public function getStepRoute()
+    public function getStepRoute(): string
     {
         return $this->stepRoute;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getEscapeRoute()
+    public function getEscapeRoute(): ?string
     {
         return $this->escapeRoute;
     }
@@ -116,7 +121,7 @@ class StepMock implements StepInterface
      *
      * @return array
      */
-    public function getTemplateVariables(AbstractTransfer $quoteTransfer)
+    public function getTemplateVariables(AbstractTransfer $quoteTransfer): array
     {
         return [];
     }

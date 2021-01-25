@@ -16,6 +16,9 @@ use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Search\SearchConstants;
 
+/**
+ * @deprecated Use {@link \Spryker\Client\SearchElasticsearch\Plugin\Query\SearchKeysQuery} instead.
+ */
 class SearchKeysQuery implements QueryInterface
 {
     /**
@@ -46,6 +49,11 @@ class SearchKeysQuery implements QueryInterface
     }
 
     /**
+     * {@inheritDoc}
+     * - Returns a query object for keys search.
+     *
+     * @api
+     *
      * @return \Elastica\Query\MatchAll|\Elastica\Query
      */
     public function getSearchQuery()

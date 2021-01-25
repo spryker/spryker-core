@@ -13,8 +13,6 @@ use SprykerTest\Zed\Refund\PageObject\RefundListPage;
 use SprykerTest\Zed\Refund\PageObject\SalesDetailPage;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -24,7 +22,7 @@ use SprykerTest\Zed\Refund\PageObject\SalesDetailPage;
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  *
  * @SuppressWarnings(PHPMD)
  */
@@ -46,7 +44,7 @@ class RefundPresentationTester extends Actor
     /**
      * @return void
      */
-    public function canOpenRefundListPage()
+    public function canOpenRefundListPage(): void
     {
         $i = $this;
         $i->amOnPage(RefundListPage::URL);
@@ -58,7 +56,7 @@ class RefundPresentationTester extends Actor
      *
      * @return void
      */
-    public function refundItem($idSalesOrderItem)
+    public function refundItem(int $idSalesOrderItem): void
     {
         $i = $this;
 
@@ -75,18 +73,18 @@ class RefundPresentationTester extends Actor
      *
      * @return void
      */
-    public function seeNumberOfRefunds($expectedNumberOfRefundRows)
+    public function seeNumberOfRefunds(int $expectedNumberOfRefundRows): void
     {
         $i = $this;
         $rows = $i->grabMultiple(SalesDetailPage::SELECTOR_REFUND_ROW);
 
-        $this->assertEquals($expectedNumberOfRefundRows, count($rows));
+        $this->assertSame($expectedNumberOfRefundRows, count($rows));
     }
 
     /**
      * @return int
      */
-    public function grabTotalRefundedAmount()
+    public function grabTotalRefundedAmount(): int
     {
         $i = $this;
         $refundTotals = $i->grabMultiple(SalesDetailPage::REFUND_TOTAL_AMOUNT_SELECTOR, SalesDetailPage::ATTRIBUTE_ITEM_TOTAL_RAW);

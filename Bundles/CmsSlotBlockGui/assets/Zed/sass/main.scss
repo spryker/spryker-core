@@ -1,0 +1,103 @@
+/**
+ * Copyright (c) 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+.cms-slot-blocks {
+    position: relative;
+
+    &__col {
+        &:not(:first-child) {
+            padding-left: 0;
+        }
+
+        &:last-child {
+            text-align: right;
+        }
+    }
+
+    &__overlay {
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 10;
+
+        &--hidden {
+            display: none;
+        }
+    }
+
+    .select2-container {
+        .select2-selection--single {
+            &,
+            .select2-selection {
+                &,
+                &__arrow {
+                    height: 33px;
+                }
+
+                &__rendered {
+                    line-height: 33px;
+                }
+            }
+        }
+    }
+
+    tr {
+        &:first-child {
+            .btn[data-direction='up'] {
+                display: none;
+            }
+        }
+
+        &:last-child {
+            .btn[data-direction='down'] {
+                display: none;
+            }
+        }
+    }
+
+    .js-cms-slot-block-form-item {
+        display: none;
+    }
+}
+
+.cms-slot-blocks-alert {
+    button.cancel {
+        background: transparent;
+        color: #d18d21;
+        border: 1px solid #d18d21;
+        padding: 9px 30px;
+
+        &:hover {
+            color: #fff;
+            background: #f7a54a;
+            border-color: #f7a54a;
+        }
+    }
+
+    h2 {
+        font-size: 24px;
+    }
+}
+
+.js-row-unsaved-overlay {
+    .ibox-content {
+        position: relative;
+    }
+}
+
+.js-row-overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: #fff;
+    opacity: 0;
+    display: none;
+    border-radius: inherit;
+}

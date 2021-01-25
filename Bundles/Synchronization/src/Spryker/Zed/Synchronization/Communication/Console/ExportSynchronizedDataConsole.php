@@ -28,9 +28,9 @@ class ExportSynchronizedDataConsole extends Console
      */
     protected function configure(): void
     {
-        $this->addArgument(static::RESOURCE, InputArgument::OPTIONAL, 'Defines which resource(s) should be exported, if there is more than one, use comma to separate them. 
+        $this->addArgument(static::RESOURCE, InputArgument::OPTIONAL, 'Defines which resource(s) should be exported, if there is more than one, use comma to separate them.
         If not, full export will be executed.');
-        $this->addArgument(static::OPTION_IDS, InputArgument::OPTIONAL, 'Defines ids for entities which should be exported, if there is more than one, use comma to separate them. 
+        $this->addArgument(static::OPTION_IDS, InputArgument::OPTIONAL, 'Defines ids for entities which should be exported, if there is more than one, use comma to separate them.
         If not, full export will be executed.');
 
         $this->setName(static::COMMAND_NAME)
@@ -42,9 +42,9 @@ class ExportSynchronizedDataConsole extends Console
      * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
-     * @return int|null
+     * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $resources = [];
         $ids = [];
@@ -64,6 +64,8 @@ class ExportSynchronizedDataConsole extends Console
         }
 
         $this->getFacade()->executeResolvedPluginsBySourcesWithIds($resources, $ids);
+
+        return static::CODE_SUCCESS;
     }
 
     /**

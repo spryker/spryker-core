@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\CustomerGroup\Helper;
 use Codeception\Module;
 use Generated\Shared\DataBuilder\CustomerGroupBuilder;
 use Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupQuery;
+use Spryker\Zed\CustomerGroup\Business\CustomerGroupFacadeInterface;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
@@ -30,7 +31,7 @@ class CustomerGroupHelper extends Module
         $customerGroupFacade = $this->getCustomerGroupFacade();
         $customerGroupTransfer = $customerGroupFacade->add($customerGroupTransfer);
 
-        $this->getDataCleanupHelper()->_addCleanup(function () use ($customerGroupTransfer) {
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($customerGroupTransfer): void {
             $this->cleanupCustomerGroup($customerGroupTransfer->getIdCustomerGroup());
         });
 
@@ -40,7 +41,7 @@ class CustomerGroupHelper extends Module
     /**
      * @return \Spryker\Zed\CustomerGroup\Business\CustomerGroupFacadeInterface
      */
-    private function getCustomerGroupFacade()
+    private function getCustomerGroupFacade(): CustomerGroupFacadeInterface
     {
         return $this->getLocator()->customerGroup()->facade();
     }
@@ -50,7 +51,7 @@ class CustomerGroupHelper extends Module
      *
      * @return void
      */
-    private function cleanupCustomerGroup($idCustomerGroup)
+    private function cleanupCustomerGroup(int $idCustomerGroup): void
     {
         $this->debug(sprintf('Deleting CustomerGroup: %d', $idCustomerGroup));
 
@@ -62,7 +63,7 @@ class CustomerGroupHelper extends Module
     /**
      * @return \Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupQuery
      */
-    private function getCustomerGroupQuery()
+    private function getCustomerGroupQuery(): SpyCustomerGroupQuery
     {
         return SpyCustomerGroupQuery::create();
     }

@@ -12,16 +12,31 @@ interface ProductLabelsRestApiToProductLabelStorageClientInterface
     /**
      * @param array $idProductLabels
      * @param string $localeName
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]
      */
-    public function findLabels(array $idProductLabels, $localeName);
+    public function findLabels(array $idProductLabels, $localeName, string $storeName);
 
     /**
      * @param int $idProductAbstract
      * @param string $localeName
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]
      */
-    public function findLabelsByIdProductAbstract($idProductAbstract, $localeName);
+    public function findLabelsByIdProductAbstract($idProductAbstract, $localeName, string $storeName);
+
+    /**
+     * @param int[] $productAbstractIds
+     * @param string $localeName
+     * @param string $storeName
+     *
+     * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[][]
+     */
+    public function getProductLabelsByProductAbstractIds(
+        array $productAbstractIds,
+        string $localeName,
+        string $storeName
+    ): array;
 }

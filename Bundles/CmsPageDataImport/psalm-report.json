@@ -1,0 +1,223 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 28,
+            "line_to": 28,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'Spryker\\Zed\\DataImport\\Business\\Model\\DataImporterInterface' for Spryker\\Zed\\CmsPageDataImport\\Business\\CmsPageDataImportBusinessFactory::createCmsPageImporter is incorrect, got 'Spryker\\Zed\\DataImport\\Business\\Model\\DataImporterAfterImportAwareInterface|Spryker\\Zed\\DataImport\\Business\\Model\\DataImporterBeforeImportAwareInterface|Spryker\\Zed\\DataImport\\Business\\Model\\DataImporterInterface|Spryker\\Zed\\DataImport\\Business\\Model\\DataSet\\DataSetStepBrokerAwareInterface'",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsPageDataImport/src/Spryker/Zed/CmsPageDataImport/Business/CmsPageDataImportBusinessFactory.php",
+            "snippet": "     * @return \\Spryker\\Zed\\DataImport\\Business\\Model\\DataImporterInterface",
+            "selected_text": "\\Spryker\\Zed\\DataImport\\Business\\Model\\DataImporterInterface",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 56,
+            "line_to": 56,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'Spryker\\Zed\\DataImport\\Business\\Model\\DataImporterAfterImportAwareInterface|Spryker\\Zed\\DataImport\\Business\\Model\\DataImporterBeforeImportAwareInterface|Spryker\\Zed\\DataImport\\Business\\Model\\DataImporterInterface|Spryker\\Zed\\DataImport\\Business\\Model\\DataSet\\DataSetStepBrokerAwareInterface' does not match the declared return type 'Spryker\\Zed\\DataImport\\Business\\Model\\DataImporterInterface' for Spryker\\Zed\\CmsPageDataImport\\Business\\CmsPageDataImportBusinessFactory::createCmsPageImporter",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsPageDataImport/src/Spryker/Zed/CmsPageDataImport/Business/CmsPageDataImportBusinessFactory.php",
+            "snippet": "        return $dataImporter;",
+            "selected_text": "$dataImporter",
+            "error_level": 6,
+            "shortcode": 128
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 41,
+            "line_to": 41,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Zed\\CmsPageDataImport\\Business\\CmsPage\\CmsPagePublishStep::addPublishEvents cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsPageDataImport/src/Spryker/Zed/CmsPageDataImport/Business/CmsPage/CmsPagePublishStep.php",
+            "snippet": "        $this->addPublishEvents(CmsEvents::CMS_VERSION_PUBLISH, $cmsVersionTransfer->getFkCmsPage());",
+            "selected_text": "$cmsVersionTransfer->getFkCmsPage()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 50,
+            "line_to": 50,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdCmsTemplate on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsPageDataImport/src/Spryker/Zed/CmsPageDataImport/Business/CmsPage/CmsPageWriterStep.php",
+            "snippet": "            ->setFkTemplate($templateEntity->getIdCmsTemplate())",
+            "selected_text": "getIdCmsTemplate",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 40,
+            "line_to": 40,
+            "type": "PossiblyUndefinedMethod",
+            "message": "Method Spryker\\Zed\\DataImport\\Business\\Model\\DataSet\\DataSetStepBrokerInterface::addStep does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsPageDataImport/src/Spryker/Zed/CmsPageDataImport/Business/CmsPageDataImportBusinessFactory.php",
+            "snippet": "            ->addStep($this->createAddLocalesStep())",
+            "selected_text": "addStep",
+            "error_level": 3,
+            "shortcode": 108
+        },
+        {
+            "severity": "info",
+            "line_from": 54,
+            "line_to": 54,
+            "type": "PossiblyUndefinedMethod",
+            "message": "Method Spryker\\Zed\\DataImport\\Business\\Model\\DataImporterInterface::addDataSetStepBroker does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsPageDataImport/src/Spryker/Zed/CmsPageDataImport/Business/CmsPageDataImportBusinessFactory.php",
+            "snippet": "        $dataImporter->addDataSetStepBroker($dataSetStepBroker);",
+            "selected_text": "addDataSetStepBroker",
+            "error_level": 3,
+            "shortcode": 108
+        },
+        {
+            "severity": "info",
+            "line_from": 54,
+            "line_to": 54,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\DataImport\\Business\\Model\\DataSet\\DataSetStepBrokerAwareInterface::addDataSetStepBroker expects Spryker\\Zed\\DataImport\\Business\\Model\\DataSet\\DataSetStepBrokerInterface, possibly different type Spryker\\Zed\\DataImport\\Business\\Model\\DataImportStep\\DataImportStepAwareInterface|Spryker\\Zed\\DataImport\\Business\\Model\\DataSet\\DataSetStepBrokerInterface provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsPageDataImport/src/Spryker/Zed/CmsPageDataImport/Business/CmsPageDataImportBusinessFactory.php",
+            "snippet": "        $dataImporter->addDataSetStepBroker($dataSetStepBroker);",
+            "selected_text": "$dataSetStepBroker",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 69,
+            "line_to": 69,
+            "type": "PossiblyUndefinedMethod",
+            "message": "Method Spryker\\Zed\\DataImport\\Business\\Model\\DataSet\\DataSetStepBrokerInterface::addStep does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsPageDataImport/src/Spryker/Zed/CmsPageDataImport/Business/CmsPageDataImportBusinessFactory.php",
+            "snippet": "        $dataSetStepBroker->addStep($this->createStoreNameToIdStoreStep());",
+            "selected_text": "addStep",
+            "error_level": 3,
+            "shortcode": 108
+        },
+        {
+            "severity": "info",
+            "line_from": 70,
+            "line_to": 70,
+            "type": "PossiblyUndefinedMethod",
+            "message": "Method Spryker\\Zed\\DataImport\\Business\\Model\\DataSet\\DataSetStepBrokerInterface::addStep does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsPageDataImport/src/Spryker/Zed/CmsPageDataImport/Business/CmsPageDataImportBusinessFactory.php",
+            "snippet": "        $dataSetStepBroker->addStep($this->createCmsPageKeyToIdCmsPageStep());",
+            "selected_text": "addStep",
+            "error_level": 3,
+            "shortcode": 108
+        },
+        {
+            "severity": "info",
+            "line_from": 71,
+            "line_to": 71,
+            "type": "PossiblyUndefinedMethod",
+            "message": "Method Spryker\\Zed\\DataImport\\Business\\Model\\DataSet\\DataSetStepBrokerInterface::addStep does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsPageDataImport/src/Spryker/Zed/CmsPageDataImport/Business/CmsPageDataImportBusinessFactory.php",
+            "snippet": "        $dataSetStepBroker->addStep(new CmsPageStoreWriterStep());",
+            "selected_text": "addStep",
+            "error_level": 3,
+            "shortcode": 108
+        },
+        {
+            "severity": "info",
+            "line_from": 72,
+            "line_to": 72,
+            "type": "PossiblyUndefinedMethod",
+            "message": "Method Spryker\\Zed\\DataImport\\Business\\Model\\DataSet\\DataSetStepBrokerInterface::addStep does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsPageDataImport/src/Spryker/Zed/CmsPageDataImport/Business/CmsPageDataImportBusinessFactory.php",
+            "snippet": "        $dataSetStepBroker->addStep($this->createCmsPagePublishStep());",
+            "selected_text": "addStep",
+            "error_level": 3,
+            "shortcode": 108
+        },
+        {
+            "severity": "info",
+            "line_from": 73,
+            "line_to": 73,
+            "type": "PossiblyUndefinedMethod",
+            "message": "Method Spryker\\Zed\\DataImport\\Business\\Model\\DataImporterInterface::addDataSetStepBroker does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsPageDataImport/src/Spryker/Zed/CmsPageDataImport/Business/CmsPageDataImportBusinessFactory.php",
+            "snippet": "        $dataImporter->addDataSetStepBroker($dataSetStepBroker);",
+            "selected_text": "addDataSetStepBroker",
+            "error_level": 3,
+            "shortcode": 108
+        },
+        {
+            "severity": "info",
+            "line_from": 73,
+            "line_to": 73,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\DataImport\\Business\\Model\\DataSet\\DataSetStepBrokerAwareInterface::addDataSetStepBroker expects Spryker\\Zed\\DataImport\\Business\\Model\\DataSet\\DataSetStepBrokerInterface, possibly different type Spryker\\Zed\\DataImport\\Business\\Model\\DataImportStep\\DataImportStepAwareInterface|Spryker\\Zed\\DataImport\\Business\\Model\\DataSet\\DataSetStepBrokerInterface provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsPageDataImport/src/Spryker/Zed/CmsPageDataImport/Business/CmsPageDataImportBusinessFactory.php",
+            "snippet": "        $dataImporter->addDataSetStepBroker($dataSetStepBroker);",
+            "selected_text": "$dataSetStepBroker",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 44,
+            "line_to": 44,
+            "type": "PossiblyUndefinedMethod",
+            "message": "Method Spryker\\Zed\\DataImport\\Business\\Model\\DataImporterAfterImportAwareInterface::import does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsPageDataImport/src/Spryker/Zed/CmsPageDataImport/Business/CmsPageDataImportFacade.php",
+            "snippet": "        return $this->getFactory()->createCmsPageStoreImporter()->import($dataImporterConfigurationTransfer);",
+            "selected_text": "import",
+            "error_level": 3,
+            "shortcode": 108
+        },
+        {
+            "severity": "info",
+            "line_from": 166,
+            "line_to": 166,
+            "type": "InvalidNullableReturnType",
+            "message": "The declared return type 'Generated\\Shared\\Transfer\\CmsVersionTransfer' for Spryker\\Zed\\CmsPageDataImport\\Dependency\\Facade\\CmsPageDataImportToCmsFacadeBridge::findLatestCmsVersionByIdCmsPage is not nullable, but 'Generated\\Shared\\Transfer\\CmsVersionTransfer|null' contains null",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsPageDataImport/src/Spryker/Zed/CmsPageDataImport/Dependency/Facade/CmsPageDataImportToCmsFacadeBridge.php",
+            "snippet": "     * @return \\Generated\\Shared\\Transfer\\CmsVersionTransfer",
+            "selected_text": "\\Generated\\Shared\\Transfer\\CmsVersionTransfer",
+            "error_level": 5,
+            "shortcode": 144
+        },
+        {
+            "severity": "info",
+            "line_from": 170,
+            "line_to": 170,
+            "type": "NullableReturnStatement",
+            "message": "The declared return type 'Generated\\Shared\\Transfer\\CmsVersionTransfer' for Spryker\\Zed\\CmsPageDataImport\\Dependency\\Facade\\CmsPageDataImportToCmsFacadeBridge::findLatestCmsVersionByIdCmsPage is not nullable, but the function returns 'Generated\\Shared\\Transfer\\CmsVersionTransfer|null'",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsPageDataImport/src/Spryker/Zed/CmsPageDataImport/Dependency/Facade/CmsPageDataImportToCmsFacadeBridge.php",
+            "snippet": "        return $this->cmsFacade->findLatestCmsVersionByIdCmsPage($idCmsPage);",
+            "selected_text": "$this->cmsFacade->findLatestCmsVersionByIdCmsPage($idCmsPage)",
+            "error_level": 5,
+            "shortcode": 139
+        },
+        {
+            "severity": "info",
+            "line_from": 187,
+            "line_to": 187,
+            "type": "InvalidNullableReturnType",
+            "message": "The declared return type 'Generated\\Shared\\Transfer\\CmsVersionTransfer' for Spryker\\Zed\\CmsPageDataImport\\Dependency\\Facade\\CmsPageDataImportToCmsFacadeBridge::findCmsVersionByIdCmsPageAndVersion is not nullable, but 'Generated\\Shared\\Transfer\\CmsVersionTransfer|null' contains null",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsPageDataImport/src/Spryker/Zed/CmsPageDataImport/Dependency/Facade/CmsPageDataImportToCmsFacadeBridge.php",
+            "snippet": "     * @return \\Generated\\Shared\\Transfer\\CmsVersionTransfer",
+            "selected_text": "\\Generated\\Shared\\Transfer\\CmsVersionTransfer",
+            "error_level": 5,
+            "shortcode": 144
+        },
+        {
+            "severity": "info",
+            "line_from": 191,
+            "line_to": 191,
+            "type": "NullableReturnStatement",
+            "message": "The declared return type 'Generated\\Shared\\Transfer\\CmsVersionTransfer' for Spryker\\Zed\\CmsPageDataImport\\Dependency\\Facade\\CmsPageDataImportToCmsFacadeBridge::findCmsVersionByIdCmsPageAndVersion is not nullable, but the function returns 'Generated\\Shared\\Transfer\\CmsVersionTransfer|null'",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsPageDataImport/src/Spryker/Zed/CmsPageDataImport/Dependency/Facade/CmsPageDataImportToCmsFacadeBridge.php",
+            "snippet": "        return $this->cmsFacade->findCmsVersionByIdCmsPageAndVersion($idCmsPage, $version);",
+            "selected_text": "$this->cmsFacade->findCmsVersionByIdCmsPageAndVersion($idCmsPage, $version)",
+            "error_level": 5,
+            "shortcode": 139
+        }
+    ],
+    "deprecation": []
+}

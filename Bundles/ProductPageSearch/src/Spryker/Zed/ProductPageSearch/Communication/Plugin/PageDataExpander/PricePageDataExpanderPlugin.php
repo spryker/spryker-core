@@ -13,7 +13,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInterface;
 
 /**
- * @deprecated Use \Spryker\Zed\ProductPageSearch\Communication\Plugin\PageDataExpander\PricePageDataLoaderExpanderPlugin instead.
+ * @deprecated Use {@link \Spryker\Zed\ProductPageSearch\Communication\Plugin\PageDataExpander\PricePageDataLoaderExpanderPlugin} instead.
  *
  * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductPageSearch\Communication\ProductPageSearchCommunicationFactory getFactory()
@@ -28,6 +28,8 @@ class PricePageDataExpanderPlugin extends AbstractPlugin implements ProductPageD
     protected $idStoreMapBuffer;
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $productData

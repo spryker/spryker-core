@@ -20,10 +20,14 @@ use Symfony\Component\Routing\RouteCollection;
 
 class RouterDebugYvesConsole extends Command
 {
-    /**
-     * @var string
-     */
-    protected static $defaultName = 'router:debug:yves';
+    protected const CODE_SUCCESS = 0;
+
+    protected const NAME = 'router:debug';
+    protected const NAME_ALIAS = 'router:debug:yves';
+
+    protected const ARGUMENT_ROUTE_NAME = 'name';
+    protected const OPTION_SHOW_CONTROLLERS = 'show-controllers';
+    protected const OPTION_SHOW_CONTROLLERS_SHORT = 'c';
 
     /**
      * @return void
@@ -31,18 +35,12 @@ class RouterDebugYvesConsole extends Command
     protected function configure(): void
     {
         $this
+            ->setName(static::NAME)
+            ->setAliases([static::NAME_ALIAS])
             ->setDefinition([
-                new InputArgument('name', InputArgument::OPTIONAL, 'A route name'),
-                new InputOption('show-controllers', null, InputOption::VALUE_NONE, 'Show assigned controllers in overview'),
-            ])
-            ->setDescription('Displays current routes for an application')
-            ->setHelp(<<<'EOF'
-The <info>%command.name%</info> displays the configured routes:
-
-  <info>php %command.full_name%</info>
-
-EOF
-            );
+                new InputArgument(static::ARGUMENT_ROUTE_NAME, InputArgument::OPTIONAL, 'A route name.'),
+                new InputOption(static::OPTION_SHOW_CONTROLLERS, static::OPTION_SHOW_CONTROLLERS_SHORT, InputOption::VALUE_NONE, 'Show assigned controllers in the overview.'),
+            ]);
     }
 
     /**
@@ -59,22 +57,26 @@ EOF
      *
      * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
      *
-     * @return int|null|void
+     * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
-        $name = $input->getArgument('name');
+        $name = $input->getArgument(static::ARGUMENT_ROUTE_NAME);
         $helper = new DescriptorHelper();
 
         $router = $this->getFactory()->createRouter();
         $routes = $router->getRouteCollection();
 
         if ($name) {
-            if (!($route = $routes->get($name)) && $matchingRoutes = $this->findRouteNameContaining($name, $routes)) {
-                $default = count($matchingRoutes) === 1 ? $matchingRoutes[0] : null;
-                $name = $io->choice('Select one of the matching routes', $matchingRoutes, $default);
-                $route = $routes->get($name);
+            $route = $routes->get($name);
+            if (!$route) {
+                $matchingRoutes = $this->findRouteNameContaining($name, $routes);
+                if ($matchingRoutes) {
+                    $default = count($matchingRoutes) === 1 ? $matchingRoutes[0] : null;
+                    $name = $io->choice('Select one of the matching routes', $matchingRoutes, $default);
+                    $route = $routes->get($name);
+                }
             }
 
             if (!$route) {
@@ -82,15 +84,17 @@ EOF
             }
 
             $helper->describe($io, $route, [
-                'name' => $name,
+                static::ARGUMENT_ROUTE_NAME => $name,
                 'output' => $io,
             ]);
         } else {
             $helper->describe($io, $routes, [
-                'show_controllers' => $input->getOption('show-controllers'),
+                'show_controllers' => $input->getOption(static::OPTION_SHOW_CONTROLLERS),
                 'output' => $io,
             ]);
         }
+
+        return static::CODE_SUCCESS;
     }
 
     /**

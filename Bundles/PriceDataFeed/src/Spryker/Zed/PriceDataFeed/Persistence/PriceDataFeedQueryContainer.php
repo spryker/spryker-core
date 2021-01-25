@@ -17,6 +17,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 class PriceDataFeedQueryContainer extends AbstractQueryContainer implements PriceDataFeedQueryContainerInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\PriceDataFeedTransfer|null $priceDataFeedTransfer
@@ -44,7 +46,6 @@ class PriceDataFeedQueryContainer extends AbstractQueryContainer implements Pric
         SpyPriceProductQuery $productPriceQuery,
         ?PriceDataFeedTransfer $priceDataFeedTransfer = null
     ) {
-
         if ($priceDataFeedTransfer !== null) {
             $productPriceQuery = $this->joinPriceTypes($productPriceQuery, $priceDataFeedTransfer);
         }
@@ -62,7 +63,6 @@ class PriceDataFeedQueryContainer extends AbstractQueryContainer implements Pric
         SpyPriceProductQuery $productPriceQuery,
         PriceDataFeedTransfer $priceDataFeedTransfer
     ) {
-
         if ($priceDataFeedTransfer->getJoinPriceType()) {
             $productPriceQuery->joinPriceType();
         }

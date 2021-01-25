@@ -9,14 +9,14 @@ namespace SprykerTest\Zed\ProductQuantity;
 
 use ArrayObject;
 use Codeception\Actor;
+use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductQuantityTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -26,7 +26,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  *
  * @SuppressWarnings(PHPMD)
  */
@@ -34,14 +34,10 @@ class ProductQuantityBusinessTester extends Actor
 {
     use _generated\ProductQuantityBusinessTesterActions;
 
-   /**
-    * Define custom actions here
-    */
-
     /**
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function createProductWithProductQuantity()
+    public function createProductWithProductQuantity(): ProductConcreteTransfer
     {
         $productTransfer = $this->haveProduct();
         $this->haveProductQuantity($productTransfer->getIdProductConcrete());
@@ -56,7 +52,7 @@ class ProductQuantityBusinessTester extends Actor
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function createProductWithSpecificProductQuantity($min, $max, $interval)
+    public function createProductWithSpecificProductQuantity(?int $min, ?int $max, ?int $interval): ProductConcreteTransfer
     {
         $productQuantityOverride = [
             ProductQuantityTransfer::QUANTITY_INTERVAL => $interval,
@@ -73,7 +69,7 @@ class ProductQuantityBusinessTester extends Actor
     /**
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function createEmptyCartChangeTransfer()
+    public function createEmptyCartChangeTransfer(): CartChangeTransfer
     {
         return (new CartChangeTransfer())
             ->setQuote(
@@ -90,11 +86,12 @@ class ProductQuantityBusinessTester extends Actor
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function addSkuToCartChangeTransferQuote(CartChangeTransfer $cartChangeTransfer, $sku, $quantity)
+    public function addSkuToCartChangeTransferQuote(CartChangeTransfer $cartChangeTransfer, string $sku, int $quantity): CartChangeTransfer
     {
         $cartChangeTransfer->getQuote()->addItem(
             (new ItemTransfer())
                 ->setSku($sku)
+                ->setGroupKey($sku)
                 ->setQuantity($quantity)
         );
 
@@ -108,7 +105,7 @@ class ProductQuantityBusinessTester extends Actor
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function addSkuToCartChangeTransfer(CartChangeTransfer $cartChangeTransfer, $sku, $quantity)
+    public function addSkuToCartChangeTransfer(CartChangeTransfer $cartChangeTransfer, string $sku, int $quantity): CartChangeTransfer
     {
         $cartChangeTransfer->addItem(
             (new ItemTransfer())
@@ -124,12 +121,29 @@ class ProductQuantityBusinessTester extends Actor
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function addEmptyItemTransferToCartChangeTransfer(CartChangeTransfer $cartChangeTransfer)
+    public function addEmptyItemTransferToCartChangeTransfer(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
         $cartChangeTransfer->addItem(
             (new ItemTransfer())
         );
 
         return $cartChangeTransfer;
+    }
+
+    /**
+     * @param string $sku
+     * @param string $groupKey
+     * @param int $quantity
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    public function createItemTransferWithNormalizableQuantity(string $sku, string $groupKey, int $quantity): ItemTransfer
+    {
+        return (new ItemBuilder([
+            ItemTransfer::SKU => $sku,
+            ItemTransfer::GROUP_KEY => $groupKey,
+            ItemTransfer::QUANTITY => $quantity,
+            ItemTransfer::NORMALIZABLE_FIELDS => ['quantity'],
+        ]))->build();
     }
 }

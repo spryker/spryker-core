@@ -44,7 +44,7 @@ JSON;
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -54,45 +54,45 @@ JSON;
     /**
      * @return void
      */
-    public function testEncodeJsonWithDefaultOptions()
+    public function testEncodeJsonWithDefaultOptions(): void
     {
         $jsonEncodeValue = $this->utilEncodingService->encodeJson($this->jsonData);
 
-        $this->assertEquals(self::JSON_ENCODED_VALUE, $jsonEncodeValue);
+        $this->assertSame(self::JSON_ENCODED_VALUE, $jsonEncodeValue);
     }
 
     /**
      * @return void
      */
-    public function testEncodeString()
+    public function testEncodeString(): void
     {
         $jsonEncodeValue = $this->utilEncodingService->encodeJson('A string!');
 
-        $this->assertEquals('"A string!"', $jsonEncodeValue);
+        $this->assertSame('"A string!"', $jsonEncodeValue);
     }
 
     /**
      * @return void
      */
-    public function testEncodeBooleanAndNull()
+    public function testEncodeBooleanAndNull(): void
     {
         $jsonEncodeValue = $this->utilEncodingService->encodeJson(true);
 
-        $this->assertEquals('true', $jsonEncodeValue);
+        $this->assertSame('true', $jsonEncodeValue);
 
         $jsonEncodeValue = $this->utilEncodingService->encodeJson(false);
 
-        $this->assertEquals('false', $jsonEncodeValue);
+        $this->assertSame('false', $jsonEncodeValue);
 
         $jsonEncodeValue = $this->utilEncodingService->encodeJson(null);
 
-        $this->assertEquals('null', $jsonEncodeValue);
+        $this->assertSame('null', $jsonEncodeValue);
     }
 
     /**
      * @return void
      */
-    public function testEncodeInvalid()
+    public function testEncodeInvalid(): void
     {
         $jsonEncodeValue = $this->utilEncodingService->encodeJson(['x' => ['y' => 'z']], JSON_NUMERIC_CHECK, 1);
 
@@ -102,17 +102,17 @@ JSON;
     /**
      * @return void
      */
-    public function testEncodeJsonWithPrettyPrintIncluded()
+    public function testEncodeJsonWithPrettyPrintIncluded(): void
     {
         $jsonEncodeValue = $this->utilEncodingService->encodeJson($this->jsonData, Json::DEFAULT_OPTIONS | JSON_PRETTY_PRINT);
 
-        $this->assertEquals(self::JSON_ENCODED_VALUE_PRETTY_PRINT, $jsonEncodeValue);
+        $this->assertSame(self::JSON_ENCODED_VALUE_PRETTY_PRINT, $jsonEncodeValue);
     }
 
     /**
      * @return void
      */
-    public function testDecodeJsonShouldReturnAssocArray()
+    public function testDecodeJsonShouldReturnAssocArray(): void
     {
         $jsonDecodeValue = $this->utilEncodingService->decodeJson(self::JSON_ENCODED_VALUE, true);
 
@@ -122,7 +122,7 @@ JSON;
     /**
      * @return void
      */
-    public function testDecodeJsonWhenAssocFlagIsOffShouldReturnStdObject()
+    public function testDecodeJsonWhenAssocFlagIsOffShouldReturnStdObject(): void
     {
         $jsonDecodeValue = $this->utilEncodingService->decodeJson(self::JSON_ENCODED_VALUE);
 
@@ -132,28 +132,28 @@ JSON;
     /**
      * @return void
      */
-    public function testDecodeString()
+    public function testDecodeString(): void
     {
         $jsonEncodeValue = $this->utilEncodingService->decodeJson('"A string!"');
 
-        $this->assertEquals('A string!', $jsonEncodeValue);
+        $this->assertSame('A string!', $jsonEncodeValue);
     }
 
     /**
      * @return void
      */
-    public function testDecodeBooleanAndNull()
+    public function testDecodeBooleanAndNull(): void
     {
         $jsonEncodeValue = $this->utilEncodingService->decodeJson('true');
 
-        $this->assertEquals(true, $jsonEncodeValue);
+        $this->assertTrue($jsonEncodeValue);
 
         $jsonEncodeValue = $this->utilEncodingService->decodeJson('false');
 
-        $this->assertEquals(false, $jsonEncodeValue);
+        $this->assertFalse($jsonEncodeValue);
 
         $jsonEncodeValue = $this->utilEncodingService->decodeJson('null');
 
-        $this->assertEquals(null, $jsonEncodeValue);
+        $this->assertNull($jsonEncodeValue);
     }
 }

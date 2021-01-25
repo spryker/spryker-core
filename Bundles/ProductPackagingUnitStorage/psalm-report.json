@@ -1,0 +1,115 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 34,
+            "line_to": 34,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed' does not match the declared return type 'array<array-key, Generated\\Shared\\Transfer\\SpyProductPackagingUnitStorageEntityTransfer>' for Spryker\\Zed\\ProductPackagingUnitStorage\\Persistence\\ProductPackagingUnitStorageRepository::findProductPackagingUnitStorageEntitiesByProductConcreteIds",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnitStorage/src/Spryker/Zed/ProductPackagingUnitStorage/Persistence/ProductPackagingUnitStorageRepository.php",
+            "snippet": "        return $this->buildQueryFromCriteria($query)->find();",
+            "selected_text": "$this->buildQueryFromCriteria($query)->find()",
+            "error_level": 6,
+            "shortcode": 128
+        },
+        {
+            "severity": "error",
+            "line_from": 90,
+            "line_to": 90,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed' does not match the declared return type 'array<array-key, Generated\\Shared\\Transfer\\SpyProductPackagingUnitEntityTransfer>' for Spryker\\Zed\\ProductPackagingUnitStorage\\Persistence\\ProductPackagingUnitStorageRepository::findFilteredProductPackagingUnit",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnitStorage/src/Spryker/Zed/ProductPackagingUnitStorage/Persistence/ProductPackagingUnitStorageRepository.php",
+            "snippet": "        return $this->buildQueryFromCriteria($query, $filterTransfer)->find();",
+            "selected_text": "$this->buildQueryFromCriteria($query, $filterTransfer)->find()",
+            "error_level": 6,
+            "shortcode": 128
+        },
+        {
+            "severity": "error",
+            "line_from": 107,
+            "line_to": 107,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed' does not match the declared return type 'array<array-key, Generated\\Shared\\Transfer\\SpyProductPackagingUnitStorageEntityTransfer>' for Spryker\\Zed\\ProductPackagingUnitStorage\\Persistence\\ProductPackagingUnitStorageRepository::findFilteredProductPackagingUnitStorageEntityTransfers",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnitStorage/src/Spryker/Zed/ProductPackagingUnitStorage/Persistence/ProductPackagingUnitStorageRepository.php",
+            "snippet": "        return $this->buildQueryFromCriteria($query, $filterTransfer)->find();",
+            "selected_text": "$this->buildQueryFromCriteria($query, $filterTransfer)->find()",
+            "error_level": 6,
+            "shortcode": 128
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 49,
+            "line_to": 49,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdProductConcrete on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnitStorage/src/Spryker/Client/ProductPackagingUnitStorage/Expander/ItemTransferExpander.php",
+            "snippet": "            (int)$itemTransfer->getProductConcrete()->getIdProductConcrete()",
+            "selected_text": "getIdProductConcrete",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 73,
+            "line_to": 73,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method multiply on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnitStorage/src/Spryker/Client/ProductPackagingUnitStorage/Expander/ItemTransferExpander.php",
+            "snippet": "            $productPackagingUnitStorageTransfer->getDefaultAmount()->multiply($itemTransfer->getQuantity())",
+            "selected_text": "multiply",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 73,
+            "line_to": 73,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\DecimalObject\\Decimal::multiply cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnitStorage/src/Spryker/Client/ProductPackagingUnitStorage/Expander/ItemTransferExpander.php",
+            "snippet": "            $productPackagingUnitStorageTransfer->getDefaultAmount()->multiply($itemTransfer->getQuantity())",
+            "selected_text": "$itemTransfer->getQuantity()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 89,
+            "line_to": 89,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method requireIdProductConcrete on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnitStorage/src/Spryker/Client/ProductPackagingUnitStorage/Expander/ItemTransferExpander.php",
+            "snippet": "                ->requireIdProductConcrete();",
+            "selected_text": "requireIdProductConcrete",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 28,
+            "line_to": 28,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdProduct on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnitStorage/src/Spryker/Zed/ProductPackagingUnitStorage/Persistence/Mapper/ProductPackagingUnitStorageMapper.php",
+            "snippet": "            ->setIdLeadProduct($productPackagingUnitEntityTransfer->getLeadProduct()->getIdProduct())",
+            "selected_text": "getIdProduct",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 34,
+            "line_to": 34,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getName on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnitStorage/src/Spryker/Zed/ProductPackagingUnitStorage/Persistence/Mapper/ProductPackagingUnitStorageMapper.php",
+            "snippet": "            ->setTypeName($productPackagingUnitEntityTransfer->getProductPackagingUnitType()->getName());",
+            "selected_text": "getName",
+            "error_level": 3,
+            "shortcode": 83
+        }
+    ],
+    "deprecation": []
+}

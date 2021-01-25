@@ -1,0 +1,18 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 55,
+            "line_to": 55,
+            "type": "LessSpecificImplementedReturnType",
+            "message": "The inherited return type 'Spryker\\Glue\\GlueApplication\\Rest\\JsonApi\\RestResponse' for Spryker\\Glue\\OrderPaymentsRestApi\\Processor\\OrderPayment\\OrderPaymentUpdaterInterface::updateOrderPayment is more specific than the implemented return type for Spryker\\Glue\\OrderPaymentsRestApi\\Processor\\OrderPayment\\OrderPaymentUpdater::updateorderpayment 'Spryker\\Glue\\GlueApplication\\Rest\\JsonApi\\RestResponseInterface'",
+            "file_name": "vendor/spryker/spryker/Bundles/OrderPaymentsRestApi/src/Spryker/Glue/OrderPaymentsRestApi/Processor/OrderPayment/OrderPaymentUpdater.php",
+            "snippet": "     * @return \\Spryker\\Glue\\GlueApplication\\Rest\\JsonApi\\RestResponseInterface",
+            "selected_text": "\\Spryker\\Glue\\GlueApplication\\Rest\\JsonApi\\RestResponseInterface",
+            "error_level": 5,
+            "shortcode": 166
+        }
+    ],
+    "deprecation": []
+}

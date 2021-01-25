@@ -64,7 +64,7 @@ class PriceChangeHelper extends Module
     protected function getProductPackagingUnitAmountTransfer(): ProductPackagingUnitAmountTransfer
     {
         return (new ProductPackagingUnitAmountBuilder())->build()
-            ->setIsVariable(true);
+            ->setIsAmountVariable(true);
     }
 
     /**

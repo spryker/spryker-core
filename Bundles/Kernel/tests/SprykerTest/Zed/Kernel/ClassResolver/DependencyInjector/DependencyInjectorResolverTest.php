@@ -8,9 +8,7 @@
 namespace SprykerTest\Zed\Kernel\ClassResolver\DependencyInjector;
 
 use Codeception\Test\Unit;
-use ReflectionClass;
 use Spryker\Shared\Kernel\ContainerInterface;
-use Spryker\Zed\Kernel\ClassResolver\AbstractClassResolver;
 use Spryker\Zed\Kernel\ClassResolver\DependencyInjector\DependencyInjectorResolver;
 use Spryker\Zed\Kernel\Dependency\Injector\AbstractDependencyInjector;
 use Spryker\Zed\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface;
@@ -61,7 +59,7 @@ class DependencyInjectorResolverTest extends Unit
     /**
      * @var string
      */
-    protected $classPattern = '%namespace%\\Zed\\%fromBundle%%store%\\ClassResolver\\%bundle%DependencyInjector';
+    protected $classPattern = '%namespace%\\Zed\\%fromBundle%%codeBucket%\\ClassResolver\\%bundle%DependencyInjector';
 
     /**
      * @var array
@@ -71,14 +69,9 @@ class DependencyInjectorResolverTest extends Unit
     /**
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
-
-        $reflectionResolver = new ReflectionClass(AbstractClassResolver::class);
-        $reflectionProperty = $reflectionResolver->getProperty('cache');
-        $reflectionProperty->setAccessible(true);
-        $reflectionProperty->setValue([]);
 
         $this->deleteCreatedFiles();
     }
@@ -88,7 +81,7 @@ class DependencyInjectorResolverTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Kernel\ClassResolver\DependencyInjector\DependencyInjectorResolver
      */
-    protected function getResolverMock(array $methods)
+    protected function getResolverMock(array $methods): DependencyInjectorResolver
     {
         $dependencyInjectorResolverMock = $this->getMockBuilder(DependencyInjectorResolver::class)->setMethods($methods)->getMock();
 
@@ -98,7 +91,7 @@ class DependencyInjectorResolverTest extends Unit
     /**
      * @return void
      */
-    public function testResolveShouldReturnEmptyCollection()
+    public function testResolveShouldReturnEmptyCollection(): void
     {
         $resolverMock = $this->getResolverMock(['canResolve']);
         $resolverMock->method('canResolve')
@@ -117,7 +110,7 @@ class DependencyInjectorResolverTest extends Unit
     /**
      * @return void
      */
-    public function testResolveMustReturnCoreClass()
+    public function testResolveMustReturnCoreClass(): void
     {
         $this->createClass($this->coreClass);
 
@@ -142,7 +135,7 @@ class DependencyInjectorResolverTest extends Unit
     /**
      * @return void
      */
-    public function testResolveMustReturnProjectClass()
+    public function testResolveMustReturnProjectClass(): void
     {
         $this->createClass($this->coreClass);
         $this->createClass($this->projectClass);
@@ -168,7 +161,7 @@ class DependencyInjectorResolverTest extends Unit
     /**
      * @return void
      */
-    public function testResolveMustReturnStoreClass()
+    public function testResolveMustReturnStoreClass(): void
     {
         $this->createClass($this->projectClass);
         $this->createClass($this->storeClass);
@@ -194,16 +187,16 @@ class DependencyInjectorResolverTest extends Unit
     /**
      * @return void
      */
-    public function testGetClassPattern()
+    public function testGetClassPattern(): void
     {
         $dependencyInjectorResolver = new DependencyInjectorResolver();
-        $this->assertSame('\%namespace%\Zed\%fromBundle%%store%\Dependency\Injector\%bundle%DependencyInjector', $dependencyInjectorResolver->getClassPattern());
+        $this->assertSame('\%namespace%\Zed\%fromBundle%%codeBucket%\Dependency\Injector\%bundle%DependencyInjector', $dependencyInjectorResolver->getClassPattern());
     }
 
     /**
      * @return void
      */
-    private function deleteCreatedFiles()
+    private function deleteCreatedFiles(): void
     {
         if (is_dir($this->getBasePath())) {
             $filesystem = new Filesystem();
@@ -216,7 +209,7 @@ class DependencyInjectorResolverTest extends Unit
      *
      * @return void
      */
-    protected function createClass($className)
+    protected function createClass(string $className): void
     {
         $classNameParts = explode('\\', $className);
         $class = array_pop($classNameParts);
@@ -248,7 +241,7 @@ class DependencyInjectorResolverTest extends Unit
     /**
      * @return string
      */
-    private function getBasePath()
+    private function getBasePath(): string
     {
         return __DIR__ . '/../_data/Generated';
     }

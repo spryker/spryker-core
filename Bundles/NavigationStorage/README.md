@@ -1,7 +1,6 @@
 # NavigationStorage Module
 [![Build Status](https://travis-ci.org/spryker/navigation-storage.svg)](https://travis-ci.org/spryker/navigation-storage)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/navigation-storage/badge.svg)](https://coveralls.io/github/spryker/navigation-storage)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/spryker/navigation-storage/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/spryker/navigation-storage/?branch=master)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 ## Installation
 

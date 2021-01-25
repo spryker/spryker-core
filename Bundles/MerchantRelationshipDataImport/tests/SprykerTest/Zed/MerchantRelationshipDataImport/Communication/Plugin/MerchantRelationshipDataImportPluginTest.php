@@ -122,7 +122,7 @@ class MerchantRelationshipDataImportPluginTest extends Unit
     /**
      * @return \Spryker\Zed\MerchantRelationshipDataImport\Business\MerchantRelationshipDataImportFacade
      */
-    public function getFacadeMock()
+    public function getFacadeMock(): MerchantRelationshipDataImportFacade
     {
         $factoryMock = $this->getMockBuilder(MerchantRelationshipDataImportBusinessFactory::class)
             ->setMethods(

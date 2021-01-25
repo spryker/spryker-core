@@ -5,7 +5,7 @@
 
     <transfer name="RestProductTaxSetsAttributes">
         <property name="name" type="string"/>
-        <property name="RestTaxRates" type="RestProductTaxRate[]" singular="RestProductTaxRate"/>
+        <property name="restTaxRates" type="RestProductTaxRate[]" singular="restProductTaxRate"/>
     </transfer>
 
     <transfer name="RestProductTaxRate">
@@ -31,6 +31,12 @@
         <property name="name" type="string"/>
         <property name="country" type="string"/>
         <property name="rate" type="float"/>
+    </transfer>
+
+    <transfer name="RestErrorMessage">
+        <property name="code" type="string"/>
+        <property name="status" type="int"/>
+        <property name="detail" type="string"/>
     </transfer>
 
 </transfers>

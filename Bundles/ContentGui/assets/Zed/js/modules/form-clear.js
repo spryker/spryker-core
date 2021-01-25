@@ -10,28 +10,29 @@ $(document).ready(function () {
         var subform = $($(this).data('tab'));
         var elements = subform.find('input, textarea, select');
 
-        for(var i=0; i < elements.length; i++) {
+        for (var i = 0; i < elements.length; i++) {
             var fieldType = elements[i].type.toLowerCase();
 
-            switch(fieldType) {
-                case "text":
-                case "password":
-                case "email":
-                case "tel":
-                case "textarea":
-                    elements[i].value = "";
+            switch (fieldType) {
+                case 'text':
+                case 'password':
+                case 'email':
+                case 'tel':
+                case 'textarea':
+                    elements[i].value = '';
                     break;
 
-                case "radio":
-                case "checkbox":
+                case 'radio':
+                case 'checkbox':
                     if (elements[i].checked) {
                         elements[i].checked = false;
                     }
                     break;
 
-                case "select-one":
-                case "select-multi":
+                case 'select-one':
+                case 'select-multi':
                     elements[i].selectedIndex = -1;
+                    $('#select2-' + elements[i].id + '-container')[0].innerText = elements[i][0].innerText;
                     break;
 
                 default:

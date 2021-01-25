@@ -110,19 +110,14 @@ class ProductConcreteFormAddDataProvider
     }
 
     /**
-     * @param int|null $idProductAbstract
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param string|null $type
      *
      * @return mixed
      */
-    public function getOptions($idProductAbstract = null, $type = null)
+    public function getOptions(ProductAbstractTransfer $productAbstractTransfer, $type = null)
     {
-        $productAbstractTransfer = new ProductAbstractTransfer();
-        $productAbstractTransfer->setIdProductAbstract($idProductAbstract);
-
         $localeCollection = $this->localeProvider->getLocaleCollection();
-        $productAbstractTransfer = $this->productFacade->findProductAbstractById($idProductAbstract);
-
         $localizedAttributeOptions = [];
 
         foreach ($localeCollection as $localeTransfer) {
@@ -131,6 +126,7 @@ class ProductConcreteFormAddDataProvider
 
         $localizedAttributeOptions[ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE] = $this->convertAbstractLocalizedAttributesToFormOptions($productAbstractTransfer, null);
 
+        $formOptions = [];
         $formOptions[ProductConcreteFormAdd::OPTION_ATTRIBUTE_ABSTRACT] = $localizedAttributeOptions;
         $formOptions[ProductConcreteFormAdd::OPTION_ID_LOCALE] = $this->currentLocale->getIdLocale();
         $formOptions[ProductConcreteFormAdd::OPTION_ATTRIBUTE_SUPER] = [];
@@ -139,7 +135,7 @@ class ProductConcreteFormAddDataProvider
         if ($this->store->getCurrencyIsoCode()) {
             $formOptions[ProductConcreteFormAdd::OPTION_CURRENCY_ISO_CODE] = $this->store->getCurrencyIsoCode();
         }
-        $formOptions[ProductConcreteFormAdd::OPTION_ID_PRODUCT_ABSTRACT] = $idProductAbstract;
+        $formOptions[ProductConcreteFormAdd::OPTION_ID_PRODUCT_ABSTRACT] = $productAbstractTransfer->getIdProductAbstract();
         $formOptions[ProductConcreteFormAdd::OPTION_IS_BUNDLE_ITEM] = $type === ProductManagementConfig::PRODUCT_TYPE_BUNDLE;
         $formOptions[ProductConcreteFormAdd::OPTION_SUPER_ATTRIBUTES] = $this->getSuperAttributesOption($productAbstractTransfer);
 

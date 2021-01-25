@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Cart\Business;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CartItemReplaceTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -78,6 +79,20 @@ class CartFacade extends AbstractFacade implements CartFacadeInterface
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function removeFromCart(CartChangeTransfer $cartChangeTransfer): QuoteResponseTransfer
+    {
+        return $this->getFactory()->createCartOperation()->removeFromCart($cartChangeTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
@@ -85,6 +100,34 @@ class CartFacade extends AbstractFacade implements CartFacadeInterface
     public function reloadItems(QuoteTransfer $quoteTransfer)
     {
         return $this->getFactory()->createCartOperation()->reloadItems($quoteTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function reloadItemsInQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    {
+        return $this->getFactory()->createCartOperation()->reloadItemsInQuote($quoteTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartItemReplaceTransfer $cartItemReplaceTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function replaceItem(CartItemReplaceTransfer $cartItemReplaceTransfer): QuoteResponseTransfer
+    {
+        return $this->getFactory()->createCartItemReplacer()->replaceItem($cartItemReplaceTransfer);
     }
 
     /**

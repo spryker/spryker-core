@@ -39,15 +39,7 @@ class StateMachineFacadeExceptionTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
-    {
-        parent::setUp();
-    }
-
-    /**
-     * @return void
-     */
-    public function testGetManualEventsForStateMachineItemShouldReturnAlsoOnEnterEventsForProvidedState()
+    public function testGetManualEventsForStateMachineItemShouldReturnAlsoOnEnterEventsForProvidedState(): void
     {
         $processName = static::TEST_PROCESS_NAME;
         $identifier = 1985;
@@ -74,7 +66,7 @@ class StateMachineFacadeExceptionTest extends Unit
 
         $manualEvents = $stateMachineFacade->getManualEventsForStateMachineItem($stateMachineItemTransfer);
 
-        $this->assertEquals('invoice created', $stateMachineItemTransfer->getStateName());
+        $this->assertSame('invoice created', $stateMachineItemTransfer->getStateName());
 
         $manualEvent = array_pop($manualEvents);
         $this->assertSame('send invoice', $manualEvent, 'Does not contain the onEnter event.');
@@ -85,7 +77,7 @@ class StateMachineFacadeExceptionTest extends Unit
      *
      * @return \Spryker\Zed\StateMachine\Business\StateMachineFacade
      */
-    protected function createStateMachineFacade(StateMachineHandlerInterface $stateMachineHandler)
+    protected function createStateMachineFacade(StateMachineHandlerInterface $stateMachineHandler): StateMachineFacade
     {
         $stateMachineBusinessFactory = new StateMachineBusinessFactory();
         $stateMachineConfig = new StateMachineConfig();

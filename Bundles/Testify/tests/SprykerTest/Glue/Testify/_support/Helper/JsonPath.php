@@ -1,8 +1,8 @@
 <?php
 
 /**
- * This file is part of the Spryker Suite.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerTest\Glue\Testify\Helper;
@@ -10,6 +10,7 @@ namespace SprykerTest\Glue\Testify\Helper;
 use Codeception\Module;
 use Codeception\PHPUnit\Constraint\JsonType as JsonTypeConstraint;
 use Codeception\Util\JsonType;
+use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 use JsonPath\JsonObject;
 use PHPUnit\Framework\Assert;
 
@@ -19,6 +20,7 @@ use PHPUnit\Framework\Assert;
 class JsonPath extends Module
 {
     use LastConnectionConsumerTrait;
+    use ArraySubsetAsserts;
 
     /**
      * @inheritDoc
@@ -82,7 +84,7 @@ class JsonPath extends Module
      *
      * @return void
      */
-    public function seeResponseJsonPathMatchesJsonType(array $jsonType, $jsonPath = '$'): void
+    public function seeResponseJsonPathMatchesJsonType(array $jsonType, string $jsonPath = '$'): void
     {
         Assert::assertThat(
             (new JsonObject($this->getJsonLastConnection()->getResponseJson()))->get($jsonPath),
@@ -96,14 +98,14 @@ class JsonPath extends Module
      *
      * @return void
      */
-    public function seeResponseJsonPathContains(array $subArray, $jsonPath = '$'): void
+    public function seeResponseJsonPathContains(array $subArray, string $jsonPath = '$'): void
     {
         $foundSegments = (new JsonObject($this->getJsonLastConnection()->getResponseJson()))->get($jsonPath);
 
         Assert::assertIsArray($foundSegments, 'Requested response part should be an array to assert `contains`');
 
         foreach ($foundSegments as $segment) {
-            Assert::assertArraySubset(
+            $this->assertArraySubset(
                 $subArray,
                 $segment
             );

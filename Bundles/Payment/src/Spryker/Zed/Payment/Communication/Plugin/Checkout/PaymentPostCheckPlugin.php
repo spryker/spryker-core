@@ -20,15 +20,17 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class PaymentPostCheckPlugin extends AbstractPlugin implements CheckoutPostSaveHookInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
      * @return void
      */
-    public function executeHook(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
+    public function executeHook(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
-        $this->getFacade()->checkoutPostCheck($quoteTransfer, $checkoutResponse);
+        $this->getFacade()->checkoutPostCheck($quoteTransfer, $checkoutResponseTransfer);
     }
 }

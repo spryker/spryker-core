@@ -26,12 +26,12 @@ class RouteResolverTest extends Unit
     /**
      * @return void
      */
-    public function testBuildRouteFromControllerServiceNameShouldReturnUri()
+    public function testBuildRouteFromControllerServiceNameShouldReturnUri(): void
     {
         $routeResolver = new RouteResolver();
         $incomingString = 'controller.service.DummyBundle.Index.camelCase:camelCaseAction';
 
-        $this->assertEquals(
+        $this->assertSame(
             'DummyBundle/Index/camel-case',
             $routeResolver->buildRouteFromControllerServiceName($incomingString)
         );
@@ -40,7 +40,7 @@ class RouteResolverTest extends Unit
     /**
      * @return void
      */
-    public function testBuildRouteFromControllerServiceNameReturnUriFail()
+    public function testBuildRouteFromControllerServiceNameReturnUriFail(): void
     {
         $routeResolver = new RouteResolver();
         $incomingString = 'controller.service.DummyBundle.Index.camelCase:camelCaseAction';

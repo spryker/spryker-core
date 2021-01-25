@@ -1,7 +1,6 @@
 # ProductSearchConfigStorage Module
-[![Build Status](https://travis-ci.org/spryker/ProductSearchConfigStorage.svg)](https://travis-ci.org/spryker/ProductSearchConfigStorage)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/ProductSearchConfigStorage/badge.svg)](https://coveralls.io/github/spryker/ProductSearchConfigStorage)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/spryker/ProductSearchConfigStorage/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/spryker/ProductSearchConfigStorage/?branch=master)
+[![Build Status](https://travis-ci.org/spryker/product-search-config-storage.svg)](https://travis-ci.org/spryker/product-search-config-storage)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 ## Installation
 

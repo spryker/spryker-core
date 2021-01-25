@@ -20,10 +20,20 @@ class ProductGroupFactory extends AbstractFactory
      */
     public function createProductGroupTwigExtension()
     {
-        return new ProductGroupTwigExtension($this->getClient(), $this->getApplication());
+        return new ProductGroupTwigExtension($this->getClient(), $this->getLocale());
     }
 
     /**
+     * @return string
+     */
+    protected function getLocale(): string
+    {
+        return $this->getProvidedDependency(ProductGroupDependencyProvider::SERVICE_LOCALE);
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Yves\Kernel\Application
      */
     protected function getApplication()

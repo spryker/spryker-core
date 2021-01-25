@@ -21,6 +21,8 @@ class GiftCardUsageMailTypePlugin extends AbstractPlugin implements MailTypePlug
     public const MAIL_TYPE = 'gift card usage mail';
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string
@@ -31,6 +33,8 @@ class GiftCardUsageMailTypePlugin extends AbstractPlugin implements MailTypePlug
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilderInterface $mailBuilder
@@ -111,7 +115,7 @@ class GiftCardUsageMailTypePlugin extends AbstractPlugin implements MailTypePlug
      */
     protected function setSender(MailBuilderInterface $mailBuilder)
     {
-        $mailBuilder->setSender('mail.sender.email', 'mail.sender.name');
+        $mailBuilder->useDefaultSender();
 
         return $this;
     }

@@ -25,7 +25,7 @@ use SprykerTest\Zed\Kernel\Communication\Controller\Fixtures\MockController;
 class AbstractControllerTest extends Unit
 {
     /**
-     * @deprecated Please use phpunit's additional internal methods methods instead of the deprecated `assertInternalType()`.
+     * @deprecated Use PHPUnit's additional internal methods methods instead of the deprecated `assertInternalType()`.
      */
     public const EXPECTED_INTERNAL_TYPE = 'int';
 
@@ -38,7 +38,7 @@ class AbstractControllerTest extends Unit
      *
      * @return void
      */
-    public function testCastInt($input, $expected, $isValid)
+    public function testCastInt($input, int $expected, bool $isValid): void
     {
         $controller = new MockController();
 
@@ -55,7 +55,7 @@ class AbstractControllerTest extends Unit
     /**
      * @return array
      */
-    public function getTestData()
+    public function getTestData(): array
     {
         return [
             ['1', 1, true],

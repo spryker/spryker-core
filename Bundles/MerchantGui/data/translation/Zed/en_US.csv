@@ -1,14 +1,41 @@
 "Add Merchant","Add Merchant"
+approved,Approved
+approved_button,"Approve Access"
 "Back to Merchants","Back to Merchants"
+"Contact person first name","Contact person first name"
+"Contact person last name","Contact person last name"
+"Contact person phone","Contact person phone"
+"Contact person title","Contact person title"
+denied,Denied
+denied_button,"Deny Access"
+E-Mail,E-Mail
 "Edit Merchant","Edit Merchant"
 "Edit Merchant:","Edit Merchant:"
+Email,Email
+General,General
 "List of Merchants","List of merchants"
 "Merchant created successfully.","Merchant created successfully."
 "Merchant deleted successfully.","Merchant deleted successfully."
 "Merchant has not been created.","Merchant has not been created."
 "Merchant Id","Merchant Id"
 "Merchant is not found.","Merchant is not found."
+"Merchant reference is already used.","Merchant reference is already used."
 "Merchant updated successfully.","Merchant updated successfully."
 "Merchant with id %s doesn't exists.","Merchant with id %s doesn't exists."
+merchant_gui.error_wrong_params,"Status can't be updated."
+merchant_gui.success_merchant_status_update,"Status has been updated."
+Name,Name
 "Overview of Merchants","Overview of Merchants"
+"Registration number","Registration Number"
 Save,Save
+"Is Active","Is Active"
+active,Active
+inactive,Inactive
+Activate,Activate
+Deactivate,Deactivate
+merchant.activated,"Merchant Profile successfully activated."
+merchant.deactivated,"Merchant Profile successfully deactivated."
+Stores,Stores
+"Merchant Reference","Merchant Reference"
+"Merchant URL","Merchant URL"
+"Create Merchant","Create Merchant"

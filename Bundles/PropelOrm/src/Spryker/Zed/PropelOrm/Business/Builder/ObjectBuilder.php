@@ -42,6 +42,31 @@ class ObjectBuilder extends PropelObjectBuilder
     }
 
     /**
+     * Adds the comment for a mutator. Respects nullable.
+     *
+     * @param string $script
+     * @param \Propel\Generator\Model\Column $column
+     *
+     * @return void
+     */
+    public function addMutatorComment(&$script, Column $column)
+    {
+        $clo = $column->getLowercasedName();
+        $type = $column->getPhpType();
+        if ($type && !$column->isNotNull()) {
+            $type .= '|null';
+        }
+
+        $script .= "
+    /**
+     * Set the value of [$clo] column.
+     * " . $column->getDescription() . "
+     * @param " . $type . " \$v New value
+     * @return \$this|" . $this->getObjectClassName(true) . " The current object (for fluent API support)
+     */";
+    }
+
+    /**
      * Changes default Propel behavior.
      *
      * Adds setter method for boolean columns.
@@ -79,6 +104,49 @@ class ObjectBuilder extends PropelObjectBuilder
         }
 
         if (\$this->$clo !== \$v) {
+            \$this->$clo = \$v;
+            \$this->modifiedColumns[" . $this->getColumnConstant($col) . "] = true;
+        }
+";
+        $this->addMutatorClose($script, $col);
+    }
+
+    /**
+     * Adds setter method for "normal" columns.
+     *
+     * @see parent::addColumnMutators()
+     *
+     * @param string $script The script will be modified in this method.
+     * @param \Propel\Generator\Model\Column $col The current column.
+     *
+     * @return void
+     */
+    protected function addDefaultMutator(&$script, Column $col)
+    {
+        $clo = $col->getLowercasedName();
+
+        $this->addMutatorOpen($script, $col);
+
+        // Perform type-casting to ensure that we can use type-sensitive
+        // checking in mutators.
+        if ($col->isPhpPrimitiveType()) {
+            $script .= "
+        if (\$v !== null) {
+            \$v = (" . $col->getPhpType() . ") \$v;
+        }
+";
+        }
+
+        $hasDefaultValue = $col->getDefaultValue() === null ? 'false' : 'true';
+
+        $script .= "
+        // When this is true we will not check for value equality as we need to be able to set a value for this field
+        // to it's initial value and have the column marked as modified. This is relevant for update cases when
+        // we create an instance of an entity manually.
+        // @see \Spryker\Zed\Kernel\Persistence\EntityManager\TransferToEntityMapper::mapEntity()
+        \$hasDefaultValue = $hasDefaultValue;
+
+        if (\$hasDefaultValue || \$this->$clo !== \$v) {
             \$this->$clo = \$v;
             \$this->modifiedColumns[" . $this->getColumnConstant($col) . "] = true;
         }
@@ -141,7 +209,7 @@ class ObjectBuilder extends PropelObjectBuilder
         }
 
         // if non auto-increment but using sequence, get the id first
-        if (!$platform->isNativeIdMethodAutoIncrement() && $table->getIdMethod() == "native") {
+        if (!$platform->isNativeIdMethodAutoIncrement() && $table->getIdMethod() === 'native') {
             /** @var \Propel\Generator\Model\Column|null $column */
             $column = $table->getFirstPrimaryKeyColumn();
             if (!$column) {
@@ -188,7 +256,7 @@ class ObjectBuilder extends PropelObjectBuilder
             $columnNameCase = var_export($this->quoteIdentifier($column->getName()), true);
             $script .= "
                     case $columnNameCase:";
-            $script .= $platform->getColumnBindingPHP($column, "\$identifier", '$this->' . $column->getLowercasedName(), '                        ');
+            $script .= $platform->getColumnBindingPHP($column, '$identifier', '$this->' . $column->getLowercasedName(), '                        ');
             $script .= "
                         break;";
         }
@@ -220,7 +288,7 @@ class ObjectBuilder extends PropelObjectBuilder
         }
 
         // if auto-increment, get the id after
-        if ($platform->isNativeIdMethodAutoIncrement() && $table->getIdMethod() == "native") {
+        if ($platform->isNativeIdMethodAutoIncrement() && $table->getIdMethod() === 'native') {
             $script .= "
         try {";
             $script .= $platform->getIdentifierPhp('$pk', '$con', $primaryKeyMethodInfo);
@@ -238,7 +306,7 @@ class ObjectBuilder extends PropelObjectBuilder
         }";
                 } else {
                     $script .= "
-        \$this->set" . $column->getPhpName() . "(\$pk);";
+        \$this->set" . $column->getPhpName() . '($pk);';
                 }
             }
             $script .= "
@@ -261,7 +329,6 @@ class ObjectBuilder extends PropelObjectBuilder
         $referrers = $this->getTable()->getReferrers();
         $hasFks = count($fks) > 0 || count($referrers) > 0;
         $objectClassName = $this->getUnqualifiedClassName();
-        $pkGetter = $this->getTable()->hasCompositePrimaryKey() ? 'serialize($this->getPrimaryKey())' : '$this->getPrimaryKey()';
         $defaultKeyType = $this->getDefaultKeyType();
         $script .= "
     /**
@@ -283,7 +350,7 @@ class ObjectBuilder extends PropelObjectBuilder
      *
      * @return array an associative array containing the field names (as keys) and field values
      */
-    public function toArray(\$keyType = TableMap::$defaultKeyType, \$includeLazyLoadColumns = true, \$alreadyDumpedObjects = array()" . ($hasFks ? ", \$includeForeignObjects = false" : '') . ")
+    public function toArray(\$keyType = TableMap::$defaultKeyType, \$includeLazyLoadColumns = true, \$alreadyDumpedObjects = array()" . ($hasFks ? ', $includeForeignObjects = false' : '') . ")
     {
 
         if (isset(\$alreadyDumpedObjects['$objectClassName'][\$this->hashCode()])) {
@@ -295,10 +362,10 @@ class ObjectBuilder extends PropelObjectBuilder
         foreach ($this->getTable()->getColumns() as $num => $col) {
             if ($col->isLazyLoad()) {
                 $script .= "
-            \$keys[$num] => (\$includeLazyLoadColumns) ? \$this->get" . $col->getPhpName() . "() : null,";
+            \$keys[$num] => (\$includeLazyLoadColumns) ? \$this->get" . $col->getPhpName() . '() : null,';
             } else {
                 $script .= "
-            \$keys[$num] => \$this->get" . $col->getPhpName() . "(),";
+            \$keys[$num] => \$this->get" . $col->getPhpName() . '(),';
             }
         }
         $script .= "
@@ -357,7 +424,7 @@ class ObjectBuilder extends PropelObjectBuilder
     /**
      * {@inheritDoc}
      *
-     * @uses buildReturnTypeStringForModel for fixing autogenerated return types in DocBlock.
+     * @uses buildReturnTypeStringForModel() for fixing autogenerated return types in DocBlock.
      *
      * @param string $script The script will be modified in this method.
      * @param \Propel\Generator\Model\ForeignKey $fk
@@ -366,14 +433,13 @@ class ObjectBuilder extends PropelObjectBuilder
      */
     protected function addFKAccessor(&$script, ForeignKey $fk)
     {
-        $table = $this->getTable();
-
         $varName = $this->getFKVarName($fk);
 
         $fkQueryBuilder = $this->getNewStubQueryBuilder($fk->getForeignTable());
         $fkObjectBuilder = $this->getNewObjectBuilder($fk->getForeignTable())->getStubObjectBuilder();
         $returnDesc = '';
-        if ($interface = $fk->getInterface()) {
+        $interface = $fk->getInterface();
+        if ($interface) {
             $className = $this->declareClass($interface);
         } else {
             $className = $this->getClassNameFromBuilder($fkObjectBuilder); // get the ClassName that has maybe a prefix
@@ -398,19 +464,19 @@ class ObjectBuilder extends PropelObjectBuilder
             if ($rightValueOrColumn instanceof Column) {
                 $localColumns[$rightValueOrColumn->getPosition()] = '$this->' . $clo;
 
-                if ($cptype == "int" || $cptype == "float" || $cptype == "double") {
-                    $conditional .= $and . "\$this->" . $clo . " != 0";
-                } elseif ($cptype == "string") {
-                    $conditional .= $and . "(\$this->" . $clo . " !== \"\" && \$this->" . $clo . " !== null)";
+                if ($cptype === 'int' || $cptype === 'float' || $cptype === 'double') {
+                    $conditional .= $and . '$this->' . $clo . ' != 0';
+                } elseif ($cptype === 'string') {
+                    $conditional .= $and . '($this->' . $clo . ' !== "" && $this->' . $clo . ' !== null)';
                 } else {
-                    $conditional .= $and . "\$this->" . $clo . " !== null";
+                    $conditional .= $and . '$this->' . $clo . ' !== null';
                 }
             } else {
                 $val = var_export($rightValueOrColumn, true);
-                $conditional .= $and . "\$this->" . $clo . " === " . $val;
+                $conditional .= $and . '$this->' . $clo . ' === ' . $val;
             }
 
-            $and = " && ";
+            $and = ' && ';
         }
 
         ksort($localColumns); // restoring the order of the foreign PK
@@ -442,7 +508,7 @@ class ObjectBuilder extends PropelObjectBuilder
         if ($fk->isLocalPrimaryKey()) {
             $script .= "
             // Because this foreign key represents a one-to-one relationship, we will create a bi-directional association.
-            \$this->{$varName}->set" . $this->getRefFKPhpNameAffix($fk, false) . "(\$this);";
+            \$this->{$varName}->set" . $this->getRefFKPhpNameAffix($fk, false) . '($this);';
         } else {
             $script .= "
             /* The following can be used additionally to
@@ -465,7 +531,7 @@ class ObjectBuilder extends PropelObjectBuilder
     /**
      * {@inheritDoc}
      *
-     * @uses buildReturnTypeStringForModel for fixing autogenerated return types in DocBlock.
+     * @uses buildReturnTypeStringForModel() for fixing autogenerated return types in DocBlock.
      *
      * @param string $script
      * @param \Propel\Generator\Model\Column $column
@@ -493,7 +559,7 @@ class ObjectBuilder extends PropelObjectBuilder
     /**
      * {@inheritDoc}
      *
-     * @uses buildReturnTypeStringForModel for fixing auto generated return types in DocBlock.
+     * @uses buildReturnTypeStringForModel() for fixing auto generated return types in DocBlock.
      *
      * @param string $script
      * @param \Propel\Generator\Model\Column $column
@@ -569,5 +635,200 @@ class ObjectBuilder extends PropelObjectBuilder
     protected function buildAdditionalReturnTypeForColumn(Column $column): ?string
     {
         return $column->isNotNull() ? null : static::COMMENT_DOC_BLOCK_NULLABLE_PART;
+    }
+
+    /**
+     * Adds the base object hook functions.
+     *
+     * @param string $script
+     *
+     * @return void
+     */
+    protected function addHookMethods(&$script): void
+    {
+        $hooks = [
+            'pre',
+            'post',
+        ];
+        $actions = [
+            'Insert',
+            'Update',
+            'Save',
+            'Delete',
+        ];
+        foreach ($hooks as $hook) {
+            foreach ($actions as $action) {
+                $methodName = sprintf('add%s%sHook', ucfirst($hook), $action);
+                if (strpos($script, sprintf('function %s%s(', $hook, $action)) !== false || !method_exists($this, $methodName)) {
+                    continue;
+                }
+
+                $script .= $this->{$methodName}();
+            }
+        }
+    }
+
+    /**
+     * @return string
+     */
+    protected function addPreInsertHook(): string
+    {
+        $script = '
+
+    /**
+     * Code to be run before inserting to database
+     * @param  \Propel\Runtime\Connection\ConnectionInterface $con
+     *
+     * @return bool
+     */
+    public function preInsert(ConnectionInterface $con = null)
+    {
+        return true;
+    }';
+
+        return $script;
+    }
+
+    /**
+     * @return string
+     */
+    protected function addPreUpdateHook(): string
+    {
+        $script = '
+
+    /**
+     * Code to be run before updating the object in database
+     * @param  \Propel\Runtime\Connection\ConnectionInterface $con
+     *
+     * @return bool
+     */
+    public function preUpdate(ConnectionInterface $con = null)
+    {
+        return true;
+    }';
+
+        return $script;
+    }
+
+    /**
+     * @return string
+     */
+    protected function addPreSaveHook(): string
+    {
+        $script = '
+
+    /**
+     * Code to be run before persisting the object
+     * @param  \Propel\Runtime\Connection\ConnectionInterface $con
+     *
+     * @return bool
+     */
+    public function preSave(ConnectionInterface $con = null)
+    {
+        return true;
+    }';
+
+        return $script;
+    }
+
+    /**
+     * @return string
+     */
+    protected function addPreDeleteHook(): string
+    {
+        $script = '
+
+    /**
+     * Code to be run before deleting the object in database
+     * @param  \Propel\Runtime\Connection\ConnectionInterface $con
+     *
+     * @return bool
+     */
+    public function preDelete(ConnectionInterface $con = null)
+    {
+        return true;
+    }';
+
+        return $script;
+    }
+
+    /**
+     * @return string
+     */
+    protected function addPostInsertHook(): string
+    {
+        $script = '
+
+    /**
+     * Code to be run after inserting to database
+     * @param \Propel\Runtime\Connection\ConnectionInterface $con
+     *
+     * @return void
+     */
+    public function postInsert(ConnectionInterface $con = null)
+    {
+    }';
+
+        return $script;
+    }
+
+    /**
+     * @return string
+     */
+    protected function addPostUpdateHook(): string
+    {
+        $script = '
+
+    /**
+     * Code to be run after updating the object in database
+     * @param \Propel\Runtime\Connection\ConnectionInterface $con
+     *
+     * @return void
+     */
+    public function postUpdate(ConnectionInterface $con = null)
+    {
+    }';
+
+        return $script;
+    }
+
+    /**
+     * @return string
+     */
+    protected function addPostSaveHook(): string
+    {
+        $script = '
+
+    /**
+     * Code to be run after persisting the object
+     * @param \Propel\Runtime\Connection\ConnectionInterface $con
+     *
+     * @return void
+     */
+    public function postSave(ConnectionInterface $con = null)
+    {
+    }';
+
+        return $script;
+    }
+
+    /**
+     * @return string
+     */
+    protected function addPostDeleteHook(): string
+    {
+        $script = '
+
+    /**
+     * Code to be run after deleting the object in database
+     * @param \Propel\Runtime\Connection\ConnectionInterface $con
+     *
+     * @return void
+     */
+    public function postDelete(ConnectionInterface $con = null)
+    {
+    }';
+
+        return $script;
     }
 }

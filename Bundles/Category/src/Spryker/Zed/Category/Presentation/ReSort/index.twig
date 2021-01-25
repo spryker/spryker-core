@@ -28,6 +28,7 @@
             </div>
             <br/>
             <br/>
+            <input type="hidden" value="{{ csrf_token('category_nodes_re_sort_token') }}" id="category-nodes-re-sort-token">
             <button id="save-button" class="btn btn-sm btn-primary">{{ 'Save' | trans }}</button>
         {% endblock %}
     {% endembed %}
@@ -36,5 +37,5 @@
 
 {% block footer_js %}
     {{ parent() }}
-    <script src="/assets/js/spryker-zed-category-re-sort.js"></script>
+    <script src="{{ assetsPath('js/spryker-zed-category-re-sort.js') }}"></script>
 {% endblock %}

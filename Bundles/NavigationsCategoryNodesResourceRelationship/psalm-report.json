@@ -1,0 +1,30 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 46,
+            "line_to": 46,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\RestNavigationNodeTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/NavigationsCategoryNodesResourceRelationship/src/Spryker/Glue/NavigationsCategoryNodesResourceRelationship/Processor/Expander/CategoryNodeResourceExpander.php",
+            "snippet": "            $categoryNodeIds = $this->getCategoryNodeIds($resourceAttributes->getNodes()->getArrayCopy());",
+            "selected_text": "getArrayCopy",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 66,
+            "line_to": 66,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\RestNavigationNodeTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/NavigationsCategoryNodesResourceRelationship/src/Spryker/Glue/NavigationsCategoryNodesResourceRelationship/Processor/Expander/CategoryNodeResourceExpander.php",
+            "snippet": "            $childCategoryNodes = $this->getCategoryNodeIds($navigationNode->getChildren()->getArrayCopy());",
+            "selected_text": "getArrayCopy",
+            "error_level": 3,
+            "shortcode": 113
+        }
+    ],
+    "deprecation": []
+}

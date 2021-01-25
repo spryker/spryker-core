@@ -1,0 +1,163 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 64,
+            "line_to": 64,
+            "type": "ParamNameMismatch",
+            "message": "Argument 1 of Spryker\\Zed\\ProductApi\\Communication\\Plugin\\Api\\ProductApiResourcePlugin::update has wrong name $idProductAbstract, expecting $id as defined by Spryker\\Zed\\Api\\Dependency\\Plugin\\ApiResourcePluginInterface::update",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductApi/src/Spryker/Zed/ProductApi/Communication/Plugin/Api/ProductApiResourcePlugin.php",
+            "snippet": "    public function update($idProductAbstract, ApiDataTransfer $apiDataTransfer)",
+            "selected_text": "$idProductAbstract",
+            "error_level": 7,
+            "shortcode": 230
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 177,
+            "line_to": 177,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Product\\Persistence\\SpyProduct|Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductApi/src/Spryker/Zed/ProductApi/Business/Model/ProductApi.php",
+            "snippet": "            $query->find()->toArray()",
+            "selected_text": "toArray",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 181,
+            "line_to": 181,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ProductApi\\Business\\Model\\ProductApi::get cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductApi/src/Spryker/Zed/ProductApi/Business/Model/ProductApi.php",
+            "snippet": "            $collection[$k] = $this->get($productApiTransfer->getIdProductAbstract())->getData();",
+            "selected_text": "$productApiTransfer->getIdProductAbstract()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 206,
+            "line_to": 206,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getLimit on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductApi/src/Spryker/Zed/ProductApi/Business/Model/ProductApi.php",
+            "snippet": "        $page = $apiRequestTransfer->getFilter()->getLimit() ? ($apiRequestTransfer->getFilter()->getOffset() / $apiRequestTransfer->getFilter()->getLimit() + 1) : 1;",
+            "selected_text": "getLimit",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 206,
+            "line_to": 206,
+            "type": "PossiblyNullOperand",
+            "message": "Left operand cannot be nullable, got int|null",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductApi/src/Spryker/Zed/ProductApi/Business/Model/ProductApi.php",
+            "snippet": "        $page = $apiRequestTransfer->getFilter()->getLimit() ? ($apiRequestTransfer->getFilter()->getOffset() / $apiRequestTransfer->getFilter()->getLimit() + 1) : 1;",
+            "selected_text": "$apiRequestTransfer->getFilter()->getOffset()",
+            "error_level": 1,
+            "shortcode": 80
+        },
+        {
+            "severity": "info",
+            "line_from": 206,
+            "line_to": 206,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getOffset on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductApi/src/Spryker/Zed/ProductApi/Business/Model/ProductApi.php",
+            "snippet": "        $page = $apiRequestTransfer->getFilter()->getLimit() ? ($apiRequestTransfer->getFilter()->getOffset() / $apiRequestTransfer->getFilter()->getLimit() + 1) : 1;",
+            "selected_text": "getOffset",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 206,
+            "line_to": 206,
+            "type": "PossiblyNullOperand",
+            "message": "Right operand cannot be nullable, got int|null",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductApi/src/Spryker/Zed/ProductApi/Business/Model/ProductApi.php",
+            "snippet": "        $page = $apiRequestTransfer->getFilter()->getLimit() ? ($apiRequestTransfer->getFilter()->getOffset() / $apiRequestTransfer->getFilter()->getLimit() + 1) : 1;",
+            "selected_text": "$apiRequestTransfer->getFilter()->getLimit()",
+            "error_level": 1,
+            "shortcode": 80
+        },
+        {
+            "severity": "info",
+            "line_from": 206,
+            "line_to": 206,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getLimit on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductApi/src/Spryker/Zed/ProductApi/Business/Model/ProductApi.php",
+            "snippet": "        $page = $apiRequestTransfer->getFilter()->getLimit() ? ($apiRequestTransfer->getFilter()->getOffset() / $apiRequestTransfer->getFilter()->getLimit() + 1) : 1;",
+            "selected_text": "getLimit",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 207,
+            "line_to": 207,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getLimit on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductApi/src/Spryker/Zed/ProductApi/Business/Model/ProductApi.php",
+            "snippet": "        $pageTotal = ($total && $apiRequestTransfer->getFilter()->getLimit()) ? (int)ceil($total / $apiRequestTransfer->getFilter()->getLimit()) : 1;",
+            "selected_text": "getLimit",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 207,
+            "line_to": 207,
+            "type": "PossiblyNullOperand",
+            "message": "Right operand cannot be nullable, got int|null",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductApi/src/Spryker/Zed/ProductApi/Business/Model/ProductApi.php",
+            "snippet": "        $pageTotal = ($total && $apiRequestTransfer->getFilter()->getLimit()) ? (int)ceil($total / $apiRequestTransfer->getFilter()->getLimit()) : 1;",
+            "selected_text": "$apiRequestTransfer->getFilter()->getLimit()",
+            "error_level": 1,
+            "shortcode": 80
+        },
+        {
+            "severity": "info",
+            "line_from": 207,
+            "line_to": 207,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getLimit on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductApi/src/Spryker/Zed/ProductApi/Business/Model/ProductApi.php",
+            "snippet": "        $pageTotal = ($total && $apiRequestTransfer->getFilter()->getLimit()) ? (int)ceil($total / $apiRequestTransfer->getFilter()->getLimit()) : 1;",
+            "selected_text": "getLimit",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 213,
+            "line_to": 213,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getLimit on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductApi/src/Spryker/Zed/ProductApi/Business/Model/ProductApi.php",
+            "snippet": "        $apiPaginationTransfer->setItemsPerPage($apiRequestTransfer->getFilter()->getLimit());",
+            "selected_text": "getLimit",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 214,
+            "line_to": 214,
+            "type": "InvalidScalarArgument",
+            "message": "Argument 1 of Generated\\Shared\\Transfer\\ApiPaginationTransfer::setPage expects int|null, float|int provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductApi/src/Spryker/Zed/ProductApi/Business/Model/ProductApi.php",
+            "snippet": "        $apiPaginationTransfer->setPage($page);",
+            "selected_text": "$page",
+            "error_level": 4,
+            "shortcode": 12
+        }
+    ],
+    "deprecation": []
+}

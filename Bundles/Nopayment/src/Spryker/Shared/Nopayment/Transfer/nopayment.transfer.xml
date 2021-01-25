@@ -5,10 +5,41 @@
 
     <transfer name="Payment">
         <property name="nopayment" type="Nopayment"/>
+        <property name="paymentSelection" type="string"/>
+        <property name="paymentProvider" type="string"/>
+        <property name="paymentMethod" type="string"/>
+        <property name="isLimitedAmount" type="bool"/>
+        <property name="amount" type="int"/>
     </transfer>
 
     <transfer name="Nopayment">
         <property name="amount" type="int"/>
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="payment" type="Payment" deprecated="Use payments property instead."/>
+        <property name="totals" type="Totals"/>
+    </transfer>
+
+    <transfer name="PaymentMethods">
+        <property name="methods" singular="method" type="PaymentMethod[]"/>
+    </transfer>
+
+    <transfer name="CheckoutError">
+        <property name="message" type="string"/>
+        <property name="errorCode" type="int"/>
+    </transfer>
+
+    <transfer name="CheckoutResponse">
+        <property name="errors" type="CheckoutError[]" singular="error"/>
+    </transfer>
+
+    <transfer name="Totals">
+        <property name="priceToPay" type="int"/>
+    </transfer>
+
+    <transfer name="PaymentMethod">
+        <property name="methodName" type="string"/>
     </transfer>
 
 </transfers>

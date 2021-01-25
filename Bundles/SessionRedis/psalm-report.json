@@ -1,0 +1,102 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 70,
+            "line_to": 70,
+            "type": "PossiblyNullPropertyFetch",
+            "message": "Cannot get property on possibly null variable  of type Symfony\\Component\\HttpFoundation\\Request|null",
+            "file_name": "vendor/spryker/spryker/Bundles/SessionRedis/src/Spryker/Shared/SessionRedis/Handler/LifeTime/SessionRedisLifeTimeCalculator.php",
+            "snippet": "        $currentRequestHeaders = $this->requestStack->getCurrentRequest()->headers;",
+            "selected_text": "$this->requestStack->getCurrentRequest()->headers",
+            "error_level": 3,
+            "shortcode": 82
+        },
+        {
+            "severity": "info",
+            "line_from": 72,
+            "line_to": 72,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method keys on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/SessionRedis/src/Spryker/Shared/SessionRedis/Handler/LifeTime/SessionRedisLifeTimeCalculator.php",
+            "snippet": "        foreach ($currentRequestHeaders->keys() as $key) {",
+            "selected_text": "keys",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 106,
+            "line_to": 106,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Shared\\SessionRedis\\Handler\\Lock\\SessionSpinLockLocker::unlock cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/SessionRedis/src/Spryker/Shared/SessionRedis/Handler/Lock/SessionSpinLockLocker.php",
+            "snippet": "        $this->unlock($this->sessionId, $this->token);",
+            "selected_text": "$this->sessionId",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 106,
+            "line_to": 106,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Shared\\SessionRedis\\Handler\\Lock\\SessionSpinLockLocker::unlock cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/SessionRedis/src/Spryker/Shared/SessionRedis/Handler/Lock/SessionSpinLockLocker.php",
+            "snippet": "        $this->unlock($this->sessionId, $this->token);",
+            "selected_text": "$this->token",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 221,
+            "line_to": 221,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Shared\\SessionRedis\\Handler\\Lock\\SessionSpinLockLocker::generateLockKey cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/SessionRedis/src/Spryker/Shared/SessionRedis/Handler/Lock/SessionSpinLockLocker.php",
+            "snippet": "        $lockKey = $this->generateLockKey($this->sessionId);",
+            "selected_text": "$this->sessionId",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 225,
+            "line_to": 225,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Shared\\SessionRedis\\Redis\\SessionRedisWrapperInterface::set cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/SessionRedis/src/Spryker/Shared/SessionRedis/Handler/Lock/SessionSpinLockLocker.php",
+            "snippet": "            ->set($lockKey, $this->token, 'PX', $this->lockTtlMilliseconds, 'NX');",
+            "selected_text": "$this->token",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 53,
+            "line_to": 53,
+            "type": "InvalidNullableReturnType",
+            "message": "The declared return type 'string' for Spryker\\Zed\\SessionRedis\\Communication\\Lock\\SessionLockReleaser::getLockToken is not nullable, but 'null|string' contains null",
+            "file_name": "vendor/spryker/spryker/Bundles/SessionRedis/src/Spryker/Zed/SessionRedis/Communication/Lock/SessionLockReleaser.php",
+            "snippet": "     * @return string",
+            "selected_text": "string",
+            "error_level": 5,
+            "shortcode": 144
+        },
+        {
+            "severity": "info",
+            "line_from": 57,
+            "line_to": 57,
+            "type": "NullableReturnStatement",
+            "message": "The declared return type 'string' for Spryker\\Zed\\SessionRedis\\Communication\\Lock\\SessionLockReleaser::getLockToken is not nullable, but the function returns 'null|string'",
+            "file_name": "vendor/spryker/spryker/Bundles/SessionRedis/src/Spryker/Zed/SessionRedis/Communication/Lock/SessionLockReleaser.php",
+            "snippet": "        return $this->lockReader->getTokenForSession($sessionId);",
+            "selected_text": "$this->lockReader->getTokenForSession($sessionId)",
+            "error_level": 5,
+            "shortcode": 139
+        }
+    ],
+    "deprecation": []
+}

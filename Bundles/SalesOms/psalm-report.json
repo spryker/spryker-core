@@ -1,0 +1,79 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 39,
+            "line_to": 39,
+            "type": "ParamNameMismatch",
+            "message": "Argument 3 of Spryker\\Zed\\SalesOms\\Communication\\Plugin\\OrderItemReferenceExpanderPreSavePlugin::expandOrderItem has wrong name $salesOrderItemEntityTransfer, expecting $salesOrderItemEntity as defined by Spryker\\Zed\\SalesExtension\\Dependency\\Plugin\\OrderItemExpanderPreSavePluginInterface::expandOrderItem",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesOms/src/Spryker/Zed/SalesOms/Communication/Plugin/OrderItemReferenceExpanderPreSavePlugin.php",
+            "snippet": "        SpySalesOrderItemEntityTransfer $salesOrderItemEntityTransfer",
+            "selected_text": "$salesOrderItemEntityTransfer",
+            "error_level": 7,
+            "shortcode": 230
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 138,
+            "line_to": 138,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\SalesOms\\Dependency\\Facade\\SalesOmsToOmsFacadeInterface::getManualEvents cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesOms/src/Spryker/Zed/SalesOms/Communication/Console/ImportOrderItemsStatusConsole.php",
+            "snippet": "                $manualEvents = $this->getFactory()->getOmsFacade()->getManualEvents($salesOrderItemTransfer->getIdSalesOrderItem());",
+            "selected_text": "$salesOrderItemTransfer->getIdSalesOrderItem()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 148,
+            "line_to": 148,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Zed\\SalesOms\\Dependency\\Facade\\SalesOmsToOmsFacadeInterface::triggerEventForOneOrderItem cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesOms/src/Spryker/Zed/SalesOms/Communication/Console/ImportOrderItemsStatusConsole.php",
+            "snippet": "                    $salesOrderItemTransfer->getIdSalesOrderItem()",
+            "selected_text": "$salesOrderItemTransfer->getIdSalesOrderItem()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 183,
+            "line_to": 183,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\SalesOms\\Communication\\FilePathResolver\\FilePathResolverInterface::resolveFilePath expects string, possibly different type array<array-key, string>|null|string provided",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesOms/src/Spryker/Zed/SalesOms/Communication/Console/ImportOrderItemsStatusConsole.php",
+            "snippet": "            ->resolveFilePath($this->input->getArgument(static::ARGUMENT_FILE_PATH));",
+            "selected_text": "$this->input->getArgument(static::ARGUMENT_FILE_PATH)",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 186,
+            "line_to": 186,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\SalesOms\\Communication\\Console\\ImportOrderItemsStatusConsole::error cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesOms/src/Spryker/Zed/SalesOms/Communication/Console/ImportOrderItemsStatusConsole.php",
+            "snippet": "            $this->error($filePathResolverResponseTransfer->getMessage()->getMessage());",
+            "selected_text": "$filePathResolverResponseTransfer->getMessage()->getMessage()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 186,
+            "line_to": 186,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getMessage on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesOms/src/Spryker/Zed/SalesOms/Communication/Console/ImportOrderItemsStatusConsole.php",
+            "snippet": "            $this->error($filePathResolverResponseTransfer->getMessage()->getMessage());",
+            "selected_text": "getMessage",
+            "error_level": 3,
+            "shortcode": 83
+        }
+    ],
+    "deprecation": []
+}

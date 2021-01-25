@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * MIT License
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace Spryker\Zed\CmsSlotDataImport\Business;
@@ -15,6 +15,7 @@ use Spryker\Zed\CmsSlotDataImport\Business\DataImportStep\CmsSlotWriterStep;
 use Spryker\Zed\CmsSlotDataImport\Business\DataImportStep\TemplatePathToCmsSlotTemplateIdStep;
 use Spryker\Zed\CmsSlotDataImport\CmsSlotDataImportDependencyProvider;
 use Spryker\Zed\CmsSlotDataImport\Dependency\Facade\CmsSlotDataImportToCmsSlotFacadeInterface;
+use Spryker\Zed\CmsSlotDataImport\Dependency\Service\CmsSlotDataImportToUtilTextServiceInterface;
 use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
 use Spryker\Zed\DataImport\Business\Model\DataImporterInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
@@ -71,7 +72,7 @@ class CmsSlotDataImportBusinessFactory extends DataImportBusinessFactory
      */
     public function createCmsSlotTemplateWriterStep(): DataImportStepInterface
     {
-        return new CmsSlotTemplateWriterStep();
+        return new CmsSlotTemplateWriterStep($this->getUtilTextService());
     }
 
     /**
@@ -112,5 +113,13 @@ class CmsSlotDataImportBusinessFactory extends DataImportBusinessFactory
     public function getCmsSlotFacade(): CmsSlotDataImportToCmsSlotFacadeInterface
     {
         return $this->getProvidedDependency(CmsSlotDataImportDependencyProvider::FACADE_CMS_SLOT);
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsSlotDataImport\Dependency\Service\CmsSlotDataImportToUtilTextServiceInterface
+     */
+    public function getUtilTextService(): CmsSlotDataImportToUtilTextServiceInterface
+    {
+        return $this->getProvidedDependency(CmsSlotDataImportDependencyProvider::SERVICE_UTIL_TEXT);
     }
 }

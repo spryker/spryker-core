@@ -8,16 +8,23 @@
 namespace SprykerTest\Zed\Acl\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\NavigationItemBuilder;
+use Generated\Shared\Transfer\GroupCriteriaTransfer;
+use Generated\Shared\Transfer\NavigationItemCollectionTransfer;
+use Generated\Shared\Transfer\NavigationItemTransfer;
 use Generated\Shared\Transfer\RolesTransfer;
 use Generated\Shared\Transfer\RoleTransfer;
 use Generated\Shared\Transfer\RuleTransfer;
+use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Shared\Acl\AclConstants;
+use Spryker\Zed\Acl\AclDependencyProvider;
 use Spryker\Zed\Acl\Business\AclFacade;
 use Spryker\Zed\Acl\Business\Exception\EmptyEntityException;
 use Spryker\Zed\Acl\Business\Exception\RoleNameEmptyException;
 use Spryker\Zed\Acl\Business\Exception\RoleNameExistsException;
 use Spryker\Zed\Acl\Business\Exception\RootNodeModificationException;
 use Spryker\Zed\Acl\Business\Exception\RuleNotFoundException;
+use Spryker\Zed\Acl\Dependency\Facade\AclToUserInterface;
 use Spryker\Zed\User\Business\UserFacade;
 
 /**
@@ -28,10 +35,13 @@ use Spryker\Zed\User\Business\UserFacade;
  * @group Acl
  * @group Business
  * @group AclTest
+ *
  * Add your own group annotations below this line
  */
 class AclTest extends Unit
 {
+    protected const NOT_EXISTING_ACL_GROUP_ID = 0;
+
     /**
      * @var \Spryker\Zed\Acl\Business\AclFacade
      */
@@ -48,9 +58,14 @@ class AclTest extends Unit
     protected $rolesTransfer;
 
     /**
+     * @var \SprykerTest\Zed\Acl\AclBusinessTester
+     */
+    protected $tester;
+
+    /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -62,7 +77,7 @@ class AclTest extends Unit
     /**
      * @return array
      */
-    private function mockGroupData()
+    private function mockGroupData(): array
     {
         $data = [];
 
@@ -74,7 +89,7 @@ class AclTest extends Unit
     /**
      * @return array
      */
-    private function mockRoleData()
+    private function mockRoleData(): array
     {
         $data = [];
 
@@ -89,7 +104,7 @@ class AclTest extends Unit
      *
      * @return array
      */
-    private function mockRuleData($type, $idRole)
+    private function mockRuleData(string $type, int $idRole): array
     {
         $data = [];
 
@@ -105,7 +120,7 @@ class AclTest extends Unit
     /**
      * @return array
      */
-    private function mockUserData()
+    private function mockUserData(): array
     {
         $data = [];
 
@@ -122,7 +137,7 @@ class AclTest extends Unit
      *
      * @return \Generated\Shared\Transfer\UserTransfer
      */
-    private function mockAddUser(array $data)
+    private function mockAddUser(array $data): UserTransfer
     {
         return $this->userFacade->addUser($data['firstName'], $data['lastName'], $data['username'], $data['password']);
     }
@@ -130,7 +145,7 @@ class AclTest extends Unit
     /**
      * @return void
      */
-    public function testAddGroup()
+    public function testAddGroup(): void
     {
         $data = $this->mockGroupData();
 
@@ -138,13 +153,44 @@ class AclTest extends Unit
 
         $this->assertInstanceOf('\Generated\Shared\Transfer\GroupTransfer', $transfer);
         $this->assertNotNull($transfer->getIdAclGroup());
-        $this->assertEquals($data['name'], $transfer->getName());
+        $this->assertSame($data['name'], $transfer->getName());
     }
 
     /**
      * @return void
      */
-    public function testUpdateGroup()
+    public function testFindGroupReturnsTransferWithCorrectData(): void
+    {
+        // Arrange
+        $groupTransfer = $this->tester->haveGroup();
+        $groupCriteriaTransfer = (new GroupCriteriaTransfer())->setIdAclGroup($groupTransfer->getIdAclGroup());
+
+        //Act
+        $foundGroupTransfer = $this->facade->findGroup($groupCriteriaTransfer);
+
+        //Assert
+        $this->assertSame($groupTransfer->getReference(), $foundGroupTransfer->getReference());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindGroupReturnsNullWithIncorrectData(): void
+    {
+        // Arrange
+        $groupCriteriaTransfer = (new GroupCriteriaTransfer())->setIdAclGroup(static::NOT_EXISTING_ACL_GROUP_ID);
+
+        //Act
+        $foundGroupTransfer = $this->facade->findGroup($groupCriteriaTransfer);
+
+        //Assert
+        $this->assertNull($foundGroupTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateGroup(): void
     {
         $groupData = $this->mockGroupData();
         $groupData2 = $this->mockGroupData();
@@ -158,13 +204,13 @@ class AclTest extends Unit
         $this->assertInstanceOf('\Generated\Shared\Transfer\GroupTransfer', $dto2);
         $this->assertNotNull($groupDto->getIdAclGroup());
         $this->assertNotEquals($groupData2['name'], $groupDto->getName());
-        $this->assertEquals($groupData2['name'], $dto2->getName());
+        $this->assertSame($groupData2['name'], $dto2->getName());
     }
 
     /**
      * @return void
      */
-    public function testGetGroupById()
+    public function testGetGroupById(): void
     {
         $groupData = $this->mockGroupData();
         $groupDto = $this->facade->addGroup($groupData['name'], $this->rolesTransfer);
@@ -177,14 +223,14 @@ class AclTest extends Unit
 
         $this->assertInstanceOf('\Generated\Shared\Transfer\GroupTransfer', $groupDto);
         $this->assertNotNull($groupDto->getIdAclGroup());
-        $this->assertEquals($id, $groupDto->getIdAclGroup());
-        $this->assertEquals($groupData['name'], $groupDto->getName());
+        $this->assertSame($id, $groupDto->getIdAclGroup());
+        $this->assertSame($groupData['name'], $groupDto->getName());
     }
 
     /**
      * @return void
      */
-    public function testRemoveGroup()
+    public function testRemoveGroup(): void
     {
         $groupData = $this->mockGroupData();
         $groupDto = $this->facade->addGroup($groupData['name'], $this->rolesTransfer);
@@ -202,7 +248,7 @@ class AclTest extends Unit
     /**
      * @return void
      */
-    public function testAddRole()
+    public function testAddRole(): void
     {
         $roleData = $this->mockRoleData();
         $roleDto = $this->facade->addRole($roleData['name']);
@@ -211,13 +257,13 @@ class AclTest extends Unit
 
         $this->assertInstanceOf('\Generated\Shared\Transfer\RoleTransfer', $roleDto);
         $this->assertNotNull($roleDto->getIdAclRole());
-        $this->assertEquals($roleData['name'], $roleDto->getName());
+        $this->assertSame($roleData['name'], $roleDto->getName());
     }
 
     /**
      * @return void
      */
-    public function testUpdatesRole()
+    public function testUpdatesRole(): void
     {
         $roleData = $this->mockRoleData();
         $roleTransfer = $this->facade->addRole($roleData['name']);
@@ -231,7 +277,7 @@ class AclTest extends Unit
     /**
      * @return void
      */
-    public function testRoleNameUniquenessCheck()
+    public function testRoleNameUniquenessCheck(): void
     {
         $roleData = $this->mockRoleData();
         $roleName = $roleData['name'];
@@ -246,7 +292,7 @@ class AclTest extends Unit
     /**
      * @return void
      */
-    public function testRoleNameShouldNotBeEmpty()
+    public function testRoleNameShouldNotBeEmpty(): void
     {
         $this->expectException(RoleNameEmptyException::class);
         $this->expectExceptionMessage('Role name should not be empty!');
@@ -257,7 +303,7 @@ class AclTest extends Unit
     /**
      * @return void
      */
-    public function testRootRoleIsNotAllowedToEdit()
+    public function testRootRoleIsNotAllowedToEdit(): void
     {
         $roleTransfer = $this->facade->getRoleByName(AclConstants::ROOT_ROLE);
 
@@ -270,7 +316,7 @@ class AclTest extends Unit
     /**
      * @return void
      */
-    public function testRemoveRole()
+    public function testRemoveRole(): void
     {
         $roleData = $this->mockRoleData();
         $roleDto = $this->facade->addRole($roleData['name']);
@@ -290,7 +336,7 @@ class AclTest extends Unit
     /**
      * @return void
      */
-    public function testAddRoleAndIsPresentInGroup()
+    public function testAddRoleAndIsPresentInGroup(): void
     {
         $groupData = $this->mockGroupData();
         $roleData = $this->mockRoleData();
@@ -299,13 +345,13 @@ class AclTest extends Unit
 
         $this->assertInstanceOf('\Generated\Shared\Transfer\RoleTransfer', $transferRole);
         $this->assertNotNull($transferRole->getIdAclRole());
-        $this->assertEquals($roleData['name'], $transferRole->getName());
+        $this->assertSame($roleData['name'], $transferRole->getName());
     }
 
     /**
      * @return void
      */
-    public function testAddRuleAndAddToRole()
+    public function testAddRuleAndAddToRole(): void
     {
         $groupData = $this->mockGroupData();
         $this->facade->addGroup($groupData['name'], $this->rolesTransfer);
@@ -324,18 +370,18 @@ class AclTest extends Unit
 
             $this->assertInstanceOf('\Generated\Shared\Transfer\RuleTransfer', $ruleDto);
             $this->assertNotNull($ruleDto->getIdAclRule());
-            $this->assertEquals($current['bundle'], $ruleDto->getBundle());
-            $this->assertEquals($current['controller'], $ruleDto->getController());
-            $this->assertEquals($current['action'], $ruleDto->getAction());
-            $this->assertEquals($current['type'], $ruleDto->getType());
-            $this->assertEquals($roleDto->getIdAclRole(), $ruleDto->getFkAclRole());
+            $this->assertSame($current['bundle'], $ruleDto->getBundle());
+            $this->assertSame($current['controller'], $ruleDto->getController());
+            $this->assertSame($current['action'], $ruleDto->getAction());
+            $this->assertSame($current['type'], $ruleDto->getType());
+            $this->assertSame($roleDto->getIdAclRole(), $ruleDto->getFkAclRole());
         }
     }
 
     /**
      * @return void
      */
-    public function testGetRulesFromRoles()
+    public function testGetRulesFromRoles(): void
     {
         $roleData = $this->mockRoleData();
         $roleDto = $this->facade->addRole($roleData['name']);
@@ -350,11 +396,11 @@ class AclTest extends Unit
         $index = 0;
         foreach ($rulesCollectionDto->getRules() as $current) {
             $currentData = $ruleData[$index];
-            $this->assertEquals($currentData['bundle'], $current->getBundle());
-            $this->assertEquals($currentData['controller'], $current->getController());
-            $this->assertEquals($currentData['action'], $current->getAction());
-            $this->assertEquals($currentData['type'], $current->getType());
-            $this->assertEquals($roleDto->getIdAclRole(), $current->getFkAclRole());
+            $this->assertSame($currentData['bundle'], $current->getBundle());
+            $this->assertSame($currentData['controller'], $current->getController());
+            $this->assertSame($currentData['action'], $current->getAction());
+            $this->assertSame($currentData['type'], $current->getType());
+            $this->assertSame($roleDto->getIdAclRole(), $current->getFkAclRole());
             $index++;
         }
     }
@@ -362,7 +408,7 @@ class AclTest extends Unit
     /**
      * @return void
      */
-    public function testGetRulesFromGroup()
+    public function testGetRulesFromGroup(): void
     {
         $groupData = $this->mockGroupData();
         $groupDto = $this->facade->addGroup($groupData['name'], $this->rolesTransfer);
@@ -379,11 +425,11 @@ class AclTest extends Unit
         $index = 0;
         foreach ($rulesCollectionDto->getRules() as $current) {
             $currentData = $ruleData[$index];
-            $this->assertEquals($currentData['bundle'], $current->getBundle());
-            $this->assertEquals($currentData['controller'], $current->getController());
-            $this->assertEquals($currentData['action'], $current->getAction());
-            $this->assertEquals($currentData['type'], $current->getType());
-            $this->assertEquals($roleDto->getIdAclRole(), $current->getFkAclRole());
+            $this->assertSame($currentData['bundle'], $current->getBundle());
+            $this->assertSame($currentData['controller'], $current->getController());
+            $this->assertSame($currentData['action'], $current->getAction());
+            $this->assertSame($currentData['type'], $current->getType());
+            $this->assertSame($roleDto->getIdAclRole(), $current->getFkAclRole());
             $index++;
         }
     }
@@ -391,7 +437,7 @@ class AclTest extends Unit
     /**
      * @return void
      */
-    public function testRemoveRule()
+    public function testRemoveRule(): void
     {
         $roleData = $this->mockRoleData();
         $roleDto = $this->facade->addRole($roleData['name']);
@@ -419,7 +465,7 @@ class AclTest extends Unit
     /**
      * @return void
      */
-    public function testAddUserToGroup()
+    public function testAddUserToGroup(): void
     {
         $groupData = $this->mockGroupData();
         $groupDto = $this->facade->addGroup($groupData['name'], $this->rolesTransfer);
@@ -427,13 +473,13 @@ class AclTest extends Unit
         $userDto = $this->mockAddUser($userData);
 
         $added = $this->facade->addUserToGroup($userDto->getIdUser(), $groupDto->getIdAclGroup());
-        $this->assertEquals($added, 1);
+        $this->assertSame(1, $added);
     }
 
     /**
      * @return void
      */
-    public function testGetUserGroups()
+    public function testGetUserGroups(): void
     {
         $groupData = $this->mockGroupData();
         $groupDto = $this->facade->addGroup($groupData['name'], $this->rolesTransfer);
@@ -448,7 +494,7 @@ class AclTest extends Unit
         $userDto = $this->mockAddUser($userData);
 
         $added = $this->facade->addUserToGroup($userDto->getIdUser(), $groupDto->getIdAclGroup());
-        $this->assertEquals($added, 1);
+        $this->assertSame(1, $added);
 
         $userGroupDto = $this->facade->getUserGroups($userDto->getIdUser());
         $this->assertInstanceOf('\Generated\Shared\Transfer\GroupsTransfer', $userGroupDto);
@@ -456,13 +502,13 @@ class AclTest extends Unit
         $groups = $userGroupDto->toArray();
         $group = $groups['groups'][0];
         $this->assertNotNull($group['id_acl_group']);
-        $this->assertEquals($groupData['name'], $group['name']);
+        $this->assertSame($groupData['name'], $group['name']);
     }
 
     /**
      * @return void
      */
-    public function testCheckPermissionSimple()
+    public function testCheckPermissionSimple(): void
     {
         $groupData = $this->mockGroupData();
 
@@ -471,6 +517,7 @@ class AclTest extends Unit
         $groupDto = $this->facade->addGroup($groupData['name'], $this->rolesTransfer);
         $this->facade->addRoleToGroup($roleDto->getIdAclRole(), $groupDto->getIdAclGroup());
 
+        $ruleData = [];
         $ruleData[] = $this->mockRuleData('allow', $roleDto->getIdAclRole());
         $ruleData[] = $this->mockRuleData('deny', $roleDto->getIdAclRole());
 
@@ -478,7 +525,7 @@ class AclTest extends Unit
         $userDto = $this->mockAddUser($userData);
 
         $added = $this->facade->addUserToGroup($userDto->getIdUser(), $groupDto->getIdAclGroup());
-        $this->assertEquals($added, 1);
+        $this->assertSame(1, $added);
 
         foreach ($ruleData as $current) {
             $ruleTransfer = new RuleTransfer();
@@ -490,20 +537,21 @@ class AclTest extends Unit
             $canAccess = $this->facade
                 ->checkAccess($userDto, $current['bundle'], $current['controller'], $current['action']);
 
-            $this->assertEquals($shouldAllow, $canAccess);
+            $this->assertSame($shouldAllow, $canAccess);
         }
     }
 
     /**
      * @return void
      */
-    public function testCheckPermissionSimpleHasNoAccess()
+    public function testCheckPermissionSimpleHasNoAccess(): void
     {
         $groupData = $this->mockGroupData();
         $groupDto = $this->facade->addGroup($groupData['name'], $this->rolesTransfer);
         $roleData = $this->mockRoleData();
         $roleDto = $this->facade->addRole($roleData['name']);
 
+        $ruleData = [];
         $ruleData[] = $this->mockRuleData('allow', $roleDto->getIdAclRole());
         $ruleData[] = $this->mockRuleData('deny', $roleDto->getIdAclRole());
 
@@ -511,7 +559,7 @@ class AclTest extends Unit
         $userDto = $this->mockAddUser($userData);
 
         $added = $this->facade->addUserToGroup($userDto->getIdUser(), $groupDto->getIdAclGroup());
-        $this->assertEquals($added, 1);
+        $this->assertSame(1, $added);
 
         foreach ($ruleData as $current) {
             $ruleTransfer = new RuleTransfer();
@@ -521,14 +569,14 @@ class AclTest extends Unit
             $canAccess = $this->facade
                 ->checkAccess($userDto, rand(100, 999), rand(100, 999), rand(100, 999));
 
-            $this->assertEquals(false, $canAccess);
+            $this->assertFalse($canAccess);
         }
     }
 
     /**
      * @return void
      */
-    public function testCheckPermissionWildcards()
+    public function testCheckPermissionWildcards(): void
     {
         $groupData = $this->mockGroupData();
         $groupDto = $this->facade->addGroup($groupData['name'], $this->rolesTransfer);
@@ -537,6 +585,7 @@ class AclTest extends Unit
 
         $this->facade->addRoleToGroup($roleDto->getIdAclRole(), $groupDto->getIdAclGroup());
 
+        $ruleData = [];
         $ruleData[] = $this->mockRuleData('allow', $roleDto->getIdAclRole());
         $ruleData[] = $this->mockRuleData('deny', $roleDto->getIdAclRole());
 
@@ -544,7 +593,7 @@ class AclTest extends Unit
         $userDto = $this->mockAddUser($userData);
 
         $added = $this->facade->addUserToGroup($userDto->getIdUser(), $groupDto->getIdAclGroup());
-        $this->assertEquals($added, 1);
+        $this->assertSame(1, $added);
 
         foreach ($ruleData as $current) {
             $ruleTransfer = new RuleTransfer();
@@ -558,14 +607,14 @@ class AclTest extends Unit
             $canAccess = $this->facade
                 ->checkAccess($userDto, $current['bundle'], $current['controller'], $current['action']);
 
-            $this->assertEquals($shouldAllow, $canAccess);
+            $this->assertSame($shouldAllow, $canAccess);
         }
     }
 
     /**
      * @return void
      */
-    public function testPermissionsWithSystemUser()
+    public function testPermissionsWithSystemUser(): void
     {
         $systemUsers = $this->userFacade->getSystemUsers();
 
@@ -585,7 +634,7 @@ class AclTest extends Unit
     /**
      * @return void
      */
-    public function testPermissionsWithSystemUserShouldNotAllow()
+    public function testPermissionsWithSystemUserShouldNotAllow(): void
     {
         $systemUsers = $this->userFacade->getSystemUsers();
 
@@ -595,10 +644,137 @@ class AclTest extends Unit
             $this->assertInstanceOf('\Generated\Shared\Transfer\UserTransfer', $user);
 
             $hasAccess = $this->facade->checkAccess($user, rand(100, 999), rand(100, 999), rand(100, 999));
-            $this->assertEquals(false, $hasAccess);
+            $this->assertFalse($hasAccess);
 
             $hasAccess = $this->facade->checkAccess($user, rand(100, 999), rand(100, 999), rand(100, 999));
-            $this->assertEquals(false, $hasAccess);
+            $this->assertFalse($hasAccess);
         }
+    }
+
+    /**
+     * @return void
+     */
+    public function testFilterNavigationItemCollectionByAccessibilityReturnsFilteredCollectionWithCorrectData(): void
+    {
+        // Arrange
+        $groupData = $this->mockGroupData();
+        $roleData = $this->mockRoleData();
+        $roleTransfer = $this->facade->addRole($roleData['name']);
+        $groupTransfer = $this->facade->addGroup($groupData['name'], $this->rolesTransfer);
+        $this->facade->addRoleToGroup($roleTransfer->getIdAclRole(), $groupTransfer->getIdAclGroup());
+
+        $rulesData = [];
+        $rulesData[] = $this->mockRuleData('allow', $roleTransfer->getIdAclRole());
+        $rulesData[] = $this->mockRuleData('allow', $roleTransfer->getIdAclRole());
+        $rulesData[] = $this->mockRuleData('deny', $roleTransfer->getIdAclRole());
+
+        $userData = $this->mockUserData();
+        $userTransfer = $this->mockAddUser($userData);
+        $aclToUserBridgeMock = $this->getAclToUserBridgeMock();
+        $aclToUserBridgeMock->method('hasCurrentUser')->willReturn(true);
+        $aclToUserBridgeMock->method('getCurrentUser')->willReturn($userTransfer);
+
+        $this->facade->addUserToGroup($userTransfer->getIdUser(), $groupTransfer->getIdAclGroup());
+
+        $navigationItemCollectionTransfer = (new NavigationItemCollectionTransfer());
+
+        foreach ($rulesData as $ruleKey => $ruleData) {
+            $ruleTransfer = new RuleTransfer();
+            $ruleTransfer->fromArray($ruleData, true);
+            $this->facade->addRule($ruleTransfer);
+
+            $navigationItemTransfer = $this->getNavigationItemTransfer([
+                NavigationItemTransfer::MODULE => $ruleData['bundle'],
+                NavigationItemTransfer::CONTROLLER => $ruleData['controller'],
+                NavigationItemTransfer::ACTION => $ruleData['action'],
+            ]);
+
+            $navigationItemCollectionTransfer->addNavigationItem($ruleKey, $navigationItemTransfer);
+        }
+
+        $navigationItemTransfer = $this->getNavigationItemTransfer([
+            NavigationItemTransfer::MODULE => null,
+            NavigationItemTransfer::CONTROLLER => null,
+            NavigationItemTransfer::ACTION => null,
+        ]);
+        $navigationItemCollectionTransfer->addNavigationItem('empty-navigation-item', $navigationItemTransfer);
+
+        // Act
+        $navigationItemCollectionTransfer = $this->facade->filterNavigationItemCollectionByAccessibility(
+            $navigationItemCollectionTransfer
+        );
+
+        // Assert
+        $this->assertCount(3, $navigationItemCollectionTransfer->getNavigationItems());
+        $this->assertArrayHasKey('empty-navigation-item', $navigationItemCollectionTransfer->getNavigationItems());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFilterNavigationItemCollectionByAccessibilityReturnsEmptyCollectionIfUserIsUnauthorized(): void
+    {
+        // Arrange
+        $groupData = $this->mockGroupData();
+        $roleData = $this->mockRoleData();
+        $roleTransfer = $this->facade->addRole($roleData['name']);
+        $groupTransfer = $this->facade->addGroup($groupData['name'], $this->rolesTransfer);
+        $this->facade->addRoleToGroup($roleTransfer->getIdAclRole(), $groupTransfer->getIdAclGroup());
+
+        $rulesData = [];
+        $rulesData[] = $this->mockRuleData('allow', $roleTransfer->getIdAclRole());
+        $rulesData[] = $this->mockRuleData('allow', $roleTransfer->getIdAclRole());
+
+        $userData = $this->mockUserData();
+        $userTransfer = $this->mockAddUser($userData);
+        $aclToUserBridgeMock = $this->getAclToUserBridgeMock();
+        $aclToUserBridgeMock->method('hasCurrentUser')->willReturn(false);
+
+        $this->facade->addUserToGroup($userTransfer->getIdUser(), $groupTransfer->getIdAclGroup());
+
+        $navigationItemCollectionTransfer = (new NavigationItemCollectionTransfer());
+
+        foreach ($rulesData as $ruleKey => $ruleData) {
+            $ruleTransfer = new RuleTransfer();
+            $ruleTransfer->fromArray($ruleData, true);
+            $this->facade->addRule($ruleTransfer);
+
+            $navigationItemTransfer = $this->getNavigationItemTransfer([
+                NavigationItemTransfer::MODULE => $ruleData['bundle'],
+                NavigationItemTransfer::CONTROLLER => $ruleData['controller'],
+                NavigationItemTransfer::ACTION => $ruleData['action'],
+            ]);
+
+            $navigationItemCollectionTransfer->addNavigationItem($ruleKey, $navigationItemTransfer);
+        }
+
+        // Act
+        $navigationItemCollectionTransfer = $this->facade->filterNavigationItemCollectionByAccessibility(
+            $navigationItemCollectionTransfer
+        );
+
+        // Assert
+        $this->assertCount(0, $navigationItemCollectionTransfer->getNavigationItems());
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Acl\Dependency\Facade\AclToUserInterface
+     */
+    protected function getAclToUserBridgeMock(): AclToUserInterface
+    {
+        $aclToUserBridge = $this->getMockBuilder(AclToUserInterface::class)->getMock();
+        $this->tester->setDependency(AclDependencyProvider::FACADE_USER, $aclToUserBridge);
+
+        return $aclToUserBridge;
+    }
+
+    /**
+     * @param array $seedData
+     *
+     * @return \Generated\Shared\Transfer\NavigationItemTransfer
+     */
+    protected function getNavigationItemTransfer(array $seedData): NavigationItemTransfer
+    {
+        return (new NavigationItemBuilder($seedData))->build();
     }
 }

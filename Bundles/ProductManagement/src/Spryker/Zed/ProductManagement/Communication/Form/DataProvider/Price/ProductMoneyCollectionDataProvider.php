@@ -69,7 +69,7 @@ class ProductMoneyCollectionDataProvider
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $currentFormMoneyValueCollection
      *
-     * @return \ArrayObject
+     * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
      */
     public function mergeMissingMoneyValues(ArrayObject $currentFormMoneyValueCollection)
     {
@@ -86,9 +86,9 @@ class ProductMoneyCollectionDataProvider
     }
 
     /**
-     * @param \ArrayObject $productMoneyValueCollection
+     * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $productMoneyValueCollection
      *
-     * @return \ArrayObject
+     * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
      */
     protected function mapProductMoneyValueCollection(ArrayObject $productMoneyValueCollection)
     {
@@ -109,18 +109,17 @@ class ProductMoneyCollectionDataProvider
     }
 
     /**
-     * @param \ArrayObject $currentFormMoneyValueCollection
+     * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $currentFormMoneyValueCollection
      * @param \Generated\Shared\Transfer\StoreWithCurrencyTransfer[] $storeCurrencyCollection
-     * @param array $existingCurrencyMap
+     * @param bool[] $existingCurrencyMap
      *
-     * @return \ArrayObject
+     * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
      */
     protected function mergeMultiStoreMoneyCollection(
         ArrayObject $currentFormMoneyValueCollection,
         array $storeCurrencyCollection,
         array $existingCurrencyMap
     ) {
-
         $priceTypes = $this->priceFacade->getPriceTypeValues();
 
         foreach ($storeCurrencyCollection as $storeWithCurrencyTransfer) {
@@ -161,7 +160,6 @@ class ProductMoneyCollectionDataProvider
         StoreTransfer $storeTransfer,
         PriceTypeTransfer $priceTypeTransfer
     ) {
-
         $moneyValueTransfer = (new MoneyValueTransfer())
             ->setCurrency($currencyTransfer)
             ->setFkCurrency($currencyTransfer->getIdCurrency())
@@ -176,7 +174,7 @@ class ProductMoneyCollectionDataProvider
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $submittedMoneyValueCollection
      *
-     * @return array
+     * @return bool[]
      */
     protected function createCurrencyIndexMap(ArrayObject $submittedMoneyValueCollection)
     {

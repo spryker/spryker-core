@@ -31,7 +31,7 @@ class Category
      *
      * @return array
      */
-    public static function getCategorySelectorsWithValues($categoryKey)
+    public static function getCategorySelectorsWithValues(string $categoryKey): array
     {
         return [
             self::FORM_FIELD_CATEGORY_KEY => $categoryKey,
@@ -51,7 +51,7 @@ class Category
      *
      * @return array
      */
-    public static function getAttributesSelector($name, $localeName, $position)
+    public static function getAttributesSelector(string $name, string $localeName, int $position): array
     {
         return [
             self::getFieldSelectorCategoryName($position) => $name . ' ' . $localeName,
@@ -66,7 +66,7 @@ class Category
      *
      * @return string
      */
-    public static function getFieldSelectorCategoryName($position)
+    public static function getFieldSelectorCategoryName(int $position): string
     {
         return sprintf(self::FORM_FIELD_CATEGORY_NAME_PATTERN, $position);
     }
@@ -76,7 +76,7 @@ class Category
      *
      * @return string
      */
-    public static function getFieldSelectorCategoryTitle($position)
+    public static function getFieldSelectorCategoryTitle(int $position): string
     {
         return sprintf(self::FORM_FIELD_CATEGORY_TITLE_PATTERN, $position);
     }
@@ -86,7 +86,7 @@ class Category
      *
      * @return string
      */
-    public static function getFieldSelectorCategoryDescription($position)
+    public static function getFieldSelectorCategoryDescription(int $position): string
     {
         return sprintf(self::FORM_FIELD_CATEGORY_DESCRIPTION_PATTERN, $position);
     }
@@ -96,7 +96,7 @@ class Category
      *
      * @return string
      */
-    public static function getFieldSelectorCategoryKeywords($position)
+    public static function getFieldSelectorCategoryKeywords(int $position): string
     {
         return sprintf(self::FORM_FIELD_CATEGORY_KEYWORDS_PATTERN, $position);
     }

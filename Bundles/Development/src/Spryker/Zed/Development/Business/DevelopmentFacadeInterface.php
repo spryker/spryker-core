@@ -21,6 +21,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 interface DevelopmentFacadeInterface
 {
     /**
+     * Specification:
+     * - Runs vendor/bin/phpcs or vendor/bin/phpcbf as wrapper for easier use.
+     * - If no module is given, it will run over the whole repository.
+     *
      * @api
      *
      * @param string|null $module
@@ -31,30 +35,39 @@ interface DevelopmentFacadeInterface
     public function checkCodeStyle($module = null, array $options = []);
 
     /**
+     * Specification:
+     * - Runs `vendor/bin/codecept run` as wrapper for easier use.
+     * - If no (core) module is given, it will run on project level.
+     *
      * @api
      *
      * @param string|null $module
      * @param array $options
      *
-     * @return void
+     * @return int
      */
-    public function runTest($module, array $options = []);
+    public function runTest(?string $module, array $options = []): int;
 
     /**
      * Specification:
-     * - Runs the vendor/bin/codecept fixtures command with options
-     * - If options contains "initialize", it will also run vendor/bin/codecept build
+     * - Runs `vendor/bin/codecept fixtures` as wrapper for easier use.
+     * - If no (core) module is given, it will run on project level.
+     * - If options contains "initialize", it will also run vendor/bin/codecept build.
      *
      * @api
      *
      * @param string|null $module
      * @param array $options
      *
-     * @return void
+     * @return int
      */
-    public function runFixtures($module, array $options = []);
+    public function runFixtures(?string $module, array $options = []): int;
 
     /**
+     * Specification:
+     * - Runs the vendor/bin/phpmd as wrapper for easier use.
+     * - If no (core) module is given, it will run on project level.
+     *
      * @api
      *
      * @param string|null $module
@@ -67,6 +80,8 @@ interface DevelopmentFacadeInterface
     /**
      * @api
      *
+     * @internal
+     *
      * @param string $module
      * @param string $toModule
      * @param array $methods
@@ -77,6 +92,8 @@ interface DevelopmentFacadeInterface
 
     /**
      * @api
+     *
+     * @deprecated Use Spryk tool instead.
      *
      * @param string $module
      * @param array $options
@@ -114,7 +131,7 @@ interface DevelopmentFacadeInterface
     /**
      * @api
      *
-     * @deprecated Please use `getModules()` instead.
+     * @deprecated Use {@link getModules()} instead.
      *
      * @return array
      */
@@ -123,7 +140,7 @@ interface DevelopmentFacadeInterface
     /**
      * @api
      *
-     * @deprecated Use `getAllModules()` instead.
+     * @deprecated Use {@link getAllModules()} instead.
      *
      * @return array
      */
@@ -208,7 +225,7 @@ interface DevelopmentFacadeInterface
     /**
      * @api
      *
-     * @return array
+     * @return string[]
      */
     public function getEngineModuleList();
 
@@ -248,11 +265,31 @@ interface DevelopmentFacadeInterface
     public function generateYvesIdeAutoCompletion();
 
     /**
+     * Specification:
+     * - Removes Yves IDE autocompletion files
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function removeYvesIdeAutoCompletion(): void;
+
+    /**
      * @api
      *
      * @return void
      */
     public function generateZedIdeAutoCompletion();
+
+    /**
+     * Specification:
+     * - Removes Zed IDE autocompletion files
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function removeZedIdeAutoCompletion(): void;
 
     /**
      * @api
@@ -262,6 +299,16 @@ interface DevelopmentFacadeInterface
     public function generateClientIdeAutoCompletion();
 
     /**
+     * Specification:
+     * - Removes Client IDE autocompletion files
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function removeClientIdeAutoCompletion(): void;
+
+    /**
      * @api
      *
      * @return void
@@ -269,11 +316,31 @@ interface DevelopmentFacadeInterface
     public function generateServiceIdeAutoCompletion();
 
     /**
+     * Specification:
+     * - Removes Service IDE autocompletion files
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function removeServiceIdeAutoCompletion(): void;
+
+    /**
      * @api
      *
      * @return void
      */
     public function generateGlueIdeAutoCompletion();
+
+    /**
+     * Specification:
+     * - Removes Glue IDE autocompletion files
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function removeGlueIdeAutoCompletion(): void;
 
     /**
      * Run the architecture sniffer against the given module and returns the violations
@@ -299,7 +366,7 @@ interface DevelopmentFacadeInterface
     /**
      * @api
      *
-     * @deprecated Use `listAllModules` instead.
+     * @deprecated Use {@link listAllModules()} instead.
      *
      * @return array
      */
@@ -387,7 +454,7 @@ interface DevelopmentFacadeInterface
      *
      * @param \Generated\Shared\Transfer\ModuleFilterTransfer|null $moduleFilterTransfer
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\ModuleTransfer[]
      */
     public function getProjectModules(?ModuleFilterTransfer $moduleFilterTransfer = null): array;
 

@@ -48,8 +48,9 @@ class ProductConcretePageSearchExpander implements ProductConcretePageSearchExpa
      *
      * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer
      */
-    protected function expandProductConcretePageSearchTransferWithWhitelistIds(ProductConcretePageSearchTransfer $productConcretePageSearchTransfer): ProductConcretePageSearchTransfer
-    {
+    protected function expandProductConcretePageSearchTransferWithWhitelistIds(
+        ProductConcretePageSearchTransfer $productConcretePageSearchTransfer
+    ): ProductConcretePageSearchTransfer {
         $whitelists = $this->productListFacade->getProductWhitelistIdsByIdProduct($productConcretePageSearchTransfer->getFkProduct());
 
         if ($whitelists) {
@@ -64,8 +65,9 @@ class ProductConcretePageSearchExpander implements ProductConcretePageSearchExpa
      *
      * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer
      */
-    protected function expandProductConcretePageSearchTransferWithBlacklistIds(ProductConcretePageSearchTransfer $productConcretePageSearchTransfer): ProductConcretePageSearchTransfer
-    {
+    protected function expandProductConcretePageSearchTransferWithBlacklistIds(
+        ProductConcretePageSearchTransfer $productConcretePageSearchTransfer
+    ): ProductConcretePageSearchTransfer {
         $blacklists = $this->productListFacade->getProductBlacklistIdsByIdProduct($productConcretePageSearchTransfer->getFkProduct());
 
         if ($blacklists) {
@@ -80,8 +82,9 @@ class ProductConcretePageSearchExpander implements ProductConcretePageSearchExpa
      *
      * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer
      */
-    protected function sanitizeProductConcretePageSearchTransfer(ProductConcretePageSearchTransfer $productConcretePageSearchTransfer): ProductConcretePageSearchTransfer
-    {
+    protected function sanitizeProductConcretePageSearchTransfer(
+        ProductConcretePageSearchTransfer $productConcretePageSearchTransfer
+    ): ProductConcretePageSearchTransfer {
         if (!$productConcretePageSearchTransfer->getProductListMap()) {
             $productConcretePageSearchTransfer->setProductListMap(new ProductListMapTransfer());
         }

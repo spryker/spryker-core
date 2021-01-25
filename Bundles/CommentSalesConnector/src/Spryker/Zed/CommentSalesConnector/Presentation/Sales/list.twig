@@ -1,9 +1,14 @@
+{# @var order \Generated\Shared\Transfer\OrderTransfer #}
+{# @var comment \Generated\Shared\Transfer\CommentTransfer #}
+{# @var comment.customer \Generated\Shared\Transfer\CustomerTransfer #}
+{# @var commentTag \Generated\Shared\Transfer\CommentTagTransfer #}
+
 {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Comments to Order' | trans } %}
 
     {% block widget_content %}
 
         {% block head_css %}
-            <link rel="stylesheet" href="/assets/css/spryker-zed-comment-sales-connector-main.css">
+            <link rel="stylesheet" href="{{ assetsPath('css/spryker-zed-comment-sales-connector-main.css') }}">
         {% endblock %}
 
         {% if order.commentThread %}
@@ -35,7 +40,7 @@
         {% endif %}
 
         {% block footer_js %}
-            <script src="/assets/js/spryker-zed-comment-sales-connector-main.js"></script>
+            <script src="{{ assetsPath('js/spryker-zed-comment-sales-connector-main.js') }}"></script>
         {% endblock %}
 
     {% endblock %}

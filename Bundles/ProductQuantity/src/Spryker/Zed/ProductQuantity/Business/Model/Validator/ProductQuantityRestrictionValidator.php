@@ -108,8 +108,12 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
      *
      * @return void
      */
-    protected function validateItem(string $sku, int $quantity, ProductQuantityTransfer $productQuantityTransfer, CartPreCheckResponseTransfer $responseTransfer): void
-    {
+    protected function validateItem(
+        string $sku,
+        int $quantity,
+        ProductQuantityTransfer $productQuantityTransfer,
+        CartPreCheckResponseTransfer $responseTransfer
+    ): void {
         $min = $productQuantityTransfer->getQuantityMin();
         $max = $productQuantityTransfer->getQuantityMax();
         $interval = $productQuantityTransfer->getQuantityInterval();
@@ -138,7 +142,7 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
 
         $cartQuantityMap = [];
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            $productGroupKey = $itemTransfer->getGroupKey();
+            $productGroupKey = $itemTransfer->getGroupKey() ?? $itemTransfer->getSku();
             $cartQuantityMap[$productGroupKey] = $itemTransfer->getQuantity();
 
             if (isset($quoteQuantityMapByGroupKey[$productGroupKey])) {
@@ -160,7 +164,7 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
 
         $cartQuantityMap = [];
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            $productGroupKey = $itemTransfer->getGroupKey();
+            $productGroupKey = $itemTransfer->getGroupKey() ?? $itemTransfer->getSku();
             $cartQuantityMap[$productGroupKey] = -$itemTransfer->getQuantity();
 
             if (isset($quoteQuantityMapByGroupKey[$productGroupKey])) {
@@ -211,7 +215,7 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
     {
         $skuMap = [];
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            $skuMap[$itemTransfer->getGroupKey()] = $itemTransfer->getSku();
+            $skuMap[$itemTransfer->getGroupKey() ?? $itemTransfer->getSku()] = $itemTransfer->getSku();
         }
 
         return $skuMap;

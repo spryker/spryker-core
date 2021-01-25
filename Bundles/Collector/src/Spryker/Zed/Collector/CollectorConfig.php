@@ -14,6 +14,7 @@ use Spryker\Zed\Collector\Persistence\Pdo\MySql\BulkUpdateTouchKeyByIdQuery as M
 use Spryker\Zed\Collector\Persistence\Pdo\PostgreSql\BulkDeleteTouchByIdQuery as PostgreSqlBulkDeleteTouchByIdQuery;
 use Spryker\Zed\Collector\Persistence\Pdo\PostgreSql\BulkUpdateTouchKeyByIdQuery as PostgreSqlBulkUpdateTouchKeyByIdQuery;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
+use Spryker\Zed\Propel\PropelConfig;
 
 class CollectorConfig extends AbstractBundleConfig
 {
@@ -26,38 +27,52 @@ class CollectorConfig extends AbstractBundleConfig
     public const COLLECTOR_BULK_UPDATE_QUERY_CLASS = 'BulkUpdateTouchKeyByIdQuery';
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getSearchIndexName()
     {
-        return Config::get(CollectorConstants::ELASTICA_PARAMETER__INDEX_NAME);
+        return Config::get(CollectorConstants::ELASTICA_PARAMETER__INDEX_NAME, sprintf('%s_search', strtolower(APPLICATION_STORE)));
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getSearchDocumentType()
     {
-        return Config::get(CollectorConstants::ELASTICA_PARAMETER__DOCUMENT_TYPE);
+        return Config::get(CollectorConstants::ELASTICA_PARAMETER__DOCUMENT_TYPE, 'page');
     }
 
     /**
+     * @api
+     *
+     * @deprecated Will be removed without replacement.
+     *
      * @return string
      */
     public function getMysqlEngineName()
     {
-        return Config::get(CollectorConstants::ZED_DB_ENGINE_MYSQL);
+        return Config::get(CollectorConstants::ZED_DB_ENGINE_MYSQL, PropelConfig::DB_ENGINE_MYSQL);
     }
 
     /**
+     * @api
+     *
+     * @deprecated Will be removed without replacement.
+     *
      * @return string
      */
     public function getPostgresEngineName()
     {
-        return Config::get(CollectorConstants::ZED_DB_ENGINE_PGSQL);
+        return Config::get(CollectorConstants::ZED_DB_ENGINE_PGSQL, PropelConfig::DB_ENGINE_PGSQL);
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getCurrentEngineName()
@@ -66,6 +81,8 @@ class CollectorConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getStandardChunkSize()
@@ -74,6 +91,8 @@ class CollectorConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getChunkSizeTypeMap()
@@ -82,13 +101,23 @@ class CollectorConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
+     * @return bool
+     */
+    public function isCollectorEnabled(): bool
+    {
+        return true;
+    }
+
+    /**
      * @return array
      */
     protected function getQueryToDbEngineClassMap()
     {
         return [
-            $this->getMysqlEngineName() => $this->getMysqlDbEngineClassMap(),
-            $this->getPostgresEngineName() => $this->getPostgresDbEngineClassMap(),
+            PropelConfig::DB_ENGINE_MYSQL => $this->getMysqlDbEngineClassMap(),
+            PropelConfig::DB_ENGINE_PGSQL => $this->getPostgresDbEngineClassMap(),
         ];
     }
 
@@ -115,6 +144,8 @@ class CollectorConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getCurrentBulkQueryClassNames()
@@ -125,6 +156,8 @@ class CollectorConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return bool
      */
     public function getEnablePrepareScopeKeyJoinFixFeatureFlag()

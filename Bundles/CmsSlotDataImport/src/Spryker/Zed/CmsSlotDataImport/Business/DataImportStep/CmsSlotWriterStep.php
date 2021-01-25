@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * MIT License
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace Spryker\Zed\CmsSlotDataImport\Business\DataImportStep;
@@ -10,6 +10,7 @@ namespace Spryker\Zed\CmsSlotDataImport\Business\DataImportStep;
 use Orm\Zed\CmsSlot\Persistence\SpyCmsSlotQuery;
 use Orm\Zed\CmsSlot\Persistence\SpyCmsSlotToCmsSlotTemplate;
 use Orm\Zed\CmsSlot\Persistence\SpyCmsSlotToCmsSlotTemplateQuery;
+use Spryker\Zed\CmsSlot\Dependency\CmsSlotEvents;
 use Spryker\Zed\CmsSlotDataImport\Business\DataSet\CmsSlotDataSetInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
@@ -44,5 +45,7 @@ class CmsSlotWriterStep extends PublishAwareStep implements DataImportStepInterf
             ->setFkCmsSlotTemplate($dataSet[CmsSlotDataSetInterface::CMS_SLOT_TEMPLATE_ID]);
 
         $cmsSlotToCmsSlotTemplateEntity->save();
+
+        $this->addPublishEvents(CmsSlotEvents::CMS_SLOT_PUBLISH, $cmsSlotEntity->getIdCmsSlot());
     }
 }

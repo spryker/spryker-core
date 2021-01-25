@@ -16,6 +16,8 @@ use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInt
 use Spryker\Zed\Search\Dependency\Plugin\NamedPageMapInterface;
 
 /**
+ * @deprecated Will be removed without replacement.
+ *
  * @method \Spryker\Zed\CategoryPageSearch\Communication\CategoryPageSearchCommunicationFactory getFactory()
  * @method \Spryker\Zed\CategoryPageSearch\Business\CategoryPageSearchFacadeInterface getFacade()
  * @method \Spryker\Zed\CategoryPageSearch\CategoryPageSearchConfig getConfig()
@@ -27,28 +29,28 @@ class CategoryNodeDataPageMapBuilder extends AbstractPlugin implements NamedPage
 
     /**
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
-     * @param array $categoryData
+     * @param array $data
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Generated\Shared\Transfer\PageMapTransfer
      */
-    public function buildPageMap(PageMapBuilderInterface $pageMapBuilder, array $categoryData, LocaleTransfer $localeTransfer)
+    public function buildPageMap(PageMapBuilderInterface $pageMapBuilder, array $data, LocaleTransfer $localeTransfer)
     {
         $pageMapTransfer = (new PageMapTransfer())
             ->setStore(Store::getInstance()->getStoreName())
             ->setLocale($localeTransfer->getLocaleName())
             ->setType(static::TYPE_CATEGORY)
-            ->setIsActive($categoryData['spy_category']['is_active'] && $categoryData['spy_category']['is_searchable']);
+            ->setIsActive($data['spy_category']['is_active'] && $data['spy_category']['is_searchable']);
 
-        $categoryAttribute = $categoryData['spy_category']['spy_category_attributes'][0];
+        $categoryAttribute = $data['spy_category']['spy_category_attributes'][0];
 
         /*
          * Here you can hard code which category data will be used for which search functionality
          */
         $pageMapBuilder
-            ->addSearchResultData($pageMapTransfer, 'id_category', $categoryData['fk_category'])
+            ->addSearchResultData($pageMapTransfer, 'id_category', $data['fk_category'])
             ->addSearchResultData($pageMapTransfer, 'name', $categoryAttribute['name'])
-            ->addSearchResultData($pageMapTransfer, 'url', $categoryData['spy_urls'][0]['url'])
+            ->addSearchResultData($pageMapTransfer, 'url', $data['spy_urls'][0]['url'])
             ->addSearchResultData($pageMapTransfer, 'type', static::TYPE_CATEGORY)
             ->addFullTextBoosted($pageMapTransfer, $categoryAttribute['name'])
             ->addFullText($pageMapTransfer, isset($categoryAttribute['meta_title']) ? $categoryAttribute['meta_title'] : '')

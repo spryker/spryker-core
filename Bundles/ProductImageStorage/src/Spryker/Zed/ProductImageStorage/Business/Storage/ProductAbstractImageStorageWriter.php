@@ -35,6 +35,8 @@ class ProductAbstractImageStorageWriter implements ProductAbstractImageStorageWr
     protected $repository;
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()} instead.
+     *
      * @var bool
      */
     protected $isSendingToQueue = true;
@@ -78,7 +80,8 @@ class ProductAbstractImageStorageWriter implements ProductAbstractImageStorageWr
             $idLocale = $productAbstractLocalizedEntity->getFkLocale();
             $idAbstractAttributes = $productAbstractLocalizedEntity->getIdAbstractAttributes();
 
-            if (!isset($productAbstractImageSetsBulk[$idProductAbstract][$idLocale]) &&
+            if (
+                !isset($productAbstractImageSetsBulk[$idProductAbstract][$idLocale]) &&
                 !isset($defaultProductAbstractImageSetsBulk[$idProductAbstract])
             ) {
                 continue;
@@ -217,8 +220,11 @@ class ProductAbstractImageStorageWriter implements ProductAbstractImageStorageWr
      *
      * @return void
      */
-    protected function storeDataSet(SpyProductAbstractLocalizedAttributes $spyProductAbstractLocalizedEntity, array $imageSets, ?SpyProductAbstractImageStorage $spyProductAbstractImageStorage = null)
-    {
+    protected function storeDataSet(
+        SpyProductAbstractLocalizedAttributes $spyProductAbstractLocalizedEntity,
+        array $imageSets,
+        ?SpyProductAbstractImageStorage $spyProductAbstractImageStorage = null
+    ) {
         if ($spyProductAbstractImageStorage === null) {
             $spyProductAbstractImageStorage = new SpyProductAbstractImageStorage();
         }
@@ -245,7 +251,7 @@ class ProductAbstractImageStorageWriter implements ProductAbstractImageStorageWr
     /**
      * @param \Generated\Shared\Transfer\SpyProductImageSetEntityTransfer[] $productImageSetEntityTransfers
      *
-     * @return \ArrayObject
+     * @return \ArrayObject|\Generated\Shared\Transfer\ProductImageSetStorageTransfer[]
      */
     protected function generateProductAbstractImageSets(array $productImageSetEntityTransfers)
     {
@@ -269,7 +275,7 @@ class ProductAbstractImageStorageWriter implements ProductAbstractImageStorageWr
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes[]
      */
@@ -279,7 +285,7 @@ class ProductAbstractImageStorageWriter implements ProductAbstractImageStorageWr
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return \Orm\Zed\ProductImageStorage\Persistence\SpyProductAbstractImageStorage[][]
      */

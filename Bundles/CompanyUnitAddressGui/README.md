@@ -1,6 +1,6 @@
 # CompanyUnitAddressGui Module
-[![Build Status](https://travis-ci.org/spryker/CompanyUnitAddressGui.svg)](https://travis-ci.org/spryker/CompanyUnitAddressGui)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/CompanyUnitAddressGui/badge.svg)](https://coveralls.io/github/spryker/CompanyUnitAddressGui)
+[![Build Status](https://travis-ci.org/spryker/company-unit-address-gui.svg)](https://travis-ci.org/spryker/company-unit-address-gui)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 Company unit address gui provides functionality related to view of company business unit addresses.
 

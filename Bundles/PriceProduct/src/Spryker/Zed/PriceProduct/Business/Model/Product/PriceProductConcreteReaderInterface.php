@@ -10,6 +10,7 @@ namespace Spryker\Zed\PriceProduct\Business\Model\Product;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 interface PriceProductConcreteReaderInterface
 {
@@ -67,16 +68,26 @@ interface PriceProductConcreteReaderInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function findProductConcretePricesWithoutPriceExtraction(int $idProductConcrete, ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null): array;
+    public function findProductConcretePricesWithoutPriceExtraction(
+        int $idProductConcrete,
+        ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null
+    ): array;
 
     /**
      * @param string[] $concreteSkus
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[][]
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     public function getProductConcretePricesByConcreteSkusAndCriteria(
         array $concreteSkus,
         PriceProductCriteriaTransfer $priceProductCriteriaTransfer
     ): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function expandProductConcreteWithPrices(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer;
 }

@@ -4,17 +4,20 @@
   "description": "ProductCartConnector module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.3",
     "spryker/kernel": "^3.30.0",
     "spryker/locale": "^3.0.0",
     "spryker/messenger": "^3.0.0",
-    "spryker/product": "^6.14.0"
+    "spryker/product": "^6.20.0",
+    "spryker/store": "^1.0.0"
   },
   "require-dev": {
     "spryker/cart": "*",
+    "spryker/code-sniffer": "*",
     "spryker/propel": "*",
     "spryker/tax": "*",
-    "spryker/testify": "*"
+    "spryker/testify": "*",
+    "spryker/url": "*"
   },
   "suggest": {
     "spryker/cart": "If you want to use Cart plugins. Must be >= 4.0.2!"
@@ -31,6 +34,10 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "4.0.x-dev"

@@ -32,7 +32,7 @@ class SortByQueryFilterPreProcessorTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
     }
@@ -40,7 +40,7 @@ class SortByQueryFilterPreProcessorTest extends Unit
     /**
      * @return void
      */
-    public function testProcessEmpty()
+    public function testProcessEmpty(): void
     {
         $processor = new SortByQueryFilterPreProcessor();
 
@@ -54,7 +54,7 @@ class SortByQueryFilterPreProcessorTest extends Unit
     /**
      * @return void
      */
-    public function testProcess()
+    public function testProcess(): void
     {
         $processor = new SortByQueryFilterPreProcessor();
 

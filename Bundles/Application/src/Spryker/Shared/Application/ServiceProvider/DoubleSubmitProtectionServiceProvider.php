@@ -15,7 +15,7 @@ use Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTokenPro
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @deprecated Use `\Spryker\Zed\Application\Communication\Plugin\ServiceProvider\DoubleSubmitProtectionServiceProvider` instead.
+ * @deprecated Use {@link \Spryker\Zed\Form\Communication\Plugin\Form\DoubleSubmitProtectionFormPlugin} instead.
  */
 class DoubleSubmitProtectionServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
@@ -59,7 +59,7 @@ class DoubleSubmitProtectionServiceProvider extends AbstractPlugin implements Se
 
     /**
      * @param \Silex\Application $app
-     * @param \Symfony\Component\Translation\TranslatorInterface|null $translator
+     * @param \Symfony\Contracts\Translation\TranslatorInterface|null $translator
      *
      * @return \Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\DoubleSubmitProtectionExtension
      */

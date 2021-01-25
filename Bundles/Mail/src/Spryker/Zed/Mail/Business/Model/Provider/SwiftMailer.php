@@ -45,7 +45,9 @@ class SwiftMailer implements MailProviderPluginInterface
             ->addSubject($mailTransfer)
             ->addFrom($mailTransfer)
             ->addTo($mailTransfer)
-            ->addContent($mailTransfer);
+            ->addBcc($mailTransfer)
+            ->addContent($mailTransfer)
+            ->addAttachments($mailTransfer);
 
         $this->mailer->send();
     }
@@ -97,6 +99,23 @@ class SwiftMailer implements MailProviderPluginInterface
      *
      * @return $this
      */
+    protected function addBcc(MailTransfer $mailTransfer)
+    {
+        $mailRecipientTransfers = $mailTransfer->getRecipientBccs();
+        foreach ($mailRecipientTransfers as $mailRecipientTransfer) {
+            $mailRecipientTransfer->requireEmail();
+
+            $this->mailer->addBcc($mailRecipientTransfer->getEmail(), $mailRecipientTransfer->getName());
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
+     *
+     * @return $this
+     */
     protected function addContent(MailTransfer $mailTransfer)
     {
         $this->renderer->render($mailTransfer);
@@ -112,5 +131,17 @@ class SwiftMailer implements MailProviderPluginInterface
         }
 
         return $this;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
+     *
+     * @return void
+     */
+    protected function addAttachments(MailTransfer $mailTransfer): void
+    {
+        foreach ($mailTransfer->getAttachments() as $attachment) {
+            $this->mailer->attach($attachment->getAttachmentUrl());
+        }
     }
 }

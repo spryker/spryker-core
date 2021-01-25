@@ -1,0 +1,188 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 50,
+            "line_to": 50,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'array<array-key, string>' for Spryker\\Zed\\CmsContentWidget\\Communication\\Plugin\\CmsBlockStorage\\CmsBlockStorageStorageParameterMapExpanderPlugin::gePlaceholders is incorrect, got 'array<array-key|mixed, mixed|null|string>'",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsContentWidget/src/Spryker/Zed/CmsContentWidget/Communication/Plugin/CmsBlockStorage/CmsBlockStorageStorageParameterMapExpanderPlugin.php",
+            "snippet": "     * @return string[]",
+            "selected_text": "string[]",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 60,
+            "line_to": 60,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'array<array-key|mixed, mixed|null|string>' does not match the declared return type 'array<array-key, string>' for Spryker\\Zed\\CmsContentWidget\\Communication\\Plugin\\CmsBlockStorage\\CmsBlockStorageStorageParameterMapExpanderPlugin::gePlaceholders",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsContentWidget/src/Spryker/Zed/CmsContentWidget/Communication/Plugin/CmsBlockStorage/CmsBlockStorageStorageParameterMapExpanderPlugin.php",
+            "snippet": "        return $placeholders;",
+            "selected_text": "$placeholders",
+            "error_level": 6,
+            "shortcode": 128
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 76,
+            "line_to": 76,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method error on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsContentWidget/src/Spryker/Yves/CmsContentWidget/Twig/TwigCmsContentRenderer.php",
+            "snippet": "            $this->getLogger()->error($exception->getMessage(), ['exception' => $exception]);",
+            "selected_text": "error",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 74,
+            "line_to": 74,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $contentWidgetParameterMap[$functionName] using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsContentWidget/src/Spryker/Zed/CmsContentWidget/Business/ContentWidget/ContentWidgetParameterMapper.php",
+            "snippet": "                $contentWidgetParameterMap[$functionName] = [];",
+            "selected_text": "$contentWidgetParameterMap",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 77,
+            "line_to": 77,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $contentWidgetParameterMap[$functionName] using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsContentWidget/src/Spryker/Zed/CmsContentWidget/Business/ContentWidget/ContentWidgetParameterMapper.php",
+            "snippet": "            $contentWidgetParameterMap[$functionName] = $contentWidgetParameterMap[$functionName] + $mappedParameters;",
+            "selected_text": "$contentWidgetParameterMap",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 77,
+            "line_to": 77,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $contentWidgetParameterMap[$functionName] using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsContentWidget/src/Spryker/Zed/CmsContentWidget/Business/ContentWidget/ContentWidgetParameterMapper.php",
+            "snippet": "            $contentWidgetParameterMap[$functionName] = $contentWidgetParameterMap[$functionName] + $mappedParameters;",
+            "selected_text": "$contentWidgetParameterMap",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 179,
+            "line_to": 179,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\CmsContentWidget\\Business\\ContentWidget\\ContentWidgetParameterMapper::buildParameterMap cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsContentWidget/src/Spryker/Zed/CmsContentWidget/Business/ContentWidget/ContentWidgetParameterMapper.php",
+            "snippet": "            $this->buildParameterMap($cmsContentWidgetFunctionTransfer->getFunctionName(), $unProcessedFunctionParameters);",
+            "selected_text": "$cmsContentWidgetFunctionTransfer->getFunctionName()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 57,
+            "line_to": 57,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $placeholders[mixed|null|string] using possibly null offset mixed|null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsContentWidget/src/Spryker/Zed/CmsContentWidget/Communication/Plugin/CmsBlockStorage/CmsBlockStorageStorageParameterMapExpanderPlugin.php",
+            "snippet": "            $placeholders[$keyMapping->getPlaceholder()] = $keyMapping->getGlossaryKey()->getKey();",
+            "selected_text": "$placeholders",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 57,
+            "line_to": 57,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getKey on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsContentWidget/src/Spryker/Zed/CmsContentWidget/Communication/Plugin/CmsBlockStorage/CmsBlockStorageStorageParameterMapExpanderPlugin.php",
+            "snippet": "            $placeholders[$keyMapping->getPlaceholder()] = $keyMapping->getGlossaryKey()->getKey();",
+            "selected_text": "getKey",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 30,
+            "line_to": 30,
+            "type": "InvalidNullableReturnType",
+            "message": "The declared return type 'string' for Spryker\\Zed\\CmsContentWidget\\Dependency\\Service\\CmsContentWidgetToUtilEncodingBridge::encodeJson is not nullable, but 'null|string' contains null",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsContentWidget/src/Spryker/Zed/CmsContentWidget/Dependency/Service/CmsContentWidgetToUtilEncodingBridge.php",
+            "snippet": "     * @return string",
+            "selected_text": "string",
+            "error_level": 5,
+            "shortcode": 144
+        },
+        {
+            "severity": "info",
+            "line_from": 34,
+            "line_to": 34,
+            "type": "NullableReturnStatement",
+            "message": "The declared return type 'string' for Spryker\\Zed\\CmsContentWidget\\Dependency\\Service\\CmsContentWidgetToUtilEncodingBridge::encodeJson is not nullable, but the function returns 'null|string'",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsContentWidget/src/Spryker/Zed/CmsContentWidget/Dependency/Service/CmsContentWidgetToUtilEncodingBridge.php",
+            "snippet": "        return $this->utilEncodingService->encodeJson($value, $options, $depth);",
+            "selected_text": "$this->utilEncodingService->encodeJson($value, $options, $depth)",
+            "error_level": 5,
+            "shortcode": 139
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 57,
+            "line_to": 57,
+            "type": "DeprecatedClass",
+            "message": "Spryker\\Yves\\Kernel\\Plugin\\Pimple is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsContentWidget/src/Spryker/Yves/CmsContentWidget/CmsContentWidgetDependencyProvider.php",
+            "snippet": "        $pimplePlugin = new Pimple();",
+            "selected_text": "new Pimple()",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 31,
+            "line_to": 31,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Service\\Container\\Container::offsetSet has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsContentWidget/src/Spryker/Yves/CmsContentWidget/Plugin/CmsContentWidgetServiceProvider.php",
+            "snippet": "        $app['twig'] = $app->share(",
+            "selected_text": "$app",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 31,
+            "line_to": 31,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Service\\Container\\Container::share has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsContentWidget/src/Spryker/Yves/CmsContentWidget/Plugin/CmsContentWidgetServiceProvider.php",
+            "snippet": "        $app['twig'] = $app->share(",
+            "selected_text": "share",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 21,
+            "line_to": 21,
+            "type": "DeprecatedInterface",
+            "message": "Spryker\\Zed\\CmsCollector\\Dependency\\Plugin\\CmsPageCollectorDataExpanderPluginInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsContentWidget/src/Spryker/Zed/CmsContentWidget/Communication/Plugin/CmsPageCollector/CmsPageCollectorParameterMapExpanderPlugin.php",
+            "snippet": "class CmsPageCollectorParameterMapExpanderPlugin extends AbstractPlugin implements CmsPageCollectorDataExpanderPluginInterface",
+            "selected_text": "CmsPageCollectorParameterMapExpanderPlugin",
+            "error_level": 2,
+            "shortcode": 152
+        }
+    ]
+}

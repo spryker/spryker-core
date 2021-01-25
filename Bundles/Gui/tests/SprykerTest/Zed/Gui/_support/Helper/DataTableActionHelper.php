@@ -22,7 +22,7 @@ class DataTableActionHelper extends Module
      *
      * @return void
      */
-    public function _beforeSuite($settings = [])
+    public function _beforeSuite($settings = []): void
     {
         $className = $settings['class_name'];
         if (preg_match('/CommunicationTester/', $className)) {
@@ -36,7 +36,7 @@ class DataTableActionHelper extends Module
      *
      * @return void
      */
-    public function clickDataTableEditButton($rowPosition = 1, $gridId = null)
+    public function clickDataTableEditButton(int $rowPosition = 1, ?string $gridId = null): void
     {
         $this->clickButton('Edit', $rowPosition, $gridId);
     }
@@ -47,7 +47,7 @@ class DataTableActionHelper extends Module
      *
      * @return void
      */
-    public function clickDataTableViewButton($rowPosition = 1, $gridId = null)
+    public function clickDataTableViewButton(int $rowPosition = 1, ?string $gridId = null): void
     {
         $this->clickButton('View', $rowPosition, $gridId);
     }
@@ -58,7 +58,7 @@ class DataTableActionHelper extends Module
      *
      * @return void
      */
-    public function clickDataTableDeleteButton($rowPosition = 1, $gridId = null)
+    public function clickDataTableDeleteButton(int $rowPosition = 1, ?string $gridId = null): void
     {
         $this->clickButton('Delete', $rowPosition, $gridId);
     }
@@ -70,15 +70,23 @@ class DataTableActionHelper extends Module
      *
      * @return void
      */
-    public function clickDataTableLinkInDropDownOfButton($buttonName, $linkName, $rowPosition = 1)
+    public function clickDataTableLinkInDropDownOfButton(string $buttonName, string $linkName, int $rowPosition = 1): void
     {
         $this->clickButton($buttonName, $rowPosition);
-        $this->getDriver()->click(sprintf(
+
+        $elementInRoot = sprintf(
+            '//body/ul[@class="dropdown-menu"][1]//following::li/a[contains(., "%s")]',
+            $linkName
+        );
+
+        $elementInList = sprintf(
             '(//tr[@role="row"]//button[contains(., "%s")])[%s]/following::ul[1]//a[contains(., "%s")]',
             $buttonName,
             $rowPosition,
             $linkName
-        ));
+        );
+
+        $this->getDriver()->click(sprintf('%s | %s', $elementInRoot, $elementInList));
     }
 
     /**
@@ -88,7 +96,7 @@ class DataTableActionHelper extends Module
      *
      * @return void
      */
-    public function clickDataTableButton($name, $rowPosition = 1, $gridId = null)
+    public function clickDataTableButton(string $name, int $rowPosition = 1, ?string $gridId = null): void
     {
         $this->clickButton($name, $rowPosition, $gridId);
     }
@@ -100,7 +108,7 @@ class DataTableActionHelper extends Module
      *
      * @return void
      */
-    protected function clickButton($name, $rowPosition, $gridId = null)
+    protected function clickButton(string $name, int $rowPosition, ?string $gridId = null): void
     {
         $driver = $this->getDriver();
 

@@ -87,12 +87,14 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
 
     /**
      * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
-     * @param \ArrayObject $messageTransfers
+     * @param \ArrayObject|\Generated\Shared\Transfer\MessageTransfer[] $messageTransfers
      *
      * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
-    protected function executeZedCallResourceShareActivators(ResourceShareRequestTransfer $resourceShareRequestTransfer, ArrayObject $messageTransfers): ResourceShareResponseTransfer
-    {
+    protected function executeZedCallResourceShareActivators(
+        ResourceShareRequestTransfer $resourceShareRequestTransfer,
+        ArrayObject $messageTransfers
+    ): ResourceShareResponseTransfer {
         $resourceShareResponseTransfer = $this->zedResourceShareStub->activateResourceShare($resourceShareRequestTransfer);
         $resourceShareResponseTransfer->setMessages(
             $this->mergeResponseMessages(
@@ -106,12 +108,14 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
 
     /**
      * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
-     * @param \ArrayObject $messageTransfers
+     * @param \ArrayObject|\Generated\Shared\Transfer\MessageTransfer[] $messageTransfers
      *
      * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
-    protected function executeAfterZedClientActivators(ResourceShareRequestTransfer $resourceShareRequestTransfer, ArrayObject $messageTransfers): ResourceShareResponseTransfer
-    {
+    protected function executeAfterZedClientActivators(
+        ResourceShareRequestTransfer $resourceShareRequestTransfer,
+        ArrayObject $messageTransfers
+    ): ResourceShareResponseTransfer {
         $resourceShareResponseTransfer = $this->executeResourceShareActivatorStrategyPlugins(
             $this->afterZedResourceShareActivatorStrategyPlugins,
             $resourceShareRequestTransfer
@@ -147,6 +151,7 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
             }
 
             $resourceShareResponseTransfer = $resourceShareActivatorStrategyPlugin->execute($resourceShareRequestTransfer);
+
             break;
         }
 

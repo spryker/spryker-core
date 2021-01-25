@@ -10,6 +10,7 @@ namespace Spryker\Zed\DataImport\Business\Model;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
 use Spryker\Zed\DataImport\Business\DataImporter\DataImporterImportGroupAwareInterface;
+use Spryker\Zed\DataImport\Business\Exception\DataImporterNotFoundException;
 use Spryker\Zed\DataImport\Business\Exception\InvalidImportGroupException;
 use Spryker\Zed\DataImport\DataImportConfig;
 use Spryker\Zed\DataImport\Dependency\Plugin\DataImportAfterImportHookInterface;
@@ -42,7 +43,7 @@ class DataImporterCollection implements
     /**
      * @var \Spryker\Zed\DataImport\DataImportConfig|null
      */
-    protected $config = null;
+    protected $config;
 
     /**
      * @param \Spryker\Zed\DataImport\Dependency\Plugin\DataImportBeforeImportHookInterface[] $beforeImportHooks
@@ -131,6 +132,8 @@ class DataImporterCollection implements
      *
      * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
      *
+     * @throws \Spryker\Zed\DataImport\Business\Exception\DataImporterNotFoundException
+     *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
      */
     public function import(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null)
@@ -142,6 +145,10 @@ class DataImporterCollection implements
         $this->beforeImport();
 
         if ($importType !== $this->getImportType()) {
+            if (!isset($dataImporters[$importType])) {
+                throw new DataImporterNotFoundException(sprintf('Data importer not found for "%s" importer type.', $importType));
+            }
+
             $this->executeDataImporter(
                 $dataImporters[$importType],
                 $dataImporterReportTransfer,
@@ -227,7 +234,8 @@ class DataImporterCollection implements
         }
 
         foreach ($dataImporters as $dataImporter) {
-            if ($this->config->getFullImportTypes()
+            if (
+                $this->config->getFullImportTypes()
                 && !in_array($dataImporter->getImportType(), $this->config->getFullImportTypes(), true)
             ) {
                 continue;
@@ -280,7 +288,8 @@ class DataImporterCollection implements
      */
     protected function getDataImportersByImportGroup(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): array
     {
-        if (!$dataImporterConfigurationTransfer
+        if (
+            !$dataImporterConfigurationTransfer
             || $dataImporterConfigurationTransfer->getImportGroup() === DataImportConfig::IMPORT_GROUP_FULL
         ) {
             return $this->dataImporter;
@@ -300,7 +309,7 @@ class DataImporterCollection implements
 
         if (!$dataImporters) {
             throw new InvalidImportGroupException(
-                sprintf('No data importers found for the import group %s. Make the name of the group is spelled correctly.', $dataImporterConfigurationTransfer->getImportGroup())
+                sprintf('No data importers found for the import group %s. Make sure the name of the group is spelled correctly.', $dataImporterConfigurationTransfer->getImportGroup())
             );
         }
 

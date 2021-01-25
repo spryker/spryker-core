@@ -88,10 +88,9 @@ class PriceProductCriteriaBuilder implements PriceProductCriteriaBuilderInterfac
      */
     public function buildCriteriaFromFilter(PriceProductFilterTransfer $priceProductFilterTransfer): PriceProductCriteriaTransfer
     {
-        $priceProductCriteriaTransfer = (new PriceProductCriteriaTransfer())
-            ->fromArray($priceProductFilterTransfer->toArray(), true);
-
-        return $priceProductCriteriaTransfer
+        return (new PriceProductCriteriaTransfer())
+            ->setSku($priceProductFilterTransfer->getSku())
+            ->setQuantity($priceProductFilterTransfer->getQuantity())
             ->setPriceDimension(
                 $priceProductFilterTransfer->getPriceDimension()
             )
@@ -182,7 +181,7 @@ class PriceProductCriteriaBuilder implements PriceProductCriteriaBuilderInterfac
      *
      * @return \Generated\Shared\Transfer\PriceProductCriteriaTransfer[]
      */
-    public function buildCriteriaTransfersFromFilterTransfersIndexedBySku(array $priceProductFilterTransfers): array
+    public function buildCriteriaTransfersFromFilterTransfers(array $priceProductFilterTransfers): array
     {
         $storeTransfers = $this->getStoreTransfersForPriceProductFilters($priceProductFilterTransfers);
         $storeTransfers = $this->indexStoreTransfersByStoreName($storeTransfers);
@@ -190,13 +189,13 @@ class PriceProductCriteriaBuilder implements PriceProductCriteriaBuilderInterfac
         $currencyTransfers = $this->getCurrencyTransfersForPriceProductFilters($priceProductFilterTransfers);
         $currencyTransfers = $this->indexCurrencyTransfersByIsoCode($currencyTransfers);
 
-        $priceProductCriteriaTransferIndexedBySku = [];
+        $priceProductCriteriaTransfers = [];
         foreach ($priceProductFilterTransfers as $priceProductFilterTransfer) {
             $currencyTransfer = $currencyTransfers[$priceProductFilterTransfer->getCurrencyIsoCode()] ?? $this->getDefaultCurrencyForCurrentStore();
             $storeTransfer = $storeTransfers[$priceProductFilterTransfer->getStoreName()] ?? $this->getCurrentStore();
 
             $priceProductCriteriaTransfer = (new PriceProductCriteriaTransfer())
-                ->fromArray($priceProductFilterTransfer->toArray(), true);
+                ->fromArray($priceProductFilterTransfer->toArray(false), true);
 
             $priceProductCriteriaTransfer
                 ->setPriceDimension(
@@ -213,12 +212,13 @@ class PriceProductCriteriaBuilder implements PriceProductCriteriaBuilderInterfac
                     $this->getPriceModeFromFilter($priceProductFilterTransfer)
                 )->setPriceType(
                     $this->priceProductTypeReader->handleDefaultPriceType($priceProductFilterTransfer->getPriceTypeName())
-                );
+                )
+                ->setSku($priceProductFilterTransfer->getSku());
 
-            $priceProductCriteriaTransferIndexedBySku[$priceProductFilterTransfer->getSku()] = $priceProductCriteriaTransfer;
+            $priceProductCriteriaTransfers[] = $priceProductCriteriaTransfer;
         }
 
-        return $priceProductCriteriaTransferIndexedBySku;
+        return $priceProductCriteriaTransfers;
     }
 
     /**

@@ -39,7 +39,7 @@ class DataImporterCollectionTest extends Unit
     /**
      * @return void
      */
-    public function testAddDataImporter()
+    public function testAddDataImporter(): void
     {
         $dataImporterCollection = $this->tester->getFactory()->createDataImporterCollection();
         $fluentInterface = $dataImporterCollection->addDataImporter($this->tester->getDataImporterMock(static::DATA_IMPORTER_TYPE_A));
@@ -50,7 +50,7 @@ class DataImporterCollectionTest extends Unit
     /**
      * @return void
      */
-    public function testImportReturnsSuccessfulDataImportReportWhenAtLeastOneDataSetWasImported()
+    public function testImportReturnsSuccessfulDataImportReportWhenAtLeastOneDataSetWasImported(): void
     {
         $dataImporterReportTransfer = new DataImporterReportTransfer();
         $dataImporterReportTransfer
@@ -67,7 +67,7 @@ class DataImporterCollectionTest extends Unit
     /**
      * @return void
      */
-    public function testImporterPluginCanBeAddedAfterSpecificDataImporter()
+    public function testImporterPluginCanBeAddedAfterSpecificDataImporter(): void
     {
         $dataImportCollectionMock = $this->getDataImportCollectionMock();
         $dataImporterA = $this->tester->getDataImporterMock(static::DATA_IMPORTER_TYPE_A);
@@ -94,7 +94,7 @@ class DataImporterCollectionTest extends Unit
     /**
      * @return void
      */
-    public function testImporterPluginWillAddedAtTheEndIfAddAfterIsNotMatchingToAnyAppliedImporter()
+    public function testImporterPluginWillAddedAtTheEndIfAddAfterIsNotMatchingToAnyAppliedImporter(): void
     {
         $dataImportCollectionMock = $this->getDataImportCollectionMock();
 

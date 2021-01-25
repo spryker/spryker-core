@@ -22,20 +22,48 @@ class ProductPricesMapper implements ProductPricesMapperInterface
     protected $priceClient;
 
     /**
+     * @var string|null
+     */
+    protected static $currentPriceMode;
+
+    /**
+     * @var string|null
+     */
+    protected static $grossPriceModeIdentifier;
+
+    /**
+     * @var string|null
+     */
+    protected static $netPriceModeIdentifier;
+
+    /**
      * @var \Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToCurrencyClientInterface
      */
     protected $currencyClient;
 
     /**
+     * @var \Spryker\Glue\ProductPricesRestApiExtension\Dependency\Plugin\RestProductPricesAttributesMapperPluginInterface[]
+     */
+    protected $restProductPricesAttributesMapperPlugins;
+
+    /**
+     * @var \Generated\Shared\Transfer\RestCurrencyTransfer
+     */
+    protected static $restCurrencyTransfer;
+
+    /**
      * @param \Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToPriceClientInterface $priceClient
      * @param \Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToCurrencyClientInterface $currencyClient
+     * @param \Spryker\Glue\ProductPricesRestApiExtension\Dependency\Plugin\RestProductPricesAttributesMapperPluginInterface[] $restProductPricesAttributesMapperPlugins
      */
     public function __construct(
         ProductPricesRestApiToPriceClientInterface $priceClient,
-        ProductPricesRestApiToCurrencyClientInterface $currencyClient
+        ProductPricesRestApiToCurrencyClientInterface $currencyClient,
+        array $restProductPricesAttributesMapperPlugins
     ) {
         $this->priceClient = $priceClient;
         $this->currencyClient = $currencyClient;
+        $this->restProductPricesAttributesMapperPlugins = $restProductPricesAttributesMapperPlugins;
     }
 
     /**
@@ -51,6 +79,11 @@ class ProductPricesMapper implements ProductPricesMapperInterface
             ->setPrice($currentProductPriceTransfer->getPrice());
         foreach ($currentProductPriceTransfer->getPrices() as $priceType => $amount) {
             $restProductPriceAttributesTransfer = $this->getRestProductPriceAttributesTransfer($priceType, $amount);
+            $restProductPriceAttributesTransfer = $this->executeRestProductPriceAttributesMapperPlugins(
+                $currentProductPriceTransfer,
+                $restProductPriceAttributesTransfer
+            );
+
             $productPricesRestAttributesTransfer->addPrice($restProductPriceAttributesTransfer);
         }
 
@@ -69,12 +102,12 @@ class ProductPricesMapper implements ProductPricesMapperInterface
 
         $restProductPriceAttributesTransfer->setPriceTypeName($priceType);
         $restProductPriceAttributesTransfer->setCurrency($this->getRestCurrencyTransfer());
-        if ($this->priceClient->getCurrentPriceMode() === $this->priceClient->getGrossPriceModeIdentifier()) {
+        if ($this->getCurrentPriceMode() === $this->getGrossPriceModeIdentifier()) {
             $restProductPriceAttributesTransfer->setGrossAmount($amount);
 
             return $restProductPriceAttributesTransfer;
         }
-        if ($this->priceClient->getCurrentPriceMode() === $this->priceClient->getNetPriceModeIdentifier()) {
+        if ($this->getCurrentPriceMode() === $this->getNetPriceModeIdentifier()) {
             $restProductPriceAttributesTransfer->setNetAmount($amount);
 
             return $restProductPriceAttributesTransfer;
@@ -84,11 +117,71 @@ class ProductPricesMapper implements ProductPricesMapperInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CurrentProductPriceTransfer $currentProductPriceTransfer
+     * @param \Generated\Shared\Transfer\RestProductPriceAttributesTransfer $restProductPriceAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestProductPriceAttributesTransfer
+     */
+    public function executeRestProductPriceAttributesMapperPlugins(
+        CurrentProductPriceTransfer $currentProductPriceTransfer,
+        RestProductPriceAttributesTransfer $restProductPriceAttributesTransfer
+    ): RestProductPriceAttributesTransfer {
+        foreach ($this->restProductPricesAttributesMapperPlugins as $restProductPricesAttributesMapperPlugin) {
+            $restProductPriceAttributesTransfer = $restProductPricesAttributesMapperPlugin->map(
+                $currentProductPriceTransfer,
+                $restProductPriceAttributesTransfer
+            );
+        }
+
+        return $restProductPriceAttributesTransfer;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getCurrentPriceMode(): string
+    {
+        if (!static::$currentPriceMode) {
+            static::$currentPriceMode = $this->priceClient->getCurrentPriceMode();
+        }
+
+        return static::$currentPriceMode;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getGrossPriceModeIdentifier(): string
+    {
+        if (static::$grossPriceModeIdentifier === null) {
+            static::$grossPriceModeIdentifier = $this->priceClient->getGrossPriceModeIdentifier();
+        }
+
+        return static::$grossPriceModeIdentifier;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getNetPriceModeIdentifier(): string
+    {
+        if (static::$netPriceModeIdentifier === null) {
+            static::$netPriceModeIdentifier = $this->priceClient->getNetPriceModeIdentifier();
+        }
+
+        return static::$netPriceModeIdentifier;
+    }
+
+    /**
      * @return \Generated\Shared\Transfer\RestCurrencyTransfer
      */
     protected function getRestCurrencyTransfer(): RestCurrencyTransfer
     {
-        return (new RestCurrencyTransfer())
-            ->fromArray($this->currencyClient->getCurrent()->toArray(), true);
+        if (static::$restCurrencyTransfer === null) {
+            static::$restCurrencyTransfer = (new RestCurrencyTransfer())
+                ->fromArray($this->currencyClient->getCurrent()->toArray(), true);
+        }
+
+        return static::$restCurrencyTransfer;
     }
 }

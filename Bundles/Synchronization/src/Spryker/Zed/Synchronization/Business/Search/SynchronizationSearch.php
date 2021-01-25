@@ -35,8 +35,10 @@ class SynchronizationSearch implements SynchronizationInterface
      * @param \Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToSearchClientInterface $searchClient
      * @param \Spryker\Zed\Synchronization\Business\Validation\OutdatedValidatorInterface $outdatedValidator
      */
-    public function __construct(SynchronizationToSearchClientInterface $searchClient, OutdatedValidatorInterface $outdatedValidator)
-    {
+    public function __construct(
+        SynchronizationToSearchClientInterface $searchClient,
+        OutdatedValidatorInterface $outdatedValidator
+    ) {
         $this->searchClient = $searchClient;
         $this->outdatedValidator = $outdatedValidator;
     }
@@ -51,8 +53,9 @@ class SynchronizationSearch implements SynchronizationInterface
     {
         $typeName = $this->getParam($data, static::TYPE);
         $indexName = $this->getParam($data, static::INDEX);
+
         $data = $this->formatTimestamp($data);
-        $existingEntry = $this->read($data[static::KEY]);
+        $existingEntry = $this->read($data[static::KEY], $typeName);
 
         $formattedData = [
             $data[static::KEY] => $data[static::VALUE],
@@ -75,8 +78,9 @@ class SynchronizationSearch implements SynchronizationInterface
     {
         $typeName = $this->getParam($data, static::TYPE);
         $indexName = $this->getParam($data, static::INDEX);
+
         $data = $this->formatTimestamp($data);
-        $existingEntry = $this->read($data[static::KEY]);
+        $existingEntry = $this->read($data[static::KEY], $typeName);
 
         $formattedData = [
             $data[static::KEY] => [],
@@ -107,13 +111,14 @@ class SynchronizationSearch implements SynchronizationInterface
 
     /**
      * @param string $key
+     * @param string|null $typeName
      *
      * @return array|null
      */
-    protected function read($key)
+    protected function read(string $key, ?string $typeName)
     {
         try {
-            return $this->searchClient->read($key)->getData();
+            return $this->searchClient->read($key, $typeName)->getData();
         } catch (NotFoundException $exception) {
             return null;
         }

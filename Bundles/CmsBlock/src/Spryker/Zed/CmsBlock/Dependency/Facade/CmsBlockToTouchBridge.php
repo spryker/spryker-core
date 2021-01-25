@@ -24,23 +24,24 @@ class CmsBlockToTouchBridge implements CmsBlockToTouchInterface
 
     /**
      * @param string $itemType
-     * @param int $idCmsBlock
+     * @param int $idItem
+     * @param bool $keyChange
      *
      * @return bool
      */
-    public function touchActive($itemType, $idCmsBlock)
+    public function touchActive($itemType, $idItem, $keyChange = false)
     {
-        return $this->touchFacade->touchActive($itemType, $idCmsBlock);
+        return $this->touchFacade->touchActive($itemType, $idItem, $keyChange);
     }
 
     /**
      * @param string $itemType
-     * @param int $idCmsBlock
+     * @param int $idItem
      *
      * @return bool
      */
-    public function touchDeleted($itemType, $idCmsBlock)
+    public function touchDeleted($itemType, $idItem)
     {
-        return $this->touchFacade->touchDeleted($itemType, $idCmsBlock);
+        return $this->touchFacade->touchDeleted($itemType, $idItem);
     }
 }

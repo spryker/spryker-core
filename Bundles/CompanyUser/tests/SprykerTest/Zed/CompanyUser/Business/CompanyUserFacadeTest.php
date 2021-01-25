@@ -487,6 +487,7 @@ class CompanyUserFacadeTest extends Test
 
         //Assert
         $this->assertCount(1, $activeCompanyUsers);
+        // TODO: use assertSame() once the actual return result is of int, and not string
         $this->assertEquals($activeCompanyUsers[0], $activeCompanyUserTransfer->getIdCompanyUser());
     }
 
@@ -547,7 +548,7 @@ class CompanyUserFacadeTest extends Test
             ->offsetGet(0);
 
         // Assert
-        $this->assertEquals($companyUserTransfer->getIdCompanyUser(), $foundCompanyUserTransfer->getIdCompanyUser());
+        $this->assertSame($companyUserTransfer->getIdCompanyUser(), $foundCompanyUserTransfer->getIdCompanyUser());
     }
 
     /**
@@ -568,7 +569,7 @@ class CompanyUserFacadeTest extends Test
             ->offsetGet(0);
 
         // Assert
-        $this->assertEquals($companyUserTransfer->getIdCompanyUser(), $foundCompanyUserTransfer->getIdCompanyUser());
+        $this->assertSame($companyUserTransfer->getIdCompanyUser(), $foundCompanyUserTransfer->getIdCompanyUser());
     }
 
     /**
@@ -589,6 +590,28 @@ class CompanyUserFacadeTest extends Test
             ->offsetGet(0);
 
         // Assert
-        $this->assertEquals($companyUserTransfer->getIdCompanyUser(), $foundCompanyUserTransfer->getIdCompanyUser());
+        $this->assertSame($companyUserTransfer->getIdCompanyUser(), $foundCompanyUserTransfer->getIdCompanyUser());
+    }
+
+    /**
+     * @return void
+     */
+    public function testRawCompanyUsersByCriteriaShouldReturnTransfer(): void
+    {
+        // Arrange
+        $companyUserTransfer = $this->tester->createCompanyUserTransfer();
+        $companyUserCriteriaFilterTransfer = (new CompanyUserCriteriaFilterBuilder([
+            CompanyUserCriteriaFilterTransfer::ID_COMPANY => $companyUserTransfer->getFkCompany(),
+        ]))->build();
+
+        // Act
+        $foundCompanyUserTransfer = $this->tester->getFacade()
+            ->getRawCompanyUsersByCriteria($companyUserCriteriaFilterTransfer)
+            ->getCompanyUsers()
+            ->offsetGet(0);
+
+        // Assert
+        $this->assertNotEmpty($foundCompanyUserTransfer);
+        $this->assertSame($companyUserTransfer->getIdCompanyUser(), $foundCompanyUserTransfer->getIdCompanyUser());
     }
 }

@@ -7,10 +7,15 @@
 
 namespace Spryker\Zed\DiscountPromotion\Business;
 
+use Spryker\Zed\DiscountPromotion\Business\Cart\CartValidator;
+use Spryker\Zed\DiscountPromotion\Business\Cart\CartValidatorInterface;
+use Spryker\Zed\DiscountPromotion\Business\DiscountPromotionCreator\DiscountPromotionCreator;
+use Spryker\Zed\DiscountPromotion\Business\DiscountPromotionCreator\DiscountPromotionCreatorInterface;
+use Spryker\Zed\DiscountPromotion\Business\DiscountPromotionUpdater\DiscountPromotionUpdater;
+use Spryker\Zed\DiscountPromotion\Business\DiscountPromotionUpdater\DiscountPromotionUpdaterInterface;
 use Spryker\Zed\DiscountPromotion\Business\Model\DiscountCollectorStrategy\DiscountPromotionCollectorStrategy;
 use Spryker\Zed\DiscountPromotion\Business\Model\DiscountCollectorStrategy\PromotionAvailabilityCalculator;
 use Spryker\Zed\DiscountPromotion\Business\Model\DiscountPromotionReader;
-use Spryker\Zed\DiscountPromotion\Business\Model\DiscountPromotionWriter;
 use Spryker\Zed\DiscountPromotion\Business\Model\Mapper\DiscountPromotionMapper;
 use Spryker\Zed\DiscountPromotion\DiscountPromotionDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
@@ -19,6 +24,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  * @method \Spryker\Zed\DiscountPromotion\DiscountPromotionConfig getConfig()
  * @method \Spryker\Zed\DiscountPromotion\Persistence\DiscountPromotionQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\DiscountPromotion\Persistence\DiscountPromotionEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\DiscountPromotion\Persistence\DiscountPromotionRepositoryInterface getRepository()
  */
 class DiscountPromotionBusinessFactory extends AbstractBusinessFactory
 {
@@ -39,15 +45,7 @@ class DiscountPromotionBusinessFactory extends AbstractBusinessFactory
      */
     protected function createPromotionAvailabilityCalculator()
     {
-        return new PromotionAvailabilityCalculator($this->getAvailabilityFacade(), $this->getLocaleFacade());
-    }
-
-    /**
-     * @return \Spryker\Zed\DiscountPromotion\Business\Model\DiscountPromotionWriterInterface
-     */
-    public function createDiscountPromotionWriter()
-    {
-        return new DiscountPromotionWriter($this->getQueryContainer(), $this->createDiscountPromotionMapper());
+        return new PromotionAvailabilityCalculator($this->getAvailabilityFacade());
     }
 
     /**
@@ -83,10 +81,26 @@ class DiscountPromotionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\DiscountPromotion\Dependency\Facade\DiscountPromotionToLocaleInterface
+     * @return \Spryker\Zed\DiscountPromotion\Business\DiscountPromotionCreator\DiscountPromotionCreatorInterface
      */
-    protected function getLocaleFacade()
+    public function createDiscountPromotionCreator(): DiscountPromotionCreatorInterface
     {
-        return $this->getProvidedDependency(DiscountPromotionDependencyProvider::FACADE_LOCALE);
+        return new DiscountPromotionCreator($this->getEntityManager());
+    }
+
+    /**
+     * @return \Spryker\Zed\DiscountPromotion\Business\DiscountPromotionUpdater\DiscountPromotionUpdaterInterface
+     */
+    public function createDiscountPromotionUpdater(): DiscountPromotionUpdaterInterface
+    {
+        return new DiscountPromotionUpdater($this->getEntityManager());
+    }
+
+    /**
+     * @return \Spryker\Zed\DiscountPromotion\Business\Cart\CartValidatorInterface
+     */
+    public function createCartValidator(): CartValidatorInterface
+    {
+        return new CartValidator();
     }
 }

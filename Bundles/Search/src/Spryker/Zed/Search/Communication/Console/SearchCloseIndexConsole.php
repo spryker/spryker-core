@@ -13,6 +13,8 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\SearchElasticsearch\Communication\Console\ElasticsearchCloseIndexConsole} instead.
+ *
  * @method \Spryker\Zed\Search\Business\SearchFacadeInterface getFacade()
  * @method \Spryker\Zed\Search\Communication\SearchCommunicationFactory getFactory()
  */
@@ -43,7 +45,7 @@ class SearchCloseIndexConsole extends Console
      *
      * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         if ($input->getOption(static::OPTION_ALL)) {
             return $this->closeAll();

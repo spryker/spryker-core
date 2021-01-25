@@ -9,6 +9,9 @@ namespace Spryker\Zed\SalesConfigurableBundle\Business\Expander;
 
 use Generated\Shared\Transfer\OrderTransfer;
 
+/**
+ * @deprecated Use {@link \Spryker\Zed\SalesConfigurableBundle\Business\Expander\ItemExpanderInterface} instead.
+ */
 interface SalesOrderConfiguredBundleExpanderInterface
 {
     /**

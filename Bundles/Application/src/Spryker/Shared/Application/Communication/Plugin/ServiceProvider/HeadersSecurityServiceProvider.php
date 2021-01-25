@@ -9,11 +9,11 @@ namespace Spryker\Shared\Application\Communication\Plugin\ServiceProvider;
 
 use Silex\Application;
 use Silex\ServiceProviderInterface;
-use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
- * @deprecated Use Spryker\Shared\Application\ServiceProvider\HeadersSecurityServiceProvider instead
+ * @deprecated Use {@link \Spryker\Shared\Application\ServiceProvider\HeadersSecurityServiceProvider} instead
  */
 class HeadersSecurityServiceProvider implements ServiceProviderInterface
 {
@@ -61,11 +61,11 @@ class HeadersSecurityServiceProvider implements ServiceProviderInterface
     /**
      * Sets security headers.
      *
-     * @param \Symfony\Component\HttpKernel\Event\FilterResponseEvent $event
+     * @param \Symfony\Component\HttpKernel\Event\ResponseEvent $event
      *
      * @return void
      */
-    public function onKernelResponse(FilterResponseEvent $event)
+    public function onKernelResponse(ResponseEvent $event)
     {
         if (!$event->isMasterRequest()) {
             return;

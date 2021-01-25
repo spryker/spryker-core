@@ -33,13 +33,13 @@ class MerchantRelationshipCreateForm extends AbstractType
     protected const FIELD_ASSIGNED_COMPANY_BUSINESS_UNIT = 'assigneeCompanyBusinessUnits';
 
     protected const  COMPANY_FIELD_LABEL = 'Company';
-    protected const  COMPANY_FIELD_PLACEHOLDER = 'Select company';
+    protected const  COMPANY_FIELD_PLACEHOLDER = 'Select Company';
     protected const  MERCHANT_FIELD_LABEL = 'Merchant';
     protected const  MERCHANT_FIELD_PLACEHOLDER = 'Select merchant';
-    protected const  FK_COMPANY_BUSINESS_UNIT_FIELD_LABEL = 'Business unit owner';
-    protected const  FK_COMPANY_BUSINESS_UNIT_FIELD_PLACEHOLDER = 'Select business unit';
-    protected const  ASSIGNED_COMPANY_BUSINESS_UNIT_FIELD_LABEL = 'Assigned business units';
-    protected const  ASSIGNED_COMPANY_BUSINESS_UNIT_FIELD_PLACEHOLDER = 'Select business units';
+    protected const  FK_COMPANY_BUSINESS_UNIT_FIELD_LABEL = 'Business Unit Owner';
+    protected const  FK_COMPANY_BUSINESS_UNIT_FIELD_PLACEHOLDER = 'Select Business Unit';
+    protected const  ASSIGNED_COMPANY_BUSINESS_UNIT_FIELD_LABEL = 'Assigned Business Units';
+    protected const  ASSIGNED_COMPANY_BUSINESS_UNIT_FIELD_PLACEHOLDER = 'Select Business Units';
 
     /**
      * @return string
@@ -79,6 +79,24 @@ class MerchantRelationshipCreateForm extends AbstractType
             $this
                 ->addOwnerCompanyBusinessUnitField($builder, $options)
                 ->addAssignedCompanyBusinessUnitField($builder, $options[static::OPTION_ASSIGNED_COMPANY_BUSINESS_UNIT_CHOICES]);
+        }
+
+        $this->executeMerchantRelationshipCreateFormExpanderPlugins($builder, $options);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return void
+     */
+    protected function executeMerchantRelationshipCreateFormExpanderPlugins(FormBuilderInterface $builder, array $options): void
+    {
+        $merchantRelationshipCreateFormExpanderPlugins = $this->getFactory()
+            ->getMerchantRelationshipCreateFormExpanderPlugins();
+
+        foreach ($merchantRelationshipCreateFormExpanderPlugins as $merchantRelationshipCreateFormExpanderPlugin) {
+            $builder = $merchantRelationshipCreateFormExpanderPlugin->expand($builder, $options);
         }
     }
 

@@ -11,26 +11,26 @@ interface CmsToTouchFacadeInterface
 {
     /**
      * @param string $itemType
-     * @param int $itemId
+     * @param int $idItem
      * @param bool $keyChange
      *
      * @return bool
      */
-    public function touchActive($itemType, $itemId, $keyChange = false);
+    public function touchActive($itemType, $idItem, $keyChange = false);
 
     /**
      * @param string $itemType
-     * @param int $itemId
+     * @param int $idItem
      *
      * @return bool
      */
-    public function touchInactive($itemType, $itemId);
+    public function touchInactive($itemType, $idItem);
 
     /**
      * @param string $itemType
-     * @param int $itemId
+     * @param int $idItem
      *
      * @return bool
      */
-    public function touchDeleted($itemType, $itemId);
+    public function touchDeleted($itemType, $idItem);
 }

@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * MIT License
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace SprykerTest\Zed\CmsSlotDataImport\Communication\Plugin;
@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
 use Spryker\Zed\CmsSlotDataImport\Communication\Plugin\CmsSlotDataImportPlugin;
+use Spryker\Zed\DataImport\Business\Exception\DataImportException;
 
 /**
  * Auto-generated group annotations
@@ -62,12 +63,11 @@ class CmsSlotDataImportPluginTest extends Unit
     }
 
     /**
-     * @expectedException \Spryker\Zed\DataImport\Business\Exception\DataImportException
-     *
      * @return void
      */
     public function testCmsSlotImportWithInvalidDataThrowsException(): void
     {
+        $this->expectException(DataImportException::class);
         $this->tester->hasCmsSlotTemplate([
             CmsSlotTemplateTransfer::PATH => static::CMS_SLOT_TEMPLATE_PATH,
             CmsSlotTemplateTransfer::NAME => static::CMS_SLOT_TEMPLATE_NAME,

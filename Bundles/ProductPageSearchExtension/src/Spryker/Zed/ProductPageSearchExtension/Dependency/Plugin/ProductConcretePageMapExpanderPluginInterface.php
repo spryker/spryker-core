@@ -26,5 +26,10 @@ interface ProductConcretePageMapExpanderPluginInterface
      *
      * @return \Generated\Shared\Transfer\PageMapTransfer
      */
-    public function expand(PageMapTransfer $pageMapTransfer, PageMapBuilderInterface $pageMapBuilder, array $productData, LocaleTransfer $localeTransfer): PageMapTransfer;
+    public function expand(
+        PageMapTransfer $pageMapTransfer,
+        PageMapBuilderInterface $pageMapBuilder,
+        array $productData,
+        LocaleTransfer $localeTransfer
+    ): PageMapTransfer;
 }

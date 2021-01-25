@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\Event\Business\Dispatcher;
 use Codeception\Test\Unit;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Zed\Event\Business\Dispatcher\EventDispatcher;
+use Spryker\Zed\Event\Business\Dispatcher\EventDispatcherInterface;
 use Spryker\Zed\Event\Business\Logger\EventLoggerInterface;
 use Spryker\Zed\Event\Business\Queue\Producer\EventQueueProducerInterface;
 use Spryker\Zed\Event\Dependency\EventCollection;
@@ -36,7 +37,7 @@ class EventDispatcherTest extends Unit
     /**
      * @return void
      */
-    public function testTriggerWhenSynchronousEventTriggeredShouldInvokeHandle()
+    public function testTriggerWhenSynchronousEventTriggeredShouldInvokeHandle(): void
     {
         $eventCollection = $this->createEventCollection();
 
@@ -58,7 +59,7 @@ class EventDispatcherTest extends Unit
     /**
      * @return void
      */
-    public function testTriggerWhenAsynchronousEventTriggeredShouldWriteToQueue()
+    public function testTriggerWhenAsynchronousEventTriggeredShouldWriteToQueue(): void
     {
         $transferMocks = [];
         $transferMocks[] = $this->createTransferMock();
@@ -85,7 +86,7 @@ class EventDispatcherTest extends Unit
     /**
      * @return void
      */
-    public function testTriggerBulkWhenAsynchronousEventTriggeredShouldWriteToQueue()
+    public function testTriggerBulkWhenAsynchronousEventTriggeredShouldWriteToQueue(): void
     {
         $eventCollection = $this->createEventCollection();
         $transferMock = $this->createTransferMock();
@@ -109,7 +110,7 @@ class EventDispatcherTest extends Unit
     /**
      * @return void
      */
-    public function testTriggerWhenEventHandledShouldLogIt()
+    public function testTriggerWhenEventHandledShouldLogIt(): void
     {
         $eventCollection = $this->createEventCollection();
         $transferMock = $this->createTransferMock();
@@ -142,8 +143,7 @@ class EventDispatcherTest extends Unit
         EventCollectionInterface $eventCollection,
         ?EventQueueProducerInterface $queueProducerMock = null,
         ?EventLoggerInterface $eventLoggerMock = null
-    ) {
-
+    ): EventDispatcherInterface {
         if ($queueProducerMock === null) {
             $queueProducerMock = $this->createQueueProducerMock();
         }
@@ -160,7 +160,7 @@ class EventDispatcherTest extends Unit
     /**
      * @return \Spryker\Zed\Event\Dependency\EventCollectionInterface
      */
-    protected function createEventCollection()
+    protected function createEventCollection(): EventCollectionInterface
     {
         return new EventCollection();
     }
@@ -168,7 +168,7 @@ class EventDispatcherTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Event\Business\Queue\Producer\EventQueueProducerInterface
      */
-    protected function createQueueProducerMock()
+    protected function createQueueProducerMock(): EventQueueProducerInterface
     {
         return $this->getMockBuilder(EventQueueProducerInterface::class)
             ->getMock();
@@ -177,7 +177,7 @@ class EventDispatcherTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Event\Business\Logger\EventLoggerInterface
      */
-    protected function createEventLoggerMock()
+    protected function createEventLoggerMock(): EventLoggerInterface
     {
         return $this->getMockBuilder(EventLoggerInterface::class)
             ->getMock();
@@ -186,16 +186,16 @@ class EventDispatcherTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Event\Dependency\Plugin\EventHandlerInterface
      */
-    protected function createEventListenerMock()
+    protected function createEventListenerMock(): EventHandlerInterface
     {
         return $this->getMockBuilder(EventHandlerInterface::class)
             ->getMock();
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createTransferMock()
+    protected function createTransferMock(): TransferInterface
     {
         return $this->getMockBuilder(TransferInterface::class)
             ->getMock();
@@ -204,7 +204,7 @@ class EventDispatcherTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Event\Dependency\Service\EventToUtilEncodingInterface
      */
-    protected function createUtilEncodingMock()
+    protected function createUtilEncodingMock(): EventToUtilEncodingInterface
     {
         return $this->getMockBuilder(EventToUtilEncodingInterface::class)
             ->getMock();

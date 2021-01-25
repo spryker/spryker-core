@@ -59,13 +59,13 @@ class CmsBlockCollectorFacadeTest extends Unit
     protected $cmsBlockCollector;
 
     /**
-     * @uses CmsBlockCollectorFacadeInterface::getFactory()
-     * @uses CmsBlockCollectorBusinessFactory::getCollectorFacade()
-     * @uses CmsBlockCollectorBusinessFactory::createStorageCmsBlockCollector()
+     * @uses \Spryker\Zed\CmsBlockCollector\Business\CmsBlockCollectorFacade::getFactory()
+     * @uses \Spryker\Zed\CmsBlockCollector\Business\CmsBlockCollectorBusinessFactory::getCollectorFacade()
+     * @uses \Spryker\Zed\CmsBlockCollector\Business\CmsBlockCollectorBusinessFactory::createStorageCmsBlockCollector()
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -121,7 +121,7 @@ class CmsBlockCollectorFacadeTest extends Unit
      *
      * @return void
      */
-    public function testStorageCmsBlockCollectorCallsRunCollector()
+    public function testStorageCmsBlockCollectorCallsRunCollector(): void
     {
         $this->collectorFacadeMock
             ->expects($this->exactly(1))

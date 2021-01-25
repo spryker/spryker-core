@@ -1,0 +1,42 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 58,
+            "line_to": 58,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of urldecode cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/UrlsRestApi/src/Spryker/Glue/UrlsRestApi/Processor/Url/Resolver/UrlResolver.php",
+            "snippet": "        $urlRequestParameter = urldecode($restRequest->getHttpRequest()->query->get(static::URL_REQUEST_PARAMETER));",
+            "selected_text": "$restRequest->getHttpRequest()->query->get(static::URL_REQUEST_PARAMETER)",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 96,
+            "line_to": 96,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Glue\\UrlsRestApi\\Dependency\\Client\\UrlsRestApiToUrlStorageClientInterface::findUrlRedirectStorageById cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/UrlsRestApi/src/Spryker/Glue/UrlsRestApi/Processor/Url/Resolver/UrlResolver.php",
+            "snippet": "            $urlStorageTransfer->getFkResourceRedirect()",
+            "selected_text": "$urlStorageTransfer->getFkResourceRedirect()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 103,
+            "line_to": 103,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Glue\\UrlsRestApi\\Processor\\Url\\Resolver\\UrlResolver::getUrlStorageTransfer cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/UrlsRestApi/src/Spryker/Glue/UrlsRestApi/Processor/Url/Resolver/UrlResolver.php",
+            "snippet": "        return $this->getUrlStorageTransfer($urlRedirectStorageTransfer->getToUrl());",
+            "selected_text": "$urlRedirectStorageTransfer->getToUrl()",
+            "error_level": 3,
+            "shortcode": 78
+        }
+    ],
+    "deprecation": []
+}

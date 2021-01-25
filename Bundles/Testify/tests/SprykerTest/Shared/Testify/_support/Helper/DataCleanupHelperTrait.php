@@ -10,11 +10,14 @@ namespace SprykerTest\Shared\Testify\Helper;
 trait DataCleanupHelperTrait
 {
     /**
-     * @return \Codeception\Module|\SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+     * @return \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
      */
     private function getDataCleanupHelper()
     {
-        return $this->getModule('\\' . DataCleanupHelper::class);
+        /** @var \SprykerTest\Shared\Testify\Helper\DataCleanupHelper $dataCleanerHelper */
+        $dataCleanerHelper = $this->getModule('\\' . DataCleanupHelper::class);
+
+        return $dataCleanerHelper;
     }
 
     /**

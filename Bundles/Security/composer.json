@@ -1,0 +1,57 @@
+{
+  "name": "spryker/security",
+  "type": "library",
+  "description": "Security module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.3",
+    "spryker/application-extension": "^1.0.0",
+    "spryker/kernel": "^3.52.0",
+    "spryker/security-extension": "^1.0.0",
+    "spryker/symfony": "^3.5.0",
+    "spryker/validator-extension": "^1.0.0"
+  },
+  "require-dev": {
+    "spryker/application": "*",
+    "spryker/code-sniffer": "*",
+    "spryker/container": "*",
+    "spryker/event-dispatcher": "*",
+    "spryker/event-dispatcher-extension": "*",
+    "spryker/log": "*",
+    "spryker/router": "*",
+    "spryker/session": "*",
+    "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/container": "Add this module to use the Container.",
+    "spryker/event-dispatcher": "Add this module to use the EventDispatcher.",
+    "spryker/event-dispatcher-extension": "Add this module to use the EventDispatcherExtension.",
+    "spryker/log": "Add this module when you want to use the Logger."
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Yves\\Security\\Helper\\": "tests/SprykerTest/Yves/Security/_support/Helper/",
+      "SprykerTest\\Zed\\Security\\Helper\\": "tests/SprykerTest/Zed/Security/_support/Helper/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerTest\\": "tests/SprykerTest/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

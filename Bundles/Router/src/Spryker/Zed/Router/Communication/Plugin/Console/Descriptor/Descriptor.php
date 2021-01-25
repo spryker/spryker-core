@@ -36,9 +36,11 @@ abstract class Descriptor implements DescriptorInterface
         switch (true) {
             case $object instanceof RouteCollection:
                 $this->describeRouteCollection($object, $options);
+
                 break;
             case $object instanceof Route:
                 $this->describeRoute($object, $options);
+
                 break;
             default:
                 throw new InvalidArgumentException(sprintf('Object of type "%s" is not describable.', get_class($object)));

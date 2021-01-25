@@ -1,0 +1,162 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 30,
+            "line_to": 30,
+            "type": "InvalidNullableReturnType",
+            "message": "The declared return type 'string' for Spryker\\Zed\\ApiQueryBuilder\\Dependency\\Service\\ApiQueryBuilderToUtilEncodingBridge::encodeJson is not nullable, but 'null|string' contains null",
+            "file_name": "vendor/spryker/spryker/Bundles/ApiQueryBuilder/src/Spryker/Zed/ApiQueryBuilder/Dependency/Service/ApiQueryBuilderToUtilEncodingBridge.php",
+            "snippet": "     * @return string",
+            "selected_text": "string",
+            "error_level": 5,
+            "shortcode": 144
+        },
+        {
+            "severity": "info",
+            "line_from": 34,
+            "line_to": 34,
+            "type": "NullableReturnStatement",
+            "message": "The declared return type 'string' for Spryker\\Zed\\ApiQueryBuilder\\Dependency\\Service\\ApiQueryBuilderToUtilEncodingBridge::encodeJson is not nullable, but the function returns 'null|string'",
+            "file_name": "vendor/spryker/spryker/Bundles/ApiQueryBuilder/src/Spryker/Zed/ApiQueryBuilder/Dependency/Service/ApiQueryBuilderToUtilEncodingBridge.php",
+            "snippet": "        return $this->utilEncodingService->encodeJson($value, $options, $depth);",
+            "selected_text": "$this->utilEncodingService->encodeJson($value, $options, $depth)",
+            "error_level": 5,
+            "shortcode": 139
+        },
+        {
+            "severity": "info",
+            "line_from": 55,
+            "line_to": 55,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method requireFilter on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ApiQueryBuilder/src/Spryker/Zed/ApiQueryBuilder/Persistence/Mapper/ApiRequestMapper.php",
+            "snippet": "        $apiQueryBuilderQueryTransfer->getApiRequest()->requireFilter();",
+            "selected_text": "requireFilter",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 58,
+            "line_to": 58,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ApiQueryBuilder\\Persistence\\Mapper\\ApiRequestMapper::expandResourceCriteria cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ApiQueryBuilder/src/Spryker/Zed/ApiQueryBuilder/Persistence/Mapper/ApiRequestMapper.php",
+            "snippet": "        $criteriaTransfer = $this->expandResourceCriteria($apiQueryBuilderQueryTransfer->getApiRequest(), $criteriaTransfer);",
+            "selected_text": "$apiQueryBuilderQueryTransfer->getApiRequest()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 87,
+            "line_to": 87,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method requireFilter on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ApiQueryBuilder/src/Spryker/Zed/ApiQueryBuilder/Persistence/Mapper/ApiRequestMapper.php",
+            "snippet": "        $apiQueryBuilderQueryTransfer->getApiRequest()->requireFilter();",
+            "selected_text": "requireFilter",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 90,
+            "line_to": 90,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ApiQueryBuilder\\Dependency\\QueryContainer\\ApiQueryBuilderToPropelQueryBuilderInterface::createPropelQueryBuilderCriteriaFromJson cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ApiQueryBuilder/src/Spryker/Zed/ApiQueryBuilder/Persistence/Mapper/ApiRequestMapper.php",
+            "snippet": "            $apiQueryBuilderQueryTransfer->getApiRequest()->getFilter()->getCriteriaJson()",
+            "selected_text": "$apiQueryBuilderQueryTransfer->getApiRequest()->getFilter()->getCriteriaJson()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 90,
+            "line_to": 90,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getFilter on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ApiQueryBuilder/src/Spryker/Zed/ApiQueryBuilder/Persistence/Mapper/ApiRequestMapper.php",
+            "snippet": "            $apiQueryBuilderQueryTransfer->getApiRequest()->getFilter()->getCriteriaJson()",
+            "selected_text": "getFilter",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 90,
+            "line_to": 90,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getCriteriaJson on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ApiQueryBuilder/src/Spryker/Zed/ApiQueryBuilder/Persistence/Mapper/ApiRequestMapper.php",
+            "snippet": "            $apiQueryBuilderQueryTransfer->getApiRequest()->getFilter()->getCriteriaJson()",
+            "selected_text": "getCriteriaJson",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 111,
+            "line_to": 111,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getFields on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ApiQueryBuilder/src/Spryker/Zed/ApiQueryBuilder/Persistence/Mapper/ApiRequestMapper.php",
+            "snippet": "            $apiRequestTransfer->getFilter()->getFields(),",
+            "selected_text": "getFields",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 112,
+            "line_to": 112,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Zed\\ApiQueryBuilder\\Persistence\\Mapper\\ApiRequestMapper::buildColumnSelection cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ApiQueryBuilder/src/Spryker/Zed/ApiQueryBuilder/Persistence/Mapper/ApiRequestMapper.php",
+            "snippet": "            $criteriaTransfer->getColumnSelection()",
+            "selected_text": "$criteriaTransfer->getColumnSelection()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 116,
+            "line_to": 116,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ApiQueryBuilder\\Persistence\\Mapper\\ApiRequestMapper::buildPagination cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ApiQueryBuilder/src/Spryker/Zed/ApiQueryBuilder/Persistence/Mapper/ApiRequestMapper.php",
+            "snippet": "            $apiRequestTransfer->getFilter(),",
+            "selected_text": "$apiRequestTransfer->getFilter()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 117,
+            "line_to": 117,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Zed\\ApiQueryBuilder\\Persistence\\Mapper\\ApiRequestMapper::buildPagination cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ApiQueryBuilder/src/Spryker/Zed/ApiQueryBuilder/Persistence/Mapper/ApiRequestMapper.php",
+            "snippet": "            $criteriaTransfer->getColumnSelection()",
+            "selected_text": "$criteriaTransfer->getColumnSelection()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 183,
+            "line_to": 183,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of mb_strtolower cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ApiQueryBuilder/src/Spryker/Zed/ApiQueryBuilder/Persistence/Mapper/ApiRequestMapper.php",
+            "snippet": "            if (mb_strtolower($columnAlias) === mb_strtolower($columnTransfer->getAlias())) {",
+            "selected_text": "$columnTransfer->getAlias()",
+            "error_level": 3,
+            "shortcode": 78
+        }
+    ],
+    "deprecation": []
+}

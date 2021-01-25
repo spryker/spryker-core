@@ -29,7 +29,7 @@ class CacheClearerTest extends Unit
     /**
      * @return void
      */
-    public function testClearCacheEmptiesDirectories()
+    public function testClearCacheEmptiesDirectories(): void
     {
         $configMock = $this->getConfigMock(['DE']);
         $configMock
@@ -61,7 +61,7 @@ class CacheClearerTest extends Unit
     /**
      * @return void
      */
-    public function testClearAutoLoadCacheEmptiesDirectories()
+    public function testClearAutoLoadCacheEmptiesDirectories(): void
     {
         $configMock = $this->getConfigMock(['DE']);
         $configMock
@@ -93,7 +93,7 @@ class CacheClearerTest extends Unit
     /**
      * @return void
      */
-    public function testClearingOfFilesForAllStores()
+    public function testClearingOfFilesForAllStores(): void
     {
         $configMock = $this->getConfigMock(['DE', 'EN']);
         $configMock
@@ -133,7 +133,7 @@ class CacheClearerTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Cache\CacheConfig
      */
-    protected function getConfigMock(array $stores)
+    protected function getConfigMock(array $stores): CacheConfig
     {
         $mock = $this
             ->getMockBuilder(CacheConfig::class)
@@ -156,7 +156,7 @@ class CacheClearerTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\Filesystem\Filesystem
      */
-    protected function getFileSystemMock()
+    protected function getFileSystemMock(): Filesystem
     {
         $mock = $this
             ->getMockBuilder(Filesystem::class)
@@ -168,7 +168,7 @@ class CacheClearerTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\Finder\Finder
      */
-    protected function getFinderMock()
+    protected function getFinderMock(): Finder
     {
         return $this
             ->getMockBuilder(Finder::class)

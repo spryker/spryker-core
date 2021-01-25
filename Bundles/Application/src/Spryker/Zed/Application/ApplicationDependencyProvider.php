@@ -30,12 +30,20 @@ use Spryker\Zed\Kernel\Container;
  */
 class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const SERVICE_ENCODING = 'util encoding service';
     public const SERVICE_PROVIDER = 'SERVICE_PROVIDER';
     public const SERVICE_PROVIDER_API = 'SERVICE_PROVIDER_API';
     public const INTERNAL_CALL_SERVICE_PROVIDER = 'INTERNAL_CALL_SERVICE_PROVIDER';
     public const INTERNAL_CALL_SERVICE_PROVIDER_WITH_AUTHENTICATION = 'INTERNAL_CALL_SERVICE_PROVIDER_WITH_AUTHENTICATION';
     public const PLUGINS_APPLICATION = 'PLUGINS_APPLICATION';
+
+    /**
+     * @deprecated Will be removed without replacement.
+     */
+    public const SERVICE_ENCODING = 'util encoding service';
+
+    /**
+     * @deprecated Will be removed without replacement.
+     */
     public const ENVIRONMENT = 'ENVIRONMENT';
 
     /**
@@ -57,50 +65,83 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
+        $container = $this->addApplicationPlugins($container);
         $container = $this->addServiceProviders($container);
         $container = $this->addApiServiceProviders($container);
         $container = $this->addInternalCallServiceProviders($container);
         $container = $this->addInternalCallServiceProvidersWithAuthentication($container);
-        $container = $this->addApplicationPlugins($container);
 
         return $container;
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addApplicationPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_APPLICATION, function (Container $container): array {
+            return $this->getApplicationPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[]
+     */
+    protected function getApplicationPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
      */
     protected function addUtilEncodingService(Container $container)
     {
-        $container[static::SERVICE_ENCODING] = function (Container $container) {
+        $container->set(static::SERVICE_ENCODING, function (Container $container) {
             return $container->getLocator()->utilEncoding()->service();
-        };
+        });
 
         return $container;
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Application\ApplicationDependencyProvider::addApplicationPlugins()} instead.
+     *
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
      */
     protected function addServiceProviders(Container $container)
     {
-        $container[self::SERVICE_PROVIDER] = function (Container $container) {
+        $container->set(static::SERVICE_PROVIDER, function (Container $container) {
             return $this->getServiceProviders($container);
-        };
+        });
 
         return $container;
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Application\ApplicationDependencyProvider::getApplicationPlugins()} instead.
+     *
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Silex\ServiceProviderInterface[]
      */
     protected function getServiceProviders(Container $container)
     {
+        trigger_error(
+            '\Spryker\Zed\Application\ApplicationDependencyProvider::getServiceProviders is deprecated, please copy all required ServiceProvider and remove the call to this method',
+            E_USER_DEPRECATED
+        );
+
         $providers = [
             new TwigGlobalVariablesServiceProvider(),
             new RequestServiceProvider(),
@@ -132,7 +173,7 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @deprecated Use getServiceProviders() instead.
+     * @deprecated Use {@link getServiceProviders()} instead.
      *
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -144,20 +185,24 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Application\ApplicationDependencyProvider::addApplicationPlugins()} instead.
+     *
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
      */
     protected function addApiServiceProviders(Container $container)
     {
-        $container[self::SERVICE_PROVIDER_API] = function (Container $container) {
+        $container->set(static::SERVICE_PROVIDER_API, function (Container $container) {
             return $this->getApiServiceProviders($container);
-        };
+        });
 
         return $container;
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Application\ApplicationDependencyProvider::getApplicationPlugins()} instead.
+     *
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Silex\ServiceProviderInterface[]
@@ -168,7 +213,7 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @deprecated Use `ApplicationDependencyProvider::addServiceProviders()` instead.
+     * @deprecated Use {@link addServiceProviders()} instead.
      *
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -176,15 +221,15 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addInternalCallServiceProviders(Container $container)
     {
-        $container[self::INTERNAL_CALL_SERVICE_PROVIDER] = function (Container $container) {
+        $container->set(static::INTERNAL_CALL_SERVICE_PROVIDER, function (Container $container) {
             return $this->getInternalCallServiceProviders($container);
-        };
+        });
 
         return $container;
     }
 
     /**
-     * @deprecated Use `ApplicationDependencyProvider::getServiceProviders()` instead.
+     * @deprecated Use {@link getServiceProviders()} instead.
      *
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -196,7 +241,7 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @deprecated Use `ApplicationDependencyProvider::addServiceProviders()` instead.
+     * @deprecated Use {@link addServiceProviders()} instead.
      *
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -204,43 +249,21 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addInternalCallServiceProvidersWithAuthentication(Container $container)
     {
-        $container[self::INTERNAL_CALL_SERVICE_PROVIDER_WITH_AUTHENTICATION] = function (Container $container) {
+        $container->set(static::INTERNAL_CALL_SERVICE_PROVIDER_WITH_AUTHENTICATION, function (Container $container) {
             return $this->getInternalCallServiceProvidersWithAuthentication($container);
-        };
-
-        return $container;
-    }
-
-    /**
-     * @deprecated Use `ApplicationDependencyProvider::getServiceProviders()` instead.
-     *
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Silex\ServiceProviderInterface[]
-     */
-    protected function getInternalCallServiceProvidersWithAuthentication(Container $container)
-    {
-        return [];
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addApplicationPlugins(Container $container): Container
-    {
-        $container->set(static::PLUGINS_APPLICATION, function (Container $container): array {
-            return $this->getApplicationPlugins();
         });
 
         return $container;
     }
 
     /**
-     * @return \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[]
+     * @deprecated Use {@link getServiceProviders()} instead.
+     *
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Silex\ServiceProviderInterface[]
      */
-    protected function getApplicationPlugins(): array
+    protected function getInternalCallServiceProvidersWithAuthentication(Container $container)
     {
         return [];
     }

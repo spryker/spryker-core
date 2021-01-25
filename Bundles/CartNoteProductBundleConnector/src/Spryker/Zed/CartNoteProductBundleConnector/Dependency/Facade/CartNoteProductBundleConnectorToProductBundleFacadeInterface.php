@@ -18,5 +18,5 @@ interface CartNoteProductBundleConnectorToProductBundleFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    public function findBundleItemsInQuote(QuoteTransfer $quoteTransfer, $sku, $groupKey);
+    public function findBundleItemsInQuote(QuoteTransfer $quoteTransfer, $sku, $groupKey): array;
 }

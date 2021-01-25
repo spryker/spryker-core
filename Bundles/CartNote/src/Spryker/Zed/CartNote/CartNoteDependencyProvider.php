@@ -52,9 +52,9 @@ class CartNoteDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addSalesOrderQuery(Container $container): Container
     {
-        $container[static::SALES_ORDER_QUERY] = function (Container $container) {
+        $container->set(static::SALES_ORDER_QUERY, $container->factory(function () {
             return SpySalesOrderQuery::create();
-        };
+        }));
 
         return $container;
     }
@@ -66,9 +66,9 @@ class CartNoteDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addQuoteFacade(Container $container): Container
     {
-        $container[static::FACADE_QUOTE] = function (Container $container) {
+        $container->set(static::FACADE_QUOTE, function (Container $container) {
             return new CartNoteToQuoteFacadeBridge($container->getLocator()->quote()->facade());
-        };
+        });
 
         return $container;
     }
@@ -80,9 +80,9 @@ class CartNoteDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addQuoteItemsFinderPlugin(Container $container): Container
     {
-        $container[static::PLUGIN_QUOTE_ITEMS_FINDER] = function (Container $container) {
+        $container->set(static::PLUGIN_QUOTE_ITEMS_FINDER, function (Container $container) {
             return $this->getQuoteItemsFinderPlugin();
-        };
+        });
 
         return $container;
     }

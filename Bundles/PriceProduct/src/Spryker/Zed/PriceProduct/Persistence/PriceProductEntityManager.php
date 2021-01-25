@@ -19,7 +19,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 class PriceProductEntityManager extends AbstractEntityManager implements PriceProductEntityManagerInterface
 {
     /**
-     * @deprecated Use \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductStoreWriter::deleteOrphanPriceProductStoreEntities() instead.
+     * @deprecated Use {@link \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductStoreWriter::deleteOrphanPriceProductStoreEntities()} instead.
      *
      * @return void
      */
@@ -130,12 +130,16 @@ class PriceProductEntityManager extends AbstractEntityManager implements PricePr
             ->requireFkPriceType()
             ->requireIdProduct();
 
-        return $this->getFactory()
+        /** @var \Orm\Zed\PriceProduct\Persistence\SpyPriceProduct $priceProductEntity */
+        $priceProductEntity = $this->getFactory()
             ->createPriceProductQuery()
             ->filterByFKProduct($priceProductTransfer->getIdProduct())
             ->filterByFkPriceType($priceProductTransfer->getFkPriceType())
-            ->findOneOrCreate()
-            ->save();
+            ->findOneOrCreate();
+
+        $priceProductEntity->save();
+
+        return $priceProductEntity->getIdPriceProduct();
     }
 
     /**
@@ -149,11 +153,15 @@ class PriceProductEntityManager extends AbstractEntityManager implements PricePr
             ->requireFkPriceType()
             ->requireIdProductAbstract();
 
-        return $this->getFactory()
+        /** @var \Orm\Zed\PriceProduct\Persistence\SpyPriceProduct $priceProductEntity */
+        $priceProductEntity = $this->getFactory()
             ->createPriceProductQuery()
             ->filterByFkProductAbstract($priceProductTransfer->getIdProductAbstract())
             ->filterByFkPriceType($priceProductTransfer->getFkPriceType())
-            ->findOneOrCreate()
-            ->save();
+            ->findOneOrCreate();
+
+        $priceProductEntity->save();
+
+        return $priceProductEntity->getIdPriceProduct();
     }
 }

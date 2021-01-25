@@ -17,24 +17,21 @@ use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 class ProductFormEditDataProvider extends AbstractProductFormDataProvider
 {
     /**
-     * @param int $idProductAbstract
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param array|null $priceDimension
      *
      * @return array
      */
-    public function getData($idProductAbstract, ?array $priceDimension = null)
+    public function getData(ProductAbstractTransfer $productAbstractTransfer, ?array $priceDimension = null)
     {
         $formData = $this->getDefaultFormFields($priceDimension);
-        $productAbstractTransfer = $this->productFacade->findProductAbstractById($idProductAbstract);
 
-        if ($productAbstractTransfer) {
-            $formData = $this->appendGeneralAndSeoData($productAbstractTransfer, $formData);
-            $formData = $this->appendPriceAndTax($productAbstractTransfer, $formData);
-            $formData = $this->appendAbstractProductImages($productAbstractTransfer, $formData);
-            $formData = $this->appendStoreRelation($productAbstractTransfer, $formData);
+        $formData = $this->appendGeneralAndSeoData($productAbstractTransfer, $formData);
+        $formData = $this->appendPriceAndTax($productAbstractTransfer, $formData);
+        $formData = $this->appendAbstractProductImages($productAbstractTransfer, $formData);
+        $formData = $this->appendStoreRelation($productAbstractTransfer, $formData);
 
-            $formData[ProductFormAdd::FIELD_ID_PRODUCT_ABSTRACT] = $productAbstractTransfer->getIdProductAbstract();
-        }
+        $formData[ProductFormAdd::FIELD_ID_PRODUCT_ABSTRACT] = $productAbstractTransfer->getIdProductAbstract();
 
         return $formData;
     }

@@ -20,12 +20,25 @@
     <transfer name="ProductPageSearch">
         <property name="averageRating" type="float"/>
         <property name="reviewCount" type="int"/>
+        <property name="idProductAbstract" type="int"/>
     </transfer>
 
 
     <transfer name="ProductPayload">
         <property name="averageRating" type="float"/>
         <property name="reviewCount" type="int"/>
+        <property name="idProductAbstract" type="int"/>
+    </transfer>
+
+    <transfer name="ProductPageLoad">
+        <property name="productAbstractIds" type="array" singular="productAbstractIds"/>
+        <property name="payloadTransfers" type="array" singular="payloadTransfers"/>
+    </transfer>
+
+    <transfer name="Locale">
+    </transfer>
+
+    <transfer name="PageMap">
     </transfer>
 
 </transfers>

@@ -1,0 +1,90 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 75,
+            "line_to": 75,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getTemplatePath on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsContentWidgetCmsBlockConnector/src/Spryker/Yves/CmsContentWidgetCmsBlockConnector/Plugin/CmsContentWidget/CmsBlockContentWidgetPlugin.php",
+            "snippet": "                    $cmsBlockTransfer->getCmsBlockTemplate()->getTemplatePath() :",
+            "selected_text": "getTemplatePath",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 78,
+            "line_to": 78,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Twig\\Environment::render cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsContentWidgetCmsBlockConnector/src/Spryker/Yves/CmsContentWidgetCmsBlockConnector/Plugin/CmsContentWidget/CmsBlockContentWidgetPlugin.php",
+            "snippet": "                $rendered .= $twig->render($templatePath, [",
+            "selected_text": "$templatePath",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 124,
+            "line_to": 124,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getTemplatePath on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsContentWidgetCmsBlockConnector/src/Spryker/Yves/CmsContentWidgetCmsBlockConnector/Plugin/CmsContentWidget/CmsBlockContentWidgetPlugin.php",
+            "snippet": "        return $cmsBlockData->getCmsBlockTemplate()->getTemplatePath() !== null;",
+            "selected_text": "getTemplatePath",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 137,
+            "line_to": 137,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of DateTime::__construct cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsContentWidgetCmsBlockConnector/src/Spryker/Yves/CmsContentWidgetCmsBlockConnector/Plugin/CmsContentWidget/CmsBlockContentWidgetPlugin.php",
+            "snippet": "            $validFrom = new DateTime($cmsBlockTransfer->getValidFrom());",
+            "selected_text": "$cmsBlockTransfer->getValidFrom()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 145,
+            "line_to": 145,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of DateTime::__construct cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsContentWidgetCmsBlockConnector/src/Spryker/Yves/CmsContentWidgetCmsBlockConnector/Plugin/CmsContentWidget/CmsBlockContentWidgetPlugin.php",
+            "snippet": "            $validTo = new DateTime($cmsBlockTransfer->getValidTo());",
+            "selected_text": "$cmsBlockTransfer->getValidTo()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 163,
+            "line_to": 163,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getGlossaryPlaceholders on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsContentWidgetCmsBlockConnector/src/Spryker/Yves/CmsContentWidgetCmsBlockConnector/Plugin/CmsContentWidget/CmsBlockContentWidgetPlugin.php",
+            "snippet": "        foreach ($cmsBlockTransfer->getGlossary()->getGlossaryPlaceholders() as $cmsBlockGlossaryPlaceholderTransfer) {",
+            "selected_text": "getGlossaryPlaceholders",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 164,
+            "line_to": 164,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $placeholders[mixed|null|string] using possibly null offset mixed|null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsContentWidgetCmsBlockConnector/src/Spryker/Yves/CmsContentWidgetCmsBlockConnector/Plugin/CmsContentWidget/CmsBlockContentWidgetPlugin.php",
+            "snippet": "            $placeholders[$cmsBlockGlossaryPlaceholderTransfer->getPlaceholder()] = $cmsBlockGlossaryPlaceholderTransfer->getTranslationKey();",
+            "selected_text": "$placeholders",
+            "error_level": 3,
+            "shortcode": 125
+        }
+    ],
+    "deprecation": []
+}

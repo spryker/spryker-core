@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Cart\Communication\Controller;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CartItemReplaceTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
@@ -40,11 +41,31 @@ class GatewayController extends AbstractGatewayController
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function addToCartAction(CartChangeTransfer $cartChangeTransfer): QuoteResponseTransfer
+    {
+        return $this->getFacade()->addToCart($cartChangeTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function removeItemAction(CartChangeTransfer $cartChangeTransfer)
     {
         return $this->getFacade()->remove($cartChangeTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function removeFromCartAction(CartChangeTransfer $cartChangeTransfer): QuoteResponseTransfer
+    {
+        return $this->getFacade()->removeFromCart($cartChangeTransfer);
     }
 
     /**
@@ -75,5 +96,15 @@ class GatewayController extends AbstractGatewayController
     public function resetQuoteLockAction(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
         return $this->getFacade()->resetQuoteLock($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartItemReplaceTransfer $cartItemReplaceTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function replaceItemAction(CartItemReplaceTransfer $cartItemReplaceTransfer): QuoteResponseTransfer
+    {
+        return $this->getFacade()->replaceItem($cartItemReplaceTransfer);
     }
 }

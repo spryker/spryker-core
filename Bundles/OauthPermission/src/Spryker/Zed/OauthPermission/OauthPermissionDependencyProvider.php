@@ -41,11 +41,11 @@ class OauthPermissionDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addPermissionFacade(Container $container): Container
     {
-        $container[static::FACADE_PERMISSION] = function (Container $container) {
+        $container->set(static::FACADE_PERMISSION, function (Container $container) {
             return new OauthPermissionToPermissionFacadeBridge(
                 $container->getLocator()->permission()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -57,11 +57,11 @@ class OauthPermissionDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCompanyUserFacade(Container $container): Container
     {
-        $container[static::FACADE_COMPANY_USER] = function (Container $container) {
+        $container->set(static::FACADE_COMPANY_USER, function (Container $container) {
             return new OauthPermissionToCompanyUserFacadeBridge(
                 $container->getLocator()->companyUser()->facade()
             );
-        };
+        });
 
         return $container;
     }

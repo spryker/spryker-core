@@ -4,7 +4,7 @@
   "description": "Tax module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.3",
     "spryker/calculation": "^4.0.0",
     "spryker/country": "^3.0.0",
     "spryker/gui": "^3.7.0",
@@ -16,8 +16,15 @@
   },
   "require-dev": {
     "spryker/application": "*",
+    "spryker/code-sniffer": "*",
+    "spryker/container": "*",
+    "spryker/event-dispatcher": "*",
+    "spryker/form": "*",
     "spryker/propel": "*",
+    "spryker/router": "*",
     "spryker/testify": "*",
+    "spryker/twig": "*",
+    "spryker/validator": "*",
     "spryker/zed-navigation": "*"
   },
   "autoload": {
@@ -33,9 +40,13 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+  },
   "extra": {
     "branch-alias": {
-      "dev-master": "4.0.x-dev"
+      "dev-master": "5.0.x-dev"
     }
   },
   "config": {

@@ -47,10 +47,8 @@ class VoucherController extends AbstractController
 
         if ($affectedRows > 0) {
             $this->addSuccessMessage(
-                sprintf(
-                    'Successfully deleted "%d" vouchers.',
-                    $affectedRows
-                )
+                'Successfully deleted "%d" vouchers.',
+                ['%d' => $affectedRows]
             );
         } else {
             $this->addErrorMessage('No voucher codes were deleted.');
@@ -68,6 +66,17 @@ class VoucherController extends AbstractController
      */
     public function deleteVoucherCodeAction(Request $request)
     {
+        $deleteForm = $this->getFactory()
+            ->getDeleteVoucherCodeForm()
+            ->handleRequest($request);
+        if (!$deleteForm->isSubmitted() || !$deleteForm->isValid()) {
+            $this->addErrorMessage('CSRF token is not valid.');
+
+            return new RedirectResponse(
+                $this->createVoucherCodeDeleteRedirectUrl($request)
+            );
+        }
+
         $idVoucher = $this->castId($request->query->get(self::URL_PARAM_ID_VOUCHER));
 
         $voucherEntity = $this->getQueryContainer()

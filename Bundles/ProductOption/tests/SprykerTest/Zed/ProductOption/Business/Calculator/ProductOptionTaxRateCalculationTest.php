@@ -33,23 +33,23 @@ class ProductOptionTaxRateCalculationTest extends Unit
     /**
      * @return void
      */
-    public function testCalculateTaxRateForDefaultCountry()
+    public function testCalculateTaxRateForDefaultCountry(): void
     {
         $quoteTransfer = $this->createQuoteTransferWithoutShippingAddress();
 
         $taxAverage = $this->getEffectiveTaxRateByQuoteTransfer($quoteTransfer, $this->getMockDefaultTaxRates());
-        $this->assertEquals(15, $taxAverage);
+        $this->assertSame(15.0, $taxAverage);
     }
 
     /**
      * @return void
      */
-    public function testCalculateTaxRateForDifferentCountry()
+    public function testCalculateTaxRateForDifferentCountry(): void
     {
         $quoteTransfer = $this->createQuoteTransferWithShippingAddress();
 
         $taxAverage = $this->getEffectiveTaxRateByQuoteTransfer($quoteTransfer, $this->getMockCountryBasedTaxRates());
-        $this->assertEquals(17, $taxAverage);
+        $this->assertSame(17.0, $taxAverage);
     }
 
     /**
@@ -58,7 +58,7 @@ class ProductOptionTaxRateCalculationTest extends Unit
      *
      * @return float
      */
-    protected function getEffectiveTaxRateByQuoteTransfer(QuoteTransfer $quoteTransfer, $mockData)
+    protected function getEffectiveTaxRateByQuoteTransfer(QuoteTransfer $quoteTransfer, array $mockData): float
     {
         $productItemTaxRateCalculatorMock = $this->createProductItemTaxRateCalculator();
         $productItemTaxRateCalculatorMock->method('findTaxRatesByIdOptionValueAndCountryIso2Code')->willReturn($mockData);
@@ -165,7 +165,7 @@ class ProductOptionTaxRateCalculationTest extends Unit
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    protected function createProductItemTransfer($id, ?AddressTransfer $addressTransfer = null): ItemTransfer
+    protected function createProductItemTransfer(int $id, ?AddressTransfer $addressTransfer = null): ItemTransfer
     {
         $itemTransfer = $this->createItemTransfer();
         $itemTransfer->setIdProductAbstract($id);
@@ -209,7 +209,7 @@ class ProductOptionTaxRateCalculationTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    protected function createItemTransfer()
+    protected function createItemTransfer(): ItemTransfer
     {
         return new ItemTransfer();
     }
@@ -217,7 +217,7 @@ class ProductOptionTaxRateCalculationTest extends Unit
     /**
      * @return array
      */
-    protected function getMockDefaultTaxRates()
+    protected function getMockDefaultTaxRates(): array
     {
         return [
             [
@@ -230,7 +230,7 @@ class ProductOptionTaxRateCalculationTest extends Unit
     /**
      * @return array
      */
-    protected function getMockCountryBasedTaxRates()
+    protected function getMockCountryBasedTaxRates(): array
     {
         return [
             [
@@ -249,7 +249,7 @@ class ProductOptionTaxRateCalculationTest extends Unit
      *
      * @return \Generated\Shared\Transfer\ProductOptionTransfer
      */
-    protected function createProductOption($idOptionValueUsage)
+    protected function createProductOption(int $idOptionValueUsage): ProductOptionTransfer
     {
         $productOption1 = new ProductOptionTransfer();
         $productOption1->setIdProductOptionValue($idOptionValueUsage);
@@ -262,7 +262,7 @@ class ProductOptionTaxRateCalculationTest extends Unit
      *
      * @return float
      */
-    protected function getProductItemsTaxRateAverage(QuoteTransfer $quoteTransfer)
+    protected function getProductItemsTaxRateAverage(QuoteTransfer $quoteTransfer): float
     {
         $taxSum = 0;
         $productOptionCount = 0;
@@ -281,7 +281,7 @@ class ProductOptionTaxRateCalculationTest extends Unit
      *
      * @return float
      */
-    protected function getEffectiveProductOptionTaxRate(ItemTransfer $item)
+    protected function getEffectiveProductOptionTaxRate(ItemTransfer $item): float
     {
         $taxSum = 0;
         foreach ($item->getProductOptions() as $productOption) {

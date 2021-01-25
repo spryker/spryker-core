@@ -17,12 +17,16 @@ interface AvailabilityNotificationUnsubscriberInterface
      *
      * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer
      */
-    public function unsubscribeBySubscriptionKey(AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer): AvailabilityNotificationSubscriptionResponseTransfer;
+    public function unsubscribeBySubscriptionKey(
+        AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
+    ): AvailabilityNotificationSubscriptionResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
      *
      * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer
      */
-    public function unsubscribeByCustomerReferenceAndSku(AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer): AvailabilityNotificationSubscriptionResponseTransfer;
+    public function unsubscribeByCustomerReferenceAndSku(
+        AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
+    ): AvailabilityNotificationSubscriptionResponseTransfer;
 }

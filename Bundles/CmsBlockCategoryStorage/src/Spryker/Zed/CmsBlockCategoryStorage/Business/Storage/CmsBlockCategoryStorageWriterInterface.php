@@ -14,12 +14,12 @@ interface CmsBlockCategoryStorageWriterInterface
      *
      * @return void
      */
-    public function publish(array $categoryIds);
+    public function publish(array $categoryIds): void;
 
     /**
      * @param array $categoryIds
      *
      * @return void
      */
-    public function refreshOrUnpublish(array $categoryIds);
+    public function refreshOrUnpublish(array $categoryIds): void;
 }

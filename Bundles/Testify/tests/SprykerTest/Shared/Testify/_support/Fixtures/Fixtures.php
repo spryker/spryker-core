@@ -27,7 +27,7 @@ class Fixtures implements LoaderInterface
     /**
      * @param array $settings
      */
-    public function __construct($settings = [])
+    public function __construct(array $settings = [])
     {
         //These are the suite settings
         $this->settings = $settings;

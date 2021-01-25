@@ -17,5 +17,8 @@ interface MerchantRelationshipThresholdFormMapperInterface
      *
      * @return \Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer
      */
-    public function mapFormDataToTransfer(array $data, MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer): MerchantRelationshipSalesOrderThresholdTransfer;
+    public function mapFormDataToTransfer(
+        array $data,
+        MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer
+    ): MerchantRelationshipSalesOrderThresholdTransfer;
 }

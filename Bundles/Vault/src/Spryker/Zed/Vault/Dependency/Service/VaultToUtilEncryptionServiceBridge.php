@@ -33,6 +33,16 @@ class VaultToUtilEncryptionServiceBridge implements VaultToUtilEncryptionService
     }
 
     /**
+     * @param string|null $encryptionMethod
+     *
+     * @return string
+     */
+    public function generateByteStringOpenSslEncryptInitVector(?string $encryptionMethod = null): string
+    {
+        return $this->utilEncryptionService->generateByteStringOpenSslEncryptInitVector($encryptionMethod);
+    }
+
+    /**
      * @param string $cipherText
      * @param string $initVector
      * @param string $encryptionKey

@@ -15,6 +15,8 @@ use Generated\Shared\DataBuilder\ShipmentBuilder;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Orm\Zed\Customer\Persistence\SpyCustomerAddressQuery;
+use Spryker\Zed\Customer\CustomerDependencyProvider;
+use Spryker\Zed\Customer\Dependency\Facade\CustomerToMailInterface;
 
 /**
  * Auto-generated group annotations
@@ -33,6 +35,16 @@ class CustomerOrderSaverWithItemLevelShippingAddressTest extends Test
      * @var \SprykerTest\Zed\Customer\CustomerBusinessTester
      */
     protected $tester;
+
+    /**
+     * @return void
+     */
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->tester->setDependency(CustomerDependencyProvider::FACADE_MAIL, $this->getMockBuilder(CustomerToMailInterface::class)->getMock());
+    }
 
     /**
      * @dataProvider saveCustomerOrderWithItemLevelShippingAddressAndAddressSavingIsNotSkipped

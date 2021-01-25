@@ -16,6 +16,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 class GiftCardQueryContainer extends AbstractQueryContainer implements GiftCardQueryContainerInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\GiftCard\Persistence\SpyGiftCardQuery
@@ -28,6 +30,8 @@ class GiftCardQueryContainer extends AbstractQueryContainer implements GiftCardQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idGiftCard
@@ -42,6 +46,8 @@ class GiftCardQueryContainer extends AbstractQueryContainer implements GiftCardQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\GiftCard\Persistence\SpyPaymentGiftCardQuery
@@ -54,6 +60,8 @@ class GiftCardQueryContainer extends AbstractQueryContainer implements GiftCardQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $code
@@ -68,6 +76,8 @@ class GiftCardQueryContainer extends AbstractQueryContainer implements GiftCardQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $abstractSku
@@ -87,6 +97,8 @@ class GiftCardQueryContainer extends AbstractQueryContainer implements GiftCardQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $concreteSku
@@ -106,6 +118,8 @@ class GiftCardQueryContainer extends AbstractQueryContainer implements GiftCardQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idSalesPayment
@@ -118,6 +132,8 @@ class GiftCardQueryContainer extends AbstractQueryContainer implements GiftCardQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idSalesOrder
@@ -134,6 +150,8 @@ class GiftCardQueryContainer extends AbstractQueryContainer implements GiftCardQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $code
@@ -146,6 +164,8 @@ class GiftCardQueryContainer extends AbstractQueryContainer implements GiftCardQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string[] $codes
@@ -158,6 +178,8 @@ class GiftCardQueryContainer extends AbstractQueryContainer implements GiftCardQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idSalesOrderItem

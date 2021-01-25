@@ -3,7 +3,7 @@
           namespace="Orm\Zed\SalesOrderThreshold\Persistence"
           package="src.Orm.Zed.SalesOrderThreshold.Persistence">
 
-    <table name="spy_sales_order_threshold_tax_set" idMethod="native" allowPkInsert="true" identifierQuoting="true" phpName="SpySalesOrderThresholdTaxSet">
+    <table name="spy_sales_order_threshold_tax_set" idMethod="native" allowPkInsert="true" identifierQuoting="true">
         <column name="id_sales_order_threshold_tax_set" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="fk_tax_set" type="INTEGER" required="true"/>
 

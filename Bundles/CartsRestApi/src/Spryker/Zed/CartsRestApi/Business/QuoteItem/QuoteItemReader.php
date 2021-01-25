@@ -28,15 +28,23 @@ class QuoteItemReader implements QuoteItemReaderInterface
     protected $quoteItemMapper;
 
     /**
+     * @var \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteItemReadValidatorPluginInterface[]
+     */
+    protected $quoteItemReadValidatorPlugins;
+
+    /**
      * @param \Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface $quoteReader
      * @param \Spryker\Zed\CartsRestApi\Business\QuoteItem\Mapper\QuoteItemMapperInterface $quoteItemMapper
+     * @param \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteItemReadValidatorPluginInterface[] $quoteItemReadValidatorPlugins
      */
     public function __construct(
         QuoteReaderInterface $quoteReader,
-        QuoteItemMapperInterface $quoteItemMapper
+        QuoteItemMapperInterface $quoteItemMapper,
+        array $quoteItemReadValidatorPlugins
     ) {
         $this->quoteReader = $quoteReader;
         $this->quoteItemMapper = $quoteItemMapper;
+        $this->quoteItemReadValidatorPlugins = $quoteItemReadValidatorPlugins;
     }
 
     /**
@@ -56,12 +64,12 @@ class QuoteItemReader implements QuoteItemReaderInterface
             return $quoteResponseTransfer;
         }
 
-        $ifRequestedItemIsInQuote = $this->checkRequestedItemIsInQuote(
-            $cartItemRequestTransfer->getSku(),
-            $quoteResponseTransfer->getQuoteTransfer()->getItems()->getArrayCopy()
+        $isRequestedItemInQuote = $this->isCartItemInQuote(
+            $cartItemRequestTransfer,
+            $quoteResponseTransfer->getQuoteTransfer()
         );
 
-        if (!$ifRequestedItemIsInQuote) {
+        if (!$isRequestedItemInQuote) {
             $quoteResponseTransfer
                 ->setIsSuccessful(false)
                 ->addError((new QuoteErrorTransfer())
@@ -72,19 +80,45 @@ class QuoteItemReader implements QuoteItemReaderInterface
     }
 
     /**
-     * @param string $itemSku
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $items
+     * @param \Generated\Shared\Transfer\CartItemRequestTransfer $cartItemRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
-    protected function checkRequestedItemIsInQuote(string $itemSku, array $items): bool
+    protected function isCartItemInQuote(CartItemRequestTransfer $cartItemRequestTransfer, QuoteTransfer $quoteTransfer): bool
     {
-        if (count($items) === 0) {
+        foreach ($this->quoteItemReadValidatorPlugins as $quoteItemReadValidatorPlugin) {
+            if ($quoteItemReadValidatorPlugin->validate($cartItemRequestTransfer, $quoteTransfer)) {
+                return true;
+            }
+        }
+
+        return $this->isItemInQuote($cartItemRequestTransfer, $quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartItemRequestTransfer $cartItemRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function isItemInQuote(CartItemRequestTransfer $cartItemRequestTransfer, QuoteTransfer $quoteTransfer): bool
+    {
+        if (!$quoteTransfer->getItems()->count()) {
             return false;
         }
 
-        foreach ($items as $item) {
-            if ($item->getSku() === $itemSku) {
+        $itemFound = false;
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            if ($cartItemRequestTransfer->getGroupKey()) {
+                $itemFound = $itemTransfer->getGroupKey() === $cartItemRequestTransfer->getGroupKey();
+            }
+
+            if (!$itemFound && $itemTransfer->getSku() === $cartItemRequestTransfer->getSku()) {
+                $itemFound = true;
+            }
+
+            if ($itemFound && !$itemTransfer->getRelatedBundleItemIdentifier()) {
                 return true;
             }
         }

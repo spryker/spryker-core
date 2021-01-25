@@ -1,0 +1,102 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 53,
+            "line_to": 53,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getPriceData on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/PriceProductOfferVolume/src/Spryker/Client/PriceProductOfferVolume/VolumePriceExtractor/ProductOfferVolumePriceExtractor.php",
+            "snippet": "        if (!$priceProductTransfer->getMoneyValue()->getPriceData()) {",
+            "selected_text": "getPriceData",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 57,
+            "line_to": 57,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Client\\PriceProductOfferVolume\\Dependency\\Service\\PriceProductOfferVolumeToUtilEncodingServiceInterface::decodeJson cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/PriceProductOfferVolume/src/Spryker/Client/PriceProductOfferVolume/VolumePriceExtractor/ProductOfferVolumePriceExtractor.php",
+            "snippet": "        $priceData = $this->utilEncodingService->decodeJson($priceProductTransfer->getMoneyValue()->getPriceData(), true);",
+            "selected_text": "$priceProductTransfer->getMoneyValue()->getPriceData()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 57,
+            "line_to": 57,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getPriceData on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/PriceProductOfferVolume/src/Spryker/Client/PriceProductOfferVolume/VolumePriceExtractor/ProductOfferVolumePriceExtractor.php",
+            "snippet": "        $priceData = $this->utilEncodingService->decodeJson($priceProductTransfer->getMoneyValue()->getPriceData(), true);",
+            "selected_text": "getPriceData",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 63,
+            "line_to": 63,
+            "type": "PossiblyNullArrayAccess",
+            "message": "Cannot access array value on possibly null variable $priceData of type mixed|null",
+            "file_name": "vendor/spryker/spryker/Bundles/PriceProductOfferVolume/src/Spryker/Client/PriceProductOfferVolume/VolumePriceExtractor/ProductOfferVolumePriceExtractor.php",
+            "snippet": "        foreach ($priceData[PriceProductOfferVolumeConfig::VOLUME_PRICE_TYPE] as $volumePrice) {",
+            "selected_text": "$priceData[PriceProductOfferVolumeConfig::VOLUME_PRICE_TYPE]",
+            "error_level": 3,
+            "shortcode": 79
+        },
+        {
+            "severity": "info",
+            "line_from": 63,
+            "line_to": 63,
+            "type": "PossiblyNullIterator",
+            "message": "Cannot iterate over nullable var mixed|null",
+            "file_name": "vendor/spryker/spryker/Bundles/PriceProductOfferVolume/src/Spryker/Client/PriceProductOfferVolume/VolumePriceExtractor/ProductOfferVolumePriceExtractor.php",
+            "snippet": "        foreach ($priceData[PriceProductOfferVolumeConfig::VOLUME_PRICE_TYPE] as $volumePrice) {",
+            "selected_text": "$priceData[PriceProductOfferVolumeConfig::VOLUME_PRICE_TYPE]",
+            "error_level": 3,
+            "shortcode": 97
+        },
+        {
+            "severity": "info",
+            "line_from": 89,
+            "line_to": 89,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/PriceProductOfferVolume/src/Spryker/Client/PriceProductOfferVolume/VolumePriceExtractor/ProductOfferVolumePriceExtractor.php",
+            "snippet": "                    $priceProductTransfer->getGroupKey(),",
+            "selected_text": "$priceProductTransfer->getGroupKey()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 95,
+            "line_to": 95,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method setGrossAmount on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/PriceProductOfferVolume/src/Spryker/Client/PriceProductOfferVolume/VolumePriceExtractor/ProductOfferVolumePriceExtractor.php",
+            "snippet": "            ->setGrossAmount($volumePriceData[PriceProductOfferVolumeConfig::VOLUME_PRICE_GROSS_PRICE])",
+            "selected_text": "setGrossAmount",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 29,
+            "line_to": 29,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Service\\PriceProductOfferVolume\\PriceProduct\\PriceProductReader::findMinPrice cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/PriceProductOfferVolume/src/Spryker/Service/PriceProductOfferVolume/PriceProduct/PriceProductReader.php",
+            "snippet": "            $priceProductFilterTransfer->getQuantity()",
+            "selected_text": "$priceProductFilterTransfer->getQuantity()",
+            "error_level": 3,
+            "shortcode": 78
+        }
+    ],
+    "deprecation": []
+}

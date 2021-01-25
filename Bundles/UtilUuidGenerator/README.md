@@ -1,6 +1,6 @@
 # UtilUuidGenerator Module
 [![Build Status](https://travis-ci.org/spryker/util-uuid-generator.svg)](https://travis-ci.org/spryker/util-uuid-generator)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/util-uuid-generator/badge.svg)](https://coveralls.io/github/spryker/util-uuid-generator)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 UtilUuidGenerator provides uuid generation functionality.
 

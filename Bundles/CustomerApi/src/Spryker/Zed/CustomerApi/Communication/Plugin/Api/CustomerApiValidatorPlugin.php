@@ -20,6 +20,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class CustomerApiValidatorPlugin extends AbstractPlugin implements ApiValidatorPluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string
@@ -30,6 +32,8 @@ class CustomerApiValidatorPlugin extends AbstractPlugin implements ApiValidatorP
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer

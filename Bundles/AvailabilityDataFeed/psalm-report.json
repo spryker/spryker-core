@@ -1,0 +1,18 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 39,
+            "line_to": 39,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\AvailabilityDataFeed\\Dependency\\QueryContainer\\AvailabilityDataFeedToAvailabilityInterface::queryAvailabilityWithStockByIdLocale cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/AvailabilityDataFeed/src/Spryker/Zed/AvailabilityDataFeed/Persistence/AvailabilityDataFeedQueryContainer.php",
+            "snippet": "            ->queryAvailabilityWithStockByIdLocale($availabilityDataFeedTransfer->getIdLocale());",
+            "selected_text": "$availabilityDataFeedTransfer->getIdLocale()",
+            "error_level": 3,
+            "shortcode": 78
+        }
+    ],
+    "deprecation": []
+}

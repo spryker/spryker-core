@@ -1,0 +1,115 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 59,
+            "line_to": 59,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'array<array-key, string>' for Spryker\\Glue\\ProductOfferPricesRestApi\\Processor\\Expander\\ProductOfferPriceExpander::getProductOfferReferences is incorrect, got 'list<null|string>'",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOfferPricesRestApi/src/Spryker/Glue/ProductOfferPricesRestApi/Processor/Expander/ProductOfferPriceExpander.php",
+            "snippet": "     * @return string[]",
+            "selected_text": "string[]",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 72,
+            "line_to": 72,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'list<null|string>' does not match the declared return type 'array<array-key, string>' for Spryker\\Glue\\ProductOfferPricesRestApi\\Processor\\Expander\\ProductOfferPriceExpander::getProductOfferReferences",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOfferPricesRestApi/src/Spryker/Glue/ProductOfferPricesRestApi/Processor/Expander/ProductOfferPriceExpander.php",
+            "snippet": "        return $productOfferReferences;",
+            "selected_text": "$productOfferReferences",
+            "error_level": 6,
+            "shortcode": 128
+        },
+        {
+            "severity": "error",
+            "line_from": 86,
+            "line_to": 86,
+            "type": "InvalidArgument",
+            "message": "Argument 1 of Spryker\\Glue\\ProductOfferPricesRestApi\\Processor\\Reader\\ProductOfferPriceReader::getProductOfferPriceRestResources expects array<array-key, string>, array{null|string} provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOfferPricesRestApi/src/Spryker/Glue/ProductOfferPricesRestApi/Processor/Reader/ProductOfferPriceReader.php",
+            "snippet": "        $productOfferPriceRestResources = $this->getProductOfferPriceRestResources([$productOfferRestResource->getId()], $restRequest->getMetadata()->getLocale());",
+            "selected_text": "[$productOfferRestResource->getId()]",
+            "error_level": 6,
+            "shortcode": 4
+        },
+        {
+            "severity": "error",
+            "line_from": 145,
+            "line_to": 145,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'array<string, string>' for Spryker\\Glue\\ProductOfferPricesRestApi\\Processor\\Reader\\ProductOfferPriceReader::getProductConcreteSkus is incorrect, got 'array<int(0)|string, null|string>'",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOfferPricesRestApi/src/Spryker/Glue/ProductOfferPricesRestApi/Processor/Reader/ProductOfferPriceReader.php",
+            "snippet": "     * @phpstan-return array<string, string>",
+            "selected_text": "array<string, string>",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 158,
+            "line_to": 158,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'array<int(0)|string, null|string>' does not match the declared return type 'array<string, string>' for Spryker\\Glue\\ProductOfferPricesRestApi\\Processor\\Reader\\ProductOfferPriceReader::getProductConcreteSkus",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOfferPricesRestApi/src/Spryker/Glue/ProductOfferPricesRestApi/Processor/Reader/ProductOfferPriceReader.php",
+            "snippet": "        return $productConcreteSkus;",
+            "selected_text": "$productConcreteSkus",
+            "error_level": 6,
+            "shortcode": 128
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 52,
+            "line_to": 52,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $productOfferPriceRestResources using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOfferPricesRestApi/src/Spryker/Glue/ProductOfferPricesRestApi/Processor/Expander/ProductOfferPriceExpander.php",
+            "snippet": "            $resource->addRelationship($productOfferPriceRestResources[$resource->getId()]);",
+            "selected_text": "$productOfferPriceRestResources",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 30,
+            "line_to": 30,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method toArray on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOfferPricesRestApi/src/Spryker/Glue/ProductOfferPricesRestApi/Processor/Mapper/ProductOfferPriceMapper.php",
+            "snippet": "            ->fromArray($currentProductPriceTransfer->getCurrency()->toArray(), true);",
+            "selected_text": "toArray",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 35,
+            "line_to": 35,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 3 of Spryker\\Glue\\ProductOfferPricesRestApi\\Processor\\Mapper\\ProductOfferPriceMapper::createRestProductOfferPriceAttributesTransfer cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOfferPricesRestApi/src/Spryker/Glue/ProductOfferPricesRestApi/Processor/Mapper/ProductOfferPriceMapper.php",
+            "snippet": "                $currentProductPriceTransfer->getPriceMode(),",
+            "selected_text": "$currentProductPriceTransfer->getPriceMode()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 155,
+            "line_to": 155,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $productConcreteSkus[null|string] using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOfferPricesRestApi/src/Spryker/Glue/ProductOfferPricesRestApi/Processor/Reader/ProductOfferPriceReader.php",
+            "snippet": "            $productConcreteSkus[$productOfferStorageTransfer->getProductOfferReference()] = $productOfferStorageTransfer->getProductConcreteSku();",
+            "selected_text": "$productConcreteSkus",
+            "error_level": 3,
+            "shortcode": 125
+        }
+    ],
+    "deprecation": []
+}

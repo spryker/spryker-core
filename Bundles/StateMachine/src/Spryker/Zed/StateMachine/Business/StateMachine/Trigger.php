@@ -109,44 +109,44 @@ class Trigger implements TriggerInterface
 
     /**
      * @param string $eventName
-     * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
+     * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItemTransfers
      *
      * @return int
      */
-    public function triggerEvent($eventName, array $stateMachineItems)
+    public function triggerEvent($eventName, array $stateMachineItemTransfers)
     {
         if ($this->checkForEventRepetitions($eventName) === false) {
             return 0;
         }
 
-        $stateMachineItems = $this->stateMachinePersistence
-            ->updateStateMachineItemsFromPersistence($stateMachineItems);
+        $stateMachineItemTransfers = $this->stateMachinePersistence
+            ->updateStateMachineItemsFromPersistence($stateMachineItemTransfers);
 
-        $processes = $this->finder->findProcessesForItems($stateMachineItems);
-        $stateMachineItems = $this->filterEventAffectedItems($eventName, $stateMachineItems, $processes);
+        $processes = $this->finder->findProcessesForItems($stateMachineItemTransfers);
+        $stateMachineItemTransfers = $this->filterEventAffectedItems($eventName, $stateMachineItemTransfers, $processes);
 
-        $this->transitionLog->init($stateMachineItems);
-        $this->logSourceState($stateMachineItems);
+        $this->transitionLog->init($stateMachineItemTransfers);
+        $this->logSourceState($stateMachineItemTransfers);
 
-        $this->runCommand($eventName, $stateMachineItems, $processes);
+        $this->runCommand($eventName, $stateMachineItemTransfers, $processes);
 
-        $sourceStateBuffer = $this->updateStateByEvent($eventName, $stateMachineItems);
+        $sourceStateBuffer = $this->updateStateByEvent($eventName, $stateMachineItemTransfers);
 
         $this->stateUpdater->updateStateMachineItemState(
-            $stateMachineItems,
+            $stateMachineItemTransfers,
             $processes,
             $sourceStateBuffer
         );
 
         $stateMachineItemsWithOnEnterEvent = $this->finder->filterItemsWithOnEnterEvent(
-            $stateMachineItems,
+            $stateMachineItemTransfers,
             $processes,
             $sourceStateBuffer
         );
 
         $this->transitionLog->saveAll();
 
-        $this->affectedItems += count($stateMachineItems);
+        $this->affectedItems += count($stateMachineItemTransfers);
 
         $this->triggerOnEnterEvents($stateMachineItemsWithOnEnterEvent);
 
@@ -192,7 +192,7 @@ class Trigger implements TriggerInterface
     /**
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[][]
      */
     protected function groupItemsByEvent(array $stateMachineItems)
     {
@@ -271,6 +271,7 @@ class Trigger implements TriggerInterface
                 $this->transitionLog->setIsError(true);
                 $this->transitionLog->setErrorMessage(get_class($commandPlugin) . ' - ' . $e->getMessage());
                 $this->transitionLog->saveAll();
+
                 throw $e;
             }
         }
@@ -280,7 +281,7 @@ class Trigger implements TriggerInterface
      * @param string $eventName
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
      *
-     * @return array
+     * @return string[]
      */
     protected function updateStateByEvent($eventName, array $stateMachineItems)
     {
@@ -397,7 +398,6 @@ class Trigger implements TriggerInterface
         StateMachineProcessTransfer $stateMachineProcessTransfer,
         $identifier
     ) {
-
         $processName = $stateMachineProcessTransfer->requireProcessName()
             ->getProcessName();
 

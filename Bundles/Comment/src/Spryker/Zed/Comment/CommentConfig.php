@@ -15,6 +15,8 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class CommentConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getAvailableCommentTags(): array

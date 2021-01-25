@@ -41,7 +41,7 @@ class SalesDetailPage
      *
      * @return string
      */
-    public static function getOrderDetailsPageUrl($idSalesOrder)
+    public static function getOrderDetailsPageUrl(int $idSalesOrder): string
     {
         return static::URL . $idSalesOrder;
     }
@@ -51,7 +51,7 @@ class SalesDetailPage
      *
      * @return string
      */
-    public static function getCurrentStateSelector($idSalesOrderItem)
+    public static function getCurrentStateSelector(int $idSalesOrderItem): string
     {
         return str_replace('{{idSalesOrderItem}}', $idSalesOrderItem, static::SELECTOR_CURRENT_STATE);
     }
@@ -61,7 +61,7 @@ class SalesDetailPage
      *
      * @return string
      */
-    public static function getItemTotalElementSelector($idSalesOrderItem)
+    public static function getItemTotalElementSelector(int $idSalesOrderItem): string
     {
         return str_replace('{{idSalesOrderItem}}', $idSalesOrderItem, static::SELECTOR_ITEM_TOTAL_ELEMENT);
     }
@@ -71,7 +71,7 @@ class SalesDetailPage
      *
      * @return string
      */
-    public static function getIdSalesOrderItemSelector($rowPosition)
+    public static function getIdSalesOrderItemSelector(int $rowPosition): string
     {
         return str_replace('{{position}}', $rowPosition, static::SELECTOR_ID_SALES_ORDER_ITEM);
     }
@@ -81,7 +81,7 @@ class SalesDetailPage
      *
      * @return string
      */
-    public static function getSalesOrderItemRowSelector($rowPosition)
+    public static function getSalesOrderItemRowSelector(int $rowPosition): string
     {
         return str_replace('{{position}}', $rowPosition, static::SELECTOR_SALES_ORDER_ROW);
     }
@@ -91,9 +91,9 @@ class SalesDetailPage
      *
      * @return void
      */
-    public function openDetailPageForOrder($idSalesOrder)
+    public function openDetailPageForOrder(int $idSalesOrder): void
     {
-        $this->tester->amOnPage(SalesDetailPage::getOrderDetailsPageUrl($idSalesOrder));
+        $this->tester->amOnPage(self::getOrderDetailsPageUrl($idSalesOrder));
     }
 
     /**
@@ -103,9 +103,9 @@ class SalesDetailPage
      *
      * @return int
      */
-    public function grabIdSalesOrderItemFromRow($rowPosition)
+    public function grabIdSalesOrderItemFromRow(int $rowPosition): int
     {
-        $idSalesOrderItem = $this->tester->grabValueFrom(SalesDetailPage::getIdSalesOrderItemSelector($rowPosition));
+        $idSalesOrderItem = $this->tester->grabValueFrom(self::getIdSalesOrderItemSelector($rowPosition));
 
         return $idSalesOrderItem;
     }

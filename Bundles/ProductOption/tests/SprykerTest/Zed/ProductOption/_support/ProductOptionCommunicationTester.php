@@ -8,10 +8,9 @@
 namespace SprykerTest\Zed\ProductOption;
 
 use Codeception\Actor;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionValue;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -21,7 +20,7 @@ use Codeception\Actor;
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  *
  * @SuppressWarnings(PHPMD)
  */
@@ -29,7 +28,19 @@ class ProductOptionCommunicationTester extends Actor
 {
     use _generated\ProductOptionCommunicationTesterActions;
 
-   /**
-    * Define custom actions here
-    */
+    /**
+     * @param string $sku
+     * @param int $idProductOptionGroup
+     *
+     * @return void
+     */
+    public function createProductOptionValueEntity(string $sku, int $idProductOptionGroup): void
+    {
+        $productOptionValue = new SpyProductOptionValue();
+        $productOptionValue->setSku($sku);
+        $productOptionValue->setValue($sku);
+        $productOptionValue->setFkProductOptionGroup($idProductOptionGroup);
+
+        $productOptionValue->save();
+    }
 }

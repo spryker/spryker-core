@@ -1,6 +1,6 @@
 # GiftCardMailConnector Module
-[![Build Status](https://travis-ci.org/spryker/GiftCardMailConnector.svg)](https://travis-ci.org/spryker/GiftCardMailConnector)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/GiftCardMailConnector/badge.svg)](https://coveralls.io/github/spryker/GiftCardMailConnector)
+[![Build Status](https://travis-ci.org/spryker/gift-card-mail-connector.svg)](https://travis-ci.org/spryker/gift-card-mail-connector)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 Provides basic gift card functionality.
 

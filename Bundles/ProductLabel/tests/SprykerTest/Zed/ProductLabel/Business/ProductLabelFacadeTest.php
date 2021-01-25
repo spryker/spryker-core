@@ -11,11 +11,22 @@ use Codeception\Test\Unit;
 use DateInterval;
 use DateTime;
 use Generated\Shared\DataBuilder\ProductLabelBuilder;
+use Generated\Shared\DataBuilder\ProductLabelCriteriaBuilder;
 use Generated\Shared\DataBuilder\ProductLabelLocalizedAttributesBuilder;
 use Generated\Shared\DataBuilder\ProductLabelProductAbstractRelationsBuilder;
+use Generated\Shared\DataBuilder\StoreRelationBuilder;
+use Generated\Shared\Transfer\FilterTransfer;
+use Generated\Shared\Transfer\ProductLabelCriteriaTransfer;
+use Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer;
+use Generated\Shared\Transfer\ProductLabelTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
+use Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery;
+use Orm\Zed\ProductLabel\Persistence\SpyProductLabelStoreQuery;
 use Spryker\Shared\Product\ProductConfig;
 use Spryker\Shared\ProductLabel\ProductLabelConstants;
+use Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface;
 use Spryker\Zed\ProductLabel\Dependency\Plugin\ProductLabelRelationUpdaterPluginInterface;
 use Spryker\Zed\ProductLabel\ProductLabelDependencyProvider;
 
@@ -33,14 +44,17 @@ use Spryker\Zed\ProductLabel\ProductLabelDependencyProvider;
 class ProductLabelFacadeTest extends Unit
 {
     /**
-     * @var \SprykerTest\Zed\ProductLabel\BusinessTester
+     * @var \SprykerTest\Zed\ProductLabel\ProductLabelBusinessTester
      */
     protected $tester;
+
+    public const STORE_NAME_DE = 'DE';
+    public const STORE_NAME_AT = 'AT';
 
     /**
      * @return void
      */
-    public function testFindLabelByIdShouldReturnProductLabelTransfer()
+    public function testFindLabelByIdShouldReturnProductLabelTransfer(): void
     {
         $productLabelTransfer = $this->tester->haveProductLabel();
 
@@ -53,7 +67,87 @@ class ProductLabelFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindLabelByIdShouldReturnNullIfLabelDoesNotExist()
+    public function testRemoveLabelShouldRemoveProductLabel(): void
+    {
+        //Arrange
+        $productLabelTransfer = $this->tester->haveProductLabel();
+
+        //Act
+        $productLabelResponseTransfer = $this->getProductLabelFacade()->removeLabel($productLabelTransfer);
+
+        //Assert
+        $this->assertTrue($productLabelResponseTransfer->getIsSuccessful(), 'Response transfer does not match the expected result');
+
+        $deletedProductLabel = SpyProductLabelQuery::create()
+            ->filterByIdProductLabel($productLabelTransfer->getIdProductLabel())
+            ->findOne();
+
+        $this->assertNull($deletedProductLabel, 'Product label record was not deleted');
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetActiveLabelsByCriteriaShouldRetrieveActiveLabels(): void
+    {
+        //Arrange
+        $productTransfer = $this->tester->haveProduct();
+        $idProductAbstract = $productTransfer->getFkProductAbstract();
+        $storeTransferDE = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
+        $storeTransferAT = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_AT]);
+        $storeRelationSeedData = [
+            StoreRelationTransfer::ID_STORES => [
+                $storeTransferDE->getIdStore(),
+                $storeTransferAT->getIdStore(),
+            ],
+        ];
+        $productLabelTransfer = $this->tester->haveProductLabel([
+            ProductLabelTransfer::STORE_RELATION => $storeRelationSeedData,
+        ]);
+        $idProductLabel = $productLabelTransfer->getIdProductLabel();
+
+        $this->tester->haveProductLabelToAbstractProductRelation($idProductLabel, $idProductAbstract);
+
+        $productLabelCriteria = (new ProductLabelCriteriaBuilder())->seed([
+            ProductLabelCriteriaTransfer::PRODUCT_ABSTRACT_IDS => [$idProductAbstract],
+            ProductLabelCriteriaTransfer::PRODUCT_LABEL_IDS => [$idProductLabel],
+            ProductLabelCriteriaTransfer::STORE_NAME => $storeTransferDE->getName(),
+        ])->build();
+
+        //Act
+        $productLabelFacade = $this->getProductLabelFacade();
+        $activeProductLabelsByTheGivenCriteria = $productLabelFacade->getActiveLabelsByCriteria($productLabelCriteria);
+
+        //Assert
+        $this->assertCount(
+            1,
+            $activeProductLabelsByTheGivenCriteria,
+            'Product label not found.'
+        );
+
+        $this->assertSame(
+            $idProductLabel,
+            $activeProductLabelsByTheGivenCriteria[0]->getIdProductLabel(),
+            'Wrong product label.'
+        );
+
+        $this->assertCount(
+            2,
+            $activeProductLabelsByTheGivenCriteria[0]->getStoreRelation()->getStores(),
+            'Stores relations number is incorrect.'
+        );
+
+        $this->assertCount(
+            $productLabelTransfer->getLocalizedAttributesCollection()->count(),
+            $activeProductLabelsByTheGivenCriteria[0]->getLocalizedAttributesCollection(),
+            'Localized attributes number is incorrect.'
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindLabelByIdShouldReturnNullIfLabelDoesNotExist(): void
     {
         $productLabelFacade = $this->getProductLabelFacade();
         $productLabelTransfer = $productLabelFacade->findLabelById(666);
@@ -64,7 +158,7 @@ class ProductLabelFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindLabelByIdShouldReturnCollectionOfLocalizedAttributes()
+    public function testFindLabelByIdShouldReturnCollectionOfLocalizedAttributes(): void
     {
         $localeTransfer = $this->tester->haveLocale();
 
@@ -83,27 +177,26 @@ class ProductLabelFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindAllLabelsShouldReturnCollectionSortedByPosition()
+    public function testFindAllLabelsShouldReturnCollectionSortedByPosition(): void
     {
-        $this->tester->haveProductLabel();
-        $this->tester->haveProductLabel();
-        $this->tester->haveProductLabel();
-        $this->tester->haveProductLabel();
+        $this->tester->haveProductLabel([ProductLabelTransfer::POSITION => 100]);
+        $this->tester->haveProductLabel([ProductLabelTransfer::POSITION => 101]);
+        $this->tester->haveProductLabel([ProductLabelTransfer::POSITION => 102]);
+        $this->tester->haveProductLabel([ProductLabelTransfer::POSITION => 103]);
 
         $productLabelFacade = $this->getProductLabelFacade();
-        /** @var \ArrayObject $productLabelTransferCollection */
         $productLabelTransferCollection = $productLabelFacade->findAllLabels();
 
-        $this->assertSame(1, $productLabelTransferCollection[0]->getPosition());
-        $this->assertSame(2, $productLabelTransferCollection[1]->getPosition());
-        $this->assertSame(3, $productLabelTransferCollection[2]->getPosition());
-        $this->assertSame(4, $productLabelTransferCollection[3]->getPosition());
+        $this->assertSame(103, array_pop($productLabelTransferCollection)->getPosition());
+        $this->assertSame(102, array_pop($productLabelTransferCollection)->getPosition());
+        $this->assertSame(101, array_pop($productLabelTransferCollection)->getPosition());
+        $this->assertSame(100, array_pop($productLabelTransferCollection)->getPosition());
     }
 
     /**
      * @return void
      */
-    public function testCreateLabelShouldPersistDataAndUpdatesTransferIdField()
+    public function testCreateLabelShouldPersistDataAndUpdatesTransferIdField(): void
     {
         $productLabelFacade = $this->getProductLabelFacade();
         $productLabelTransfer = (new ProductLabelBuilder())->except(['idProductLabel'])->build();
@@ -118,7 +211,7 @@ class ProductLabelFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateLabelShouldPersistChanges()
+    public function testUpdateLabelShouldPersistChanges(): void
     {
         $productLabelTransfer = $this->tester->haveProductLabel([
             'idActive' => true,
@@ -142,7 +235,7 @@ class ProductLabelFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCreateLabelShouldPersistLocalizedAttributes()
+    public function testCreateLabelShouldPersistLocalizedAttributes(): void
     {
         $localeTransfer = $this->tester->haveLocale();
 
@@ -166,7 +259,141 @@ class ProductLabelFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCreateLabelShouldTouchDictionaryActive()
+    public function testCreateLabelShouldPersistStoreRelations(): void
+    {
+        //Arrange
+        $storeTransferDE = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
+        $storeTransferAT = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_AT]);
+        $storeRelationSeedData = [
+            StoreRelationTransfer::ID_STORES => [
+                $storeTransferDE->getIdStore(),
+                $storeTransferAT->getIdStore(),
+            ],
+        ];
+        $productLabelTransfer = (new ProductLabelBuilder([
+            ProductLabelTransfer::ID_PRODUCT_LABEL => null,
+            ProductLabelTransfer::STORE_RELATION => $storeRelationSeedData,
+        ]))->build();
+
+        //Act
+        $this->getProductLabelFacade()->createLabel($productLabelTransfer);
+
+        //Assert
+        $productLabelEntity = SpyProductLabelQuery::create()
+            ->filterByName($productLabelTransfer->getName())
+            ->findOne();
+
+        $productLabelStoreRelationExists = SpyProductLabelStoreQuery::create()
+            ->filterByFkProductLabel($productLabelEntity->getIdProductLabel())
+            ->exists();
+        $this->assertTrue($productLabelStoreRelationExists, 'Relation between store and product label should exists');
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateLabelShouldUpdateStoreRelations(): void
+    {
+        //Arrange
+        $storeTransferDE = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
+        $storeTransferAT = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_AT]);
+        $storeRelationSeedDataForDE = [
+            StoreRelationTransfer::ID_STORES => [
+                $storeTransferDE->getIdStore(),
+            ],
+        ];
+        $storeRelationSeedDataForAT = [
+            StoreRelationTransfer::ID_STORES => [
+                $storeTransferAT->getIdStore(),
+            ],
+        ];
+
+        $productLabelTransfer = $this->tester->haveProductLabel([
+            ProductLabelTransfer::STORE_RELATION => $storeRelationSeedDataForDE,
+        ]);
+
+        $storeRelationTransfer = (new StoreRelationBuilder())->seed($storeRelationSeedDataForAT)->build();
+
+        //Act
+        $productLabelTransfer->setStoreRelation($storeRelationTransfer);
+        $this->getProductLabelFacade()->updateLabel($productLabelTransfer);
+
+        //Assert
+        $productLabelStoreRelationAfterUpdate = SpyProductLabelStoreQuery::create()
+            ->filterByFkProductLabel($productLabelTransfer->getIdProductLabel())
+            ->find();
+
+        $this->assertCount(
+            1,
+            $productLabelStoreRelationAfterUpdate,
+            'Product label store relation data should be relevant'
+        );
+        $this->assertSame(
+            $storeTransferAT->getIdStore(),
+            $productLabelStoreRelationAfterUpdate->offsetGet(0)->getFkStore(),
+            'Product label store relation'
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindLabelByIdShouldReturnProductLabelTransferForSpecificStore(): void
+    {
+        //Arrange
+        $storeTransferDE = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
+        $productLabelTransfer = $this->tester->haveProductLabel([
+            ProductLabelTransfer::NAME => 'test1',
+            ProductLabelTransfer::STORE_RELATION => [
+                StoreRelationTransfer::ID_STORES => [
+                    $storeTransferDE->getIdStore(),
+                ],
+            ],
+        ]);
+
+        //Act
+        $productLabelTransfer = $this->getProductLabelFacade()->findLabelById($productLabelTransfer->getIdProductLabel());
+
+        //Assert
+        $this->tester->assertEquals(
+            $storeTransferDE->getName(),
+            $productLabelTransfer->getStoreRelation()->getStores()->offsetGet(0)->getName(),
+            'Given store is invalid for this relation'
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindLabelByLabelNameShouldReturnProductLabelTransferForSpecificStore(): void
+    {
+        //Arrange
+        $storeTransferDE = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
+        $productLabelTransfer = $this->tester->haveProductLabel([
+            ProductLabelTransfer::NAME => 'test1',
+            ProductLabelTransfer::STORE_RELATION => [
+                StoreRelationTransfer::ID_STORES => [
+                    $storeTransferDE->getIdStore(),
+                ],
+            ],
+        ]);
+
+        $productLabelFacade = $this->getProductLabelFacade();
+        //Act
+        $productLabelTransfer = $productLabelFacade->findLabelByLabelName($productLabelTransfer->getName());
+
+        //Assert
+        $this->tester->assertEquals(
+            $storeTransferDE->getName(),
+            $productLabelTransfer->getStoreRelation()->getStores()->offsetGet(0)->getName(),
+            'Given store is invalid for this relation'
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateLabelShouldTouchDictionaryActive(): void
     {
         $productLabelTransfer = (new ProductLabelBuilder())->except(['idProductLabel'])->build();
         $productLabelFacade = $this->getProductLabelFacade();
@@ -181,7 +408,7 @@ class ProductLabelFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindProductAbstractRelationsByIdProductLabelShouldReturnListOfIdsProductAbstract()
+    public function testFindProductAbstractRelationsByIdProductLabelShouldReturnListOfIdsProductAbstract(): void
     {
         $productTransfer = $this->tester->haveProduct();
         $idProductAbstract = $productTransfer->getFkProductAbstract();
@@ -200,7 +427,7 @@ class ProductLabelFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testAddProductAbstractRelationsShouldPersistRelations()
+    public function testAddProductAbstractRelationsShouldPersistRelations(): void
     {
         $productTransfer = $this->tester->haveProduct();
         $idProductAbstract = $productTransfer->getFkProductAbstract();
@@ -218,7 +445,7 @@ class ProductLabelFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindProductLabelIdsByIdProductAbstractShouldReturnListOfIds()
+    public function testFindProductLabelIdsByIdProductAbstractShouldReturnListOfIds(): void
     {
         $productTransfer = $this->tester->haveProduct();
         $idProductAbstract = $productTransfer->getFkProductAbstract();
@@ -230,13 +457,13 @@ class ProductLabelFacadeTest extends Unit
         $productLabelFacade = $this->getProductLabelFacade();
         $productLabelIds = $productLabelFacade->findLabelIdsByIdProductAbstract($idProductAbstract);
 
-        $this->assertSame([$idProductLabel], $productLabelIds);
+        $this->assertEquals([$idProductLabel], $productLabelIds);
     }
 
     /**
      * @return void
      */
-    public function testRemoveProductAbstractRelationsShouldRemoveExistingRelations()
+    public function testRemoveProductAbstractRelationsShouldRemoveExistingRelations(): void
     {
         $productTransfer = $this->tester->haveProduct();
         $idProductAbstract = $productTransfer->getFkProductAbstract();
@@ -255,7 +482,7 @@ class ProductLabelFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testAddProductAbstractRelationsShouldTouchRelationsActive()
+    public function testAddProductAbstractRelationsShouldTouchRelationsActive(): void
     {
         $productTransfer = $this->tester->haveProduct();
         $idProductAbstract = $productTransfer->getFkProductAbstract();
@@ -279,7 +506,7 @@ class ProductLabelFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCheckLabelValidityDateRangeAndTouchTouchesUnpublishedLabelsActiveWhenEnteringValidityDateRange()
+    public function testCheckLabelValidityDateRangeAndTouchTouchesUnpublishedLabelsActiveWhenEnteringValidityDateRange(): void
     {
         $this->tester->haveProductLabel([
             'validFrom' => (new DateTime())->setTimestamp(strtotime('-1 day'))->format('Y-m-d'),
@@ -301,7 +528,7 @@ class ProductLabelFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCheckLabelValidityDateRangeAndTouchTouchesPublishedLabelsDeletedWhenLeavingValidityDateRange()
+    public function testCheckLabelValidityDateRangeAndTouchTouchesPublishedLabelsDeletedWhenLeavingValidityDateRange(): void
     {
         $this->tester->haveProductLabel([
             'validFrom' => (new DateTime())->setTimestamp(strtotime('-3 day'))->format('Y-m-d'),
@@ -323,7 +550,7 @@ class ProductLabelFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCheckLabelValidityDateRangeAndTouchDoesNotTouchActiveWhenAlreadyPublished()
+    public function testCheckLabelValidityDateRangeAndTouchDoesNotTouchActiveWhenAlreadyPublished(): void
     {
         $this->tester->haveProductLabel([
             'validFrom' => (new DateTime())->setTimestamp(strtotime('-2 day'))->format('Y-m-d'),
@@ -346,7 +573,7 @@ class ProductLabelFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCheckLabelValidityDateRangeAndTouchDoesNotTouchDeletedWhenAlreadyUnpublished()
+    public function testCheckLabelValidityDateRangeAndTouchDoesNotTouchDeletedWhenAlreadyUnpublished(): void
     {
         $this->tester->haveProductLabel([
             'validFrom' => (new DateTime())->setTimestamp(strtotime('-3 day'))->format('Y-m-d'),
@@ -369,7 +596,7 @@ class ProductLabelFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateDynamicProductLabelRelationsPersistRelationChanges()
+    public function testUpdateDynamicProductLabelRelationsPersistRelationChanges(): void
     {
         // Arrange
         $productTransfer1 = $this->tester->haveProduct();
@@ -427,9 +654,99 @@ class ProductLabelFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testGetProductLabelProductAbstractsByProductAbstractIdsReturnsCorrectData(): void
+    {
+        // Arrange
+        $productTransfer1 = $this->tester->haveProduct();
+        $productLabelTransfer1 = $this->tester->haveProductLabel();
+        $this->tester->haveProductLabelToAbstractProductRelation(
+            $productLabelTransfer1->getIdProductLabel(),
+            $productTransfer1->getFkProductAbstract()
+        );
+
+        $productTransfer2 = $this->tester->haveProduct();
+        $productLabelTransfer2 = $this->tester->haveProductLabel();
+        $this->tester->haveProductLabelToAbstractProductRelation(
+            $productLabelTransfer2->getIdProductLabel(),
+            $productTransfer2->getFkProductAbstract()
+        );
+
+        $productAbstractIds = [
+            $productTransfer1->getFkProductAbstract(),
+            $productTransfer2->getFkProductAbstract(),
+        ];
+
+        // Act
+        $productLabelProductAbstracts = $this->getProductLabelFacade()
+            ->getProductLabelProductAbstractsByProductAbstractIds($productAbstractIds);
+
+        // Assert
+        $this->assertCount(count($productAbstractIds), $productLabelProductAbstracts);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductLabelProductAbstractsByProductAbstractIdsReturnsEmptyCollectionIfDataIsNotCorrect(): void
+    {
+        // Arrange
+        $productTransfer = $this->tester->haveProduct();
+        $productLabelTransfer = $this->tester->haveProductLabel();
+        $this->tester->haveProductLabelToAbstractProductRelation(
+            $productLabelTransfer->getIdProductLabel(),
+            $productTransfer->getFkProductAbstract()
+        );
+
+        $productAbstractIds = [
+            $productTransfer->getFkProductAbstract() + 1,
+        ];
+
+        // Act
+        $productLabelProductAbstracts = $this->getProductLabelFacade()
+            ->getProductLabelProductAbstractsByProductAbstractIds($productAbstractIds);
+
+        // Assert
+        $this->assertCount(0, $productLabelProductAbstracts);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductLabelProductAbstractsByFilterReturnsCorrectData(): void
+    {
+        // Arrange
+        $productTransfer1 = $this->tester->haveProduct();
+        $productLabelTransfer1 = $this->tester->haveProductLabel();
+        $this->tester->haveProductLabelToAbstractProductRelation(
+            $productLabelTransfer1->getIdProductLabel(),
+            $productTransfer1->getFkProductAbstract()
+        );
+
+        $productTransfer2 = $this->tester->haveProduct();
+        $productLabelTransfer2 = $this->tester->haveProductLabel();
+        $this->tester->haveProductLabelToAbstractProductRelation(
+            $productLabelTransfer2->getIdProductLabel(),
+            $productTransfer2->getFkProductAbstract()
+        );
+
+        $filterTransfer = (new FilterTransfer())
+            ->setLimit(1)
+            ->setOffset(0);
+
+        // Act
+        $productLabelProductAbstracts = $this->getProductLabelFacade()
+            ->getProductLabelProductAbstractsByFilter($filterTransfer);
+
+        // Assert
+        $this->assertCount(1, $productLabelProductAbstracts);
+    }
+
+    /**
      * @return \Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface
      */
-    protected function getProductLabelFacade()
+    protected function getProductLabelFacade(): ProductLabelFacadeInterface
     {
         return $this->tester->getLocator()->productLabel()->facade();
     }
@@ -440,7 +757,7 @@ class ProductLabelFacadeTest extends Unit
      *
      * @return \Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer
      */
-    protected function generateLocalizedAttributesTransfer($fkLocale = null, $fkProductLabel = null)
+    protected function generateLocalizedAttributesTransfer(?int $fkLocale = null, ?int $fkProductLabel = null): ProductLabelLocalizedAttributesTransfer
     {
         $builder = new ProductLabelLocalizedAttributesBuilder([
             'fkProductLabel' => $fkProductLabel,

@@ -160,11 +160,11 @@ class CompanyBusinessUnitWriterTest extends Test
 
     /**
      * @param int $idCompanyBusinessUnit
-     * @param int $parentCompanyBusinessUnitId
+     * @param int|null $parentCompanyBusinessUnitId
      *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
      */
-    protected function createNode($idCompanyBusinessUnit, $parentCompanyBusinessUnitId): CompanyBusinessUnitTransfer
+    protected function createNode(int $idCompanyBusinessUnit, ?int $parentCompanyBusinessUnitId): CompanyBusinessUnitTransfer
     {
         return (new CompanyBusinessUnitTransfer())
             ->setIdCompanyBusinessUnit($idCompanyBusinessUnit)

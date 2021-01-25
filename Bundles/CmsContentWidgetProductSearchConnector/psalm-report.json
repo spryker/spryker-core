@@ -1,0 +1,43 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 61,
+            "line_to": 61,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Yves\\CmsContentWidgetProductSearchConnector\\Plugin\\CmsProductSearchContentWidgetPlugin::resolveTemplatePath cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsContentWidgetProductSearchConnector/src/Spryker/Yves/CmsContentWidgetProductSearchConnector/Plugin/CmsProductSearchContentWidgetPlugin.php",
+            "snippet": "            $this->resolveTemplatePath($templateIdentifier, $context),",
+            "selected_text": "$templateIdentifier",
+            "error_level": 3,
+            "shortcode": 78
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 36,
+            "line_to": 36,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Client\\Search\\SearchClientInterface::searchQueryString has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsContentWidgetProductSearchConnector/src/Spryker/Yves/CmsContentWidgetProductSearchConnector/Dependency/Client/CmsContentWidgetProductSearchConnectorToSearchClientBridge.php",
+            "snippet": "        return $this->searchClient->searchQueryString($searchString, $limit, $offset);",
+            "selected_text": "searchQueryString",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 128,
+            "line_to": 128,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Yves\\CmsContentWidgetProductSearchConnector\\Dependency\\Client\\CmsContentWidgetProductSearchConnectorToSearchClientInterface::searchQueryString has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsContentWidgetProductSearchConnector/src/Spryker/Yves/CmsContentWidgetProductSearchConnector/Plugin/CmsProductSearchContentWidgetPlugin.php",
+            "snippet": "            ->searchQueryString($productSearchString, $limit)",
+            "selected_text": "searchQueryString",
+            "error_level": 2,
+            "shortcode": 1
+        }
+    ]
+}

@@ -1,2 +1,4 @@
 parameters:
+    checkMissingIterableValueType: false
     ignoreErrors:
+        - { message: '#Unreachable statement - code above always terminates#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Setup/src/Spryker/Zed/Setup/Business/Model/Cronjobs.php' }

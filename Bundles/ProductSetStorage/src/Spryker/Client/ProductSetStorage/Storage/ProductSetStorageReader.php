@@ -48,35 +48,35 @@ class ProductSetStorageReader implements ProductSetStorageReaderInterface
     }
 
     /**
-     * @param int $idProductAbstract
+     * @param int $idProductSet
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\ProductSetDataStorageTransfer|null
      */
-    public function getProductSetByIdProductSet($idProductAbstract, $localeName)
+    public function getProductSetByIdProductSet($idProductSet, $localeName)
     {
-        $productSet = $this->getStorageData($idProductAbstract, $localeName);
+        $productSetStorageStorageData = $this->getStorageData((int)$idProductSet, $localeName);
 
-        if (!$productSet) {
+        if (!$productSetStorageStorageData) {
             return null;
         }
 
-        return $this->productSetStorageMapper->mapDataToTransfer($productSet);
+        return $this->productSetStorageMapper->mapDataToTransfer($productSetStorageStorageData);
     }
 
     /**
-     * @param int $idProductAbstract
+     * @param int $idProductSet
      * @param string $localeName
      *
      * @return array|null
      */
-    protected function getStorageData(int $idProductAbstract, string $localeName): ?array
+    protected function getStorageData(int $idProductSet, string $localeName): ?array
     {
         if (ProductSetStorageConfig::isCollectorCompatibilityMode()) {
             $clientLocatorClassName = Locator::class;
             /** @var \Spryker\Client\ProductSet\ProductSetClientInterface $productSetClient */
             $productSetClient = $clientLocatorClassName::getInstance()->productSet()->client();
-            $collectorData = $productSetClient->findProductSetByIdProductSet($idProductAbstract);
+            $collectorData = $productSetClient->findProductSetByIdProductSet($idProductSet);
 
             $collectorData = $collectorData->toArray();
             $collectorData['product_abstract_ids'] = $collectorData['id_product_abstracts'];
@@ -96,7 +96,7 @@ class ProductSetStorageReader implements ProductSetStorageReaderInterface
         }
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
         $synchronizationDataTransfer
-            ->setReference($idProductAbstract)
+            ->setReference($idProductSet)
             ->setLocale($localeName);
 
         $key = $this->synchronizationService

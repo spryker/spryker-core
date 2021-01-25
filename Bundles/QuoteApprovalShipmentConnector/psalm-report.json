@@ -1,0 +1,151 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 46,
+            "line_to": 46,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ItemTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/QuoteApprovalShipmentConnector/src/Spryker/Client/QuoteApprovalShipmentConnector/Checker/QuoteShipmentChecker.php",
+            "snippet": "        if ($quoteTransfer->getItems()->count() === 0) {",
+            "selected_text": "count",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 109,
+            "line_to": 109,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Client\\QuoteApprovalShipmentConnector\\Dependency\\Service\\QuoteApprovalShipmentConnectorToShipmentServiceInterface::getShipmentHashKey cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/QuoteApprovalShipmentConnector/src/Spryker/Client/QuoteApprovalShipmentConnector/Checker/QuoteShipmentChecker.php",
+            "snippet": "            && $this->shipmentService->getShipmentHashKey($expenseTransfer->getShipment()) === $itemShipmentKey;",
+            "selected_text": "$expenseTransfer->getShipment()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 31,
+            "line_to": 31,
+            "type": "MismatchingDocblockReturnType",
+            "message": "Docblock has incorrect return type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ShipmentGroupTransfer>', should be 'ArrayObject'",
+            "file_name": "vendor/spryker/spryker/Bundles/QuoteApprovalShipmentConnector/src/Spryker/Client/QuoteApprovalShipmentConnector/Dependency/Service/QuoteApprovalShipmentConnectorToShipmentServiceBridge.php",
+            "snippet": "     * @return \\ArrayObject|\\Generated\\Shared\\Transfer\\ShipmentGroupTransfer[]",
+            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\ShipmentGroupTransfer[]",
+            "error_level": 4,
+            "shortcode": 142
+        },
+        {
+            "severity": "info",
+            "line_from": 18,
+            "line_to": 18,
+            "type": "MismatchingDocblockReturnType",
+            "message": "Docblock has incorrect return type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ShipmentGroupTransfer>', should be 'ArrayObject'",
+            "file_name": "vendor/spryker/spryker/Bundles/QuoteApprovalShipmentConnector/src/Spryker/Client/QuoteApprovalShipmentConnector/Dependency/Service/QuoteApprovalShipmentConnectorToShipmentServiceInterface.php",
+            "snippet": "     * @return \\ArrayObject|\\Generated\\Shared\\Transfer\\ShipmentGroupTransfer[]",
+            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\ShipmentGroupTransfer[]",
+            "error_level": 4,
+            "shortcode": 142
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 43,
+            "line_to": 43,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Client\\QuoteApprovalShipmentConnector\\Checker\\QuoteShipmentChecker::isValidQuoteLevelShipment has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/QuoteApprovalShipmentConnector/src/Spryker/Client/QuoteApprovalShipmentConnector/Checker/QuoteShipmentChecker.php",
+            "snippet": "            return $this->isValidQuoteLevelShipment($quoteTransfer);",
+            "selected_text": "isValidQuoteLevelShipment",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 121,
+            "line_to": 121,
+            "type": "DeprecatedMethod",
+            "message": "The method Generated\\Shared\\Transfer\\QuoteTransfer::getShipment has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/QuoteApprovalShipmentConnector/src/Spryker/Client/QuoteApprovalShipmentConnector/Checker/QuoteShipmentChecker.php",
+            "snippet": "        if (!$quoteTransfer->getShipment() || !$quoteTransfer->getShippingAddress()) {",
+            "selected_text": "getShipment",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 121,
+            "line_to": 121,
+            "type": "DeprecatedMethod",
+            "message": "The method Generated\\Shared\\Transfer\\QuoteTransfer::getShippingAddress has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/QuoteApprovalShipmentConnector/src/Spryker/Client/QuoteApprovalShipmentConnector/Checker/QuoteShipmentChecker.php",
+            "snippet": "        if (!$quoteTransfer->getShipment() || !$quoteTransfer->getShippingAddress()) {",
+            "selected_text": "getShippingAddress",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 54,
+            "line_to": 54,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Zed\\QuoteApprovalShipmentConnector\\Business\\QuoteFieldProvider\\ShipmentQuoteFieldProvider::isQuoteLevelShipment has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/QuoteApprovalShipmentConnector/src/Spryker/Zed/QuoteApprovalShipmentConnector/Business/QuoteFieldProvider/ShipmentQuoteFieldProvider.php",
+            "snippet": "        if ($this->isQuoteLevelShipment($quoteTransfer)) {",
+            "selected_text": "isQuoteLevelShipment",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 55,
+            "line_to": 55,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Zed\\QuoteApprovalShipmentConnector\\Business\\QuoteFieldProvider\\ShipmentQuoteFieldProvider::getQuoteLevelShipmentQuoteFieldsAllowedForSaving has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/QuoteApprovalShipmentConnector/src/Spryker/Zed/QuoteApprovalShipmentConnector/Business/QuoteFieldProvider/ShipmentQuoteFieldProvider.php",
+            "snippet": "            return $this->getQuoteLevelShipmentQuoteFieldsAllowedForSaving();",
+            "selected_text": "getQuoteLevelShipmentQuoteFieldsAllowedForSaving",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 70,
+            "line_to": 70,
+            "type": "DeprecatedMethod",
+            "message": "The method Generated\\Shared\\Transfer\\QuoteTransfer::getShipment has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/QuoteApprovalShipmentConnector/src/Spryker/Zed/QuoteApprovalShipmentConnector/Business/QuoteFieldProvider/ShipmentQuoteFieldProvider.php",
+            "snippet": "        if (!$quoteTransfer->getShipment()) {",
+            "selected_text": "getShipment",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 91,
+            "line_to": 91,
+            "type": "DeprecatedConstant",
+            "message": "Constant Generated\\Shared\\Transfer\\QuoteTransfer::SHIPMENT is deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/QuoteApprovalShipmentConnector/src/Spryker/Zed/QuoteApprovalShipmentConnector/Business/QuoteFieldProvider/ShipmentQuoteFieldProvider.php",
+            "snippet": "            QuoteTransfer::SHIPMENT,",
+            "selected_text": "QuoteTransfer::SHIPMENT",
+            "error_level": 2,
+            "shortcode": 170
+        },
+        {
+            "severity": "info",
+            "line_from": 92,
+            "line_to": 92,
+            "type": "DeprecatedConstant",
+            "message": "Constant Generated\\Shared\\Transfer\\QuoteTransfer::SHIPPING_ADDRESS is deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/QuoteApprovalShipmentConnector/src/Spryker/Zed/QuoteApprovalShipmentConnector/Business/QuoteFieldProvider/ShipmentQuoteFieldProvider.php",
+            "snippet": "            QuoteTransfer::SHIPPING_ADDRESS,",
+            "selected_text": "QuoteTransfer::SHIPPING_ADDRESS",
+            "error_level": 2,
+            "shortcode": 170
+        }
+    ]
+}

@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -62,11 +63,11 @@ class ResponseHeadersTest extends Unit
         $response = $responseHeaders->addHeaders(new Response(), $restResponse, $restRequest);
 
         $contentLanguage = $response->headers->get('Content-Language');
-        $this->assertEquals('DE', $contentLanguage);
+        $this->assertSame('DE', $contentLanguage);
 
         $xCustom = $response->headers->get('x-custom');
 
-        $this->assertEquals('custom', $xCustom);
+        $this->assertSame('custom', $xCustom);
     }
 
     /**

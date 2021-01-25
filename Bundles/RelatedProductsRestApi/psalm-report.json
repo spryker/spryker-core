@@ -1,0 +1,30 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 76,
+            "line_to": 76,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Glue\\RelatedProductsRestApi\\Dependency\\Client\\RelatedProductsRestApiToProductStorageClientInterface::findProductAbstractStorageDataByMapping cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/RelatedProductsRestApi/src/Spryker/Glue/RelatedProductsRestApi/Processor/RelatedProduct/RelatedProductReader.php",
+            "snippet": "                $parentResource->getId(),",
+            "selected_text": "$parentResource->getId()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 86,
+            "line_to": 86,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Glue\\RelatedProductsRestApi\\Dependency\\Client\\RelatedProductsRestApiToProductRelationStorageClientInterface::findRelatedAbstractProductIds cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/RelatedProductsRestApi/src/Spryker/Glue/RelatedProductsRestApi/Processor/RelatedProduct/RelatedProductReader.php",
+            "snippet": "            ->findRelatedAbstractProductIds($abstractProductData[static::KEY_ID_PRODUCT_ABSTRACT], $storeName);",
+            "selected_text": "$storeName",
+            "error_level": 3,
+            "shortcode": 78
+        }
+    ],
+    "deprecation": []
+}

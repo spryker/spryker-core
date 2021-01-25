@@ -16,12 +16,12 @@ interface CmsBlockGlossaryWriterInterface
      *
      * @return void
      */
-    public function deleteByCmsBlockId($idCmsBlock);
+    public function deleteByCmsBlockId(int $idCmsBlock): void;
 
     /**
      * @param \Generated\Shared\Transfer\CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer
      *
      * @return \Generated\Shared\Transfer\CmsBlockGlossaryTransfer
      */
-    public function saveGlossary(CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer);
+    public function saveGlossary(CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer): CmsBlockGlossaryTransfer;
 }

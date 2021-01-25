@@ -28,7 +28,7 @@ class AvailabilityListCest
      *
      * @return void
      */
-    public function testDisplayListPage(AvailabilityGuiCommunicationTester $i)
+    public function testDisplayListPage(AvailabilityGuiCommunicationTester $i): void
     {
         $i->wantTo('Open availability list');
         $i->expect('List of all availability items');
@@ -36,7 +36,7 @@ class AvailabilityListCest
         $i->amOnPage(AvailabilityPage::AVAILABILITY_LIST_URL);
         $i->listDataTable(AvailabilityPage::AVAILABILITY_LIST_URL . '/index/availability-abstract-table');
 
-        $i->seeBreadcrumbNavigation('Dashboard / Products / Availability');
+        $i->seeBreadcrumbNavigation('Catalog / Availability');
 
         $i->clickDataTableViewButton();
         $i->see(AvailabilityPage::PAGE_AVAILABILITY_VIEW_HEADER);

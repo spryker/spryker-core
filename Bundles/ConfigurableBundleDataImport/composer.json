@@ -4,10 +4,11 @@
   "description": "ConfigurableBundleDataImport module",
   "license": "MIT",
   "require": {
-    "php": ">=7.1",
-    "spryker/configurable-bundle": "^1.0.0",
+    "php": ">=7.3",
+    "spryker/configurable-bundle": "^2.0.0",
     "spryker/data-import": "^1.0.0",
     "spryker/kernel": "^3.33.0",
+    "spryker/product-image": "^3.0.0",
     "spryker/product-list": "^1.4.0"
   },
   "require-dev": {
@@ -28,6 +29,10 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/"
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"

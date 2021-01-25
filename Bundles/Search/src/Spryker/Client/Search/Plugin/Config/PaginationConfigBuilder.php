@@ -11,6 +11,9 @@ use Generated\Shared\Transfer\PaginationConfigTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\Search\Dependency\Plugin\PaginationConfigBuilderInterface;
 
+/**
+ * @deprecated Use {@link \Spryker\Client\SearchElasticsearch\Config\PaginationConfig} instead.
+ */
 class PaginationConfigBuilder extends AbstractPlugin implements PaginationConfigBuilderInterface
 {
     /**

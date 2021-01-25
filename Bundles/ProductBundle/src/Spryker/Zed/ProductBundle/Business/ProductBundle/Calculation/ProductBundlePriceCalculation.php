@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductBundle\Business\ProductBundle\Calculation;
 
+use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\ItemMetadataTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
@@ -37,12 +38,33 @@ class ProductBundlePriceCalculation implements ProductBundlePriceCalculationInte
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return \Generated\Shared\Transfer\CalculableObjectTransfer
+     */
+    public function calculateForCalculableObjectTransfer(CalculableObjectTransfer $calculableObjectTransfer): CalculableObjectTransfer
+    {
+        $this->resetBundlePriceAmountsCalculableObjectTransfer($calculableObjectTransfer);
+
+        foreach ($calculableObjectTransfer->getBundleItems() as $bundleItemTransfer) {
+            foreach ($calculableObjectTransfer->getItems() as $itemTransfer) {
+                if ($bundleItemTransfer->getBundleItemIdentifier() !== $itemTransfer->getRelatedBundleItemIdentifier()) {
+                    continue;
+                }
+                $this->calculateBundleAmounts($bundleItemTransfer, $itemTransfer);
+            }
+        }
+
+        return $calculableObjectTransfer;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ItemTransfer $bundleItemTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return void
      */
-    protected function calculateBundleAmounts(ItemTransfer $bundleItemTransfer, ItemTransfer $itemTransfer)
+    public function calculateBundleAmounts(ItemTransfer $bundleItemTransfer, ItemTransfer $itemTransfer): void
     {
         $this->addPrice($bundleItemTransfer, $itemTransfer);
         $this->addNetPrice($bundleItemTransfer, $itemTransfer);
@@ -195,7 +217,6 @@ class ProductBundlePriceCalculation implements ProductBundlePriceCalculationInte
         SpySalesOrderItem $salesOrderItemEntity,
         array $bundledProducts
     ) {
-
         foreach ($orderTransfer->getItems() as $itemTransfer) {
             if ($itemTransfer->getIdSalesOrderItem() !== $salesOrderItemEntity->getIdSalesOrderItem()) {
                 continue;
@@ -224,20 +245,46 @@ class ProductBundlePriceCalculation implements ProductBundlePriceCalculationInte
     protected function resetBundlePriceAmounts(QuoteTransfer $quoteTransfer)
     {
         foreach ($quoteTransfer->getBundleItems() as $bundleItemTransfer) {
-            $bundleItemTransfer->setUnitGrossPrice(0);
-            $bundleItemTransfer->setSumGrossPrice(0);
-            $bundleItemTransfer->setUnitPrice(0);
-            $bundleItemTransfer->setSumPrice(0);
-            $bundleItemTransfer->setUnitNetPrice(0);
-            $bundleItemTransfer->setSumNetPrice(0);
-            $bundleItemTransfer->setUnitSubtotalAggregation(0);
-            $bundleItemTransfer->setSumSubtotalAggregation(0);
-            $bundleItemTransfer->setUnitDiscountAmountAggregation(0);
-            $bundleItemTransfer->setSumDiscountAmountAggregation(0);
-            $bundleItemTransfer->setUnitDiscountAmountFullAggregation(0);
-            $bundleItemTransfer->setSumDiscountAmountFullAggregation(0);
-            $bundleItemTransfer->setUnitPriceToPayAggregation(0);
-            $bundleItemTransfer->setSumPriceToPayAggregation(0);
+            $this->resetBundleItemPrice($bundleItemTransfer);
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return \Generated\Shared\Transfer\CalculableObjectTransfer
+     */
+    protected function resetBundlePriceAmountsCalculableObjectTransfer(CalculableObjectTransfer $calculableObjectTransfer): CalculableObjectTransfer
+    {
+        foreach ($calculableObjectTransfer->getBundleItems() as $bundleItemTransfer) {
+            $this->resetBundleItemPrice($bundleItemTransfer);
+        }
+
+        return $calculableObjectTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $bundleItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function resetBundleItemPrice(ItemTransfer $bundleItemTransfer): ItemTransfer
+    {
+        $bundleItemTransfer->setUnitGrossPrice(0);
+        $bundleItemTransfer->setSumGrossPrice(0);
+        $bundleItemTransfer->setUnitPrice(0);
+        $bundleItemTransfer->setSumPrice(0);
+        $bundleItemTransfer->setUnitNetPrice(0);
+        $bundleItemTransfer->setSumNetPrice(0);
+        $bundleItemTransfer->setUnitSubtotalAggregation(0);
+        $bundleItemTransfer->setSumSubtotalAggregation(0);
+        $bundleItemTransfer->setUnitDiscountAmountAggregation(0);
+        $bundleItemTransfer->setSumDiscountAmountAggregation(0);
+        $bundleItemTransfer->setUnitDiscountAmountFullAggregation(0);
+        $bundleItemTransfer->setSumDiscountAmountFullAggregation(0);
+        $bundleItemTransfer->setUnitPriceToPayAggregation(0);
+        $bundleItemTransfer->setSumPriceToPayAggregation(0);
+
+        return $bundleItemTransfer;
     }
 }

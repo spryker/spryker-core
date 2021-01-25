@@ -10,12 +10,15 @@ namespace Spryker\Zed\Search\Business\Model\Elasticsearch;
 use Elastica\Exception\ResponseException;
 use Elastica\Index;
 
+/**
+ * @deprecated Use {@link \Spryker\Zed\SearchElasticsearch\Business\Index\Index} instead.
+ */
 class SearchIndexManager implements SearchIndexManagerInterface
 {
     /**
      * @var \Elastica\Index
      */
-    private $index;
+    protected $index;
 
     /**
      * @param \Elastica\Index $index

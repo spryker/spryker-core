@@ -38,8 +38,11 @@ class AttributeLoader implements AttributeLoaderInterface
      * @param \Spryker\Zed\Product\Business\Attribute\AttributeMergerInterface $attributeMerger
      * @param \Spryker\Zed\Product\Business\Attribute\AttributeEncoderInterface $attributeEncoder
      */
-    public function __construct(ProductQueryContainerInterface $productQueryContainer, AttributeMergerInterface $attributeMerger, AttributeEncoderInterface $attributeEncoder)
-    {
+    public function __construct(
+        ProductQueryContainerInterface $productQueryContainer,
+        AttributeMergerInterface $attributeMerger,
+        AttributeEncoderInterface $attributeEncoder
+    ) {
         $this->productQueryContainer = $productQueryContainer;
         $this->attributeMerger = $attributeMerger;
         $this->attributeEncoder = $attributeEncoder;

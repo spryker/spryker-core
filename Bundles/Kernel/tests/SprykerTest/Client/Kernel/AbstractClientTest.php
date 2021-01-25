@@ -24,7 +24,7 @@ class AbstractClientTest extends Unit
     /**
      * @return void
      */
-    public function testAbstractStubMustBeConstructable()
+    public function testAbstractStubMustBeConstructable(): void
     {
         $abstractStub = new KernelClient();
 

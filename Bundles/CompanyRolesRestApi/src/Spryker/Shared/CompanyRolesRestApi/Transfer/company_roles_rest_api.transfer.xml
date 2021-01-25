@@ -23,16 +23,23 @@
 
     <transfer name="CompanyRoleResponse">
         <property name="companyRoleCollection" type="CompanyRoleCollection"/>
+        <property name="isSuccessful" type="bool"/>
+        <property name="companyRoleTransfer" type="CompanyRole"/>
     </transfer>
 
     <transfer name="RestUser">
         <property name="idCompany" type="int"/>
+        <property name="idCompanyUser" type="int"/>
     </transfer>
 
     <transfer name="RestErrorMessage">
         <property name="status" type="int"/>
         <property name="code" type="string"/>
         <property name="detail" type="string"/>
+    </transfer>
+
+    <transfer name="CompanyRoleCriteriaFilter">
+        <property name="idCompanyUser" type="int"/>
     </transfer>
 
 </transfers>

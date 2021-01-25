@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -22,8 +23,7 @@ class ConcreteProductAvailabilitiesResourceController extends AbstractController
      *              "Retrieves concrete product availabilities."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "400": "Concrete product id is not specified.",

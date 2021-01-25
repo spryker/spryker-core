@@ -7,22 +7,7 @@
 
 namespace Spryker\Zed\Gui;
 
-use Spryker\Zed\Gui\Communication\Plugin\Twig\AssetsPathFunction;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Action\BackActionButtonFunction;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Action\CreateActionButtonFunction;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Action\EditActionButtonFunction;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Action\RemoveActionButtonFunction;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Action\ViewActionButtonFunction;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\ButtonGroupFunction;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Form\SubmitButtonFunction;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Table\BackTableButtonFunction;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Table\CreateTableButtonFunction;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Table\EditTableButtonFunction;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Table\RemoveTableButtonFunction;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Table\ViewTableButtonFunction;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\TabsFunction;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\UrlDecodeFunction;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\UrlFunction;
+use Spryker\Zed\Gui\Dependency\Service\GuiToUtilSanitizeXssServiceBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -31,6 +16,8 @@ use Spryker\Zed\Kernel\Container;
  */
 class GuiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    public const SERVICE_UTIL_SANITIZE_XSS = 'SERVICE_UTIL_SANITIZE_XSS';
+
     public const GUI_TWIG_FUNCTIONS = 'gui_twig_functions';
     public const GUI_TWIG_FILTERS = 'gui_twig_filters';
 
@@ -41,22 +28,9 @@ class GuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container = $this->addTwigFunctions($container);
+        $container = parent::provideCommunicationLayerDependencies($container);
         $container = $this->addTwigFilter($container);
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addTwigFunctions(Container $container)
-    {
-        $container[static::GUI_TWIG_FUNCTIONS] = function () {
-            return $this->getTwigFunctions();
-        };
+        $container = $this->addUtilSanitizeXssService($container);
 
         return $container;
     }
@@ -68,39 +42,11 @@ class GuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addTwigFilter(Container $container)
     {
-        $container[static::GUI_TWIG_FILTERS] = function () {
+        $container->set(static::GUI_TWIG_FILTERS, function () {
             return $this->getTwigFilters();
-        };
+        });
 
         return $container;
-    }
-
-    /**
-     * @return \Twig\TwigFunction[]
-     */
-    protected function getTwigFunctions()
-    {
-        return [
-            new AssetsPathFunction(),
-            new TabsFunction(),
-            new UrlFunction(),
-            new UrlDecodeFunction(),
-            // navigation buttons
-            new ButtonGroupFunction(),
-            new BackActionButtonFunction(),
-            new CreateActionButtonFunction(),
-            new ViewActionButtonFunction(),
-            new EditActionButtonFunction(),
-            new RemoveActionButtonFunction(),
-            // table row buttons
-            new EditTableButtonFunction(),
-            new BackTableButtonFunction(),
-            new CreateTableButtonFunction(),
-            new ViewTableButtonFunction(),
-            new RemoveTableButtonFunction(),
-            // Form buttons
-            new SubmitButtonFunction(),
-        ];
     }
 
     /**
@@ -109,5 +55,21 @@ class GuiDependencyProvider extends AbstractBundleDependencyProvider
     protected function getTwigFilters()
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilSanitizeXssService(Container $container): Container
+    {
+        $container->set(static::SERVICE_UTIL_SANITIZE_XSS, function (Container $container) {
+            return new GuiToUtilSanitizeXssServiceBridge(
+                $container->getLocator()->utilSanitizeXss()->service()
+            );
+        });
+
+        return $container;
     }
 }

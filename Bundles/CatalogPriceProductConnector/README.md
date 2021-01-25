@@ -1,6 +1,6 @@
 # CatalogPriceProductConnector Module
-[![Build Status](https://travis-ci.org/spryker/CatalogPriceProductConnector.svg)](https://travis-ci.org/spryker/CatalogPriceProductConnector)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/CatalogPriceProductConnector/badge.svg)](https://coveralls.io/github/spryker/CatalogPriceProductConnector)
+[![Build Status](https://travis-ci.org/spryker/catalog-price-product-connector.svg)](https://travis-ci.org/spryker/catalog-price-product-connector)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 CatalogPriceProductConnector provides price related functionality to catalog features. It contains catalog price formatting, currency logic.
 

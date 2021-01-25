@@ -1,6 +1,6 @@
 # CustomerOfferConnector Module
 [![Build Status](https://travis-ci.org/spryker/customer-offer-connector.svg)](https://travis-ci.org/spryker/customer-offer-connector)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/customer-offer-connector/badge.svg)](https://coveralls.io/github/spryker/customer-offer-connector)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 Contains plugin for offer module, which hydrates customer into an offer.
 

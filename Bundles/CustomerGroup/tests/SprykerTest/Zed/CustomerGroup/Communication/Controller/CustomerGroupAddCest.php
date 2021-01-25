@@ -28,10 +28,10 @@ class CustomerGroupAddCest
      *
      * @return void
      */
-    public function breadcrumbIsVisible(CustomerGroupCommunicationTester $i)
+    public function breadcrumbIsVisible(CustomerGroupCommunicationTester $i): void
     {
         $i->amOnPage(CustomerGroupAddPage::URL);
 
-        $i->seeBreadcrumbNavigation('Dashboard / Customers / Customer Groups / Add a customer group');
+        $i->seeBreadcrumbNavigation('Customers / Customer Groups / Add a Customer Group');
     }
 }

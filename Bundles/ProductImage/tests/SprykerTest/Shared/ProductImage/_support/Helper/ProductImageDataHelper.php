@@ -72,7 +72,7 @@ class ProductImageDataHelper extends Module
             $productImageSetTransfer->getIdProductImageSet()
         ));
 
-        $this->getDataCleanupHelper()->_addCleanup(function () use ($productImageSetTransfer) {
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($productImageSetTransfer): void {
             $this->cleanupProductImageSet($productImageSetTransfer);
         });
 

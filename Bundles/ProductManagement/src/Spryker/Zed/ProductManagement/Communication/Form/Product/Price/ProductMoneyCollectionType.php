@@ -22,6 +22,7 @@ use Symfony\Component\Form\FormView;
  * @method \Spryker\Zed\ProductManagement\ProductManagementConfig getConfig()
  * @method \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductManagement\Business\ProductManagementFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductManagement\Persistence\ProductManagementRepositoryInterface getRepository()
  */
 class ProductMoneyCollectionType extends AbstractCollectionType
 {
@@ -209,8 +210,10 @@ class ProductMoneyCollectionType extends AbstractCollectionType
         $priceProductTransfer = $this->extractPriceProductTransfer($productMoneyTypeFormView);
         $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
 
-        if (!$priceProductTransfer->getIdPriceProduct()
-            || (!$moneyValueTransfer->getGrossAmount() && !$moneyValueTransfer->getNetAmount())) {
+        if (
+            !$priceProductTransfer->getIdPriceProduct()
+            || (!$moneyValueTransfer->getGrossAmount() && !$moneyValueTransfer->getNetAmount())
+        ) {
             return true;
         }
 

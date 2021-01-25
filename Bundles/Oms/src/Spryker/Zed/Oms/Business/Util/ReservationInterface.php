@@ -7,12 +7,15 @@
 
 namespace Spryker\Zed\Oms\Business\Util;
 
-use Generated\Shared\Transfer\OmsStateCollectionTransfer;
+use Generated\Shared\Transfer\ReservationRequestTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\DecimalObject\Decimal;
 
 interface ReservationInterface
 {
     /**
+     * @deprecated Use {@link updateReservation()} instead.
+     *
      * @param string $sku
      *
      * @return void
@@ -20,45 +23,20 @@ interface ReservationInterface
     public function updateReservationQuantity($sku);
 
     /**
-     * @param string $sku
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     * @param int $reservationQuantity
+     * @param \Generated\Shared\Transfer\ReservationRequestTransfer $reservationRequestTransfer
      *
      * @return void
      */
-    public function saveReservation(string $sku, StoreTransfer $storeTransfer, int $reservationQuantity): void;
+    public function updateReservation(ReservationRequestTransfer $reservationRequestTransfer): void;
 
     /**
-     * @param string $sku
-     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
+     * @deprecated Will be removed without replacement.
      *
-     * @return int
-     */
-    public function sumReservedProductQuantitiesForSku($sku, ?StoreTransfer $storeTransfer = null);
-
-    /**
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Spryker\DecimalObject\Decimal $reservationQuantity
      *
-     * @return int
+     * @return void
      */
-    public function getOmsReservedProductQuantityForSku($sku, StoreTransfer $storeTransfer);
-
-    /**
-     * @param string $sku
-     * @param \Generated\Shared\Transfer\StoreTransfer $currentStoreTransfer
-     *
-     * @return int
-     */
-    public function getReservationsFromOtherStores($sku, StoreTransfer $currentStoreTransfer);
-
-    /**
-     * @return string[]
-     */
-    public function getReservedStateNames(): array;
-
-    /**
-     * @return \Generated\Shared\Transfer\OmsStateCollectionTransfer
-     */
-    public function getOmsReservedStateCollection(): OmsStateCollectionTransfer;
+    public function saveReservation(string $sku, StoreTransfer $storeTransfer, Decimal $reservationQuantity): void;
 }

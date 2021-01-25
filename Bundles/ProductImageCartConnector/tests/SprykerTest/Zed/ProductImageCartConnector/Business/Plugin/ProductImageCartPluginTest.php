@@ -10,7 +10,7 @@ namespace SprykerTest\Zed\ProductImageCartConnector\Business\Plugin;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\ProductImageTransfer;
 use Spryker\Zed\ProductImageCartConnector\Business\ProductImageCartConnectorFacade;
 
@@ -33,9 +33,14 @@ class ProductImageCartPluginTest extends Unit
     protected $productImageCartConnectorFacade;
 
     /**
+     * @var \SprykerTest\Zed\ProductImageCartConnector\ProductImageCartConnectorBusinessTester
+     */
+    protected $tester;
+
+    /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -45,20 +50,28 @@ class ProductImageCartPluginTest extends Unit
     /**
      * @return void
      */
-    public function testPluginExpandsCartItemWithImages()
+    public function testPluginExpandsCartItemWithImages(): void
     {
-        $productTransfer = new ProductConcreteTransfer();
-        $productTransfer->setIdProductConcrete(66);
+        // Arrange
+        $productConcreteTransfer = $this->tester->haveProduct();
+        $this->tester->haveProductImageSet([
+            ProductImageSetTransfer::ID_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
+            ProductImageSetTransfer::NAME => 'default',
+        ]);
 
-        $changeTransfer = new CartChangeTransfer();
-        $itemTransfer = new ItemTransfer();
-        $itemTransfer->setProductConcrete($productTransfer);
-        $itemTransfer->setId($productTransfer->getIdProductConcrete());
-        $changeTransfer->addItem($itemTransfer);
+        $cartChangeTransfer = (new CartChangeTransfer())
+            ->addItem(
+                (new ItemTransfer())
+                    ->setProductConcrete($productConcreteTransfer)
+                    ->setId($productConcreteTransfer->getIdProductConcrete())
+            );
 
-        $this->productImageCartConnectorFacade->expandItems($changeTransfer);
+        // Act
+        $cartChangeTransfer = $this->productImageCartConnectorFacade->expandItems($cartChangeTransfer);
 
-        $itemTransfer = $changeTransfer->getItems()[0];
+        // Assert
+        /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
+        $itemTransfer = $cartChangeTransfer->getItems()->offsetGet(0);
 
         /** @var \Generated\Shared\Transfer\ProductImageTransfer $imageTransfer */
         $imageTransfer = $itemTransfer->getImages()->offsetGet(0);

@@ -10,14 +10,12 @@ namespace Spryker\Zed\Twig\Communication\Plugin\ServiceProvider;
 use FilesystemIterator;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\Twig\TwigConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Twig\Communication\RouteResolver\RouteResolver;
 use Symfony\Bridge\Twig\Extension\HttpKernelRuntime;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
+use Symfony\Component\HttpKernel\Event\ViewEvent;
 use Symfony\Component\HttpKernel\Fragment\FragmentHandler;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Twig\Environment;
@@ -26,7 +24,7 @@ use Twig\Loader\FilesystemLoader;
 use Twig\RuntimeLoader\FactoryRuntimeLoader;
 
 /**
- * @deprecated Use \Spryker\Zed\Twig\Communication\Plugin\Application\TwigApplicationPlugin instead.
+ * @deprecated Use {@link \Spryker\Zed\Twig\Communication\Plugin\Application\TwigApplicationPlugin} instead.
  *
  * @method \Spryker\Zed\Twig\TwigConfig getConfig()
  * @method \Spryker\Zed\Twig\Communication\TwigCommunicationFactory getFactory()
@@ -37,7 +35,7 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
     /**
      * @var \Silex\Application|\Spryker\Shared\Kernel\Communication\Application
      */
-    private $app;
+    protected $app;
 
     /**
      * @param \Silex\Application $app
@@ -63,7 +61,7 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
             );
         });
 
-        $app['twig.options'] = Config::get(TwigConstants::ZED_TWIG_OPTIONS);
+        $app['twig.options'] = $this->getConfig()->getTwigOptions();
 
         $app['twig.global.variables'] = $app->share(function () {
             return [];
@@ -96,11 +94,11 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
     /**
      * Handles string responses.
      *
-     * @param \Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent $event The event to handle
+     * @param \Symfony\Component\HttpKernel\Event\ViewEvent $event The event to handle
      *
      * @return void
      */
-    public function onKernelView(GetResponseForControllerResultEvent $event)
+    public function onKernelView(ViewEvent $event)
     {
         $response = $event->getControllerResult();
 
@@ -168,11 +166,11 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
      */
     protected function provideFormTypeTemplates()
     {
-        $guiDirectory = $path = $this->getConfig()->getBundlesDirectory() . '/Gui';
+        $guiDirectory = $this->getConfig()->getBundlesDirectory() . '/Gui/';
         if (!is_dir($guiDirectory)) {
-            $guiDirectory = $path = $this->getConfig()->getBundlesDirectory() . '/gui';
+            $guiDirectory = $this->getConfig()->getBundlesDirectory() . '/gui/';
         }
-        $path = $guiDirectory . '/src/Spryker/Zed/Gui/Presentation/Form/Type';
+        $path = $guiDirectory . 'src/Spryker/Zed/Gui/Presentation/Form/Type';
 
         $this->app->extend('twig.loader.filesystem', function (FilesystemLoader $loader) use ($path) {
             $loader->addPath($path);
@@ -180,6 +178,7 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
             return $loader;
         });
 
+        /** @var \SplFileInfo[] $files */
         $files = new FilesystemIterator($path, FilesystemIterator::SKIP_DOTS | FilesystemIterator::KEY_AS_PATHNAME);
 
         $typeTemplates = [];

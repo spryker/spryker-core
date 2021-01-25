@@ -13,6 +13,7 @@ use Spryker\Zed\DataImport\Dependency\Client\DataImportToQueueClientBridge;
 use Spryker\Zed\DataImport\Dependency\Facade\DataImportToEventBridge;
 use Spryker\Zed\DataImport\Dependency\Facade\DataImportToTouchBridge;
 use Spryker\Zed\DataImport\Dependency\Propel\DataImportToPropelConnectionBridge;
+use Spryker\Zed\DataImport\Dependency\Service\DataImportToUtilDataReaderServiceBridge;
 use Spryker\Zed\DataImport\Dependency\Service\DataImportToUtilEncodingServiceBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
@@ -24,14 +25,19 @@ class DataImportDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_TOUCH = 'touch facade';
     public const FACADE_EVENT = 'event facade';
-    public const PROPEL_CONNECTION = 'propel connection';
+
     public const DATA_IMPORTER_PLUGINS = 'IMPORTER_PLUGINS';
     public const DATA_IMPORT_BEFORE_HOOK_PLUGINS = 'DATA_IMPORT_BEFORE_HOOK_PLUGINS';
     public const DATA_IMPORT_AFTER_HOOK_PLUGINS = 'DATA_IMPORT_AFTER_HOOK_PLUGINS';
     public const DATA_IMPORT_DEFAULT_WRITER_PLUGINS = 'DATA_IMPORT_DEFAULT_WRITER_PLUGINS';
-    public const CLIENT_QUEUE = 'CLIENT_QUEUE';
-    public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+
+    public const PROPEL_CONNECTION = 'propel connection';
     public const STORE = 'store';
+
+    public const CLIENT_QUEUE = 'CLIENT_QUEUE';
+
+    public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+    public const SERVICE_UTIL_DATA_READER = 'SERVICE_UTIL_DATA_READER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -59,13 +65,26 @@ class DataImportDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    public function provideCommunicationLayerDependencies(Container $container): Container
+    {
+        $container = parent::provideCommunicationLayerDependencies($container);
+        $container = $this->addUtilDataReaderService($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addTouchFacade(Container $container)
     {
-        $container[static::FACADE_TOUCH] = function (Container $container) {
+        $container->set(static::FACADE_TOUCH, function (Container $container) {
             return new DataImportToTouchBridge(
                 $container->getLocator()->touch()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -77,11 +96,11 @@ class DataImportDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addEventFacade(Container $container)
     {
-        $container[static::FACADE_EVENT] = function (Container $container) {
+        $container->set(static::FACADE_EVENT, function (Container $container) {
             return new DataImportToEventBridge(
                 $container->getLocator()->event()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -93,9 +112,9 @@ class DataImportDependencyProvider extends AbstractBundleDependencyProvider
      */
     private function addStore(Container $container)
     {
-        $container[static::STORE] = function () {
+        $container->set(static::STORE, function () {
             return Store::getInstance();
-        };
+        });
 
         return $container;
     }
@@ -107,11 +126,11 @@ class DataImportDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addPropelConnection(Container $container)
     {
-        $container[static::PROPEL_CONNECTION] = function () {
+        $container->set(static::PROPEL_CONNECTION, function () {
             return new DataImportToPropelConnectionBridge(
                 Propel::getConnection()
             );
-        };
+        });
 
         return $container;
     }
@@ -123,9 +142,9 @@ class DataImportDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addDataImporterPlugins(Container $container): Container
     {
-        $container[static::DATA_IMPORTER_PLUGINS] = function () {
+        $container->set(static::DATA_IMPORTER_PLUGINS, function () {
             return $this->getDataImporterPlugins();
-        };
+        });
 
         return $container;
     }
@@ -145,9 +164,9 @@ class DataImportDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addDataImportBeforeImportHookPlugins(Container $container): Container
     {
-        $container[static::DATA_IMPORT_BEFORE_HOOK_PLUGINS] = function () {
+        $container->set(static::DATA_IMPORT_BEFORE_HOOK_PLUGINS, function () {
             return $this->getDataImportBeforeImportHookPlugins();
-        };
+        });
 
         return $container;
     }
@@ -167,9 +186,9 @@ class DataImportDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addDataImportAfterImportHookPlugins(Container $container): Container
     {
-        $container[static::DATA_IMPORT_AFTER_HOOK_PLUGINS] = function () {
+        $container->set(static::DATA_IMPORT_AFTER_HOOK_PLUGINS, function () {
             return $this->getDataImportAfterImportHookPlugins();
-        };
+        });
 
         return $container;
     }
@@ -189,9 +208,9 @@ class DataImportDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addDataImportDefaultWriterPlugins(Container $container): Container
     {
-        $container[static::DATA_IMPORT_DEFAULT_WRITER_PLUGINS] = function () {
+        $container->set(static::DATA_IMPORT_DEFAULT_WRITER_PLUGINS, function () {
             return $this->getDataImportDefaultWriterPlugins();
-        };
+        });
 
         return $container;
     }
@@ -211,9 +230,9 @@ class DataImportDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addQueueClient(Container $container): Container
     {
-        $container[static::CLIENT_QUEUE] = function (Container $container) {
+        $container->set(static::CLIENT_QUEUE, function (Container $container) {
             return new DataImportToQueueClientBridge($container->getLocator()->queue()->client());
-        };
+        });
 
         return $container;
     }
@@ -225,9 +244,23 @@ class DataImportDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUtilEncodingService(Container $container): Container
     {
-        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new DataImportToUtilEncodingServiceBridge($container->getLocator()->utilEncoding()->service());
-        };
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilDataReaderService(Container $container): Container
+    {
+        $container->set(static::SERVICE_UTIL_DATA_READER, function (Container $container) {
+            return new DataImportToUtilDataReaderServiceBridge($container->getLocator()->utilDataReader()->service());
+        });
 
         return $container;
     }

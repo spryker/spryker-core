@@ -82,8 +82,6 @@ class SchedulerSuspendConsole extends AbstractSchedulerConsole
         $schedulerFilterTransfer = $this->createSchedulerFilterTransfer($roles, $schedulers, $jobNames);
         $responseCollectionTransfer = $this->getFacade()->suspend($schedulerFilterTransfer);
 
-        $this->outputCommandResponse($responseCollectionTransfer, $output);
-
-        return static::CODE_SUCCESS;
+        return $this->outputCommandResponseStatus($responseCollectionTransfer, $output);
     }
 }

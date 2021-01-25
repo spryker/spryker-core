@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\Oms\Persistence" package="src.Orm.Zed.Oms.Persistence">
 
-    <table name="spy_oms_transition_log" phpName="SpyOmsTransitionLog" identifierQuoting="true">
+    <table name="spy_oms_transition_log" identifierQuoting="true">
         <column name="id_oms_transition_log" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_sales_order_item" type="INTEGER" required="true"/>
         <column name="fk_sales_order" type="INTEGER" required="true"/>
@@ -15,8 +15,8 @@
         <column name="params" type="ARRAY" required="false"/>
         <column name="source_state" type="VARCHAR" size="128" required="false"/>
         <column name="target_state" type="VARCHAR" size="128" required="false"/>
-        <column name="command" type="VARCHAR" required="false"/>
-        <column name="condition" type="VARCHAR" required="false"/>
+        <column name="command" type="VARCHAR" size="512" required="false"/>
+        <column name="condition" type="VARCHAR" size="512" required="false"/>
         <column name="is_error" type="BOOLEAN" required="false"/>
         <column name="error_message" type="LONGVARCHAR" required="false"/>
 
@@ -36,7 +36,7 @@
         <id-method-parameter value="spy_oms_transition_log_pk_seq"/>
     </table>
 
-    <table name="spy_oms_order_process" phpName="SpyOmsOrderProcess" identifierQuoting="true">
+    <table name="spy_oms_order_process" identifierQuoting="true">
         <column name="id_oms_order_process" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="name" type="VARCHAR" size="255" required="true"/>
 
@@ -48,11 +48,11 @@
         <id-method-parameter value="spy_oms_order_process_pk_seq"/>
     </table>
 
-    <table name="spy_oms_state_machine_lock" phpName="SpyOmsStateMachineLock" identifierQuoting="true">
+    <table name="spy_oms_state_machine_lock" identifierQuoting="true">
         <column name="id_oms_state_machine_lock" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="identifier" type="VARCHAR" size="255"  required="true"/>
         <column name="expires" type="TIMESTAMP" required="true"/>
-        <column name="details" type="VARCHAR"/>
+        <column name="details" type="LONGVARCHAR"/>
 
         <behavior name="timestampable"/>
 
@@ -63,7 +63,7 @@
         <id-method-parameter value="spy_oms_state_machine_lock_pk_seq"/>
     </table>
 
-    <table name="spy_oms_order_item_state" phpName="SpyOmsOrderItemState" identifierQuoting="true">
+    <table name="spy_oms_order_item_state" identifierQuoting="true">
         <column name="id_oms_order_item_state" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
 
         <column name="name" type="VARCHAR" size="255" required="true"/>
@@ -76,7 +76,7 @@
         <id-method-parameter value="spy_oms_order_item_state_pk_seq"/>
     </table>
 
-    <table name="spy_oms_order_item_state_history" phpName="SpyOmsOrderItemStateHistory" identifierQuoting="true">
+    <table name="spy_oms_order_item_state_history" identifierQuoting="true">
         <column name="id_oms_order_item_state_history" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_sales_order_item" type="INTEGER" required="true"/>
         <column name="fk_oms_order_item_state" type="INTEGER" required="true"/>
@@ -100,7 +100,7 @@
         <id-method-parameter value="spy_oms_order_item_state_history_pk_seq"/>
     </table>
 
-    <table name="spy_oms_event_timeout" phpName="SpyOmsEventTimeout" identifierQuoting="true">
+    <table name="spy_oms_event_timeout" identifierQuoting="true">
         <column name="id_oms_event_timeout" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_sales_order_item" type="INTEGER" required="true"/>
         <column name="fk_oms_order_item_state" type="INTEGER" required="true"/>
@@ -129,10 +129,10 @@
         <id-method-parameter value="spy_oms_event_timeout_pk_seq"/>
     </table>
 
-    <table name="spy_oms_product_reservation" phpName="SpyOmsProductReservation" identifierQuoting="true">
+    <table name="spy_oms_product_reservation" identifierQuoting="true">
         <column name="id_oms_product_reservation" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="sku" type="VARCHAR" size="255" required="true"/>
-        <column name="reservation_quantity" type="INTEGER" required="true" default="0"/>
+        <column name="reservation_quantity" type="DECIMAL" size="20" scale="10" required="true" default="0"/>
         <column name="fk_store" required="false" type="INTEGER"/>
 
         <unique name="spy_oms_product_reservation-sku">
@@ -147,11 +147,11 @@
         <id-method-parameter value="spy_oms_product_reservation_pk_seq"/>
     </table>
 
-    <table name="spy_oms_product_reservation_store" phpName="SpyOmsProductReservationStore" identifierQuoting="true">
+    <table name="spy_oms_product_reservation_store" identifierQuoting="true">
         <column name="id_oms_product_reservation_store" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="store" type="VARCHAR" size="255" required="true"/>
         <column name="sku" type="VARCHAR" size="255" required="true"/>
-        <column name="reservation_quantity" type="INTEGER" required="true"/>
+        <column name="reservation_quantity" type="DECIMAL" size="20" scale="10" required="true"/>
         <column name="version" type="BIGINT" required="true"/>
 
         <index name="spy_oms_product_reservation_store-version">
@@ -174,14 +174,14 @@
         <id-method-parameter value="spy_oms_product_reservation_store_pk_seq"/>
     </table>
 
-    <table name="spy_oms_product_reservation_change_version" phpName="SpyOmsProductReservationChangeVersion" identifierQuoting="true">
+    <table name="spy_oms_product_reservation_change_version" identifierQuoting="true">
         <column name="version" required="true" type="BIGINT" autoIncrement="true" primaryKey="true"/>
         <column name="id_oms_product_reservation_id" required="true" type="INTEGER"/>
         <behavior name="timestampable"/>
         <id-method-parameter value="spy_oms_product_reservation_change_version_pk_seq"/>
     </table>
 
-    <table name="spy_oms_product_reservation_last_exported_version" phpName="SpyOmsProductReservationLastExportedVersion" identifierQuoting="true">
+    <table name="spy_oms_product_reservation_last_exported_version" identifierQuoting="true">
         <behavior name="timestampable"/>
         <column name="version" type="BIGINT" required="true"/>
     </table>

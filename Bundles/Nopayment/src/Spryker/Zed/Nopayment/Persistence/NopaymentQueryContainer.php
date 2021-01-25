@@ -16,6 +16,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 class NopaymentQueryContainer extends AbstractQueryContainer implements NopaymentQueryContainerInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem

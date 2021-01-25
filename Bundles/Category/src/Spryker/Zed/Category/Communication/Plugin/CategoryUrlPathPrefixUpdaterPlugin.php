@@ -21,6 +21,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class CategoryUrlPathPrefixUpdaterPlugin extends AbstractPlugin implements CategoryUrlPathPluginInterface
 {
     /**
+     * {@inheritDoc}
      * Specification:
      * - Update category url paths returned array
      *

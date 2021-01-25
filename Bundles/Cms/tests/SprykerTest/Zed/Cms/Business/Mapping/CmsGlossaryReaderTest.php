@@ -30,7 +30,7 @@ class CmsGlossaryReaderTest extends CmsMocks
     /**
      * @return void
      */
-    public function testGetPageGlossaryAttributesShouldReadDataFromTemplateAndPersistenceToTransfer()
+    public function testGetPageGlossaryAttributesShouldReadDataFromTemplateAndPersistenceToTransfer(): void
     {
         $localeFacadeMock = $this->createLocaleMock();
 
@@ -56,11 +56,11 @@ class CmsGlossaryReaderTest extends CmsMocks
         $cmsGlossaryTransfer = $cmsGlossaryReaderMock->findPageGlossaryAttributes(1);
 
         $cmsGlossaryAttributeTransfer = $cmsGlossaryTransfer->getGlossaryAttributes()[0];
-        $this->assertEquals('title', $cmsGlossaryAttributeTransfer->getPlaceholder());
+        $this->assertSame('title', $cmsGlossaryAttributeTransfer->getPlaceholder());
         $this->assertCount(2, $cmsGlossaryAttributeTransfer->getTranslations());
 
         $cmsGlossaryAttributeTransfer = $cmsGlossaryTransfer->getGlossaryAttributes()[1];
-        $this->assertEquals('content', $cmsGlossaryAttributeTransfer->getPlaceholder());
+        $this->assertSame('content', $cmsGlossaryAttributeTransfer->getPlaceholder());
         $this->assertCount(2, $cmsGlossaryAttributeTransfer->getTranslations());
     }
 
@@ -75,7 +75,7 @@ class CmsGlossaryReaderTest extends CmsMocks
         ?CmsQueryContainerInterface $cmsQueryContainerMock = null,
         ?CmsToLocaleFacadeInterface $localeFacadeMock = null,
         ?TemplateReaderInterface $templateReader = null
-    ) {
+    ): CmsGlossaryReader {
         if ($cmsQueryContainerMock === null) {
             $cmsQueryContainerMock = $this->createCmsQueryContainerMock();
         }
@@ -102,7 +102,7 @@ class CmsGlossaryReaderTest extends CmsMocks
     /**
      * @return array
      */
-    protected function createGlossaryMappingCollection()
+    protected function createGlossaryMappingCollection(): array
     {
         $glossaryMappingCollection = [];
         $glossaryMappingEntity = $this->createGlossaryMappingEntityMock();
@@ -137,7 +137,7 @@ class CmsGlossaryReaderTest extends CmsMocks
     /**
      * @return array
      */
-    protected function getAvailableLocales()
+    protected function getAvailableLocales(): array
     {
         return [
             1 => 'en_US',

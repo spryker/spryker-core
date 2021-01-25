@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\Agent;
 
+use Spryker\Client\Agent\Dependency\Client\AgentToCustomerClientBridge;
 use Spryker\Client\Agent\Dependency\Client\AgentToSessionClientBridge;
 use Spryker\Client\Agent\Dependency\Client\AgentToSessionClientInterface;
 use Spryker\Client\Agent\Dependency\Client\AgentToZedRequestClientBridge;
@@ -18,6 +19,9 @@ class AgentDependencyProvider extends AbstractDependencyProvider
 {
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
     public const CLIENT_SESSION = 'CLIENT_SESSION';
+    public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+
+    public const PLUGINS_IMPERSONATION_SESSION_FINISHER = 'PLUGINS_IMPERSONATION_SESSION_FINISHER';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -26,8 +30,13 @@ class AgentDependencyProvider extends AbstractDependencyProvider
      */
     public function provideServiceLayerDependencies(Container $container)
     {
+        $container = parent::provideServiceLayerDependencies($container);
+
         $container = $this->addZedRequestClient($container);
         $container = $this->addSessionClient($container);
+        $container = $this->addCustomerClient($container);
+
+        $container = $this->addImpersonationSessionFinisherPlugins($container);
 
         return $container;
     }
@@ -39,11 +48,11 @@ class AgentDependencyProvider extends AbstractDependencyProvider
      */
     protected function addZedRequestClient(Container $container): Container
     {
-        $container[static::CLIENT_ZED_REQUEST] = function (Container $container): AgentToZedRequestClientInterface {
+        $container->set(static::CLIENT_ZED_REQUEST, function (Container $container): AgentToZedRequestClientInterface {
             return new AgentToZedRequestClientBridge(
                 $container->getLocator()->zedRequest()->client()
             );
-        };
+        });
 
         return $container;
     }
@@ -55,12 +64,50 @@ class AgentDependencyProvider extends AbstractDependencyProvider
      */
     protected function addSessionClient(Container $container): Container
     {
-        $container[static::CLIENT_SESSION] = function (Container $container): AgentToSessionClientInterface {
+        $container->set(static::CLIENT_SESSION, function (Container $container): AgentToSessionClientInterface {
             return new AgentToSessionClientBridge(
                 $container->getLocator()->session()->client()
             );
-        };
+        });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addCustomerClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_CUSTOMER, function (Container $container) {
+            return new AgentToCustomerClientBridge(
+                $container->getLocator()->customer()->client()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addImpersonationSessionFinisherPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_IMPERSONATION_SESSION_FINISHER, function () {
+            return $this->getImpersonationSessionFinisherPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Client\AgentExtension\Dependency\Plugin\ImpersonationSessionFinisherPluginInterface[]
+     */
+    protected function getImpersonationSessionFinisherPlugins(): array
+    {
+        return [];
     }
 }

@@ -14,9 +14,11 @@ abstract class AbstractClient
     /**
      * @var \Spryker\Client\Kernel\AbstractFactory
      */
-    private $factory;
+    protected $factory;
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Spryker\Client\Kernel\AbstractFactory $factory

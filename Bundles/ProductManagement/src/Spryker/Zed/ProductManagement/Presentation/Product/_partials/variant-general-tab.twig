@@ -1,20 +1,22 @@
+{# @var locale \Generated\Shared\Transfer\LocaleTransfer #}
+
 <div class="well">
-    {% filter trans|raw %}
+    {% apply trans|raw %}
         <h3>{{ 'Add General Information' | trans }}</h3>
         <p>{{ 'Below the name and description for your product can be edited for different locales (in different languages).' | trans }}</p>
         <p><i>{{ 'Note: The SKU prefix, just like the SKUs of your product variants, are not editable after saving anymore.' | trans }}</i></p>
-    {% endfilter %}
+    {% endapply %}
 </div>
 
 {{ form_row(form.sku) }}
 {{ form_row(form.container_product_concrete_super_attributes.form_product_concrete_super_attributes) }}
 
-{% for localeTransfer in localeCollection %}
-    {% set formKey = 'general_' ~ localeTransfer.localeName %}
+{% for locale in localeCollection %}
+    {% set formKey = 'general_' ~ locale.localeName %}
 
     {% if form[formKey] is defined %}
 
-        {% embed '@Gui/Partials/localized-ibox.twig' with {'collapsed': (not loop.first), 'localeName': localeTransfer.localeName} %}
+        {% embed '@Gui/Partials/localized-ibox.twig' with {'collapsed': (not loop.first), 'localeName': locale.localeName} %}
             {% block content %}
                 {% for input in form[formKey] %}
                     <div class="form-group {% if input.vars.errors|length %}has-error{% endif %}">
@@ -36,5 +38,5 @@
 {% endif %}
 
 {% block footer_js %}
-    <script src="/assets/js/spryker-zed-productmanagement-concrete-add.js"></script>
+    <script src="{{ assetsPath('js/spryker-zed-productmanagement-concrete-add.js') }}"></script>
 {% endblock %}

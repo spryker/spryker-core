@@ -1,10 +1,7 @@
 namespace: Discount
-actor: Tester
-
 include:
     - tests/SprykerTest/Shared/Discount
     - tests/SprykerTest/Zed/Discount
-
 paths:
     tests: tests
     log: tests/_output
@@ -12,18 +9,10 @@ paths:
     support: tests/_support
     envs: tests/_envs
 settings:
-    bootstrap: _bootstrap.php
     suite_class: \PHPUnit\Framework\TestSuite
     colors: true
     memory_limit: 1024M
     log: true
-coverage:
-    enabled: true
-    whitelist: { include: ['src/*'] }
-
 extensions:
-    enabled:
-        - Codeception\Extension\Phantoman
-    config:
-        Codeception\Extension\Phantoman:
-            suites: ['Presentation']
+    enabled: [SprykerTest\Shared\Testify\Helper\WebDriverHelper]
+    config: { SprykerTest\Shared\Testify\Helper\WebDriverHelper: { suites: [Presentation] } }

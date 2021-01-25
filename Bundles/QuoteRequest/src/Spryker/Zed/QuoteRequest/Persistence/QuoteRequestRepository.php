@@ -59,8 +59,9 @@ class QuoteRequestRepository extends AbstractRepository implements QuoteRequestR
      *
      * @return \Generated\Shared\Transfer\QuoteRequestVersionCollectionTransfer
      */
-    public function getQuoteRequestVersionCollectionByFilter(QuoteRequestVersionFilterTransfer $quoteRequestVersionFilterTransfer): QuoteRequestVersionCollectionTransfer
-    {
+    public function getQuoteRequestVersionCollectionByFilter(
+        QuoteRequestVersionFilterTransfer $quoteRequestVersionFilterTransfer
+    ): QuoteRequestVersionCollectionTransfer {
         $quoteRequestVersionQuery = $this->getFactory()
             ->getQuoteRequestVersionPropelQuery()
             ->joinWithSpyQuoteRequest()
@@ -239,6 +240,9 @@ class QuoteRequestRepository extends AbstractRepository implements QuoteRequestR
             ->setNextPage($paginationModel->getNextPage())
             ->setPreviousPage($paginationModel->getPreviousPage());
 
-        return $paginationModel->getQuery();
+        /** @var \Orm\Zed\QuoteRequest\Persistence\SpyQuoteRequestQuery $query */
+        $query = $paginationModel->getQuery();
+
+        return $query;
     }
 }

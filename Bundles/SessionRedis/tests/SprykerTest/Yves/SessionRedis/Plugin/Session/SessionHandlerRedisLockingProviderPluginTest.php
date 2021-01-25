@@ -11,6 +11,8 @@ use Codeception\Test\Unit;
 use Spryker\Shared\SessionRedis\Handler\SessionHandlerRedisLocking;
 use Spryker\Shared\SessionRedis\SessionRedisConfig;
 use Spryker\Yves\SessionRedis\Plugin\Session\SessionHandlerRedisLockingProviderPlugin;
+use Spryker\Yves\SessionRedis\SessionRedisDependencyProvider;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * Auto-generated group annotations
@@ -31,12 +33,18 @@ class SessionHandlerRedisLockingProviderPluginTest extends Unit
     protected $sessionHandlerPlugin;
 
     /**
+     * @var \SprykerTest\Yves\SessionRedis\SessionRedisYvesTester
+     */
+    protected $tester;
+
+    /**
      * @return void
      */
     protected function setUp(): void
     {
         parent::setUp();
 
+        $this->tester->setDependency(SessionRedisDependencyProvider::REQUEST_STACK, new RequestStack());
         $this->sessionHandlerPlugin = new SessionHandlerRedisLockingProviderPlugin();
     }
 
@@ -45,7 +53,7 @@ class SessionHandlerRedisLockingProviderPluginTest extends Unit
      */
     public function testHasCorrectSessionHandlerName(): void
     {
-        $this->assertEquals($this->getSharedConfig()->getSessionHandlerRedisLockingName(), $this->sessionHandlerPlugin->getSessionHandlerName());
+        $this->assertSame($this->getSharedConfig()->getSessionHandlerRedisLockingName(), $this->sessionHandlerPlugin->getSessionHandlerName());
     }
 
     /**

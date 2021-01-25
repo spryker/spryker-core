@@ -1,0 +1,200 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 103,
+            "line_to": 103,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed' does not match the declared return type 'array<array-key, Generated\\Shared\\Transfer\\SpyContentEntityTransfer>' for Spryker\\Zed\\ContentStorage\\Persistence\\ContentStorageRepository::findContentByContentIds",
+            "file_name": "vendor/spryker/spryker/Bundles/ContentStorage/src/Spryker/Zed/ContentStorage/Persistence/ContentStorageRepository.php",
+            "snippet": "        return $this->buildQueryFromCriteria($query)->find();",
+            "selected_text": "$this->buildQueryFromCriteria($query)->find()",
+            "error_level": 6,
+            "shortcode": 128
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 112,
+            "line_to": 112,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $contentStorageTransfers using possibly null offset int|null",
+            "file_name": "vendor/spryker/spryker/Bundles/ContentStorage/src/Spryker/Zed/ContentStorage/Business/ContentStorage/ContentStorageWriter.php",
+            "snippet": "                    $contentStorageTransfers[$contentTransfer->getIdContent()][$availableLocale->getLocaleName()]->toArray()",
+            "selected_text": "$contentStorageTransfers",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 122,
+            "line_to": 122,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ContentStorage\\Dependency\\Service\\ContentStorageToUtilEncodingInterface::decodeJson cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ContentStorage/src/Spryker/Zed/ContentStorage/Business/ContentStorage/ContentStorageWriter.php",
+            "snippet": "                    ContentStorageConfig::CONTENT_KEY => $this->utilEncodingService->decodeJson($localizedContentTransfer->getParameters(), true),",
+            "selected_text": "$localizedContentTransfer->getParameters()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 140,
+            "line_to": 140,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $localizedContentTransfers[$localeKey] using possibly null offset mixed|null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/ContentStorage/src/Spryker/Zed/ContentStorage/Business/ContentStorage/ContentStorageWriter.php",
+            "snippet": "            $localizedContentTransfers[$localeKey] = $localizedContentTransfer;",
+            "selected_text": "$localizedContentTransfers",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 156,
+            "line_to": 156,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $contentStorageList[int|null] using possibly null offset int|null",
+            "file_name": "vendor/spryker/spryker/Bundles/ContentStorage/src/Spryker/Zed/ContentStorage/Business/ContentStorage/ContentStorageWriter.php",
+            "snippet": "            $contentStorageList[$contentStorageTransfer->getFkContent()][$contentStorageTransfer->getLocale()] = $contentStorageTransfer;",
+            "selected_text": "$contentStorageList",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 29,
+            "line_to": 29,
+            "type": "MoreSpecificImplementedParamType",
+            "message": "Argument 1 of Spryker\\Zed\\ContentStorage\\Business\\ContentStorageFacade::publish has the more specific type 'array<array-key, int>', expecting 'array<array-key, mixed>' as defined by Spryker\\Zed\\ContentStorage\\Business\\ContentStorageFacadeInterface::publish",
+            "file_name": "vendor/spryker/spryker/Bundles/ContentStorage/src/Spryker/Zed/ContentStorage/Business/ContentStorageFacade.php",
+            "snippet": "    public function publish(array $contentIds): void",
+            "selected_text": "$contentIds",
+            "error_level": 5,
+            "shortcode": 140
+        },
+        {
+            "severity": "info",
+            "line_from": 47,
+            "line_to": 47,
+            "type": "MoreSpecificImplementedParamType",
+            "message": "Argument 1 of Spryker\\Zed\\ContentStorage\\Communication\\Plugin\\Event\\ContentStorageEventResourceRepositoryPlugin::getData has the more specific type 'array<array-key, int>', expecting 'array<array-key, int|string>' as defined by Spryker\\Zed\\EventBehavior\\Dependency\\Plugin\\EventResourceRepositoryPluginInterface::getData",
+            "file_name": "vendor/spryker/spryker/Bundles/ContentStorage/src/Spryker/Zed/ContentStorage/Communication/Plugin/Event/ContentStorageEventResourceRepositoryPlugin.php",
+            "snippet": "    public function getData(array $ids = []): array",
+            "selected_text": "$ids",
+            "error_level": 5,
+            "shortcode": 140
+        },
+        {
+            "severity": "info",
+            "line_from": 30,
+            "line_to": 30,
+            "type": "InvalidNullableReturnType",
+            "message": "The declared return type 'string' for Spryker\\Zed\\ContentStorage\\Dependency\\Service\\ContentStorageToUtilEncodingBridge::encodeJson is not nullable, but 'null|string' contains null",
+            "file_name": "vendor/spryker/spryker/Bundles/ContentStorage/src/Spryker/Zed/ContentStorage/Dependency/Service/ContentStorageToUtilEncodingBridge.php",
+            "snippet": "     * @return string",
+            "selected_text": "string",
+            "error_level": 5,
+            "shortcode": 144
+        },
+        {
+            "severity": "info",
+            "line_from": 34,
+            "line_to": 34,
+            "type": "NullableReturnStatement",
+            "message": "The declared return type 'string' for Spryker\\Zed\\ContentStorage\\Dependency\\Service\\ContentStorageToUtilEncodingBridge::encodeJson is not nullable, but the function returns 'null|string'",
+            "file_name": "vendor/spryker/spryker/Bundles/ContentStorage/src/Spryker/Zed/ContentStorage/Dependency/Service/ContentStorageToUtilEncodingBridge.php",
+            "snippet": "        return $this->utilEncodingService->encodeJson($value, $options, $depth);",
+            "selected_text": "$this->utilEncodingService->encodeJson($value, $options, $depth)",
+            "error_level": 5,
+            "shortcode": 139
+        },
+        {
+            "severity": "info",
+            "line_from": 47,
+            "line_to": 47,
+            "type": "NullableReturnStatement",
+            "message": "The declared return type 'array<array-key, mixed>' for Spryker\\Zed\\ContentStorage\\Dependency\\Service\\ContentStorageToUtilEncodingBridge::decodeJson is not nullable, but the function returns 'mixed|null'",
+            "file_name": "vendor/spryker/spryker/Bundles/ContentStorage/src/Spryker/Zed/ContentStorage/Dependency/Service/ContentStorageToUtilEncodingBridge.php",
+            "snippet": "        return $this->utilEncodingService->decodeJson($jsonValue, $assoc, $depth, $options);",
+            "selected_text": "$this->utilEncodingService->decodeJson($jsonValue, $assoc, $depth, $options)",
+            "error_level": 5,
+            "shortcode": 139
+        },
+        {
+            "severity": "info",
+            "line_from": 33,
+            "line_to": 33,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getLocaleName on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ContentStorage/src/Spryker/Zed/ContentStorage/Persistence/Propel/Mapper/ContentStorageMapper.php",
+            "snippet": "                $localizedContentTransfer->setLocaleName($contentLocalizedEntity->getSpyLocale()->getLocaleName());",
+            "selected_text": "getLocaleName",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 43,
+            "line_to": 43,
+            "type": "MismatchingDocblockParamType",
+            "message": "Parameter $contentEntityCollection has wrong type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\Content\\Persistence\\SpyContent>', should be 'Propel\\Runtime\\Collection\\ObjectCollection'",
+            "file_name": "vendor/spryker/spryker/Bundles/ContentStorage/src/Spryker/Zed/ContentStorage/Persistence/Propel/Mapper/ContentStorageMapper.php",
+            "snippet": "     * @param \\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\Content\\Persistence\\SpyContent[] $contentEntityCollection",
+            "selected_text": "\\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\Content\\Persistence\\SpyContent[]",
+            "error_level": 4,
+            "shortcode": 141
+        },
+        {
+            "severity": "info",
+            "line_from": 27,
+            "line_to": 27,
+            "type": "MismatchingDocblockParamType",
+            "message": "Parameter $contentEntityCollection has wrong type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\Content\\Persistence\\SpyContent>', should be 'Propel\\Runtime\\Collection\\ObjectCollection'",
+            "file_name": "vendor/spryker/spryker/Bundles/ContentStorage/src/Spryker/Zed/ContentStorage/Persistence/Propel/Mapper/ContentStorageMapperInterface.php",
+            "snippet": "     * @param \\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\Content\\Persistence\\SpyContent[] $contentEntityCollection",
+            "selected_text": "\\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\Content\\Persistence\\SpyContent[]",
+            "error_level": 4,
+            "shortcode": 141
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 24,
+            "line_to": 24,
+            "type": "DeprecatedInterface",
+            "message": "Spryker\\Zed\\EventBehavior\\Dependency\\Plugin\\EventResourceRepositoryPluginInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ContentStorage/src/Spryker/Zed/ContentStorage/Communication/Plugin/Event/ContentStorageEventResourceRepositoryPlugin.php",
+            "snippet": "class ContentStorageEventResourceRepositoryPlugin extends AbstractPlugin implements EventResourceRepositoryPluginInterface",
+            "selected_text": "ContentStorageEventResourceRepositoryPlugin",
+            "error_level": 2,
+            "shortcode": 152
+        },
+        {
+            "severity": "info",
+            "line_from": 49,
+            "line_to": 49,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Zed\\ContentStorage\\Persistence\\ContentStorageRepositoryInterface::findContentByContentIds has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ContentStorage/src/Spryker/Zed/ContentStorage/Communication/Plugin/Event/ContentStorageEventResourceRepositoryPlugin.php",
+            "snippet": "        return $this->getRepository()->findContentByContentIds($ids);",
+            "selected_text": "findContentByContentIds",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 21,
+            "line_to": 21,
+            "type": "DeprecatedInterface",
+            "message": "Spryker\\Zed\\SynchronizationExtension\\Dependency\\Plugin\\SynchronizationDataRepositoryPluginInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ContentStorage/src/Spryker/Zed/ContentStorage/Communication/Plugin/Synchronization/ContentStorageSynchronizationDataPlugin.php",
+            "snippet": "class ContentStorageSynchronizationDataPlugin extends AbstractPlugin implements SynchronizationDataRepositoryPluginInterface",
+            "selected_text": "ContentStorageSynchronizationDataPlugin",
+            "error_level": 2,
+            "shortcode": 152
+        }
+    ]
+}

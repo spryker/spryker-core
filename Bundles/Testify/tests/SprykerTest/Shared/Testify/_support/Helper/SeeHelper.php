@@ -22,7 +22,7 @@ class SeeHelper extends Module
      *
      * @return void
      */
-    public function _beforeSuite($settings = [])
+    public function _beforeSuite($settings = []): void
     {
         $className = $settings['class_name'];
         if (preg_match('/CommunicationTester/', $className)) {
@@ -36,7 +36,7 @@ class SeeHelper extends Module
      *
      * @return void
      */
-    public function seeMatches($pattern, $selector)
+    public function seeMatches(string $pattern, string $selector): void
     {
         Assert::assertRegExp($pattern, $this->grabMultipleAsText($selector));
     }
@@ -47,7 +47,7 @@ class SeeHelper extends Module
      *
      * @return void
      */
-    public function dontSeeMatches($pattern, $selector)
+    public function dontSeeMatches(string $pattern, string $selector): void
     {
         Assert::assertNotRegExp($pattern, $this->grabMultipleAsText($selector));
     }
@@ -59,7 +59,7 @@ class SeeHelper extends Module
      *
      * @return string
      */
-    protected function grabMultipleAsText($selector)
+    protected function grabMultipleAsText(string $selector): string
     {
         $nodes = $this->getDriver()->grabMultiple($selector);
 

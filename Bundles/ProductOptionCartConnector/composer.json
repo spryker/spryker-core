@@ -4,14 +4,15 @@
   "description": "ProductOptionCartConnector module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.3",
     "spryker/cart-extension": "^2.1.0 || ^4.0.0",
     "spryker/kernel": "^3.30.0",
     "spryker/price": "^5.0.0",
-    "spryker/product-option": "^6.6.0 || ^8.0.0"
+    "spryker/product-option": "^6.10.0 || ^8.4.0"
   },
   "require-dev": {
     "spryker/cart": "*",
+    "spryker/code-sniffer": "*",
     "spryker/propel": "*",
     "spryker/testify": "*"
   },
@@ -30,9 +31,13 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+  },
   "extra": {
     "branch-alias": {
-      "dev-master": "4.0.x-dev"
+      "dev-master": "7.0.x-dev"
     }
   },
   "config": {

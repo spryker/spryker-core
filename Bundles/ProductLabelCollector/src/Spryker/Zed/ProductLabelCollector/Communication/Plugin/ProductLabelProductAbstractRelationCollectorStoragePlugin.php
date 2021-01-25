@@ -22,10 +22,12 @@ use Symfony\Component\Console\Output\OutputInterface;
 class ProductLabelProductAbstractRelationCollectorStoragePlugin extends AbstractCollectorPlugin
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $result
      * @param \Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface $dataReader
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface $dataWriter
@@ -36,7 +38,7 @@ class ProductLabelProductAbstractRelationCollectorStoragePlugin extends Abstract
      */
     public function run(
         SpyTouchQuery $baseQuery,
-        LocaleTransfer $locale,
+        LocaleTransfer $localeTransfer,
         BatchResultInterface $result,
         ReaderInterface $dataReader,
         WriterInterface $dataWriter,
@@ -45,7 +47,7 @@ class ProductLabelProductAbstractRelationCollectorStoragePlugin extends Abstract
     ) {
         $this->getFacade()->runProductAbstractRelationStorageCollector(
             $baseQuery,
-            $locale,
+            $localeTransfer,
             $result,
             $dataReader,
             $dataWriter,

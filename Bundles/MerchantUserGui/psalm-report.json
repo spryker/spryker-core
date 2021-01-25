@@ -1,0 +1,127 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 25,
+            "line_to": 25,
+            "type": "ParamNameMismatch",
+            "message": "Argument 1 of Spryker\\Zed\\MerchantUserGui\\Communication\\Form\\Constraint\\UniqueEmailConstraintValidator::validate has wrong name $email, expecting $value as defined by Symfony\\Component\\Validator\\ConstraintValidatorInterface::validate",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantUserGui/src/Spryker/Zed/MerchantUserGui/Communication/Form/Constraint/UniqueEmailConstraintValidator.php",
+            "snippet": "    public function validate($email, Constraint $constraint): void",
+            "selected_text": "$email",
+            "error_level": 7,
+            "shortcode": 230
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 67,
+            "line_to": 67,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\MerchantUserGui\\Communication\\Controller\\CreateMerchantUserController::addErrorMessage cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantUserGui/src/Spryker/Zed/MerchantUserGui/Communication/Controller/CreateMerchantUserController.php",
+            "snippet": "            $this->addErrorMessage($errors->getMessage());",
+            "selected_text": "$errors->getMessage()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 49,
+            "line_to": 49,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\MerchantUserGui\\Communication\\Controller\\DeleteMerchantUserController::getMerchantUserListUrl cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantUserGui/src/Spryker/Zed/MerchantUserGui/Communication/Controller/DeleteMerchantUserController.php",
+            "snippet": "        $merchantUserListUrl = $this->getMerchantUserListUrl($merchantUserTransfer->getIdMerchant());",
+            "selected_text": "$merchantUserTransfer->getIdMerchant()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 81,
+            "line_to": 81,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\MerchantUserGui\\Communication\\Controller\\DeleteMerchantUserController::getMerchantUserListUrl cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantUserGui/src/Spryker/Zed/MerchantUserGui/Communication/Controller/DeleteMerchantUserController.php",
+            "snippet": "        $merchantUserListUrl = $this->getMerchantUserListUrl($merchantUserTransfer->getIdMerchant());",
+            "selected_text": "$merchantUserTransfer->getIdMerchant()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 41,
+            "line_to": 41,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\MerchantUserGui\\Communication\\MerchantUserGuiCommunicationFactory::getMerchantUserUpdateForm cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantUserGui/src/Spryker/Zed/MerchantUserGui/Communication/Controller/EditMerchantUserController.php",
+            "snippet": "            ->getMerchantUserUpdateForm($merchantUserTransfer->getUser(), $dataProvider->getOptions())",
+            "selected_text": "$merchantUserTransfer->getUser()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 51,
+            "line_to": 51,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\MerchantUserGui\\Communication\\Controller\\EditMerchantUserController::getMerchantUserListUrl cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantUserGui/src/Spryker/Zed/MerchantUserGui/Communication/Controller/EditMerchantUserController.php",
+            "snippet": "            'backUrl' => $this->getMerchantUserListUrl($merchantUserTransfer->getIdMerchant()),",
+            "selected_text": "$merchantUserTransfer->getIdMerchant()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 65,
+            "line_to": 65,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\MerchantUserGui\\Communication\\Controller\\EditMerchantUserController::getMerchantUserListUrl cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantUserGui/src/Spryker/Zed/MerchantUserGui/Communication/Controller/EditMerchantUserController.php",
+            "snippet": "        $redirectUrl = $this->getMerchantUserListUrl($merchantUserTransfer->getIdMerchant());",
+            "selected_text": "$merchantUserTransfer->getIdMerchant()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 80,
+            "line_to": 80,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\MerchantUserGui\\Communication\\Controller\\EditMerchantUserController::addErrorMessage cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantUserGui/src/Spryker/Zed/MerchantUserGui/Communication/Controller/EditMerchantUserController.php",
+            "snippet": "            $this->addErrorMessage($merchantUserErrorTransfer->getMessage());",
+            "selected_text": "$merchantUserErrorTransfer->getMessage()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 48,
+            "line_to": 48,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method setStatus on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantUserGui/src/Spryker/Zed/MerchantUserGui/Communication/Controller/MerchantUserStatusController.php",
+            "snippet": "        $merchantUserTransfer->getUser()->setStatus($newMerchantUserStatus);",
+            "selected_text": "setStatus",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 50,
+            "line_to": 50,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\MerchantUserGui\\Communication\\Controller\\MerchantUserStatusController::getMerchantUserListUrl cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantUserGui/src/Spryker/Zed/MerchantUserGui/Communication/Controller/MerchantUserStatusController.php",
+            "snippet": "        $merchantUserListUrl = $this->getMerchantUserListUrl($merchantUserTransfer->getIdMerchant());",
+            "selected_text": "$merchantUserTransfer->getIdMerchant()",
+            "error_level": 3,
+            "shortcode": 78
+        }
+    ],
+    "deprecation": []
+}

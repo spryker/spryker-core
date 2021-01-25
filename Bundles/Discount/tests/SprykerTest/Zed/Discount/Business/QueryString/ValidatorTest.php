@@ -32,7 +32,7 @@ class ValidatorTest extends Unit
     /**
      * @return void
      */
-    public function testValidateDecisionRuleWhenThereIsNoErrorShouldNotThrowException()
+    public function testValidateDecisionRuleWhenThereIsNoErrorShouldNotThrowException(): void
     {
         $decisionRuleMock = $this->createSpecificationBuilderMock();
         $decisionRuleMock
@@ -49,7 +49,7 @@ class ValidatorTest extends Unit
     /**
      * @return void
      */
-    public function testValidateCollectorWhenThereIsNoErrorShouldNotThrowException()
+    public function testValidateCollectorWhenThereIsNoErrorShouldNotThrowException(): void
     {
         $collectorBuilderMock = $this->createSpecificationBuilderMock();
         $collectorBuilderMock
@@ -66,7 +66,7 @@ class ValidatorTest extends Unit
     /**
      * @return void
      */
-    public function testValidateDecisionRuleShouldCaptureExceptionsThrownIntoResponseArray()
+    public function testValidateDecisionRuleShouldCaptureExceptionsThrownIntoResponseArray(): void
     {
         $queryStringException = 'Test';
 
@@ -83,13 +83,13 @@ class ValidatorTest extends Unit
         $messages = $validator->validateByType(MetaProviderFactory::TYPE_DECISION_RULE, 'query string');
 
         $this->assertCount(1, $messages);
-        $this->assertEquals($queryStringException, $messages[0]);
+        $this->assertSame($queryStringException, $messages[0]);
     }
 
     /**
      * @return void
      */
-    public function testValidateCollectorShouldCaptureExceptionsThrownIntoResponseArray()
+    public function testValidateCollectorShouldCaptureExceptionsThrownIntoResponseArray(): void
     {
         $queryStringException = 'Test';
 
@@ -106,13 +106,13 @@ class ValidatorTest extends Unit
         $messages = $validator->validateByType(MetaProviderFactory::TYPE_COLLECTOR, 'query string');
 
         $this->assertCount(1, $messages);
-        $this->assertEquals($queryStringException, $messages[0]);
+        $this->assertSame($queryStringException, $messages[0]);
     }
 
     /**
      * @return void
      */
-    public function testValidateCollectorWhenComparatorExceptionThrownShouldStoreIntoResponseArray()
+    public function testValidateCollectorWhenComparatorExceptionThrownShouldStoreIntoResponseArray(): void
     {
         $queryStringException = 'Test';
 
@@ -129,13 +129,13 @@ class ValidatorTest extends Unit
         $messages = $validator->validateByType(MetaProviderFactory::TYPE_COLLECTOR, 'query string');
 
         $this->assertCount(1, $messages);
-        $this->assertEquals($queryStringException, $messages[0]);
+        $this->assertSame($queryStringException, $messages[0]);
     }
 
     /**
      * @return void
      */
-    public function testValidateCollectorShouldThrowExceptionWhenNonExistingTypeUsed()
+    public function testValidateCollectorShouldThrowExceptionWhenNonExistingTypeUsed(): void
     {
         $this->expectException(QueryBuilderException::class);
 
@@ -153,8 +153,7 @@ class ValidatorTest extends Unit
     protected function createValidator(
         ?SpecificationBuilder $decisionRuleMock = null,
         ?SpecificationBuilder $collectorMock = null
-    ) {
-
+    ): Validator {
         if ($decisionRuleMock === null) {
             $decisionRuleMock = $this->createSpecificationBuilderMock();
         }
@@ -172,7 +171,7 @@ class ValidatorTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder
      */
-    protected function createSpecificationBuilderMock()
+    protected function createSpecificationBuilderMock(): SpecificationBuilder
     {
         return $this->getMockBuilder(SpecificationBuilder::class)
             ->disableOriginalConstructor()
@@ -182,7 +181,7 @@ class ValidatorTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface
      */
-    protected function createDecisionRuleSpecificationMock()
+    protected function createDecisionRuleSpecificationMock(): DecisionRuleSpecificationInterface
     {
         return $this->getMockBuilder(DecisionRuleSpecificationInterface::class)->getMock();
     }

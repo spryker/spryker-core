@@ -4,7 +4,7 @@
   "description": "ProductLabel module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.3",
     "spryker/kernel": "^3.30.0",
     "spryker/key-builder": "^1.0.0",
     "spryker/locale": "^3.1.0",
@@ -12,6 +12,7 @@
     "spryker/product": "^5.0.0 || ^6.0.0",
     "spryker/propel-orm": "^1.1.0",
     "spryker/storage": "^3.0.0",
+    "spryker/store": "^1.4.0",
     "spryker/symfony": "^3.0.0",
     "spryker/touch": "^3.1.0 || ^4.0.0",
     "spryker/twig": "^3.0.0"
@@ -26,8 +27,8 @@
   },
   "suggest": {
     "spryker/catalog": "If you want to use Catalog plugins, minimum required version: 5.2.0.",
-    "spryker/silex": "If you want to use the ProductLabelTwigServiceProvider.",
-    "spryker/search": "(^6.4.0) If you want to use ProductLabelFacetValueTransformerPlugin."
+    "spryker/search": "(^6.4.0) If you want to use ProductLabelFacetValueTransformerPlugin.",
+    "spryker/silex": "If you want to use the ProductLabelTwigServiceProvider."
   },
   "autoload": {
     "psr-4": {
@@ -42,9 +43,13 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+  },
   "extra": {
     "branch-alias": {
-      "dev-master": "1.0.x-dev"
+      "dev-master": "3.0.x-dev"
     }
   },
   "config": {

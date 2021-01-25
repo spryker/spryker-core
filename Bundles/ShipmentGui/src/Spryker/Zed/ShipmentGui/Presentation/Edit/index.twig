@@ -12,12 +12,7 @@
     {% include '@ShipmentGui/Create/_partials/shipment-form-block.twig' %}
 {% endblock %}
 
-
-{% block head_css %}
-    {{ parent() }}
-{% endblock %}
-
 {% block footer_js %}
     {{ parent() }}
-    <script src="/assets/js/spryker-zed-shipment-gui-main.js"></script>
+    <script src="{{ assetsPath('js/spryker-zed-shipment-gui-main.js') }}"></script>
 {% endblock %}

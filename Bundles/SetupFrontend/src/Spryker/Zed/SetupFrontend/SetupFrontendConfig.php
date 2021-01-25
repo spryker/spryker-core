@@ -12,7 +12,11 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class SetupFrontendConfig extends AbstractBundleConfig
 {
+    protected const NODE_JS_MINIMUM_REQUIRED_MAJOR_VERSION = 12;
+
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getProjectFrontendDependencyDirectories()
@@ -23,6 +27,8 @@ class SetupFrontendConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getProjectInstallCommand()
@@ -46,7 +52,9 @@ class SetupFrontendConfig extends AbstractBundleConfig
     }
 
     /**
-     * @deprecated use getYvesInstallMultiPathDirectoryPatterns() instead.
+     * @api
+     *
+     * @deprecated Use {@link getYvesInstallMultiPathDirectoryPatterns()} instead.
      *
      * @return string
      */
@@ -56,6 +64,10 @@ class SetupFrontendConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
+     * @deprecated In next major this will not be used. Instead see {@link this->getProjectInstallCommand()}
+     *
      * @return string[]
      */
     public function getYvesInstallMultiPathDirectoryPatterns(): array
@@ -66,6 +78,10 @@ class SetupFrontendConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
+     * @deprecated In next major this will not be used. Instead see {@link this->getProjectInstallCommand()}
+     *
      * @return string
      */
     public function getYvesInstallCommand()
@@ -87,6 +103,8 @@ class SetupFrontendConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getZedAssetsDirectories()
@@ -97,7 +115,9 @@ class SetupFrontendConfig extends AbstractBundleConfig
     }
 
     /**
-     * @deprecated use getZedInstallMultiPathDirectoryPatterns() instead.
+     * @api
+     *
+     * @deprecated Use {@link getZedInstallMultiPathDirectoryPatterns()} instead.
      *
      * @return string
      */
@@ -107,6 +127,10 @@ class SetupFrontendConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
+     * @deprecated In next major this will not be used. Instead see {@link this->getProjectInstallCommand()}
+     *
      * @return string[]
      */
     public function getZedInstallMultiPathDirectoryPatterns(): array
@@ -117,6 +141,10 @@ class SetupFrontendConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
+     * @deprecated In next major this will not be used. Instead see {@link this->getProjectInstallCommand()}
+     *
      * @return string
      */
     public function getZedInstallCommand()
@@ -125,10 +153,48 @@ class SetupFrontendConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getZedBuildCommand()
     {
         return 'npm run zed';
+    }
+
+    /**
+     * @api
+     *
+     * @deprecated In next major this will not be used. Instead see {@link this->getProjectInstallCommand()}
+     *
+     * @return string
+     */
+    public function getMerchantPortalInstallCommand(): string
+    {
+        return 'yarn install';
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getMerchantPortalBuildCommand(): string
+    {
+        return 'npm run mp:build';
+    }
+
+    /**
+     * Specification:
+     * - Used to define minimum required node js version, e.g.: 12.0.0.
+     * - Used to download respective node js package for update, e.g.: https://deb.nodesource.com/setup_12.x.
+     *
+     * @api
+     *
+     * @return int
+     */
+    public function getNodeJsMinimumRequiredMajorVersion(): int
+    {
+        return static::NODE_JS_MINIMUM_REQUIRED_MAJOR_VERSION;
     }
 }

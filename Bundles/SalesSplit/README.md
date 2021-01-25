@@ -1,4 +1,6 @@
 # SalesSplit Module
+[![Build Status](https://travis-ci.org/spryker/sales-split.svg)](https://travis-ci.org/spryker/sales-split)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 SalesSplit provides the functionality that allows to split order items by quantity, to be processed independently.
 

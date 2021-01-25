@@ -18,6 +18,28 @@ class QueueConfig extends AbstractBundleConfig
     public const DEFAULT_THRESHOLD = 59;
 
     /**
+     * @uses \SIGINT
+     */
+    protected const SIGINT = 2;
+
+    /**
+     * @uses \SIGQUIT
+     */
+    protected const SIGQUIT = 3;
+
+    /**
+     * @uses \SIGABRT
+     */
+    protected const SIGABRT = 6;
+
+    /**
+     * @uses \SIGTERM
+     */
+    protected const SIGTERM = 15;
+
+    /**
+     * @api
+     *
      * @return array|null
      */
     public function getWorkerMessageCheckOption()
@@ -32,6 +54,8 @@ class QueueConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @param string $queueName
      *
      * @return array|null
@@ -75,6 +99,8 @@ class QueueConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getQueueServerId()
@@ -85,6 +111,8 @@ class QueueConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getQueueWorkerInterval()
@@ -93,6 +121,8 @@ class QueueConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getQueueProcessTriggerInterval()
@@ -101,6 +131,8 @@ class QueueConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getQueueWorkerOutputFileName()
@@ -109,6 +141,8 @@ class QueueConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getQueueWorkerLogStatus()
@@ -117,6 +151,8 @@ class QueueConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getQueueWorkerMaxThreshold()
@@ -125,6 +161,8 @@ class QueueConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getQueueAdapterConfiguration()
@@ -133,6 +171,8 @@ class QueueConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getDefaultQueueAdapterConfiguration(): array
@@ -141,6 +181,8 @@ class QueueConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @deprecated Use `vendor/bin/console queue:worker:start --stop-only-when-empty` instead.
      *
      * @return bool
@@ -148,5 +190,26 @@ class QueueConfig extends AbstractBundleConfig
     public function getIsWorkerLoopEnabled(): bool
     {
         return $this->get(QueueConstants::QUEUE_WORKER_LOOP, false);
+    }
+
+    /**
+     * Specification:
+     * - Defines the list of signals that will be handled for the graceful worker shutdown on Unix platforms.
+     *
+     * @api
+     *
+     * @example
+     * [
+     *  static::SIGINT,
+     *  static::SIGQUIT,
+     *  static::SIGABRT,
+     *  static::SIGTERM,
+     * ]
+     *
+     * @return int[]
+     */
+    public function getSignalsForGracefulWorkerShutdown(): array
+    {
+        return [];
     }
 }

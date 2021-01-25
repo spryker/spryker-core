@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\CatalogSearchProductsResourceRelationship\Plugin;
 
+use Spryker\Glue\CatalogSearchProductsResourceRelationship\CatalogSearchProductsResourceRelationshipConfig;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
@@ -16,10 +17,9 @@ use Spryker\Glue\Kernel\AbstractPlugin;
  */
 class CatalogSearchAbstractProductsResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
 {
-    protected const RELATIONSHIP_RESOURCE_TYPE = 'abstract-products';
-
     /**
      * {@inheritDoc}
+     * - Adds `abstract-products` as a relationship.
      *
      * @api
      *
@@ -44,6 +44,6 @@ class CatalogSearchAbstractProductsResourceRelationshipPlugin extends AbstractPl
      */
     public function getRelationshipResourceType(): string
     {
-        return static::RELATIONSHIP_RESOURCE_TYPE;
+        return CatalogSearchProductsResourceRelationshipConfig::RESOURCE_ABSTRACT_PRODUCTS;
     }
 }

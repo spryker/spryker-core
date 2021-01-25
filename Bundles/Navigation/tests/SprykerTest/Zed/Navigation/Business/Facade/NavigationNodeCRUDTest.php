@@ -51,7 +51,7 @@ class NavigationNodeCRUDTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -63,7 +63,7 @@ class NavigationNodeCRUDTest extends Unit
     /**
      * @return void
      */
-    public function testCreateNewNavigationNodePersistsToDatabase()
+    public function testCreateNewNavigationNodePersistsToDatabase(): void
     {
         $navigationNodeTransfer = new NavigationNodeTransfer();
         $navigationNodeTransfer
@@ -90,7 +90,7 @@ class NavigationNodeCRUDTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateExistingNavigationNodePersistsToDatabase()
+    public function testUpdateExistingNavigationNodePersistsToDatabase(): void
     {
         $navigationNodeEntity = $this->createNavigationNodeEntity(false);
         $idLocale = $this->createLocale('ab_CD');
@@ -126,7 +126,7 @@ class NavigationNodeCRUDTest extends Unit
     /**
      * @return void
      */
-    public function testReadExistingNavigationNodeReadsFromDatabase()
+    public function testReadExistingNavigationNodeReadsFromDatabase(): void
     {
         $navigationNodeEntity = $this->createNavigationNodeEntity(true);
         $idLocale = $this->createLocale('ab_CD');
@@ -156,7 +156,7 @@ class NavigationNodeCRUDTest extends Unit
     /**
      * @return void
      */
-    public function testDeleteExistingNavigationNodeDeletesFromDatabase()
+    public function testDeleteExistingNavigationNodeDeletesFromDatabase(): void
     {
         $navigationNodeEntity = $this->createNavigationNodeEntity(true);
         $idLocale = $this->createLocale('ab_CD');
@@ -188,7 +188,7 @@ class NavigationNodeCRUDTest extends Unit
     /**
      * @return void
      */
-    public function testDetachUrlFromNavigationNodesPersistsChangedToDatabase()
+    public function testDetachUrlFromNavigationNodesPersistsChangedToDatabase(): void
     {
         $idLocale = $this->createLocale('ab_CD');
         $urlEntity = new SpyUrl();
@@ -221,7 +221,7 @@ class NavigationNodeCRUDTest extends Unit
     /**
      * @return void
      */
-    protected function setUpNavigationTransfer()
+    protected function setUpNavigationTransfer(): void
     {
         $navigationEntity = $this->createNavigationEntity('test-navigation-1', 'Test navigation 1', true);
         $this->navigationTransfer = new NavigationTransfer();
@@ -235,7 +235,7 @@ class NavigationNodeCRUDTest extends Unit
      *
      * @return \Orm\Zed\Navigation\Persistence\SpyNavigation
      */
-    protected function createNavigationEntity($key, $name, $isActive)
+    protected function createNavigationEntity(string $key, string $name, bool $isActive): SpyNavigation
     {
         $navigationEntity = new SpyNavigation();
         $navigationEntity
@@ -254,8 +254,11 @@ class NavigationNodeCRUDTest extends Unit
      *
      * @return \Generated\Shared\Transfer\NavigationNodeLocalizedAttributesTransfer
      */
-    protected function createNavigationNodeLocalizedAttributesTransfer($idLocale, $nodeTitle, $externalUrl)
-    {
+    protected function createNavigationNodeLocalizedAttributesTransfer(
+        int $idLocale,
+        string $nodeTitle,
+        string $externalUrl
+    ): NavigationNodeLocalizedAttributesTransfer {
         $navigationNodeLocalizedAttributesTransfer = new NavigationNodeLocalizedAttributesTransfer();
         $navigationNodeLocalizedAttributesTransfer
             ->setFkLocale($idLocale)
@@ -270,7 +273,7 @@ class NavigationNodeCRUDTest extends Unit
      *
      * @return int
      */
-    protected function createLocale($localeName)
+    protected function createLocale(string $localeName): int
     {
         $localeEntity = new SpyLocale();
         $localeEntity
@@ -285,7 +288,7 @@ class NavigationNodeCRUDTest extends Unit
      *
      * @return \Orm\Zed\Navigation\Persistence\SpyNavigationNode
      */
-    protected function createNavigationNodeEntity($isActive)
+    protected function createNavigationNodeEntity(bool $isActive): SpyNavigationNode
     {
         $navigationNodeEntity = new SpyNavigationNode();
         $navigationNodeEntity

@@ -52,6 +52,7 @@ class CompanyUserRoleWriterStep extends AbstractCompanyRoleWriterStep implements
     protected function getIdCompanyUserByKey(string $companyUserKey): int
     {
         if (!isset($this->idCompanyUserListCache[$companyUserKey])) {
+            /** @var int|null $idCompanyUser */
             $idCompanyUser = $this->getCompanyUserQuery()
                 ->filterByKey($companyUserKey)
                 ->select(SpyCompanyUserTableMap::COL_ID_COMPANY_USER)

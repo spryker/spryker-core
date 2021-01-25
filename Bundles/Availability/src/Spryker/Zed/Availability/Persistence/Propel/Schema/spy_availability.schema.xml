@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" namespace="Orm\Zed\Availability\Persistence" package="src.Orm.Zed.Availability.Persistence" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd">
 
-    <table name="spy_availability_abstract" phpName="SpyAvailabilityAbstract">
+    <table name="spy_availability_abstract">
         <column name="id_availability_abstract" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="abstract_sku" type="VARCHAR" size="255" required="true"/>
-        <column name="quantity" type="INTEGER" required="true" defaultValue="0"/>
+        <column name="quantity" type="DECIMAL" size="20" scale="10" required="true" defaultValue="0"/>
         <column name="fk_store" required="false" type="INTEGER"/>
 
         <foreign-key name="spy_availability_abstract-fk_store" foreignTable="spy_store" phpName="Store" refPhpName="AvailabilityAbstract">
@@ -18,11 +18,11 @@
         <id-method-parameter value="spy_availability_abstract_pk_seq"/>
     </table>
 
-    <table name="spy_availability" phpName="SpyAvailability">
+    <table name="spy_availability">
         <column name="id_availability" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_availability_abstract" required="true" type="INTEGER"/>
         <column name="sku" type="VARCHAR" size="255" required="true"/>
-        <column name="quantity" type="INTEGER" required="true"/>
+        <column name="quantity" type="DECIMAL" size="20" scale="10" required="true"/>
         <column name="is_never_out_of_stock" type="BOOLEAN" defaultValue="false"/>
         <column name="fk_store" required="false" type="INTEGER"/>
 

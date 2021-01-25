@@ -31,7 +31,7 @@ class FormatTypeByPathPreProcessorTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
     }
@@ -39,7 +39,7 @@ class FormatTypeByPathPreProcessorTest extends Unit
     /**
      * @return void
      */
-    public function testProcessEmpty()
+    public function testProcessEmpty(): void
     {
         $processor = new FormatTypeByPathPreProcessor();
 
@@ -53,7 +53,7 @@ class FormatTypeByPathPreProcessorTest extends Unit
     /**
      * @return void
      */
-    public function testProcessExtension()
+    public function testProcessExtension(): void
     {
         $processor = new FormatTypeByPathPreProcessor();
 

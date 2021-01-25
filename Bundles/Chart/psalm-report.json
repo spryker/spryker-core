@@ -1,0 +1,78 @@
+{
+    "error": [],
+    "warning": [],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 72,
+            "line_to": 72,
+            "type": "DeprecatedClass",
+            "message": "Spryker\\Zed\\Chart\\Communication\\Plugin\\Twig\\TwigPieChartPlugin is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Chart/src/Spryker/Zed/Chart/ChartDependencyProvider.php",
+            "snippet": "            new TwigPieChartPlugin(),",
+            "selected_text": "new TwigPieChartPlugin()",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 73,
+            "line_to": 73,
+            "type": "DeprecatedClass",
+            "message": "Spryker\\Zed\\Chart\\Communication\\Plugin\\Twig\\TwigBarChartPlugin is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Chart/src/Spryker/Zed/Chart/ChartDependencyProvider.php",
+            "snippet": "            new TwigBarChartPlugin(),",
+            "selected_text": "new TwigBarChartPlugin()",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 74,
+            "line_to": 74,
+            "type": "DeprecatedClass",
+            "message": "Spryker\\Zed\\Chart\\Communication\\Plugin\\Twig\\TwigLineChartPlugin is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Chart/src/Spryker/Zed/Chart/ChartDependencyProvider.php",
+            "snippet": "            new TwigLineChartPlugin(),",
+            "selected_text": "new TwigLineChartPlugin()",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 75,
+            "line_to": 75,
+            "type": "DeprecatedClass",
+            "message": "Spryker\\Zed\\Chart\\Communication\\Plugin\\Twig\\TwigChartPlugin is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Chart/src/Spryker/Zed/Chart/ChartDependencyProvider.php",
+            "snippet": "            new TwigChartPlugin(),",
+            "selected_text": "new TwigChartPlugin()",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 31,
+            "line_to": 31,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Service\\Container\\Container::offsetSet has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Chart/src/Spryker/Zed/Chart/Communication/Plugin/ServiceProvider/TwigChartFunctionServiceProvider.php",
+            "snippet": "        $app['twig'] = $app->share(",
+            "selected_text": "$app",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 31,
+            "line_to": 31,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Service\\Container\\Container::share has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Chart/src/Spryker/Zed/Chart/Communication/Plugin/ServiceProvider/TwigChartFunctionServiceProvider.php",
+            "snippet": "        $app['twig'] = $app->share(",
+            "selected_text": "share",
+            "error_level": 2,
+            "shortcode": 1
+        }
+    ]
+}

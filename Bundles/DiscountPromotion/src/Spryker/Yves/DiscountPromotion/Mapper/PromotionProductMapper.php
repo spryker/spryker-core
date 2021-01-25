@@ -35,7 +35,6 @@ class PromotionProductMapper implements PromotionProductMapperInterface
         DiscountPromotionToProductInterface $productClient,
         StorageProductMapperPluginInterface $storageProductMapperPlugin
     ) {
-
         $this->productClient = $productClient;
         $this->storageProductMapperPlugin = $storageProductMapperPlugin;
     }
@@ -76,7 +75,8 @@ class PromotionProductMapper implements PromotionProductMapperInterface
      */
     protected function getSelectedAttributes(Request $request, $abstractSku)
     {
-        $selectedAttributes = $request->query->get(static::URL_PARAM_VARIANT_ATTRIBUTES, []);
+        /** @var array $selectedAttributes */
+        $selectedAttributes = $request->query->get(static::URL_PARAM_VARIANT_ATTRIBUTES) ?: [];
 
         return isset($selectedAttributes[$abstractSku]) ? $this->filterEmptyAttributes($selectedAttributes[$abstractSku]) : [];
     }

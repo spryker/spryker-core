@@ -7,9 +7,10 @@
 
 namespace Spryker\Zed\ProductPackagingUnit\Persistence;
 
-use Generated\Shared\Transfer\ProductPackagingLeadProductTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 
 interface ProductPackagingUnitRepositoryInterface
 {
@@ -41,31 +42,20 @@ interface ProductPackagingUnitRepositoryInterface
     ): int;
 
     /**
-     * @deprecated Will be removed without replacement.
-     *
-     * @param int $idProductAbstract
-     *
-     * @return \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer|null
-     */
-    public function findProductPackagingLeadProductByIdProductAbstract(
-        int $idProductAbstract
-    ): ?ProductPackagingLeadProductTransfer;
-
-    /**
      * @param string $siblingProductSku
      *
-     * @return \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer|null
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
      */
-    public function findProductPackagingLeadProductBySiblingProductSku(
+    public function findProductPackagingUnitLeadProductForPackagingUnit(
         string $siblingProductSku
-    ): ?ProductPackagingLeadProductTransfer;
+    ): ?ProductConcreteTransfer;
 
     /**
      * @param int[] $productPackagingUnitTypeIds
      *
      * @return int[]
      */
-    public function findProductAbstractIdsByProductPackagingUnitTypeIds(array $productPackagingUnitTypeIds): array;
+    public function findProductIdsByProductPackagingUnitTypeIds(array $productPackagingUnitTypeIds): array;
 
     /**
      * @param int $idProductPackagingUnit
@@ -95,6 +85,15 @@ interface ProductPackagingUnitRepositoryInterface
     ): ?ProductPackagingUnitTransfer;
 
     /**
+     * @param string[] $productSkus
+     *
+     * @return \Generated\Shared\Transfer\ProductPackagingUnitTransfer[]
+     */
+    public function findProductPackagingUnitsByProductSku(
+        array $productSkus
+    ): array;
+
+    /**
      * @param int $idSalesOrder
      *
      * @return \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer[]
@@ -102,12 +101,34 @@ interface ProductPackagingUnitRepositoryInterface
     public function findSalesOrderItemsByIdSalesOrder(int $idSalesOrder): array;
 
     /**
+     * @param int[] $salesOrderItemIds
+     *
+     * @return string[]
+     */
+    public function getMappedLeadProductSkusBySalesOrderItemIds(array $salesOrderItemIds): array;
+
+    /**
+     * @param int[] $salesOrderItemIds
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
+     */
+    public function getMappedProductMeasurementSalesUnits(array $salesOrderItemIds): array;
+
+    /**
      * @uses State
      *
      * @param string $sku
      * @param string[] $reservedStateNames
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
      * @return \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer[]
      */
-    public function aggregateLeadProductAmountForAllSalesOrderItemsBySku(string $sku, array $reservedStateNames): array;
+    public function aggregateProductPackagingUnitReservation(string $sku, array $reservedStateNames, ?StoreTransfer $storeTransfer = null): array;
+
+    /**
+     * @param int[] $productConcreteIds
+     *
+     * @return int[]
+     */
+    public function getProductPackagingUnitCountByProductConcreteIds(array $productConcreteIds): array;
 }

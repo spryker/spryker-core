@@ -8,10 +8,16 @@
 namespace Spryker\Zed\SalesConfigurableBundle\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\SalesConfigurableBundle\Business\Expander\OrderItemExpander;
+use Spryker\Zed\SalesConfigurableBundle\Business\Expander\OrderItemExpanderInterface;
 use Spryker\Zed\SalesConfigurableBundle\Business\Expander\SalesOrderConfiguredBundleExpander;
 use Spryker\Zed\SalesConfigurableBundle\Business\Expander\SalesOrderConfiguredBundleExpanderInterface;
+use Spryker\Zed\SalesConfigurableBundle\Business\Transformer\ConfigurableBundleItemTransformer;
+use Spryker\Zed\SalesConfigurableBundle\Business\Transformer\ConfigurableBundleItemTransformerInterface;
 use Spryker\Zed\SalesConfigurableBundle\Business\Writer\SalesOrderConfiguredBundleWriter;
 use Spryker\Zed\SalesConfigurableBundle\Business\Writer\SalesOrderConfiguredBundleWriterInterface;
+use Spryker\Zed\SalesConfigurableBundle\Dependency\Facade\SalesConfigurableBundleToGlossaryFacadeInterface;
+use Spryker\Zed\SalesConfigurableBundle\SalesConfigurableBundleDependencyProvider;
 
 /**
  * @method \Spryker\Zed\SalesConfigurableBundle\Persistence\SalesConfigurableBundleEntityManagerInterface getEntityManager()
@@ -36,7 +42,35 @@ class SalesConfigurableBundleBusinessFactory extends AbstractBusinessFactory
     public function createSalesOrderConfiguredBundleExpander(): SalesOrderConfiguredBundleExpanderInterface
     {
         return new SalesOrderConfiguredBundleExpander(
-            $this->getRepository()
+            $this->getRepository(),
+            $this->getGlossaryFacade()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesConfigurableBundle\Business\Transformer\ConfigurableBundleItemTransformerInterface
+     */
+    public function createConfigurableBundleItemTransformer(): ConfigurableBundleItemTransformerInterface
+    {
+        return new ConfigurableBundleItemTransformer();
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesConfigurableBundle\Business\Expander\OrderItemExpanderInterface
+     */
+    public function createOrderItemExpander(): OrderItemExpanderInterface
+    {
+        return new OrderItemExpander(
+            $this->getRepository(),
+            $this->getGlossaryFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesConfigurableBundle\Dependency\Facade\SalesConfigurableBundleToGlossaryFacadeInterface
+     */
+    protected function getGlossaryFacade(): SalesConfigurableBundleToGlossaryFacadeInterface
+    {
+        return $this->getProvidedDependency(SalesConfigurableBundleDependencyProvider::FACADE_GLOSSARY);
     }
 }

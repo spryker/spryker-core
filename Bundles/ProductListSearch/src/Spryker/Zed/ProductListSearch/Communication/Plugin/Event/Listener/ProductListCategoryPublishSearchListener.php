@@ -25,15 +25,15 @@ class ProductListCategoryPublishSearchListener extends AbstractPlugin implements
      *
      * @api
      *
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $eventTransfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
      * @param string $eventName
      *
      * @return void
      */
-    public function handleBulk(array $eventTransfers, $eventName): void
+    public function handleBulk(array $eventEntityTransfers, $eventName): void
     {
         $this->preventTransaction();
-        $categoryIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
+        $categoryIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventEntityTransfers);
 
         $this->getFactory()->getProductPageSearchFacade()->publish(
             $this->getFacade()->getProductAbstractIdsByCategoryIds($categoryIds)

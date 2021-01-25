@@ -28,7 +28,7 @@ class FilterPreferencesCest
      *
      * @return void
      */
-    public function showListOfFilters(ProductSearchPresentationTester $i)
+    public function showListOfFilters(ProductSearchPresentationTester $i): void
     {
         $i->amOnPage(FilterPreferencesPage::URL_LIST);
         $i->seeElement(FilterPreferencesPage::SELECTOR_FILTER_LIST);
@@ -39,7 +39,7 @@ class FilterPreferencesCest
      *
      * @return void
      */
-    public function createEditAndRemoveFilter(ProductSearchPresentationTester $i)
+    public function createEditAndRemoveFilter(ProductSearchPresentationTester $i): void
     {
         $id = $i->createFilter('foooooo_' . rand(1, 1000));
         $i->updateFilter($id);
@@ -51,7 +51,7 @@ class FilterPreferencesCest
      *
      * @return void
      */
-    public function updateFilterOrder(ProductSearchPresentationTester $i)
+    public function updateFilterOrder(ProductSearchPresentationTester $i): void
     {
         $idFoo = $i->createFilter('foooooo_' . rand(1, 1000));
         $idBar = $i->createFilter('baaaaar_' . rand(1, 1000));
@@ -82,7 +82,7 @@ class FilterPreferencesCest
      *
      * @return void
      */
-    public function synchronizeFilterPreferences(ProductSearchPresentationTester $i)
+    public function synchronizeFilterPreferences(ProductSearchPresentationTester $i): void
     {
         $i->createFilter('foooooo_' . rand(1, 1000));
 

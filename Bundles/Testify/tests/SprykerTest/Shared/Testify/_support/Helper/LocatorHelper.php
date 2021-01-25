@@ -10,13 +10,14 @@ namespace SprykerTest\Shared\Testify\Helper;
 use ArrayObject;
 use Codeception\Configuration;
 use Codeception\Module;
-use Codeception\Step;
 use Codeception\TestInterface;
 use ReflectionClass;
+use ReflectionProperty;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\AbstractLocatorLocator;
 use Spryker\Shared\Kernel\ClassResolver\AbstractClassResolver;
 use Spryker\Shared\Kernel\KernelConstants;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Testify\Locator\Business\BusinessLocator;
 
 class LocatorHelper extends Module
@@ -40,7 +41,7 @@ class LocatorHelper extends Module
     /**
      * @return void
      */
-    public function _initialize()
+    public function _initialize(): void
     {
         Config::init();
         $reflectionProperty = $this->getConfigReflectionProperty();
@@ -50,7 +51,7 @@ class LocatorHelper extends Module
     /**
      * @return \ReflectionProperty
      */
-    protected function getConfigReflectionProperty()
+    protected function getConfigReflectionProperty(): ReflectionProperty
     {
         $reflection = new ReflectionClass(Config::class);
         $reflectionProperty = $reflection->getProperty('config');
@@ -65,7 +66,7 @@ class LocatorHelper extends Module
      *
      * @return void
      */
-    public function setConfig($key, $value)
+    public function setConfig(string $key, $value): void
     {
         $configProperty = $this->getConfigReflectionProperty();
         $config = $configProperty->getValue();
@@ -78,7 +79,19 @@ class LocatorHelper extends Module
      *
      * @return void
      */
-    public function _beforeSuite($settings = [])
+    public function _beforeSuite($settings = []): void
+    {
+        $this->clearLocators();
+        $this->clearCaches();
+        $this->configureNamespacesForClassResolver();
+    }
+
+    /**
+     * @param \Codeception\TestInterface $test
+     *
+     * @return void
+     */
+    public function _before(TestInterface $test): void
     {
         $this->clearLocators();
         $this->clearCaches();
@@ -88,7 +101,7 @@ class LocatorHelper extends Module
     /**
      * @return void
      */
-    protected function clearLocators()
+    protected function clearLocators(): void
     {
         $reflection = new ReflectionClass(AbstractLocatorLocator::class);
         $instanceProperty = $reflection->getProperty('instance');
@@ -99,7 +112,7 @@ class LocatorHelper extends Module
     /**
      * @return void
      */
-    protected function clearCaches()
+    protected function clearCaches(): void
     {
         $reflection = new ReflectionClass(AbstractClassResolver::class);
         if ($reflection->hasProperty('cache')) {
@@ -110,26 +123,16 @@ class LocatorHelper extends Module
     }
 
     /**
-     * @param \Codeception\Step $step
-     *
      * @return void
      */
-    public function _beforeStep(Step $step)
-    {
-        $this->configureNamespacesForClassResolver();
-    }
-
-    /**
-     * @return void
-     */
-    private function configureNamespacesForClassResolver()
+    private function configureNamespacesForClassResolver(): void
     {
         $this->setConfig(KernelConstants::PROJECT_NAMESPACES, $this->config['projectNamespaces']);
         $this->setConfig(KernelConstants::CORE_NAMESPACES, $this->config['coreNamespaces']);
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\LocatorLocatorInterface|\Generated\Zed\Ide\AutoCompletion|\Generated\Service\Ide\AutoCompletion
+     * @return \Spryker\Shared\Kernel\LocatorLocatorInterface|\Generated\Zed\Ide\AutoCompletion|\Generated\Service\Ide\AutoCompletion|\Generated\Glue\Ide\AutoCompletion
      */
     public function getLocator()
     {
@@ -137,9 +140,11 @@ class LocatorHelper extends Module
     }
 
     /**
+     * @deprecated Use {@link \SprykerTest\Zed\Testify\Helper\Business\BusinessHelper::getFacade()} instead.
+     *
      * @return \Spryker\Zed\Kernel\Business\AbstractFacade
      */
-    public function getFacade()
+    public function getFacade(): AbstractFacade
     {
         $currentNamespace = Configuration::config()['namespace'];
         $namespaceParts = explode('\\', $currentNamespace);
@@ -153,23 +158,27 @@ class LocatorHelper extends Module
      *
      * @return void
      */
-    public function _after(TestInterface $test)
+    public function _after(TestInterface $test): void
     {
+        $this->clearLocators();
+        $this->clearCaches();
         $this->resetConfig();
     }
 
     /**
      * @return void
      */
-    public function _afterSuite()
+    public function _afterSuite(): void
     {
+        $this->clearLocators();
+        $this->clearCaches();
         $this->resetConfig();
     }
 
     /**
      * @return void
      */
-    private function resetConfig()
+    private function resetConfig(): void
     {
         $reflectionProperty = $this->getConfigReflectionProperty();
         $reflectionProperty->setValue(new ArrayObject($this->configCache));

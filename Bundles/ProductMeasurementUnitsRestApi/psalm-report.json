@@ -1,0 +1,223 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 95,
+            "line_to": 95,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'array<array-key, string>' for Spryker\\Glue\\ProductMeasurementUnitsRestApi\\Processor\\Expander\\ProductMeasurementUnitByProductConcreteResourceRelationshipExpander::getProductConcreteSkus is incorrect, got 'list<null|string>'",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductMeasurementUnitsRestApi/src/Spryker/Glue/ProductMeasurementUnitsRestApi/Processor/Expander/ProductMeasurementUnitByProductConcreteResourceRelationshipExpander.php",
+            "snippet": "     * @return string[]",
+            "selected_text": "string[]",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 104,
+            "line_to": 104,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'list<null|string>' does not match the declared return type 'array<array-key, string>' for Spryker\\Glue\\ProductMeasurementUnitsRestApi\\Processor\\Expander\\ProductMeasurementUnitByProductConcreteResourceRelationshipExpander::getProductConcreteSkus",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductMeasurementUnitsRestApi/src/Spryker/Glue/ProductMeasurementUnitsRestApi/Processor/Expander/ProductMeasurementUnitByProductConcreteResourceRelationshipExpander.php",
+            "snippet": "        return $skus;",
+            "selected_text": "$skus",
+            "error_level": 6,
+            "shortcode": 128
+        },
+        {
+            "severity": "error",
+            "line_from": 119,
+            "line_to": 119,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'array<array-key, string>' for Spryker\\Glue\\ProductMeasurementUnitsRestApi\\Processor\\Expander\\SalesUnitByProductConcreteResourceRelationshipExpander::getProductConcreteSkus is incorrect, got 'list<null|string>'",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductMeasurementUnitsRestApi/src/Spryker/Glue/ProductMeasurementUnitsRestApi/Processor/Expander/SalesUnitByProductConcreteResourceRelationshipExpander.php",
+            "snippet": "     * @return string[]",
+            "selected_text": "string[]",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 128,
+            "line_to": 128,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'list<null|string>' does not match the declared return type 'array<array-key, string>' for Spryker\\Glue\\ProductMeasurementUnitsRestApi\\Processor\\Expander\\SalesUnitByProductConcreteResourceRelationshipExpander::getProductConcreteSkus",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductMeasurementUnitsRestApi/src/Spryker/Glue/ProductMeasurementUnitsRestApi/Processor/Expander/SalesUnitByProductConcreteResourceRelationshipExpander.php",
+            "snippet": "        return $skus;",
+            "selected_text": "$skus",
+            "error_level": 6,
+            "shortcode": 128
+        },
+        {
+            "severity": "error",
+            "line_from": 128,
+            "line_to": 128,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'array<array-key, string>' for Spryker\\Glue\\ProductMeasurementUnitsRestApi\\Processor\\Expander\\SalesUnitsByCartItemResourceRelationshipExpander::getProductConcreteSkus is incorrect, got 'list<null|string>'",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductMeasurementUnitsRestApi/src/Spryker/Glue/ProductMeasurementUnitsRestApi/Processor/Expander/SalesUnitsByCartItemResourceRelationshipExpander.php",
+            "snippet": "     * @return string[]",
+            "selected_text": "string[]",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 142,
+            "line_to": 142,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'list<null|string>' does not match the declared return type 'array<array-key, string>' for Spryker\\Glue\\ProductMeasurementUnitsRestApi\\Processor\\Expander\\SalesUnitsByCartItemResourceRelationshipExpander::getProductConcreteSkus",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductMeasurementUnitsRestApi/src/Spryker/Glue/ProductMeasurementUnitsRestApi/Processor/Expander/SalesUnitsByCartItemResourceRelationshipExpander.php",
+            "snippet": "        return $skus;",
+            "selected_text": "$skus",
+            "error_level": 6,
+            "shortcode": 128
+        },
+        {
+            "severity": "error",
+            "line_from": 63,
+            "line_to": 63,
+            "type": "InvalidArgument",
+            "message": "Argument 2 of Spryker\\Glue\\ProductMeasurementUnitsRestApi\\Dependency\\Client\\ProductMeasurementUnitsRestApiToProductMeasurementUnitStorageClientInterface::getProductMeasurementUnitsByMapping expects array<array-key, string>, array{null|string} provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductMeasurementUnitsRestApi/src/Spryker/Glue/ProductMeasurementUnitsRestApi/Processor/Reader/ProductMeasurementUnitReader.php",
+            "snippet": "            [$restRequest->getResource()->getId()]",
+            "selected_text": "[$restRequest->getResource()->getId()]",
+            "error_level": 6,
+            "shortcode": 4
+        },
+        {
+            "severity": "error",
+            "line_from": 66,
+            "line_to": 66,
+            "type": "InvalidArgument",
+            "message": "Argument 2 of Spryker\\Glue\\ProductMeasurementUnitsRestApi\\Dependency\\Client\\ProductMeasurementUnitsRestApiToProductStorageClientInterface::getProductConcreteIdsByMapping expects array<array-key, string>, array{null|string} provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductMeasurementUnitsRestApi/src/Spryker/Glue/ProductMeasurementUnitsRestApi/Processor/Reader/SalesUnitReader.php",
+            "snippet": "            [$concreteProductResourceId],",
+            "selected_text": "[$concreteProductResourceId]",
+            "error_level": 6,
+            "shortcode": 4
+        },
+        {
+            "severity": "error",
+            "line_from": 42,
+            "line_to": 42,
+            "type": "InvalidArgument",
+            "message": "Argument 1 of Spryker\\Glue\\ProductMeasurementUnitsRestApi\\Dependency\\Client\\ProductMeasurementUnitsRestApiToGlossaryStorageClientInterface::translateBulk expects array<array-key, string>, list<null|string> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductMeasurementUnitsRestApi/src/Spryker/Glue/ProductMeasurementUnitsRestApi/Processor/Translator/ProductMeasurementUnitNameTranslator.php",
+            "snippet": "        $translatedNames = $this->glossaryStorageClient->translateBulk($names, $localeName);",
+            "selected_text": "$names",
+            "error_level": 6,
+            "shortcode": 4
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 101,
+            "line_to": 101,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $productConcreteSkus using possibly null offset int|null",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductMeasurementUnitsRestApi/src/Spryker/Glue/ProductMeasurementUnitsRestApi/Processor/Expander/SalesUnitByProductConcreteResourceRelationshipExpander.php",
+            "snippet": "        $productConcreteSku = $productConcreteSkus[$productConcreteProductMeasurementSalesUnitTransfer->getIdProductConcrete()];",
+            "selected_text": "$productConcreteSkus",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 110,
+            "line_to": 110,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Glue\\ProductMeasurementUnitsRestApi\\Processor\\RestResponseBuilder\\SalesUnitRestResponseBuilderInterface::createSalesUnitRestResource cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductMeasurementUnitsRestApi/src/Spryker/Glue/ProductMeasurementUnitsRestApi/Processor/Expander/SalesUnitByProductConcreteResourceRelationshipExpander.php",
+            "snippet": "                    $resource->getId()",
+            "selected_text": "$resource->getId()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 101,
+            "line_to": 101,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $productConcreteSkus using possibly null offset int|null",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductMeasurementUnitsRestApi/src/Spryker/Glue/ProductMeasurementUnitsRestApi/Processor/Expander/SalesUnitsByCartItemResourceRelationshipExpander.php",
+            "snippet": "        $productConcreteSku = $productConcreteSkus[$productConcreteProductMeasurementSalesUnitTransfer->getIdProductConcrete()];",
+            "selected_text": "$productConcreteSkus",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 33,
+            "line_to": 33,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getCode on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductMeasurementUnitsRestApi/src/Spryker/Glue/ProductMeasurementUnitsRestApi/Processor/Mapper/SalesUnitMapper.php",
+            "snippet": "            ->setProductMeasurementUnitCode($productMeasurementSalesUnitTransfer->getProductMeasurementUnit()->getCode());",
+            "selected_text": "getCode",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 74,
+            "line_to": 74,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method toArray on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductMeasurementUnitsRestApi/src/Spryker/Glue/ProductMeasurementUnitsRestApi/Processor/Mapper/SalesUnitMapper.php",
+            "snippet": "            ->fromArray($productMeasurementSalesUnitTransfer->getProductMeasurementUnit()->toArray(), true);",
+            "selected_text": "toArray",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 80,
+            "line_to": 80,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ProductMeasurementSalesUnitTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductMeasurementUnitsRestApi/src/Spryker/Glue/ProductMeasurementUnitsRestApi/Processor/Reader/SalesUnitReader.php",
+            "snippet": "            $productConcreteProductMeasurementSalesUnitTransfers[0]->getProductMeasurementSalesUnits()->getArrayCopy(),",
+            "selected_text": "getArrayCopy",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 81,
+            "line_to": 81,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Glue\\ProductMeasurementUnitsRestApi\\Processor\\RestResponseBuilder\\SalesUnitRestResponseBuilderInterface::createSalesUnitResourceCollectionResponse cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductMeasurementUnitsRestApi/src/Spryker/Glue/ProductMeasurementUnitsRestApi/Processor/Reader/SalesUnitReader.php",
+            "snippet": "            $concreteProductResourceId",
+            "selected_text": "$concreteProductResourceId",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 79,
+            "line_to": 79,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Glue\\ProductMeasurementUnitsRestApi\\Processor\\RestResponseBuilder\\SalesUnitRestResponseBuilder::createSelfLink cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductMeasurementUnitsRestApi/src/Spryker/Glue/ProductMeasurementUnitsRestApi/Processor/RestResponseBuilder/SalesUnitRestResponseBuilder.php",
+            "snippet": "            $this->createSelfLink($salesUnitResource->getId(), $concreteProductResourceId)",
+            "selected_text": "$salesUnitResource->getId()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 44,
+            "line_to": 44,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $translatedNames using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductMeasurementUnitsRestApi/src/Spryker/Glue/ProductMeasurementUnitsRestApi/Processor/Translator/ProductMeasurementUnitNameTranslator.php",
+            "snippet": "            $productMeasurementUnitTransfer->setName($translatedNames[$productMeasurementUnitTransfer->getName()]);",
+            "selected_text": "$translatedNames",
+            "error_level": 3,
+            "shortcode": 125
+        }
+    ],
+    "deprecation": []
+}

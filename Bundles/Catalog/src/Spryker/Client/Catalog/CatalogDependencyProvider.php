@@ -69,9 +69,9 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
      */
     protected function addSearchClient(Container $container)
     {
-        $container[static::CLIENT_SEARCH] = function (Container $container) {
+        $container->set(static::CLIENT_SEARCH, function (Container $container) {
             return $container->getLocator()->search()->client();
-        };
+        });
 
         return $container;
     }
@@ -83,9 +83,9 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
      */
     protected function addCatalogSearchQueryPlugin(Container $container)
     {
-        $container[static::CATALOG_SEARCH_QUERY_PLUGIN] = function () {
+        $container->set(static::CATALOG_SEARCH_QUERY_PLUGIN, function () {
             return $this->createCatalogSearchQueryPlugin();
-        };
+        });
 
         return $container;
     }
@@ -97,9 +97,9 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
      */
     protected function addCatalogSearchQueryExpanderPlugins(Container $container)
     {
-        $container[static::CATALOG_SEARCH_QUERY_EXPANDER_PLUGINS] = function () {
+        $container->set(static::CATALOG_SEARCH_QUERY_EXPANDER_PLUGINS, function () {
             return $this->createCatalogSearchQueryExpanderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -111,9 +111,9 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
      */
     protected function addCatalogSerachResultFormatterPlugins(Container $container)
     {
-        $container[static::CATALOG_SEARCH_RESULT_FORMATTER_PLUGINS] = function () {
+        $container->set(static::CATALOG_SEARCH_RESULT_FORMATTER_PLUGINS, function () {
             return $this->createCatalogSearchResultFormatterPlugins();
-        };
+        });
 
         return $container;
     }
@@ -125,9 +125,9 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
      */
     protected function addSuggestionQueryPlugin(Container $container)
     {
-        $container[static::SUGGESTION_QUERY_PLUGIN] = function () {
+        $container->set(static::SUGGESTION_QUERY_PLUGIN, function () {
             return $this->createSuggestionQueryPlugin();
-        };
+        });
 
         return $container;
     }
@@ -139,9 +139,9 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
      */
     protected function addSuggestionQueryExpanderPlugins(Container $container)
     {
-        $container[static::SUGGESTION_QUERY_EXPANDER_PLUGINS] = function () {
+        $container->set(static::SUGGESTION_QUERY_EXPANDER_PLUGINS, function () {
             return $this->createSuggestionQueryExpanderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -153,9 +153,9 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
      */
     protected function addSuggestionResultFormatterPlugins(Container $container)
     {
-        $container[static::SUGGESTION_RESULT_FORMATTER_PLUGINS] = function () {
+        $container->set(static::SUGGESTION_RESULT_FORMATTER_PLUGINS, function () {
             return $this->createSuggestionResultFormatterPlugins();
-        };
+        });
 
         return $container;
     }
@@ -167,9 +167,9 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
      */
     protected function addFacetConfigTransferBuilderPlugins(Container $container)
     {
-        $container[static::PLUGIN_FACET_CONFIG_TRANSFER_BUILDERS] = function () {
+        $container->set(static::PLUGIN_FACET_CONFIG_TRANSFER_BUILDERS, function () {
             return $this->getFacetConfigTransferBuilderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -181,9 +181,9 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
      */
     protected function addSortConfigTransferBuilderPlugins(Container $container)
     {
-        $container[static::PLUGIN_SORT_CONFIG_TRANSFER_BUILDERS] = function () {
+        $container->set(static::PLUGIN_SORT_CONFIG_TRANSFER_BUILDERS, function () {
             return $this->getSortConfigTransferBuilderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -195,9 +195,9 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
      */
     protected function addCatalogSearchCountQueryExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_CATALOG_SEARCH_COUNT_QUERY_EXPANDER] = function () {
+        $container->set(static::PLUGINS_CATALOG_SEARCH_COUNT_QUERY_EXPANDER, function () {
             return $this->createCatalogSearchCountQueryExpanderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -209,9 +209,9 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
      */
     protected function addProductConcreteCatalogSearchResultFormatterPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_PRODUCT_CONCRETE_CATALOG_SEARCH_RESULT_FORMATTER] = function () {
+        $container->set(static::PLUGINS_PRODUCT_CONCRETE_CATALOG_SEARCH_RESULT_FORMATTER, function () {
             return $this->getProductConcreteCatalogSearchResultFormatterPlugins();
-        };
+        });
 
         return $container;
     }
@@ -223,9 +223,9 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
      */
     protected function addProductConcreteCatalogSearchQueryExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_PRODUCT_CONCRETE_CATALOG_SEARCH_QUERY_EXPANDER] = function () {
+        $container->set(static::PLUGINS_PRODUCT_CONCRETE_CATALOG_SEARCH_QUERY_EXPANDER, function () {
             return $this->getProductConcreteCatalogSearchQueryExpanderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -237,9 +237,9 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
      */
     protected function addProductConcreteCatalogSearchQueryPlugin(Container $container): Container
     {
-        $container[static::PLUGIN_PRODUCT_CONCRETE_CATALOG_SEARCH_QUERY] = function () {
+        $container->set(static::PLUGIN_PRODUCT_CONCRETE_CATALOG_SEARCH_QUERY, $container->factory(function () {
             return $this->createProductConcreteCatalogSearchQueryPlugin();
-        };
+        }));
 
         return $container;
     }
@@ -251,9 +251,9 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
      */
     protected function addPaginationConfigBuilderPlugin(Container $container): Container
     {
-        $container[static::PLUGIN_PAGINATION_CONFIG_BUILDER] = function () {
+        $container->set(static::PLUGIN_PAGINATION_CONFIG_BUILDER, function () {
             return new PaginationConfigBuilder();
-        };
+        });
 
         return $container;
     }
@@ -291,7 +291,7 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]|\Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface[]
      */
     protected function createSuggestionQueryExpanderPlugins()
     {
@@ -299,7 +299,7 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[]
+     * @return \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[]|\Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface[]
      */
     protected function createSuggestionResultFormatterPlugins()
     {
@@ -323,7 +323,7 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]|\Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface[]
      */
     protected function createCatalogSearchCountQueryExpanderPlugins(): array
     {
@@ -347,7 +347,7 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]|\Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface[]
      */
     protected function getProductConcreteCatalogSearchQueryExpanderPlugins(): array
     {

@@ -1,6 +1,6 @@
 # ProductGroupCollector Module
-[![Build Status](https://travis-ci.org/spryker/ProductGroupCollector.svg)](https://travis-ci.org/spryker/ProductGroupCollector)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/ProductGroupCollector/badge.svg)](https://coveralls.io/github/spryker/ProductGroupCollector)
+[![Build Status](https://travis-ci.org/spryker/product-group-collector.svg)](https://travis-ci.org/spryker/product-group-collector)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 ProductGroupCollector provides product group data for Yves by exporting it to key-value storage.
 

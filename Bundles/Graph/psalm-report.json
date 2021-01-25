@@ -1,0 +1,55 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 46,
+            "line_to": 46,
+            "type": "InvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\Graph\\Communication\\GraphCommunicationFactory::validateAdapterClass expects string, object provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Graph/src/Spryker/Zed/Graph/Communication/GraphCommunicationFactory.php",
+            "snippet": "        $this->validateAdapterClass($adapter);",
+            "selected_text": "$adapter",
+            "error_level": 6,
+            "shortcode": 4
+        },
+        {
+            "severity": "error",
+            "line_from": 86,
+            "line_to": 86,
+            "type": "InvalidArgument",
+            "message": "Argument 1 of get_class expects object, string provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Graph/src/Spryker/Zed/Graph/Communication/GraphCommunicationFactory.php",
+            "snippet": "                get_class($adapter),",
+            "selected_text": "$adapter",
+            "error_level": 6,
+            "shortcode": 4
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 38,
+            "line_to": 38,
+            "type": "MoreSpecificReturnType",
+            "message": "The declared return type 'Spryker\\Shared\\Graph\\GraphAdapterInterface' for Spryker\\Zed\\Graph\\Communication\\GraphCommunicationFactory::createAdapter is more specific than the inferred return type 'object'",
+            "file_name": "vendor/spryker/spryker/Bundles/Graph/src/Spryker/Zed/Graph/Communication/GraphCommunicationFactory.php",
+            "snippet": "     * @return \\Spryker\\Shared\\Graph\\GraphAdapterInterface",
+            "selected_text": "\\Spryker\\Shared\\Graph\\GraphAdapterInterface",
+            "error_level": 3,
+            "shortcode": 70
+        },
+        {
+            "severity": "info",
+            "line_from": 48,
+            "line_to": 48,
+            "type": "LessSpecificReturnStatement",
+            "message": "The type 'object' is more general than the declared return type 'Spryker\\Shared\\Graph\\GraphAdapterInterface' for Spryker\\Zed\\Graph\\Communication\\GraphCommunicationFactory::createAdapter",
+            "file_name": "vendor/spryker/spryker/Bundles/Graph/src/Spryker/Zed/Graph/Communication/GraphCommunicationFactory.php",
+            "snippet": "        return $adapter;",
+            "selected_text": "$adapter",
+            "error_level": 3,
+            "shortcode": 129
+        }
+    ],
+    "deprecation": []
+}

@@ -318,7 +318,7 @@ class CommentFacadeAddCommentTagTest extends Unit
 
         // Assert
         $this->assertTrue($commentThreadResponseTransfer->getIsSuccessful());
-        $this->assertCount(2, $storedCommentTransfer->getCommentTags());
+        $this->assertCount(2, $storedCommentTransfer->getCommentTags(), 'Count is ' . $storedCommentTransfer->getCommentTags()->count());
         $this->assertEquals(
             $firstCommentTagTransfer->getName(),
             $storedCommentTransfer->getCommentTags()->offsetGet(0)->getName()

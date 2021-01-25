@@ -13,6 +13,9 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\Monitoring\Communication\Plugin\EventDispatcher\MonitoringRequestTransactionEventDispatcherPlugin} instead.
+ *
+ * @method \Spryker\Zed\Monitoring\Business\MonitoringFacade getFacade()
  * @method \Spryker\Zed\Monitoring\Communication\MonitoringCommunicationFactory getFactory()
  * @method \Spryker\Zed\Monitoring\MonitoringConfig getConfig()
  */

@@ -11,8 +11,6 @@ use Codeception\Actor;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -22,7 +20,7 @@ use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  *
  * @SuppressWarnings(PHPMD)
  */
@@ -37,7 +35,7 @@ class BusinessOnBehalfBusinessTester extends Actor
      *
      * @return void
      */
-    public function assertTransferEquals(AbstractTransfer $expected, AbstractTransfer $actual, string $message = '')
+    public function assertTransferEquals(AbstractTransfer $expected, AbstractTransfer $actual, string $message = ''): void
     {
         $expectedArray = $expected->toArray();
         $actualArray = $actual->toArray();

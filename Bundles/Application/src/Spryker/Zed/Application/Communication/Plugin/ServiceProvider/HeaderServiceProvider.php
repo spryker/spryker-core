@@ -11,10 +11,12 @@ use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\Http\Communication\Plugin\EventDispatcher\HeaderEventDispatcherPlugin} instead.
+ *
  * @method \Spryker\Zed\Application\Business\ApplicationFacadeInterface getFacade()
  * @method \Spryker\Zed\Application\Communication\ApplicationCommunicationFactory getFactory()
  * @method \Spryker\Zed\Application\ApplicationConfig getConfig()
@@ -43,11 +45,11 @@ class HeaderServiceProvider extends AbstractPlugin implements ServiceProviderInt
     /**
      * Sets cache control and store information in headers.
      *
-     * @param \Symfony\Component\HttpKernel\Event\FilterResponseEvent $event A FilterResponseEvent instance
+     * @param \Symfony\Component\HttpKernel\Event\ResponseEvent $event A ResponseEvent instance
      *
      * @return void
      */
-    public function onKernelResponse(FilterResponseEvent $event)
+    public function onKernelResponse(ResponseEvent $event)
     {
         if (!$event->isMasterRequest()) {
             return;
@@ -56,6 +58,7 @@ class HeaderServiceProvider extends AbstractPlugin implements ServiceProviderInt
         $store = Store::getInstance();
 
         $event->getResponse()->headers->set('X-Store', $store->getStoreName());
+        $event->getResponse()->headers->set('X-CodeBucket', APPLICATION_CODE_BUCKET);
         $event->getResponse()->headers->set('X-Env', APPLICATION_ENV);
         $event->getResponse()->headers->set('X-Locale', $store->getCurrentLocale());
 

@@ -12,6 +12,8 @@ use Spryker\Shared\Kernel\AbstractSharedConfig;
 class TestifyConfig extends AbstractSharedConfig
 {
     /**
+     * @api
+     *
      * @return bool
      */
     public function isLocatorInstanceCacheEnabled(): bool

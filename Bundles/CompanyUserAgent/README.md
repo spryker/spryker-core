@@ -1,6 +1,6 @@
 # CompanyUserAgent Module
 [![Build Status](https://travis-ci.org/spryker/company-user-agent.svg)](https://travis-ci.org/spryker/company-user-agent)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/company-user-agent/badge.svg)](https://coveralls.io/github/spryker/company-user-agent)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 CompanyUserAgent module provides ability for Agent Assist to check CompanyUsers.
 

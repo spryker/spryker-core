@@ -25,9 +25,37 @@ class DiscountCalculationConnectorDependencyProvider extends AbstractBundleDepen
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container[self::FACADE_DISCOUNT] = function (Container $container) {
+        $container = parent::provideCommunicationLayerDependencies($container);
+
+        $container = $this->addDiscountFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function provideBusinessLayerDependencies(Container $container): Container
+    {
+        $container = parent::provideBusinessLayerDependencies($container);
+
+        $container = $this->addDiscountFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addDiscountFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_DISCOUNT, function (Container $container) {
             return new DiscountCalculationToDiscountBridge($container->getLocator()->discount()->facade());
-        };
+        });
 
         return $container;
     }

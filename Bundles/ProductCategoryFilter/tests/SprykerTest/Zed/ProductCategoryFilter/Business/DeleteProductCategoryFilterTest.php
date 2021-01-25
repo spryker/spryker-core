@@ -27,7 +27,7 @@ class DeleteProductCategoryFilterTest extends Unit
     /**
      * @return void
      */
-    public function testDeleteProductCategoryFiltersRemovesFromDatabase()
+    public function testDeleteProductCategoryFiltersRemovesFromDatabase(): void
     {
         // Arrange
         $productCategoryFilter = $this->tester->haveProductCategoryFilter();

@@ -13,7 +13,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @deprecated Will be removed without replacement.
+ * @deprecated Use {@link \Spryker\Zed\Scheduler\Communication\Console\SchedulerSetupConsole} instead.
  *
  * @method \Spryker\Zed\Setup\Business\SetupFacadeInterface getFacade()
  * @method \Spryker\Zed\Setup\Communication\SetupCommunicationFactory getFactory()
@@ -45,14 +45,16 @@ class JenkinsGenerateConsole extends Console
      * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
-     * @return int|null|void
+     * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $result = $this->getFacade()->generateCronjobs(
             $input->getOption('role')
         );
 
         $output->writeln($result);
+
+        return static::CODE_SUCCESS;
     }
 }

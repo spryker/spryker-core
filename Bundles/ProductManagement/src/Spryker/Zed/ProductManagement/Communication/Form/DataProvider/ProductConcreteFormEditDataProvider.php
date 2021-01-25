@@ -98,14 +98,14 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
     }
 
     /**
-     * @param int|null $idProductAbstract
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer|null $productAbstractTransfer
      * @param string|null $type
      *
      * @return mixed
      */
-    public function getOptions($idProductAbstract = null, $type = null)
+    public function getOptions(?ProductAbstractTransfer $productAbstractTransfer = null, $type = null)
     {
-        $formOptions = parent::getOptions($idProductAbstract);
+        $formOptions = parent::getOptions($productAbstractTransfer);
 
         $formOptions[ProductConcreteFormEdit::OPTION_IS_BUNDLE_ITEM] = ($type === ProductManagementConfig::PRODUCT_TYPE_BUNDLE) ? true : false;
 
@@ -153,26 +153,23 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
     }
 
     /**
-     * @param int $idProductAbstract
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param int $idProduct
      * @param array|null $priceDimension
      *
      * @return array
      */
-    public function getData($idProductAbstract, $idProduct, ?array $priceDimension = null)
+    public function getData(ProductAbstractTransfer $productAbstractTransfer, $idProduct, ?array $priceDimension = null)
     {
         $formData = $this->getDefaultFormFields($priceDimension);
-        $productAbstractTransfer = $this->productFacade->findProductAbstractById($idProductAbstract);
         $productTransfer = $this->productFacade->findProductConcreteById($idProduct);
 
         $formData[ProductConcreteFormEdit::FIELD_ID_PRODUCT_CONCRETE] = $productTransfer->getIdProductConcrete();
 
-        if ($productAbstractTransfer) {
-            $formData = $this->appendVariantGeneralAndSeoData($productAbstractTransfer, $productTransfer, $formData);
-            $formData = $this->appendVariantPriceAndStock($productAbstractTransfer, $productTransfer, $formData);
-            $formData = $this->appendConcreteProductImages($productAbstractTransfer, $productTransfer, $formData);
-            $formData = $this->appendBundledProducts($productTransfer, $formData);
-        }
+        $formData = $this->appendVariantGeneralAndSeoData($productAbstractTransfer, $productTransfer, $formData);
+        $formData = $this->appendVariantPriceAndStock($productAbstractTransfer, $productTransfer, $formData);
+        $formData = $this->appendConcreteProductImages($productAbstractTransfer, $productTransfer, $formData);
+        $formData = $this->appendBundledProducts($productTransfer, $formData);
 
         foreach ($this->formEditDataProviderExpanderPlugins as $expanderPlugin) {
             $expanderPlugin->expand($productTransfer, $formData);
@@ -188,8 +185,11 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
      *
      * @return array
      */
-    protected function appendVariantGeneralAndSeoData(ProductAbstractTransfer $productAbstractTransfer, ProductConcreteTransfer $productTransfer, array $formData)
-    {
+    protected function appendVariantGeneralAndSeoData(
+        ProductAbstractTransfer $productAbstractTransfer,
+        ProductConcreteTransfer $productTransfer,
+        array $formData
+    ) {
         $localeCollection = $this->localeProvider->getLocaleCollection();
         $localizedData = $productTransfer->getLocalizedAttributes();
 
@@ -234,7 +234,8 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
             $formData
         );
         $stockType = $this->stockQueryContainer->queryAllStockTypes()->find()->getData();
-        $this->productStockHelper->addMissingStockTypes($productTransfer, $stockType);
+        $productTransfer = $this->productStockHelper->addMissingStockTypes($productTransfer, $stockType);
+        $productTransfer = $this->productStockHelper->trimStockQuantities($productTransfer);
 
         $stockCollection = $productTransfer->getStocks();
 
@@ -248,7 +249,7 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
             $stock[StockForm::FIELD_HIDDEN_STOCK_PRODUCT_ID] = $stockTransfer->getIdStockProduct();
             $stock[StockForm::FIELD_IS_NEVER_OUT_OF_STOCK] = (bool)$stockTransfer->getIsNeverOutOfStock();
             $stock[StockForm::FIELD_TYPE] = $stockTransfer->getStockType();
-            $stock[StockForm::FIELD_QUANTITY] = $stockTransfer->getQuantity();
+            $stock[StockForm::FIELD_QUANTITY] = $stockTransfer->getQuantity()->trim();
 
             $formData[ProductFormAdd::FORM_PRICE_AND_STOCK][] = $stock;
         }
@@ -288,8 +289,11 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
      *
      * @return array
      */
-    protected function appendVariantAbstractAttributes(ProductAbstractTransfer $productAbstractTransfer, ProductConcreteTransfer $productTransfer, array $formData)
-    {
+    protected function appendVariantAbstractAttributes(
+        ProductAbstractTransfer $productAbstractTransfer,
+        ProductConcreteTransfer $productTransfer,
+        array $formData
+    ) {
         $localeCollection = $this->localeProvider->getLocaleCollection(true);
         $attributesData = $productTransfer->getLocalizedAttributes();
 

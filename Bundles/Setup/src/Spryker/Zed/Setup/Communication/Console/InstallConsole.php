@@ -39,8 +39,10 @@ class InstallConsole extends Console
      *
      * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $this->warning('This command is deprecated. Use `spryker/install` tool and `vendor/bin/install` instead.');
+
         $setupInstallCommandNames = $this->getFactory()->getSetupInstallCommandNames();
 
         foreach ($setupInstallCommandNames as $key => $value) {

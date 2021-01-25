@@ -46,4 +46,20 @@ class ProductOptionStorageClient extends AbstractClient implements ProductOption
             ->createProductOptionStorageReader()
             ->getProductOptionsForCurrentStore($idAbstractProduct);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int[] $productAbstractIds
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer[]
+     */
+    public function getBulkProductOptions(array $productAbstractIds): array
+    {
+        return $this->getFactory()
+            ->createProductOptionStorageReader()
+            ->getBulkProductOptions($productAbstractIds);
+    }
 }

@@ -13,20 +13,6 @@ use Generated\Shared\Transfer\StoreTransfer;
 interface AvailabilityGuiToStockInterface
 {
     /**
-     * @param string $sku
-     *
-     * @return int
-     */
-    public function calculateStockForProduct($sku);
-
-    /**
-     * @param string $sku
-     *
-     * @return bool
-     */
-    public function isNeverOutOfStock($sku);
-
-    /**
      * @param \Generated\Shared\Transfer\StockProductTransfer $transferStockProduct
      *
      * @return int
@@ -41,11 +27,6 @@ interface AvailabilityGuiToStockInterface
     public function updateStockProduct(StockProductTransfer $stockProductTransfer);
 
     /**
-     * @return array
-     */
-    public function getAvailableStockTypes();
-
-    /**
      * @param int $idProductConcrete
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
@@ -54,12 +35,12 @@ interface AvailabilityGuiToStockInterface
     public function findStockProductsByIdProductForStore($idProductConcrete, StoreTransfer $storeTransfer);
 
     /**
-     * @return array
+     * @return string[][]
      */
     public function getWarehouseToStoreMapping();
 
     /**
-     * @return array
+     * @return string[][]
      */
     public function getStoreToWarehouseMapping();
 
@@ -69,4 +50,11 @@ interface AvailabilityGuiToStockInterface
      * @return string[]
      */
     public function getStockTypesForStore(StoreTransfer $storeTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\StockTransfer[]
+     */
+    public function getAvailableWarehousesForStore(StoreTransfer $storeTransfer): array;
 }

@@ -1,0 +1,18 @@
+{
+    "error": [],
+    "warning": [],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 21,
+            "line_to": 21,
+            "type": "DeprecatedInterface",
+            "message": "Spryker\\Zed\\Calculation\\Dependency\\Plugin\\CalculatorPluginInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/DiscountCalculationConnector/src/Spryker/Zed/DiscountCalculationConnector/Communication/Plugin/DiscountCalculatorPlugin.php",
+            "snippet": "class DiscountCalculatorPlugin extends AbstractPlugin implements CalculatorPluginInterface",
+            "selected_text": "DiscountCalculatorPlugin",
+            "error_level": 2,
+            "shortcode": 152
+        }
+    ]
+}

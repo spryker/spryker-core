@@ -1,0 +1,162 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 106,
+            "line_to": 106,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Client\\MerchantStorage\\Mapper\\MerchantStorageMapperInterface::mapMerchantStorageDataToMerchantStorageTransfer cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantStorage/src/Spryker/Client/MerchantStorage/Storage/MerchantStorageReader.php",
+            "snippet": "                $this->utilEncodingService->decodeJson($merchantData, true)",
+            "selected_text": "$this->utilEncodingService->decodeJson($merchantData, true)",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 148,
+            "line_to": 148,
+            "type": "PossiblyNullArrayAccess",
+            "message": "Cannot access array value on possibly null variable $merchantMapId of type mixed|null",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantStorage/src/Spryker/Client/MerchantStorage/Storage/MerchantStorageReader.php",
+            "snippet": "                $merchantIds[] = $merchantMapId[static::KEY_ID_MERCHANT];",
+            "selected_text": "$merchantMapId[static::KEY_ID_MERCHANT]",
+            "error_level": 3,
+            "shortcode": 79
+        },
+        {
+            "severity": "info",
+            "line_from": 107,
+            "line_to": 107,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\MerchantStorage\\Persistence\\MerchantStorageEntityManagerInterface::deleteMerchantStorage cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantStorage/src/Spryker/Zed/MerchantStorage/Business/Writer/MerchantStorageWriter.php",
+            "snippet": "                $this->merchantStorageEntityManager->deleteMerchantStorage($merchantTransfer->getIdMerchant(), $storeTransfer->getName());",
+            "selected_text": "$merchantTransfer->getIdMerchant()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 107,
+            "line_to": 107,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Zed\\MerchantStorage\\Persistence\\MerchantStorageEntityManagerInterface::deleteMerchantStorage cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantStorage/src/Spryker/Zed/MerchantStorage/Business/Writer/MerchantStorageWriter.php",
+            "snippet": "                $this->merchantStorageEntityManager->deleteMerchantStorage($merchantTransfer->getIdMerchant(), $storeTransfer->getName());",
+            "selected_text": "$storeTransfer->getName()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 120,
+            "line_to": 120,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getStores on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantStorage/src/Spryker/Zed/MerchantStorage/Business/Writer/MerchantStorageWriter.php",
+            "snippet": "        foreach ($merchantTransfer->getStoreRelation()->getStores() as $merchantStoreTransfer) {",
+            "selected_text": "getStores",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 55,
+            "line_to": 55,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\MerchantTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantStorage/src/Spryker/Zed/MerchantStorage/Communication/Plugin/Publisher/MerchantPublisherTriggerPlugin.php",
+            "snippet": "        return $merchantCollectionTransfer->getMerchants()->getArrayCopy();",
+            "selected_text": "getArrayCopy",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 75,
+            "line_to": 75,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\MerchantStorage\\Communication\\Plugin\\Synchronization\\MerchantSynchronizationDataPlugin::mapMerchantStorageEntitiesToSynchronizationDataTransfers expects Propel\\Runtime\\Collection\\ObjectCollection, possibly different type Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\MerchantStorage\\Persistence\\SpyMerchantStorage> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantStorage/src/Spryker/Zed/MerchantStorage/Communication/Plugin/Synchronization/MerchantSynchronizationDataPlugin.php",
+            "snippet": "        return $this->mapMerchantStorageEntitiesToSynchronizationDataTransfers($merchantStorageEntities);",
+            "selected_text": "$merchantStorageEntities",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 141,
+            "line_to": 141,
+            "type": "TypeDoesNotContainType",
+            "message": "list<Generated\\Shared\\Transfer\\SynchronizationDataTransfer> is always defined and non-null",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantStorage/src/Spryker/Zed/MerchantStorage/Communication/Plugin/Synchronization/MerchantSynchronizationDataPlugin.php",
+            "snippet": "        return $synchronizationDataTransfers ?? [];",
+            "selected_text": "$synchronizationDataTransfers",
+            "error_level": 4,
+            "shortcode": 56
+        },
+        {
+            "severity": "info",
+            "line_from": 34,
+            "line_to": 34,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Orm\\Zed\\MerchantStorage\\Persistence\\SpyMerchantStorage::setStore cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantStorage/src/Spryker/Zed/MerchantStorage/Persistence/MerchantStorageEntityManager.php",
+            "snippet": "        $merchantStorageEntity->setStore($storeTransfer->getName());",
+            "selected_text": "$storeTransfer->getName()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 55,
+            "line_to": 55,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\MerchantStorage\\Persistence\\SpyMerchantStorage> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantStorage/src/Spryker/Zed/MerchantStorage/Persistence/MerchantStorageEntityManager.php",
+            "snippet": "            ->delete();",
+            "selected_text": "delete",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 23,
+            "line_to": 23,
+            "type": "MismatchingDocblockReturnType",
+            "message": "Docblock has incorrect return type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\MerchantStorage\\Persistence\\SpyMerchantStorage>', should be 'Propel\\Runtime\\Collection\\ObjectCollection'",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantStorage/src/Spryker/Zed/MerchantStorage/Persistence/MerchantStorageRepository.php",
+            "snippet": "     * @return \\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\MerchantStorage\\Persistence\\SpyMerchantStorage[]",
+            "selected_text": "\\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\MerchantStorage\\Persistence\\SpyMerchantStorage[]",
+            "error_level": 4,
+            "shortcode": 142
+        },
+        {
+            "severity": "info",
+            "line_from": 41,
+            "line_to": 41,
+            "type": "LessSpecificReturnStatement",
+            "message": "The type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed' is more general than the declared return type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\MerchantStorage\\Persistence\\SpyMerchantStorage>' for Spryker\\Zed\\MerchantStorage\\Persistence\\MerchantStorageRepository::getFilteredMerchantStorageEntityTransfers",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantStorage/src/Spryker/Zed/MerchantStorage/Persistence/MerchantStorageRepository.php",
+            "snippet": "        return $merchantStorageQuery->find();",
+            "selected_text": "$merchantStorageQuery->find()",
+            "error_level": 3,
+            "shortcode": 129
+        },
+        {
+            "severity": "info",
+            "line_from": 18,
+            "line_to": 18,
+            "type": "MismatchingDocblockReturnType",
+            "message": "Docblock has incorrect return type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\MerchantStorage\\Persistence\\SpyMerchantStorage>', should be 'Propel\\Runtime\\Collection\\ObjectCollection'",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantStorage/src/Spryker/Zed/MerchantStorage/Persistence/MerchantStorageRepositoryInterface.php",
+            "snippet": "     * @return \\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\MerchantStorage\\Persistence\\SpyMerchantStorage[]",
+            "selected_text": "\\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\MerchantStorage\\Persistence\\SpyMerchantStorage[]",
+            "error_level": 4,
+            "shortcode": 142
+        }
+    ],
+    "deprecation": []
+}

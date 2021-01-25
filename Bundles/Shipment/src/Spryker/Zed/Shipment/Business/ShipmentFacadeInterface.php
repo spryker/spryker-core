@@ -9,14 +9,15 @@ namespace Spryker\Zed\Shipment\Business;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
-use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\MailTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
+use Generated\Shared\Transfer\ShipmentCarrierRequestTransfer;
 use Generated\Shared\Transfer\ShipmentCarrierTransfer;
 use Generated\Shared\Transfer\ShipmentGroupResponseTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
+use Generated\Shared\Transfer\ShipmentMethodPluginCollectionTransfer;
 use Generated\Shared\Transfer\ShipmentMethodsCollectionTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
@@ -45,6 +46,22 @@ interface ShipmentFacadeInterface
      * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer[]
      */
     public function getCarriers();
+
+    /**
+     * Specification:
+     * - Retrieves the carrier by ShipmentCarrierRequestTransfer from database as transfer object.
+     * - Filters by idCarrier when provided.
+     * - Filters by carrierName when provided.
+     * - Excludes carriers which id exists in excludedCarrierIds list.
+     * - Returns NULL if the carrier does not exist.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShipmentCarrierRequestTransfer $shipmentCarrierRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer|null
+     */
+    public function findShipmentCarrier(ShipmentCarrierRequestTransfer $shipmentCarrierRequestTransfer): ?ShipmentCarrierTransfer;
 
     /**
      * Specification:
@@ -85,32 +102,13 @@ interface ShipmentFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves active shipment methods.
-     * - Calculates shipment method delivery time using its assigned ShipmentMethodDeliveryTimePluginInterface plugin.
-     * - Selects shipment method price for the provided currency and current store.
-     * - Overrides shipment method price using its assigned ShipmentMethodPricePluginInterface plugin if there is any.
-     * - Excludes shipment methods which do not have a valid price as a result.
-     * - Excludes shipment methods which do not fulfill their assigned ShipmentMethodAvailabilityPluginInterface plugin
-     * requirements.
-     *
-     * @api
-     *
-     * @deprecated Use getAvailableMethodsByShipment() instead.
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
-     */
-    public function getAvailableMethods(QuoteTransfer $quoteTransfer);
-
-    /**
-     * Specification:
      * - Retrieves active shipment methods for every shipment group in QuoteTransfer.
+     * - Filters by idStore from Quote.
      * - Calculates shipment method delivery time using its assigned ShipmentMethodDeliveryTimePluginInterface plugin.
-     * - Selects shipment method price for the provided currency and current store.
+     * - Selects shipment method price for the provided currency and store from quote level.
      * - Overrides shipment method price using its assigned ShipmentMethodPricePluginInterface plugin if there is any.
-     * - Excludes shipment methods which do not have a valid price as a result.
-     * - Excludes shipment methods which do not fulfill their assigned ShipmentMethodAvailabilityPluginInterface plugin
+     * - Excludes shipment methods which do not have a valid price or ShipmentMethodPricePluginInterface as a result.
+     * - Excludes shipment methods which do not fulfill their assigned ShipmentMethodAvailabilityPluginInterface plugin.
      * requirements.
      *
      * @api
@@ -123,12 +121,12 @@ interface ShipmentFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves active shipment method buy id shipment method.
+     * - Retrieves active shipment method by id shipment method and id store.
      * - Calculates shipment method delivery time using its assigned ShipmentMethodDeliveryTimePluginInterface plugin.
-     * - Selects shipment method price for the provided currency and current store.
+     * - Selects shipment method price for the provided currency and store from quote level.
      * - Overrides shipment method price using its assigned ShipmentMethodPricePluginInterface plugin if there is any.
-     * - Excludes shipment methods which do not have a valid price as a result.
-     * - Excludes shipment methods which do not fulfill their assigned ShipmentMethodAvailabilityPluginInterface plugin
+     * - Excludes shipment methods which do not have a valid price or ShipmentMethodPricePluginInterface as a result.
+     * - Excludes shipment methods which do not fulfill their assigned ShipmentMethodAvailabilityPluginInterface plugins.
      * requirements.
      *
      * @api
@@ -139,20 +137,6 @@ interface ShipmentFacadeInterface
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
      */
     public function findAvailableMethodById($idShipmentMethod, QuoteTransfer $quoteTransfer);
-
-    /**
-     * Specification:
-     * - Retrieves a shipment method from database by ID.
-     *
-     * @api
-     *
-     * @deprecated Use findMethodById() instead.
-     *
-     * @param int $idMethod
-     *
-     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer
-     */
-    public function getShipmentMethodTransferById($idMethod);
 
     /**
      * Specification:
@@ -210,23 +194,23 @@ interface ShipmentFacadeInterface
 
     /**
      * Specification:
-     * - Adds shipment sales expense to sales order.
-     * - Creates sales shipment for sales order.
+     * - Selects shipment method tax rates using shipping address's country code.
+     * - Uses default tax rate if shipping address is not defined.
+     * - Sets tax rate to provided object.
      *
      * @api
      *
-     * @deprecated Use saveOrderShipment() instead.
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
-     *
-     * @return void
+     * @return \Generated\Shared\Transfer\CalculableObjectTransfer
      */
-    public function saveShipmentForOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse);
+    public function calculateShipmentTaxRateByCalculableObject(CalculableObjectTransfer $calculableObjectTransfer): CalculableObjectTransfer;
 
     /**
      * Specification:
      * - Adds shipment sales expenses to sales order according to quote level (BC) or item level shipments.
+     * - Expands shipment expense with a stack of ShipmentExpenseExpanderPluginInterface before shipment saving
+     * in case of multi shipment.
      * - Creates sales shipments for sales order.
      * - Creates sales shipping addresses for each item level shipment.
      *
@@ -242,6 +226,7 @@ interface ShipmentFacadeInterface
     /**
      * Specification:
      *   - Hydrates order transfer with additional shipment data from shipment sales tables.
+     *   - Sorts order items by shipment ids in the case when multiple shipment addresses are defined in order items.
      *
      * @api
      *
@@ -275,7 +260,7 @@ interface ShipmentFacadeInterface
      *
      * @api
      *
-     * @deprecated Use \Spryker\Shared\Shipment\ShipmentConfig::SHIPMENT_EXPENSE_TYPE instead.
+     * @deprecated Use {@link \Spryker\Shared\Shipment\ShipmentConfig::SHIPMENT_EXPENSE_TYPE} instead.
      *
      * @return string
      */
@@ -310,6 +295,7 @@ interface ShipmentFacadeInterface
      * - Creates new or update existing shipment for specified order in Zed.
      * - Uses shipment saving logic from the saveOrderShipment() method.
      * - Adds shipment sales expenses to sales order according to quote level (BC) or item level shipments.
+     * - Expands shipment expense with a stack of ShipmentExpenseExpanderPluginInterface before shipment saving.
      * - Creates or updates sales shipment.
      * - Creates or updates sales shipping addresses.
      *
@@ -417,4 +403,60 @@ interface ShipmentFacadeInterface
      * @return array
      */
     public function groupEventsByShipment(array $events, iterable $orderItemTransfers): array;
+
+    /**
+     * Specification:
+     * - Finds shipment method by the given name.
+     *
+     * @api
+     *
+     * @param string $shipmentMethodName
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
+     */
+    public function findShipmentMethodByName(string $shipmentMethodName): ?ShipmentMethodTransfer;
+
+    /**
+     * Specification:
+     * - Finds shipment method by the given key.
+     *
+     * @api
+     *
+     * @param string $shipmentMethodKey
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
+     */
+    public function findShipmentMethodByKey(string $shipmentMethodKey): ?ShipmentMethodTransfer;
+
+    /**
+     * Specification:
+     * - Returns the shipment method plugins grouped by the type.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodPluginCollectionTransfer
+     */
+    public function getShipmentMethodPlugins(): ShipmentMethodPluginCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Returns active shipment carriers.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer[]
+     */
+    public function getActiveShipmentCarriers(): array;
+
+    /**
+     * Specification:
+     * - Calculates shipment total using expenses.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return void
+     */
+    public function calculateShipmentTotal(CalculableObjectTransfer $calculableObjectTransfer): void;
 }

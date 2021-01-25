@@ -26,7 +26,7 @@ class RefundListCest
      *
      * @return void
      */
-    public function testThatRefundListIsVisible(RefundPresentationTester $i)
+    public function testThatRefundListIsVisible(RefundPresentationTester $i): void
     {
         $i->canOpenRefundListPage();
     }

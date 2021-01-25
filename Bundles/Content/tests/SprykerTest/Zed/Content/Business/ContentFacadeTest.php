@@ -25,9 +25,9 @@ use Generated\Shared\Transfer\LocalizedContentTransfer;
  */
 class ContentFacadeTest extends Test
 {
-    private const NAME = 'New name';
-    private const PARAMETERS = '{"sku"}';
-    private const DESCRIPTION = 'Test description';
+    protected const NAME = 'New name';
+    protected const PARAMETERS = '{"sku"}';
+    protected const DESCRIPTION = 'Test description';
     protected const KEY = 'name-1';
 
     /**
@@ -94,7 +94,7 @@ class ContentFacadeTest extends Test
         ))->build();
         $createdContentTransfer = $this->tester->getFacade()->create($contentTransfer);
 
-        $this->assertEquals($createdContentTransfer->getKey(), static::KEY);
+        $this->assertSame(static::KEY, $createdContentTransfer->getKey());
     }
 
     /**
@@ -130,7 +130,7 @@ class ContentFacadeTest extends Test
 
         $updatedContentTransfer = $this->tester->getFacade()->findContentById($contentTransfer->getIdContent());
 
-        $this->assertEquals($contentTransfer->getName(), $updatedContentTransfer->getName());
+        $this->assertSame($contentTransfer->getName(), $updatedContentTransfer->getName());
         $this->assertEquals(
             $contentTransfer->getLocalizedContents()[0]->getParameters(),
             $updatedContentTransfer->getLocalizedContents()[0]->getParameters()
@@ -195,5 +195,39 @@ class ContentFacadeTest extends Test
         $validationResponse = $this->tester->getFacade()->validateContent($contentTransfer);
 
         $this->assertFalse($validationResponse->getIsSuccess());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetContentByKeysReturnCorrectResult(): void
+    {
+        // Arrange
+        $contentTransfer = $this->tester->haveContent();
+
+        // Act
+        $foundContentTransfers = $this->tester->getFacade()->getContentByKeys([$contentTransfer->getKey()]);
+
+        // Assert
+        $this->assertNotEmpty($foundContentTransfers);
+        $this->assertEquals(
+            $contentTransfer->getKey(),
+            array_shift($foundContentTransfers)->getKey()
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetContentByKeysReturnEmptyArray(): void
+    {
+        // Arrange
+        $contentTransfer = $this->tester->haveContent();
+
+        // Act
+        $foundContentTransfers = $this->tester->getFacade()->getContentByKeys([static::KEY]);
+
+        // Assert
+        $this->assertEmpty($foundContentTransfers);
     }
 }

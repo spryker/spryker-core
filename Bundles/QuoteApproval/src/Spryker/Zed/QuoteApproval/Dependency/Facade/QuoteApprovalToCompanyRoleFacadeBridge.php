@@ -26,12 +26,13 @@ class QuoteApprovalToCompanyRoleFacadeBridge implements QuoteApprovalToCompanyRo
 
     /**
      * @param string $permissionKey
+     * @param int|null $idCompany
      *
      * @return int[]
      */
-    public function getCompanyUserIdsByPermissionKey(string $permissionKey): array
+    public function getCompanyUserIdsByPermissionKey(string $permissionKey, ?int $idCompany = null): array
     {
-        return $this->companyRoleFacade->getCompanyUserIdsByPermissionKey($permissionKey);
+        return $this->companyRoleFacade->getCompanyUserIdsByPermissionKey($permissionKey, $idCompany);
     }
 
     /**

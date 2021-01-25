@@ -43,7 +43,7 @@ class TouchUpdaterStub extends AbstractTouchUpdater
      *
      * @return void
      */
-    public function deleteTouchKeyEntities($keys, $idLocale)
+    public function deleteTouchKeyEntities($keys, $idLocale): void
     {
     }
 }

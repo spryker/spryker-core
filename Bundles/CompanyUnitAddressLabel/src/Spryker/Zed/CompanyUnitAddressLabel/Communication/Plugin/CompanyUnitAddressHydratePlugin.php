@@ -20,6 +20,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class CompanyUnitAddressHydratePlugin extends AbstractPlugin implements CompanyUnitAddressHydratePluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $addressTransfer

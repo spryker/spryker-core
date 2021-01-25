@@ -4,11 +4,11 @@
   "description": "Checkout module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.3",
     "spryker/checkout-extension": "^1.2.0",
     "spryker/error-handler": "^2.1.0",
     "spryker/kernel": "^3.30.0",
-    "spryker/oms": "^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0 || ^10.0.0",
+    "spryker/oms": "^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0 || ^10.0.0 || ^11.0.0",
     "spryker/permission-extension": "^1.0.0",
     "spryker/propel-orm": "^1.0.0",
     "spryker/quote": "^1.0.0 || ^2.0.0",
@@ -18,12 +18,14 @@
   },
   "require-dev": {
     "spryker/availability": "*",
+    "spryker/code-sniffer": "*",
     "spryker/country": "*",
     "spryker/customer": "*",
     "spryker/product": "*",
     "spryker/propel": "*",
     "spryker/sales": "*",
     "spryker/stock": "*",
+    "spryker/store": "*",
     "spryker/testify": "*"
   },
   "autoload": {
@@ -38,9 +40,13 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+  },
   "extra": {
     "branch-alias": {
-      "dev-master": "3.0.x-dev"
+      "dev-master": "6.0.x-dev"
     }
   },
   "config": {

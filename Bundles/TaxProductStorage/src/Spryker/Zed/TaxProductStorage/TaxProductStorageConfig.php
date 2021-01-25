@@ -12,6 +12,10 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class TaxProductStorageConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()} instead.
+     *
      * @return bool
      */
     public function isSendingToQueue(): bool
@@ -20,9 +24,21 @@ class TaxProductStorageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string|null
      */
     public function getTaxProductSynchronizationPoolName(): ?string
+    {
+        return null;
+    }
+
+    /**
+     * @api
+     *
+     * @return string|null
+     */
+    public function getEventQueueName(): ?string
     {
         return null;
     }

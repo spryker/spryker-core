@@ -15,6 +15,7 @@ use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+use Spryker\Zed\MerchantRelationshipGui\Communication\Form\DeleteMerchantRelationshipForm;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 class MerchantRelationshipTable extends AbstractTable
@@ -136,7 +137,9 @@ class MerchantRelationshipTable extends AbstractTable
         );
         $buttons[] = $this->generateRemoveButton(
             Url::generate(MerchantRelationshipTableConstants::URL_MERCHANT_RELATIONSHIP_DELETE, $urlParams),
-            'Delete'
+            'Delete',
+            [],
+            DeleteMerchantRelationshipForm::class
         );
 
         return implode(' ', $buttons);
@@ -153,7 +156,7 @@ class MerchantRelationshipTable extends AbstractTable
             ->innerJoinCompanyBusinessUnit()
             ->useSpyMerchantRelationshipToCompanyBusinessUnitQuery(null, Criteria::LEFT_JOIN)
                 ->leftJoinCompanyBusinessUnit('assignedBusinessUnits')
-                ->withColumn("STRING_AGG( DISTINCT assignedBusinessUnits.name, '; ')", MerchantRelationshipTableConstants::COL_ASSIGNED_BUSINESS_UNITS)
+                ->withColumn('GROUP_CONCAT(DISTINCT assignedBusinessUnits.name)', MerchantRelationshipTableConstants::COL_ASSIGNED_BUSINESS_UNITS)
             ->endUse()
             ->withColumn(SpyMerchantTableMap::COL_ID_MERCHANT, MerchantRelationshipTableConstants::COL_MERCHANT_ID)
             ->withColumn(SpyMerchantTableMap::COL_NAME, MerchantRelationshipTableConstants::COL_MERCHANT_NAME)

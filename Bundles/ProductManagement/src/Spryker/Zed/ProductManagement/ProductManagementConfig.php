@@ -29,6 +29,8 @@ class ProductManagementConfig extends AbstractBundleConfig
     protected const PRICE_TYPE_DEFAULT = 'DEFAULT';
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getImageUrlPrefix()
@@ -37,6 +39,8 @@ class ProductManagementConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getHostYves()
@@ -45,6 +49,8 @@ class ProductManagementConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getValidityTimeFormat()
@@ -53,6 +59,8 @@ class ProductManagementConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getPriceTypeDefault(): string

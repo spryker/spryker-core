@@ -33,7 +33,7 @@ class RepositoryNotFoundException extends Exception
         $message = 'Spryker Kernel Exception' . PHP_EOL;
         $message .= sprintf(
             'Can not resolve %1$sRepository in persistence layer for your module "%1$s"',
-            $callerClassInfo->getBundle()
+            $callerClassInfo->getModule()
         ) . PHP_EOL;
 
         $message .= 'You can fix this by adding the missing Repository to your module.' . PHP_EOL;
@@ -41,7 +41,7 @@ class RepositoryNotFoundException extends Exception
         $message .= sprintf(
             'E.g. %1$s\\Zed\\%2$s\\Persistence\\%2$sRepository',
             Config::getInstance()->get(KernelConstants::PROJECT_NAMESPACE),
-            $callerClassInfo->getBundle()
+            $callerClassInfo->getModule()
         );
 
         $message .= new Backtrace();

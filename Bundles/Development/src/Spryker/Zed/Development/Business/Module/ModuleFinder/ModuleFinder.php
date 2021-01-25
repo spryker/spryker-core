@@ -11,14 +11,14 @@ use Generated\Shared\Transfer\ApplicationTransfer;
 use Generated\Shared\Transfer\ModuleFilterTransfer;
 use Generated\Shared\Transfer\ModuleTransfer;
 use Generated\Shared\Transfer\OrganizationTransfer;
+use Laminas\Filter\FilterChain;
+use Laminas\Filter\StringToLower;
+use Laminas\Filter\Word\CamelCaseToDash;
+use Laminas\Filter\Word\DashToCamelCase;
 use Spryker\Zed\Development\Business\Module\ModuleMatcher\ModuleMatcherInterface;
 use Spryker\Zed\Development\DevelopmentConfig;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
-use Zend\Filter\FilterChain;
-use Zend\Filter\StringToLower;
-use Zend\Filter\Word\CamelCaseToDash;
-use Zend\Filter\Word\DashToCamelCase;
 
 /**
  * @deprecated Use `spryker/module-finder` instead.
@@ -115,8 +115,11 @@ class ModuleFinder implements ModuleFinderInterface
      *
      * @return \Generated\Shared\Transfer\ModuleTransfer[]
      */
-    protected function addModuleToCollection(ModuleTransfer $moduleTransfer, array $moduleTransferCollection, ?ModuleFilterTransfer $moduleFilterTransfer = null): array
-    {
+    protected function addModuleToCollection(
+        ModuleTransfer $moduleTransfer,
+        array $moduleTransferCollection,
+        ?ModuleFilterTransfer $moduleFilterTransfer = null
+    ): array {
         if ($moduleFilterTransfer !== null && !$this->moduleMatcher->matches($moduleTransfer, $moduleFilterTransfer)) {
             return $moduleTransferCollection;
         }
@@ -144,7 +147,7 @@ class ModuleFinder implements ModuleFinderInterface
 
         $description = $composerJsonAsArray['description'];
 
-        return preg_match('/\smodule$/', $description);
+        return (bool)preg_match('/\smodule$/', $description);
     }
 
     /**

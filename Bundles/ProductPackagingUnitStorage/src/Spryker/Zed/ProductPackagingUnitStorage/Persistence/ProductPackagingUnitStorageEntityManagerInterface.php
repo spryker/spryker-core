@@ -7,22 +7,22 @@
 
 namespace Spryker\Zed\ProductPackagingUnitStorage\Persistence;
 
-use Generated\Shared\Transfer\ProductAbstractPackagingStorageTransfer;
-use Generated\Shared\Transfer\SpyProductAbstractPackagingStorageEntityTransfer;
+use Generated\Shared\Transfer\ProductPackagingUnitStorageTransfer;
+use Generated\Shared\Transfer\SpyProductPackagingUnitStorageEntityTransfer;
 
 interface ProductPackagingUnitStorageEntityManagerInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ProductAbstractPackagingStorageTransfer $productAbstractPackagingStorageTransfer
+     * @param \Generated\Shared\Transfer\ProductPackagingUnitStorageTransfer $productPackagingUnitStorageTransfer
      *
      * @return void
      */
-    public function saveProductAbstractPackagingStorageEntity(ProductAbstractPackagingStorageTransfer $productAbstractPackagingStorageTransfer): void;
+    public function saveProductPackagingUnitStorage(ProductPackagingUnitStorageTransfer $productPackagingUnitStorageTransfer): void;
 
     /**
-     * @param \Generated\Shared\Transfer\SpyProductAbstractPackagingStorageEntityTransfer $productAbstractPackagingStorageEntity
+     * @param \Generated\Shared\Transfer\SpyProductPackagingUnitStorageEntityTransfer $productPackagingUnitStorageEntity
      *
      * @return void
      */
-    public function deleteProductAbstractPackagingStorageEntity(SpyProductAbstractPackagingStorageEntityTransfer $productAbstractPackagingStorageEntity): void;
+    public function deleteProductPackagingUnitStorage(SpyProductPackagingUnitStorageEntityTransfer $productPackagingUnitStorageEntity): void;
 }

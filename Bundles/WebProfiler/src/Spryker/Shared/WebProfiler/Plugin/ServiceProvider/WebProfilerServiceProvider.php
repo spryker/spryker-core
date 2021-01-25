@@ -19,10 +19,12 @@ use Symfony\Bridge\Twig\DataCollector\TwigDataCollector;
 use Symfony\Bridge\Twig\Extension\CodeExtension;
 use Symfony\Bridge\Twig\Extension\ProfilerExtension;
 use Symfony\Bundle\WebProfilerBundle\Controller\ExceptionController;
+use Symfony\Bundle\WebProfilerBundle\Controller\ExceptionPanelController;
 use Symfony\Bundle\WebProfilerBundle\Controller\ProfilerController;
 use Symfony\Bundle\WebProfilerBundle\Controller\RouterController;
 use Symfony\Bundle\WebProfilerBundle\EventListener\WebDebugToolbarListener;
 use Symfony\Bundle\WebProfilerBundle\Twig\WebProfilerExtension;
+use Symfony\Component\ErrorHandler\ErrorRenderer\HtmlErrorRenderer;
 use Symfony\Component\Form\Extension\DataCollector\FormDataCollector;
 use Symfony\Component\Form\Extension\DataCollector\FormDataExtractor;
 use Symfony\Component\Form\Extension\DataCollector\Proxy\ResolvedTypeFactoryDataCollectorProxy;
@@ -44,8 +46,8 @@ use Symfony\Component\Stopwatch\Stopwatch;
 use Twig\Profiler\Profile;
 
 /**
- * @deprecated Use `\Spryker\Zed\WebProfiler\Communication\Plugin\Application\WebProfilerApplicationPlugin` instead.
- * @deprecated Use `\SprykerShop\Yves\WebProfilerWidget\Plugin\Application\WebProfilerApplicationPlugin` instead.
+ * @deprecated Use {@link \Spryker\Zed\WebProfiler\Communication\Plugin\Application\WebProfilerApplicationPlugin} instead.
+ * @deprecated Use {@link \SprykerShop\Yves\WebProfilerWidget\Plugin\Application\WebProfilerApplicationPlugin} instead.
  */
 class WebProfilerServiceProvider implements ServiceProviderInterface, ControllerProviderInterface
 {
@@ -167,6 +169,10 @@ class WebProfilerServiceProvider implements ServiceProviderInterface, Controller
         });
 
         $app['web_profiler.controller.exception'] = $app->share(function ($app) {
+            if (class_exists(ExceptionPanelController::class)) {
+                return new ExceptionPanelController(new HtmlErrorRenderer($app['debug']), $app['profiler']);
+            }
+
             return new ExceptionController($app['profiler'], $app['twig'], $app['debug']);
         });
 
@@ -198,7 +204,9 @@ class WebProfilerServiceProvider implements ServiceProviderInterface, Controller
         $app['web_profiler.debug_toolbar.intercept_redirects'] = false;
 
         $app['profiler.listener'] = $app->share(function ($app) {
-            if (Kernel::VERSION_ID >= 20800) {
+            /** @var int $kernelVersion */
+            $kernelVersion = Kernel::VERSION_ID;
+            if ($kernelVersion >= 20800) {
                 return new ProfilerListener($app['profiler'], $app['request_stack'], $app['profiler.request_matcher'], $app['profiler.only_exceptions'], $app['profiler.only_master_requests']);
             } else {
                 return new ProfilerListener($app['profiler'], $app['profiler.request_matcher'], $app['profiler.only_exceptions'], $app['profiler.only_master_requests'], $app['request_stack']);

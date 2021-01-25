@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\QuoteApproval\Business;
 
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\QuoteApprovalRequestTransfer;
 use Generated\Shared\Transfer\QuoteApprovalResponseTransfer;
@@ -138,5 +139,54 @@ class QuoteApprovalFacade extends AbstractFacade implements QuoteApprovalFacadeI
         return $this->getFactory()
             ->createQuoteApprovalSanitizer()
             ->sanitizeQuoteApproval($quoteTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
+     */
+    public function isQuoteReadyForCheckout(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): CheckoutResponseTransfer
+    {
+        return $this->getFactory()
+            ->createQuoteStatusChecker()
+            ->isQuoteReadyForCheckout($quoteTransfer, $checkoutResponseTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return string[]
+     */
+    public function getQuoteFieldsAllowedForSavingByQuoteApprovalStatus(QuoteTransfer $quoteTransfer): array
+    {
+        return $this->getFactory()
+            ->createQuoteFieldsProvider()
+            ->getQuoteFieldsAllowedForSaving($quoteTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteInApprovalProcess(QuoteTransfer $quoteTransfer): bool
+    {
+        return $this->getFactory()
+            ->createQuoteStatusChecker()
+            ->isQuoteInApprovalProcess($quoteTransfer);
     }
 }

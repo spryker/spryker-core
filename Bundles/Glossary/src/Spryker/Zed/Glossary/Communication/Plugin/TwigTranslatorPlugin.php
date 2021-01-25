@@ -10,7 +10,7 @@ namespace Spryker\Zed\Glossary\Communication\Plugin;
 use Generated\Shared\Transfer\LocaleTransfer;
 use InvalidArgumentException;
 use Spryker\Zed\Twig\Communication\Plugin\AbstractTwigExtensionPlugin;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\TwigFilter;
 
 /**
@@ -30,6 +30,8 @@ class TwigTranslatorPlugin extends AbstractTwigExtensionPlugin implements Transl
     protected $localeName;
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string
@@ -40,9 +42,11 @@ class TwigTranslatorPlugin extends AbstractTwigExtensionPlugin implements Transl
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
-     * @return array
+     * @return \Twig\TwigFilter[]
      */
     public function getFilters()
     {
@@ -53,33 +57,35 @@ class TwigTranslatorPlugin extends AbstractTwigExtensionPlugin implements Transl
     }
 
     /**
+     * {@inheritDoc}
      * Specification:
      * - Translates the given message.
      *
      * @api
      *
-     * @param string $identifier
+     * @param string $id
      * @param array $parameters
      * @param string|null $domain
      * @param string|null $locale
      *
      * @return string
      */
-    public function trans($identifier, array $parameters = [], $domain = null, $locale = null)
+    public function trans($id, array $parameters = [], ?string $domain = null, ?string $locale = null)
     {
         if ($locale !== null) {
             $this->setLocale($locale);
         }
         $localeTransfer = $this->getLocaleTransfer();
 
-        if ($this->getFacade()->hasTranslation($identifier, $localeTransfer)) {
-            $identifier = $this->getFacade()->translate($identifier, $parameters, $localeTransfer);
+        if ($this->getFacade()->hasTranslation($id, $localeTransfer)) {
+            $id = $this->getFacade()->translate($id, $parameters, $localeTransfer);
         }
 
-        return $identifier;
+        return $id;
     }
 
     /**
+     * {@inheritDoc}
      * Specification:
      * - Translates the given choice message by choosing a translation according to a number.
      *
@@ -95,7 +101,7 @@ class TwigTranslatorPlugin extends AbstractTwigExtensionPlugin implements Transl
      *
      * @return string The translated string
      */
-    public function transChoice($identifier, $number, array $parameters = [], $domain = null, $locale = null)
+    public function transChoice($identifier, $number, array $parameters = [], ?string $domain = null, ?string $locale = null)
     {
         if ($locale !== null) {
             $this->setLocale($locale);
@@ -124,6 +130,8 @@ class TwigTranslatorPlugin extends AbstractTwigExtensionPlugin implements Transl
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $localeName
@@ -138,6 +146,8 @@ class TwigTranslatorPlugin extends AbstractTwigExtensionPlugin implements Transl
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string|null
@@ -148,6 +158,8 @@ class TwigTranslatorPlugin extends AbstractTwigExtensionPlugin implements Transl
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
@@ -169,8 +181,8 @@ class TwigTranslatorPlugin extends AbstractTwigExtensionPlugin implements Transl
     protected function getLocaleTransfer()
     {
         if (!$this->localeTransfer) {
-            if ($this->getLocale() === null) {
-                throw new InvalidArgumentException('No locale or localeTransfer specified. You need to set a localeName or a LocaleTransfer, otherwise translation can not properly work.');
+            if ($this->localeName === null) {
+                throw new InvalidArgumentException('No $localeTransfer or $localeName specified. You need to set one, otherwise translation can not properly work.');
             }
             $localeTransfer = new LocaleTransfer();
             $localeTransfer->setLocaleName($this->localeName);

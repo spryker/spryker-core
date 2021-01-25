@@ -1,6 +1,6 @@
 # CmsBlockProductStorage Module
-[![Build Status](https://travis-ci.org/spryker/CmsBlockProductStorage.svg)](https://travis-ci.org/spryker/CmsBlockProductStorage)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/CmsBlockProductStorage/badge.svg)](https://coveralls.io/github/spryker/CmsBlockProductStorage)
+[![Build Status](https://travis-ci.org/spryker/cms-block-product-storage.svg)](https://travis-ci.org/spryker/cms-block-product-storage)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 Manages storage for cms block product entities.
 

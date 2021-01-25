@@ -326,7 +326,12 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    public function joinCategoryQueryWithChildrenCategories(ModelCriteria $expandableQuery, $rightTableAlias = 'categoryChildren', $fieldIdentifier = 'child', $leftTableAlias = SpyCategoryNodeTableMap::TABLE_NAME);
+    public function joinCategoryQueryWithChildrenCategories(
+        ModelCriteria $expandableQuery,
+        $rightTableAlias = 'categoryChildren',
+        $fieldIdentifier = 'child',
+        $leftTableAlias = SpyCategoryNodeTableMap::TABLE_NAME
+    );
 
     /**
      * @api
@@ -344,7 +349,14 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    public function joinCategoryQueryWithParentCategories(ModelCriteria $expandableQuery, $excludeDirectParent = true, $excludeRoot = true, $leftTableAlias = SpyCategoryNodeTableMap::TABLE_NAME, $relationTableAlias = 'categoryParents', $fieldIdentifier = 'parent');
+    public function joinCategoryQueryWithParentCategories(
+        ModelCriteria $expandableQuery,
+        $excludeDirectParent = true,
+        $excludeRoot = true,
+        $leftTableAlias = SpyCategoryNodeTableMap::TABLE_NAME,
+        $relationTableAlias = 'categoryParents',
+        $fieldIdentifier = 'parent'
+    );
 
     /**
      * @api

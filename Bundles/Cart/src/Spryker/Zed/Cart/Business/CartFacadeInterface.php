@@ -4,9 +4,11 @@
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
+
 namespace Spryker\Zed\Cart\Business;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CartItemReplaceTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
@@ -100,7 +102,25 @@ interface CartFacadeInterface
 
     /**
      * Specification:
-     * - Uses CartFacade::validateQuote before reloading
+     *  - For each item runs the item expander plugins (requires a SKU for each new item).
+     *  - Decreases the given quantity for the given item(s) from the quote.
+     *  - Recalculates quote (-> Calculation).
+     *  - Adds success message to messenger (-> Messenger).
+     *  - Returns updated quote.
+     *  - Returns QuoteResponse with updated quote if quote is not locked.
+     *  - In case of error adds messenger error message and returns QuoteResponse with unchanged QuoteTransfer and errors.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function removeFromCart(CartChangeTransfer $cartChangeTransfer): QuoteResponseTransfer;
+
+    /**
+     * Specification:
+     * - Uses {@link \Spryker\Zed\Cart\Business\CartFacadeInterface::validateQuote()} before reloading
      * - Reloads all items in cart as new, it recreates all items transfer, reads new prices, options, bundles if quote is not locked.
      *
      * @api
@@ -110,6 +130,24 @@ interface CartFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function reloadItems(QuoteTransfer $quoteTransfer);
+
+    /**
+     * Specification:
+     * - Does nothing if quote is locked.
+     * - Validates quote before reloading.
+     * - Reloads all items in quote as new - it recreates all items transfer, reads new prices, options, bundles.
+     * - Runs cart pre check plugins.
+     * - Recalculates quote.
+     * - Returns QuoteResponse with updated quote if quote is not locked.
+     * - In case of error adds messenger error message and returns QuoteResponse with unchanged QuoteTransfer and errors.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function reloadItemsInQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
 
     /**
      * Specification:
@@ -136,6 +174,21 @@ interface CartFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function cleanUpItems(QuoteTransfer $quoteTransfer): QuoteTransfer;
+
+    /**
+     * Specification:
+     *  - Decreases the given quantity by the given cart change for removal in the quote.
+     *  - Adds item(s) from cart change for adding, to the quote.
+     *  - Returns QuoteResponse with updated quote.
+     *  - In case of error adds messenger error message and returns QuoteResponse with unchanged QuoteTransfer and errors.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartItemReplaceTransfer $cartItemReplaceTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function replaceItem(CartItemReplaceTransfer $cartItemReplaceTransfer): QuoteResponseTransfer;
 
     /**
      * Specification:

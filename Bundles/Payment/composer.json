@@ -4,17 +4,19 @@
   "description": "Payment module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.3",
+    "spryker/checkout-extension": "^1.2.0",
     "spryker/kernel": "^3.30.0",
     "spryker/propel-orm": "^1.0.0",
     "spryker/sales": "^8.0.0 || ^10.0.0 || ^11.0.0",
+    "spryker/store": "^1.4.0",
     "spryker/symfony": "^3.0.0",
     "spryker/zed-request": "^3.0.0"
   },
   "require-dev": {
     "spryker/calculation": "*",
     "spryker/checkout": "*",
-    "spryker/installer": "*",
+    "spryker/code-sniffer": "*",
     "spryker/propel": "*",
     "spryker/testify": "*"
   },
@@ -25,7 +27,8 @@
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/"
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Shared\\Payment\\Helper\\": "tests/SprykerTest/Shared/Payment/_support/Helper/"
     }
   },
   "autoload-dev": {
@@ -35,9 +38,13 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+  },
   "extra": {
     "branch-alias": {
-      "dev-master": "3.0.x-dev"
+      "dev-master": "5.0.x-dev"
     }
   },
   "config": {

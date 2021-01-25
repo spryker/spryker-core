@@ -119,7 +119,7 @@
         <property name="idCmsPage" type="int"/>
         <property name="name" type="string"/>
         <property name="templatePath" type="string"/>
-        <property name="placeholders" type="array"/>
+        <property name="placeholders" type="array" singular="placeholders"/>
         <property name="metaTitle" type="string"/>
         <property name="metaKeywords" type="string"/>
         <property name="metaDescription" type="string"/>
@@ -133,17 +133,54 @@
     <transfer name="FlattenedLocaleCmsPageDataRequest">
         <property name="idCmsPage" type="int"/>
         <property name="locale" type="Locale"/>
-        <property name="flattenedLocaleCmsPageData" type="array"/>
+        <property name="flattenedLocaleCmsPageData" type="array" singular="flattenedLocaleCmsPageData"/>
     </transfer>
 
     <transfer name="StoreRelation">
         <property name="idEntity" type="int"/>
-        <property name="idStores" type="int[]"/>
-        <property name="stores" type="Store[]"/>
+        <property name="idStores" type="int[]" singular="idStores"/>
+        <property name="stores" type="Store[]" singular="stores"/>
     </transfer>
 
     <transfer name="Store">
         <property name="idStore" type="int"/>
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="localeName" type="string"/>
+        <property name="idLocale" type="int"/>
+    </transfer>
+
+    <transfer name="KeyTranslation">
+        <property name="glossaryKey" type="int"/>
+        <property name="locales" type="array" singular="locales"/>
+    </transfer>
+
+    <transfer name="Url">
+        <property name="idUrl" type="int"/>
+        <property name="fkLocale" type="int"/>
+        <property name="fkRedirect" type="int" deprecated="Use fkResourceRedirect instead."/>
+        <property name="resourceId" type="int" deprecated="Use appropriate fkResourceXYZ attribute instead."/>
+        <property name="resourceType" type="string" deprecated="Use appropriate fkResourceXYZ attribute instead."/>
+        <property name="url" type="string"/>
+        <property name="fkResourcePage" type="int"/>
+    </transfer>
+
+    <transfer name="Redirect">
+        <property name="toUrl" type="string"/>
+        <property name="status" type="int"/>
+    </transfer>
+
+    <transfer name="UrlRedirect">
+        <property name="idUrlRedirect" type="int"/>
+        <property name="status" type="int"/>
+        <property name="toUrl" type="string"/>
+        <property name="source" type="Url"/>
+    </transfer>
+
+    <transfer name="UrlRedirectValidationResponse">
+        <property name="isValid" type="bool"/>
+        <property name="error" type="string"/>
     </transfer>
 
 </transfers>

@@ -126,7 +126,7 @@ class CodeceptionArgumentsBuilder implements CodeceptionArgumentsBuilderInterfac
      */
     protected function addInclusiveGroups(CodeceptionArguments $codeceptionArguments, array $options): CodeceptionArguments
     {
-        if (!empty($options[static::OPTION_MODULE])) {
+        if (!empty($options[static::OPTION_MODULE]) && strpos($options[static::OPTION_MODULE], '.') === false) {
             $codeceptionArguments = $this->enableSuiteFilterExtension($codeceptionArguments);
             $codeceptionArguments = $this->buildInlineExtensionConfig($codeceptionArguments, $options);
         }

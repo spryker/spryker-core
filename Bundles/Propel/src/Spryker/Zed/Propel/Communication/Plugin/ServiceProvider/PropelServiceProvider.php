@@ -18,7 +18,7 @@ use Spryker\Shared\Propel\PropelConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @deprecated Use `\Spryker\Zed\Propel\Communication\Plugin\Application\PropelApplicationPlugin` instead.
+ * @deprecated Use {@link \Spryker\Zed\Propel\Communication\Plugin\Application\PropelApplicationPlugin} instead.
  *
  * @method \Spryker\Zed\Propel\Communication\PropelCommunicationFactory getFactory()
  * @method \Spryker\Zed\Propel\Business\PropelFacadeInterface getFacade()

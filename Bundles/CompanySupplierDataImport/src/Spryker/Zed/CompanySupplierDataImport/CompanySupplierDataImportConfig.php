@@ -17,6 +17,8 @@ class CompanySupplierDataImportConfig extends DataImportConfig
     public const IMPORT_TYPE_PRODUCT_PRICE = 'company-supplier-product-price';
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getCompanyTypeDataImporterConfiguration(): DataImporterConfigurationTransfer
@@ -27,6 +29,8 @@ class CompanySupplierDataImportConfig extends DataImportConfig
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getCompanySupplierDataImporterConfiguration(): DataImporterConfigurationTransfer
@@ -37,6 +41,8 @@ class CompanySupplierDataImportConfig extends DataImportConfig
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getCompanySupplierProductPriceDataImporterConfiguration(): DataImporterConfigurationTransfer

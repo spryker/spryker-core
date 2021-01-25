@@ -144,7 +144,7 @@ class PriceProductScheduleRemoveAndApplyTest extends Unit
 
         $actualPriceProductTransfer = $this->priceProductFacade->findPriceProductFor($priceProductFilterTransfer);
 
-        $this->assertEquals(200, $actualPriceProductTransfer->getMoneyValue()->getNetAmount(), 'Default price does not match expected value.');
+        $this->assertSame(200, $actualPriceProductTransfer->getMoneyValue()->getNetAmount(), 'Default price does not match expected value.');
     }
 
     /**
@@ -222,7 +222,7 @@ class PriceProductScheduleRemoveAndApplyTest extends Unit
 
         $actualPriceProductTransfer = $this->priceProductFacade->findPriceProductFor($priceProductFilterTransfer);
 
-        $this->assertEquals(200, $actualPriceProductTransfer->getMoneyValue()->getNetAmount(), 'Default price does not match expected value.');
+        $this->assertSame(200, $actualPriceProductTransfer->getMoneyValue()->getNetAmount(), 'Default price does not match expected value.');
     }
 
     /**
@@ -318,7 +318,7 @@ class PriceProductScheduleRemoveAndApplyTest extends Unit
 
         $actualPriceProductTransfer = $this->priceProductFacade->findPriceProductFor($priceProductFilterTransfer);
 
-        $this->assertEquals(500, $actualPriceProductTransfer->getMoneyValue()->getNetAmount(), 'Default price does not match expected value.');
+        $this->assertSame(500, $actualPriceProductTransfer->getMoneyValue()->getNetAmount(), 'Default price does not match expected value.');
     }
 
     /**
@@ -416,7 +416,7 @@ class PriceProductScheduleRemoveAndApplyTest extends Unit
 
         $actualPriceProductTransfer = $this->priceProductFacade->findPriceProductFor($priceProductFilterTransfer);
 
-        $this->assertEquals(500, $actualPriceProductTransfer->getMoneyValue()->getNetAmount(), 'Default price does not match expected value.');
+        $this->assertSame(500, $actualPriceProductTransfer->getMoneyValue()->getNetAmount(), 'Default price does not match expected value.');
     }
 
     /**
@@ -425,7 +425,7 @@ class PriceProductScheduleRemoveAndApplyTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig
      */
-    protected function getConfigMock(string $priceTypeName, string $fallbackPriceTypeName)
+    protected function getConfigMock(string $priceTypeName, string $fallbackPriceTypeName): PriceProductScheduleConfig
     {
         $configMock = $this->getMockBuilder(PriceProductScheduleConfig::class)
             ->setMethods(['getFallbackPriceTypeList'])

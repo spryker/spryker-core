@@ -26,7 +26,7 @@ class TwigBusinessFactoryTest extends Unit
     /**
      * @return void
      */
-    public function testCreateCacheWarmerReturnsCacheWarmerInterface()
+    public function testCreateCacheWarmerReturnsCacheWarmerInterface(): void
     {
         $twigBusinessFactory = new TwigBusinessFactory();
         $this->assertInstanceOf(CacheWarmerInterface::class, $twigBusinessFactory->createCacheWarmer());

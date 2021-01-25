@@ -24,14 +24,15 @@ class CustomerPasswordResourceController extends AbstractController
      *              "Updates customer password."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "ref": "acceptLanguage"
      *          }],
      *          "isEmptyResponse": true,
      *          "responses": {
      *              "400": "Passwords don't match.",
      *              "404": "Customer not found.",
-     *              "406": "Invalid password."
+     *              "403": "Customer unauthorized.",
+     *              "406": "Invalid password.",
+     *              "422": "Unprocessable entity"
      *          }
      *     }
      * })

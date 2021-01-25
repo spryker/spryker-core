@@ -21,8 +21,10 @@ class MoleculeFunctionDependencyFinder implements TwigDependencyFinderInterface
      *
      * @return \Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainerInterface
      */
-    public function checkDependencyInFile(DependencyFinderContextInterface $context, DependencyContainerInterface $dependencyContainer): DependencyContainerInterface
-    {
+    public function checkDependencyInFile(
+        DependencyFinderContextInterface $context,
+        DependencyContainerInterface $dependencyContainer
+    ): DependencyContainerInterface {
         $twigFileContent = $context->getFileInfo()->getContents();
 
         $pregMatchResult = preg_match_all(static::TEMPLATE_FUNCTION_PATTERN, $twigFileContent, $matches, PREG_SET_ORDER);

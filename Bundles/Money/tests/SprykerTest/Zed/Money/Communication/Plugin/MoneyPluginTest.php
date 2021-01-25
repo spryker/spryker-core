@@ -37,7 +37,7 @@ class MoneyPluginTest extends Unit
     /**
      * @return void
      */
-    public function testFromIntegerShouldReturnMoneyTransfer()
+    public function testFromIntegerShouldReturnMoneyTransfer(): void
     {
         $moneyPlugin = new MoneyPlugin();
         $moneyTransfer = $moneyPlugin->fromInteger(self::AMOUNT_INTEGER);
@@ -49,7 +49,7 @@ class MoneyPluginTest extends Unit
     /**
      * @return void
      */
-    public function testFromFloatShouldReturnMoneyTransfer()
+    public function testFromFloatShouldReturnMoneyTransfer(): void
     {
         $moneyPlugin = new MoneyPlugin();
         $moneyTransfer = $moneyPlugin->fromFloat(self::AMOUNT_FLOAT);
@@ -61,7 +61,7 @@ class MoneyPluginTest extends Unit
     /**
      * @return void
      */
-    public function testFromStringShouldReturnMoneyTransfer()
+    public function testFromStringShouldReturnMoneyTransfer(): void
     {
         $moneyPlugin = new MoneyPlugin();
         $moneyTransfer = $moneyPlugin->fromString(self::AMOUNT_STRING);
@@ -73,7 +73,7 @@ class MoneyPluginTest extends Unit
     /**
      * @return void
      */
-    public function testGetMoneyShouldReturnMoneyTransferWithConfiguredDefaultCurrency()
+    public function testGetMoneyShouldReturnMoneyTransferWithConfiguredDefaultCurrency(): void
     {
         $moneyPlugin = new MoneyPlugin();
         $moneyTransfer = $moneyPlugin->fromInteger(self::AMOUNT_INTEGER);
@@ -88,7 +88,7 @@ class MoneyPluginTest extends Unit
     /**
      * @return void
      */
-    public function testGetMoneyShouldReturnMoneyTransferWithPassedCurrency()
+    public function testGetMoneyShouldReturnMoneyTransferWithPassedCurrency(): void
     {
         $moneyPlugin = new MoneyPlugin();
 
@@ -103,7 +103,7 @@ class MoneyPluginTest extends Unit
     /**
      * @return void
      */
-    public function testFormatWithSymbolShouldReturnFormattedStringWithCurrencySymbol()
+    public function testFormatWithSymbolShouldReturnFormattedStringWithCurrencySymbol(): void
     {
         Store::getInstance()->setCurrentLocale(self::LOCALE_DE_DE);
 
@@ -116,7 +116,7 @@ class MoneyPluginTest extends Unit
     /**
      * @return void
      */
-    public function testFormatWithoutSymbolShouldReturnFormattedStringWithoutCurrencySymbol()
+    public function testFormatWithoutSymbolShouldReturnFormattedStringWithoutCurrencySymbol(): void
     {
         Store::getInstance()->setCurrentLocale(self::LOCALE_DE_DE);
 
@@ -135,7 +135,7 @@ class MoneyPluginTest extends Unit
      *
      * @return void
      */
-    public function testParseShouldReturnMoneyTransfer($value, $isoCode, $expectedAmount)
+    public function testParseShouldReturnMoneyTransfer(string $value, string $isoCode, string $expectedAmount): void
     {
         $moneyPlugin = new MoneyPlugin();
         $currencyTransfer = new CurrencyTransfer();
@@ -147,7 +147,7 @@ class MoneyPluginTest extends Unit
     /**
      * @return array
      */
-    public function parseData()
+    public function parseData(): array
     {
         return [
             ['10,00 €', 'EUR', '1000'],
@@ -161,7 +161,7 @@ class MoneyPluginTest extends Unit
     /**
      * @return void
      */
-    public function testConvertIntegerToDecimalShouldReturnFloat()
+    public function testConvertIntegerToDecimalShouldReturnFloat(): void
     {
         $moneyPlugin = new MoneyPlugin();
         $converted = $moneyPlugin->convertIntegerToDecimal(1000);
@@ -172,7 +172,7 @@ class MoneyPluginTest extends Unit
     /**
      * @return void
      */
-    public function testConvertDecimalToIntegerShouldReturnInt()
+    public function testConvertDecimalToIntegerShouldReturnInt(): void
     {
         $moneyPlugin = new MoneyPlugin();
         $converted = $moneyPlugin->convertDecimalToInteger(10.00);

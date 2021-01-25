@@ -17,7 +17,7 @@ interface PriceDataFeedQueryContainerInterface extends QueryContainerInterface
      *
      * @param \Generated\Shared\Transfer\PriceDataFeedTransfer|null $priceDataFeedTransfer
      *
-     * @return \Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface
+     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
      */
     public function queryPriceDataFeed(?PriceDataFeedTransfer $priceDataFeedTransfer = null);
 }

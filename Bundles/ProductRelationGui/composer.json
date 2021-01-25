@@ -1,0 +1,55 @@
+{
+  "name": "spryker/product-relation-gui",
+  "type": "library",
+  "description": "ProductRelationGui module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.3",
+    "spryker/application": "^3.0.0",
+    "spryker/category": "^4.0.0",
+    "spryker/gui": "^3.33.0",
+    "spryker/kernel": "^3.33.0",
+    "spryker/locale": "^3.0.0",
+    "spryker/product": "^6.0.0",
+    "spryker/product-attribute": "^1.5.0",
+    "spryker/product-category": "^4.0.0",
+    "spryker/product-relation": "^3.0.0",
+    "spryker/propel-orm": "^1.0.0",
+    "spryker/propel-query-builder": "^0.3.0",
+    "spryker/store": "^1.9.0",
+    "spryker/symfony": "^3.0.0",
+    "spryker/util-encoding": "^2.0.0",
+    "spryker/util-text": "^1.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/container": "*",
+    "spryker/propel": "*",
+    "spryker/testify": "*",
+    "spryker/twig": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerTest\\": "tests/SprykerTest/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/"
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

@@ -30,7 +30,7 @@ class ClauseValidatorTest extends Unit
     /**
      * @return void
      */
-    public function testValidateWhenInvalidComparatorUsedShouldThrowException()
+    public function testValidateWhenInvalidComparatorUsedShouldThrowException(): void
     {
         $this->expectException(QueryStringException::class);
 
@@ -45,7 +45,7 @@ class ClauseValidatorTest extends Unit
     /**
      * @return void
      */
-    public function testValidateWhenFieldNameContainsInvalidCharactersShouldThrowExpeption()
+    public function testValidateWhenFieldNameContainsInvalidCharactersShouldThrowExpeption(): void
     {
         $this->expectException(QueryStringException::class);
 
@@ -64,7 +64,7 @@ class ClauseValidatorTest extends Unit
      *
      * @return void
      */
-    public function testValidateWhenFieldIsNotWithingRegisteredRulePlugins()
+    public function testValidateWhenFieldIsNotWithingRegisteredRulePlugins(): void
     {
         $this->expectException(QueryStringException::class);
 
@@ -92,7 +92,7 @@ class ClauseValidatorTest extends Unit
      *
      * @return void
      */
-    public function testValidateWhenFieldIsValidShouldNotThrowExceptions()
+    public function testValidateWhenFieldIsValidShouldNotThrowExceptions(): void
     {
         $comparatorOperatorsMock = $this->createComparatorOperatorsMock();
         $comparatorOperatorsMock->method('isExistingComparator')
@@ -119,8 +119,7 @@ class ClauseValidatorTest extends Unit
     protected function createClauseValidator(
         ?ComparatorOperatorsInterface $comparatorOperatorsMock = null,
         ?MetaDataProviderInterface $metaDataProviderMock = null
-    ) {
-
+    ): ClauseValidator {
         if (!$comparatorOperatorsMock) {
             $comparatorOperatorsMock = $this->createComparatorOperatorsMock();
         }
@@ -135,7 +134,7 @@ class ClauseValidatorTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface
      */
-    protected function createComparatorOperatorsMock()
+    protected function createComparatorOperatorsMock(): ComparatorOperatorsInterface
     {
         return $this->getMockBuilder(ComparatorOperatorsInterface::class)->getMock();
     }
@@ -143,7 +142,7 @@ class ClauseValidatorTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaDataProviderInterface
      */
-    protected function createMetaDataProviderMock()
+    protected function createMetaDataProviderMock(): MetaDataProviderInterface
     {
         return $this->getMockBuilder(MetaDataProviderInterface::class)->getMock();
     }
@@ -151,7 +150,7 @@ class ClauseValidatorTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\ClauseTransfer
      */
-    protected function createClauseTransfer()
+    protected function createClauseTransfer(): ClauseTransfer
     {
         return new ClauseTransfer();
     }

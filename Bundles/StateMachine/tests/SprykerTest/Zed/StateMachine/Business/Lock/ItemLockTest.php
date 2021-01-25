@@ -12,6 +12,7 @@ use Orm\Zed\StateMachine\Persistence\SpyStateMachineLockQuery;
 use Propel\Runtime\Exception\PropelException;
 use Spryker\Zed\StateMachine\Business\Exception\LockException;
 use Spryker\Zed\StateMachine\Business\Lock\ItemLock;
+use Spryker\Zed\StateMachine\Business\Lock\ItemLockInterface;
 use Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainerInterface;
 use SprykerTest\Zed\StateMachine\Mocks\StateMachineMocks;
 
@@ -31,7 +32,7 @@ class ItemLockTest extends StateMachineMocks
     /**
      * @return void
      */
-    public function testAcquireLockShouldCreateItemWithLockInPersistence()
+    public function testAcquireLockShouldCreateItemWithLockInPersistence(): void
     {
         $stateMachineLockEntityMock = $this->createStateMachineItemLockEntityMock();
         $stateMachineLockEntityMock->method('save')
@@ -47,7 +48,7 @@ class ItemLockTest extends StateMachineMocks
     /**
      * @return void
      */
-    public function testAcquireWhenPropelExceptionThrownShouldReThrowLockException()
+    public function testAcquireWhenPropelExceptionThrownShouldReThrowLockException(): void
     {
         $this->expectException(LockException::class);
 
@@ -65,7 +66,7 @@ class ItemLockTest extends StateMachineMocks
     /**
      * @return void
      */
-    public function testReleaseLockShouldDeleteLockFromDatabase()
+    public function testReleaseLockShouldDeleteLockFromDatabase(): void
     {
         $stateMachineQueryContainerMock = $this->createStateMachineQueryContainerMock();
 
@@ -92,8 +93,7 @@ class ItemLockTest extends StateMachineMocks
     protected function createItemLock(
         ?SpyStateMachineLock $stateMachineLockEntityMock = null,
         ?StateMachineQueryContainerInterface $stateMachineQueryContainerMock = null
-    ) {
-
+    ): ItemLockInterface {
         if ($stateMachineQueryContainerMock === null) {
             $stateMachineQueryContainerMock = $this->createStateMachineQueryContainerMock();
         }
@@ -113,7 +113,7 @@ class ItemLockTest extends StateMachineMocks
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\StateMachine\Persistence\SpyStateMachineLock
      */
-    protected function createStateMachineItemLockEntityMock()
+    protected function createStateMachineItemLockEntityMock(): SpyStateMachineLock
     {
         $stateMachineLockEntityMock = $this->getMockBuilder(SpyStateMachineLock::class)->getMock();
 
@@ -123,7 +123,7 @@ class ItemLockTest extends StateMachineMocks
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\StateMachine\Persistence\SpyStateMachineLockQuery
      */
-    protected function createStateMachineQueryMock()
+    protected function createStateMachineQueryMock(): SpyStateMachineLockQuery
     {
         return $this->getMockBuilder(SpyStateMachineLockQuery::class)->getMock();
     }

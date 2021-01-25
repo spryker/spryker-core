@@ -4,7 +4,7 @@
   "description": "Wishlist module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.3",
     "spryker/cart": "^5.0.0 || ^7.0.0",
     "spryker/customer": "^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0",
     "spryker/kernel": "^3.30.0",
@@ -15,13 +15,14 @@
     "spryker/zed-request": "^3.0.0"
   },
   "require-dev": {
+    "spryker/code-sniffer": "*",
     "spryker/propel": "*",
-    "spryker/stock": "*",
     "spryker/testify": "*"
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/"
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Shared\\Wishlist\\Helper\\": "tests/SprykerTest/Shared/Wishlist/_support/Helper/"
     }
   },
   "autoload-dev": {
@@ -31,9 +32,13 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+  },
   "extra": {
     "branch-alias": {
-      "dev-master": "4.0.x-dev"
+      "dev-master": "8.0.x-dev"
     }
   },
   "config": {

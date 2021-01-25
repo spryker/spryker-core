@@ -13,7 +13,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
- * @deprecated Use `\Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener\CategoryNodeStoragePublishListener` and `\Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener\CategoryNodeStorageUnpublishListener` instead.
+ * @deprecated Use {@link \Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener\CategoryNodeStoragePublishListener}
+ *   and {@link \Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener\CategoryNodeStorageUnpublishListener} instead.
  *
  * @method \Spryker\Zed\CategoryStorage\Persistence\CategoryStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\CategoryStorage\Communication\CategoryStorageCommunicationFactory getFactory()
@@ -27,17 +28,18 @@ class CategoryNodeStorageListener extends AbstractPlugin implements EventBulkHan
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
      * @param string $eventName
      *
      * @return void
      */
-    public function handleBulk(array $eventTransfers, $eventName)
+    public function handleBulk(array $eventEntityTransfers, $eventName)
     {
         $this->preventTransaction();
-        $categoryNodeIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
+        $categoryNodeIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventEntityTransfers);
 
-        if ($eventName === CategoryEvents::ENTITY_SPY_CATEGORY_NODE_DELETE ||
+        if (
+            $eventName === CategoryEvents::ENTITY_SPY_CATEGORY_NODE_DELETE ||
             $eventName === CategoryEvents::CATEGORY_NODE_UNPUBLISH
         ) {
             $this->getFacade()->unpublish($categoryNodeIds);

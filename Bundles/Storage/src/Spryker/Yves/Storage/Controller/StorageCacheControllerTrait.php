@@ -10,7 +10,7 @@ namespace Spryker\Yves\Storage\Controller;
 use Spryker\Shared\Storage\StorageConstants;
 
 /**
- * @method \Spryker\Yves\Kernel\Application getApplication()
+ * @method \Spryker\Service\Container\ContainerInterface getApplication()
  */
 trait StorageCacheControllerTrait
 {
@@ -21,8 +21,10 @@ trait StorageCacheControllerTrait
      */
     protected function initializeStorageCacheStrategy($storageCacheStrategy)
     {
-        if (!isset($this->getApplication()[StorageConstants::STORAGE_CACHE_STRATEGY])) {
-            $this->getApplication()[StorageConstants::STORAGE_CACHE_STRATEGY] = $storageCacheStrategy;
+        if (!$this->getApplication()->has(StorageConstants::STORAGE_CACHE_STRATEGY)) {
+            $application = $this->getApplication();
+            $application->set(StorageConstants::STORAGE_CACHE_STRATEGY, $storageCacheStrategy);
+            $application->configure(StorageConstants::STORAGE_CACHE_STRATEGY, ['isGlobal' => true]);
         }
     }
 }

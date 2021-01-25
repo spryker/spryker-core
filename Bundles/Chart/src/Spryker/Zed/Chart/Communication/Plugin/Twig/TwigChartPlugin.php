@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\Chart\Communication\Plugin\Twig;
 
+/**
+ * @deprecated {@link \Spryker\Zed\ChartGui\Communication\Plugin\Twig\Chart\ChartTwigPlugin} instead.
+ */
 class TwigChartPlugin extends AbstractTwigChartPlugin
 {
     public const TWIG_FUNCTION_NAME = 'chart';

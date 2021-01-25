@@ -32,7 +32,7 @@ class OrderItemSplitTest extends Unit
     /**
      * @var array
      */
-    private $notCopiedOrderItemFields = [
+    protected $notCopiedOrderItemFields = [
         'id_sales_order_item',
         'last_state_change',
         'quantity',
@@ -45,7 +45,7 @@ class OrderItemSplitTest extends Unit
     /**
      * @return void
      */
-    public function testIsOrderItemDataCopied()
+    public function testIsOrderItemDataCopied(): void
     {
         $spySalesOrderItem = $this->createOrderItem();
         $itemSplit = $this->createOrderItemSplitter($spySalesOrderItem, 4);
@@ -57,9 +57,9 @@ class OrderItemSplitTest extends Unit
         $this->assertNotEmpty($splitResponse->getSuccessMessage());
 
         $createdCopy = $spySalesOrderItem->getCreatedCopy();
-        $this->assertEquals(1, $createdCopy->getQuantity());
-        $this->assertEquals(4, $spySalesOrderItem->getQuantity());
-        $this->assertEquals(OrderItemSplit::SPLIT_MARKER . $spySalesOrderItem->getGroupKey(), $createdCopy->getGroupKey());
+        $this->assertSame(1, $createdCopy->getQuantity());
+        $this->assertSame(4, $spySalesOrderItem->getQuantity());
+        $this->assertSame(OrderItemSplit::SPLIT_MARKER . $spySalesOrderItem->getGroupKey(), $createdCopy->getGroupKey());
 
         $oldSalesOrderItemArray = $spySalesOrderItem->toArray();
         $copyOfItemSalesOrderItemArray = $createdCopy->toArray();
@@ -82,7 +82,7 @@ class OrderItemSplitTest extends Unit
      *
      * @return \Spryker\Zed\SalesSplit\Business\Model\OrderItemSplit
      */
-    protected function createOrderItemSplitter(SpySalesOrderItemMock $orderItem, $quantityForOld)
+    protected function createOrderItemSplitter(SpySalesOrderItemMock $orderItem, int $quantityForOld): OrderItemSplit
     {
         $validatorMock = $this->createValidatorMock();
         $salesQueryContainerMock = $this->createQueryContainerMock();
@@ -119,7 +119,7 @@ class OrderItemSplitTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\SalesSplit\Business\Model\Validation\ValidatorInterface
      */
-    protected function createValidatorMock()
+    protected function createValidatorMock(): ValidatorInterface
     {
         $validatorMock = $this
             ->getMockBuilder(ValidatorInterface::class)
@@ -132,7 +132,7 @@ class OrderItemSplitTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface
      */
-    protected function createQueryContainerMock()
+    protected function createQueryContainerMock(): SalesQueryContainerInterface
     {
         return $this
             ->getMockBuilder(SalesQueryContainerInterface::class)
@@ -142,7 +142,7 @@ class OrderItemSplitTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\Sales\Persistence\SpySalesOrderQuery
      */
-    protected function createSalesOrderMock()
+    protected function createSalesOrderMock(): SpySalesOrderQuery
     {
         $salesOrderItemQueryMock = $this
             ->getMockBuilder(SpySalesOrderQuery::class)
@@ -156,7 +156,7 @@ class OrderItemSplitTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\SalesSplit\Business\Model\CalculatorInterface
      */
-    protected function createCalculatorMock()
+    protected function createCalculatorMock(): CalculatorInterface
     {
         $calculatorMock = $this
             ->getMockBuilder(CalculatorInterface::class)
@@ -169,7 +169,7 @@ class OrderItemSplitTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Propel\Runtime\Connection\ConnectionInterface
      */
-    protected function createDatabaseConnectionMock()
+    protected function createDatabaseConnectionMock(): ConnectionInterface
     {
         $databaseConnectionMock = $this
             ->getMockBuilder(ConnectionInterface::class)
@@ -184,7 +184,7 @@ class OrderItemSplitTest extends Unit
      *
      * @return array
      */
-    protected function filterOutNotCopiedFields($salesOrderItems, $notCopiedFields)
+    protected function filterOutNotCopiedFields(array $salesOrderItems, array $notCopiedFields): array
     {
         foreach ($salesOrderItems as $key => $value) {
             if (in_array($key, $notCopiedFields)) {
@@ -198,7 +198,7 @@ class OrderItemSplitTest extends Unit
     /**
      * @return \SprykerTest\Zed\SalesSplit\Business\Model\Fixtures\SpySalesOrderItemMock
      */
-    protected function createOrderItem()
+    protected function createOrderItem(): SpySalesOrderItemMock
     {
         $spySalesOrderItem = new SpySalesOrderItemMock();
         $spySalesOrderItem->setIdSalesOrderItem(1);

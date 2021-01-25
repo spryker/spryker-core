@@ -1,4 +1,6 @@
 # CompanySupplier Module
+[![Build Status](https://travis-ci.org/spryker/company-supplier.svg)](https://travis-ci.org/spryker/company-supplier)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 CompanySupplier provides functionality to use company entity as supplier of products.
 

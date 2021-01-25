@@ -68,7 +68,7 @@ abstract class AbstractSpyProductSearchAttribute extends BaseSpyProductSearchAtt
     {
         $maxPosition = $connection
             ->query(sprintf(
-                "SELECT MAX(%s) FROM %s",
+                'SELECT MAX(%s) FROM %s',
                 SpyProductSearchAttributeTableMap::COL_POSITION,
                 SpyProductSearchAttributeTableMap::TABLE_NAME
             ))

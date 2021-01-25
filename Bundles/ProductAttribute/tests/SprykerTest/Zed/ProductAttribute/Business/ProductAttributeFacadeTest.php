@@ -48,7 +48,7 @@ class ProductAttributeFacadeTest extends Test
     protected $productAttributeFacade;
 
     /**
-     * @var \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainer
+     * @var \Spryker\Zed\ProductAttribute\Persistence\ProductAttributeQueryContainer
      */
     protected $productAttributeQueryContainer;
 
@@ -60,7 +60,7 @@ class ProductAttributeFacadeTest extends Test
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -76,14 +76,14 @@ class ProductAttributeFacadeTest extends Test
     /**
      * @return void
      */
-    public function testTranslateProductManagementAttributeKeyInGlossary()
+    public function testTranslateProductManagementAttributeKeyInGlossary(): void
     {
         $productManagementBusinessFactoryMock = $this->getMockBuilder(ProductAttributeBusinessFactory::class)
             ->setMethods(['createAttributeTranslator'])
             ->getMock();
 
         $productManagementBusinessFactoryMock->method('createAttributeTranslator')
-            ->willReturn($this->getAttributeTranslationMock());
+            ->willReturn($this->getAttributeTranslatorMock());
 
         /** @var \Spryker\Zed\ProductAttribute\Business\ProductAttributeBusinessFactory $productManagementBusinessFactoryMock */
         $this->productAttributeFacade->setFactory($productManagementBusinessFactoryMock);
@@ -109,14 +109,14 @@ class ProductAttributeFacadeTest extends Test
     /**
      * @return void
      */
-    public function testTranslateProductManagementAttributeValues()
+    public function testTranslateProductManagementAttributeValues(): void
     {
         $productManagementBusinessFactoryMock = $this->getMockBuilder(ProductAttributeBusinessFactory::class)
             ->setMethods(['createAttributeTranslator'])
             ->getMock();
 
         $productManagementBusinessFactoryMock->method('createAttributeTranslator')
-            ->willReturn($this->getAttributeTranslationMock());
+            ->willReturn($this->getAttributeTranslatorMock());
 
         /** @var \Spryker\Zed\ProductAttribute\Business\ProductAttributeBusinessFactory $productManagementBusinessFactoryMock */
         $this->productAttributeFacade->setFactory($productManagementBusinessFactoryMock);
@@ -151,7 +151,7 @@ class ProductAttributeFacadeTest extends Test
     /**
      * @return void
      */
-    public function testGetProductManagementAttributeReturnsNullIfEntityDoesNotExist()
+    public function testGetProductManagementAttributeReturnsNullIfEntityDoesNotExist(): void
     {
         $this->assertNull($this->productAttributeFacade->getProductManagementAttribute(0));
     }
@@ -159,7 +159,7 @@ class ProductAttributeFacadeTest extends Test
     /**
      * @return void
      */
-    public function testGetProductManagementAttributeReturnsFullyHydratedTransfer()
+    public function testGetProductManagementAttributeReturnsFullyHydratedTransfer(): void
     {
         $productAttributeKeyEntity = $this->tester->createProductManagementAttributeEntity(['a', 'b', 'c']);
 
@@ -194,7 +194,7 @@ class ProductAttributeFacadeTest extends Test
     /**
      * @return void
      */
-    public function testGetProductAbstractAttributeValues()
+    public function testGetProductAbstractAttributeValues(): void
     {
         $productAbstractTransfer = $this->tester->createSampleAbstractProduct(ProductAttributeBusinessTester::ABSTRACT_SKU);
 
@@ -208,7 +208,7 @@ class ProductAttributeFacadeTest extends Test
     /**
      * @return void
      */
-    public function testGetProductAttributeValues()
+    public function testGetProductAttributeValues(): void
     {
         $productAbstractTransfer = $this->tester->createSampleAbstractProduct(ProductAttributeBusinessTester::ABSTRACT_SKU);
         $productTransfer = $this->tester->createSampleProduct($productAbstractTransfer, ProductAttributeBusinessTester::CONCRETE_SKU);
@@ -223,7 +223,7 @@ class ProductAttributeFacadeTest extends Test
     /**
      * @return void
      */
-    public function testGetMetaAttributesForProductAbstractShouldReturnEmptySetForUndefinedAttributes()
+    public function testGetMetaAttributesForProductAbstractShouldReturnEmptySetForUndefinedAttributes(): void
     {
         $productAbstractTransfer = $this->tester->createSampleAbstractProduct(ProductAttributeBusinessTester::ABSTRACT_SKU);
 
@@ -237,7 +237,7 @@ class ProductAttributeFacadeTest extends Test
     /**
      * @return void
      */
-    public function testGetMetaAttributesForProductShouldReturnEmptySetForUndefinedAttributes()
+    public function testGetMetaAttributesForProductShouldReturnEmptySetForUndefinedAttributes(): void
     {
         $productAbstractTransfer = $this->tester->createSampleAbstractProduct(ProductAttributeBusinessTester::ABSTRACT_SKU);
         $productTransfer = $this->tester->createSampleProduct($productAbstractTransfer, ProductAttributeBusinessTester::CONCRETE_SKU);
@@ -252,7 +252,7 @@ class ProductAttributeFacadeTest extends Test
     /**
      * @return void
      */
-    public function testGetMetaAttributesForProductAbstract()
+    public function testGetMetaAttributesForProductAbstract(): void
     {
         $data = $this->tester->createSampleAttributeMetadataWithSuperAttributeData();
         $productAbstractTransfer = $this->tester->createSampleAbstractProduct(ProductAttributeBusinessTester::ABSTRACT_SKU, $data);
@@ -269,7 +269,7 @@ class ProductAttributeFacadeTest extends Test
     /**
      * @return void
      */
-    public function testGetMetaAttributesForProduct()
+    public function testGetMetaAttributesForProduct(): void
     {
         $data = $this->tester->createSampleAttributeMetadataWithSuperAttributeData();
         $productAbstractTransfer = $this->tester->createSampleAbstractProduct(ProductAttributeBusinessTester::ABSTRACT_SKU);
@@ -287,7 +287,7 @@ class ProductAttributeFacadeTest extends Test
     /**
      * @return void
      */
-    public function testSaveAbstractAttributes()
+    public function testSaveAbstractAttributes(): void
     {
         $productAbstractTransfer = $this->tester->createSampleAbstractProduct(ProductAttributeBusinessTester::ABSTRACT_SKU);
         $fooMetaAttributeTransfer = $this->tester->createSampleAttributeMetadata(ProductAttributeBusinessTester::FOO_ATTRIBUTE_KEY, false);
@@ -335,7 +335,7 @@ class ProductAttributeFacadeTest extends Test
     /**
      * @return void
      */
-    public function testSaveConcreteAttributes()
+    public function testSaveConcreteAttributes(): void
     {
         $productAbstractTransfer = $this->tester->createSampleAbstractProduct(ProductAttributeBusinessTester::ABSTRACT_SKU);
         $productTransfer = $this->tester->createSampleProduct($productAbstractTransfer, ProductAttributeBusinessTester::CONCRETE_SKU);
@@ -395,7 +395,7 @@ class ProductAttributeFacadeTest extends Test
     /**
      * @return void
      */
-    public function testSuggestKeys()
+    public function testSuggestKeys(): void
     {
         $this->tester->createSampleAttributeMetadata(ProductAttributeBusinessTester::FOO_ATTRIBUTE_KEY, false);
         $this->tester->createSampleAttributeMetadata(ProductAttributeBusinessTester::SUPER_ATTRIBUTE_KEY, true);
@@ -408,7 +408,7 @@ class ProductAttributeFacadeTest extends Test
     /**
      * @return void
      */
-    public function testSuggestKeysShouldIgnoreSuperAttributes()
+    public function testSuggestKeysShouldIgnoreSuperAttributes(): void
     {
         $this->tester->createSampleAttributeMetadata(ProductAttributeBusinessTester::FOO_ATTRIBUTE_KEY, false);
         $this->tester->createSampleAttributeMetadata(ProductAttributeBusinessTester::SUPER_ATTRIBUTE_KEY, true);
@@ -421,7 +421,7 @@ class ProductAttributeFacadeTest extends Test
     /**
      * @return void
      */
-    public function testExtractKeysFromAttributes()
+    public function testExtractKeysFromAttributes(): void
     {
         $keys = $this->productAttributeFacade->extractKeysFromAttributes($this->tester->getSampleLocalizedProductAttributeValues());
 
@@ -431,7 +431,7 @@ class ProductAttributeFacadeTest extends Test
     /**
      * @return void
      */
-    public function testExtractValuesFromAttributes()
+    public function testExtractValuesFromAttributes(): void
     {
         $values = $this->productAttributeFacade->extractValuesFromAttributes($this->tester->getSampleLocalizedProductAttributeValues());
 
@@ -451,7 +451,7 @@ class ProductAttributeFacadeTest extends Test
     /**
      * @return void
      */
-    public function testGetUniqueSuperAttributesFromConcreteProducts()
+    public function testGetUniqueSuperAttributesFromConcreteProducts(): void
     {
         $attributesData = $this->tester->createSampleAttributeMetadataWithSuperAttributeData();
         $productAbstractTransfer = $this->tester->createSampleAbstractProduct(ProductAttributeBusinessTester::ABSTRACT_SKU);
@@ -468,13 +468,13 @@ class ProductAttributeFacadeTest extends Test
             $secondProductConcreteTransfer,
         ]);
 
-        $this->assertEquals(2, count($uniqueSuperAttributes));
+        $this->assertSame(2, count($uniqueSuperAttributes));
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\ProductAttribute\Business\Model\Attribute\AttributeTranslator|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function getAttributeTranslationMock()
+    protected function getAttributeTranslatorMock(): AttributeTranslator
     {
         $productManagementToLocaleBridgeMock = $this->getMockBuilder(ProductAttributeToLocaleBridge::class)
             ->disableOriginalConstructor()

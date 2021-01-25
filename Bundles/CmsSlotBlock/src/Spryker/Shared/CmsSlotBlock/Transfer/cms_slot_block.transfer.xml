@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="CmsSlot">
+        <property name="contentProviderType" type="string"/>
+    </transfer>
+
+    <transfer name="CmsSlotBlock">
+        <property name="idCmsSlotBlock" type="string"/>
+        <property name="idSlotTemplate" type="int"/>
+        <property name="idSlot" type="int"/>
+        <property name="idCmsBlock" type="int"/>
+        <property name="position" type="int"/>
+        <property name="conditions" type="CmsSlotBlockCondition[]" singular="condition" associative="true"/>
+    </transfer>
+
+    <transfer name="CmsSlotBlockCondition">
+    </transfer>
+
+    <transfer name="CmsSlotBlockCollection">
+        <property name="cmsSlotBlocks" type="CmsSlotBlock[]" singular="cmsSlotBlock"/>
+    </transfer>
+
+    <transfer name="CmsSlotBlockCriteria">
+        <property name="filter" type="Filter"/>
+        <property name="idCmsSlotTemplate" type="int"/>
+        <property name="idCmsSlot" type="int"/>
+    </transfer>
+
+    <transfer name="CmsSlotTemplateConfiguration">
+        <property name="conditions" type="string[]" singular="condition"/>
+    </transfer>
+
+    <transfer name="CmsBlock">
+        <property name="cmsSlotBlockCollection" type="CmsSlotBlockCollection"/>
+        <property name="storeNames" type="string"/>
+    </transfer>
+
+    <transfer name="EventEntity">
+        <property name="id" type="int"/>
+    </transfer>
+
+    <transfer name="Filter">
+        <property name="offset" type="int"/>
+        <property name="limit" type="int"/>
+        <property name="orderBy" type="string"/>
+        <property name="orderDirection" type="string"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
+    </transfer>
+
+    <transfer name="ValidationResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="errorMessages" type="Message[]" singular="errorMessage"/>
+    </transfer>
+
+    <transfer name="CmsSlotParams">
+    </transfer>
+
+    <transfer name="CmsBlockCriteria">
+        <property name="namePattern" type="string"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="CmsBlockCollection">
+        <property name="cmsBlocks" type="CmsBlock[]" singular="cmsBlocks"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="page" type="int"/>
+        <property name="maxPerPage" type="int"/>
+        <property name="lastPage" type="int"/>
+    </transfer>
+
+</transfers>

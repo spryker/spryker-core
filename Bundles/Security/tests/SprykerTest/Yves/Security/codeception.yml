@@ -1,0 +1,31 @@
+namespace: SprykerTest\Yves\Security
+paths:
+    tests: .
+    data: ../../../_data
+    support: _support
+    log: ../../../_output
+coverage:
+    enabled: true
+    remote: false
+    whitelist:
+        include:
+            - '../../../../src/*'
+suites:
+    Yves:
+        path: .
+        class_name: SecurityTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+                - \SprykerTest\Yves\Testify\Helper\DependencyProviderHelper
+                - \SprykerTest\Service\Container\Helper\ContainerHelper
+                - \SprykerTest\Client\Testify\Helper\ClientHelper
+                - \SprykerTest\Yves\Testify\Helper\FactoryHelper
+                - \SprykerTest\Yves\Application\Helper\ApplicationHelper
+                - \SprykerTest\Yves\EventDispatcher\Helper\EventDispatcherHelper
+                - \SprykerTest\Yves\Router\Helper\RouterHelper
+                - \SprykerTest\Yves\Security\Helper\SecurityHelper
+                - \SprykerTest\Yves\Session\Helper\SessionHelper

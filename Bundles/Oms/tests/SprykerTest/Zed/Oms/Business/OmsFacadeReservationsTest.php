@@ -9,11 +9,13 @@ namespace SprykerTest\Zed\Oms\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\OmsAvailabilityReservationRequestBuilder;
-use Generated\Shared\DataBuilder\StoreBuilder;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OmsAvailabilityReservationRequestTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
+use Orm\Zed\Oms\Persistence\SpyOmsProductReservation;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
+use Spryker\DecimalObject\Decimal;
 
 /**
  * Auto-generated group annotations
@@ -28,6 +30,12 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
  */
 class OmsFacadeReservationsTest extends Unit
 {
+    protected const STORE_NAME_AT = 'AT';
+    protected const STORE_NAME_DE = 'DE';
+
+    protected const TEST_SKU_1 = 'test-sku-1';
+    protected const TEST_SKU_2 = 'test-sku-2';
+
     /**
      * @var \SprykerTest\Zed\Oms\OmsBusinessTester
      */
@@ -47,7 +55,7 @@ class OmsFacadeReservationsTest extends Unit
     /**
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         $this->tester->resetReservedStatesCache();
@@ -61,7 +69,7 @@ class OmsFacadeReservationsTest extends Unit
     public function testImportReservationShouldHaveAmountInReservationTotals(): void
     {
         // Origin store
-        $storeTransfer = $this->createStoreTransfer()->setName('AT');
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_AT]);
 
         $availabilityReservationRequestTransfer = (new OmsAvailabilityReservationRequestBuilder([
             OmsAvailabilityReservationRequestTransfer::SKU => 123,
@@ -73,10 +81,10 @@ class OmsFacadeReservationsTest extends Unit
         $this->getOmsFacade()->importReservation($availabilityReservationRequestTransfer);
 
         // Other store
-        $storeTransfer = $this->createStoreTransfer()->setName('DE');
-        $reservedAmount = $this->getOmsFacade()->getOmsReservedProductQuantityForSku(123, $storeTransfer);
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
+        $reservedAmount = $this->getOmsFacade()->getOmsReservedProductQuantityForSku('123', $storeTransfer);
 
-        $this->assertSame(1, $reservedAmount);
+        $this->assertTrue($reservedAmount->equals(1));
     }
 
     /**
@@ -139,7 +147,7 @@ class OmsFacadeReservationsTest extends Unit
             'Test03'
         );
 
-        $expectedQuantity = 0;
+        $expectedQuantity = new Decimal(0);
         foreach ([$saveOrderTransfer1, $saveOrderTransfer2] as $orderTransfer) {
             $orderItems = SpySalesOrderQuery::create()
                 ->filterByIdSalesOrder($orderTransfer->getIdSalesOrder())
@@ -150,7 +158,7 @@ class OmsFacadeReservationsTest extends Unit
             $this->setItemsState($orderItems, 'paid');
 
             foreach ($orderItems as $orderItem) {
-                $expectedQuantity += $orderItem->getQuantity();
+                $expectedQuantity = $expectedQuantity->add($orderItem->getQuantity());
             }
         }
 
@@ -162,7 +170,11 @@ class OmsFacadeReservationsTest extends Unit
 
         $this->setItemsState($orderItems, 'paid');
 
-        $this->assertEquals($expectedQuantity, $this->getOmsFacade()->sumReservedProductQuantitiesForSku($testSku));
+        $this->assertTrue(
+            $this->getOmsFacade()
+                ->sumReservedProductQuantitiesForSku($testSku)
+                ->equals($expectedQuantity)
+        );
     }
 
     /**
@@ -189,7 +201,7 @@ class OmsFacadeReservationsTest extends Unit
      */
     public function testGetReservationsFromOtherStoresShouldReturnReservations(): void
     {
-        $storeTransfer = $this->createStoreTransfer()->setName('AT');
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_AT]);
 
         $availabilityReservationRequestTransfer = (new OmsAvailabilityReservationRequestBuilder([
             OmsAvailabilityReservationRequestTransfer::SKU => 123,
@@ -200,25 +212,79 @@ class OmsFacadeReservationsTest extends Unit
 
         $this->getOmsFacade()->importReservation($availabilityReservationRequestTransfer);
 
-        $storeTransfer = $this->createStoreTransfer()->setName('DE');
-        $reserved = $this->getOmsFacade()->getReservationsFromOtherStores(123, $storeTransfer);
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
+        $reserved = $this->getOmsFacade()->getReservationsFromOtherStores('123', $storeTransfer);
 
-        $this->assertSame(1, $reserved);
+        $this->assertTrue($reserved->equals(1));
     }
 
     /**
-     * @return \Spryker\Zed\Kernel\Business\AbstractFacade|\Spryker\Zed\Oms\Business\OmsFacadeInterface
+     * @return void
+     */
+    public function testGetOmsReservedProductQuantityForSkuShouldReturnCorrectReservedAmount(): void
+    {
+        //Arrange
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
+        $reservationQuantity = new Decimal(random_int(1, 100));
+        $this->createProductReservation(static::TEST_SKU_1, $storeTransfer, $reservationQuantity);
+
+        //Act
+        $reserved = $this->getOmsFacade()->getOmsReservedProductQuantityForSku(static::TEST_SKU_1, $storeTransfer);
+
+        //Assert
+        $this->assertSame(
+            $reservationQuantity->toInt(),
+            $reserved->toInt(),
+            'Calculated reserved amount does not match expected value.'
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetOmsReservedProductQuantityForSkusShouldReturnCorrectReservedAmount(): void
+    {
+        //Arrange
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
+        $reservationQuantity1 = new Decimal(random_int(1, 100));
+        $reservationQuantity2 = new Decimal(random_int(1, 100));
+        $this->createProductReservation(static::TEST_SKU_1, $storeTransfer, $reservationQuantity1);
+        $this->createProductReservation(static::TEST_SKU_2, $storeTransfer, $reservationQuantity2);
+
+        //Act
+        $reserved = $this->getOmsFacade()->getOmsReservedProductQuantityForSkus([
+            static::TEST_SKU_1, static::TEST_SKU_2,
+        ], $storeTransfer);
+
+        //Assert
+        $this->assertSame(
+            $reservationQuantity1->add($reservationQuantity2)->toInt(),
+            $reserved->toInt(),
+            'Calculated reserved amount does not match expected value.'
+        );
+    }
+
+    /**
+     * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Spryker\DecimalObject\Decimal $reservationQuantity
+     *
+     * @return void
+     */
+    public function createProductReservation(string $sku, StoreTransfer $storeTransfer, Decimal $reservationQuantity): void
+    {
+        $omsProductReservationEntity = new SpyOmsProductReservation();
+        $omsProductReservationEntity->setSku($sku)
+            ->setFkStore($storeTransfer->getIdStore())
+            ->setReservationQuantity($reservationQuantity->toString())
+            ->save();
+    }
+
+    /**
+     * @return \Spryker\Zed\Oms\Business\OmsFacadeInterface
      */
     protected function getOmsFacade()
     {
         return $this->tester->getFacade();
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\StoreTransfer|\Spryker\Shared\Kernel\Transfer\AbstractTransfer
-     */
-    protected function createStoreTransfer()
-    {
-        return (new StoreBuilder())->build();
     }
 }

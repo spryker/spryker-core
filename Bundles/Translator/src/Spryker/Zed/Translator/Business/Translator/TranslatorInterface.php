@@ -9,9 +9,10 @@ namespace Spryker\Zed\Translator\Business\Translator;
 
 use Symfony\Component\Translation\Loader\LoaderInterface;
 use Symfony\Component\Translation\TranslatorBagInterface;
-use Symfony\Component\Translation\TranslatorInterface as SymfonyTranslatorInterface;
+use Symfony\Contracts\Translation\LocaleAwareInterface;
+use Symfony\Contracts\Translation\TranslatorInterface as SymfonyTranslatorInterface;
 
-interface TranslatorInterface extends SymfonyTranslatorInterface, TranslatorBagInterface
+interface TranslatorInterface extends SymfonyTranslatorInterface, TranslatorBagInterface, LocaleAwareInterface
 {
     /**
      * @param string $format
@@ -19,7 +20,7 @@ interface TranslatorInterface extends SymfonyTranslatorInterface, TranslatorBagI
      *
      * @return void
      */
-    public function addLoader($format, LoaderInterface $loader);
+    public function addLoader(string $format, LoaderInterface $loader);
 
     /**
      * @param string $format
@@ -29,7 +30,7 @@ interface TranslatorInterface extends SymfonyTranslatorInterface, TranslatorBagI
      *
      * @return void
      */
-    public function addResource($format, $resource, $locale, $domain = null);
+    public function addResource(string $format, $resource, string $locale, ?string $domain = null);
 
     /**
      * @param string $keyName

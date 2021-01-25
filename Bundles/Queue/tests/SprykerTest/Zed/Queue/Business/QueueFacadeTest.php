@@ -5,16 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\Queue\Communication\Console;
+namespace SprykerTest\Zed\Queue\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\QueueDumpRequestTransfer;
+use Generated\Shared\Transfer\QueueDumpResponseTransfer;
 use Generated\Shared\Transfer\QueueReceiveMessageTransfer;
 use Generated\Shared\Transfer\RabbitMqConsumerOptionTransfer;
 use Spryker\Client\Queue\QueueClient;
 use Spryker\Shared\Event\EventConstants;
 use Spryker\Shared\Queue\QueueConstants;
 use Spryker\Zed\Event\Communication\Plugin\Queue\EventQueueMessageProcessorPlugin;
+use Spryker\Zed\Queue\Business\Exception\MissingQueuePluginException;
 use Spryker\Zed\Queue\Business\QueueBusinessFactory;
 use Spryker\Zed\Queue\Business\QueueFacade;
 use Spryker\Zed\Queue\Business\QueueFacadeInterface;
@@ -27,8 +29,7 @@ use Spryker\Zed\Queue\QueueDependencyProvider;
  * @group SprykerTest
  * @group Zed
  * @group Queue
- * @group Communication
- * @group Console
+ * @group Business
  * @group Facade
  * @group QueueFacadeTest
  * Add your own group annotations below this line
@@ -55,7 +56,7 @@ class QueueFacadeTest extends Unit
     /**
      * @return void
      */
-    protected function _before()
+    protected function _before(): void
     {
         $this->tester->setDependency(QueueDependencyProvider::QUEUE_MESSAGE_PROCESSOR_PLUGINS, [
             EventConstants::EVENT_QUEUE => new EventQueueMessageProcessorPlugin(),
@@ -73,19 +74,20 @@ class QueueFacadeTest extends Unit
         $queueDumpRequestTransfer = $this->createQueueDumpRequestTransfer(static::REGISTERED_QUEUE_NAME);
         $queueDumpResponseTransfer = $queueFacade->queueDump($queueDumpRequestTransfer);
 
-        $this->assertInstanceOf('\Generated\Shared\Transfer\QueueDumpResponseTransfer', $queueDumpResponseTransfer);
+        $this->assertInstanceOf(QueueDumpResponseTransfer::class, $queueDumpResponseTransfer);
     }
 
     /**
-     * @expectedException \Spryker\Zed\Queue\Business\Exception\MissingQueuePluginException
-     * @expectedExceptionMessage There is no queue registered with this queue: wrongQueueName. Please check the queue name and try again.
-     *
      * @return void
      */
     public function testQueueDumpWithNonExistingQueue(): void
     {
         $queueFacade = $this->getFacade(static::UNREGISTERED_QUEUE_NAME);
         $queueDumpRequestTransfer = $this->createQueueDumpRequestTransfer(static::UNREGISTERED_QUEUE_NAME);
+
+        $this->expectException(MissingQueuePluginException::class);
+        $this->expectExceptionMessage('There is no queue registered with this queue: wrongQueueName. Please check the queue name and try again.');
+
         $queueFacade->queueDump($queueDumpRequestTransfer);
     }
 
@@ -160,7 +162,7 @@ class QueueFacadeTest extends Unit
             return $queueReceiverOptions[QueueConstants::QUEUE_DEFAULT_RECEIVER];
         }
 
-        return null;
+        return [];
     }
 
     /**

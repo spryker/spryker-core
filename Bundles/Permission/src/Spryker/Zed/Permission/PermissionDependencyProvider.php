@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Permission;
 
-use Exception;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -42,9 +41,9 @@ class PermissionDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addPermissionPlugins(Container $container)
     {
-        $container[static::PLUGINS_PERMISSION] = function (Container $container) {
+        $container->set(static::PLUGINS_PERMISSION, function (Container $container) {
             return $this->getPermissionPlugins();
-        };
+        });
 
         return $container;
     }
@@ -64,22 +63,19 @@ class PermissionDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addPermissionStoragePlugins(Container $container)
     {
-        $container[static::PLUGINS_PERMISSION_STORAGE] = function (Container $container) {
+        $container->set(static::PLUGINS_PERMISSION_STORAGE, function (Container $container) {
             return $this->getPermissionStoragePlugins();
-        };
+        });
 
         return $container;
     }
 
     /**
-     * @throws \Exception
-     *
      * @return \Spryker\Zed\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface[]
      */
     protected function getPermissionStoragePlugins(): array
     {
-        throw new Exception('Please set an array of permission storage plugins, 
-        all implementing the interface \Spryker\Zed\Permission\Communication\Plugin\PermissionStoragePluginInterface');
+        return [];
     }
 
     /**
@@ -89,9 +85,9 @@ class PermissionDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addPermissionClient(Container $container)
     {
-        $container[static::CLIENT_PERMISSION] = function (Container $container) {
+        $container->set(static::CLIENT_PERMISSION, function (Container $container) {
             return $container->getLocator()->permission()->client();
-        };
+        });
 
         return $container;
     }

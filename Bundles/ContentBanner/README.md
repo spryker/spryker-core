@@ -1,6 +1,6 @@
 # ContentBanner Module
 [![Build Status](https://travis-ci.org/spryker/content-banner.svg)](https://travis-ci.org/spryker/content-banner)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/content-banner/badge.svg)](https://coveralls.io/github/spryker/content-banner)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 ContentBanner provides plugins for banner
 

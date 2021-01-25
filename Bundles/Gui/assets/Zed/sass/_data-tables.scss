@@ -1,37 +1,54 @@
-$data-table-selected-row-bg-color: rgba(#0088cc, .15);
+$data-table-selected-row-bg-color: rgba(#0088cc, 0.15);
 $data-table-selected-row-border-size: 1px;
 $data-table-selected-row-border-color: rgba(#0088cc, 1);
 
 .dataTables_scrollHeadInner {
-  width: 100% !important;
-
-  & > .table {
     width: 100% !important;
-  }
+
+    & > .table {
+        width: 100% !important;
+    }
 }
 
 table.dataTable tbody > tr {
-  &,
-  &:first-child {
-    &.selected,
-    & > .selected {
-      background-color: $data-table-selected-row-bg-color;
-      color: inherit;
+    &,
+    &:first-child {
+        &.selected,
+        & > .selected {
+            background-color: $data-table-selected-row-bg-color;
+            color: inherit;
 
-      & > td {
-        border-right-color: $data-table-selected-row-bg-color;
-        border-top: $data-table-selected-row-border-size solid $data-table-selected-row-border-color;
-        border-bottom: $data-table-selected-row-border-size solid $data-table-selected-row-border-color;
+            & > td {
+                border-right-color: $data-table-selected-row-bg-color;
+                border-top: $data-table-selected-row-border-size solid $data-table-selected-row-border-color;
+                border-bottom: $data-table-selected-row-border-size solid $data-table-selected-row-border-color;
 
-        &:first-child {
-          border-left:  $data-table-selected-row-border-size solid $data-table-selected-row-border-color;
+                &:first-child {
+                    border-left: $data-table-selected-row-border-size solid $data-table-selected-row-border-color;
+                }
+
+                &:last-child {
+                    border-right: $data-table-selected-row-border-size solid $data-table-selected-row-border-color;
+                }
+            }
+
+            .btn-outline {
+                &.btn-danger {
+                    color: $btn-danger-bg;
+                }
+
+                &.btn-create {
+                    color: #108548;
+                }
+
+                &.btn-view {
+                    color: #1c84c6;
+                }
+
+                &:hover {
+                    color: #fff;
+                }
+            }
         }
-
-        &:last-child {
-          border-right:  $data-table-selected-row-border-size solid $data-table-selected-row-border-color;
-        }
-      }
     }
-  }
 }
-

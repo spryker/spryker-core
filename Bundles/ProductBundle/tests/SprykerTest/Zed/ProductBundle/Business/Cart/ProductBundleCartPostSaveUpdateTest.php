@@ -28,7 +28,7 @@ class ProductBundleCartPostSaveUpdateTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateBundlesShouldRemoveStaleBundles()
+    public function testUpdateBundlesShouldRemoveStaleBundles(): void
     {
         $productBundlesCartPostSaveUpdate = new ProductBundleCartPostSaveUpdate();
 

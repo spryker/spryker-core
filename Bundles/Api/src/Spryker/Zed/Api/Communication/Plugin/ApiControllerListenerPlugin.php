@@ -16,10 +16,14 @@ use Spryker\Zed\Api\Communication\Controller\AbstractApiController;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
+use Symfony\Component\HttpKernel\Event\ControllerEvent;
 use Throwable;
 
 /**
+ * @deprecated Will be removed without replacement.
+ *
+ * @see \Spryker\Zed\Api\Communication\Plugin\ApiControllerEventDispatcherPlugin
+ *
  * @method \Spryker\Zed\Api\Communication\ApiCommunicationFactory getFactory()
  * @method \Spryker\Zed\Api\Business\ApiFacadeInterface getFacade()
  * @method \Spryker\Zed\Api\ApiConfig getConfig()
@@ -32,13 +36,15 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
     protected const REQUEST_URI = 'REQUEST_URI';
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
-     * @param \Symfony\Component\HttpKernel\Event\FilterControllerEvent $event
+     * @param \Symfony\Component\HttpKernel\Event\ControllerEvent $event
      *
      * @return callable|null
      */
-    public function onKernelController(FilterControllerEvent $event)
+    public function onKernelController(ControllerEvent $event)
     {
         /** @var array $currentController */
         $currentController = $event->getController();

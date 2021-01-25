@@ -15,7 +15,7 @@
     <transfer name="QuoteResponse">
         <property name="isSuccessful" type="bool"/>
         <property name="quoteTransfer" type="Quote"/>
-        <property name="errors" type="QuoteError[]"/>
+        <property name="errors" type="QuoteError[]" singular="error"/>
     </transfer>
 
     <transfer name="QuoteError">
@@ -44,7 +44,7 @@
         <property name="isSuccessful" type="bool"/>
         <property name="isLoginRequired" type="bool"/>
         <property name="resourceShare" type="ResourceShare"/>
-        <property name="messages" type="Message[]"/>
+        <property name="messages" type="Message[]" singular="message"/>
     </transfer>
 
     <transfer name="Message">

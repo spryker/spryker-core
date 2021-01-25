@@ -16,6 +16,8 @@ use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInt
 use Spryker\Zed\Search\Dependency\Plugin\NamedPageMapInterface;
 
 /**
+ * @deprecated Will be removed without replacement. Search data mapping is now done inside of this module.
+ *
  * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductPageSearch\Communication\ProductPageSearchCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacadeInterface getFacade()
@@ -26,15 +28,17 @@ class ProductConcretePageMapPlugin extends AbstractPlugin implements NamedPageMa
     public const KEY_ID_PRODUCT = 'id_product';
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
      * @param array $data
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Generated\Shared\Transfer\PageMapTransfer
      */
-    public function buildPageMap(PageMapBuilderInterface $pageMapBuilder, array $data, LocaleTransfer $locale): PageMapTransfer
+    public function buildPageMap(PageMapBuilderInterface $pageMapBuilder, array $data, LocaleTransfer $localeTransfer): PageMapTransfer
     {
         $pageMapTransfer = (new PageMapTransfer())
             ->setStore($data[ProductConcretePageSearchTransfer::STORE])
@@ -57,12 +61,14 @@ class ProductConcretePageMapPlugin extends AbstractPlugin implements NamedPageMa
             ->addCompletionTerms($pageMapTransfer, $data[ProductConcretePageSearchTransfer::SKU])
             ->addStringSort($pageMapTransfer, ProductConcretePageSearchTransfer::NAME, $data[ProductConcretePageSearchTransfer::NAME]);
 
-        $pageMapTransfer = $this->expandProductPageMap($pageMapTransfer, $pageMapBuilder, $data, $locale);
+        $pageMapTransfer = $this->expandProductPageMap($pageMapTransfer, $pageMapBuilder, $data, $localeTransfer);
 
         return $pageMapTransfer;
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string
@@ -80,8 +86,12 @@ class ProductConcretePageMapPlugin extends AbstractPlugin implements NamedPageMa
      *
      * @return \Generated\Shared\Transfer\PageMapTransfer
      */
-    protected function expandProductPageMap(PageMapTransfer $pageMapTransfer, PageMapBuilderInterface $pageMapBuilder, array $productData, LocaleTransfer $localeTransfer): PageMapTransfer
-    {
+    protected function expandProductPageMap(
+        PageMapTransfer $pageMapTransfer,
+        PageMapBuilderInterface $pageMapBuilder,
+        array $productData,
+        LocaleTransfer $localeTransfer
+    ): PageMapTransfer {
         $pageMapTransfer = $this->applyProductPageMapExpanders($pageMapTransfer, $pageMapBuilder, $productData, $localeTransfer);
 
         foreach ($this->getFactory()->getConcreteProductPageMapExpanderPlugins() as $productConcretePageMapExpanderPlugin) {

@@ -7,31 +7,44 @@
 
 namespace Spryker\Glue\Kernel\Plugin;
 
-use Spryker\Glue\Kernel\AbstractPlugin;
-use Spryker\Glue\Kernel\Application;
+use Spryker\Service\Container\ContainerInterface;
+use Spryker\Shared\Kernel\Container\GlobalContainer;
 
-class Pimple extends AbstractPlugin
+/**
+ * @deprecated Use {@link \Spryker\Shared\Kernel\Container\GlobalContainerInterface} instead.
+ */
+class Pimple extends GlobalContainer
 {
     /**
-     * @var \Spryker\Glue\Kernel\Application
+     * @var \Silex\Application
      */
     protected static $application;
 
     /**
-     * @param \Spryker\Glue\Kernel\Application $application
+     * @param \Spryker\Service\Container\ContainerInterface|\Silex\Application $application
      *
      * @return void
      */
-    public static function setApplication(Application $application)
+    public static function setApplication($application): void
     {
-        self::$application = $application;
+        if ($application instanceof ContainerInterface) {
+            parent::setContainer($application);
+
+            return;
+        }
+
+        static::$application = $application;
     }
 
     /**
-     * @return \Spryker\Glue\Kernel\Application
+     * @return \Spryker\Service\Container\ContainerInterface|\Silex\Application
      */
     public function getApplication()
     {
-        return self::$application;
+        if (static::$application === null) {
+            return parent::getContainer();
+        }
+
+        return static::$application;
     }
 }

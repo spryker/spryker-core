@@ -30,13 +30,15 @@ use Spryker\Zed\Api\Business\Model\Processor\Pre\FilterPreProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Format\FormatTypeByHeaderPreProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Format\FormatTypeByPathPreProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\PathPreProcessor;
-use Spryker\Zed\Api\Business\Model\Processor\Pre\Resource\ResourceActionPreProcessor;
-use Spryker\Zed\Api\Business\Model\Processor\Pre\Resource\ResourceIdPreProcessor;
-use Spryker\Zed\Api\Business\Model\Processor\Pre\Resource\ResourceParametersPreProcessor;
-use Spryker\Zed\Api\Business\Model\Processor\Pre\Resource\ResourcePreProcessor;
+use Spryker\Zed\Api\Business\Model\Processor\Pre\RestApiResource\ResourceActionPreProcessor;
+use Spryker\Zed\Api\Business\Model\Processor\Pre\RestApiResource\ResourceIdPreProcessor;
+use Spryker\Zed\Api\Business\Model\Processor\Pre\RestApiResource\ResourceParametersPreProcessor;
+use Spryker\Zed\Api\Business\Model\Processor\Pre\RestApiResource\ResourcePreProcessor;
 use Spryker\Zed\Api\Business\Model\ResourceHandler;
 use Spryker\Zed\Api\Business\Model\Validator\ApiValidator;
+use Spryker\Zed\Api\Business\Router\ApiRouter;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Symfony\Component\Routing\RouterInterface;
 
 /**
  * @method \Spryker\Zed\Api\ApiConfig getConfig()
@@ -354,5 +356,13 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     protected function getApiRequestTransferFilterPlugins()
     {
         return $this->getProvidedDependency(ApiDependencyProvider::PLUGINS_API_REQUEST_TRANSFER_FILTER);
+    }
+
+    /**
+     * @return \Symfony\Component\Routing\RouterInterface
+     */
+    public function createApiRouter(): RouterInterface
+    {
+        return new ApiRouter($this->getConfig());
     }
 }

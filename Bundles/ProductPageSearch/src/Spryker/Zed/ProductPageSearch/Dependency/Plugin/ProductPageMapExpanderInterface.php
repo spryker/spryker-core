@@ -11,6 +11,9 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageMapTransfer;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface;
 
+/**
+ * @deprecated Use {@link \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductAbstractMapExpanderPluginInterface} instead.
+ */
 interface ProductPageMapExpanderInterface
 {
     /**
@@ -26,5 +29,10 @@ interface ProductPageMapExpanderInterface
      *
      * @return \Generated\Shared\Transfer\PageMapTransfer
      */
-    public function expandProductPageMap(PageMapTransfer $pageMapTransfer, PageMapBuilderInterface $pageMapBuilder, array $productData, LocaleTransfer $localeTransfer);
+    public function expandProductPageMap(
+        PageMapTransfer $pageMapTransfer,
+        PageMapBuilderInterface $pageMapBuilder,
+        array $productData,
+        LocaleTransfer $localeTransfer
+    );
 }

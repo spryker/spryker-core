@@ -31,7 +31,8 @@ class AssignRolesCompanyUserPostCreatePlugin extends AbstractPlugin implements C
     {
         $companyUser = $companyUserResponseTransfer->getCompanyUser();
 
-        if ($companyUser->getCompanyRoleCollection() !== null &&
+        if (
+            $companyUser->getCompanyRoleCollection() !== null &&
             $companyUser->getCompanyRoleCollection()->getRoles()->count()
         ) {
             $this->getFacade()->saveCompanyUser($companyUser);

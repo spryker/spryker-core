@@ -8,7 +8,7 @@
 namespace Spryker\Zed\SynchronizationExtension\Dependency\Plugin;
 
 /**
- * @deprecated Use \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBulkRepositoryPluginInterface instead.
+ * @deprecated Use {@link \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBulkRepositoryPluginInterface} instead.
  */
 interface SynchronizationDataRepositoryPluginInterface extends SynchronizationDataPluginInterface
 {

@@ -7,14 +7,14 @@
 
 namespace Spryker\Yves\CartVariant;
 
-use Spryker\Yves\CartVariant\Dependency\Client\CartVariantToAvailabilityClientBridge;
+use Spryker\Yves\CartVariant\Dependency\Client\CartVariantToAvailabilityStorageClientBridge;
 use Spryker\Yves\CartVariant\Dependency\Client\CartVariantToProductClientBridge;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 
 class CartVariantDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const CLIENT_AVAILABILITY = 'CLIENT_PRODUCT_OPTION';
+    public const CLIENT_AVAILABILITY_STORAGE = 'CLIENT_AVAILABILITY_STORAGE';
     public const CLIENT_PRODUCT = 'CLIENT_PRODUCT';
 
     /**
@@ -25,8 +25,7 @@ class CartVariantDependencyProvider extends AbstractBundleDependencyProvider
     public function provideDependencies(Container $container)
     {
         $container = $this->provideProductClient($container);
-
-        $container = $this->provideAvailabilityClient($container);
+        $container = $this->provideAvailabilityStorageClient($container);
 
         return $container;
     }
@@ -38,9 +37,9 @@ class CartVariantDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function provideProductClient(Container $container)
     {
-        $container[static::CLIENT_PRODUCT] = function (Container $container) {
+        $container->set(static::CLIENT_PRODUCT, function (Container $container) {
             return new CartVariantToProductClientBridge($container->getLocator()->product()->client());
-        };
+        });
 
         return $container;
     }
@@ -50,11 +49,11 @@ class CartVariantDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function provideAvailabilityClient(Container $container)
+    protected function provideAvailabilityStorageClient(Container $container)
     {
-        $container[static::CLIENT_AVAILABILITY] = function (Container $container) {
-            return new CartVariantToAvailabilityClientBridge($container->getLocator()->availability()->client());
-        };
+        $container->set(static::CLIENT_AVAILABILITY_STORAGE, function (Container $container) {
+            return new CartVariantToAvailabilityStorageClientBridge($container->getLocator()->availabilityStorage()->client());
+        });
 
         return $container;
     }

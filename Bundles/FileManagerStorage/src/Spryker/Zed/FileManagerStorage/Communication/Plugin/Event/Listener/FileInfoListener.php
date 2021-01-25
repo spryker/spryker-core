@@ -18,19 +18,20 @@ class FileInfoListener extends AbstractFileManagerListener
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
      * @param string $eventName
      *
      * @return void
      */
-    public function handleBulk(array $eventTransfers, $eventName)
+    public function handleBulk(array $eventEntityTransfers, $eventName)
     {
         $this->preventTransaction();
         $fileIds = $this->getFactory()
             ->getEventBehaviorFacade()
-            ->getEventTransferForeignKeys($eventTransfers, SpyFileInfoTableMap::COL_FK_FILE);
+            ->getEventTransferForeignKeys($eventEntityTransfers, SpyFileInfoTableMap::COL_FK_FILE);
 
-        if ($eventName === FileManagerEvents::ENTITY_FILE_INFO_CREATE
+        if (
+            $eventName === FileManagerEvents::ENTITY_FILE_INFO_CREATE
             || $eventName === FileManagerEvents::ENTITY_FILE_INFO_UPDATE
             || $eventName === FileManagerEvents::ENTITY_FILE_INFO_DELETE
         ) {

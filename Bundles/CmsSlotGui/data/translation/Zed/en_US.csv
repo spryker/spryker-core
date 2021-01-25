@@ -1,14 +1,18 @@
 Actions,Actions
 Activate,Activate
+"Content Provider","Content Provider"
 Deactivate,Deactivate
 Description,Description
 Edit,Edit
 ID,ID
 "List of Slots","List of Slots"
+"List of Slots for","List of Slots for"
 "List of Templates","List of Templates"
 Name,Name
 "Overview of Slots","Overview of Slots"
 Ownership,Ownership
-Slots,Slots
 "Slot Key","Slot Key"
+Slots,Slots
 Status,Status
+Template,Template
+"Number of Slots","Number of Slots"

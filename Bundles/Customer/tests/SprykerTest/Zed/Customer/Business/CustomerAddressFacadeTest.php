@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Zed\Customer\Business\CustomerBusinessFactory;
 use Spryker\Zed\Customer\Business\CustomerFacade;
+use Spryker\Zed\Customer\Business\Exception\AddressNotFoundException;
 use Spryker\Zed\Customer\CustomerDependencyProvider;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToMailInterface;
 use Spryker\Zed\Kernel\Container;
@@ -30,12 +31,12 @@ use Spryker\Zed\Kernel\Container;
 class CustomerAddressFacadeTest extends Unit
 {
     protected const TESTER_EMAIL = 'tester@spryker.com';
-    protected const TESTER_PASSWORD = '$2tester';
+    protected const TESTER_PASSWORD = 'testpassworD1$';
     protected const TESTER_NAME = 'Tester';
     protected const TESTER_CITY = 'Testcity';
     protected const TESTER_ADDRESS1 = 'Testerstreet 23';
     protected const TESTER_ZIP_CODE = '42';
-    protected const TESTER_FK_COUNTRY_GERMANY = '60';
+    protected const TESTER_FK_COUNTRY_GERMANY = 60;
 
     /**
      * @var \SprykerTest\Zed\Customer\CustomerBusinessTester
@@ -55,7 +56,7 @@ class CustomerAddressFacadeTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->customerFacade = new CustomerFacade();
@@ -65,7 +66,7 @@ class CustomerAddressFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetAddressesHasCountry()
+    public function testGetAddressesHasCountry(): void
     {
         // Assign
         $customerTransfer = $this->tester->haveCustomer();
@@ -76,13 +77,13 @@ class CustomerAddressFacadeTest extends Unit
         $addressTransfer = $addressesTransfer->getAddresses()[0];
 
         // Assert
-        $this->assertEquals(self::TESTER_FK_COUNTRY_GERMANY, $addressTransfer->getCountry()->getIdCountry());
+        $this->assertSame(static::TESTER_FK_COUNTRY_GERMANY, $addressTransfer->getCountry()->getIdCountry());
     }
 
     /**
      * @return void
      */
-    public function testDeleteAddress()
+    public function testDeleteAddress(): void
     {
         $customerTransfer = $this->createCustomerWithAddress();
 
@@ -96,7 +97,7 @@ class CustomerAddressFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testDeleteDefaultAddress()
+    public function testDeleteDefaultAddress(): void
     {
         $customerTransfer = $this->createCustomerWithAddress();
 
@@ -115,7 +116,7 @@ class CustomerAddressFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testSetDefaultBillingAddress()
+    public function testSetDefaultBillingAddress(): void
     {
         $customerTransfer = $this->createTestCustomer();
         $addressTransfer = new AddressTransfer();
@@ -137,7 +138,7 @@ class CustomerAddressFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetDefaultShippingAddress()
+    public function testGetDefaultShippingAddress(): void
     {
         $customerTransfer = $this->createTestCustomer();
         $this->createTestAddress($customerTransfer);
@@ -148,7 +149,7 @@ class CustomerAddressFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetDefaultBillingAddress()
+    public function testGetDefaultBillingAddress(): void
     {
         $customerTransfer = $this->createTestCustomer();
         $this->createTestAddress($customerTransfer);
@@ -159,7 +160,7 @@ class CustomerAddressFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testRenderAddress()
+    public function testRenderAddress(): void
     {
         $customerTransfer = $this->createTestCustomer();
         $addressTransfer = $this->createTestAddress($customerTransfer);
@@ -171,7 +172,7 @@ class CustomerAddressFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testNewAddress()
+    public function testNewAddress(): void
     {
         $customerTransfer = $this->createTestCustomer();
         $addressTransfer = new AddressTransfer();
@@ -185,7 +186,7 @@ class CustomerAddressFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateAddress()
+    public function testUpdateAddress(): void
     {
         $customerTransfer = $this->createTestCustomer();
         $addressTransfer = new AddressTransfer();
@@ -204,13 +205,13 @@ class CustomerAddressFacadeTest extends Unit
         $addressTransfer->setFkCustomer($customerTransfer->getIdCustomer());
         $addressTransfer = $this->customerFacade->updateAddress($addressTransfer);
         $this->assertNotNull($addressTransfer);
-        $this->assertEquals(self::TESTER_CITY, $addressTransfer->getCity());
+        $this->assertSame(static::TESTER_CITY, $addressTransfer->getCity());
     }
 
     /**
      * @return void
      */
-    public function testSetDefaultShippingAddress()
+    public function testSetDefaultShippingAddress(): void
     {
         $customerTransfer = $this->createTestCustomer();
         $addressTransfer = new AddressTransfer();
@@ -230,12 +231,11 @@ class CustomerAddressFacadeTest extends Unit
     }
 
     /**
-     * @expectedException \Spryker\Zed\Customer\Business\Exception\AddressNotFoundException
-     *
      * @return void
      */
-    public function testDeleteCustomerWithDefaultAddresses()
+    public function testDeleteCustomerWithDefaultAddresses(): void
     {
+        $this->expectException(AddressNotFoundException::class);
         $customerTransfer = $this->createCustomerWithAddress();
 
         $addresses = $customerTransfer->getAddresses()->getAddresses();
@@ -286,7 +286,7 @@ class CustomerAddressFacadeTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    protected function createCustomerWithAddress()
+    protected function createCustomerWithAddress(): CustomerTransfer
     {
         $customerTransfer = $this->createTestCustomer();
         $addressTransfer = new AddressTransfer();
@@ -303,7 +303,7 @@ class CustomerAddressFacadeTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    protected function createTestCustomer()
+    protected function createTestCustomer(): CustomerTransfer
     {
         $customerTransfer = $this->createTestCustomerTransfer();
         $customerResponseTransfer = $this->customerFacade->registerCustomer($customerTransfer);
@@ -315,7 +315,7 @@ class CustomerAddressFacadeTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    protected function createTestCustomerTransfer()
+    protected function createTestCustomerTransfer(): CustomerTransfer
     {
         $customerTransfer = new CustomerTransfer();
         $customerTransfer->setEmail(self::TESTER_EMAIL);
@@ -329,7 +329,7 @@ class CustomerAddressFacadeTest extends Unit
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    protected function getTestCustomerTransfer(CustomerTransfer $customerTransfer)
+    protected function getTestCustomerTransfer(CustomerTransfer $customerTransfer): CustomerTransfer
     {
         $customerTransfer = $this->customerFacade->getCustomer($customerTransfer);
 
@@ -341,7 +341,7 @@ class CustomerAddressFacadeTest extends Unit
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
-    protected function createTestAddress(CustomerTransfer $customerTransfer)
+    protected function createTestAddress(CustomerTransfer $customerTransfer): AddressTransfer
     {
         $addressTransfer = $this->createTestAddressTransfer($customerTransfer);
         $addressTransfer = $this->customerFacade->createAddress($addressTransfer);
@@ -354,7 +354,7 @@ class CustomerAddressFacadeTest extends Unit
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
-    protected function createTestAddressTransfer(CustomerTransfer $customerTransfer)
+    protected function createTestAddressTransfer(CustomerTransfer $customerTransfer): AddressTransfer
     {
         $addressTransfer = new AddressTransfer();
         $addressTransfer->setFkCustomer($customerTransfer->getIdCustomer());
@@ -371,7 +371,7 @@ class CustomerAddressFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\Customer\Business\CustomerBusinessFactory
      */
-    protected function getBusinessFactory()
+    protected function getBusinessFactory(): CustomerBusinessFactory
     {
         $customerBusinessFactory = new CustomerBusinessFactory();
         $customerBusinessFactory->setContainer($this->getContainer());
@@ -382,7 +382,7 @@ class CustomerAddressFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function getContainer()
+    protected function getContainer(): Container
     {
         $dependencyProvider = new CustomerDependencyProvider();
         $this->businessLayerDependencies = new Container();

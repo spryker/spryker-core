@@ -25,6 +25,7 @@ class CatalogSearchProductsResourceRelationshipDependencyProvider extends Abstra
      */
     public function provideDependencies(Container $container): Container
     {
+        $container = parent::provideDependencies($container);
         $container = $this->addProductsResource($container);
 
         return $container;
@@ -37,11 +38,11 @@ class CatalogSearchProductsResourceRelationshipDependencyProvider extends Abstra
      */
     protected function addProductsResource(Container $container): Container
     {
-        $container[static::RESOURCE_PRODUCTS] = function (Container $container) {
+        $container->set(static::RESOURCE_PRODUCTS, function (Container $container) {
             return new CatalogSearchProductsResourceRelationshipToProductsRestApiBridge(
                 $container->getLocator()->productsRestApi()->resource()
             );
-        };
+        });
 
         return $container;
     }

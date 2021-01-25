@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * MIT License
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace Spryker\Zed\PriceProductScheduleDataImport\Communication\Plugin;
@@ -20,6 +20,8 @@ use Spryker\Zed\PriceProductScheduleDataImport\PriceProductScheduleDataImportCon
 class PriceProductScheduleDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
@@ -32,6 +34,8 @@ class PriceProductScheduleDataImportPlugin extends AbstractPlugin implements Dat
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string

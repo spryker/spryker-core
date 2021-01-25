@@ -18,9 +18,11 @@
     {% for property in normalizedProperties %}
     self::{{ property.propertyConst }} => [
             'type' => '{{ property.type_fully_qualified }}',
+            'type_shim' => {% if property.typeShim is defined %}'{{ property.typeShim }}'{% else %}null{% endif %},
             'name_underscore' => '{{ property.name_underscore }}',
             'is_collection' => {{ property.is_collection ? 'true' : 'false' }},
             'is_transfer' => {{ property.is_transfer ? 'true' : 'false' }},
+            'is_value_object' => {{ property.is_value_object ? 'true' : 'false' }},
             'rest_request_parameter' => '{{ property.restRequestParameter is defined ? property.restRequestParameter : 'no' }}',
             'is_associative' => {{ property.is_associative ? 'true' : 'false' }},
             'is_nullable' => {{ property.nullable ? 'true' : 'false' }},
@@ -34,7 +36,7 @@
     /**
      * @var {{ property.type }}
      */
-    protected ${{ property.name }}{% if property.type == 'array' or property.is_typed_array %} = []{% endif %};
+    protected ${{ property.name }}{% if property.is_array_collection %} = []{% endif %};
 {% endmacro %}
 
 {# propertyNamesMap #}
@@ -74,19 +76,44 @@
      * @deprecated {{ method.deprecationDescription }}
      *
      {% endif -%}
-     * @param {{ method.var }}{% if method.hasDefaultNull %}|null{% endif %} ${{ method.property }}
+     * @param {{ method.var }}{% if method.hasDefaultNull %}|null{% endif %} ${{ method.property }}{% if method.typeShimNotice %} {{ method.typeShimNotice }}{% endif ~%}
      *
      * @return $this
      */
     public function {{ method.name }}({% if method.typeHint %}{{ method.typeHint }} {% endif %}${{ method.property }}{% if method.hasDefaultNull %} = null{% endif %})
     {
-        {% if method.typeHint == "array" -%}
+        {% if method.isTypeAssertionEnabled -%}
+        $this->validateAddSetValueType(${{ method.property }}, '{{ method.var }}', __METHOD__);
+
+        {% endif -%}
+        {% if method.setsArrayCollection|default -%}
         if (${{ method.property }} === null) {
             ${{ method.property }} = [];
         }
 
         {% endif -%}
+        {% if method.valueObject -%}
+            if (${{ method.property }} !== null && !${{ method.property }} instanceof {{ method.valueObject }}) {
+            ${{ method.property }} = new {{ method.valueObject }}(${{ method.property }});
+        }
+
+        {% endif -%}
+        {% if method.isCollectionPropertyTypeCheckNeeded -%}
+        $this->{{ method.property }} = {{ method.typeHint == 'ArrayObject' ? 'new ArrayObject()' : '[]' }};
+
+        foreach (${{ method.property }} as $key => $value) {
+            $args = [$value];
+
+            if ($this->transferMetadata[static::{{ method.propertyConst }}]['is_associative']) {
+                $args = [$key, $value];
+            }
+
+            $this->{{ method.addMethodName }}(...$args);
+        }
+
+        {% else -%}
         $this->{{ method.property }} = ${{ method.property }};
+        {% endif -%}
         $this->modifiedProperties[self::{{ method.propertyConst }}] = true;
 
         return $this;
@@ -104,10 +131,33 @@
      * @deprecated {{ method.deprecationDescription }}
      *
      {% endif -%}
+     * @return {{ method.return }}{% if method.typeShimNotice %} {{ method.typeShimNotice }}{% endif ~%}
+     */
+    public function {{ method.name }}(){% if method.returnTypeHint is defined %}: {{ method.returnTypeHint }} {% endif ~%}
+    {
+        return $this->{{ method.property }};
+    }
+{% endmacro -%}
+
+{# get or fail method #}
+{%- macro addGetOrFail(method) %}
+    /**
+     {% if method.bundles is defined -%}
+     * @module {{ method.bundles|join('|') }}
+     *
+     {% endif -%}
+     {% if method.deprecationDescription is not null -%}
+     * @deprecated {{ method.deprecationDescription }}
+     *
+     {% endif -%}
      * @return {{ method.return }}
      */
-    public function {{ method.name }}()
+    public function {{ method.name }}(){% if method.returnTypeHint is defined %}: {{ method.returnTypeHint }} {% endif ~%}
     {
+        if ($this->{{ method.property }} === null) {
+            $this->throwNullValueException(static::{{ method.propertyConst }});
+        }
+
         return $this->{{ method.property }};
     }
 {% endmacro -%}
@@ -123,12 +173,16 @@
      * @deprecated {{ method.deprecationDescription }}
      *
      {% endif -%}
-     * @param {{ method.var }} ${{ method.property }}
+     * @param {{ method.var }} ${{ method.property }}{% if method.typeShimNotice %} {{ method.typeShimNotice }}{% endif ~%}
      *
      * @return $this
      */
     public function {{ method.name }}({% if method.typeHint %}{{ method.typeHint }} {% endif %}${{ method.property }})
     {
+        {% if method.isTypeAssertionEnabled -%}
+        $this->validateAddSetValueType(${{ method.property }}, '{{ method.var }}', __METHOD__);
+
+        {% endif -%}
         $this->{{ method.parent }}[] = ${{ method.property }};
         $this->modifiedProperties[self::{{ method.propertyConst }}] = true;
 
@@ -150,16 +204,41 @@
      *
      {% endif -%}
      * @param {{ method.var }} ${{ propertyKey }}
-     * @param {{ method.varValue }} ${{ propertyValue }}
+     * @param {{ method.varValue }} ${{ propertyValue }}{% if method.typeShimNotice %} {{ method.typeShimNotice }}{% endif ~%}
      *
      * @return $this
      */
     public function {{ method.name }}({% if method.typeHint %}{{ method.typeHint }} {% endif %}${{ propertyKey }}, {% if method.typeHintValue %}{{ method.typeHintValue }} {% endif %}${{ propertyValue }})
     {
+        {% if method.isTypeAssertionEnabled -%}
+        $this->validateAddSetValueType(${{ propertyValue }}, '{{ method.varValue }}', __METHOD__);
+
+        {% endif -%}
         $this->{{ method.parent }}[${{ propertyKey }}] = ${{ propertyValue }};
         $this->modifiedProperties[self::{{ method.propertyConst }}] = true;
 
         return $this;
+    }
+{% endmacro -%}
+
+{# get collection element method #}
+{%- macro addGetCollectionElement(method) %}
+    /**
+     {% if method.bundles is defined -%}
+     * @module {{ method.bundles|join('|') }}
+     *
+     {% endif -%}
+     {% if method.deprecationDescription is not null -%}
+     * @deprecated {{ method.deprecationDescription }}
+     *
+     {% endif -%}
+     * @param {{ method.var }} $key
+     *
+     * @return {{ method.return }}
+     */
+    public function {{ method.name }}($key){% if method.returnTypeHint is defined -%}: {{ method.returnTypeHint }}{% endif ~%}
+    {
+        return $this->{{ method.property }}[$key];
     }
 {% endmacro -%}
 
@@ -195,3 +274,109 @@
     public static $entityNamespace = '{{ entityNamespace }}';
 {% endmacro -%}
 
+
+{%- macro addModifiedToArray(methodName, camelCase, isRecursive, primitives, transfers, collections, valueObjects)-%}
+
+    /**
+    * @return array
+    */
+    public function {{ methodName }}()
+    {
+        $values = [];
+        foreach ($this->modifiedProperties as $property => $_) {
+            $value = $this->$property;
+
+{% if camelCase %}
+            $arrayKey = $property;
+{% else %}
+            $arrayKey = $this->transferMetadata[$property]['name_underscore'];
+{% endif %}
+
+{% if isRecursive %}
+            if ($value instanceof AbstractTransfer) {
+                $values[$arrayKey] = $value->modifiedToArray({{ isRecursive ?  'true' : 'false' }}, {{ camelCase ?  'true' : 'false' }});
+                continue;
+            }
+            switch ($property) {
+{% if primitives is not empty %}
+{% for value in primitives %}
+                case '{{ value.name }}':
+{% endfor %}
+{% for value in valueObjects %}
+                case '{{ value.name }}':
+{% endfor %}
+                    $values[$arrayKey] = $value;
+                    break;
+{% endif %}
+{% if transfers is not empty %}
+{% for value in transfers %}
+                case '{{ value.name }}':
+{% endfor %}
+                    $values[$arrayKey] = $value instanceof AbstractTransfer ? $value->modifiedToArray({{ isRecursive ?  'true' : 'false' }}, {{ camelCase ?  'true' : 'false' }}) : $value;
+                    break;
+{% endif %}
+{% if collections is not empty %}
+{% for value in collections %}
+                case '{{ value.name }}':
+{% endfor %}
+                    $values[$arrayKey] = $value ? $this->addValuesToCollectionModified($value, {{ isRecursive ?  'true' : 'false' }}, {{ camelCase ?  'true' : 'false' }}) : $value;
+                    break;
+{% endif %}
+            }
+{% else %}
+            $values[$arrayKey] = $value;
+{% endif %}
+        }
+
+        return $values;
+    }
+
+{%- endmacro -%}
+
+{%- macro addToArray(methodName, isRecursive, isCamelCamed, primitives, transfers, transferCollections, valueObjects)-%}
+{%- set nameKey = isCamelCamed ? 'name' : 'name_underscore' -%}
+    /**
+    * @return array
+    */
+    public function {{ methodName }}()
+    {
+        return [
+{% for prop in primitives %}
+            '{{ prop[nameKey] }}' => {% if isRecursive -%}
+                $this->{{ prop.name }} instanceof AbstractTransfer ? $this->{{ prop.name }}->toArray({{ isRecursive ? 'true' : 'false' }}, {{ isCamelCamed ? 'true' : 'false' }}) : $this->{{ prop.name }}
+            {%- else -%}
+                $this->{{ prop.name }}
+            {%- endif -%},
+{% endfor %}
+{% for prop in transfers %}
+            '{{ prop[nameKey] }}' => {% if isRecursive -%}
+                $this->{{ prop.name }} instanceof AbstractTransfer ? $this->{{ prop.name }}->toArray({{ isRecursive ? 'true' : 'false' }}, {{ isCamelCamed ? 'true' : 'false' }}) : $this->{{ prop.name }}
+            {%- else -%}
+                $this->{{ prop.name }}
+            {%- endif -%},
+{% endfor %}
+{% for prop in transferCollections %}
+            '{{ prop[nameKey] }}' => {% if isRecursive -%}
+                $this->{{ prop.name }} instanceof AbstractTransfer ? $this->{{ prop.name }}->toArray({{ isRecursive ? 'true' : 'false' }}, {{ isCamelCamed ? 'true' : 'false' }}) : $this->addValuesToCollection($this->{{ prop.name }}, {{ isRecursive ? 'true' : 'false' }}, {{ isCamelCamed ? 'true' : 'false' }})
+            {%- else -%}
+                $this->{{ prop.name }}
+            {%- endif -%},
+{% endfor %}
+{% for prop in valueObjects %}
+            '{{ prop[nameKey] }}' => $this->{{ prop.name }},
+{% endfor %}
+        ];
+    }
+{%- endmacro -%}
+
+{%- macro addInitCollections(collections) -%}
+    /**
+    * @return void
+    */
+    protected function initCollectionProperties()
+    {
+{% for collection in collections %}
+        $this->{{ collection.name }} = $this->{{ collection.name }} ?: new ArrayObject();
+{% endfor %}
+    }
+{%- endmacro -%}

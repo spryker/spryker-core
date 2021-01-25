@@ -39,7 +39,7 @@ class PriceProductVolumeFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testExtractPriceProductVolumesForProductAbstractReturnsNotEmptyArray()
+    public function testExtractPriceProductVolumesForProductAbstractReturnsNotEmptyArray(): void
     {
         $priceProductVolumeFacade = $this->getPriceProductVolumeFacade();
         $priceProducts = $this->preparePriceProductsWithVolumePrices();
@@ -52,7 +52,7 @@ class PriceProductVolumeFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testExtractPriceProductVolumesForProductConcreteReturnsEmptyArrayWithoutPriceData()
+    public function testExtractPriceProductVolumesForProductConcreteReturnsEmptyArrayWithoutPriceData(): void
     {
         $priceProductVolumeFacade = $this->getPriceProductVolumeFacade();
         $priceProducts = $this->preparePriceProductsWithoutVolumePrices();
@@ -65,7 +65,7 @@ class PriceProductVolumeFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\PriceProductVolume\Business\PriceProductVolumeFacade
      */
-    protected function getPriceProductVolumeFacade()
+    protected function getPriceProductVolumeFacade(): PriceProductVolumeFacade
     {
         return new PriceProductVolumeFacade();
     }
@@ -77,9 +77,9 @@ class PriceProductVolumeFacadeTest extends Unit
      * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
     protected function createPriceProductTransfer(
-        $netPrice,
-        $grossPrice
-    ) {
+        int $netPrice,
+        int $grossPrice
+    ): PriceProductTransfer {
         $priceDimensionTransfer = (new PriceProductDimensionTransfer())
             ->setType(static::PRICE_DIMENSION_DEFAULT);
 
@@ -104,9 +104,9 @@ class PriceProductVolumeFacadeTest extends Unit
      * @return \Generated\Shared\Transfer\MoneyValueTransfer
      */
     protected function createMoneyValueTransfer(
-        $grossAmount,
-        $netAmount
-    ) {
+        int $grossAmount,
+        int $netAmount
+    ): MoneyValueTransfer {
         return (new MoneyValueTransfer())
             ->setNetAmount($netAmount)
             ->setGrossAmount($grossAmount);

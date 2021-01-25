@@ -1,6 +1,6 @@
 # DataImport Module
-[![Build Status](https://travis-ci.org/spryker/DataImport.svg)](https://travis-ci.org/spryker/DataImport)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/DataImport/badge.svg)](https://coveralls.io/github/spryker/DataImport)
+[![Build Status](https://travis-ci.org/spryker/data-import.svg)](https://travis-ci.org/spryker/data-import)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 DataImport handles data imports. It allows inserts and updates. The module uses the Event module in certain cases, for example to print debug output to the console or time information if the specific subscriber is added.
 

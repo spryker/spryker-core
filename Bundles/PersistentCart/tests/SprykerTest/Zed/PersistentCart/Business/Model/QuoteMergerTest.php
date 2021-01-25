@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteMergeRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use PHPUnit\Framework\MockObject\MockObject;
+use Spryker\Zed\Kernel\AbstractBundleConfig;
 use Spryker\Zed\PersistentCart\Business\Model\QuoteMerger;
 use Spryker\Zed\PersistentCart\Business\PersistentCartBusinessFactory;
 
@@ -35,7 +35,7 @@ class QuoteMergerTest extends Unit
     /**
      * @var \Spryker\Zed\PersistentCart\Business\Model\QuoteMergerInterface
      */
-    private $cartMerger;
+    protected $cartMerger;
 
     /**
      * @var \SprykerTest\Zed\PersistentCart\PersistentCartBusinessTester
@@ -45,7 +45,7 @@ class QuoteMergerTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $factory = $this->createPersistentCartBusinessFactoryMock();
@@ -68,7 +68,7 @@ class QuoteMergerTest extends Unit
         // Assert
         $changedItems = $quoteTransfer->getItems();
         $this->assertCount(2, $changedItems);
-        $this->assertEquals($quoteTransfer->getCurrency()->getCode(), $quoteMergeRequestTransfer->getTargetQuote()->getCurrency()->getCode());
+        $this->assertSame($quoteTransfer->getCurrency()->getCode(), $quoteMergeRequestTransfer->getTargetQuote()->getCurrency()->getCode());
 
         $skuIndex = [];
         foreach ($changedItems as $key => $changedItem) {
@@ -76,10 +76,10 @@ class QuoteMergerTest extends Unit
         }
 
         $existingItem = $changedItems[$skuIndex[static::EXISTING_ITEM_SKU]];
-        $this->assertEquals($existingItem->getQuantity(), 2);
+        $this->assertSame(2, $existingItem->getQuantity());
 
         $newItem = $changedItems[$skuIndex[static::NEW_ITEM_SKU]];
-        $this->assertEquals($newItem->getQuantity(), 1);
+        $this->assertSame(1, $newItem->getQuantity());
     }
 
     /**
@@ -118,12 +118,13 @@ class QuoteMergerTest extends Unit
     }
 
     /**
-     * @param \PHPUnit\Framework\MockObject\MockObject|null $config
+     * @param \Spryker\Zed\Kernel\AbstractBundleConfig|\PHPUnit\Framework\MockObject\MockObject|null $config
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\PersistentCart\Business\PersistentCartBusinessFactory
      */
-    protected function createPersistentCartBusinessFactoryMock(?MockObject $config = null): MockObject
+    protected function createPersistentCartBusinessFactoryMock(?AbstractBundleConfig $config = null): PersistentCartBusinessFactory
     {
+        /** @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\PersistentCart\Business\PersistentCartBusinessFactory $mockObject */
         $mockObject = $this->getMockBuilder(PersistentCartBusinessFactory::class)
             ->enableProxyingToOriginalMethods()
             ->getMock();

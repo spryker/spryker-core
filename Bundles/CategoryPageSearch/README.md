@@ -1,7 +1,8 @@
 # CategoryPageSearch Module
-[![Build Status](https://travis-ci.org/spryker/CategoryPageSearch.svg)](https://travis-ci.org/spryker/CategoryPageSearch)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/CategoryPageSearch/badge.svg)](https://coveralls.io/github/spryker/CategoryPageSearch)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/spryker/CategoryPageSearch/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/spryker/CategoryPageSearch/?branch=master)
+[![Build Status](https://travis-ci.org/spryker/category-page-search.svg)](https://travis-ci.org/spryker/category-page-search)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
+
+This module manages Elasticsearch documents for category entities.
 
 ## Installation
 

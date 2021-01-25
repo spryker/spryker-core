@@ -61,9 +61,9 @@ class ProductSetDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addTouchFacade(Container $container)
     {
-        $container[static::FACADE_TOUCH] = function (Container $container) {
+        $container->set(static::FACADE_TOUCH, function (Container $container) {
             return new ProductSetToTouchBridge($container->getLocator()->touch()->facade());
-        };
+        });
     }
 
     /**
@@ -73,9 +73,9 @@ class ProductSetDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUrlFacade(Container $container)
     {
-        $container[static::FACADE_URL] = function (Container $container) {
+        $container->set(static::FACADE_URL, function (Container $container) {
             return new ProductSetToUrlBridge($container->getLocator()->url()->facade());
-        };
+        });
     }
 
     /**
@@ -85,9 +85,9 @@ class ProductSetDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductImageFacade(Container $container)
     {
-        $container[static::FACADE_PRODUCT_IMAGE] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT_IMAGE, function (Container $container) {
             return new ProductSetToProductImageBridge($container->getLocator()->productImage()->facade());
-        };
+        });
     }
 
     /**
@@ -97,9 +97,9 @@ class ProductSetDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUrlQueryContainer(Container $container)
     {
-        $container[static::QUERY_CONTAINER_URL] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_URL, function (Container $container) {
             return new ProductSetToUrlQueryContainerBridge($container->getLocator()->url()->queryContainer());
-        };
+        });
     }
 
     /**
@@ -109,8 +109,8 @@ class ProductSetDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductImageQueryContainer(Container $container)
     {
-        $container[static::QUERY_CONTAINER_PRODUCT_IMAGE] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_PRODUCT_IMAGE, function (Container $container) {
             return new ProductSetToProductImageQueryContainerBridge($container->getLocator()->productImage()->queryContainer());
-        };
+        });
     }
 }

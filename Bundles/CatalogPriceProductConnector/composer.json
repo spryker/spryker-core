@@ -4,7 +4,7 @@
   "description": "CatalogPriceProductConnector module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.3",
     "spryker/currency": "^3.2.0",
     "spryker/kernel": "^3.30.0",
     "spryker/price": "^5.0.0",
@@ -15,8 +15,7 @@
     "spryker/catalog": "*",
     "spryker/code-sniffer": "*",
     "spryker/elastica": "*",
-    "spryker/search": "*",
-    "spryker/testify": "*"
+    "spryker/search": "*"
   },
   "suggest": {
     "spryker/catalog": "If you want to use Catalog plugins, minimum required version: 5.2.0.",
@@ -31,6 +30,10 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"

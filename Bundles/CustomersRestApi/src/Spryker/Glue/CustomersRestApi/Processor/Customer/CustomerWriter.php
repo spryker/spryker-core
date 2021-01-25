@@ -143,13 +143,13 @@ class CustomerWriter implements CustomerWriterInterface
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param \Generated\Shared\Transfer\RestCustomersAttributesTransfer $restCustomerAttributesTransfer
+     * @param \Generated\Shared\Transfer\RestCustomersAttributesTransfer $restCustomersAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function updateCustomer(
         RestRequestInterface $restRequest,
-        RestCustomersAttributesTransfer $restCustomerAttributesTransfer
+        RestCustomersAttributesTransfer $restCustomersAttributesTransfer
     ): RestResponseInterface {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
@@ -157,8 +157,10 @@ class CustomerWriter implements CustomerWriterInterface
             return $this->restApiError->addCustomerReferenceMissingError($restResponse);
         }
 
-        if ($restCustomerAttributesTransfer->getPassword()
-            && $restCustomerAttributesTransfer->getPassword() !== $restCustomerAttributesTransfer->getConfirmPassword()) {
+        if (
+            $restCustomersAttributesTransfer->getPassword()
+            && $restCustomersAttributesTransfer->getPassword() !== $restCustomersAttributesTransfer->getConfirmPassword()
+        ) {
             return $this->restApiError->addPasswordsDoNotMatchError(
                 $restResponse,
                 RestCustomersAttributesTransfer::PASSWORD,
@@ -177,7 +179,7 @@ class CustomerWriter implements CustomerWriterInterface
         }
 
         $customerResponseTransfer->getCustomerTransfer()->fromArray(
-            $this->getCustomerData($restCustomerAttributesTransfer),
+            $this->getCustomerData($restCustomersAttributesTransfer),
             true
         );
 

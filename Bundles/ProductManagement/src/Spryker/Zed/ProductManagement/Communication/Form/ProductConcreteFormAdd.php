@@ -83,8 +83,6 @@ class ProductConcreteFormAdd extends ProductConcreteFormEdit
      */
     protected function addSkuField(FormBuilderInterface $builder, array $options = [])
     {
-        $formData = $builder->getData();
-
         $builder->add(static::FIELD_SKU, TextType::class, [
             'label' => 'SKU',
             'constraints' => [

@@ -27,8 +27,10 @@ class NavigationNodeReader implements NavigationNodeReaderInterface
      * @param \Spryker\Zed\CmsNavigationConnector\Dependency\QueryContainer\CmsNavigationConnectorToCmsQueryContainerInterface $cmsQueryContainer
      * @param \Spryker\Zed\CmsNavigationConnector\Dependency\QueryContainer\CmsNavigationConnectorToNavigationQueryContainerInterface $navigationQueryContainer
      */
-    public function __construct(CmsNavigationConnectorToCmsQueryContainerInterface $cmsQueryContainer, CmsNavigationConnectorToNavigationQueryContainerInterface $navigationQueryContainer)
-    {
+    public function __construct(
+        CmsNavigationConnectorToCmsQueryContainerInterface $cmsQueryContainer,
+        CmsNavigationConnectorToNavigationQueryContainerInterface $navigationQueryContainer
+    ) {
         $this->cmsQueryContainer = $cmsQueryContainer;
         $this->navigationQueryContainer = $navigationQueryContainer;
     }
@@ -45,7 +47,11 @@ class NavigationNodeReader implements NavigationNodeReaderInterface
         foreach ($urlEntities as $url) {
             $navigationNodeEntities = $this->navigationQueryContainer->queryNavigationNodeByFkUrl($url->getIdUrl())->find();
             foreach ($navigationNodeEntities as $navigationNode) {
-                $navigationNodes[] = (new NavigationNodeTransfer())->fromArray($navigationNode->toArray(), true);
+                if (isset($navigationNodes[$navigationNode->getIdNavigationNode()])) {
+                    continue;
+                }
+
+                $navigationNodes[$navigationNode->getIdNavigationNode()] = (new NavigationNodeTransfer())->fromArray($navigationNode->toArray(), true);
             }
         }
 

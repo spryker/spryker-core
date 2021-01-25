@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\User\Business;
 
+use Generated\Shared\Transfer\MailTransfer;
+use Generated\Shared\Transfer\UserCriteriaTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 
 interface UserFacadeInterface
@@ -60,11 +62,26 @@ interface UserFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link findUser()} instead.
+     *
      * @param int $idUser
      *
      * @return \Generated\Shared\Transfer\UserTransfer|null
      */
     public function findUserById(int $idUser): ?UserTransfer;
+
+    /**
+     * Specification:
+     * - Returns User transfer found by criteria.
+     * - Returns null otherwise.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\UserCriteriaTransfer $userCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\UserTransfer|null
+     */
+    public function findUser(UserCriteriaTransfer $userCriteriaTransfer): ?UserTransfer;
 
     /**
      * @api
@@ -78,7 +95,7 @@ interface UserFacadeInterface
     /**
      * @api
      *
-     * @deprecated Use \Spryker\Zed\User\Business\UserFacadeInterface::createUser instead.
+     * @deprecated Use {@link \Spryker\Zed\User\Business\UserFacadeInterface::createUser()} instead.
      *
      * @param string $firstName
      * @param string $lastName
@@ -189,4 +206,19 @@ interface UserFacadeInterface
      * @return bool
      */
     public function deactivateUser($idUser);
+
+    /**
+     * Specification:
+     * - Requires MailTransfer.recipients and MailTransfer.recipients.email to be set.
+     * - Expands the given mail transfer with an additional user data.
+     *
+     * @api
+     *
+     * @deprecated Will be removed without replacement. Handling of user password reset mail is implemented in UserPasswordReset module.
+     *
+     * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
+     *
+     * @return \Generated\Shared\Transfer\MailTransfer
+     */
+    public function expandMailWithUserData(MailTransfer $mailTransfer): MailTransfer;
 }

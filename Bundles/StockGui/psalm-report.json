@@ -1,0 +1,30 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 85,
+            "line_to": 85,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\StockGui\\Communication\\Controller\\CreateWarehouseController::addErrorMessage cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/StockGui/src/Spryker/Zed/StockGui/Communication/Controller/CreateWarehouseController.php",
+            "snippet": "            $this->addErrorMessage($messageTransfer->getValue());",
+            "selected_text": "$messageTransfer->getValue()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 92,
+            "line_to": 92,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\StockGui\\Communication\\Controller\\EditWarehouseController::addErrorMessage cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/StockGui/src/Spryker/Zed/StockGui/Communication/Controller/EditWarehouseController.php",
+            "snippet": "            $this->addErrorMessage($messageTransfer->getValue());",
+            "selected_text": "$messageTransfer->getValue()",
+            "error_level": 3,
+            "shortcode": 78
+        }
+    ],
+    "deprecation": []
+}

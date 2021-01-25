@@ -28,6 +28,7 @@ class QuoteDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_QUOTE_VALIDATOR = 'PLUGINS_QUOTE_VALIDATOR';
     public const PLUGINS_QUOTE_EXPANDER = 'PLUGINS_QUOTE_EXPANDER';
     public const PLUGINS_QUOTE_EXPAND_BEFORE_CREATE = 'PLUGINS_QUOTE_EXPAND_BEFORE_CREATE';
+    public const PLUGINS_QUOTE_FIELDS_ALLOWED_FOR_SAVING_PROVIDER = 'PLUGINS_QUOTE_FIELDS_ALLOWED_FOR_SAVING_PROVIDER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -48,6 +49,7 @@ class QuoteDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addQuoteValidatorPlugins($container);
         $container = $this->addQuoteExpanderPlugins($container);
         $container = $this->addQuoteExpandBeforeCreatePlugins($container);
+        $container = $this->addQuoteFieldsAllowedForSavingProviderPlugins($container);
 
         return $container;
     }
@@ -71,9 +73,9 @@ class QuoteDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUtilEncodingService(Container $container): Container
     {
-        $container[self::SERVICE_UTIL_ENCODING] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new QuoteToUtilEncodingServiceBridge($container->getLocator()->utilEncoding()->service());
-        };
+        });
 
         return $container;
     }
@@ -85,9 +87,9 @@ class QuoteDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addStoreFacade(Container $container): Container
     {
-        $container[self::FACADE_STORE] = function (Container $container) {
+        $container->set(static::FACADE_STORE, function (Container $container) {
             return new QuoteToStoreFacadeBridge($container->getLocator()->store()->facade());
-        };
+        });
 
         return $container;
     }
@@ -99,9 +101,9 @@ class QuoteDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addQuoteCreateAfterPlugins(Container $container): Container
     {
-        $container[self::PLUGINS_QUOTE_CREATE_AFTER] = function (Container $container) {
+        $container->set(static::PLUGINS_QUOTE_CREATE_AFTER, function (Container $container) {
             return $this->getQuoteCreateAfterPlugins();
-        };
+        });
 
         return $container;
     }
@@ -113,9 +115,9 @@ class QuoteDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addQuoteExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_QUOTE_EXPANDER] = function (Container $container) {
+        $container->set(static::PLUGINS_QUOTE_EXPANDER, function (Container $container) {
             return $this->getQuoteExpanderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -127,9 +129,9 @@ class QuoteDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addQuoteCreateBeforePlugins(Container $container): Container
     {
-        $container[self::PLUGINS_QUOTE_CREATE_BEFORE] = function (Container $container) {
+        $container->set(static::PLUGINS_QUOTE_CREATE_BEFORE, function (Container $container) {
             return $this->getQuoteCreateBeforePlugins();
-        };
+        });
 
         return $container;
     }
@@ -141,9 +143,9 @@ class QuoteDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addQuoteUpdateAfterPlugins(Container $container): Container
     {
-        $container[self::PLUGINS_QUOTE_UPDATE_AFTER] = function (Container $container) {
+        $container->set(static::PLUGINS_QUOTE_UPDATE_AFTER, function (Container $container) {
             return $this->getQuoteUpdateAfterPlugins();
-        };
+        });
 
         return $container;
     }
@@ -155,9 +157,9 @@ class QuoteDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addQuoteExpandBeforeCreatePlugins(Container $container): Container
     {
-        $container[static::PLUGINS_QUOTE_EXPAND_BEFORE_CREATE] = function (Container $container): array {
+        $container->set(static::PLUGINS_QUOTE_EXPAND_BEFORE_CREATE, function (Container $container): array {
             return $this->getQuoteExpandBeforeCreatePlugins();
-        };
+        });
 
         return $container;
     }
@@ -169,9 +171,9 @@ class QuoteDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addQuoteUpdateBeforePlugins(Container $container): Container
     {
-        $container[self::PLUGINS_QUOTE_UPDATE_BEFORE] = function (Container $container) {
+        $container->set(static::PLUGINS_QUOTE_UPDATE_BEFORE, function (Container $container) {
             return $this->getQuoteUpdateBeforePlugins();
-        };
+        });
 
         return $container;
     }
@@ -183,9 +185,9 @@ class QuoteDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addQuoteDeleteBeforePlugins(Container $container): Container
     {
-        $container[self::PLUGINS_QUOTE_DELETE_BEFORE] = function (Container $container) {
+        $container->set(static::PLUGINS_QUOTE_DELETE_BEFORE, function (Container $container) {
             return $this->getQuoteDeleteBeforePlugins();
-        };
+        });
 
         return $container;
     }
@@ -197,9 +199,9 @@ class QuoteDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addQuoteDeleteAfterPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_QUOTE_DELETE_AFTER] = function (Container $container) {
+        $container->set(static::PLUGINS_QUOTE_DELETE_AFTER, function (Container $container) {
             return $this->getQuoteDeleteAfterPlugins();
-        };
+        });
 
         return $container;
     }
@@ -211,9 +213,23 @@ class QuoteDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addQuoteValidatorPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_QUOTE_VALIDATOR] = function (Container $container) {
+        $container->set(static::PLUGINS_QUOTE_VALIDATOR, function (Container $container) {
             return $this->getQuoteValidatorPlugins();
-        };
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addQuoteFieldsAllowedForSavingProviderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_QUOTE_FIELDS_ALLOWED_FOR_SAVING_PROVIDER, function () {
+            return $this->getQuoteFieldsAllowedForSavingProviderPlugins();
+        });
 
         return $container;
     }
@@ -286,6 +302,14 @@ class QuoteDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteValidatorPluginInterface[]
      */
     protected function getQuoteValidatorPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteFieldsAllowedForSavingProviderPluginInterface[]
+     */
+    protected function getQuoteFieldsAllowedForSavingProviderPlugins(): array
     {
         return [];
     }

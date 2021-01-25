@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\ProductDiscontinuedProductLabelConnector\Business\ProductDiscontinuedProductLabelConnectorBusinessFactory getFactory()
+ * @method \Spryker\Zed\ProductDiscontinuedProductLabelConnector\Persistence\ProductDiscontinuedProductLabelConnectorRepositoryInterface getRepository()
  */
 class ProductDiscontinuedProductLabelConnectorFacade extends AbstractFacade implements ProductDiscontinuedProductLabelConnectorFacadeInterface
 {
@@ -72,5 +73,21 @@ class ProductDiscontinuedProductLabelConnectorFacade extends AbstractFacade impl
         return $this->getFactory()
             ->createProductAbstractRelationReader()
             ->findProductLabelProductAbstractRelationChanges();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int[] $productConcreteIds
+     *
+     * @return void
+     */
+    public function removeProductAbstractRelationsForLabelInBulk(array $productConcreteIds): void
+    {
+        $this->getFactory()
+            ->createProductDiscontinuedProductLabelWriter()
+            ->removeProductAbstractRelationsForLabelInBulk($productConcreteIds);
     }
 }

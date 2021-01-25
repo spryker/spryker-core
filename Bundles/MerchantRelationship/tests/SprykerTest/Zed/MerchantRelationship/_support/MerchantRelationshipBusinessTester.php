@@ -13,10 +13,9 @@ use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 use Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipQuery;
 use Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipToCompanyBusinessUnitQuery;
+use Spryker\Zed\MerchantRelationship\Business\Expander\MerchantRelationshipExpander;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -26,7 +25,7 @@ use Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipToCompanyBus
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  * @method \Spryker\Zed\MerchantRelationship\Business\MerchantRelationshipFacadeInterface getFacade()
  *
  * @SuppressWarnings(PHPMD)
@@ -34,10 +33,6 @@ use Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipToCompanyBus
 class MerchantRelationshipBusinessTester extends Actor
 {
     use _generated\MerchantRelationshipBusinessTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 
     /**
      * @param string $merchantRelationshipKey
@@ -68,6 +63,7 @@ class MerchantRelationshipBusinessTester extends Actor
             foreach ($assigneeCompanyBusinessUnitKeys as $businessUnitKey) {
                 if ($companyBusinessUnitOwnerKey === $businessUnitKey) {
                     $assigneeCompanyBusinessUnitCollectionTransfer->addCompanyBusinessUnit($companyBusinessUnitOwner);
+
                     continue;
                 }
 
@@ -121,6 +117,24 @@ class MerchantRelationshipBusinessTester extends Actor
             ->filterByFkMerchantRelationship($idMerchantRelationship);
 
         $this->assertSame(0, $merchantRelationshipToCompanyBusinessUnitQuery->count());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer
+     */
+    public function expandMecrhantRelationshipWithName(MerchantRelationshipTransfer $merchantRelationshipTransfer): MerchantRelationshipTransfer
+    {
+        return (new MerchantRelationshipExpander())->expandWithName($merchantRelationshipTransfer);
+    }
+
+    /**
+     * @return int
+     */
+    public function getMerchantRelationsCount(): int
+    {
+        return SpyMerchantRelationshipQuery::create()->count();
     }
 
     /**

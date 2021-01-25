@@ -32,7 +32,6 @@ class StorageCacheStrategyFactory
         StorageClientInterface $storageClient,
         StorageConfig $storageConfig
     ) {
-
         $this->storageClient = $storageClient;
         $this->storageClientConfig = $storageConfig;
     }
@@ -49,7 +48,7 @@ class StorageCacheStrategyFactory
         $cacheStrategyStack = $this->createCacheStrategyStack();
 
         if (!isset($cacheStrategyStack[$storageCacheStrategy])) {
-            throw new InvalidStrategyException($storageCacheStrategy . " is not a valid storage cache strategy.");
+            throw new InvalidStrategyException($storageCacheStrategy . ' is not a valid storage cache strategy.');
         }
 
         return $cacheStrategyStack[$storageCacheStrategy];

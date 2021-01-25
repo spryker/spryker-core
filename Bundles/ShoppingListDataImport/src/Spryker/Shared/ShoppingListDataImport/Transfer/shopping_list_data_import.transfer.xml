@@ -7,4 +7,10 @@
         <property name="key" type="string"/>
     </transfer>
 
+    <transfer name="DataImporterConfiguration">
+    </transfer>
+
+    <transfer name="DataImporterReport">
+    </transfer>
+
 </transfers>

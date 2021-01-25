@@ -24,6 +24,15 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
 
+    Persistence:
+        path: Persistence
+        class_name: ProductSearchPersistenceTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+
     Presentation:
         path: Presentation
         class_name: ProductSearchPresentationTester

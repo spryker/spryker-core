@@ -1,0 +1,5 @@
+parameters:
+    checkGenericClassInNonGenericObjectType: false
+    checkMissingIterableValueType: false
+    ignoreErrors:
+        - '#Method .+ should return .+Query but returns .+Criteria#'

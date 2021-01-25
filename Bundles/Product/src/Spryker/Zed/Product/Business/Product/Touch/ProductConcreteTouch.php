@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Product\Business\Product\Touch;
 
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Product\Business\Exception\MissingProductException;
 
 class ProductConcreteTouch extends AbstractProductTouch implements ProductConcreteTouchInterface
@@ -18,14 +19,45 @@ class ProductConcreteTouch extends AbstractProductTouch implements ProductConcre
      */
     public function touchProductConcrete($idProductConcrete)
     {
-        $concreteProductEntity = $this->getProductEntity($idProductConcrete);
+        $this->getTransactionHandler()->handleTransaction(function () use ($idProductConcrete): void {
+            $this->executeTouchProductConcreteTransaction($idProductConcrete);
+        });
+    }
 
-        $this->productQueryContainer->getConnection()->beginTransaction();
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return void
+     */
+    public function touchProductConcreteByTransfer(ProductConcreteTransfer $productConcreteTransfer): void
+    {
+        $this->getTransactionHandler()->handleTransaction(function () use ($productConcreteTransfer): void {
+            $this->executeTouchProductConcreteTransactionByTransfer($productConcreteTransfer);
+        });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return void
+     */
+    protected function executeTouchProductConcreteTransactionByTransfer(ProductConcreteTransfer $productConcreteTransfer): void
+    {
+        $this->touchConcreteByTransferStatus($productConcreteTransfer);
+        $this->touchAbstractByStatus($productConcreteTransfer->getFkProductAbstract());
+    }
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return void
+     */
+    protected function executeTouchProductConcreteTransaction(int $idProductConcrete): void
+    {
+        $concreteProductEntity = $this->getProductEntity($idProductConcrete);
 
         $this->touchConcreteByStatus($concreteProductEntity);
         $this->touchAbstractByStatus($concreteProductEntity->getFkProductAbstract());
-
-        $this->productQueryContainer->getConnection()->commit();
     }
 
     /**
@@ -49,5 +81,21 @@ class ProductConcreteTouch extends AbstractProductTouch implements ProductConcre
         }
 
         return $concreteProductEntity;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return void
+     */
+    protected function touchConcreteByTransferStatus(ProductConcreteTransfer $productConcreteTransfer): void
+    {
+        if ($productConcreteTransfer->getIsActive()) {
+            $this->touchProductConcreteActive($productConcreteTransfer->getIdProductConcrete());
+
+            return;
+        }
+
+        $this->touchProductConcreteDeleted($productConcreteTransfer->getIdProductConcrete());
     }
 }

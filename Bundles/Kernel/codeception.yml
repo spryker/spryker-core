@@ -16,20 +16,15 @@ paths:
     envs: tests/_envs
 
 settings:
-    bootstrap: _bootstrap.php
     suite_class: \PHPUnit\Framework\TestSuite
     colors: true
     memory_limit: 1024M
     log: true
 
-coverage:
-    enabled: true
-    whitelist: { include: ['src/*'] }
-
 extensions:
     enabled:
-        - Codeception\Extension\Phantoman
+        - SprykerTest\Shared\Testify\Helper\WebDriverHelper
 
     config:
-        Codeception\Extension\Phantoman:
+        SprykerTest\Shared\Testify\Helper\WebDriverHelper:
             suites: ['Presentation']

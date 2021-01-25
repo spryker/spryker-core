@@ -28,9 +28,9 @@ class AclGroupCreateCest
      *
      * @return void
      */
-    public function breadcrumbIsVisible(AclCommunicationTester $i)
+    public function breadcrumbIsVisible(AclCommunicationTester $i): void
     {
         $i->amOnPage(AclGroupCreatePage::URL);
-        $i->seeBreadcrumbNavigation('Dashboard / Users Control / Groups / Create new Group');
+        $i->seeBreadcrumbNavigation('Users / User Groups / Create new Group');
     }
 }

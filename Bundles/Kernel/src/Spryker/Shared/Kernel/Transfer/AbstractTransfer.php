@@ -9,11 +9,13 @@ namespace Spryker\Shared\Kernel\Transfer;
 
 use ArrayAccess;
 use ArrayObject;
+use Countable;
 use Exception;
 use InvalidArgumentException;
 use Serializable;
 use Spryker\Service\UtilEncoding\Model\Json;
 use Spryker\Shared\Kernel\Transfer\Exception\ArrayAccessReadyOnlyException;
+use Spryker\Shared\Kernel\Transfer\Exception\NullValueException;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Shared\Kernel\Transfer\Exception\TransferUnserializationException;
 
@@ -30,7 +32,7 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
     protected $transferMetadata = [];
 
     /**
-     * @var array
+     * @var string[]
      */
     protected $transferPropertyNameMap = [];
 
@@ -98,21 +100,20 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
         foreach ($properties as $property) {
             $value = $this->$property;
 
-            if ($camelCasedKeys) {
-                $arrayKey = $property;
-            } else {
-                $arrayKey = $this->transferMetadata[$property]['name_underscore'];
-            }
+            $arrayKey = $this->getArrayKey($property, $camelCasedKeys);
 
-            if (is_object($value)) {
-                if ($isRecursive && $value instanceof TransferInterface) {
+            if (is_object($value) && $isRecursive) {
+                if ($value instanceof TransferInterface) {
                     $values[$arrayKey] = $value->$childConvertMethodName($isRecursive, $camelCasedKeys);
-                } elseif ($isRecursive && $this->transferMetadata[$property]['is_collection'] && count($value) >= 1) {
-                    $values = $this->addValuesToCollection($value, $values, $arrayKey, $isRecursive, $childConvertMethodName, $camelCasedKeys);
-                } else {
-                    $values[$arrayKey] = $value;
+
+                    continue;
                 }
-                continue;
+
+                if ($this->transferMetadata[$property]['is_collection'] && ($value instanceof Countable) && count($value) >= 1) {
+                    $values = $this->addValuesToCollection($value, $values, $arrayKey, $isRecursive, $childConvertMethodName, $camelCasedKeys);
+
+                    continue;
+                }
             }
 
             $values[$arrayKey] = $value;
@@ -122,9 +123,24 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
     }
 
     /**
+     * @param string $propertyName
+     * @param bool $camelCasedKeys
+     *
+     * @return string
+     */
+    protected function getArrayKey(string $propertyName, bool $camelCasedKeys): string
+    {
+        if ($camelCasedKeys) {
+            return $propertyName;
+        }
+
+        return $this->transferMetadata[$propertyName]['name_underscore'];
+    }
+
+    /**
      * @return array
      */
-    private function getPropertyNames()
+    protected function getPropertyNames(): array
     {
         return array_keys($this->transferMetadata);
     }
@@ -159,39 +175,43 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
     }
 
     /**
+     * @param string $propertyName
+     * @param mixed|null $value
+     *
+     * @return void
+     */
+    protected function assignValueObject(string $propertyName, $value): void
+    {
+        $propertySetterMethod = $this->getSetterMethod($propertyName);
+        $this->$propertySetterMethod($value);
+    }
+
+    /**
      * @param string $elementType
      * @param array|\ArrayObject $arrayObject
      * @param bool $ignoreMissingProperty
      *
-     * @return \ArrayObject
+     * @return \ArrayObject|\Spryker\Shared\Kernel\Transfer\TransferInterface[]
      */
-    protected function processArrayObject($elementType, $arrayObject, $ignoreMissingProperty = false)
+    protected function processArrayObject($elementType, $arrayObject, $ignoreMissingProperty = false): ArrayObject
     {
-        $transferObjectsArray = new ArrayObject();
-        foreach ($arrayObject as $arrayElement) {
+        $result = new ArrayObject();
+        foreach ($arrayObject as $key => $arrayElement) {
             if (!is_array($arrayElement)) {
-                $transferObjectsArray->append(new $elementType());
+                $result->offsetSet($key, new $elementType());
+
                 continue;
             }
 
-            if (array_values($arrayElement) !== $arrayElement) { // isAssociativeArray
+            if ($arrayElement) {
                 /** @var \Spryker\Shared\Kernel\Transfer\TransferInterface $transferObject */
                 $transferObject = new $elementType();
                 $transferObject->fromArray($arrayElement, $ignoreMissingProperty);
-                $transferObjectsArray->append($transferObject);
-
-                continue;
-            }
-
-            foreach ($arrayElement as $arrayElementItem) {
-                /** @var \Spryker\Shared\Kernel\Transfer\TransferInterface $transferObject */
-                $transferObject = new $elementType();
-                $transferObject->fromArray($arrayElementItem, $ignoreMissingProperty);
-                $transferObjectsArray->append($transferObject);
+                $result->offsetSet($key, $transferObject);
             }
         }
 
-        return $transferObjectsArray;
+        return $result;
     }
 
     /**
@@ -201,7 +221,7 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
      *
      * @return void
      */
-    protected function assertPropertyIsSet($property)
+    protected function assertPropertyIsSet($property): void
     {
         if ($this->$property === null) {
             throw new RequiredTransferPropertyException(sprintf(
@@ -219,7 +239,7 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
      *
      * @return void
      */
-    protected function assertCollectionPropertyIsSet($property)
+    protected function assertCollectionPropertyIsSet($property): void
     {
         /** @var \ArrayObject $collection */
         $collection = $this->$property;
@@ -252,6 +272,16 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
         }
 
         return $value;
+    }
+
+    /**
+     * @param string $propertyName
+     *
+     * @return string
+     */
+    protected function getSetterMethod(string $propertyName): string
+    {
+        return 'set' . ucfirst($propertyName);
     }
 
     /**
@@ -338,14 +368,6 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
     }
 
     /**
-     * @return void
-     */
-    public function __wakeup()
-    {
-        $this->initCollectionProperties();
-    }
-
-    /**
      * @param string $offset
      *
      * @return bool
@@ -386,5 +408,19 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
     public function offsetUnset($offset)
     {
         throw new ArrayAccessReadyOnlyException('Transfer object as an array is available only for read');
+    }
+
+    /**
+     * @param string $propertyName
+     *
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\NullValueException
+     *
+     * @return void
+     */
+    protected function throwNullValueException(string $propertyName): void
+    {
+        throw new NullValueException(
+            sprintf('Property "%s" of transfer `%s` is null.', $propertyName, static::class)
+        );
     }
 }

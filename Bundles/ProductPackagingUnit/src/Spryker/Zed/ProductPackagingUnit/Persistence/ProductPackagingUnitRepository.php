@@ -7,14 +7,16 @@
 
 namespace Spryker\Zed\ProductPackagingUnit\Persistence;
 
-use Generated\Shared\Transfer\ProductPackagingLeadProductTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
 use Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderItemStateTableMap;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderProcessTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
+use Orm\Zed\ProductPackagingUnit\Persistence\Map\SpyProductPackagingUnitTableMap;
 use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitQuery;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -25,10 +27,8 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
  */
 class ProductPackagingUnitRepository extends AbstractRepository implements ProductPackagingUnitRepositoryInterface
 {
-    protected const SUM_COLUMN = 'sumAmount';
-    protected const SKU_COLUMN = 'sku';
-    protected const PROCESS_NAME_COLUMN = 'processName';
-    protected const STATE_NAME_COLUMN = 'stateName';
+    protected const SKU = 'sku';
+    protected const COL_COUNT = 'count';
 
     /**
      * @param string $productPackagingUnitTypeName
@@ -97,86 +97,45 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
     /**
      * @module Product
      *
-     * @deprecated Will be removed without replacement.
-     *
-     * @param int $idProductAbstract
-     *
-     * @return \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer|null
-     */
-    public function findProductPackagingLeadProductByIdProductAbstract(
-        int $idProductAbstract
-    ): ?ProductPackagingLeadProductTransfer {
-        $productPackagingLeadProductEntity = $this->getFactory()
-            ->createProductPackagingLeadProductQuery()
-            ->filterByFkProductAbstract($idProductAbstract)
-            ->innerJoinWithSpyProduct()
-            ->findOne();
-
-        if (!$productPackagingLeadProductEntity) {
-            return null;
-        }
-
-        $productPackagingLeadProductTransfer = $this->getFactory()
-            ->createProductPackagingUnitMapper()
-            ->mapProductPackagingLeadProductTransfer(
-                $productPackagingLeadProductEntity,
-                new ProductPackagingLeadProductTransfer()
-            );
-
-        return $productPackagingLeadProductTransfer;
-    }
-
-    /**
-     * @module Product
-     *
      * @param string $siblingProductSku
      *
-     * @return \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer|null
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
      */
-    public function findProductPackagingLeadProductBySiblingProductSku(
+    public function findProductPackagingUnitLeadProductForPackagingUnit(
         string $siblingProductSku
-    ): ?ProductPackagingLeadProductTransfer {
-        $productPackagingLeadProductQuery = $this->getFactory()->createProductPackagingLeadProductQuery();
-        $productPackagingLeadProductQuery
-            ->useSpyProductAbstractQuery()
-                ->useSpyProductQuery()
-                    ->filterBySku($siblingProductSku)
-                ->endUse()
-            ->endUse();
-
-        $productPackagingLeadProductEntity = $productPackagingLeadProductQuery
+    ): ?ProductConcreteTransfer {
+        $productPackagingUnitEntity = $this->getFactory()
+            ->createProductPackagingUnitQuery()
+            ->innerJoin('SpyProductPackagingUnit.Product Product')
+            ->innerJoinWithLeadProduct()
+            ->where('Product.sku = ?', $siblingProductSku)
             ->findOne();
 
-        if (!$productPackagingLeadProductEntity) {
+        if ($productPackagingUnitEntity === null) {
             return null;
         }
 
-        $productPackagingLeadProductTransfer = $this->getFactory()
+        return $this->getFactory()
             ->createProductPackagingUnitMapper()
-            ->mapProductPackagingLeadProductTransfer(
-                $productPackagingLeadProductEntity,
-                new ProductPackagingLeadProductTransfer()
+            ->mapProductEntityToProductConcreteTransfer(
+                $productPackagingUnitEntity->getLeadProduct(),
+                new ProductConcreteTransfer()
             );
-
-        return $productPackagingLeadProductTransfer;
     }
 
     /**
-     * @module Product
-     *
      * @param int[] $productPackagingUnitTypeIds
      *
      * @return int[]
      */
-    public function findProductAbstractIdsByProductPackagingUnitTypeIds(array $productPackagingUnitTypeIds): array
+    public function findProductIdsByProductPackagingUnitTypeIds(array $productPackagingUnitTypeIds): array
     {
         return $this->getFactory()
             ->createProductPackagingUnitQuery()
             ->useProductPackagingUnitTypeQuery()
                 ->filterByIdProductPackagingUnitType_In($productPackagingUnitTypeIds)
             ->endUse()
-            ->joinProduct()
-            ->select([SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT])
+            ->select([SpyProductPackagingUnitTableMap::COL_FK_PRODUCT])
             ->find()
             ->toArray();
     }
@@ -267,6 +226,47 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
     }
 
     /**
+     * @module Product
+     *
+     * @param string[] $productSkus
+     *
+     * @return \Generated\Shared\Transfer\ProductPackagingUnitTransfer[]
+     */
+    public function findProductPackagingUnitsByProductSku(
+        array $productSkus
+    ): array {
+        if (!$productSkus) {
+            return [];
+        }
+
+        $productPackagingUnitEntities = $this->getProductPackagingUnitCriteria()
+            ->joinWithProduct()
+            ->useProductQuery()
+                ->filterBySku_In($productSkus)
+                ->withColumn(SpyProductTableMap::COL_SKU, static::SKU)
+            ->endUse()
+            ->find()
+            ->getArrayCopy();
+
+        if (!$productPackagingUnitEntities) {
+            return [];
+        }
+
+        $productPackagingUnitTransfers = [];
+        foreach ($productPackagingUnitEntities as $productPackagingUnitEntity) {
+            $sku = $productPackagingUnitEntity->getVirtualColumn(static::SKU);
+            $productPackagingUnitTransfers[$sku] = $this->getFactory()
+                ->createProductPackagingUnitMapper()
+                ->mapProductPackagingUnitTransfer(
+                    $productPackagingUnitEntity,
+                    new ProductPackagingUnitTransfer()
+                );
+        }
+
+        return $productPackagingUnitTransfers;
+    }
+
+    /**
      * @param int $idSalesOrder
      *
      * @return \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer[]
@@ -291,38 +291,136 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
     }
 
     /**
+     * @module Sales
+     *
+     * @param int[] $salesOrderItemIds
+     *
+     * @return string[]
+     */
+    public function getMappedLeadProductSkusBySalesOrderItemIds(array $salesOrderItemIds): array
+    {
+        if (!$salesOrderItemIds) {
+            return [];
+        }
+
+        return $this->getFactory()
+            ->getSalesOrderItemQuery()
+            ->filterByIdSalesOrderItem_In($salesOrderItemIds)
+            ->filterByAmountSku(null, Criteria::ISNOTNULL)
+            ->filterByAmount(null, Criteria::ISNOTNULL)
+            ->select([SpySalesOrderItemTableMap::COL_ID_SALES_ORDER_ITEM, SpySalesOrderItemTableMap::COL_AMOUNT_SKU])
+            ->find()
+            ->toKeyValue(SpySalesOrderItemTableMap::COL_ID_SALES_ORDER_ITEM, SpySalesOrderItemTableMap::COL_AMOUNT_SKU);
+    }
+
+    /**
+     * @module Sales
+     *
+     * @param int[] $salesOrderItemIds
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
+     */
+    public function getMappedProductMeasurementSalesUnits(array $salesOrderItemIds): array
+    {
+        if (!$salesOrderItemIds) {
+            return [];
+        }
+
+        $salesOrderItemQuery = $this->getFactory()
+            ->getSalesOrderItemQuery()
+            ->filterByIdSalesOrderItem_In($salesOrderItemIds)
+            ->filterByAmountMeasurementUnitName(null, Criteria::ISNOTNULL);
+
+        return $this->getFactory()
+            ->createProductMeasurementSalesUnitMapper()
+            ->mapSalesOrderItemEntitiesToProductMeasurementSalesUnitTransfers($salesOrderItemQuery->find());
+    }
+
+    /**
      * @uses State
      *
      * @param string $sku
      * @param string[] $reservedStateNames
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
      * @return \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer[]
      */
-    public function aggregateLeadProductAmountForAllSalesOrderItemsBySku(string $sku, array $reservedStateNames): array
+    public function aggregateProductPackagingUnitReservation(string $sku, array $reservedStateNames, ?StoreTransfer $storeTransfer = null): array
     {
-        $salesOrderItemAggregations = $this->getFactory()
+        $salesOrderItemQuery = $this->getFactory()
             ->getSalesOrderItemQuery()
-            ->filterByAmountSku($sku)
-            ->joinWithProcess()
-            ->joinWithState()
+            ->groupByAmountSku()
             ->useStateQuery()
-                ->filterByName($reservedStateNames, Criteria::IN)
+                ->filterByName_In($reservedStateNames)
             ->endUse()
             ->groupByFkOmsOrderItemState()
+            ->innerJoinProcess()
             ->groupByFkOmsOrderProcess()
-            ->withColumn(SpySalesOrderItemTableMap::COL_SKU, static::SKU_COLUMN)
-            ->withColumn(SpyOmsOrderProcessTableMap::COL_NAME, static::PROCESS_NAME_COLUMN)
-            ->withColumn(SpyOmsOrderItemStateTableMap::COL_NAME, static::STATE_NAME_COLUMN)
-            ->withColumn('SUM(' . SpySalesOrderItemTableMap::COL_QUANTITY . ')', static::SUM_COLUMN)
             ->select([SpySalesOrderItemTableMap::COL_SKU])
-            ->find();
+            ->withColumn(SpyOmsOrderProcessTableMap::COL_NAME, SalesOrderItemStateAggregationTransfer::PROCESS_NAME)
+            ->withColumn(SpyOmsOrderItemStateTableMap::COL_NAME, SalesOrderItemStateAggregationTransfer::STATE_NAME)
+            ->withColumn(
+                sprintf(
+                    "CASE WHEN %s = '%s' THEN SUM(%s) ELSE SUM(%s) END",
+                    SpySalesOrderItemTableMap::COL_AMOUNT_SKU,
+                    $sku,
+                    SpySalesOrderItemTableMap::COL_AMOUNT,
+                    SpySalesOrderItemTableMap::COL_QUANTITY
+                ),
+                SalesOrderItemStateAggregationTransfer::SUM_AMOUNT
+            )
+            ->condition('sku', 'spy_sales_order_item.sku = ?', $sku)
+            ->condition('amount_sku', 'spy_sales_order_item.amount_sku = ?', $sku)
+            ->where(['sku', 'amount_sku'], Criteria::LOGICAL_OR);
+
+        if ($storeTransfer !== null) {
+            $storeTransfer->requireName();
+
+            $salesOrderItemQuery
+                ->useOrderQuery()
+                    ->filterByStore($storeTransfer->getName())
+                ->endUse();
+        }
+
+        /** @var array $salesOrderItemAggregations */
+        $salesOrderItemAggregations = $salesOrderItemQuery->find();
 
         $salesAggregationTransfers = [];
         foreach ($salesOrderItemAggregations as $salesOrderItemAggregation) {
-            $salesAggregationTransfers[] = (new SalesOrderItemStateAggregationTransfer())->fromArray($salesOrderItemAggregation, true);
+            $salesAggregationTransfers[] = (new SalesOrderItemStateAggregationTransfer())
+                ->fromArray($salesOrderItemAggregation, true)
+                ->setSku($sku);
         }
 
         return $salesAggregationTransfers;
+    }
+
+    /**
+     * @param int[] $productConcreteIds
+     *
+     * @return int[]
+     */
+    public function getProductPackagingUnitCountByProductConcreteIds(array $productConcreteIds): array
+    {
+        /** @var array $productPackagingUnitsData */
+        $productPackagingUnitsData = $this->getFactory()
+            ->createProductPackagingUnitQuery()
+            ->filterByFkProduct_In($productConcreteIds)
+            ->groupByFkProduct()
+            ->select(SpyProductPackagingUnitTableMap::COL_FK_PRODUCT)
+            ->withColumn('COUNT(*)', static::COL_COUNT)
+            ->find();
+
+        $productPackagingUnitCounts = [];
+
+        foreach ($productPackagingUnitsData as $productPackagingUnitData) {
+            $fkProduct = $productPackagingUnitData[SpyProductPackagingUnitTableMap::COL_FK_PRODUCT];
+            $count = $productPackagingUnitData[static::COL_COUNT];
+
+            $productPackagingUnitCounts[$fkProduct] = $count;
+        }
+
+        return $productPackagingUnitCounts;
     }
 
     /**
@@ -332,7 +430,6 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
     {
         return $this->getFactory()
             ->createProductPackagingUnitQuery()
-            ->innerJoinWithProductPackagingUnitType()
-            ->leftJoinWithSpyProductPackagingUnitAmount();
+            ->innerJoinWithProductPackagingUnitType();
     }
 }

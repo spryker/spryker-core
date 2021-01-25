@@ -19,6 +19,8 @@ class NavigationStorageQueryContainer extends AbstractQueryContainer implements 
     public const FK_NAVIGATION = 'fkNavigation';
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $localeNames
@@ -34,6 +36,8 @@ class NavigationStorageQueryContainer extends AbstractQueryContainer implements 
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $navigationIds
@@ -48,11 +52,13 @@ class NavigationStorageQueryContainer extends AbstractQueryContainer implements 
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $navigationNodeIds
      *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Orm\Zed\Navigation\Persistence\SpyNavigationQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function queryNavigationIdsByNavigationNodeIds(array $navigationNodeIds)
     {
@@ -65,11 +71,13 @@ class NavigationStorageQueryContainer extends AbstractQueryContainer implements 
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $urlIds
      *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Orm\Zed\Navigation\Persistence\SpyNavigationQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function queryNavigationIdsByUrlIds(array $urlIds)
     {
@@ -84,6 +92,8 @@ class NavigationStorageQueryContainer extends AbstractQueryContainer implements 
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int[] $navigationIds

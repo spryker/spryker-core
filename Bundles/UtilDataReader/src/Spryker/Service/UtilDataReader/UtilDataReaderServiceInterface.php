@@ -62,7 +62,7 @@ interface UtilDataReaderServiceInterface
      * - Returns a PdoBatchIterator
      * - Loads a chunk of entities with given CriteriaBuilderInterface
      *
-     * @deprecated Use getBatchIteratorOrdered() instead. Method getPdoBatchIterator() does not work with sliced data.
+     * @deprecated Use {@link getBatchIteratorOrdered()} instead. Method getPdoBatchIterator() does not work with sliced data.
      *
      * @param \Spryker\Shared\SqlCriteriaBuilder\CriteriaBuilder\CriteriaBuilderInterface $criteriaBuilder
      * @param \Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface $connection
@@ -87,7 +87,13 @@ interface UtilDataReaderServiceInterface
      *
      * @return \Spryker\Service\UtilDataReader\Model\BatchIterator\CountableIteratorInterface
      */
-    public function getBatchIteratorOrdered(CriteriaBuilderInterface $criteriaBuilder, QueryContainerInterface $connection, $chunkSize, $orderBy, $orderByDirection);
+    public function getBatchIteratorOrdered(
+        CriteriaBuilderInterface $criteriaBuilder,
+        QueryContainerInterface $connection,
+        $chunkSize,
+        $orderBy,
+        $orderByDirection
+    );
 
     /**
      * @api
@@ -96,7 +102,7 @@ interface UtilDataReaderServiceInterface
      * - Returns a PropelBatchIterator
      * - Loads a chunk of PropelEntities with given ModelCriteria
      *
-     * @deprecated Use getBatchIteratorOrdered() instead. Method getPropelBatchIteratorOrdered() does not work with sliced data.
+     * @deprecated Use {@link getBatchIteratorOrdered()} instead. Method getPropelBatchIteratorOrdered() does not work with sliced data.
      *
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param int $chunkSize

@@ -9,10 +9,18 @@ namespace SprykerTest\Zed\CustomersRestApi\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\AddressBuilder;
+use Generated\Shared\DataBuilder\CheckoutDataBuilder;
 use Generated\Shared\DataBuilder\CustomerBuilder;
+use Generated\Shared\DataBuilder\QuoteBuilder;
+use Generated\Shared\DataBuilder\RestShipmentsBuilder;
 use Generated\Shared\Transfer\AddressesTransfer;
+use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\CheckoutDataTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
-use PHPUnit\Framework\MockObject\MockObject;
+use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\RestAddressTransfer;
+use Generated\Shared\Transfer\RestShipmentsTransfer;
 use Spryker\Zed\Customer\Business\CustomerFacade;
 use Spryker\Zed\CustomersRestApi\Business\CustomersRestApiBusinessFactory;
 use Spryker\Zed\CustomersRestApi\Dependency\Facade\CustomersRestApiToCustomerFacadeBridge;
@@ -30,6 +38,16 @@ use Spryker\Zed\CustomersRestApi\Dependency\Facade\CustomersRestApiToCustomerFac
  */
 class CustomersRestApiFacadeTest extends Unit
 {
+    /**
+     * @uses \Spryker\Zed\CustomersRestApi\Business\Validator\CustomerAddressValidator::GLOSSARY_KEY_CUSTOMER_ADDRESS_IN_CHECKOUT_DATA_NOT_FOUND
+     */
+    protected const GLOSSARY_KEY_CUSTOMER_ADDRESS_IN_CHECKOUT_DATA_NOT_FOUND = 'checkout.validation.customer_address.not_found';
+
+    /**
+     * @uses \Spryker\Zed\CustomersRestApi\Business\Validator\CustomerAddressValidator::GLOSSARY_KEY_CUSTOMER_ADDRESSES_APPLICABLE_FOR_CUSTOMERS_ONLY
+     */
+    protected const GLOSSARY_KEY_CUSTOMER_ADDRESSES_APPLICABLE_FOR_CUSTOMERS_ONLY = 'checkout.validation.customer_address.not_applicable';
+
     /**
      * @var \SprykerTest\Zed\CustomersRestApi\CustomersRestApiBusinessTester
      */
@@ -410,9 +428,111 @@ class CustomersRestApiFacadeTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return void
      */
-    protected function getMockCustomersRestApiFactory(): MockObject
+    public function testValidateCustomerAddressesInCheckoutDataWillNotReturnErrorIfNoShippingAddressProvided(): void
+    {
+        // Arrange
+        $checkoutDataTransfer = (new CheckoutDataBuilder([CheckoutDataTransfer::SHIPMENTS => []]))->build();
+
+        // Act
+        $checkoutResponseTransfer = $this->tester->getFacade()
+            ->validateCustomerAddressesInCheckoutData($checkoutDataTransfer);
+
+        // Assert
+        $this->assertTrue($checkoutResponseTransfer->getIsSuccess());
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateCustomerAddressesInCheckoutDataWillNotReturnErrorIfCorrectShippingAddressProvided(): void
+    {
+        $shippingAddressUuid = $this->tester::ADDRESS_1['uuid'];
+        $customerTransfer = (new CustomerBuilder([CustomerTransfer::ID_CUSTOMER => 777]))
+            ->withShippingAddress([AddressTransfer::UUID => $shippingAddressUuid])
+            ->build();
+        $quoteTransfer = (new QuoteBuilder([QuoteTransfer::CUSTOMER => $customerTransfer->toArray()]))->build();
+        $restShipmentsTransfer = (new RestShipmentsBuilder([
+            RestShipmentsTransfer::SHIPPING_ADDRESS => [RestAddressTransfer::ID => $shippingAddressUuid],
+        ]))->build();
+        $checkoutDataTransfer = (new CheckoutDataBuilder([
+            CheckoutDataTransfer::QUOTE => $quoteTransfer->toArray(),
+            CheckoutDataTransfer::SHIPMENTS => [$restShipmentsTransfer->toArray()],
+        ]))->build();
+
+        $customersRestApiFacade = $this->tester->getFacade();
+        $customersRestApiFacade->setFactory($this->getMockCustomersRestApiFactory());
+
+        // Act
+        $checkoutResponseTransfer = $customersRestApiFacade->validateCustomerAddressesInCheckoutData($checkoutDataTransfer);
+
+        // Assert
+        $this->assertTrue($checkoutResponseTransfer->getIsSuccess());
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateCustomerAddressesInCheckoutDataWillReturnErrorIfNoCustomerIsProvided(): void
+    {
+        $quoteTransfer = (new QuoteBuilder([QuoteTransfer::CUSTOMER => null]))->build();
+        $restShipmentsTransfer = (new RestShipmentsBuilder([
+            RestShipmentsTransfer::SHIPPING_ADDRESS => [RestAddressTransfer::ID => $this->tester::ADDRESS_1['uuid']],
+        ]))->build();
+        $checkoutDataTransfer = (new CheckoutDataBuilder([
+            CheckoutDataTransfer::QUOTE => $quoteTransfer->toArray(),
+            CheckoutDataTransfer::SHIPMENTS => [$restShipmentsTransfer->toArray()],
+        ]))->build();
+
+        // Act
+        $checkoutResponseTransfer = $this->tester->getFacade()->validateCustomerAddressesInCheckoutData($checkoutDataTransfer);
+
+        // Assert
+        $this->assertFalse($checkoutResponseTransfer->getIsSuccess());
+        $this->assertCount(1, $checkoutResponseTransfer->getErrors());
+        $this->assertEquals(
+            static::GLOSSARY_KEY_CUSTOMER_ADDRESSES_APPLICABLE_FOR_CUSTOMERS_ONLY,
+            $checkoutResponseTransfer->getErrors()->offsetGet(0)->getMessage()
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateCustomerAddressesInCheckoutDataWillReturnErrorIfNoValidCustomerAddressIsProvided(): void
+    {
+        $customerTransfer = (new CustomerBuilder([CustomerTransfer::ID_CUSTOMER => 777]))
+            ->withShippingAddress([AddressTransfer::UUID => $this->tester::ADDRESS_1['uuid']])
+            ->build();
+        $quoteTransfer = (new QuoteBuilder([QuoteTransfer::CUSTOMER => $customerTransfer]))->build();
+        $restShipmentsTransfer = (new RestShipmentsBuilder([
+            RestShipmentsTransfer::SHIPPING_ADDRESS => [RestAddressTransfer::ID => 'some-random-uuid'],
+        ]))->build();
+        $checkoutDataTransfer = (new CheckoutDataBuilder([
+            CheckoutDataTransfer::QUOTE => $quoteTransfer->toArray(),
+            CheckoutDataTransfer::SHIPMENTS => [$restShipmentsTransfer->toArray()],
+        ]))->build();
+
+        $customersRestApiFacade = $this->tester->getFacade();
+        $customersRestApiFacade->setFactory($this->getMockCustomersRestApiFactory());
+
+        // Act
+        $checkoutResponseTransfer = $customersRestApiFacade->validateCustomerAddressesInCheckoutData($checkoutDataTransfer);
+
+        // Assert
+        $this->assertFalse($checkoutResponseTransfer->getIsSuccess());
+        $this->assertCount(1, $checkoutResponseTransfer->getErrors());
+        $this->assertEquals(
+            static::GLOSSARY_KEY_CUSTOMER_ADDRESS_IN_CHECKOUT_DATA_NOT_FOUND,
+            $checkoutResponseTransfer->getErrors()->offsetGet(0)->getMessage()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\CustomersRestApi\Business\CustomersRestApiBusinessFactory|\PHPUnit\Framework\MockObject\MockObject
+     */
+    protected function getMockCustomersRestApiFactory(): CustomersRestApiBusinessFactory
     {
         $mockFactory = $this->createPartialMock(
             CustomersRestApiBusinessFactory::class,
@@ -426,9 +546,9 @@ class CustomersRestApiFacadeTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\CustomersRestApi\Business\CustomersRestApiBusinessFactory|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function getMockCustomersRestApiFactoryForGuest(): MockObject
+    protected function getMockCustomersRestApiFactoryForGuest(): CustomersRestApiBusinessFactory
     {
         $mockFactory = $this->createPartialMock(
             CustomersRestApiBusinessFactory::class,
@@ -442,9 +562,9 @@ class CustomersRestApiFacadeTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\Customer\Business\CustomerFacade|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function getMockCustomerFacade(): MockObject
+    protected function getMockCustomerFacade(): CustomerFacade
     {
         $mockCustomerFacade = $this->createPartialMock(
             CustomerFacade::class,
@@ -470,9 +590,9 @@ class CustomersRestApiFacadeTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\Customer\Business\CustomerFacade|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function getMockCustomerFacadeForGuest(): MockObject
+    protected function getMockCustomerFacadeForGuest(): CustomerFacade
     {
         $mockCustomerFacade = $this->createPartialMock(
             CustomerFacade::class,

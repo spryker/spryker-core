@@ -42,7 +42,7 @@ class CsvReaderTest extends Unit
     /**
      * @return void
      */
-    public function testDataReaderCanBeUsedAsIteratorAndReturnsArrayObject()
+    public function testDataReaderCanBeUsedAsIteratorAndReturnsArrayObject(): void
     {
         $csvReader = $this->getCsvReader(Configuration::dataDir() . 'import-standard.csv');
         foreach ($csvReader as $dataSet) {
@@ -53,7 +53,7 @@ class CsvReaderTest extends Unit
     /**
      * @return void
      */
-    public function testReaderIsCountable()
+    public function testReaderIsCountable(): void
     {
         $csvReader = $this->getCsvReader(Configuration::dataDir() . 'import-standard.csv');
         $this->assertInstanceOf(Countable::class, $csvReader);
@@ -62,7 +62,7 @@ class CsvReaderTest extends Unit
     /**
      * @return void
      */
-    public function testDataReaderCountWithColumnHeader()
+    public function testDataReaderCountWithColumnHeader(): void
     {
         $csvReader = $this->getCsvReader(Configuration::dataDir() . 'import-standard.csv');
         $this->tester->assertDataSetCount(static::EXPECTED_NUMBER_OF_DATA_SETS_IN_CSV, $csvReader);
@@ -71,7 +71,7 @@ class CsvReaderTest extends Unit
     /**
      * @return void
      */
-    public function testDataReaderCountWithoutColumnHeader()
+    public function testDataReaderCountWithoutColumnHeader(): void
     {
         $csvReader = $this->getCsvReader(Configuration::dataDir() . 'import-without-header.csv', false);
         $this->tester->assertDataSetCount(static::EXPECTED_NUMBER_OF_DATA_SETS_IN_CSV, $csvReader);
@@ -80,7 +80,7 @@ class CsvReaderTest extends Unit
     /**
      * @return void
      */
-    public function testDataReaderCanBeConfiguredToUseNewFileAfterInstantiation()
+    public function testDataReaderCanBeConfiguredToUseNewFileAfterInstantiation(): void
     {
         $csvReader = $this->getCsvReader(Configuration::dataDir() . 'import-semicolon-delimiter.csv');
         $dataImportReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
@@ -96,7 +96,7 @@ class CsvReaderTest extends Unit
     /**
      * @return void
      */
-    public function testDataReaderCanBeConfiguredToUseNewFileAndCsvControlAfterInstantiation()
+    public function testDataReaderCanBeConfiguredToUseNewFileAndCsvControlAfterInstantiation(): void
     {
         $csvReader = $this->getCsvReader(Configuration::dataDir() . 'import-standard.csv');
         $dataImportReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
@@ -117,7 +117,7 @@ class CsvReaderTest extends Unit
     /**
      * @return void
      */
-    public function testDataReaderReturnSubsetOfTheDataSetsStartingAtGivenPositionWhenOffsetIsSet()
+    public function testDataReaderReturnSubsetOfTheDataSetsStartingAtGivenPositionWhenOffsetIsSet(): void
     {
         $csvReader = $this->getCsvReader(Configuration::dataDir() . 'import-standard.csv', true, 2);
 
@@ -131,7 +131,7 @@ class CsvReaderTest extends Unit
     /**
      * @return void
      */
-    public function testDataReaderReturnSubsetOfTheDataSetsWhenOffsetAndLimitIsSet()
+    public function testDataReaderReturnSubsetOfTheDataSetsWhenOffsetAndLimitIsSet(): void
     {
         $csvReader = $this->getCsvReader(Configuration::dataDir() . 'import-standard.csv', true, 2, 1);
 
@@ -145,7 +145,7 @@ class CsvReaderTest extends Unit
     /**
      * @return void
      */
-    public function testDataReaderReturnSubsetOfTheDataSetsWhenLimitIsSet()
+    public function testDataReaderReturnSubsetOfTheDataSetsWhenLimitIsSet(): void
     {
         $csvReader = $this->getCsvReader(Configuration::dataDir() . 'import-standard.csv', true, null, 1);
 
@@ -159,7 +159,7 @@ class CsvReaderTest extends Unit
     /**
      * @return void
      */
-    public function testEachDataSetShouldHaveCsvColumnNamesAsKeys()
+    public function testEachDataSetShouldHaveCsvColumnNamesAsKeys(): void
     {
         $csvReader = $this->getCsvReader(Configuration::dataDir() . 'import-standard.csv');
 
@@ -178,7 +178,7 @@ class CsvReaderTest extends Unit
     /**
      * @return void
      */
-    public function testEachDataSetShouldNotHaveCsvColumnNamesAsKeys()
+    public function testEachDataSetShouldNotHaveCsvColumnNamesAsKeys(): void
     {
         $csvReader = $this->getCsvReader(Configuration::dataDir() . 'import-without-header.csv', false);
 
@@ -197,7 +197,7 @@ class CsvReaderTest extends Unit
     /**
      * @return void
      */
-    public function testKeyReturnsCurrentDataSetPosition()
+    public function testKeyReturnsCurrentDataSetPosition(): void
     {
         $csvReader = $this->getCsvReader(Configuration::dataDir() . 'import-standard.csv');
         $this->assertIsInt($csvReader->key());
@@ -206,7 +206,7 @@ class CsvReaderTest extends Unit
     /**
      * @return void
      */
-    public function testThrowsExceptionWhenFileInvalid()
+    public function testThrowsExceptionWhenFileInvalid(): void
     {
         $this->expectException(DataReaderException::class);
         $configuration = $this->getCsvReaderConfigurationTransfer(Configuration::dataDir() . 'not-existing.csv');
@@ -217,7 +217,7 @@ class CsvReaderTest extends Unit
     /**
      * @return void
      */
-    public function testThrowsExceptionWhenHeaderAndDataSetLengthDoesNotMatch()
+    public function testThrowsExceptionWhenHeaderAndDataSetLengthDoesNotMatch(): void
     {
         $this->expectException(DataSetWithHeaderCombineFailedException::class);
         $csvReader = $this->getCsvReader(Configuration::dataDir() . 'import-header-dataset-length-missmatch.csv');
@@ -233,7 +233,7 @@ class CsvReaderTest extends Unit
      *
      * @return \Spryker\Zed\DataImport\Business\Model\DataReader\DataReaderInterface|\Spryker\Zed\DataImport\Business\Model\DataReader\ConfigurableDataReaderInterface
      */
-    protected function getCsvReader($fileName, $hasHeader = true, $offset = null, $limit = null)
+    protected function getCsvReader(string $fileName, bool $hasHeader = true, ?int $offset = null, ?int $limit = null)
     {
         $configuration = $this->getCsvReaderConfigurationTransfer($fileName, $hasHeader, $offset, $limit);
         $csvReader = $this->tester->getFactory()->createCsvReaderFromConfig($configuration);
@@ -249,8 +249,12 @@ class CsvReaderTest extends Unit
      *
      * @return \Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer
      */
-    protected function getCsvReaderConfigurationTransfer($fileName, $hasHeader = true, $offset = null, $limit = null)
-    {
+    protected function getCsvReaderConfigurationTransfer(
+        string $fileName,
+        bool $hasHeader = true,
+        ?int $offset = null,
+        ?int $limit = null
+    ): DataImporterReaderConfigurationTransfer {
         $dataImporterReaderConfiguration = new DataImporterReaderConfigurationTransfer();
         $dataImporterReaderConfiguration
             ->setFileName($fileName)

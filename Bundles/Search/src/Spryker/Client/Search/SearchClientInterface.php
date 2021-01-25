@@ -7,7 +7,8 @@
 
 namespace Spryker\Client\Search;
 
-use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
+use Generated\Shared\Transfer\SearchDocumentTransfer;
+use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 
 interface SearchClientInterface
 {
@@ -33,11 +34,11 @@ interface SearchClientInterface
      *
      * @api
      *
-     * @param \Spryker\Client\Search\Dependency\Plugin\QueryInterface $searchQuery
-     * @param \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[] $searchQueryExpanders
+     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
+     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface[] $searchQueryExpanders
      * @param array $requestParameters
      *
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
+     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
      */
     public function expandQuery(QueryInterface $searchQuery, array $searchQueryExpanders, array $requestParameters = []);
 
@@ -49,11 +50,11 @@ interface SearchClientInterface
      *
      * @api
      *
-     * @param \Spryker\Client\Search\Dependency\Plugin\QueryInterface $searchQuery
-     * @param \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[] $resultFormatters
+     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
+     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface[] $resultFormatters
      * @param array $requestParameters
      *
-     * @return array|\Elastica\ResultSet
+     * @return array|\Elastica\ResultSet|mixed (@deprecated Only mixed will be supported with the next major)
      */
     public function search(QueryInterface $searchQuery, array $resultFormatters = [], array $requestParameters = []);
 
@@ -64,6 +65,8 @@ interface SearchClientInterface
      * - Dynamic configuration is provided by \Spryker\Client\Search\SearchDependencyProvider::createSearchConfigExpanderPlugins()
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement. This functionality is obsolete and should not be used.
      *
      * @return \Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface
      */
@@ -80,7 +83,7 @@ interface SearchClientInterface
      * @param int|null $limit
      * @param int|null $offset
      *
-     * @return \Elastica\ResultSet
+     * @return array|\Elastica\ResultSet|mixed (@deprecated Only mixed will be supported with the next major)
      */
     public function searchKeys($searchString, $limit = null, $offset = null);
 
@@ -92,11 +95,13 @@ interface SearchClientInterface
      *
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @param string $searchString
      * @param int|null $limit
      * @param int|null $offset
      *
-     * @return \Elastica\ResultSet|array
+     * @return array|\Elastica\ResultSet|mixed (@deprecated Only mixed will be supported with the next major)
      */
     public function searchQueryString($searchString, $limit = null, $offset = null);
 
@@ -105,6 +110,8 @@ interface SearchClientInterface
      * - Returns data from an external search service (e.g Elasticsearch)
      *
      * @api
+     *
+     * @deprecated Use {@link \Spryker\Client\Search\SearchClientInterface::readDocument()} instead.
      *
      * @param string $key
      * @param string|null $typeName
@@ -116,9 +123,23 @@ interface SearchClientInterface
 
     /**
      * Specification:
+     * - Returns data from an external search service (e.g Elasticsearch)
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer $searchDocumentTransfer
+     *
+     * @return mixed
+     */
+    public function readDocument(SearchDocumentTransfer $searchDocumentTransfer);
+
+    /**
+     * Specification:
      * - Writes data into an external search service (e.g Elasticsearch)
      *
      * @api
+     *
+     * @deprecated Use {@link \Spryker\Client\Search\SearchClientInterface::writeDocument()} instead.
      *
      * @param array $dataSet
      * @param string|null $typeName
@@ -130,9 +151,23 @@ interface SearchClientInterface
 
     /**
      * Specification:
+     * - Writes data into an external search service (e.g Elasticsearch).
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer $searchDocumentTransfer
+     *
+     * @return bool
+     */
+    public function writeDocument(SearchDocumentTransfer $searchDocumentTransfer): bool;
+
+    /**
+     * Specification:
      * - Writes data into an external search service in bulk mode.
      *
      * @api
+     *
+     * @deprecated Use {@link \Spryker\Client\Search\SearchClientInterface::writeDocuments()} instead.
      *
      * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
      *
@@ -142,9 +177,23 @@ interface SearchClientInterface
 
     /**
      * Specification:
+     * - Writes data into an external search service in bulk mode.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
+     *
+     * @return bool
+     */
+    public function writeDocuments(array $searchDocumentTransfers): bool;
+
+    /**
+     * Specification:
      * - Deletes data from an external search service (e.g Elasticsearch)
      *
      * @api
+     *
+     * @deprecated Use {@link \Spryker\Client\Search\SearchClientInterface::deleteDocument()} instead.
      *
      * @param array $dataSet
      * @param string|null $typeName
@@ -156,6 +205,32 @@ interface SearchClientInterface
 
     /**
      * Specification:
+     * - Deletes data from an external search service (e.g Elasticsearch).
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer $searchDocumentTransfer
+     *
+     * @return bool
+     */
+    public function deleteDocument(SearchDocumentTransfer $searchDocumentTransfer): bool;
+
+    /**
+     * Specification:
+     * - Deletes data from an external search service (e.g Elasticsearch) in bulk mode.
+     *
+     * @api
+     *
+     * @deprecated Use {@link \Spryker\Client\Search\SearchClientInterface::deleteDocuments()} instead.
+     *
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
+     *
+     * @return bool
+     */
+    public function deleteBulk(array $searchDocumentTransfers): bool;
+
+    /**
+     * Specification:
      * - Deletes data from an external search service (e.g Elasticsearch) in bulk mode.
      *
      * @api
@@ -164,5 +239,5 @@ interface SearchClientInterface
      *
      * @return bool
      */
-    public function deleteBulk(array $searchDocumentTransfers): bool;
+    public function deleteDocuments(array $searchDocumentTransfers): bool;
 }

@@ -14,6 +14,7 @@ use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\Stock\Persistence\SpyStockProductQuery;
 use Orm\Zed\Stock\Persistence\SpyStockQuery;
+use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Stock\Business\StockFacade;
 
 /**
@@ -31,12 +32,12 @@ class WriterTest extends Unit
     /**
      * @var \Spryker\Zed\Stock\Business\StockFacade
      */
-    private $stockFacade;
+    protected $stockFacade;
 
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -46,7 +47,7 @@ class WriterTest extends Unit
     /**
      * @return void
      */
-    public function testDecrementStock()
+    public function testDecrementStock(): void
     {
         $this->setData();
         $stockProductEntity = SpyStockProductQuery::create()->findOne();
@@ -57,18 +58,18 @@ class WriterTest extends Unit
         $stockType = SpyStockQuery::create()
             ->findOneByIdStock($stockProductEntity->getFkStock());
 
-        $this->stockFacade->decrementStockProduct($product->getSku(), $stockType->getName());
+        $this->stockFacade->decrementStockProduct($product->getSku(), $stockType->getName(), new Decimal(1));
 
         $stockEntity = SpyStockProductQuery::create()->findOneByIdStockProduct($stockProductEntity->getIdStockProduct());
         $newQuantity = $stockEntity->getQuantity();
 
-        $this->assertEquals($oldQuantity - 1, $newQuantity);
+        $this->assertSame((new Decimal($oldQuantity))->subtract(1)->toString(), $newQuantity);
     }
 
     /**
      * @return void
      */
-    public function testIncrementStock()
+    public function testIncrementStock(): void
     {
         $this->setData();
         $stockProductEntity = SpyStockProductQuery::create()->findOne();
@@ -77,18 +78,18 @@ class WriterTest extends Unit
         $product = SpyProductQuery::create()->findOneByIdProduct($stockProductEntity->getFkProduct());
         $stockType = SpyStockQuery::create()->findOneByIdStock($stockProductEntity->getFkStock());
 
-        $this->stockFacade->incrementStockProduct($product->getSku(), $stockType->getName());
+        $this->stockFacade->incrementStockProduct($product->getSku(), $stockType->getName(), new Decimal(1));
 
         $stockEntity = SpyStockProductQuery::create()->findOneByIdStockProduct($stockProductEntity->getIdStockProduct());
         $newQuantity = $stockEntity->getQuantity();
 
-        $this->assertEquals($oldQuantity + 1, $newQuantity);
+        $this->assertSame((new Decimal($oldQuantity))->add(1)->toString(), $newQuantity);
     }
 
     /**
      * @return void
      */
-    protected function setData()
+    protected function setData(): void
     {
         $productAbstract = SpyProductAbstractQuery::create()
             ->filterBySku('test')

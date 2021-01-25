@@ -25,7 +25,7 @@ class ActivationTest extends FacadeTestAbstract
     /**
      * @return void
      */
-    public function testProductActivationShouldGenerateUrlAndTouch()
+    public function testProductActivationShouldGenerateUrlAndTouch(): void
     {
         $this->productConcreteTransfer->setIsActive(false);
 
@@ -45,7 +45,7 @@ class ActivationTest extends FacadeTestAbstract
     /**
      * @return void
      */
-    public function testProductDeactivationShouldGenerateUrlAndTouch()
+    public function testProductDeactivationShouldGenerateUrlAndTouch(): void
     {
         $idProductAbstract = $this->createNewActiveProduct();
         $productConcreteCollection = $this->productConcreteManager->getConcreteProductsByAbstractProductId($idProductAbstract);
@@ -63,7 +63,7 @@ class ActivationTest extends FacadeTestAbstract
     /**
      * @return void
      */
-    public function testProductActivationShouldThrowException()
+    public function testProductActivationShouldThrowException(): void
     {
         $this->expectException(ProductConcreteNotFoundException::class);
         $this->expectExceptionMessage('Could not activate product concrete [12324]');
@@ -76,7 +76,7 @@ class ActivationTest extends FacadeTestAbstract
      *
      * @return void
      */
-    protected function assertProductWasActivated(ProductConcreteTransfer $productConcreteTransfer)
+    protected function assertProductWasActivated(ProductConcreteTransfer $productConcreteTransfer): void
     {
         $productConcrete = $this->productConcreteManager->findProductConcreteById(
             $productConcreteTransfer->getIdProductConcrete()
@@ -97,7 +97,7 @@ class ActivationTest extends FacadeTestAbstract
      *
      * @return void
      */
-    protected function assertProductWasDeactivated(ProductConcreteTransfer $productConcreteTransfer)
+    protected function assertProductWasDeactivated(ProductConcreteTransfer $productConcreteTransfer): void
     {
         $productConcrete = $this->productConcreteManager->findProductConcreteById(
             $productConcreteTransfer->getIdProductConcrete()
@@ -116,7 +116,7 @@ class ActivationTest extends FacadeTestAbstract
     /**
      * @return int
      */
-    protected function createNewProduct()
+    protected function createNewProduct(): int
     {
         return $this->productManager->addProduct($this->productAbstractTransfer, [$this->productConcreteTransfer]);
     }
@@ -124,7 +124,7 @@ class ActivationTest extends FacadeTestAbstract
     /**
      * @return int
      */
-    protected function createNewActiveProduct()
+    protected function createNewActiveProduct(): int
     {
         $this->productAbstractTransfer->setIsActive(true);
         $this->productConcreteTransfer->setIsActive(true);

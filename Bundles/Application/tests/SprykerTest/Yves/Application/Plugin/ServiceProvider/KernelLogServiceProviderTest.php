@@ -17,6 +17,8 @@ use Spryker\Yves\Application\Plugin\ServiceProvider\KernelLogServiceProvider;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
+ * @deprecated Will be removed without replacement.
+ *
  * Auto-generated group annotations
  *
  * @group SprykerTest
@@ -32,7 +34,7 @@ class KernelLogServiceProviderTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         $reflection = new ReflectionClass(Config::class);
         $reflectionProperty = $reflection->getProperty('config');
@@ -44,7 +46,7 @@ class KernelLogServiceProviderTest extends Unit
     /**
      * @return void
      */
-    public function testRegisterShouldDoNothing()
+    public function testRegisterShouldDoNothing(): void
     {
         $serviceProvider = new KernelLogServiceProvider();
         $serviceProvider->register(new Application());
@@ -53,7 +55,7 @@ class KernelLogServiceProviderTest extends Unit
     /**
      * @return void
      */
-    public function testBootShouldAddListenerToDispatcher()
+    public function testBootShouldAddListenerToDispatcher(): void
     {
         $application = new Application();
         $dispatcher = new EventDispatcher();

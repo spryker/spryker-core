@@ -22,6 +22,8 @@ class NewsletterSubscribedMailTypePlugin extends AbstractPlugin implements MailT
     public const MAIL_TYPE = 'newsletter subscribed mail';
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string
@@ -32,6 +34,8 @@ class NewsletterSubscribedMailTypePlugin extends AbstractPlugin implements MailT
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilderInterface $mailBuilder
@@ -105,7 +109,7 @@ class NewsletterSubscribedMailTypePlugin extends AbstractPlugin implements MailT
      */
     protected function setSender(MailBuilderInterface $mailBuilder)
     {
-        $mailBuilder->setSender('mail.sender.email', 'mail.sender.name');
+        $mailBuilder->useDefaultSender();
 
         return $this;
     }

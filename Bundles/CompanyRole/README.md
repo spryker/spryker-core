@@ -1,6 +1,6 @@
 # CompanyRole Module
-[![Build Status](https://travis-ci.org/spryker/CompanyRole.svg)](https://travis-ci.org/spryker/CompanyRole)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/CompanyRole/badge.svg)](https://coveralls.io/github/spryker/CompanyRole)
+[![Build Status](https://travis-ci.org/spryker/company-role.svg)](https://travis-ci.org/spryker/company-role)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 Company role modules provides role management tooling.
 

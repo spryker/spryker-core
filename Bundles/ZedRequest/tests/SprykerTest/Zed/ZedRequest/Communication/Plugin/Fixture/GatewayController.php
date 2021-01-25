@@ -16,7 +16,7 @@ class GatewayController extends AbstractGatewayController
     /**
      * @return string
      */
-    public function badAction()
+    public function badAction(): string
     {
         return 'bad';
     }
@@ -26,7 +26,7 @@ class GatewayController extends AbstractGatewayController
      *
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
-    public function goodAction(TransferInterface $foo)
+    public function goodAction(TransferInterface $foo): TransferInterface
     {
         return $foo;
     }
@@ -37,7 +37,7 @@ class GatewayController extends AbstractGatewayController
      *
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
-    public function twoTransferParametersAction(TransferInterface $foo, TransferInterface $bar)
+    public function twoTransferParametersAction(TransferInterface $foo, TransferInterface $bar): TransferInterface
     {
         if ($bar) {
         }
@@ -52,7 +52,7 @@ class GatewayController extends AbstractGatewayController
      *
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
-    public function tooManyParametersAction(TransferInterface $foo, $bar, $baz)
+    public function tooManyParametersAction(TransferInterface $foo, $bar, $baz): TransferInterface
     {
         if ($bar && $baz) {
         }
@@ -65,7 +65,7 @@ class GatewayController extends AbstractGatewayController
      *
      * @return \stdClass
      */
-    public function notTransferAction(stdClass $foo)
+    public function notTransferAction(stdClass $foo): stdClass
     {
         return $foo;
     }
@@ -83,7 +83,7 @@ class GatewayController extends AbstractGatewayController
     /**
      * @return void
      */
-    public function transformMessageAction()
+    public function transformMessageAction(): void
     {
         $this->addInfoMessage('info');
         $this->addErrorMessage('error');

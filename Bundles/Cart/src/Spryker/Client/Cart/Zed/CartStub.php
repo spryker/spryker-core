@@ -7,8 +7,8 @@
 
 namespace Spryker\Client\Cart\Zed;
 
-use Generated\Shared\Transfer\CartChangeQuantityTransfer;
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CartItemReplaceTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\ZedRequest\Stub\ZedRequestStub;
@@ -42,6 +42,36 @@ class CartStub extends ZedRequestStub implements CartStubInterface
     }
 
     /**
+     * @uses \Spryker\Zed\Cart\Communication\Controller\GatewayController::addToCartAction()
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function addToCart(CartChangeTransfer $cartChangeTransfer): QuoteResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
+        $quoteResponseTransfer = $this->zedStub->call('/cart/gateway/add-to-cart', $cartChangeTransfer);
+
+        return $quoteResponseTransfer;
+    }
+
+    /**
+     * @uses \Spryker\Zed\Cart\Communication\Controller\GatewayController::replaceItemAction()
+     *
+     * @param \Generated\Shared\Transfer\CartItemReplaceTransfer $cartItemReplaceTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function replaceItem(CartItemReplaceTransfer $cartItemReplaceTransfer): QuoteResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
+        $quoteResponseTransfer = $this->zedStub->call('/cart/gateway/replace-item', $cartItemReplaceTransfer);
+
+        return $quoteResponseTransfer;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $changeTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
@@ -55,6 +85,21 @@ class CartStub extends ZedRequestStub implements CartStubInterface
     }
 
     /**
+     * @uses \Spryker\Zed\Cart\Communication\Controller\GatewayController::removeFromCartAction()
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function removeFromCart(CartChangeTransfer $cartChangeTransfer): QuoteResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
+        $quoteResponseTransfer = $this->zedStub->call('/cart/gateway/remove-from-cart', $cartChangeTransfer);
+
+        return $quoteResponseTransfer;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
@@ -65,19 +110,6 @@ class CartStub extends ZedRequestStub implements CartStubInterface
         $quoteTransfer = $this->zedStub->call('/cart/gateway/reload-items', $quoteTransfer);
 
         return $quoteTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CartChangeQuantityTransfer $cartChangeQuantityTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    public function changeItemQuantity(CartChangeQuantityTransfer $cartChangeQuantityTransfer): QuoteResponseTransfer
-    {
-        /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
-        $quoteResponseTransfer = $this->zedStub->call('/cart/gateway/change-item-quantity', $cartChangeQuantityTransfer);
-
-        return $quoteResponseTransfer;
     }
 
     /**

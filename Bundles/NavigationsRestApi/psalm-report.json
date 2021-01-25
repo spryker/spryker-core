@@ -1,0 +1,163 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 84,
+            "line_to": 84,
+            "type": "InvalidArgument",
+            "message": "Argument 2 of Spryker\\Glue\\NavigationsRestApi\\Processor\\Expander\\NavigationNodeExpander::getUrlCollection expects array<array-key, string>, array<array-key, mixed|null|string> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/NavigationsRestApi/src/Spryker/Glue/NavigationsRestApi/Processor/Expander/NavigationNodeExpander.php",
+            "snippet": "                $this->getUrlCollection($restNavigationNodeTransfer->getChildren(), $urlCollection);",
+            "selected_text": "$urlCollection",
+            "error_level": 6,
+            "shortcode": 4
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 54,
+            "line_to": 54,
+            "type": "MismatchingDocblockParamType",
+            "message": "Parameter $restNavigationNodeTransfers has wrong type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\RestNavigationNodeTransfer>', should be 'ArrayObject'",
+            "file_name": "vendor/spryker/spryker/Bundles/NavigationsRestApi/src/Spryker/Glue/NavigationsRestApi/Processor/Expander/NavigationNodeExpander.php",
+            "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\RestNavigationNodeTransfer[] $restNavigationNodeTransfers",
+            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\RestNavigationNodeTransfer[]",
+            "error_level": 4,
+            "shortcode": 141
+        },
+        {
+            "severity": "info",
+            "line_from": 56,
+            "line_to": 56,
+            "type": "MismatchingDocblockReturnType",
+            "message": "Docblock has incorrect return type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\RestNavigationNodeTransfer>', should be 'ArrayObject'",
+            "file_name": "vendor/spryker/spryker/Bundles/NavigationsRestApi/src/Spryker/Glue/NavigationsRestApi/Processor/Expander/NavigationNodeExpander.php",
+            "snippet": "     * @return \\ArrayObject|\\Generated\\Shared\\Transfer\\RestNavigationNodeTransfer[]",
+            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\RestNavigationNodeTransfer[]",
+            "error_level": 4,
+            "shortcode": 142
+        },
+        {
+            "severity": "info",
+            "line_from": 71,
+            "line_to": 71,
+            "type": "MismatchingDocblockParamType",
+            "message": "Parameter $restNavigationNodeTransfers has wrong type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\RestNavigationNodeTransfer>', should be 'ArrayObject'",
+            "file_name": "vendor/spryker/spryker/Bundles/NavigationsRestApi/src/Spryker/Glue/NavigationsRestApi/Processor/Expander/NavigationNodeExpander.php",
+            "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\RestNavigationNodeTransfer[] $restNavigationNodeTransfers",
+            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\RestNavigationNodeTransfer[]",
+            "error_level": 4,
+            "shortcode": 141
+        },
+        {
+            "severity": "info",
+            "line_from": 76,
+            "line_to": 76,
+            "type": "ReferenceConstraintViolation",
+            "message": "Variable $urlCollection is limited to values of type array<array-key, string> because it is passed by reference, array<array-key, mixed|null|string> type found. Use @param-out to specify a different output type",
+            "file_name": "vendor/spryker/spryker/Bundles/NavigationsRestApi/src/Spryker/Glue/NavigationsRestApi/Processor/Expander/NavigationNodeExpander.php",
+            "snippet": "    protected function getUrlCollection(ArrayObject $restNavigationNodeTransfers, array &$urlCollection = []): void",
+            "selected_text": "$urlCollection",
+            "error_level": 2,
+            "shortcode": 86
+        },
+        {
+            "severity": "info",
+            "line_from": 83,
+            "line_to": 83,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\RestNavigationNodeTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/NavigationsRestApi/src/Spryker/Glue/NavigationsRestApi/Processor/Expander/NavigationNodeExpander.php",
+            "snippet": "            if ($restNavigationNodeTransfer->getChildren()->count() > 0) {",
+            "selected_text": "count",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 91,
+            "line_to": 91,
+            "type": "MismatchingDocblockParamType",
+            "message": "Parameter $restNavigationNodeTransfers has wrong type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\RestNavigationNodeTransfer>', should be 'ArrayObject'",
+            "file_name": "vendor/spryker/spryker/Bundles/NavigationsRestApi/src/Spryker/Glue/NavigationsRestApi/Processor/Expander/NavigationNodeExpander.php",
+            "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\RestNavigationNodeTransfer[] $restNavigationNodeTransfers",
+            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\RestNavigationNodeTransfer[]",
+            "error_level": 4,
+            "shortcode": 141
+        },
+        {
+            "severity": "info",
+            "line_from": 93,
+            "line_to": 93,
+            "type": "MismatchingDocblockReturnType",
+            "message": "Docblock has incorrect return type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\RestNavigationNodeTransfer>', should be 'ArrayObject'",
+            "file_name": "vendor/spryker/spryker/Bundles/NavigationsRestApi/src/Spryker/Glue/NavigationsRestApi/Processor/Expander/NavigationNodeExpander.php",
+            "snippet": "     * @return \\ArrayObject|\\Generated\\Shared\\Transfer\\RestNavigationNodeTransfer[]",
+            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\RestNavigationNodeTransfer[]",
+            "error_level": 4,
+            "shortcode": 142
+        },
+        {
+            "severity": "info",
+            "line_from": 100,
+            "line_to": 100,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of array_key_exists cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/NavigationsRestApi/src/Spryker/Glue/NavigationsRestApi/Processor/Expander/NavigationNodeExpander.php",
+            "snippet": "            if (array_key_exists($restNavigationNodeTransfer->getUrl(), $urlStorageTransfers)) {",
+            "selected_text": "$restNavigationNodeTransfer->getUrl()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 102,
+            "line_to": 102,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $urlStorageTransfers using possibly null offset mixed|null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/NavigationsRestApi/src/Spryker/Glue/NavigationsRestApi/Processor/Expander/NavigationNodeExpander.php",
+            "snippet": "                    $urlStorageTransfers[$restNavigationNodeTransfer->getUrl()],",
+            "selected_text": "$urlStorageTransfers",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 103,
+            "line_to": 103,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Glue\\NavigationsRestApi\\Processor\\Expander\\NavigationNodeExpander::findResourceIdByNodeType cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/NavigationsRestApi/src/Spryker/Glue/NavigationsRestApi/Processor/Expander/NavigationNodeExpander.php",
+            "snippet": "                    $restNavigationNodeTransfer->getNodeType()",
+            "selected_text": "$restNavigationNodeTransfer->getNodeType()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 108,
+            "line_to": 108,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\RestNavigationNodeTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/NavigationsRestApi/src/Spryker/Glue/NavigationsRestApi/Processor/Expander/NavigationNodeExpander.php",
+            "snippet": "            if ($restNavigationNodeTransfer->getChildren()->count() > 0) {",
+            "selected_text": "count",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 92,
+            "line_to": 92,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Glue\\NavigationsRestApi\\Dependency\\Client\\NavigationsRestApiToNavigationStorageClientInterface::findNavigationTreeByKey cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/NavigationsRestApi/src/Spryker/Glue/NavigationsRestApi/Processor/Navigation/NavigationReader.php",
+            "snippet": "            $restRequest->getResource()->getId(),",
+            "selected_text": "$restRequest->getResource()->getId()",
+            "error_level": 3,
+            "shortcode": 78
+        }
+    ],
+    "deprecation": []
+}

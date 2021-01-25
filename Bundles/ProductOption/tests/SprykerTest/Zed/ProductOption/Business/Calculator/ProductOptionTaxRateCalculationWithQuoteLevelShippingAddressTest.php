@@ -18,9 +18,9 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TaxRateTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery;
-use Pyz\Zed\ProductOption\ProductOptionDependencyProvider;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxFacadeBridge;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxFacadeInterface;
+use Spryker\Zed\ProductOption\ProductOptionDependencyProvider;
 
 /**
  * Auto-generated group annotations
@@ -48,7 +48,7 @@ class ProductOptionTaxRateCalculationWithQuoteLevelShippingAddressTest extends U
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -114,7 +114,7 @@ class ProductOptionTaxRateCalculationWithQuoteLevelShippingAddressTest extends U
         // Assert
         foreach ($quoteTransfer->getItems() as $iterator => $itemTransfer) {
             foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
-                $this->assertEquals(
+                $this->assertSame(
                     $expectedTaxRate,
                     $productOptionTransfer->getTaxRate(),
                     sprintf(
@@ -133,7 +133,7 @@ class ProductOptionTaxRateCalculationWithQuoteLevelShippingAddressTest extends U
      * @param string $defaultCountryIso2Code
      * @param float $defaultTaxRate
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxFacadeInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxFacadeInterface
      */
     protected function createProductOptionToTaxFacadeBridgeMock(string $defaultCountryIso2Code, float $defaultTaxRate): ProductOptionToTaxFacadeInterface
     {

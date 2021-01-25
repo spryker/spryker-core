@@ -10,6 +10,7 @@ namespace Spryker\Shared\SessionRedis\Handler;
 use SessionHandlerInterface;
 use Spryker\Shared\SessionRedis\Handler\Exception\LockCouldNotBeAcquiredException;
 use Spryker\Shared\SessionRedis\Handler\KeyBuilder\SessionKeyBuilderInterface;
+use Spryker\Shared\SessionRedis\Handler\LifeTime\SessionRedisLifeTimeCalculatorInterface;
 use Spryker\Shared\SessionRedis\Handler\Lock\SessionLockerInterface;
 use Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface;
 
@@ -23,11 +24,6 @@ class SessionHandlerRedisLocking implements SessionHandlerInterface
     protected $redisClient;
 
     /**
-     * @var int
-     */
-    protected $ttlSeconds;
-
-    /**
      * @var \Spryker\Shared\SessionRedis\Handler\Lock\SessionLockerInterface
      */
     protected $locker;
@@ -38,21 +34,26 @@ class SessionHandlerRedisLocking implements SessionHandlerInterface
     protected $keyBuilder;
 
     /**
+     * @var \Spryker\Shared\SessionRedis\Handler\LifeTime\SessionRedisLifeTimeCalculatorInterface
+     */
+    protected $sessionRedisLifeTimeCalculator;
+
+    /**
      * @param \Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface $redisClient
      * @param \Spryker\Shared\SessionRedis\Handler\Lock\SessionLockerInterface $locker
      * @param \Spryker\Shared\SessionRedis\Handler\KeyBuilder\SessionKeyBuilderInterface $keyBuilder
-     * @param int $ttlSeconds
+     * @param \Spryker\Shared\SessionRedis\Handler\LifeTime\SessionRedisLifeTimeCalculatorInterface $sessionRedisLifeTimeCalculator
      */
     public function __construct(
         SessionRedisWrapperInterface $redisClient,
         SessionLockerInterface $locker,
         SessionKeyBuilderInterface $keyBuilder,
-        $ttlSeconds
+        SessionRedisLifeTimeCalculatorInterface $sessionRedisLifeTimeCalculator
     ) {
         $this->redisClient = $redisClient;
         $this->locker = $locker;
-        $this->ttlSeconds = $ttlSeconds;
         $this->keyBuilder = $keyBuilder;
+        $this->sessionRedisLifeTimeCalculator = $sessionRedisLifeTimeCalculator;
         $this->redisClient->connect();
     }
 
@@ -96,7 +97,7 @@ class SessionHandlerRedisLocking implements SessionHandlerInterface
             throw new LockCouldNotBeAcquiredException(
                 sprintf(
                     '%s could not acquire access to the session %s',
-                    SessionHandlerRedisLocking::class,
+                    self::class,
                     $sessionId
                 )
             );
@@ -115,7 +116,11 @@ class SessionHandlerRedisLocking implements SessionHandlerInterface
      */
     public function write($sessionId, $data): bool
     {
-        return $this->redisClient->setex($this->keyBuilder->buildSessionKey($sessionId), $this->ttlSeconds, $data);
+        return $this->redisClient->setex(
+            $this->keyBuilder->buildSessionKey($sessionId),
+            $this->sessionRedisLifeTimeCalculator->getSessionLifeTime(),
+            $data
+        );
     }
 
     /**

@@ -1,0 +1,224 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 40,
+            "line_to": 40,
+            "type": "UndefinedClass",
+            "message": "Class or interface Symfony\\Component\\Security\\Core\\Encoder\\BCryptPasswordEncoder does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/Security/src/Spryker/Yves/Security/SecurityFactory.php",
+            "snippet": "        return new BCryptPasswordEncoder($this->getConfig()->getBCryptCost());",
+            "selected_text": "BCryptPasswordEncoder",
+            "error_level": -1,
+            "shortcode": 19
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 248,
+            "line_to": 248,
+            "type": "LessSpecificImplementedReturnType",
+            "message": "The inherited return type 'Spryker\\Shared\\SecurityExtension\\Configuration\\SecurityBuilderInterface&static' for Spryker\\Shared\\SecurityExtension\\Configuration\\SecurityBuilderInterface::addAccessDeniedHandler is more specific than the implemented return type for Spryker\\Shared\\Security\\Configuration\\SecurityConfiguration::addaccessdeniedhandler 'Spryker\\Shared\\SecurityExtension\\Configuration\\SecurityBuilderInterface'",
+            "file_name": "vendor/spryker/spryker/Bundles/Security/src/Spryker/Shared/Security/Configuration/SecurityConfiguration.php",
+            "snippet": "     * @return \\Spryker\\Shared\\SecurityExtension\\Configuration\\SecurityBuilderInterface",
+            "selected_text": "\\Spryker\\Shared\\SecurityExtension\\Configuration\\SecurityBuilderInterface",
+            "error_level": 5,
+            "shortcode": 166
+        },
+        {
+            "severity": "info",
+            "line_from": 272,
+            "line_to": 272,
+            "type": "LessSpecificImplementedReturnType",
+            "message": "The inherited return type 'Spryker\\Shared\\SecurityExtension\\Configuration\\SecurityBuilderInterface&static' for Spryker\\Shared\\SecurityExtension\\Configuration\\SecurityBuilderInterface::addEventSubscriber is more specific than the implemented return type for Spryker\\Shared\\Security\\Configuration\\SecurityConfiguration::addeventsubscriber 'Spryker\\Shared\\SecurityExtension\\Configuration\\SecurityBuilderInterface'",
+            "file_name": "vendor/spryker/spryker/Bundles/Security/src/Spryker/Shared/Security/Configuration/SecurityConfiguration.php",
+            "snippet": "     * @return \\Spryker\\Shared\\SecurityExtension\\Configuration\\SecurityBuilderInterface",
+            "selected_text": "\\Spryker\\Shared\\SecurityExtension\\Configuration\\SecurityBuilderInterface",
+            "error_level": 5,
+            "shortcode": 166
+        },
+        {
+            "severity": "info",
+            "line_from": 629,
+            "line_to": 629,
+            "type": "PossiblyNullOperand",
+            "message": "Cannot concatenate with a possibly null null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/Security/src/Spryker/Yves/Security/Plugin/Application/SecurityApplicationPlugin.php",
+            "snippet": "                if (!$container->has('security.authentication_provider.' . $firewallName . '.' . $provider)) {",
+            "selected_text": "$provider",
+            "error_level": 1,
+            "shortcode": 80
+        },
+        {
+            "severity": "info",
+            "line_from": 630,
+            "line_to": 630,
+            "type": "PossiblyNullOperand",
+            "message": "Cannot concatenate with a possibly null null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/Security/src/Spryker/Yves/Security/Plugin/Application/SecurityApplicationPlugin.php",
+            "snippet": "                    $container->set('security.authentication_provider.' . $firewallName . '.' . $provider, $container->get('security.authentication_provider.' . $provider . '._proto')($firewallName, $options));",
+            "selected_text": "$provider",
+            "error_level": 1,
+            "shortcode": 80
+        },
+        {
+            "severity": "info",
+            "line_from": 630,
+            "line_to": 630,
+            "type": "PossiblyNullOperand",
+            "message": "Cannot concatenate with a possibly null null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/Security/src/Spryker/Yves/Security/Plugin/Application/SecurityApplicationPlugin.php",
+            "snippet": "                    $container->set('security.authentication_provider.' . $firewallName . '.' . $provider, $container->get('security.authentication_provider.' . $provider . '._proto')($firewallName, $options));",
+            "selected_text": "$provider",
+            "error_level": 1,
+            "shortcode": 80
+        },
+        {
+            "severity": "info",
+            "line_from": 634,
+            "line_to": 634,
+            "type": "PossiblyNullOperand",
+            "message": "Cannot concatenate with a possibly null null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/Security/src/Spryker/Yves/Security/Plugin/Application/SecurityApplicationPlugin.php",
+            "snippet": "                    'security.authentication_provider.' . $firewallName . '.' . $provider,",
+            "selected_text": "$provider",
+            "error_level": 1,
+            "shortcode": 80
+        },
+        {
+            "severity": "info",
+            "line_from": 734,
+            "line_to": 734,
+            "type": "TooManyArguments",
+            "message": "Class Symfony\\Component\\Security\\Core\\Authentication\\AuthenticationTrustResolver has no __construct, but arguments were passed",
+            "file_name": "vendor/spryker/spryker/Bundles/Security/src/Spryker/Yves/Security/Plugin/Application/SecurityApplicationPlugin.php",
+            "snippet": "                return new AuthenticationTrustResolver(AnonymousToken::class, RememberMeToken::class);",
+            "selected_text": "new AuthenticationTrustResolver(AnonymousToken::class, RememberMeToken::class)",
+            "error_level": 4,
+            "shortcode": 26
+        },
+        {
+            "severity": "info",
+            "line_from": 1142,
+            "line_to": 1142,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 3 of Symfony\\Component\\Security\\Http\\Firewall\\LogoutListener::__construct expects Symfony\\Contracts\\EventDispatcher\\EventDispatcherInterface, possibly different type Symfony\\Component\\Security\\Http\\Logout\\LogoutSuccessHandlerInterface|Symfony\\Contracts\\EventDispatcher\\EventDispatcherInterface provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Security/src/Spryker/Yves/Security/Plugin/Application/SecurityApplicationPlugin.php",
+            "snippet": "                    (class_exists(LogoutEvent::class)) ? $eventDispatcher : $this->getLogoutHandler($container, $name, $options),",
+            "selected_text": "(class_exists(LogoutEvent::class)) ? $eventDispatcher : $this->getLogoutHandler($container, $name, $options)",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 1497,
+            "line_to": 1497,
+            "type": "TooManyArguments",
+            "message": "Too many arguments for method Symfony\\Component\\Routing\\RouteCollection::add - saw 3",
+            "file_name": "vendor/spryker/spryker/Bundles/Security/src/Spryker/Yves/Security/Plugin/Application/SecurityApplicationPlugin.php",
+            "snippet": "                $routeCollection->add($name, $route, 0);",
+            "selected_text": "add",
+            "error_level": 4,
+            "shortcode": 26
+        },
+        {
+            "severity": "info",
+            "line_from": 123,
+            "line_to": 123,
+            "type": "TypeDoesNotContainType",
+            "message": "Found a contradiction when evaluating $options and trying to reconcile type 'array<array-key, mixed>' to !array",
+            "file_name": "vendor/spryker/spryker/Bundles/Security/src/Spryker/Yves/Security/Plugin/Security/RememberMeSecurityPlugin.php",
+            "snippet": "                if (!is_array($options)) {",
+            "selected_text": "is_array($options)",
+            "error_level": 4,
+            "shortcode": 56
+        },
+        {
+            "severity": "info",
+            "line_from": 26,
+            "line_to": 26,
+            "type": "InvalidDocblock",
+            "message": "Found duplicated @return or prefixed @return tag in docblock for Spryker\\Yves\\Security\\SecurityDependencyProvider::provideDependencies",
+            "file_name": "vendor/spryker/spryker/Bundles/Security/src/Spryker/Yves/Security/SecurityDependencyProvider.php",
+            "snippet": "    /**\n     * @param \\Spryker\\Yves\\Kernel\\Container $container\n     *\n     * @return \\Spryker\\Yves\\Kernel\\Container\n     * @return \\Spryker\\Yves\\Kernel\\Container\n     */\n    public function provideDependencies(Container $container): Container",
+            "selected_text": "public function provideDependencies(Container $container): Container",
+            "error_level": 4,
+            "shortcode": 8
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 371,
+            "line_to": 371,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Yves\\Security\\Plugin\\Application\\SecurityApplicationPlugin::addUserPasswordValidator has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Security/src/Spryker/Yves/Security/Plugin/Application/SecurityApplicationPlugin.php",
+            "snippet": "            $this->addUserPasswordValidator($container);",
+            "selected_text": "addUserPasswordValidator",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 577,
+            "line_to": 577,
+            "type": "DeprecatedMethod",
+            "message": "The method Symfony\\Component\\Security\\Http\\Firewall\\LogoutListener::addHandler has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Security/src/Spryker/Yves/Security/Plugin/Application/SecurityApplicationPlugin.php",
+            "snippet": "                    $listener->addHandler($container->get('security.remember_me.service.' . $firewallName));",
+            "selected_text": "addHandler",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 917,
+            "line_to": 920,
+            "type": "DeprecatedClass",
+            "message": "Symfony\\Component\\Security\\Http\\Logout\\DefaultLogoutSuccessHandler is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Security/src/Spryker/Yves/Security/Plugin/Application/SecurityApplicationPlugin.php",
+            "snippet": "                return new DefaultLogoutSuccessHandler(\n                    $container->get(static::SERVICE_SECURITY_HTTP_UTILS),\n                    $options['target_url'] ?? '/'\n                );",
+            "selected_text": "new DefaultLogoutSuccessHandler(\n                    $container->get(static::SERVICE_SECURITY_HTTP_UTILS),\n                    $options['target_url'] ?? '/'\n                )",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 1163,
+            "line_to": 1163,
+            "type": "DeprecatedClass",
+            "message": "Class Symfony\\Component\\Security\\Http\\Logout\\LogoutSuccessHandlerInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Security/src/Spryker/Yves/Security/Plugin/Application/SecurityApplicationPlugin.php",
+            "snippet": "     * @return \\Symfony\\Component\\Security\\Http\\Logout\\LogoutSuccessHandlerInterface",
+            "selected_text": "\\Symfony\\Component\\Security\\Http\\Logout\\LogoutSuccessHandlerInterface",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 1165,
+            "line_to": 1165,
+            "type": "DeprecatedClass",
+            "message": "Class Symfony\\Component\\Security\\Http\\Logout\\LogoutSuccessHandlerInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Security/src/Spryker/Yves/Security/Plugin/Application/SecurityApplicationPlugin.php",
+            "snippet": "    protected function getLogoutHandler(ContainerInterface $container, string $firewallName, array $options): LogoutSuccessHandlerInterface",
+            "selected_text": "LogoutSuccessHandlerInterface",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 1201,
+            "line_to": 1201,
+            "type": "DeprecatedMethod",
+            "message": "The method Symfony\\Component\\Security\\Http\\Firewall\\LogoutListener::addHandler has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Security/src/Spryker/Yves/Security/Plugin/Application/SecurityApplicationPlugin.php",
+            "snippet": "            $listener->addHandler(new SessionLogoutHandler());",
+            "selected_text": "addHandler",
+            "error_level": 2,
+            "shortcode": 1
+        }
+    ]
+}

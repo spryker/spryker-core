@@ -49,7 +49,7 @@ class ProductApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGet()
+    public function testGet(): void
     {
         $productApiFacade = new ProductApiFacade();
 
@@ -69,7 +69,7 @@ class ProductApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFind()
+    public function testFind(): void
     {
         $productApiFacade = new ProductApiFacade();
 
@@ -89,8 +89,9 @@ class ProductApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindConditionsAndSortAndLimit()
+    public function testFindConditionsAndSortAndLimit(): void
     {
+        //Arrange
         $productApiFacade = new ProductApiFacade();
 
         $jsonDataForPagination = $this->getJsonDataForPagination();
@@ -104,14 +105,16 @@ class ProductApiFacadeTest extends Unit
 
         $apiRequestTransfer->setFilter($apiFilterTransfer);
 
+        //Act
         $resultTransfer = $productApiFacade->findProducts($apiRequestTransfer);
 
+        //Assert
         $this->assertInstanceOf(ApiCollectionTransfer::class, $resultTransfer);
         $this->assertSame(2, count($resultTransfer->getData()));
 
         $data = $resultTransfer->getData();
-        $this->assertGreaterThanOrEqual(209, $data[0]['sku']);
-        $this->assertGreaterThanOrEqual(209, $data[1]['sku']);
+        $this->assertGreaterThanOrEqual(209, $data[0]['id_product_abstract']);
+        $this->assertGreaterThanOrEqual(209, $data[1]['id_product_abstract']);
 
         $apiPaginationTransfer = $resultTransfer->getPagination();
         $this->assertSame(2, $apiPaginationTransfer->getPage());
@@ -121,14 +124,13 @@ class ProductApiFacadeTest extends Unit
     }
 
     /**
-     * @expectedException \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     * @expectedExceptionCode 404
-     * @expectedExceptionMessage Out of bounds.
-     *
      * @return void
      */
-    public function testFindOutOfBounds()
+    public function testFindOutOfBounds(): void
     {
+        $this->expectException('Symfony\Component\HttpKernel\Exception\NotFoundHttpException');
+        $this->expectExceptionCode('404');
+        $this->expectExceptionMessage('Out of bounds.');
         $productApiFacade = new ProductApiFacade();
 
         $apiRequestTransfer = new ApiRequestTransfer();
@@ -144,7 +146,7 @@ class ProductApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testAdd()
+    public function testAdd(): void
     {
         $productApiFacade = new ProductApiFacade();
 
@@ -170,7 +172,7 @@ class ProductApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testEdit()
+    public function testEdit(): void
     {
         $productApiFacade = new ProductApiFacade();
 
@@ -199,7 +201,7 @@ class ProductApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdate()
+    public function testUpdate(): void
     {
         $productApiFacade = new ProductApiFacade();
 
@@ -224,14 +226,14 @@ class ProductApiFacadeTest extends Unit
     protected function getJsonDataForPagination(): array
     {
         return [
-            "rules" => [
+            'rules' => [
                 [
-                    "id" => "spy_product_abstract.id_product_abstract",
-                    "field" => "spy_product_abstract.id_product_abstract",
-                    "type" => "number",
-                    "input" => "text",
-                    "operator" => "greater_or_equal",
-                    "value" => "209",
+                    'id' => 'spy_product_abstract.id_product_abstract',
+                    'field' => 'spy_product_abstract.id_product_abstract',
+                    'type' => 'number',
+                    'input' => 'text',
+                    'operator' => 'greater_or_equal',
+                    'value' => '209',
                 ],
             ],
         ];

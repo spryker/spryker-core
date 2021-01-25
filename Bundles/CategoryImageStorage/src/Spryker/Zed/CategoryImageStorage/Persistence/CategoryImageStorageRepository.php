@@ -7,9 +7,11 @@
 
 namespace Spryker\Zed\CategoryImageStorage\Persistence;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Orm\Zed\CategoryImage\Persistence\Map\SpyCategoryImageSetTableMap;
 use Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSetQuery;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Propel\Runtime\Formatter\ObjectFormatter;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -83,6 +85,30 @@ class CategoryImageStorageRepository extends AbstractRepository implements Categ
             ->select([static::FK_CATEGORY])
             ->addAnd(SpyCategoryImageSetTableMap::COL_FK_CATEGORY, null, ModelCriteria::NOT_EQUAL)
             ->find();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $categoryIds
+     *
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     */
+    public function getSynchronizationDataTransfersByFilterAndCategoryIds(FilterTransfer $filterTransfer, array $categoryIds = []): array
+    {
+        $query = $this->getFactory()
+            ->createSpyCategoryImageStorageQuery();
+
+        if ($categoryIds !== []) {
+            $query->filterByFkCategory_In($categoryIds);
+        }
+
+        $categoryImageStorageEntityCollection = $this->buildQueryFromCriteria($query, $filterTransfer)
+            ->setFormatter(ObjectFormatter::class)
+            ->find();
+
+        return $this->getFactory()
+            ->createCategoryImageStorageMapper()
+            ->mapCategoryImageStorageEntityCollectionToSynchronizationDataTransfers($categoryImageStorageEntityCollection);
     }
 
     /**

@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\MerchantGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\MerchantCollectionTransfer;
+use Generated\Shared\Transfer\MerchantCriteriaTransfer;
+use Generated\Shared\Transfer\MerchantResponseTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 
 interface MerchantGuiToMerchantFacadeInterface
@@ -14,35 +17,35 @@ interface MerchantGuiToMerchantFacadeInterface
     /**
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantTransfer
+     * @return \Generated\Shared\Transfer\MerchantResponseTransfer
      */
-    public function createMerchant(MerchantTransfer $merchantTransfer): MerchantTransfer;
+    public function createMerchant(MerchantTransfer $merchantTransfer): MerchantResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantTransfer
+     * @return \Generated\Shared\Transfer\MerchantResponseTransfer
      */
-    public function updateMerchant(MerchantTransfer $merchantTransfer): MerchantTransfer;
+    public function updateMerchant(MerchantTransfer $merchantTransfer): MerchantResponseTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     *
-     * @return void
-     */
-    public function deleteMerchant(MerchantTransfer $merchantTransfer): void;
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     * @param \Generated\Shared\Transfer\MerchantCriteriaTransfer $merchantCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantTransfer|null
      */
-    public function getMerchantById(MerchantTransfer $merchantTransfer): ?MerchantTransfer;
+    public function findOne(MerchantCriteriaTransfer $merchantCriteriaTransfer): ?MerchantTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     * @param string $currentStatus
      *
-     * @return \Generated\Shared\Transfer\MerchantTransfer|null
+     * @return string[]
      */
-    public function findMerchantById(MerchantTransfer $merchantTransfer): ?MerchantTransfer;
+    public function getApplicableMerchantStatuses(string $currentStatus): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantCriteriaTransfer $merchantCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
+     */
+    public function get(MerchantCriteriaTransfer $merchantCriteriaTransfer): MerchantCollectionTransfer;
 }

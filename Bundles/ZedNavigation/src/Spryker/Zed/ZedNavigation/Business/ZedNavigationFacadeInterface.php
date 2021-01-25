@@ -15,7 +15,10 @@ interface ZedNavigationFacadeInterface
     /**
      * Specification:
      * - Returns an array with all navigation entries.
+     * - Calls a stack of `NavigationItemCollectionFilterPluginInterface` to filter navigation items.
+     * - Calls a stack of `NavigationItemFilterPluginInterface` to filter navigation items.
      * - When navigation cache is enabled it returns cached navigation.
+     * - Uses a strategy to define navigation elements merging process.
      *
      * @api
      *
@@ -35,4 +38,14 @@ interface ZedNavigationFacadeInterface
      * @return void
      */
     public function writeNavigationCache();
+
+    /**
+     * Specification:
+     * - Removes the navigation cache file.
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function removeNavigationCache(): void;
 }

@@ -36,6 +36,14 @@ class CompanyBusinessUnitHelper extends Module
     }
 
     /**
+     * @return int
+     */
+    public function getBusinessUnitsCount(): int
+    {
+        return SpyCompanyBusinessUnitQuery::create()->count();
+    }
+
+    /**
      * @return \Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFacadeInterface
      */
     protected function getCompanyBusinessUnitFacade(): CompanyBusinessUnitFacadeInterface

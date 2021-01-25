@@ -17,16 +17,17 @@
     </transfer>
 
     <transfer name="CompanySupplierCollection">
-        <property name="suppliers" type="SpyCompanyEntity[]"/>
+        <property name="suppliers" type="SpyCompanyEntity[]" singular="suppliers"/>
     </transfer>
 
     <transfer name="ProductConcrete">
-        <property name="companySuppliers" type="SpyCompanyEntity[]"/>
+        <property name="companySuppliers" type="SpyCompanyEntity[]" singular="companySuppliers"/>
         <property name="supplierPrice" type="string"/>
         <property name="defaultPrice" type="string"/>
+        <property name="idProductConcrete" type="int"/>
     </transfer>
 
     <transfer name="ProductSupplierCollection">
-        <property name="products" type="ProductConcrete[]"/>
+        <property name="products" type="ProductConcrete[]" singular="products"/>
     </transfer>
 </transfers>

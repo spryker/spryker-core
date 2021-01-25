@@ -7,13 +7,13 @@
 
 namespace Spryker\Zed\Development\Business\DependencyTree\DependencyFinder;
 
+use Laminas\Filter\Word\SeparatorToCamelCase;
 use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Ruleset;
 use PHP_CodeSniffer\Runner;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyTree;
 use Symfony\Component\Finder\SplFileInfo;
-use Zend\Filter\Word\SeparatorToCamelCase;
 
 $manualAutoload = APPLICATION_VENDOR_DIR . '/squizlabs/php_codesniffer/autoload.php';
 if (!class_exists(Config::class) && file_exists($manualAutoload)) {
@@ -80,7 +80,8 @@ class ExternalDependency extends AbstractDependencyFinder
                 continue;
             }
 
-            if (strpos($className, 'Spryker') !== false
+            if (
+                strpos($className, 'Spryker') !== false
                 || strpos($className, 'Generated') !== false
                 || strpos($className, 'Orm') !== false
                 || strpos($className, 'static') !== false

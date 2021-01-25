@@ -102,7 +102,7 @@ class MerchantRelationshipSalesOrderThresholdTable extends AbstractTable
             ->getMerchantRelationshipTableQuery()
             ->withColumn(SpyCompanyBusinessUnitTableMap::COL_NAME, static::COL_BUSINESS_UNIT_NAME)
             ->withColumn(SpyCompanyTableMap::COL_NAME, static::COL_COMPANY_NAME)
-            ->withColumn("CONCAT(" . SpyMerchantTableMap::COL_NAME . ", ' ', " . SpyMerchantRelationshipTableMap::COL_MERCHANT_RELATIONSHIP_KEY . ")", static::COL_MERCHANT_RELATIONSHIP_NAME);
+            ->withColumn('CONCAT(' . SpyMerchantTableMap::COL_NAME . ", ' ', " . SpyMerchantRelationshipTableMap::COL_MERCHANT_RELATIONSHIP_KEY . ')', static::COL_MERCHANT_RELATIONSHIP_NAME);
 
         return $query;
     }
@@ -208,7 +208,7 @@ class MerchantRelationshipSalesOrderThresholdTable extends AbstractTable
     protected function formatThresholdsColumn(array $thresholdGroups): string
     {
         $thresholdGroups = array_map(function (string $thresholdGroup) {
-            return "<span class='label label-info'>" . $thresholdGroup . "</span>";
+            return $this->generateLabel($thresholdGroup, 'label-info');
         }, $thresholdGroups);
 
         return implode(' ', $thresholdGroups);

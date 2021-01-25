@@ -20,6 +20,8 @@ interface CartUpdaterInterface
     public function updateQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
 
     /**
+     * @deprecated Use {@link markQuoteAsDefault()} instead.
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
@@ -32,4 +34,11 @@ interface CartUpdaterInterface
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function clearQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function markQuoteAsDefault(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
 }

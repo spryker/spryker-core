@@ -1,6 +1,6 @@
 # ProductsRestApi Module
 [![Build Status](https://travis-ci.org/spryker/products-rest-api.svg)](https://travis-ci.org/spryker/products-rest-api)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/products-rest-api/badge.svg)](https://coveralls.io/github/spryker/products-rest-api)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 ProductsRestApi module provides REST access to products.
 

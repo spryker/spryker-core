@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * MIT License
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace SprykerTest\Zed\ConfigurableBundleDataImport;
@@ -12,10 +12,11 @@ use Generated\Shared\Transfer\ProductListTransfer;
 use Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplate;
 use Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateQuery;
 use Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateSlotQuery;
+use Orm\Zed\ProductImage\Persistence\Base\SpyProductImageQuery;
+use Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery;
+use Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImageQuery;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -25,7 +26,7 @@ use Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateSlotQuer
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  * @method \Spryker\Zed\ConfigurableBundle\Business\ConfigurableBundleFacadeInterface getFacade()
  *
  * @SuppressWarnings(PHPMD)
@@ -41,6 +42,16 @@ class ConfigurableBundleDataImportCommunicationTester extends Actor
     {
         $this->ensureDatabaseTableIsEmpty($this->getConfigurableBundleTemplateQuery());
         $this->ensureDatabaseTableIsEmpty($this->getConfigurableBundleTemplateSlotQuery());
+    }
+
+    /**
+     * @return void
+     */
+    public function ensureProductImageTablesIsEmpty(): void
+    {
+        $this->ensureDatabaseTableIsEmpty($this->getProductImageQuery());
+        $this->ensureDatabaseTableIsEmpty($this->getProductImageSetQuery());
+        $this->ensureDatabaseTableIsEmpty($this->getProductImageSetToProductImageQuery());
     }
 
     /**
@@ -82,5 +93,29 @@ class ConfigurableBundleDataImportCommunicationTester extends Actor
     protected function getConfigurableBundleTemplateSlotQuery(): SpyConfigurableBundleTemplateSlotQuery
     {
         return SpyConfigurableBundleTemplateSlotQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery
+     */
+    protected function getProductImageSetQuery(): SpyProductImageSetQuery
+    {
+        return SpyProductImageSetQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImageQuery
+     */
+    protected function getProductImageSetToProductImageQuery(): SpyProductImageSetToProductImageQuery
+    {
+        return SpyProductImageSetToProductImageQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageQuery
+     */
+    protected function getProductImageQuery(): SpyProductImageQuery
+    {
+        return SpyProductImageQuery::create();
     }
 }

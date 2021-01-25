@@ -35,7 +35,7 @@ class RequestTest extends Unit
         TransferInterface $transfer,
         ?TransferInterface $metaTransfer1 = null,
         ?TransferInterface $metaTransfer2 = null
-    ) {
+    ): Request {
         $request = new Request();
 
         $request->setPassword('password');
@@ -59,36 +59,36 @@ class RequestTest extends Unit
     /**
      * @return void
      */
-    public function testDefaultTransferIsNull()
+    public function testDefaultTransferIsNull(): void
     {
         $response = new Request();
-        $this->assertEquals(null, $response->getTransfer());
-        $this->assertEquals(null, $response->getMetaTransfer('asd'));
+        $this->assertNull($response->getTransfer());
+        $this->assertNull($response->getMetaTransfer('asd'));
     }
 
     /**
      * @return void
      */
-    public function testGetterAndSetters()
+    public function testGetterAndSetters(): void
     {
         $transfer = new TestTransfer();
         $transfer->setFoo('bar');
         $request = $this->createFullRequest($transfer);
 
-        $this->assertEquals('password', $request->getPassword());
-        $this->assertEquals('host', $request->getHost());
-        $this->assertEquals('sessionId', $request->getSessionId());
-        $this->assertEquals(1234567, $request->getTime());
+        $this->assertSame('password', $request->getPassword());
+        $this->assertSame('host', $request->getHost());
+        $this->assertSame('sessionId', $request->getSessionId());
+        $this->assertSame(1234567, $request->getTime());
         $this->assertEquals($transfer, $request->getTransfer());
         $this->assertNotSame($transfer, $request->getTransfer());
         $this->assertNotSame($request->getTransfer(), $request->getTransfer());
-        $this->assertEquals('username', $request->getUsername());
+        $this->assertSame('username', $request->getUsername());
     }
 
     /**
      * @return void
      */
-    public function testMetaTransfersAreStoredCorrectly()
+    public function testMetaTransfersAreStoredCorrectly(): void
     {
         $transfer = new TestTransfer();
         $transfer->setFoo('foo');
@@ -110,7 +110,7 @@ class RequestTest extends Unit
     /**
      * @return void
      */
-    public function testToArrayAndFromArray()
+    public function testToArrayAndFromArray(): void
     {
         $transfer = new TestTransfer();
         $transfer->setFoo('foo');

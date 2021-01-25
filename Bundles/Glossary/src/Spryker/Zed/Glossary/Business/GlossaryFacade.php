@@ -19,6 +19,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $keyName
@@ -33,6 +35,8 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $keyName
@@ -47,6 +51,8 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $keyName
@@ -61,6 +67,8 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $oldKeyName
@@ -76,6 +84,8 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $keyName
@@ -106,6 +116,8 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $keyName
@@ -123,6 +135,8 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $keyName
@@ -139,6 +153,8 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $keyName
@@ -156,6 +172,8 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $keyName
@@ -171,6 +189,8 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $keyName
@@ -186,6 +206,8 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $keyName
@@ -203,6 +225,8 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $keyName
@@ -220,6 +244,8 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\KeyTranslationTransfer $keyTranslationTransfer
@@ -234,6 +260,8 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\TranslationTransfer $transferTranslation
@@ -248,6 +276,8 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\TranslationTransfer $transferTranslation
@@ -262,6 +292,8 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $keyName
@@ -293,6 +325,8 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $keyName
@@ -309,6 +343,8 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idKey
@@ -324,6 +360,8 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idKey
@@ -338,6 +376,8 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idKey
@@ -353,6 +393,8 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $keyName
@@ -367,6 +409,8 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return void
@@ -377,6 +421,8 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $keyFragment
@@ -405,5 +451,38 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
         return $this->getFactory()
             ->createTranslationReader()
             ->getTranslationsByGlossaryKeyAndLocaleTransfers($glossaryKey, $localeTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string[] $glossaryKeys
+     * @param \Generated\Shared\Transfer\LocaleTransfer[] $localeTransfers
+     *
+     * @return \Generated\Shared\Transfer\TranslationTransfer[]
+     */
+    public function getTranslationsByGlossaryKeysAndLocaleTransfers(array $glossaryKeys, array $localeTransfers): array
+    {
+        return $this->getFactory()
+            ->createTranslationReader()
+            ->getTranslationsByGlossaryKeysAndLocaleTransfers($glossaryKeys, $localeTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string[] $glossaryKeys
+     *
+     * @return \Generated\Shared\Transfer\GlossaryKeyTransfer[]
+     */
+    public function getGlossaryKeyTransfersByGlossaryKeys(array $glossaryKeys): array
+    {
+        return $this->getFactory()
+            ->createGlossaryKeyReader()
+            ->getGlossaryKeyTransfersByGlossaryKeys($glossaryKeys);
     }
 }

@@ -20,7 +20,7 @@ class TransactionHelper extends Module
     /**
      * @return void
      */
-    public function _initialize()
+    public function _initialize(): void
     {
         Propel::disableInstancePooling();
 
@@ -35,7 +35,7 @@ class TransactionHelper extends Module
     }
 
     /**
-     * @deprecated Will be removed in favor of `\Spryker\Zed\Propel\Communication\Plugin\Application\PropelApplicationPlugin`.
+     * @deprecated Will be removed in favor of {@link \Spryker\Zed\Propel\Communication\Plugin\Application\PropelApplicationPlugin}.
      *
      * @return void
      */
@@ -50,7 +50,7 @@ class TransactionHelper extends Module
      *
      * @return void
      */
-    public function _before(TestInterface $test)
+    public function _before(TestInterface $test): void
     {
         parent::_before($test);
 
@@ -62,7 +62,7 @@ class TransactionHelper extends Module
      *
      * @return void
      */
-    public function _after(TestInterface $test)
+    public function _after(TestInterface $test): void
     {
         parent::_after($test);
 
@@ -72,7 +72,7 @@ class TransactionHelper extends Module
     /**
      * @return void
      */
-    public function _afterSuite()
+    public function _afterSuite(): void
     {
         Propel::closeConnections();
     }

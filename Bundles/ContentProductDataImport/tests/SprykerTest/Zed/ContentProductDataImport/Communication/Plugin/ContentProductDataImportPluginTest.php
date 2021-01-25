@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * MIT License
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace SprykerTest\Zed\ContentProductDataImport\Communication\Plugin;
@@ -39,7 +39,7 @@ class ContentProductDataImportPluginTest extends Unit
     /**
      * @return void
      */
-    protected function _before()
+    protected function _before(): void
     {
         parent::_before();
         $this->tester->ensureDatabaseTableIsEmpty();
@@ -174,7 +174,7 @@ class ContentProductDataImportPluginTest extends Unit
     /**
      * @return \Spryker\Service\UtilEncoding\UtilEncodingService
      */
-    protected function createUtilEncodingService()
+    protected function createUtilEncodingService(): UtilEncodingService
     {
         return new UtilEncodingService();
     }

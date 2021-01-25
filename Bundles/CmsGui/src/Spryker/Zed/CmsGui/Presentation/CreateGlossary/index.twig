@@ -1,3 +1,5 @@
+{# @var cmsPage \Generated\Shared\Transfer\CmsPageTransfer #}
+
 {% extends '@Cms/Layout/layout.twig' %}
 
     {% set pageName = '' %}
@@ -7,14 +9,14 @@
         {% endif %}
     {% endfor %}
 
-{% set widget_title = 'Edit Placeholders: ' | trans ~ pageName %}
+{% set widget_title = 'Edit Placeholders' | trans ~ ': ' ~ pageName %}
 
 {% block head_title widget_title %}
 {% block section_title widget_title %}
 
 {% block action %}
     {% set redirectUrl = url('/cms-gui/create-glossary', {'id-cms-page' : idCmsPage}) %}
-    {{ include ('@CmsGui/_template/version-button.twig', { 'id-cms-page': idCmsPage, 'redirect-url' : redirectUrl}) }}
+    {% include '@CmsGui/_template/version-button.twig' %}
     {% for buttonTransfer in viewActionButtons %}
         {{ viewActionButton(buttonTransfer.url, buttonTransfer.title | trans, buttonTransfer.defaultOptions) }}
     {% endfor %}
@@ -22,13 +24,13 @@
     {% if cmsVersion is not null %}
         {{ removeActionButton(url('/cms-gui/version-page/discard', {'id-cms-page': idCmsPage, 'redirect-url' : redirectUrl}), 'Discard Draft' | trans) }}
     {% endif %}
-    {{ include ('@CmsGui/_template/activate-button.twig', { 'id-cms-page': idCmsPage, 'isActive': cmsPage.isActive}) }}
+    {% include '@CmsGui/_template/activate-button.twig' %}
     {{ backActionButton('/cms-gui/list-page', 'Back to CMS' | trans) }}
 {% endblock %}
 
 {% block content %}
 
-    {{ include ('@CmsGui/_template/edit-notes.twig') }}
+    {% include '@CmsGui/_template/edit-notes.twig' %}
 
     {% if placeholderTabs.tabs | length > 0 %}
 
@@ -49,7 +51,7 @@
 
 {% block head_css %}
     {{ parent() }}
-    <link rel="stylesheet" href="/assets/css/spryker-zed-cms-gui-main.css">
+    <link rel="stylesheet" href="{{ assetsPath('css/spryker-zed-cms-gui-main.css') }}">
 {% endblock %}
 
 {% block footer_js %}
@@ -59,6 +61,6 @@
         {{ render(controller('/content-gui/assets/index'), {'ignore_errors':true}) }}
         {{ parent() }}
     {% endblock %}
-    <script src="/assets/js/spryker-zed-cms-gui-main.js"></script>
+    <script src="{{ assetsPath('js/spryker-zed-cms-gui-main.js') }}"></script>
 {% endblock %}
 

@@ -40,7 +40,7 @@ class AbstractPlaceOrderStepTest extends Unit
     /**
      * @return void
      */
-    public function testRequireInputReturnFalse()
+    public function testRequireInputReturnFalse(): void
     {
         $checkoutClientMock = $this->getCheckoutClientMock();
         $abstractPlaceOrderStepMock = $this->getAbstractPlaceOrderStep($checkoutClientMock);
@@ -51,7 +51,7 @@ class AbstractPlaceOrderStepTest extends Unit
     /**
      * @return void
      */
-    public function testExecuteShouldSetExternalRedirectUrlIfResponseContainsOne()
+    public function testExecuteShouldSetExternalRedirectUrlIfResponseContainsOne(): void
     {
         $checkoutResponseTransfer = new CheckoutResponseTransfer();
         $checkoutResponseTransfer->setIsExternalRedirect(true);
@@ -68,7 +68,7 @@ class AbstractPlaceOrderStepTest extends Unit
     /**
      * @return void
      */
-    public function testExecuteShouldSetOrderReferenceIfResponseContainsOne()
+    public function testExecuteShouldSetOrderReferenceIfResponseContainsOne(): void
     {
         $checkoutResponseTransfer = new CheckoutResponseTransfer();
         $saveOrderTransfer = new SaveOrderTransfer();
@@ -87,7 +87,7 @@ class AbstractPlaceOrderStepTest extends Unit
     /**
      * @return void
      */
-    public function testPostConditionReturnTrueWhenOrderReferenceGivenAndResponseIsSuccessful()
+    public function testPostConditionReturnTrueWhenOrderReferenceGivenAndResponseIsSuccessful(): void
     {
         $checkoutResponseTransfer = new CheckoutResponseTransfer();
         $checkoutResponseTransfer->setIsSuccess(true);
@@ -107,7 +107,7 @@ class AbstractPlaceOrderStepTest extends Unit
     /**
      * @return void
      */
-    public function testPostConditionReturnFalseWhenNoOrderReferenceGiven()
+    public function testPostConditionReturnFalseWhenNoOrderReferenceGiven(): void
     {
         $abstractPlaceOrderStepMock = $this->getAbstractPlaceOrderStep(
             $this->getCheckoutClientMock()
@@ -119,7 +119,7 @@ class AbstractPlaceOrderStepTest extends Unit
     /**
      * @return void
      */
-    public function testPostConditionReturnFalseWhenOrderReferenceGivenAndResponseIsNotSuccessful()
+    public function testPostConditionReturnFalseWhenOrderReferenceGivenAndResponseIsNotSuccessful(): void
     {
         $checkoutResponseTransfer = new CheckoutResponseTransfer();
         $checkoutResponseTransfer->setIsSuccess(false);
@@ -139,7 +139,7 @@ class AbstractPlaceOrderStepTest extends Unit
     /**
      * @return void
      */
-    public function testPostConditionDoesNotChangeEscapeRouteIfResponseFalseAndNoErrorCodeMatches()
+    public function testPostConditionDoesNotChangeEscapeRouteIfResponseFalseAndNoErrorCodeMatches(): void
     {
         $checkoutResponseTransfer = new CheckoutResponseTransfer();
         $checkoutResponseTransfer->setIsSuccess(false);
@@ -161,7 +161,7 @@ class AbstractPlaceOrderStepTest extends Unit
     /**
      * @return void
      */
-    public function testPostConditionChangeErrorRouteIfResponseFalseAndErrorCodeMatches()
+    public function testPostConditionChangeErrorRouteIfResponseFalseAndErrorCodeMatches(): void
     {
         $checkoutResponseTransfer = new CheckoutResponseTransfer();
         $checkoutResponseTransfer->setIsSuccess(false);
@@ -188,7 +188,7 @@ class AbstractPlaceOrderStepTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Yves\Checkout\Process\Steps\AbstractPlaceOrderStep
      */
-    protected function getAbstractPlaceOrderStep(CheckoutClientInterface $checkoutClient)
+    protected function getAbstractPlaceOrderStep(CheckoutClientInterface $checkoutClient): AbstractPlaceOrderStep
     {
         $errorCodeToEscapeRouteMatching = [
             self::ERROR_CODE_123 => self::ESCAPE_ROUTE_123,
@@ -201,7 +201,7 @@ class AbstractPlaceOrderStepTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\Checkout\CheckoutClientInterface
      */
-    private function getCheckoutClientMock()
+    private function getCheckoutClientMock(): CheckoutClientInterface
     {
         return $this->getMockBuilder(CheckoutClientInterface::class)->getMock();
     }
@@ -209,7 +209,7 @@ class AbstractPlaceOrderStepTest extends Unit
     /**
      * @return \Symfony\Component\HttpFoundation\Request
      */
-    protected function getRequest()
+    protected function getRequest(): Request
     {
         return Request::create('foo');
     }

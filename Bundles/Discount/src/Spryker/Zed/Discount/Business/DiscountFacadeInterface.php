@@ -4,6 +4,7 @@
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
+
 namespace Spryker\Zed\Discount\Business;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
@@ -13,6 +14,7 @@ use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\DiscountVoucherTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
@@ -338,7 +340,7 @@ interface DiscountFacadeInterface
      *
      * @api
      *
-     * @deprecated Use `findHydratedDiscountConfiguratorByIdDiscount()` instead.
+     * @deprecated Use {@link findHydratedDiscountConfiguratorByIdDiscount()} instead.
      *
      * @param int $idDiscount
      *
@@ -565,4 +567,57 @@ interface DiscountFacadeInterface
      * @return bool
      */
     public function validateVoucherDiscountsMaxUsage(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool;
+
+    /**
+     * Specification:
+     * - Sets voucher discount to the quote if the code hasn't been added already.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $cartCode
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function addCartCode(QuoteTransfer $quoteTransfer, string $cartCode): QuoteTransfer;
+
+    /**
+     * Specification:
+     * - Removes matching applied and not applied voucher discount from quote.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $cartCode
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function removeCartCode(QuoteTransfer $quoteTransfer, string $cartCode): QuoteTransfer;
+
+    /**
+     * Specification:
+     * - Clears all applied and not applied voucher codes from the quote.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function clearCartCodes(QuoteTransfer $quoteTransfer): QuoteTransfer;
+
+    /**
+     * Specification:
+     * - Returns voucher apply success message in case the given voucher code has been applied successfully.
+     * - Returns voucher apply failed message in case the given voucher code hasn't been applied successfully.
+     * - Returns an empty failed message if code is not relevant.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $cartCode
+     *
+     * @return \Generated\Shared\Transfer\MessageTransfer|null
+     */
+    public function findOperationResponseMessage(QuoteTransfer $quoteTransfer, string $cartCode): ?MessageTransfer;
 }

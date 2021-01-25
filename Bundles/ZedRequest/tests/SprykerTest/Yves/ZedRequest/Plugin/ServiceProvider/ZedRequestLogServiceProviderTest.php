@@ -13,6 +13,8 @@ use Spryker\Shared\ZedRequest\Client\HandlerStack\HandlerStackContainer;
 use Spryker\Yves\ZedRequest\Plugin\ServiceProvider\ZedRequestLogServiceProvider;
 
 /**
+ * @deprecated Will be removed without replacement.
+ *
  * Auto-generated group annotations
  *
  * @group SprykerTest
@@ -28,7 +30,7 @@ class ZedRequestLogServiceProviderTest extends Unit
     /**
      * @return void
      */
-    public function testRegisterShouldDoNothing()
+    public function testRegisterShouldDoNothing(): void
     {
         $serviceProvider = new ZedRequestLogServiceProvider();
         $serviceProvider->register(new Application());
@@ -37,7 +39,7 @@ class ZedRequestLogServiceProviderTest extends Unit
     /**
      * @return void
      */
-    public function testBootShouldAddGuzzleLogMiddleware()
+    public function testBootShouldAddGuzzleLogMiddleware(): void
     {
         $application = new Application();
 

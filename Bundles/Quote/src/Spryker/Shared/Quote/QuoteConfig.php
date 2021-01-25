@@ -15,6 +15,8 @@ class QuoteConfig extends AbstractSharedConfig
     public const STORAGE_STRATEGY_DATABASE = 'database';
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getStorageStrategy()

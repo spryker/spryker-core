@@ -4,20 +4,20 @@
   "description": "CmsPageSearch module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.3",
     "spryker/cms": "^7.0.0",
     "spryker/event-behavior": "^1.10.0",
     "spryker/kernel": "^3.30.0",
     "spryker/locale": "^3.1.0",
     "spryker/propel-orm": "^1.0.0",
     "spryker/search": "^7.0.0 || ^8.0.0",
+    "spryker/search-extension": "^1.0.0",
     "spryker/synchronization-behavior": "^1.0.0",
     "spryker/synchronization-extension": "^1.0.0",
     "spryker/util-encoding": "^2.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/config": "*",
     "spryker/elastica": "*",
     "spryker/event": "*",
     "spryker/propel": "*",
@@ -42,9 +42,13 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+  },
   "extra": {
     "branch-alias": {
-      "dev-master": "0.1.x-dev"
+      "dev-master": "2.0.x-dev"
     }
   },
   "config": {

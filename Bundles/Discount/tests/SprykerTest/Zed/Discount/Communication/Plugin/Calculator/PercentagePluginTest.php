@@ -27,7 +27,7 @@ class PercentagePluginTest extends Unit
     /**
      * @return void
      */
-    public function testTransformForPersistence()
+    public function testTransformForPersistence(): void
     {
         $plugin = new PercentagePlugin();
 
@@ -38,7 +38,7 @@ class PercentagePluginTest extends Unit
     /**
      * @return void
      */
-    public function testTransformFromPersistence()
+    public function testTransformFromPersistence(): void
     {
         $plugin = new PercentagePlugin();
 

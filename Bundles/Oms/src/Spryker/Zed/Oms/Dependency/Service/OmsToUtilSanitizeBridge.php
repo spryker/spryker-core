@@ -25,10 +25,11 @@ class OmsToUtilSanitizeBridge implements OmsToUtilSanitizeInterface
     /**
      * @param string $text
      * @param bool $double
+     * @param string|null $charset
      *
      * @return string
      */
-    public function escapeHtml($text, $double = true)
+    public function escapeHtml($text, $double = true, $charset = null)
     {
         return $this->utilSanitizeService->escapeHtml($text, $double);
     }

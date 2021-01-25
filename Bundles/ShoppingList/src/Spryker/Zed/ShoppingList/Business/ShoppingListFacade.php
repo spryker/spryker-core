@@ -18,6 +18,7 @@ use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListPermissionGroupCollectionTransfer;
+use Generated\Shared\Transfer\ShoppingListPreAddItemCheckResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListShareRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListShareResponseTransfer;
@@ -99,6 +100,42 @@ class ShoppingListFacade extends AbstractFacade implements ShoppingListFacadeInt
      * {@inheritDoc}
      *
      * @api
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
+     */
+    public function addShoppingListItem(
+        ShoppingListItemTransfer $shoppingListItemTransfer
+    ): ShoppingListItemResponseTransfer {
+        return $this->getFactory()
+            ->createShoppingListItemOperation()
+            ->addShoppingListItem($shoppingListItemTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
+     */
+    public function updateShoppingListItemById(
+        ShoppingListItemTransfer $shoppingListItemTransfer
+    ): ShoppingListItemResponseTransfer {
+        return $this->getFactory()
+            ->createShoppingListItemOperation()
+            ->updateShoppingListItem($shoppingListItemTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @deprecated Use {@link addShoppingListItem()} instead. Will be removed with next major release.
      *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
@@ -216,8 +253,9 @@ class ShoppingListFacade extends AbstractFacade implements ShoppingListFacadeInt
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
      */
-    public function getShoppingListItemCollectionTransfer(ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer): ShoppingListItemCollectionTransfer
-    {
+    public function getShoppingListItemCollectionTransfer(
+        ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+    ): ShoppingListItemCollectionTransfer {
         return $this->getFactory()
             ->createShoppingListReader()
             ->getShoppingListItemCollectionTransfer($shoppingListItemCollectionTransfer);
@@ -284,8 +322,9 @@ class ShoppingListFacade extends AbstractFacade implements ShoppingListFacadeInt
      *
      * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
      */
-    public function shareShoppingListWithCompanyBusinessUnit(ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer): ShoppingListShareResponseTransfer
-    {
+    public function shareShoppingListWithCompanyBusinessUnit(
+        ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer
+    ): ShoppingListShareResponseTransfer {
         return $this->getFactory()->createShoppingListSharer()->shareShoppingListWithCompanyBusinessUnit($shoppingListShareRequestTransfer);
     }
 
@@ -340,8 +379,9 @@ class ShoppingListFacade extends AbstractFacade implements ShoppingListFacadeInt
      *
      * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
      */
-    public function unShareShoppingListWithCompanyBusinessUnit(ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer): ShoppingListShareResponseTransfer
-    {
+    public function unShareShoppingListWithCompanyBusinessUnit(
+        ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer
+    ): ShoppingListShareResponseTransfer {
         return $this->getFactory()->createShoppingListSharer()->unShareShoppingListCompanyBusinessUnit($shoppingListShareRequestTransfer);
     }
 
@@ -373,5 +413,40 @@ class ShoppingListFacade extends AbstractFacade implements ShoppingListFacadeInt
         return $this->getFactory()
             ->createShoppingListShareDeleter()
             ->dismissShoppingListSharing($shoppingListDismissRequest);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * {@internal will work if uuid field is provided.}
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
+     */
+    public function findShoppingListByUuid(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer
+    {
+        return $this->getFactory()
+            ->createShoppingListReader()
+            ->findShoppingListByUuid($shoppingListTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListPreAddItemCheckResponseTransfer
+     */
+    public function checkShoppingListItemProductIsActive(
+        ShoppingListItemTransfer $shoppingListItemTransfer
+    ): ShoppingListPreAddItemCheckResponseTransfer {
+        return $this->getFactory()
+            ->createProductConcreteIsActiveChecker()
+            ->checkShoppingListItemProductIsActive($shoppingListItemTransfer);
     }
 }

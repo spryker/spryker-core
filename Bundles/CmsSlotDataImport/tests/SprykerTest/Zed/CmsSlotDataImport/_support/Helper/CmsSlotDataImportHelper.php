@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * MIT License
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace SprykerTest\Zed\CmsSlotDataImport\Helper;
@@ -14,6 +14,7 @@ use Orm\Zed\CmsSlot\Persistence\SpyCmsSlotQuery;
 use Orm\Zed\CmsSlot\Persistence\SpyCmsSlotTemplate;
 use Orm\Zed\CmsSlot\Persistence\SpyCmsSlotTemplateQuery;
 use Orm\Zed\CmsSlot\Persistence\SpyCmsSlotToCmsSlotTemplateQuery;
+use Orm\Zed\CmsSlotBlock\Persistence\SpyCmsSlotBlockQuery;
 
 class CmsSlotDataImportHelper extends Module
 {
@@ -31,9 +32,10 @@ class CmsSlotDataImportHelper extends Module
 
         $cmsSlotTemplateEntity = new SpyCmsSlotTemplate();
         $cmsSlotTemplateEntity->fromArray($cmsSlotTemplateTransfer->toArray());
+        $cmsSlotTemplateEntity->setPathHash('path_hash');
         $cmsSlotTemplateEntity->save();
 
-        $cmsSlotTemplateTransfer->fromArray($cmsSlotTemplateEntity->toArray());
+        $cmsSlotTemplateTransfer->fromArray($cmsSlotTemplateEntity->toArray(), true);
 
         return $cmsSlotTemplateTransfer;
     }
@@ -46,6 +48,9 @@ class CmsSlotDataImportHelper extends Module
         $cmsSlotToCmsSlotTemplateQuery = $this->getCmsSlotToCmsSlotTemplateQuery();
         $cmsSlotToCmsSlotTemplateQuery->deleteAll();
 
+        $cmsSlotBlockQuery = $this->getCmsSlotBlockQuery();
+        $cmsSlotBlockQuery->deleteAll();
+
         $cmsSlotQuery = $this->getCmsSlotQuery();
         $cmsSlotQuery->deleteAll();
     }
@@ -57,6 +62,9 @@ class CmsSlotDataImportHelper extends Module
     {
         $cmsSlotToCmsSlotTemplateQuery = $this->getCmsSlotToCmsSlotTemplateQuery();
         $cmsSlotToCmsSlotTemplateQuery->deleteAll();
+
+        $cmsSlotBlockQuery = $this->getCmsSlotBlockQuery();
+        $cmsSlotBlockQuery->deleteAll();
 
         $cmsSlotTemplateQuery = $this->getCmsSlotTemplateQuery();
         $cmsSlotTemplateQuery->deleteAll();
@@ -102,5 +110,13 @@ class CmsSlotDataImportHelper extends Module
     protected function getCmsSlotToCmsSlotTemplateQuery(): SpyCmsSlotToCmsSlotTemplateQuery
     {
         return SpyCmsSlotToCmsSlotTemplateQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\CmsSlotBlock\Persistence\SpyCmsSlotBlockQuery
+     */
+    protected function getCmsSlotBlockQuery(): SpyCmsSlotBlockQuery
+    {
+        return SpyCmsSlotBlockQuery::create();
     }
 }

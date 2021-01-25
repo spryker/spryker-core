@@ -8,17 +8,19 @@
 namespace SprykerTest\Zed\QuoteRequest;
 
 use Codeception\Actor;
+use Generated\Shared\DataBuilder\MoneyValueBuilder;
+use Generated\Shared\DataBuilder\ShipmentBuilder;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentTransfer;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -70,7 +72,7 @@ class QuoteRequestBusinessTester extends Actor
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer
      */
-    public function createCompanyUser(CustomerTransfer $customerTransfer)
+    public function createCompanyUser(CustomerTransfer $customerTransfer): CompanyUserTransfer
     {
         $companyTransfer = $this->createCompany();
         $companyBusinessUnit = $this->createCompanyBusinessUnit($companyTransfer);
@@ -88,7 +90,7 @@ class QuoteRequestBusinessTester extends Actor
     /**
      * @return \Generated\Shared\Transfer\CompanyTransfer
      */
-    public function createCompany()
+    public function createCompany(): CompanyTransfer
     {
         return $this->haveCompany(
             [
@@ -105,7 +107,7 @@ class QuoteRequestBusinessTester extends Actor
      *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
      */
-    public function createCompanyBusinessUnit($companyTransfer)
+    public function createCompanyBusinessUnit(CompanyTransfer $companyTransfer): CompanyBusinessUnitTransfer
     {
         return $this->haveCompanyBusinessUnit(
             [
@@ -115,5 +117,19 @@ class QuoteRequestBusinessTester extends Actor
                 CompanyBusinessUnitTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
             ]
         );
+    }
+
+    /**
+     * @param int $sourcePrice
+     *
+     * @return \Generated\Shared\Transfer\ShipmentTransfer
+     */
+    public function createShipmentWithSourcePrice(int $sourcePrice): ShipmentTransfer
+    {
+        $shipmentMethodTransfer = $this->haveShipmentMethod();
+        $shipmentMethodTransfer->setSourcePrice((new MoneyValueBuilder([MoneyValueTransfer::GROSS_AMOUNT => $sourcePrice]))->build());
+        $shipmentTransfer = (new ShipmentBuilder())->build();
+
+        return $shipmentTransfer->setMethod($shipmentMethodTransfer);
     }
 }

@@ -26,16 +26,16 @@ class ProductListSearchListener extends AbstractPlugin implements EventBulkHandl
      *
      * @api
      *
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $eventTransfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
      * @param string $eventName
      *
      * @return void
      */
-    public function handleBulk(array $eventTransfers, $eventName)
+    public function handleBulk(array $eventEntityTransfers, $eventName)
     {
         $this->preventTransaction();
         $productListIds = $this->getFactory()
-            ->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
+            ->getEventBehaviorFacade()->getEventTransferIds($eventEntityTransfers);
 
         $this->getFactory()->getProductPageSearchFacade()->refresh(
             $this->getFactory()->getProductListFacade()->getProductAbstractIdsByProductListIds($productListIds),

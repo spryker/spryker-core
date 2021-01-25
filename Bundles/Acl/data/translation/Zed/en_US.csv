@@ -54,3 +54,9 @@ Save,Save
 "User was updated successfully.","User was updated successfully."
 Users,Users
 "Users Control","Users Control"
+Groups,Groups
+allow,allow
+deny,deny
+"Edit Role","Edit Role"
+"Created At","Created At"
+"Create new Group","Create new Group"

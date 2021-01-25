@@ -7,35 +7,47 @@
 
 namespace Spryker\Client\GlossaryStorage;
 
-use Spryker\Client\GlossaryStorage\Storage\GlossaryStorage;
+use Spryker\Client\GlossaryStorage\Dependency\Client\GlossaryStorageToStorageClientInterface;
+use Spryker\Client\GlossaryStorage\Dependency\Service\GlossaryStorageToSynchronizationServiceInterface;
+use Spryker\Client\GlossaryStorage\Dependency\Service\GlossaryStorageToUtilEncodingServiceInterface;
+use Spryker\Client\GlossaryStorage\Storage\GlossaryStorageReader;
 use Spryker\Client\Kernel\AbstractFactory;
 
 class GlossaryStorageFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Client\GlossaryStorage\Storage\GlossaryStorageInterface
+     * @return \Spryker\Client\GlossaryStorage\Storage\GlossaryStorageReaderInterface
      */
     public function createTranslator()
     {
-        return new GlossaryStorage(
+        return new GlossaryStorageReader(
             $this->getStorageClient(),
-            $this->getSynchronizationService()
+            $this->getSynchronizationService(),
+            $this->getUtilEncodingService()
         );
     }
 
     /**
      * @return \Spryker\Client\GlossaryStorage\Dependency\Client\GlossaryStorageToStorageClientInterface
      */
-    protected function getStorageClient()
+    public function getStorageClient(): GlossaryStorageToStorageClientInterface
     {
         return $this->getProvidedDependency(GlossaryStorageDependencyProvider::CLIENT_STORAGE);
     }
 
     /**
-     * @return \Spryker\Client\GlossaryStorage\Dependency\Service\GlossaryStorageToSynchronizationServiceBridge
+     * @return \Spryker\Client\GlossaryStorage\Dependency\Service\GlossaryStorageToSynchronizationServiceInterface
      */
-    protected function getSynchronizationService()
+    public function getSynchronizationService(): GlossaryStorageToSynchronizationServiceInterface
     {
         return $this->getProvidedDependency(GlossaryStorageDependencyProvider::SERVICE_SYNCHRONIZATION);
+    }
+
+    /**
+     * @return \Spryker\Client\GlossaryStorage\Dependency\Service\GlossaryStorageToUtilEncodingServiceInterface
+     */
+    public function getUtilEncodingService(): GlossaryStorageToUtilEncodingServiceInterface
+    {
+        return $this->getProvidedDependency(GlossaryStorageDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 }

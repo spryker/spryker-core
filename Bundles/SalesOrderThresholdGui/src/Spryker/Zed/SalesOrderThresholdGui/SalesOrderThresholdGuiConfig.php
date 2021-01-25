@@ -8,8 +8,10 @@
 namespace Spryker\Zed\SalesOrderThresholdGui;
 
 use Spryker\Zed\Kernel\AbstractBundleConfig;
+use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdGroup\GlobalHardMaximumThresholdDataProvider;
 use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdGroup\GlobalHardThresholdDataProvider;
 use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdGroup\GlobalSoftThresholdDataProvider;
+use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\Mapper\ThresholdGroup\GlobalHardMaximumThresholdFormMapper;
 use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\Mapper\ThresholdGroup\GlobalHardThresholdFormMapper;
 use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\Mapper\ThresholdGroup\GlobalSoftThresholdFormMapper;
 
@@ -26,6 +28,11 @@ class SalesOrderThresholdGuiConfig extends AbstractBundleConfig
     public const GROUP_HARD = 'Hard';
 
     /**
+     * @uses \Spryker\Shared\SalesOrderThreshold\SalesOrderThresholdConfig::GROUP_HARD_MAX
+     */
+    public const GROUP_HARD_MAX = 'Hard-Max';
+
+    /**
      * @uses \Spryker\Shared\SalesOrderThreshold\SalesOrderThresholdConfig::GROUP_SOFT
      */
     public const GROUP_SOFT = 'Soft';
@@ -34,6 +41,11 @@ class SalesOrderThresholdGuiConfig extends AbstractBundleConfig
      * @uses \Spryker\Shared\SalesOrderThreshold\SalesOrderThresholdConfig::THRESHOLD_STRATEGY_KEY_HARD
      */
     public const HARD_TYPE_STRATEGY = 'hard-minimum-threshold';
+
+    /**
+     * @uses \Spryker\Shared\SalesOrderThreshold\SalesOrderThresholdConfig::THRESHOLD_STRATEGY_KEY_HARD_MAXIMUM
+     */
+    public const THRESHOLD_STRATEGY_KEY_HARD_MAXIMUM = 'hard-maximum-threshold';
 
     /**
      * @uses \Spryker\Shared\SalesOrderThreshold\SalesOrderThresholdConfig::THRESHOLD_STRATEGY_KEY_SOFT
@@ -59,6 +71,7 @@ class SalesOrderThresholdGuiConfig extends AbstractBundleConfig
 
     protected const STRATEGY_GROUP_TO_FORM_TYPE_MAP = [
         self::GROUP_HARD => GlobalHardThresholdFormMapper::class,
+        self::GROUP_HARD_MAX => GlobalHardMaximumThresholdFormMapper::class,
         self::GROUP_SOFT => GlobalSoftThresholdFormMapper::class,
     ];
 
@@ -69,13 +82,16 @@ class SalesOrderThresholdGuiConfig extends AbstractBundleConfig
 
     protected const STRATEGY_GROUP_TO_DATA_PROVIDER_MAP = [
         self::GROUP_HARD => GlobalHardThresholdDataProvider::class,
+        self::GROUP_HARD_MAX => GlobalHardMaximumThresholdDataProvider::class,
         self::GROUP_SOFT => GlobalSoftThresholdDataProvider::class,
     ];
 
     /**
+     * @api
+     *
      * @deprecated Will be removed in the next major.
      *
-     * @return array
+     * @return string[]
      */
     public function getStrategyTypeToFormTypeMap(): array
     {
@@ -83,7 +99,11 @@ class SalesOrderThresholdGuiConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return \Spryker\Zed\SalesOrderThresholdGui\Communication\Form\Mapper\ThresholdGroup\GlobalThresholdFormMapperInterface[]
+     * @api
+     *
+     * @phpstan-return class-string<\Spryker\Zed\SalesOrderThresholdGui\Communication\Form\Mapper\ThresholdGroup\GlobalThresholdFormMapperInterface>[]
+     *
+     * @return string[]
      */
     public function getStrategyGroupToFormTypeMap(): array
     {
@@ -91,9 +111,11 @@ class SalesOrderThresholdGuiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @deprecated Will be removed in the next major.
      *
-     * @return array
+     * @return string[]
      */
     public function getStrategyTypeToDataProviderMap(): array
     {
@@ -101,7 +123,11 @@ class SalesOrderThresholdGuiConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return \Spryker\Zed\SalesOrderThresholdGui\Communication\Form\Mapper\ThresholdGroup\GlobalThresholdFormMapperInterface[]
+     * @api
+     *
+     * @phpstan-return class-string<\Spryker\Zed\SalesOrderThresholdGui\Communication\Form\Mapper\ThresholdGroup\GlobalThresholdFormMapperInterface[]>[]
+     *
+     * @return string[]
      */
     public function getStrategyGroupToDataProviderMap(): array
     {

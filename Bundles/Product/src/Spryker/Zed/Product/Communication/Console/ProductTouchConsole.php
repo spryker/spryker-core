@@ -68,7 +68,7 @@ class ProductTouchConsole extends Console
      *
      * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $idProductAbstract = (int)$input->getArgument(self::ARGUMENT_ID_ABSTRACT_PRODUCT);
         $action = strtolower($input->getArgument(self::ARGUMENT_TOUCH_ACTION));
@@ -77,22 +77,22 @@ class ProductTouchConsole extends Console
             case self::ACTION_ACTIVATE:
             case self::ACTION_ACTIVATE_SHORT:
                 $this->getFacade()->touchProductActive($idProductAbstract);
-                break;
 
+                break;
             case self::ACTION_INACTIVATE:
             case self::ACTION_INACTIVATE_SHORT:
                 $this->getFacade()->touchProductInactive($idProductAbstract);
-                break;
 
+                break;
             case self::ACTION_DELETE:
             case self::ACTION_DELETE_SHORT:
                 $this->getFacade()->touchProductDeleted($idProductAbstract);
-                break;
 
+                break;
             default:
                 throw new Exception('Unknown touch action: ' . $action);
         }
 
-        return self::CODE_SUCCESS;
+        return static::CODE_SUCCESS;
     }
 }

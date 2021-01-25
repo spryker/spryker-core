@@ -27,12 +27,12 @@ class ProductManagementProductCreateCest
      *
      * @return void
      */
-    public function breadcrumbIsVisible(ProductManagementPresentationTester $i)
+    public function breadcrumbIsVisible(ProductManagementPresentationTester $i): void
     {
         $i->registerProductManagementStoreRelationFormTypePlugin();
         $i->registerMoneyCollectionFormTypePlugin();
 
         $i->amOnPage(ProductManagementProductCreatePage::URL);
-        $i->seeBreadcrumbNavigation('Dashboard / Products / Products / Create a Product');
+        $i->seeBreadcrumbNavigation('Catalog / Products / Create a Product');
     }
 }

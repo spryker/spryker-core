@@ -1,6 +1,6 @@
 # CartCodeExtension Module
 [![Build Status](https://travis-ci.org/spryker/cart-code-extension.svg)](https://travis-ci.org/spryker/cart-code-extension)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/cart-code-extension/badge.svg)](https://coveralls.io/github/spryker/cart-code-extension)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 Provides plugin interfaces that are executed by CartCode module.
 

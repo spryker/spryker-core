@@ -60,8 +60,10 @@ class QuoteBundleItemsFinder implements QuoteBundleItemsFinderInterface
     protected function findQuoteItem(QuoteTransfer $quoteTransfer, $sku, $groupKey = null): ?ItemTransfer
     {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if (($itemTransfer->getSku() === $sku && $groupKey === null) ||
-                $itemTransfer->getGroupKey() === $groupKey) {
+            if (
+                ($itemTransfer->getSku() === $sku && $groupKey === null) ||
+                $itemTransfer->getGroupKey() === $groupKey
+            ) {
                 return $itemTransfer;
             }
         }

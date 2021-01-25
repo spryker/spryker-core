@@ -34,8 +34,6 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -45,7 +43,7 @@ use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  *
  * @SuppressWarnings(PHPMD)
  */
@@ -74,7 +72,7 @@ class CheckoutRestApiBusinessTester extends Actor
         'lastName' => 'hopkin',
         'address1' => 'West road',
         'address2' => '212',
-        'address3' => "",
+        'address3' => '',
         'zipCode' => '61000',
         'city' => 'Berlin',
         'iso2Code' => 'DE',
@@ -134,13 +132,13 @@ class CheckoutRestApiBusinessTester extends Actor
     public function getPaymentTransfer(): AbstractTransfer
     {
         $paymentTransferData = [
-            "dummyPaymentInvoice" => [
-                "dateOfBirth" => "08.04.1986",
+            'dummyPaymentInvoice' => [
+                'dateOfBirth' => '08.04.1986',
             ],
-            "paymentMethod" => "invoice",
-            "paymentProvider" => "dummyPayment",
-            "paymentSelection" => "dummyPaymentInvoice",
-            "amount" => "899910",
+            'paymentMethod' => 'invoice',
+            'paymentProvider' => 'dummyPayment',
+            'paymentSelection' => 'dummyPaymentInvoice',
+            'amount' => '899910',
         ];
 
         return (new PaymentBuilder($paymentTransferData))->build();
@@ -332,6 +330,9 @@ class CheckoutRestApiBusinessTester extends Actor
             ->withShippingAddress(static::ADDRESS_2)
             ->withShipment()
             ->withPayment()
+            ->withStore([
+                StoreTransfer::NAME => 'DE',
+            ])
             ->build();
 
         return $quoteTransfer->setCustomerReference(static::CUSTOMER['customerReference']);

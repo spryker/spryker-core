@@ -1,0 +1,138 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 49,
+            "line_to": 49,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Glue\\ConfigurableBundlesRestApi\\Processor\\RestResourceBuilder\\ConfigurableBundleTemplateImageSetRestResourceBuilderInterface::buildConfigurableBundleTemplateImageSetRestResource cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundlesRestApi/src/Spryker/Glue/ConfigurableBundlesRestApi/Processor/Expander/ConfigurableBundleTemplateImageSetExpander.php",
+            "snippet": "                        $resource->getId()",
+            "selected_text": "$resource->getId()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 48,
+            "line_to": 48,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Glue\\ConfigurableBundlesRestApi\\Processor\\RestResourceBuilder\\ConfigurableBundleTemplateSlotRestResourceBuilderInterface::buildConfigurableBundleTemplateSlotRestResource cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundlesRestApi/src/Spryker/Glue/ConfigurableBundlesRestApi/Processor/Expander/ConfigurableBundleTemplateSlotExpander.php",
+            "snippet": "                        $resource->getId()",
+            "selected_text": "$resource->getId()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 32,
+            "line_to": 32,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method toArray on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundlesRestApi/src/Spryker/Glue/ConfigurableBundlesRestApi/Processor/Mapper/OrderItemMapper.php",
+            "snippet": "            ->fromArray($itemTransfer->getSalesOrderConfiguredBundle()->toArray(), true);",
+            "selected_text": "toArray",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 37,
+            "line_to": 37,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method toArray on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundlesRestApi/src/Spryker/Glue/ConfigurableBundlesRestApi/Processor/Mapper/OrderItemMapper.php",
+            "snippet": "            ->fromArray($itemTransfer->getSalesOrderConfiguredBundleItem()->toArray(), true);",
+            "selected_text": "toArray",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 56,
+            "line_to": 56,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getTranslations on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundlesRestApi/src/Spryker/Glue/ConfigurableBundlesRestApi/Processor/Mapper/OrderItemMapper.php",
+            "snippet": "        if (!$itemTransfer->getSalesOrderConfiguredBundle()->getTranslations()->offsetExists(0)) {",
+            "selected_text": "getTranslations",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 56,
+            "line_to": 56,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\SalesOrderConfiguredBundleTranslationTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundlesRestApi/src/Spryker/Glue/ConfigurableBundlesRestApi/Processor/Mapper/OrderItemMapper.php",
+            "snippet": "        if (!$itemTransfer->getSalesOrderConfiguredBundle()->getTranslations()->offsetExists(0)) {",
+            "selected_text": "offsetExists",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 61,
+            "line_to": 61,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getTranslations on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundlesRestApi/src/Spryker/Glue/ConfigurableBundlesRestApi/Processor/Mapper/OrderItemMapper.php",
+            "snippet": "            $itemTransfer->getSalesOrderConfiguredBundle()->getTranslations()->offsetGet(0)->getName()",
+            "selected_text": "getTranslations",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 61,
+            "line_to": 61,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\SalesOrderConfiguredBundleTranslationTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundlesRestApi/src/Spryker/Glue/ConfigurableBundlesRestApi/Processor/Mapper/OrderItemMapper.php",
+            "snippet": "            $itemTransfer->getSalesOrderConfiguredBundle()->getTranslations()->offsetGet(0)->getName()",
+            "selected_text": "offsetGet",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 86,
+            "line_to": 86,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $translations using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundlesRestApi/src/Spryker/Glue/ConfigurableBundlesRestApi/Processor/Translator/ConfigurableBundleTranslator.php",
+            "snippet": "                    $translations[$configurableBundleTemplateStorageTransfer->getName()]",
+            "selected_text": "$translations",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 93,
+            "line_to": 93,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $translations using possibly null offset mixed|null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundlesRestApi/src/Spryker/Glue/ConfigurableBundlesRestApi/Processor/Translator/ConfigurableBundleTranslator.php",
+            "snippet": "                        $translations[$configurableBundleTemplateSlotStorageTransfer->getName()]",
+            "selected_text": "$translations",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 101,
+            "line_to": 101,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $translations using possibly null offset mixed|null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundlesRestApi/src/Spryker/Glue/ConfigurableBundlesRestApi/Processor/Translator/ConfigurableBundleTranslator.php",
+            "snippet": "                        $translations[$productImageSetStorageTransfer->getName()]",
+            "selected_text": "$translations",
+            "error_level": 3,
+            "shortcode": 125
+        }
+    ],
+    "deprecation": []
+}

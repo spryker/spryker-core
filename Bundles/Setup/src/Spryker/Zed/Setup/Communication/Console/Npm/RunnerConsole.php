@@ -14,6 +14,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\Process;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\SetupFrontend\Communication\Console\Npm\RunnerConsole } instead.
+ *
  * @method \Spryker\Zed\Setup\Business\SetupFacadeInterface getFacade()
  * @method \Spryker\Zed\Setup\Communication\SetupCommunicationFactory getFactory()
  */
@@ -93,10 +95,11 @@ EOM
      * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
-     * @return int|null
+     * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $this->warning(sprintf('The console command `%s` is deprecated. Use `frontend:npm:run` instead', static::COMMAND_NAME));
         $command = $this->getCommand();
 
         return $this->runCommand($command);
@@ -116,9 +119,9 @@ EOM
     /**
      * @param string $command
      *
-     * @return int|null
+     * @return int
      */
-    protected function runCommand($command)
+    protected function runCommand($command): int
     {
         $this->info('Run command: ' . $command);
         $process = new Process(explode(' ', $command), APPLICATION_ROOT_DIR);

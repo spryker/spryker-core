@@ -16,8 +16,7 @@ class TestResourceWithGetResourceByIdController
      *              "Summary example"
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "400": "Bad Request",
@@ -28,7 +27,7 @@ class TestResourceWithGetResourceByIdController
      *
      * @return void
      */
-    public function getAction()
+    public function getAction(): void
     {
     }
 }

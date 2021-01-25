@@ -1,0 +1,54 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 96,
+            "line_to": 96,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\CategoryGui\\Communication\\Table\\CategoryTable::prepareQuery cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoryGui/src/Spryker/Zed/CategoryGui/Communication/Table/CategoryTable.php",
+            "snippet": "        $query = $this->prepareQuery($fkLocale);",
+            "selected_text": "$fkLocale",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 155,
+            "line_to": 155,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\CategoryGui\\Communication\\Table\\CategoryTable::yesNoOutput cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoryGui/src/Spryker/Zed/CategoryGui/Communication/Table/CategoryTable.php",
+            "snippet": "            static::COL_ACTIVE => $this->yesNoOutput($categoryEntity->getIsActive()),",
+            "selected_text": "$categoryEntity->getIsActive()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 156,
+            "line_to": 156,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\CategoryGui\\Communication\\Table\\CategoryTable::yesNoOutput cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoryGui/src/Spryker/Zed/CategoryGui/Communication/Table/CategoryTable.php",
+            "snippet": "            static::COL_VISIBLE => $this->yesNoOutput($categoryEntity->getIsInMenu()),",
+            "selected_text": "$categoryEntity->getIsInMenu()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 157,
+            "line_to": 157,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\CategoryGui\\Communication\\Table\\CategoryTable::yesNoOutput cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoryGui/src/Spryker/Zed/CategoryGui/Communication/Table/CategoryTable.php",
+            "snippet": "            static::COL_SEARCHABLE => $this->yesNoOutput($categoryEntity->getIsSearchable()),",
+            "selected_text": "$categoryEntity->getIsSearchable()",
+            "error_level": 3,
+            "shortcode": 78
+        }
+    ],
+    "deprecation": []
+}

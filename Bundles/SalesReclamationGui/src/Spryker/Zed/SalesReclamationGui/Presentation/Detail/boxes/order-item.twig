@@ -5,8 +5,10 @@
 
 <td class="item-checker"><input type="checkbox" name="order-item" value="{{ orderItem.idSalesOrderItem }}" class="item-check" /></td>
 {% if displayImage %}
-    <td {% if group %}rowspan="{{ itemCount }}" {% endif %}>
-        <img class="product-image" src="{{ image }}" width="150px"/>
+    <td {% if group %}rowspan="{{ itemCount }}"{% endif %}>
+        <div class="image-wrap">
+            <img class="product-image" src="{{ image }}" alt="{{ orderItem.name }}">
+        </div>
     </td>
 {% endif %}
 <td>
@@ -21,7 +23,7 @@
         {{ 'Sku' | trans }}: {{ orderItem.Sku }}
     </div>
 
-    {% if orderItem.metadata.superAttributes is not null and orderItem.metadata.superAttributes | length > 0 %}
+    {% if (orderItem.metadata.superAttributes | default([])) | length > 0 %}
         <div class="variant-details">
             <h3>{{ 'Variant Details' | trans }}</h3>
             {% for attributeName, attributeValue in orderItem.metadata.superAttributes | slice(0,2) %}
@@ -48,7 +50,7 @@
 </td>
 <td>
     <div>
-        {% embed '@SalesReclamationGui/partials/items/discounted-price.twig' with {
+        {% embed '@SalesReclamationGui/Partials/items/discounted-price.twig' with {
             subtotal: orderItem.unitPrice,
             priceToPay: orderItem.unitPrice - orderItem.unitDiscountAmountFullAggregation | default(0)
         } %} {% endembed %}
@@ -58,7 +60,7 @@
 
 {% if displayTotals %}
     <td {% if group %}rowspan="{{ rowCount }}"{% endif %} data-qa="item-total-amount" data-qa-raw="{{ priceToPay }}">
-        {% embed '@SalesReclamationGui/partials/items/discounted-price.twig' with {
+        {% embed '@SalesReclamationGui/Partials/items/discounted-price.twig' with {
             subtotal: subtotal,
             priceToPay: priceToPay
         } %} {% endembed %}

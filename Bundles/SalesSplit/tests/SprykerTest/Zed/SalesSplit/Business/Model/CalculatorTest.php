@@ -27,7 +27,7 @@ class CalculatorTest extends Unit
     /**
      * @return void
      */
-    public function testCalculateAmountLeft()
+    public function testCalculateAmountLeft(): void
     {
         $calculator = new Calculator();
         $spySalesOrderItem = new SpySalesOrderItem();
@@ -35,6 +35,6 @@ class CalculatorTest extends Unit
 
         $quantityAmountLeft = $calculator->calculateQuantityAmountLeft($spySalesOrderItem, 1);
 
-        $this->assertEquals(1, $quantityAmountLeft);
+        $this->assertSame(1, $quantityAmountLeft);
     }
 }

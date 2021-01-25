@@ -16,9 +16,9 @@ class ProductStockHelper implements ProductStockHelperInterface
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      * @param \Orm\Zed\Stock\Persistence\SpyStock[] $stockTypeEntities
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function addMissingStockTypes(ProductConcreteTransfer $productConcreteTransfer, array $stockTypeEntities)
+    public function addMissingStockTypes(ProductConcreteTransfer $productConcreteTransfer, array $stockTypeEntities): ProductConcreteTransfer
     {
         foreach ($stockTypeEntities as $type) {
             if ($this->stockTypeExist($productConcreteTransfer, $type->getName())) {
@@ -30,6 +30,34 @@ class ProductStockHelper implements ProductStockHelperInterface
 
             $productConcreteTransfer->addStock($stockProductTransfer);
         }
+
+        return $productConcreteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function trimStockQuantities(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
+    {
+        foreach ($productConcreteTransfer->getStocks() as $stockProductTransfer) {
+            if ($stockProductTransfer->getQuantity() === null) {
+                continue;
+            }
+
+            $stockProductTransfer->setQuantity(
+                $stockProductTransfer->getQuantity()->trim()
+            );
+        }
+
+        if ($productConcreteTransfer->getProductBundle() !== null && $productConcreteTransfer->getProductBundle()->getAvailability() !== null) {
+            $productConcreteTransfer->getProductBundle()->setAvailability(
+                $productConcreteTransfer->getProductBundle()->getAvailability()->trim()
+            );
+        }
+
+        return $productConcreteTransfer;
     }
 
     /**

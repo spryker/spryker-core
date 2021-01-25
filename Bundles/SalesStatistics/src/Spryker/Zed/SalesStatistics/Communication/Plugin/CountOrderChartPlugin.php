@@ -25,6 +25,8 @@ class CountOrderChartPlugin extends AbstractPlugin implements ChartPluginInterfa
     public const DAYS = 7;
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string
@@ -35,6 +37,8 @@ class CountOrderChartPlugin extends AbstractPlugin implements ChartPluginInterfa
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string|null $dataIdentifier
@@ -54,6 +58,8 @@ class CountOrderChartPlugin extends AbstractPlugin implements ChartPluginInterfa
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string

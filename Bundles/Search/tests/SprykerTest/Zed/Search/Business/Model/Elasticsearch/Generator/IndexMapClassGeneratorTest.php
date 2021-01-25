@@ -33,7 +33,7 @@ class IndexMapClassGeneratorTest extends Unit
     /**
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         $searchMapCleaner = new IndexMapCleaner(self::TARGET_DIRECTORY);
         $searchMapCleaner->cleanDirectory();
@@ -42,7 +42,7 @@ class IndexMapClassGeneratorTest extends Unit
     /**
      * @return void
      */
-    public function testGenerateSimpleIndexMap()
+    public function testGenerateSimpleIndexMap(): void
     {
         $generator = new IndexMapGenerator(self::TARGET_DIRECTORY, 0777);
 
@@ -76,7 +76,7 @@ class IndexMapClassGeneratorTest extends Unit
     /**
      * @return void
      */
-    public function testGenerateComplexIndexMap()
+    public function testGenerateComplexIndexMap(): void
     {
         $generator = new IndexMapGenerator(self::TARGET_DIRECTORY, 0777);
 
@@ -118,7 +118,7 @@ class IndexMapClassGeneratorTest extends Unit
      *
      * @return \Generated\Shared\Transfer\ElasticsearchIndexDefinitionTransfer
      */
-    protected function createIndexDefinition($name, array $settings = [], array $mappings = [])
+    protected function createIndexDefinition(string $name, array $settings = [], array $mappings = []): ElasticsearchIndexDefinitionTransfer
     {
         $indexDefinition = new ElasticsearchIndexDefinitionTransfer();
         $indexDefinition

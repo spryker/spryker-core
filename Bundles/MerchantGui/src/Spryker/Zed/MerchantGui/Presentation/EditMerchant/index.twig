@@ -7,6 +7,13 @@
 
 {% block action %}
     {{ backActionButton(url('/merchant-gui/list-merchant'), 'Back to Merchants' | trans) }}
+    {%  for applicableMerchantStatus in applicableMerchantStatuses %}
+        {% if applicableMerchantStatus == 'denied' %}
+            {{ removeActionButton(url('/merchant-gui/merchant-status', {'status': applicableMerchantStatus, 'id-merchant': idMerchant}), (applicableMerchantStatus ~ '_button') | trans, {'icon':'<i class="fa fa-key"></i> '}) }}
+        {% else %}
+            {{ createActionButton(url('/merchant-gui/merchant-status', {'status': applicableMerchantStatus, 'id-merchant': idMerchant}), (applicableMerchantStatus ~ '_button') | trans, {'icon':'<i class="fa fa-key"></i> '}) }}
+        {%  endif %}
+    {%  endfor %}
 {% endblock %}
 
 {% block content %}
@@ -15,10 +22,10 @@
 
         {% block widget_content %}
 
-            {{ form_start(form) }}
-            {{ form_widget(form) }}
+            {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
 
-            <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Save' | trans }}" />
+            {{ tabs(merchantFormTabs, {'merchantForm': form}) }}
+
             {{ form_end(form) }}
 
         {% endblock %}

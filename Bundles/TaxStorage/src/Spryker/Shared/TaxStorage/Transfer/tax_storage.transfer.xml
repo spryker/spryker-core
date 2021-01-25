@@ -15,4 +15,10 @@
         <property name="country" type="string"/>
         <property name="rate" type="float"/>
     </transfer>
+
+    <transfer name="SynchronizationData">
+        <property name="reference" type="string"/>
+        <property name="data" type="string"/>
+        <property name="key" type="string"/>
+    </transfer>
 </transfers>

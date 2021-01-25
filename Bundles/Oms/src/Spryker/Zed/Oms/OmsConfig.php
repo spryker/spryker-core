@@ -14,7 +14,11 @@ class OmsConfig extends AbstractBundleConfig
 {
     public const DEFAULT_PROCESS_LOCATION = APPLICATION_ROOT_DIR . '/config/Zed/oms';
 
+    public const EVENT_CANCEL = 'cancel';
+
     /**
+     * @api
+     *
      * @return string
      */
     public function getProcessDefinitionLocation()
@@ -23,6 +27,8 @@ class OmsConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getActiveProcesses()
@@ -31,6 +37,8 @@ class OmsConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getGraphDefaults()
@@ -44,6 +52,8 @@ class OmsConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getStateBlacklist()
@@ -52,6 +62,21 @@ class OmsConfig extends AbstractBundleConfig
     }
 
     /**
+     * Specification:
+     * - This prefix is used for the auto-generated display name in case of its absence.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getFallbackDisplayNamePrefix(): string
+    {
+        return '';
+    }
+
+    /**
+     * @api
+     *
      * @return string
      */
     public function getStateMachineLockerTimeoutInterval()
@@ -60,6 +85,8 @@ class OmsConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getSubProcessPrefixDelimiter()
@@ -68,10 +95,38 @@ class OmsConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getInitialStatus()
     {
         return 'new';
+    }
+
+    /**
+     * Specification:
+     * - Defines the query limit of orders for which order items should be checked.
+     *
+     * @api
+     *
+     * @return int|null
+     */
+    public function getCheckTimeoutsQueryLimit(): ?int
+    {
+        return null;
+    }
+
+    /**
+     * Specification:
+     * - Defines the query limit of orders for which order items should be checked.
+     *
+     * @api
+     *
+     * @return int|null
+     */
+    public function getCheckConditionsQueryLimit(): ?int
+    {
+        return null;
     }
 }

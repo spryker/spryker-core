@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CartNote\Persistence;
 
+use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Spryker\Zed\CartNote\CartNoteDependencyProvider;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
@@ -18,7 +19,7 @@ class CartNotePersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
      */
-    public function getSalesOrderQuery()
+    public function getSalesOrderQuery(): SpySalesOrderQuery
     {
         return $this->getProvidedDependency(CartNoteDependencyProvider::SALES_ORDER_QUERY);
     }

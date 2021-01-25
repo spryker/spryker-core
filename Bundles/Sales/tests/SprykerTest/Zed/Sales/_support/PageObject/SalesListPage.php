@@ -31,18 +31,18 @@ class SalesListPage
     /**
      * @return string[]
      */
-    public function grabOrderIdsFromGrid()
+    public function grabOrderIdsFromGrid(): array
     {
-        $this->tester->amOnPage(SalesListPage::URL);
+        $this->tester->amOnPage(self::URL);
         $this->tester->wait(2);
 
-        return $this->tester->grabMultiple(SalesListPage::SELECTOR_ID_SALES_ORDER_ROWS);
+        return $this->tester->grabMultiple(self::SELECTOR_ID_SALES_ORDER_ROWS);
     }
 
     /**
      * @return void
      */
-    public function seeListOfOrders()
+    public function seeListOfOrders(): void
     {
         $this->tester->assertTrue(count($this->grabOrderIdsFromGrid()) > 0);
     }
@@ -50,7 +50,7 @@ class SalesListPage
     /**
      * @return int
      */
-    public function grabLatestOrderId()
+    public function grabLatestOrderId(): int
     {
         return $this->grabOrderIdsFromGrid()[0];
     }

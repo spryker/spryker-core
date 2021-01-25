@@ -22,10 +22,6 @@ class AutosuggestType extends AbstractType
     public const URL = 'url';
     public const PLACEHOLDER = 'placeholder';
 
-    public function __construct()
-    {
-    }
-
     /**
      * @param \Symfony\Component\Form\FormView $view
      * @param \Symfony\Component\Form\FormInterface $form
@@ -53,7 +49,7 @@ class AutosuggestType extends AbstractType
     }
 
     /**
-     * @deprecated Use `configureOptions()` instead.
+     * @deprecated Use {@link configureOptions()} instead.
      *
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
@@ -81,7 +77,7 @@ class AutosuggestType extends AbstractType
     }
 
     /**
-     * @deprecated Use `getBlockPrefix()` instead.
+     * @deprecated Use {@link getBlockPrefix()} instead.
      *
      * @return string
      */

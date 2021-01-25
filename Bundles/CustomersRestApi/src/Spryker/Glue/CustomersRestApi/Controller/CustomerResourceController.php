@@ -24,13 +24,23 @@ class CustomerResourceController extends AbstractController
      *              "Retrieves customer data."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "400": "Customer id is not specified.",
      *              "403": "Unauthorized request.",
      *              "404": "Customer not found."
+     *          }
+     *     },
+     *     "getCollection": {
+     *          "summary": [
+     *              "Retrieves customers collection."
+     *          ],
+     *          "parameters": [{
+     *              "ref": "acceptLanguage"
+     *          }],
+     *          "responses": {
+     *              "403": "Unauthorized request."
      *          }
      *     }
      * })
@@ -53,8 +63,7 @@ class CustomerResourceController extends AbstractController
      *              "Creates customer."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "400": "Terms and Conditions was not accepted.",
@@ -82,13 +91,13 @@ class CustomerResourceController extends AbstractController
      *              "Updates customer data."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "400": "Failed to save customer.",
      *              "403": "Unauthorized request.",
-     *              "404": "Customer not found."
+     *              "404": "Customer not found.",
+     *              "422": "Customer with this email already exists."
      *          }
      *     }
      * })
@@ -112,8 +121,7 @@ class CustomerResourceController extends AbstractController
      *              "Anonymizes customers."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "400": "Customer id is not specified.",

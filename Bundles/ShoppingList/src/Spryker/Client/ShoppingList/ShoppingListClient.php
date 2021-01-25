@@ -116,16 +116,33 @@ class ShoppingListClient extends AbstractClient implements ShoppingListClientInt
      */
     public function addItem(ShoppingListItemTransfer $shoppingListItemTransfer, array $params = []): ShoppingListItemTransfer
     {
+        return $this->addShoppingListItem($shoppingListItemTransfer, $params)->getShoppingListItem() ?? $shoppingListItemTransfer;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     * @param array $params
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
+     */
+    public function addShoppingListItem(
+        ShoppingListItemTransfer $shoppingListItemTransfer,
+        array $params = []
+    ): ShoppingListItemResponseTransfer {
         $shoppingListItemTransfer = $this->getFactory()
             ->createShoppingListAddItemExpander()
             ->expandShoppingListAddItem($shoppingListItemTransfer, $params);
 
-        $shoppingListItemTransfer = $this->getZedStub()->addItem($shoppingListItemTransfer);
+        $shoppingListItemResponseTransfer = $this->getZedStub()->addShoppingListItem($shoppingListItemTransfer);
 
         $this->getFactory()->getZedRequestClient()->addResponseMessagesToMessenger();
         $this->updatePermissions();
 
-        return $shoppingListItemTransfer;
+        return $shoppingListItemResponseTransfer;
     }
 
     /**
@@ -192,8 +209,9 @@ class ShoppingListClient extends AbstractClient implements ShoppingListClientInt
      *
      * @return \Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer
      */
-    public function getShoppingListOverviewWithoutProductDetails(ShoppingListOverviewRequestTransfer $shoppingListOverviewRequestTransfer): ShoppingListOverviewResponseTransfer
-    {
+    public function getShoppingListOverviewWithoutProductDetails(
+        ShoppingListOverviewRequestTransfer $shoppingListOverviewRequestTransfer
+    ): ShoppingListOverviewResponseTransfer {
         return $this->getZedStub()->getShoppingListOverview($shoppingListOverviewRequestTransfer);
     }
 
@@ -252,8 +270,9 @@ class ShoppingListClient extends AbstractClient implements ShoppingListClientInt
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
      */
-    public function getShoppingListItemCollectionTransfer(ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer): ShoppingListItemCollectionTransfer
-    {
+    public function getShoppingListItemCollectionTransfer(
+        ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+    ): ShoppingListItemCollectionTransfer {
         return $this->getZedStub()->getShoppingListItemCollectionTransfer($shoppingListItemCollectionTransfer);
     }
 
@@ -266,8 +285,9 @@ class ShoppingListClient extends AbstractClient implements ShoppingListClientInt
      *
      * @return \Generated\Shared\Transfer\ShoppingListAddToCartRequestCollectionTransfer
      */
-    public function addItemCollectionToCart(ShoppingListAddToCartRequestCollectionTransfer $shoppingListAddToCartRequestCollectionTransfer): ShoppingListAddToCartRequestCollectionTransfer
-    {
+    public function addItemCollectionToCart(
+        ShoppingListAddToCartRequestCollectionTransfer $shoppingListAddToCartRequestCollectionTransfer
+    ): ShoppingListAddToCartRequestCollectionTransfer {
         return $this->getFactory()->createCartHandler()->addItemCollectionToCart($shoppingListAddToCartRequestCollectionTransfer);
     }
 
@@ -282,7 +302,22 @@ class ShoppingListClient extends AbstractClient implements ShoppingListClientInt
      */
     public function updateShoppingListItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
     {
-        return $this->getZedStub()->updateShoppingListItem($shoppingListItemTransfer);
+        return $this->updateShoppingListItemById($shoppingListItemTransfer)->getShoppingListItem() ?? $shoppingListItemTransfer;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
+     */
+    public function updateShoppingListItemById(
+        ShoppingListItemTransfer $shoppingListItemTransfer
+    ): ShoppingListItemResponseTransfer {
+        return $this->getZedStub()->updateShoppingListItemById($shoppingListItemTransfer);
     }
 
     /**
@@ -411,5 +446,21 @@ class ShoppingListClient extends AbstractClient implements ShoppingListClientInt
         return $this->getFactory()
             ->createShoppingListSubtotalCalculator()
             ->calculateShoppingListSubtotal($shoppingListItemProductViews);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * {@internal will work if uuid field is provided.}
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
+     */
+    public function findShoppingListByUuid(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer
+    {
+        return $this->getZedStub()->findShoppingListByUuid($shoppingListTransfer);
     }
 }

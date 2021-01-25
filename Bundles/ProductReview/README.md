@@ -1,6 +1,6 @@
 # ProductReview Module
-[![Build Status](https://travis-ci.org/spryker/ProductReview.svg)](https://travis-ci.org/spryker/ProductReview)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/ProductReview/badge.svg)](https://coveralls.io/github/spryker/ProductReview)
+[![Build Status](https://travis-ci.org/spryker/product-review.svg)](https://travis-ci.org/spryker/product-review)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 ProductReview allows end users to add reviews and ratings to abstract products. Rating information, when approved, can be used for sorting and filtering products. Product ratings and reviews can be displayed for end users on demand.
 

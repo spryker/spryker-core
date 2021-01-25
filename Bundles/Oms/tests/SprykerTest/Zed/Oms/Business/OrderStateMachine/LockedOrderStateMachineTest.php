@@ -8,18 +8,8 @@
 namespace SprykerTest\Zed\Oms\Business\OrderStateMachine;
 
 use Codeception\Test\Unit;
-use DateTime;
 use Exception;
-use Orm\Zed\Oms\Persistence\SpyOmsStateMachineLock;
-use Orm\Zed\Oms\Persistence\SpyOmsStateMachineLockQuery;
-use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
-use Propel\Runtime\Exception\PropelException;
-use ReflectionMethod;
-use Spryker\Zed\Oms\Business\Lock\TriggerLocker;
-use Spryker\Zed\Oms\Business\OrderStateMachine\LockedOrderStateMachine;
-use Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachineInterface;
-use Spryker\Zed\Oms\OmsConfig;
-use Spryker\Zed\Oms\Persistence\OmsQueryContainer;
+use Spryker\Zed\Oms\Business\Exception\LockException;
 
 /**
  * Auto-generated group annotations
@@ -35,349 +25,99 @@ use Spryker\Zed\Oms\Persistence\OmsQueryContainer;
 class LockedOrderStateMachineTest extends Unit
 {
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \SprykerTest\Zed\Oms\OmsBusinessTester
      */
-    protected $stateMachineMock;
+    protected $tester;
 
     /**
-     * @var \Spryker\Zed\Oms\Business\OrderStateMachine\LockedOrderStateMachine
+     * @return string[][]
      */
-    protected $lockedStateMachine;
-
-    /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
-     */
-    protected $omsQueryContainerMock;
-
-    /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
-     */
-    protected $omsQueryMock;
-
-    /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
-     */
-    protected $omsStateMachineLockMock;
-
-    /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
-     */
-    protected $triggerLockerMock;
-
-    /**
-     * Because LockedStateMachine contains 5 similar methods (because it is a decorator), which are just calling
-     * different StateMachine methods, this data provider is used to test similar cases for all these methods,
-     * reducing the amount of code 5 times
-     *
-     * @return array
-     */
-    public function triggerEventsDataProvider()
+    public function methodsUnderTestDataProvider(): array
     {
-        $eventId = 'eventId';
-        $orderItems = $this->createOrderItems();
-        $orderItemIds = [10, 11, 12];
-        $orderItemsIdentifier = $this->hashIdentifier('10-11-12');
-        $singleOrderItemIdentifier = $this->hashIdentifier('10');
-
         return [
-            ['triggerEvent', $orderItemsIdentifier, $eventId, $orderItems, []],
-            ['triggerEventForNewItem', $orderItemsIdentifier,  $orderItems, []],
-            ['triggerEventForNewOrderItems', $orderItemsIdentifier, $orderItemIds, []],
-            ['triggerEventForOneOrderItem', $singleOrderItemIdentifier, $eventId, $orderItemIds[0], []],
-            ['triggerEventForOrderItems', $orderItemsIdentifier, $eventId, $orderItemIds, []],
+            'Trigger event' => ['triggerEvent'],
+            'Trigger event for new item' => ['triggerEventForNewItem'],
+            'Trigger event for new order items' => ['triggerEventForNewOrderItems'],
+            'Trigger event for one order item' => ['triggerEventForOneOrderItem'],
+            'Trigger event for order items' => ['triggerEventForOrderItems'],
         ];
     }
 
     /**
-     * @dataProvider triggerEventsDataProvider
+     * @dataProvider methodsUnderTestDataProvider()
      *
-     * @expectedException \Spryker\Zed\Oms\Business\Exception\LockException
+     * @param string $methodUnderTest
      *
      * @return void
      */
-    public function testTriggerSimilarEventsWhenTriggerIsLocked()
+    public function testTriggerEventMethodWillAcquireSingleLockEntryForEachOrderItemAndReleasesLocksAfterProcessing(string $methodUnderTest): void
     {
-        $arguments = func_get_args();
-        $methodToTest = array_shift($arguments);
-        $expectedIdentifier = array_shift($arguments);
+        // Arrange
+        $orderItemEntityCollection = $this->tester->createOrderItemEntityCollection();
+        $lockedOrderStatemachine = $this->tester->createLockedOrderStatemachineWithTriggerSuccess();
 
-        $lockedStateMachine = $this->createLockedStateMachine();
-        $this->expectStateMachineLockSaveFails($expectedIdentifier);
+        // Act
+        $this->tester->callLockedOrderStatemachineMethod($methodUnderTest, $lockedOrderStatemachine, $orderItemEntityCollection);
 
-        call_user_func_array([$lockedStateMachine, $methodToTest], $arguments);
+        // Assert
+        $this->assertFalse($this->tester->hasLockedOrderItems(), 'Expected all locks to be released but found lock entries.');
     }
 
     /**
-     * @dataProvider triggerEventsDataProvider
+     * @dataProvider methodsUnderTestDataProvider()
+     *
+     * @param string $methodUnderTest
      *
      * @return void
      */
-    public function testTriggerSimilarEventsLockReleasesWhenTriggerSuccess()
+    public function testTriggerEventMethodWithExceptionWillReleaseLocksBeforeExceptionIsForwarded(string $methodUnderTest): void
     {
-        $arguments = func_get_args();
-        $methodToTest = array_shift($arguments);
-        $expectedIdentifier = array_shift($arguments);
+        // Arrange
+        $orderItemEntityCollection = $this->tester->createOrderItemEntityCollection();
+        $lockedOrderStatemachine = $this->tester->createLockedOrderStatemachineWithTriggerException();
 
-        $lockedStateMachine = $this->createLockedStateMachine();
+        // Expect
+        $this->expectException(Exception::class);
 
-        $this->expectStateMachineLockSaveSuccess($expectedIdentifier);
-        $this->expectTriggerRelease($expectedIdentifier);
+        // Act
+        $this->tester->callLockedOrderStatemachineMethod($methodUnderTest, $lockedOrderStatemachine, $orderItemEntityCollection);
 
-        call_user_func_array([$lockedStateMachine, $methodToTest], $arguments);
+        // Assert
+        $this->assertFalse($this->tester->hasLockedOrderItems(), 'Expected all locks to be released but found lock entries.');
     }
 
     /**
-     * @dataProvider triggerEventsDataProvider
+     * @dataProvider methodsUnderTestDataProvider()
      *
-     * @expectedException \Exception
+     * @param string $methodUnderTest
      *
      * @return void
      */
-    public function testTriggerEventLockReleasesWhenTriggerFails()
+    public function testTriggerEventMethodWithAlreadyLockedOrderItemsWillThrowAnException(string $methodUnderTest): void
     {
-        $arguments = func_get_args();
-        $methodToTest = array_shift($arguments);
-        $expectedIdentifier = array_shift($arguments);
+        // Arrange
+        $orderItemEntityCollection = $this->tester->createOrderItemEntityCollection();
+        $lockedOrderStatemachine = $this->tester->createLockedOrderStatemachineWithTriggerSuccess();
+        $this->tester->lockOrderItems($orderItemEntityCollection);
 
-        $lockedStateMachine = $this->createLockedStateMachine();
+        // Expect
+        $this->expectException(LockException::class);
 
-        $this->expectStateMachineLockSaveSuccess($expectedIdentifier);
+        // Act
+        $this->tester->callLockedOrderStatemachineMethod($methodUnderTest, $lockedOrderStatemachine, $orderItemEntityCollection);
 
-        $this->stateMachineMock->expects($this->once())
-            ->method($methodToTest)
-            ->willThrowException(new Exception('Something bad happened'));
-
-        $this->expectTriggerRelease($expectedIdentifier);
-
-        call_user_func_array([$lockedStateMachine, $methodToTest], $arguments);
+        // Assert
+        $this->assertTrue($this->tester->hasLockedOrderItems(), 'Expected to have locks but all locks are released.');
     }
 
     /**
      * @return void
      */
-    public function testCheckConditionMethodIsDecorated()
+    public function testCheckConditionMethodIsDecorated(): void
     {
-        $lockedStateMachine = $this->createLockedStateMachine();
+        $lockedStateMachine = $this->tester->createLockedOrderStatemachineWithTriggerSuccess();
         $logContext = ['some log context'];
 
-        $this->stateMachineMock->expects($this->once())
-            ->method('checkConditions')
-            ->with($logContext);
-
-        $lockedStateMachine->checkConditions($logContext);
-    }
-
-    /**
-     * @return void
-     */
-    public function testIdentifierGeneratedSameForOrderIdsDifferentOrderAndNotUnique()
-    {
-        $testIdsList1 = ['100', '11', '12', '10', 11, 12];
-        $testIdsList2 = [12, 11, 100, '10'];
-
-        $expectedResult = $this->hashIdentifier('10-11-12-100');
-
-        $lockedStateMachine = $this->createLockedStateMachine();
-
-        $generateIdentifierMethod = new ReflectionMethod($lockedStateMachine, 'buildIdentifierForOrderItemIdsLock');
-        $generateIdentifierMethod->setAccessible(true);
-
-        $this->assertEquals($expectedResult, $generateIdentifierMethod->invoke($lockedStateMachine, $testIdsList1));
-        $this->assertEquals($expectedResult, $generateIdentifierMethod->invoke($lockedStateMachine, $testIdsList2));
-    }
-
-    /**
-     * @param string $identifer
-     *
-     * @return string
-     */
-    protected function hashIdentifier($identifer)
-    {
-        return hash('sha512', $identifer);
-    }
-
-    /**
-     * @param string $expectedIdentifier
-     *
-     * @return void
-     */
-    protected function expectStateMachineLockSaveSuccess($expectedIdentifier)
-    {
-        $stateMachineLock = $this->createOmsStateMachineLockEntityMock();
-
-        $stateMachineLock->expects($this->once())
-            ->method('setIdentifier')
-            ->with($expectedIdentifier);
-
-        $stateMachineLock->expects($this->once())
-            ->method('setExpires')
-            ->with($this->isInstanceOf(DateTime::class));
-
-        $stateMachineLock->expects($this->once())
-            ->method('save')
-            ->willReturn(1);
-
-        $this->triggerLockerMock->expects($this->once())
-            ->method('createStateMachineLockEntity')
-            ->willReturn($stateMachineLock);
-    }
-
-    /**
-     * @param string $expectedIdentifier
-     *
-     * @return void
-     */
-    protected function expectStateMachineLockSaveFails($expectedIdentifier)
-    {
-        $stateMachineLock = $this->createOmsStateMachineLockEntityMock();
-
-        $stateMachineLock->expects($this->once())
-            ->method('setIdentifier')
-            ->with($expectedIdentifier);
-
-        $stateMachineLock->expects($this->once())
-            ->method('setExpires')
-            ->with($this->isInstanceOf(DateTime::class));
-
-        $stateMachineLock->expects($this->once())
-            ->method('save')
-            ->willThrowException(new PropelException());
-
-        $this->triggerLockerMock->expects($this->once())
-            ->method('createStateMachineLockEntity')
-            ->willReturn($stateMachineLock);
-    }
-
-    /**
-     * @param string $identifier
-     *
-     * @return void
-     */
-    protected function expectTriggerRelease($identifier)
-    {
-        $queryMock = $this->createOmsQueryMock();
-        $queryMock->expects($this->once())
-            ->method('delete');
-
-        $this->omsQueryContainerMock->expects($this->once())
-            ->method('queryLockItemsByIdentifier')
-            ->with($identifier)
-            ->willReturn($queryMock);
-    }
-
-    /**
-     * @return \Spryker\Zed\Oms\Business\OrderStateMachine\LockedOrderStateMachine
-     */
-    protected function createLockedStateMachine()
-    {
-        return new LockedOrderStateMachine(
-            $this->createStateMachineMock(),
-            $this->createTriggerLockerMock()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachineInterface|\PHPUnit\Framework\MockObject\MockObject
-     */
-    protected function createStateMachineMock()
-    {
-        $this->stateMachineMock = $this->getMockForAbstractClass(
-            OrderStateMachineInterface::class,
-            [],
-            '',
-            true,
-            true,
-            true,
-            ['triggerEvent']
-        );
-
-        return $this->stateMachineMock;
-    }
-
-    /**
-     * @return \Spryker\Zed\Oms\Business\Lock\TriggerLocker|\PHPUnit\Framework\MockObject\MockObject
-     */
-    protected function createTriggerLockerMock()
-    {
-        $this->triggerLockerMock = $this->getMockBuilder(TriggerLocker::class)
-            ->setMethods(['createStateMachineLockEntity'])
-            ->setConstructorArgs([$this->createOmsQueryContainerMock(), $this->createOmsConfig()])
-            ->getMock();
-
-        return $this->triggerLockerMock;
-    }
-
-    /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
-     */
-    protected function createOmsQueryContainerMock()
-    {
-        $this->omsQueryContainerMock = $this->getMockBuilder(OmsQueryContainer::class)
-            ->setMethods(['queryLockItemsByIdentifier'])
-            ->getMock();
-
-        return $this->omsQueryContainerMock;
-    }
-
-    /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
-     */
-    protected function createOmsQueryMock()
-    {
-        $this->omsQueryMock = $this->getMockBuilder(SpyOmsStateMachineLockQuery::class)->setMethods(['count', 'delete'])->getMock();
-
-        return $this->omsQueryMock;
-    }
-
-    /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
-     */
-    protected function createOmsStateMachineLockEntityMock()
-    {
-        $this->omsStateMachineLockMock = $this->getMockBuilder(SpyOmsStateMachineLock::class)
-            ->setMethods(['setIdentifier', 'setExpires', 'save'])
-            ->getMock();
-
-        return $this->omsStateMachineLockMock;
-    }
-
-    /**
-     * @return \Spryker\Zed\Oms\OmsConfig
-     */
-    protected function createOmsConfig()
-    {
-        return new OmsConfig();
-    }
-
-    /**
-     * @return array
-     */
-    protected function createOrderItems()
-    {
-        $orderItem1 = (new SpySalesOrderItem())
-            ->setIdSalesOrderItem(10);
-
-        $orderItem2 = (new SpySalesOrderItem())
-            ->setIdSalesOrderItem(11);
-
-        $orderItem3 = (new SpySalesOrderItem())
-            ->setIdSalesOrderItem(12);
-
-        return [$orderItem1, $orderItem2, $orderItem3];
-    }
-
-    /**
-     * @param array $orderItems
-     *
-     * @return string
-     */
-    protected function getOrderItemsIdentifier($orderItems)
-    {
-        $orderItemIds = [];
-        foreach ($orderItems as $orderItem) {
-            $orderItemIds[] = $orderItem->getIdSalesOrderItem();
-        }
-
-        return implode('-', $orderItemIds);
+        $this->assertIsInt($lockedStateMachine->checkConditions($logContext));
     }
 }

@@ -29,6 +29,7 @@
         <property name="idProductManagementAttributeValue" type="int"/>
         <property name="fkProductManagementAttributeValue" type="int"/>
         <property name="fkLocale" type="int"/>
+        <property name="localeName" type="string"/>
         <property name="translation" type="string"/>
     </transfer>
 
@@ -36,13 +37,66 @@
         <property name="idProductAbstract" type="int"/>
         <property name="abstractAttributes" type="array" singular="abstractAttribute"/>
         <property name="attributes" type="array" singular="attribute"/>
-        <property name="localizedAttributes" type="array" singular="localizedAttribute"/>
+        <property name="localizedAttributes" type="array" singular="concreteLocalizedAttribute"/>
         <property name="abstractLocalizedAttributes" type="array" singular="localizedAttribute"/>
     </transfer>
 
     <transfer name="ProductAbstract">
         <property name="newFrom" type="string"/>
         <property name="newTo" type="string"/>
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="idLocale" type="int"/>
+        <property name="localeName" type="string"/>
+    </transfer>
+
+    <transfer name="Translation">
+        <property name="value" type="string"/>
+        <property name="fkGlossaryKey" type="int"/>
+        <property name="fkLocale" type="int"/>
+    </transfer>
+
+    <transfer name="GlossaryKey">
+        <property name="idGlossaryKey" type="int"/>
+        <property name="key" type="string"/>
+    </transfer>
+
+    <transfer name="ProductAttributeKey">
+        <property name="idProductAttributeKey" type="int"/>
+        <property name="key" type="string"/>
+    </transfer>
+
+    <transfer name="ProductConcrete">
+        <property name="attributes" type="array" singular="attribute"/>
+        <property name="localizedAttributes" type="LocalizedAttributes[]" singular="localizedAttributes"/>
+        <property name="idProductConcrete" type="int"/>
+    </transfer>
+
+    <transfer name="LocalizedAttributes">
+        <property name="locale" type="Locale"/>
+        <property name="attributes" type="array" singular="attribute"/>
+    </transfer>
+
+    <transfer name="ProductManagementAttributeFilter">
+        <property name="keys" type="string[]" singular="key"/>
+        <property name="filter" type="Filter"/>
+    </transfer>
+
+    <transfer name="ProductManagementAttributeCollection">
+        <property name="productManagementAttributes" type="ProductManagementAttribute[]" singular="productManagementAttribute"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="Filter">
+        <property name="limit" type="int"/>
+        <property name="offset" type="int"/>
+        <property name="orderBy" type="string"/>
+        <property name="orderDirection" type="string"/>
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="nbResults" type="int"/>
     </transfer>
 
 </transfers>

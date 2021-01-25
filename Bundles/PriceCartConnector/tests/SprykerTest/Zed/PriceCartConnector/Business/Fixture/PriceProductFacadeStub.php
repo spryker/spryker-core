@@ -7,6 +7,7 @@
 
 namespace SprykerTest\Zed\PriceCartConnector\Business\Fixture;
 
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
@@ -14,21 +15,23 @@ use Spryker\Zed\PriceProduct\Business\PriceProductFacade;
 
 class PriceProductFacadeStub extends PriceProductFacade
 {
-    /**
-     * @var array
-     */
-    private $prices = [];
+    protected const EUR_ISO_CODE = 'EUR';
 
     /**
-     * @var array
+     * @var int[]
      */
-    private $validities = [];
+    protected $prices = [];
+
+    /**
+     * @var bool[]
+     */
+    protected $validities = [];
 
     /**
      * @param string $sku
      * @param string|null $priceType
      *
-     * @return mixed
+     * @return int|null
      */
     public function findPriceBySku($sku, $priceType = null)
     {
@@ -64,9 +67,14 @@ class PriceProductFacadeStub extends PriceProductFacade
 
         return (new PriceProductTransfer())
             ->setSkuProduct($priceFilterTransfer->getSku())
+            ->setPriceTypeName($this->getDefaultPriceTypeName())
             ->setMoneyValue(
                 (new MoneyValueTransfer())
                     ->setGrossAmount($price)
+                    ->setCurrency(
+                        (new CurrencyTransfer())
+                            ->setCode(static::EUR_ISO_CODE)
+                    )
             );
     }
 
@@ -76,7 +84,7 @@ class PriceProductFacadeStub extends PriceProductFacade
      *
      * @return bool
      */
-    public function hasValidPrice($sku, $priceType = null)
+    public function hasValidPrice($sku, $priceType = null): bool
     {
         if (!isset($this->validities[$sku])) {
             return false;
@@ -91,7 +99,7 @@ class PriceProductFacadeStub extends PriceProductFacade
      *
      * @return void
      */
-    public function addPriceStub($sku, $price)
+    public function addPriceStub(string $sku, int $price): void
     {
         $this->prices[$sku] = $price;
     }
@@ -102,7 +110,7 @@ class PriceProductFacadeStub extends PriceProductFacade
      *
      * @return void
      */
-    public function addValidityStub($sku, $validity = true)
+    public function addValidityStub(string $sku, bool $validity = true): void
     {
         $this->validities[$sku] = $validity;
     }
@@ -110,7 +118,7 @@ class PriceProductFacadeStub extends PriceProductFacade
     /**
      * @return string
      */
-    public function getDefaultPriceTypeName()
+    public function getDefaultPriceTypeName(): string
     {
         return 'DEFAULT';
     }

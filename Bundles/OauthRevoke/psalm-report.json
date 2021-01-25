@@ -1,0 +1,188 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 88,
+            "line_to": 88,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'array<array-key, string>' for Spryker\\Zed\\OauthRevoke\\Persistence\\OauthRevokeEntityManager::getIdentifiersFromTransfers is incorrect, got 'list<mixed|null|string>'",
+            "file_name": "vendor/spryker/spryker/Bundles/OauthRevoke/src/Spryker/Zed/OauthRevoke/Persistence/OauthRevokeEntityManager.php",
+            "snippet": "     * @return string[]",
+            "selected_text": "string[]",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 98,
+            "line_to": 98,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'list<mixed|null|string>' does not match the declared return type 'array<array-key, string>' for Spryker\\Zed\\OauthRevoke\\Persistence\\OauthRevokeEntityManager::getIdentifiersFromTransfers",
+            "file_name": "vendor/spryker/spryker/Bundles/OauthRevoke/src/Spryker/Zed/OauthRevoke/Persistence/OauthRevokeEntityManager.php",
+            "snippet": "        return $identifiers;",
+            "selected_text": "$identifiers",
+            "error_level": 6,
+            "shortcode": 128
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 51,
+            "line_to": 51,
+            "type": "InvalidScalarArgument",
+            "message": "Argument 1 of Spryker\\Zed\\OauthRevoke\\Dependency\\Service\\OauthRevokeToUtilEncodingServiceInterface::decodeJson expects string, int|null|string provided",
+            "file_name": "vendor/spryker/spryker/Bundles/OauthRevoke/src/Spryker/Zed/OauthRevoke/Business/Mapper/OauthRefreshTokenMapper.php",
+            "snippet": "        $userIdentifier = $this->utilEncodingService->decodeJson($encodedUserIdentifier, true);",
+            "selected_text": "$encodedUserIdentifier",
+            "error_level": 4,
+            "shortcode": 12
+        },
+        {
+            "severity": "info",
+            "line_from": 52,
+            "line_to": 52,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\OauthRevoke\\Business\\Mapper\\OauthRefreshTokenMapper::filterUserIdentifier cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/OauthRevoke/src/Spryker/Zed/OauthRevoke/Business/Mapper/OauthRefreshTokenMapper.php",
+            "snippet": "        $filteredUserIdentifier = $this->filterUserIdentifier($userIdentifier);",
+            "selected_text": "$userIdentifier",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 85,
+            "line_to": 85,
+            "type": "MismatchingDocblockParamType",
+            "message": "Parameter $oauthRefreshTokenTransfers has wrong type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\OauthRefreshTokenTransfer>', should be 'ArrayObject'",
+            "file_name": "vendor/spryker/spryker/Bundles/OauthRevoke/src/Spryker/Zed/OauthRevoke/Business/OauthRevokeFacade.php",
+            "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\OauthRefreshTokenTransfer[] $oauthRefreshTokenTransfers",
+            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\OauthRefreshTokenTransfer[]",
+            "error_level": 4,
+            "shortcode": 141
+        },
+        {
+            "severity": "info",
+            "line_from": 27,
+            "line_to": 27,
+            "type": "MismatchingDocblockParamType",
+            "message": "Parameter $oauthRefreshTokenTransfers has wrong type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\OauthRefreshTokenTransfer>', should be 'ArrayObject'",
+            "file_name": "vendor/spryker/spryker/Bundles/OauthRevoke/src/Spryker/Zed/OauthRevoke/Communication/Plugin/Oauth/OauthRefreshTokensRevokerPlugin.php",
+            "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\OauthRefreshTokenTransfer[] $oauthRefreshTokenTransfers",
+            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\OauthRefreshTokenTransfer[]",
+            "error_level": 4,
+            "shortcode": 141
+        },
+        {
+            "severity": "info",
+            "line_from": 33,
+            "line_to": 33,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\OauthRevoke\\Business\\OauthRevokeFacadeInterface::revokeAllRefreshTokens expects ArrayObject, possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\OauthRefreshTokenTransfer> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/OauthRevoke/src/Spryker/Zed/OauthRevoke/Communication/Plugin/Oauth/OauthRefreshTokensRevokerPlugin.php",
+            "snippet": "        $this->getFacade()->revokeAllRefreshTokens($oauthRefreshTokenTransfers);",
+            "selected_text": "$oauthRefreshTokenTransfers",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 55,
+            "line_to": 55,
+            "type": "MismatchingDocblockParamType",
+            "message": "Parameter $oauthRefreshTokenTransfers has wrong type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\OauthRefreshTokenTransfer>', should be 'ArrayObject'",
+            "file_name": "vendor/spryker/spryker/Bundles/OauthRevoke/src/Spryker/Zed/OauthRevoke/Persistence/OauthRevokeEntityManager.php",
+            "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\OauthRefreshTokenTransfer[] $oauthRefreshTokenTransfers",
+            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\OauthRefreshTokenTransfer[]",
+            "error_level": 4,
+            "shortcode": 141
+        },
+        {
+            "severity": "info",
+            "line_from": 86,
+            "line_to": 86,
+            "type": "MismatchingDocblockParamType",
+            "message": "Parameter $oauthRefreshTokenTransfers has wrong type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\OauthRefreshTokenTransfer>', should be 'ArrayObject'",
+            "file_name": "vendor/spryker/spryker/Bundles/OauthRevoke/src/Spryker/Zed/OauthRevoke/Persistence/OauthRevokeEntityManager.php",
+            "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\OauthRefreshTokenTransfer[] $oauthRefreshTokenTransfers",
+            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\OauthRefreshTokenTransfer[]",
+            "error_level": 4,
+            "shortcode": 141
+        },
+        {
+            "severity": "info",
+            "line_from": 31,
+            "line_to": 31,
+            "type": "MismatchingDocblockParamType",
+            "message": "Parameter $oauthRefreshTokenTransfers has wrong type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\OauthRefreshTokenTransfer>', should be 'ArrayObject'",
+            "file_name": "vendor/spryker/spryker/Bundles/OauthRevoke/src/Spryker/Zed/OauthRevoke/Persistence/OauthRevokeEntityManagerInterface.php",
+            "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\OauthRefreshTokenTransfer[] $oauthRefreshTokenTransfers",
+            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\OauthRefreshTokenTransfer[]",
+            "error_level": 4,
+            "shortcode": 141
+        },
+        {
+            "severity": "info",
+            "line_from": 59,
+            "line_to": 59,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\OauthRevoke\\Persistence\\Propel\\Mapper\\OauthRefreshTokenMapper::mapOauthRefreshTokenEntityCollectionToOauthRefreshTokenTransferCollection expects Propel\\Runtime\\Collection\\Collection, possibly different type Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\OauthRevoke\\Persistence\\SpyOauthRefreshToken> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/OauthRevoke/src/Spryker/Zed/OauthRevoke/Persistence/OauthRevokeRepository.php",
+            "snippet": "            ->mapOauthRefreshTokenEntityCollectionToOauthRefreshTokenTransferCollection($oauthRefreshTokenCollection);",
+            "selected_text": "$oauthRefreshTokenCollection",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 28,
+            "line_to": 28,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Orm\\Zed\\OauthRevoke\\Persistence\\SpyOauthRefreshToken::setFkOauthClient cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/OauthRevoke/src/Spryker/Zed/OauthRevoke/Persistence/Propel/Mapper/OauthRefreshTokenMapper.php",
+            "snippet": "        $oauthRefreshTokenEntity->setFkOauthClient($oauthRefreshTokenTransfer->getIdOauthClient());",
+            "selected_text": "$oauthRefreshTokenTransfer->getIdOauthClient()",
+            "error_level": 3,
+            "shortcode": 78
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 121,
+            "line_to": 121,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Zed\\OauthRevoke\\Business\\Creator\\OauthRefreshTokenCreatorInterface::saveRefreshToken has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/OauthRevoke/src/Spryker/Zed/OauthRevoke/Business/OauthRevokeFacade.php",
+            "snippet": "        $this->getFactory()->createOauthRefreshTokenCreator()->saveRefreshToken($refreshTokenEntity);",
+            "selected_text": "saveRefreshToken",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 20,
+            "line_to": 20,
+            "type": "DeprecatedInterface",
+            "message": "Spryker\\Zed\\OauthExtension\\Dependency\\Plugin\\OauthRefreshTokenSaverPluginInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/OauthRevoke/src/Spryker/Zed/OauthRevoke/Communication/Plugin/Oauth/OauthRefreshTokenSaverPlugin.php",
+            "snippet": "class OauthRefreshTokenSaverPlugin extends AbstractPlugin implements OauthRefreshTokenSaverPluginInterface",
+            "selected_text": "OauthRefreshTokenSaverPlugin",
+            "error_level": 2,
+            "shortcode": 152
+        },
+        {
+            "severity": "info",
+            "line_from": 34,
+            "line_to": 34,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Zed\\OauthRevoke\\Business\\OauthRevokeFacadeInterface::saveRefreshToken has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/OauthRevoke/src/Spryker/Zed/OauthRevoke/Communication/Plugin/Oauth/OauthRefreshTokenSaverPlugin.php",
+            "snippet": "        $this->getFacade()->saveRefreshToken($refreshTokenEntity);",
+            "selected_text": "saveRefreshToken",
+            "error_level": 2,
+            "shortcode": 1
+        }
+    ]
+}

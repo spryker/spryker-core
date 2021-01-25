@@ -1,50 +1,85 @@
 "%s header(s) is missing in uploaded csv file","%s header fehlen in der hochgeladenen CSV-Datei"
 "Abstract product was not found by provided sku %s.","Abstraktes Produkt wurde von angegebenem Artikel %s nicht gefunden."
+Actions,Aktionen
+"An identical scheduled price already exists for this product.","Ein identischer Preis existiert bereits für dieses Produkt."
+"Are you sure about deleting the Scheduled prices %s?","Möchten Sie die geplanten Preise %s wirklich löschen?"
+"Are you sure about deleting this scheduled price?","Möchten Sie diesen Preis wirklich löschen?"
 "By clicking the ""Publish"" button below, you will send the scheduled prices to the live system.","Wenn Sie unten auf die Schaltfläche ""Veröffentlichen"" klicken, werden die geplanten Preise an das Live-System gesendet."
 "Concrete product was not found by provided sku %s.","Konkretes Produkt wurde von den angegebenen Artikelnr. %s nicht gefunden."
 "Currency was not found by provided iso code %s.","Die Währung wurde mit dem angegebenen ISO-Code %s nicht gefunden."
 "Dates must be in right format and to date must be greater than from.","Die Daten müssen im richtigen Format vorliegen und aktuell müssen größer als von sein."
+Delete,Löschen
+Download,Herunterladen
+Draft,Entwurf
 "Dry run of your import","Trockenlauf Ihres Imports"
+Edit,Bearbeiten
 "Eg: Christmas sales, etc.","ZB: Weihnachtsverkauf etc."
 Error,Error
 "Errors found inside your file","Fehler in Ihrer Datei gefunden"
+"Finish at must be greater than start from","Beenden am muss größer sein als starten ab"
 "Gross and Net Amount must be a positive integer.","Brutto- und Nettobetrag müssen eine positive ganze Zahl sein."
 "If you want to retry your import with corrected data, use ""Import your csv file"" button.","Wenn Sie den Import mit korrigierten Daten wiederholen möchten, klicken Sie auf ""Ihre CSV-Datei importieren""."
 Import,Einführen
+"Import ID","ID importieren"
+"Import n",Importieren
 "Import new scheduled prices","Importieren Sie neue geplante Preise"
 "Import Scheduled Prices","Geplante Preise Importieren"
 "Import your CSV file","Importieren Sie Ihre CSV-Datei"
+"Imported by and on the","Importiert von und am"
+"Imported by on the","Importiert von am"
 "Importing a lot of scheduled prices can take some time.","Das Importieren vieler geplanter Preise kann einige Zeit in Anspruch nehmen."
 "Learn about file format on our documentation","Weitere Informationen zum Dateiformat finden Sie in unserer Dokumentation"
+Name,Name
 "No prices have been processed. You may have only errors inside your file or no prices were defined inside.","Es wurden keine Preise verarbeitet. Möglicherweise enthält Ihre Datei nur Fehler oder es wurden keine Preise definiert."
+"No, I want to keep this price","Nein, ich möchte diesen Preis behalten"
+"Number of prices","Anzahl der Preise"
+"Number of products","Anzahl der Produkte"
 "One Product Abstract Sku or Product Concrete Sku must be provided.","Es muss eine Product Abstract Sku oder Product Concrete Sku bereitgestellt werden."
 "Price type was not found by provided sku %s.","Der Preistyp wurde von der angegebenen Artikelnummer %s nicht gefunden."
 Prices,Preise
 "Publish the scheduled prices","Veröffentlichen Sie die geplanten Preise"
+Published,Veröffentlicht
 "Row n°","Reihe n°"
 "Row processed with success","Zeile erfolgreich verarbeitet"
 "Schedule name","Name des Zeitplans"
+"Schedule price haven not been saved","Geplanter Preis wurde nicht gespeichert"
 "Scheduled price already exists.","Geplanter Preis existiert bereits."
+"Scheduled price has been successfully saved","Geplanter Preis wurde erfolgreich gespeichert"
+"Scheduled price list was successfully removed","Liste der geplanten Preise wurde erfolgreich entfernt"
 "Scheduled Prices","Geplante Preise"
+"Scheduled prices inside import","Geplante Preise im Import"
 "Scheduled Prices: Import dry run","Geplante Preise: Trockenlauf importieren"
 "Select your CSV file","Wählen Sie Ihre CSV-Datei"
+Status,Status
 "Store was not found by provided name %s.","Geschäft wurde mit dem angegebenen Namen %s nicht gefunden."
+"The timezone used for the scheduled price will be %s as defined on the store selected","Die Zeitzone für den geplanten Preis wird %s sein wie definiert im gewähltn Store"
 "They will be available to your customers based on the dates","Sie werden Ihren Kunden basierend auf den Daten zur Verfügung stehen"
+"Via data import","Via Datenimport"
+View,Ansicht
+"Yes, delete this price","Ja, diesen Preis löschen"
+"Yes, delete those prices","Ja, diese Preise löschen"
+"No, I want to keep those prices","Nein, ich will diese Preise behalten"
+"Delete Import","Import löschen"
+"You will delete %d prices for %d products. Is this what you want?","Sie werden %d Preise für %d Produkte löschen. Wollen Sie das wirklich?"
 "You will find below the list errors and successfully processed rows inside your import file.","Sie finden unter der Liste Fehler und erfolgreich verarbeitete Zeilen in Ihrer Importdatei."
 "Your file does not contain any errors.","Ihre Datei enthält keine Fehler."
 "Your prices are now available to your custoers based on their start and end date.","Ihre Preise sind nun entsprechend deren Start- und Enddaten für Ihre Kunden verfügbar."
 "Your prices are now available to your customers based on their start and end date.","Ihre Preise stehen Ihren Kunden nun basierend auf ihrem Start- und Enddatum zur Verfügung"
 "Your scheduled prices have been published","Ihre geplanten Preise wurden veröffentlicht"
-Draft,Entwurf
-Published,Veröffentlicht
-"Import ID","ID importieren"
-Name,Name
-"Imported by and on the","Importiert von und am"
-Status,Status
-"Number of prices","Anzahl der Preise"
-"Number of products","Anzahl der Produkte"
-Actions,Aktionen
-View,Aussicht
-Edit,Bearbeiten
-Download,Herunterladen
-Delete,Löschen
+"Price type",Preistyp
+"Start from (included)","Von (einschließlich)"
+"Finish at (included)","Bis (einschließlich)"
+"You can define a price for the product that will take effect at a date and time in the future. You can define multiple prices on the same period.","Sie können einen Preis für das Produkt definieren, der zu einem bestimmten Zeitpunkt wirksam wird. Sie können mehrere Preise für denselben Zeitraum definieren."
+"Import via CSV file","Per CSV importieren"
+"Add scheduled price","Geplanten Preis hinzufügen"
+"Scheduled prices inside this import","Geplante Preise in diesem Import"
+"View Import","Import ansehen"
+"Edit Import","Import bearbeiten"
+"Edit Scheduled Price","Geplante Preise bearbeiten"
+"Scheduled price information","Geplante Preise bearbeiten"
+"Scheduled price was successfully removed","Geplanter Preis wurde erfolgreich gelöscht."
+"Choose store","Store auswählen"
+"Choose currency","Währung auswählen"
+"Net price or gross price must be filled","Geben Sie einen Nettopreis oder einen Bruttopreis an."
+"Scheduled prices imported","Geplante Preise importiert"
+"The timezone used for the scheduled price will be <b class=""timezone""></b> as defined on the store selected","Die für den geplanten Preis verwendete Zeitzone ist <b class=""timezone""></b>, wie es im ausgewählten Store definiert wurde."

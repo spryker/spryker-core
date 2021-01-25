@@ -32,17 +32,17 @@ use Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInt
 class QuoteStorageStrategyProxyTest extends Unit
 {
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \Spryker\Client\Cart\Dependency\Client\CartToQuoteInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $quoteClientMock;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \Spryker\Client\Cart\Dependency\Client\CartToMessengerClientInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $messengerClientMock;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var \Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $quoteStorageStrategyMock;
 
@@ -54,13 +54,13 @@ class QuoteStorageStrategyProxyTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
         $this->messengerClientMock = $this->createMock(CartToMessengerClientInterface::class);
         $this->quoteClientMock = $this->createMock(CartToQuoteInterface::class);
-        $this->quoteStorageStrategyMock = $quoteStorageStrategy = $this->createMock(QuoteStorageStrategyPluginInterface::class);
+        $this->quoteStorageStrategyMock = $this->createMock(QuoteStorageStrategyPluginInterface::class);
 
         $this->quoteStorageStrategyProxy = new QuoteStorageStrategyProxy(
             $this->messengerClientMock,
@@ -126,7 +126,7 @@ class QuoteStorageStrategyProxyTest extends Unit
         $this->expectsErrorMessageNotAdded();
         $this->assertCallForwardedToSubject(
             'removeItem',
-            ["sku"],
+            ['sku'],
             QuoteTransfer::class
         );
     }
@@ -140,7 +140,7 @@ class QuoteStorageStrategyProxyTest extends Unit
         $this->expectsErrorMessageAdded();
         $this->assertCallNotForwardedToSubject(
             'removeItem',
-            ["sku"],
+            ['sku'],
             QuoteTransfer::class
         );
     }

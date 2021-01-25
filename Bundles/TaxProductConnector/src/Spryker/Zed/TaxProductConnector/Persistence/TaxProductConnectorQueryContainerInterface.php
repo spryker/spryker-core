@@ -53,24 +53,24 @@ interface TaxProductConnectorQueryContainerInterface extends QueryContainerInter
      *
      * @module Country
      *
-     * @deprecated Use queryTaxSetByIdProductAbstractAndCountryIso2Codes() instead.
+     * @deprecated Use {@link queryTaxSetByIdProductAbstractAndCountryIso2Codes()} instead.
      *
-     * @param int[] $allIdProductAbstracts
+     * @param int[] $productAbstractIds
      * @param string $countryIso2Code
      *
      * @return \Orm\Zed\Tax\Persistence\SpyTaxSetQuery
      */
-    public function queryTaxSetByIdProductAbstractAndCountryIso2Code(array $allIdProductAbstracts, $countryIso2Code);
+    public function queryTaxSetByIdProductAbstractAndCountryIso2Code(array $productAbstractIds, $countryIso2Code);
 
     /**
      * @api
      *
      * @module Country
      *
-     * @param int[] $allIdProductAbstracts
+     * @param int[] $productAbstractIds
      * @param string[] $countryIso2Codes
      *
      * @return \Orm\Zed\Tax\Persistence\SpyTaxSetQuery
      */
-    public function queryTaxSetByIdProductAbstractAndCountryIso2Codes(array $allIdProductAbstracts, array $countryIso2Codes): SpyTaxSetQuery;
+    public function queryTaxSetByIdProductAbstractAndCountryIso2Codes(array $productAbstractIds, array $countryIso2Codes): SpyTaxSetQuery;
 }

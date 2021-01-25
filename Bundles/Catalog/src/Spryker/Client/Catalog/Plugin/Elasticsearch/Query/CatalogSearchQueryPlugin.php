@@ -13,15 +13,20 @@ use Elastica\Query\BoolQuery;
 use Elastica\Query\MatchAll;
 use Elastica\Query\MultiMatch;
 use Generated\Shared\Search\PageIndexMap;
+use Generated\Shared\Transfer\SearchContextTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 use Spryker\Client\Search\Dependency\Plugin\SearchStringGetterInterface;
 use Spryker\Client\Search\Dependency\Plugin\SearchStringSetterInterface;
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\Search\SearchConstants;
+use Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextAwareQueryInterface;
 
-class CatalogSearchQueryPlugin extends AbstractPlugin implements QueryInterface, SearchStringSetterInterface, SearchStringGetterInterface
+/**
+ * @method \Spryker\Client\Catalog\CatalogFactory getFactory()
+ */
+class CatalogSearchQueryPlugin extends AbstractPlugin implements QueryInterface, SearchContextAwareQueryInterface, SearchStringSetterInterface, SearchStringGetterInterface
 {
+    protected const SOURCE_IDENTIFIER = 'page';
+
     /**
      * @var string
      */
@@ -32,17 +37,59 @@ class CatalogSearchQueryPlugin extends AbstractPlugin implements QueryInterface,
      */
     protected $query;
 
+    /**
+     * @var \Generated\Shared\Transfer\SearchContextTransfer
+     */
+    protected $searchContextTransfer;
+
     public function __construct()
     {
         $this->query = $this->createSearchQuery();
     }
 
     /**
+     * {@inheritDoc}
+     * - Returns query object for catalog search.
+     *
+     * @api
+     *
      * @return \Elastica\Query
      */
     public function getSearchQuery()
     {
         return $this->query;
+    }
+
+    /**
+     * {@inheritDoc}
+     * - Defines a context for catalog search.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\SearchContextTransfer
+     */
+    public function getSearchContext(): SearchContextTransfer
+    {
+        if (!$this->hasSearchContext()) {
+            $this->setupDefaultSearchContext();
+        }
+
+        return $this->searchContextTransfer;
+    }
+
+    /**
+     * {@inheritDoc}
+     * - Sets a context for catalog search.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SearchContextTransfer $searchContextTransfer
+     *
+     * @return void
+     */
+    public function setSearchContext(SearchContextTransfer $searchContextTransfer): void
+    {
+        $this->searchContextTransfer = $searchContextTransfer;
     }
 
     /**
@@ -103,7 +150,7 @@ class CatalogSearchQueryPlugin extends AbstractPlugin implements QueryInterface,
     {
         $fields = [
             PageIndexMap::FULL_TEXT,
-            PageIndexMap::FULL_TEXT_BOOSTED . '^' . Config::get(SearchConstants::FULL_TEXT_BOOSTED_BOOSTING_VALUE),
+            PageIndexMap::FULL_TEXT_BOOSTED . '^' . $this->getFullTextBoostedBoostingValue(),
         ];
 
         $matchQuery = (new MultiMatch())
@@ -125,5 +172,32 @@ class CatalogSearchQueryPlugin extends AbstractPlugin implements QueryInterface,
         $boolQuery->addMust($matchQuery);
 
         return $boolQuery;
+    }
+
+    /**
+     * @return void
+     */
+    protected function setupDefaultSearchContext(): void
+    {
+        $searchContextTransfer = new SearchContextTransfer();
+        $searchContextTransfer->setSourceIdentifier(static::SOURCE_IDENTIFIER);
+
+        $this->searchContextTransfer = $searchContextTransfer;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function hasSearchContext(): bool
+    {
+        return (bool)$this->searchContextTransfer;
+    }
+
+    /**
+     * @return int
+     */
+    protected function getFullTextBoostedBoostingValue(): int
+    {
+        return $this->getFactory()->getConfig()->getElasticsearchFullTextBoostedBoostingValue();
     }
 }

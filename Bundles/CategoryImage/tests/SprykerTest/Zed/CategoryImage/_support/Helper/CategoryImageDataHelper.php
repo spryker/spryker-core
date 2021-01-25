@@ -44,7 +44,7 @@ class CategoryImageDataHelper extends Module
         $categoryTransfer->addImageSet($categoryImageSetTransfer);
         $this->getCategoryImageFacade()->createCategoryImageSetsForCategory($categoryTransfer);
 
-        $this->getDataCleanupHelper()->_addCleanup(function () use ($categoryImageSetTransfer) {
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($categoryImageSetTransfer): void {
             $this->cleanupCategoryImageSet($categoryImageSetTransfer);
         });
 

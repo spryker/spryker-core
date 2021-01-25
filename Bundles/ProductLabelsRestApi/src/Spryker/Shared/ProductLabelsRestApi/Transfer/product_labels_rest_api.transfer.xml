@@ -10,4 +10,14 @@
         <property name="frontEndReference" type="string"/>
     </transfer>
 
+    <transfer name="ProductLabelDictionaryItem">
+        <property name="idProductLabel" type="int"/>
+    </transfer>
+
+    <transfer name="RestErrorMessage">
+        <property name="code" type="string"/>
+        <property name="status" type="int"/>
+        <property name="detail" type="string"/>
+    </transfer>
+
 </transfers>

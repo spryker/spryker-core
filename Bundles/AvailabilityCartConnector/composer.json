@@ -4,12 +4,16 @@
   "description": "AvailabilityCartConnector module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
-    "spryker/availability": "^5.0.0 || ^6.0.0 || ^8.0.0",
-    "spryker/kernel": "^3.30.0"
+    "php": ">=7.3",
+    "spryker/availability": "^9.1.0",
+    "spryker/availability-cart-connector-extension": "^1.0.0",
+    "spryker/cart-extension": "^2.1.0 || ^3.0.0 || ^4.0.0",
+    "spryker/decimal-object": "^1.0.0",
+    "spryker/kernel": "^3.30.0",
+    "spryker/transfer": "^3.18.0"
   },
   "require-dev": {
-    "spryker/cart": "*"
+    "spryker/code-sniffer": "*"
   },
   "suggest": {
     "spryker/cart": "If you want to use Cart plugins."
@@ -21,9 +25,13 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
+  },
   "extra": {
     "branch-alias": {
-      "dev-master": "4.0.x-dev"
+      "dev-master": "7.0.x-dev"
     }
   },
   "config": {

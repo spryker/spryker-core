@@ -1,9 +1,9 @@
 # ShipmentCheckoutConnector Module
-[![Build Status](https://travis-ci.org/spryker/ShipmentCheckoutConnector.svg)](https://travis-ci.org/spryker/ShipmentCheckoutConnector)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/ShipmentCheckoutConnector/badge.svg)](https://coveralls.io/github/spryker/ShipmentCheckoutConnector)
+[![Build Status](https://travis-ci.org/spryker/shipment-checkout-connector.svg)](https://travis-ci.org/spryker/shipment-checkout-connector)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 ShipmentCheckoutConnector provides plugins for Checkout extension points.
- `ShipmentCheckoutPreCheckPlugin` plugin checks if selected shipment method is still active, if not adds error message and redirects customer back to shipment step. 
+ `ShipmentCheckoutPreCheckPlugin` plugin checks if selected shipment method is still active, if not adds error message and redirects customer back to shipment step.
 
 ## Installation
 

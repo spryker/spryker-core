@@ -4,11 +4,11 @@
   "description": "PropelOrm module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
-    "propel/propel": "2.0.0-alpha8",
+    "php": ">=7.3",
+    "propel/propel": "2.0.0-alpha11",
     "spryker/config": "^3.0.0",
     "spryker/error-handler": "^2.0.0",
-    "spryker/kernel": "^3.30.0",
+    "spryker/kernel": "^3.49.0",
     "spryker/symfony": "^3.0.0"
   },
   "require-dev": {
@@ -18,7 +18,8 @@
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/"
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Shared\\PropelOrm\\Helper\\": "tests/SprykerTest/Shared/PropelOrm/_support/Helper/"
     }
   },
   "autoload-dev": {
@@ -28,6 +29,10 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"

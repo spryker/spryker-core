@@ -1,0 +1,90 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 64,
+            "line_to": 64,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Uuid/src/Spryker/Zed/Uuid/Business/Generator/UuidGenerator.php",
+            "snippet": "            throw new Exception(sprintf(static::ERROR_MESSAGE_UUID, $uuidGeneratorConfigurationTransfer->getTable()));",
+            "selected_text": "$uuidGeneratorConfigurationTransfer->getTable()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 72,
+            "line_to": 72,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Uuid/src/Spryker/Zed/Uuid/Communication/Console/UuidGeneratorConsole.php",
+            "snippet": "            $uuidGeneratorReportTransfer->getCount(),",
+            "selected_text": "$uuidGeneratorReportTransfer->getCount()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 73,
+            "line_to": 73,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 3 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Uuid/src/Spryker/Zed/Uuid/Communication/Console/UuidGeneratorConsole.php",
+            "snippet": "            $uuidGeneratorReportTransfer->getTable()",
+            "selected_text": "$uuidGeneratorReportTransfer->getTable()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 24,
+            "line_to": 24,
+            "type": "MoreSpecificReturnType",
+            "message": "The declared return type 'Propel\\Runtime\\ActiveQuery\\ModelCriteria' for Spryker\\Zed\\Uuid\\Persistence\\Propel\\Builder\\QueryBuilder::buildQuery is more specific than the inferred return type 'object'",
+            "file_name": "vendor/spryker/spryker/Bundles/Uuid/src/Spryker/Zed/Uuid/Persistence/Propel/Builder/QueryBuilder.php",
+            "snippet": "     * @return \\Propel\\Runtime\\ActiveQuery\\ModelCriteria",
+            "selected_text": "\\Propel\\Runtime\\ActiveQuery\\ModelCriteria",
+            "error_level": 3,
+            "shortcode": 70
+        },
+        {
+            "severity": "info",
+            "line_from": 29,
+            "line_to": 29,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\Uuid\\Persistence\\Propel\\Builder\\QueryBuilder::getFullyQualifiedClassName cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Uuid/src/Spryker/Zed/Uuid/Persistence/Propel/Builder/QueryBuilder.php",
+            "snippet": "            $uuidGeneratorConfigurationTransfer->getModule(),",
+            "selected_text": "$uuidGeneratorConfigurationTransfer->getModule()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 30,
+            "line_to": 30,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Zed\\Uuid\\Persistence\\Propel\\Builder\\QueryBuilder::getFullyQualifiedClassName cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Uuid/src/Spryker/Zed/Uuid/Persistence/Propel/Builder/QueryBuilder.php",
+            "snippet": "            $uuidGeneratorConfigurationTransfer->getTable()",
+            "selected_text": "$uuidGeneratorConfigurationTransfer->getTable()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 37,
+            "line_to": 37,
+            "type": "LessSpecificReturnStatement",
+            "message": "The type 'object' is more general than the declared return type 'Propel\\Runtime\\ActiveQuery\\ModelCriteria' for Spryker\\Zed\\Uuid\\Persistence\\Propel\\Builder\\QueryBuilder::buildQuery",
+            "file_name": "vendor/spryker/spryker/Bundles/Uuid/src/Spryker/Zed/Uuid/Persistence/Propel/Builder/QueryBuilder.php",
+            "snippet": "        return new $className();",
+            "selected_text": "new $className()",
+            "error_level": 3,
+            "shortcode": 129
+        }
+    ],
+    "deprecation": []
+}

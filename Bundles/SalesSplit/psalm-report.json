@@ -1,0 +1,30 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 75,
+            "line_to": 75,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\SalesSplit\\Business\\Model\\Validation\\ValidatorInterface::isValid cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesSplit/src/Spryker/Zed/SalesSplit/Business/Model/OrderItemSplit.php",
+            "snippet": "        if ($this->validator->isValid($salesOrderItemEntity, $quantityToSplit) === false) {",
+            "selected_text": "$salesOrderItemEntity",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 159,
+            "line_to": 159,
+            "type": "PossiblyNullOperand",
+            "message": "Cannot concatenate with a possibly null null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesSplit/src/Spryker/Zed/SalesSplit/Business/Model/OrderItemSplit.php",
+            "snippet": "        $copyOfSalesOrderItem->setGroupKey(self::SPLIT_MARKER . $copyOfSalesOrderItem->getGroupKey());",
+            "selected_text": "$copyOfSalesOrderItem->getGroupKey()",
+            "error_level": 1,
+            "shortcode": 80
+        }
+    ],
+    "deprecation": []
+}

@@ -2,12 +2,12 @@
   <tr>
       {% embed '@SalesReclamationGui/Detail/boxes/order-item.twig' with {
           orderItem: reclamationItem.orderItem,
-          displayImage: true,
-          image: reclamationItem.orderItem.metadata.image,
+          displayImage: reclamationItem.orderItem.metadata is not null,
+          image: reclamationItem.orderItem.metadata.image | default,
           displayTotals: true,
           group: false
       } %}{% endembed %}
   </tr>
-  {% embed '@SalesReclamationGui/partials/items/order-item-option.twig' with {orderItem: reclamationItem.orderItem} %}
+  {% embed '@SalesReclamationGui/Partials/items/order-item-option.twig' with {orderItem: reclamationItem.orderItem} %}
   {% endembed %}
 {% endfor %}

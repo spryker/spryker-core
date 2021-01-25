@@ -1,0 +1,42 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 53,
+            "line_to": 53,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getQuote on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/QuoteRequestAgent/src/Spryker/Client/QuoteRequestAgent/Converter/QuoteRequestAgentConverter.php",
+            "snippet": "        $quoteTransfer = $quoteRequestTransfer->getLatestVersion()->getQuote();",
+            "selected_text": "getQuote",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 56,
+            "line_to": 56,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method setQuoteRequestReference on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/QuoteRequestAgent/src/Spryker/Client/QuoteRequestAgent/Converter/QuoteRequestAgentConverter.php",
+            "snippet": "            ->setQuoteRequestReference($quoteRequestTransfer->getQuoteRequestReference())",
+            "selected_text": "setQuoteRequestReference",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 57,
+            "line_to": 57,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getVersionReference on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/QuoteRequestAgent/src/Spryker/Client/QuoteRequestAgent/Converter/QuoteRequestAgentConverter.php",
+            "snippet": "            ->setQuoteRequestVersionReference($quoteRequestTransfer->getLatestVersion()->getVersionReference())",
+            "selected_text": "getVersionReference",
+            "error_level": 3,
+            "shortcode": 83
+        }
+    ],
+    "deprecation": []
+}

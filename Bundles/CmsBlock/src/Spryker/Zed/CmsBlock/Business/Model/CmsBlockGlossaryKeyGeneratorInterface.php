@@ -17,5 +17,10 @@ interface CmsBlockGlossaryKeyGeneratorInterface
      *
      * @return string
      */
-    public function generateGlossaryKeyName($idCmsBlock, $templateName, $placeholder, $autoIncrement = true);
+    public function generateGlossaryKeyName(
+        int $idCmsBlock,
+        string $templateName,
+        string $placeholder,
+        bool $autoIncrement = true
+    ): string;
 }

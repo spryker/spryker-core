@@ -10,15 +10,13 @@ namespace SprykerTest\Zed\ProductBundleProductListConnector;
 use Codeception\Actor;
 use Generated\Shared\Transfer\ProductListProductConcreteRelationTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
-use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductBundleProductListConnector\Business\ProductBundleProductListConnectorBusinessFactory;
 use Spryker\Zed\ProductBundleProductListConnector\Business\ProductBundleProductListConnectorFacadeInterface;
+use Spryker\Zed\ProductBundleProductListConnector\Dependency\Facade\ProductBundleProductListConnectorToProductBundleFacadeBridge;
 use Spryker\Zed\ProductBundleProductListConnector\ProductBundleProductListConnectorDependencyProvider;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -28,7 +26,7 @@ use Spryker\Zed\ProductBundleProductListConnector\ProductBundleProductListConnec
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  *
  * @SuppressWarnings(PHPMD)
  */
@@ -55,12 +53,12 @@ class ProductBundleProductListConnectorBusinessTester extends Actor
     }
 
     /**
-     * @param \PHPUnit\Framework\MockObject\MockObject $productBundleProductListConnectorToProductBundleFacadeBridgeMock
+     * @param \Spryker\Zed\ProductBundleProductListConnector\Dependency\Facade\ProductBundleProductListConnectorToProductBundleFacadeBridge|\PHPUnit\Framework\MockObject\MockObject $productBundleProductListConnectorToProductBundleFacadeBridgeMock
      *
      * @return \Spryker\Zed\ProductBundleProductListConnector\Business\ProductBundleProductListConnectorFacadeInterface
      */
     public function getFacadeWitMockDependency(
-        MockObject $productBundleProductListConnectorToProductBundleFacadeBridgeMock
+        ProductBundleProductListConnectorToProductBundleFacadeBridge $productBundleProductListConnectorToProductBundleFacadeBridgeMock
     ): ProductBundleProductListConnectorFacadeInterface {
         /** @var \Spryker\Zed\ProductBundleProductListConnector\Business\ProductBundleProductListConnectorFacadeInterface|\Spryker\Zed\Kernel\Business\AbstractFacade $productBundleProductListConnectorFacade */
         $productBundleProductListConnectorFacade = $this->getFacade();
@@ -71,12 +69,12 @@ class ProductBundleProductListConnectorBusinessTester extends Actor
     }
 
     /**
-     * @param \PHPUnit\Framework\MockObject\MockObject $productBundleProductListConnectorToProductBundleFacadeBridgeMock
+     * @param \Spryker\Zed\ProductBundleProductListConnector\Dependency\Facade\ProductBundleProductListConnectorToProductBundleFacadeBridge|\PHPUnit\Framework\MockObject\MockObject $productBundleProductListConnectorToProductBundleFacadeBridgeMock
      *
      * @return \Spryker\Zed\ProductBundleProductListConnector\Business\ProductBundleProductListConnectorBusinessFactory
      */
     protected function getProductBundleProductListConnectorBusinessFactory(
-        MockObject $productBundleProductListConnectorToProductBundleFacadeBridgeMock
+        ProductBundleProductListConnectorToProductBundleFacadeBridge $productBundleProductListConnectorToProductBundleFacadeBridgeMock
     ): ProductBundleProductListConnectorBusinessFactory {
         $container = new Container();
         $dependencyProvider = new ProductBundleProductListConnectorDependencyProvider();

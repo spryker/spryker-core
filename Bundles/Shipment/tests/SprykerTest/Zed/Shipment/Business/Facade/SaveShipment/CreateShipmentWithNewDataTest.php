@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Shipment\tests\SprykerTest\Zed\Shipment\Business\Facade\SaveShipment;
+namespace SprykerTest\Zed\Shipment\Business\Facade\SaveShipment;
 
 use Codeception\TestCase\Test;
 use DateTime;
@@ -17,7 +17,9 @@ use Generated\Shared\DataBuilder\ShipmentMethodBuilder;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
+use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\Sales\Persistence\SpySalesShipmentQuery;
 use Spryker\Shared\Price\PriceConfig;
@@ -25,8 +27,6 @@ use Spryker\Shared\Price\PriceConfig;
 /**
  * Auto-generated group annotations
  *
- * @group Shipment
- * @group tests
  * @group SprykerTest
  * @group Zed
  * @group Shipment
@@ -120,7 +120,9 @@ class CreateShipmentWithNewDataTest extends Test
         $actualShipmentTransfer = clone $itemTransfer
             ->getShipment()
             ->setMethod(
-                (new ShipmentMethodBuilder())->build()
+                (new ShipmentMethodBuilder())->seed([
+                    ShipmentMethodTransfer::STORE_RELATION => new StoreRelationTransfer(),
+                ])->build()
             );
 
         return [$quoteTransfer, $actualShipmentTransfer, $itemTransfer];
@@ -156,7 +158,9 @@ class CreateShipmentWithNewDataTest extends Test
                     ->withShipment(
                         (new ShipmentBuilder())
                             ->withShippingAddress()
-                            ->withMethod()
+                            ->withMethod([
+                                ShipmentMethodTransfer::STORE_RELATION => new StoreRelationTransfer(),
+                            ])
                     )
             )
             ->withAnotherItem(
@@ -164,7 +168,9 @@ class CreateShipmentWithNewDataTest extends Test
                     ->withShipment(
                         (new ShipmentBuilder())
                             ->withShippingAddress()
-                            ->withMethod()
+                            ->withMethod([
+                                ShipmentMethodTransfer::STORE_RELATION => new StoreRelationTransfer(),
+                            ])
                     )
             )
             ->withBillingAddress()
@@ -261,7 +267,7 @@ class CreateShipmentWithNewDataTest extends Test
 
         $this->assertTrue($shipmentGroupResponseTransfer->getIsSuccessful(), 'Saving a new shipment should have been successful.');
         $this->assertNotNull($shipmentEntity->getFkSalesExpense(), 'New sales shipment should have been a new sales expense assigned.');
-        $this->assertEquals(0, $shipmentEntity->getExpense()->getPrice(), 'New shipments must have 0 price as expense.');
+        $this->assertSame(0, $shipmentEntity->getExpense()->getPrice(), 'New shipments must have 0 price as expense.');
     }
 
     /**

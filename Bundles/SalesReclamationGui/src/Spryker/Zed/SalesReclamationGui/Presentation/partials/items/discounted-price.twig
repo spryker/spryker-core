@@ -1,6 +1,0 @@
-<span>{{ priceToPay | money(true, reclamation.order.currencyIsoCode) }}</span>
-{% if (subtotal - priceToPay > 0) > 0 %}
-  <span {% if (subtotal - priceToPay > 0) %} class="discounted" {% endif %}>
-      ({{ subtotal | money(true, reclamation.order.currencyIsoCode) }})
-  </span>
-{% endif %}

@@ -30,10 +30,10 @@ class TaxSetCreateCest
      *
      * @return void
      */
-    public function breadcrumbIsVisible(TaxCommunicationTester $i)
+    public function breadcrumbIsVisible(TaxCommunicationTester $i): void
     {
         $i->amOnPage(TaxSetCreatePage::URL);
-        $i->seeBreadcrumbNavigation('Dashboard / Taxes / Tax Sets / Create Tax Set');
+        $i->seeBreadcrumbNavigation('Administration / Tax Sets / Create Tax Set');
     }
 
     /**
@@ -41,7 +41,7 @@ class TaxSetCreateCest
      *
      * @return void
      */
-    public function iCanAddANewTaxSet(TaxCommunicationTester $i)
+    public function iCanAddANewTaxSet(TaxCommunicationTester $i): void
     {
         $i->amOnPage(TaxSetCreatePage::URL);
 

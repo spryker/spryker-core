@@ -7,13 +7,21 @@
 
 namespace Spryker\Client\CmsBlockStorage\Storage;
 
+use Generated\Shared\Transfer\CmsBlockRequestTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\CmsBlockStorage\Dependency\Client\CmsBlockStorageToStorageInterface;
 use Spryker\Client\CmsBlockStorage\Dependency\Service\CmsBlockStorageToSynchronizationServiceInterface;
+use Spryker\Client\CmsBlockStorage\Dependency\Service\CmsBlockStorageToUtilEncodingServiceInterface;
 use Spryker\Shared\CmsBlockStorage\CmsBlockStorageConstants;
 
 class CmsBlockStorage implements CmsBlockStorageInterface
 {
+    protected const OPTION_NAME = 'name';
+    protected const OPTION_KEY = 'key';
+    protected const OPTION_KEYS = 'keys';
+
+    protected const PREFIX_MAPPING_CMS_BLOCK_KEY = 'name:';
+
     /**
      * @var \Spryker\Client\CmsBlockStorage\Dependency\Client\CmsBlockStorageToStorageInterface
      */
@@ -25,13 +33,62 @@ class CmsBlockStorage implements CmsBlockStorageInterface
     protected $synchronizationService;
 
     /**
+     * @var \Spryker\Client\CmsBlockStorage\Dependency\Service\CmsBlockStorageToUtilEncodingServiceInterface
+     */
+    protected $utilEncodingService;
+
+    /**
+     * @var \Spryker\Client\CmsBlockStorageExtension\Dependency\Plugin\CmsBlockStorageReaderPluginInterface[]
+     */
+    protected $cmsBlockStorageReaderPlugins;
+
+    /**
      * @param \Spryker\Client\CmsBlockStorage\Dependency\Client\CmsBlockStorageToStorageInterface $storageClient
      * @param \Spryker\Client\CmsBlockStorage\Dependency\Service\CmsBlockStorageToSynchronizationServiceInterface $synchronizationService
+     * @param \Spryker\Client\CmsBlockStorage\Dependency\Service\CmsBlockStorageToUtilEncodingServiceInterface $utilEncodingService
+     * @param \Spryker\Client\CmsBlockStorageExtension\Dependency\Plugin\CmsBlockStorageReaderPluginInterface[] $cmsBlockStorageReaderPlugins
      */
-    public function __construct(CmsBlockStorageToStorageInterface $storageClient, CmsBlockStorageToSynchronizationServiceInterface $synchronizationService)
-    {
+    public function __construct(
+        CmsBlockStorageToStorageInterface $storageClient,
+        CmsBlockStorageToSynchronizationServiceInterface $synchronizationService,
+        CmsBlockStorageToUtilEncodingServiceInterface $utilEncodingService,
+        array $cmsBlockStorageReaderPlugins
+    ) {
         $this->storageClient = $storageClient;
         $this->synchronizationService = $synchronizationService;
+        $this->utilEncodingService = $utilEncodingService;
+        $this->cmsBlockStorageReaderPlugins = $cmsBlockStorageReaderPlugins;
+    }
+
+    /**
+     * @param array $options
+     * @param string $localeName
+     * @param string $storeName
+     *
+     * @return array
+     */
+    public function getCmsBlocksByOptions(array $options, string $localeName, string $storeName): array
+    {
+        $cmsBlockKey = $options[static::OPTION_KEY] ?? null;
+        $cmsBlockKeys = $options[static::OPTION_KEYS] ?? [];
+
+        if ($cmsBlockKey) {
+            $cmsBlockKeys = array_merge($cmsBlockKeys, [$cmsBlockKey]);
+        }
+
+        if ($cmsBlockKeys) {
+            return $this->getBlocksByKeys($cmsBlockKeys, $localeName, $storeName);
+        }
+
+        $cmsBlockName = $options[static::OPTION_NAME] ?? null;
+
+        if ($cmsBlockName) {
+            return $this->getBlocksByNames([$cmsBlockName], $localeName, $storeName);
+        }
+
+        $availableBlockKeys = $this->getBlockKeysByOptions($options);
+
+        return $this->getBlocksByKeys($availableBlockKeys, $localeName, $storeName);
     }
 
     /**
@@ -41,166 +98,140 @@ class CmsBlockStorage implements CmsBlockStorageInterface
      *
      * @return array
      */
-    public function getBlocksByNames(array $blockNames, $localeName, $storeName)
+    public function getBlocksByNames(array $blockNames, $localeName, $storeName): array
     {
-        $searchKeys = [];
+        $blockKeys = $this->getBlockKeysByNames($blockNames, $localeName, $storeName);
 
-        foreach ($blockNames as $blockName) {
-            $searchKeys[] = $this->generateKey($blockName, CmsBlockStorageConstants::CMS_BLOCK_RESOURCE_NAME, $localeName, $storeName);
+        return $this->getBlocksByKeys($blockKeys, $localeName, $storeName);
+    }
+
+    /**
+     * @param string[] $blockKeys
+     * @param string $localeName
+     * @param string $storeName
+     *
+     * @return array
+     */
+    protected function getBlocksByKeys(array $blockKeys, string $localeName, string $storeName): array
+    {
+        $storageKeys = [];
+
+        foreach ($blockKeys as $blockKey) {
+            $storageKeys[] = $this->generateKey(
+                $blockKey,
+                CmsBlockStorageConstants::CMS_BLOCK_RESOURCE_NAME,
+                $localeName,
+                $storeName
+            );
         }
 
-        $resultArray = $this->storageClient->getMulti($searchKeys) ?: [];
-        $resultArray = array_filter($resultArray);
+        $results = $this->storageClient->getMulti($storageKeys) ?: [];
+        $results = array_values(array_filter($results));
 
-        $blocks = [];
-        foreach ($resultArray as $key => $result) {
-            $blocks[] = json_decode($result, true);
-        }
+        $blocks = array_map(function ($result) {
+            return $this->utilEncodingService->decodeJson($result, true);
+        }, $results);
 
         return $blocks;
     }
 
     /**
-     * @param array $options
+     * @param string[] $blockNames
      * @param string $localeName
+     * @param string $storeName
      *
-     * @return array
+     * @return string[]|null
      */
-    public function getBlockNamesByOptions(array $options, $localeName)
+    protected function getBlockKeysByNames(array $blockNames, $localeName, $storeName): ?array
     {
-        $availableBlockNames = null;
-
-        foreach ($options as $optionKey => $resources) {
-            $resources = (array)$resources;
-            $blockNames = $this->getBlockNamesForOption($optionKey, $resources);
-
-            $availableBlockNames = $availableBlockNames === null ?
-                $blockNames :
-                array_intersect($availableBlockNames, $blockNames);
+        $blockNameStorageKeys = [];
+        foreach ($blockNames as $blockName) {
+            $blockNameKey = static::PREFIX_MAPPING_CMS_BLOCK_KEY . $blockName;
+            $blockNameStorageKeys[] = $this->generateKey(
+                $blockNameKey,
+                CmsBlockStorageConstants::CMS_BLOCK_RESOURCE_NAME,
+                $localeName,
+                $storeName
+            );
         }
 
-        return $availableBlockNames ?: [];
+        $results = $this->storageClient->getMulti($blockNameStorageKeys);
+        $results = array_values(array_filter($results));
+
+        $blockKeys = array_map(function ($result) {
+            $mappingData = $this->utilEncodingService->decodeJson($result, true);
+
+            return $mappingData['id'] ?? null;
+        }, $results);
+
+        return $blockKeys;
     }
 
     /**
-     * @param string $optionKey
-     * @param int[] $idResources
+     * @param array $options
      *
      * @return string[]
      */
-    protected function getBlockNamesForOption($optionKey, $idResources)
+    protected function getBlockKeysByOptions(array $options): array
     {
-        $searchKeys = [];
+        $blockKeys = [];
 
-        foreach ($idResources as $id) {
-            $searchKeys[] = $this->generateKey((string)$id, 'cms_block' . '_' . $optionKey);
-        }
+        $cmsBlockRequestTransfer = $this->mapOptionsToTransfer($options);
 
-        $blockNames = $this->storageClient->getMulti($searchKeys);
-        $blockNames = $this->decodeMultiResultToArrays($blockNames);
-        $blockNames = $this->getBlockNamePositionArray($blockNames);
+        foreach ($this->cmsBlockStorageReaderPlugins as $cmsBlockStorageReaderPlugin) {
+            $cmsBlockTransfers = $cmsBlockStorageReaderPlugin->getCmsBlocks($cmsBlockRequestTransfer);
 
-        return $blockNames;
-    }
-
-    /**
-     * @param array $blockNames
-     *
-     * @return array
-     */
-    protected function getBlockNamePositionArray(array $blockNames)
-    {
-        $blockNames = array_values($blockNames);
-        $blockOptionNames = [];
-
-        foreach ($blockNames as $blockName) {
-            if (!is_array($blockName)) {
+            if (count($cmsBlockTransfers) < 1) {
                 continue;
             }
 
-            $blockOptionNames = $this->filterBlockByPosition($blockName, $blockOptionNames);
+            $blockKeys = array_merge($blockKeys, $this->getBlockKeysFromTransfers($cmsBlockTransfers));
         }
 
-        return $blockOptionNames;
+        return $blockKeys;
     }
 
     /**
-     * @param array $blockName
-     * @param array $blockOptionNames
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer[] $cmsBlockTransfers
      *
-     * @return array
+     * @return string[]
      */
-    protected function filterBlockByPosition(array $blockName, array $blockOptionNames)
+    protected function getBlockKeysFromTransfers(array $cmsBlockTransfers): array
     {
-        foreach ($blockName as $item) {
-            if (!is_array($item)) {
-                $blockOptionNames[] = $item;
+        $blockKeys = [];
 
-                continue;
-            }
-
-            $position = $item['position'];
-            $positionBlocks = [];
-
-            if (isset($blockOptionNames[$position])) {
-                $positionBlocks = $blockOptionNames[$position];
-            }
-
-            $blockOptionNames[$position] = array_merge($item['block_names'], $positionBlocks);
+        foreach ($cmsBlockTransfers as $cmsBlockTransfer) {
+            $blockKeys[] = $cmsBlockTransfer->getKey();
         }
 
-        return $blockOptionNames;
-    }
-
-    /**
-     * @param array|null $array
-     *
-     * @return array
-     */
-    protected function decodeMultiResultToArrays($array)
-    {
-        if (!is_array($array)) {
-            return [];
-        }
-
-        $array = array_filter($array);
-
-        $resultArray = [];
-        foreach ($array as $key => $result) {
-            $resultArray = array_merge_recursive($resultArray, json_decode($result, true));
-        }
-
-        return $resultArray;
-    }
-
-    /**
-     * @param string $name
-     *
-     * @return string
-     */
-    public function generateBlockNameKey($name)
-    {
-        $charsToReplace = ['"', "'", ' ', "\0", "\n", "\r"];
-
-        return str_replace($charsToReplace, '-', mb_strtolower(trim($name)));
+        return $blockKeys;
     }
 
     /**
      * @param string $blockKey
      * @param string $resourceName
-     * @param string|null $localeName
-     * @param string|null $storeName
+     * @param string $localeName
+     * @param string $storeName
      *
      * @return string
      */
-    protected function generateKey($blockKey, $resourceName = CmsBlockStorageConstants::CMS_BLOCK_RESOURCE_NAME, $localeName = null, $storeName = null)
+    protected function generateKey(string $blockKey, string $resourceName, string $localeName, string $storeName): string
     {
-        $blockName = $this->generateBlockNameKey($blockKey);
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
         $synchronizationDataTransfer->setStore($storeName);
         $synchronizationDataTransfer->setLocale($localeName);
-        $synchronizationDataTransfer->setReference($blockName);
+        $synchronizationDataTransfer->setReference($blockKey);
 
         return $this->synchronizationService->getStorageKeyBuilder($resourceName)->generateKey($synchronizationDataTransfer);
+    }
+
+    /**
+     * @param array $options
+     *
+     * @return \Generated\Shared\Transfer\CmsBlockRequestTransfer
+     */
+    protected function mapOptionsToTransfer(array $options): CmsBlockRequestTransfer
+    {
+        return (new CmsBlockRequestTransfer())->fromArray($options, true);
     }
 }

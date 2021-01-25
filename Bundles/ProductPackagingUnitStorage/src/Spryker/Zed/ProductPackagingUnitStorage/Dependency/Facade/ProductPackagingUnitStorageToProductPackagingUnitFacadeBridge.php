@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\ProductPackagingUnitStorage\Dependency\Facade;
 
-use Generated\Shared\Transfer\ProductPackagingLeadProductTransfer;
-
 class ProductPackagingUnitStorageToProductPackagingUnitFacadeBridge implements ProductPackagingUnitStorageToProductPackagingUnitFacadeInterface
 {
     /**
@@ -25,33 +23,12 @@ class ProductPackagingUnitStorageToProductPackagingUnitFacadeBridge implements P
     }
 
     /**
-     * @deprecated Will be removed without replacement.
-     *
-     * @param int $idProductAbstract
-     *
-     * @return \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer|null
-     */
-    public function getProductPackagingLeadProductByIdProductAbstract(
-        int $idProductAbstract
-    ): ?ProductPackagingLeadProductTransfer {
-        return $this->productPackagingUnitFacade->findProductPackagingLeadProductByIdProductAbstract($idProductAbstract);
-    }
-
-    /**
-     * @return string
-     */
-    public function getDefaultProductPackagingUnitTypeName(): string
-    {
-        return $this->productPackagingUnitFacade->getDefaultProductPackagingUnitTypeName();
-    }
-
-    /**
      * @param array $productPackagingUnitTypeIds
      *
      * @return array
      */
-    public function findProductAbstractIdsByProductPackagingUnitTypeIds(array $productPackagingUnitTypeIds): array
+    public function findProductIdsByProductPackagingUnitTypeIds(array $productPackagingUnitTypeIds): array
     {
-        return $this->productPackagingUnitFacade->findProductAbstractIdsByProductPackagingUnitTypeIds($productPackagingUnitTypeIds);
+        return $this->productPackagingUnitFacade->findProductIdsByProductPackagingUnitTypeIds($productPackagingUnitTypeIds);
     }
 }

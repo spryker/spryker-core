@@ -20,9 +20,11 @@ class GraphPlugin extends AbstractPlugin implements GraphInterface
     /**
      * @var \Spryker\Shared\Graph\GraphInterface
      */
-    private $graph;
+    protected $graph;
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $name
@@ -54,6 +56,8 @@ class GraphPlugin extends AbstractPlugin implements GraphInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $name
@@ -70,6 +74,8 @@ class GraphPlugin extends AbstractPlugin implements GraphInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $fromNode
@@ -86,6 +92,8 @@ class GraphPlugin extends AbstractPlugin implements GraphInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $name
@@ -101,6 +109,8 @@ class GraphPlugin extends AbstractPlugin implements GraphInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $type

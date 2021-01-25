@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="Merchant">
+    </transfer>
+
+    <transfer name="MerchantProductCriteria">
+        <property name="idProductAbstract" type="int"/>
+        <property name="merchantIds" type="int[]" singular="idMerchant"/>
+        <property name="merchantProductAbstractIds" type="int[]" singular="merchantProductAbstractId"/>
+    </transfer>
+
+    <transfer name="MerchantProduct">
+        <property name="idMerchantProductAbstract" type="int"/>
+        <property name="idProductAbstract" type="int"/>
+        <property name="idMerchant" type="int"/>
+    </transfer>
+
+    <transfer name="MerchantProductCollection">
+        <property name="merchantProducts" type="MerchantProduct[]" singular="merchantProduct"/>
+    </transfer>
+
+    <transfer name="CartChange">
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
+        <property name="type" type="string"/>
+        <property name="parameters" type="array" singular="parameters"/>
+    </transfer>
+
+    <transfer name="CartPreCheckResponse">
+        <property name="messages" type="Message[]" singular="message"/>
+        <property name="isSuccess" type="bool"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="sku" type="string"/>
+        <property name="merchantReference" type="string"/>
+        <property name="productOfferReference" type="string"/>
+    </transfer>
+</transfers>

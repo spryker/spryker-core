@@ -1,0 +1,102 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 19,
+            "line_to": 19,
+            "type": "MismatchingDocblockParamType",
+            "message": "Parameter $items has wrong type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ItemTransfer>', should be 'ArrayObject'",
+            "file_name": "vendor/spryker/spryker/Bundles/CartVariant/src/Spryker/Yves/CartVariant/Dependency/Plugin/CartVariantAttributeMapperPlugin.php",
+            "snippet": "     * @param \\Generated\\Shared\\Transfer\\ItemTransfer[]|\\ArrayObject $items",
+            "selected_text": "\\Generated\\Shared\\Transfer\\ItemTransfer[]|\\ArrayObject",
+            "error_level": 4,
+            "shortcode": 141
+        },
+        {
+            "severity": "info",
+            "line_from": 17,
+            "line_to": 17,
+            "type": "MismatchingDocblockParamType",
+            "message": "Parameter $items has wrong type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ItemTransfer>', should be 'ArrayObject'",
+            "file_name": "vendor/spryker/spryker/Bundles/CartVariant/src/Spryker/Yves/CartVariant/Dependency/Plugin/CartVariantAttributeMapperPluginInterface.php",
+            "snippet": "     * @param \\Generated\\Shared\\Transfer\\ItemTransfer[]|\\ArrayObject $items",
+            "selected_text": "\\Generated\\Shared\\Transfer\\ItemTransfer[]|\\ArrayObject",
+            "error_level": 4,
+            "shortcode": 141
+        },
+        {
+            "severity": "info",
+            "line_from": 45,
+            "line_to": 45,
+            "type": "MismatchingDocblockParamType",
+            "message": "Parameter $items has wrong type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ItemTransfer>', should be 'ArrayObject'",
+            "file_name": "vendor/spryker/spryker/Bundles/CartVariant/src/Spryker/Yves/CartVariant/Mapper/CartItemsAttributeMapper.php",
+            "snippet": "     * @param \\Generated\\Shared\\Transfer\\ItemTransfer[]|\\ArrayObject $items",
+            "selected_text": "\\Generated\\Shared\\Transfer\\ItemTransfer[]|\\ArrayObject",
+            "error_level": 4,
+            "shortcode": 141
+        },
+        {
+            "severity": "info",
+            "line_from": 58,
+            "line_to": 58,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $attributes[null|string] using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/CartVariant/src/Spryker/Yves/CartVariant/Mapper/CartItemsAttributeMapper.php",
+            "snippet": "            $attributes[$item->getSku()] = $this->getAttributesWithAvailability(",
+            "selected_text": "$attributes",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 115,
+            "line_to": 115,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Yves\\CartVariant\\Dependency\\Client\\CartVariantToProductClientBridgeInterface::getAttributeMapByIdProductAbstractForCurrentLocale cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CartVariant/src/Spryker/Yves/CartVariant/Mapper/CartItemsAttributeMapper.php",
+            "snippet": "            ->getAttributeMapByIdProductAbstractForCurrentLocale($item->getIdProductAbstract());",
+            "selected_text": "$item->getIdProductAbstract()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 33,
+            "line_to": 33,
+            "type": "MismatchingDocblockParamType",
+            "message": "Parameter $items has wrong type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ItemTransfer>', should be 'ArrayObject'",
+            "file_name": "vendor/spryker/spryker/Bundles/CartVariant/src/Spryker/Yves/CartVariant/Mapper/CartItemsAvailabilityMapper.php",
+            "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\ItemTransfer[] $items",
+            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\ItemTransfer[]",
+            "error_level": 4,
+            "shortcode": 141
+        },
+        {
+            "severity": "info",
+            "line_from": 55,
+            "line_to": 55,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Yves\\CartVariant\\Dependency\\Client\\CartVariantToAvailabilityStorageClientBridgeInterface::getProductAvailabilityByIdProductAbstract cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CartVariant/src/Spryker/Yves/CartVariant/Mapper/CartItemsAvailabilityMapper.php",
+            "snippet": "            ->getProductAvailabilityByIdProductAbstract($item->getIdProductAbstract())",
+            "selected_text": "$item->getIdProductAbstract()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 15,
+            "line_to": 15,
+            "type": "MismatchingDocblockParamType",
+            "message": "Parameter $items has wrong type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ItemTransfer>', should be 'ArrayObject'",
+            "file_name": "vendor/spryker/spryker/Bundles/CartVariant/src/Spryker/Yves/CartVariant/Mapper/CartItemsMapperInterface.php",
+            "snippet": "     * @param \\Generated\\Shared\\Transfer\\ItemTransfer[]|\\ArrayObject $items",
+            "selected_text": "\\Generated\\Shared\\Transfer\\ItemTransfer[]|\\ArrayObject",
+            "error_level": 4,
+            "shortcode": 141
+        }
+    ],
+    "deprecation": []
+}

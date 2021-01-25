@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\QuoteRequestOverviewFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 interface QuoteRequestAgentClientInterface
 {
@@ -183,4 +184,16 @@ interface QuoteRequestAgentClientInterface
      * @return bool
      */
     public function isQuoteRequestEditable(QuoteRequestTransfer $quoteRequestTransfer): bool;
+
+    /**
+     * Specification:
+     * - Returns true if quote request version is editable by agent.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isEditableQuoteRequestVersion(QuoteTransfer $quoteTransfer): bool;
 }

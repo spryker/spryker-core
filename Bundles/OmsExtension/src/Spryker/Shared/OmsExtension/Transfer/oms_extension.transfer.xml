@@ -3,10 +3,35 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
+    <transfer name="OmsStateCollection">
+        <property name="states" type="OmsState[]" associative="true" singular="state"/>
+    </transfer>
+
     <transfer name="Mail">
     </transfer>
 
     <transfer name="Order">
+    </transfer>
+
+    <transfer name="Store">
+    </transfer>
+
+    <transfer name="OmsState">
+    </transfer>
+
+    <transfer name="ReservationRequest">
+    </transfer>
+
+    <transfer name="ReservationResponse">
+    </transfer>
+
+    <transfer name="OmsEvent">
+    </transfer>
+
+    <transfer name="TimeoutProcessorTimeoutRequest">
+    </transfer>
+
+    <transfer name="TimeoutProcessorTimeoutResponse">
     </transfer>
 
 </transfers>

@@ -30,15 +30,22 @@ class EventListenerContext implements EventListenerContextInterface
     protected $queuePoolName;
 
     /**
+     * @var string|null
+     */
+    protected $eventQueueName;
+
+    /**
      * @param \Spryker\Zed\Event\Dependency\Plugin\EventBaseHandlerInterface $eventHandler
      * @param bool $isHandledInQueue
      * @param string|null $queuePoolName
+     * @param string|null $eventQueueName
      */
-    public function __construct(EventBaseHandlerInterface $eventHandler, $isHandledInQueue, $queuePoolName = null)
+    public function __construct(EventBaseHandlerInterface $eventHandler, $isHandledInQueue, $queuePoolName = null, $eventQueueName = null)
     {
         $this->eventHandler = $eventHandler;
         $this->isHandledInQueue = $isHandledInQueue;
         $this->queuePoolName = $queuePoolName;
+        $this->eventQueueName = $eventQueueName;
     }
 
     /**
@@ -58,6 +65,14 @@ class EventListenerContext implements EventListenerContextInterface
     }
 
     /**
+     * @return string|null
+     */
+    public function getEventQueueName(): ?string
+    {
+        return $this->eventQueueName;
+    }
+
+    /**
      * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $transfer
      * @param string $eventName
      *
@@ -71,15 +86,15 @@ class EventListenerContext implements EventListenerContextInterface
     }
 
     /**
-     * @param array $transfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
      * @param string $eventName
      *
      * @return void
      */
-    public function handleBulk(array $transfers, $eventName)
+    public function handleBulk(array $eventEntityTransfers, $eventName)
     {
         if ($this->eventHandler instanceof EventBulkHandlerInterface) {
-            $this->eventHandler->handleBulk($transfers, $eventName);
+            $this->eventHandler->handleBulk($eventEntityTransfers, $eventName);
         }
     }
 

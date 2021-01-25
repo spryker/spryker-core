@@ -1,0 +1,151 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 66,
+            "line_to": 66,
+            "type": "InvalidScalarArgument",
+            "message": "Argument 1 of Generated\\Shared\\Transfer\\SynchronizationDataTransfer::setReference expects null|string, int provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCategoryFilterStorage/src/Spryker/Client/ProductCategoryFilterStorage/Storage/ProductCategoryFilterStorageReader.php",
+            "snippet": "            ->setReference($resourceId);",
+            "selected_text": "$resourceId",
+            "error_level": 4,
+            "shortcode": 12
+        },
+        {
+            "severity": "info",
+            "line_from": 61,
+            "line_to": 61,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ProductCategoryFilter\\Persistence\\SpyProductCategoryFilter> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCategoryFilterStorage/src/Spryker/Zed/ProductCategoryFilterStorage/Business/Storage/ProductCategoryFilterStorageWriter.php",
+            "snippet": "            ->toKeyValue(static::FK_CATEGORY, static::FILTER_DATA);",
+            "selected_text": "toKeyValue",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 46,
+            "line_to": 46,
+            "type": "MoreSpecificImplementedParamType",
+            "message": "Argument 1 of Spryker\\Zed\\ProductCategoryFilterStorage\\Communication\\Plugin\\Event\\ProductCategoryFilterEventResourceQueryContainerPlugin::queryData has the more specific type 'array<array-key, int>', expecting 'array<array-key, int|string>' as defined by Spryker\\Zed\\EventBehavior\\Dependency\\Plugin\\EventResourceQueryContainerPluginInterface::queryData",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCategoryFilterStorage/src/Spryker/Zed/ProductCategoryFilterStorage/Communication/Plugin/Event/ProductCategoryFilterEventResourceQueryContainerPlugin.php",
+            "snippet": "    public function queryData(array $ids = []): ?ModelCriteria",
+            "selected_text": "$ids",
+            "error_level": 5,
+            "shortcode": 140
+        },
+        {
+            "severity": "info",
+            "line_from": 54,
+            "line_to": 54,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Orm\\Zed\\ProductCategoryFilter\\Persistence\\SpyProductCategoryFilterQuery::orderBy cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCategoryFilterStorage/src/Spryker/Zed/ProductCategoryFilterStorage/Communication/Plugin/Event/ProductCategoryFilterEventResourceQueryContainerPlugin.php",
+            "snippet": "        return $query->orderBy($this->getIdColumnName());",
+            "selected_text": "$this->getIdColumnName()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 52,
+            "line_to": 52,
+            "type": "MoreSpecificImplementedParamType",
+            "message": "Argument 2 of Spryker\\Zed\\ProductCategoryFilterStorage\\Dependency\\Facade\\ProductCategoryFilterStorageToEventBehaviorFacadeBridge::getEventTransfersByModifiedColumns has the more specific type 'array<array-key, string>', expecting 'array<array-key, mixed>' as defined by Spryker\\Zed\\ProductCategoryFilterStorage\\Dependency\\Facade\\ProductCategoryFilterStorageToEventBehaviorFacadeInterface::getEventTransfersByModifiedColumns",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCategoryFilterStorage/src/Spryker/Zed/ProductCategoryFilterStorage/Dependency/Facade/ProductCategoryFilterStorageToEventBehaviorFacadeBridge.php",
+            "snippet": "    public function getEventTransfersByModifiedColumns(array $eventTransfers, array $columns)",
+            "selected_text": "$columns",
+            "error_level": 5,
+            "shortcode": 140
+        },
+        {
+            "severity": "info",
+            "line_from": 30,
+            "line_to": 30,
+            "type": "InvalidNullableReturnType",
+            "message": "The declared return type 'string' for Spryker\\Zed\\ProductCategoryFilterStorage\\Dependency\\Service\\ProductCategoryFilterStorageToUtilEncodingBridge::encodeJson is not nullable, but 'null|string' contains null",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCategoryFilterStorage/src/Spryker/Zed/ProductCategoryFilterStorage/Dependency/Service/ProductCategoryFilterStorageToUtilEncodingBridge.php",
+            "snippet": "     * @return string",
+            "selected_text": "string",
+            "error_level": 5,
+            "shortcode": 144
+        },
+        {
+            "severity": "info",
+            "line_from": 34,
+            "line_to": 34,
+            "type": "NullableReturnStatement",
+            "message": "The declared return type 'string' for Spryker\\Zed\\ProductCategoryFilterStorage\\Dependency\\Service\\ProductCategoryFilterStorageToUtilEncodingBridge::encodeJson is not nullable, but the function returns 'null|string'",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCategoryFilterStorage/src/Spryker/Zed/ProductCategoryFilterStorage/Dependency/Service/ProductCategoryFilterStorageToUtilEncodingBridge.php",
+            "snippet": "        return $this->utilEncodingService->encodeJson($value, $options, $depth);",
+            "selected_text": "$this->utilEncodingService->encodeJson($value, $options, $depth)",
+            "error_level": 5,
+            "shortcode": 139
+        },
+        {
+            "severity": "info",
+            "line_from": 47,
+            "line_to": 47,
+            "type": "NullableReturnStatement",
+            "message": "The declared return type 'array<array-key, mixed>' for Spryker\\Zed\\ProductCategoryFilterStorage\\Dependency\\Service\\ProductCategoryFilterStorageToUtilEncodingBridge::decodeJson is not nullable, but the function returns 'mixed|null'",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCategoryFilterStorage/src/Spryker/Zed/ProductCategoryFilterStorage/Dependency/Service/ProductCategoryFilterStorageToUtilEncodingBridge.php",
+            "snippet": "        return $this->utilEncodingService->decodeJson($jsonValue, $assoc, $depth, $options);",
+            "selected_text": "$this->utilEncodingService->decodeJson($jsonValue, $assoc, $depth, $options)",
+            "error_level": 5,
+            "shortcode": 139
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 28,
+            "line_to": 28,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Zed\\ProductCategoryFilterStorage\\ProductCategoryFilterStorageConfig::isSendingToQueue has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCategoryFilterStorage/src/Spryker/Zed/ProductCategoryFilterStorage/Business/ProductCategoryFilterStorageBusinessFactory.php",
+            "snippet": "            $this->getConfig()->isSendingToQueue()",
+            "selected_text": "isSendingToQueue",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 49,
+            "line_to": 49,
+            "type": "DeprecatedProperty",
+            "message": "Spryker\\Zed\\ProductCategoryFilterStorage\\Business\\Storage\\ProductCategoryFilterStorageWriter::$isSendingToQueue is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCategoryFilterStorage/src/Spryker/Zed/ProductCategoryFilterStorage/Business/Storage/ProductCategoryFilterStorageWriter.php",
+            "snippet": "        $this->isSendingToQueue = $isSendingToQueue;",
+            "selected_text": "$this->isSendingToQueue",
+            "error_level": 2,
+            "shortcode": 99
+        },
+        {
+            "severity": "info",
+            "line_from": 127,
+            "line_to": 127,
+            "type": "DeprecatedMethod",
+            "message": "The method Orm\\Zed\\ProductCategoryFilterStorage\\Persistence\\Base\\SpyProductCategoryFilterStorage::setIsSendingToQueue has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCategoryFilterStorage/src/Spryker/Zed/ProductCategoryFilterStorage/Business/Storage/ProductCategoryFilterStorageWriter.php",
+            "snippet": "        $spyProductCategoryFilterStorage->setIsSendingToQueue($this->isSendingToQueue);",
+            "selected_text": "setIsSendingToQueue",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 23,
+            "line_to": 23,
+            "type": "DeprecatedTrait",
+            "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCategoryFilterStorage/src/Spryker/Zed/ProductCategoryFilterStorage/Communication/Plugin/Event/Listener/ProductCategoryFilterPublishStorageListener.php",
+            "snippet": "    use DatabaseTransactionHandlerTrait;",
+            "selected_text": "DatabaseTransactionHandlerTrait",
+            "error_level": 2,
+            "shortcode": 171
+        }
+    ]
+}

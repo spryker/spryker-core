@@ -4,15 +4,12 @@
   "description": "Csv module",
   "license": "proprietary",
   "require": {
-    "league/csv": "^9.1",
-    "php": ">=7.1"
-  },
-  "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
+    "league/csv": "^9.2",
+    "php": ">=7.3"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {},
   "extra": {
     "branch-alias": {
       "dev-master": "3.0.x-dev"
@@ -20,6 +17,5 @@
   },
   "config": {
     "sort-packages": true
-  },
-  "abandoned": true
+  }
 }

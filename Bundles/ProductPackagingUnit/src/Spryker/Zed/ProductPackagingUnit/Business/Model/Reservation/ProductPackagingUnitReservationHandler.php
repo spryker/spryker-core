@@ -7,23 +7,18 @@
 
 namespace Spryker\Zed\ProductPackagingUnit\Business\Model\Reservation;
 
-use Generated\Shared\Transfer\ProductPackagingLeadProductTransfer;
-use Generated\Shared\Transfer\ProductPackagingUnitTransfer;
-use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReaderInterface;
+use Generated\Shared\Transfer\OmsStateCollectionTransfer;
+use Generated\Shared\Transfer\ReservationRequestTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToOmsFacadeInterface;
-use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToStoreFacadeInterface;
+use Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryInterface;
 
 class ProductPackagingUnitReservationHandler implements ProductPackagingUnitReservationHandlerInterface
 {
     /**
-     * @var \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReaderInterface
+     * @var \Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryInterface
      */
-    protected $packagingUnitReader;
-
-    /**
-     * @var \Spryker\Zed\ProductPackagingUnit\Business\Model\Reservation\LeadProductReservationCalculatorInterface
-     */
-    protected $leadProductReservationCalculator;
+    protected $productPackagingUnitRepository;
 
     /**
      * @var \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToOmsFacadeInterface
@@ -31,26 +26,15 @@ class ProductPackagingUnitReservationHandler implements ProductPackagingUnitRese
     protected $omsFacade;
 
     /**
-     * @var \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToStoreFacadeInterface
-     */
-    protected $storeFacade;
-
-    /**
-     * @param \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReaderInterface $packagingUnitReader
-     * @param \Spryker\Zed\ProductPackagingUnit\Business\Model\Reservation\LeadProductReservationCalculatorInterface $leadProductReservationCalculator
+     * @param \Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryInterface $productPackagingUnitRepository
      * @param \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToOmsFacadeInterface $omsFacade
-     * @param \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToStoreFacadeInterface $storeFacade
      */
     public function __construct(
-        ProductPackagingUnitReaderInterface $packagingUnitReader,
-        LeadProductReservationCalculatorInterface $leadProductReservationCalculator,
-        ProductPackagingUnitToOmsFacadeInterface $omsFacade,
-        ProductPackagingUnitToStoreFacadeInterface $storeFacade
+        ProductPackagingUnitRepositoryInterface $productPackagingUnitRepository,
+        ProductPackagingUnitToOmsFacadeInterface $omsFacade
     ) {
-        $this->packagingUnitReader = $packagingUnitReader;
-        $this->leadProductReservationCalculator = $leadProductReservationCalculator;
+        $this->productPackagingUnitRepository = $productPackagingUnitRepository;
         $this->omsFacade = $omsFacade;
-        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -60,63 +44,41 @@ class ProductPackagingUnitReservationHandler implements ProductPackagingUnitRese
      */
     public function updateLeadProductReservation(string $sku): void
     {
-        $productPackagingUnitTransfer = $this->findProductPackagingUnitBySku($sku);
+        $productPackagingLeadProductTransfer = $this->productPackagingUnitRepository
+            ->findProductPackagingUnitLeadProductForPackagingUnit($sku);
 
-        if (!$productPackagingUnitTransfer || !$productPackagingUnitTransfer->getHasLeadProduct()) {
-            return;
-        }
-
-        $productPackagingLeadProductTransfer = $this->findProductPackagingLeadProductByProductPackagingSku($sku);
         if (!$productPackagingLeadProductTransfer) {
             return;
         }
 
-        $this->updateReservationForLeadProduct($productPackagingLeadProductTransfer->getProduct()->getSku());
-    }
-
-    /**
-     * @param string $leadProductSku
-     *
-     * @return void
-     */
-    protected function updateReservationForLeadProduct(string $leadProductSku): void
-    {
-        $currentStoreTransfer = $this->storeFacade->getCurrentStore();
-
-        $stores = $currentStoreTransfer->getStoresWithSharedPersistence();
-        $stores[] = $currentStoreTransfer->getName();
-
-        foreach ($stores as $storeName) {
-            $storeTransfer = $this->storeFacade->getStoreByName($storeName);
-
-            $reservationQuantity = $this->leadProductReservationCalculator
-                ->calculateReservedAmountForLeadProduct($leadProductSku, $storeTransfer);
-
-            $this->omsFacade->saveReservation($leadProductSku, $storeTransfer, $reservationQuantity);
+        if ($sku === $productPackagingLeadProductTransfer->getSku()) {
+            return;
         }
+
+        $reservationRequestTransfer = (new ReservationRequestTransfer())
+            ->setSku($productPackagingLeadProductTransfer->getSku());
+
+        $this->omsFacade->updateReservation($reservationRequestTransfer);
     }
 
     /**
-     * @param string $productPackagingUnitSku
+     * @param string $sku
+     * @param \Generated\Shared\Transfer\OmsStateCollectionTransfer $reservedStates
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductPackagingUnitTransfer|null
+     * @return \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer[]
      */
-    protected function findProductPackagingUnitBySku(
-        string $productPackagingUnitSku
-    ): ?ProductPackagingUnitTransfer {
-        return $this->packagingUnitReader
-            ->findProductPackagingUnitByProductSku($productPackagingUnitSku);
-    }
+    public function aggregateProductPackagingUnitReservation(
+        string $sku,
+        OmsStateCollectionTransfer $reservedStates,
+        ?StoreTransfer $storeTransfer = null
+    ): array {
+        $reservedStates->requireStates();
 
-    /**
-     * @param string $productPackagingUnitSku
-     *
-     * @return \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer|null
-     */
-    protected function findProductPackagingLeadProductByProductPackagingSku(
-        string $productPackagingUnitSku
-    ): ?ProductPackagingLeadProductTransfer {
-        return $this->packagingUnitReader
-            ->findProductPackagingLeadProductByProductPackagingSku($productPackagingUnitSku);
+        return $this->productPackagingUnitRepository->aggregateProductPackagingUnitReservation(
+            $sku,
+            array_keys($reservedStates->getStates()->getArrayCopy()),
+            $storeTransfer
+        );
     }
 }

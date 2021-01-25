@@ -18,5 +18,8 @@ interface ProductListImporterInterface
      *
      * @return \Generated\Shared\Transfer\ProductListProductConcreteRelationTransfer
      */
-    public function importFromCsvFile(UploadedFile $productsConcreteCsv, ProductListProductConcreteRelationTransfer $productConcreteRelationTransfer): ProductListProductConcreteRelationTransfer;
+    public function importFromCsvFile(
+        UploadedFile $productsConcreteCsv,
+        ProductListProductConcreteRelationTransfer $productConcreteRelationTransfer
+    ): ProductListProductConcreteRelationTransfer;
 }

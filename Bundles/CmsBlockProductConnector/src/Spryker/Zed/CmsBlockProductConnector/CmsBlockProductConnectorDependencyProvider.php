@@ -81,9 +81,9 @@ class CmsBlockProductConnectorDependencyProvider extends AbstractBundleDependenc
      */
     protected function addLocaleFacade(Container $container)
     {
-        $container[static::FACADE_LOCALE] = function (Container $container) {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new CmsBlockProductConnectorToLocaleBridge($container->getLocator()->locale()->facade());
-        };
+        });
 
         return $container;
     }
@@ -95,9 +95,9 @@ class CmsBlockProductConnectorDependencyProvider extends AbstractBundleDependenc
      */
     protected function addProductFacade(Container $container): Container
     {
-        $container[static::FACADE_PRODUCT] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT, function (Container $container) {
             return new CmsBlockProductConnectorToProductFacadeBridge($container->getLocator()->product()->facade());
-        };
+        });
 
         return $container;
     }
@@ -109,9 +109,9 @@ class CmsBlockProductConnectorDependencyProvider extends AbstractBundleDependenc
      */
     protected function addProductAbstractQueryContainer(Container $container)
     {
-        $container[static::QUERY_CONTAINER_PRODUCT_ABSTRACT] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_PRODUCT_ABSTRACT, function (Container $container) {
             return new CmsBlockProductConnectorToProductAbstractQueryContainerBridge($container->getLocator()->product()->queryContainer());
-        };
+        });
 
         return $container;
     }
@@ -123,9 +123,9 @@ class CmsBlockProductConnectorDependencyProvider extends AbstractBundleDependenc
      */
     protected function addTouchFacade(Container $container)
     {
-        $container[static::FACADE_TOUCH] = function (Container $container) {
+        $container->set(static::FACADE_TOUCH, function (Container $container) {
             return new CmsBlockProductConnectorToTouchBridge($container->getLocator()->touch()->facade());
-        };
+        });
 
         return $container;
     }
@@ -137,9 +137,9 @@ class CmsBlockProductConnectorDependencyProvider extends AbstractBundleDependenc
      */
     protected function addCollectorFacade(Container $container)
     {
-        $container[static::FACADE_COLLECTOR] = function (Container $container) {
+        $container->set(static::FACADE_COLLECTOR, function (Container $container) {
             return new CmsBlockProductConnectorToCollectorBridge($container->getLocator()->collector()->facade());
-        };
+        });
 
         return $container;
     }
@@ -151,9 +151,9 @@ class CmsBlockProductConnectorDependencyProvider extends AbstractBundleDependenc
      */
     protected function addDataReaderService(Container $container)
     {
-        $container[static::SERVICE_DATA_READER] = function (Container $container) {
+        $container->set(static::SERVICE_DATA_READER, function (Container $container) {
             return $container->getLocator()->utilDataReader()->service();
-        };
+        });
 
         return $container;
     }
@@ -165,9 +165,9 @@ class CmsBlockProductConnectorDependencyProvider extends AbstractBundleDependenc
      */
     protected function addTouchQueryContainer(Container $container)
     {
-        $container[static::QUERY_CONTAINER_TOUCH] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_TOUCH, function (Container $container) {
             return $container->getLocator()->touch()->queryContainer();
-        };
+        });
 
         return $container;
     }

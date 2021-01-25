@@ -13,6 +13,8 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class NewsletterConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @param string $token
      *
      * @return string
@@ -23,6 +25,8 @@ class NewsletterConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getHostYves()
@@ -34,6 +38,8 @@ class NewsletterConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string|null
      */
     public function getFromEmailName()
@@ -42,6 +48,8 @@ class NewsletterConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string|null
      */
     public function getFromEmailAddress()
@@ -50,6 +58,8 @@ class NewsletterConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getDoubleOptInConfirmationTemplateName()
@@ -58,6 +68,8 @@ class NewsletterConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getPasswordRestoreSubject()
@@ -66,6 +78,8 @@ class NewsletterConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getMergeLanguage()
@@ -74,7 +88,9 @@ class NewsletterConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return array
+     * @api
+     *
+     * @return string[]
      */
     public function getNewsletterTypes()
     {

@@ -39,6 +39,8 @@ class VoucherManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string
@@ -49,6 +51,8 @@ class VoucherManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -62,6 +66,8 @@ class VoucherManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -98,6 +104,8 @@ class VoucherManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -110,6 +118,8 @@ class VoucherManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Symfony\Component\HttpFoundation\Request $request

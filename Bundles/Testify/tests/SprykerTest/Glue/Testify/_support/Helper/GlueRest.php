@@ -1,8 +1,8 @@
 <?php
 
 /**
- * This file is part of the Spryker Suite.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerTest\Glue\Testify\Helper;
@@ -104,7 +104,7 @@ class GlueRest extends REST implements LastConnectionProviderInterface
             HttpCode::getDescription($this->grabResponseCode()),
             strlen($rawResponse) > $responseLimit ? substr($rawResponse, 0, $responseLimit) . '...' : $rawResponse
         );
-        $this->assertEquals($code, $this->grabResponseCode(), $failureMessage);
+        $this->assertSame($code, $this->grabResponseCode(), $failureMessage);
     }
 
     /**
@@ -116,7 +116,7 @@ class GlueRest extends REST implements LastConnectionProviderInterface
      */
     public function grabDataFromResponseByJsonPath($jsonPath)
     {
-        return (new JsonObject($this->connectionModule->_getResponseContent()))->get($jsonPath);
+        return (new JsonObject($this->connectionModule->_getResponseContent(), true))->get($jsonPath);
     }
 
     /**
@@ -212,16 +212,28 @@ class GlueRest extends REST implements LastConnectionProviderInterface
      * @part json
      *
      * @param string $type
+     *
+     * @return void
+     */
+    public function seeResponseDataContainsResourceCollectionOfType(string $type): void
+    {
+        $this->getJsonPathModule()->seeResponseJsonPathContains([
+            'type' => $type,
+        ], '$.data[*]');
+    }
+
+    /**
+     * @part json
+     *
+     * @param string $type
      * @param int $size
      *
      * @return void
      */
     public function seeResponseDataContainsResourceCollectionOfTypeWithSizeOf(string $type, int $size): void
     {
-        $this->getJsonPathModule()->seeResponseJsonPathContains([
-            'type' => $type,
-        ], '$.data[*]');
-        $this->assertCount($size, $this->grabDataFromResponseByJsonPath('$.data')[0]);
+        $this->seeResponseDataContainsResourceCollectionOfType($type);
+        $this->assertCount($size, $this->grabDataFromResponseByJsonPath('$.data'));
     }
 
     /**
@@ -242,6 +254,25 @@ class GlueRest extends REST implements LastConnectionProviderInterface
     public function seeResponseDataContainsNonEmptyCollection(): void
     {
         $this->getJsonPathModule()->seeResponseMatchesJsonPath('$.data[*]');
+    }
+
+    /**
+     * @part json
+     *
+     * @param string $resourceName
+     * @param string $identifier
+     *
+     * @return array|mixed
+     */
+    public function grabIncludedByTypeAndId(string $resourceName, string $identifier)
+    {
+        $jsonPath = sprintf(
+            '$..included[?(@.type == \'%s\' and @.id == \'%s\')].attributes',
+            $resourceName,
+            $identifier
+        );
+
+        return $this->grabDataFromResponseByJsonPath($jsonPath)[0];
     }
 
     /**
@@ -338,6 +369,20 @@ class GlueRest extends REST implements LastConnectionProviderInterface
                 json_encode($id),
                 json_encode($type)
             )
+        );
+    }
+
+    /**
+     * @part json
+     *
+     * @param string $type
+     *
+     * @return void
+     */
+    public function dontSeeIncludesContainResourceOfType(string $type): void
+    {
+        $this->getJsonPathModule()->dontSeeResponseMatchesJsonPath(
+            sprintf('$.included[?(@.type == %1$s)]', json_encode($type))
         );
     }
 
@@ -449,6 +494,51 @@ class GlueRest extends REST implements LastConnectionProviderInterface
     }
 
     /**
+     * @part json
+     *
+     * @param string $code
+     * @param string $index
+     *
+     * @return void
+     */
+    public function seeResponseErrorsHaveCode(string $code, string $index = '*'): void
+    {
+        $this->getJsonPathModule()->seeResponseJsonPathContains([
+            'code' => $code,
+        ], sprintf('$.errors[%s]', $index));
+    }
+
+    /**
+     * @part json
+     *
+     * @param int $status
+     * @param string $index
+     *
+     * @return void
+     */
+    public function seeResponseErrorsHaveStatus(int $status, string $index = '*'): void
+    {
+        $this->getJsonPathModule()->seeResponseJsonPathContains([
+            'status' => $status,
+        ], sprintf('$.errors[%s]', $index));
+    }
+
+    /**
+     * @part json
+     *
+     * @param string $detail
+     * @param string $index
+     *
+     * @return void
+     */
+    public function seeResponseErrorsHaveDetail(string $detail, string $index = '*'): void
+    {
+        $this->getJsonPathModule()->seeResponseJsonPathContains([
+            'detail' => $detail,
+        ], sprintf('$.errors[%s]', $index));
+    }
+
+    /**
      * @inheritDoc
      */
     protected function resetVariables(): void
@@ -510,16 +600,14 @@ class GlueRest extends REST implements LastConnectionProviderInterface
     }
 
     /**
-     * @throws \Codeception\Exception\ModuleException
-     *
      * @return \SprykerTest\Glue\Testify\Helper\JsonPath
      */
     protected function getJsonPathModule(): JsonPath
     {
-        $this->jsonPathModule = $this->jsonPathModule ?: $this->findModule(JsonPath::class);
-
-        if ($this->jsonPathModule === null) {
-            throw new ModuleException('GlueRest', 'The module requires JsonPath');
+        if (!$this->jsonPathModule instanceof JsonPath) {
+            /** @var \SprykerTest\Glue\Testify\Helper\JsonPath $module */
+            $module = $this->locateModule(JsonPath::class);
+            $this->jsonPathModule = $module;
         }
 
         return $this->jsonPathModule;

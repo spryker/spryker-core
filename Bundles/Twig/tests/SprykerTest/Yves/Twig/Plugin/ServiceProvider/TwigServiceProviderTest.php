@@ -13,6 +13,8 @@ use Silex\Provider\TwigServiceProvider as SilexTwigServiceProvider;
 use Spryker\Yves\Twig\Plugin\ServiceProvider\TwigServiceProvider;
 
 /**
+ * @deprecated Will be removed without replacement.
+ *
  * Auto-generated group annotations
  *
  * @group SprykerTest
@@ -28,7 +30,7 @@ class TwigServiceProviderTest extends Unit
     /**
      * @return void
      */
-    public function testRegisterAddsFilesystemLoaderToApplication()
+    public function testRegisterAddsFilesystemLoaderToApplication(): void
     {
         $application = new Application();
 
@@ -44,7 +46,7 @@ class TwigServiceProviderTest extends Unit
     /**
      * @return void
      */
-    public function testBootDoesNothing()
+    public function testBootDoesNothing(): void
     {
         $application = new Application();
 

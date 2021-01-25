@@ -3,10 +3,10 @@
           namespace="Orm\Zed\SalesOrderThreshold\Persistence"
           package="src.Orm.Zed.SalesOrderThreshold.Persistence">
 
-    <table name="spy_sales_order_threshold_type" idMethod="native" allowPkInsert="true" identifierQuoting="true" phpName="SpySalesOrderThresholdType">
+    <table name="spy_sales_order_threshold_type" idMethod="native" allowPkInsert="true" identifierQuoting="true">
         <column name="id_sales_order_threshold_type" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
-        <column name="key" type="VARCHAR" required="true"/>
-        <column name="threshold_group" type="VARCHAR" required="true"/>
+        <column name="key" type="VARCHAR" size="255" required="true"/>
+        <column name="threshold_group" type="VARCHAR" size="255" required="true"/>
 
         <behavior name="timestampable"/>
 

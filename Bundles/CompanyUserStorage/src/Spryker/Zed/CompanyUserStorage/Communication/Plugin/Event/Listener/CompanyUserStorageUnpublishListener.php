@@ -21,17 +21,17 @@ class CompanyUserStorageUnpublishListener extends AbstractPlugin implements Even
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * @param array $transfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
      * @param string $eventName
      *
      * @return void
      */
-    public function handleBulk(array $transfers, $eventName): void
+    public function handleBulk(array $eventEntityTransfers, $eventName): void
     {
         $this->preventTransaction();
         $companyUserIds = $this->getFactory()
             ->getEventBehaviorFacade()
-            ->getEventTransferIds($transfers);
+            ->getEventTransferIds($eventEntityTransfers);
 
         if (!$companyUserIds) {
             return;

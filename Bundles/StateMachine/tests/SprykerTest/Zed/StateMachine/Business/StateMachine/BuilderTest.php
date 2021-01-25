@@ -33,7 +33,7 @@ class BuilderTest extends Unit
     /**
      * @return void
      */
-    public function testCreateProcessShouldReturnProcessInstance()
+    public function testCreateProcessShouldReturnProcessInstance(): void
     {
         $builder = $this->createBuilder();
         $stateMachineProcessTransfer = $this->createStateMachineProcessTransfer();
@@ -45,7 +45,7 @@ class BuilderTest extends Unit
     /**
      * @return void
      */
-    public function testCreateProcessShouldIncludeAllStatesFromXml()
+    public function testCreateProcessShouldIncludeAllStatesFromXml(): void
     {
         $builder = $this->createBuilder();
         $stateMachineProcessTransfer = $this->createStateMachineProcessTransfer();
@@ -58,7 +58,7 @@ class BuilderTest extends Unit
     /**
      * @return void
      */
-    public function testCreateProcessShouldIncludeAllTransitions()
+    public function testCreateProcessShouldIncludeAllTransitions(): void
     {
         $builder = $this->createBuilder();
         $stateMachineProcessTransfer = $this->createStateMachineProcessTransfer();
@@ -71,7 +71,7 @@ class BuilderTest extends Unit
     /**
      * @return void
      */
-    public function testCreateProcessShouldIncludeAllSubProcesses()
+    public function testCreateProcessShouldIncludeAllSubProcesses(): void
     {
         $builder = $this->createBuilder();
         $stateMachineProcessTransfer = $this->createStateMachineProcessTransfer();
@@ -83,7 +83,7 @@ class BuilderTest extends Unit
     /**
      * @return void
      */
-    public function testCreateProcessShouldFlagMainProcess()
+    public function testCreateProcessShouldFlagMainProcess(): void
     {
         $builder = $this->createBuilder();
         $stateMachineProcessTransfer = $this->createStateMachineProcessTransfer();
@@ -95,7 +95,7 @@ class BuilderTest extends Unit
     /**
      * @return void
      */
-    public function testCreateProcessShouldThrowExceptionWhenStateMachineXmlFileNotFound()
+    public function testCreateProcessShouldThrowExceptionWhenStateMachineXmlFileNotFound(): void
     {
         $this->expectException(StateMachineException::class);
 
@@ -110,7 +110,7 @@ class BuilderTest extends Unit
     /**
      * @return void
      */
-    public function testCreateProcessShouldThrowExceptionWhenProcessXmlFileNotFound()
+    public function testCreateProcessShouldThrowExceptionWhenProcessXmlFileNotFound(): void
     {
         $this->expectException(StateMachineException::class);
 
@@ -125,7 +125,7 @@ class BuilderTest extends Unit
     /**
      * @return void
      */
-    public function testSubProcessPrefixIsApplied()
+    public function testSubProcessPrefixIsApplied(): void
     {
         $builder = $this->createBuilder();
         $stateMachineProcessTransfer = $this->createStateMachineProcessTransfer();
@@ -133,14 +133,14 @@ class BuilderTest extends Unit
 
         $manualEventsBySource = $process->getManuallyExecutableEventsBySource();
 
-        $this->assertEquals('Foo 1 - action', $manualEventsBySource['Foo 1 - sub process state'][0]);
-        $this->assertEquals('Leave Sub-process 2', $manualEventsBySource['Foo 1 - done'][0]);
+        $this->assertSame('Foo 1 - action', $manualEventsBySource['Foo 1 - sub process state'][0]);
+        $this->assertSame('Leave Sub-process 2', $manualEventsBySource['Foo 1 - done'][0]);
     }
 
     /**
      * @return \Spryker\Zed\StateMachine\Business\StateMachine\Builder
      */
-    protected function createBuilder()
+    protected function createBuilder(): Builder
     {
         return new Builder(
             $this->createEvent(),
@@ -154,7 +154,7 @@ class BuilderTest extends Unit
     /**
      * @return \Spryker\Zed\StateMachine\Business\Process\Event
      */
-    protected function createEvent()
+    protected function createEvent(): Event
     {
         return new Event();
     }
@@ -162,7 +162,7 @@ class BuilderTest extends Unit
     /**
      * @return \Spryker\Zed\StateMachine\Business\Process\State
      */
-    protected function createState()
+    protected function createState(): State
     {
         return new State();
     }
@@ -170,7 +170,7 @@ class BuilderTest extends Unit
     /**
      * @return \Spryker\Zed\StateMachine\Business\Process\Transition
      */
-    protected function createTransition()
+    protected function createTransition(): Transition
     {
         return new Transition();
     }
@@ -178,7 +178,7 @@ class BuilderTest extends Unit
     /**
      * @return \Spryker\Zed\StateMachine\Business\Process\Process
      */
-    protected function createProcess()
+    protected function createProcess(): Process
     {
         return new Process();
     }
@@ -186,7 +186,7 @@ class BuilderTest extends Unit
     /**
      * @return \Spryker\Zed\StateMachine\StateMachineConfig
      */
-    protected function createStateMachineConfig()
+    protected function createStateMachineConfig(): StateMachineConfig
     {
         $stateMachineConfigMock = $this->getMockBuilder(StateMachineConfig::class)->getMock();
 
@@ -200,7 +200,7 @@ class BuilderTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\StateMachineProcessTransfer
      */
-    protected function createStateMachineProcessTransfer()
+    protected function createStateMachineProcessTransfer(): StateMachineProcessTransfer
     {
         $stateMachineProcessTransfer = new StateMachineProcessTransfer();
         $stateMachineProcessTransfer->setProcessName('TestProcess');

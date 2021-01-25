@@ -1,6 +1,6 @@
 # CmsBlockCategoryConnector Module
-[![Build Status](https://travis-ci.org/spryker/CmsBlockCategoryConnector.svg)](https://travis-ci.org/spryker/CmsBlockCategoryConnector)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/CmsBlockCategoryConnector/badge.svg)](https://coveralls.io/github/spryker/CmsBlockCategoryConnector)
+[![Build Status](https://travis-ci.org/spryker/cms-block-category-connector.svg)](https://travis-ci.org/spryker/cms-block-category-connector)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 CmsBlockCategoryConnector extends the CmsBlock module to allow category block management. Category blocks are blocks that can be embedded into the category template. It is possible to specify on which specific categories we want them to be rendered.
 

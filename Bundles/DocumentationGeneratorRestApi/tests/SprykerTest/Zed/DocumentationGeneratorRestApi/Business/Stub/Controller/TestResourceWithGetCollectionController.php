@@ -16,8 +16,7 @@ class TestResourceWithGetCollectionController
      *              "Summary example"
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "400": "Bad Request",
@@ -28,7 +27,7 @@ class TestResourceWithGetCollectionController
      *
      * @return void
      */
-    public function getAction()
+    public function getAction(): void
     {
     }
 }

@@ -42,6 +42,7 @@ class TransferToEntityMapper implements TransferToEntityMapperInterface
                     $childEntity = $this->mapEntityCollection($childTransfer);
                     $entity->$parentEntitySetterMethodName($childEntity);
                 }
+
                 continue;
             }
 

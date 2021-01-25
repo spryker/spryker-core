@@ -4,7 +4,7 @@
   "description": "OfferGui module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.3",
     "spryker/cart": "^5.0.0 || ^7.0.0",
     "spryker/currency": "^3.3.0",
     "spryker/customer": "^7.8.0",
@@ -13,11 +13,12 @@
     "spryker/messenger": "^3.1.0",
     "spryker/money": "^2.0.0",
     "spryker/offer": "^0.1.0 || ^0.3.0",
-    "spryker/oms": "^8.0.0 || ^10.0.0",
+    "spryker/oms": "^8.0.0 || ^10.0.0 || ^11.0.0",
     "spryker/price": "^5.2.0",
     "spryker/session": "^3.0.0 || ^4.0.0",
     "spryker/store": "^1.1.0",
     "spryker/symfony": "^3.0.0",
+    "spryker/transfer": "^3.18.0",
     "spryker/util-date-time": "^1.0.0",
     "spryker/util-encoding": "^2.0.0",
     "spryker/util-sanitize": "^2.0.0",
@@ -25,8 +26,7 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/manual-order-entry-gui": "*",
-    "spryker/testify": "*"
+    "spryker/manual-order-entry-gui": "*"
   },
   "suggest": {
     "spryker/calculation": "Recalculates prices for offer",
@@ -39,6 +39,10 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"

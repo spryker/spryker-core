@@ -15,6 +15,8 @@ use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
 /**
+ * @deprecated Will be removed without replacement.
+ *
  * Auto-generated group annotations
  *
  * @group SprykerTest
@@ -34,26 +36,19 @@ class TwigCurrencyServiceProviderTest extends Unit
     protected static $twigServiceProvider;
 
     /**
-     * @var \Spryker\Shared\Kernel\Communication\Application
-     */
-    protected static $application;
-
-    /**
      * @return void
      */
-    public static function setUpBeforeClass()
+    public function setUp(): void
     {
-        parent::setUpBeforeClass();
+        parent::setUp();
 
         Store::getInstance()->setCurrentLocale('de_DE');
-
-        static::initialiseTwigServiceProviderPlugin();
     }
 
     /**
      * @return void
      */
-    public function testIfCurrentCurrencyFunctionProvided()
+    public function testIfCurrentCurrencyFunctionProvided(): void
     {
         $currencyCurrencyFunction = $this->getCurrentCurrencyTwigFunction();
 
@@ -63,60 +58,38 @@ class TwigCurrencyServiceProviderTest extends Unit
     /**
      * @return void
      */
-    public function testCurrentCurrencyShouldReturnDefaultShopCurrencySymbol()
+    public function testCurrentCurrencyShouldReturnDefaultShopCurrencySymbol(): void
     {
         $currencyCurrencyFunction = $this->getCurrentCurrencyTwigFunction();
 
         $currentCurrency = call_user_func($currencyCurrencyFunction->getCallable());
 
-        $this->assertEquals('€', $currentCurrency);
+        $this->assertSame('€', $currentCurrency);
     }
 
     /**
      * @return void
      */
-    public function testCurrentCurrencyWhenIsoCodeProvided()
+    public function testCurrentCurrencyWhenIsoCodeProvided(): void
     {
         $currencyCurrencyFunction = $this->getCurrentCurrencyTwigFunction();
 
         $currentCurrency = call_user_func($currencyCurrencyFunction->getCallable(), 'USD');
 
-        $this->assertEquals('$', $currentCurrency);
-    }
-
-    /**
-     * @return void
-     */
-    protected static function initialiseTwigServiceProviderPlugin()
-    {
-        $twigCurrencyServiceProvider = static::createTwigCurrencyServiceProvider();
-        $application = static::getApplication();
-        $twigCurrencyServiceProvider->register($application);
-    }
-
-    /**
-     * @return \Spryker\Zed\Currency\Communication\Plugin\ServiceProvider\TwigCurrencyServiceProvider
-     */
-    protected static function createTwigCurrencyServiceProvider()
-    {
-        return new TwigCurrencyServiceProvider();
+        $this->assertSame('$', $currentCurrency);
     }
 
     /**
      * @return \Spryker\Shared\Kernel\Communication\Application
      */
-    protected static function getApplication()
+    protected function getApplication(): Application
     {
-        if (!static::$application) {
-            $application = new Application();
-            $application['twig'] = function () {
-                return new Environment(new FilesystemLoader());
-            };
+        $application = new Application();
+        $application['twig'] = function () {
+            return new Environment(new FilesystemLoader());
+        };
 
-            static::$application = $application;
-        }
-
-        return static::$application;
+        return $application;
     }
 
     /**
@@ -124,6 +97,10 @@ class TwigCurrencyServiceProviderTest extends Unit
      */
     protected function getCurrentCurrencyTwigFunction()
     {
-        return static::getApplication()['twig']->getFunction(TwigCurrencyServiceProvider::CURRENCY_SYMBOL_FUNCTION_NAME);
+        $application = $this->getApplication();
+        $twigCurrencyServiceProvider = new TwigCurrencyServiceProvider();
+        $twigCurrencyServiceProvider->register($application);
+
+        return $application['twig']->getFunction(TwigCurrencyServiceProvider::CURRENCY_SYMBOL_FUNCTION_NAME);
     }
 }

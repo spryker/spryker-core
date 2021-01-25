@@ -1,0 +1,54 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 42,
+            "line_to": 42,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getStates on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOfferPackagingUnit/src/Spryker/Zed/ProductOfferPackagingUnit/Persistence/ProductOfferPackagingUnitRepository.php",
+            "snippet": "                ->filterByName_In(array_keys($reservationRequestTransfer->getReservedStates()->getStates()->getArrayCopy()))",
+            "selected_text": "getStates",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 42,
+            "line_to": 42,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\OmsStateTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOfferPackagingUnit/src/Spryker/Zed/ProductOfferPackagingUnit/Persistence/ProductOfferPackagingUnitRepository.php",
+            "snippet": "                ->filterByName_In(array_keys($reservationRequestTransfer->getReservedStates()->getStates()->getArrayCopy()))",
+            "selected_text": "getArrayCopy",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 55,
+            "line_to": 55,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 3 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOfferPackagingUnit/src/Spryker/Zed/ProductOfferPackagingUnit/Persistence/ProductOfferPackagingUnitRepository.php",
+            "snippet": "                    $reservationRequestTransfer->getSku(),",
+            "selected_text": "$reservationRequestTransfer->getSku()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 68,
+            "line_to": 68,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getName on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOfferPackagingUnit/src/Spryker/Zed/ProductOfferPackagingUnit/Persistence/ProductOfferPackagingUnitRepository.php",
+            "snippet": "                    ->filterByStore($reservationRequestTransfer->getStore()->getName())",
+            "selected_text": "getName",
+            "error_level": 3,
+            "shortcode": 83
+        }
+    ],
+    "deprecation": []
+}

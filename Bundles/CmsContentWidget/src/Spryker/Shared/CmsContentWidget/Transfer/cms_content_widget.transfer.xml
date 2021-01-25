@@ -14,7 +14,7 @@
     </transfer>
 
     <transfer name="CmsContentWidgetFunctions">
-        <property name="CmsContentWidgetFunctionList" type="CmsContentWidgetFunction[]" singular="cmsContentWidgetFunction"/>
+        <property name="cmsContentWidgetFunctionList" type="CmsContentWidgetFunction[]" singular="cmsContentWidgetFunction"/>
     </transfer>
 
     <transfer name="CmsContentWidgetFunction">

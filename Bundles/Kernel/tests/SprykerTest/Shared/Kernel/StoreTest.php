@@ -24,12 +24,12 @@ class StoreTest extends Unit
     /**
      * @var \Spryker\Shared\Kernel\Store
      */
-    private $Store;
+    protected $Store;
 
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -48,7 +48,7 @@ class StoreTest extends Unit
     /**
      * @return void
      */
-    public function testInstance()
+    public function testInstance(): void
     {
         $this->assertInstanceOf('\Spryker\Shared\Kernel\Store', $this->Store);
     }
@@ -56,7 +56,7 @@ class StoreTest extends Unit
     /**
      * @return void
      */
-    public function testGetLocales()
+    public function testGetLocales(): void
     {
         $locales = $this->Store->getLocales();
         $this->assertSame($locales['de'], 'de_DE');
@@ -65,7 +65,7 @@ class StoreTest extends Unit
     /**
      * @return void
      */
-    public function testSetCurrentLocale()
+    public function testSetCurrentLocale(): void
     {
         $locale = $this->Store->getCurrentLocale();
         $this->assertSame('de_DE', $locale);
@@ -78,12 +78,11 @@ class StoreTest extends Unit
     }
 
     /**
-     * @expectedException \InvalidArgumentException
-     *
      * @return void
      */
-    public function testSetCurrentLocaleInvalid()
+    public function testSetCurrentLocaleInvalid(): void
     {
+        $this->expectException('InvalidArgumentException');
         $newLocale = 'xy_XY';
         $this->Store->setCurrentLocale($newLocale);
     }
@@ -91,16 +90,18 @@ class StoreTest extends Unit
     /**
      * @return void
      */
-    public function testInitializeSetupWhenMultipleCurrenciesNotDefinedShouldUseDefault()
+    public function testInitializeSetupWhenMultipleCurrenciesNotDefinedShouldUseDefault(): void
     {
-        $mockConfig['DE'] = [
-            'locales' => [
-                'en' => 'en_US',
+        $mockConfig = [
+            'DE' => [
+                'locales' => [
+                    'en' => 'en_US',
+                ],
+                'countries' => [
+                    'DE',
+                ],
+                'currencyIsoCode' => 'EUR',
             ],
-            'countries' => [
-                'DE',
-            ],
-            'currencyIsoCode' => 'EUR',
         ];
 
         $storeMock = $this->createStoreMock();
@@ -109,13 +110,13 @@ class StoreTest extends Unit
 
         $storeMock->initializeSetup('DE');
 
-        $this->assertEquals($mockConfig['DE']['currencyIsoCode'], $storeMock->getCurrencyIsoCode());
+        $this->assertSame($mockConfig['DE']['currencyIsoCode'], $storeMock->getCurrencyIsoCode());
     }
 
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Kernel\Store
      */
-    protected function createStoreMock()
+    protected function createStoreMock(): Store
     {
         return $this->getMockBuilder(Store::class)
             ->disableOriginalConstructor()

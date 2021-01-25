@@ -5,11 +5,11 @@
           package="src.Orm.Zed.Quote.Persistence"
 >
 
-    <table name="spy_quote" idMethod="native" allowPkInsert="true" phpName="SpyQuote">
+    <table name="spy_quote" idMethod="native" allowPkInsert="true">
         <column name="id_quote" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="fk_store" required="true" type="INTEGER"/>
         <column name="customer_reference" required="true" type="VARCHAR" size="255"/>
-        <column name="quote_data" required="true" type="LONGVARCHAR"/>
+        <column name="quote_data" required="true" type="CLOB"/>
 
         <behavior name="timestampable"/>
 

@@ -1,0 +1,38 @@
+{
+  "name": "spryker/content-navigation-gui",
+  "type": "library",
+  "description": "ContentNavigationGui module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.3",
+    "spryker/content-gui-extension": "^1.1.0",
+    "spryker/content-navigation": "^1.0.0",
+    "spryker/gui": "^3.0.0",
+    "spryker/kernel": "^3.30.0",
+    "spryker/navigation": "^2.5.0",
+    "spryker/symfony": "^3.1.5",
+    "spryker/util-encoding": "^2.1.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

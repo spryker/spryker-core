@@ -1,0 +1,42 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 70,
+            "line_to": 70,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 2 of explode expects string, possibly different type array<array-key, string>|bool|null|string provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Publisher/src/Spryker/Zed/Publisher/Communication/Console/PublisherTriggerEventsConsole.php",
+            "snippet": "            $resources = explode(',', $resourceString);",
+            "selected_text": "$resourceString",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 75,
+            "line_to": 75,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 2 of explode expects string, possibly different type array<array-key, string>|bool|null|string provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Publisher/src/Spryker/Zed/Publisher/Communication/Console/PublisherTriggerEventsConsole.php",
+            "snippet": "            $resourcesIds = explode(',', $idsString);",
+            "selected_text": "$idsString",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 65,
+            "line_to": 65,
+            "type": "ArgumentTypeCoercion",
+            "message": "Argument 2 of Spryker\\Zed\\Event\\Dependency\\EventCollectionInterface::addListenerQueued expects Spryker\\Zed\\Event\\Dependency\\Plugin\\EventBaseHandlerInterface, parent type object provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Publisher/src/Spryker/Zed/Publisher/Communication/Plugin/Event/PublisherSubscriber.php",
+            "snippet": "            $eventCollection->addListenerQueued($eventName, new $listener(), 0, null, $queueName);",
+            "selected_text": "new $listener()",
+            "error_level": 3,
+            "shortcode": 193
+        }
+    ],
+    "deprecation": []
+}

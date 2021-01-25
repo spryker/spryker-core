@@ -10,7 +10,7 @@ namespace Spryker\Yves\Kernel;
 use Spryker\Shared\Kernel\Communication\Application as SharedApplication;
 
 /**
- * @deprecated Use `\Spryker\Shared\Application\Application` instead.
+ * @deprecated Use {@link \Spryker\Shared\Application\Application} instead.
  */
 class Application extends SharedApplication
 {

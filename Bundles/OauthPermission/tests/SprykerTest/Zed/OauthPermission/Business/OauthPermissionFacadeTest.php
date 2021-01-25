@@ -11,9 +11,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CustomerIdentifierTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
-use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterface;
-use Spryker\Zed\Kernel\AbstractBundleConfig;
 use Spryker\Zed\OauthPermission\Business\OauthPermissionBusinessFactory;
 use Spryker\Zed\OauthPermission\Business\OauthPermissionFacadeInterface;
 use Spryker\Zed\OauthPermission\OauthPermissionConfig;
@@ -61,7 +59,7 @@ class OauthPermissionFacadeTest extends Unit
         //Assert
         $this->assertNotNull($customerIdentifierTransfer->getPermissions());
         $this->assertCount(1, $customerIdentifierTransfer->getPermissions()->getPermissions());
-        $this->assertEquals(
+        $this->assertSame(
             static::PERMISSION_PLUGIN_KEY,
             $customerIdentifierTransfer->getPermissions()->getPermissions()->offsetGet(0)->getKey()
         );
@@ -92,7 +90,7 @@ class OauthPermissionFacadeTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterface
      */
-    protected function createPermissionPluginMock(): MockObject
+    protected function createPermissionPluginMock(): PermissionPluginInterface
     {
         $mock = $this->getMockBuilder(PermissionPluginInterface::class)
             ->setMethods(['getKey'])
@@ -128,7 +126,7 @@ class OauthPermissionFacadeTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\Kernel\Business\AbstractFacade|\Spryker\Zed\OauthPermission\Business\OauthPermissionFacadeInterface
+     * @return \Spryker\Zed\OauthPermission\Business\OauthPermissionFacadeInterface
      */
     protected function getOauthPermissionFacade(): OauthPermissionFacadeInterface
     {
@@ -136,9 +134,9 @@ class OauthPermissionFacadeTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Kernel\AbstractBundleConfig|\Spryker\Zed\OauthPermission\OauthPermissionConfig
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\OauthPermission\OauthPermissionConfig
      */
-    protected function createOauthPermissionConfigMock(): AbstractBundleConfig
+    protected function createOauthPermissionConfigMock(): OauthPermissionConfig
     {
         $mock = $this->getMockBuilder(OauthPermissionConfig::class)
             ->setMethods(['getOauthUserIdentifierFilterKeys'])

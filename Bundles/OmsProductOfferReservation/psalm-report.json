@@ -1,0 +1,150 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 26,
+            "line_to": 26,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdStore on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/OmsProductOfferReservation/src/Spryker/Zed/OmsProductOfferReservation/Business/Mapper/OmsProductOfferReservationMapper.php",
+            "snippet": "            ->setIdStore($reservationRequestTransfer->getStore()->getIdStore())",
+            "selected_text": "getIdStore",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 49,
+            "line_to": 49,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method setReservationQuantity on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/OmsProductOfferReservation/src/Spryker/Zed/OmsProductOfferReservation/Persistence/OmsProductOfferReservationEntityManager.php",
+            "snippet": "        $productOfferReservationEntity->setReservationQuantity($omsProductOfferReservationTransfer->getReservationQuantity());",
+            "selected_text": "setReservationQuantity",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 49,
+            "line_to": 49,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Orm\\Zed\\OmsProductOfferReservation\\Persistence\\SpyOmsProductOfferReservation::setReservationQuantity cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/OmsProductOfferReservation/src/Spryker/Zed/OmsProductOfferReservation/Persistence/OmsProductOfferReservationEntityManager.php",
+            "snippet": "        $productOfferReservationEntity->setReservationQuantity($omsProductOfferReservationTransfer->getReservationQuantity());",
+            "selected_text": "$omsProductOfferReservationTransfer->getReservationQuantity()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 39,
+            "line_to": 39,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method requireIdStore on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/OmsProductOfferReservation/src/Spryker/Zed/OmsProductOfferReservation/Persistence/OmsProductOfferReservationRepository.php",
+            "snippet": "            ->requireIdStore();",
+            "selected_text": "requireIdStore",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 43,
+            "line_to": 43,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdStore on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/OmsProductOfferReservation/src/Spryker/Zed/OmsProductOfferReservation/Persistence/OmsProductOfferReservationRepository.php",
+            "snippet": "            ->filterByFkStore($reservationRequestTransfer->getStore()->getIdStore())",
+            "selected_text": "getIdStore",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 102,
+            "line_to": 102,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getStates on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/OmsProductOfferReservation/src/Spryker/Zed/OmsProductOfferReservation/Persistence/OmsProductOfferReservationRepository.php",
+            "snippet": "                ->filterByName_In(array_keys($reservationRequestTransfer->getReservedStates()->getStates()->getArrayCopy()))",
+            "selected_text": "getStates",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 102,
+            "line_to": 102,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\OmsStateTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/OmsProductOfferReservation/src/Spryker/Zed/OmsProductOfferReservation/Persistence/OmsProductOfferReservationRepository.php",
+            "snippet": "                ->filterByName_In(array_keys($reservationRequestTransfer->getReservedStates()->getStates()->getArrayCopy()))",
+            "selected_text": "getArrayCopy",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 118,
+            "line_to": 118,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getName on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/OmsProductOfferReservation/src/Spryker/Zed/OmsProductOfferReservation/Persistence/OmsProductOfferReservationRepository.php",
+            "snippet": "                    ->filterByStore($reservationRequestTransfer->getStore()->getName())",
+            "selected_text": "getName",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 144,
+            "line_to": 144,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdStore on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/OmsProductOfferReservation/src/Spryker/Zed/OmsProductOfferReservation/Persistence/OmsProductOfferReservationRepository.php",
+            "snippet": "        if ($omsProductOfferReservationCriteriaTransfer->getStore()->getIdStore()) {",
+            "selected_text": "getIdStore",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 146,
+            "line_to": 146,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdStore on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/OmsProductOfferReservation/src/Spryker/Zed/OmsProductOfferReservation/Persistence/OmsProductOfferReservationRepository.php",
+            "snippet": "                $omsProductOfferReservationCriteriaTransfer->getStore()->getIdStore()",
+            "selected_text": "getIdStore",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 150,
+            "line_to": 150,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getName on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/OmsProductOfferReservation/src/Spryker/Zed/OmsProductOfferReservation/Persistence/OmsProductOfferReservationRepository.php",
+            "snippet": "        if ($omsProductOfferReservationCriteriaTransfer->getStore()->getName()) {",
+            "selected_text": "getName",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 153,
+            "line_to": 153,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getName on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/OmsProductOfferReservation/src/Spryker/Zed/OmsProductOfferReservation/Persistence/OmsProductOfferReservationRepository.php",
+            "snippet": "                    ->filterByName($omsProductOfferReservationCriteriaTransfer->getStore()->getName())",
+            "selected_text": "getName",
+            "error_level": 3,
+            "shortcode": 83
+        }
+    ],
+    "deprecation": []
+}

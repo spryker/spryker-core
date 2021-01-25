@@ -1,6 +1,6 @@
 # UtilPrice Module
-[![Build Status](https://travis-ci.org/spryker/util-number.svg)](https://travis-ci.org/spryker/util-number)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/util-number/badge.svg)](https://coveralls.io/github/spryker/util-number)
+[![Build Status](https://travis-ci.org/spryker/util-price.svg)](https://travis-ci.org/spryker/util-price)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 Provide service for operations with prices.
 

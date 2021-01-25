@@ -29,9 +29,11 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 
     public const PROPEL_QUERY_QUOTE = 'PROPEL_QUERY_QUOTE';
 
+    public const PLUGINS_CART_ITEM_MAPPER = 'PLUGINS_CART_ITEM_MAPPER';
     public const PLUGIN_QUOTE_CREATOR = 'PLUGIN_QUOTE_CREATOR';
     public const PLUGINS_QUOTE_COLLECTION_EXPANDER = 'PLUGINS_QUOTE_COLLECTION_EXPANDER';
     public const PLUGINS_QUOTE_EXPANDER = 'PLUGINS_QUOTE_EXPANDER';
+    public const PLUGINS_QUOTE_ITEM_READ_VALIDATOR = 'PLUGINS_QUOTE_ITEM_READ_VALIDATOR';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -48,6 +50,8 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addQuoteCreatorPlugin($container);
         $container = $this->addQuoteCollectionExpanderPlugins($container);
         $container = $this->addQuoteExpanderPlugins($container);
+        $container = $this->addCartItemMapperPlugins($container);
+        $container = $this->addQuoteItemReadValidatorPlugins($container);
 
         return $container;
     }
@@ -72,9 +76,9 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addQuotePropelQuery(Container $container): Container
     {
-        $container->set(static::PROPEL_QUERY_QUOTE, function () {
+        $container->set(static::PROPEL_QUERY_QUOTE, $container->factory(function () {
             return SpyQuoteQuery::create();
-        });
+        }));
 
         return $container;
     }
@@ -197,6 +201,50 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteExpanderPluginInterface[]
      */
     protected function getQuoteExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCartItemMapperPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_CART_ITEM_MAPPER, function () {
+            return $this->getCartItemMapperPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\CartItemMapperPluginInterface[]
+     */
+    protected function getCartItemMapperPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addQuoteItemReadValidatorPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_QUOTE_ITEM_READ_VALIDATOR, function () {
+            return $this->getQuoteItemReadValidatorPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteItemReadValidatorPluginInterface[]
+     */
+    protected function getQuoteItemReadValidatorPlugins(): array
     {
         return [];
     }

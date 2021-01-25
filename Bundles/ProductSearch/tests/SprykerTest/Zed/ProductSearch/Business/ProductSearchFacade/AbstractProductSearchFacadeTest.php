@@ -44,7 +44,7 @@ abstract class AbstractProductSearchFacadeTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -57,7 +57,7 @@ abstract class AbstractProductSearchFacadeTest extends Unit
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKey
      */
-    protected function createProductAttributeKeyEntity($key)
+    protected function createProductAttributeKeyEntity(string $key): SpyProductAttributeKey
     {
         $productAttributeKeyEntity = new SpyProductAttributeKey();
         $productAttributeKeyEntity->setKey($key);
@@ -74,8 +74,12 @@ abstract class AbstractProductSearchFacadeTest extends Unit
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstract
      */
-    protected function createProduct(array $abstractAttrs, array $abstractLocalizedAttrs, array $concreteAttrs, array $concreteLocalizedAttrs)
-    {
+    protected function createProduct(
+        array $abstractAttrs,
+        array $abstractLocalizedAttrs,
+        array $concreteAttrs,
+        array $concreteLocalizedAttrs
+    ): SpyProductAbstract {
         $productAbstractEntity = new SpyProductAbstract();
         $productAbstractEntity
             ->setSku('touchProductAbstractByAsynchronousAttributesOnCreate')

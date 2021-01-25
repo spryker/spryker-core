@@ -30,7 +30,7 @@ class CmsBlockGuiToCmsBlockBridge implements CmsBlockGuiToCmsBlockInterface
      *
      * @return \Generated\Shared\Transfer\CmsBlockTransfer|null
      */
-    public function findCmsBlockById($idCmsBlock)
+    public function findCmsBlockById($idCmsBlock): ?CmsBlockTransfer
     {
         return $this->cmsBlockFacade->findCmsBlockById($idCmsBlock);
     }
@@ -40,7 +40,7 @@ class CmsBlockGuiToCmsBlockBridge implements CmsBlockGuiToCmsBlockInterface
      *
      * @return void
      */
-    public function activateById($idCmsBlock)
+    public function activateById($idCmsBlock): void
     {
         $this->cmsBlockFacade->activateById($idCmsBlock);
     }
@@ -50,7 +50,7 @@ class CmsBlockGuiToCmsBlockBridge implements CmsBlockGuiToCmsBlockInterface
      *
      * @return void
      */
-    public function deactivateById($idCmsBlock)
+    public function deactivateById($idCmsBlock): void
     {
         $this->cmsBlockFacade->deactivateById($idCmsBlock);
     }
@@ -60,7 +60,7 @@ class CmsBlockGuiToCmsBlockBridge implements CmsBlockGuiToCmsBlockInterface
      *
      * @return \Generated\Shared\Transfer\CmsBlockTransfer
      */
-    public function updateCmsBlock(CmsBlockTransfer $cmsBlockTransfer)
+    public function updateCmsBlock(CmsBlockTransfer $cmsBlockTransfer): CmsBlockTransfer
     {
         return $this->cmsBlockFacade->updateCmsBlock($cmsBlockTransfer);
     }
@@ -70,7 +70,7 @@ class CmsBlockGuiToCmsBlockBridge implements CmsBlockGuiToCmsBlockInterface
      *
      * @return \Generated\Shared\Transfer\CmsBlockTransfer
      */
-    public function createCmsBlock(CmsBlockTransfer $cmsBlockTransfer)
+    public function createCmsBlock(CmsBlockTransfer $cmsBlockTransfer): CmsBlockTransfer
     {
         return $this->cmsBlockFacade->createCmsBlock($cmsBlockTransfer);
     }
@@ -80,7 +80,7 @@ class CmsBlockGuiToCmsBlockBridge implements CmsBlockGuiToCmsBlockInterface
      *
      * @return void
      */
-    public function syncTemplate($templatePath)
+    public function syncTemplate($templatePath): void
     {
         $this->cmsBlockFacade->syncTemplate($templatePath);
     }
@@ -90,7 +90,7 @@ class CmsBlockGuiToCmsBlockBridge implements CmsBlockGuiToCmsBlockInterface
      *
      * @return \Generated\Shared\Transfer\CmsBlockGlossaryTransfer
      */
-    public function findGlossary($idCmsBlock)
+    public function findGlossary($idCmsBlock): CmsBlockGlossaryTransfer
     {
         return $this->cmsBlockFacade->findGlossary($idCmsBlock);
     }
@@ -100,7 +100,7 @@ class CmsBlockGuiToCmsBlockBridge implements CmsBlockGuiToCmsBlockInterface
      *
      * @return \Generated\Shared\Transfer\CmsBlockGlossaryTransfer
      */
-    public function saveGlossary(CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer)
+    public function saveGlossary(CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer): CmsBlockGlossaryTransfer
     {
         return $this->cmsBlockFacade->saveGlossary($cmsBlockGlossaryTransfer);
     }
@@ -110,7 +110,7 @@ class CmsBlockGuiToCmsBlockBridge implements CmsBlockGuiToCmsBlockInterface
      *
      * @return bool
      */
-    public function hasTemplateFileById($idCmsBlockTemplate)
+    public function hasTemplateFileById($idCmsBlockTemplate): bool
     {
         return $this->cmsBlockFacade->hasTemplateFileById($idCmsBlockTemplate);
     }

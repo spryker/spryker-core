@@ -34,8 +34,11 @@ class MailHandler implements MailHandlerInterface
      * @param \Spryker\Zed\Mail\Business\Model\Mail\MailTypeCollectionGetInterface $mailCollection
      * @param \Spryker\Zed\Mail\Business\Model\Provider\MailProviderCollectionGetInterface $mailProviderCollection
      */
-    public function __construct(MailBuilderInterface $mailBuilder, MailTypeCollectionGetInterface $mailCollection, MailProviderCollectionGetInterface $mailProviderCollection)
-    {
+    public function __construct(
+        MailBuilderInterface $mailBuilder,
+        MailTypeCollectionGetInterface $mailCollection,
+        MailProviderCollectionGetInterface $mailProviderCollection
+    ) {
         $this->mailBuilder = $mailBuilder;
         $this->mailTypeCollection = $mailCollection;
         $this->mailProviderCollection = $mailProviderCollection;

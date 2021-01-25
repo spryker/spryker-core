@@ -8,59 +8,72 @@
 namespace Spryker\Zed\Stock\Business\Model;
 
 use Generated\Shared\Transfer\StoreTransfer;
-use Traversable;
+use Spryker\DecimalObject\Decimal;
+use Spryker\Zed\Stock\Business\StockProduct\StockProductReaderInterface;
 
 class Calculator implements CalculatorInterface
 {
     /**
-     * @var \Spryker\Zed\Stock\Business\Model\ReaderInterface
+     * @var \Spryker\Zed\Stock\Business\StockProduct\StockProductReaderInterface
      */
-    protected $reader;
+    protected $stockProductReader;
 
     /**
-     * @param \Spryker\Zed\Stock\Business\Model\ReaderInterface $reader
+     * @param \Spryker\Zed\Stock\Business\StockProduct\StockProductReaderInterface $stockProductReader
      */
-    public function __construct(ReaderInterface $reader)
+    public function __construct(StockProductReaderInterface $stockProductReader)
     {
-        $this->reader = $reader;
+        $this->stockProductReader = $stockProductReader;
     }
 
     /**
      * @param string $sku
      *
-     * @return int
+     * @return \Spryker\DecimalObject\Decimal
      */
-    public function calculateStockForProduct($sku)
+    public function calculateStockForProduct(string $sku): Decimal
     {
-        $productEntities = $this->reader->getStocksProduct($sku);
+        $stockProductTransfers = $this->stockProductReader->getStocksProduct($sku);
 
-        return $this->calculateTotalQuantity($productEntities);
+        return $this->calculateTotalQuantity($stockProductTransfers);
     }
 
     /**
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return int
+     * @return \Spryker\DecimalObject\Decimal
      */
-    public function calculateProductStockForStore($sku, StoreTransfer $storeTransfer)
+    public function calculateProductStockForStore(string $sku, StoreTransfer $storeTransfer): Decimal
     {
-        $productEntities = $this->reader->findProductStocksForStore($sku, $storeTransfer);
+        $stockProductTransfers = $this->stockProductReader->findProductStocksForStore($sku, $storeTransfer);
 
-        return $this->calculateTotalQuantity($productEntities);
+        return $this->calculateTotalQuantity($stockProductTransfers);
     }
 
     /**
-     * @param \Traversable|\Orm\Zed\Stock\Persistence\SpyStockProduct[] $productEntities
+     * @param string $abstractSku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return int
+     * @return \Spryker\DecimalObject\Decimal
      */
-    protected function calculateTotalQuantity(Traversable $productEntities)
+    public function calculateProductAbstractStockForStore(string $abstractSku, StoreTransfer $storeTransfer): Decimal
     {
-        $quantity = 0;
+        $stockProductTransfers = $this->stockProductReader->getStockProductByProductAbstractSkuForStore($abstractSku, $storeTransfer);
 
-        foreach ($productEntities as $productEntity) {
-            $quantity += $productEntity->getQuantity();
+        return $this->calculateTotalQuantity($stockProductTransfers);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StockProductTransfer[] $stockProductTransfers
+     *
+     * @return \Spryker\DecimalObject\Decimal
+     */
+    protected function calculateTotalQuantity(array $stockProductTransfers): Decimal
+    {
+        $quantity = new Decimal(0);
+        foreach ($stockProductTransfers as $stockProductTransfer) {
+            $quantity = $quantity->add($stockProductTransfer->getQuantity());
         }
 
         return $quantity;

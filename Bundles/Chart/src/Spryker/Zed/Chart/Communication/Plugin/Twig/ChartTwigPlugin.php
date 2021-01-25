@@ -13,6 +13,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Twig\Environment;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\ChartGui\Communication\Plugin\Twig\Chart\ChartGuiTwigPlugin} instead.
+ *
  * @method \Spryker\Zed\Chart\Communication\ChartCommunicationFactory getFactory()
  * @method \Spryker\Zed\Chart\ChartConfig getConfig()
  * @method \Spryker\Zed\Chart\Business\ChartFacadeInterface getFacade()
@@ -42,7 +44,7 @@ class ChartTwigPlugin extends AbstractPlugin implements TwigPluginInterface
     protected function registerChartTwigFunctions(Environment $twig): Environment
     {
         foreach ($this->getChartTwigFunctions() as $function) {
-            $twig->addFunction($function->getName(), $function);
+            $twig->addFunction($function);
         }
 
         return $twig;

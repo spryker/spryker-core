@@ -10,6 +10,9 @@ namespace Spryker\Yves\EventDispatcher;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 
+/**
+ * @method \Spryker\Yves\EventDispatcher\EventDispatcherConfig getConfig()
+ */
 class EventDispatcherDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PLUGINS_EVENT_DISPATCHER_PLUGINS = 'PLUGINS_EVENT_DISPATCHER_PLUGINS';

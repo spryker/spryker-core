@@ -60,31 +60,7 @@ class CodeStyleSnifferTest extends Unit
     /**
      * @return void
      */
-    public function testCheckCodeStyleRunsCommandInProject()
-    {
-        $options = ['ignore' => 'vendor/'] + $this->defaultOptions;
-        $pathToApplicationRoot = APPLICATION_ROOT_DIR . '/';
-        $codeStyleSnifferMock = $this->getCodeStyleSnifferMock($pathToApplicationRoot, $options);
-
-        $codeStyleSnifferMock->checkCodeStyle(null, $options);
-    }
-
-    /**
-     * @return void
-     */
-    public function testCheckCodeStyleRunsCommandInProjectModule()
-    {
-        $options = ['ignore' => 'vendor/'] + $this->defaultOptions;
-        $pathToApplicationRoot = APPLICATION_ROOT_DIR . '/src/Pyz/Zed/Development/';
-        $codeStyleSnifferMock = $this->getCodeStyleSnifferMock($pathToApplicationRoot, $options);
-
-        $codeStyleSnifferMock->checkCodeStyle('Development', $options);
-    }
-
-    /**
-     * @return void
-     */
-    public function testCheckCodeStyleRunsCommandInCore()
+    public function testCheckCodeStyleRunsCommandInCore(): void
     {
         $module = 'Spryker.all';
         $options = [
@@ -101,7 +77,7 @@ class CodeStyleSnifferTest extends Unit
     /**
      * @return void
      */
-    public function testCheckCodeStyleRunsCommandInCoreModuleForLevelOne()
+    public function testCheckCodeStyleRunsCommandInCoreModuleForLevelOne(): void
     {
         $module = 'Spryker.Development';
         $options = [
@@ -119,7 +95,7 @@ class CodeStyleSnifferTest extends Unit
     /**
      * @return void
      */
-    public function testCheckCodeStyleRunsCommandInCoreModuleForLevelTwo()
+    public function testCheckCodeStyleRunsCommandInCoreModuleForLevelTwo(): void
     {
         $module = 'Spryker.Development';
         $options = [
@@ -140,7 +116,7 @@ class CodeStyleSnifferTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Development\Business\CodeStyleSniffer\CodeStyleSniffer
      */
-    protected function getCodeStyleSnifferMock($expectedPathToRunCommandWith, array $options)
+    protected function getCodeStyleSnifferMock(string $expectedPathToRunCommandWith, array $options): CodeStyleSniffer
     {
         $developmentConfig = $this->tester->createDevelopmentConfig();
         $codingStandard = $developmentConfig->getCodingStandard();

@@ -23,8 +23,7 @@ class NavigationsResourceController extends AbstractController
      *              "Retrieves a navigation by id."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "400": "Navigation id not specified.",

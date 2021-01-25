@@ -29,7 +29,7 @@ class CreateProductSetTest extends Unit
     /**
      * @return void
      */
-    public function testCreateProductSetPersistNewEntitiesToDatabase()
+    public function testCreateProductSetPersistNewEntitiesToDatabase(): void
     {
         // Arrange
         $productAbstractTransfer1 = $this->tester->haveProductAbstract();

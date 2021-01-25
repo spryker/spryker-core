@@ -10,6 +10,7 @@ namespace Spryker\Zed\Oms\Communication\Controller;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * @method \Spryker\Zed\Oms\Business\OmsFacadeInterface getFacade()
@@ -32,28 +33,6 @@ class TriggerController extends AbstractController
 
     protected const ROUTE_REDIRECT_DEFAULT = '/';
     protected const ERROR_INVALID_FORM = 'Form is invalid';
-
-    /**
-     * @deprecated use submitTriggerEventForOrderItemsAction instead
-     *
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function triggerEventForOrderItemsAction(Request $request)
-    {
-        $redirect = $request->query->get(static::REQUEST_PARAMETER_REDIRECT, static::ROUTE_REDIRECT_DEFAULT);
-        $idOrderItems = $this->getRequestIdSalesOrderItems($request);
-        if ($idOrderItems === []) {
-            return $this->redirectResponse($redirect);
-        }
-
-        $event = $request->query->get(static::REQUEST_PARAMETER_EVENT);
-        $this->getFacade()->triggerEventForOrderItems($event, $idOrderItems);
-        $this->addInfoMessage(static::MESSAGE_STATUS_CHANGED_SUCCESSFULLY);
-
-        return $this->redirectResponse($redirect);
-    }
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -82,28 +61,6 @@ class TriggerController extends AbstractController
     }
 
     /**
-     * @deprecated use submitTriggerEventForOrderAction instead
-     *
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function triggerEventForOrderAction(Request $request)
-    {
-        $idOrder = $this->castId($request->query->getInt('id-sales-order'));
-        $event = $request->query->get('event');
-        $redirect = $request->query->get('redirect', '/');
-        $itemsList = $request->query->get('items');
-
-        $orderItems = $this->getOrderItemsToTriggerAction($idOrder, $itemsList);
-
-        $this->getFacade()->triggerEvent($event, $orderItems, []);
-        $this->addInfoMessage('Status change triggered successfully.');
-
-        return $this->redirectResponse($redirect);
-    }
-
-    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
@@ -121,6 +78,7 @@ class TriggerController extends AbstractController
         $idOrder = $this->castId($request->query->getInt(static::REQUEST_PARAMETER_ID_SALES_ORDER));
         $event = $request->query->get(static::REQUEST_PARAMETER_EVENT);
         $redirect = $request->query->get(static::REQUEST_PARAMETER_REDIRECT, '/');
+        /** @var array $itemsList */
         $itemsList = $request->query->get(static::REQUEST_PARAMETER_ITEMS);
 
         $orderItems = $this->getOrderItemsToTriggerAction($idOrder, $itemsList);
@@ -153,11 +111,17 @@ class TriggerController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
+     * @throws \Symfony\Component\HttpKernel\Exception\BadRequestHttpException
+     *
      * @return bool
      */
     protected function isValidPostRequest(Request $request): bool
     {
-        return $request->isMethod(Request::METHOD_POST) && $this->isTriggerFormValid($request);
+        if (!$request->isMethod(Request::METHOD_POST)) {
+            throw new BadRequestHttpException();
+        }
+
+        return $this->isTriggerFormValid($request);
     }
 
     /**
@@ -182,8 +146,9 @@ class TriggerController extends AbstractController
      */
     protected function getRequestIdSalesOrderItems(Request $request): array
     {
+        /** @var array|null $idOrderItems */
         $idOrderItems = $request->query->get(static::REQUEST_PARAMETER_ITEMS);
-        if (is_array($idOrderItems) === false) {
+        if (!is_array($idOrderItems)) {
             $idOrderItems = [];
         }
 

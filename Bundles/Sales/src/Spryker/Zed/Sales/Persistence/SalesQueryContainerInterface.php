@@ -94,7 +94,7 @@ interface SalesQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
-     * @deprecated Use querySalesOrderDetailsWithoutShippingAddress() instead.
+     * @deprecated Use {@link querySalesOrderDetailsWithoutShippingAddress()} instead.
      *
      * @param int $idSalesOrder
      *
@@ -131,6 +131,11 @@ interface SalesQueryContainerInterface extends QueryContainerInterface
     public function queryCustomerOrders($idCustomer, ?FilterTransfer $filterTransfer = null);
 
     /**
+     * Specification:
+     * - Hydrates order items with latest states.
+     *
+     * Note: For performance reasons, the state history join is separated into this method.
+
      * @api
      *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]|\Propel\Runtime\Collection\ObjectCollection $salesOrderItems
@@ -142,7 +147,7 @@ interface SalesQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
-     * @deprecated Use SalesQueryContainerInterface::fillOrderItemsWithLatestStates() instead.
+     * @deprecated Use {@link fillOrderItemsWithLatestStates()} instead.
      *
      * @param \Propel\Runtime\Collection\ObjectCollection $salesOrderItems
      *

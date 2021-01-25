@@ -28,7 +28,7 @@ class NamespaceExtractorTest extends Unit
     /**
      * @return void
      */
-    public function testReplacementOfRegularBaseDirectory()
+    public function testReplacementOfRegularBaseDirectory(): void
     {
         $baseDirectory = '/foo/bar/baz/Bundle/src/';
         $directory = new SplFileInfo('/foo/bar/baz/Bundle/src/Spryker/Application/Bundle', 'foo', 'bar');
@@ -41,7 +41,7 @@ class NamespaceExtractorTest extends Unit
     /**
      * @return void
      */
-    public function testReplacementOfAsteriskGlobPatternBaseDirectory()
+    public function testReplacementOfAsteriskGlobPatternBaseDirectory(): void
     {
         $baseDirectory = '/foo/bar/baz/*/src/';
         $directory = new SplFileInfo('/foo/bar/baz/Bundle/src/Spryker/Application/Bundle', 'foo', 'bar');
@@ -54,7 +54,7 @@ class NamespaceExtractorTest extends Unit
     /**
      * @return void
      */
-    public function testReplacementOfQuestionMarkGlobPatternBaseDirectory()
+    public function testReplacementOfQuestionMarkGlobPatternBaseDirectory(): void
     {
         $baseDirectory = '/foo/bar/?az/Bundle/src/';
         $directory = new SplFileInfo('/foo/bar/baz/Bundle/src/Spryker/Application/Bundle', 'foo', 'bar');
@@ -67,7 +67,7 @@ class NamespaceExtractorTest extends Unit
     /**
      * @return void
      */
-    public function testReplacementOfBraceGlobPatternBaseDirectory()
+    public function testReplacementOfBraceGlobPatternBaseDirectory(): void
     {
         $baseDirectory = '/foo/bar/{baz,spryker}/Bundle/src/';
         $namespaceExtractor = new NamespaceExtractor();
@@ -84,7 +84,7 @@ class NamespaceExtractorTest extends Unit
     /**
      * @return void
      */
-    public function testReplacementOfCharacterClassGlobPatternBasePath()
+    public function testReplacementOfCharacterClassGlobPatternBasePath(): void
     {
         $baseDirectory = '/foo/bar/[bf]az/Bundle/src/';
         $namespaceExtractor = new NamespaceExtractor();

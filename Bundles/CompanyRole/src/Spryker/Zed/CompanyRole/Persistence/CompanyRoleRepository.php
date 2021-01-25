@@ -191,17 +191,22 @@ class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRep
      * @module Permission
      *
      * @param string $permissionKey
+     * @param int|null $idCompany
      *
      * @return int[]
      */
-    public function getCompanyUserIdsByPermissionKey(string $permissionKey): array
+    public function getCompanyUserIdsByPermissionKey(string $permissionKey, ?int $idCompany = null): array
     {
-        return $this->getFactory()
-            ->createCompanyRoleQuery()
-            ->joinSpyCompanyRoleToCompanyUser()
+        $companyRoleQuery = $this->getFactory()->createCompanyRoleQuery();
+
+        if ($idCompany) {
+            $companyRoleQuery->filterByFkCompany($idCompany);
+        }
+
+        return $companyRoleQuery->joinSpyCompanyRoleToCompanyUser()
             ->useSpyCompanyRoleToPermissionQuery()
                 ->usePermissionQuery()
-                   ->filterByKey($permissionKey)
+                    ->filterByKey($permissionKey)
                 ->endUse()
             ->endUse()
             ->select([SpyCompanyRoleToCompanyUserTableMap::COL_FK_COMPANY_USER])
@@ -246,18 +251,18 @@ class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRep
     }
 
     /**
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $criteria
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $modelCriteria
      * @param \Generated\Shared\Transfer\FilterTransfer|null $filterTransfer
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    public function buildQueryFromCriteria(ModelCriteria $criteria, ?FilterTransfer $filterTransfer = null): ModelCriteria
+    public function buildQueryFromCriteria(ModelCriteria $modelCriteria, ?FilterTransfer $filterTransfer = null): ModelCriteria
     {
-        $criteria = parent::buildQueryFromCriteria($criteria, $filterTransfer);
+        $modelCriteria = parent::buildQueryFromCriteria($modelCriteria, $filterTransfer);
 
-        $criteria->setFormatter(ModelCriteria::FORMAT_OBJECT);
+        $modelCriteria->setFormatter(ModelCriteria::FORMAT_OBJECT);
 
-        return $criteria;
+        return $modelCriteria;
     }
 
     /**

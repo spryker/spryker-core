@@ -8,6 +8,7 @@
 namespace Spryker\Zed\MerchantRelationshipGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
+use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 use Spryker\Zed\MerchantRelationshipGui\Dependency\Facade\MerchantRelationshipGuiToCompanyBusinessUnitFacadeInterface;
 use Spryker\Zed\MerchantRelationshipGui\Dependency\Facade\MerchantRelationshipGuiToCompanyFacadeInterface;
@@ -140,10 +141,11 @@ class MerchantRelationshipFormDataProvider
     {
         $choices = [];
 
-        foreach ($this->merchantFacade->getMerchants()->getMerchants() as $merchant) {
-            $choices[$merchant->getIdMerchant()] = sprintf(
+        foreach ($this->merchantFacade->get(new MerchantCriteriaTransfer())->getMerchants() as $merchant) {
+            $idMerchant = $merchant->getIdMerchant();
+            $choices[$idMerchant] = sprintf(
                 '%d - %s',
-                $merchant->getIdMerchant(),
+                $idMerchant,
                 $merchant->getName()
             );
         }

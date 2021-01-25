@@ -17,7 +17,7 @@ class ProductAbstractRelationCollectorQuery extends AbstractPropelCollectorQuery
 {
     public const RESULT_FIELD_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
     public const RESULT_FIELD_ID_PRODUCT_LABELS_CSV = 'id_product_labels_csv';
-    public const LABEL_DELIMITER = ":#:";
+    public const LABEL_DELIMITER = ':#:';
 
     /**
      * @return void
@@ -49,5 +49,6 @@ class ProductAbstractRelationCollectorQuery extends AbstractPropelCollectorQuery
             static::RESULT_FIELD_ID_PRODUCT_LABELS_CSV
         );
         $this->touchQuery->groupBy(SpyTouchTableMap::COL_ITEM_ID);
+        $this->touchQuery->groupBy(SpyTouchTableMap::COL_ITEM_TYPE);
     }
 }

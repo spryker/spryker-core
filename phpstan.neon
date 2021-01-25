@@ -5,4 +5,6 @@ includes:
     - ../../spryker-sdk/phpstan-spryker/extension.neon
 
 parameters:
-    bootstrap: %rootDir%/../../../phpstan-bootstrap.php
+    bootstrap: '%rootDir%/../../../phpstan-bootstrap.php'
+    parallel:
+        processTimeout: 300.0

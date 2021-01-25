@@ -48,7 +48,7 @@ class QuoteShareTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -81,7 +81,7 @@ class QuoteShareTest extends Unit
     /**
      * @return void
      */
-    public function testCompanyUserShouldNotHaveAccessToForeignCartsByDefault()
+    public function testCompanyUserShouldNotHaveAccessToForeignCartsByDefault(): void
     {
         // Arrange
         $customerTransfer1 = $this->tester->haveCustomer();
@@ -100,7 +100,7 @@ class QuoteShareTest extends Unit
     /**
      * @return void
      */
-    public function testShareCartWithCompanyUserShouldGiveAccessToRead()
+    public function testShareCartWithCompanyUserShouldGiveAccessToRead(): void
     {
         // Arrange
         $customerTransfer1 = $this->tester->haveCustomer();
@@ -127,7 +127,7 @@ class QuoteShareTest extends Unit
     /**
      * @return void
      */
-    public function testRemoveCompanyUserPermissionGroupShouldDisallowToRead()
+    public function testRemoveCompanyUserPermissionGroupShouldDisallowToRead(): void
     {
         // Arrange
         $customerTransfer1 = $this->tester->haveCustomer();

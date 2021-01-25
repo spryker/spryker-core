@@ -14,8 +14,6 @@ use Spryker\Zed\ProductManagement\ProductManagementDependencyProvider;
 use Spryker\Zed\Store\Communication\Plugin\Form\StoreRelationToggleFormTypePlugin;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -25,7 +23,7 @@ use Spryker\Zed\Store\Communication\Plugin\Form\StoreRelationToggleFormTypePlugi
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  *
  * @SuppressWarnings(PHPMD)
  */
@@ -47,7 +45,7 @@ class ProductManagementPresentationTester extends Actor
     /**
      * @return void
      */
-    public function registerMoneyCollectionFormTypePlugin()
+    public function registerMoneyCollectionFormTypePlugin(): void
     {
         $this->setDependency(ProductManagementDependencyProvider::PLUGIN_MONEY_FORM_TYPE, function () {
             return new MoneyFormTypePlugin();
@@ -55,13 +53,9 @@ class ProductManagementPresentationTester extends Actor
     }
 
     /**
-     * Define custom actions here
-     */
-
-    /**
      * @return void
      */
-    public function registerProductManagementStoreRelationFormTypePlugin()
+    public function registerProductManagementStoreRelationFormTypePlugin(): void
     {
         $this->setDependency(ProductManagementDependencyProvider::PLUGIN_STORE_RELATION_FORM_TYPE, function () {
             return new StoreRelationToggleFormTypePlugin();

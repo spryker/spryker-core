@@ -89,7 +89,7 @@ class ShortVariable extends PHPMDShortVariable
      *
      * @return string[]
      */
-    private function getExceptionsList()
+    protected function getExceptionsList()
     {
         try {
             $exceptions = $this->getStringProperty('exceptions');
@@ -109,7 +109,7 @@ class ShortVariable extends PHPMDShortVariable
      *
      * @return bool
      */
-    private function isNameAllowedInContext(AbstractNode $node)
+    protected function isNameAllowedInContext(AbstractNode $node)
     {
         return $this->isChildOf($node, 'CatchStatement')
                 || $this->isChildOf($node, 'ForInit')
@@ -126,8 +126,9 @@ class ShortVariable extends PHPMDShortVariable
      *
      * @return bool
      */
-    private function isChildOf(AbstractNode $node, $type)
+    protected function isChildOf(AbstractNode $node, $type)
     {
+        /** @var object|null $parent */
         $parent = $node->getParent();
         while (is_object($parent)) {
             if ($parent->isInstanceOf($type)) {

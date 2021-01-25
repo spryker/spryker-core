@@ -25,7 +25,7 @@ class AbstractRequestTest extends Unit
     /**
      * @return void
      */
-    public function testGetTransferMustReturnNullIfNoTransferClassNameProvided()
+    public function testGetTransferMustReturnNullIfNoTransferClassNameProvided(): void
     {
         $data = [];
         $abstractRequest = new AbstractRequest($data);
@@ -36,7 +36,7 @@ class AbstractRequestTest extends Unit
     /**
      * @return void
      */
-    public function testGetTransferMustReturnTransferIfTransferClassNameAndDataProvided()
+    public function testGetTransferMustReturnTransferIfTransferClassNameAndDataProvided(): void
     {
         $data = [
             'transferClassName' => '\\SprykerTest\\Shared\\ZedRequest\\Client\\Fixture\\Transfer',
@@ -50,7 +50,7 @@ class AbstractRequestTest extends Unit
     /**
      * @return void
      */
-    public function testGetTransferMustReturnTransferIfTransferClassNameProvidedButNoDataGiven()
+    public function testGetTransferMustReturnTransferIfTransferClassNameProvidedButNoDataGiven(): void
     {
         $data = [
             'transferClassName' => '\\SprykerTest\\Shared\\ZedRequest\\Client\\Fixture\\Transfer',

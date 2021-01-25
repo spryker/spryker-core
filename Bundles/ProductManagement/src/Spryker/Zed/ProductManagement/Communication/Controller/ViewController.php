@@ -89,7 +89,7 @@ class ViewController extends AddController
             ->getProductCategoryFacade()
             ->getCategoryTransferCollectionByIdProductAbstract($idProductAbstract, $localeProvider->getCurrentLocale());
 
-        return $this->viewResponse([
+        $viewData = $this->executeProductAbstractViewActionViewDataExpanderPlugins([
             'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale()->getLocaleName(),
             'currentProduct' => $productAbstractTransfer->toArray(),
             'concreteProductCollection' => $concreteProductCollection,
@@ -109,6 +109,8 @@ class ViewController extends AddController
             'isGiftCard' => $isGiftCard,
             'categories' => $categoryCollectionTransfer->getCategories(),
         ]);
+
+        return $this->viewResponse($viewData);
     }
 
     /**
@@ -130,14 +132,15 @@ class ViewController extends AddController
             ->getProductFacade()
             ->findProductConcreteById($idProduct);
 
-        $stockTypes = $this->getFactory()->getStockQueryContainer()->queryAllStockTypes()->find()->getData();
-        $this->getFactory()->createProductStockHelper()->addMissingStockTypes($productTransfer, $stockTypes);
-
-        if (!$productTransfer) {
+        if ($productTransfer === null) {
             $this->addErrorMessage('The product [%s] you are trying to edit, does not exist.', ['%s' => $idProduct]);
 
             return new RedirectResponse('/product-management/edit?id-product-abstract=' . $idProductAbstract);
         }
+
+        $stockTypes = $this->getFactory()->getStockQueryContainer()->queryAllStockTypes()->find()->getData();
+        $productTransfer = $this->getFactory()->createProductStockHelper()->addMissingStockTypes($productTransfer, $stockTypes);
+        $productTransfer = $this->getFactory()->createProductStockHelper()->trimStockQuantities($productTransfer);
 
         $localeProvider = $this->getFactory()->createLocaleProvider();
 
@@ -233,6 +236,7 @@ class ViewController extends AddController
             foreach ($imageSetTransferCollection as $imageSetTransfer) {
                 if ($imageSetTransfer->getLocale() === null) {
                     $defaults[$imageSetTransfer->getIdProductImageSet()] = $this->convertProductImageSet($imageSetTransfer);
+
                     continue;
                 }
 
@@ -287,7 +291,7 @@ class ViewController extends AddController
     {
         $url = $baseUrl;
 
-        if (preg_match("#^\/(?!/).*$#", $url) === 1) {
+        if (preg_match("#^/(?!/)[\w/-]*\.[A-Za-z]{3,4}$#", $url) === 1) {
             $url = $imageUrlPrefix . $url;
         }
 
@@ -323,5 +327,19 @@ class ViewController extends AddController
         return array_map(function (StoreTransfer $storeTransfer) {
             return $storeTransfer->getName();
         }, $stores->getArrayCopy());
+    }
+
+    /**
+     * @param array $viewData
+     *
+     * @return array
+     */
+    protected function executeProductAbstractViewActionViewDataExpanderPlugins(array $viewData): array
+    {
+        foreach ($this->getFactory()->getProductAbstractViewActionViewDataExpanderPlugins() as $productAbstractViewActionViewDataExpanderPlugin) {
+            $viewData = $productAbstractViewActionViewDataExpanderPlugin->expand($viewData);
+        }
+
+        return $viewData;
     }
 }

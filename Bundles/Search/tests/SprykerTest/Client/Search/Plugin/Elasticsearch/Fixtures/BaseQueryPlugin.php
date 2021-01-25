@@ -21,7 +21,7 @@ class BaseQueryPlugin implements QueryInterface, SearchStringSetterInterface, Se
     protected $query;
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $searchString;
 
@@ -34,7 +34,7 @@ class BaseQueryPlugin implements QueryInterface, SearchStringSetterInterface, Se
     /**
      * @return \Elastica\Query
      */
-    public function getSearchQuery()
+    public function getSearchQuery(): Query
     {
         return $this->query;
     }
@@ -44,13 +44,13 @@ class BaseQueryPlugin implements QueryInterface, SearchStringSetterInterface, Se
      *
      * @return void
      */
-    public function setSearchString($searchString)
+    public function setSearchString($searchString): void
     {
         $this->searchString = $searchString;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getSearchString()
     {

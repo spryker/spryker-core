@@ -1,0 +1,18 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 66,
+            "line_to": 66,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Glue\\AlternativeProductsRestApi\\Dependency\\Client\\AlternativeProductsRestApiToProductStorageClientInterface::findProductConcreteStorageDataByMapping cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/AlternativeProductsRestApi/src/Spryker/Glue/AlternativeProductsRestApi/Processor/ConcreteAlternativeProduct/ConcreteAlternativeProductReader.php",
+            "snippet": "            $concreteProductSku,",
+            "selected_text": "$concreteProductSku",
+            "error_level": 3,
+            "shortcode": 78
+        }
+    ],
+    "deprecation": []
+}

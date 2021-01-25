@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\Oms\Business\Util;
 
+use Generated\Shared\Transfer\OmsEventTransfer;
 use Spryker\Shared\Graph\GraphInterface;
 use Spryker\Zed\Oms\Business\Exception\StatemachineException;
+use Spryker\Zed\Oms\Business\Process\EventInterface;
 use Spryker\Zed\Oms\Business\Process\ProcessInterface;
 use Spryker\Zed\Oms\Business\Process\StateInterface;
 use Spryker\Zed\Oms\Business\Process\TransitionInterface;
@@ -71,12 +73,12 @@ class Drawer implements DrawerInterface
     /**
      * @var int|null
      */
-    protected $fontSizeBig = null;
+    protected $fontSizeBig;
 
     /**
      * @var int|null
      */
-    protected $fontSizeSmall = null;
+    protected $fontSizeSmall;
 
     /**
      * @var \Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionCollectionInterface
@@ -99,22 +101,30 @@ class Drawer implements DrawerInterface
     protected $utilTextService;
 
     /**
+     * @var \Spryker\Zed\Oms\Business\Util\TimeoutProcessorCollectionInterface
+     */
+    protected $timeoutProcessorCollection;
+
+    /**
      * @param \Spryker\Zed\Oms\Dependency\Plugin\Command\CommandCollectionInterface|array $commands
      * @param \Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionCollectionInterface|array $conditions
      * @param \Spryker\Shared\Graph\GraphInterface $graph
      * @param \Spryker\Zed\Oms\Dependency\Service\OmsToUtilTextInterface $utilTextService
+     * @param \Spryker\Zed\Oms\Business\Util\TimeoutProcessorCollectionInterface $timeoutProcessorCollection
      */
     public function __construct(
         $commands,
         $conditions,
         GraphInterface $graph,
-        OmsToUtilTextInterface $utilTextService
+        OmsToUtilTextInterface $utilTextService,
+        TimeoutProcessorCollectionInterface $timeoutProcessorCollection
     ) {
         $this->setCommands($commands);
         $this->setConditions($conditions);
 
         $this->graph = $graph;
         $this->utilTextService = $utilTextService;
+        $this->timeoutProcessorCollection = $timeoutProcessorCollection;
     }
 
     /**
@@ -335,6 +345,7 @@ class Drawer implements DrawerInterface
         foreach ($transitions as $transition) {
             if ($transition->getTarget()->getName() !== $state->getName()) {
                 $hasOnlySelfReferences = false;
+
                 break;
             }
         }
@@ -427,6 +438,10 @@ class Drawer implements DrawerInterface
                     $commandLabel .= ' ' . $this->notImplemented;
                 }
                 $label[] = $commandLabel;
+            }
+
+            if ($event->hasTimeoutProcessor()) {
+                $label[] = sprintf('timeout processor: %s', $this->getTimeoutProcessorLabel($event));
             }
 
             if ($event->isManual()) {
@@ -551,5 +566,22 @@ class Drawer implements DrawerInterface
             $this->fontSizeBig = $fontSize;
             $this->fontSizeSmall = $fontSize - 2;
         }
+    }
+
+    /**
+     * @param \Spryker\Zed\Oms\Business\Process\EventInterface $event
+     *
+     * @return string
+     */
+    protected function getTimeoutProcessorLabel(EventInterface $event): string
+    {
+        if (!$this->inCollection($this->timeoutProcessorCollection, $event->getTimeoutProcessor())) {
+            return $this->notImplemented;
+        }
+
+        $timeoutProcessor = $this->timeoutProcessorCollection->get($event->getTimeoutProcessor());
+        $omsEventTransfer = (new OmsEventTransfer())->setTimeout($event->getTimeout());
+
+        return $timeoutProcessor->getLabel($omsEventTransfer);
     }
 }

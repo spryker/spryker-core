@@ -35,8 +35,8 @@
 
     <transfer name="StoreRelation">
         <property name="idEntity" type="int"/>
-        <property name="idStores" type="int[]"/>
-        <property name="stores" type="Store[]"/>
+        <property name="idStores" type="int[]" singular="idStores"/>
+        <property name="stores" type="Store[]" singular="stores"/>
     </transfer>
 
     <transfer name="Store">
@@ -46,6 +46,55 @@
 
     <transfer name="Item">
         <property name="quantitySalesUnit" type="ProductMeasurementSalesUnit"/>
+        <property name="sku" type="string"/>
+        <property name="groupKey" type="string"/>
+        <property name="quantity" type="int"/>
+        <property name="idSalesOrderItem" type="int"/>
+    </transfer>
+
+    <transfer name="PersistentCartChange">
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="CartChange">
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="Order">
+        <property name="idSalesOrder" type="int"/>
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="Filter">
+    </transfer>
+
+    <transfer name="EventEntity">
+    </transfer>
+
+    <transfer name="Locale">
+    </transfer>
+
+    <transfer name="ProductAbstract">
+    </transfer>
+
+    <transfer name="CartPreCheckResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="messages" type="Message[]" singular="message"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="type" type="string"/>
+        <property name="value" type="string"/>
+        <property name="parameters" type="array" singular="parameters"/>
+    </transfer>
+
+    <transfer name="ProductConcrete">
+        <property name="idProductConcrete" type="int"/>
+        <property name="fkProductAbstract" type="int"/>
     </transfer>
 
 </transfers>

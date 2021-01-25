@@ -12,6 +12,10 @@ use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerIdentifierTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
+use Generated\Shared\Transfer\RestCustomerTransfer;
 
 /**
  * Auto-generated group annotations
@@ -54,7 +58,7 @@ class CompanyUsersRestApiFacadeTest extends Test
         );
 
         // Assert
-        $this->assertEquals($customerTransfer->getCompanyUserTransfer()->getUuid(), $expandedCustomerIdentifierTransfer->getIdCompanyUser());
+        $this->assertSame($customerTransfer->getCompanyUserTransfer()->getUuid(), $expandedCustomerIdentifierTransfer->getIdCompanyUser());
     }
 
     /**
@@ -108,10 +112,10 @@ class CompanyUsersRestApiFacadeTest extends Test
         $this->assertCount(1, $companyUserCollectionTransfer->getCompanyUsers());
         /** @var \Generated\Shared\Transfer\CompanyUserTransfer $expectedCompanyUserTransfer */
         $expectedCompanyUserTransfer = $companyUserCollectionTransfer->getCompanyUsers()->offsetGet(0);
-        $this->assertEquals($companyUserTransfer->getIdCompanyUser(), $expectedCompanyUserTransfer->getIdCompanyUser());
-        $this->assertEquals($companyUserTransfer->getFkCompany(), $expectedCompanyUserTransfer->getFkCompany());
-        $this->assertEquals($companyUserTransfer->getFkCompanyBusinessUnit(), $expectedCompanyUserTransfer->getFkCompanyBusinessUnit());
-        $this->assertEquals($companyUserTransfer->getFkCustomer(), $expectedCompanyUserTransfer->getFkCustomer());
+        $this->assertSame($companyUserTransfer->getIdCompanyUser(), $expectedCompanyUserTransfer->getIdCompanyUser());
+        $this->assertSame($companyUserTransfer->getFkCompany(), $expectedCompanyUserTransfer->getFkCompany());
+        $this->assertSame($companyUserTransfer->getFkCompanyBusinessUnit(), $expectedCompanyUserTransfer->getFkCompanyBusinessUnit());
+        $this->assertSame($companyUserTransfer->getFkCustomer(), $expectedCompanyUserTransfer->getFkCustomer());
     }
 
     /**
@@ -131,5 +135,162 @@ class CompanyUsersRestApiFacadeTest extends Test
 
         // Assert
         $this->assertCount(0, $companyUserCollectionTransfer->getCompanyUsers());
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandQuoteCustomerWithCompanyUserWillExpandCompanyUser(): void
+    {
+        // Assign
+        $customerTransfer = $this->tester->haveCustomer();
+        $companyTransfer = $this->tester->haveCompany();
+        $companyBusinessUnitTransfer = $this->tester->haveCompanyBusinessUnit([CompanyBusinessUnitTransfer::FK_COMPANY => $companyTransfer->getIdCompany()]);
+        $companyUserTransfer = $this->tester->haveCompanyUser([CompanyUserTransfer::FK_COMPANY => $companyTransfer->getIdCompany(), CompanyUserTransfer::FK_COMPANY_BUSINESS_UNIT => $companyBusinessUnitTransfer->getIdCompanyBusinessUnit(), CompanyUserTransfer::CUSTOMER => $customerTransfer]);
+
+        $quoteTransfer = (new QuoteTransfer())
+            ->setCustomer(
+                (new CustomerTransfer())
+                    ->setCompanyUserTransfer(
+                        (new CompanyUserTransfer())
+                            ->setIdCompanyUser($companyUserTransfer->getIdCompanyUser())
+                    )
+            );
+
+        // Act
+        $actualQuoteTransfer = $this->tester->getFacade()
+            ->expandQuoteCustomerWithCompanyUser($quoteTransfer);
+
+        // Assert
+        $this->assertNotNull(
+            $actualQuoteTransfer->getCustomer()->getCompanyUserTransfer(),
+            'Company user should be set.'
+        );
+        $this->assertSame(
+            $companyUserTransfer->getIdCompanyUser(),
+            $actualQuoteTransfer->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser(),
+            'Company user ID should be the same.'
+        );
+        $this->assertSame(
+            $companyUserTransfer->getFkCompanyBusinessUnit(),
+            $actualQuoteTransfer->getCustomer()->getCompanyUserTransfer()->getFkCompanyBusinessUnit(),
+            'Company business unit ID should be the same.'
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandQuoteCustomerWithCompanyUserWillSkipNotCompanyUser(): void
+    {
+        // Assign
+        $quoteTransfer = (new QuoteTransfer())
+            ->setCustomer(new CustomerTransfer());
+
+        // Act
+        $actualQuoteTransfer = $this->tester->getFacade()
+            ->expandQuoteCustomerWithCompanyUser($quoteTransfer);
+
+        // Assert
+        $this->assertNull(
+            $actualQuoteTransfer->getCustomer()->getCompanyUserTransfer(),
+            'Company user should not be set.'
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandQuoteCustomerWithCompanyUserWillSkipCompanyUserWithoutId(): void
+    {
+        // Assign
+        $quoteTransfer = (new QuoteTransfer())
+            ->setCustomer(
+                (new CustomerTransfer())
+                    ->setCompanyUserTransfer(new CompanyUserTransfer())
+            );
+
+        // Act
+        $actualQuoteTransfer = $this->tester->getFacade()
+            ->expandQuoteCustomerWithCompanyUser($quoteTransfer);
+
+        // Assert
+        $this->assertNotNull(
+            $actualQuoteTransfer->getCustomer()->getCompanyUserTransfer(),
+            'Company user should be set.'
+        );
+        $this->assertNull(
+            $actualQuoteTransfer->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser(),
+            'Company user ID should not be set.'
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testMapCompanyUserToQuoteTransferWillExpandCompanyUser(): void
+    {
+        // Assign
+        $customerTransfer = $this->tester->haveCustomer();
+        $companyTransfer = $this->tester->haveCompany();
+        $companyBusinessUnitTransfer = $this->tester->haveCompanyBusinessUnit([CompanyBusinessUnitTransfer::FK_COMPANY => $companyTransfer->getIdCompany()]);
+        $companyUserTransfer = $this->tester->haveCompanyUser([CompanyUserTransfer::FK_COMPANY => $companyTransfer->getIdCompany(), CompanyUserTransfer::FK_COMPANY_BUSINESS_UNIT => $companyBusinessUnitTransfer->getIdCompanyBusinessUnit(), CompanyUserTransfer::CUSTOMER => $customerTransfer]);
+
+        $quoteTransfer = (new QuoteTransfer())
+            ->setCustomer(
+                (new CustomerTransfer())
+                    ->setCompanyUserTransfer(
+                        (new CompanyUserTransfer())
+                            ->setIdCompanyUser($companyUserTransfer->getIdCompanyUser())
+                    )
+            );
+
+        $restCheckoutRequestAttributesTransfer = (new RestCheckoutRequestAttributesTransfer())
+            ->setCustomer(
+                (new RestCustomerTransfer())
+                    ->setIdCompanyUser($companyUserTransfer->getIdCompanyUser())
+            );
+
+        // Act
+        $actualQuoteTransfer = $this->tester->getFacade()
+            ->mapCompanyUserToQuoteTransfer($restCheckoutRequestAttributesTransfer, $quoteTransfer);
+
+        // Assert
+        $this->assertNotNull(
+            $actualQuoteTransfer->getCustomer()->getCompanyUserTransfer(),
+            'Company user should be set.'
+        );
+        $this->assertSame(
+            $companyUserTransfer->getIdCompanyUser(),
+            $actualQuoteTransfer->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser(),
+            'Company user ID should be the same.'
+        );
+        $this->assertSame(
+            $companyUserTransfer->getFkCompanyBusinessUnit(),
+            $actualQuoteTransfer->getCustomer()->getCompanyUserTransfer()->getFkCompanyBusinessUnit(),
+            'Company business unit ID should be the same.'
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testMapCompanyUserToQuoteTransferWillSkipNotCompanyUser(): void
+    {
+        // Arrange
+        $quoteTransfer = (new QuoteTransfer())
+            ->setCustomer(new CustomerTransfer());
+        $restCheckoutRequestAttributesTransfer = (new RestCheckoutRequestAttributesTransfer())
+            ->setCustomer(new RestCustomerTransfer());
+
+        // Act
+        $actualQuoteTransfer = $this->tester->getFacade()
+            ->mapCompanyUserToQuoteTransfer($restCheckoutRequestAttributesTransfer, $quoteTransfer);
+
+        // Assert
+        $this->assertNull(
+            $actualQuoteTransfer->getCustomer()->getCompanyUserTransfer(),
+            'Company user should be set.'
+        );
     }
 }

@@ -9,14 +9,18 @@ namespace Spryker\Zed\Stock\Business;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
+use Generated\Shared\Transfer\StockResponseTransfer;
+use Generated\Shared\Transfer\StockTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\TypeTransfer;
+use Spryker\DecimalObject\Decimal;
 
 interface StockFacadeInterface
 {
     /**
      * Specification:
      * - Checks if the concrete product with the provided SKU has any stock type that is set as "never out of stock".
+     * - Filters out stocks that are inactive.
      *
      * @api
      *
@@ -29,6 +33,7 @@ interface StockFacadeInterface
     /**
      * Specification:
      * - Checks if the concrete product with the provided SKU has any stock type that is set as "never out of stock".
+     * - Filters out stocks that are inactive.
      *
      * @api
      *
@@ -41,28 +46,58 @@ interface StockFacadeInterface
 
     /**
      * Specification:
-     * - Returns the total stock amount of the concrete product for all its available stock types.
+     * - Checks if the abstract product with the provided SKU has any stock product that is set as "never out of stock".
+     * - Filters out stocks that are inactive.
+     *
+     * @api
+     *
+     * @param string $abstractSku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return bool
+     */
+    public function isProductAbstractNeverOutOfStockForStore(string $abstractSku, StoreTransfer $storeTransfer): bool;
+
+    /**
+     * Specification:
+     *  - Returns the total stock amount of the concrete product for all its available stock types.
+     *  - Filters out stocks that are inactive.
      *
      * @api
      *
      * @param string $sku
      *
-     * @return int
+     * @return \Spryker\DecimalObject\Decimal
      */
-    public function calculateStockForProduct($sku);
+    public function calculateStockForProduct(string $sku): Decimal;
 
     /**
      * Specification:
      *  - Returns the total stock amount of the concrete product for all its available stock types and store.
+     *  - Filters out stocks that are inactive.
      *
      * @api
      *
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return int
+     * @return \Spryker\DecimalObject\Decimal
      */
-    public function calculateProductStockForStore($sku, StoreTransfer $storeTransfer);
+    public function calculateProductStockForStore(string $sku, StoreTransfer $storeTransfer): Decimal;
+
+    /**
+     * Specification:
+     *  - Returns the total stock amount of the abstract product's concrete products for all theirs available stocks and store.
+     *  - Filters out stocks that are inactive.
+     *
+     * @api
+     *
+     * @param string $abstractSku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Spryker\DecimalObject\Decimal
+     */
+    public function calculateProductAbstractStockForStore(string $abstractSku, StoreTransfer $storeTransfer): Decimal;
 
     /**
      * Specification:
@@ -71,6 +106,8 @@ interface StockFacadeInterface
      * - Returns the ID of the new stock type entity.
      *
      * @api
+     *
+     * @deprecated Use {@link createStock()} instead.
      *
      * @param \Generated\Shared\Transfer\TypeTransfer $stockTypeTransfer
      *
@@ -116,11 +153,11 @@ interface StockFacadeInterface
      *
      * @param string $sku
      * @param string $stockType
-     * @param int $decrementBy
+     * @param \Spryker\DecimalObject\Decimal $decrementBy
      *
      * @return void
      */
-    public function decrementStockProduct($sku, $stockType, $decrementBy = 1);
+    public function decrementStockProduct($sku, $stockType, Decimal $decrementBy): void;
 
     /**
      * Specification:
@@ -131,11 +168,11 @@ interface StockFacadeInterface
      *
      * @param string $sku
      * @param string $stockType
-     * @param int $incrementBy
+     * @param \Spryker\DecimalObject\Decimal $incrementBy
      *
      * @return void
      */
-    public function incrementStockProduct($sku, $stockType, $incrementBy = 1);
+    public function incrementStockProduct($sku, $stockType, Decimal $incrementBy): void;
 
     /**
      * Specification:
@@ -152,7 +189,7 @@ interface StockFacadeInterface
 
     /**
      * Specification:
-     * - Processes all provided stocks of the concrete product transfer
+     * - Processes all provided stocks of the concrete product transfer.
      * - If a stock entry from the collection doesn't exists for the product, then it will be newly created.
      * - If a stock entry from the collection exists for the product, then it will be updated with the provided data.
      *
@@ -166,7 +203,8 @@ interface StockFacadeInterface
 
     /**
      * Specification:
-     * - Expands concrete product transfer (by the ID of the product) with it's stock information from the database.
+     *  - Expands concrete product transfer (by the ID of the product) with it's stock information from the database.
+     *  - Filters out stocks that are inactive.
      *
      * @api
      *
@@ -178,7 +216,7 @@ interface StockFacadeInterface
 
     /**
      * Specification:
-     *  - Returns all available stock types
+     *  - Returns all available stock types.
      *
      * @api
      *
@@ -188,7 +226,8 @@ interface StockFacadeInterface
 
     /**
      * Specification:
-     *  - Returns stock product by givent id product
+     *  - Returns stock product by given id product.
+     *  - Filters out stocks that are inactive.
      *
      * @api
      *
@@ -200,7 +239,7 @@ interface StockFacadeInterface
 
     /**
      * Specification:
-     *  - Returns stock product by given id product
+     *  - Returns stock product by given id product.
      *
      * @api
      *
@@ -213,19 +252,19 @@ interface StockFacadeInterface
 
     /**
      * Specification:
-     *  - Gets stocks for store
+     *  - Gets stock types for store.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return array
+     * @return string[]
      */
     public function getStockTypesForStore(StoreTransfer $storeTransfer);
 
     /**
      * Specification:
-     *  - Returns stock mapping per store/warehouse pair
+     *  - Returns stock mapping per store/warehouse pair:
      *
      *  [
      *    'Warehouse1' => ['DE', 'US'],
@@ -234,7 +273,7 @@ interface StockFacadeInterface
      *
      * @api
      *
-     * @return array
+     * @return string[][]
      */
     public function getWarehouseToStoreMapping();
 
@@ -249,7 +288,87 @@ interface StockFacadeInterface
      *
      * @api
      *
-     * @return array
+     * @return string[][]
      */
     public function getStoreToWarehouseMapping();
+
+    /**
+     * Specification:
+     *  - Finds stock by given id.
+     *  - Returns StockTransfer or null if there are no records in database.
+     *
+     * @api
+     *
+     * @param int $idStock
+     *
+     * @return \Generated\Shared\Transfer\StockTransfer|null
+     */
+    public function findStockById(int $idStock): ?StockTransfer;
+
+    /**
+     * Specification:
+     *  - Finds stock by given stock name.
+     *  - Returns StockTransfer or null if there are no records in database.
+     *
+     * @api
+     *
+     * @param string $stockName
+     *
+     * @return \Generated\Shared\Transfer\StockTransfer|null
+     */
+    public function findStockByName(string $stockName): ?StockTransfer;
+
+    /**
+     * Specification:
+     *  - Persists a new stock entity to database.
+     *  - Touches the newly created stock.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\StockTransfer $stockTransfer
+     *
+     * @return \Generated\Shared\Transfer\StockResponseTransfer
+     */
+    public function createStock(StockTransfer $stockTransfer): StockResponseTransfer;
+
+    /**
+     * Specification:
+     *  - Updates stock.
+     *  - Updates stock store relationships.
+     *  - Persists stock entity to database.
+     *  - Touches the newly created stock.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\StockTransfer $stockTransfer
+     *
+     * @return \Generated\Shared\Transfer\StockResponseTransfer
+     */
+    public function updateStock(StockTransfer $stockTransfer): StockResponseTransfer;
+
+    /**
+     * Specification:
+     *  - Returns all stores that have relationship with stock where product with given sku is defined.
+     *
+     * @api
+     *
+     * @param string $sku
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     */
+    public function getStoresWhereProductStockIsDefined(string $sku): array;
+
+    /**
+     * Specification:
+     *  - Returns all available stock types for given store.
+     *  - Filters out stocks that are inactive.
+     *  - StoreTransfer.name is required.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\StockTransfer[]
+     */
+    public function getAvailableWarehousesForStore(StoreTransfer $storeTransfer): array;
 }

@@ -4,17 +4,21 @@
   "description": "WishlistsRestApi module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.3",
     "spryker/glue-application": "^1.8.0",
     "spryker/glue-application-extension": "^1.0.0",
     "spryker/kernel": "^3.30.0",
     "spryker/propel-orm": "^1.0.0",
     "spryker/symfony": "^3.0.0",
     "spryker/uuid-behavior": "^1.0.0",
-    "spryker/wishlist": "^6.2.0 || ^8.0.0"
+    "spryker/wishlist": "^6.5.0 || ^8.1.0",
+    "spryker/zed-request": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/customer": "*",
+    "spryker/product": "*",
+    "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "suggest": {
@@ -27,8 +31,17 @@
       "Spryker\\": "src/Spryker/"
     }
   },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerTest\\": "tests/SprykerTest/"
+    }
+  },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"

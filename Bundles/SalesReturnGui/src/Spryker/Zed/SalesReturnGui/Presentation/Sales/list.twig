@@ -1,0 +1,5 @@
+{% embed '@Gui/Partials/widget.twig' with { widget_title: 'Returns' | trans } %}
+    {% block widget_content %}
+        {{ orderReturnTable | raw }}
+    {% endblock %}
+{% endembed %}

@@ -19,7 +19,11 @@ class ProductLabelQueryContainer extends AbstractQueryContainer implements Produ
     public const COL_MAX_POSITION = 'max_position';
 
     /**
+     * {@inheritDoc}
+     *
      * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\ProductLabel\Persistence\ProductLabelRepository::getAllProductLabelsSortedByPosition()} instead.
      *
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery
      */
@@ -32,7 +36,11 @@ class ProductLabelQueryContainer extends AbstractQueryContainer implements Produ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\ProductLabel\Persistence\ProductLabelRepository::findProductLabelById} instead.
      *
      * @param int $idProductLabel
      *
@@ -47,7 +55,11 @@ class ProductLabelQueryContainer extends AbstractQueryContainer implements Produ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\ProductLabel\Persistence\ProductLabelRepository::findProductLabelByName} instead.
      *
      * @param string $labelName
      *
@@ -62,7 +74,11 @@ class ProductLabelQueryContainer extends AbstractQueryContainer implements Produ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\ProductLabel\Persistence\ProductLabelRepository::getProductLabelsByIdProductAbstract} instead.
      *
      * @param int $idProductAbstract
      *
@@ -79,7 +95,11 @@ class ProductLabelQueryContainer extends AbstractQueryContainer implements Produ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\ProductLabel\Persistence\ProductLabelRepository::getActiveProductLabelIdsByIdProductAbstract} instead.
      *
      * @param int $idProductAbstract
      *
@@ -92,7 +112,11 @@ class ProductLabelQueryContainer extends AbstractQueryContainer implements Produ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @param int $idProductLabel
      *
@@ -107,6 +131,8 @@ class ProductLabelQueryContainer extends AbstractQueryContainer implements Produ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelLocalizedAttributesQuery
@@ -118,7 +144,11 @@ class ProductLabelQueryContainer extends AbstractQueryContainer implements Produ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @param int $idProductLabel
      * @param int $idLocale
@@ -133,7 +163,11 @@ class ProductLabelQueryContainer extends AbstractQueryContainer implements Produ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelLocalizedAttributesQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
      */
@@ -152,6 +186,8 @@ class ProductLabelQueryContainer extends AbstractQueryContainer implements Produ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idProductLabel
@@ -167,6 +203,8 @@ class ProductLabelQueryContainer extends AbstractQueryContainer implements Produ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery
@@ -179,6 +217,8 @@ class ProductLabelQueryContainer extends AbstractQueryContainer implements Produ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idProductLabel
@@ -196,6 +236,8 @@ class ProductLabelQueryContainer extends AbstractQueryContainer implements Produ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery
@@ -215,6 +257,8 @@ class ProductLabelQueryContainer extends AbstractQueryContainer implements Produ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery
@@ -231,6 +275,8 @@ class ProductLabelQueryContainer extends AbstractQueryContainer implements Produ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idProductAbstract

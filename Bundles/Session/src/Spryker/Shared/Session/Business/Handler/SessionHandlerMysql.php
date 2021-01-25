@@ -65,8 +65,13 @@ class SessionHandlerMysql implements SessionHandlerInterface
      * @param string|null $password
      * @param int $lifetime
      */
-    public function __construct(SessionToMonitoringServiceInterface $monitoringService, $hosts = ['127.0.0.1:3306'], $user = null, $password = null, $lifetime = 600)
-    {
+    public function __construct(
+        SessionToMonitoringServiceInterface $monitoringService,
+        $hosts = ['127.0.0.1:3306'],
+        $user = null,
+        $password = null,
+        $lifetime = 600
+    ) {
         $host = $hosts[0];
         if (strpos($host, ':')) {
             $parts = explode(':', $host);
@@ -171,7 +176,7 @@ class SessionHandlerMysql implements SessionHandlerInterface
 
         $startTime = microtime(true);
 
-        $query = sprintf('DELETE FROM session WHERE key = "%s"', $key);
+        $query = sprintf('DELETE FROM session WHERE `key` = "%s"', $key);
 
         $this->connection->exec($query);
         $this->monitoringService->addCustomParameter(self::METRIC_SESSION_DELETE_TIME, microtime(true) - $startTime);

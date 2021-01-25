@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Merchant\Persistence;
 
 use Generated\Shared\Transfer\MerchantTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
+use Orm\Zed\Merchant\Persistence\SpyMerchantStore;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -16,42 +18,63 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 class MerchantEntityManager extends AbstractEntityManager implements MerchantEntityManagerInterface
 {
     /**
-     * {@inheritDoc}
-     *
-     * @param int $idMerchant
-     *
-     * @return void
-     */
-    public function deleteMerchantById(int $idMerchant): void
-    {
-        $this->getFactory()
-            ->createMerchantQuery()
-            ->filterByIdMerchant($idMerchant)
-            ->delete();
-    }
-
-    /**
-     * {@inheritDoc}
-     *
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantTransfer
      */
     public function saveMerchant(MerchantTransfer $merchantTransfer): MerchantTransfer
     {
-        $spyMerchant = $this->getFactory()
+        $merchantEntity = $this->getFactory()
             ->createMerchantQuery()
             ->filterByIdMerchant($merchantTransfer->getIdMerchant())
             ->findOneOrCreate();
 
-        $spyMerchant = $this->getFactory()
+        $merchantEntity = $this->getFactory()
             ->createPropelMerchantMapper()
-            ->mapMerchantTransferToEntity($merchantTransfer, $spyMerchant);
+            ->mapMerchantTransferToMerchantEntity($merchantTransfer, $merchantEntity);
 
-        $spyMerchant->save();
+        $merchantEntity->save();
 
-        $merchantTransfer->setIdMerchant($spyMerchant->getIdMerchant());
+        $merchantTransfer = $this->getFactory()
+            ->createPropelMerchantMapper()
+            ->mapMerchantEntityToMerchantTransfer($merchantEntity, $merchantTransfer);
 
         return $merchantTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     * @param int $idStore
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    public function createMerchantStore(MerchantTransfer $merchantTransfer, int $idStore): StoreTransfer
+    {
+        $merchantStoreEntity = (new SpyMerchantStore())
+            ->setFkStore($idStore)
+            ->setFkMerchant($merchantTransfer->getIdMerchant());
+
+        $merchantStoreEntity->save();
+
+        return $this->getFactory()
+            ->createPropelMerchantMapper()
+            ->mapStoreEntityToStoreTransfer($merchantStoreEntity->getSpyStore(), new StoreTransfer());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     * @param int $idStore
+     *
+     * @return void
+     */
+    public function deleteMerchantStore(MerchantTransfer $merchantTransfer, int $idStore): void
+    {
+        $merchantStoreEntity = $this->getFactory()
+            ->createMerchantStoreQuery()
+            ->filterByFkMerchant($merchantTransfer->getIdMerchant())
+            ->filterByFkStore($idStore)
+            ->findOne();
+
+        $merchantStoreEntity->delete();
     }
 }

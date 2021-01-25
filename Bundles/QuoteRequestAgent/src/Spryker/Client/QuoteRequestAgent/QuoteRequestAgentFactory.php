@@ -8,6 +8,8 @@
 namespace Spryker\Client\QuoteRequestAgent;
 
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\QuoteRequestAgent\Checker\QuoteChecker;
+use Spryker\Client\QuoteRequestAgent\Checker\QuoteCheckerInterface;
 use Spryker\Client\QuoteRequestAgent\Converter\QuoteRequestAgentConverter;
 use Spryker\Client\QuoteRequestAgent\Converter\QuoteRequestAgentConverterInterface;
 use Spryker\Client\QuoteRequestAgent\Dependency\Client\QuoteRequestAgentToQuoteClientInterface;
@@ -52,6 +54,14 @@ class QuoteRequestAgentFactory extends AbstractFactory
         return new QuoteRequestReader(
             $this->getQuoteRequestClient()
         );
+    }
+
+    /**
+     * @return \Spryker\Client\QuoteRequestAgent\Checker\QuoteCheckerInterface
+     */
+    public function createQuoteChecker(): QuoteCheckerInterface
+    {
+        return new QuoteChecker();
     }
 
     /**

@@ -27,13 +27,13 @@ class ProductManagementProductConcreteEditCest
      *
      * @return void
      */
-    public function breadcrumbIsVisible(ProductManagementPresentationTester $i)
+    public function breadcrumbIsVisible(ProductManagementPresentationTester $i): void
     {
         $i->registerMoneyCollectionFormTypePlugin();
 
         $i->amOnPage(ProductManagementProductListPage::URL);
         $i->clickDataTableViewButton();
         $i->clickDataTableEditButton(1, 'product-variant-table_wrapper');
-        $i->seeBreadcrumbNavigation('Dashboard / Products / Products / Edit Concrete Product');
+        $i->seeBreadcrumbNavigation('Catalog / Products / Edit Concrete Product');
     }
 }

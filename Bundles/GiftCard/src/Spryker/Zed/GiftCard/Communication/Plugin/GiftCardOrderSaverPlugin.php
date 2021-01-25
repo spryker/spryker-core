@@ -21,17 +21,19 @@ use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginInterface;
 class GiftCardOrderSaverPlugin extends AbstractPlugin implements CheckoutPluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
      * @return void
      */
-    public function execute(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
+    public function execute(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
          $this
             ->getFacade()
-            ->saveGiftCardPayments($quoteTransfer, $checkoutResponse);
+            ->saveGiftCardPayments($quoteTransfer, $checkoutResponseTransfer);
     }
 }

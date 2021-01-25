@@ -14,11 +14,13 @@ use Orm\Zed\Acl\Persistence\SpyAclRuleQuery;
 use Orm\Zed\Acl\Persistence\SpyAclUserHasGroupQuery;
 use Orm\Zed\User\Persistence\SpyUserQuery;
 use Spryker\Zed\Acl\AclDependencyProvider;
+use Spryker\Zed\Acl\Persistence\Propel\Mapper\AclMapper;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\Acl\AclConfig getConfig()
  * @method \Spryker\Zed\Acl\Persistence\AclQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Acl\Persistence\AclRepositoryInterface getRepository()
  */
 class AclPersistenceFactory extends AbstractPersistenceFactory
 {
@@ -44,6 +46,14 @@ class AclPersistenceFactory extends AbstractPersistenceFactory
     public function createRoleQuery()
     {
         return new SpyAclRoleQuery();
+    }
+
+    /**
+     * @return \Spryker\Zed\Acl\Persistence\Propel\Mapper\AclMapper
+     */
+    public function createAclMapper(): AclMapper
+    {
+        return new AclMapper();
     }
 
     /**

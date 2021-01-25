@@ -11,6 +11,9 @@ use Generated\Shared\Transfer\SortConfigTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\Search\Dependency\Plugin\SortConfigBuilderInterface;
 
+/**
+ * @deprecated Use {@link \Spryker\Client\SearchElasticsearch\Config\SortConfig} instead.
+ */
 class SortConfigBuilder extends AbstractPlugin implements SortConfigBuilderInterface
 {
     public const DIRECTION_ASC = 'asc';

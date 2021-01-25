@@ -1,7 +1,6 @@
 # GiftCardBalance Module
-[![Build Status](https://travis-ci.org/spryker/GiftCardBalance.svg)](https://travis-ci.org/spryker/GiftCardBalance)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/GiftCardBalance/badge.svg)](https://coveralls.io/github/spryker/GiftCardBalance)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/spryker/GiftCardBalance/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/spryker/GiftCardBalance/?branch=master)
+[![Build Status](https://travis-ci.org/spryker/gift-card-balance.svg)](https://travis-ci.org/spryker/gift-card-balance)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 ## Installation
 

@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="Group">
+        <property name="name" type="string"/>
+        <property name="reference" type="string"/>
+        <property name="idAclGroup" type="int"/>
+    </transfer>
+
+    <transfer name="GroupCriteria">
+        <property name="reference" type="string"/>
+    </transfer>
+
+    <transfer name="Merchant">
+        <property name="idMerchant" type="int"/>
+        <property name="status" type="string"/>
+    </transfer>
+
+    <transfer name="MerchantError">
+        <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="MerchantResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="errors" type="MerchantError[]" singular="error"/>
+        <property name="merchant" type="Merchant"/>
+    </transfer>
+
+    <transfer name="MerchantUser">
+        <property name="idMerchantUser" type="int"/>
+        <property name="idMerchant" type="int"/>
+        <property name="idUser" type="int"/>
+        <property name="user" type="User"/>
+        <property name="merchant" type="Merchant"/>
+    </transfer>
+
+    <transfer name="MerchantUserCriteria">
+        <property name="idMerchantUser" type="int"/>
+        <property name="idMerchant" type="int"/>
+        <property name="idUser" type="int"/>
+        <property name="withUser" type="bool"/>
+        <property name="username" type="string"/>
+        <property name="status" type="string"/>
+        <property name="merchantStatus" type="string"/>
+    </transfer>
+
+    <transfer name="MerchantUserResponse">
+        <property name="merchantUser" type="MerchantUser"/>
+        <property name="isSuccessful" type="bool"/>
+        <property name="errors" type="Message[]" singular="error"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="message" type="string"/>
+        <property name="value" type="string"/>
+    </transfer>
+
+    <transfer name="Role">
+        <property name="name" type="string"/>
+        <property name="aclGroup" type="Group"/>
+        <property name="aclRules" type="Rule[]" singular="aclRule"/>
+    </transfer>
+
+    <transfer name="Rule">
+        <property name="bundle" type="string"/>
+        <property name="controller" type="string"/>
+        <property name="action" type="string"/>
+        <property name="type" type="string"/>
+    </transfer>
+
+    <transfer name="User">
+        <property name="idUser" type="int"/>
+        <property name="password" type="string"/>
+        <property name="firstName" type="string"/>
+        <property name="username" type="string"/>
+        <property name="status" type="string"/>
+        <property name="lastName" type="string"/>
+        <property name="lastLogin" type="string"/>
+    </transfer>
+
+    <transfer name="UserCriteria">
+        <property name="idUser" type="int"/>
+        <property name="email" type="string"/>
+    </transfer>
+
+    <transfer name="MerchantCriteria">
+        <property name="idMerchant" type="int"/>
+    </transfer>
+
+</transfers>

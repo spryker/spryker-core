@@ -23,6 +23,8 @@ abstract class AbstractTwigChartPlugin extends AbstractPlugin implements TwigCha
     public const TWIG_FUNCTION_NAME = 'chart';
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string
@@ -33,6 +35,8 @@ abstract class AbstractTwigChartPlugin extends AbstractPlugin implements TwigCha
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Twig\TwigFunction[]
@@ -49,6 +53,8 @@ abstract class AbstractTwigChartPlugin extends AbstractPlugin implements TwigCha
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Twig\Environment $twig

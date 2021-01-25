@@ -24,6 +24,7 @@ use Generated\Shared\Transfer\TaxTotalTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\Country\Persistence\SpyCountry;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
+use Orm\Zed\Oms\Persistence\SpyOmsOrderProcess;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderProcessQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddressQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
@@ -65,7 +66,7 @@ class SalesFacadeSaveOrderTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -87,6 +88,7 @@ class SalesFacadeSaveOrderTest extends Unit
                 'getGroupedDistinctManualEventsByIdSalesOrder',
                 'getOrderItemMatrix',
                 'isOrderFlaggedExcludeFromCustomer',
+                'triggerEventForOrderItems',
             ])
             ->getMock();
         $omsFacadeMock->method('selectProcess')
@@ -131,7 +133,7 @@ class SalesFacadeSaveOrderTest extends Unit
     /**
      * @return void
      */
-    public function testSaveOrderCreatesBillingAddressAndAssignsItToOrder()
+    public function testSaveOrderCreatesBillingAddressAndAssignsItToOrder(): void
     {
         $salesOrderAddressQuery = SpySalesOrderAddressQuery::create()
             ->filterByAddress1('address-1-1-test')
@@ -154,7 +156,7 @@ class SalesFacadeSaveOrderTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
-    private function getValidBaseResponseTransfer()
+    private function getValidBaseResponseTransfer(): CheckoutResponseTransfer
     {
         return (new CheckoutResponseTransfer())
             ->setSaveOrder(new SaveOrderTransfer());
@@ -163,7 +165,7 @@ class SalesFacadeSaveOrderTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\SaveOrderTransfer
      */
-    private function createSaveOrderTransfer()
+    private function createSaveOrderTransfer(): SaveOrderTransfer
     {
         return new SaveOrderTransfer();
     }
@@ -171,7 +173,7 @@ class SalesFacadeSaveOrderTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    private function getValidBaseQuoteTransfer()
+    private function getValidBaseQuoteTransfer(): QuoteTransfer
     {
         $country = new SpyCountry();
         $country->setIso2Code('ix');
@@ -242,7 +244,7 @@ class SalesFacadeSaveOrderTest extends Unit
     /**
      * @return void
      */
-    public function testSaveOrderCreatesShippingAddressAndAssignsItToOrder()
+    public function testSaveOrderCreatesShippingAddressAndAssignsItToOrder(): void
     {
         $salesOrderAddressQuery = SpySalesOrderAddressQuery::create()
             ->filterByAddress1('address-1-2-test')
@@ -264,7 +266,7 @@ class SalesFacadeSaveOrderTest extends Unit
     /**
      * @return void
      */
-    public function testSaveOrderAssignsSavedOrderId()
+    public function testSaveOrderAssignsSavedOrderId(): void
     {
         $quoteTransfer = $this->getValidBaseQuoteTransfer();
         $checkoutResponseTransfer = $this->getValidBaseResponseTransfer();
@@ -276,7 +278,7 @@ class SalesFacadeSaveOrderTest extends Unit
     /**
      * @return void
      */
-    public function testSaveOrderCreatesOrderAndSavesFieldsDeprecated()
+    public function testSaveOrderCreatesOrderAndSavesFieldsDeprecated(): void
     {
         $quoteTransfer = $this->getValidBaseQuoteTransfer();
         $checkoutResponseTransfer = $this->getValidBaseResponseTransfer();
@@ -296,7 +298,7 @@ class SalesFacadeSaveOrderTest extends Unit
     /**
      * @return void
      */
-    public function testSaveOrderCreatesOrderAndSavesFields()
+    public function testSaveOrderCreatesOrderAndSavesFields(): void
     {
         $quoteTransfer = $this->getValidBaseQuoteTransfer();
         $saveOrderTransfer = $this->createSaveOrderTransfer();
@@ -316,7 +318,7 @@ class SalesFacadeSaveOrderTest extends Unit
     /**
      * @return void
      */
-    public function testSaveOrderWhenCustomerHaveCreatedAtSetShouldNotOverwriteOrderData()
+    public function testSaveOrderWhenCustomerHaveCreatedAtSetShouldNotOverwriteOrderData(): void
     {
         $quoteTransfer = $this->getValidBaseQuoteTransfer();
 
@@ -338,7 +340,7 @@ class SalesFacadeSaveOrderTest extends Unit
     /**
      * @return void
      */
-    public function testSaveOrderCreatesAndFillsOrderItems()
+    public function testSaveOrderCreatesAndFillsOrderItems(): void
     {
         $quoteTransfer = $this->getValidBaseQuoteTransfer();
         $omsConfig = new OmsConfig();
@@ -408,7 +410,7 @@ class SalesFacadeSaveOrderTest extends Unit
     /**
      * @return void
      */
-    public function testSaveOrderGeneratesOrderReference()
+    public function testSaveOrderGeneratesOrderReference(): void
     {
         $quoteTransfer = $this->getValidBaseQuoteTransfer();
         $checkoutResponseTransfer = $this->getValidBaseResponseTransfer();
@@ -464,7 +466,7 @@ class SalesFacadeSaveOrderTest extends Unit
     /**
      * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderProcess
      */
-    protected function getProcessEntity()
+    protected function getProcessEntity(): SpyOmsOrderProcess
     {
         $omsOrderProcessEntity = (new SpyOmsOrderProcessQuery())->filterByName('CheckoutTest01')->findOneOrCreate();
         $omsOrderProcessEntity->save();

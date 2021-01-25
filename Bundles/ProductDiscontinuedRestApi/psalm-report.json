@@ -1,0 +1,18 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 39,
+            "line_to": 39,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Glue\\ProductDiscontinuedRestApi\\Dependency\\Client\\ProductDiscontinuedRestApiToProductDiscontinuedStorageClientInterface::findProductDiscontinuedStorage cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscontinuedRestApi/src/Spryker/Glue/ProductDiscontinuedRestApi/Processor/Expander/ConcreteProductsResourceExpander.php",
+            "snippet": "            ->findProductDiscontinuedStorage($concreteProductsRestAttributesTransfer->getSku(), $localeName);",
+            "selected_text": "$concreteProductsRestAttributesTransfer->getSku()",
+            "error_level": 3,
+            "shortcode": 78
+        }
+    ],
+    "deprecation": []
+}

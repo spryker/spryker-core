@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
  * @method \Spryker\Zed\StateMachine\Business\StateMachineFacadeInterface getFacade()
  * @method \Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\StateMachine\Communication\StateMachineCommunicationFactory getFactory()
+ * @method \Spryker\Zed\StateMachine\Persistence\StateMachineRepositoryInterface getRepository()
  */
 class GraphController extends AbstractController
 {
@@ -123,15 +124,18 @@ class GraphController extends AbstractController
             return $this->redirectResponse(self::URL_STATE_MACHINE_LIST);
         }
 
+        $stateMachine = $request->query->get(static::URL_PARAM_STATE_MACHINE);
+
         return $this->viewResponse([
             'processName' => $processName,
+            'stateMachineName' => $stateMachine,
         ]);
     }
 
     /**
      * @param string $format
      *
-     * @return array
+     * @return string[]
      */
     protected function getStreamedResponseHeaders($format)
     {

@@ -34,7 +34,7 @@ class CompiledUrlMatcher extends SymfonyCompiledUrlMatcher implements RouterEnha
      *
      * @return array
      */
-    public function match($pathinfo)
+    public function match($pathinfo): array
     {
         foreach ($this->routerEnhancerPlugins as $routerEnhancerPlugin) {
             $pathinfo = $routerEnhancerPlugin->beforeMatch($pathinfo, $this->getContext());
@@ -56,7 +56,7 @@ class CompiledUrlMatcher extends SymfonyCompiledUrlMatcher implements RouterEnha
      *
      * @return array
      */
-    public function redirect($path, $route, $scheme = null)
+    public function redirect($path, $route, $scheme = null): array
     {
         $url = $this->context->getBaseUrl() . $path;
         $query = $this->context->getQueryString() ?: '';

@@ -35,8 +35,10 @@ class CategoryNameExistsValidator extends ConstraintValidator
             ->findOne();
 
         if ($categoryEntity !== null) {
-            if (!$idCategory
-                || $idCategory !== $categoryEntity->getIdCategory()) {
+            if (
+                !$idCategory
+                || $idCategory !== $categoryEntity->getIdCategory()
+            ) {
                 $this->addViolation($value, $constraint);
             }
         }

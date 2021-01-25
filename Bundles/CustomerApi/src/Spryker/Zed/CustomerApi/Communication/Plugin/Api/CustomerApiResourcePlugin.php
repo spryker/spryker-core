@@ -22,6 +22,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class CustomerApiResourcePlugin extends AbstractPlugin implements ApiResourcePluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
@@ -34,6 +36,8 @@ class CustomerApiResourcePlugin extends AbstractPlugin implements ApiResourcePlu
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $id
@@ -46,31 +50,37 @@ class CustomerApiResourcePlugin extends AbstractPlugin implements ApiResourcePlu
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
-     * @param int $idCustomer
+     * @param int $id
      * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
      *
      * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
-    public function update($idCustomer, ApiDataTransfer $apiDataTransfer)
+    public function update($id, ApiDataTransfer $apiDataTransfer)
     {
-        return $this->getFacade()->updateCustomer($idCustomer, $apiDataTransfer);
+        return $this->getFacade()->updateCustomer($id, $apiDataTransfer);
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
-     * @param int $idCustomer
+     * @param int $id
      *
      * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
-    public function remove($idCustomer)
+    public function remove($id)
     {
-        return $this->getFacade()->removeCustomer($idCustomer);
+        return $this->getFacade()->removeCustomer($id);
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
@@ -83,6 +93,8 @@ class CustomerApiResourcePlugin extends AbstractPlugin implements ApiResourcePlu
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string

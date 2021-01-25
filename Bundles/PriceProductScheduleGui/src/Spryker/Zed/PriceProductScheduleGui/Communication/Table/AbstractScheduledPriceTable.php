@@ -34,9 +34,8 @@ abstract class AbstractScheduledPriceTable extends AbstractTable
     /**
      * @param \Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\RowFormatterInterface $rowFormatter
      */
-    public function __construct(
-        RowFormatterInterface $rowFormatter
-    ) {
+    public function __construct(RowFormatterInterface $rowFormatter)
+    {
         $this->rowFormatter = $rowFormatter;
     }
 
@@ -45,7 +44,7 @@ abstract class AbstractScheduledPriceTable extends AbstractTable
      */
     public function getSearchTerm(): array
     {
-        $searchTerm = $this->request->query->get('search');
+        $searchTerm = $this->getSearchParameter();
 
         if (!$this->isSearchTermValid($searchTerm)) {
             return $this->getDefaultSearchTerm();

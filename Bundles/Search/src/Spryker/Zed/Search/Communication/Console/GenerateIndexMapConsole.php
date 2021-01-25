@@ -12,6 +12,8 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\Search\Communication\Console\GenerateSourceMapConsole} instead.
+ *
  * @method \Spryker\Zed\Search\Business\SearchFacadeInterface getFacade()
  * @method \Spryker\Zed\Search\Communication\SearchCommunicationFactory getFactory()
  */
@@ -36,10 +38,12 @@ class GenerateIndexMapConsole extends Console
      * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
-     * @return int|null|void
+     * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->getFacade()->generatePageIndexMap($this->getMessenger());
+
+        return static::CODE_SUCCESS;
     }
 }

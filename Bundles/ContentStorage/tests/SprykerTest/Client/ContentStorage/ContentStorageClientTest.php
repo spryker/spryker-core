@@ -10,6 +10,7 @@ namespace SprykerTest\Client\ContentStorage;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ContentTypeContextTransfer;
 use Spryker\Client\ContentStorage\ContentStorageClient;
+use Spryker\Client\ContentStorage\ContentStorageClientInterface;
 use Spryker\Client\ContentStorage\ContentStorageDependencyProvider;
 use Spryker\Client\ContentStorage\Dependency\Client\ContentStorageToStorageClientInterface;
 use Spryker\Shared\ContentStorage\ContentStorageConfig;
@@ -48,7 +49,7 @@ class ContentStorageClientTest extends Unit
     /**
      * @return void
      */
-    public function testFindContentTypeContextByIdReturnsValidTransfer()
+    public function testFindContentTypeContextByIdReturnsValidTransfer(): void
     {
         // Arrange
         $content = [
@@ -63,7 +64,7 @@ class ContentStorageClientTest extends Unit
             ->findContentTypeContextByKey(static::CONTENT_ITEM_KEY, static::LOCALE);
 
         // Assert
-        $this->assertEquals(ContentTypeContextTransfer::class, get_class($systemUnderTest));
+        $this->assertSame(ContentTypeContextTransfer::class, get_class($systemUnderTest));
     }
 
     /**
@@ -71,7 +72,7 @@ class ContentStorageClientTest extends Unit
      *
      * @return void
      */
-    protected function setStorageReturn($returnedContent)
+    protected function setStorageReturn(?array $returnedContent): void
     {
         $contentToStorageBridge = $this->getMockBuilder(ContentStorageToStorageClientInterface::class)->getMock();
         $contentToStorageBridge->method('get')->willReturn($returnedContent);
@@ -81,7 +82,7 @@ class ContentStorageClientTest extends Unit
     /**
      * @return \Spryker\Client\ContentStorage\ContentStorageClientInterface
      */
-    protected function createContentStorageClient()
+    protected function createContentStorageClient(): ContentStorageClientInterface
     {
         return new ContentStorageClient();
     }

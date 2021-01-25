@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\CatalogSearchProductsResourceRelationship\Plugin;
 
+use Spryker\Glue\CatalogSearchProductsResourceRelationship\CatalogSearchProductsResourceRelationshipConfig;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
@@ -16,14 +17,13 @@ use Spryker\Glue\Kernel\AbstractPlugin;
  */
 class CatalogSearchSuggestionsAbstractProductsResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
 {
-    protected const RELATIONSHIP_RESOURCE_TYPE = 'abstract-products';
-
     /**
      * {@inheritDoc}
+     * - Adds `abstract-products` as a relationship.
      *
      * @api
      *
-     * @param array $resources
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return void
@@ -31,7 +31,7 @@ class CatalogSearchSuggestionsAbstractProductsResourceRelationshipPlugin extends
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         $this->getFactory()
-            ->createCatalogSearchSuggestionsProductsResourceRelationshipExpander()
+            ->createCatalogSearchProductsResourceRelationshipExpander()
             ->addResourceRelationships($resources, $restRequest);
     }
 
@@ -44,6 +44,6 @@ class CatalogSearchSuggestionsAbstractProductsResourceRelationshipPlugin extends
      */
     public function getRelationshipResourceType(): string
     {
-        return static::RELATIONSHIP_RESOURCE_TYPE;
+        return CatalogSearchProductsResourceRelationshipConfig::RESOURCE_ABSTRACT_PRODUCTS;
     }
 }

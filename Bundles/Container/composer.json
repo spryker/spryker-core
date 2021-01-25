@@ -4,17 +4,19 @@
   "description": "Container module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.3",
     "psr/container": "^1.0.0",
     "spryker/symfony": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/kernel": "*",
     "spryker/testify": "*"
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/"
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Service\\Container\\Helper\\": "tests/SprykerTest/Service/Container/_support/Helper/"
     },
     "psr-0": {
       "Pimple": "src/Spryker"
@@ -27,6 +29,10 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"

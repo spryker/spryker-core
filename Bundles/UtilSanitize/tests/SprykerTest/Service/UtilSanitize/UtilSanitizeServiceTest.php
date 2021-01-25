@@ -24,19 +24,19 @@ class UtilSanitizeServiceTest extends Unit
     /**
      * @return void
      */
-    public function testSanitizeHtmlShouldEscapeGivenHtmlTags()
+    public function testSanitizeHtmlShouldEscapeGivenHtmlTags(): void
     {
         $utilSanitizeService = $this->createUtilSanitizeService();
 
         $escapedHtml = $utilSanitizeService->escapeHtml('<b></b>');
 
-        $this->assertEquals('&lt;b&gt;&lt;/b&gt;', $escapedHtml);
+        $this->assertSame('&lt;b&gt;&lt;/b&gt;', $escapedHtml);
     }
 
     /**
      * @return \Spryker\Service\UtilSanitize\UtilSanitizeService
      */
-    protected function createUtilSanitizeService()
+    protected function createUtilSanitizeService(): UtilSanitizeService
     {
         return new UtilSanitizeService();
     }

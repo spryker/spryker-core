@@ -1,6 +1,6 @@
 # ContentStorageExtension Module
 [![Build Status](https://travis-ci.org/spryker/content-storage-extension.svg)](https://travis-ci.org/spryker/content-storage-extension)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/content-storage-extension/badge.svg)](https://coveralls.io/github/spryker/content-storage-extension)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 ContentStorageExtension module provides plugin interfaces used by ContentStorage module.
 

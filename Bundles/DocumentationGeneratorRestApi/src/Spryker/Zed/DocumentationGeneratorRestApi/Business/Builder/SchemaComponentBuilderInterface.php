@@ -8,6 +8,7 @@
 namespace Spryker\Zed\DocumentationGeneratorRestApi\Business\Builder;
 
 use Generated\Shared\Transfer\SchemaDataTransfer;
+use Generated\Shared\Transfer\SchemaItemsTransfer;
 use Generated\Shared\Transfer\SchemaPropertyTransfer;
 
 interface SchemaComponentBuilderInterface
@@ -96,4 +97,11 @@ interface SchemaComponentBuilderInterface
      * @return \Generated\Shared\Transfer\SchemaPropertyTransfer
      */
     public function createRequestSchemaPropertyTransfer(string $metadataKey, array $metadataValue): SchemaPropertyTransfer;
+
+    /**
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface[] $resourceRelationships
+     *
+     * @return \Generated\Shared\Transfer\SchemaItemsTransfer
+     */
+    public function createRelationshipSchemaItemsTransfer(array $resourceRelationships): SchemaItemsTransfer;
 }

@@ -28,7 +28,7 @@ class CheckoutDependencyProviderTest extends Unit
     /**
      * @return void
      */
-    public function testProvideDependencies()
+    public function testProvideDependencies(): void
     {
         $container = new Container();
         $checkoutDependencyProvider = new CheckoutDependencyProvider();

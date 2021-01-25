@@ -1,0 +1,90 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 74,
+            "line_to": 74,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of get_class expects object, possibly different type Elastica\\Query\\AbstractQuery|array<array-key, mixed> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProductOfferSearch/src/Spryker/Client/MerchantProductOfferSearch/Plugin/MerchantReferenceQueryExpanderPlugin.php",
+            "snippet": "                get_class($boolQuery)",
+            "selected_text": "$boolQuery",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 57,
+            "line_to": 57,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $updatedPayLoadTransfers[int|null] using possibly null offset int|null",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProductOfferSearch/src/Spryker/Zed/MerchantProductOfferSearch/Communication/Plugin/PageDataLoader/MerchantProductPageDataLoaderPlugin.php",
+            "snippet": "            $updatedPayLoadTransfers[$payloadTransfer->getIdProductAbstract()] = $this->setMerchantDataToPayloadTransfer($payloadTransfer, $productAbstractMerchantData);",
+            "selected_text": "$updatedPayLoadTransfers",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 52,
+            "line_to": 52,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $productData[static::KEY_MERCHANT_NAMES] using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProductOfferSearch/src/Spryker/Zed/MerchantProductOfferSearch/Communication/Plugin/PageMapExpander/MerchantNamesProductAbstractMapExpanderPlugin.php",
+            "snippet": "        foreach ($productData[static::KEY_MERCHANT_NAMES][$pageMapTransfer->getStore()] as $merchantName) {",
+            "selected_text": "$productData[static::KEY_MERCHANT_NAMES]",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 42,
+            "line_to": 42,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $productData[static::KEY_MERCHANT_REFERENCES] using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProductOfferSearch/src/Spryker/Zed/MerchantProductOfferSearch/Communication/Plugin/PageMapExpander/MerchantReferencesProductAbstractsMapExpanderPlugin.php",
+            "snippet": "        return $pageMapTransfer->setMerchantReferences($productData[static::KEY_MERCHANT_REFERENCES][$pageMapTransfer->getStore()]);",
+            "selected_text": "$productData[static::KEY_MERCHANT_REFERENCES]",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 61,
+            "line_to": 61,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ProductOffer\\Persistence\\SpyProductOffer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProductOfferSearch/src/Spryker/Zed/MerchantProductOfferSearch/Persistence/MerchantProductOfferSearchRepository.php",
+            "snippet": "            ->getData();",
+            "selected_text": "getData",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 96,
+            "line_to": 96,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Product\\Persistence\\SpyProductAbstract> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProductOfferSearch/src/Spryker/Zed/MerchantProductOfferSearch/Persistence/MerchantProductOfferSearchRepository.php",
+            "snippet": "            ->getData();",
+            "selected_text": "getData",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 117,
+            "line_to": 117,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Product\\Persistence\\SpyProductAbstract> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProductOfferSearch/src/Spryker/Zed/MerchantProductOfferSearch/Persistence/MerchantProductOfferSearchRepository.php",
+            "snippet": "            ->getData();",
+            "selected_text": "getData",
+            "error_level": 3,
+            "shortcode": 113
+        }
+    ],
+    "deprecation": []
+}

@@ -1,0 +1,200 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 131,
+            "line_to": 131,
+            "type": "UndefinedClass",
+            "message": "Type null cannot be called as a class",
+            "file_name": "vendor/spryker/spryker/Bundles/RestRequestValidator/src/Spryker/Glue/RestRequestValidator/Processor/Validator/Constraint/RestRequestValidatorConstraintResolver.php",
+            "snippet": "            return new $className($parameters);",
+            "selected_text": "new $className($parameters)",
+            "error_level": -1,
+            "shortcode": 19
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 21,
+            "line_to": 21,
+            "type": "MoreSpecificImplementedParamType",
+            "message": "Argument 1 of Spryker\\Glue\\RestRequestValidator\\Constraints\\EmailConstraintValidator::validate has the more specific type 'string', expecting 'mixed' as defined by Symfony\\Component\\Validator\\ConstraintValidatorInterface::validate",
+            "file_name": "vendor/spryker/spryker/Bundles/RestRequestValidator/src/Spryker/Glue/RestRequestValidator/Constraints/EmailConstraintValidator.php",
+            "snippet": "    public function validate($value, Constraint $constraint): void",
+            "selected_text": "$value",
+            "error_level": 5,
+            "shortcode": 140
+        },
+        {
+            "severity": "info",
+            "line_from": 21,
+            "line_to": 21,
+            "type": "MoreSpecificImplementedParamType",
+            "message": "Argument 2 of Spryker\\Glue\\RestRequestValidator\\Constraints\\EmailConstraintValidator::validate has the more specific type 'Spryker\\Glue\\RestRequestValidator\\Constraints\\EmailConstraint', expecting 'Symfony\\Component\\Validator\\Constraint' as defined by Symfony\\Component\\Validator\\ConstraintValidatorInterface::validate",
+            "file_name": "vendor/spryker/spryker/Bundles/RestRequestValidator/src/Spryker/Glue/RestRequestValidator/Constraints/EmailConstraintValidator.php",
+            "snippet": "    public function validate($value, Constraint $constraint): void",
+            "selected_text": "$constraint",
+            "error_level": 5,
+            "shortcode": 140
+        },
+        {
+            "severity": "info",
+            "line_from": 121,
+            "line_to": 121,
+            "type": "MoreSpecificReturnType",
+            "message": "The declared return type 'Symfony\\Component\\Validator\\Constraint' for /media/mark/f42d91bd-14bc-4e71-936f-96ed99135be4/www/devvm/project/vendor/spryker/spryker/bundles/restrequestvalidator/src/spryker/glue/restrequestvalidator/processor/validator/constraint/restrequestvalidatorconstraintresolver.php:121:4417:-:closure is more specific than the inferred return type 'object'",
+            "file_name": "vendor/spryker/spryker/Bundles/RestRequestValidator/src/Spryker/Glue/RestRequestValidator/Processor/Validator/Constraint/RestRequestValidatorConstraintResolver.php",
+            "snippet": "        return function (array $validatorConfig): Constraint {",
+            "selected_text": "Constraint",
+            "error_level": 3,
+            "shortcode": 70
+        },
+        {
+            "severity": "info",
+            "line_from": 131,
+            "line_to": 131,
+            "type": "LessSpecificReturnStatement",
+            "message": "The type 'object' is more general than the declared return type 'Symfony\\Component\\Validator\\Constraint' for /media/mark/f42d91bd-14bc-4e71-936f-96ed99135be4/www/devvm/project/vendor/spryker/spryker/bundles/restrequestvalidator/src/spryker/glue/restrequestvalidator/processor/validator/constraint/restrequestvalidatorconstraintresolver.php:121:4417:-:closure",
+            "file_name": "vendor/spryker/spryker/Bundles/RestRequestValidator/src/Spryker/Glue/RestRequestValidator/Processor/Validator/Constraint/RestRequestValidatorConstraintResolver.php",
+            "snippet": "            return new $className($parameters);",
+            "selected_text": "new $className($parameters)",
+            "error_level": 3,
+            "shortcode": 129
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 71,
+            "line_to": 71,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Glue\\RestRequestValidator\\Processor\\Validator\\Configuration\\RestRequestValidatorConfigReader::getValidationConfigPath has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/RestRequestValidator/src/Spryker/Glue/RestRequestValidator/Processor/Validator/Configuration/RestRequestValidatorConfigReader.php",
+            "snippet": "            $configurationFile = $this->getValidationConfigPath();",
+            "selected_text": "getValidationConfigPath",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 97,
+            "line_to": 97,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Glue\\RestRequestValidator\\RestRequestValidatorConfig::getValidationCacheFilenamePattern has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/RestRequestValidator/src/Spryker/Glue/RestRequestValidator/Processor/Validator/Configuration/RestRequestValidatorConfigReader.php",
+            "snippet": "        return sprintf($this->config->getValidationCacheFilenamePattern(), APPLICATION_STORE);",
+            "selected_text": "getValidationCacheFilenamePattern",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 56,
+            "line_to": 56,
+            "type": "DeprecatedConstant",
+            "message": "Constant Spryker\\Shared\\RestRequestValidator\\RestRequestValidatorConfig::VALIDATION_CACHE_FILENAME_PATTERN is deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/RestRequestValidator/src/Spryker/Glue/RestRequestValidator/RestRequestValidatorConfig.php",
+            "snippet": "        return APPLICATION_SOURCE_DIR . RestRequestValidatorConfigShared::VALIDATION_CACHE_FILENAME_PATTERN;",
+            "selected_text": "RestRequestValidatorConfigShared::VALIDATION_CACHE_FILENAME_PATTERN",
+            "error_level": 2,
+            "shortcode": 170
+        },
+        {
+            "severity": "info",
+            "line_from": 69,
+            "line_to": 69,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Zed\\RestRequestValidator\\RestRequestValidatorConfig::getValidationSchemaPathPattern has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/RestRequestValidator/src/Spryker/Zed/RestRequestValidator/Business/Collector/SchemaFinder/RestRequestValidatorSchemaFinder.php",
+            "snippet": "        foreach ($this->config->getValidationSchemaPathPattern() as $pathPattern) {",
+            "selected_text": "getValidationSchemaPathPattern",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 69,
+            "line_to": 69,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Zed\\RestRequestValidator\\RestRequestValidatorConfig::getCacheFilePathPattern has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/RestRequestValidator/src/Spryker/Zed/RestRequestValidator/Business/Remover/RestRequestValidatorCacheRemover.php",
+            "snippet": "        return glob(sprintf($this->config->getCacheFilePathPattern(), $storeName), GLOB_NOSORT) ?: [];",
+            "selected_text": "getCacheFilePathPattern",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 43,
+            "line_to": 48,
+            "type": "DeprecatedClass",
+            "message": "Spryker\\Zed\\RestRequestValidator\\Business\\Builder\\RestRequestValidatorCacheBuilder is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/RestRequestValidator/src/Spryker/Zed/RestRequestValidator/Business/RestRequestValidatorBusinessFactory.php",
+            "snippet": "        return new RestRequestValidatorCacheBuilder(\n            $this->createRestRequestValidatorCacheCollector(),\n            $this->createRestRequestValidatorSchemaMerger(),\n            $this->createRestRequestValidatorCacheSaver(),\n            $this->getStore()\n        );",
+            "selected_text": "new RestRequestValidatorCacheBuilder(\n            $this->createRestRequestValidatorCacheCollector(),\n            $this->createRestRequestValidatorSchemaMerger(),\n            $this->createRestRequestValidatorCacheSaver(),\n            $this->getStore()\n        )",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 112,
+            "line_to": 116,
+            "type": "DeprecatedClass",
+            "message": "Spryker\\Zed\\RestRequestValidator\\Business\\Remover\\RestRequestValidatorCacheRemover is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/RestRequestValidator/src/Spryker/Zed/RestRequestValidator/Business/RestRequestValidatorBusinessFactory.php",
+            "snippet": "        return new RestRequestValidatorCacheRemover(\n            $this->getStore(),\n            $this->getFilesystemAdapter(),\n            $this->getConfig()\n        );",
+            "selected_text": "new RestRequestValidatorCacheRemover(\n            $this->getStore(),\n            $this->getFilesystemAdapter(),\n            $this->getConfig()\n        )",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 28,
+            "line_to": 28,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Zed\\RestRequestValidator\\Business\\RestRequestValidatorFacade::removeValidationCache has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/RestRequestValidator/src/Spryker/Zed/RestRequestValidator/Business/RestRequestValidatorFacade.php",
+            "snippet": "        $this->removeValidationCache();",
+            "selected_text": "removeValidationCache",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 57,
+            "line_to": 57,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Zed\\RestRequestValidator\\Business\\Saver\\RestRequestValidatorCacheSaver::getStoreCacheFilePath has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/RestRequestValidator/src/Spryker/Zed/RestRequestValidator/Business/Saver/RestRequestValidatorCacheSaver.php",
+            "snippet": "            $this->getStoreCacheFilePath($storeName),",
+            "selected_text": "getStoreCacheFilePath",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 91,
+            "line_to": 91,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Zed\\RestRequestValidator\\RestRequestValidatorConfig::getCacheFilePathPattern has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/RestRequestValidator/src/Spryker/Zed/RestRequestValidator/Business/Saver/RestRequestValidatorCacheSaver.php",
+            "snippet": "        return sprintf($this->config->getCacheFilePathPattern(), $storeName);",
+            "selected_text": "getCacheFilePathPattern",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 86,
+            "line_to": 86,
+            "type": "DeprecatedConstant",
+            "message": "Constant Spryker\\Shared\\RestRequestValidator\\RestRequestValidatorConfig::VALIDATION_CACHE_FILENAME_PATTERN is deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/RestRequestValidator/src/Spryker/Zed/RestRequestValidator/RestRequestValidatorConfig.php",
+            "snippet": "        return APPLICATION_SOURCE_DIR . RestRequestValidatorConfigShared::VALIDATION_CACHE_FILENAME_PATTERN;",
+            "selected_text": "RestRequestValidatorConfigShared::VALIDATION_CACHE_FILENAME_PATTERN",
+            "error_level": 2,
+            "shortcode": 170
+        }
+    ]
+}

@@ -49,7 +49,7 @@ class EditPageController extends AbstractController
         $cmsPageTransfer = $cmsPageFormTypeDataProvider->getData($idCmsPage);
 
         if ($cmsPageTransfer === null) {
-            $this->addErrorMessage("'Cms page with id %s doesn't exist'", ["%s" => $idCmsPage]);
+            $this->addErrorMessage("'Cms page with id %s doesn't exist'", ['%s' => $idCmsPage]);
 
             return $this->redirectResponse($this->getFactory()->getConfig()->getDefaultRedirectUrl());
         }
@@ -90,6 +90,8 @@ class EditPageController extends AbstractController
             'cmsVersion' => $cmsVersion,
             'cmsPage' => $cmsPageTransfer,
             'isPageTemplateWithPlaceholders' => $this->isPageTemplateWithPlaceholders($idCmsPage),
+            'publishForm' => $this->getFactory()->createPublishVersionPageForm()->createView(),
+            'toggleActiveForm' => $this->getFactory()->createToggleActivateCmsPageForm()->createView(),
         ];
     }
 
@@ -144,7 +146,15 @@ class EditPageController extends AbstractController
     public function activateAction(Request $request)
     {
         $idCmsPage = $this->castId($request->query->get(static::URL_PARAM_ID_CMS_PAGE));
-        $redirectUrl = $request->query->get(static::URL_PARAM_REDIRECT_URL);
+        $redirectUrl = $request->get(static::URL_PARAM_REDIRECT_URL);
+
+        $form = $this->getFactory()->createToggleActivateCmsPageForm()->handleRequest($request);
+
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            $this->addErrorMessage('CSRF token is not valid.');
+
+            return $this->redirectResponseExternal($redirectUrl);
+        }
 
         try {
             $this->getFactory()
@@ -154,9 +164,9 @@ class EditPageController extends AbstractController
             $this->addSuccessMessage(static::MESSAGE_PAGE_ACTIVATION_SUCCESS);
         } catch (CannotActivatePageException $exception) {
              $this->addErrorMessage($exception->getMessage());
-        } finally {
-            return $this->redirectResponse($redirectUrl);
         }
+
+        return $this->redirectResponse($redirectUrl);
     }
 
     /**
@@ -167,7 +177,15 @@ class EditPageController extends AbstractController
     public function deactivateAction(Request $request)
     {
         $idCmsPage = $this->castId($request->query->get(static::URL_PARAM_ID_CMS_PAGE));
-        $redirectUrl = $request->query->get(static::URL_PARAM_REDIRECT_URL);
+        $redirectUrl = $request->get(static::URL_PARAM_REDIRECT_URL);
+
+        $form = $this->getFactory()->createToggleActivateCmsPageForm()->handleRequest($request);
+
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            $this->addErrorMessage('CSRF token is not valid.');
+
+            return $this->redirectResponseExternal($redirectUrl);
+        }
 
         $this->getFactory()
             ->getCmsFacade()

@@ -11,7 +11,6 @@ use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\ProductConcreteBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\Transfer\ItemTransfer;
-use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Zed\PriceCartConnector\Business\Sanitizer\SourcePriceSanitizer;
 
 /**
@@ -35,7 +34,7 @@ class SourcePriceSanitizerTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -68,9 +67,9 @@ class SourcePriceSanitizerTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\PriceCartConnector\Business\Sanitizer\SourcePriceSanitizer|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createSourcePriceSanitizerMock(): MockObject
+    protected function createSourcePriceSanitizerMock(): SourcePriceSanitizer
     {
         return $this->getMockBuilder(SourcePriceSanitizer::class)
             ->disableOriginalConstructor()

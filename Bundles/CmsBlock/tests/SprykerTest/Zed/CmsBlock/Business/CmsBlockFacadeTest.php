@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\CmsBlockGlossaryPlaceholderTranslationTransfer;
 use Generated\Shared\Transfer\CmsBlockGlossaryTransfer;
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
+use Spryker\Zed\CmsBlock\Business\CmsBlockFacadeInterface;
 
 /**
  * Auto-generated group annotations
@@ -35,7 +36,7 @@ class CmsBlockFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindCmsBlockById()
+    public function testFindCmsBlockById(): void
     {
         $cmsBlockTransfer = $this->tester->haveCmsBlock();
 
@@ -48,7 +49,7 @@ class CmsBlockFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testActivateById()
+    public function testActivateById(): void
     {
         $cmsBlockTransfer = $this->tester->haveCmsBlock(['is_active' => false]);
 
@@ -66,7 +67,7 @@ class CmsBlockFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testDeactivateById()
+    public function testDeactivateById(): void
     {
         $cmsBlockTransfer = $this->tester->haveCmsBlock(['is_active' => true]);
 
@@ -84,7 +85,7 @@ class CmsBlockFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateCmsBlock()
+    public function testUpdateCmsBlock(): void
     {
         $cmsBlockTransfer = $this->tester->haveCmsBlock();
         $cmsBlockTransfer->setName('Test name');
@@ -95,13 +96,13 @@ class CmsBlockFacadeTest extends Unit
         $cmsBlockTransfer = $this->createCmsBlockFacade()
             ->findCmsBlockById($cmsBlockTransfer->getIdCmsBlock());
 
-        $this->assertEquals('Test name', $cmsBlockTransfer->getName());
+        $this->assertSame('Test name', $cmsBlockTransfer->getName());
     }
 
     /**
      * @return void
      */
-    public function testCreateCmsBlock()
+    public function testCreateCmsBlock(): void
     {
         $cmsBlockTemplateTransfer = $this->tester->haveCmsBlockTemplate();
 
@@ -118,7 +119,7 @@ class CmsBlockFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindGlossaryPlaceholders()
+    public function testFindGlossaryPlaceholders(): void
     {
         $cmsBlockTransfer = $this->tester->haveCmsBlock();
 
@@ -130,6 +131,7 @@ class CmsBlockFacadeTest extends Unit
         $placeholder->addTranslation($translation);
         $placeholder->setPlaceholder('placeholder');
         $placeholder->setFkCmsBlock($cmsBlockTransfer->getIdCmsBlock());
+        $placeholder->setTemplateName('test template name');
 
         $glossary = new CmsBlockGlossaryTransfer();
         $glossary->addGlossaryPlaceholder($placeholder);
@@ -141,14 +143,14 @@ class CmsBlockFacadeTest extends Unit
             ->findGlossary($cmsBlockTransfer->getIdCmsBlock());
 
         foreach ($glossary->getGlossaryPlaceholders() as $placeholder) {
-            $this->assertEquals('placeholder', $placeholder->getPlaceholder());
+            $this->assertSame('placeholder', $placeholder->getPlaceholder());
         }
     }
 
     /**
      * @return void
      */
-    public function testSaveGlossary()
+    public function testSaveGlossary(): void
     {
         $cmsBlockTransfer = $this->tester->haveCmsBlock();
 
@@ -160,6 +162,7 @@ class CmsBlockFacadeTest extends Unit
         $placeholder->addTranslation($translation);
         $placeholder->setPlaceholder('placeholder');
         $placeholder->setFkCmsBlock($cmsBlockTransfer->getIdCmsBlock());
+        $placeholder->setTemplateName('test template name');
 
         $glossary = new CmsBlockGlossaryTransfer();
         $glossary->addGlossaryPlaceholder($placeholder);
@@ -176,7 +179,7 @@ class CmsBlockFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCreateTemplate()
+    public function testCreateTemplate(): void
     {
         $this->createCmsBlockFacade()
             ->createTemplate('test name', 'test path');
@@ -190,7 +193,7 @@ class CmsBlockFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindTemplate()
+    public function testFindTemplate(): void
     {
         $this->createCmsBlockFacade()
             ->createTemplate('test name', 'test path');
@@ -198,7 +201,7 @@ class CmsBlockFacadeTest extends Unit
         $cmsBlockTemplateTransfer = $this->createCmsBlockFacade()
             ->findTemplate('test path');
 
-        $this->assertEquals('test name', $cmsBlockTemplateTransfer->getTemplateName());
+        $this->assertSame('test name', $cmsBlockTemplateTransfer->getTemplateName());
     }
 
     /**
@@ -209,7 +212,7 @@ class CmsBlockFacadeTest extends Unit
      *
      * @return void
      */
-    public function testUpdateCmsBlockUpdatesStoreRelation(array $originalRelation, array $modifiedRelation)
+    public function testUpdateCmsBlockUpdatesStoreRelation(array $originalRelation, array $modifiedRelation): void
     {
         // Assign
         $cmsBlockTransfer = $this->tester->haveCmsBlock(
@@ -240,7 +243,7 @@ class CmsBlockFacadeTest extends Unit
     /**
      * @return array
      */
-    public function relationUpdate()
+    public function relationUpdate(): array
     {
         return [
             [
@@ -258,7 +261,7 @@ class CmsBlockFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCreateCmsBlockSavesStoreRelation()
+    public function testCreateCmsBlockSavesStoreRelation(): void
     {
         // Assign
         $expectedIdStores = [1, 3];
@@ -278,7 +281,7 @@ class CmsBlockFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\CmsBlock\Business\CmsBlockFacadeInterface
      */
-    protected function createCmsBlockFacade()
+    protected function createCmsBlockFacade(): CmsBlockFacadeInterface
     {
         return $this->tester->getLocator()->cmsBlock()->facade();
     }

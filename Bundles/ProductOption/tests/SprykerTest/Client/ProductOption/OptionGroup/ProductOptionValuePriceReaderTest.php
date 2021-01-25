@@ -52,7 +52,7 @@ class ProductOptionValuePriceReaderTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -71,7 +71,7 @@ class ProductOptionValuePriceReaderTest extends Unit
     /**
      * @return void
      */
-    public function testLocalizeGroupPricesRemovesOptionsWhenCurrentCurrencyIsNotDefined()
+    public function testLocalizeGroupPricesRemovesOptionsWhenCurrentCurrencyIsNotDefined(): void
     {
         // Assign
         $productOptionGroupTransfer = new StorageProductOptionGroupTransfer();
@@ -117,7 +117,7 @@ class ProductOptionValuePriceReaderTest extends Unit
     /**
      * @return void
      */
-    public function testLocalizeGroupPricesRemovesOptionsWhenPriceIsNull()
+    public function testLocalizeGroupPricesRemovesOptionsWhenPriceIsNull(): void
     {
         // Assign
         $productOptionGroupTransfer = new StorageProductOptionGroupTransfer();
@@ -168,7 +168,7 @@ class ProductOptionValuePriceReaderTest extends Unit
     /**
      * @return void
      */
-    public function testLocalizeGroupPricesLocalizesAllProductOptionValuePrices()
+    public function testLocalizeGroupPricesLocalizesAllProductOptionValuePrices(): void
     {
         // Assign
         $productOptionGroupTransfer = new StorageProductOptionGroupTransfer();
@@ -217,12 +217,12 @@ class ProductOptionValuePriceReaderTest extends Unit
     }
 
     /**
-     * @uses ProductOptionToCurrencyClientInterface::getCurrent()
-     * @uses CurrencyTransfer::getCode()
+     * @uses \Spryker\Client\ProductOption\Dependency\Client\ProductOptionToCurrencyClientInterface::getCurrent()
+     * @uses \Generated\Shared\Transfer\CurrencyTransfer::getCode()
      *
      * @return void
      */
-    protected function mockCurrentCurrency()
+    protected function mockCurrentCurrency(): void
     {
         $currentCurrencyMock = $this->getMockBuilder(CurrencyTransfer::class)->getMock();
         $currentCurrencyMock
@@ -237,11 +237,11 @@ class ProductOptionValuePriceReaderTest extends Unit
     }
 
     /**
-     * @uses ProductOptionToPriceClientInterface::getCurrentPriceMode()
+     * @uses \Spryker\Client\ProductOption\Dependency\Client\ProductOptionToPriceClientInterface::getCurrentPriceMode()
      *
      * @return void
      */
-    protected function mockCurrentPriceMode()
+    protected function mockCurrentPriceMode(): void
     {
         $this->priceClientMock
             ->expects($this->any())
@@ -254,7 +254,7 @@ class ProductOptionValuePriceReaderTest extends Unit
      *
      * @return array
      */
-    protected function filterPrices(StorageProductOptionGroupTransfer $productOptionGroupTransfer)
+    protected function filterPrices(StorageProductOptionGroupTransfer $productOptionGroupTransfer): array
     {
         $filtered = array_map(
             function (StorageProductOptionValueTransfer $productOptionValueTransfer) {

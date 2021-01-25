@@ -18,8 +18,10 @@ class MerchantRelationshipSoftThresholdFormMapper extends AbstractMerchantRelati
      *
      * @return \Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer
      */
-    public function mapFormDataToTransfer(array $data, MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer): MerchantRelationshipSalesOrderThresholdTransfer
-    {
+    public function mapFormDataToTransfer(
+        array $data,
+        MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer
+    ): MerchantRelationshipSalesOrderThresholdTransfer {
         $merchantRelationshipSalesOrderThresholdTransfer->setIdMerchantRelationshipSalesOrderThreshold($data[MerchantRelationshipSoftThresholdType::FIELD_ID_THRESHOLD] ?? null);
         $merchantRelationshipSalesOrderThresholdTransfer = $this->setLocalizedMessagesToSalesOrderThresholdTransfer(
             $data,

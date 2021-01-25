@@ -14,7 +14,7 @@ class AbstractHttpClient extends SharedAbstractHttpClient
     /**
      * @return array
      */
-    public function getHeaders()
+    public function getHeaders(): array
     {
         return [];
     }

@@ -56,7 +56,7 @@ interface FileManagerRepositoryInterface
     /**
      * @param int|null $idParentFileDirectory
      *
-     * @return \ArrayObject
+     * @return \ArrayObject|\Generated\Shared\Transfer\FileDirectoryTransfer[]
      */
     public function getFileDirectories(?int $idParentFileDirectory = null);
 
@@ -85,4 +85,11 @@ interface FileManagerRepositoryInterface
      * @return \Generated\Shared\Transfer\FileTransfer[]
      */
     public function getFilesByIds(array $idFiles): array;
+
+    /**
+     * @param int $idFile
+     *
+     * @return int
+     */
+    public function getFileInfoVersionsCount(int $idFile): int;
 }

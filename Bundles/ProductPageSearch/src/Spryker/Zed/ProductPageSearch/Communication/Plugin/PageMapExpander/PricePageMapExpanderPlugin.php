@@ -15,6 +15,8 @@ use Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageMapExpanderInterf
 use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\ProductPageSearch\Communication\Plugin\ProductPageSearch\Elasticsearch\PricePageMapExpanderPlugin} instead.
+ *
  * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductPageSearch\Communication\ProductPageSearchCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacadeInterface getFacade()
@@ -23,6 +25,8 @@ use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInt
 class PricePageMapExpanderPlugin extends AbstractPlugin implements ProductPageMapExpanderInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
@@ -32,8 +36,12 @@ class PricePageMapExpanderPlugin extends AbstractPlugin implements ProductPageMa
      *
      * @return \Generated\Shared\Transfer\PageMapTransfer
      */
-    public function expandProductPageMap(PageMapTransfer $pageMapTransfer, PageMapBuilderInterface $pageMapBuilder, array $productData, LocaleTransfer $localeTransfer)
-    {
+    public function expandProductPageMap(
+        PageMapTransfer $pageMapTransfer,
+        PageMapBuilderInterface $pageMapBuilder,
+        array $productData,
+        LocaleTransfer $localeTransfer
+    ) {
         $price = $productData['price'];
         $pageMapBuilder
             ->addSearchResultData($pageMapTransfer, 'price', $price)

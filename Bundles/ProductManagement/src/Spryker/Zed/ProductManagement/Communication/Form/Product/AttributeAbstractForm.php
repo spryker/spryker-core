@@ -122,7 +122,7 @@ class AttributeAbstractForm extends AbstractSubForm
      */
     protected function addCheckboxNameField(FormBuilderInterface $builder, array $options = [])
     {
-        $attributes = $options[AttributeAbstractForm::OPTION_ATTRIBUTE];
+        $attributes = $options[self::OPTION_ATTRIBUTE];
 
         $name = $builder->getName();
         $label = $attributes[$name][AbstractProductFormDataProvider::FORM_FIELD_LABEL];
@@ -172,7 +172,6 @@ class AttributeAbstractForm extends AbstractSubForm
         $inputManager = new AttributeInputManager();
         $inputType = $attributeData->get(AbstractProductFormDataProvider::FORM_FIELD_INPUT_TYPE);
         $allowInput = $attributeData->get(AbstractProductFormDataProvider::FORM_FIELD_ALLOW_INPUT);
-        $isSuper = $attributeData->get(AbstractProductFormDataProvider::FORM_FIELD_SUPER);
         $isDisabled = $attributeData->get(AbstractProductFormDataProvider::FORM_FIELD_NAME_DISABLED);
         $isProductSpecific = $attributeData->get(AbstractProductFormDataProvider::FORM_FIELD_PRODUCT_SPECIFIC);
         $value = $attributeData->get(AbstractProductFormDataProvider::FORM_FIELD_VALUE);
@@ -268,7 +267,7 @@ class AttributeAbstractForm extends AbstractSubForm
     }
 
     /**
-     * @deprecated Use `getBlockPrefix()` instead.
+     * @deprecated Use {@link getBlockPrefix()} instead.
      *
      * @return string
      */

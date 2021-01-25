@@ -53,7 +53,7 @@ class QueueReaderTest extends Unit
     /**
      * @return void
      */
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
 
@@ -65,7 +65,7 @@ class QueueReaderTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -79,7 +79,7 @@ class QueueReaderTest extends Unit
     /**
      * @return void
      */
-    public function testDataReaderCanBeUsedAsIteratorAndReturnsArrayObject()
+    public function testDataReaderCanBeUsedAsIteratorAndReturnsArrayObject(): void
     {
         $queueReader = $this->getQueueReader();
         foreach ($queueReader as $dataSet) {
@@ -90,10 +90,10 @@ class QueueReaderTest extends Unit
     /**
      * @return void
      */
-    public function testKeyReturnsCurrentDataSetPosition()
+    public function testKeyReturnsCurrentDataSetPosition(): void
     {
         $csvReader = $this->getQueueReader();
-        $this->assertInternalType('int', $csvReader->key());
+        $this->assertIsInt($csvReader->key());
     }
 
     /**
@@ -116,9 +116,9 @@ class QueueReaderTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\Queue\QueueClientInterface
+     * @return \Spryker\Zed\DataImport\Dependency\Client\DataImportToQueueClientInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createQueueClientMock()
+    protected function createQueueClientMock(): DataImportToQueueClientInterface
     {
         $queueClientMock = $this->createMock(DataImportToQueueClientInterface::class);
         $queueClientMock->method('receiveMessages')

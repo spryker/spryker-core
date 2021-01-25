@@ -22,4 +22,11 @@ interface ProductDiscontinuedProductLabelWriterInterface
      * @return void
      */
     public function removeProductAbstractRelationsForLabel(int $idProduct): void;
+
+    /**
+     * @param int[] $productConcreteIds
+     *
+     * @return void
+     */
+    public function removeProductAbstractRelationsForLabelInBulk(array $productConcreteIds): void;
 }

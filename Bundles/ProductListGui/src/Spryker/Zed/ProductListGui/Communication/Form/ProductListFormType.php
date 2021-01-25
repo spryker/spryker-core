@@ -17,7 +17,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Required;
 
 /**
  * @method \Spryker\Zed\ProductListGui\Communication\ProductListGuiCommunicationFactory getFactory()
@@ -64,8 +63,7 @@ class ProductListFormType extends AbstractType
     {
         $this->addIdProductListField($builder)
             ->addTitleField($builder)
-            ->addTypeFiled($builder)
-            ->executeOwnerTypeFormExpanderPlugins($builder, $options);
+            ->addTypeFiled($builder);
     }
 
     /**
@@ -93,7 +91,6 @@ class ProductListFormType extends AbstractType
             [
                 'label' => 'Title',
                 'constraints' => [
-                    new Required(),
                     new NotBlank(),
                     new Length(['max' => 255]),
                 ],
@@ -119,25 +116,9 @@ class ProductListFormType extends AbstractType
                 'Blacklist' => SpyProductListTableMap::COL_TYPE_BLACKLIST,
             ],
             'constraints' => [
-                new Required(),
                 new NotBlank(),
             ],
         ]);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     *
-     * @return $this
-     */
-    protected function executeOwnerTypeFormExpanderPlugins(FormBuilderInterface $builder, array $options)
-    {
-        foreach ($this->getFactory()->getProductListOwnerTypeFormExpanderPlugins() as $productListOwnerTypeFormExpanderPlugin) {
-            $productListOwnerTypeFormExpanderPlugin->buildForm($builder, $options);
-        }
 
         return $this;
     }

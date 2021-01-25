@@ -1,0 +1,30 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 83,
+            "line_to": 83,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method subtract on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOfferAvailability/src/Spryker/Zed/ProductOfferAvailability/Business/Availability/ProductOfferAvailabilityProvider.php",
+            "snippet": "        return $quantity->subtract($reservationResponseTransfer->getReservationQuantity());",
+            "selected_text": "subtract",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 83,
+            "line_to": 83,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\DecimalObject\\Decimal::subtract cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOfferAvailability/src/Spryker/Zed/ProductOfferAvailability/Business/Availability/ProductOfferAvailabilityProvider.php",
+            "snippet": "        return $quantity->subtract($reservationResponseTransfer->getReservationQuantity());",
+            "selected_text": "$reservationResponseTransfer->getReservationQuantity()",
+            "error_level": 3,
+            "shortcode": 78
+        }
+    ],
+    "deprecation": []
+}

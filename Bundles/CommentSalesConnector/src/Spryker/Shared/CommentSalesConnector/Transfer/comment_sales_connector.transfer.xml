@@ -6,7 +6,7 @@
     <transfer name="CommentFilter">
         <property name="ownerId" type="int"/>
         <property name="ownerType" type="string"/>
-        <property name="tags" type="array"/>
+        <property name="tags" type="array" singular="tags"/>
     </transfer>
 
     <transfer name="CommentRequest">
@@ -30,10 +30,29 @@
 
     <transfer name="CommentThread">
         <property name="comments" type="Comment[]" singular="comment"/>
+        <property name="ownerType" type="string"/>
+        <property name="ownerId" type="int"/>
     </transfer>
 
     <transfer name="Comment">
         <property name="idComment" type="int"/>
+        <property name="customer" type="Customer"/>
+        <property name="createdAt" type="string"/>
+        <property name="isUpdated" type="bool"/>
+        <property name="message" type="string"/>
+        <property name="commentTags" type="CommentTag[]" singular="commentTag"/>
+    </transfer>
+
+    <transfer name="CommentThreadResponse">
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="firstName" type="string"/>
+        <property name="lastName" type="string"/>
+    </transfer>
+
+    <transfer name="CommentTag">
+        <property name="name" type="string"/>
     </transfer>
 
 </transfers>

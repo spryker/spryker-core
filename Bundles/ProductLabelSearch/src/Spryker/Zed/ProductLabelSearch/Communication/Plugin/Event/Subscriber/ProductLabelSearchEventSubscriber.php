@@ -15,9 +15,13 @@ use Spryker\Zed\ProductLabelSearch\Communication\Plugin\Event\Listener\ProductLa
 use Spryker\Zed\ProductLabelSearch\Communication\Plugin\Event\Listener\ProductLabelSearchListener;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\ProductLabelSearch\Communication\Plugin\Publisher\ProductLabel\ProductLabelWritePublisherPlugin}
+ *              or {@link \Spryker\Zed\ProductLabelSearch\Communication\Plugin\Publisher\ProductLabelProductAbstract\ProductLabelStoreWritePublisherPlugin} instead.
+ *
  * @method \Spryker\Zed\ProductLabelSearch\Communication\ProductLabelSearchCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductLabelSearch\ProductLabelSearchConfig getConfig()
  * @method \Spryker\Zed\ProductLabelSearch\Persistence\ProductLabelSearchQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductLabelSearch\Business\ProductLabelSearchFacadeInterface getFacade()
  */
 class ProductLabelSearchEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
@@ -46,7 +50,7 @@ class ProductLabelSearchEventSubscriber extends AbstractPlugin implements EventS
      */
     protected function addProductLabelProductAbstractCreateSearchListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_PRODUCT_ABSTRACT_CREATE, new ProductLabelProductAbstractSearchListener());
+        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_PRODUCT_ABSTRACT_CREATE, new ProductLabelProductAbstractSearchListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -56,7 +60,7 @@ class ProductLabelSearchEventSubscriber extends AbstractPlugin implements EventS
      */
     protected function addProductLabelProductAbstractUpdateSearchListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_PRODUCT_ABSTRACT_UPDATE, new ProductLabelProductAbstractSearchListener());
+        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_PRODUCT_ABSTRACT_UPDATE, new ProductLabelProductAbstractSearchListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -66,7 +70,7 @@ class ProductLabelSearchEventSubscriber extends AbstractPlugin implements EventS
      */
     protected function addProductLabelProductAbstractDeleteSearchListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_PRODUCT_ABSTRACT_DELETE, new ProductLabelProductAbstractSearchListener());
+        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_PRODUCT_ABSTRACT_DELETE, new ProductLabelProductAbstractSearchListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -76,7 +80,7 @@ class ProductLabelSearchEventSubscriber extends AbstractPlugin implements EventS
      */
     protected function addProductLabelUpdateSearchListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_UPDATE, new ProductLabelSearchListener());
+        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_UPDATE, new ProductLabelSearchListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -86,6 +90,6 @@ class ProductLabelSearchEventSubscriber extends AbstractPlugin implements EventS
      */
     protected function addProductLabelDeleteSearchListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_DELETE, new ProductLabelSearchListener());
+        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_DELETE, new ProductLabelSearchListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 }

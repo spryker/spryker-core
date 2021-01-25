@@ -7,13 +7,19 @@
 
 namespace Spryker\Yves\Session;
 
+use Spryker\Client\Session\SessionClientInterface;
 use Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface;
 use Spryker\Shared\Session\Model\SessionStorage;
 use Spryker\Shared\Session\Model\SessionStorage\SessionStorageHandlerPool;
 use Spryker\Shared\Session\Model\SessionStorage\SessionStorageOptions;
 use Spryker\Shared\Session\SessionConfig;
 use Spryker\Yves\Kernel\AbstractFactory;
+use Spryker\Yves\Session\Model\HealthCheck\HealthCheckInterface;
+use Spryker\Yves\Session\Model\HealthCheck\SessionHealthCheck;
 use Spryker\Yves\Session\Model\SessionHandlerFactory;
+use Symfony\Component\HttpFoundation\Session\Storage\MockFileSessionStorage;
+use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
+use Symfony\Component\HttpFoundation\Session\Storage\SessionStorageInterface;
 
 /**
  * @method \Spryker\Yves\Session\SessionConfig getConfig()
@@ -63,7 +69,7 @@ class SessionFactory extends AbstractFactory
     }
 
     /**
-     * @deprecated Use `Spryker\Yves\SessionRedis\SessionRedisFactory::createSessionHandlerRedis()` instead.
+     * @deprecated Use {@link \Spryker\Yves\SessionRedis\SessionRedisFactory::createSessionHandlerRedis()} instead.
      *
      * @return \Spryker\Shared\Session\Business\Handler\SessionHandlerRedis|\SessionHandlerInterface
      */
@@ -76,7 +82,7 @@ class SessionFactory extends AbstractFactory
     }
 
     /**
-     * @deprecated Use `Spryker\Yves\SessionRedis\SessionRedisFactory::createSessionHandlerRedisLocking()` instead.
+     * @deprecated Use {@link \Spryker\Yves\SessionRedis\SessionRedisFactory::createSessionHandlerRedisLocking()} instead.
      *
      * @return \Spryker\Shared\Session\Business\Handler\SessionHandlerRedisLocking|\SessionHandlerInterface
      */
@@ -89,7 +95,7 @@ class SessionFactory extends AbstractFactory
     }
 
     /**
-     * @deprecated Use `Spryker\Yves\SessionFile::createSessionHandlerFile()` instead.
+     * @deprecated Use {@link \Spryker\Yves\SessionFile::createSessionHandlerFile()} instead.
      *
      * @return \Spryker\Shared\Session\Business\Handler\SessionHandlerRedisLocking|\SessionHandlerInterface
      */
@@ -101,7 +107,7 @@ class SessionFactory extends AbstractFactory
     }
 
     /**
-     * @deprecated Use `Spryker\Yves\SessionRedis\SessionRedisFactory::createSessionHandlerFactory()` instead.
+     * @deprecated Use {@link \Spryker\Yves\SessionRedis\SessionRedisFactory::createSessionHandlerFactory()} instead.
      *
      * @return \Spryker\Yves\Session\Model\SessionHandlerFactory
      */
@@ -127,5 +133,41 @@ class SessionFactory extends AbstractFactory
     public function getMonitoringService(): SessionToMonitoringServiceInterface
     {
         return $this->getProvidedDependency(SessionDependencyProvider::MONITORING_SERVICE);
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Session\Storage\SessionStorageInterface
+     */
+    public function createMemorySessionStorage(): SessionStorageInterface
+    {
+        return new MockFileSessionStorage();
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Session\Storage\SessionStorageInterface
+     */
+    public function createNativeSessionStorage(): SessionStorageInterface
+    {
+        $sessionStorage = $this->createSessionStorage();
+
+        return new NativeSessionStorage($sessionStorage->getOptions(), $sessionStorage->getAndRegisterHandler());
+    }
+
+    /**
+     * @return \Spryker\Yves\Session\Model\HealthCheck\HealthCheckInterface
+     */
+    public function createSessionHealthChecker(): HealthCheckInterface
+    {
+        return new SessionHealthCheck(
+            $this->getSessionClient()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\Session\SessionClientInterface
+     */
+    public function getSessionClient(): SessionClientInterface
+    {
+        return $this->getProvidedDependency(SessionDependencyProvider::CLIENT_SESSION);
     }
 }

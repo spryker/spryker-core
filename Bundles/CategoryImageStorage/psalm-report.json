@@ -1,0 +1,212 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 56,
+            "line_to": 56,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed' does not match the declared return type 'array<array-key, Generated\\Shared\\Transfer\\SpyCategoryImageSetEntityTransfer>' for Spryker\\Zed\\CategoryImageStorage\\Persistence\\CategoryImageStorageRepository::getCategoryImageSetsByFkCategoryIn",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoryImageStorage/src/Spryker/Zed/CategoryImageStorage/Persistence/CategoryImageStorageRepository.php",
+            "snippet": "        return $this->buildQueryFromCriteria($categoryImageSetsQuery)->find();",
+            "selected_text": "$this->buildQueryFromCriteria($categoryImageSetsQuery)->find()",
+            "error_level": 6,
+            "shortcode": 128
+        },
+        {
+            "severity": "error",
+            "line_from": 70,
+            "line_to": 70,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed' does not match the declared return type 'array<array-key, Generated\\Shared\\Transfer\\SpyCategoryImageStorageEntityTransfer>' for Spryker\\Zed\\CategoryImageStorage\\Persistence\\CategoryImageStorageRepository::getCategoryImageStorageByFkCategoryIn",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoryImageStorage/src/Spryker/Zed/CategoryImageStorage/Persistence/CategoryImageStorageRepository.php",
+            "snippet": "        return $this->buildQueryFromCriteria($categoryImageStorageQuery)->find();",
+            "selected_text": "$this->buildQueryFromCriteria($categoryImageStorageQuery)->find()",
+            "error_level": 6,
+            "shortcode": 128
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 69,
+            "line_to": 69,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\CategoryImageStorage\\Persistence\\CategoryImageStorageEntityManagerInterface::deleteCategoryImageStorage cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoryImageStorage/src/Spryker/Zed/CategoryImageStorage/Business/Storage/CategoryImageStorageWriter.php",
+            "snippet": "                $spyCategoryImageStorageEntity->getIdCategoryImageStorage()",
+            "selected_text": "$spyCategoryImageStorageEntity->getIdCategoryImageStorage()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 84,
+            "line_to": 84,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $indexedCategoryImageSets[int|null] using possibly null offset int|null",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoryImageStorage/src/Spryker/Zed/CategoryImageStorage/Business/Storage/CategoryImageStorageWriter.php",
+            "snippet": "                $indexedCategoryImageSets[$categoryImageSet->getFkCategory()][$categoryImageSet->getSpyLocale()->getLocaleName()][] = $categoryImageSet;",
+            "selected_text": "$indexedCategoryImageSets",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 84,
+            "line_to": 84,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getLocaleName on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoryImageStorage/src/Spryker/Zed/CategoryImageStorage/Business/Storage/CategoryImageStorageWriter.php",
+            "snippet": "                $indexedCategoryImageSets[$categoryImageSet->getFkCategory()][$categoryImageSet->getSpyLocale()->getLocaleName()][] = $categoryImageSet;",
+            "selected_text": "getLocaleName",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 198,
+            "line_to": 198,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\CategoryImageStorage\\Business\\Storage\\CategoryImageStorageWriter::mapSpyCategoryImageEntityTransfer cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoryImageStorage/src/Spryker/Zed/CategoryImageStorage/Business/Storage/CategoryImageStorageWriter.php",
+            "snippet": "            $categoryImages[] = $this->mapSpyCategoryImageEntityTransfer($categoryImageSetToCategoryImage->getSpyCategoryImage());",
+            "selected_text": "$categoryImageSetToCategoryImage->getSpyCategoryImage()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 225,
+            "line_to": 225,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $categoryStorageEntitiesByIdAndLocale[int|null] using possibly null offset int|null",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoryImageStorage/src/Spryker/Zed/CategoryImageStorage/Business/Storage/CategoryImageStorageWriter.php",
+            "snippet": "            $categoryStorageEntitiesByIdAndLocale[$categoryImageStorageTransfer->getFkCategory()][$categoryImageStorageTransfer->getLocale()] = $categoryImageStorageTransfer;",
+            "selected_text": "$categoryStorageEntitiesByIdAndLocale",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 242,
+            "line_to": 243,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\CategoryImageStorage\\Persistence\\CategoryImageStorageEntityManagerInterface::deleteCategoryImageStorage cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoryImageStorage/src/Spryker/Zed/CategoryImageStorage/Business/Storage/CategoryImageStorageWriter.php",
+            "snippet": "                    $imageStorageEntityTransfer->requireIdCategoryImageStorage()\n                        ->getIdCategoryImageStorage()",
+            "selected_text": "$imageStorageEntityTransfer->requireIdCategoryImageStorage()\n                        ->getIdCategoryImageStorage()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 43,
+            "line_to": 43,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoryImageStorage/src/Spryker/Zed/CategoryImageStorage/Communication/Plugin/Event/Listener/CategoryImageSetCategoryImageStorageListener.php",
+            "snippet": "            ->getData();",
+            "selected_text": "getData",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 41,
+            "line_to": 41,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoryImageStorage/src/Spryker/Zed/CategoryImageStorage/Communication/Plugin/Event/Listener/CategoryImageStorageListener.php",
+            "snippet": "            ->getData();",
+            "selected_text": "getData",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 40,
+            "line_to": 40,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method delete on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoryImageStorage/src/Spryker/Zed/CategoryImageStorage/Persistence/CategoryImageStorageEntityManager.php",
+            "snippet": "        $categoryImageStorageEntity->delete();",
+            "selected_text": "delete",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 17,
+            "line_to": 17,
+            "type": "MismatchingDocblockParamType",
+            "message": "Parameter $categoryImageStorageEntityCollection has wrong type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\CategoryImageStorage\\Persistence\\SpyCategoryImageStorage>', should be 'Propel\\Runtime\\Collection\\ObjectCollection'",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoryImageStorage/src/Spryker/Zed/CategoryImageStorage/Persistence/Propel/Mapper/CategoryImageStorageMapper.php",
+            "snippet": "     * @param \\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\CategoryImageStorage\\Persistence\\SpyCategoryImageStorage[] $categoryImageStorageEntityCollection",
+            "selected_text": "\\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\CategoryImageStorage\\Persistence\\SpyCategoryImageStorage[]",
+            "error_level": 4,
+            "shortcode": 141
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 22,
+            "line_to": 22,
+            "type": "DeprecatedTrait",
+            "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoryImageStorage/src/Spryker/Zed/CategoryImageStorage/Communication/Plugin/Event/Listener/CategoryImagePublishStorageListener.php",
+            "snippet": "    use DatabaseTransactionHandlerTrait;",
+            "selected_text": "DatabaseTransactionHandlerTrait",
+            "error_level": 2,
+            "shortcode": 171
+        },
+        {
+            "severity": "info",
+            "line_from": 23,
+            "line_to": 23,
+            "type": "DeprecatedTrait",
+            "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoryImageStorage/src/Spryker/Zed/CategoryImageStorage/Communication/Plugin/Event/Listener/CategoryImageSetCategoryImageStorageListener.php",
+            "snippet": "    use DatabaseTransactionHandlerTrait;",
+            "selected_text": "DatabaseTransactionHandlerTrait",
+            "error_level": 2,
+            "shortcode": 171
+        },
+        {
+            "severity": "info",
+            "line_from": 22,
+            "line_to": 22,
+            "type": "DeprecatedTrait",
+            "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoryImageStorage/src/Spryker/Zed/CategoryImageStorage/Communication/Plugin/Event/Listener/CategoryImageSetStorageListener.php",
+            "snippet": "    use DatabaseTransactionHandlerTrait;",
+            "selected_text": "DatabaseTransactionHandlerTrait",
+            "error_level": 2,
+            "shortcode": 171
+        },
+        {
+            "severity": "info",
+            "line_from": 22,
+            "line_to": 22,
+            "type": "DeprecatedTrait",
+            "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoryImageStorage/src/Spryker/Zed/CategoryImageStorage/Communication/Plugin/Event/Listener/CategoryImageStorageListener.php",
+            "snippet": "    use DatabaseTransactionHandlerTrait;",
+            "selected_text": "DatabaseTransactionHandlerTrait",
+            "error_level": 2,
+            "shortcode": 171
+        },
+        {
+            "severity": "info",
+            "line_from": 24,
+            "line_to": 24,
+            "type": "DeprecatedInterface",
+            "message": "Spryker\\Zed\\SynchronizationExtension\\Dependency\\Plugin\\SynchronizationDataRepositoryPluginInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoryImageStorage/src/Spryker/Zed/CategoryImageStorage/Communication/Plugin/Synchronization/CategoryImageSynchronizationDataPlugin.php",
+            "snippet": "class CategoryImageSynchronizationDataPlugin extends AbstractPlugin implements SynchronizationDataRepositoryPluginInterface",
+            "selected_text": "CategoryImageSynchronizationDataPlugin",
+            "error_level": 2,
+            "shortcode": 152
+        }
+    ]
+}

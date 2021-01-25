@@ -19,7 +19,10 @@ interface PriceProductMatcherInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
-    public function matchPriceValueByPriceProductCriteria(array $priceProductTransfers, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): ?PriceProductTransfer;
+    public function matchPriceValueByPriceProductCriteria(
+        array $priceProductTransfers,
+        PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+    ): ?PriceProductTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers

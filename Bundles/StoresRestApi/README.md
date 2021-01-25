@@ -1,6 +1,6 @@
 # StoresRestApi Module
 [![Build Status](https://travis-ci.org/spryker/stores-rest-api.svg)](https://travis-ci.org/spryker/stores-rest-api)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/stores-rest-api/badge.svg)](https://coveralls.io/github/spryker/stores-rest-api)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 StoresRestApi module provides rest API endpoints to stores.
 

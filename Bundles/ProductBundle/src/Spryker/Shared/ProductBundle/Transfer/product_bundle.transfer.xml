@@ -5,7 +5,7 @@
 
     <transfer name="ProductBundle">
         <property name="idProductConcreteBundle" type="int"/>
-        <property name="availability" type="int"/>
+        <property name="availability" type="decimal"/>
         <property name="isNeverOutOfStock" type="bool"/>
         <property name="bundledProducts" type="ProductForBundle[]" singular="bundledProduct"/>
         <property name="bundlesToRemove" type="array" singular="bundleToRemove"/>
@@ -25,6 +25,7 @@
         <property name="quantity" type="int"/>
         <property name="sku" type="string"/>
         <property name="isActive" type="bool"/>
+        <property name="bundleSku" type="string"/>
     </transfer>
 
     <transfer name="Item">
@@ -48,15 +49,35 @@
 
         <property name="images" type="ProductImage[]" singular="image"/>
 
+        <property name="sumSubtotalAggregation" type="int"/>
+        <property name="unitSubtotalAggregation" type="int"/>
+        <property name="metadata" type="ItemMetadata"/>
+        <property name="unitPriceToPayAggregation" type="int"/>
+        <property name="sumPriceToPayAggregation" type="int"/>
+        <property name="id" type="int"/>
+        <property name="idProductAbstract" type="int"/>
+        <property name="abstractSku" type="string"/>
+        <property name="quantity" type="int"/>
+        <property name="groupKey" type="string"/>
+        <property name="unitGrossPrice" type="int"/>
+        <property name="sumGrossPrice" type="int"/>
+        <property name="name" type="string"/>
+        <property name="idSalesOrderItem" type="int"/>
+        <property name="productBundle" type="Item"/>
+        <property name="isReturnable" type="bool"/>
+        <property name="concreteAttributes" type="array" singular="concreteAttribute"/>
     </transfer>
 
     <transfer name="ItemCollection">
-        <property name="Items" type="Item[]" singular="item"/>
+        <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
     <transfer name="Quote">
         <property name="bundleItems" type="Item[]" singular="bundleItem"/>
         <property name="store" type="Store"/>
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="priceMode" type="string"/>
+        <property name="currency" type="Currency"/>
     </transfer>
 
     <transfer name="CartPreCheckResponse">
@@ -66,15 +87,25 @@
 
     <transfer name="CartChange">
         <property name="items" type="Item[]" singular="item"/>
+        <property name="quote" type="Quote"/>
     </transfer>
 
     <transfer name="Order">
         <property name="bundleItems" type="Item[]" singular="bundleItem"/>
         <property name="itemGroups" type="ProductBundleGroup[]" singular="itemGroup"/>
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="idSalesOrder" type="int"/>
     </transfer>
 
     <transfer name="ProductConcrete">
-        <property name="ProductBundle" type="ProductBundle"/>
+        <property name="productBundle" type="ProductBundle"/>
+        <property name="idProductConcrete" type="int"/>
+        <property name="sku" type="string"/>
+        <property name="fkProductAbstract" type="int"/>
+        <property name="abstractSku" type="string"/>
+        <property name="stocks" type="StockProduct[]" singular="stock"/>
+        <property name="isActive" type="bool"/>
+        <property name="attributes" type="array" singular="attribute"/>
     </transfer>
 
     <transfer name="ProductBundleGroup">
@@ -88,15 +119,104 @@
     <transfer name="Store">
         <property name="idStore" type="int"/>
         <property name="storesWithSharedPersistence" type="array" singular="storeWithSharedPersistence"/>
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="Message">
         <property name="value" type="string"/>
-        <property name="parameters" type="array"/>
+        <property name="parameters" type="array" singular="parameters"/>
     </transfer>
 
     <transfer name="ProductBundleCriteriaFilter">
         <property name="idBundledProduct" type="int"/>
+        <property name="productConcreteIds" type="int[]" singular="idProductConcrete"/>
+        <property name="bundledProductIds" type="int[]" singular="idBundledProduct"/>
+        <property name="filter" type="Filter"/>
+        <property name="applyGrouped" type="bool"/>
+        <property name="isProductConcreteActive" type="bool"/>
+        <property name="isBundledProductActive" type="bool"/>
+    </transfer>
+
+    <transfer name="Filter">
+        <property name="orderBy" type="string"/>
+        <property name="limit" type="int"/>
+        <property name="offset" type="int"/>
+    </transfer>
+
+    <transfer name="ItemMetadata">
+        <property name="image" type="string"/>
+    </transfer>
+
+    <transfer name="CheckoutResponse">
+        <property name="errors" type="CheckoutError[]" singular="error"/>
+        <property name="isSuccess" type="bool"/>
+        <property name="saveOrder" type="SaveOrder"/>
+    </transfer>
+
+    <transfer name="CheckoutError">
+        <property name="message" type="string"/>
+        <property name="errorType" type="string"/>
+        <property name="parameters" type="array" singular="parameters"/>
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="localeName" type="string"/>
+        <property name="idLocale" type="int"/>
+    </transfer>
+
+    <transfer name="PriceProductFilter">
+        <property name="sku" type="string"/>
+        <property name="currencyIsoCode" type="string"/>
+        <property name="priceMode" type="string"/>
+        <property name="storeName" type="string"/>
+        <property name="quote" type="Quote"/>
+    </transfer>
+
+    <transfer name="ProductImageSet">
+        <property name="name" type="string"/>
+        <property name="productImages" type="ProductImage[]" singular="productImage"/>
+    </transfer>
+
+    <transfer name="SaveOrder">
+        <property name="orderItems" type="Item[]" singular="orderItem"/>
+    </transfer>
+
+    <transfer name="StockProduct">
+        <property name="sku" type="string"/>
+        <property name="stockType" type="string"/>
+    </transfer>
+
+    <transfer name="ProductConcreteAvailability">
+        <property name="availability" type="decimal"/>
+        <property name="isNeverOutOfStock" type="bool"/>
+    </transfer>
+
+    <transfer name="Currency">
+        <property name="code" type="string"/>
+    </transfer>
+
+    <transfer name="ProductAbstract">
+    </transfer>
+
+    <transfer name="ProductImage">
+    </transfer>
+
+    <transfer name="CalculableObject">
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="bundleItems" type="Item[]" singular="bundleItem"/>
+    </transfer>
+
+    <transfer name="ReturnItem">
+        <property name="orderItem" type="Item"/>
+        <property name="reason" type="string"/>
+    </transfer>
+
+    <transfer name="ReturnCreateRequest">
+        <property name="returnItems" type="ReturnItem[]" singular="returnItem"/>
+    </transfer>
+
+    <transfer name="ReservationRequest">
+        <property name="sku" type="string"/>
     </transfer>
 
 </transfers>

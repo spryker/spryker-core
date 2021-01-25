@@ -14,6 +14,7 @@ use Generated\Shared\DataBuilder\MoneyValueBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\DataBuilder\ShipmentBuilder;
 use Generated\Shared\DataBuilder\ShipmentMethodBuilder;
+use Generated\Shared\DataBuilder\StoreBuilder;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
@@ -82,7 +83,7 @@ class ShipmentCartExpanderTest extends Test
             'Quote shipment should not have been set.'
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             $expectedPrice,
             $actualCartChangeTransfer->getQuote()->getExpenses()[0]->getUnitNetPrice(),
             sprintf('Shipment price should not have been changed for shipment expense.')
@@ -124,7 +125,7 @@ class ShipmentCartExpanderTest extends Test
             'Shipment price should not have been changed.'
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             $expectedPrice,
             $actualCartChangeTransfer->getQuote()->getExpenses()[0]->getUnitNetPrice(),
             sprintf('Shipment price should not have been changed for shipment expense.')
@@ -196,6 +197,7 @@ class ShipmentCartExpanderTest extends Test
             ->withQuote(
                 (new QuoteBuilder([QuoteTransfer::PRICE_MODE => ShipmentConstants::PRICE_MODE_NET]))
                     ->withCurrency([CurrencyTransfer::CODE => static::CURRENCY_CODE_EUR])
+                    ->withStore([StoreTransfer::NAME => static::DEFAULT_STORE_NAME])
                     ->withExpense(
                         (new ExpenseBuilder([
                             ExpenseTransfer::TYPE => ShipmentCartConnectorConfig::SHIPMENT_EXPENSE_TYPE,
@@ -234,7 +236,7 @@ class ShipmentCartExpanderTest extends Test
         // Assert
         foreach ($actualCartChangeTransfer->getQuote()->getExpenses() as $i => $expenseTransfer) {
             $shipmentMethodTransfer = $expenseTransfer->getShipment()->getMethod();
-            $this->assertEquals(
+            $this->assertSame(
                 $expectedPrices[$shipmentMethodTransfer->getName()][$cartChangeTransfer->getQuote()->getCurrency()->getCode()],
                 $expenseTransfer->getUnitNetPrice(),
                 sprintf('Shipment price should have been changed for shipment expense #%s.', $i)
@@ -298,7 +300,7 @@ class ShipmentCartExpanderTest extends Test
                 ]))
                     ->withItem()
                     ->withAnotherItem()
-                    ->withCurrency([CurrencyTransfer::CODE => static::CURRENCY_CODE_USD])
+                    ->withCurrency([CurrencyTransfer::CODE => static::CURRENCY_CODE_EUR])
                 ->withExpense(
                     (new ExpenseBuilder([
                         ExpenseTransfer::TYPE => ShipmentCartConnectorConfig::SHIPMENT_EXPENSE_TYPE,
@@ -317,6 +319,10 @@ class ShipmentCartExpanderTest extends Test
             ->build();
 
         $quoteTransfer = $cartChangeTransfer->getQuote();
+        $storeTransfer = (new StoreBuilder([
+            StoreTransfer::NAME => static::DEFAULT_STORE_NAME,
+        ]))->build();
+        $quoteTransfer->setStore($storeTransfer);
         $quoteTransfer->getItems()[0]->setShipment($shipmentTransfer1);
         $quoteTransfer->getExpenses()[0]->setShipment($shipmentTransfer1);
         $quoteTransfer->getItems()[1]->setShipment($shipmentTransfer2);
@@ -344,8 +350,10 @@ class ShipmentCartExpanderTest extends Test
     protected function haveAvailableShipmentMethods(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
         foreach ($cartChangeTransfer->getQuote()->getExpenses() as $expenseTransfer) {
-            if ($expenseTransfer->getShipment() === null
-                || $expenseTransfer->getShipment()->getMethod() === null) {
+            if (
+                $expenseTransfer->getShipment() === null
+                || $expenseTransfer->getShipment()->getMethod() === null
+            ) {
                 continue;
             }
 

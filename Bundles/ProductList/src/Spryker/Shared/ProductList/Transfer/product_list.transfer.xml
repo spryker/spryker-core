@@ -20,22 +20,45 @@
 
     <transfer name="Message">
         <property name="value" type="string"/>
-        <property name="parameters" type="array"/>
+        <property name="parameters" type="array" singular="parameters"/>
     </transfer>
 
     <transfer name="ProductListCategoryRelation">
         <property name="idProductList" type="int"/>
-        <property name="categoryIds" type="int[]"/>
+        <property name="categoryIds" type="int[]" singular="categoryIds"/>
     </transfer>
 
     <transfer name="ProductListProductConcreteRelation">
         <property name="idProductList" type="int"/>
-        <property name="productIds" type="int[]"/>
+        <property name="productIds" type="int[]" singular="productIds"/>
     </transfer>
 
     <transfer name="CartChange">
         <property name="items" type="Item[]" singular="item"/>
         <property name="quote" type="Quote"/>
+    </transfer>
+
+    <transfer name="CartPreCheckResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="messages" type="Message[]" singular="message"/>
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="customer" type="Customer"/>
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="sku" type="string"/>
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="customerProductListCollection" type="CustomerProductListCollection"/>
+    </transfer>
+
+    <transfer name="CustomerProductListCollection">
+        <property name="blacklistIds" type="int[]" singular="blacklistId"/>
+        <property name="whitelistIds" type="int[]" singular="whitelistId"/>
     </transfer>
 
 </transfers>

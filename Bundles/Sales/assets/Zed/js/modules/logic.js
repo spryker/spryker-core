@@ -6,7 +6,7 @@
 'use strict';
 
 $(document).ready(function () {
-    $('.sales-order-item-group-element button').click(function(e) {
+    $('.sales-order-item-group-element button').click(function (e) {
         e.preventDefault();
         var keyItemGroup = $(this).closest('.sales-order-item-group-element').data('group-key');
         var $groupTable = $('.order-group-items-table-' + keyItemGroup);
@@ -28,16 +28,16 @@ $(document).ready(function () {
             idGroupItemsCheckedList = idGroupItemsFullList;
         }
 
-        var finalUrl = formAction + '&' + $.param({items: idGroupItemsCheckedList});
+        var finalUrl = formAction + '&' + $.param({ items: idGroupItemsCheckedList });
 
         $(this).prop('disabled', true).addClass('disabled');
         $form.attr('action', finalUrl);
         $form.submit();
     });
 
-    $('.item-check').click(function(){
+    $('.item-check').click(function () {
         var $table = $(this).closest('table');
-        var $checkAllOrders = $table.find('.check-all-orders');
+        var $checkAllOrders = $table.find('#check-all-orders');
         var countChecked = $table.find('.item-check[type="checkbox"]:checked').length;
         var totalCheckboxItems = $table.find('.item-check').length;
 
@@ -50,7 +50,7 @@ $(document).ready(function () {
         $checkAllOrders.prop('checked', false);
     });
 
-    $('.more-attributes').click(function(e){
+    $('.more-attributes').click(function (e) {
         e.preventDefault();
         var idProductItem = $(this).data('id');
         var $attributes = $('#attribute_details_' + idProductItem);
@@ -62,26 +62,14 @@ $(document).ready(function () {
         $button.toggleClass('is-shown', isHidden);
     });
 
-    $('.more-history').click(function(e){
-        e.preventDefault();
-        var idProductItem = $(this).data('id');
-        var $history = $('#history_details_' + idProductItem);
-        var $button = $('#history-btn-' + idProductItem);
-        var isHidden = $history.hasClass('hidden');
-
-        $history.toggleClass('hidden', !isHidden);
-        $button.toggleClass('is-hidden', !isHidden);
-        $button.toggleClass('is-shown', isHidden);
-    });
-
-    $('.item-split').click(function(e){
+    $('.item-split').click(function (e) {
         e.preventDefault();
         var theID = $(this).data('id');
 
         $('#split_form_row_' + theID).toggle();
     });
 
-    $('.check-all-orders').click(function(){
+    $('#check-all-orders').click(function () {
         $(this).closest('table').find('.item-check').prop('checked', $(this).prop('checked'));
     });
 });

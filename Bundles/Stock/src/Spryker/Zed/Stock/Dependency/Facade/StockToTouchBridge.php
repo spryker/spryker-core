@@ -24,12 +24,13 @@ class StockToTouchBridge implements StockToTouchInterface
 
     /**
      * @param string $itemType
-     * @param int $itemId
+     * @param int $idItem
+     * @param bool $keyChange
      *
      * @return bool
      */
-    public function touchActive($itemType, $itemId)
+    public function touchActive($itemType, $idItem, $keyChange = false)
     {
-        return $this->touchFacade->touchActive($itemType, $itemId);
+        return $this->touchFacade->touchActive($itemType, $idItem, $keyChange);
     }
 }

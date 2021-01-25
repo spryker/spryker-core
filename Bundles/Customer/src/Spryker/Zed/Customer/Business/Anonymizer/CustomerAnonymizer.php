@@ -112,7 +112,7 @@ class CustomerAnonymizer implements CustomerAnonymizerInterface
     protected function anonymizeCustomer(CustomerTransfer $customerTransfer)
     {
         $customerTransfer
-            ->setAnonymizedAt((new DateTime())->format("Y-m-d H:i:s.u"))
+            ->setAnonymizedAt((new DateTime())->format('Y-m-d H:i:s.u'))
             ->setFirstName(null)
             ->setLastName(null)
             ->setSalutation(null)
@@ -132,9 +132,9 @@ class CustomerAnonymizer implements CustomerAnonymizerInterface
         do {
             $randomEmail = sprintf(
                 '%s@%s.%s',
-                strtolower(md5((string)mt_rand())),
-                strtolower(md5((string)mt_rand())),
-                strtolower(md5((string)mt_rand()))
+                strtolower(md5((string)random_int(0, PHP_INT_MAX))),
+                strtolower(md5((string)random_int(0, PHP_INT_MAX))),
+                strtolower(md5((string)random_int(0, PHP_INT_MAX)))
             );
         } while ($this->queryContainer->queryCustomerByEmail($randomEmail)->exists());
 
@@ -163,7 +163,7 @@ class CustomerAnonymizer implements CustomerAnonymizerInterface
     protected function anonymizeCustomerAddress(AddressTransfer $addressTransfer)
     {
         $addressTransfer
-            ->setAnonymizedAt((new DateTime())->format("Y-m-d H:i:s.u"))
+            ->setAnonymizedAt((new DateTime())->format('Y-m-d H:i:s.u'))
             ->setIsDeleted(true)
             ->setFirstName('')
             ->setLastName('')

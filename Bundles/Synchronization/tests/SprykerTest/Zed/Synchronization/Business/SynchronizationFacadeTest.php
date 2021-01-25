@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\SearchDocumentTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use PHPUnit\Framework\SkippedTestError;
 use Spryker\Service\UtilEncoding\UtilEncodingService;
+use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Zed\AvailabilityStorage\Communication\Plugin\Synchronization\AvailabilitySynchronizationDataPlugin;
 use Spryker\Zed\CategoryPageSearch\Communication\Plugin\Synchronization\CategoryPageSynchronizationDataPlugin;
 use Spryker\Zed\CategoryStorage\Communication\Plugin\Synchronization\CategoryNodeSynchronizationDataPlugin;
@@ -34,8 +35,8 @@ use Spryker\Zed\ProductCategoryStorage\Communication\Plugin\Synchronization\Prod
 use Spryker\Zed\ProductGroupStorage\Communication\Plugin\Synchronization\ProductGroupSynchronizationDataPlugin;
 use Spryker\Zed\ProductImageStorage\Communication\Plugin\Synchronization\ProductAbstractImageSynchronizationDataPlugin;
 use Spryker\Zed\ProductImageStorage\Communication\Plugin\Synchronization\ProductConcreteImageSynchronizationDataPlugin;
-use Spryker\Zed\ProductLabelStorage\Communication\Plugin\Synchronization\ProductAbstractLabelSynchronizationDataPlugin;
-use Spryker\Zed\ProductLabelStorage\Communication\Plugin\Synchronization\ProductLabelDictionarySynchronizationDataPlugin;
+use Spryker\Zed\ProductLabelStorage\Communication\Plugin\Synchronization\ProductAbstractLabelSynchronizationDataRepositoryPlugin;
+use Spryker\Zed\ProductLabelStorage\Communication\Plugin\Synchronization\ProductLabelDictionarySynchronizationDataRepositoryPlugin;
 use Spryker\Zed\ProductMeasurementUnitStorage\Communication\Plugin\Synchronization\ProductConcreteMeasurementUnitSynchronizationDataPlugin;
 use Spryker\Zed\ProductMeasurementUnitStorage\Communication\Plugin\Synchronization\ProductMeasurementUnitSynchronizationDataPlugin;
 use Spryker\Zed\ProductOptionStorage\Communication\Plugin\Synchronization\ProductOptionSynchronizationDataPlugin;
@@ -76,6 +77,11 @@ class SynchronizationFacadeTest extends Unit
     protected const PARAM_PROJECT = 'PROJECT';
 
     protected const PROJECT_SUITE = 'suite';
+
+    /**
+     * @var \SprykerTest\Zed\Synchronization\SynchronizationBusinessTester
+     */
+    protected $tester;
 
     /**
      * @var \Spryker\Zed\Synchronization\Business\SynchronizationFacadeInterface
@@ -211,16 +217,16 @@ class SynchronizationFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testSynchronizationWritesDataToStorage()
+    public function testSynchronizationWritesDataToStorage(): void
     {
         $container = new Container();
         $container[SynchronizationDependencyProvider::CLIENT_STORAGE] = function (Container $container) {
             $storageMock = $this->createStorageClientBridge();
             $storageMock->expects($this->once())->method('set')->will(
                 $this->returnCallback(
-                    function ($key, $value) {
-                        $this->assertEquals($key, 'testKey');
-                        $this->assertEquals($value, ['data' => 'testValue']);
+                    function ($key, $value): void {
+                        $this->assertSame('testKey', $key);
+                        $this->assertSame(['data' => 'testValue'], $value);
                     }
                 )
             );
@@ -245,15 +251,15 @@ class SynchronizationFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testSynchronizationDeletesDataToStorage()
+    public function testSynchronizationDeletesDataToStorage(): void
     {
         $container = new Container();
         $container[SynchronizationDependencyProvider::CLIENT_STORAGE] = function (Container $container) {
             $storageMock = $this->createStorageClientBridge();
             $storageMock->expects($this->once())->method('delete')->will(
                 $this->returnCallback(
-                    function ($key) {
-                        $this->assertEquals($key, 'testKey');
+                    function ($key): void {
+                        $this->assertSame('testKey', $key);
                     }
                 )
             );
@@ -273,25 +279,23 @@ class SynchronizationFacadeTest extends Unit
     }
 
     /**
-     * @throws \Elastica\Exception\NotFoundException
-     *
      * @return void
      */
-    public function testSynchronizationWritesDataToSearch()
+    public function testSynchronizationWritesDataToSearch(): void
     {
         $container = new Container();
         $container[SynchronizationDependencyProvider::CLIENT_SEARCH] = function (Container $container) {
             $searchMock = $this->createSearchClientBridge();
             $searchMock->expects($this->once())->method('write')->will(
                 $this->returnCallback(
-                    function ($data) {
-                        $this->assertEquals(key($data), 'testKey');
-                        $this->assertEquals(current($data), ['data' => 'testValue']);
+                    function ($data): void {
+                        $this->assertSame('testKey', key($data));
+                        $this->assertSame(['data' => 'testValue'], current($data));
                     }
                 )
             );
             $searchMock->expects($this->once())->method('read')->will($this->returnCallback(
-                function ($key) {
+                function ($key): void {
                     throw new NotFoundException();
                 }
             ));
@@ -313,25 +317,23 @@ class SynchronizationFacadeTest extends Unit
     }
 
     /**
-     * @throws \Elastica\Exception\NotFoundException
-     *
      * @return void
      */
-    public function testSynchronizationDeleteDataToSearch()
+    public function testSynchronizationDeleteDataToSearch(): void
     {
         $container = new Container();
         $container[SynchronizationDependencyProvider::CLIENT_SEARCH] = function (Container $container) {
             $searchMock = $this->createSearchClientBridge();
             $searchMock->expects($this->once())->method('delete')->will(
                 $this->returnCallback(
-                    function ($data) {
-                        $this->assertEquals(key($data), 'testKey');
+                    function ($data): void {
+                        $this->assertSame('testKey', key($data));
                     }
                 )
             );
 
             $searchMock->expects($this->once())->method('read')->will($this->returnCallback(
-                function ($key) {
+                function ($key): void {
                     throw new NotFoundException();
                 }
             ));
@@ -357,11 +359,13 @@ class SynchronizationFacadeTest extends Unit
      *
      * @return void
      */
-    public function testExecuteResolvedPluginsBySources()
+    public function testExecuteResolvedPluginsBySources(): void
     {
         if (!$this->isSuiteProject()) {
             throw new SkippedTestError('Warning: not in suite environment');
         }
+
+        $this->tester->setConfig(KernelConstants::PROJECT_NAMESPACES, ['Pyz']);
 
         $container = new Container();
         $container[SynchronizationDependencyProvider::CLIENT_QUEUE] = function (Container $container) {
@@ -401,9 +405,9 @@ class SynchronizationFacadeTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToQueueClientInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createQueueClientBridge()
+    protected function createQueueClientBridge(): SynchronizationToQueueClientInterface
     {
         return $this->getMockBuilder(SynchronizationToQueueClientInterface::class)
             ->disableOriginalConstructor()
@@ -416,7 +420,7 @@ class SynchronizationFacadeTest extends Unit
     /**
      * @return array
      */
-    protected function createSynchronizationDataPlugins()
+    protected function createSynchronizationDataPlugins(): array
     {
         return [
             //Search plugins
@@ -442,8 +446,8 @@ class SynchronizationFacadeTest extends Unit
             new ProductGroupSynchronizationDataPlugin(),
             new ProductAbstractImageSynchronizationDataPlugin(),
             new ProductConcreteImageSynchronizationDataPlugin(),
-            new ProductAbstractLabelSynchronizationDataPlugin(),
-            new ProductLabelDictionarySynchronizationDataPlugin(),
+            new ProductAbstractLabelSynchronizationDataRepositoryPlugin(),
+            new ProductLabelDictionarySynchronizationDataRepositoryPlugin(),
             new ProductMeasurementUnitSynchronizationDataPlugin(),
             new ProductConcreteMeasurementUnitSynchronizationDataPlugin(),
             new ProductQuantitySynchronizationDataPlugin(),
@@ -460,9 +464,9 @@ class SynchronizationFacadeTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToStorageClientInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createStorageClientBridge()
+    protected function createStorageClientBridge(): SynchronizationToStorageClientInterface
     {
         return $this->getMockBuilder(SynchronizationToStorageClientInterface::class)
             ->disableOriginalConstructor()
@@ -477,9 +481,9 @@ class SynchronizationFacadeTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToSearchClientInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createSearchClientBridge()
+    protected function createSearchClientBridge(): SynchronizationToSearchClientInterface
     {
         return $this->getMockBuilder(SynchronizationToSearchClientInterface::class)
             ->disableOriginalConstructor()
@@ -494,9 +498,9 @@ class SynchronizationFacadeTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncodingServiceInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createUtilEncodingServiceBridgeMock()
+    protected function createUtilEncodingServiceBridgeMock(): SynchronizationToUtilEncodingServiceInterface
     {
         return $this->getMockBuilder(SynchronizationToUtilEncodingServiceInterface::class)
             ->disableOriginalConstructor()
@@ -510,7 +514,7 @@ class SynchronizationFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncodingServiceBridge
      */
-    protected function createUtilEncodingServiceBridge()
+    protected function createUtilEncodingServiceBridge(): SynchronizationToUtilEncodingServiceBridge
     {
         return new SynchronizationToUtilEncodingServiceBridge(
             new UtilEncodingService()
@@ -522,7 +526,7 @@ class SynchronizationFacadeTest extends Unit
      *
      * @return void
      */
-    protected function prepareFacade($container)
+    protected function prepareFacade(Container $container): void
     {
         $synchronizationBusinessFactory = new SynchronizationBusinessFactory();
         $synchronizationBusinessFactory->setContainer($container);

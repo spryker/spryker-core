@@ -14,5 +14,5 @@ interface TransferValidatorInterface
      *
      * @return bool
      */
-    public function validate(array $options);
+    public function validate(array $options): bool;
 }

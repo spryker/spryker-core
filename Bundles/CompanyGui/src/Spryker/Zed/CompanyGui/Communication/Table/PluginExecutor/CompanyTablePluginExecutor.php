@@ -37,8 +37,12 @@ class CompanyTablePluginExecutor implements CompanyTablePluginExecutorInterface
      * @param \Spryker\Zed\CompanyGuiExtension\Dependency\Plugin\CompanyTableDataExpanderPluginInterface[] $companyTableDataExpanderPlugins
      * @param \Spryker\Zed\CompanyGuiExtension\Dependency\Plugin\CompanyTableActionExpanderInterface[] $companyTableActionExpanderPlugins
      */
-    public function __construct(array $companyTableConfigExpanderPlugins, array $companyTableHeaderExpanderPlugins, array $companyTableDataExpanderPlugins, array $companyTableActionExpanderPlugins)
-    {
+    public function __construct(
+        array $companyTableConfigExpanderPlugins,
+        array $companyTableHeaderExpanderPlugins,
+        array $companyTableDataExpanderPlugins,
+        array $companyTableActionExpanderPlugins
+    ) {
         $this->companyTableConfigExpanderPlugins = $companyTableConfigExpanderPlugins;
         $this->companyTableHeaderExpanderPlugins = $companyTableHeaderExpanderPlugins;
         $this->companyTableDataExpanderPlugins = $companyTableDataExpanderPlugins;

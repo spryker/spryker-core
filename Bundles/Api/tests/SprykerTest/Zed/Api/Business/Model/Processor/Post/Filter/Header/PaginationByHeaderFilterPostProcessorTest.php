@@ -11,7 +11,6 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ApiPaginationTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
 use Generated\Shared\Transfer\ApiResponseTransfer;
-use Spryker\Zed\Api\ApiConfig;
 use Spryker\Zed\Api\Business\Model\Processor\Post\Filter\Header\PaginationByHeaderFilterPostProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Header\PaginationByHeaderFilterPreProcessor;
 
@@ -35,7 +34,7 @@ class PaginationByHeaderFilterPostProcessorTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
     }
@@ -43,10 +42,9 @@ class PaginationByHeaderFilterPostProcessorTest extends Unit
     /**
      * @return void
      */
-    public function testProcessWithDefaultsPageOne()
+    public function testProcessWithDefaultsPageOne(): void
     {
-        $config = new ApiConfig();
-        $processor = new PaginationByHeaderFilterPostProcessor($config);
+        $processor = new PaginationByHeaderFilterPostProcessor();
 
         $apiRequestTransfer = new ApiRequestTransfer();
         $apiRequestTransfer->setResource('users');

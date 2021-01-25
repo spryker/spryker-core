@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\Development\Business\Composer\Updater;
 
+use Laminas\Filter\FilterChain;
+use Laminas\Filter\Word\DashToCamelCase;
+use Laminas\Filter\Word\UnderscoreToCamelCase;
 use Symfony\Component\Finder\SplFileInfo;
-use Zend\Filter\FilterChain;
-use Zend\Filter\Word\DashToCamelCase;
-use Zend\Filter\Word\UnderscoreToCamelCase;
 
 class DescriptionUpdater implements UpdaterInterface
 {
@@ -22,7 +22,7 @@ class DescriptionUpdater implements UpdaterInterface
      *
      * @return array
      */
-    public function update(array $composerJson, SplFileInfo $composerJsonFile)
+    public function update(array $composerJson, SplFileInfo $composerJsonFile): array
     {
         $composerJson[static::KEY_DESCRIPTION] = $this->getModuleNameFromFullPath($composerJsonFile->getPath()) . ' module';
 

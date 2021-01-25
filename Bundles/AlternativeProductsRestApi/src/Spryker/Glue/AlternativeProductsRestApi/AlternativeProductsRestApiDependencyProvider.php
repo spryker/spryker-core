@@ -9,7 +9,7 @@ namespace Spryker\Glue\AlternativeProductsRestApi;
 
 use Spryker\Glue\AlternativeProductsRestApi\Dependency\Client\AlternativeProductsRestApiToProductAlternativeStorageClientBridge;
 use Spryker\Glue\AlternativeProductsRestApi\Dependency\Client\AlternativeProductsRestApiToProductStorageClientBridge;
-use Spryker\Glue\AlternativeProductsRestApi\Dependency\Resource\AlternativeProductsRestApiToProductsRestApiResourceBridge;
+use Spryker\Glue\AlternativeProductsRestApi\Dependency\RestApiResource\AlternativeProductsRestApiToProductsRestApiResourceBridge;
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
 
@@ -46,11 +46,11 @@ class AlternativeProductsRestApiDependencyProvider extends AbstractBundleDepende
      */
     protected function addProductAlternativeStorageClient(Container $container): Container
     {
-        $container[static::CLIENT_PRODUCT_ALTERNATIVE_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_PRODUCT_ALTERNATIVE_STORAGE, function (Container $container) {
             return new AlternativeProductsRestApiToProductAlternativeStorageClientBridge(
                 $container->getLocator()->productAlternativeStorage()->client()
             );
-        };
+        });
 
         return $container;
     }
@@ -62,11 +62,11 @@ class AlternativeProductsRestApiDependencyProvider extends AbstractBundleDepende
      */
     protected function addProductsRestApiResource(Container $container): Container
     {
-        $container[static::RESOURCE_PRODUCTS_REST_API] = function (Container $container) {
+        $container->set(static::RESOURCE_PRODUCTS_REST_API, function (Container $container) {
             return new AlternativeProductsRestApiToProductsRestApiResourceBridge(
                 $container->getLocator()->productsRestApi()->resource()
             );
-        };
+        });
 
         return $container;
     }
@@ -78,11 +78,11 @@ class AlternativeProductsRestApiDependencyProvider extends AbstractBundleDepende
      */
     protected function addProductStorageClient(Container $container): Container
     {
-        $container[static::CLIENT_PRODUCT_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_PRODUCT_STORAGE, function (Container $container) {
             return new AlternativeProductsRestApiToProductStorageClientBridge(
                 $container->getLocator()->productStorage()->client()
             );
-        };
+        });
 
         return $container;
     }

@@ -11,8 +11,6 @@ use Codeception\Actor;
 use Spryker\Shared\Config\Profiler;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -22,7 +20,7 @@ use Spryker\Shared\Config\Profiler;
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  *
  * @SuppressWarnings(PHPMD)
  */
@@ -36,7 +34,7 @@ class ConfigSharedTester extends Actor
      *
      * @return void
      */
-    public function assertProfileKey($expectedKey, array $profileData)
+    public function assertProfileKey(string $expectedKey, array $profileData): void
     {
         $this->assertArrayHasKey(
             $expectedKey,
@@ -51,7 +49,7 @@ class ConfigSharedTester extends Actor
      *
      * @return void
      */
-    public function assertProfileValue($expected, array $profileData)
+    public function assertProfileValue($expected, array $profileData): void
     {
         $this->assertSame($expected, $profileData[Profiler::PROFILE_VALUE]);
     }
@@ -62,7 +60,7 @@ class ConfigSharedTester extends Actor
      *
      * @return void
      */
-    public function assertProfileDefaultValue($expected, array $profileData)
+    public function assertProfileDefaultValue($expected, array $profileData): void
     {
         $this->assertSame($expected, $profileData[Profiler::PROFILE_DEFAULT]);
     }
@@ -73,7 +71,7 @@ class ConfigSharedTester extends Actor
      *
      * @return void
      */
-    public function assertProfileCount($expectedCount, array $profileData)
+    public function assertProfileCount(int $expectedCount, array $profileData): void
     {
         $this->assertSame(
             $profileData[Profiler::PROFILE_COUNT],

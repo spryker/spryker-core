@@ -15,6 +15,8 @@ use Spryker\Client\Kernel\AbstractBundleConfig;
 class OauthConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @return string
      */
     public function getPublicKeyPath(): string

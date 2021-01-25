@@ -11,6 +11,9 @@ use Spryker\Yves\CmsContentWidgetProductConnector\Dependency\Client\CmsContentWi
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 
+/**
+ * @method \Spryker\Yves\CmsContentWidgetProductConnector\CmsContentWidgetProductConnectorConfig getConfig()
+ */
 class CmsContentWidgetProductConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PRODUCT_CLIENT = 'PRODUCT CLIENT';
@@ -22,9 +25,9 @@ class CmsContentWidgetProductConnectorDependencyProvider extends AbstractBundleD
      */
     public function provideDependencies(Container $container)
     {
-        $container[static::PRODUCT_CLIENT] = function (Container $container) {
+        $container->set(static::PRODUCT_CLIENT, function (Container $container) {
             return new CmsContentWidgetProductConnectorToProductBridge($container->getLocator()->product()->client());
-        };
+        });
 
         return $container;
     }

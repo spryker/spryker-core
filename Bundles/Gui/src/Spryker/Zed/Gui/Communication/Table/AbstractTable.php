@@ -15,8 +15,12 @@ use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Propel;
 use Spryker\Service\UtilSanitize\UtilSanitizeService;
 use Spryker\Service\UtilText\Model\Url\Url;
+use Spryker\Shared\Kernel\Container\GlobalContainer;
+use Spryker\Shared\Kernel\Container\GlobalContainerInterface;
 use Spryker\Zed\Gui\Communication\Form\DeleteForm;
-use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
+use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
@@ -33,6 +37,29 @@ abstract class AbstractTable
     public const SORT_BY_COLUMN = 'column';
     public const SORT_BY_DIRECTION = 'dir';
     public const URL_ANCHOR = '#';
+
+    /**
+     * @uses \Spryker\Zed\Twig\Communication\Plugin\Application\TwigApplicationPlugin::SERVICE_TWIG
+     */
+    public const SERVICE_TWIG = 'twig';
+
+    /**
+     * @uses \Spryker\Zed\Form\Communication\Plugin\Application\FormApplicationPlugin::SERVICE_FORM_FACTORY
+     */
+    public const SERVICE_FORM_FACTORY = 'form.factory';
+
+    /**
+     * Defines delete form name suffix allowing to avoid non-unique attributes (e.g. form name or id) for delete forms on one page.
+     * It is recommended to fill parameter $options in AbstractTable:generateRemoveButton() to avoid non-unique id warning in browser console.
+     *
+     * $options parameter example:
+     * [
+     *    'name_suffix' => $id,
+     * ]
+     */
+    protected const DELETE_FORM_NAME_SUFFIX = 'name_suffix';
+
+    protected const DELETE_FORM_NAME = 'delete_form';
 
     /**
      * @var \Symfony\Component\HttpFoundation\Request
@@ -92,7 +119,7 @@ abstract class AbstractTable
     /**
      * @var string|null
      */
-    protected $tableIdentifier = null;
+    protected $tableIdentifier;
 
     /**
      * @var \Generated\Shared\Transfer\DataTablesTransfer
@@ -163,8 +190,13 @@ abstract class AbstractTable
      */
     protected function getRequest()
     {
-        return (new Pimple())
-            ->getApplication()['request'];
+        $container = $this->getApplicationContainer();
+
+        if ($container->has('request')) {
+            return $container->get('request');
+        }
+
+        return $container->get('request_stack')->getCurrentRequest();
     }
 
     /**
@@ -373,8 +405,7 @@ abstract class AbstractTable
     private function getTwig()
     {
         /** @var \Twig\Environment|null $twig */
-        $twig = (new Pimple())
-            ->getApplication()['twig'];
+        $twig = $this->getApplicationContainer()->get(static::SERVICE_TWIG);
 
         if ($twig === null) {
             throw new LogicException('Twig environment not set up.');
@@ -388,6 +419,14 @@ abstract class AbstractTable
         ));
 
         return $twig;
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\Container\GlobalContainerInterface
+     */
+    protected function getApplicationContainer(): GlobalContainerInterface
+    {
+        return new GlobalContainer();
     }
 
     /**
@@ -409,11 +448,11 @@ abstract class AbstractTable
     }
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getOffset()
     {
-        return $this->request->query->get('start', 0);
+        return $this->request->query->getInt('start', 0);
     }
 
     /**
@@ -425,7 +464,7 @@ abstract class AbstractTable
     {
         $defaultSorting = [$this->getDefaultSorting($config)];
 
-        $orderParameter = $this->request->query->get('order');
+        $orderParameter = $this->getOrderParameter();
 
         if (!is_array($orderParameter)) {
             return $defaultSorting;
@@ -438,6 +477,34 @@ abstract class AbstractTable
         }
 
         return $sorting;
+    }
+
+    /**
+     * @return array|null
+     */
+    protected function getOrderParameter(): ?array
+    {
+        if ($this->isSymfonyHttpFoundationVersion5OrHigher()) {
+            return $this->request->query->all('order');
+        }
+
+        return $this->request->query->get('order');
+    }
+
+    /**
+     * Retrieving non-string values using InputBag::get() was deprecated in symfony/http-foundation:5.1
+     * Using the InputBag::all() method with an argument was introduced in symfony/http-foundation:5.0
+     *
+     * The method UploadedFile::getClientSize() was removed in symfony/http-foundation:5.0.
+     *
+     * To find which way to use we check for the existence of the UploadedFile::getClientSize(), when the method does
+     * not exist we have symfony/http-foundation:5.0 or higher installed.
+     *
+     * @return bool
+     */
+    protected function isSymfonyHttpFoundationVersion5OrHigher(): bool
+    {
+        return !method_exists(UploadedFile::class, 'getClientSize');
     }
 
     /**
@@ -459,7 +526,6 @@ abstract class AbstractTable
 
         $field = key($defaultSortField);
         $direction = $defaultSortField[$field];
-        $index = null;
 
         $availableFields = array_keys($config->getHeader());
         $index = array_search($field, $availableFields, true);
@@ -517,7 +583,23 @@ abstract class AbstractTable
      */
     public function getSearchTerm()
     {
-        return $this->request->query->get('search', null);
+        if (!$this->request->query->has('search')) {
+            return null;
+        }
+
+        return $this->getSearchParameter();
+    }
+
+    /**
+     * @return array
+     */
+    protected function getSearchParameter(): array
+    {
+        if ($this->isSymfonyHttpFoundationVersion5OrHigher()) {
+            return $this->request->query->all('search');
+        }
+
+        return $this->request->query->get('search');
     }
 
     /**
@@ -663,37 +745,35 @@ abstract class AbstractTable
 
         $orderColumn = $this->getOrderByColumn($query, $config, $order);
 
-        $this->total = $query->count();
+        $this->total = $this->countTotal($query);
         $query->orderBy($orderColumn, $order[0][self::SORT_BY_DIRECTION]);
         $searchTerm = $this->getSearchTerm();
+        $searchValue = $searchTerm[static::PARAMETER_VALUE] ?? '';
 
-        $isFirst = true;
-
-        if (mb_strlen($searchTerm[self::PARAMETER_VALUE]) > 0) {
+        if (mb_strlen($searchValue) > 0) {
             $query->setIdentifierQuoting(true);
 
-            foreach ($config->getSearchable() as $value) {
-                if (!$isFirst) {
-                    $query->_or();
-                } else {
-                    $isFirst = false;
-                }
+            $conditions = [];
 
+            foreach ($config->getSearchable() as $value) {
                 $filter = '';
                 $driverName = Propel::getConnection()->getAttribute(PDO::ATTR_DRIVER_NAME);
                 if ($driverName === 'pgsql') {
                     $filter = '::TEXT';
                 }
 
-                $conditionParameter = '%' . mb_strtolower($searchTerm[self::PARAMETER_VALUE]) . '%';
+                $conditionParameter = '%' . mb_strtolower($searchValue) . '%';
                 $condition = sprintf(
                     'LOWER(%s%s) LIKE %s',
                     $value,
                     $filter,
                     Propel::getConnection()->quote($conditionParameter)
                 );
-                $query->where($condition);
+
+                $conditions[] = $condition;
             }
+
+            $query = $this->applyConditions($query, $config, $conditions);
 
             $this->filtered = $query->count();
         } else {
@@ -719,6 +799,39 @@ abstract class AbstractTable
     }
 
     /**
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     *
+     * @return int
+     */
+    protected function countTotal(ModelCriteria $query): int
+    {
+        return $query->count();
+    }
+
+    /**
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
+     * @param string[] $conditions
+     *
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    protected function applyConditions(ModelCriteria $query, TableConfiguration $config, array $conditions): ModelCriteria
+    {
+        $gluedCondition = implode(
+            sprintf(' %s ', Criteria::LOGICAL_OR),
+            $conditions
+        );
+
+        $gluedCondition = '(' . $gluedCondition . ')';
+
+        if ($config->getHasSearchableFieldsWithAggregateFunctions()) {
+            return $query->having($gluedCondition);
+        }
+
+        return $query->where($gluedCondition);
+    }
+
+    /**
      * @param string $value
      *
      * @return string
@@ -741,7 +854,7 @@ abstract class AbstractTable
         $data = $this->prepareData($this->config);
         $this->loadData($data);
         $wrapperArray = [
-            'draw' => $this->request->query->get('draw', 1),
+            'draw' => $this->request->query->getInt('draw', 1),
             'recordsTotal' => $this->total,
             'recordsFiltered' => $this->filtered,
             'data' => $this->data,
@@ -884,20 +997,20 @@ abstract class AbstractTable
      * @param string $url
      * @param string $title
      * @param array $options
+     * @param string $formClassName
      *
      * @return string
      */
-    protected function generateRemoveButton($url, $title, array $options = [])
+    protected function generateRemoveButton($url, $title, array $options = [], string $formClassName = DeleteForm::class)
     {
-        $formFactory = $this->getFormFactory();
+        $name = isset($options[static::DELETE_FORM_NAME_SUFFIX]) ? static::DELETE_FORM_NAME . $options[static::DELETE_FORM_NAME_SUFFIX] : '';
 
         $options = [
             'fields' => $options,
-            'action' => $url,
+            'action' => (string)$url,
         ];
 
-        $form = $formFactory->create(DeleteForm::class, [], $options);
-
+        $form = $this->createForm($formClassName, $name, $options);
         $options['form'] = $form->createView();
         $options['title'] = $title;
 
@@ -905,11 +1018,28 @@ abstract class AbstractTable
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Gui\Communication\Table\AbstractTable::createForm()} instead.
+     *
+     * @param array $options
+     * @param string $name
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    protected function createDeleteForm(array $options, string $name = ''): FormInterface
+    {
+        if (!$name) {
+            return $this->getFormFactory()->create(DeleteForm::class, [], $options);
+        }
+
+        return $this->getFormFactory()->createNamed($name, DeleteForm::class, [], $options);
+    }
+
+    /**
      * @return \Symfony\Component\Form\FormFactoryInterface
      */
     protected function getFormFactory()
     {
-        return (new Pimple())->getApplication()['form.factory'];
+        return $this->getApplicationContainer()->get(static::SERVICE_FORM_FACTORY);
     }
 
     /**
@@ -939,6 +1069,71 @@ abstract class AbstractTable
             'icon' => $icon,
             'parameters' => $parameters,
         ]);
+    }
+
+    /**
+     * @param string|\Spryker\Service\UtilText\Model\Url\Url $url
+     * @param string $title
+     * @param string $formClassName
+     * @param array $buttonOptions
+     * @param array $formOptions
+     *
+     * @return string
+     */
+    protected function generateFormButton($url, string $title, string $formClassName, array $buttonOptions = [], array $formOptions = [])
+    {
+        $buttonOptions = $this->generateButtonOptions([
+            'class' => 'btn-view',
+            'icon' => 'fa-caret-right',
+        ], $buttonOptions);
+
+        $buttonClass = $this->getButtonClass($buttonOptions);
+        $buttonParameters = $this->getButtonParameters($buttonOptions);
+
+        $formOptions = array_merge($formOptions, [
+            'action' => $this->buildUrl($url),
+            'attr' => ['class' => 'form-inline'],
+        ]);
+
+        $form = $this->createForm($formClassName, null, $formOptions);
+
+        return $this->getTwig()->render('button-form.twig', [
+            'class' => $buttonClass,
+            'title' => $title,
+            'icon' => $this->generateButtonIcon($buttonOptions),
+            'parameters' => $buttonParameters,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @param string $formClassName
+     * @param string|null $formName
+     * @param array $formOptions
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    protected function createForm(string $formClassName, ?string $formName = null, array $formOptions = []): FormInterface
+    {
+        if (!$formName) {
+            return $this->getFormFactory()->create($formClassName, [], $formOptions);
+        }
+
+        return $this->getFormFactory()->createNamed($formName, $formClassName, [], $formOptions);
+    }
+
+    /**
+     * @param array $buttonOptions
+     *
+     * @return string
+     */
+    protected function generateButtonIcon(array $buttonOptions): string
+    {
+        if (array_key_exists(static::BUTTON_ICON, $buttonOptions) === true && $buttonOptions[static::BUTTON_ICON] !== null) {
+            return '<i class="fa ' . $buttonOptions[static::BUTTON_ICON] . '"></i> ';
+        }
+
+        return '';
     }
 
     /**
@@ -1111,7 +1306,7 @@ abstract class AbstractTable
         if (preg_match('/created_at|updated_at/', $searchColumns[$column->getData()])) {
             $query->where(
                 sprintf(
-                    "(%s >= %s AND %s <= %s)",
+                    '(%s >= %s AND %s <= %s)',
                     $searchColumns[$column->getData()],
                     Propel::getConnection()->quote($this->filterSearchValue($search[self::PARAMETER_VALUE]) . ' 00:00:00'),
                     $searchColumns[$column->getData()],
@@ -1128,7 +1323,7 @@ abstract class AbstractTable
         }
 
         $query->where(sprintf(
-            "%s = %s",
+            '%s = %s',
             $searchColumns[$column->getData()],
             Propel::getConnection()->quote($value)
         ));

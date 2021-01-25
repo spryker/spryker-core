@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductMeasurementUnit\Business;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
@@ -150,11 +151,25 @@ interface ProductMeasurementUnitFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link ProductMeasurementUnitFacade::expandOrderItemsWithQuantitySalesUnit()} instead.
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function expandOrderWithQuantitySalesUnit(OrderTransfer $orderTransfer): OrderTransfer;
+
+    /**
+     * Specification:
+     * - Expands order items with quantity sales unit if applicable.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function expandOrderItemsWithQuantitySalesUnit(array $itemTransfers): array;
 
     /**
      * Specification:
@@ -221,4 +236,31 @@ interface ProductMeasurementUnitFacadeInterface
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
     public function expandItemsWithDefaultQuantitySalesUnit(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
+
+    /**
+     * Specification:
+     * - Checks if product measurement sales units are found for items with amount sales units in `CartChangeTransfer`.
+     * - Returns `CartPreCheckResponseTransfer` with an error in case sales unit not found for item.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
+     */
+    public function checkItemProductMeasurementSalesUnit(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer;
+
+    /**
+     * Specification:
+     * - Filters out products which have measurement unit available and returns back modified array.
+     * - Requires ProductConcreteTransfer::idProductConcrete to be set.
+     * - Requires ProductConcreteTransfer::fkProductAbstract to be set.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function filterProductsWithoutMeasurementUnit(array $productConcreteTransfers): array;
 }

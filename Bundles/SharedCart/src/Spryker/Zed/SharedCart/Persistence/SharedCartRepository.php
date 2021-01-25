@@ -293,7 +293,7 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
      */
     public function getCustomerIdByReference(string $customerReference): string
     {
-        return $this->getFactory()
+        return (string)$this->getFactory()
             ->createSpyCustomerQuery()
             ->filterByCustomerReference($customerReference)
             ->select([SpyCustomerTableMap::COL_ID_CUSTOMER])
@@ -309,10 +309,12 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
      */
     public function isSharedQuoteDefault(int $idQuote, int $idCompanyUser): bool
     {
-        return (bool)$this->getFactory()
+        return $this->getFactory()
             ->createQuoteCompanyUserQuery()
             ->filterByFkQuote($idQuote)
-            ->filterByFkCompanyUser($idCompanyUser)->count();
+            ->filterByFkCompanyUser($idCompanyUser)
+            ->filterByIsDefault(true)
+            ->exists();
     }
 
     /**
@@ -365,8 +367,9 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
      *
      * @return \Generated\Shared\Transfer\ShareDetailCollectionTransfer
      */
-    public function getShareDetailCollectionByShareDetailCriteria(ShareDetailCriteriaFilterTransfer $shareDetailCriteriaFilterTransfer): ShareDetailCollectionTransfer
-    {
+    public function getShareDetailCollectionByShareDetailCriteria(
+        ShareDetailCriteriaFilterTransfer $shareDetailCriteriaFilterTransfer
+    ): ShareDetailCollectionTransfer {
         $quoteCompanyUserQuery = $this->getFactory()->createQuoteCompanyUserQuery();
         $quoteCompanyUserQuery = $this->applySharedDetailCriteriaFiltersToQuoteCompanyUserQuery(
             $quoteCompanyUserQuery,

@@ -4,11 +4,12 @@
   "description": "Graphviz module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.3",
     "phpdocumentor/graphviz": "^1.0.4"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {},
   "extra": {
     "branch-alias": {
       "dev-master": "2.0.x-dev"

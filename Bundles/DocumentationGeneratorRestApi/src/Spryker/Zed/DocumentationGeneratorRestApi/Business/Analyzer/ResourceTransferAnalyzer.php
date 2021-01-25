@@ -8,6 +8,7 @@
 namespace Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer;
 
 use ReflectionClass;
+use Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 class ResourceTransferAnalyzer implements ResourceTransferAnalyzerInterface
@@ -19,6 +20,7 @@ class ResourceTransferAnalyzer implements ResourceTransferAnalyzerInterface
     protected const SCHEMA_NAME_PARTIAL_COLLECTION = 'Collection';
     protected const SCHEMA_NAME_PARTIAL_DATA = 'Data';
     protected const SCHEMA_NAME_PARTIAL_RELATIONSHIPS = 'Relationships';
+    protected const SCHEMA_NAME_PARTIAL_INCLUDED = 'Included';
     protected const SCHEMA_NAME_PARTIAL_REQUEST = 'Request';
     protected const SCHEMA_NAME_PARTIAL_RESPONSE = 'Response';
 
@@ -29,7 +31,9 @@ class ResourceTransferAnalyzer implements ResourceTransferAnalyzerInterface
      */
     public function isTransferValid(string $transferClassName): bool
     {
-        return class_exists($transferClassName) && is_subclass_of($transferClassName, AbstractTransfer::class);
+        return class_exists($transferClassName)
+            && is_subclass_of($transferClassName, AbstractTransfer::class)
+            && !is_subclass_of($transferClassName, AbstractEntityTransfer::class);
     }
 
     /**
@@ -169,6 +173,20 @@ class ResourceTransferAnalyzer implements ResourceTransferAnalyzerInterface
             $this->getTransferClassNamePartial($transferClassName),
             static::TRANSFER_NAME_PARTIAL_ATTRIBUTES . static::TRANSFER_NAME_PARTIAL_TRANSFER,
             static::SCHEMA_NAME_PARTIAL_RELATIONSHIPS
+        );
+    }
+
+    /**
+     * @param string $transferClassName
+     *
+     * @return string
+     */
+    public function createIncludedSchemaNameFromTransferClassName(string $transferClassName): string
+    {
+        return $this->createSchemaNameFromTransferClassName(
+            $this->getTransferClassNamePartial($transferClassName),
+            static::TRANSFER_NAME_PARTIAL_ATTRIBUTES . static::TRANSFER_NAME_PARTIAL_TRANSFER,
+            static::SCHEMA_NAME_PARTIAL_INCLUDED
         );
     }
 

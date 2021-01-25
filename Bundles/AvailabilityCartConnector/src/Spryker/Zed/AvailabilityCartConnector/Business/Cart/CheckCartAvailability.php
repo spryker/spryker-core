@@ -12,7 +12,9 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
+use Generated\Shared\Transfer\ProductAvailabilityCriteriaTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\AvailabilityCartConnector\Dependency\Facade\AvailabilityCartConnectorToAvailabilityInterface;
 
 class CheckCartAvailability implements CheckCartAvailabilityInterface
@@ -28,11 +30,20 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
     protected $availabilityFacade;
 
     /**
-     * @param \Spryker\Zed\AvailabilityCartConnector\Dependency\Facade\AvailabilityCartConnectorToAvailabilityInterface $availabilityFacade
+     * @var \Spryker\Zed\AvailabilityCartConnectorExtension\Dependency\Plugin\CartItemQuantityCounterStrategyPluginInterface[]
      */
-    public function __construct(AvailabilityCartConnectorToAvailabilityInterface $availabilityFacade)
-    {
+    protected $cartItemQuantityCounterStrategyPlugins;
+
+    /**
+     * @param \Spryker\Zed\AvailabilityCartConnector\Dependency\Facade\AvailabilityCartConnectorToAvailabilityInterface $availabilityFacade
+     * @param \Spryker\Zed\AvailabilityCartConnectorExtension\Dependency\Plugin\CartItemQuantityCounterStrategyPluginInterface[] $cartItemQuantityCounterStrategyPlugins
+     */
+    public function __construct(
+        AvailabilityCartConnectorToAvailabilityInterface $availabilityFacade,
+        array $cartItemQuantityCounterStrategyPlugins
+    ) {
         $this->availabilityFacade = $availabilityFacade;
+        $this->cartItemQuantityCounterStrategyPlugins = $cartItemQuantityCounterStrategyPlugins;
     }
 
     /**
@@ -50,25 +61,61 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
 
         $messages = new ArrayObject();
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            $currentItemQuantity = $this->calculateCurrentCartQuantityForGivenSku(
-                $itemsInCart,
-                $itemTransfer->getSku()
-            );
+            if ($itemTransfer->getAmount() !== null) {
+                continue;
+            }
+
+            $currentItemQuantity = $this->calculateCurrentCartItemQuantity($itemsInCart, $itemTransfer);
+
             $currentItemQuantity += $itemTransfer->getQuantity();
 
-            $isSellable = $this->isProductSellable($itemTransfer, $currentItemQuantity, $storeTransfer);
+            $productAvailabilityCriteriaTransfer = (new ProductAvailabilityCriteriaTransfer())
+                ->fromArray($itemTransfer->toArray(), true);
+
+            $isSellable = $this->availabilityFacade->isProductSellableForStore(
+                $itemTransfer->getSku(),
+                new Decimal($currentItemQuantity),
+                $storeTransfer,
+                $productAvailabilityCriteriaTransfer
+            );
 
             if (!$isSellable) {
-                $stock = $this->calculateStockForProduct($itemTransfer, $storeTransfer);
+                $availability = $this->findProductConcreteAvailability($itemTransfer, $storeTransfer, $productAvailabilityCriteriaTransfer);
                 $cartPreCheckResponseTransfer->setIsSuccess(false);
-                $messages[] = $this->createItemIsNotAvailableMessageTransfer($stock, $itemTransfer->getSku());
+                $messages[] = $this->createItemIsNotAvailableMessageTransfer($availability, $itemTransfer->getSku());
             }
+
             $itemsInCart->append($itemTransfer);
         }
 
         $cartPreCheckResponseTransfer->setMessages($messages);
 
         return $cartPreCheckResponseTransfer;
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemsInCart
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return int
+     */
+    protected function calculateCurrentCartItemQuantity(ArrayObject $itemsInCart, ItemTransfer $itemTransfer): int
+    {
+        foreach ($this->cartItemQuantityCounterStrategyPlugins as $cartItemQuantityCounterStrategyPlugin) {
+            if ($cartItemQuantityCounterStrategyPlugin->isApplicable($itemsInCart, $itemTransfer)) {
+                $cartItemQuantityTransfer = $cartItemQuantityCounterStrategyPlugin->countCartItemQuantity(
+                    $itemsInCart,
+                    $itemTransfer
+                );
+
+                return $cartItemQuantityTransfer->getQuantity();
+            }
+        }
+
+        return $this->calculateCurrentCartQuantityForGivenSku(
+            $itemsInCart,
+            $itemTransfer->getSku()
+        );
     }
 
     /**
@@ -91,19 +138,19 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
     }
 
     /**
-     * @param int $stock
+     * @param \Spryker\DecimalObject\Decimal $availability
      * @param string $sku
      *
      * @return \Generated\Shared\Transfer\MessageTransfer
      */
-    protected function createItemIsNotAvailableMessageTransfer($stock, $sku)
+    protected function createItemIsNotAvailableMessageTransfer(Decimal $availability, string $sku): MessageTransfer
     {
-        $translationKey = $this->getTranslationKey($stock);
+        $translationKey = $this->getTranslationKey($availability);
 
         $messageTransfer = new MessageTransfer();
         $messageTransfer->setValue($translationKey);
         $messageTransfer->setParameters([
-            static::STOCK_TRANSLATION_PARAMETER => $stock,
+            static::STOCK_TRANSLATION_PARAMETER => $availability->trim()->toString(),
             static::SKU_TRANSLATION_PARAMETER => $sku,
         ]);
 
@@ -111,14 +158,14 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
     }
 
     /**
-     * @param int $stock
+     * @param \Spryker\DecimalObject\Decimal $availability
      *
      * @return string
      */
-    protected function getTranslationKey($stock)
+    protected function getTranslationKey(Decimal $availability): string
     {
         $translationKey = static::CART_PRE_CHECK_AVAILABILITY_FAILED;
-        if ($stock <= 0) {
+        if ($availability->lessThanOrEquals(0)) {
             $translationKey = static::CART_PRE_CHECK_AVAILABILITY_EMPTY;
         }
 
@@ -130,49 +177,34 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
      *
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    protected function getStoreTransfer(CartChangeTransfer $cartChangeTransfer)
+    protected function getStoreTransfer(CartChangeTransfer $cartChangeTransfer): StoreTransfer
     {
-        $storeTransfer = $cartChangeTransfer->getQuote()->getStore();
-        if (!$storeTransfer) {
-            return new StoreTransfer();
-        }
+        $cartChangeTransfer
+            ->getQuote()
+                ->requireStore();
+
+        return $cartChangeTransfer->getQuote()->getStore();
     }
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param int $currentItemQuantity
-     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\ProductAvailabilityCriteriaTransfer $productAvailabilityCriteriaTransfer
      *
-     * @return bool
+     * @return \Spryker\DecimalObject\Decimal
      */
-    protected function isProductSellable(
+    protected function findProductConcreteAvailability(
         ItemTransfer $itemTransfer,
-        $currentItemQuantity,
-        ?StoreTransfer $storeTransfer = null
-    ) {
-        if ($storeTransfer) {
-            return $this->availabilityFacade->isProductSellableForStore(
-                $itemTransfer->getSku(),
-                $currentItemQuantity,
-                $storeTransfer
-            );
+        StoreTransfer $storeTransfer,
+        ProductAvailabilityCriteriaTransfer $productAvailabilityCriteriaTransfer
+    ): Decimal {
+        $productConcreteAvailabilityTransfer = $this->availabilityFacade
+            ->findOrCreateProductConcreteAvailabilityBySkuForStore($itemTransfer->getSku(), $storeTransfer, $productAvailabilityCriteriaTransfer);
+
+        if ($productConcreteAvailabilityTransfer !== null) {
+            return $productConcreteAvailabilityTransfer->getAvailability();
         }
 
-        return $this->availabilityFacade->isProductSellable($itemTransfer->getSku(), $currentItemQuantity);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
-     *
-     * @return int
-     */
-    protected function calculateStockForProduct(ItemTransfer $itemTransfer, ?StoreTransfer $storeTransfer = null)
-    {
-        if ($storeTransfer) {
-            $this->availabilityFacade->calculateStockForProductWithStore($itemTransfer->getSku(), $storeTransfer);
-        }
-
-        return $this->availabilityFacade->calculateStockForProduct($itemTransfer->getSku());
+        return new Decimal(0);
     }
 }

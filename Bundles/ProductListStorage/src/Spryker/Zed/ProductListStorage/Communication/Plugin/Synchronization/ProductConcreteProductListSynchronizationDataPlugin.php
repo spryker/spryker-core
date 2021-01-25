@@ -13,7 +13,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataRepositoryPluginInterface;
 
 /**
- * @deprecated Use \Spryker\Zed\ProductListStorage\Communication\Plugin\Synchronization\ProductConcreteProductListSynchronizationDataBulkPlugin instead.
+ * @deprecated Use {@link \Spryker\Zed\ProductListStorage\Communication\Plugin\Synchronization\ProductConcreteProductListSynchronizationDataBulkPlugin} instead.
  *
  * @method \Spryker\Zed\ProductListStorage\ProductListStorageConfig getConfig()
  * @method \Spryker\Zed\ProductListStorage\Persistence\ProductListStorageRepositoryInterface getRepository()
@@ -23,6 +23,8 @@ use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataRe
 class ProductConcreteProductListSynchronizationDataPlugin extends AbstractPlugin implements SynchronizationDataRepositoryPluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string
@@ -33,6 +35,8 @@ class ProductConcreteProductListSynchronizationDataPlugin extends AbstractPlugin
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return bool
@@ -43,6 +47,8 @@ class ProductConcreteProductListSynchronizationDataPlugin extends AbstractPlugin
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return array
@@ -53,6 +59,8 @@ class ProductConcreteProductListSynchronizationDataPlugin extends AbstractPlugin
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string
@@ -63,6 +71,8 @@ class ProductConcreteProductListSynchronizationDataPlugin extends AbstractPlugin
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string|null
@@ -73,6 +83,8 @@ class ProductConcreteProductListSynchronizationDataPlugin extends AbstractPlugin
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int[] $ids

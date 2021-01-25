@@ -28,19 +28,19 @@ class ShoppingListStoragePublishListener extends AbstractPlugin implements Event
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
      * @param string $eventName
      *
      * @return void
      */
-    public function handleBulk(array $eventTransfers, $eventName): void
+    public function handleBulk(array $eventEntityTransfers, $eventName): void
     {
         $this->preventTransaction();
         $customerReferences = [];
 
         $validEventTransfers = $this->getFactory()
             ->getEventBehaviorFacade()
-            ->getEventTransfersByModifiedColumns($eventTransfers, [
+            ->getEventTransfersByModifiedColumns($eventEntityTransfers, [
                 ShoppingListTransfer::CUSTOMER_REFERENCE,
             ]);
 
