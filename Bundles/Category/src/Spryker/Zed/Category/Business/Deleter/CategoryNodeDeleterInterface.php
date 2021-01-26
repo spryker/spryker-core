@@ -14,12 +14,27 @@ interface CategoryNodeDeleterInterface
      *
      * @return void
      */
-    public function deleteCategoryNodes(int $idCategory): void;
+    public function deleteCategoryNodesForCategory(int $idCategory): void;
 
     /**
      * @param int $idCategory
      *
      * @return void
      */
-    public function deleteCategoryExtraParentNodes(int $idCategory): void;
+    public function deleteCategoryExtraParentNodesForCategory(int $idCategory): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\NodeTransfer[] $nodeTransfers
+     *
+     * @return void
+     */
+    public function deleteCategoryNodes(array $nodeTransfers): void;
+
+    /**
+     * @param int $idCategoryNode
+     * @param int $idChildrenDestinationNode
+     *
+     * @return void
+     */
+    public function deleteNodeById(int $idCategoryNode, int $idChildrenDestinationNode): void;
 }

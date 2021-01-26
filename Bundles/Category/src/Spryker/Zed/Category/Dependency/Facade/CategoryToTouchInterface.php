@@ -24,12 +24,4 @@ interface CategoryToTouchInterface
      * @return bool
      */
     public function touchDeleted($itemType, $itemId);
-
-    /**
-     * @param string $itemType
-     * @param array $itemIds
-     *
-     * @return int
-     */
-    public function bulkTouchSetActive($itemType, array $itemIds = []);
 }

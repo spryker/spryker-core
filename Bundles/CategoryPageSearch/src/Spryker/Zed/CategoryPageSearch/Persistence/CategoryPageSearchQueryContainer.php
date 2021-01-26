@@ -7,11 +7,8 @@
 
 namespace Spryker\Zed\CategoryPageSearch\Persistence;
 
-use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
-use Orm\Zed\Category\Persistence\Map\SpyCategoryTableMap;
 use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
-use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -20,37 +17,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 class CategoryPageSearchQueryContainer extends AbstractQueryContainer implements CategoryPageSearchQueryContainerInterface
 {
     public const ID_CATEGORY_NODE = 'idCategoryNode';
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @deprecated Will be removed with next major release.
-     *
-     * @param array $categoryNodeIds
-     * @param int $idLocale
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
-     */
-    public function queryCategoryNodeTree(array $categoryNodeIds, $idLocale)
-    {
-        /** @var \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery $query */
-        $query = $this->getFactory()
-            ->getCategoryQueryContainer()
-            ->queryAllCategoryNodes()
-            ->filterByIdCategoryNode_In($categoryNodeIds)
-            ->joinWithSpyUrl()
-            ->joinWithCategory()
-            ->joinWith('Category.Attribute')
-            ->joinWith('Category.CategoryTemplate')
-            ->where(SpyCategoryAttributeTableMap::COL_FK_LOCALE . ' = ?', $idLocale)
-            ->where(SpyUrlTableMap::COL_FK_LOCALE . ' = ?', $idLocale)
-            ->where(SpyCategoryTableMap::COL_IS_ACTIVE . ' = ?', true)
-            ->where(SpyCategoryTableMap::COL_IS_IN_MENU . ' = ?', true);
-
-        return $query;
-    }
 
     /**
      * {@inheritDoc}

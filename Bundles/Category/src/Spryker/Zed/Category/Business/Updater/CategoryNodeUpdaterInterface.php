@@ -5,30 +5,31 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Category\Business\Model\CategoryAttribute;
+namespace Spryker\Zed\Category\Business\Updater;
 
 use Generated\Shared\Transfer\CategoryTransfer;
 
-interface CategoryAttributeInterface
+interface CategoryNodeUpdaterInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
      * @return void
      */
-    public function create(CategoryTransfer $categoryTransfer);
+    public function updateCategoryNode(CategoryTransfer $categoryTransfer): void;
 
     /**
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
      * @return void
      */
-    public function update(CategoryTransfer $categoryTransfer);
+    public function updateExtraParentCategoryNodes(CategoryTransfer $categoryTransfer): void;
 
     /**
-     * @param int $idCategory
+     * @param int $idCategoryNode
+     * @param int $position
      *
      * @return void
      */
-    public function delete($idCategory);
+    public function updateCategoryNodeOrder(int $idCategoryNode, int $position): void;
 }

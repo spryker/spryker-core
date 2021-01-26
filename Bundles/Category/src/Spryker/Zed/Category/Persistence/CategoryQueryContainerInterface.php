@@ -118,23 +118,6 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
      *
      * @api
      *
-     * @deprecated Will be removed with next major release.
-     *
-     * @param int $idNode
-     * @param int $idLocale
-     * @param bool $onlyOneLevel
-     * @param bool $excludeStartNode
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
-     */
-    public function queryChildren($idNode, $idLocale, $onlyOneLevel = true, $excludeStartNode = true);
-
-    /**
-     * Specification:
-     * - TODO: Add method specification.
-     *
-     * @api
-     *
      * @param int $idNode
      * @param int $idLocale
      * @param bool $excludeRootNode
@@ -186,53 +169,11 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
      *
      * @api
      *
-     * @deprecated Will be removed with next major release.
-     *
-     * @param int $idCategory
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
-     */
-    public function queryMainNodesByCategoryId($idCategory);
-
-    /**
-     * Specification:
-     * - TODO: Add method specification.
-     *
-     * @api
-     *
-     * @deprecated Will be removed with next major release.
-     *
-     * @param int $idCategory
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
-     */
-    public function queryNotMainNodesByCategoryId($idCategory);
-
-    /**
-     * Specification:
-     * - TODO: Add method specification.
-     *
-     * @api
-     *
      * @param int $idCategory
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryQuery
      */
     public function queryCategoryById($idCategory);
-
-    /**
-     * Specification:
-     * - TODO: Add method specification.
-     *
-     * @api
-     *
-     * @deprecated Will be removed with next major release.
-     *
-     * @param int $idNode
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
-     */
-    public function queryCategoryNodeByNodeId($idNode);
 
     /**
      * Specification:
@@ -271,21 +212,6 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
      */
     public function queryUrlByIdCategoryNode($idCategoryNode);
-
-    /**
-     * Specification:
-     * - TODO: Add method specification.
-     *
-     * @api
-     *
-     * @deprecated Will be removed with next major release.
-     *
-     * @param int $idCategoryNode
-     * @param int $idLocale
-     *
-     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
-     */
-    public function queryResourceUrlByCategoryNodeAndLocaleId($idCategoryNode, $idLocale);
 
     /**
      * Specification:

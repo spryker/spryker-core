@@ -45,7 +45,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      */
     public function queryAllCategoryNodes()
     {
-        return $this->getFactory()->createCategoryNodeQuery()
+        return $this->getFactory()
+            ->createCategoryNodeQuery()
             ->orderBy(SpyCategoryNodeTableMap::COL_NODE_ORDER, Criteria::DESC);
     }
 
@@ -221,52 +222,6 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      *
      * @api
      *
-     * @deprecated Will be removed with next major release.
-     *
-     * @param int $idNode
-     * @param int $idLocale
-     * @param bool $onlyOneLevel
-     * @param bool $excludeStartNode
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
-     */
-    public function queryChildren($idNode, $idLocale, $onlyOneLevel = true, $excludeStartNode = true)
-    {
-        $nodeQuery = $this->getFactory()->createCategoryNodeQuery();
-        $nodeQuery
-            ->useCategoryQuery()
-            ->useAttributeQuery()
-            ->filterByFkLocale($idLocale)
-            ->endUse()
-            ->endUse()
-            ->useDescendantQuery()
-            ->filterByFkCategoryNode($idNode)
-            ->endUse()
-            ->withColumn(SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE)
-            ->withColumn(SpyCategoryNodeTableMap::COL_FK_PARENT_CATEGORY_NODE)
-            ->withColumn(SpyCategoryAttributeTableMap::COL_NAME)
-            ->withColumn(SpyCategoryTableMap::COL_CATEGORY_KEY);
-
-        if ($excludeStartNode) {
-            $nodeQuery->filterByIdCategoryNode($idNode, Criteria::NOT_EQUAL);
-        }
-
-        if ($onlyOneLevel) {
-            $nodeQuery->filterByIdCategoryNode($idNode)
-                ->_or();
-            $nodeQuery->filterByFkParentCategoryNode($idNode);
-        }
-
-        $nodeQuery->orderBy(SpyCategoryNodeTableMap::COL_NODE_ORDER, Criteria::DESC);
-
-        return $nodeQuery;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
      * @param int $idNode
      * @param int $idLocale
      * @param bool $excludeRootNode
@@ -357,38 +312,6 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     }
 
     /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @deprecated Will be removed with next major release.
-     *
-     * @param int $idCategory
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
-     */
-    public function queryMainNodesByCategoryId($idCategory)
-    {
-        return $this->queryNodesByCategoryId($idCategory, true);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @deprecated Will be removed with next major release.
-     *
-     * @param int $idCategory
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
-     */
-    public function queryNotMainNodesByCategoryId($idCategory)
-    {
-        return $this->queryNodesByCategoryId($idCategory, false);
-    }
-
-    /**
      * @param int $idCategory
      * @param mixed $isMain true|false|null
      *
@@ -418,20 +341,6 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     public function queryCategoryById($idCategory)
     {
         return $this->getFactory()->createCategoryQuery()->filterByIdCategory($idCategory);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param int $idNode
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
-     */
-    public function queryCategoryNodeByNodeId($idNode)
-    {
-        return $this->getFactory()->createCategoryNodeQuery()->filterByIdCategoryNode($idNode);
     }
 
     /**
@@ -498,27 +407,6 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
             ->joinSpyLocale()
             ->filterByFkResourceCategorynode($idCategoryNode)
             ->withColumn(SpyLocaleTableMap::COL_LOCALE_NAME);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @deprecated Will be removed with next major release.
-     *
-     * @param int $idCategoryNode
-     * @param int $idLocale
-     *
-     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
-     */
-    public function queryResourceUrlByCategoryNodeAndLocaleId($idCategoryNode, $idLocale)
-    {
-        $query = $this->getFactory()->createUrlQuery();
-        $query->filterByFkResourceCategorynode($idCategoryNode);
-        $query->filterByFkLocale($idLocale);
-
-        return $query;
     }
 
     /**

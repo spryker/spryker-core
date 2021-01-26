@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\CategoryNodeUrlFilterTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeCollectionTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 
 interface CategoryFacadeInterface
 {
@@ -63,6 +64,7 @@ interface CategoryFacadeInterface
      *  - Finds or creates extra-parent category-node entities, hydrates them from CategoryTransfer, and persists them
      *  - Generates urls from category names for all given locales (names are part of the attributes)
      *  - Finds url entities, hydrates them with generated URLs, and persists them
+     *  - Updates the relationships between category and store if data is provided.
      *  - Touches modified category-node entities active (via TouchFacade)
      *  - Touches modified url entities active (via TouchFacade)
      *  - Touches navigation active (via TouchFacade)
@@ -94,6 +96,25 @@ interface CategoryFacadeInterface
      * @return void
      */
     public function update(CategoryTransfer $categoryTransfer): void;
+
+    /**
+     * Specification:
+     * - Updates category store relation of provided category.
+     * - Updates category store relation for all main children nodes of provided category.
+     *
+     * @api
+     *
+     * @param int $idCategory
+     * @param \Generated\Shared\Transfer\StoreRelationTransfer $newStoreAssignment
+     * @param \Generated\Shared\Transfer\StoreRelationTransfer|null $currentStoreAssignment
+     *
+     * @return void
+     */
+    public function updateCategoryStoreRelationWithMainChildrenPropagation(
+        int $idCategory,
+        StoreRelationTransfer $newStoreAssignment,
+        ?StoreRelationTransfer $currentStoreAssignment = null
+    ): void;
 
     /**
      * Specification:
@@ -197,14 +218,16 @@ interface CategoryFacadeInterface
     /**
      * Specification:
      * - Retrieves collection with all categories from DB.
+     * - Filters collection by related locale and store.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
      */
-    public function getAllCategoryCollection(LocaleTransfer $localeTransfer): CategoryCollectionTransfer;
+    public function getAllCategoryCollection(LocaleTransfer $localeTransfer, string $storeName): CategoryCollectionTransfer;
 
     /**
      * Specification:

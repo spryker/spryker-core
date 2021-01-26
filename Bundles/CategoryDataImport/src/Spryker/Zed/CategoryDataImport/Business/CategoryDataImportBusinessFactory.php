@@ -13,6 +13,8 @@ use Spryker\Zed\CategoryDataImport\Business\Writer\CategoryStore\CategoryKeyToId
 use Spryker\Zed\CategoryDataImport\Business\Writer\CategoryStore\CategoryStoreWriteStep;
 use Spryker\Zed\CategoryDataImport\Business\Writer\CategoryStore\StoreNameToIdStoreStep;
 use Spryker\Zed\CategoryDataImport\Business\Writer\CategoryStore\StoreRelationshipFilterStep;
+use Spryker\Zed\CategoryDataImport\CategoryDataImportDependencyProvider;
+use Spryker\Zed\CategoryDataImport\Dependency\Facade\CategoryDataImportToCategoryFacadeInterface;
 use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 
@@ -101,6 +103,14 @@ class CategoryDataImportBusinessFactory extends DataImportBusinessFactory
      */
     public function createCategoryStoreWriteStep(): DataImportStepInterface
     {
-        return new CategoryStoreWriteStep();
+        return new CategoryStoreWriteStep($this->getCategoryFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\CategoryDataImport\Dependency\Facade\CategoryDataImportToCategoryFacadeInterface
+     */
+    public function getCategoryFacade(): CategoryDataImportToCategoryFacadeInterface
+    {
+        return $this->getProvidedDependency(CategoryDataImportDependencyProvider::FACADE_CATEGORY);
     }
 }

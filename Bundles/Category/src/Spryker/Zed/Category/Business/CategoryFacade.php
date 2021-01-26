@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\CategoryNodeUrlFilterTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeCollectionTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -53,6 +54,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
+     * @throws \Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException
+     *
      * @return void
      */
     public function create(CategoryTransfer $categoryTransfer): void
@@ -70,19 +73,37 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
-     * @throws \Spryker\Zed\Category\Business\Exception\MissingCategoryException
-     * @throws \Spryker\Zed\Category\Business\Exception\MissingCategoryNodeException
-     * @throws \Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException
-     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
-     *
      * @return void
      */
     public function update(CategoryTransfer $categoryTransfer): void
     {
         $this
             ->getFactory()
-            ->createCategory()
-            ->update($categoryTransfer);
+            ->createCategoryUpdater()
+            ->updateCategory($categoryTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int $idCategory
+     * @param \Generated\Shared\Transfer\StoreRelationTransfer $newStoreAssignment
+     * @param \Generated\Shared\Transfer\StoreRelationTransfer|null $currentStoreAssignment
+     *
+     * @throws \Spryker\Zed\Category\Business\Exception\MissingCategoryException
+     *
+     * @return void
+     */
+    public function updateCategoryStoreRelationWithMainChildrenPropagation(
+        int $idCategory,
+        StoreRelationTransfer $newStoreAssignment,
+        ?StoreRelationTransfer $currentStoreAssignment = null
+    ): void {
+        $this->getFactory()
+            ->createCategoryStoreUpdater()
+            ->updateCategoryStoreRelationWithMainChildrenPropagation($idCategory, $newStoreAssignment, $currentStoreAssignment);
     }
 
     /**
@@ -115,7 +136,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     public function deleteNodeById($idCategoryNode, $idChildrenDestinationNode)
     {
         $this->getFactory()
-            ->createCategoryNode()
+            ->createCategoryNodeDeleter()
             ->deleteNodeById($idCategoryNode, $idChildrenDestinationNode);
     }
 
@@ -131,10 +152,9 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      */
     public function updateCategoryNodeOrder($idCategoryNode, $position): void
     {
-        $this
-            ->getFactory()
-            ->createNodeWriter()
-            ->updateOrder($idCategoryNode, $position);
+        $this->getFactory()
+            ->createCategoryNodeUpdater()
+            ->updateCategoryNodeOrder($idCategoryNode, $position);
     }
 
     /**
@@ -204,14 +224,15 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
      */
-    public function getAllCategoryCollection(LocaleTransfer $localeTransfer): CategoryCollectionTransfer
+    public function getAllCategoryCollection(LocaleTransfer $localeTransfer, string $storeName): CategoryCollectionTransfer
     {
         return $this->getFactory()
-            ->createCategory()
-            ->getAllCategoryCollection($localeTransfer);
+            ->createCategoryReader()
+            ->getAllCategoryCollection($localeTransfer, $storeName);
     }
 
     /**

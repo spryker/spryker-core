@@ -20,21 +20,6 @@ interface CategoryPageSearchQueryContainerInterface extends QueryContainerInterf
      *
      * @deprecated Will be removed with next major release.
      *
-     * @param array $categoryNodeIds
-     * @param int $idLocale
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
-     */
-    public function queryCategoryNodeTree(array $categoryNodeIds, $idLocale);
-
-    /**
-     * Specification:
-     * - TODO: Add method specification.
-     *
-     * @api
-     *
-     * @deprecated Will be removed with next major release.
-     *
      * @param int[] $categoryIds
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery|\Propel\Runtime\ActiveQuery\ModelCriteria

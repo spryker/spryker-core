@@ -140,6 +140,8 @@
 
     <transfer name="StoreRelation">
         <property name="idStores" type="int[]" singular="idStores"/>
+        <property name="idEntity" type="int"/>
+        <property name="stores" type="Store[]" singular="stores"/>
     </transfer>
 
     <transfer name="CategoryNodeFilter">

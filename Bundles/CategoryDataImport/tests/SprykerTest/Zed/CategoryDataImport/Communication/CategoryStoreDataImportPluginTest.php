@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
-use Spryker\Zed\CategoryDataImport\Communication\Plugin\CategoryStoreDataImportPlugin;
+use Spryker\Zed\CategoryDataImport\Communication\Plugin\DataImport\CategoryStoreDataImportPlugin;
 
 /**
  * Auto-generated group annotations
