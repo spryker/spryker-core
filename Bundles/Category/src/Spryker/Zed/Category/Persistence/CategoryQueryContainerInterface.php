@@ -24,9 +24,6 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
      * Specification:
      * - Finds all category-node entities sorted by node order
      *
-     * Specification:
-     * - TODO: Add method specification.
-     *
      * @api
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
