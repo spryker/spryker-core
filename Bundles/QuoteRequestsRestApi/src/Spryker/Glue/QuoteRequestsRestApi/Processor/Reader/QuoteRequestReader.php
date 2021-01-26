@@ -64,13 +64,15 @@ class QuoteRequestReader implements QuoteRequestReaderInterface
         $quoteRequestResponseTransfer = $this->quoteRequestClient
             ->getQuoteRequest($quoteRequestFilterTransfer);
 
-        if (!$quoteRequestResponseTransfer->getIsSuccessful()) {
+        if (
+            !$quoteRequestResponseTransfer->getIsSuccessful()
+            || $quoteRequestResponseTransfer->getQuoteRequest() === null
+        ) {
             return $this->quoteRequestsRestResponseBuilder->createQuoteRequestNotFoundErrorResponse();
         }
 
-        $quoteRequestTransfer = $quoteRequestResponseTransfer->getQuoteRequestOrFail();
-
-        return $this->quoteRequestsRestResponseBuilder->createQuoteRequestRestResponse($quoteRequestTransfer);
+        return $this->quoteRequestsRestResponseBuilder
+            ->createQuoteRequestRestResponse($quoteRequestResponseTransfer->getQuoteRequest());
     }
 
     /**

@@ -13,6 +13,9 @@ namespace Spryker\Zed\Api\Dependency\Plugin;
 interface OptionsForCollectionInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $params

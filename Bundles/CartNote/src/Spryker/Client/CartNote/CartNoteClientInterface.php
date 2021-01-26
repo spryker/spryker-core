@@ -27,7 +27,7 @@ interface CartNoteClientInterface
     public function setNoteToQuote(string $note): QuoteResponseTransfer;
 
     /**
-     * Specification::
+     * Specification:
      * - Set Cart note to quote item.
      *
      * @api
