@@ -5,6 +5,7 @@
 
     <transfer name="Locale">
         <property name="idLocale" type="int"/>
+        <property name="localeName" type="string"/>
     </transfer>
 
     <transfer name="ProductCategoryFilter">
@@ -18,6 +19,7 @@
     <transfer name="Category">
         <property name="name" type="string"/>
         <property name="idCategory" type="int"/>
+        <property name="nodeCollection" type="NodeCollection"/>
     </transfer>
 
     <transfer name="ProductCategoryFilterItem">
@@ -28,9 +30,15 @@
 
     <transfer name="CategoryCriteria">
         <property name="idCategory" type="int"/>
+        <property name="localeName" type="string"/>
+        <property name="withChildrenRecursively" type="bool"/>
     </transfer>
 
     <transfer name="NodeCollection">
+        <property name="nodes" type="Node[]" singular="node"/>
+    </transfer>
+
+    <transfer name="Node">
     </transfer>
 
 </transfers>

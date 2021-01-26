@@ -23,6 +23,8 @@ use SprykerTest\Zed\Category\PageObject\CategoryEditPage;
 class CategoryEditCest
 {
     /**
+     * @skip Will be removed to GUI module.
+     *
      * @param \SprykerTest\Zed\Category\CategoryPresentationTester $i
      *
      * @return void
@@ -37,6 +39,8 @@ class CategoryEditCest
     }
 
     /**
+     * @skip Will be removed to GUI module.
+     *
      * @param \SprykerTest\Zed\Category\CategoryPresentationTester $i
      *
      * @return void
