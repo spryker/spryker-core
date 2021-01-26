@@ -12,7 +12,7 @@ interface SalesTablePluginInterface
     public const ROW_ACTIONS = 'Actions';
 
     /**
-     * Specifications:
+     * Specification:
      * - Get item inside foreach in AbstractTable::formatQueryData(). And update it.
      *
      * @api

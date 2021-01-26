@@ -12,7 +12,8 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 interface ConditionInterface
 {
     /**
-     * Run the check for an item and return boolean result.
+     * Specification:
+     * - Run the check for an item and return boolean result.
      *
      * @api
      *

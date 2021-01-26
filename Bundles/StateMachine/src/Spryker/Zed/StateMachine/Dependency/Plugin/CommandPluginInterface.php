@@ -12,7 +12,8 @@ use Generated\Shared\Transfer\StateMachineItemTransfer;
 interface CommandPluginInterface
 {
     /**
-     * This method is called when event have concrete command assigned.
+     * Specification:
+     * - Called when event have concrete command assigned.
      *
      * @api
      *

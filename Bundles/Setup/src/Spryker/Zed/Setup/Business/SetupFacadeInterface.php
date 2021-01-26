@@ -10,6 +10,9 @@ namespace Spryker\Zed\Setup\Business;
 interface SetupFacadeInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @deprecated Method will be removed without replacement.
@@ -21,6 +24,9 @@ interface SetupFacadeInterface
     public function generateCronjobs(array $roles);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @deprecated Method will be removed without replacement.
@@ -30,6 +36,9 @@ interface SetupFacadeInterface
     public function enableJenkins();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @deprecated Method will be removed without replacement.
@@ -39,6 +48,9 @@ interface SetupFacadeInterface
     public function disableJenkins();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @deprecated Use {@link emptyGeneratedDirectory()} instead
@@ -51,6 +63,9 @@ interface SetupFacadeInterface
      * Specification:
      * - Emtpies the configured directory that contains generated files
      *
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return void
@@ -58,6 +73,9 @@ interface SetupFacadeInterface
     public function emptyGeneratedDirectory();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @deprecated Hook in commands manually on project level

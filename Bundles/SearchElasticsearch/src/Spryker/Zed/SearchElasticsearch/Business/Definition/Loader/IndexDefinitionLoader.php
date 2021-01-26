@@ -9,6 +9,7 @@ namespace Spryker\Zed\SearchElasticsearch\Business\Definition\Loader;
 
 use Spryker\Zed\SearchElasticsearch\Business\Definition\Finder\SchemaDefinitionFinderInterface;
 use Spryker\Zed\SearchElasticsearch\Business\Definition\Reader\IndexDefinitionReaderInterface;
+use Spryker\Zed\SearchElasticsearch\Business\SourceIdentifier\SourceIdentifierInterface;
 use Symfony\Component\Finder\SplFileInfo;
 
 class IndexDefinitionLoader implements IndexDefinitionLoaderInterface
@@ -24,13 +25,23 @@ class IndexDefinitionLoader implements IndexDefinitionLoaderInterface
     protected $indexDefinitionReader;
 
     /**
+     * @var \Spryker\Zed\SearchElasticsearch\Business\SourceIdentifier\SourceIdentifierInterface
+     */
+    protected $sourceIdentifier;
+
+    /**
      * @param \Spryker\Zed\SearchElasticsearch\Business\Definition\Finder\SchemaDefinitionFinderInterface $schemaDefinitionFinder
      * @param \Spryker\Zed\SearchElasticsearch\Business\Definition\Reader\IndexDefinitionReaderInterface $indexDefinitionReader
+     * @param \Spryker\Zed\SearchElasticsearch\Business\SourceIdentifier\SourceIdentifierInterface $sourceIdentifier
      */
-    public function __construct(SchemaDefinitionFinderInterface $schemaDefinitionFinder, IndexDefinitionReaderInterface $indexDefinitionReader)
-    {
+    public function __construct(
+        SchemaDefinitionFinderInterface $schemaDefinitionFinder,
+        IndexDefinitionReaderInterface $indexDefinitionReader,
+        SourceIdentifierInterface $sourceIdentifier
+    ) {
         $this->schemaDefinitionFinder = $schemaDefinitionFinder;
         $this->indexDefinitionReader = $indexDefinitionReader;
+        $this->sourceIdentifier = $sourceIdentifier;
     }
 
     /**
@@ -39,18 +50,30 @@ class IndexDefinitionLoader implements IndexDefinitionLoaderInterface
     public function load(): array
     {
         $indexDefinitions = [];
-        foreach ($this->schemaDefinitionFinder->find() as $schemaDefinitionFile) {
-            $indexName = $this->getIndexNameFromFile($schemaDefinitionFile);
+        $storePrefixedIndexDefinitions = [];
 
-            $indexDefinition = [
-                'name' => $indexName,
-                'definition' => $this->indexDefinitionReader->read($schemaDefinitionFile),
-            ];
+        foreach ($this->schemaDefinitionFinder->find() as $schemaDefinitionFile) {
+            $sourceIdentifier = $this->getSourceIdentifierFromFile($schemaDefinitionFile);
+
+            if (!$this->sourceIdentifier->isSupported($sourceIdentifier)) {
+                continue;
+            }
+
+            $indexDefinition = $this->buildIndexDefinition(
+                $sourceIdentifier,
+                $schemaDefinitionFile
+            );
+
+            if ($this->sourceIdentifier->isPrefixedWithStoreName($sourceIdentifier)) {
+                 $storePrefixedIndexDefinitions[] = $indexDefinition;
+
+                continue;
+            }
 
             $indexDefinitions[] = $indexDefinition;
         }
 
-        return $indexDefinitions;
+        return array_merge($indexDefinitions, $storePrefixedIndexDefinitions);
     }
 
     /**
@@ -58,13 +81,25 @@ class IndexDefinitionLoader implements IndexDefinitionLoaderInterface
      *
      * @return string
      */
-    protected function getIndexNameFromFile(SplFileInfo $indexDefinitionJsonFile): string
+    protected function getSourceIdentifierFromFile(SplFileInfo $indexDefinitionJsonFile): string
     {
         $fileName = $indexDefinitionJsonFile->getFilename();
         $fileExtension = $indexDefinitionJsonFile->getExtension();
 
-        $indexName = substr($fileName, 0, -strlen($fileExtension) - 1);
+        return substr($fileName, 0, -strlen($fileExtension) - 1);
+    }
 
-        return $indexName;
+    /**
+     * @param string $sourceIdentifier
+     * @param \Symfony\Component\Finder\SplFileInfo $schemaDefinitionFile
+     *
+     * @return array
+     */
+    protected function buildIndexDefinition(string $sourceIdentifier, SplFileInfo $schemaDefinitionFile): array
+    {
+        return [
+            'name' => $this->sourceIdentifier->translateToIndexName($sourceIdentifier),
+            'definition' => $this->indexDefinitionReader->read($schemaDefinitionFile),
+        ];
     }
 }

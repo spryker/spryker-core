@@ -13,6 +13,9 @@ namespace Spryker\Zed\Currency\Persistence;
 interface CurrencyQueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $isoCode
@@ -22,6 +25,9 @@ interface CurrencyQueryContainerInterface
     public function queryCurrencyByIsoCode($isoCode);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idCurrency
@@ -31,6 +37,9 @@ interface CurrencyQueryContainerInterface
     public function queryCurrencyByIdCurrency($idCurrency);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $isoCodes
