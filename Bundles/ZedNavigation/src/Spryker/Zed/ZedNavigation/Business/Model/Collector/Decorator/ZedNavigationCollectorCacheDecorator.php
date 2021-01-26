@@ -21,17 +21,17 @@ class ZedNavigationCollectorCacheDecorator implements ZedNavigationCollectorInte
     /**
      * @var \Spryker\Zed\ZedNavigation\Business\Model\Collector\ZedNavigationCollectorInterface
      */
-    private $navigationCollector;
+    protected $navigationCollector;
 
     /**
      * @var \Spryker\Zed\ZedNavigation\Business\Model\Cache\ZedNavigationCacheInterface
      */
-    private $navigationCache;
+    protected $navigationCache;
 
     /**
      * @var \Spryker\Zed\ZedNavigation\ZedNavigationConfig
      */
-    private $config;
+    protected $config;
 
     /**
      * @param \Spryker\Zed\ZedNavigation\Business\Model\Collector\ZedNavigationCollectorInterface $navigationCollector

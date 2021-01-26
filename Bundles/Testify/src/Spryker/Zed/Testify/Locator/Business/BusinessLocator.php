@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Testify\Locator\Business;
 
 use Spryker\Client\Kernel\ClientLocator;
+use Spryker\Glue\Kernel\ResourceLocator;
 use Spryker\Service\Kernel\ServiceLocator;
 use Spryker\Zed\Kernel\Business\FacadeLocator;
 use Spryker\Zed\Kernel\Persistence\QueryContainerLocator;
@@ -25,6 +26,7 @@ class BusinessLocator extends AbstractLocator
             new QueryContainerLocator(),
             new ServiceLocator(),
             new ClientLocator(),
+            new ResourceLocator(),
         ];
 
         $bundleProxy = new BundleProxy($this);

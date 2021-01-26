@@ -31,7 +31,6 @@ class RefundCalculator implements RefundCalculatorInterface
         array $refundCalculatorPlugins,
         RefundToSalesInterface $salesFacade
     ) {
-
         $this->refundCalculatorPlugins = $refundCalculatorPlugins;
         $this->salesFacade = $salesFacade;
     }

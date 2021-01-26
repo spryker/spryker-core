@@ -18,7 +18,7 @@ interface PriceProductClientInterface
 {
     /**
      * Specification:
-     *  - Returns default price type as configured for current environment
+     * - Returns default price type as configured for current environment
      *
      * @api
      *

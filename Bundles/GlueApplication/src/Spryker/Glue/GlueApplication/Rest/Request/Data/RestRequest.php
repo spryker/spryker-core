@@ -109,7 +109,6 @@ class RestRequest implements RestRequestInterface
         bool $excludeRelationship,
         ?UserInterface $user = null
     ) {
-
         $this->resource = $resource;
         $this->filters = $filters;
         $this->sort = $sort;

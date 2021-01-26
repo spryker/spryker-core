@@ -132,7 +132,6 @@ class PaymentPluginExecutor implements PaymentPluginExecutorInterface
         $pluginType,
         CheckoutResponseTransfer $checkoutResponseTransfer
     ) {
-
         foreach ($quoteTransfer->getPayments() as $paymentTransfer) {
             if (!$this->hasPlugin($pluginType, $paymentTransfer->getPaymentProvider()) || $this->isAlreadyExecuted($pluginType, $paymentTransfer->getPaymentProvider())) {
                 continue;

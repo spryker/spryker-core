@@ -45,7 +45,6 @@ class ProductCategoryFilterCollectorPlugin extends AbstractCollectorPlugin
         TouchUpdaterInterface $touchUpdater,
         OutputInterface $output
     ) {
-
         $this->getFacade()->runStorageProductCategoryFilterCollector(
             $baseQuery,
             $localeTransfer,

@@ -90,3 +90,4 @@ suites:
                 - \SprykerTest\Zed\ZedNavigation\Helper\BreadcrumbHelper
                 - \SprykerTest\Zed\Gui\Helper\DataTableActionHelper
                 - \SprykerTest\Shared\Discount\Helper\DiscountDataHelper
+                - \SprykerTest\Shared\Testify\Helper\BrowserHelper

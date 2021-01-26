@@ -69,6 +69,7 @@ class OrdersDashboardCardProvider implements OrdersDashboardCardProviderInterfac
      */
     public function getDashboardCard(): MerchantDashboardCardTransfer
     {
+        /** @var int $idMerchant */
         $idMerchant = $this->merchantUserFacade->getCurrentMerchantUser()->getIdMerchant();
         $merchantOrderCountsTransfer = $this->salesMerchantPortalGuiRepository->getMerchantOrderCounts($idMerchant);
 

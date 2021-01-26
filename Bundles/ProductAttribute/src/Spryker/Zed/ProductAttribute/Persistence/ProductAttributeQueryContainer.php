@@ -170,7 +170,6 @@ class ProductAttributeQueryContainer extends AbstractQueryContainer implements P
         $offset = null,
         $limit = 10
     ) {
-
         $query = $this->getFactory()
             ->createProductManagementAttributeValueQuery()
             ->filterByFkProductManagementAttribute($idProductManagementAttribute)

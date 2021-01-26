@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductOfferMerchantPortalGui;
 
+use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\ProductImage\Persistence\SpyProductImageQuery;
 use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
@@ -14,11 +15,14 @@ use Orm\Zed\ProductOffer\Persistence\SpyProductOfferStoreQuery;
 use Orm\Zed\Store\Persistence\SpyStoreQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\External\ProductOfferMerchantPortalGuiToValidationAdapter;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToCurrencyFacadeBridge;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToLocaleFacadeBridge;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMerchantStockFacadeBridge;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMerchantUserFacadeBridge;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMoneyFacadeBridge;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToPriceProductFacadeBridge;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToPriceProductOfferFacadeBridge;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToProductFacadeBridge;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToProductOfferFacadeBridge;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToRouterFacadeBridge;
@@ -31,6 +35,7 @@ use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service\ProductOfferMer
  */
 class ProductOfferMerchantPortalGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    public const FACADE_MONEY = 'FACADE_MONEY';
     public const FACADE_LOCALE = 'FACADE_LOCALE';
     public const FACADE_MERCHANT_USER = 'FACADE_MERCHANT_USER';
     public const FACADE_TRANSLATOR = 'FACADE_TRANSLATOR';
@@ -41,6 +46,9 @@ class ProductOfferMerchantPortalGuiDependencyProvider extends AbstractBundleDepe
     public const FACADE_PRICE_PRODUCT = 'FACADE_PRICE_PRODUCT';
     public const FACADE_CURRENCY = 'FACADE_CURRENCY';
     public const FACADE_ROUTER = 'FACADE_ROUTER';
+    public const FACADE_PRICE_PRODUCT_OFFER = 'FACADE_PRICE_PRODUCT_OFFER';
+
+    public const EXTERNAL_ADAPTER_VALIDATION = 'EXTERNAL_ADAPTER_VALIDATION';
 
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
@@ -64,6 +72,7 @@ class ProductOfferMerchantPortalGuiDependencyProvider extends AbstractBundleDepe
     public const PROPEL_QUERY_PRODUCT_OFFER = 'PROPEL_QUERY_PRODUCT_OFFER';
     public const PROPEL_QUERY_STORE = 'PROPEL_QUERY_STORE';
     public const PROPEL_QUERY_PRODUCT_OFFER_STORE = 'PROPEL_PRODUCT_OFFER_STORE';
+    public const PROPEL_QUERY_PRICE_PRODUCT_STORE = 'PROPEL_QUERY_PRICE_PRODUCT_STORE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -85,6 +94,10 @@ class ProductOfferMerchantPortalGuiDependencyProvider extends AbstractBundleDepe
         $container = $this->addTwigEnvironment($container);
         $container = $this->addGuiTableHttpDataRequestHandler($container);
         $container = $this->addGuiTableFactory($container);
+        $container = $this->addPriceProductOfferFacade($container);
+        $container = $this->addValidationAdapter($container);
+        $container = $this->addUtilEncodingService($container);
+        $container = $this->addMoneyFacade($container);
 
         return $container;
     }
@@ -101,7 +114,9 @@ class ProductOfferMerchantPortalGuiDependencyProvider extends AbstractBundleDepe
         $container = $this->addProductOfferPropelQuery($container);
         $container = $this->addStorePropelQuery($container);
         $container = $this->addProductOfferStorePropelQuery($container);
+        $container = $this->addPriceProductStorePropelQuery($container);
         $container = $this->addUtilEncodingService($container);
+        $container = $this->addPriceProductFacade($container);
 
         return $container;
     }
@@ -390,6 +405,66 @@ class ProductOfferMerchantPortalGuiDependencyProvider extends AbstractBundleDepe
         $container->set(static::PROPEL_QUERY_PRODUCT_OFFER_STORE, $container->factory(function () {
             return SpyProductOfferStoreQuery::create();
         }));
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addPriceProductStorePropelQuery(Container $container): Container
+    {
+        $container->set(static::PROPEL_QUERY_PRICE_PRODUCT_STORE, $container->factory(function () {
+            return SpyPriceProductStoreQuery::create();
+        }));
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addPriceProductOfferFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_PRICE_PRODUCT_OFFER, $container->factory(function (Container $container) {
+            return new ProductOfferMerchantPortalGuiToPriceProductOfferFacadeBridge(
+                $container->getLocator()->priceProductOffer()->facade()
+            );
+        }));
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addValidationAdapter(Container $container): Container
+    {
+        $container->set(static::EXTERNAL_ADAPTER_VALIDATION, function () {
+            return new ProductOfferMerchantPortalGuiToValidationAdapter();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMoneyFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_MONEY, function (Container $container) {
+            return new ProductOfferMerchantPortalGuiToMoneyFacadeBridge(
+                $container->getLocator()->money()->facade()
+            );
+        });
 
         return $container;
     }

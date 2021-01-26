@@ -1,18 +1,5 @@
 {
-    "error": [
-        {
-            "severity": "error",
-            "line_from": 33,
-            "line_to": 33,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Glue\\AuthRestApi\\Plugin\\AccessTokenValidatorPlugin::validate has wrong name $request, expecting $httpRequest as defined by Spryker\\Glue\\GlueApplicationExtension\\Dependency\\Plugin\\ValidateRestRequestPluginInterface::validate",
-            "file_name": "vendor/spryker/spryker/Bundles/AuthRestApi/src/Spryker/Glue/AuthRestApi/Plugin/AccessTokenValidatorPlugin.php",
-            "snippet": "    public function validate(Request $request, RestRequestInterface $restRequest): ?RestErrorMessageTransfer",
-            "selected_text": "$request",
-            "error_level": 7,
-            "shortcode": 230
-        }
-    ],
+    "error": [],
     "warning": [
         {
             "severity": "info",

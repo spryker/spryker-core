@@ -14,7 +14,7 @@ class DependencyInjector implements DependencyInjectorInterface
     /**
      * @var \Spryker\Zed\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface
      */
-    private $dependencyInjectorCollection;
+    protected $dependencyInjectorCollection;
 
     /**
      * @param \Spryker\Zed\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface $dependencyInjectorCollection

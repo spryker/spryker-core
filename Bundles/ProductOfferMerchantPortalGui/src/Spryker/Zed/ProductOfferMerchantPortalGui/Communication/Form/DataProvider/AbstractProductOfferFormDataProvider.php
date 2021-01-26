@@ -8,36 +8,18 @@
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\DataProvider;
 
 use ArrayObject;
-use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MerchantStockCriteriaTransfer;
-use Generated\Shared\Transfer\MoneyValueTransfer;
-use Generated\Shared\Transfer\PriceProductDimensionTransfer;
-use Generated\Shared\Transfer\PriceProductTransfer;
-use Generated\Shared\Transfer\PriceTypeTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductOfferStockTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Exception\DefaultMerchantStockNotFoundException;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\ProductOfferForm;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToCurrencyFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMerchantStockFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToPriceProductFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToProductFacadeInterface;
 
 abstract class AbstractProductOfferFormDataProvider
 {
-    /**
-     * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToCurrencyFacadeInterface
-     */
-    protected $currencyFacade;
-
-    /**
-     * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToPriceProductFacadeInterface
-     */
-    protected $priceProductFacade;
-
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToProductFacadeInterface
      */
@@ -54,21 +36,15 @@ abstract class AbstractProductOfferFormDataProvider
     protected $merchantStockFacade;
 
     /**
-     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToCurrencyFacadeInterface $currencyFacade
-     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToPriceProductFacadeInterface $priceProductFacade
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToProductFacadeInterface $productFacade
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMerchantStockFacadeInterface $merchantStockFacade
      */
     public function __construct(
-        ProductOfferMerchantPortalGuiToCurrencyFacadeInterface $currencyFacade,
-        ProductOfferMerchantPortalGuiToPriceProductFacadeInterface $priceProductFacade,
         ProductOfferMerchantPortalGuiToProductFacadeInterface $productFacade,
         ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade,
         ProductOfferMerchantPortalGuiToMerchantStockFacadeInterface $merchantStockFacade
     ) {
-        $this->currencyFacade = $currencyFacade;
-        $this->priceProductFacade = $priceProductFacade;
         $this->productFacade = $productFacade;
         $this->merchantUserFacade = $merchantUserFacade;
         $this->merchantStockFacade = $merchantStockFacade;
@@ -87,42 +63,6 @@ abstract class AbstractProductOfferFormDataProvider
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductOfferTransfer
-     */
-    protected function addPrices(ProductOfferTransfer $productOfferTransfer): ProductOfferTransfer
-    {
-        $storeWithCurrencyTransfers = $this->currencyFacade->getAllStoresWithCurrencies();
-        $priceTypeTransfers = $this->priceProductFacade->getPriceTypeValues();
-
-        $indexedPriceProductTransfers = $this->indexPriceProductTransfers($productOfferTransfer);
-        $priceProductTransfers = new ArrayObject();
-        foreach ($storeWithCurrencyTransfers as $storeWithCurrencyTransfer) {
-            foreach ($storeWithCurrencyTransfer->getCurrencies() as $currencyTransfer) {
-                foreach ($priceTypeTransfers as $priceTypeTransfer) {
-                    $idStore = $storeWithCurrencyTransfer->getStore()->getIdStore();
-                    $idCurrency = $currencyTransfer->getIdCurrency();
-                    $idPriceType = $priceTypeTransfer->getIdPriceType();
-
-                    $priceProductTransfer = $indexedPriceProductTransfers[$idStore][$idCurrency][$idPriceType]
-                        ?? $this->createDefaultPriceProductTransfer(
-                            $currencyTransfer,
-                            $storeWithCurrencyTransfer->getStore(),
-                            $priceTypeTransfer
-                        );
-
-                    $priceProductTransfers->append($priceProductTransfer);
-                }
-            }
-        }
-
-        $productOfferTransfer->setPrices($priceProductTransfers);
-
-        return $productOfferTransfer;
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return int[]
@@ -138,55 +78,14 @@ abstract class AbstractProductOfferFormDataProvider
         }
 
         foreach ($storeRelationTransfer->getStores() as $storeTransfer) {
-            $storeChoices[$storeTransfer->getName()] = $storeTransfer->getIdStore();
+            /** @var int $idStore */
+            $idStore = $storeTransfer->requireIdStore()->getIdStore();
+            /** @var string $storeName */
+            $storeName = $storeTransfer->requireName()->getName();
+            $storeChoices[$storeName] = $idStore;
         }
 
         return $storeChoices;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     * @param \Generated\Shared\Transfer\PriceTypeTransfer $priceTypeTransfer
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer
-     */
-    protected function createDefaultPriceProductTransfer(
-        CurrencyTransfer $currencyTransfer,
-        StoreTransfer $storeTransfer,
-        PriceTypeTransfer $priceTypeTransfer
-    ): PriceProductTransfer {
-        $moneyValueTransfer = (new MoneyValueTransfer())
-            ->setStore($storeTransfer)
-            ->setCurrency($currencyTransfer)
-            ->setFkCurrency($currencyTransfer->getIdCurrency())
-            ->setFkStore($storeTransfer->getIdStore());
-
-        return (new PriceProductTransfer())
-            ->setMoneyValue($moneyValueTransfer)
-            ->setFkPriceType($priceTypeTransfer->getIdPriceType())
-            ->setPriceType($priceTypeTransfer)
-            ->setPriceDimension(new PriceProductDimensionTransfer());
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]|mixed[]
-     */
-    protected function indexPriceProductTransfers(ProductOfferTransfer $productOfferTransfer): array
-    {
-        $indexedPriceProductTransfers = [];
-        foreach ($productOfferTransfer->getPrices() as $priceProductTransfer) {
-            $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
-            $idStore = $moneyValueTransfer->getFkStore();
-            $idCurrency = $moneyValueTransfer->getFkCurrency();
-            $idPriceType = $priceProductTransfer->getPriceType()->getIdPriceType();
-
-            $indexedPriceProductTransfers[$idStore][$idCurrency][$idPriceType] = $priceProductTransfer;
-        }
-
-        return $indexedPriceProductTransfers;
     }
 
     /**
@@ -218,7 +117,11 @@ abstract class AbstractProductOfferFormDataProvider
         }
 
         foreach ($productOfferTransfer->getProductOfferStocks() as $productOfferStockTransfer) {
-            if ($productOfferStockTransfer->getStock()->getIdStock() === $stockTransfers->offsetGet(0)->getIdStock()) {
+            $firstStockTransfer = $stockTransfers->offsetGet(0);
+            /** @var \Generated\Shared\Transfer\StockTransfer $stockTransfer */
+            $stockTransfer = $productOfferStockTransfer->requireStock()->getStock();
+
+            if ($stockTransfer->getIdStock() === $firstStockTransfer->getIdStock()) {
                 $productOfferTransfer->setProductOfferStocks(new ArrayObject([$productOfferStockTransfer]));
 
                 break;

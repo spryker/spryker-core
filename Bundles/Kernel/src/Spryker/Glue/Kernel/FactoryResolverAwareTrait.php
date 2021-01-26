@@ -14,7 +14,7 @@ trait FactoryResolverAwareTrait
     /**
      * @var \Spryker\Glue\Kernel\AbstractFactory|null
      */
-    private $factory;
+    protected $factory;
 
     /**
      * @param \Spryker\Glue\Kernel\AbstractFactory $factory

@@ -13,6 +13,9 @@ namespace Spryker\Zed\Payment\Persistence;
 interface PaymentQueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idSalesOrder
@@ -24,6 +27,9 @@ interface PaymentQueryContainerInterface
     public function queryPaymentMethodPriceToPay($idSalesOrder, $paymentProvider, $paymentMethod);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $paymentProvider
@@ -34,6 +40,9 @@ interface PaymentQueryContainerInterface
     public function queryPaymentMethodType($paymentProvider, $paymentMethod);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idSalesOrder

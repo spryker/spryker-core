@@ -114,7 +114,6 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
         ProductConcreteTransfer $productConcreteTransfer,
         array $bundleTotalStockPerWarehouse
     ) {
-
         $bundleTotalStockPerWarehouse = $this->removeBundleStockFromWarehousesWithoutBundledItems(
             $productConcreteTransfer,
             $bundleTotalStockPerWarehouse

@@ -12,6 +12,9 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 interface ProductManagementQueryContainerInterface extends QueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeQuery
@@ -19,6 +22,9 @@ interface ProductManagementQueryContainerInterface extends QueryContainerInterfa
     public function queryProductManagementAttribute();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValueQuery
@@ -26,6 +32,9 @@ interface ProductManagementQueryContainerInterface extends QueryContainerInterfa
     public function queryProductManagementAttributeValue();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProductManagementAttribute
@@ -36,6 +45,9 @@ interface ProductManagementQueryContainerInterface extends QueryContainerInterfa
     public function queryProductManagementAttributeValueWithTranslation($idProductManagementAttribute, $idLocale);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProductManagementAttribute
@@ -47,6 +59,9 @@ interface ProductManagementQueryContainerInterface extends QueryContainerInterfa
     public function queryFindAttributeByValueOrTranslation($idProductManagementAttribute, $idLocale, $attributeValueOrTranslation = null);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
@@ -54,6 +69,9 @@ interface ProductManagementQueryContainerInterface extends QueryContainerInterfa
     public function queryProductAttributeKey();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValueQuery
@@ -61,6 +79,9 @@ interface ProductManagementQueryContainerInterface extends QueryContainerInterfa
     public function queryProductManagementAttributeValueQuery();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValueTranslationQuery
@@ -68,6 +89,9 @@ interface ProductManagementQueryContainerInterface extends QueryContainerInterfa
     public function queryProductManagementAttributeValueTranslation();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProductManagementAttribute
@@ -77,6 +101,9 @@ interface ProductManagementQueryContainerInterface extends QueryContainerInterfa
     public function queryProductManagementAttributeValueTranslationById($idProductManagementAttribute);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery

@@ -23,7 +23,7 @@ class GlueApplicationServiceProvider extends AbstractPlugin implements ServicePr
     /**
      * @var \Silex\Application
      */
-    private $application;
+    protected $application;
 
     /**
      * @param \Silex\Application $app

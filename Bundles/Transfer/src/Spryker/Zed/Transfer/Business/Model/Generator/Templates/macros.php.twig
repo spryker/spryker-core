@@ -36,7 +36,7 @@
     /**
      * @var {{ property.type }}
      */
-    protected ${{ property.name }}{% if property.type == 'array' or property.is_typed_array %} = []{% endif %};
+    protected ${{ property.name }}{% if property.is_array_collection %} = []{% endif %};
 {% endmacro %}
 
 {# propertyNamesMap #}
@@ -86,7 +86,7 @@
         $this->validateAddSetValueType(${{ method.property }}, '{{ method.var }}', __METHOD__);
 
         {% endif -%}
-        {% if method.typeHint == "array" -%}
+        {% if method.setsArrayCollection|default -%}
         if (${{ method.property }} === null) {
             ${{ method.property }} = [];
         }
@@ -98,7 +98,22 @@
         }
 
         {% endif -%}
+        {% if method.isCollectionPropertyTypeCheckNeeded -%}
+        $this->{{ method.property }} = {{ method.typeHint == 'ArrayObject' ? 'new ArrayObject()' : '[]' }};
+
+        foreach (${{ method.property }} as $key => $value) {
+            $args = [$value];
+
+            if ($this->transferMetadata[static::{{ method.propertyConst }}]['is_associative']) {
+                $args = [$key, $value];
+            }
+
+            $this->{{ method.addMethodName }}(...$args);
+        }
+
+        {% else -%}
         $this->{{ method.property }} = ${{ method.property }};
+        {% endif -%}
         $this->modifiedProperties[self::{{ method.propertyConst }}] = true;
 
         return $this;
@@ -118,7 +133,7 @@
      {% endif -%}
      * @return {{ method.return }}{% if method.typeShimNotice %} {{ method.typeShimNotice }}{% endif ~%}
      */
-    public function {{ method.name }}()
+    public function {{ method.name }}(){% if method.returnTypeHint is defined %}: {{ method.returnTypeHint }} {% endif ~%}
     {
         return $this->{{ method.property }};
     }
@@ -137,7 +152,7 @@
      {% endif -%}
      * @return {{ method.return }}
      */
-    public function {{ method.name }}()
+    public function {{ method.name }}(){% if method.returnTypeHint is defined %}: {{ method.returnTypeHint }} {% endif ~%}
     {
         if ($this->{{ method.property }} === null) {
             $this->throwNullValueException(static::{{ method.propertyConst }});
@@ -203,6 +218,27 @@
         $this->modifiedProperties[self::{{ method.propertyConst }}] = true;
 
         return $this;
+    }
+{% endmacro -%}
+
+{# get collection element method #}
+{%- macro addGetCollectionElement(method) %}
+    /**
+     {% if method.bundles is defined -%}
+     * @module {{ method.bundles|join('|') }}
+     *
+     {% endif -%}
+     {% if method.deprecationDescription is not null -%}
+     * @deprecated {{ method.deprecationDescription }}
+     *
+     {% endif -%}
+     * @param {{ method.var }} $key
+     *
+     * @return {{ method.return }}
+     */
+    public function {{ method.name }}($key){% if method.returnTypeHint is defined -%}: {{ method.returnTypeHint }}{% endif ~%}
+    {
+        return $this->{{ method.property }}[$key];
     }
 {% endmacro -%}
 
@@ -339,8 +375,8 @@
     */
     protected function initCollectionProperties()
     {
-{% for collcation in collections %}
-        $this->{{ collcation.name }} = $this->{{ collcation.name }} ?: new ArrayObject();
+{% for collection in collections %}
+        $this->{{ collection.name }} = $this->{{ collection.name }} ?: new ArrayObject();
 {% endfor %}
     }
 {%- endmacro -%}

@@ -10,6 +10,9 @@ namespace Spryker\Client\Glossary;
 interface GlossaryClientInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $id

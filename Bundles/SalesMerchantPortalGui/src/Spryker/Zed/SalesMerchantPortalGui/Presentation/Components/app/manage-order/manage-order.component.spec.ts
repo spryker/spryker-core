@@ -17,11 +17,11 @@ describe('ManageOrderComponent', () => {
         selector: 'test-edit-offer',
         template: `
             <mp-manage-order [orderDetails]="orderDetails">
-                <div state-transitions class='${mockStateTransitionsClass}'></div>   
-                <div state-transitions-meessage class='${mockStateTransitionsMessageClass}'></div>   
-                <div items-states class='${mockItemStatesClass}'></div>   
-                <div items-states-title class='${mockItemStatesTitleClass}'></div>   
-                <div class='${mockDefaultClass}'></div> 
+                <div state-transitions class="${mockStateTransitionsClass}"></div>
+                <div state-transitions-meessage class="${mockStateTransitionsMessageClass}"></div>
+                <div items-states class="${mockItemStatesClass}"></div>
+                <div items-states-title class="${mockItemStatesTitleClass}"></div>
+                <div class="${mockDefaultClass}"></div>
             </mp-manage-order>
         `,
     })
@@ -49,7 +49,7 @@ describe('ManageOrderComponent', () => {
 
     it('should render slot [state-transitions] in the last element with `mp-manage-order__heading-col` className', () => {
         const stateTransitionsElem = fixture.debugElement.query(
-            By.css(`.mp-manage-order__heading-col:first-child .${mockStateTransitionsClass}`)
+            By.css(`.mp-manage-order__heading-col:first-child .${mockStateTransitionsClass}`),
         );
 
         expect(stateTransitionsElem).toBeTruthy();
@@ -57,7 +57,7 @@ describe('ManageOrderComponent', () => {
 
     it('should render slot [state-transitions-meessage] in the element with `mp-manage-order__transitions-message` className', () => {
         const stateTransitionsMessageElem = fixture.debugElement.query(
-            By.css(`.mp-manage-order__transitions-message .${mockStateTransitionsMessageClass}`)
+            By.css(`.mp-manage-order__transitions-message .${mockStateTransitionsMessageClass}`),
         );
 
         fixture.detectChanges();
@@ -67,7 +67,7 @@ describe('ManageOrderComponent', () => {
 
     it('should render slot [items-states] in the last element with `mp-manage-order__states-col` className', () => {
         const itemStatesElem = fixture.debugElement.query(
-            By.css(`.mp-manage-order__states-col:last-child .${mockItemStatesClass}`)
+            By.css(`.mp-manage-order__states-col:last-child .${mockItemStatesClass}`),
         );
 
         expect(itemStatesElem).toBeTruthy();
@@ -75,17 +75,15 @@ describe('ManageOrderComponent', () => {
 
     it('should render slot [items-states-title] in the element with `mp-manage-order__states-col--title` className', () => {
         const itemStatesTitleElem = fixture.debugElement.query(
-            By.css(`.mp-manage-order__states-col--title .${mockItemStatesTitleClass}`)
+            By.css(`.mp-manage-order__states-col--title .${mockItemStatesTitleClass}`),
         );
 
         expect(itemStatesTitleElem).toBeTruthy();
     });
 
-
-
     it('should render default slot after `.mp-manage-order__information` element', () => {
         const defaultSlotElem = fixture.debugElement.query(
-            By.css(`.mp-manage-order__information + .${mockDefaultClass}`)
+            By.css(`.mp-manage-order__information + .${mockDefaultClass}`),
         );
 
         expect(defaultSlotElem).toBeTruthy();
