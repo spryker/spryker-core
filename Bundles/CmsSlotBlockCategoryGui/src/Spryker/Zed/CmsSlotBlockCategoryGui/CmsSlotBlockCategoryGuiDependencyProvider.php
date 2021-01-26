@@ -28,8 +28,6 @@ class CmsSlotBlockCategoryGuiDependencyProvider extends AbstractBundleDependency
      */
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
-        $container = parent::provideCommunicationLayerDependencies($container);
-
         $container = $this->addCategoryFacade($container);
         $container = $this->addLocaleFacade($container);
         $container = $this->addTranslatorFacade($container);
