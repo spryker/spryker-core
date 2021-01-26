@@ -9,27 +9,23 @@ require('../../sass/main.scss');
 
 var OptionValueFormHandler = require('./product-option-value-form-handler');
 
-$(document).ready(function() {
-
+$(document).ready(function () {
     new OptionValueFormHandler();
 
-    $('#create-product-option-button').on('click', function(e) {
+    $('#create-product-option-button').on('click', function (e) {
         e.preventDefault();
 
-        $(this)
-            .prop('disabled', true)
-            .addClass('disabled');
+        $(this).prop('disabled', true).addClass('disabled');
 
         $('#product_option_general').submit();
     });
 
-    $('.ibox-content').each(function(index, content) {
+    $('.ibox-content').each(function (index, content) {
         var hasErrors = $(content).find('.has-error, .alert-danger');
         if (hasErrors.length == 0) {
             return;
         }
 
         $(content).parent().addClass('error');
-
     });
 });

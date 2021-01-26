@@ -145,6 +145,7 @@ interface PriceProductScheduleFacadeInterface
     public function findPriceProductSchedulesByIdPriceProductScheduleList(int $idPriceProductScheduleList): array;
 
     /**
+     * Specification:
      * - Creates scheduled price.
      * - Apply scheduled prices for product, related to given scheduled price.
      *

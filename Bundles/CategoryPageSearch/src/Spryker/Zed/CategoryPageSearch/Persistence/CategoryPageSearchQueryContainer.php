@@ -26,6 +26,8 @@ class CategoryPageSearchQueryContainer extends AbstractQueryContainer implements
      *
      * @api
      *
+     * @deprecated Will be removed with next major release.
+     *
      * @param array $categoryNodeIds
      * @param int $idLocale
      *
@@ -54,6 +56,8 @@ class CategoryPageSearchQueryContainer extends AbstractQueryContainer implements
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Will be removed with next major release.
      *
      * @param int[] $categoryIds
      *

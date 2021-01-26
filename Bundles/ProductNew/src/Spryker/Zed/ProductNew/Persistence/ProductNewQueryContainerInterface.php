@@ -10,6 +10,9 @@ namespace Spryker\Zed\ProductNew\Persistence;
 interface ProductNewQueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $labelName
@@ -19,6 +22,9 @@ interface ProductNewQueryContainerInterface
     public function queryProductLabelByName($labelName);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProductLabel
@@ -28,6 +34,9 @@ interface ProductNewQueryContainerInterface
     public function queryRelationsBecomingInactive($idProductLabel);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProductLabel

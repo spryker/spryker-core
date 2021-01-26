@@ -13,6 +13,9 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 interface CategoryStorageQueryContainerInterface extends QueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int[] $categoryNodeIds
@@ -22,13 +25,21 @@ interface CategoryStorageQueryContainerInterface extends QueryContainerInterface
     public function queryCategoryNodeByIds(array $categoryNodeIds): SpyCategoryNodeQuery;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
+     *
+     * @deprecated Will be removed with next major release.
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
      */
     public function queryCategoryRoot();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\CategoryStorage\Persistence\SpyCategoryTreeStorageQuery
@@ -36,6 +47,9 @@ interface CategoryStorageQueryContainerInterface extends QueryContainerInterface
     public function queryCategoryStorage();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $categoryIds
@@ -45,6 +59,9 @@ interface CategoryStorageQueryContainerInterface extends QueryContainerInterface
     public function queryCategoryNodeIdsByCategoryIds(array $categoryIds);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $categoryNodeIds
@@ -54,6 +71,9 @@ interface CategoryStorageQueryContainerInterface extends QueryContainerInterface
     public function queryCategoryNodeStorageByIds(array $categoryNodeIds);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $categoryTemplateIds

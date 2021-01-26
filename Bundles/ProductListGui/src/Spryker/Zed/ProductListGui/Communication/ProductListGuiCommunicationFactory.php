@@ -45,7 +45,6 @@ use Spryker\Zed\ProductListGui\Dependency\Facade\ProductListGuiToCategoryFacadeI
 use Spryker\Zed\ProductListGui\Dependency\Facade\ProductListGuiToLocaleFacadeInterface;
 use Spryker\Zed\ProductListGui\Dependency\Facade\ProductListGuiToProductFacadeInterface;
 use Spryker\Zed\ProductListGui\Dependency\Facade\ProductListGuiToProductListFacadeInterface;
-use Spryker\Zed\ProductListGui\Dependency\Facade\ProductListGuiToStoreFacadeInterface;
 use Spryker\Zed\ProductListGui\Dependency\Service\ProductListGuiToUtilCsvServiceInterface;
 use Spryker\Zed\ProductListGui\ProductListGuiDependencyProvider;
 use Symfony\Component\Form\FormInterface;
@@ -171,8 +170,7 @@ class ProductListGuiCommunicationFactory extends AbstractCommunicationFactory
         return new ProductListCategoryRelationFormDataProvider(
             $this->getProductListFacade(),
             $this->getCategoryFacade(),
-            $this->getLocaleFacade(),
-            $this->getStoreFacade()
+            $this->getLocaleFacade()
         );
     }
 
@@ -244,14 +242,6 @@ class ProductListGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductListGui\Dependency\Facade\ProductListGuiToStoreFacadeInterface
-     */
-    public function getStoreFacade(): ProductListGuiToStoreFacadeInterface
-    {
-        return $this->getProvidedDependency(ProductListGuiDependencyProvider::FACADE_STORE);
-    }
-
-    /**
      * @return \Spryker\Zed\ProductListGui\Communication\Exporter\ProductListExporterInterface
      */
     public function createProductListExporter(): ProductListExporterInterface
@@ -287,14 +277,6 @@ class ProductListGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getProductListFacade(): ProductListGuiToProductListFacadeInterface
     {
         return $this->getProvidedDependency(ProductListGuiDependencyProvider::FACADE_PRODUCT_LIST);
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductListGui\Dependency\Facade\ProductListGuiToStoreFacadeInterface
-     */
-    public function getStoreFacade(): ProductListGuiToStoreFacadeInterface
-    {
-        return $this->getProvidedDependency(ProductListGuiDependencyProvider::FACADE_STORE);
     }
 
     /**

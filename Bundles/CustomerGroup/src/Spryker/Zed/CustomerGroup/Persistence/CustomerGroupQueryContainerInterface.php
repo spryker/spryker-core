@@ -12,6 +12,9 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 interface CustomerGroupQueryContainerInterface extends QueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupQuery
@@ -19,6 +22,9 @@ interface CustomerGroupQueryContainerInterface extends QueryContainerInterface
     public function queryCustomerGroup();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idCustomerGroup
@@ -28,6 +34,9 @@ interface CustomerGroupQueryContainerInterface extends QueryContainerInterface
     public function queryCustomerGroupById($idCustomerGroup);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idCustomerGroup
@@ -37,6 +46,9 @@ interface CustomerGroupQueryContainerInterface extends QueryContainerInterface
     public function queryCustomerGroupToCustomerByFkCustomerGroup($idCustomerGroup);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery
@@ -44,6 +56,9 @@ interface CustomerGroupQueryContainerInterface extends QueryContainerInterface
     public function queryCustomer();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idCustomer

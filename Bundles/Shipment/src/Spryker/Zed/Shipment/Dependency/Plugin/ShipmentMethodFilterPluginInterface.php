@@ -16,6 +16,9 @@ use Generated\Shared\Transfer\QuoteTransfer;
 interface ShipmentMethodFilterPluginInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentMethodTransfer[] $shipmentMethods

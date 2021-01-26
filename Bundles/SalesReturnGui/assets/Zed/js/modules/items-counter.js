@@ -14,25 +14,25 @@ function ItemsCounter(options) {
     this.$counterWrapper = $(this.counterWrapperSelector);
     this.$counter = $(this.counterSelector);
 
-    this.init = function() {
+    this.init = function () {
         this.mapEvents();
     };
 
-    this.mapEvents = function() {
+    this.mapEvents = function () {
         var self = this;
 
-        this.$item.on('change', function() {
+        this.$item.on('change', function () {
             self.updateItemCounter();
         });
 
-        this.$allItems.on('change', function() {
-            setTimeout(function() {
+        this.$allItems.on('change', function () {
+            setTimeout(function () {
                 self.updateItemCounter();
             }, 0);
         });
     };
 
-    this.updateItemCounter = function() {
+    this.updateItemCounter = function () {
         var checkedItems = this.$table.find(this.checkedItemSelector).length;
 
         if (checkedItems) {

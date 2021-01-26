@@ -15,6 +15,9 @@ use Generated\Shared\Transfer\StorageScanResultTransfer;
 interface StorageClientInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $key
@@ -28,6 +31,9 @@ interface StorageClientInterface
     public function set($key, $value, $ttl = null);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $items
@@ -37,6 +43,9 @@ interface StorageClientInterface
     public function setMulti(array $items);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $key
@@ -46,6 +55,9 @@ interface StorageClientInterface
     public function delete($key);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $keys
@@ -55,6 +67,9 @@ interface StorageClientInterface
     public function deleteMulti(array $keys);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return int
@@ -62,6 +77,9 @@ interface StorageClientInterface
     public function deleteAll();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $key
@@ -71,6 +89,9 @@ interface StorageClientInterface
     public function get($key);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string[] $keys
@@ -80,6 +101,9 @@ interface StorageClientInterface
     public function getMulti(array $keys);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return array
@@ -87,6 +111,9 @@ interface StorageClientInterface
     public function getStats();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return array
@@ -94,6 +121,9 @@ interface StorageClientInterface
     public function getAllKeys();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $pattern
@@ -103,6 +133,9 @@ interface StorageClientInterface
     public function getKeys($pattern);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $pattern
@@ -114,6 +147,9 @@ interface StorageClientInterface
     public function scanKeys(string $pattern, int $limit, ?int $cursor = 0): StorageScanResultTransfer;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return void
@@ -121,6 +157,9 @@ interface StorageClientInterface
     public function resetAccessStats();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return array
@@ -128,6 +167,9 @@ interface StorageClientInterface
     public function getAccessStats();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return int
@@ -135,6 +177,9 @@ interface StorageClientInterface
     public function getCountItems();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Spryker\Client\Storage\Redis\ServiceInterface|\Spryker\Client\StorageExtension\Dependency\Plugin\StoragePluginInterface|\Spryker\Client\StorageExtension\Dependency\Plugin\StorageScanPluginInterface
@@ -142,6 +187,9 @@ interface StorageClientInterface
     public function getService();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $keys
@@ -151,6 +199,9 @@ interface StorageClientInterface
     public function setCachedKeys($keys);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return array
@@ -158,6 +209,9 @@ interface StorageClientInterface
     public function getCachedKeys();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $key
@@ -167,6 +221,9 @@ interface StorageClientInterface
     public function unsetCachedKey($key);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return void

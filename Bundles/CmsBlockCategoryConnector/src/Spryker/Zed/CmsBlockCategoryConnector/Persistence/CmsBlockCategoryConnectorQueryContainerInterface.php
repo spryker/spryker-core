@@ -10,6 +10,9 @@ namespace Spryker\Zed\CmsBlockCategoryConnector\Persistence;
 interface CmsBlockCategoryConnectorQueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnectorQuery
@@ -17,6 +20,9 @@ interface CmsBlockCategoryConnectorQueryContainerInterface
     public function queryCmsBlockCategoryConnector();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idCmsBlock
@@ -26,6 +32,9 @@ interface CmsBlockCategoryConnectorQueryContainerInterface
     public function queryCmsBlockCategoryConnectorByIdCmsBlock($idCmsBlock);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idCategory
@@ -36,6 +45,9 @@ interface CmsBlockCategoryConnectorQueryContainerInterface
     public function queryCmsBlockCategoryConnectorByIdCategory($idCategory, $idCategoryTemplate);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idCmsBlock
@@ -46,6 +58,9 @@ interface CmsBlockCategoryConnectorQueryContainerInterface
     public function queryCmsBlockCategoryWithNamesByIdBlock($idCmsBlock, $idLocale);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idCategory
@@ -56,6 +71,9 @@ interface CmsBlockCategoryConnectorQueryContainerInterface
     public function queryCmsBlockCategoryWithBlocksByIdCategoryIdTemplate($idCategory, $idCategoryTemplate);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idCategory
@@ -65,6 +83,9 @@ interface CmsBlockCategoryConnectorQueryContainerInterface
     public function queryCmsBlockCategoryWithBlocksByIdCategory($idCategory);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryPositionQuery
@@ -72,6 +93,9 @@ interface CmsBlockCategoryConnectorQueryContainerInterface
     public function queryCmsBlockCategoryPosition();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $positionName

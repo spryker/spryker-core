@@ -5,7 +5,7 @@
 
 'use strict';
 
-var SelectTableAPI = function() {
+var SelectTableAPI = function () {
     this.selectedProductsData = [];
     this.removeBtnSelector = '.js-remove-item';
     this.removeBtnTemplate = '<a href="#" class="js-remove-item btn-xs">Remove</a>';
@@ -21,7 +21,13 @@ var SelectTableAPI = function() {
      * @param {string} counterLabelSelector - Tabs label where will be added count of select products.
      * @param {string} inputWithSelectedProducts - In this input will putted all selected product ids.
      */
-    this.init = function(productTable, selectedProductsTable, checkboxSelector, counterLabelSelector, inputWithSelectedProducts) {
+    this.init = function (
+        productTable,
+        selectedProductsTable,
+        checkboxSelector,
+        counterLabelSelector,
+        inputWithSelectedProducts,
+    ) {
         this.$productTable = $(productTable);
         this.$selectedProductsTable = $(selectedProductsTable);
         this.$counterLabel = $(counterLabelSelector);
@@ -34,7 +40,7 @@ var SelectTableAPI = function() {
         this.addCounterToLabel();
     };
 
-    this.selectProductsOnLoad = function(initialSelectedProductsData) {
+    this.selectProductsOnLoad = function (initialSelectedProductsData) {
         if (this.initialDataLoaded) {
             return;
         }
@@ -53,11 +59,11 @@ var SelectTableAPI = function() {
     /**
      * Draw method of DataTable. Fires every time table rerender.
      */
-    this.drawProductsTable = function() {
+    this.drawProductsTable = function () {
         var self = this,
             productTableData = self.$productTable.DataTable();
 
-        productTableData.on('draw', function(event, settings) {
+        productTableData.on('draw', function (event, settings) {
             self.updateCheckboxes();
             self.mapEventsToCheckboxes(productTableData, $(self.checkboxSelector));
 
@@ -75,7 +81,7 @@ var SelectTableAPI = function() {
      * @param {object} productTableData - DataTable options ( get by $(element).DataTable() ).
      * @param {checkboxes} checkboxes - Collection of all checkboxes in Product Table.
      */
-    this.mapEventsToCheckboxes = function(productTableData, checkboxes) {
+    this.mapEventsToCheckboxes = function (productTableData, checkboxes) {
         var self = this;
 
         checkboxes.off('change');
@@ -95,7 +101,7 @@ var SelectTableAPI = function() {
     /**
      * Check for selected products in product table.
      */
-    this.updateCheckboxes = function() {
+    this.updateCheckboxes = function () {
         var productTable = this.$productTable.DataTable(),
             productTableData = productTable.data();
 
@@ -115,8 +121,8 @@ var SelectTableAPI = function() {
      * @param {object} checkBox - Jquery object with checkbox.
      * @param {number} productItemId - Id if product row.
      */
-    this.findSelectedProductsInTable = function(checkBox,productItemId) {
-        var itemEqualId = function(item) {
+    this.findSelectedProductsInTable = function (checkBox, productItemId) {
+        var itemEqualId = function (item) {
             return item[0] === productItemId;
         };
 
@@ -128,11 +134,11 @@ var SelectTableAPI = function() {
     /**
      * Update counter.
      */
-    this.updateCounter = function() {
+    this.updateCounter = function () {
         var counterText = '';
 
         if (this.selectedProductsData.length) {
-            counterText = ' ('+this.selectedProductsData.length+')';
+            counterText = ' (' + this.selectedProductsData.length + ')';
         }
 
         $(this.counterSelector).html(counterText);
@@ -142,8 +148,8 @@ var SelectTableAPI = function() {
      * Update selected products input value.
      * @param {number} id - Selected product id.
      */
-    this.updateSelectedProductsInputValue = function() {
-        var inputValue = this.selectedProductsData.reduce(function(concat, current, index) {
+    this.updateSelectedProductsInputValue = function () {
+        var inputValue = this.selectedProductsData.reduce(function (concat, current, index) {
             return index ? concat + ',' + current[0] : current[0];
         }, '');
 
@@ -154,7 +160,7 @@ var SelectTableAPI = function() {
      * Add selected product to array with all selected items.
      * @param {array} rowData - Array of all data selected product.
      */
-    this.addRow = function(rowData) {
+    this.addRow = function (rowData) {
         var productItem = rowData.slice();
         productItem[rowData.length - 1] = this.removeBtnTemplate.replace('#', productItem[0]);
         this.selectedProductsData.push(productItem);
@@ -165,17 +171,16 @@ var SelectTableAPI = function() {
      * Remove row from array with all selected items.
      * @param {number} id - Products id which should be deleted.
      */
-    this.removeRow = function(id) {
+    this.removeRow = function (id) {
         var self = this;
 
-        this.selectedProductsData.every(function(elem,index) {
+        this.selectedProductsData.every(function (elem, index) {
             if (elem[0] !== Number(id)) {
                 return true;
             }
 
-            self.selectedProductsData.splice(index,1);
+            self.selectedProductsData.splice(index, 1);
             return false;
-
         });
         self.renderSelectedItemsTable();
     };
@@ -183,7 +188,7 @@ var SelectTableAPI = function() {
     /**
      * Add event for remove button to remove row from array with all selected items.
      */
-    this.addRemoveButtonClickHandler = function() {
+    this.addRemoveButtonClickHandler = function () {
         var self = this,
             selectedTable = this.$selectedProductsTable;
 
@@ -200,24 +205,20 @@ var SelectTableAPI = function() {
     /**
      * Add counter template on init.
      */
-    this.addCounterToLabel = function() {
+    this.addCounterToLabel = function () {
         this.$counterLabel.append(this.counterTemplate);
     };
 
     /**
      * Redraw table with selected items.
      */
-    this.renderSelectedItemsTable = function() {
-        this.$selectedProductsTable
-            .DataTable()
-            .clear()
-            .rows
-            .add(this.selectedProductsData).draw();
+    this.renderSelectedItemsTable = function () {
+        this.$selectedProductsTable.DataTable().clear().rows.add(this.selectedProductsData).draw();
 
         this.updateCounter();
         this.updateSelectedProductsInputValue();
         this.updateCheckboxes();
     };
-}
+};
 
 module.exports = SelectTableAPI;

@@ -25,6 +25,9 @@ interface ProductCategoryStorageQueryContainerInterface extends QueryContainerIn
     public function queryProductCategoryByProductCategoryIds($productCategoryIds): SpyProductCategoryQuery;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int[] $productAbstractIds
@@ -34,6 +37,9 @@ interface ProductCategoryStorageQueryContainerInterface extends QueryContainerIn
     public function queryProductAbstractCategoryStorageByIds(array $productAbstractIds);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $categoryIds
@@ -43,6 +49,9 @@ interface ProductCategoryStorageQueryContainerInterface extends QueryContainerIn
     public function queryProductAbstractIdsByCategoryIds(array $categoryIds);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $nodeIds
