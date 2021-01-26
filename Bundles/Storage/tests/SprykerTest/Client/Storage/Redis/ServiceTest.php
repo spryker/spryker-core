@@ -29,8 +29,15 @@ class ServiceTest extends Unit
 {
     /**
      * @uses \Spryker\Shared\StorageRedis\StorageRedisConstants::STORAGE_REDIS_PROTOCOL
+     *
+     * @deprecated Use {@link \SprykerTest\Client\Storage\Redis\ServiceTest::REDIS_SCHEME} instead.
      */
     protected const REDIS_PROTOCOL = 'STORAGE_REDIS:STORAGE_REDIS_PROTOCOL';
+
+    /**
+     * @uses \Spryker\Shared\StorageRedis\StorageRedisConstants::STORAGE_REDIS_SCHEME
+     */
+    protected const REDIS_SCHEME = 'STORAGE_REDIS:STORAGE_REDIS_SCHEME';
 
     /**
      * @uses \Spryker\Shared\StorageRedis\StorageRedisConstants::STORAGE_REDIS_HOST
@@ -409,7 +416,7 @@ class ServiceTest extends Unit
      */
     protected function setupConfig(): void
     {
-        $this->tester->setConfig(StorageConstants::STORAGE_REDIS_PROTOCOL, Config::get(static::REDIS_PROTOCOL, 'tcp'));
+        $this->tester->setConfig(StorageConstants::STORAGE_REDIS_PROTOCOL, Config::get(static::REDIS_SCHEME, false) ?: Config::get(static::REDIS_PROTOCOL, 'tcp'));
         $this->tester->setConfig(StorageConstants::STORAGE_REDIS_PORT, Config::get(static::REDIS_PORT, 10009));
         $this->tester->setConfig(StorageConstants::STORAGE_REDIS_HOST, Config::get(static::REDIS_HOST, '127.0.0.1'));
         $this->tester->setConfig(StorageConstants::STORAGE_REDIS_DATABASE, Config::get(static::REDIS_DATABASE, 3));
