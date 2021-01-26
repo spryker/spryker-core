@@ -9,7 +9,7 @@ namespace Spryker\Glue\ProductConfigurationsRestApi\Dependency\Client;
 
 use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
 
-class ProductConfigurationRestApiToProductConfigurationStorageClientBridge implements ProductConfigurationsRestApiToProductConfigurationStorageClientInterface
+class ProductConfigurationsRestApiToProductConfigurationStorageClientBridge implements ProductConfigurationsRestApiToProductConfigurationStorageClientInterface
 {
     /**
      * @var \Spryker\Client\ProductConfigurationStorage\ProductConfigurationStorageClientInterface

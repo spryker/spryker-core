@@ -19,7 +19,7 @@ class ProductConfigurationConcreteProductsResourceExpanderPlugin extends Abstrac
 {
     /**
      * {@inheritDoc}
-     *  - Expands concrete-products resource with discontinued data.
+     * - Expands concrete-products resource with configurable product data.
      *
      * @api
      *

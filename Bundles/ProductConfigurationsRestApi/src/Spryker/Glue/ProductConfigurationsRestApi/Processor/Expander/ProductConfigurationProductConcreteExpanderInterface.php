@@ -9,7 +9,7 @@ namespace Spryker\Glue\ProductConfigurationsRestApi\Processor\Expander;
 
 use Generated\Shared\Transfer\ConcreteProductsRestAttributesTransfer;
 
-interface ConcreteProductsProductConfigurationResourceExpanderInterface
+interface ProductConfigurationProductConcreteExpanderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ConcreteProductsRestAttributesTransfer $concreteProductsRestAttributesTransfer

@@ -9,14 +9,14 @@ namespace Spryker\Glue\ProductConfigurationsRestApi;
 
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
-use Spryker\Glue\ProductConfigurationsRestApi\Dependency\Client\ProductConfigurationRestApiToProductConfigurationStorageClientBridge;
+use Spryker\Glue\ProductConfigurationsRestApi\Dependency\Client\ProductConfigurationsRestApiToProductConfigurationStorageClientBridge;
 
 /**
  * @method \Spryker\Glue\ProductConfigurationsRestApi\ProductDiscontinuedRestApiConfig getConfig()
  */
 class ProductConfigurationsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const CLIENT_PRODUCT_CONFIGURATIONS_STORAGE = 'CLIENT_PRODUCT_CONFIGURATIONS_STORAGE';
+    public const CLIENT_PRODUCT_CONFIGURATION_STORAGE = 'CLIENT_PRODUCT_CONFIGURATION_STORAGE';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
@@ -26,8 +26,7 @@ class ProductConfigurationsRestApiDependencyProvider extends AbstractBundleDepen
     public function provideDependencies(Container $container): Container
     {
         $container = parent::provideDependencies($container);
-
-        $container = $this->addProductConfigurationsStorageClient($container);
+        $container = $this->addProductConfigurationStorageClient($container);
 
         return $container;
     }
@@ -37,10 +36,10 @@ class ProductConfigurationsRestApiDependencyProvider extends AbstractBundleDepen
      *
      * @return \Spryker\Glue\Kernel\Container
      */
-    public function addProductConfigurationsStorageClient(Container $container): Container
+    public function addProductConfigurationStorageClient(Container $container): Container
     {
-        $container->set(static::CLIENT_PRODUCT_CONFIGURATIONS_STORAGE, function (Container $container) {
-            return new ProductConfigurationRestApiToProductConfigurationStorageClientBridge(
+        $container->set(static::CLIENT_PRODUCT_CONFIGURATION_STORAGE, function (Container $container) {
+            return new ProductConfigurationsRestApiToProductConfigurationStorageClientBridge(
                 $container->getLocator()->productConfigurationStorage()->client()
             );
         });

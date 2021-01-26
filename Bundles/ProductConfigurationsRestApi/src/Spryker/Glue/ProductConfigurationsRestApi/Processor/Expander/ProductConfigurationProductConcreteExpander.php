@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\ConcreteProductsRestAttributesTransfer;
 use Generated\Shared\Transfer\RestProductConfigurationInstanceAttributesTransfer;
 use Spryker\Glue\ProductConfigurationsRestApi\Dependency\Client\ProductConfigurationsRestApiToProductConfigurationStorageClientInterface;
 
-class ConcreteProductsProductConfigurationResourceExpander implements ConcreteProductsProductConfigurationResourceExpanderInterface
+class ProductConfigurationProductConcreteExpander implements ProductConfigurationProductConcreteExpanderInterface
 {
     /**
      * @var \Spryker\Glue\ProductConfigurationsRestApi\Dependency\Client\ProductConfigurationsRestApiToProductConfigurationStorageClientInterface
@@ -35,7 +35,7 @@ class ConcreteProductsProductConfigurationResourceExpander implements ConcretePr
         ConcreteProductsRestAttributesTransfer $concreteProductsRestAttributesTransfer
     ): ConcreteProductsRestAttributesTransfer {
         $productConfigurationInstanceTransfer = $this->productConfigurationStorageClient
-            ->findProductConfigurationInstanceBySku($concreteProductsRestAttributesTransfer->getSku());
+            ->findProductConfigurationInstanceBySku($concreteProductsRestAttributesTransfer->getSkuOrFail());
         if (!$productConfigurationInstanceTransfer) {
             return $concreteProductsRestAttributesTransfer;
         }

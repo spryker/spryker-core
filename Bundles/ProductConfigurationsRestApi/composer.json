@@ -1,10 +1,11 @@
 {
   "name": "spryker/product-configurations-rest-api",
+  "type": "library",
   "description": "ProductConfigurationsRestApi module",
   "license": "proprietary",
   "require": {
     "php": ">=7.3",
-    "spryker/kernel": "^3.30.0",
+    "spryker/kernel": "^3.56.0",
     "spryker/product-configuration-storage": "^0.1.2",
     "spryker/products-rest-api-extension": "^1.0.0"
   },
