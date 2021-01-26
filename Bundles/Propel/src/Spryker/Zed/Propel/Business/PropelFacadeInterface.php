@@ -13,6 +13,9 @@ use Generated\Shared\Transfer\SchemaValidationTransfer;
 interface PropelFacadeInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return void
@@ -30,6 +33,9 @@ interface PropelFacadeInterface
     public function getSchemaDirectory(): string;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return void
@@ -102,6 +108,9 @@ interface PropelFacadeInterface
     public function adjustCorePostgresqlFunctions();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Symfony\Component\Console\Command\Command[]
@@ -109,6 +118,9 @@ interface PropelFacadeInterface
     public function getConsoleCommands();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return string
@@ -116,6 +128,9 @@ interface PropelFacadeInterface
     public function getCurrentDatabaseEngine();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @deprecated Will be removed without replacement.

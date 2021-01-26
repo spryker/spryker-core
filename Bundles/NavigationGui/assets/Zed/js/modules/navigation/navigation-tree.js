@@ -24,25 +24,25 @@ var config = {
     navigationNodeFormUrlPrefix: '/navigation-gui/node/',
     navigationTreeHierarchyUpdateUrl: '/navigation-gui/tree/update-hierarchy',
     navigationTreeNodeTypes: {
-        'default': {
-            'icon': 'fa fa-folder'
+        default: {
+            icon: 'fa fa-folder',
         },
-        'navigation': {
-            'icon': 'fa fa-list'
+        navigation: {
+            icon: 'fa fa-list',
         },
-        'cms_page': {
-            'icon': 'fa fa-file-o'
+        cms_page: {
+            icon: 'fa fa-file-o',
         },
-        'category': {
-            'icon': 'fa fa-sitemap'
+        category: {
+            icon: 'fa fa-sitemap',
         },
-        'link': {
-            'icon': 'fa fa-link'
+        link: {
+            icon: 'fa fa-link',
         },
-        'external_url': {
-            'icon': 'fa fa-external-link'
-        }
-    }
+        external_url: {
+            icon: 'fa fa-external-link',
+        },
+    },
 };
 
 /**
@@ -53,7 +53,7 @@ function initialize() {
     $treeSearchField.keyup(onTreeSearchKeyup);
 
     // Enable save order button on tree change
-    $(document).bind('dnd_stop.vakata', function() {
+    $(document).bind('dnd_stop.vakata', function () {
         $treeOrderSaveBtn.removeAttr('disabled');
     });
 }
@@ -65,7 +65,7 @@ function initialize() {
  *
  * @return {void}
  */
-function loadTree(idNavigation, selected, skipFormLoad)  {
+function loadTree(idNavigation, selected, skipFormLoad) {
     $treeProgressBar.removeClass('hidden');
     $treeContainer.addClass('hidden');
 
@@ -73,16 +73,19 @@ function loadTree(idNavigation, selected, skipFormLoad)  {
         ajaxRequest.abort();
     }
 
-    ajaxRequest = $.get(config.navigationTreeUrl, {'id-navigation': idNavigation}, createTreeLoadHandler(idNavigation, selected, skipFormLoad))
-        .always(function() {
-            $treeProgressBar.addClass('hidden');
-        });
+    ajaxRequest = $.get(
+        config.navigationTreeUrl,
+        { 'id-navigation': idNavigation },
+        createTreeLoadHandler(idNavigation, selected, skipFormLoad),
+    ).always(function () {
+        $treeProgressBar.addClass('hidden');
+    });
 }
 
 /**
  * @return {void}
  */
-function resetTree()  {
+function resetTree() {
     if (ajaxRequest) {
         ajaxRequest.abort();
     }
@@ -99,7 +102,7 @@ function resetTree()  {
  * @returns {Function}
  */
 function createTreeLoadHandler(idNavigation, selected, skipFormLoad) {
-    return function(response) {
+    return function (response) {
         $treeContent.html(response);
 
         initJsTree();
@@ -113,7 +116,7 @@ function createTreeLoadHandler(idNavigation, selected, skipFormLoad) {
             setNodeSelectListener(idNavigation);
             selectNode(selected);
         }
-    }
+    };
 }
 
 /**
@@ -121,24 +124,24 @@ function createTreeLoadHandler(idNavigation, selected, skipFormLoad) {
  */
 function initJsTree() {
     $('#navigation-tree').jstree({
-        'core': {
-            'check_callback': function (op, node, par, pos, more) {
+        core: {
+            check_callback: function (op, node, par, pos, more) {
                 // disable drop on root level
                 if (more && more.dnd && (op === 'move_node' || op === 'copy_node')) {
                     return !!more.ref.data.idNavigationNode;
                 }
 
                 return true;
-            }
+            },
         },
-        'plugins': ['types', 'wholerow', 'dnd', 'search'],
-        'types': config.navigationTreeNodeTypes,
-        'dnd': {
-            'is_draggable': function(items) {
+        plugins: ['types', 'wholerow', 'dnd', 'search'],
+        types: config.navigationTreeNodeTypes,
+        dnd: {
+            is_draggable: function (items) {
                 var idNavigationNode = items[0].data.idNavigationNode;
                 return !!idNavigationNode;
-            }
-        }
+            },
+        },
     });
 }
 
@@ -158,7 +161,7 @@ function selectNode(idNavigationNode) {
  * @return {void}
  */
 function setNodeSelectListener(idNavigation) {
-    $('#navigation-tree').on('select_node.jstree', function(e, data){
+    $('#navigation-tree').on('select_node.jstree', function (e, data) {
         var idNavigationNode = data.node.data.idNavigationNode;
 
         loadForm(idNavigation, idNavigationNode);
@@ -171,10 +174,10 @@ function setNodeSelectListener(idNavigation) {
  *
  * @return {void}
  */
-function loadForm(idNavigation, idNavigationNode)  {
+function loadForm(idNavigation, idNavigationNode) {
     var data = {
         'id-navigation': idNavigation,
-        'id-navigation-node': idNavigationNode
+        'id-navigation-node': idNavigationNode,
     };
     var uri = config.navigationNodeFormUrlPrefix;
     if (idNavigationNode) {
@@ -194,7 +197,7 @@ function loadForm(idNavigation, idNavigationNode)  {
 /**
  * @return {void}
  */
-function resetForm()  {
+function resetForm() {
     $iframe.addClass('hidden');
 }
 
@@ -227,7 +230,7 @@ function changeIframeHeight() {
  * @return {void}
  */
 function onTreeSearchKeyup() {
-    if(treeSearchTimeout) {
+    if (treeSearchTimeout) {
         clearTimeout(treeSearchTimeout);
     }
     treeSearchTimeout = setTimeout(function () {
@@ -238,28 +241,28 @@ function onTreeSearchKeyup() {
 /**
  * @return {void}
  */
-function onTreeSaveOrderClick(){
+function onTreeSaveOrderClick() {
     $treeUpdateProgressBar.removeClass('hidden');
 
     var jstreeData = $('#navigation-tree').jstree(true).get_json();
     var params = {
         'navigation-tree': {
-            'navigation': {
-                'id_navigation': jstreeData[0].data.idNavigation
+            navigation: {
+                id_navigation: jstreeData[0].data.idNavigation,
             },
-            'nodes': getNavigationNodesRecursively(jstreeData[0])
-        }
+            nodes: getNavigationNodesRecursively(jstreeData[0]),
+        },
     };
 
-    $.post(config.navigationTreeHierarchyUpdateUrl, params, function(response) {
+    $.post(config.navigationTreeHierarchyUpdateUrl, params, function (response) {
         window.sweetAlert({
-            title: response.success ? "Success" : "Error",
+            title: response.success ? 'Success' : 'Error',
             text: response.message,
-            type: response.success ? "success" : "error"
+            type: response.success ? 'success' : 'error',
         });
 
         $treeOrderSaveBtn.attr('disabled', 'disabled');
-    }).always(function() {
+    }).always(function () {
         $treeUpdateProgressBar.addClass('hidden');
     });
 }
@@ -272,13 +275,13 @@ function onTreeSaveOrderClick(){
 function getNavigationNodesRecursively(jstreeNode) {
     var nodes = [];
 
-    $.each(jstreeNode.children, function(i, childNode) {
+    $.each(jstreeNode.children, function (i, childNode) {
         var navigationNode = {
-            'navigation_node': {
-                'id_navigation_node': childNode.data.idNavigationNode,
-                'position': (i + 1)
+            navigation_node: {
+                id_navigation_node: childNode.data.idNavigationNode,
+                position: i + 1,
             },
-            'children': getNavigationNodesRecursively(childNode)
+            children: getNavigationNodesRecursively(childNode),
         };
 
         nodes.push(navigationNode);
@@ -287,12 +290,11 @@ function getNavigationNodesRecursively(jstreeNode) {
     return nodes;
 }
 
-
 /**
  * Open public methods
  */
 module.exports = {
     initialize: initialize,
     load: loadTree,
-    reset: resetTree
+    reset: resetTree,
 };

@@ -13,6 +13,9 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 interface CategoryPageSearchQueryContainerInterface extends QueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @deprecated Will be removed with next major release.
@@ -24,6 +27,9 @@ interface CategoryPageSearchQueryContainerInterface extends QueryContainerInterf
     public function queryLocalesWithLocaleNames(array $localeNames);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @deprecated Will be removed with next major release.
@@ -36,6 +42,9 @@ interface CategoryPageSearchQueryContainerInterface extends QueryContainerInterf
     public function queryCategoryNodeTree(array $categoryNodeIds, $idLocale);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @deprecated Will be removed with next major release.
@@ -48,6 +57,9 @@ interface CategoryPageSearchQueryContainerInterface extends QueryContainerInterf
     public function queryWholeCategoryNodeTree(array $categoryNodeIds, int $idLocale): SpyCategoryNodeQuery;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @deprecated Will be removed with next major release.
@@ -57,6 +69,9 @@ interface CategoryPageSearchQueryContainerInterface extends QueryContainerInterf
     public function queryCategoryRoot();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @deprecated Will be removed with next major release.
@@ -68,6 +83,9 @@ interface CategoryPageSearchQueryContainerInterface extends QueryContainerInterf
     public function queryCategoryNodeIdsByCategoryIds(array $categoryIds);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int[] $categoryNodeIds
@@ -77,6 +95,9 @@ interface CategoryPageSearchQueryContainerInterface extends QueryContainerInterf
     public function queryCategoryNodePageSearchByIds(array $categoryNodeIds);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int[] $categoryTemplateIds
@@ -86,6 +107,9 @@ interface CategoryPageSearchQueryContainerInterface extends QueryContainerInterf
     public function queryCategoryNodeIdsByTemplateIds(array $categoryTemplateIds);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int[] $ids

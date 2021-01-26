@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\DataExportReportTransfer;
 interface SalesDataExportFacadeInterface
 {
     /**
-     * Specification
+     * Specification:
      * - Exports orders according to configuration in `DataExportConfigurationTransfer`.
      * - Merges module level configuration with provided `DataExportConfigurationTransfer`.
      * - Returns results of export in `DataExportReportTransfer`.
@@ -27,7 +27,7 @@ interface SalesDataExportFacadeInterface
     public function exportOrder(DataExportConfigurationTransfer $dataExportConfigurationTransfer): DataExportReportTransfer;
 
     /**
-     * Specification
+     * Specification:
      * - Exports order items according to configuration in `DataExportConfigurationTransfer`.
      * - Merges module level configuration with provided `DataExportConfigurationTransfer`.
      * - Returns results of export in `DataExportReportTransfer`.
@@ -41,7 +41,7 @@ interface SalesDataExportFacadeInterface
     public function exportOrderItem(DataExportConfigurationTransfer $dataExportConfigurationTransfer): DataExportReportTransfer;
 
     /**
-     * Specification
+     * Specification:
      * - Exports order expenses according to configuration in `DataExportConfigurationTransfer`.
      * - Merges module level configuration with provided `DataExportConfigurationTransfer`.
      * - Returns results of export in `DataExportReportTransfer`.

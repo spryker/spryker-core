@@ -71,5 +71,5 @@ function getDataTableApi(settings) {
  * Open public methods
  */
 module.exports = {
-    initialize: initialize
+    initialize: initialize,
 };

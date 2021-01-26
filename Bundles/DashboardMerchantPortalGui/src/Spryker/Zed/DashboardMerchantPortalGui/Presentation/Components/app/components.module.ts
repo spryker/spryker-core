@@ -12,13 +12,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { DashboardModule } from './dashboard/dashboard.module';
 
 @NgModule({
-    imports: [
-        ButtonLinkModule,
-        ChipsModule,
-        DashboardModule,
-        DashboardCardModule,
-        DashboardStatsModule,
-    ],
+    imports: [ButtonLinkModule, ChipsModule, DashboardModule, DashboardCardModule, DashboardStatsModule],
     providers: [],
 })
 export class ComponentsModule extends CustomElementModule {

@@ -10,30 +10,30 @@ function ProductSelector() {
     var selectedProducts = {};
     var idKey = 'id';
 
-    productSelector.addProductToSelection = function(idProduct) {
+    productSelector.addProductToSelection = function (idProduct) {
         selectedProducts[idProduct] = idProduct;
     };
 
-    productSelector.removeProductFromSelection = function(idProduct) {
+    productSelector.removeProductFromSelection = function (idProduct) {
         delete selectedProducts[idProduct];
     };
 
-    productSelector.isProductSelected = function(idProduct) {
+    productSelector.isProductSelected = function (idProduct) {
         return selectedProducts.hasOwnProperty(idProduct);
     };
 
-    productSelector.clearAllSelections = function() {
+    productSelector.clearAllSelections = function () {
         selectedProducts = {};
     };
 
-    productSelector.addAllToSelection = function(data) {
+    productSelector.addAllToSelection = function (data) {
         for (var i = 0; i < data.length; i++) {
             var id = data[i][idKey];
             selectedProducts[id] = id;
         }
     };
 
-    productSelector.getSelected = function() {
+    productSelector.getSelected = function () {
         return selectedProducts;
     };
 
@@ -44,7 +44,7 @@ module.exports = {
     /**
      * @return {ProductSelector}
      */
-    create: function() {
+    create: function () {
         return new ProductSelector();
-    }
+    },
 };
