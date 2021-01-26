@@ -62,7 +62,7 @@ class MerchantSalesOrderDataExportFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testExportMerchantOrderWillReturnResultTransferWithCorrectData(): void
+    public function testExportMerchantOrderReturnsResultTransferWithCorrectData(): void
     {
         // Arrange
         $dataExportConfigurationTransfer = $this->tester->createDataExportConfigurationTransfer(
@@ -77,6 +77,7 @@ class MerchantSalesOrderDataExportFacadeTest extends Unit
         // Assert
         /** @var \Generated\Shared\Transfer\DataExportResultTransfer $dataExportResultTransfer */
         $dataExportResultTransfer = $dataExportReportTransfer->getDataExportResults()->offsetGet(0);
+
         $this->assertSame(
             1,
             $dataExportResultTransfer->getExportCount(),
@@ -87,7 +88,7 @@ class MerchantSalesOrderDataExportFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testExportMerchantOrderWillReturnTheCorrectQuantityOfResultTransfers(): void
+    public function testExportMerchantOrderReturnsTheCorrectQuantityOfResultTransfers(): void
     {
         // Arrange
         $dataExportConfigurationTransfer = $this->tester->createDataExportConfigurationTransfer(
@@ -111,7 +112,7 @@ class MerchantSalesOrderDataExportFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testExportMerchantOrderWillCreateExportFileWithCorrectNameAndFilePath(): void
+    public function testExportMerchantOrderCreatesExportFileWithCorrectNameAndFilePath(): void
     {
         // Arrange
         $dataExportConfigurationTransfer = $this->tester->createDataExportConfigurationTransfer(
@@ -145,7 +146,7 @@ class MerchantSalesOrderDataExportFacadeTest extends Unit
    /**
     * @return void
     */
-    public function testExportMerchantOrderWillReturnUnsuccessfulDataExportReportTransferInCaseOfEmptyData(): void
+    public function testExportMerchantOrderReturnsUnsuccessfulDataExportReportTransferInCaseOfEmptyData(): void
     {
         // Arrange
         $dataExportConfigurationTransfer = $this->tester->createDataExportConfigurationTransfer(
@@ -166,7 +167,7 @@ class MerchantSalesOrderDataExportFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testExportMerchantOrderItemWillReturnResultTransferWithCorrectData(): void
+    public function testExportMerchantOrderItemReturnsResultTransferWithCorrectData(): void
     {
         // Arrange
         $dataExportConfigurationTransfer = $this->tester->createDataExportConfigurationTransfer(
@@ -181,6 +182,7 @@ class MerchantSalesOrderDataExportFacadeTest extends Unit
         // Assert
         /** @var \Generated\Shared\Transfer\DataExportResultTransfer $dataExportResultTransfer */
         $dataExportResultTransfer = $dataExportReportTransfer->getDataExportResults()->offsetGet(0);
+
         $this->assertSame(
             1,
             $dataExportResultTransfer->getExportCount(),
@@ -191,7 +193,7 @@ class MerchantSalesOrderDataExportFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testExportMerchantOrderItemWillReturnTheCorrectQuantityOfResultTransfers(): void
+    public function testExportMerchantOrderItemReturnsTheCorrectQuantityOfResultTransfers(): void
     {
         // Arrange
         $dataExportConfigurationTransfer = $this->tester->createDataExportConfigurationTransfer(
@@ -215,7 +217,7 @@ class MerchantSalesOrderDataExportFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testExportMerchantOrderItemWillCreateExportFileWithCorrectNameAndFilePath(): void
+    public function testExportMerchantOrderItemCreatesExportFileWithCorrectNameAndFilePath(): void
     {
         // Arrange
         $dataExportConfigurationTransfer = $this->tester->createDataExportConfigurationTransfer(
@@ -249,7 +251,7 @@ class MerchantSalesOrderDataExportFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testExportMerchantOrderItemWillReturnUnsuccessfulDataExportReportTransferInCaseOfEmptyData(): void
+    public function testExportMerchantOrderItemReturnsUnsuccessfulDataExportReportTransferInCaseOfEmptyData(): void
     {
         // Arrange
         $dataExportConfigurationTransfer = $this->tester->createDataExportConfigurationTransfer(
@@ -270,7 +272,7 @@ class MerchantSalesOrderDataExportFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testExportMerchantOrderExpenseWillReturnResultTransferWithCorrectData(): void
+    public function testExportMerchantOrderExpenseReturnsResultTransferWithCorrectData(): void
     {
         // Arrange
         $dataExportConfigurationTransfer = $this->tester->createDataExportConfigurationTransfer(
@@ -285,6 +287,7 @@ class MerchantSalesOrderDataExportFacadeTest extends Unit
         // Assert
         /** @var \Generated\Shared\Transfer\DataExportResultTransfer $dataExportResultTransfer */
         $dataExportResultTransfer = $dataExportReportTransfer->getDataExportResults()->offsetGet(0);
+
         $this->assertSame(
             1,
             $dataExportResultTransfer->getExportCount(),
@@ -295,7 +298,7 @@ class MerchantSalesOrderDataExportFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testExportMerchantOrderExpenseWillReturnTheCorrectQuantityOfResultTransfers(): void
+    public function testExportMerchantOrderExpenseReturnsTheCorrectQuantityOfResultTransfers(): void
     {
         // Arrange
         $dataExportConfigurationTransfer = $this->tester->createDataExportConfigurationTransfer(
@@ -319,7 +322,7 @@ class MerchantSalesOrderDataExportFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testExportMerchantOrderExpenseWillCreateExportFileWithCorrectNameAndFilePath(): void
+    public function testExportMerchantOrderExpenseCreatesExportFileWithCorrectNameAndFilePath(): void
     {
         // Arrange
         $dataExportConfigurationTransfer = $this->tester->createDataExportConfigurationTransfer(
@@ -353,7 +356,7 @@ class MerchantSalesOrderDataExportFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testExportMerchantOrderExpenseWillReturnUnsuccessfulDataExportReportTransferInCaseOfEmptyData(): void
+    public function testExportMerchantOrderExpenseReturnsUnsuccessfulDataExportReportTransferInCaseOfEmptyData(): void
     {
         // Arrange
         $dataExportConfigurationTransfer = $this->tester->createDataExportConfigurationTransfer(

@@ -27,7 +27,9 @@ class MerchantSalesOrderCommentMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Sales\Persistence\Base\SpySalesOrderComment[] $salesOrderCommentEntities
+     * @phpstan-param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Sales\Persistence\SpySalesOrderComment> $salesOrderCommentEntities
+     *
+     * @param \Propel\Runtime\Collection\ObjectCollection $salesOrderCommentEntities
      * @param \Generated\Shared\Transfer\CommentTransfer[] $commentTransfers
      *
      * @return \Generated\Shared\Transfer\CommentTransfer[]

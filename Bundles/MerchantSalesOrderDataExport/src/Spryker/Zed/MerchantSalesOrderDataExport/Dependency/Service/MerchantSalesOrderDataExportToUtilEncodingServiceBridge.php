@@ -23,7 +23,7 @@ class MerchantSalesOrderDataExportToUtilEncodingServiceBridge implements Merchan
     }
 
     /**
-     * @param array $value
+     * @param mixed $value
      * @param int|null $options
      * @param int|null $depth
      *

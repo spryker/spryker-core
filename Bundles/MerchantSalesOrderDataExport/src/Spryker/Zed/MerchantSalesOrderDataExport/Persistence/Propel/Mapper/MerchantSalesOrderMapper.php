@@ -19,7 +19,6 @@ use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap;
 class MerchantSalesOrderMapper
 {
     protected const KEY_MERCHANT_ORDER_COMMENTS = 'merchant_order_comments';
-    protected const KEY_MERCHANT_NAME = 'merchant_name';
     protected const KEY_ORDER_SALUTATION = 'salutation';
     protected const KEY_BILLING_ADDRESS_SALUTATION = 'billing_address_salutation';
     protected const KEY_PRICE_MODE = 'price_mode';

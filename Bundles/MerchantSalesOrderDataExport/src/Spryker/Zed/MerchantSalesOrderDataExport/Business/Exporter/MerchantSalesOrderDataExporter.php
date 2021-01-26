@@ -57,16 +57,6 @@ class MerchantSalesOrderDataExporter implements MerchantSalesOrderDataExporterIn
     protected $dataReader;
 
     /**
-     * @var string
-     */
-    protected $merchantName;
-
-    /**
-     * @var string
-     */
-    protected $storeName;
-
-    /**
      * @param \Spryker\Zed\MerchantSalesOrderDataExport\Dependency\Service\MerchantSalesOrderDataExportToDataExportServiceInterface $dataExportService
      * @param \Spryker\Zed\MerchantSalesOrderDataExport\MerchantSalesOrderDataExportConfig $merchantSalesOrderDataExportConfig
      * @param \Spryker\Zed\MerchantSalesOrderDataExport\Business\Reader\DataReaderInterface $dataReader
@@ -94,7 +84,7 @@ class MerchantSalesOrderDataExporter implements MerchantSalesOrderDataExporterIn
         do {
             $dataExportBatchTransfer = $this->dataReader->readBatch($extendedDataExportConfigurationTransfer);
 
-            if (!($dataExportBatchTransfer->getData())) {
+            if (!$dataExportBatchTransfer->getData()) {
                 return $this->createDataExportReportTransfer($dataExportResultTransfer);
             }
             $dataExportResultTransfer = $this->exportBatchData(
@@ -131,24 +121,24 @@ class MerchantSalesOrderDataExporter implements MerchantSalesOrderDataExporterIn
         $dataExportBatchData = $dataExportBatchTransfer->getData();
         $exportData = [];
 
-        if ($dataExportBatchTransfer->getOffset() === 0) {
-            $this->merchantName = $dataExportBatchData[0][static::EXTENDED_DATA_EXPORT_CONFIGURATION_FIELD_MERCHANT_NAME];
-            $this->storeName = $dataExportBatchData[0][static::EXTENDED_DATA_EXPORT_CONFIGURATION_FIELD_MERCHANT_ORDER_STORE];
-        }
+        $merchantName = $dataExportBatchData[0][static::EXTENDED_DATA_EXPORT_CONFIGURATION_FIELD_MERCHANT_NAME];
+        $storeName = $dataExportBatchData[0][static::EXTENDED_DATA_EXPORT_CONFIGURATION_FIELD_MERCHANT_ORDER_STORE];
+
+        /** @var int $exportedRowsCount */
         $exportedRowsCount = $dataExportBatchTransfer->getOffset() ? $dataExportBatchTransfer->getOffset() : 0;
 
         foreach ($dataExportBatchData as $dataExportRow) {
             $exportedRowsCount++;
             if (
-                $dataExportRow[static::EXTENDED_DATA_EXPORT_CONFIGURATION_FIELD_MERCHANT_NAME] === $this->merchantName
-                && $dataExportRow[static::EXTENDED_DATA_EXPORT_CONFIGURATION_FIELD_MERCHANT_ORDER_STORE] === $this->storeName
+                $dataExportRow[static::EXTENDED_DATA_EXPORT_CONFIGURATION_FIELD_MERCHANT_NAME] === $merchantName
+                && $dataExportRow[static::EXTENDED_DATA_EXPORT_CONFIGURATION_FIELD_MERCHANT_ORDER_STORE] === $storeName
             ) {
                 $exportData[] = $dataExportRow;
 
                 continue;
             }
 
-            $dataExportWriteResponseTransfer = $this->writeMerchantStoreData(
+            $dataExportWriteResponseTransfer = $this->writeMerchantOrderData(
                 $exportData,
                 $dataExportConfigurationTransfer,
                 $dataExportBatchTransfer
@@ -160,13 +150,13 @@ class MerchantSalesOrderDataExporter implements MerchantSalesOrderDataExporterIn
                     ->setExportCount($exportedRowsCount);
             }
 
-            $this->merchantName = $dataExportRow[static::EXTENDED_DATA_EXPORT_CONFIGURATION_FIELD_MERCHANT_NAME];
-            $this->storeName = $dataExportRow[static::EXTENDED_DATA_EXPORT_CONFIGURATION_FIELD_MERCHANT_ORDER_STORE];
+            $merchantName = $dataExportRow[static::EXTENDED_DATA_EXPORT_CONFIGURATION_FIELD_MERCHANT_NAME];
+            $storeName = $dataExportRow[static::EXTENDED_DATA_EXPORT_CONFIGURATION_FIELD_MERCHANT_ORDER_STORE];
             $exportData = [];
             $exportData[] = $dataExportRow;
         }
 
-        $dataExportWriteResponseTransfer = $this->writeMerchantStoreData(
+        $dataExportWriteResponseTransfer = $this->writeMerchantOrderData(
             $exportData,
             $dataExportConfigurationTransfer,
             $dataExportBatchTransfer
@@ -191,7 +181,7 @@ class MerchantSalesOrderDataExporter implements MerchantSalesOrderDataExporterIn
      *
      * @return \Generated\Shared\Transfer\DataExportWriteResponseTransfer
      */
-    protected function writeMerchantStoreData(
+    protected function writeMerchantOrderData(
         array $exportData,
         DataExportConfigurationTransfer $dataExportConfigurationTransfer,
         DataExportBatchTransfer $dataExportBatchTransfer

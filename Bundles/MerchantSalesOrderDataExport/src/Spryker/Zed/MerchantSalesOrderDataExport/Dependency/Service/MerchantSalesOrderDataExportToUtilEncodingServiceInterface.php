@@ -10,7 +10,7 @@ namespace Spryker\Zed\MerchantSalesOrderDataExport\Dependency\Service;
 interface MerchantSalesOrderDataExportToUtilEncodingServiceInterface
 {
     /**
-     * @param mixed $value
+     * @param array $value
      * @param int|null $options
      * @param int|null $depth
      *
