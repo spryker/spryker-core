@@ -10,9 +10,9 @@ var $selectedForm = null;
 
 $(document).ready(function () {
     slotProductsTable.init();
-    $('#slot-table-wrapper').on('submit', 'form[name="delete_form"]', slotDeleteButtonHandler)
-    $('.js-btn-confirm').on('click', deleteConfirmButtonHandler)
-    $('.js-btn-cancel').on('click', deleteCancelButtonHandler)
+    $('#slot-table-wrapper').on('submit', 'form[name="delete_form"]', slotDeleteButtonHandler);
+    $('.js-btn-confirm').on('click', deleteConfirmButtonHandler);
+    $('.js-btn-cancel').on('click', deleteCancelButtonHandler);
 });
 
 /**
@@ -43,7 +43,5 @@ function deleteCancelButtonHandler() {
         return;
     }
 
-    $($selectedForm).find('button[type="submit"]')
-        .prop('disabled', false)
-        .removeClass('disabled');
+    $($selectedForm).find('button[type="submit"]').prop('disabled', false).removeClass('disabled');
 }

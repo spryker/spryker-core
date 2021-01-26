@@ -95,7 +95,7 @@ interface MoneyFacadeInterface
     public function parse($value, CurrencyTransfer $currencyTransfer);
 
     /**
-     * Specification
+     * Specification:
      * - Converts an integer value into decimal value
      *
      * @api
@@ -107,7 +107,7 @@ interface MoneyFacadeInterface
     public function convertIntegerToDecimal($value);
 
     /**
-     * Specification
+     * Specification:
      * - Converts a decimal value into integer value
      *
      * @api

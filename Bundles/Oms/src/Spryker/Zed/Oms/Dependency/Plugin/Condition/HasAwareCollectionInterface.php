@@ -10,6 +10,9 @@ namespace Spryker\Zed\Oms\Dependency\Plugin\Condition;
 interface HasAwareCollectionInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $name

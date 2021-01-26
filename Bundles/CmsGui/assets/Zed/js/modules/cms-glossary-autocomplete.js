@@ -10,7 +10,6 @@ var summernote = require('ZedGuiEditorConfiguration');
 const GLOSSARY_SELECT_MARGIN_WIDTH = 25;
 
 function CmsGlossaryAutocomplete(options) {
-
     var self = this;
 
     this.xhr = null;
@@ -23,11 +22,12 @@ function CmsGlossaryAutocomplete(options) {
     this.autocompleteUrl = '/cms-gui/create-glossary/search?{0}={1}';
     this.loadingSpinner = $(this.placeholderTranslationContainer.find('.loading'));
     this.keyInput = this.placeholderTranslationContainer.find("input[id$='translationKey']");
-    this.listElement = '<div id="foundKeyListContainer" class="key-container"><select id="foundKeyList" size="10" class="key-list"></select></div>';
+    this.listElement =
+        '<div id="foundKeyListContainer" class="key-container"><select id="foundKeyList" size="10" class="key-list"></select></div>';
 
     this.addKeySearchEvent(this.autocompleteElement);
 
-    $(document).on('click', function(e) {
+    $(document).on('click', function (e) {
         if (self.keyContainer !== null && !$(e.target).is('option')) {
             self.keyContainer.hide();
         }
@@ -37,8 +37,7 @@ function CmsGlossaryAutocomplete(options) {
     });
 }
 
-CmsGlossaryAutocomplete.prototype.showAutoComplete = function(placeholderTranslationContainer, searchType)
-{
+CmsGlossaryAutocomplete.prototype.showAutoComplete = function (placeholderTranslationContainer, searchType) {
     var keyListCanvas = $(this.placeholderTranslationContainer.find('.keyListCanvas'));
     keyListCanvas.empty();
     keyListCanvas.append(this.listElement);
@@ -53,31 +52,32 @@ CmsGlossaryAutocomplete.prototype.showAutoComplete = function(placeholderTransla
         type: 'GET',
         url: this.buildAutocompleteUrl(searchType, this.keyInput.val()),
         context: this,
-        success: this.handleAjaxResponse
+        success: this.handleAjaxResponse,
     });
-}
+};
 
-CmsGlossaryAutocomplete.prototype.handleAjaxResponse = function(response)
-{
+CmsGlossaryAutocomplete.prototype.handleAjaxResponse = function (response) {
     var self = this;
     this.loadingSpinner.hide();
 
     $.each(response, function (i, item) {
-        self.keyList.append($('<option>', {
-            value: i,
-            text : item.key
-        }));
+        self.keyList.append(
+            $('<option>', {
+                value: i,
+                text: item.key,
+            }),
+        );
 
         self.keyContainer.css({ width: self.keyInput.width() + GLOSSARY_SELECT_MARGIN_WIDTH });
         self.keyContainer.show();
     });
 
-    self.keyList.css({ height :  response.length * 20 });
-    self.keyList.on('change',function() {
-        self.setSelectedTranslationValueFromResponse(response, this)
+    self.keyList.css({ height: response.length * 20 });
+    self.keyList.on('change', function () {
+        self.setSelectedTranslationValueFromResponse(response, this);
     });
 
-    self.keyList.on('keydown', function(e) {
+    self.keyList.on('keydown', function (e) {
         var key = e.keyCode;
         if (key == 13 || key == 9) {
             self.keyList.blur();
@@ -85,16 +85,15 @@ CmsGlossaryAutocomplete.prototype.handleAjaxResponse = function(response)
         }
     });
 
-    self.keyList.on('blur', function() {
+    self.keyList.on('blur', function () {
         self.keyInput.val(response[this.value].key);
         self.keyContainer.hide();
         self.keyInput.focus();
         return false;
     });
-}
+};
 
-CmsGlossaryAutocomplete.prototype.setSelectedTranslationValueFromResponse = function(response, selectChange)
-{
+CmsGlossaryAutocomplete.prototype.setSelectedTranslationValueFromResponse = function (response, selectChange) {
     var self = this;
     this.keyInput.val(response[selectChange.value].key);
     var translations = response[selectChange.value].translations;
@@ -108,36 +107,34 @@ CmsGlossaryAutocomplete.prototype.setSelectedTranslationValueFromResponse = func
             }
         });
     });
-}
+};
 
-CmsGlossaryAutocomplete.prototype.buildAutocompleteUrl = function(searchType, value)
-{
+CmsGlossaryAutocomplete.prototype.buildAutocompleteUrl = function (searchType, value) {
     var searchTypeGlossaryKey = 2;
     var searchTypeFullText = 3;
 
     if (searchType == searchTypeGlossaryKey) {
         return this.autocompleteUrl.formatString('key', value);
-    } else if(searchType == searchTypeFullText) {
+    } else if (searchType == searchTypeFullText) {
         return this.autocompleteUrl.formatString('value', value);
     }
-}
+};
 
-CmsGlossaryAutocomplete.prototype.addKeySearchEvent = function(autocompleteElement)
-{
+CmsGlossaryAutocomplete.prototype.addKeySearchEvent = function (autocompleteElement) {
     var searchOption = $(this.placeholderTranslationContainer.find("select[id$='searchOption']"));
 
-    var delay = (function() {
+    var delay = (function () {
         var timer = 0;
-        return function(callback, ms) {
-            clearTimeout (timer);
+        return function (callback, ms) {
+            clearTimeout(timer);
             timer = setTimeout(callback, ms);
         };
     })();
 
     var self = this;
-    autocompleteElement.on('input', function() {
+    autocompleteElement.on('input', function () {
         if ($(this).val().length > 3) {
-            delay(function() {
+            delay(function () {
                 if (self.xhr && self.xhr.readystate != 4) {
                     self.xhr.abort();
                 }
@@ -154,15 +151,15 @@ CmsGlossaryAutocomplete.prototype.addKeySearchEvent = function(autocompleteEleme
         searchOption.val(1);
     }
 
-    searchOption.on('change', function() {
+    searchOption.on('change', function () {
         if (this.value == 0) {
-            autocompleteElement.attr('readonly','readonly');
+            autocompleteElement.attr('readonly', 'readonly');
         } else {
             autocompleteElement.removeAttr('readonly');
         }
     });
 
-    autocompleteElement.on('keyup', function(e) {
+    autocompleteElement.on('keyup', function (e) {
         var key = e.keyCode;
 
         if (key == 40) {
@@ -170,15 +167,13 @@ CmsGlossaryAutocomplete.prototype.addKeySearchEvent = function(autocompleteEleme
             self.keyList.val(0).change();
         }
     });
-}
+};
 
-String.prototype.formatString = function(){
+String.prototype.formatString = function () {
     var args = arguments;
-    return this.replace(/{(\d+)}/g, function(match, index){
+    return this.replace(/{(\d+)}/g, function (match, index) {
         return args[index];
     });
 };
 
-
 module.exports = CmsGlossaryAutocomplete;
-

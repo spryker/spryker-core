@@ -7,6 +7,6 @@
 
 var navigationTable = require('./navigation-table');
 
-$(document).ready(function() {
+$(document).ready(function () {
     navigationTable.initialize('#navigation-table');
 });

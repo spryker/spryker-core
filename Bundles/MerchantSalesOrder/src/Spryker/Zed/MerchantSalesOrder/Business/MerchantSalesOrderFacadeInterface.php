@@ -44,7 +44,7 @@ interface MerchantSalesOrderFacadeInterface
     public function createMerchantOrderCollection(OrderTransfer $orderTransfer): MerchantOrderCollectionTransfer;
 
     /**
-     * Specification
+     * Specification:
      * - Requires MerchantOrderItem.idMerchantOrderItem transfer field to be set.
      * - Updates existing merchant order item based on MerchantOrderItem.idMerchantOrderItem in database.
      * - Returns MerchantOrderItemResponse transfer with isSuccessful = false when merchant order item not found.
@@ -119,7 +119,7 @@ interface MerchantSalesOrderFacadeInterface
     ): SpySalesOrderItemEntityTransfer;
 
     /**
-     * Specification
+     * Specification:
      * - Expands expense transfer with merchant reference from items.
      * - Doesn't expand if items have different merchant references or given expense is not of shipment type.
      * - Requires ShipmentGroup.items property to be set.
@@ -138,7 +138,7 @@ interface MerchantSalesOrderFacadeInterface
     ): ExpenseTransfer;
 
     /**
-     * Specification
+     * Specification:
      * - Expands order items with merchant order reference.
      *
      * @api

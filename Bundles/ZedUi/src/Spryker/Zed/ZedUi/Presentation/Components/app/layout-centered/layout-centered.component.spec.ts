@@ -11,16 +11,14 @@ describe('LayoutCentralComponent', () => {
 
     @Component({
         selector: 'test',
-        template: `
-            <mp-layout-centered>Content</mp-layout-centered>
-        `
+        template: ` <mp-layout-centered>Content</mp-layout-centered> `,
     })
     class TestComponent {}
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [LayoutFooterModule],
-            declarations: [LayoutCenteredComponent, TestComponent]
+            declarations: [LayoutCenteredComponent, TestComponent],
         }).compileComponents();
     }));
 

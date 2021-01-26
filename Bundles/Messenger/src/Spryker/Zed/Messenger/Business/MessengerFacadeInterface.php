@@ -12,6 +12,9 @@ use Generated\Shared\Transfer\MessageTransfer;
 interface MessengerFacadeInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\MessageTransfer $message
@@ -21,6 +24,9 @@ interface MessengerFacadeInterface
     public function addSuccessMessage(MessageTransfer $message);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\MessageTransfer $message
@@ -30,6 +36,9 @@ interface MessengerFacadeInterface
     public function addErrorMessage(MessageTransfer $message);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\MessageTransfer $message
@@ -39,6 +48,9 @@ interface MessengerFacadeInterface
     public function addInfoMessage(MessageTransfer $message);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Generated\Shared\Transfer\FlashMessagesTransfer
