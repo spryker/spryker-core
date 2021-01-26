@@ -718,19 +718,14 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     * @param string|null $storeName
      *
      * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
      */
-    public function getAllCategoryCollection(LocaleTransfer $localeTransfer, ?string $storeName = null): CategoryCollectionTransfer
+    public function getAllCategoryCollection(LocaleTransfer $localeTransfer): CategoryCollectionTransfer
     {
-        if ($storeName === null) {
-            trigger_error('Pass the $storeName parameter for the forward compatibility with next major version.', E_USER_DEPRECATED);
-        }
-
         return $this->getFactory()
             ->createCategory()
-            ->getAllCategoryCollection($localeTransfer, $storeName);
+            ->getAllCategoryCollection($localeTransfer);
     }
 
     /**

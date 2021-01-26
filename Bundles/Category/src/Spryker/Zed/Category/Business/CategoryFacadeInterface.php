@@ -510,16 +510,14 @@ interface CategoryFacadeInterface
     /**
      * Specification:
      * - Retrieves collection with all categories from DB.
-     * - Forward compatibility (from next major): only categories assigned with passed $storeName will be returned.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     * @param string|null $storeName the parameter is going to be required in the next major.
      *
      * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
      */
-    public function getAllCategoryCollection(LocaleTransfer $localeTransfer, ?string $storeName = null): CategoryCollectionTransfer;
+    public function getAllCategoryCollection(LocaleTransfer $localeTransfer): CategoryCollectionTransfer;
 
     /**
      * Specification:
