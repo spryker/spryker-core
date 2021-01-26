@@ -8,7 +8,7 @@
     "spryker/application-extension": "^1.0.0",
     "spryker/kernel": "^3.30.0",
     "spryker/symfony": "^3.0.0",
-    "spryker/transfer": "^3.8.0",
+    "spryker/transfer": "^3.25.0",
     "spryker/translator": "^1.1.0",
     "spryker/twig": "^3.13.0",
     "spryker/util-date-time": "^1.2.0",
@@ -36,8 +36,8 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "scripts": {
-    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
-    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/"
   },
   "extra": {
     "branch-alias": {

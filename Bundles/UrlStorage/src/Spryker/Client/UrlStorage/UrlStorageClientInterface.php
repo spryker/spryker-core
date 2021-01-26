@@ -26,7 +26,7 @@ interface UrlStorageClientInterface
     public function matchUrl($url, $localeName);
 
     /**
-     * Specification
+     * Specification:
      * - Gets the URL data from storage
      * - Returns UrlStorageTransfer with data
      * - If URL doesn't exist in storage, returns null

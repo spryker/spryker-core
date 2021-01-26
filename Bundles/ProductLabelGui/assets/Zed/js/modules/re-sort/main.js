@@ -7,6 +7,6 @@
 
 var reSortList = require('./re-sort-list');
 
-$(document).ready(function() {
+$(document).ready(function () {
     reSortList.initialize('#js-re-sort-list', '#js-list-save-button');
 });

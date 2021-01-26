@@ -21,8 +21,6 @@ class MarkAsDefaultQuoteAfterSavePlugin extends AbstractPlugin implements QuoteW
 {
     /**
      * {@inheritDoc}
-     * Specification:
-     * - Mark shared quote as default.
      *
      * @api
      *

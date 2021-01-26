@@ -12,6 +12,9 @@ use Generated\Shared\Transfer\UserTransfer;
 interface UserPostSavePluginInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\UserTransfer $userTransfer

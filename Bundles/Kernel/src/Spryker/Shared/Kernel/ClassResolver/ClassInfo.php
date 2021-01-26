@@ -20,12 +20,12 @@ class ClassInfo
     /**
      * @var string|null
      */
-    private $callerClassName;
+    protected $callerClassName;
 
     /**
      * @var string|null
      */
-    private $cacheKey;
+    protected $cacheKey;
 
     /**
      * @var string[]

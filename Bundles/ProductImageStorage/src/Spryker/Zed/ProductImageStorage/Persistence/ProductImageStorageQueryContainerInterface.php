@@ -13,6 +13,9 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 interface ProductImageStorageQueryContainerInterface extends QueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int[] $productAbstractIds
@@ -22,6 +25,9 @@ interface ProductImageStorageQueryContainerInterface extends QueryContainerInter
     public function queryProductAbstractImageStorageByIds(array $productAbstractIds);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $productIds
@@ -31,6 +37,9 @@ interface ProductImageStorageQueryContainerInterface extends QueryContainerInter
     public function queryProductConcreteImageStorageByIds(array $productIds);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int[] $productAbstractIds
@@ -40,6 +49,9 @@ interface ProductImageStorageQueryContainerInterface extends QueryContainerInter
     public function queryProductAbstractLocalizedByIds(array $productAbstractIds);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $productIds
@@ -49,6 +61,9 @@ interface ProductImageStorageQueryContainerInterface extends QueryContainerInter
     public function queryProductLocalizedByIds(array $productIds);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $productImageIds
@@ -58,6 +73,9 @@ interface ProductImageStorageQueryContainerInterface extends QueryContainerInter
     public function queryProductAbstractIdsByProductImageIds(array $productImageIds);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $productImageSetToProductImageIds
@@ -81,6 +99,9 @@ interface ProductImageStorageQueryContainerInterface extends QueryContainerInter
     public function queryProductImageSetToProductImageByIds(array $productImageSetToProductImageIds): SpyProductImageSetToProductImageQuery;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $productImageIds
@@ -90,6 +111,9 @@ interface ProductImageStorageQueryContainerInterface extends QueryContainerInter
     public function queryProductIdsByProductImageIds(array $productImageIds);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $productImageSetToProductImageIds

@@ -1,9 +1,6 @@
 import { NgModule } from '@angular/core';
 import { LocaleModule, LocaleSwitcherComponent } from '@spryker/locale';
-import {
-    NotificationComponent,
-    NotificationModule,
-} from '@spryker/notification';
+import { NotificationComponent, NotificationModule } from '@spryker/notification';
 import { CustomElementModule, WebComponentDefs } from '@spryker/web-components';
 
 import { HeaderComponent } from './header/header.component';

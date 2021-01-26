@@ -13,4 +13,11 @@
         <property name="password" type="string"/>
     </transfer>
 
+    <transfer name="OauthAuthenticationLink">
+        <property name="href" type="string"/>
+        <property name="target" type="string"/>
+        <property name="text" type="string"/>
+        <property name="template" type="string"/>
+    </transfer>
+
 </transfers>

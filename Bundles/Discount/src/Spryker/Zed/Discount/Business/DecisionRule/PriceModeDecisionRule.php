@@ -39,7 +39,6 @@ class PriceModeDecisionRule implements DecisionRuleInterface
         ItemTransfer $itemTransfer,
         ClauseTransfer $clauseTransfer
     ) {
-
         $priceMode = $quoteTransfer->getPriceMode();
 
         return $this->comparators->compare($clauseTransfer, $priceMode);

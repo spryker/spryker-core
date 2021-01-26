@@ -7,18 +7,14 @@
 
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form;
 
-use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\PriceProduct\PriceProductForm;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Count;
 use Symfony\Component\Validator\Constraints\Length;
@@ -38,7 +34,7 @@ class ProductOfferForm extends AbstractType
     protected const FIELD_IS_ACTIVE = 'isActive';
     protected const FIELD_PRODUCT_OFFER_STOCKS = 'productOfferStocks';
     protected const FIELD_PRODUCT_OFFER_VALIDITY = 'productOfferValidity';
-    protected const FIELD_PRICES = 'prices';
+    protected const FIELD_PRODUCT_OFFER_PRICES = 'prices';
     protected const BUTTON_CREATE = 'create';
 
     protected const LABEL_MERCHANT_SKU = 'Merchant SKU';
@@ -54,12 +50,14 @@ class ProductOfferForm extends AbstractType
     protected const FIELD_MERCHANT_SKU_MAX_LENGTH = 255;
     protected const FIELD_STORES_MIN_COUNT = 1;
 
+    protected const BLOCK_PREFIX = 'productOffer';
+
     /**
      * @return string
      */
     public function getBlockPrefix(): string
     {
-        return 'productOfferCreate';
+        return static::BLOCK_PREFIX;
     }
 
     /**
@@ -77,6 +75,9 @@ class ProductOfferForm extends AbstractType
     }
 
     /**
+     * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
+     * @phpstan-param array<mixed> $options
+     *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
@@ -89,11 +90,13 @@ class ProductOfferForm extends AbstractType
             ->addStoresField($builder, $options)
             ->addIsActiveField($builder)
             ->addProductOfferStockSubform($builder)
-            ->addPricesSubform($builder)
+            ->addPrices($builder, $options)
             ->addProductOfferValiditySubform($builder);
     }
 
     /**
+     * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
+     *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
      * @return $this
@@ -108,6 +111,8 @@ class ProductOfferForm extends AbstractType
     }
 
     /**
+     * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
+     *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
      * @return $this
@@ -135,6 +140,9 @@ class ProductOfferForm extends AbstractType
     }
 
     /**
+     * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
+     * @phpstan-param array<mixed> $options
+     *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
@@ -170,6 +178,8 @@ class ProductOfferForm extends AbstractType
     }
 
     /**
+     * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
+     *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
      * @return $this
@@ -189,6 +199,8 @@ class ProductOfferForm extends AbstractType
     }
 
     /**
+     * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
+     *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
      * @return $this
@@ -206,6 +218,8 @@ class ProductOfferForm extends AbstractType
     }
 
     /**
+     * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
+     *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
      * @return $this
@@ -220,58 +234,27 @@ class ProductOfferForm extends AbstractType
     }
 
     /**
+     * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
+     * @phpstan-param array<mixed> $options
+     *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
      *
      * @return $this
      */
-    protected function addPricesSubform(FormBuilderInterface $builder)
+    protected function addPrices(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FIELD_PRICES, CollectionType::class, [
+        $builder->add(static::FIELD_PRODUCT_OFFER_PRICES, HiddenType::class, [
+            'required' => false,
             'label' => false,
-            'entry_type' => PriceProductForm::class,
-            'allow_add' => true,
-            'allow_delete' => true,
         ]);
 
+        $idProductOffer = $options['data']->getIdProductOffer();
+        $priceProductOfferTransformer = $this->getFactory()->createPriceProductOfferTransformer($idProductOffer);
+
+        $builder->get(static::FIELD_PRODUCT_OFFER_PRICES)
+            ->addModelTransformer($priceProductOfferTransformer);
+
         return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormView $formViewCollection
-     * @param \Symfony\Component\Form\FormInterface $form
-     * @param array $options
-     *
-     * @return void
-     */
-    public function finishView(FormView $formViewCollection, FormInterface $form, array $options): void
-    {
-        $pricesForm = $formViewCollection->children[static::FIELD_PRICES];
-        $pricesFormTable = [];
-
-        foreach ($pricesForm as $formView) {
-            $priceProductTransfer = $this->getPriceProductTransfer($formView);
-            $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
-
-            $formView->children[PriceProductForm::FIELD_NET_AMOUNT]->vars['label'] = $moneyValueTransfer->getCurrency()->getSymbol();
-            $formView->children[PriceProductForm::FIELD_GROSS_AMOUNT]->vars['label'] = $moneyValueTransfer->getCurrency()->getSymbol();
-
-            $storeName = $moneyValueTransfer->getStore()->getName();
-            $priceTypeName = $priceProductTransfer->getPriceType()->getName();
-
-            $pricesFormTable[$storeName]['GROSS'][$priceTypeName][] = $formView->children[PriceProductForm::FIELD_GROSS_AMOUNT];
-            $pricesFormTable[$storeName]['NET'][$priceTypeName][] = $formView->children[PriceProductForm::FIELD_NET_AMOUNT];
-        }
-
-        $formViewCollection->vars['pricesFormTable'] = $pricesFormTable;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormView $formView
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer
-     */
-    protected function getPriceProductTransfer(FormView $formView): PriceProductTransfer
-    {
-        return $formView->vars['data'];
     }
 }
