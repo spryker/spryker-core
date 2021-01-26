@@ -27,12 +27,11 @@ class CmsSlotBlockProductCategoryGuiToCategoryFacadeBridge implements CmsSlotBlo
 
     /**
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     * @param string|null $storeName
      *
      * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
      */
-    public function getAllCategoryCollection(LocaleTransfer $localeTransfer, ?string $storeName = null): CategoryCollectionTransfer
+    public function getAllCategoryCollection(LocaleTransfer $localeTransfer): CategoryCollectionTransfer
     {
-        return $this->categoryFacade->getAllCategoryCollection($localeTransfer, $storeName);
+        return $this->categoryFacade->getAllCategoryCollection($localeTransfer);
     }
 }

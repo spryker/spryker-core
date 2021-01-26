@@ -10,7 +10,6 @@ namespace Spryker\Zed\CmsSlotBlockProductCategoryGui;
 use Spryker\Zed\CmsSlotBlockProductCategoryGui\Dependency\Facade\CmsSlotBlockProductCategoryGuiToCategoryFacadeBridge;
 use Spryker\Zed\CmsSlotBlockProductCategoryGui\Dependency\Facade\CmsSlotBlockProductCategoryGuiToLocaleFacadeBridge;
 use Spryker\Zed\CmsSlotBlockProductCategoryGui\Dependency\Facade\CmsSlotBlockProductCategoryGuiToProductFacadeBridge;
-use Spryker\Zed\CmsSlotBlockProductCategoryGui\Dependency\Facade\CmsSlotBlockProductCategoryGuiToStoreFacadeBridge;
 use Spryker\Zed\CmsSlotBlockProductCategoryGui\Dependency\Facade\CmsSlotBlockProductCategoryGuiToTranslatorFacadeBridge;
 use Spryker\Zed\CmsSlotBlockProductCategoryGui\Dependency\QueryContainer\CmsSlotBlockProductCategoryGuiToProductQueryContainerBridge;
 use Spryker\Zed\CmsSlotBlockProductCategoryGui\Dependency\Service\CmsSlotBlockProductCategoryGuiToUtilEncodingBridge;
@@ -24,7 +23,6 @@ class CmsSlotBlockProductCategoryGuiDependencyProvider extends AbstractBundleDep
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
     public const FACADE_LOCALE = 'FACADE_LOCALE';
     public const FACADE_TRANSLATOR = 'FACADE_TRANSLATOR';
-    public const FACADE_STORE = 'FACADE_STORE';
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**
@@ -38,7 +36,6 @@ class CmsSlotBlockProductCategoryGuiDependencyProvider extends AbstractBundleDep
         $container = $this->addCategoryFacade($container);
         $container = $this->addLocaleFacade($container);
         $container = $this->addTranslatorFacade($container);
-        $container = $this->addStoreFacade($container);
         $container = $this->addUtilEncoding($container);
 
         return $container;
@@ -131,22 +128,6 @@ class CmsSlotBlockProductCategoryGuiDependencyProvider extends AbstractBundleDep
         $container->set(static::FACADE_TRANSLATOR, function (Container $container) {
             return new CmsSlotBlockProductCategoryGuiToTranslatorFacadeBridge(
                 $container->getLocator()->translator()->facade()
-            );
-        });
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addStoreFacade(Container $container): Container
-    {
-        $container->set(static::FACADE_STORE, function (Container $container) {
-            return new CmsSlotBlockProductCategoryGuiToStoreFacadeBridge(
-                $container->getLocator()->store()->facade()
             );
         });
 

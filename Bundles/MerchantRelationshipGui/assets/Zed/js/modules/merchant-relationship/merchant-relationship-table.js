@@ -43,5 +43,5 @@ function createListUrl(companyId) {
  * Open public methods
  */
 module.exports = {
-    initialize: initialize
+    initialize: initialize,
 };

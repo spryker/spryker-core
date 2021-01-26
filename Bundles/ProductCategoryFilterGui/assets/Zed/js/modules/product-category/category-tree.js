@@ -14,7 +14,6 @@ var $treeSearchField = $('#category-tree-search-field');
 var $formProgressBar = $('#product-category-filter-form-loader');
 var $iframe = $('#product-category-filter-iframe');
 
-
 var ajaxRequest;
 var currentlySelectedNodeId;
 var treeSearchTimeout = false;
@@ -23,16 +22,16 @@ var config = {
     categoryTreeUrl: '/product-category-filter-gui/category-tree',
     productCategoryFilterUrl: '/product-category-filter-gui/product-category-filter',
     categoryTreeNodeTypes: {
-        'default': {
-            'icon': 'fa fa-folder'
+        default: {
+            icon: 'fa fa-folder',
         },
-        'category': {
-            'icon': 'fa fa-sitemap'
+        category: {
+            icon: 'fa fa-sitemap',
         },
         'edited-category': {
-            'icon': 'fa fa-edit'
-        }
-    }
+            icon: 'fa fa-edit',
+        },
+    },
 };
 
 /**
@@ -49,7 +48,7 @@ function initialize() {
  *
  * @return {void}
  */
-function loadTree(idCategory, selected, skipFormLoad)  {
+function loadTree(idCategory, selected, skipFormLoad) {
     $treeProgressBar.removeClass('hidden');
     $treeContainer.addClass('hidden');
 
@@ -57,16 +56,19 @@ function loadTree(idCategory, selected, skipFormLoad)  {
         ajaxRequest.abort();
     }
 
-    ajaxRequest = $.get(config.categoryTreeUrl, {'id-root-node': idCategory}, createTreeLoadHandler(idCategory, selected, skipFormLoad))
-        .always(function() {
-            $treeProgressBar.addClass('hidden');
-        });
+    ajaxRequest = $.get(
+        config.categoryTreeUrl,
+        { 'id-root-node': idCategory },
+        createTreeLoadHandler(idCategory, selected, skipFormLoad),
+    ).always(function () {
+        $treeProgressBar.addClass('hidden');
+    });
 }
 
 /**
  * @return {void}
  */
-function resetTree()  {
+function resetTree() {
     if (ajaxRequest) {
         ajaxRequest.abort();
     }
@@ -83,7 +85,7 @@ function resetTree()  {
  * @returns {Function}
  */
 function createTreeLoadHandler(idCategory, selected, skipFormLoad) {
-    return function(response) {
+    return function (response) {
         $treeContent.html(response);
 
         initJsTree();
@@ -97,7 +99,7 @@ function createTreeLoadHandler(idCategory, selected, skipFormLoad) {
             setListeners(idCategory);
             selectNode(selected);
         }
-    }
+    };
 }
 
 /**
@@ -105,11 +107,11 @@ function createTreeLoadHandler(idCategory, selected, skipFormLoad) {
  */
 function initJsTree() {
     $('#category-tree').jstree({
-        'plugins': ['types', 'wholerow', 'dnd', 'search'],
-        'types': config.categoryTreeNodeTypes,
-        'dnd': {
-            'is_draggable': false
-        }
+        plugins: ['types', 'wholerow', 'dnd', 'search'],
+        types: config.categoryTreeNodeTypes,
+        dnd: {
+            is_draggable: false,
+        },
     });
 }
 
@@ -119,7 +121,9 @@ function initJsTree() {
  * @return {void}
  */
 function selectNode(idCategoryNode) {
-    $('#category-tree').jstree(true).select_node(getNodeName((idCategoryNode ? idCategoryNode : 0)));
+    $('#category-tree')
+        .jstree(true)
+        .select_node(getNodeName(idCategoryNode ? idCategoryNode : 0));
 }
 
 /**
@@ -135,8 +139,8 @@ function getNodeName(id) {
  * @return {void}
  */
 function setListeners() {
-    $('#category-tree').on('select_node.jstree', function(e, data) {
-        if(data.node.data.rootNode) {
+    $('#category-tree').on('select_node.jstree', function (e, data) {
+        if (data.node.data.rootNode) {
             $('#category-tree').jstree(true).deselect_node(data.node);
             currentlySelectedNodeId = data.node.data.idCategory;
             resetForm();
@@ -147,12 +151,12 @@ function setListeners() {
         var nodesWithSameCategoryId = document.querySelectorAll('[data-id-category="' + idCategory + '"]');
         var nodeIds = [];
 
-        for(var i=0; i < nodesWithSameCategoryId.length; i++) {
-            nodeIds.push(nodesWithSameCategoryId[i].id)
+        for (var i = 0; i < nodesWithSameCategoryId.length; i++) {
+            nodeIds.push(nodesWithSameCategoryId[i].id);
         }
 
         $('#category-tree').jstree(true).select_node(nodeIds, true);
-        if(currentlySelectedNodeId === idCategory) {
+        if (currentlySelectedNodeId === idCategory) {
             return;
         }
 
@@ -162,21 +166,26 @@ function setListeners() {
 
     window.document.addEventListener(
         'categoryChanged',
-        function(e) {
-            $("[data-id-category='" + e.detail.idCategory + "']").children('a').children('i')
+        function (e) {
+            $("[data-id-category='" + e.detail.idCategory + "']")
+                .children('a')
+                .children('i')
                 .removeClass(config.categoryTreeNodeTypes.default.icon)
                 .addClass(config.categoryTreeNodeTypes['edited-category'].icon);
-            },
-        false
+        },
+        false,
     );
 
     window.document.addEventListener(
-        'resetCategory', function(e) {
-            $("[data-id-category='" + e.detail.idCategory + "']").children('a').children('i')
+        'resetCategory',
+        function (e) {
+            $("[data-id-category='" + e.detail.idCategory + "']")
+                .children('a')
+                .children('i')
                 .removeClass(config.categoryTreeNodeTypes['edited-category'].icon)
                 .addClass(config.categoryTreeNodeTypes.default.icon);
         },
-        false
+        false,
     );
 }
 
@@ -185,9 +194,9 @@ function setListeners() {
  *
  * @return {void}
  */
-function loadForm(idCategoryNode)  {
+function loadForm(idCategoryNode) {
     var data = {
-        'id-category-node': idCategoryNode
+        'id-category-node': idCategoryNode,
     };
     var uri = config.productCategoryFilterUrl;
     var url = uri + '?' + $.param(data);
@@ -202,7 +211,7 @@ function loadForm(idCategoryNode)  {
 /**
  * @return {void}
  */
-function resetForm()  {
+function resetForm() {
     $iframe.addClass('hidden');
 }
 
@@ -235,7 +244,7 @@ function changeIframeHeight() {
  * @return {void}
  */
 function onTreeSearchKeyup() {
-    if(treeSearchTimeout) {
+    if (treeSearchTimeout) {
         clearTimeout(treeSearchTimeout);
     }
     treeSearchTimeout = setTimeout(function () {
@@ -243,12 +252,11 @@ function onTreeSearchKeyup() {
     }, 250);
 }
 
-
 /**
  * Open public methods
  */
 module.exports = {
     initialize: initialize,
     load: loadTree,
-    reset: resetTree
+    reset: resetTree,
 };

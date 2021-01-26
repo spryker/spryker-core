@@ -8,10 +8,7 @@
                     </div>
                 </div>
 
-                <spy-navigation
-                    [items]="navigationConfig"
-                    [collapsed]="isCollapsed"
-                ></spy-navigation>
+                <spy-navigation [items]="navigationConfig" [collapsed]="isCollapsed"></spy-navigation>
             </spy-sidebar>
         </div>
 
@@ -20,10 +17,7 @@
                 <ng-content select="[name='header']"></ng-content>
             </spy-header>
 
-            <div
-                class="mp-layout-main-cnt__content"
-                spyApplyContexts="spy-bg-gray"
-            >
+            <div class="mp-layout-main-cnt__content" spyApplyContexts="spy-bg-gray">
                 <span spyCustomElementBoundary>
                     <ng-content></ng-content>
                 </span>

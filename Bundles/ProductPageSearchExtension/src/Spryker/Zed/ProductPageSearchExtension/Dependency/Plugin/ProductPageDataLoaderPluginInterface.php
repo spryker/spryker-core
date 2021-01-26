@@ -12,6 +12,9 @@ use Generated\Shared\Transfer\ProductPageLoadTransfer;
 interface ProductPageDataLoaderPluginInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductPageLoadTransfer $loadTransfer

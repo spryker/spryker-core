@@ -10,6 +10,9 @@ namespace Spryker\Zed\ProductSet\Persistence;
 interface ProductSetQueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\ProductSet\Persistence\SpyProductSetQuery
@@ -17,6 +20,9 @@ interface ProductSetQueryContainerInterface
     public function queryProductSet();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\ProductSet\Persistence\SpyProductSetDataQuery
@@ -24,6 +30,9 @@ interface ProductSetQueryContainerInterface
     public function queryAllProductSetData();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\ProductSet\Persistence\SpyProductAbstractSetQuery
@@ -31,6 +40,9 @@ interface ProductSetQueryContainerInterface
     public function queryProductAbstractSet();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProductSet
@@ -40,6 +52,9 @@ interface ProductSetQueryContainerInterface
     public function queryProductSetById($idProductSet);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int[] $productSetIds
@@ -49,6 +64,9 @@ interface ProductSetQueryContainerInterface
     public function queryProductSetByIds(array $productSetIds);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProductSet
@@ -58,6 +76,9 @@ interface ProductSetQueryContainerInterface
     public function queryProductAbstractSetsById($idProductSet);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProductAbstract
@@ -68,6 +89,9 @@ interface ProductSetQueryContainerInterface
     public function queryProductAbstractSetsByIdProductAbstract($idProductAbstract, $excludedIdProductSet = null);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProductSet
@@ -78,6 +102,9 @@ interface ProductSetQueryContainerInterface
     public function queryUrlByIdProductSet($idProductSet, $idLocale = null);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProductSet
@@ -88,6 +115,9 @@ interface ProductSetQueryContainerInterface
     public function queryProductImageSet($idProductSet, $idLocale = null);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProductSet
@@ -97,6 +127,9 @@ interface ProductSetQueryContainerInterface
     public function queryDefaultProductImageSet($idProductSet);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProductSet
@@ -107,6 +140,9 @@ interface ProductSetQueryContainerInterface
     public function queryExcludedProductImageSet($idProductSet, array $excludedIdProductImageSets);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProductSet

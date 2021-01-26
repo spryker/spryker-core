@@ -7,7 +7,6 @@
 
 var merchantRelationshipTable = require('./merchant-relationship-table');
 
-$(document).ready(function() {
+$(document).ready(function () {
     merchantRelationshipTable.initialize('#merchant-relationship-table');
 });
-

@@ -12,6 +12,9 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 interface ProductQueryContainerInterface extends QueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $concreteSku
@@ -22,6 +25,9 @@ interface ProductQueryContainerInterface extends QueryContainerInterface
     public function queryProductWithAttributesAndProductAbstract($concreteSku, $idLocale);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
@@ -29,6 +35,9 @@ interface ProductQueryContainerInterface extends QueryContainerInterface
     public function queryProductAbstract();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductQuery
@@ -36,6 +45,9 @@ interface ProductQueryContainerInterface extends QueryContainerInterface
     public function queryProduct();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProductAbstract
@@ -45,6 +57,9 @@ interface ProductQueryContainerInterface extends QueryContainerInterface
     public function queryProductAbstractLocalizedAttributes($idProductAbstract);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery
@@ -52,6 +67,9 @@ interface ProductQueryContainerInterface extends QueryContainerInterface
     public function queryAllProductAbstractLocalizedAttributes();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductLocalizedAttributesQuery
@@ -59,6 +77,9 @@ interface ProductQueryContainerInterface extends QueryContainerInterface
     public function queryAllProductLocalizedAttributes();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProduct
@@ -68,6 +89,9 @@ interface ProductQueryContainerInterface extends QueryContainerInterface
     public function queryProductLocalizedAttributes($idProduct);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $sku
@@ -77,6 +101,9 @@ interface ProductQueryContainerInterface extends QueryContainerInterface
     public function queryProductConcreteBySku($sku);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $sku
@@ -86,6 +113,9 @@ interface ProductQueryContainerInterface extends QueryContainerInterface
     public function queryProductAbstractBySku($sku);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProductAbstract
@@ -96,6 +126,9 @@ interface ProductQueryContainerInterface extends QueryContainerInterface
     public function queryProductAbstractAttributeCollection($idProductAbstract, $fkCurrentLocale);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProductConcrete
@@ -106,6 +139,9 @@ interface ProductQueryContainerInterface extends QueryContainerInterface
     public function queryProductConcreteAttributeCollection($idProductConcrete, $fkCurrentLocale);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
@@ -113,6 +149,9 @@ interface ProductQueryContainerInterface extends QueryContainerInterface
     public function queryProductAttributeKey();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProductAbstract
@@ -123,6 +162,9 @@ interface ProductQueryContainerInterface extends QueryContainerInterface
     public function queryUrlByIdProductAbstractAndIdLocale($idProductAbstract, $idLocale);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idLocale
@@ -132,6 +174,9 @@ interface ProductQueryContainerInterface extends QueryContainerInterface
     public function queryProductAbstractWithName($idLocale);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProductAbstract
@@ -141,6 +186,9 @@ interface ProductQueryContainerInterface extends QueryContainerInterface
     public function queryProductAbstractStoreWithStoresByFkProductAbstract($idProductAbstract);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProductAbstract

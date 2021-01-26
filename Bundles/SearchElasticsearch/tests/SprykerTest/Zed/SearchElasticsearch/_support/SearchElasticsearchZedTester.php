@@ -57,8 +57,8 @@ class SearchElasticsearchZedTester extends Actor
     public function translateSourceIdentifierToIndexName(string $sourceIdentifier): string
     {
         return $this->getSearchElasticsearchBusinessFactory()
-            ->createIndexNameResolver()
-            ->resolve($sourceIdentifier);
+            ->createSourceIdentifier()
+            ->translateToIndexName($sourceIdentifier);
     }
 
     /**

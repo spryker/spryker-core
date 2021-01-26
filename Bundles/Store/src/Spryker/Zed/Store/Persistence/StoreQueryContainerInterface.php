@@ -13,6 +13,9 @@ namespace Spryker\Zed\Store\Persistence;
 interface StoreQueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $storeName
@@ -22,6 +25,9 @@ interface StoreQueryContainerInterface
     public function queryStoreByName($storeName);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $stores
@@ -31,6 +37,9 @@ interface StoreQueryContainerInterface
     public function queryStoresByNames(array $stores);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idStore
