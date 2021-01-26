@@ -88,6 +88,8 @@ class ObjectBuilder extends PropelObjectBuilder
 
         $allowNullValues = ($col->getAttribute('required', 'true') === 'true') ? 'false' : 'true';
 
+        $hasDefaultValue = $col->getDefaultValue() === null ? 'false' : 'true';
+
         $script .= "
         if (\$v !== null) {
             if (is_string(\$v)) {
@@ -103,7 +105,13 @@ class ObjectBuilder extends PropelObjectBuilder
             return \$this;
         }
 
-        if (\$this->$clo !== \$v) {
+        // When this is true we will not check for value equality as we need to be able to set a value for this field
+        // to it's initial value and have the column marked as modified. This is relevant for update cases when
+        // we create an instance of an entity manually.
+        // @see \Spryker\Zed\Kernel\Persistence\EntityManager\TransferToEntityMapper::mapEntity()
+        \$hasDefaultValue = $hasDefaultValue;
+
+        if (\$hasDefaultValue || \$this->$clo !== \$v) {
             \$this->$clo = \$v;
             \$this->modifiedColumns[" . $this->getColumnConstant($col) . "] = true;
         }

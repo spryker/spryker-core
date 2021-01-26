@@ -48,7 +48,8 @@ class TableHelper extends Module
 
         foreach ($columnsData as $columnData) {
             $column = new Column($columnData['name'], $columnData['type']);
-            $column->setDomain(new Domain($columnData['type'], $columnData['type']));
+            $domain = $this->_setDomainExtraColumn(new Domain($columnData['type'], $columnData['type']), $columnData);
+            $column->setDomain($domain);
 
             $table->addColumn($column);
         }
@@ -60,6 +61,24 @@ class TableHelper extends Module
         $this->tables[] = $table;
 
         return $table;
+    }
+
+    /**
+     * @param \Propel\Generator\Model\Domain $domain
+     * @param array $column
+     *
+     * @return \Propel\Generator\Model\Domain
+     */
+    protected function _setDomainExtraColumn(Domain $domain, array $column): Domain
+    {
+        foreach ($column as $propertySetterName => $propertyValue) {
+            if (!method_exists($domain, $propertySetterName)) {
+                continue;
+            }
+            $domain->$propertySetterName($propertyValue);
+        }
+
+        return $domain;
     }
 
     /**
