@@ -53,6 +53,7 @@ class OmsFacadeSumReservedItemsTest extends Unit
         parent::setUp();
 
         $this->tester->resetReservedStatesCache();
+        $this->tester->resetReservedStateProcessNamesCache();
         $this->tester->configureTestStateMachine(['Test01', 'Test02', 'Test03', 'Test06']);
     }
 
@@ -63,6 +64,7 @@ class OmsFacadeSumReservedItemsTest extends Unit
     {
         parent::tearDown();
         $this->tester->resetReservedStatesCache();
+        $this->tester->resetReservedStateProcessNamesCache();
     }
 
     /**
