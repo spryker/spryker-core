@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductCategorySearch\Communication\Plugin\PageDataExpander;
+namespace Spryker\Zed\ProductCategorySearch\Communication\Plugin\ProductPageSearch;
 
 use Generated\Shared\Transfer\ProductPageSearchTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -20,6 +20,7 @@ class ProductCategoryPageDataExpanderPlugin extends AbstractPlugin implements Pr
 {
     /**
      * {@inheritDoc}
+     * - Expands `ProductPageSearchTransfer` with category related data.
      * - Populates `ProductPageSearchTransfer.allParentCategoryIds`.
      * - Populates `ProductPageSearchTransfer.categoryNames`.
      * - Populates `ProductPageSearchTransfer.sortedCategories`.

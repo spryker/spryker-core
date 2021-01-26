@@ -53,6 +53,7 @@ interface ProductCategorySearchFacadeInterface
 
     /**
      * Specification:
+     * - Expands `ProductPageSearchTransfer` with category related data.
      * - Populates `ProductPageSearchTransfer.allParentCategoryIds`.
      * - Populates `ProductPageSearchTransfer.categoryNames`.
      * - Populates `ProductPageSearchTransfer.sortedCategories`.

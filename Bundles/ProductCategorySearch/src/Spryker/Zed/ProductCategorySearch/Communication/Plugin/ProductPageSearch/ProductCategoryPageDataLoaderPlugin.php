@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductCategorySearch\Communication\Plugin\PageDataLoader;
+namespace Spryker\Zed\ProductCategorySearch\Communication\Plugin\ProductPageSearch;
 
 use Generated\Shared\Transfer\ProductPageLoadTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;

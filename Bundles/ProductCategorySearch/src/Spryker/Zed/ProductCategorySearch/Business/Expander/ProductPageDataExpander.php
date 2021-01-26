@@ -93,10 +93,9 @@ class ProductPageDataExpander implements ProductPageDataExpanderInterface
         LocaleTransfer $localeTransfer,
         ProductPageSearchTransfer $productAbstractPageSearchTransfer
     ): void {
-        $categoryTreeNames = $this->productCategoryTreeBuilder->buildProductCategoryTreeNames(
-            $allParentCategories + $directParentCategories,
-            $localeTransfer
-        );
+        $categoryIds = array_unique(array_merge($allParentCategories, $directParentCategories));
+        $categoryTreeNames = $this->productCategoryTreeBuilder
+            ->buildProductCategoryTreeNames($categoryIds, $localeTransfer);
 
         $this->setBoostedCategoryNames(
             $directParentCategories,
@@ -190,11 +189,15 @@ class ProductPageDataExpander implements ProductPageDataExpanderInterface
         $store = $productAbstractPageSearchTransfer->getStore();
         $filteredProductCategoriesByDirectParents = [];
 
-        if ($productCategoryEntities && isset($productCategoryEntities[$store])) {
-            foreach ($productCategoryEntities[$store] as $productCategoryEntity) {
-                if (in_array($productCategoryEntity->getVirtualColumn(static::COLUMN_ID_CATEGORY_NODE), $directParentCategories)) {
-                    $filteredProductCategoriesByDirectParents[] = $productCategoryEntity;
-                }
+        if (!$productCategoryEntities || !isset($productCategoryEntities[$store])) {
+            $productAbstractPageSearchTransfer->setSortedCategories([]);
+
+            return;
+        }
+
+        foreach ($productCategoryEntities[$store] as $productCategoryEntity) {
+            if (in_array($productCategoryEntity->getVirtualColumn(static::COLUMN_ID_CATEGORY_NODE), $directParentCategories)) {
+                $filteredProductCategoriesByDirectParents[] = $productCategoryEntity;
             }
         }
 

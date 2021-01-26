@@ -94,10 +94,10 @@ class ProductCategoryTreeBuilder implements ProductCategoryTreeBuilderInterface
         $categoryTree[$idCategoryNode] = [];
 
         foreach ($categories as $category) {
-            $idCategory = (int)$category[static::COLUMN_ID_CATEGORY_NODE];
+            $idNode = (int)$category[static::COLUMN_ID_CATEGORY_NODE];
 
-            if (!in_array($idCategory, $categoryTree[$idCategoryNode])) {
-                $categoryTree[$idCategoryNode][] = $idCategory;
+            if (!in_array($idNode, $categoryTree[$idCategoryNode])) {
+                $categoryTree[$idCategoryNode][] = $idNode;
             }
         }
 
