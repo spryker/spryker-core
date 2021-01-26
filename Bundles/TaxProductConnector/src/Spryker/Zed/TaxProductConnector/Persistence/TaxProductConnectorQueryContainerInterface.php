@@ -13,6 +13,9 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 interface TaxProductConnectorQueryContainerInterface extends QueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idTaxRate
@@ -22,6 +25,9 @@ interface TaxProductConnectorQueryContainerInterface extends QueryContainerInter
     public function getAbstractAbstractIdsForTaxRate($idTaxRate);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idTaxSet
@@ -31,6 +37,9 @@ interface TaxProductConnectorQueryContainerInterface extends QueryContainerInter
     public function getProductAbstractIdsForTaxSet($idTaxSet);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProductAbstract
@@ -40,6 +49,9 @@ interface TaxProductConnectorQueryContainerInterface extends QueryContainerInter
     public function queryProductAbstractById($idProductAbstract);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProductAbstract
@@ -49,6 +61,9 @@ interface TaxProductConnectorQueryContainerInterface extends QueryContainerInter
     public function queryTaxSetForProductAbstract($idProductAbstract);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @module Country
@@ -63,6 +78,9 @@ interface TaxProductConnectorQueryContainerInterface extends QueryContainerInter
     public function queryTaxSetByIdProductAbstractAndCountryIso2Code(array $productAbstractIds, $countryIso2Code);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @module Country

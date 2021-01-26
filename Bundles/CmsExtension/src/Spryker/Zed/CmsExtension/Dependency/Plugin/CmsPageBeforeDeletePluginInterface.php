@@ -14,6 +14,7 @@ interface CmsPageBeforeDeletePluginInterface
     /**
      * Specification:
      * - Runs before delete CMS Page.
+     * - Removes all Navigation nodes related to provided CMS Page.
      *
      * @api
      *
