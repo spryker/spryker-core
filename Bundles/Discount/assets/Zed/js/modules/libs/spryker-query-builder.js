@@ -1,6 +1,6 @@
 'use strict';
 
-window.SQLParser = require('sql-parser/browser/sql-parser');
+window.SQLParser = require('@spryker/sql-parser-mistic/browser/sql-parser');
 require('jquery-query-builder');
 
 function SprykerQueryBuilder(options) {
