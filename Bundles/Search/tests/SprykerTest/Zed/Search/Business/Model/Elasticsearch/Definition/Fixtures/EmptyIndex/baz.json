@@ -1,15 +1,15 @@
 {
-  "settings": {
-    "number_of_shards": 1,
-    "number_of_replicas": 1,
-    "analysis": {
-      "analyzer": {
-        "my_analyzer": {
-          "type": "standard",
-          "stopwords": "_german_",
-          "filter": ["standard", "lowercase"]
+    "settings": {
+        "number_of_shards": 1,
+        "number_of_replicas": 1,
+        "analysis": {
+            "analyzer": {
+                "my_analyzer": {
+                    "type": "standard",
+                    "stopwords": "_german_",
+                    "filter": ["standard", "lowercase"]
+                }
+            }
         }
-      }
     }
-  }
 }

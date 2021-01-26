@@ -5,7 +5,6 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.less'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
 })
-export class LoginComponent {
-}
+export class LoginComponent {}

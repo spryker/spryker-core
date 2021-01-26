@@ -84,7 +84,7 @@ class WishlistsResourceController extends AbstractController
      * @Glue({
      *     "patch": {
      *          "summary": [
-     *              "Deletes customer wishlist."
+     *              "Updates customer wishlist."
      *          ],
      *          "parameters": [{
      *              "ref": "acceptLanguage"

@@ -13,7 +13,12 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 interface CategoryPageSearchQueryContainerInterface extends QueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
+     *
+     * @deprecated Will be removed with next major release.
      *
      * @param int[] $categoryIds
      *
@@ -22,6 +27,9 @@ interface CategoryPageSearchQueryContainerInterface extends QueryContainerInterf
     public function queryCategoryNodeIdsByCategoryIds(array $categoryIds);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int[] $categoryNodeIds
@@ -31,6 +39,9 @@ interface CategoryPageSearchQueryContainerInterface extends QueryContainerInterf
     public function queryCategoryNodePageSearchByIds(array $categoryNodeIds);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int[] $categoryTemplateIds
@@ -40,6 +51,9 @@ interface CategoryPageSearchQueryContainerInterface extends QueryContainerInterf
     public function queryCategoryNodeIdsByTemplateIds(array $categoryTemplateIds);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int[] $ids

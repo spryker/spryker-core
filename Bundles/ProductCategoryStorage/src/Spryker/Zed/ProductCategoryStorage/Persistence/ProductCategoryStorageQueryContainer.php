@@ -30,6 +30,8 @@ class ProductCategoryStorageQueryContainer extends AbstractQueryContainer implem
      *
      * @api
      *
+     * @deprecated Will be removed in the next major.
+     *
      * @param int $idProductAbstract
      *
      * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
@@ -96,6 +98,8 @@ class ProductCategoryStorageQueryContainer extends AbstractQueryContainer implem
      *
      * @api
      *
+     * @deprecated Will be removed in the next major.
+     *
      * @param int $idNode
      * @param int $idLocale
      * @param bool $excludeRootNode
@@ -114,6 +118,8 @@ class ProductCategoryStorageQueryContainer extends AbstractQueryContainer implem
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Will be removed in the next major.
      *
      * @param int $idCategoryNode
      * @param int $idLocale
@@ -150,6 +156,8 @@ class ProductCategoryStorageQueryContainer extends AbstractQueryContainer implem
      *
      * @api
      *
+     * @deprecated Will be removed in the next major.
+     *
      * @param int[] $productAbstractIds
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery
@@ -167,6 +175,8 @@ class ProductCategoryStorageQueryContainer extends AbstractQueryContainer implem
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Will be removed in the next major.
      *
      * @param int $idNode
      *
@@ -223,6 +233,8 @@ class ProductCategoryStorageQueryContainer extends AbstractQueryContainer implem
      *
      * @api
      *
+     * @deprecated Will be removed in the next major.
+     *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
      */
     public function queryAllCategoriesWithAttributesAndOrderByDescendant()
@@ -268,6 +280,8 @@ class ProductCategoryStorageQueryContainer extends AbstractQueryContainer implem
      *
      * @api
      *
+     * @deprecated Will be removed in the next major.
+     *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
      */
     public function queryAllCategoryNodes()
@@ -279,6 +293,8 @@ class ProductCategoryStorageQueryContainer extends AbstractQueryContainer implem
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Will be removed in the next major.
      *
      * @param int[] $productAbstractIds
      *

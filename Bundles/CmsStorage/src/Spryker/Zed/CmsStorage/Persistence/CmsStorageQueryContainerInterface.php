@@ -13,6 +13,9 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 interface CmsStorageQueryContainerInterface extends QueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $cmsPageIds
@@ -25,6 +28,9 @@ interface CmsStorageQueryContainerInterface extends QueryContainerInterface
      * Specification:
      * - Returns a a query for the table `spy_cms_page` filtered by cms page ids.
      *
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $cmsPageIds
@@ -34,6 +40,9 @@ interface CmsStorageQueryContainerInterface extends QueryContainerInterface
     public function queryCmsPageByIds(array $cmsPageIds): SpyCmsPageQuery;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $cmsPageIds
@@ -43,6 +52,9 @@ interface CmsStorageQueryContainerInterface extends QueryContainerInterface
     public function queryCmsPageStorageEntities(array $cmsPageIds);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $localeNames

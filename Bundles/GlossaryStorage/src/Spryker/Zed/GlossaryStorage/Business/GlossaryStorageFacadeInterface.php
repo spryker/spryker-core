@@ -82,7 +82,7 @@ interface GlossaryStorageFacadeInterface
     public function writeCollectionByGlossaryTranslationEvents(array $eventTransfers): void;
 
     /**
-     * Specification
+     * Specification:
      * - Retrieves a collection of glossary key transfer according to provided offset and limit.
      *
      * @api
@@ -95,7 +95,7 @@ interface GlossaryStorageFacadeInterface
     public function findFilteredGlossaryKeyEntities(int $offset, int $limit): array;
 
     /**
-     * Specification
+     * Specification:
      * - Retrieves a collection of glossary storage transfer according to provided offset, limit and ids.
      *
      * @api

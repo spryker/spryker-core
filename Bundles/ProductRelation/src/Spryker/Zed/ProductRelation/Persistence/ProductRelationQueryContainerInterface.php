@@ -13,6 +13,9 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 interface ProductRelationQueryContainerInterface extends QueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\ProductRelation\Persistence\SpyProductRelationTypeQuery
@@ -20,6 +23,9 @@ interface ProductRelationQueryContainerInterface extends QueryContainerInterface
     public function queryProductRelationType();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\ProductRelation\Persistence\SpyProductRelationQuery
@@ -27,6 +33,9 @@ interface ProductRelationQueryContainerInterface extends QueryContainerInterface
     public function queryAllProductRelations();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $key
@@ -36,6 +45,9 @@ interface ProductRelationQueryContainerInterface extends QueryContainerInterface
     public function queryProductRelationTypeByKey($key);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idLocale
@@ -45,6 +57,9 @@ interface ProductRelationQueryContainerInterface extends QueryContainerInterface
     public function queryProductsWithCategoriesByFkLocale($idLocale);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProductRelation
@@ -54,6 +69,9 @@ interface ProductRelationQueryContainerInterface extends QueryContainerInterface
     public function queryProductRelationByIdProductRelation($idProductRelation);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProductRelationType
@@ -63,6 +81,9 @@ interface ProductRelationQueryContainerInterface extends QueryContainerInterface
     public function queryProductRelationByIdRelationType($idProductRelationType);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProductAbstract
@@ -73,6 +94,9 @@ interface ProductRelationQueryContainerInterface extends QueryContainerInterface
     public function queryProductRelationByIdProductAbstractAndRelationKey($idProductAbstract, $relationKey);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProductRelation
@@ -83,6 +107,9 @@ interface ProductRelationQueryContainerInterface extends QueryContainerInterface
     public function queryProductRelationProductAbstractByIdRelationAndIdProduct($idProductRelation, $idProductAbstract);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProductRelation
@@ -92,6 +119,9 @@ interface ProductRelationQueryContainerInterface extends QueryContainerInterface
     public function queryProductRelationProductAbstractByIdProductRelation($idProductRelation);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idLocale
@@ -101,6 +131,9 @@ interface ProductRelationQueryContainerInterface extends QueryContainerInterface
     public function queryProductRelationsWithProductCount($idLocale);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductRelationTransfer $productRelationTransfer
@@ -110,6 +143,9 @@ interface ProductRelationQueryContainerInterface extends QueryContainerInterface
     public function getRulePropelQuery(ProductRelationTransfer $productRelationTransfer);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\ProductRelation\Persistence\SpyProductRelationQuery
@@ -117,6 +153,9 @@ interface ProductRelationQueryContainerInterface extends QueryContainerInterface
     public function queryActiveProductRelations();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\ProductRelation\Persistence\SpyProductRelationProductAbstractQuery
@@ -124,6 +163,9 @@ interface ProductRelationQueryContainerInterface extends QueryContainerInterface
     public function queryActiveProductRelationProductAbstract();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
@@ -131,6 +173,9 @@ interface ProductRelationQueryContainerInterface extends QueryContainerInterface
     public function queryProductAttributeKey();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProductRelation
@@ -141,6 +186,9 @@ interface ProductRelationQueryContainerInterface extends QueryContainerInterface
     public function queryProductRelationWithProductAbstractByIdRelationAndLocale($idProductRelation, $idLocale);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\ProductRelation\Persistence\SpyProductRelationQuery
@@ -148,6 +196,9 @@ interface ProductRelationQueryContainerInterface extends QueryContainerInterface
     public function queryActiveAndScheduledRelations();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductRelationTransfer $productRelationTransfer
@@ -157,6 +208,9 @@ interface ProductRelationQueryContainerInterface extends QueryContainerInterface
     public function queryRulePropelQueryWithLocalizedProductData(ProductRelationTransfer $productRelationTransfer);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idLocale

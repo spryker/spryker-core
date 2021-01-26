@@ -23,6 +23,9 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 interface CmsQueryContainerInterface extends QueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsTemplateQuery
@@ -30,6 +33,9 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
     public function queryTemplates(): SpyCmsTemplateQuery;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $path
@@ -39,6 +45,9 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
     public function queryTemplateByPath(string $path): SpyCmsTemplateQuery;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $id
@@ -48,6 +57,9 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
     public function queryTemplateById(int $id): SpyCmsTemplateQuery;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idUrl
@@ -57,6 +69,9 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
     public function queryUrlByIdWithRedirect(int $idUrl): SpyUrlQuery;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idUrl
@@ -66,6 +81,9 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
     public function queryUrlById(int $idUrl): SpyUrlQuery;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idCmsPage
@@ -75,6 +93,9 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
     public function queryPageWithTemplatesAndUrlByIdPage(int $idCmsPage): SpyCmsPageQuery;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idMapping
@@ -84,6 +105,9 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
     public function queryGlossaryKeyMappingWithKeyById(int $idMapping): SpyCmsGlossaryKeyMappingQuery;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
@@ -91,6 +115,9 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
     public function queryPages(): SpyCmsPageQuery;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $id
@@ -100,6 +127,9 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
     public function queryPageById(int $id): SpyCmsPageQuery;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idPage
@@ -110,6 +140,9 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
     public function queryGlossaryKeyMapping(int $idPage, string $placeholder): SpyCmsGlossaryKeyMappingQuery;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idMapping
@@ -119,6 +152,9 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
     public function queryGlossaryKeyMappingById(int $idMapping): SpyCmsGlossaryKeyMappingQuery;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery
@@ -126,6 +162,9 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
     public function queryGlossaryKeyMappings(): SpyCmsGlossaryKeyMappingQuery;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idCmsPage
@@ -135,6 +174,9 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
     public function queryGlossaryKeyMappingsByPageId(int $idCmsPage): SpyCmsGlossaryKeyMappingQuery;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idLocale
@@ -144,6 +186,9 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
     public function queryLocaleById(int $idLocale): SpyLocaleQuery;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributesQuery
@@ -151,6 +196,9 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
     public function queryCmsPageLocalizedAttributes(): SpyCmsPageLocalizedAttributesQuery;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idCmsPage
@@ -161,6 +209,9 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
     public function queryGlossaryKeyMappingsWithKeyByPageId(int $idCmsPage, int $fkLocale): SpyCmsGlossaryKeyMappingQuery;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idPage
@@ -170,6 +221,9 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
     public function queryCmsPageLocalizedAttributesByFkPage(int $idPage): SpyCmsPageLocalizedAttributesQuery;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idPage
@@ -180,6 +234,9 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
     public function queryCmsPageLocalizedAttributesByFkPageAndFkLocale(int $idPage, int $idLocale): SpyCmsPageLocalizedAttributesQuery;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $key
@@ -189,6 +246,9 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
     public function queryKey(string $key): SpyGlossaryKeyQuery;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $key
@@ -198,6 +258,9 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
     public function queryKeyWithTranslationByKey(string $key);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idLocale
@@ -207,6 +270,9 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
     public function queryPagesWithTemplatesForSelectedLocale(int $idLocale): ModelCriteria;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idCmsPage
@@ -217,6 +283,9 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
     public function queryPageWithUrlByIdCmsPageAndLocaleName(int $idCmsPage, string $localName): SpyCmsPageQuery;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idLocale
@@ -226,6 +295,9 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
     public function queryPagesWithTemplatesForSelectedLocaleAndVersion(int $idLocale): ModelCriteria;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
@@ -233,6 +305,9 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
     public function queryLocalizedPagesWithTemplates(): SpyCmsPageQuery;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $value
@@ -242,6 +317,9 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
     public function queryTranslationWithKeyByValue(string $value): SpyGlossaryTranslationQuery;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $placeholders
@@ -252,6 +330,9 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
     public function queryGlossaryKeyMappingByPlaceholdersAndIdPage(array $placeholders, int $idCmsPage): SpyCmsGlossaryKeyMappingQuery;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idPage
@@ -261,6 +342,9 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
     public function queryCmsPageWithAllRelationsByIdPage(int $idPage): SpyCmsPageQuery;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idPage
@@ -271,6 +355,9 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
     public function queryCmsVersionByIdPage(int $idPage, string $versionOrder = Criteria::DESC): SpyCmsVersionQuery;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idCmsVersion
@@ -280,6 +367,9 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
     public function queryCmsVersionById(int $idCmsVersion): SpyCmsVersionQuery;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsVersionQuery
@@ -287,6 +377,9 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
     public function queryAllCmsVersions(): SpyCmsVersionQuery;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idPage
@@ -297,6 +390,9 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
     public function queryCmsVersionByIdPageAndVersion(int $idPage, int $version): SpyCmsVersionQuery;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $idGlossaryKeys
@@ -306,6 +402,9 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
     public function queryGlossaryKeyMappingsByFkGlossaryKeys(array $idGlossaryKeys): SpyCmsGlossaryKeyMappingQuery;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idCmsPage
@@ -315,6 +414,9 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
     public function queryResourceUrlByCmsPageId(int $idCmsPage): SpyUrlQuery;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $key
@@ -325,6 +427,9 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
     public function queryKeyWithTranslationByKeyAndLocale(string $key, int $localeId);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
@@ -332,6 +437,9 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
     public function queryPageWithTemplatesAndUrls(): SpyCmsPageQuery;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
