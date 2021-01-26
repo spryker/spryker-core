@@ -51,8 +51,8 @@ class ObjectBuilderTest extends AbstractBuilderTester
         $foo = new Foo();
 
         // Assert
-        $this->assertSame(self::TESTING_COLUMN_FLAG_DEFAULT_VALUE, $foo->getFlagDefaultFoo());
-        $this->assertFalse($foo->isColumnModified(self::TESTING_TABLE_NAME . '.' . self::TESTING_COLUMN_FLAG_DEFAULT_VALUE_NAME));
+        $this->assertSame(self::TESTING_COLUMN_BOOLEAN_DEFAULT_VALUE, $foo->getFlagDefaultFoo());
+        $this->assertFalse($foo->isColumnModified(self::TESTING_TABLE_NAME . '.' . self::TESTING_COLUMN_BOOLEAN_DEFAULT_VALUE_NAME));
     }
 
     /**
@@ -64,10 +64,10 @@ class ObjectBuilderTest extends AbstractBuilderTester
         $foo = new Foo();
 
         // Act
-        $foo->setFlagDefaultFoo(self::TESTING_COLUMN_FLAG_DEFAULT_VALUE);
+        $foo->setFlagDefaultFoo(self::TESTING_COLUMN_BOOLEAN_DEFAULT_VALUE);
 
         // Assert
-        $this->assertTrue($foo->isColumnModified(self::TESTING_TABLE_NAME . '.' . self::TESTING_COLUMN_FLAG_DEFAULT_VALUE_NAME));
+        $this->assertTrue($foo->isColumnModified(self::TESTING_TABLE_NAME . '.' . self::TESTING_COLUMN_BOOLEAN_DEFAULT_VALUE_NAME));
     }
 
     /**
@@ -107,7 +107,7 @@ class ObjectBuilderTest extends AbstractBuilderTester
         $foo = new Foo();
 
         // Assert
-        $this->assertFalse($foo->isColumnModified(self::TESTING_TABLE_NAME . '.' . self::TESTING_COLUMN_FLAG_NAME));
+        $this->assertFalse($foo->isColumnModified(self::TESTING_TABLE_NAME . '.' . self::TESTING_COLUMN_BOOLEAN_NAME));
     }
 
     /**
@@ -122,7 +122,7 @@ class ObjectBuilderTest extends AbstractBuilderTester
         $foo->setFlagFoo(true);
 
         // Assert
-        $this->assertTrue($foo->isColumnModified(self::TESTING_TABLE_NAME . '.' . self::TESTING_COLUMN_FLAG_NAME));
+        $this->assertTrue($foo->isColumnModified(self::TESTING_TABLE_NAME . '.' . self::TESTING_COLUMN_BOOLEAN_NAME));
     }
 
     /**
