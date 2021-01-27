@@ -84,9 +84,54 @@ class SavePriceProductAbstractController extends AbstractController
 
         $priceProductCriteriaTransfer = (new PriceProductCriteriaTransfer())->setPriceProductStoreIds($priceProductStoreIds);
 
-        return new ArrayObject($this->getFactory()
+        $priceProductTransfers = $this->getFactory()
             ->getPriceProductFacade()
-            ->findProductAbstractPricesWithoutPriceExtraction($idProductAbstract, $priceProductCriteriaTransfer));
+            ->findProductAbstractPricesWithoutPriceExtraction($idProductAbstract, $priceProductCriteriaTransfer);
+
+        if ($priceProductTransfers && (isset($data[MoneyValueTransfer::STORE]) || isset($data[MoneyValueTransfer::CURRENCY]))) {
+            $priceProductTransfers = $this->expandPriceProductTransfersWithTypes($idProductAbstract, $priceProductTransfers);
+        }
+
+        return new ArrayObject($priceProductTransfers);
+    }
+
+    /**
+     * @param int $idProductAbstract
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    protected function expandPriceProductTransfersWithTypes(int $idProductAbstract, array $priceProductTransfers): array
+    {
+        $priceTypeIds = [];
+
+        foreach ($priceProductTransfers as $priceProductTransfer) {
+            $priceTypeIds[] = $priceProductTransfer->getFkPriceType();
+        }
+
+        foreach ($this->getFactory()->getPriceProductFacade()->getPriceTypeValues() as $priceTypeTransfer) {
+            if (in_array($priceTypeTransfer->getIdPriceType(), $priceTypeIds)) {
+                continue;
+            }
+
+            $moneyValueTransfer = $priceProductTransfers[0]->getMoneyValue();
+            $priceProductTransfers[] = (new PriceProductTransfer())
+                ->setFkPriceType($priceTypeTransfer->getIdPriceType())
+                ->setPriceType($priceTypeTransfer)
+                ->setPriceDimension(
+                    (new PriceProductDimensionTransfer())->setType(static::PRICE_DIMENSION_TYPE_DEFAULT)
+                )
+                ->setIdProductAbstract($idProductAbstract)
+                ->setMoneyValue(
+                    (new MoneyValueTransfer())
+                        ->setCurrency($moneyValueTransfer->getCurrency())
+                        ->setFkStore($moneyValueTransfer->getFkStore())
+                        ->setStore($moneyValueTransfer->getStore())
+                        ->setFkCurrency($moneyValueTransfer->getFkCurrency())
+                );
+        }
+
+        return $priceProductTransfers;
     }
 
     /**
