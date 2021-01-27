@@ -3,7 +3,7 @@
     "name": "spryker-zed-discount",
     "version": "1.0.0",
     "dependencies": {
-        "@spryker/sql-parser-mistic": "~1.2.3",
-        "jquery-query-builder": "https://github.com/spryker/jquery-query-builder.git#feature/te-8445-update-dependency"
+        "@spryker/jquery-query-builder": "~2.5.2",
+        "@spryker/sql-parser-mistic": "~1.2.3"
     }
 }
