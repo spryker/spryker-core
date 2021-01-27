@@ -125,7 +125,6 @@ class CategoryNodePageSearchWriter implements CategoryNodePageSearchWriterInterf
         $nodeCollectionTransfer = $this->categoryFacade->getCategoryNodeCollectionByCriteria($categoryNodeCriteriaTransfer);
 
         $this->storeData($nodeCollectionTransfer);
-        $this->categoryNodePageSearchDeleter->deleteMissingCategoryNodePageSearchCollection($nodeCollectionTransfer, $categoryNodeIds);
     }
 
     /**
@@ -157,7 +156,11 @@ class CategoryNodePageSearchWriter implements CategoryNodePageSearchWriterInterf
     ): void {
         foreach ($nodeCollectionTransfers->getNodes() as $nodeTransfer) {
             if (!$this->isCategoryHasStoreRelation($nodeTransfer->getCategoryOrFail(), $storeName)) {
-                continue;
+                $this->categoryPageSearchEntityManager->deleteCategoryNodePageSearchByIdCategoryNodeForLocaleAndStore(
+                    $nodeTransfer->getIdCategoryNode(),
+                    $localeName,
+                    $storeName
+                );
             }
 
             $this->storeDataSet($nodeTransfer, $storeName, $localeName);

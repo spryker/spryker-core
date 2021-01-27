@@ -10,12 +10,12 @@ namespace Spryker\Zed\CategoryStorage\Business\Deleter;
 interface CategoryNodeStorageDeleterInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\NodeTransfer[] $nodeTransfers
+     * @param \Generated\Shared\Transfer\CategoryNodeStorageTransfer[][][] $categoryNodeStorageTransferTreesIndexedByLocaleAndStore
      * @param int[] $categoryNodeIds
      *
      * @return void
      */
-    public function deleteMissingCategoryNodeStorage(array $nodeTransfers, array $categoryNodeIds): void;
+    public function deleteMissingCategoryNodeStorage(array $categoryNodeStorageTransferTreesIndexedByLocaleAndStore, array $categoryNodeIds): void;
 
     /**
      * @param int[] $categoryNodeIds

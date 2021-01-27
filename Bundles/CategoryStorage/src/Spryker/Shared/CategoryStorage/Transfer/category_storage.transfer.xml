@@ -118,4 +118,8 @@
         <property name="nodes" type="Node[]" singular="node"/>
     </transfer>
 
+    <transfer name="CategoryNodeFilter">
+        <property name="categoryIds" type="int[]" singular="idCategory"/>
+    </transfer>
+
 </transfers>

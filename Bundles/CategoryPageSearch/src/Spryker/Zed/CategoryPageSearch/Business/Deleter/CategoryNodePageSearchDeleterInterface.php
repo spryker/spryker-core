@@ -7,18 +7,8 @@
 
 namespace Spryker\Zed\CategoryPageSearch\Business\Deleter;
 
-use Generated\Shared\Transfer\NodeCollectionTransfer;
-
 interface CategoryNodePageSearchDeleterInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\NodeCollectionTransfer $nodeCollectionTransfer
-     * @param int[] $categoryNodeIds
-     *
-     * @return void
-     */
-    public function deleteMissingCategoryNodePageSearchCollection(NodeCollectionTransfer $nodeCollectionTransfer, array $categoryNodeIds): void;
-
     /**
      * @param int[] $categoryNodeIds
      *
