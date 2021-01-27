@@ -12,9 +12,9 @@ interface CmsSlotBlockProductCategoryConnectorToProductCategoryStorageClientInte
     /**
      * @param int $idProductAbstract
      * @param string $locale
-     * @param string|null $storeName
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer|null
      */
-    public function findProductAbstractCategory($idProductAbstract, $locale, ?string $storeName = null);
+    public function findProductAbstractCategory($idProductAbstract, $locale, string $storeName);
 }

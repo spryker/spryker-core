@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="ProductPageLoad">
+        <property name="productAbstractIds" type="array" singular="productAbstractIds"/>
+        <property name="payloadTransfers" type="array" singular="payloadTransfers"/>
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="idLocale" type="int"/>
+    </transfer>
+
+    <transfer name="ProductPageSearch">
+        <property name="store" type="string"/>
+        <property name="categoryNodeIds" type="array" singular="categoryNodeIds"/>
+        <property name="allParentCategoryIds" type="array" singular="allParentCategoryIds"/>
+        <property name="boostedCategoryNames" type="array" singular="boostedCategoryNames"/>
+        <property name="categoryNames" type="array" singular="categoryNames"/>
+        <property name="sortedCategories" type="array" singular="sortedCategories"/>
+    </transfer>
+
+    <transfer name="ProductPayload">
+        <property name="idProductAbstract" type="int"/>
+        <property name="categories" type="array" singular="categories"/>
+    </transfer>
+
+    <transfer name="PageMap">
+    </transfer>
+
+</transfers>

@@ -10,6 +10,31 @@
         <property name="url" type="string"/>
     </transfer>
 
+    <transfer name="ProductCategory">
+        <property name="category" type="Category"/>
+    </transfer>
+
+    <transfer name="Category">
+        <property name="nodeCollection" type="NodeCollection"/>
+    </transfer>
+
+    <transfer name="NodeCollection">
+        <property name="nodes" type="Node[]" singular="node"/>
+    </transfer>
+
+    <transfer name="Node">
+        <property name="idCategoryNode" type="int"/>
+    </transfer>
+
+    <transfer name="ProductAbstractLocalizedAttributes">
+        <property name="idProductAbstract" type="int"/>
+        <property name="locale" type="Locale"/>
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="localeName" type="string"/>
+    </transfer>
+
     <transfer name="ProductAbstractCategoryStorage">
         <property name="idProductAbstract" type="int"/>
         <property name="categories" singular="category" type="ProductCategoryStorage[]"/>
@@ -22,6 +47,16 @@
 
     <transfer name="Node">
         <property name="idCategoryNode" type="int"/>
+    </transfer>
+
+    <transfer name="CategoryNodeAggregation">
+        <property name="idCategoryNode" type="int"/>
+        <property name="idCategoryNodeDescendant" type="int"/>
+        <property name="idCategory" type="int"/>
+        <property name="name" type="string"/>
+        <property name="url" type="string"/>
+        <property name="locale" type="string"/>
+        <property name="store" type="string"/>
     </transfer>
 
 </transfers>
