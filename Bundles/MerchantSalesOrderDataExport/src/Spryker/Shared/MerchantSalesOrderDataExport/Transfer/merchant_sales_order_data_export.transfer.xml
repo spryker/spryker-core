@@ -16,6 +16,11 @@
         <property name="hooks" type="array" singular="hook" associative="true"/>
     </transfer>
 
+    <transfer name="DataExportWriteResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="fileName" type="string"/>
+    </transfer>
+
     <transfer name="DataExportReport">
         <property name="isSuccessful" type="bool"/>
         <property name="dataExportResults" type="DataExportResult[]" singular="dataExportResult"/>
@@ -25,6 +30,17 @@
         <property name="isSuccessful" type="bool"/>
         <property name="fileName" type="string"/>
         <property name="exportCount" type="int"/>
+        <property name="dataEntity" type="string"/>
+    </transfer>
+
+    <transfer name="Comment">
+        <property name="username" type="string"/>
+        <property name="message" type="string"/>
+        <property name="createdAt" type="string"/>
+        <property name="updatedAt" type="string"/>
+    </transfer>
+
+    <transfer name="DataExportConfigurations">
     </transfer>
 
 </transfers>
