@@ -24,6 +24,7 @@ class AddGuestQuoteItemsToCustomerQuotePostAuthPlugin extends AbstractPlugin imp
      * - Reads registered customer quote.
      * - Aborts if anonymous customer reference or customer reference are not set on the OauthResponseTransfer.
      * - Aborts if guest customer quote is not found or is empty.
+     * - Merges guest cart with customer cart.
      * - Adds all guest cart items to the customer quote.
      * - Deletes guest quote.
      *
