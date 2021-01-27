@@ -37,7 +37,7 @@ class ClosureTableWriter implements ClosureTableWriterInterface
      */
     public function create(NodeTransfer $categoryNodeTransfer)
     {
-        $idCategoryNode = $categoryNodeTransfer->getIdCategoryNode();
+        $idCategoryNode = $categoryNodeTransfer->getIdCategoryNodeOrFail();
         $parentId = $categoryNodeTransfer->getFkParentCategoryNode();
 
         if ($parentId === null) {
@@ -67,7 +67,7 @@ class ClosureTableWriter implements ClosureTableWriterInterface
     public function moveNode(NodeTransfer $categoryNodeTransfer)
     {
         $obsoleteEntities = $this->queryContainer
-            ->queryClosureTableParentEntries($categoryNodeTransfer->getIdCategoryNode())
+            ->queryClosureTableParentEntries($categoryNodeTransfer->getIdCategoryNodeOrFail())
             ->find();
 
         foreach ($obsoleteEntities as $obsoleteEntity) {
@@ -75,11 +75,11 @@ class ClosureTableWriter implements ClosureTableWriterInterface
         }
 
         $nodeEntities = $this->queryContainer
-            ->queryClosureTableFilterByIdNode($categoryNodeTransfer->getIdCategoryNode())
+            ->queryClosureTableFilterByIdNode($categoryNodeTransfer->getIdCategoryNodeOrFail())
             ->find();
 
         $parentEntities = $this->queryContainer
-            ->queryClosureTableFilterByIdNodeDescendant($categoryNodeTransfer->getFkParentCategoryNode())
+            ->queryClosureTableFilterByIdNodeDescendant($categoryNodeTransfer->getFkParentCategoryNodeOrFail())
             ->find();
 
         foreach ($nodeEntities as $nodeEntity) {
@@ -103,7 +103,7 @@ class ClosureTableWriter implements ClosureTableWriterInterface
      */
     protected function createRootNode(NodeTransfer $categoryNode)
     {
-        $nodeId = $categoryNode->getIdCategoryNode();
+        $nodeId = $categoryNode->getIdCategoryNodeOrFail();
 
         $pathEntity = new SpyCategoryClosureTable();
         $pathEntity->setFkCategoryNode($nodeId);
@@ -166,7 +166,7 @@ class ClosureTableWriter implements ClosureTableWriterInterface
             }
 
             $nodeToMove = (new NodeTransfer())->fromArray($nodeEntity->toArray());
-            $this->delete($nodeToMove->getIdCategoryNode());
+            $this->delete($nodeToMove->getIdCategoryNodeOrFail());
             $this->create($nodeToMove);
             $this->moveNode($nodeToMove);
         }

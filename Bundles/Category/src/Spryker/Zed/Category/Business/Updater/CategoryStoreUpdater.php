@@ -97,7 +97,7 @@ class CategoryStoreUpdater implements CategoryStoreUpdaterInterface
 
         if ($categoryTransfer->getParentCategoryNode()) {
             $parentStoreRelationTransfer = $this->categoryRepository->getCategoryStoreRelationByIdCategory(
-                $categoryTransfer->getParentCategoryNode()->getFkCategoryOrFail()
+                $categoryTransfer->getParentCategoryNodeOrFail()->getFkCategoryOrFail()
             );
         }
 
@@ -250,15 +250,15 @@ class CategoryStoreUpdater implements CategoryStoreUpdaterInterface
      */
     protected function updateChildrenCategoryStoreRelations(CategoryTransfer $categoryTransfer, array $storeIdsToAdd, array $storeIdsToDelete): void
     {
-        if (!$categoryTransfer->getNodeCollection() || $categoryTransfer->getNodeCollection()->getNodes()->count() === 0) {
+        if (!$categoryTransfer->getNodeCollection() || $categoryTransfer->getNodeCollectionOrFail()->getNodes()->count() === 0) {
             return;
         }
 
-        foreach ($categoryTransfer->getNodeCollection()->getNodes() as $nodeTransfer) {
+        foreach ($categoryTransfer->getNodeCollectionOrFail()->getNodes() as $nodeTransfer) {
             if (!$nodeTransfer->getIsMain()) {
                 continue;
             }
-            $this->updateMainChildCategoryStoreRelation($nodeTransfer->getChildrenNodes(), $storeIdsToAdd, $storeIdsToDelete);
+            $this->updateMainChildCategoryStoreRelation($nodeTransfer->getChildrenNodesOrFail(), $storeIdsToAdd, $storeIdsToDelete);
         }
     }
 
@@ -275,13 +275,13 @@ class CategoryStoreUpdater implements CategoryStoreUpdaterInterface
             if (!$nodeTransfer->getIsMain()) {
                 continue;
             }
-            $this->updateCategoryStoreRelations($nodeTransfer->getFkCategory(), $storeIdsToAdd, $storeIdsToDelete);
+            $this->updateCategoryStoreRelations($nodeTransfer->getFkCategoryOrFail(), $storeIdsToAdd, $storeIdsToDelete);
 
-            if (!$nodeTransfer->getChildrenNodes()->getNodes()->count()) {
+            if (!$nodeTransfer->getChildrenNodesOrFail()->getNodes()->count()) {
                 continue;
             }
 
-            $this->updateMainChildCategoryStoreRelation($nodeTransfer->getChildrenNodes(), $storeIdsToAdd, $storeIdsToDelete);
+            $this->updateMainChildCategoryStoreRelation($nodeTransfer->getChildrenNodesOrFail(), $storeIdsToAdd, $storeIdsToDelete);
         }
     }
 }

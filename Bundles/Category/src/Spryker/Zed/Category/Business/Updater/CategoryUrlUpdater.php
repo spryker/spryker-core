@@ -76,7 +76,7 @@ class CategoryUrlUpdater implements CategoryUrlUpdaterInterface
 
         foreach ($categoryTransfer->getLocalizedAttributes() as $categoryLocalizedAttributesTransfer) {
             $this->updateUrlsForNodes(
-                $categoryTransfer->getNodeCollection(),
+                $categoryTransfer->getNodeCollectionOrFail(),
                 $urlTransfers,
                 $categoryLocalizedAttributesTransfer->getLocaleOrFail()
             );
@@ -97,7 +97,7 @@ class CategoryUrlUpdater implements CategoryUrlUpdaterInterface
             if (!$nodeTransfer->getChildrenNodes()) {
                 continue;
             }
-            $this->updateUrlsForNodes($nodeTransfer->getChildrenNodes(), $urlTransfers, $localeTransfer);
+            $this->updateUrlsForNodes($nodeTransfer->getChildrenNodesOrFail(), $urlTransfers, $localeTransfer);
         }
     }
 
@@ -136,7 +136,7 @@ class CategoryUrlUpdater implements CategoryUrlUpdaterInterface
 
             $categoryNodeIds = array_merge(
                 $categoryNodeIds,
-                $this->getCategoryNodeIdsFromNodeCollection($nodeTransfer->getChildrenNodes())
+                $this->getCategoryNodeIdsFromNodeCollection($nodeTransfer->getChildrenNodesOrFail())
             );
         }
 

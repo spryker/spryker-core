@@ -72,7 +72,7 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
             return $nodeCollectionTransfer;
         }
 
-        $categoryNodeTransfer = $this->buildNodeTree($categoryNodes, $categoryTransfer->getCategoryNode());
+        $categoryNodeTransfer = $this->buildNodeTree($categoryNodes, $categoryTransfer->getCategoryNodeOrFail());
 
         return $nodeCollectionTransfer->addNode($categoryNodeTransfer);
     }

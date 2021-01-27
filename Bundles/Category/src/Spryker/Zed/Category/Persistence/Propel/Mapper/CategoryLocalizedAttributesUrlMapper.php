@@ -24,7 +24,7 @@ class CategoryLocalizedAttributesUrlMapper
         ObjectCollection $urlEntities,
         CategoryLocalizedAttributesTransfer $categoryLocalizedAttributesTransfer
     ): CategoryLocalizedAttributesTransfer {
-        $urlEntity = $this->findUrlForLocale($urlEntities, $categoryLocalizedAttributesTransfer->getLocale());
+        $urlEntity = $this->findUrlForLocale($urlEntities, $categoryLocalizedAttributesTransfer->getLocaleOrFail());
         if (!$urlEntity) {
             return $categoryLocalizedAttributesTransfer;
         }

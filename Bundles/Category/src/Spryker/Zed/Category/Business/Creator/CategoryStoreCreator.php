@@ -46,10 +46,10 @@ class CategoryStoreCreator implements CategoryStoreCreatorInterface
             return;
         }
 
-        $storeIdsToAdd = $categoryTransfer->getStoreRelation()->getIdStores();
+        $storeIdsToAdd = $categoryTransfer->getStoreRelationOrFail()->getIdStores();
         if ($categoryTransfer->getParentCategoryNode()) {
             $storeIdsToAdd = $this->filterOutStoreIdsMissingInParentCategoryStoreRelation(
-                $categoryTransfer->getParentCategoryNode()->getFkCategoryOrFail(),
+                $categoryTransfer->getParentCategoryNodeOrFail()->getFkCategoryOrFail(),
                 $storeIdsToAdd
             );
         }

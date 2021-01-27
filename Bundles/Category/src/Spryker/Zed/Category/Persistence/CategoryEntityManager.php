@@ -188,6 +188,10 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
             ->filterByIdCategory($categoryTransfer->getIdCategoryOrFail())
             ->findOne();
 
+        if (!$categoryEntity) {
+            return;
+        }
+
         $categoryEntity = $this->getFactory()
             ->createCategoryMapper()
             ->mapCategoryTransferToCategoryEntity($categoryTransfer, $categoryEntity);
@@ -206,6 +210,10 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
         $categoryNodeEntity = $this->getFactory()
             ->createCategoryNodeQuery()
             ->findOneByIdCategoryNode($nodeTransfer->getIdCategoryNodeOrFail());
+
+        if (!$categoryNodeEntity) {
+            return $nodeTransfer;
+        }
 
         $categoryNodeMapper->mapNodeTransferToCategoryNodeEntity($nodeTransfer, $categoryNodeEntity);
         $categoryNodeEntity->save();

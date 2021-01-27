@@ -137,6 +137,10 @@ class CategoryNodeUpdater implements CategoryNodeUpdaterInterface
             $nodeTransfer->getIdCategoryNodeOrFail()
         );
 
+        if (!$currentCategoryNodeTransfer) {
+            return;
+        }
+
         $idFormerParentCategoryNode = $this->findPossibleFormerParentCategoryNodeId(
             $currentCategoryNodeTransfer,
             $categoryTransfer
@@ -152,7 +156,7 @@ class CategoryNodeUpdater implements CategoryNodeUpdaterInterface
         $this->touchCategoryNode($categoryTransfer, $nodeTransfer);
         $this->touchPossibleFormerParentCategoryNode($idFormerParentCategoryNode);
 
-        $this->categoryNodePublisher->triggerBulkCategoryNodePublishEventForUpdate($nodeTransfer->getIdCategoryNode());
+        $this->categoryNodePublisher->triggerBulkCategoryNodePublishEventForUpdate($nodeTransfer->getIdCategoryNodeOrFail());
     }
 
     /**
@@ -163,7 +167,7 @@ class CategoryNodeUpdater implements CategoryNodeUpdaterInterface
     protected function executeUpdateExtraParentCategoryNodesTransaction(CategoryTransfer $categoryTransfer): void
     {
         $categoryNodeFilterTransfer = (new CategoryNodeFilterTransfer())
-            ->addIdCategory($categoryTransfer->getIdCategory())
+            ->addIdCategory($categoryTransfer->getIdCategoryOrFail())
             ->setIsMain(false);
         $existingExtraParentCategoryNodeTransferCollection = $this->categoryRepository->getCategoryNodesByCriteria($categoryNodeFilterTransfer);
 

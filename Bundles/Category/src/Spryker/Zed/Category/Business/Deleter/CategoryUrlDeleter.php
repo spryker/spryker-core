@@ -98,7 +98,7 @@ class CategoryUrlDeleter implements CategoryUrlDeleterInterface
         $nodeCollectionTransfer = $this->categoryRepository->getCategoryNodesByCriteria($categoryNodeFilterTransfer);
 
         foreach ($nodeCollectionTransfer->getNodes() as $nodeTransfer) {
-            $categoryNodeIds[] = $nodeTransfer->getIdCategoryNode();
+            $categoryNodeIds[] = $nodeTransfer->getIdCategoryNodeOrFail();
         }
 
         return $categoryNodeIds;

@@ -90,7 +90,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
     {
         $nodePathQuery = $this->queryNodePathWithRootNode(
             $idCategoryNode,
-            $localeTransfer->getIdLocale(),
+            $localeTransfer->getIdLocaleOrFail(),
             static::NODE_PATH_ZERO_DEPTH
         );
 
@@ -107,7 +107,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
     {
         $nodePathQuery = $this->queryNodePathWithoutRootNode(
             $idNode,
-            $localeTransfer->getIdLocale(),
+            $localeTransfer->getIdLocaleOrFail(),
             static::NODE_PATH_NULL_DEPTH
         );
 
@@ -188,7 +188,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
     {
         return $this->getFactory()->createCategoryNodeQuery()
             ->setIgnoreCase(true)
-            ->filterByFkParentCategoryNode($categoryTransfer->getParentCategoryNode()->getIdCategoryNode())
+            ->filterByFkParentCategoryNode($categoryTransfer->getParentCategoryNodeOrFail()->getIdCategoryNodeOrFail())
             ->useCategoryQuery()
                 ->filterByIdCategory($categoryTransfer->getIdCategory(), Criteria::NOT_EQUAL)
                 ->useAttributeQuery()
@@ -280,12 +280,15 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
         CategoryTransfer $categoryTransfer,
         CategoryCriteriaTransfer $categoryCriteriaTransfer
     ): array {
+        /** @var \Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery $categoryClosureTableQuery */
         $categoryClosureTableQuery = $this->getFactory()
             ->createCategoryClosureTableQuery()
             ->leftJoinWithDescendantNode()
             ->useNodeQuery('node')
                 ->filterByFkCategory($categoryTransfer->getIdCategoryOrFail())
-            ->endUse()
+            ->endUse();
+
+        $categoryClosureTableQuery
             ->useDescendantNodeQuery()
                 ->leftJoinWithCategory()
                 ->orderByNodeOrder(Criteria::DESC)
@@ -439,7 +442,9 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
             ->endUse()
             ->where(sprintf('%s IN (%s)', SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE_DESCENDANT, $categoryNodeIdsImploded))
             ->_or()
-            ->where(sprintf('%s IN (%s)', SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE, $categoryNodeIdsImploded))
+            ->where(sprintf('%s IN (%s)', SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE, $categoryNodeIdsImploded));
+
+        $categoryNodeQuery
             ->orderByNodeOrder(Criteria::DESC)
             ->distinct();
 

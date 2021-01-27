@@ -122,10 +122,10 @@ class CategoryNodeCreator implements CategoryNodeCreatorInterface
         $this->categoryClosureTableCreator->createCategoryClosureTable($nodeTransfer);
 
         if ($categoryTransfer->getIsActive()) {
-            $this->categoryToucher->touchCategoryNodeActiveRecursively($nodeTransfer->getIdCategoryNode());
+            $this->categoryToucher->touchCategoryNodeActiveRecursively($nodeTransfer->getIdCategoryNodeOrFail());
         }
 
-        $this->categoryNodePublisher->triggerBulkCategoryNodePublishEventForCreate($nodeTransfer->getIdCategoryNode());
+        $this->categoryNodePublisher->triggerBulkCategoryNodePublishEventForCreate($nodeTransfer->getIdCategoryNodeOrFail());
     }
 
     /**
@@ -153,6 +153,6 @@ class CategoryNodeCreator implements CategoryNodeCreatorInterface
         $this->categoryClosureTableCreator->createCategoryClosureTable($nodeTransfer);
         $this->categoryUrlCreator->createLocalizedCategoryUrlsForNode($nodeTransfer, $categoryTransfer->getLocalizedAttributes());
 
-        $this->categoryToucher->touchCategoryNodeActiveRecursively($nodeTransfer->getIdCategoryNode());
+        $this->categoryToucher->touchCategoryNodeActiveRecursively($nodeTransfer->getIdCategoryNodeOrFail());
     }
 }

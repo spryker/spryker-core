@@ -38,6 +38,6 @@ class CategoryUrlUpdater implements CategoryUrlUpdaterInterface
      */
     protected function getLanguageIdentifierFromLocale(LocaleTransfer $localeTransfer): string
     {
-        return mb_substr($localeTransfer->getLocaleName(), 0, 2);
+        return mb_substr($localeTransfer->getLocaleNameOrFail(), 0, 2);
     }
 }

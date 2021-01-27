@@ -201,17 +201,17 @@ class CategoryNodeDeleter implements CategoryNodeDeleterInterface
     {
         do {
             $childrenMoved = $this->categoryTree->moveSubTree(
-                $nodeTransfer->getIdCategoryNode(),
-                $idDestinationCategoryNode ?? $nodeTransfer->getFkParentCategoryNode()
+                $nodeTransfer->getIdCategoryNodeOrFail(),
+                $idDestinationCategoryNode ?? $nodeTransfer->getFkParentCategoryNodeOrFail()
             );
         } while ($childrenMoved > 0);
 
-        $this->categoryNodePublisher->triggerBulkCategoryNodePublishEventForUpdate($nodeTransfer->getIdCategoryNode());
+        $this->categoryNodePublisher->triggerBulkCategoryNodePublishEventForUpdate($nodeTransfer->getIdCategoryNodeOrFail());
 
-        $this->categoryClosureTableDeleter->deleteCategoryClosureTable($nodeTransfer->getIdCategoryNode());
-        $this->categoryEntityManager->deleteCategoryNode($nodeTransfer->getIdCategoryNode());
+        $this->categoryClosureTableDeleter->deleteCategoryClosureTable($nodeTransfer->getIdCategoryNodeOrFail());
+        $this->categoryEntityManager->deleteCategoryNode($nodeTransfer->getIdCategoryNodeOrFail());
 
-        $this->categoryToucher->touchCategoryNodeDeleted($nodeTransfer->getIdCategoryNode());
+        $this->categoryToucher->touchCategoryNodeDeleted($nodeTransfer->getIdCategoryNodeOrFail());
     }
 
     /**
@@ -221,12 +221,15 @@ class CategoryNodeDeleter implements CategoryNodeDeleterInterface
      */
     protected function deleteExtraParentNode(NodeTransfer $nodeTransfer): void
     {
-        $this->categoryTree->moveSubTree($nodeTransfer->getIdCategoryNode(), $nodeTransfer->getFkParentCategoryNode());
+        $this->categoryTree->moveSubTree(
+            $nodeTransfer->getIdCategoryNodeOrFail(),
+            $nodeTransfer->getFkParentCategoryNodeOrFail()
+        );
 
-        $this->categoryUrlDeleter->deleteCategoryUrlsForCategoryNode($nodeTransfer->getIdCategoryNode());
-        $this->categoryClosureTableDeleter->deleteCategoryClosureTable($nodeTransfer->getIdCategoryNode());
-        $this->categoryEntityManager->deleteCategoryNode($nodeTransfer->getIdCategoryNode());
+        $this->categoryUrlDeleter->deleteCategoryUrlsForCategoryNode($nodeTransfer->getIdCategoryNodeOrFail());
+        $this->categoryClosureTableDeleter->deleteCategoryClosureTable($nodeTransfer->getIdCategoryNodeOrFail());
+        $this->categoryEntityManager->deleteCategoryNode($nodeTransfer->getIdCategoryNodeOrFail());
 
-        $this->categoryToucher->touchCategoryNodeDeleted($nodeTransfer->getIdCategoryNode());
+        $this->categoryToucher->touchCategoryNodeDeleted($nodeTransfer->getIdCategoryNodeOrFail());
     }
 }

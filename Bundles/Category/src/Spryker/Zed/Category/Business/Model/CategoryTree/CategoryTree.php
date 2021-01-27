@@ -52,6 +52,7 @@ class CategoryTree implements CategoryTreeInterface
             ->queryFirstLevelChildren($idSourceCategoryNode)
             ->find();
 
+        /** @var \Orm\Zed\Category\Persistence\SpyCategoryNode $destinationCategoryNodeEntity */
         $destinationCategoryNodeEntity = $this->queryContainer
             ->queryNodeById($idDestinationCategoryNode)
             ->findOne();
@@ -78,6 +79,10 @@ class CategoryTree implements CategoryTreeInterface
 
             $categoryTransfer = $this->categoryFacade->findCategoryById($childNodeEntity->getFkCategory());
 
+            if (!$categoryTransfer) {
+                continue;
+            }
+
             if ($childNodeEntity->getIsMain()) {
                 $this->moveMainCategoryNodeSubTree($categoryTransfer, $idDestinationCategoryNode);
 
@@ -102,11 +107,11 @@ class CategoryTree implements CategoryTreeInterface
      */
     protected function moveMainCategoryNodeSubTree(CategoryTransfer $categoryTransfer, $idDestinationCategoryNode)
     {
-        $categoryNodeTransfer = $categoryTransfer->requireCategoryNode()->getCategoryNode();
+        $categoryNodeTransfer = $categoryTransfer->getCategoryNodeOrFail();
         $categoryNodeTransfer->setFkParentCategoryNode($idDestinationCategoryNode);
         $categoryTransfer->setCategoryNode($categoryNodeTransfer);
 
-        $categoryParentNodeTransfer = $categoryTransfer->requireParentCategoryNode()->getParentCategoryNode();
+        $categoryParentNodeTransfer = $categoryTransfer->getParentCategoryNodeOrFail();
         $categoryParentNodeTransfer->setIdCategoryNode($idDestinationCategoryNode);
         $categoryTransfer->setParentCategoryNode($categoryParentNodeTransfer);
 
