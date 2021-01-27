@@ -221,12 +221,12 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
             ->endUse();
 
         $productStoresSubquery->where(sprintf(
-                '%s = %s AND %s = %s',
-                SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
-                SpyProductCategoryTableMap::COL_FK_PRODUCT_ABSTRACT,
-                SpyCategoryAttributeTableMap::COL_FK_LOCALE,
-                $idLocale
-            ));
+            '%s = %s AND %s = %s',
+            SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
+            SpyProductCategoryTableMap::COL_FK_PRODUCT_ABSTRACT,
+            SpyCategoryAttributeTableMap::COL_FK_LOCALE,
+            $idLocale
+        ));
         $productStoresSubquery->addAsColumn('category_names', sprintf('GROUP_CONCAT(DISTINCT %s)', SpyCategoryAttributeTableMap::COL_NAME));
         $params = [];
 
