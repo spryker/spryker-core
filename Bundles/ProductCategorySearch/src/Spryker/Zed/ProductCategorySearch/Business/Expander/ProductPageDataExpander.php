@@ -51,17 +51,10 @@ class ProductPageDataExpander implements ProductPageDataExpanderInterface
      */
     public function expandProductPageDataWithCategoryData(array $productData, ProductPageSearchTransfer $productAbstractPageSearchTransfer): void
     {
-        $allParentCategoryIds = [];
         $productCategoryEntities = $productData[static::PRODUCT_ABSTRACT_PAGE_LOAD_DATA]->getCategories();
         $localeTransfer = (new LocaleTransfer())->setIdLocale($productData[static::RELATION_LOCALE][static::ID_LOCALE]);
 
-        foreach ($productAbstractPageSearchTransfer->getCategoryNodeIds() as $idCategory) {
-            $allParentCategoryIds[] = $this->getCategoryParentIds($idCategory, $localeTransfer);
-        }
-
-        $allParentCategoryIds = array_merge(...$allParentCategoryIds);
-        $allParentCategoryIds = array_values(array_unique($allParentCategoryIds));
-
+        $allParentCategoryIds = $this->getAllParentCategoryIds($productAbstractPageSearchTransfer, $localeTransfer);
         $productAbstractPageSearchTransfer->setAllParentCategoryIds($allParentCategoryIds);
 
         $this->setNames(
@@ -77,6 +70,28 @@ class ProductPageDataExpander implements ProductPageDataExpanderInterface
             $productAbstractPageSearchTransfer,
             $productCategoryEntities
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductPageSearchTransfer $productAbstractPageSearchTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return int[]
+     */
+    protected function getAllParentCategoryIds(
+        ProductPageSearchTransfer $productAbstractPageSearchTransfer,
+        LocaleTransfer $localeTransfer
+    ): array {
+        $allParentCategoryIds = [];
+
+        foreach ($productAbstractPageSearchTransfer->getCategoryNodeIds() as $idCategory) {
+            $allParentCategoryIds[] = $this->getCategoryParentIds($idCategory, $localeTransfer);
+        }
+
+        $allParentCategoryIds = array_merge(...$allParentCategoryIds);
+        $allParentCategoryIds = array_values(array_unique($allParentCategoryIds));
+
+        return $allParentCategoryIds;
     }
 
     /**
@@ -173,7 +188,7 @@ class ProductPageDataExpander implements ProductPageDataExpanderInterface
     }
 
     /**
-     * @param array $directParentCategories
+     * @param int[] $directParentCategories
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param \Generated\Shared\Transfer\ProductPageSearchTransfer $productAbstractPageSearchTransfer
      * @param \Orm\Zed\ProductCategory\Persistence\SpyProductCategory[][] $productCategoryEntities
