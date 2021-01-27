@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\Oms\Business\Reader;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ReservationRequestTransfer;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Spryker\Zed\Oms\Business\OmsBusinessFactory;
 use Spryker\Zed\Store\Business\StoreFacadeInterface;
 
@@ -73,12 +74,8 @@ class ReservationReaderTest extends Unit
         $itemSku = $salesOrderEntity->getItems()->getFirst()->getSku();
 
         foreach ($salesOrderEntity->getItems() as $orderItem) {
-            $currentQuantity = rand(1, 10);
-            $totalQuantity += $currentQuantity;
-
-            $orderItem->setSku($itemSku)
-                ->setQuantity($currentQuantity)
-                ->save();
+            $this->applyOrderItemSkuAndQuantityForQuantityCheck($orderItem, $itemSku);
+            $totalQuantity += $orderItem->getQuantity();
         }
 
         $reservationRequestTransfer = (new ReservationRequestTransfer())
@@ -110,6 +107,21 @@ class ReservationReaderTest extends Unit
             $sumReservedProductQuantitiesAfter->equals($totalQuantity),
             'Expected reserved product quantity to be 50 for reserved state of subprocess.'
         );
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
+     * @param string $itemSku
+     *
+     * @return void
+     */
+    protected function applyOrderItemSkuAndQuantityForQuantityCheck(SpySalesOrderItem $orderItem, string $itemSku): void
+    {
+        $itemQuantity = rand(1, 10);
+
+        $orderItem->setSku($itemSku)
+            ->setQuantity($itemQuantity)
+            ->save();
     }
 
     /**
