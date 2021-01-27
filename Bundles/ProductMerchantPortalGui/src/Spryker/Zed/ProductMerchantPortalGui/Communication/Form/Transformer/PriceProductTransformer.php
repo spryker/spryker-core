@@ -125,7 +125,6 @@ class PriceProductTransformer implements DataTransformerInterface
     }
 
     /**
-
      * @phpstan-param array<int, \Generated\Shared\Transfer\PriceTypeTransfer> $priceTypeTransfers
      * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
