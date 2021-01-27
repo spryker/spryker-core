@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Category\Business\Updater;
 
 use ArrayObject;
-use Generated\Shared\Transfer\CategoryNodeFilterTransfer;
+use Generated\Shared\Transfer\CategoryNodeCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\NodeCollectionTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
@@ -166,10 +166,12 @@ class CategoryNodeUpdater implements CategoryNodeUpdaterInterface
      */
     protected function executeUpdateExtraParentCategoryNodesTransaction(CategoryTransfer $categoryTransfer): void
     {
-        $categoryNodeFilterTransfer = (new CategoryNodeFilterTransfer())
+        $categoryNodeCriteriaTransfer = (new CategoryNodeCriteriaTransfer())
             ->addIdCategory($categoryTransfer->getIdCategoryOrFail())
             ->setIsMain(false);
-        $existingExtraParentCategoryNodeTransferCollection = $this->categoryRepository->getCategoryNodesByCriteria($categoryNodeFilterTransfer);
+
+        $existingExtraParentCategoryNodeTransferCollection = $this->categoryRepository
+            ->getCategoryNodesByCriteria($categoryNodeCriteriaTransfer);
 
         $newExtraParentCategoryNodeIds = $this->getCategoryNodeIdsFromNodeTransfers($categoryTransfer->getExtraParents());
         $existingExtraParentCategoryNodeIds = $this->getCategoryNodeIdsFromNodeTransfers($existingExtraParentCategoryNodeTransferCollection->getNodes());

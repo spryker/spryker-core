@@ -188,7 +188,9 @@ class ClosureTableWriter implements ClosureTableWriterInterface
             ->innerJoinCategory()
             ->useCategoryQuery()
                 ->innerJoinAttribute()
-            ->endUse()
+            ->endUse();
+
+        $query
             ->orderByFkParentCategoryNode()
             ->orderByNodeOrder('DESC')
             ->where(SpyCategoryNodeTableMap::COL_FK_CATEGORY . ' = ' . SpyCategoryNodeTableMap::COL_FK_PARENT_CATEGORY_NODE)
@@ -213,8 +215,10 @@ class ClosureTableWriter implements ClosureTableWriterInterface
             $query
                 ->innerJoinCategory()
                 ->useCategoryQuery()
-                ->innerJoinAttribute()
-                ->endUse()
+                    ->innerJoinAttribute()
+                ->endUse();
+
+            $query
                 ->orderByFkParentCategoryNode()
                 ->orderByNodeOrder('DESC')
                 ->where(SpyCategoryNodeTableMap::COL_FK_PARENT_CATEGORY_NODE . ' = ?', $entityToMoveToRoot->getIdCategoryNode())

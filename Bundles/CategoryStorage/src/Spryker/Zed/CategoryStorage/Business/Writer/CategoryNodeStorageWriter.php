@@ -8,7 +8,6 @@
 namespace Spryker\Zed\CategoryStorage\Business\Writer;
 
 use Generated\Shared\Transfer\CategoryNodeCriteriaTransfer;
-use Generated\Shared\Transfer\CategoryNodeFilterTransfer;
 use Generated\Shared\Transfer\NodeCollectionTransfer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryStoreTableMap;
 use Spryker\Zed\CategoryStorage\Business\Deleter\CategoryNodeStorageDeleterInterface;
@@ -74,7 +73,7 @@ class CategoryNodeStorageWriter implements CategoryNodeStorageWriterInterface
     {
         $categoryIds = $this->eventBehaviorFacade->getEventTransferForeignKeys($eventEntityTransfers, SpyCategoryStoreTableMap::COL_FK_CATEGORY);
         $nodeCollectionTransfer = $this->categoryFacade->getCategoryNodesByCriteria(
-            (new CategoryNodeFilterTransfer())->setCategoryIds($categoryIds)
+            (new CategoryNodeCriteriaTransfer())->setCategoryIds($categoryIds)
         );
 
         $categoryNodeIds = $this->extractCategoryNodeIdsFromNodeCollection($nodeCollectionTransfer);
@@ -91,7 +90,7 @@ class CategoryNodeStorageWriter implements CategoryNodeStorageWriterInterface
     {
         $categoryIds = $this->eventBehaviorFacade->getEventTransferIds($eventEntityTransfers);
         $nodeCollectionTransfer = $this->categoryFacade->getCategoryNodesByCriteria(
-            (new CategoryNodeFilterTransfer())->setCategoryIds($categoryIds)
+            (new CategoryNodeCriteriaTransfer())->setCategoryIds($categoryIds)
         );
 
         $categoryNodeIds = $this->extractCategoryNodeIdsFromNodeCollection($nodeCollectionTransfer);

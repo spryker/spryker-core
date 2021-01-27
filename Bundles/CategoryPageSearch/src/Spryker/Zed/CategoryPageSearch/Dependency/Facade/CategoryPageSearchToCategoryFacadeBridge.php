@@ -8,7 +8,6 @@
 namespace Spryker\Zed\CategoryPageSearch\Dependency\Facade;
 
 use Generated\Shared\Transfer\CategoryNodeCriteriaTransfer;
-use Generated\Shared\Transfer\CategoryNodeFilterTransfer;
 use Generated\Shared\Transfer\NodeCollectionTransfer;
 
 class CategoryPageSearchToCategoryFacadeBridge implements CategoryPageSearchToCategoryFacadeInterface
@@ -31,18 +30,8 @@ class CategoryPageSearchToCategoryFacadeBridge implements CategoryPageSearchToCa
      *
      * @return \Generated\Shared\Transfer\NodeCollectionTransfer
      */
-    public function getCategoryNodeCollectionByCriteria(CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer): NodeCollectionTransfer
+    public function getCategoryNodesByCriteria(CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer): NodeCollectionTransfer
     {
-        return $this->categoryFacade->getCategoryNodeCollectionByCriteria($categoryNodeCriteriaTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CategoryNodeFilterTransfer $categoryNodeFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\NodeCollectionTransfer
-     */
-    public function getCategoryNodesByCriteria(CategoryNodeFilterTransfer $categoryNodeFilterTransfer): NodeCollectionTransfer
-    {
-        return $this->categoryFacade->getCategoryNodesByCriteria($categoryNodeFilterTransfer);
+        return $this->categoryFacade->getCategoryNodesByCriteria($categoryNodeCriteriaTransfer);
     }
 }

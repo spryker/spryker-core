@@ -8,7 +8,6 @@
 namespace Spryker\Zed\CategoryStorage\Dependency\Facade;
 
 use Generated\Shared\Transfer\CategoryNodeCriteriaTransfer;
-use Generated\Shared\Transfer\CategoryNodeFilterTransfer;
 use Generated\Shared\Transfer\NodeCollectionTransfer;
 
 class CategoryStorageToCategoryFacadeBridge implements CategoryStorageToCategoryFacadeInterface
@@ -38,22 +37,12 @@ class CategoryStorageToCategoryFacadeBridge implements CategoryStorageToCategory
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CategoryNodeFilterTransfer $categoryNodeFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\NodeCollectionTransfer
-     */
-    public function getCategoryNodesByCriteria(CategoryNodeFilterTransfer $categoryNodeFilterTransfer): NodeCollectionTransfer
-    {
-        return $this->categoryFacade->getCategoryNodesByCriteria($categoryNodeFilterTransfer);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\NodeCollectionTransfer
      */
-    public function getCategoryNodeCollectionByCriteria(CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer): NodeCollectionTransfer
+    public function getCategoryNodesByCriteria(CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer): NodeCollectionTransfer
     {
-        return $this->categoryFacade->getCategoryNodeCollectionByCriteria($categoryNodeCriteriaTransfer);
+        return $this->categoryFacade->getCategoryNodesByCriteria($categoryNodeCriteriaTransfer);
     }
 }

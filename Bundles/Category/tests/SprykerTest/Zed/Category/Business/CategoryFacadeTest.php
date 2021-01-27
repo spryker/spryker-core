@@ -14,7 +14,6 @@ use Generated\Shared\DataBuilder\CategoryLocalizedAttributesBuilder;
 use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\CategoryNodeCriteriaTransfer;
-use Generated\Shared\Transfer\CategoryNodeFilterTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
@@ -413,12 +412,12 @@ class CategoryFacadeTest extends Unit
         $categoryTransfer1 = $this->tester->haveCategory();
         $categoryTransfer2 = $this->tester->haveCategory();
 
-        $categoryNodeFilterTransfer = (new CategoryNodeFilterTransfer())
+        $categoryNodeCriteriaTransfer = (new CategoryNodeCriteriaTransfer())
             ->addIdCategory($categoryTransfer1->getIdCategory())
             ->addIdCategory($categoryTransfer2->getIdCategory());
 
         // Act
-        $nodeCollectionTransfer = $this->getFacade()->getCategoryNodesByCriteria($categoryNodeFilterTransfer);
+        $nodeCollectionTransfer = $this->getFacade()->getCategoryNodesByCriteria($categoryNodeCriteriaTransfer);
 
         // Assert
         $this->assertCount(2, $nodeCollectionTransfer->getNodes(), 'Expected 2 category nodes in results.');
@@ -437,7 +436,7 @@ class CategoryFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetCategoryNodeCollectionByCriteriaWillReturnCorrectNodeTransfers(): void
+    public function testGetCategoryNodesByCriteriaWillReturnCorrectNodeTransfers(): void
     {
         // Arrange
         $categoryTransfer1 = $this->tester->haveCategory();
@@ -451,8 +450,10 @@ class CategoryFacadeTest extends Unit
         ];
 
         // Act
-        $nodeCollectionTransfer = $this->getFacade()->getCategoryNodeCollectionByCriteria(
-            (new CategoryNodeCriteriaTransfer())->setCategoryNodeIds($nodeTransferIds)
+        $nodeCollectionTransfer = $this->getFacade()->getCategoryNodesByCriteria(
+            (new CategoryNodeCriteriaTransfer())
+                ->setCategoryNodeIds($nodeTransferIds)
+                ->setWithRelations(true)
         );
 
         // Assert

@@ -111,9 +111,11 @@ class CategoryTreeStorageWriter implements CategoryTreeStorageWriterInterface
      */
     protected function getCategoryNodeStorageTransferTrees(): array
     {
-        $nodeCollectionTransfer = $this->categoryFacade->getCategoryNodeCollectionByCriteria(
-            (new CategoryNodeCriteriaTransfer())->setIsRoot(true)
-        );
+        $categoryNodeCriteriaTransfer = (new CategoryNodeCriteriaTransfer())
+            ->setIsRoot(true)
+            ->setWithRelations(true);
+
+        $nodeCollectionTransfer = $this->categoryFacade->getCategoryNodesByCriteria($categoryNodeCriteriaTransfer);
 
         if (!$nodeCollectionTransfer->getNodes()->count()) {
             return [];
