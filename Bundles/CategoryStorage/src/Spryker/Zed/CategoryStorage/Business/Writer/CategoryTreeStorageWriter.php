@@ -146,7 +146,7 @@ class CategoryTreeStorageWriter implements CategoryTreeStorageWriterInterface
     protected function getCategoryNodeIdsFromNodeCollectionTransfer(NodeCollectionTransfer $nodeCollectionTransfer): array
     {
         return array_map(function (NodeTransfer $nodeTransfer): int {
-            return $nodeTransfer->getIdCategoryNode();
+            return $nodeTransfer->getIdCategoryNodeOrFail();
         }, $nodeCollectionTransfer->getNodes()->getArrayCopy());
     }
 }

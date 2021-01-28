@@ -28,19 +28,20 @@ class CategoryNodePageSearchMapper
 
     /**
      * @param \Generated\Shared\Transfer\CategoryNodePageSearchTransfer $categoryNodePageSearchTransfer
-     * @param \Orm\Zed\CategoryPageSearch\Persistence\SpyCategoryNodePageSearch $categoryNodePageSearch
+     * @param \Orm\Zed\CategoryPageSearch\Persistence\SpyCategoryNodePageSearch $categoryNodePageSearchEntity
      *
      * @return \Orm\Zed\CategoryPageSearch\Persistence\SpyCategoryNodePageSearch
      */
     public function mapCategoryNodePageSearchTransferToCategoryNodePageSearchEntity(
         CategoryNodePageSearchTransfer $categoryNodePageSearchTransfer,
-        SpyCategoryNodePageSearch $categoryNodePageSearch
+        SpyCategoryNodePageSearch $categoryNodePageSearchEntity
     ): SpyCategoryNodePageSearch {
-        $categoryNodePageSearch->fromArray($categoryNodePageSearchTransfer->toArray());
+        $categoryNodePageSearchEntity->fromArray($categoryNodePageSearchTransfer->toArray());
 
-        $categoryNodePageSearch->setFkCategoryNode($categoryNodePageSearchTransfer->getIdCategoryNodeOrFail());
-        $categoryNodePageSearch->setStructuredData($this->utilEncodingService->encodeJson($categoryNodePageSearchTransfer->getNodeOrFail()->toArray()));
+        $categoryNodePageSearchEntity->setFkCategoryNode($categoryNodePageSearchTransfer->getIdCategoryNodeOrFail());
+        $structuredData = $this->utilEncodingService->encodeJson($categoryNodePageSearchTransfer->getNodeOrFail()->toArray()) ?? '';
+        $categoryNodePageSearchEntity->setStructuredData($structuredData);
 
-        return $categoryNodePageSearch;
+        return $categoryNodePageSearchEntity;
     }
 }

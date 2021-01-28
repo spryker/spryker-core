@@ -168,7 +168,7 @@ class CategoryNodeStorageWriter implements CategoryNodeStorageWriterInterface
         $categoryNodeIds = [];
 
         foreach ($nodeCollectionTransfer->getNodes() as $nodeTransfer) {
-            $categoryNodeIds[] = $nodeTransfer->getIdCategoryNode();
+            $categoryNodeIds[] = $nodeTransfer->getIdCategoryNodeOrFail();
         }
 
         return $categoryNodeIds;

@@ -44,7 +44,7 @@ class CategoryNodePageSearchDeleter implements CategoryNodePageSearchDeleterInte
     protected function getCategoryNodeIdsFromNodeTransfers(NodeCollectionTransfer $nodeCollectionTransfer): array
     {
         return array_map(function (NodeTransfer $nodeTransfer): int {
-            return $nodeTransfer->getIdCategoryNode();
+            return $nodeTransfer->getIdCategoryNodeOrFail();
         }, $nodeCollectionTransfer->getNodes()->getArrayCopy());
     }
 }

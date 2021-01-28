@@ -35,7 +35,7 @@ class CategoryLocalizedAttributesMapper implements CategoryLocalizedAttributesMa
         }
 
         if ($categoryLocalizedAttributesTransfer->getImage()) {
-            $categoryNodeStorageTransfer->setImage($categoryLocalizedAttributesTransfer->getImage()->getName());
+            $categoryNodeStorageTransfer->setImage($categoryLocalizedAttributesTransfer->getImageOrFail()->getNameOrFail());
         }
 
         return $categoryNodeStorageTransfer
@@ -57,7 +57,7 @@ class CategoryLocalizedAttributesMapper implements CategoryLocalizedAttributesMa
         string $localeName
     ): ?CategoryLocalizedAttributesTransfer {
         foreach ($categoryLocalizedAttributesTransfers as $categoryLocalizedAttributesTransfer) {
-            if ($localeName === $categoryLocalizedAttributesTransfer->getLocale()->getLocaleName()) {
+            if ($localeName === $categoryLocalizedAttributesTransfer->getLocaleOrFail()->getLocaleNameOrFail()) {
                 return $categoryLocalizedAttributesTransfer;
             }
         }
