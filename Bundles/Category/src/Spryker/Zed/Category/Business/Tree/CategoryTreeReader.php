@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\NodeCollectionTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
-use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use Spryker\Zed\Category\Persistence\CategoryRepositoryInterface;
 
@@ -37,19 +36,6 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     ) {
         $this->categoryQueryContainer = $categoryQueryContainer;
         $this->categoryRepository = $categoryRepository;
-    }
-
-    /**
-     * @param int $idCategory
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNode[]|\Propel\Runtime\Collection\ObjectCollection
-     */
-    public function getAllNodesByIdCategory($idCategory)
-    {
-        return $this->categoryQueryContainer
-            ->queryAllNodesByCategoryId($idCategory)
-            ->orderByNodeOrder(Criteria::ASC)
-            ->find();
     }
 
     /**

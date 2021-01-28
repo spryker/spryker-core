@@ -35,15 +35,9 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      */
     public function getAllNodesByIdCategory($idCategory)
     {
-        $nodeEntities = $this
-            ->getFactory()
-            ->createCategoryTreeReader()
+        return $this->getFactory()
+            ->createCategoryNodeReader()
             ->getAllNodesByIdCategory($idCategory);
-
-        return $this
-            ->getFactory()
-            ->createCategoryTransferGenerator()
-            ->convertCategoryNodeCollection($nodeEntities);
     }
 
     /**
