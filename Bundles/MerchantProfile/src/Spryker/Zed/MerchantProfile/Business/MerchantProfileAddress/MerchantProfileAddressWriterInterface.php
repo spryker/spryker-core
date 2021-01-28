@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\MerchantProfile\Business\MerchantProfileAddress;
 
-use Generated\Shared\Transfer\MerchantProfileAddressCollectionTransfer;
+use ArrayObject;
 use Generated\Shared\Transfer\MerchantProfileAddressTransfer;
 
 interface MerchantProfileAddressWriterInterface
@@ -27,13 +27,17 @@ interface MerchantProfileAddressWriterInterface
     public function update(MerchantProfileAddressTransfer $merchantProfileAddressTransfer): MerchantProfileAddressTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantProfileAddressCollectionTransfer $merchantProfileAddressCollectionTransfer
+     * @phpstan-param \ArrayObject<int,\Generated\Shared\Transfer\MerchantProfileAddressTransfer> $merchantProfileAddressTransfers
+     *
+     * @phpstan-return \ArrayObject<int,\Generated\Shared\Transfer\MerchantProfileAddressTransfer>
+     *
+     * @param \ArrayObject|\Generated\Shared\Transfer\MerchantProfileAddressTransfer[] $merchantProfileAddressTransfers
      * @param int $idMerchantProfile
      *
-     * @return \Generated\Shared\Transfer\MerchantProfileAddressCollectionTransfer
+     * @return \ArrayObject|\Generated\Shared\Transfer\MerchantProfileAddressTransfer[]
      */
-    public function saveMerchantProfileAddressCollection(
-        MerchantProfileAddressCollectionTransfer $merchantProfileAddressCollectionTransfer,
+    public function saveMerchantProfileAddresses(
+        ArrayObject $merchantProfileAddressTransfers,
         int $idMerchantProfile
-    ): MerchantProfileAddressCollectionTransfer;
+    ): ArrayObject;
 }
