@@ -14,7 +14,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 interface QueueFacadeInterface
 {
     /**
-     * Specification
+     * Specification:
      *  - Starts receiving and processing messages task for one specific queue
      *
      * @api
@@ -27,7 +27,7 @@ interface QueueFacadeInterface
     public function startTask($queueName, array $options = []);
 
     /**
-     * Specification
+     * Specification:
      *  - Starts multiple task/processes per queue
      *
      * @api

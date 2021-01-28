@@ -12,10 +12,23 @@ use Generated\Shared\Transfer\ProductViewTransfer;
 interface ProductVariantExpanderInterface
 {
     /**
+     * @deprecated Use {@link \Spryker\Client\ProductStorage\Mapper\ProductVariantExpanderInterface::expandProductViewWithProductVariant()} instead.
+     *
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      * @param string $locale
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
     public function expandProductVariantData(ProductViewTransfer $productViewTransfer, $locale);
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer
+     */
+    public function expandProductViewWithProductVariant(
+        ProductViewTransfer $productViewTransfer,
+        string $localeName
+    ): ProductViewTransfer;
 }

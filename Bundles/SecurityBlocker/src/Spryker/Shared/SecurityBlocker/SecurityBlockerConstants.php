@@ -17,8 +17,18 @@ interface SecurityBlockerConstants
      * - Defines a protocol for Redis connection.
      *
      * @api
+     *
+     * @deprecated Use {@link \Spryker\Shared\SecurityBlockerSecurityBlockerConstants::SECURITY_BLOCKER_REDIS_SCHEME} instead.
      */
     public const SECURITY_BLOCKER_REDIS_PROTOCOL = 'SECURITY_BLOCKER_REDIS:SECURITY_BLOCKER_REDIS_PROTOCOL';
+
+    /**
+     * Specification:
+     * - Defines a scheme|protocol (tcp:// or redis://) for Redis connection.
+     *
+     * @api
+     */
+    public const SECURITY_BLOCKER_REDIS_SCHEME = 'SECURITY_BLOCKER_REDIS:SECURITY_BLOCKER_REDIS_SCHEME';
 
     /**
      * Specification:

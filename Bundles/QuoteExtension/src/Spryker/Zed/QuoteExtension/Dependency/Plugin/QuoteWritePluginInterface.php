@@ -13,7 +13,8 @@ interface QuoteWritePluginInterface
 {
     /**
      * Specification:
-     * - Plugins which can be called before or after quote save
+     * - Plugins which can be called before or after quote save.
+     * - Removes shared links before quote delete.
      *
      * @api
      *
