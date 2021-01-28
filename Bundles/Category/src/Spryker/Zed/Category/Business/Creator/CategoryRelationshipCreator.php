@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Category\Business\Creator;
 
 use Generated\Shared\Transfer\CategoryTransfer;
+use Spryker\Zed\Category\Business\Model\CategoryTemplate\CategoryTemplateSyncInterface;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
 class CategoryRelationshipCreator implements CategoryRelationshipCreatorInterface
@@ -35,6 +36,11 @@ class CategoryRelationshipCreator implements CategoryRelationshipCreatorInterfac
     protected $categoryStoreCreator;
 
     /**
+     * @var \Spryker\Zed\Category\Business\Model\CategoryTemplate\CategoryTemplateSyncInterface
+     */
+    protected $categoryTemplateSync;
+
+    /**
      * @var \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryRelationUpdatePluginInterface[]
      */
     protected $categoryRelationUpdatePlugins;
@@ -44,6 +50,7 @@ class CategoryRelationshipCreator implements CategoryRelationshipCreatorInterfac
      * @param \Spryker\Zed\Category\Business\Creator\CategoryAttributeCreatorInterface $categoryAttributeCreator
      * @param \Spryker\Zed\Category\Business\Creator\CategoryUrlCreatorInterface $categoryUrlCreator
      * @param \Spryker\Zed\Category\Business\Creator\CategoryStoreCreatorInterface $categoryStoreCreator
+     * @param \Spryker\Zed\Category\Business\Model\CategoryTemplate\CategoryTemplateSyncInterface $categoryTemplateSync
      * @param \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryRelationUpdatePluginInterface[] $categoryRelationUpdatePlugins
      */
     public function __construct(
@@ -51,12 +58,14 @@ class CategoryRelationshipCreator implements CategoryRelationshipCreatorInterfac
         CategoryAttributeCreatorInterface $categoryAttributeCreator,
         CategoryUrlCreatorInterface $categoryUrlCreator,
         CategoryStoreCreatorInterface $categoryStoreCreator,
+        CategoryTemplateSyncInterface $categoryTemplateSync,
         array $categoryRelationUpdatePlugins = []
     ) {
         $this->categoryNodeCreator = $categoryNodeCreator;
         $this->categoryAttributeCreator = $categoryAttributeCreator;
         $this->categoryUrlCreator = $categoryUrlCreator;
         $this->categoryStoreCreator = $categoryStoreCreator;
+        $this->categoryTemplateSync = $categoryTemplateSync;
         $this->categoryRelationUpdatePlugins = $categoryRelationUpdatePlugins;
     }
 
@@ -79,6 +88,8 @@ class CategoryRelationshipCreator implements CategoryRelationshipCreatorInterfac
      */
     protected function executeCreateCategoryRelationshipsTransaction(CategoryTransfer $categoryTransfer): void
     {
+        $this->categoryTemplateSync->syncFromConfig();
+
         $this->categoryStoreCreator->createCategoryStoreRelations($categoryTransfer);
         $this->categoryNodeCreator->createCategoryNode($categoryTransfer);
         $this->categoryNodeCreator->createExtraParentsCategoryNodes($categoryTransfer);

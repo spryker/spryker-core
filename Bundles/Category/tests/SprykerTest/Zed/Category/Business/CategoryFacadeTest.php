@@ -26,6 +26,7 @@ use Orm\Zed\Category\Persistence\SpyCategoryStoreQuery;
 use Orm\Zed\Url\Persistence\SpyUrlQuery;
 use Spryker\Zed\Category\Business\CategoryFacadeInterface;
 use Spryker\Zed\Category\CategoryDependencyProvider;
+use Spryker\Zed\Category\Communication\Plugin\Category\MainChildrenPropagationCategoryStoreAssignerPlugin;
 use Spryker\Zed\Category\Communication\Plugin\CategoryUrlPathPrefixUpdaterPlugin;
 
 /**
@@ -52,6 +53,16 @@ class CategoryFacadeTest extends Unit
      */
     protected $tester;
 
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->tester->setDependency(
+            CategoryDependencyProvider::PLUGIN_CATEGORY_STORE_ASSIGNER,
+            new MainChildrenPropagationCategoryStoreAssignerPlugin()
+        );
+    }
+
     /**
      * @return void
      */
@@ -69,6 +80,7 @@ class CategoryFacadeTest extends Unit
     }
 
     /**
+     * @group her
      * @return void
      */
     public function testDeleteByIdCategory(): void

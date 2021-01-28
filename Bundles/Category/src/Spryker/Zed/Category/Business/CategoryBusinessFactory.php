@@ -172,6 +172,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
             $this->createCategoryNodeUpdater(),
             $this->createCategoryUrlUpdater(),
             $this->createCategoryAttributeUpdater(),
+            $this->createCategoryTemplateSync(),
             $this->getCategoryStoreAssignerPlugin(),
             $this->getCategoryRelationUpdatePlugins()
         );
@@ -398,6 +399,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
             $this->createCategoryAttributeCreator(),
             $this->createCategoryUrlCreator(),
             $this->createCategoryStoreCreator(),
+            $this->createCategoryTemplateSync(),
             $this->getCategoryRelationUpdatePlugins()
         );
     }
