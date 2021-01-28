@@ -170,6 +170,10 @@ class CategoryNodeUpdater implements CategoryNodeUpdaterInterface
         $newExtraParentCategoryNodeIds = $this->getCategoryNodeIdsFromNodeTransfers($categoryTransfer->getExtraParents());
         $existingExtraParentCategoryNodeIds = $this->getCategoryNodeIdsFromNodeTransfers($existingExtraParentCategoryNodeTransferCollection->getNodes());
 
+        if ($newExtraParentCategoryNodeIds === [] && $existingExtraParentCategoryNodeIds === []) {
+            return;
+        }
+
         $extraParentCategoryNodeIdsToAdd = array_diff($newExtraParentCategoryNodeIds, $existingExtraParentCategoryNodeIds);
         $extraParentCategoryNodeIdsToDelete = array_diff($existingExtraParentCategoryNodeIds, $newExtraParentCategoryNodeIds);
 
@@ -196,6 +200,9 @@ class CategoryNodeUpdater implements CategoryNodeUpdaterInterface
         NodeTransfer $currentCategoryNodeTransfer,
         CategoryTransfer $categoryTransfer
     ): ?int {
+        if ($categoryTransfer->getCategoryNode()->getIsRoot()) {
+            return null;
+        }
         $parentCategoryNodeTransfer = $categoryTransfer->getParentCategoryNodeOrFail();
         $idFormerParentCategoryNode = $currentCategoryNodeTransfer->getFkParentCategoryNode();
 

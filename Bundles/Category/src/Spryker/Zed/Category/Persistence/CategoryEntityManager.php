@@ -123,7 +123,7 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
 
         $parentCategoryClosureTableEntities = $this->getFactory()
             ->createCategoryClosureTableQuery()
-            ->filterByFkCategoryNodeDescendant($nodeTransfer->getIdCategoryNode())
+            ->filterByFkCategoryNodeDescendant($nodeTransfer->getFkParentCategoryNode())
             ->find();
 
         foreach ($categoryClosureTableEntities as $categoryClosureTableEntity) {

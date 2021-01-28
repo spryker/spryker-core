@@ -82,7 +82,8 @@ class UrlPathGenerator implements UrlPathGeneratorInterface
     {
         $categoryUrlPathCriteriaTransfer = (new CategoryUrlPathCriteriaTransfer())
             ->setIdCategoryNode($nodeTransfer->getIdCategoryNodeOrFail())
-            ->setIdLocale($localeTransfer->getIdLocaleOrFail());
+            ->setIdLocale($localeTransfer->getIdLocaleOrFail())
+            ->setExcludeRootNode(true);
 
         $categoryUrlPathParts = $this->categoryRepository->getCategoryUrlPathParts($categoryUrlPathCriteriaTransfer);
 

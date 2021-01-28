@@ -9,6 +9,7 @@ namespace Spryker\Zed\Category\Business\Model\CategoryTree;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CategoryTransfer;
+use Generated\Shared\Transfer\NodeCollectionTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
 use Propel\Runtime\Formatter\SimpleArrayFormatter;
@@ -105,6 +106,7 @@ class CategoryTree implements CategoryTreeInterface
         $categoryNodeTransfer = $categoryTransfer->requireCategoryNode()->getCategoryNode();
         $categoryNodeTransfer->setFkParentCategoryNode($idDestinationCategoryNode);
         $categoryTransfer->setCategoryNode($categoryNodeTransfer);
+        $categoryTransfer->setNodeCollection((new NodeCollectionTransfer())->addNode($categoryNodeTransfer));
 
         $categoryParentNodeTransfer = $categoryTransfer->requireParentCategoryNode()->getParentCategoryNode();
         $categoryParentNodeTransfer->setIdCategoryNode($idDestinationCategoryNode);

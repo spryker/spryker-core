@@ -111,10 +111,18 @@ class CategoryUrlUpdater implements CategoryUrlUpdaterInterface
     protected function updateCategoryNodeUrlsForLocale(NodeTransfer $nodeTransfer, array $urlTransfers, LocaleTransfer $localeTransfer): void
     {
         foreach ($urlTransfers as $urlTransfer) {
-            if ($urlTransfer->getFkLocaleOrFail() !== $localeTransfer->getIdLocaleOrFail()) {
+            if (
+                $urlTransfer->getFkLocaleOrFail() !== $localeTransfer->getIdLocaleOrFail()
+                || $urlTransfer->getFkResourceCategorynodeOrFail() !== $nodeTransfer->getIdCategoryNodeOrFail()
+            ) {
                 continue;
             }
+
             $urlPath = $this->urlPathGenerator->buildCategoryNodeUrlForLocale($nodeTransfer, $localeTransfer);
+            if ($urlPath === $urlTransfer->getUrl()) {
+                continue;
+            }
+
             $urlTransfer->setUrl($urlPath);
             $this->urlFacade->updateUrl($urlTransfer);
         }
