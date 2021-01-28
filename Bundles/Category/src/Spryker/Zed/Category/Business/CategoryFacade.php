@@ -341,6 +341,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @api
      *
+     * @deprecated Will be removed with next major release
+     *
      * @param int $idCategoryNode
      * @param int $idChildrenDestinationNode
      *
@@ -578,6 +580,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @api
      *
+     * @deprecated Will be removed with next major release
+     *
      * @return void
      */
     public function rebuildClosureTable()
@@ -648,6 +652,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Will be removed with next major release
      *
      * @return void
      */

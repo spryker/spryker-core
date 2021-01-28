@@ -284,6 +284,8 @@ interface CategoryFacadeInterface
      *
      * @api
      *
+     * @deprecated Will be removed with next major release
+     *
      * @param int $idCategoryNode
      * @param int $idChildrenDestinationNode
      *
@@ -447,6 +449,8 @@ interface CategoryFacadeInterface
      *
      * @api
      *
+     * @deprecated Will be removed with next major release
+     *
      * @return void
      */
     public function rebuildClosureTable();
@@ -518,6 +522,8 @@ interface CategoryFacadeInterface
      * - Does not delete/update existing template records (safe)
      *
      * @api
+     *
+     * @deprecated Will be removed with next major release
      *
      * @return void
      */
