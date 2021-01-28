@@ -9,7 +9,7 @@ namespace Spryker\Zed\MerchantProfileMerchantPortalGui\Communication\Form;
 
 use Generated\Shared\Transfer\MerchantProfileAddressTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
-use Spryker\Zed\MerchantProfileMerchantPortalGui\Communication\Form\Transformer\MerchantProfileAddressCollectionTransferToMerchantProfileAddressTransferTransformer;
+use Spryker\Zed\MerchantProfileMerchantPortalGui\Communication\Form\Transformer\MerchantProfileAddressTransfersToMerchantProfileAddressTransferTransformer;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -67,7 +67,9 @@ class MerchantProfileAddressFormType extends AbstractType
             ->addCityField($builder)
             ->addAddress3Field($builder);
 
-        $builder->addModelTransformer(new MerchantProfileAddressCollectionTransferToMerchantProfileAddressTransferTransformer());
+        $builder->addModelTransformer(
+            new MerchantProfileAddressTransfersToMerchantProfileAddressTransferTransformer()
+        );
     }
 
     /**

@@ -80,10 +80,13 @@ class MerchantProfileGlossaryWriter implements MerchantProfileGlossaryWriterInte
         MerchantProfileTransfer $merchantProfileTransfer
     ): MerchantProfileTransfer {
         foreach ($merchantProfileTransfer->getMerchantProfileLocalizedGlossaryAttributes() as $merchantProfileLocalizedGlossaryAttributesTransfer) {
-            if ($merchantProfileLocalizedGlossaryAttributesTransfer->getLocale()->getIdLocale() === $localeTransfer->getIdLocale()) {
+            if (
+                $merchantProfileLocalizedGlossaryAttributesTransfer->getLocale() !== null
+                && $merchantProfileLocalizedGlossaryAttributesTransfer->getLocale()->getIdLocale() === $localeTransfer->getIdLocale()
+            ) {
                 $merchantProfileTransfer = $this->saveMerchantProfileGlossaryAttributesByProvidedLocale(
                     $localeTransfer,
-                    $merchantProfileLocalizedGlossaryAttributesTransfer->getMerchantProfileGlossaryAttributeValues(),
+                    $merchantProfileLocalizedGlossaryAttributesTransfer->getMerchantProfileGlossaryAttributeValuesOrFail(),
                     $merchantProfileTransfer
                 );
             }
@@ -112,7 +115,7 @@ class MerchantProfileGlossaryWriter implements MerchantProfileGlossaryWriterInte
             $merchantProfileGlossaryKey = $this->getMerchantProfileGlossaryAttributeKey(
                 $merchantProfileData,
                 $merchantProfileGlossaryAttributeFieldName,
-                $merchantProfileTransfer->getFkMerchant()
+                $merchantProfileTransfer->getFkMerchantOrFail()
             );
 
             if (empty($glossaryAttributeValue)) {
@@ -130,6 +133,8 @@ class MerchantProfileGlossaryWriter implements MerchantProfileGlossaryWriterInte
     }
 
     /**
+     * @phpstan-param array<string> $merchantProfileData
+     *
      * @param array $merchantProfileData
      * @param string $merchantProfileGlossaryKeyFieldName
      * @param int $fkMerchant
