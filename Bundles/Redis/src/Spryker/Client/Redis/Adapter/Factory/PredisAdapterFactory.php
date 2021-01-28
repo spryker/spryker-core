@@ -169,7 +169,7 @@ class PredisAdapterFactory implements RedisAdapterFactoryInterface
      */
     protected function clearEmptySchema(array $connectionCredentials): array
     {
-        if (isset($connectionCredentials[RedisCredentialsTransfer::SCHEME]) && !$connectionCredentials[RedisCredentialsTransfer::SCHEME]) {
+        if (array_key_exists(RedisCredentialsTransfer::SCHEME, $connectionCredentials) && !$connectionCredentials[RedisCredentialsTransfer::SCHEME]) {
             unset($connectionCredentials[RedisCredentialsTransfer::SCHEME]);
         }
 
