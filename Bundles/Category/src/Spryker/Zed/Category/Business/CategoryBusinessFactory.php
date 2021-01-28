@@ -35,8 +35,6 @@ use Spryker\Zed\Category\Business\Deleter\CategoryStoreDeleter;
 use Spryker\Zed\Category\Business\Deleter\CategoryStoreDeleterInterface;
 use Spryker\Zed\Category\Business\Deleter\CategoryUrlDeleter;
 use Spryker\Zed\Category\Business\Deleter\CategoryUrlDeleterInterface;
-use Spryker\Zed\Category\Business\Generator\TransferGenerator;
-use Spryker\Zed\Category\Business\Generator\TransferGeneratorInterface;
 use Spryker\Zed\Category\Business\Generator\UrlPathGenerator;
 use Spryker\Zed\Category\Business\Generator\UrlPathGeneratorInterface;
 use Spryker\Zed\Category\Business\Model\Category\CategoryHydrator;
@@ -49,6 +47,8 @@ use Spryker\Zed\Category\Business\Model\CategoryTree\CategoryTree;
 use Spryker\Zed\Category\Business\Model\CategoryTree\CategoryTreeInterface;
 use Spryker\Zed\Category\Business\Publisher\CategoryNodePublisher;
 use Spryker\Zed\Category\Business\Publisher\CategoryNodePublisherInterface;
+use Spryker\Zed\Category\Business\Reader\CategoryNodeReader;
+use Spryker\Zed\Category\Business\Reader\CategoryNodeReaderInterface;
 use Spryker\Zed\Category\Business\Reader\CategoryReader;
 use Spryker\Zed\Category\Business\Reader\CategoryReaderInterface;
 use Spryker\Zed\Category\Business\Tree\CategoryTreeReader;
@@ -131,6 +131,16 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->createUrlPathGenerator(),
             $this->getCategoryUrlPathPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\Reader\CategoryNodeReaderInterface
+     */
+    public function createCategoryNodeReader(): CategoryNodeReaderInterface
+    {
+        return new CategoryNodeReader(
+            $this->getRepository()
         );
     }
 
@@ -261,8 +271,10 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     {
         return new CategoryTree(
             $this->getQueryContainer(),
+            $this->getEntityManager(),
             $this->createFacade(),
-            $this->createCategoryNodeDeleter()
+            $this->createCategoryNodePublisher(),
+            $this->createCategoryToucher()
         );
     }
 
@@ -294,14 +306,6 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->getCategoryUrlPathPlugins()
         );
-    }
-
-    /**
-     * @return \Spryker\Zed\Category\Business\Generator\TransferGeneratorInterface
-     */
-    public function createCategoryTransferGenerator(): TransferGeneratorInterface
-    {
-        return new TransferGenerator();
     }
 
     /**

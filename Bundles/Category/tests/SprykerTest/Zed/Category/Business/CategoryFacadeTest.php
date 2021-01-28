@@ -53,6 +53,9 @@ class CategoryFacadeTest extends Unit
      */
     protected $tester;
 
+    /**
+     * @return void
+     */
     public function setUp(): void
     {
         parent::setUp();
@@ -80,7 +83,6 @@ class CategoryFacadeTest extends Unit
     }
 
     /**
-     * @group her
      * @return void
      */
     public function testDeleteByIdCategory(): void
