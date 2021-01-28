@@ -43,9 +43,31 @@ class CategoryPageSearchEntityManager extends AbstractEntityManager implements C
      */
     public function deleteCategoryNodePageSearchByCategoryNodeIds(array $categoryNodeIds): void
     {
+        if ($categoryNodeIds === []) {
+            return;
+        }
+
         $this->getFactory()
             ->createSpyCategoryNodePageSearchQuery()
             ->filterByFkCategoryNode_In($categoryNodeIds)
+            ->find()
+            ->delete();
+    }
+
+    /**
+     * @param int $idCategoryNode
+     * @param string $localeName
+     * @param string $storeName
+     *
+     * @return void
+     */
+    public function deleteCategoryNodePageSearchByIdCategoryNodeForLocaleAndStore(int $idCategoryNode, string $localeName, string $storeName): void
+    {
+        $this->getFactory()
+            ->createSpyCategoryNodePageSearchQuery()
+            ->filterByFkCategoryNode($idCategoryNode)
+            ->filterByLocale($localeName)
+            ->filterByStore($storeName)
             ->find()
             ->delete();
     }

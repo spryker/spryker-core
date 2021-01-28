@@ -26,17 +26,18 @@ class CategoryNodeStorageDeleter implements CategoryNodeStorageDeleterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\NodeTransfer[] $nodeTransfers
+     * @param \Generated\Shared\Transfer\CategoryNodeStorageTransfer[][][] $categoryNodeStorageTransferTreesIndexedByLocaleAndStore
      * @param int[] $categoryNodeIds
      *
      * @return void
      */
-    public function deleteMissingCategoryNodeStorage(array $nodeTransfers, array $categoryNodeIds): void
+    public function deleteMissingCategoryNodeStorage(array $categoryNodeStorageTransferTreesIndexedByLocaleAndStore, array $categoryNodeIds): void
     {
-        $existingCategoryNodeIds = $this->getCategoryNodeIdsFromNodeTransfers($nodeTransfers);
-        $categoryNodeIdsToDelete = array_diff($categoryNodeIds, $existingCategoryNodeIds);
-
-        $this->deleteCategoryNodeStorageCollection($categoryNodeIdsToDelete);
+        foreach ($categoryNodeStorageTransferTreesIndexedByLocaleAndStore as $storeName => $categoryNodeStorageTransferTreesIndexedByLocale) {
+            foreach ($categoryNodeStorageTransferTreesIndexedByLocale as $localeName => $categoryNodeStorageTransfers) {
+                $this->deleteMissingCategoryNodeStorageForLocaleAndStore($categoryNodeIds, $categoryNodeStorageTransfers, $localeName, $storeName);
+            }
+        }
     }
 
     /**
@@ -59,5 +60,27 @@ class CategoryNodeStorageDeleter implements CategoryNodeStorageDeleterInterface
         return array_map(function (NodeTransfer $nodeTransfer): int {
             return $nodeTransfer->getIdCategoryNode();
         }, $nodeTransfers);
+    }
+
+    /**
+     * @param int[] $categoryNodeIds
+     * @param \Generated\Shared\Transfer\CategoryNodeStorageTransfer[] $categoryNodeStorageTransfers
+     * @param string $localeName
+     * @param string $storeName
+     *
+     * @return void
+     */
+    protected function deleteMissingCategoryNodeStorageForLocaleAndStore(
+        array $categoryNodeIds,
+        array $categoryNodeStorageTransfers,
+        string $localeName,
+        string $storeName
+    ): void {
+        $categoryNodeIdsToDelete = $categoryNodeIds;
+        if ($categoryNodeStorageTransfers !== []) {
+            $categoryNodeIdsToDelete = array_diff($categoryNodeIds, array_keys($categoryNodeStorageTransfers));
+        }
+
+        $this->categoryStorageEntityManager->deleteCategoryNodeStoragesForStoreAndLocale($categoryNodeIdsToDelete, $localeName, $storeName);
     }
 }

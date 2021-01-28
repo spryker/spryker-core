@@ -44,6 +44,28 @@ class CategoryStorageEntityManager extends AbstractEntityManager implements Cate
 
     /**
      * @param int[] $categoryNodeIds
+     * @param string $localeName
+     * @param string $storeName
+     *
+     * @return void
+     */
+    public function deleteCategoryNodeStoragesForStoreAndLocale(array $categoryNodeIds, string $localeName, string $storeName): void
+    {
+        if ($categoryNodeIds === []) {
+            return;
+        }
+
+        $this->getFactory()
+            ->createSpyCategoryNodeStorageQuery()
+            ->filterByFkCategoryNode_In($categoryNodeIds)
+            ->filterByLocale($localeName)
+            ->filterByStore($storeName)
+            ->find()
+            ->delete();
+    }
+
+    /**
+     * @param int[] $categoryNodeIds
      *
      * @return void
      */

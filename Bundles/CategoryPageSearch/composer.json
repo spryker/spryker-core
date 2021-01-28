@@ -21,7 +21,8 @@
     "spryker/propel-orm": "*",
     "spryker/queue": "*",
     "spryker/search": "*",
-    "spryker/testify": "*"
+    "spryker/testify": "*",
+    "spryker/url": "*"
   },
   "suggest": {
     "spryker/event": "If you want to use Event plugins, minimum required version: 2.1.0",

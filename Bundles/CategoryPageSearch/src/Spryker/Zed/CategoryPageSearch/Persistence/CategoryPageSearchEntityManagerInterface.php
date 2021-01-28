@@ -24,4 +24,17 @@ interface CategoryPageSearchEntityManagerInterface
      * @return void
      */
     public function deleteCategoryNodePageSearchByCategoryNodeIds(array $categoryNodeIds): void;
+
+    /**
+     * @param int $idCategoryNode
+     * @param string $localeName
+     * @param string $storeName
+     *
+     * @return void
+     */
+    public function deleteCategoryNodePageSearchByIdCategoryNodeForLocaleAndStore(
+        int $idCategoryNode,
+        string $localeName,
+        string $storeName
+    ): void;
 }
