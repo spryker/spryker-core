@@ -151,26 +151,45 @@ class PriceProductScheduleEnableFinder implements PriceProductScheduleEnableFind
         string $currentDatabaseEngineName
     ): SpyPriceProductScheduleQuery {
         $priceProductScheduleConcatenatedSubQuery = $this->createPriceProductScheduleConcatenatedSubQuery(
-            $storeTransfer,
             $currentDatabaseEngineName
         );
 
-        return $this->factory->createPriceProductScheduleQuery()
+        $priceProductScheduleConcatenatedSubQuery = $this->setConditionsToEnableByStoreForPriceProductScheduleQuery($priceProductScheduleConcatenatedSubQuery, $storeTransfer);
+
+        $priceProductScheduleFilteredByMinResultSubQuery = $this->factory->createPriceProductScheduleQuery()
             ->addSelectQuery($priceProductScheduleConcatenatedSubQuery, static::ALIAS_CONCATENATED, false)
             ->addAsColumn(static::COL_PRODUCT_ID, static::ALIAS_CONCATENATED . '.' . static::COL_PRODUCT_ID)
-            ->addAsColumn(static::COL_RESULT, sprintf('min(%s)', static::ALIAS_CONCATENATED . '.' . static::COL_RESULT))
-            ->groupBy(static::COL_PRODUCT_ID)
-            ->limit($this->config->getApplyBatchSize());
+            ->addAsColumn(static::COL_RESULT, sprintf('min(%s)', static::ALIAS_CONCATENATED . '.' . static::COL_RESULT));
+
+        return $this->setConditionsToEnableByStoreForPriceProductScheduleQuery($priceProductScheduleFilteredByMinResultSubQuery, $storeTransfer)
+            ->groupBy(static::COL_PRODUCT_ID);
     }
 
     /**
+     * @param \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery $priceProductScheduleQuery
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery
+     */
+    protected function setConditionsToEnableByStoreForPriceProductScheduleQuery(
+        SpyPriceProductScheduleQuery $priceProductScheduleQuery,
+        StoreTransfer $storeTransfer
+    ): SpyPriceProductScheduleQuery {
+        return $priceProductScheduleQuery
+            ->filterByFkStore($storeTransfer->getIdStore())
+            ->where(sprintf('%s <= now()', SpyPriceProductScheduleTableMap::COL_ACTIVE_FROM))
+            ->where(sprintf('%s >= now()', SpyPriceProductScheduleTableMap::COL_ACTIVE_TO))
+            ->usePriceProductScheduleListQuery()
+            ->filterByIsActive(true)
+            ->endUse();
+    }
+
+    /**
      * @param string $currentDatabaseEngineName
      *
      * @return \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery
      */
     protected function createPriceProductScheduleConcatenatedSubQuery(
-        StoreTransfer $storeTransfer,
         string $currentDatabaseEngineName
     ): SpyPriceProductScheduleQuery {
         $concatenatedResultExpression = $this->getConcatenatedResultExpressionByDbEngineName($currentDatabaseEngineName);
@@ -197,13 +216,7 @@ class PriceProductScheduleEnableFinder implements PriceProductScheduleEnableFind
                     SpyPriceProductScheduleTableMap::COL_GROSS_PRICE,
                     SpyPriceProductScheduleTableMap::COL_ID_PRICE_PRODUCT_SCHEDULE
                 )
-            )
-            ->usePriceProductScheduleListQuery()
-            ->filterByIsActive(true)
-            ->endUse()
-            ->filterByFkStore($storeTransfer->getIdStore())
-            ->where(sprintf('%s <= now()', SpyPriceProductScheduleTableMap::COL_ACTIVE_FROM))
-            ->where(sprintf('%s >= now()', SpyPriceProductScheduleTableMap::COL_ACTIVE_TO));
+            );
     }
 
     /**
@@ -252,6 +265,7 @@ class PriceProductScheduleEnableFinder implements PriceProductScheduleEnableFind
             ->where($this->getFilterByConcatenatedResultExpression($dbEngineName))
             ->where(sprintf('%s <= now()', SpyPriceProductScheduleTableMap::COL_ACTIVE_FROM))
             ->where(sprintf('%s >= now()', SpyPriceProductScheduleTableMap::COL_ACTIVE_TO))
+            ->limit($this->config->getApplyBatchSize())
             ->find()
             ->getData();
 
