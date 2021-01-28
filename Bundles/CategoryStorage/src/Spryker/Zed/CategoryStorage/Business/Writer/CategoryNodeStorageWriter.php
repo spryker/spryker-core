@@ -117,7 +117,7 @@ class CategoryNodeStorageWriter implements CategoryNodeStorageWriterInterface
             );
 
         $this->storeData($categoryNodeStorageTransferTreesIndexedByLocaleAndStore);
-        $this->categoryNodeStorageDeleter->deleteMissingCategoryNodeStorage($nodeTransfers, $categoryNodeIds);
+        $this->categoryNodeStorageDeleter->deleteMissingCategoryNodeStorage($categoryNodeStorageTransferTreesIndexedByLocaleAndStore, $categoryNodeIds);
     }
 
     /**

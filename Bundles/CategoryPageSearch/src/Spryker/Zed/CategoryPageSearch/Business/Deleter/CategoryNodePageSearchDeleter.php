@@ -27,20 +27,6 @@ class CategoryNodePageSearchDeleter implements CategoryNodePageSearchDeleterInte
     }
 
     /**
-     * @param \Generated\Shared\Transfer\NodeCollectionTransfer $nodeCollectionTransfer
-     * @param int[] $categoryNodeIds
-     *
-     * @return void
-     */
-    public function deleteMissingCategoryNodePageSearchCollection(NodeCollectionTransfer $nodeCollectionTransfer, array $categoryNodeIds): void
-    {
-        $existingCategoryNodeIds = $this->getCategoryNodeIdsFromNodeTransfers($nodeCollectionTransfer);
-        $categoryNodeIdsToDelete = array_diff($categoryNodeIds, $existingCategoryNodeIds);
-
-        $this->deleteCategoryNodePageSearchCollection($categoryNodeIdsToDelete);
-    }
-
-    /**
      * @param int[] $categoryNodeIds
      *
      * @return void
