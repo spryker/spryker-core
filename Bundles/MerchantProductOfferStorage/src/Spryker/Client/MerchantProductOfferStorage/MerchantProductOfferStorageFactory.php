@@ -13,6 +13,8 @@ use Spryker\Client\MerchantProductOfferStorage\Dependency\Client\MerchantProduct
 use Spryker\Client\MerchantProductOfferStorage\Dependency\Client\MerchantProductOfferStorageToStoreClientInterface;
 use Spryker\Client\MerchantProductOfferStorage\Dependency\Service\MerchantProductOfferStorageToSynchronizationServiceInterface;
 use Spryker\Client\MerchantProductOfferStorage\Dependency\Service\MerchantProductOfferStorageToUtilEncodingServiceInterface;
+use Spryker\Client\MerchantProductOfferStorage\Expander\ProductViewOfferAvailabilityExpander;
+use Spryker\Client\MerchantProductOfferStorage\Expander\ProductViewOfferAvailabilityExpanderInterface;
 use Spryker\Client\MerchantProductOfferStorage\Expander\ProductViewOfferExpander;
 use Spryker\Client\MerchantProductOfferStorage\Expander\ProductViewOfferExpanderInterface;
 use Spryker\Client\MerchantProductOfferStorage\Mapper\MerchantProductOfferMapper;
@@ -77,6 +79,16 @@ class MerchantProductOfferStorageFactory extends AbstractFactory
     {
         return new ProductViewOfferExpander(
             $this->createProductConcreteDefaultProductOfferReader()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\MerchantProductOfferStorage\Expander\ProductViewOfferAvailabilityExpanderInterface
+     */
+    public function createProductViewOfferAvailabilityExpander(): ProductViewOfferAvailabilityExpanderInterface
+    {
+        return new ProductViewOfferAvailabilityExpander(
+            $this->createProductOfferStorageReader()
         );
     }
 

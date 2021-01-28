@@ -72,6 +72,7 @@
 
     <transfer name="ProductStorageCriteria">
         <property name="merchantReference" type="string"/>
+        <property name="productOfferReference" type="string"/>
     </transfer>
 
     <transfer name="Store">
