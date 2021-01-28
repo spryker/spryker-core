@@ -13,8 +13,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 interface ConsolePreRunHookPluginInterface
 {
     /**
-     * Specification
-     *  - The pre-run plugins will be executed before each console commands
+     * Specification:
+     * - The pre-run plugins will be executed before each console commands
      *
      * @api
      *

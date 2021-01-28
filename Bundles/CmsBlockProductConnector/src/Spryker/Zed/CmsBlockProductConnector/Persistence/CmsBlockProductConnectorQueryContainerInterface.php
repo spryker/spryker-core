@@ -13,6 +13,9 @@ interface CmsBlockProductConnectorQueryContainerInterface
     public const COL_PRODUCT_ABSTRACT_SKU = 'sku';
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\CmsBlockProductConnector\Persistence\SpyCmsBlockProductConnectorQuery
@@ -20,6 +23,9 @@ interface CmsBlockProductConnectorQueryContainerInterface
     public function queryCmsBlockProductConnector();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idCmsBlock
@@ -29,6 +35,9 @@ interface CmsBlockProductConnectorQueryContainerInterface
     public function queryCmsBlockProductConnectorByIdCmsBlock($idCmsBlock);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idCmsBlock
@@ -39,6 +48,9 @@ interface CmsBlockProductConnectorQueryContainerInterface
     public function queryCmsBlockProductConnectorWithNameByIdCmsBlock($idCmsBlock, $idLocale);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProductAbstract

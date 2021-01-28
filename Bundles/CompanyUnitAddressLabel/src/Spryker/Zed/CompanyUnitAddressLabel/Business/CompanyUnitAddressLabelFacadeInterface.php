@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 interface CompanyUnitAddressLabelFacadeInterface
 {
     /**
-     * Specifications:
+     * Specification:
      *  - Returns labels by address.
      *
      * @api

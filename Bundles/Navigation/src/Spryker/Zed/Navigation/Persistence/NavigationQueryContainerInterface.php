@@ -15,6 +15,9 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 interface NavigationQueryContainerInterface extends QueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idNavigation
@@ -24,6 +27,9 @@ interface NavigationQueryContainerInterface extends QueryContainerInterface
     public function queryNavigationById($idNavigation);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idNavigationNode
@@ -33,6 +39,9 @@ interface NavigationQueryContainerInterface extends QueryContainerInterface
     public function queryNavigationNodeById($idNavigationNode);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idNavigationNodeLocalizedAttributes
@@ -42,6 +51,9 @@ interface NavigationQueryContainerInterface extends QueryContainerInterface
     public function queryNavigationNodeLocalizedAttributesById($idNavigationNodeLocalizedAttributes);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idNavigation
@@ -51,6 +63,9 @@ interface NavigationQueryContainerInterface extends QueryContainerInterface
     public function queryRootNavigationNodesByIdNavigation($idNavigation);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $fkParentNavigationNode
@@ -60,6 +75,9 @@ interface NavigationQueryContainerInterface extends QueryContainerInterface
     public function queryNavigationNodesByFkParentNavigationNode($fkParentNavigationNode);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\Navigation\Persistence\SpyNavigationQuery
@@ -67,6 +85,9 @@ interface NavigationQueryContainerInterface extends QueryContainerInterface
     public function queryNavigation();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\Navigation\Persistence\SpyNavigationNodeQuery
@@ -74,6 +95,9 @@ interface NavigationQueryContainerInterface extends QueryContainerInterface
     public function queryNavigationNode();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $fkUrl
@@ -83,6 +107,9 @@ interface NavigationQueryContainerInterface extends QueryContainerInterface
     public function queryNavigationNodeByFkUrl($fkUrl);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $fkUrl

@@ -8,7 +8,7 @@
 var availableCustomerTable = require('./available-customer-table');
 var assignedCustomerTable = require('./assigned-customer-table');
 
-$(document).ready(function() {
+$(document).ready(function () {
     availableCustomerTable.initialize();
     assignedCustomerTable.initialize();
 });

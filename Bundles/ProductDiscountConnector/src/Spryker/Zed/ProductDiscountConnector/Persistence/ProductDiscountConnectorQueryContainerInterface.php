@@ -10,6 +10,9 @@ namespace Spryker\Zed\ProductDiscountConnector\Persistence;
 interface ProductDiscountConnectorQueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
