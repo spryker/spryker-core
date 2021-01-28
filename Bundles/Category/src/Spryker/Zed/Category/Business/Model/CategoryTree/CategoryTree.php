@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\NodeTransfer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
 use Propel\Runtime\Formatter\SimpleArrayFormatter;
 use Spryker\Zed\Category\Business\CategoryFacadeInterface;
+use Spryker\Zed\Category\Business\Deleter\CategoryNodeDeleterInterface;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 
 class CategoryTree implements CategoryTreeInterface
@@ -28,15 +29,23 @@ class CategoryTree implements CategoryTreeInterface
     protected $categoryFacade;
 
     /**
+     * @var \Spryker\Zed\Category\Business\Deleter\CategoryNodeDeleterInterface
+     */
+    protected $categoryNodeDeleter;
+
+    /**
      * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Category\Business\CategoryFacadeInterface $categoryFacade
+     * @param \Spryker\Zed\Category\Business\Deleter\CategoryNodeDeleterInterface $categoryNodeDeleter
      */
     public function __construct(
         CategoryQueryContainerInterface $queryContainer,
-        CategoryFacadeInterface $categoryFacade
+        CategoryFacadeInterface $categoryFacade,
+        CategoryNodeDeleterInterface $categoryNodeDeleter
     ) {
         $this->queryContainer = $queryContainer;
         $this->categoryFacade = $categoryFacade;
+        $this->categoryNodeDeleter = $categoryNodeDeleter;
     }
 
     /**
@@ -66,13 +75,13 @@ class CategoryTree implements CategoryTreeInterface
 
         foreach ($firstLevelChildNodeCollection as $childNodeEntity) {
             if ($childNodeEntity->getFkCategory() === $destinationCategoryNodeEntity->getFkCategory()) {
-                $this->categoryFacade->deleteNodeById($childNodeEntity->getIdCategoryNode(), $idDestinationCategoryNode);
+                $this->categoryNodeDeleter->deleteNodeById($childNodeEntity->getIdCategoryNode(), $idDestinationCategoryNode);
 
                 continue;
             }
 
             if (in_array($childNodeEntity->getFkCategory(), $destinationChildrenIds)) {
-                $this->categoryFacade->deleteNodeById($childNodeEntity->getIdCategoryNode(), $idDestinationCategoryNode);
+                $this->categoryNodeDeleter->deleteNodeById($childNodeEntity->getIdCategoryNode(), $idDestinationCategoryNode);
 
                 continue;
             }

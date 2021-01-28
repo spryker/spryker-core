@@ -141,21 +141,6 @@ interface CategoryFacadeInterface
 
     /**
      * Specification:
-     *  - Finds sub-trees for the category node to be deleted and moves them under the destination node
-     *  - Touches deleted category-node deleted (via TouchFacade)
-     *  - Triggers CategoryEvents::CATEGORY_NODE_PUBLISH event for parent and children nodes
-     *
-     * @api
-     *
-     * @param int $idCategoryNode
-     * @param int $idChildrenDestinationNode
-     *
-     * @return void
-     */
-    public function deleteNodeById($idCategoryNode, $idChildrenDestinationNode);
-
-    /**
-     * Specification:
      *  - Finds category-node entity, updates node_order field, and persists it
      *  - Touches category-node entity active
      *  - Touches navigation active
@@ -168,13 +153,6 @@ interface CategoryFacadeInterface
      * @return void
      */
     public function updateCategoryNodeOrder($idCategoryNode, $position): void;
-
-    /**
-     * @api
-     *
-     * @return void
-     */
-    public function rebuildClosureTable();
 
     /**
      * Specification:

@@ -52,8 +52,6 @@ use Spryker\Zed\Category\Business\Publisher\CategoryNodePublisherInterface;
 use Spryker\Zed\Category\Business\Reader\CategoryReader;
 use Spryker\Zed\Category\Business\Reader\CategoryReaderInterface;
 use Spryker\Zed\Category\Business\Tree\CategoryTreeReader;
-use Spryker\Zed\Category\Business\Tree\ClosureTableWriter;
-use Spryker\Zed\Category\Business\Tree\ClosureTableWriterInterface;
 use Spryker\Zed\Category\Business\Updater\CategoryAttributeUpdater;
 use Spryker\Zed\Category\Business\Updater\CategoryAttributeUpdaterInterface;
 use Spryker\Zed\Category\Business\Updater\CategoryClosureTableUpdater;
@@ -262,7 +260,8 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     {
         return new CategoryTree(
             $this->getQueryContainer(),
-            $this->createFacade()
+            $this->createFacade(),
+            $this->createCategoryNodeDeleter()
         );
     }
 
@@ -283,14 +282,6 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->getEventFacade()
         );
-    }
-
-    /**
-     * @return \Spryker\Zed\Category\Business\Tree\ClosureTableWriterInterface
-     */
-    public function createClosureTableWriter(): ClosureTableWriterInterface
-    {
-        return new ClosureTableWriter($this->getQueryContainer());
     }
 
     /**
