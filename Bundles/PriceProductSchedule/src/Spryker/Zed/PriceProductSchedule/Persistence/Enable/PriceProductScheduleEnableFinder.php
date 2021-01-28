@@ -154,15 +154,20 @@ class PriceProductScheduleEnableFinder implements PriceProductScheduleEnableFind
             $currentDatabaseEngineName
         );
 
-        $priceProductScheduleConcatenatedSubQuery = $this->setConditionsToEnableByStoreForPriceProductScheduleQuery($priceProductScheduleConcatenatedSubQuery, $storeTransfer);
+        $priceProductScheduleConcatenatedSubQuery = $this->setConditionsToEnableByStoreForPriceProductScheduleQuery(
+            $priceProductScheduleConcatenatedSubQuery,
+            $storeTransfer
+        );
 
         $priceProductScheduleFilteredByMinResultSubQuery = $this->factory->createPriceProductScheduleQuery()
             ->addSelectQuery($priceProductScheduleConcatenatedSubQuery, static::ALIAS_CONCATENATED, false)
             ->addAsColumn(static::COL_PRODUCT_ID, static::ALIAS_CONCATENATED . '.' . static::COL_PRODUCT_ID)
             ->addAsColumn(static::COL_RESULT, sprintf('min(%s)', static::ALIAS_CONCATENATED . '.' . static::COL_RESULT));
 
-        return $this->setConditionsToEnableByStoreForPriceProductScheduleQuery($priceProductScheduleFilteredByMinResultSubQuery, $storeTransfer)
-            ->groupBy(static::COL_PRODUCT_ID);
+        return $this->setConditionsToEnableByStoreForPriceProductScheduleQuery(
+            $priceProductScheduleFilteredByMinResultSubQuery,
+            $storeTransfer
+        )->groupBy(static::COL_PRODUCT_ID);
     }
 
     /**
