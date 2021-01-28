@@ -7,7 +7,8 @@
 
 namespace Spryker\Zed\MerchantProfileMerchantPortalGui\Communication\Form\Transformer;
 
-use Generated\Shared\Transfer\MerchantProfileAddressCollectionTransfer;
+use ArrayAccess;
+use ArrayObject;
 use Generated\Shared\Transfer\MerchantProfileAddressTransfer;
 use Symfony\Component\Form\DataTransformerInterface;
 
@@ -15,17 +16,17 @@ use Symfony\Component\Form\DataTransformerInterface;
  * @method \Spryker\Zed\MerchantProfileMerchantPortalGui\Communication\MerchantProfileMerchantPortalGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\MerchantProfileMerchantPortalGui\MerchantProfileMerchantPortalGuiConfig getConfig()
  */
-class MerchantProfileAddressCollectionTransferToMerchantProfileAddressTransferTransformer implements DataTransformerInterface
+class MerchantProfileAddressTransfersToMerchantProfileAddressTransferTransformer implements DataTransformerInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\MerchantProfileAddressCollectionTransfer $value
+     * @param \ArrayObject|\Generated\Shared\Transfer\MerchantProfileAddressTransfer[] $value
      *
      * @return \Generated\Shared\Transfer\MerchantProfileAddressTransfer
      */
     public function transform($value): MerchantProfileAddressTransfer
     {
-        if ($value instanceof MerchantProfileAddressCollectionTransfer && $value->getAddresses()->offsetExists(0)) {
-            return $value->getAddresses()->offsetGet(0);
+        if ($value instanceof ArrayAccess && $value->offsetExists(0)) {
+            return $value->offsetGet(0);
         }
 
         return new MerchantProfileAddressTransfer();
@@ -34,17 +35,17 @@ class MerchantProfileAddressCollectionTransferToMerchantProfileAddressTransferTr
     /**
      * @param \Generated\Shared\Transfer\MerchantProfileAddressTransfer $value
      *
-     * @return \Generated\Shared\Transfer\MerchantProfileAddressCollectionTransfer
+     * @return \ArrayObject|\Generated\Shared\Transfer\MerchantProfileAddressTransfer[]
      */
-    public function reverseTransform($value): MerchantProfileAddressCollectionTransfer
+    public function reverseTransform($value): ArrayObject
     {
+        $merchantProfileAddressTransfers = new ArrayObject();
         if (!$value instanceof MerchantProfileAddressTransfer) {
-            return new MerchantProfileAddressCollectionTransfer();
+            return $merchantProfileAddressTransfers;
         }
 
-        $merchantProfileAddressCollectionTransfer = new MerchantProfileAddressCollectionTransfer();
-        $merchantProfileAddressCollectionTransfer->addAddress($value);
+        $merchantProfileAddressTransfers->append($value);
 
-        return $merchantProfileAddressCollectionTransfer;
+        return $merchantProfileAddressTransfers;
     }
 }
