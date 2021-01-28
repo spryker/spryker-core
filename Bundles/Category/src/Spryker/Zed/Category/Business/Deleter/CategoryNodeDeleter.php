@@ -119,19 +119,6 @@ class CategoryNodeDeleter implements CategoryNodeDeleterInterface
     }
 
     /**
-     * @param int $idCategoryNode
-     * @param int $idChildrenDestinationNode
-     *
-     * @return void
-     */
-    public function deleteNodeById(int $idCategoryNode, int $idChildrenDestinationNode): void
-    {
-        $this->getTransactionHandler()->handleTransaction(function () use ($idCategoryNode, $idChildrenDestinationNode) {
-            $this->executeDeleteNodeByIdTransaction($idCategoryNode, $idChildrenDestinationNode);
-        });
-    }
-
-    /**
      * @param int $idCategory
      *
      * @return void
@@ -179,19 +166,6 @@ class CategoryNodeDeleter implements CategoryNodeDeleterInterface
     }
 
     /**
-     * @param int $idCategoryNode
-     * @param int $idChildrenDestinationNode
-     *
-     * @return void
-     */
-    protected function executeDeleteNodeByIdTransaction(int $idCategoryNode, int $idChildrenDestinationNode): void
-    {
-        $nodeTransfer = (new NodeTransfer())->setIdCategoryNode($idCategoryNode);
-
-        $this->deleteNode($nodeTransfer, $idChildrenDestinationNode);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
      * @param int|null $idDestinationCategoryNode
      *
@@ -199,12 +173,14 @@ class CategoryNodeDeleter implements CategoryNodeDeleterInterface
      */
     protected function deleteNode(NodeTransfer $nodeTransfer, ?int $idDestinationCategoryNode = null): void
     {
-        do {
-            $childrenMoved = $this->categoryTree->moveSubTree(
-                $nodeTransfer->getIdCategoryNodeOrFail(),
-                $idDestinationCategoryNode ?? $nodeTransfer->getFkParentCategoryNodeOrFail()
-            );
-        } while ($childrenMoved > 0);
+        if ($nodeTransfer->getFkParentCategoryNode() !== null) {
+            do {
+                $childrenMoved = $this->categoryTree->moveSubTree(
+                    $nodeTransfer->getIdCategoryNodeOrFail(),
+                    $idDestinationCategoryNode ?? $nodeTransfer->getFkParentCategoryNodeOrFail()
+                );
+            } while ($childrenMoved > 0);
+        }
 
         $this->categoryNodePublisher->triggerBulkCategoryNodePublishEventForUpdate($nodeTransfer->getIdCategoryNodeOrFail());
 

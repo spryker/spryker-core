@@ -70,8 +70,14 @@ class CategoryUrlUpdater implements CategoryUrlUpdaterInterface
      */
     protected function executeUpdateCategoryUrlTransaction(CategoryTransfer $categoryTransfer): void
     {
-        $categoryNodeUrlFilterTransfer = (new CategoryNodeUrlFilterTransfer())
-            ->setCategoryNodeIds($this->getCategoryNodeIdsFromNodeCollection($categoryTransfer->getNodeCollectionOrFail()));
+        $categoryNodeUrlFilterTransfer = new CategoryNodeUrlFilterTransfer();
+
+        if ($categoryTransfer->getNodeCollection() !== null) {
+            $categoryNodeUrlFilterTransfer->setCategoryNodeIds(
+                $this->getCategoryNodeIdsFromNodeCollection($categoryTransfer->getNodeCollectionOrFail())
+            );
+        }
+
         $urlTransfers = $this->categoryRepository->getCategoryNodeUrls($categoryNodeUrlFilterTransfer);
 
         foreach ($categoryTransfer->getLocalizedAttributes() as $categoryLocalizedAttributesTransfer) {

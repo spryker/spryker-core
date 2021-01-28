@@ -261,8 +261,10 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     {
         return new CategoryTree(
             $this->getQueryContainer(),
+            $this->getEntityManager(),
             $this->createFacade(),
-            $this->createCategoryNodeDeleter()
+            $this->createCategoryNodePublisher(),
+            $this->createCategoryToucher()
         );
     }
 

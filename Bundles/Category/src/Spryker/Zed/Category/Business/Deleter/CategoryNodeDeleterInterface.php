@@ -29,12 +29,4 @@ interface CategoryNodeDeleterInterface
      * @return void
      */
     public function deleteCategoryNodes(array $nodeTransfers): void;
-
-    /**
-     * @param int $idCategoryNode
-     * @param int $idChildrenDestinationNode
-     *
-     * @return void
-     */
-    public function deleteNodeById(int $idCategoryNode, int $idChildrenDestinationNode): void;
 }
