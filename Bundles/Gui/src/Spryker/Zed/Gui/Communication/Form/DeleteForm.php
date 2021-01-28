@@ -33,6 +33,7 @@ class DeleteForm extends AbstractType
             'attr' => [
                 'class' => 'form-inline',
             ],
+            'allow_extra_fields' => true,
         ]);
     }
 
