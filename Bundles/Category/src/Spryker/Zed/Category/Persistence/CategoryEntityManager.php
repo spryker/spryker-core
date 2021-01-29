@@ -356,27 +356,6 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     * @param int[] $parentCategoryNodeIds
-     *
-     * @return void
-     */
-    public function deleteExtraCategoryNodesForCategory(CategoryTransfer $categoryTransfer, array $parentCategoryNodeIds): void
-    {
-        if ($parentCategoryNodeIds === []) {
-            return;
-        }
-
-        $this->getFactory()
-            ->createCategoryNodeQuery()
-            ->filterByIsMain(false)
-            ->filterByFkCategory($categoryTransfer->getIdCategoryOrFail())
-            ->filterByFkParentCategoryNode_In($parentCategoryNodeIds)
-            ->find()
-            ->delete();
-    }
-
-    /**
      * @param \Orm\Zed\Category\Persistence\SpyCategoryClosureTable[]|\Propel\Runtime\Collection\ObjectCollection $parentCategoryClosureTableEntities
      * @param \Orm\Zed\Category\Persistence\SpyCategoryClosureTable $categoryClosureTableEntity
      *

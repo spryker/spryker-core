@@ -14,15 +14,9 @@ use Generated\Shared\Transfer\NodeTransfer;
 use Spryker\Zed\CategoryStorage\Business\TreeBuilder\CategoryStorageNodeTreeBuilderInterface;
 use Spryker\Zed\CategoryStorage\Dependency\Facade\CategoryStorageToCategoryFacadeInterface;
 use Spryker\Zed\CategoryStorage\Persistence\CategoryStorageEntityManagerInterface;
-use Spryker\Zed\CategoryStorage\Persistence\CategoryStorageRepositoryInterface;
 
 class CategoryTreeStorageWriter implements CategoryTreeStorageWriterInterface
 {
-    /**
-     * @var \Spryker\Zed\CategoryStorage\Persistence\CategoryStorageRepositoryInterface
-     */
-    protected $categoryStorageRepository;
-
     /**
      * @var \Spryker\Zed\CategoryStorage\Persistence\CategoryStorageEntityManagerInterface
      */
@@ -39,18 +33,15 @@ class CategoryTreeStorageWriter implements CategoryTreeStorageWriterInterface
     protected $categoryFacade;
 
     /**
-     * @param \Spryker\Zed\CategoryStorage\Persistence\CategoryStorageRepositoryInterface $categoryStorageRepository
      * @param \Spryker\Zed\CategoryStorage\Persistence\CategoryStorageEntityManagerInterface $categoryStorageEntityManager
      * @param \Spryker\Zed\CategoryStorage\Business\TreeBuilder\CategoryStorageNodeTreeBuilderInterface $categoryStorageNodeTreeBuilder
      * @param \Spryker\Zed\CategoryStorage\Dependency\Facade\CategoryStorageToCategoryFacadeInterface $categoryFacade
      */
     public function __construct(
-        CategoryStorageRepositoryInterface $categoryStorageRepository,
         CategoryStorageEntityManagerInterface $categoryStorageEntityManager,
         CategoryStorageNodeTreeBuilderInterface $categoryStorageNodeTreeBuilder,
         CategoryStorageToCategoryFacadeInterface $categoryFacade
     ) {
-        $this->categoryStorageRepository = $categoryStorageRepository;
         $this->categoryStorageEntityManager = $categoryStorageEntityManager;
         $this->categoryStorageNodeTreeBuilder = $categoryStorageNodeTreeBuilder;
         $this->categoryFacade = $categoryFacade;

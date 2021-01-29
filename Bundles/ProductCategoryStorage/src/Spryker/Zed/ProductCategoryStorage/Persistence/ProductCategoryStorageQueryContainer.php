@@ -17,8 +17,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class ProductCategoryStorageQueryContainer extends AbstractQueryContainer implements ProductCategoryStorageQueryContainerInterface
 {
-    public const FK_CATEGORY = 'fkCategory';
-
     /**
      * {@inheritDoc}
      *

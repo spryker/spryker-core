@@ -111,7 +111,6 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
      */
     public function writeCollection(array $productAbstractIds): void
     {
-        $productAbstractIds = [1];
         $productCategoryTransfers = $this->findProductCategories($productAbstractIds);
         $productAbstractLocalizedAttributesTransfers = $this->productCategoryStorageRepository
             ->getProductAbstractLocalizedAttributes($productAbstractIds);
