@@ -11,6 +11,7 @@
         <property name="sku" type="string"/>
         <property name="productOfferReference" type="string"/>
         <property name="groupKey" type="string"/>
+        <property name="merchantReference" type="string"/>
     </transfer>
 
     <transfer name="ProductOffer">
@@ -89,4 +90,15 @@
         <property name="isSuccess" type="bool"/>
         <property name="messages" type="Message[]" singular="message"/>
     </transfer>
+
+    <transfer name="CheckoutResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="errors" type="CheckoutError[]" singular="error"/>
+    </transfer>
+
+    <transfer name="CheckoutError">
+        <property name="message" type="string"/>
+        <property name="parameters" type="array" singular="parameters"/>
+    </transfer>
+
 </transfers>
