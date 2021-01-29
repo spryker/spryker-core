@@ -74,7 +74,7 @@ class ProductCategoryMapper
             ->setNodeCollection(new NodeCollectionTransfer());
 
         foreach ($productCategoryEntity->getNodes() as $categoryNodeEntity) {
-            $categoryTransfer->getNodeCollection()
+            $categoryTransfer->getNodeCollectionOrFail()
                 ->addNode($this->mapCategoryNodeEntityToNodeTransfer($categoryNodeEntity, new NodeTransfer()));
         }
 

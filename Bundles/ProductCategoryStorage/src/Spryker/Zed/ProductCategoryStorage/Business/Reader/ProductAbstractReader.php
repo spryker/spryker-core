@@ -81,7 +81,7 @@ class ProductAbstractReader implements ProductAbstractReaderInterface
     {
         foreach ($nodeTransfers as $nodeTransfer) {
             $relatedCategoryIds[] = $this->productCategoryStorageRepository
-                ->getAllCategoryIdsByCategoryNodeId($nodeTransfer->getIdCategoryNode());
+                ->getAllCategoryIdsByCategoryNodeId($nodeTransfer->getIdCategoryNodeOrFail());
         }
 
         return $relatedCategoryIds;

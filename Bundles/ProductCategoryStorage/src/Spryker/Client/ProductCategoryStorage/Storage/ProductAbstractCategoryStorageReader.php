@@ -118,7 +118,7 @@ class ProductAbstractCategoryStorageReader implements ProductAbstractCategorySto
             ];
         }
 
-        $key = $this->generateKey($idProductAbstract, $localeName, $storeName);
+        $key = $this->generateKey((string)$idProductAbstract, $localeName, $storeName);
 
         return $this->storageClient->get($key);
     }
@@ -134,7 +134,7 @@ class ProductAbstractCategoryStorageReader implements ProductAbstractCategorySto
     {
         $storageKeys = [];
         foreach ($productAbstractIds as $idProductAbstract) {
-            $storageKeys[] = $this->generateKey($idProductAbstract, $localeName, $storeName);
+            $storageKeys[] = $this->generateKey((string)$idProductAbstract, $localeName, $storeName);
         }
 
         $productAbstractCategoryStorageData = $this->storageClient->getMulti($storageKeys);
@@ -148,13 +148,13 @@ class ProductAbstractCategoryStorageReader implements ProductAbstractCategorySto
     }
 
     /**
-     * @param int|string $idProductAbstract
+     * @param string $idProductAbstract
      * @param string $localeName
      * @param string $storeName
      *
      * @return string
      */
-    protected function generateKey($idProductAbstract, string $localeName, string $storeName): string
+    protected function generateKey(string $idProductAbstract, string $localeName, string $storeName): string
     {
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
         $synchronizationDataTransfer

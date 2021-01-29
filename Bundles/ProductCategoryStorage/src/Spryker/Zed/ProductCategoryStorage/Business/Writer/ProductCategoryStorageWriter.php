@@ -168,7 +168,7 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
         string $localeName
     ): void {
         foreach ($productAbstractLocalizedAttributesTransfers as $productAbstractLocalizedAttributesTransfer) {
-            if ($productAbstractLocalizedAttributesTransfer->getLocale()->getLocaleName() !== $localeName) {
+            if ($productAbstractLocalizedAttributesTransfer->getLocaleOrFail()->getLocaleName() !== $localeName) {
                 continue;
             }
 
@@ -198,7 +198,7 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
         string $storeName,
         string $localeName
     ): void {
-        $idProductAbstract = $productAbstractLocalizedAttributesTransfer->getIdProductAbstract();
+        $idProductAbstract = $productAbstractLocalizedAttributesTransfer->getIdProductAbstractOrFail();
         $productCategoryStorageTransfers = $this->productCategoryStorageReader->getProductCategoryStoragesFromCategoryTree(
             $productCategoryTransfers[$idProductAbstract] ?? [],
             $storeName,

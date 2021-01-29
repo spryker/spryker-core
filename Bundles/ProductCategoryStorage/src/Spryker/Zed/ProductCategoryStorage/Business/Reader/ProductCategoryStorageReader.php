@@ -67,7 +67,7 @@ class ProductCategoryStorageReader implements ProductCategoryStorageReaderInterf
     ): array {
         $productCategoryTransfers = [];
 
-        foreach ($productCategoryTransfer->getCategory()->getNodeCollection()->getNodes() as $nodeTransfer) {
+        foreach ($productCategoryTransfer->getCategoryOrFail()->getNodeCollectionOrFail()->getNodes() as $nodeTransfer) {
             $categoryNodeAggregationTransfers = $this->extractCategoryNodeAggregationsFromCategoryTree(
                 $nodeTransfer,
                 $storeName,
