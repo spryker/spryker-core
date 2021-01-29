@@ -14,8 +14,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 /**
@@ -50,7 +50,7 @@ class KernelLogListenerTest extends Unit
         $requestMock->expects($this->once())->method('getRequestUri')->willReturn('/foo/bar');
         $requestMock->expects($this->once())->method('getMethod')->willReturn(Request::METHOD_GET);
 
-        $event = new GetResponseEvent(
+        $event = new RequestEvent(
             $this->getKernelMock(),
             $requestMock,
             HttpKernelInterface::MASTER_REQUEST
@@ -68,7 +68,7 @@ class KernelLogListenerTest extends Unit
      */
     public function testOnKernelRequestLogRequestShouldNotCalledWhenNotMasterRequest(): void
     {
-        $event = new GetResponseEvent(
+        $event = new RequestEvent(
             $this->getKernelMock(),
             Request::createFromGlobals(),
             HttpKernelInterface::SUB_REQUEST
@@ -89,7 +89,7 @@ class KernelLogListenerTest extends Unit
         $responseMock = $this->responseMock();
         $responseMock->expects($this->once())->method('getStatusCode');
 
-        $event = new FilterResponseEvent(
+        $event = new ResponseEvent(
             $this->getKernelMock(),
             $this->getRequestMock(),
             HttpKernelInterface::MASTER_REQUEST,
@@ -108,7 +108,7 @@ class KernelLogListenerTest extends Unit
      */
     public function testOnKernelResponseLogResponseShouldNotCalledWhenNotMasterRequest(): void
     {
-        $event = new FilterResponseEvent(
+        $event = new ResponseEvent(
             $this->getKernelMock(),
             $this->getRequestMock(),
             HttpKernelInterface::SUB_REQUEST,
@@ -131,7 +131,7 @@ class KernelLogListenerTest extends Unit
         $responseMock->expects($this->once())->method('getStatusCode');
         $responseMock->expects($this->once())->method('getTargetUrl');
 
-        $event = new FilterResponseEvent(
+        $event = new ResponseEvent(
             $this->getKernelMock(),
             $this->getRequestMock(),
             HttpKernelInterface::MASTER_REQUEST,

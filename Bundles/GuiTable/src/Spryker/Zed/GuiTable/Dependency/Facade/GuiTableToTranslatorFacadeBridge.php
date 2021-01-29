@@ -23,6 +23,8 @@ class GuiTableToTranslatorFacadeBridge implements GuiTableToTranslatorFacadeInte
     }
 
     /**
+     * @phpstan-param array<mixed> $parameters
+     *
      * @param string $id
      * @param array $parameters
      * @param string|null $domain

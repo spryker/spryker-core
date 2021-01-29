@@ -63,6 +63,8 @@ class CreateGlossaryController extends AbstractController
             'cmsVersion' => $this->getFactory()->getCmsFacade()->findLatestCmsVersionByIdCmsPage($idCmsPage),
             'cmsPage' => $cmsPageTransfer,
             'viewActionButtons' => $this->getViewActionButtons($cmsPageTransfer),
+            'publishForm' => $this->getFactory()->createPublishVersionPageForm()->createView(),
+            'toggleActiveForm' => $this->getFactory()->createToggleActivateCmsPageForm()->createView(),
         ];
     }
 

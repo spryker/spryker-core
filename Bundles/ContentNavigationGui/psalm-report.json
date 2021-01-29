@@ -1,0 +1,103 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 30,
+            "line_to": 30,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'array<array-key, string>' for Spryker\\Zed\\ContentNavigationGui\\Communication\\Form\\DataProvider\\NavigationContentTermFormDataProvider::getNavigationChoices is incorrect, got 'array<string, int(0)|string>'",
+            "file_name": "vendor/spryker/spryker/Bundles/ContentNavigationGui/src/Spryker/Zed/ContentNavigationGui/Communication/Form/DataProvider/NavigationContentTermFormDataProvider.php",
+            "snippet": "     * @return string[]",
+            "selected_text": "string[]",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 48,
+            "line_to": 48,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'array<string, int(0)|string>' does not match the declared return type 'array<array-key, string>' for Spryker\\Zed\\ContentNavigationGui\\Communication\\Form\\DataProvider\\NavigationContentTermFormDataProvider::getNavigationChoices",
+            "file_name": "vendor/spryker/spryker/Bundles/ContentNavigationGui/src/Spryker/Zed/ContentNavigationGui/Communication/Form/DataProvider/NavigationContentTermFormDataProvider.php",
+            "snippet": "        return array_flip($navigationChoices);",
+            "selected_text": "array_flip($navigationChoices)",
+            "error_level": 6,
+            "shortcode": 128
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 61,
+            "line_to": 61,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of strtr cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ContentNavigationGui/src/Spryker/Zed/ContentNavigationGui/Communication/Form/Constraint/ContentNavigationConstraintValidator.php",
+            "snippet": "            $text = strtr($messageTransfer->getValue(), $messageTransfer->getParameters());",
+            "selected_text": "$messageTransfer->getValue()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 64,
+            "line_to": 64,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ContentNavigationGui/src/Spryker/Zed/ContentNavigationGui/Communication/Form/Constraint/ContentNavigationConstraintValidator.php",
+            "snippet": "                ->atPath(sprintf('[%s]', $parameterMessageTransfer->getParameter()))",
+            "selected_text": "$parameterMessageTransfer->getParameter()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 41,
+            "line_to": 41,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $navigationChoices[null|string] using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/ContentNavigationGui/src/Spryker/Zed/ContentNavigationGui/Communication/Form/DataProvider/NavigationContentTermFormDataProvider.php",
+            "snippet": "            $navigationChoices[$navigationTransfer->getKey()] = sprintf(",
+            "selected_text": "$navigationChoices",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 43,
+            "line_to": 43,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ContentNavigationGui/src/Spryker/Zed/ContentNavigationGui/Communication/Form/DataProvider/NavigationContentTermFormDataProvider.php",
+            "snippet": "                $navigationName,",
+            "selected_text": "$navigationName",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 44,
+            "line_to": 44,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 3 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ContentNavigationGui/src/Spryker/Zed/ContentNavigationGui/Communication/Form/DataProvider/NavigationContentTermFormDataProvider.php",
+            "snippet": "                $navigationKey",
+            "selected_text": "$navigationKey",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 37,
+            "line_to": 37,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getData on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ContentNavigationGui/src/Spryker/Zed/ContentNavigationGui/Communication/Form/NavigationContentTermForm.php",
+            "snippet": "                $localizedContentTransfer = $form->getParent()->getData();",
+            "selected_text": "getData",
+            "error_level": 3,
+            "shortcode": 83
+        }
+    ],
+    "deprecation": []
+}

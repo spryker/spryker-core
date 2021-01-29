@@ -1,0 +1,18 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 56,
+            "line_to": 56,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ContentProductSet/src/Spryker/Client/ContentProductSet/Mapper/ContentProductSetTypeMapper.php",
+            "snippet": "                sprintf('There is no matching Term for ProductSetType when provided with term %s.', $term)",
+            "selected_text": "$term",
+            "error_level": 3,
+            "shortcode": 78
+        }
+    ],
+    "deprecation": []
+}

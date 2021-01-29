@@ -14,6 +14,7 @@ use Spryker\Zed\ProductOfferStock\Persistence\Propel\Mapper\ProductOfferStockMap
 /**
  * @method \Spryker\Zed\ProductOfferStock\ProductOfferStockConfig getConfig()
  * @method \Spryker\Zed\ProductOfferStock\Persistence\ProductOfferStockRepositoryInterface getRepository()
+ * @method \Spryker\Zed\ProductOfferStock\Persistence\ProductOfferStockEntityManagerInterface getEntityManager()
  */
 class ProductOfferStockPersistenceFactory extends AbstractPersistenceFactory
 {

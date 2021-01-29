@@ -11,7 +11,7 @@ use Spryker\Shared\Form\DoubleSubmitProtection\RequestTokenProvider\StorageInter
 use Spryker\Shared\Form\DoubleSubmitProtection\RequestTokenProvider\TokenGeneratorInterface;
 use Spryker\Shared\Form\DoubleSubmitProtection\Type\DoubleSubmitFormType;
 use Symfony\Component\Form\AbstractExtension;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class DoubleSubmitProtectionExtension extends AbstractExtension
 {
@@ -26,7 +26,7 @@ class DoubleSubmitProtectionExtension extends AbstractExtension
     protected $tokenStorage;
 
     /**
-     * @var \Symfony\Component\Translation\TranslatorInterface|null
+     * @var \Symfony\Contracts\Translation\TranslatorInterface|null
      */
     protected $translator;
 
@@ -38,7 +38,7 @@ class DoubleSubmitProtectionExtension extends AbstractExtension
     /**
      * @param \Spryker\Shared\Form\DoubleSubmitProtection\RequestTokenProvider\TokenGeneratorInterface $tokenGenerator
      * @param \Spryker\Shared\Form\DoubleSubmitProtection\RequestTokenProvider\StorageInterface $tokenStorage
-     * @param \Symfony\Component\Translation\TranslatorInterface|null $translator
+     * @param \Symfony\Contracts\Translation\TranslatorInterface|null $translator
      * @param string|null $translationDomain
      */
     public function __construct(

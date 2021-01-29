@@ -7,11 +7,14 @@
 
 namespace Spryker\Zed\PriceProductOffer\Persistence;
 
+use ArrayObject;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
+use Generated\Shared\Transfer\PriceProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\QueryCriteriaTransfer;
 use Generated\Shared\Transfer\QueryJoinTransfer;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductStoreTableMap;
 use Orm\Zed\PriceProductOffer\Persistence\Map\SpyPriceProductOfferTableMap;
+use Orm\Zed\PriceProductOffer\Persistence\SpyPriceProductOfferQuery;
 use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
@@ -42,5 +45,104 @@ class PriceProductOfferRepository extends AbstractRepository implements PricePro
                     ->setRight([SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER])
                     ->setJoinType(Criteria::LEFT_JOIN)
             );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function getProductOfferPrices(PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer): ArrayObject
+    {
+        $priceProductOfferQuery = $this->getFactory()
+            ->getPriceProductOfferPropelQuery()
+            ->joinWithSpyPriceProductStore()
+            ->useSpyPriceProductStoreQuery()
+                ->joinWithPriceProduct()
+                ->joinWithStore()
+                ->joinWithCurrency()
+                ->usePriceProductQuery()
+                    ->joinWithPriceType()
+                ->endUse()
+            ->endUse();
+
+        $this->applyCriteria($priceProductOfferQuery, $priceProductOfferCriteriaTransfer);
+
+        $priceProductOfferEntities = $priceProductOfferQuery->find();
+
+        return $this->getFactory()
+            ->createPriceProductOfferMapper()
+            ->mapPriceProductOfferEntitiesToPriceProductTransfers($priceProductOfferEntities, new ArrayObject());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer
+     *
+     * @return int
+     */
+    public function count(PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer): int
+    {
+        $priceProductOfferQuery = $this->getFactory()
+            ->getPriceProductOfferPropelQuery()
+            ->joinWithSpyProductOffer()
+            ->useSpyProductOfferQuery()
+            ->endUse();
+
+        $this->applyCriteria($priceProductOfferQuery, $priceProductOfferCriteriaTransfer);
+
+        return $priceProductOfferQuery->count();
+    }
+
+    /**
+     * @param \Orm\Zed\PriceProductOffer\Persistence\SpyPriceProductOfferQuery $priceProductOfferQuery
+     * @param \Generated\Shared\Transfer\PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer
+     *
+     * @return void
+     */
+    protected function applyCriteria(
+        SpyPriceProductOfferQuery $priceProductOfferQuery,
+        PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer
+    ): void {
+        if ($priceProductOfferCriteriaTransfer->getPriceProductOfferIds()) {
+            $priceProductOfferQuery->filterByIdPriceProductOffer_In($priceProductOfferCriteriaTransfer->getPriceProductOfferIds());
+        }
+        if (
+            $priceProductOfferCriteriaTransfer->getProductOfferCriteriaFilter()
+            && $priceProductOfferCriteriaTransfer->getProductOfferCriteriaFilter()->getMerchantIds()
+        ) {
+            $priceProductOfferQuery->filterBy(
+                SpyProductOfferTableMap::COL_FK_MERCHANT,
+                $priceProductOfferCriteriaTransfer->getProductOfferCriteriaFilter()->getMerchantIds(),
+                Criteria::IN
+            );
+        }
+
+        if ($priceProductOfferCriteriaTransfer->getIdProductOffer()) {
+            $priceProductOfferQuery->filterByFkProductOffer($priceProductOfferCriteriaTransfer->getIdProductOffer());
+        }
+
+        if ($priceProductOfferCriteriaTransfer->getCurrencyIds()) {
+            $priceProductOfferQuery->useSpyPriceProductStoreQuery()
+                ->useCurrencyQuery()
+                ->filterByIdCurrency_In($priceProductOfferCriteriaTransfer->getCurrencyIds())
+                ->endUse()
+                ->endUse();
+        }
+
+        if ($priceProductOfferCriteriaTransfer->getStoreIds()) {
+            $priceProductOfferQuery->useSpyPriceProductStoreQuery()
+                ->useStoreQuery()
+                ->filterByIdStore_In($priceProductOfferCriteriaTransfer->getStoreIds())
+                ->endUse()
+                ->endUse();
+        }
+
+        if ($priceProductOfferCriteriaTransfer->getPriceTypeIds()) {
+            $priceProductOfferQuery->useSpyPriceProductStoreQuery()
+                ->usePriceProductQuery()
+                ->filterByFkPriceType_In($priceProductOfferCriteriaTransfer->getPriceTypeIds())
+                ->endUse()
+                ->endUse();
+        }
     }
 }

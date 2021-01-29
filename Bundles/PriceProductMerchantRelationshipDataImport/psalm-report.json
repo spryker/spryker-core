@@ -3,54 +3,6 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 75,
-            "line_to": 75,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Orm\\Zed\\Currency\\Persistence\\SpyCurrencyQuery::filterbyfkmerchantrelationship does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/PriceProductMerchantRelationshipDataImport/src/Spryker/Zed/PriceProductMerchantRelationshipDataImport/Business/Model/PriceProductMerchantRelationshipWriterStep.php",
-            "snippet": "            ->filterByFkMerchantRelationship($dataSet[PriceProductMerchantRelationshipDataSetInterface::ID_MERCHANT_RELATIONSHIP]);",
-            "selected_text": "filterByFkMerchantRelationship",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 37,
-            "line_to": 37,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Propel\\Runtime\\ActiveQuery\\ModelCriteria::findonebycode does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/PriceProductMerchantRelationshipDataImport/src/Spryker/Zed/PriceProductMerchantRelationshipDataImport/Business/Model/Step/CurrencyToIdCurrencyStep.php",
-            "snippet": "                ->findOneByCode($currencyCode);",
-            "selected_text": "findOneByCode",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 37,
-            "line_to": 37,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Propel\\Runtime\\ActiveQuery\\ModelCriteria::findonebymerchantrelationshipkey does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/PriceProductMerchantRelationshipDataImport/src/Spryker/Zed/PriceProductMerchantRelationshipDataImport/Business/Model/Step/MerchantRelationshipKeyToIdMerchantRelationshipStep.php",
-            "snippet": "                ->findOneByMerchantRelationshipKey($merchantRelationshipKey);",
-            "selected_text": "findOneByMerchantRelationshipKey",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 37,
-            "line_to": 37,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Propel\\Runtime\\ActiveQuery\\ModelCriteria::findonebyname does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/PriceProductMerchantRelationshipDataImport/src/Spryker/Zed/PriceProductMerchantRelationshipDataImport/Business/Model/Step/StoreToIdStoreStep.php",
-            "snippet": "                ->findOneByName($storeName);",
-            "selected_text": "findOneByName",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 36,
             "line_to": 36,
             "type": "PossiblyUndefinedMethod",

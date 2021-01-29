@@ -23,34 +23,30 @@ class UniqueUrlValidator extends ConstraintValidator
      * @api
      *
      * @param \Generated\Shared\Transfer\CmsPageAttributesTransfer|mixed $cmsPageAttributesTransfer The value that should be validated
-     * @param \Symfony\Component\Validator\Constraint $uniqueUrlConstraint The constraint for the validation
+     * @param \Symfony\Component\Validator\Constraint $constraint The constraint for the validation
      *
      * @throws \Symfony\Component\Validator\Exception\UnexpectedTypeException
      *
      * @return void
      */
-    public function validate($cmsPageAttributesTransfer, Constraint $uniqueUrlConstraint)
+    public function validate($cmsPageAttributesTransfer, Constraint $constraint)
     {
         if (!$cmsPageAttributesTransfer->getUrl()) {
             return;
         }
 
-        if (!$uniqueUrlConstraint instanceof UniqueUrl) {
-            throw new UnexpectedTypeException($uniqueUrlConstraint, UniqueUrl::class);
+        if (!$constraint instanceof UniqueUrl) {
+            throw new UnexpectedTypeException($constraint, UniqueUrl::class);
         }
 
-        $submittedUrlTransfer = $this->buildUrlTransfer($cmsPageAttributesTransfer, $uniqueUrlConstraint);
-        $existingUrlTransfer = $uniqueUrlConstraint->getUrlFacade()->findUrlCaseInsensitive($submittedUrlTransfer);
+        $submittedUrlTransfer = $this->buildUrlTransfer($cmsPageAttributesTransfer, $constraint);
+        $existingUrlTransfer = $constraint->getUrlFacade()->findUrlCaseInsensitive($submittedUrlTransfer);
 
-        if ($existingUrlTransfer === null || $existingUrlTransfer->getFkResourcePage() === null) {
+        if ($existingUrlTransfer === null || $existingUrlTransfer->getFkResourcePage() === null && $existingUrlTransfer->getFkResourceRedirect() !== null) {
             return;
         }
 
-        if ($existingUrlTransfer->getFkResourcePage() === $submittedUrlTransfer->getFkResourcePage()) {
-            return;
-        }
-
-        if ($existingUrlTransfer->getUrl() !== $submittedUrlTransfer->getUrl()) {
+        if ($existingUrlTransfer->getFkResourcePage() === $submittedUrlTransfer->getFkResourcePage() && $existingUrlTransfer->getFkResourcePage() !== null) {
             return;
         }
 

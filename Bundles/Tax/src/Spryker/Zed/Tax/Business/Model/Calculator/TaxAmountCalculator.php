@@ -291,7 +291,6 @@ class TaxAmountCalculator implements CalculatorInterface
         $priceMode,
         $identifier
     ) {
-
         if ($priceMode === CalculationPriceMode::PRICE_MODE_NET) {
             return $this->accruedTaxCalculator->getTaxValueFromNetPrice($price, $taxRate, $identifier);
         }

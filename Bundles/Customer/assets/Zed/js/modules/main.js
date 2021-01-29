@@ -11,6 +11,6 @@ $(document).ready(function () {
         changeMonth: true,
         numberOfMonths: 3,
         maxDate: 0,
-        defaultData: 0
+        defaultData: 0,
     });
 });

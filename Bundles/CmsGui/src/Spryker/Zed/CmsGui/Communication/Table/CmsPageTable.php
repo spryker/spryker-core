@@ -11,6 +11,8 @@ use Generated\Shared\Transfer\CmsPageAttributesTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\CmsGui\CmsGuiConfig;
+use Spryker\Zed\CmsGui\Communication\Form\PublishVersionPageForm;
+use Spryker\Zed\CmsGui\Communication\Form\ToggleActiveCmsPageForm;
 use Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsInterface;
 use Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToLocaleInterface;
 use Spryker\Zed\CmsGui\Dependency\QueryContainer\CmsGuiToCmsQueryContainerInterface;
@@ -145,15 +147,16 @@ class CmsPageTable extends AbstractTable
      */
     protected function createPublishButton(array $item)
     {
-        return $this->generateCreateButton(
+        return $this->generateFormButton(
             Url::generate('/cms-gui/version-page/publish', [
                 CmsPageTableConstants::VERSION_PAGE_URL_PARAM_ID_CMS_PAGE => $item[CmsPageTableConstants::COL_ID_CMS_PAGE],
                 CmsPageTableConstants::VERSION_PAGE_URL_PARAM_REDIRECT_URL => '/cms-gui/list-page/index',
             ]),
             'Publish',
+            PublishVersionPageForm::class,
             [
                 'icon' => 'fa-upload',
-                'class' => 'safe-submit',
+                'class' => 'safe-submit btn-create',
             ]
         );
     }
@@ -381,21 +384,26 @@ class CmsPageTable extends AbstractTable
         }
 
         if ($item[CmsPageTableConstants::COL_IS_ACTIVE]) {
-            return $this->generateRemoveButton(
+            return $this->generateFormButton(
                 Url::generate(CmsPageTableConstants::URL_CMS_PAGE_DEACTIVATE, [
                     CmsPageTableConstants::EDIT_PAGE_URL_PARAM_ID_CMS_PAGE => $item[CmsPageTableConstants::COL_ID_CMS_PAGE],
                     CmsPageTableConstants::EDIT_PAGE_URL_PARAM_REDIRECT_URL => '/cms-gui/list-page/index',
                 ]),
-                'Deactivate'
+                'Deactivate',
+                ToggleActiveCmsPageForm::class,
+                [
+                    static::BUTTON_CLASS => 'btn-danger safe-submit',
+                ]
             );
         }
 
-        return $this->generateViewButton(
+        return $this->generateFormButton(
             Url::generate(CmsPageTableConstants::URL_CMS_PAGE_ACTIVATE, [
                 CmsPageTableConstants::EDIT_PAGE_URL_PARAM_ID_CMS_PAGE => $item[CmsPageTableConstants::COL_ID_CMS_PAGE],
                 CmsPageTableConstants::EDIT_PAGE_URL_PARAM_REDIRECT_URL => '/cms-gui/list-page/index',
             ]),
-            'Activate'
+            'Activate',
+            ToggleActiveCmsPageForm::class
         );
     }
 

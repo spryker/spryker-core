@@ -23,4 +23,18 @@ interface ContainerInterface extends ArrayAccess
      * @return \Closure|object
      */
     public function extend(string $id, $service);
+
+    /**
+     * @param string $id
+     *
+     * @return bool
+     */
+    public function hasApplicationService(string $id): bool;
+
+    /**
+     * @param string $id
+     *
+     * @return mixed
+     */
+    public function getApplicationService(string $id);
 }

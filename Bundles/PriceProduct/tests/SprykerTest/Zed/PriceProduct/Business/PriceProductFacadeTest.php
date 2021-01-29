@@ -491,7 +491,7 @@ class PriceProductFacadeTest extends Unit
         $actualResult = $priceProductFacade->groupPriceProductCollection($priceProductCollection);
 
         // Assert
-        $this->assertEquals($expectedPriceData, $actualResult['dummy currency 1']['priceData']);
+        $this->assertSame($expectedPriceData, $actualResult['dummy currency 1']['priceData']);
     }
 
     /**
@@ -503,7 +503,7 @@ class PriceProductFacadeTest extends Unit
 
         $actualResult = $priceProductFacade->getPriceModeIdentifierForBothType();
 
-        $this->assertEquals('BOTH', $actualResult);
+        $this->assertSame('BOTH', $actualResult);
     }
 
     /**
@@ -515,7 +515,7 @@ class PriceProductFacadeTest extends Unit
 
         $actualResult = $priceProductFacade->generatePriceDataChecksum(['11', '22']);
 
-        $this->assertEquals('3b513d6f', $actualResult);
+        $this->assertSame('3b513d6f', $actualResult);
     }
 
     /**
@@ -587,7 +587,7 @@ class PriceProductFacadeTest extends Unit
 
         $foundPrices = $priceProductFacade->findProductAbstractPricesWithoutPriceExtractionByIdProductAbstractIn([$productAbstractTransfer->getIdProductAbstract()]);
 
-        $this->assertEquals(
+        $this->assertSame(
             count($foundPrices),
             count($prices)
         );
@@ -605,7 +605,7 @@ class PriceProductFacadeTest extends Unit
         $priceProductCriteriaTransfer = $this->getPriceProductFacade()
             ->buildCriteriaFromFilter($priceProductFilterTransfer);
 
-        $this->assertEquals($priceProductFilterTransfer->getQuantity(), $priceProductCriteriaTransfer->getQuantity());
+        $this->assertSame($priceProductFilterTransfer->getQuantity(), $priceProductCriteriaTransfer->getQuantity());
     }
 
     /**
@@ -862,7 +862,7 @@ class PriceProductFacadeTest extends Unit
 
         $findedPriceTypeTransfer = $this->getPriceProductFacade()->findPriceTypeByName($priceTypeTransfer->getName());
 
-        $this->assertEquals($priceTypeTransfer->getIdPriceType(), $findedPriceTypeTransfer->getIdPriceType());
+        $this->assertSame($priceTypeTransfer->getIdPriceType(), $findedPriceTypeTransfer->getIdPriceType());
     }
 
     /**
@@ -959,7 +959,7 @@ class PriceProductFacadeTest extends Unit
         /** @var \Generated\Shared\Transfer\PriceProductTransfer $resultPriceProductTransfer */
         $resultPriceProductTransfer = $resultPriceProductTransfers[0];
 
-        $this->assertEquals($priceProductTransfer->getIdProductAbstract(), $resultPriceProductTransfer->getIdProductAbstract());
+        $this->assertSame($priceProductTransfer->getIdProductAbstract(), $resultPriceProductTransfer->getIdProductAbstract());
         $this->assertSame(
             $priceProductTransfer->getMoneyValue()->getNetAmount(),
             $resultPriceProductTransfer->getMoneyValue()->getNetAmount()
@@ -996,7 +996,7 @@ class PriceProductFacadeTest extends Unit
         /** @var \Generated\Shared\Transfer\PriceProductTransfer $resultPriceProductTransfer */
         $resultPriceProductTransfer = $resultPriceProductTransfers[0];
 
-        $this->assertEquals($priceProductTransfer->getIdProduct(), $resultPriceProductTransfer->getIdProduct());
+        $this->assertSame($priceProductTransfer->getIdProduct(), $resultPriceProductTransfer->getIdProduct());
         $this->assertSame(
             $priceProductTransfer->getMoneyValue()->getNetAmount(),
             $resultPriceProductTransfer->getMoneyValue()->getNetAmount()

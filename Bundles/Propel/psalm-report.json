@@ -26,54 +26,6 @@
         },
         {
             "severity": "error",
-            "line_from": 152,
-            "line_to": 152,
-            "type": "InvalidArgument",
-            "message": "Argument 1 of Symfony\\Component\\Process\\Process::__construct expects array<array-key, mixed>, string provided",
-            "file_name": "vendor/spryker/spryker/Bundles/Propel/src/Spryker/Zed/Propel/Business/Model/PropelDatabase/Adapter/PostgreSql/CreatePostgreSqlDatabase.php",
-            "snippet": "        return new Process($command);",
-            "selected_text": "$command",
-            "error_level": 6,
-            "shortcode": 4
-        },
-        {
-            "severity": "error",
-            "line_from": 143,
-            "line_to": 143,
-            "type": "InvalidArgument",
-            "message": "Argument 1 of Symfony\\Component\\Process\\Process::__construct expects array<array-key, mixed>, string provided",
-            "file_name": "vendor/spryker/spryker/Bundles/Propel/src/Spryker/Zed/Propel/Business/Model/PropelDatabase/Adapter/PostgreSql/DropPostgreSqlDatabase.php",
-            "snippet": "        return new Process($command);",
-            "selected_text": "$command",
-            "error_level": 6,
-            "shortcode": 4
-        },
-        {
-            "severity": "error",
-            "line_from": 119,
-            "line_to": 119,
-            "type": "InvalidArgument",
-            "message": "Argument 1 of Symfony\\Component\\Process\\Process::__construct expects array<array-key, mixed>, string provided",
-            "file_name": "vendor/spryker/spryker/Bundles/Propel/src/Spryker/Zed/Propel/Business/Model/PropelDatabase/Adapter/PostgreSql/ExportPostgreSqlDatabase.php",
-            "snippet": "        return new Process($command, null, $this->getEnvironmentVariables());",
-            "selected_text": "$command",
-            "error_level": 6,
-            "shortcode": 4
-        },
-        {
-            "severity": "error",
-            "line_from": 124,
-            "line_to": 124,
-            "type": "InvalidArgument",
-            "message": "Argument 1 of Symfony\\Component\\Process\\Process::__construct expects array<array-key, mixed>, string provided",
-            "file_name": "vendor/spryker/spryker/Bundles/Propel/src/Spryker/Zed/Propel/Business/Model/PropelDatabase/Adapter/PostgreSql/ImportPostgreSqlDatabase.php",
-            "snippet": "        return new Process($command);",
-            "selected_text": "$command",
-            "error_level": 6,
-            "shortcode": 4
-        },
-        {
-            "severity": "error",
             "line_from": 481,
             "line_to": 481,
             "type": "NullArrayAccess",
@@ -558,6 +510,18 @@
             "severity": "info",
             "line_from": 42,
             "line_to": 42,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Propel\\Runtime\\Connection\\ConnectionManagerMasterSlave::setReadConfiguration cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Propel/src/Spryker/Zed/Propel/Communication/Plugin/Application/PropelApplicationPlugin.php",
+            "snippet": "        $manager->setReadConfiguration($this->getPropelReadConfiguration());",
+            "selected_text": "$this->getPropelReadConfiguration()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 42,
+            "line_to": 42,
             "type": "UndefinedInterfaceMethod",
             "message": "Method Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface::toArray does not exist",
             "file_name": "vendor/spryker/spryker/Bundles/Propel/src/Spryker/Zed/Propel/Communication/Plugin/Log/EntityProcessorPlugin.php",
@@ -613,42 +577,6 @@
             "selected_text": "removeChild",
             "error_level": 3,
             "shortcode": 83
-        },
-        {
-            "severity": "info",
-            "line_from": 60,
-            "line_to": 60,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Propel/src/Spryker/Zed/Propel/PropelDependencyProvider.php",
-            "snippet": "            return new PropelToUtilTextServiceBridge($container->getLocator()->utilText()->service());",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 74,
-            "line_to": 74,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Propel/src/Spryker/Zed/Propel/PropelDependencyProvider.php",
-            "snippet": "            return new PropelToLogBridge($container->getLocator()->log()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 88,
-            "line_to": 88,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Propel/src/Spryker/Zed/Propel/PropelDependencyProvider.php",
-            "snippet": "            return new PropelToTransferFacadeBridge($container->getLocator()->transfer()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
         },
         {
             "severity": "info",
@@ -721,18 +649,6 @@
             "file_name": "vendor/spryker/spryker/Bundles/Propel/src/Spryker/Zed/Propel/Business/Model/PropelDatabase/Adapter/Adapter.php",
             "snippet": "        $this->importCommand->importDatabase($backupPath);",
             "selected_text": "importDatabase",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 96,
-            "line_to": 96,
-            "type": "DeprecatedMethod",
-            "message": "The method Symfony\\Component\\Process\\Process::inheritEnvironmentVariables has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Propel/src/Spryker/Zed/Propel/Business/Model/PropelDatabase/Adapter/PostgreSql/ExportPostgreSqlDatabase.php",
-            "snippet": "        $process->inheritEnvironmentVariables(true);",
-            "selected_text": "inheritEnvironmentVariables",
             "error_level": 2,
             "shortcode": 1
         },
@@ -990,8 +906,20 @@
         },
         {
             "severity": "info",
-            "line_from": 218,
-            "line_to": 218,
+            "line_from": 170,
+            "line_to": 170,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Zed\\Propel\\PropelConfig::getCurrentDatabaseEngineName has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Propel/src/Spryker/Zed/Propel/Business/PropelFacade.php",
+            "snippet": "        return $this->getFactory()->getConfig()->getCurrentDatabaseEngineName();",
+            "selected_text": "getCurrentDatabaseEngineName",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 220,
+            "line_to": 220,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Zed\\Propel\\Business\\Model\\PropelDatabase\\Command\\ExportDatabaseInterface::exportDatabase has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Propel/src/Spryker/Zed/Propel/Business/PropelFacade.php",
@@ -1002,8 +930,8 @@
         },
         {
             "severity": "info",
-            "line_from": 232,
-            "line_to": 232,
+            "line_from": 234,
+            "line_to": 234,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Zed\\Propel\\Business\\Model\\PropelDatabase\\Command\\ImportDatabaseInterface::importDatabase has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Propel/src/Spryker/Zed/Propel/Business/PropelFacade.php",
@@ -1050,6 +978,18 @@
         },
         {
             "severity": "info",
+            "line_from": 39,
+            "line_to": 39,
+            "type": "DeprecatedClass",
+            "message": "Propel\\Runtime\\Connection\\ConnectionManagerMasterSlave is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Propel/src/Spryker/Zed/Propel/Communication/Plugin/Application/PropelApplicationPlugin.php",
+            "snippet": "        $manager = new ConnectionManagerMasterSlave();",
+            "selected_text": "new ConnectionManagerMasterSlave()",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
             "line_from": 142,
             "line_to": 142,
             "type": "DeprecatedMethod",
@@ -1059,6 +999,18 @@
             "selected_text": "getBCBaseLogPath",
             "error_level": 2,
             "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 182,
+            "line_to": 182,
+            "type": "DeprecatedConstant",
+            "message": "Constant Spryker\\Shared\\Propel\\PropelConstants::ZED_DB_SUPPORTED_ENGINES is deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Propel/src/Spryker/Zed/Propel/PropelConfig.php",
+            "snippet": "        $supportedEngines = $this->get(PropelConstants::ZED_DB_SUPPORTED_ENGINES, [",
+            "selected_text": "PropelConstants::ZED_DB_SUPPORTED_ENGINES",
+            "error_level": 2,
+            "shortcode": 170
         }
     ]
 }

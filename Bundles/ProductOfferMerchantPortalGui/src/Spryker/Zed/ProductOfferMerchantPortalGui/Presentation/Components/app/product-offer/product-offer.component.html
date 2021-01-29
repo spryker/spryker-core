@@ -1,2 +1,9 @@
-<h1 class="product-offer-table-title">{{ title }}</h1>
-<mp-product-offer-table [config]="tableConfig"></mp-product-offer-table>
+<spy-headline>
+    <ng-content select="[title]"></ng-content>
+</spy-headline>
+
+<div class="mp-product-offer__description">
+    <ng-content select="[description]"></ng-content>
+</div>
+
+<mp-product-offer-table [tableId]="tableId" [config]="tableConfig"></mp-product-offer-table>

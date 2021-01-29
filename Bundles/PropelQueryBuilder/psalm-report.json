@@ -1,18 +1,5 @@
 {
-    "error": [
-        {
-            "severity": "error",
-            "line_from": 73,
-            "line_to": 73,
-            "type": "ParadoxicalCondition",
-            "message": "Found a redundant condition when evaluating assertion ($propelQueryBuilderPaginationTransfer->offset || $propelQueryBuilderPaginationTransfer->offset)",
-            "file_name": "vendor/spryker/spryker/Bundles/PropelQueryBuilder/src/Spryker/Zed/PropelQueryBuilder/Persistence/Mapper/PaginationQueryMapper.php",
-            "snippet": "        if ($propelQueryBuilderPaginationTransfer->getOffset() || $propelQueryBuilderPaginationTransfer->getOffset()) {",
-            "selected_text": "$propelQueryBuilderPaginationTransfer->getOffset() || $propelQueryBuilderPaginationTransfer->getOffset()",
-            "error_level": -1,
-            "shortcode": 89
-        }
-    ],
+    "error": [],
     "warning": [
         {
             "severity": "info",
@@ -107,6 +94,18 @@
             "file_name": "vendor/spryker/spryker/Bundles/PropelQueryBuilder/src/Spryker/Zed/PropelQueryBuilder/Persistence/Mapper/PaginationQueryMapper.php",
             "snippet": "            $query->setLimit($propelQueryBuilderPaginationTransfer->getLimit());",
             "selected_text": "$propelQueryBuilderPaginationTransfer->getLimit()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 74,
+            "line_to": 74,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Propel\\Runtime\\ActiveQuery\\ModelCriteria::setOffset cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/PropelQueryBuilder/src/Spryker/Zed/PropelQueryBuilder/Persistence/Mapper/PaginationQueryMapper.php",
+            "snippet": "            $query->setOffset($propelQueryBuilderPaginationTransfer->getOffset());",
+            "selected_text": "$propelQueryBuilderPaginationTransfer->getOffset()",
             "error_level": 3,
             "shortcode": 78
         },
@@ -424,8 +423,8 @@
         },
         {
             "severity": "info",
-            "line_from": 21,
-            "line_to": 21,
+            "line_from": 24,
+            "line_to": 24,
             "type": "InvalidNullableReturnType",
             "message": "The declared return type 'string' for Spryker\\Zed\\PropelQueryBuilder\\Persistence\\QueryBuilder\\JsonMapper\\MySql\\JsonMapper::getField is not nullable, but 'null|string' contains null",
             "file_name": "vendor/spryker/spryker/Bundles/PropelQueryBuilder/src/Spryker/Zed/PropelQueryBuilder/Persistence/QueryBuilder/JsonMapper/MySql/JsonMapper.php",
@@ -436,8 +435,8 @@
         },
         {
             "severity": "info",
-            "line_from": 25,
-            "line_to": 25,
+            "line_from": 28,
+            "line_to": 28,
             "type": "NullableReturnStatement",
             "message": "The declared return type 'string' for Spryker\\Zed\\PropelQueryBuilder\\Persistence\\QueryBuilder\\JsonMapper\\MySql\\JsonMapper::getField is not nullable, but the function returns 'null|string'",
             "file_name": "vendor/spryker/spryker/Bundles/PropelQueryBuilder/src/Spryker/Zed/PropelQueryBuilder/Persistence/QueryBuilder/JsonMapper/MySql/JsonMapper.php",
@@ -445,6 +444,18 @@
             "selected_text": "$ruleSetTransfer->getField()",
             "error_level": 5,
             "shortcode": 139
+        },
+        {
+            "severity": "info",
+            "line_from": 42,
+            "line_to": 42,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/PropelQueryBuilder/src/Spryker/Zed/PropelQueryBuilder/Persistence/QueryBuilder/JsonMapper/MySql/JsonMapper.php",
+            "snippet": "            $ruleSetTransfer->getField(),",
+            "selected_text": "$ruleSetTransfer->getField()",
+            "error_level": 3,
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -544,15 +555,27 @@
         },
         {
             "severity": "info",
-            "line_from": 44,
-            "line_to": 44,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/PropelQueryBuilder/src/Spryker/Zed/PropelQueryBuilder/PropelQueryBuilderDependencyProvider.php",
-            "snippet": "            return new PropelQueryBuilderToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
+            "line_from": 87,
+            "line_to": 87,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Zed\\PropelQueryBuilder\\Persistence\\Mapper\\ColumnQueryMapperInterface::mapColumns cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/PropelQueryBuilder/src/Spryker/Zed/PropelQueryBuilder/Persistence/QueryBuilder/QueryBuilder.php",
+            "snippet": "            $query = $this->columnMapper->mapColumns($query, $propelQueryBuilderCriteriaTransfer->getColumnSelection());",
+            "selected_text": "$propelQueryBuilderCriteriaTransfer->getColumnSelection()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 102,
+            "line_to": 102,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Zed\\PropelQueryBuilder\\Persistence\\Mapper\\PaginationQueryMapperInterface::mapPagination cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/PropelQueryBuilder/src/Spryker/Zed/PropelQueryBuilder/Persistence/QueryBuilder/QueryBuilder.php",
+            "snippet": "            $query = $this->paginationMapper->mapPagination($query, $propelQueryBuilderCriteriaTransfer->getPagination());",
+            "selected_text": "$propelQueryBuilderCriteriaTransfer->getPagination()",
+            "error_level": 3,
+            "shortcode": 78
         }
     ],
     "deprecation": [

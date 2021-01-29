@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Kernel\Business;
 
+use Spryker\Shared\Kernel\SharedFactoryResolverAwareTrait;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\AbstractFactory;
 use Spryker\Zed\Kernel\Container;
@@ -14,6 +15,8 @@ use Spryker\Zed\Kernel\Dependency\Injector\DependencyInjector;
 
 abstract class AbstractBusinessFactory extends AbstractFactory implements BusinessFactoryInterface
 {
+    use SharedFactoryResolverAwareTrait;
+
     /**
      * @param \Spryker\Zed\Kernel\AbstractBundleDependencyProvider $dependencyProvider
      * @param \Spryker\Zed\Kernel\Container $container

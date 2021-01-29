@@ -23,9 +23,9 @@ describe('LayoutFooterComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('is the current date', () => {
+    it('should contain current date', () => {
         fixture.detectChanges();
-        const footerElem = fixture.debugElement.query(By.css('.footer span'));
+        const footerElem = fixture.debugElement.query(By.css('.footer'));
         const currentYear = new Date().getFullYear();
 
         expect(footerElem.nativeElement.textContent).toMatch(currentYear.toString());

@@ -37,12 +37,20 @@ class SanitizeXssTypeExtension extends AbstractTypeExtension
     /**
      * @return iterable
      */
-    public function getExtendedTypes(): iterable
+    public static function getExtendedTypes(): iterable
     {
         return [
             TextType::class,
             TextareaType::class,
         ];
+    }
+
+    /**
+     * @return string
+     */
+    public function getExtendedType(): string
+    {
+        return TextareaType::class;
     }
 
     /**

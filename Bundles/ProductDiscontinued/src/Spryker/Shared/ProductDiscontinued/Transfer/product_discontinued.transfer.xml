@@ -40,6 +40,7 @@
     <transfer name="ProductConcrete">
         <property name="productDiscontinued" type="ProductDiscontinued"/>
         <property name="discontinuedNotes" type="ProductDiscontinuedNote[]" singular="discontinuedNote"/>
+        <property name="idProductConcrete" type="int"/>
     </transfer>
 
     <transfer name="ProductDiscontinuedCriteriaFilter">

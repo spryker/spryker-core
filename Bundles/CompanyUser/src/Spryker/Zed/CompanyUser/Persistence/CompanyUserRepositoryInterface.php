@@ -87,14 +87,14 @@ interface CompanyUserRepositoryInterface
     public function findCompanyUserById(int $idCompanyUser): ?CompanyUserTransfer;
 
     /**
-     * @param array $companyUserIds
+     * @param int[] $companyUserIds
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer[]
      */
     public function findActiveCompanyUsersByIds(array $companyUserIds): array;
 
     /**
-     * @param array $companyIds
+     * @param int[] $companyIds
      *
      * @return int[]
      */

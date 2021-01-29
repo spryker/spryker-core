@@ -47,7 +47,7 @@ class TaxFacadeRateCalculationTest extends Unit
         $taxFacadeTest = $this->createTaxProductConnectorFacade();
         $taxFacadeTest->calculateProductItemTaxRate($quoteTransfer);
 
-        $this->assertEquals('0.0', $itemTransfer->getTaxRate());
+        $this->assertSame(0.0, $itemTransfer->getTaxRate());
     }
 
     /**
@@ -66,7 +66,7 @@ class TaxFacadeRateCalculationTest extends Unit
         $taxFacadeTest = $this->createTaxProductConnectorFacade();
         $taxFacadeTest->calculateProductItemTaxRate($quoteTransfer);
 
-        $this->assertEquals('20.00', $itemTransfer->getTaxRate());
+        $this->assertSame(20.00, $itemTransfer->getTaxRate());
     }
 
     /**

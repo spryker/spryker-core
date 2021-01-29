@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\ConfigurableBundleStorage;
 
+use Generated\Shared\Transfer\ConfigurableBundleTemplateStorageFilterTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer;
 
 interface ConfigurableBundleStorageClientInterface
@@ -28,7 +29,24 @@ interface ConfigurableBundleStorageClientInterface
 
     /**
      * Specification:
+     * - Finds configurable bundle templates Storage records by given configurable bundle template ids.
+     * - Populates ConfigurableBundleTemplateStorageTransfer::imageSets using provided locale.
+     * - Returns array of ConfigurableBundleTemplateStorageTransfers.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageFilterTransfer $configurableBundleTemplateStorageFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer[]
+     */
+    public function getConfigurableBundleTemplateStorageCollection(
+        ConfigurableBundleTemplateStorageFilterTransfer $configurableBundleTemplateStorageFilterTransfer
+    ): array;
+
+    /**
+     * Specification:
      * - Finds configurable bundle template within Storage with a given uuid.
+     * - Populates ConfigurableBundleTemplateStorageTransfer::imageSets using provided locale.
      * - Returns ConfigurableBundleTemplateStorageTransfer if found, null otherwise.
      *
      * @api

@@ -227,7 +227,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         $productPackagingUnitTypeTransfer = $this->getFacade()->updateProductPackagingUnitType($productPackagingUnitTypeTransfer);
 
         // Assert
-        $this->assertEquals($productPackagingUnitTypeTransfer->getName(), $newName);
+        $this->assertSame($productPackagingUnitTypeTransfer->getName(), $newName);
     }
 
     /**
@@ -436,7 +436,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         // Assert
         foreach ($cartChange->getItems() as $itemTransfer) {
             $this->assertNotEquals($itemTransfer->getUnitGrossPrice(), $unitGrossPrice);
-            $this->assertEquals($itemTransfer->getUnitGrossPrice(), 9000);
+            $this->assertSame(9000, $itemTransfer->getUnitGrossPrice());
         }
     }
 
@@ -928,7 +928,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         // Assert
         foreach ($cartChange->getItems() as $itemTransfer) {
             $this->assertInstanceOf(ProductConcreteTransfer::class, $itemTransfer->getAmountLeadProduct());
-            $this->assertEquals($itemProductConcreteTransfer->getSku(), $itemTransfer->getAmountLeadProduct()->getSku());
+            $this->assertSame($itemProductConcreteTransfer->getSku(), $itemTransfer->getAmountLeadProduct()->getSku());
         }
     }
 
@@ -1031,8 +1031,8 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         // Assert
         $this->assertCount(1, $quoteTransfer->getItems());
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $this->assertEquals(2, $itemTransfer->getQuantity());
-            $this->assertEquals('2', $itemTransfer->getAmount()->toString());
+            $this->assertSame(2, $itemTransfer->getQuantity());
+            $this->assertSame('2', $itemTransfer->getAmount()->toString());
         }
 
         // Act
@@ -1044,8 +1044,8 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         // Assert
         $this->assertCount(1, $quoteTransfer->getItems());
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $this->assertEquals(1, $itemTransfer->getQuantity());
-            $this->assertEquals('1', $itemTransfer->getAmount()->toString());
+            $this->assertSame(1, $itemTransfer->getQuantity());
+            $this->assertSame('1', $itemTransfer->getAmount()->toString());
         }
 
         // Act
@@ -1118,7 +1118,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         $this->assertContainsOnlyInstancesOf(SalesOrderItemStateAggregationTransfer::class, $salesAggregationTransfers);
         $result = $this->sumSalesAggregationTransfers($salesAggregationTransfers);
         // SUM(amount)
-        $this->assertEquals(
+        $this->assertSame(
             $result->toString(),
             $amount->multiply($itemsCount)->trim()->toString()
         );
@@ -1148,8 +1148,8 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         $this->assertContainsOnlyInstancesOf(SalesOrderItemStateAggregationTransfer::class, $salesAggregationTransfers);
         $result = $this->sumSalesAggregationTransfers($salesAggregationTransfers);
         // SUM(quantity)
-        $this->assertEquals(
-            $result->toString(),
+        $this->assertSame(
+            $result->toInt(),
             $quantity * $itemsCount
         );
     }
@@ -1184,7 +1184,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         $this->assertContainsOnlyInstancesOf(SalesOrderItemStateAggregationTransfer::class, $salesAggregationTransfers);
         $result = $this->sumSalesAggregationTransfers($salesAggregationTransfers);
         // SUM(amount in PU) + SUM(quantity)
-        $this->assertEquals(
+        $this->assertSame(
             $result->toString(),
             $amountForPackagingUnit->multiply($itemsCountInPackagingUnit)->add($quantity * $itemsCount)->toString()
         );

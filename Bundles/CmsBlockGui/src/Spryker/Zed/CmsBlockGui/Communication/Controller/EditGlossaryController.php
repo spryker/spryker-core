@@ -53,6 +53,7 @@ class EditGlossaryController extends AbstractCmsBlockController
             'availableLocales' => $this->getFactory()->getLocaleFacade()->getLocaleCollection(),
             'cmsBlock' => $cmsBlockTransfer,
             'idCmsBlock' => $idCmsBlock,
+            'toggleActiveCmsBlockForm' => $this->getFactory()->createToggleActiveCmsBlockForm()->createView(),
         ]);
     }
 

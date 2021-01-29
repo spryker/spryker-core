@@ -4,17 +4,16 @@
   "description": "Session module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/application-extension": "^1.0.0",
     "spryker/config": "^3.0.0",
     "spryker/event-dispatcher-extension": "^1.0.0",
     "spryker/health-check-extension": "^1.0.0",
-    "spryker/kernel": "^3.33.0",
+    "spryker/kernel": "^3.52.0",
     "spryker/monitoring": "^1.0.0 || ^2.0.0",
     "spryker/redis": "^2.0.0",
     "spryker/session-extension": "^1.0.0",
-    "spryker/silex": "^2.0.0",
-    "spryker/symfony": "^3.0.0"
+    "spryker/symfony": "^3.5.0"
   },
   "require-dev": {
     "spryker/application": "*",
@@ -22,17 +21,20 @@
     "spryker/container": "*",
     "spryker/event-dispatcher": "*",
     "spryker/propel": "*",
+    "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "suggest": {
     "spryker/container": "If you want to use application plugins and event dispatcher plugins.",
-    "spryker/event-dispatcher": "If you want to use application plugins and event dispatcher plugins."
+    "spryker/event-dispatcher": "If you want to use application plugins and event dispatcher plugins.",
+    "spryker/silex": "Add this when you still want to use the abandoned Silex."
   },
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/",
       "SprykerTest\\Shared\\Session\\Helper\\": "tests/SprykerTest/Shared/Session/_support/Helper/",
-      "SprykerTest\\Yves\\Session\\Helper\\": "tests/SprykerTest/Yves/Session/_support/Helper/"
+      "SprykerTest\\Yves\\Session\\Helper\\": "tests/SprykerTest/Yves/Session/_support/Helper/",
+      "SprykerTest\\Zed\\Session\\Helper\\": "tests/SprykerTest/Zed/Session/_support/Helper/"
     }
   },
   "autoload-dev": {

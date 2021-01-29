@@ -1,6 +1,5 @@
 {
-  "private": true,
-  "name": "spryker-zed-merchant-relationship-sales-order-threshold-gui",
-  "version": "1.0.0",
-  "dependencies": {}
+    "private": true,
+    "name": "spryker-zed-merchant-relationship-sales-order-threshold-gui",
+    "version": "1.0.0"
 }

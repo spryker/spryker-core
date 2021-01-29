@@ -2,25 +2,17 @@ namespace: SprykerTest
 include:
     - tests/SprykerTest/Shared/Sales
     - tests/SprykerTest/Zed/Sales
-
 paths:
     tests: tests
     support: .
     log: tests/_output
     data: tests/_data
     envs: tests/_envs
-
 settings:
-    bootstrap: _bootstrap.php
     suite_class: \PHPUnit\Framework\TestSuite
     colors: true
     memory_limit: 1024M
     log: true
-
 extensions:
-    enabled:
-        - Codeception\Extension\Phantoman
-
-    config:
-        Codeception\Extension\Phantoman:
-            suites: ['Presentation']
+    enabled: [SprykerTest\Shared\Testify\Helper\WebDriverHelper]
+    config: { SprykerTest\Shared\Testify\Helper\WebDriverHelper: { suites: [Presentation] } }

@@ -1,0 +1,90 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 36,
+            "line_to": 36,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\CompanyUnitAddressLabel\\Persistence\\CompanyUnitAddressLabelRepositoryInterface::findCompanyUnitAddressLabelsByAddress cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyUnitAddressLabel/src/Spryker/Zed/CompanyUnitAddressLabel/Business/Model/CompanyUnitAddressHydrator.php",
+            "snippet": "            ->findCompanyUnitAddressLabelsByAddress($companyUnitAddressTransfer->getIdCompanyUnitAddress());",
+            "selected_text": "$companyUnitAddressTransfer->getIdCompanyUnitAddress()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 71,
+            "line_to": 71,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\CompanyUnitAddressLabel\\Persistence\\CompanyUnitAddressLabelRepositoryInterface::findCompanyUnitAddressLabelToCompanyUnitAddressRelationIdsByAddressIdAndLabelIds cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyUnitAddressLabel/src/Spryker/Zed/CompanyUnitAddressLabel/Business/Model/CompanyUnitAddressLabelRelationSaver.php",
+            "snippet": "            $companyUnitAddress->getIdCompanyUnitAddress(),",
+            "selected_text": "$companyUnitAddress->getIdCompanyUnitAddress()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 87,
+            "line_to": 87,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getLabels on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyUnitAddressLabel/src/Spryker/Zed/CompanyUnitAddressLabel/Business/Model/CompanyUnitAddressLabelRelationSaver.php",
+            "snippet": "        $labelTransfers = $companyUnitAddressTransfer->getLabelCollection()->getLabels();",
+            "selected_text": "getLabels",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 55,
+            "line_to": 55,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\CompanyUnitAddressLabel\\Persistence\\CompanyUnitAddressLabelRepositoryInterface::findCompanyUnitAddressLabelsByAddress cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyUnitAddressLabel/src/Spryker/Zed/CompanyUnitAddressLabel/Communication/Form/DataProvider/CompanyUnitAddressLabelFormDataProvider.php",
+            "snippet": "            ->findCompanyUnitAddressLabelsByAddress($companyUnitAddressTransfer->getIdCompanyUnitAddress());",
+            "selected_text": "$companyUnitAddressTransfer->getIdCompanyUnitAddress()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 70,
+            "line_to": 70,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $result[mixed|null|string] using possibly null offset mixed|null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyUnitAddressLabel/src/Spryker/Zed/CompanyUnitAddressLabel/Communication/Form/DataProvider/CompanyUnitAddressLabelFormDataProvider.php",
+            "snippet": "            $result[$label->getName()] = $label->getIdCompanyUnitAddressLabel();",
+            "selected_text": "$result",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 63,
+            "line_to": 63,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\CompanyUnitAddressLabel\\Persistence\\SpyCompanyUnitAddressLabel|Orm\\Zed\\CompanyUnitAddress\\Persistence\\SpyCompanyUnitAddress> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyUnitAddressLabel/src/Spryker/Zed/CompanyUnitAddressLabel/Persistence/CompanyUnitAddressLabelRepository.php",
+            "snippet": "            )->find()->getData();",
+            "selected_text": "getData",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 82,
+            "line_to": 82,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\CompanyUnitAddressLabel\\Persistence\\SpyCompanyUnitAddressLabelToCompanyUnitAddress> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyUnitAddressLabel/src/Spryker/Zed/CompanyUnitAddressLabel/Persistence/CompanyUnitAddressLabelRepository.php",
+            "snippet": "            )->find()->getData();",
+            "selected_text": "getData",
+            "error_level": 3,
+            "shortcode": 113
+        }
+    ],
+    "deprecation": []
+}

@@ -1,0 +1,66 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 49,
+            "line_to": 49,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getConfiguratorKey on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductConfiguration/src/Spryker/Client/ProductConfiguration/Processor/ProductConfiguratorResponseProcessor.php",
+            "snippet": "            if ($configuratorKey === $productConfiguratorResponseTransfer->getProductConfigurationInstance()->getConfiguratorKey()) {",
+            "selected_text": "getConfiguratorKey",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 47,
+            "line_to": 47,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getConfiguratorKey on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductConfiguration/src/Spryker/Client/ProductConfiguration/Resolver/ProductConfiguratorRedirectResolver.php",
+            "snippet": "            if ($configuratorKey === $productConfiguratorRequestTransfer->getProductConfiguratorRequestData()->getConfiguratorKey()) {",
+            "selected_text": "getConfiguratorKey",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 81,
+            "line_to": 81,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ProductConfiguration\\Business\\Expander\\ProductConfigurationGroupKeyItemExpander::getProductConfigurationHashKey cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductConfiguration/src/Spryker/Zed/ProductConfiguration/Business/Expander/ProductConfigurationGroupKeyItemExpander.php",
+            "snippet": "            $itemTransfer->getProductConfigurationInstance()",
+            "selected_text": "$itemTransfer->getProductConfigurationInstance()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 86,
+            "line_to": 86,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductConfiguration/src/Spryker/Zed/ProductConfiguration/Business/Expander/ProductConfigurationGroupKeyItemExpander.php",
+            "snippet": "            $itemTransfer->getGroupKey(),",
+            "selected_text": "$itemTransfer->getGroupKey()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 39,
+            "line_to": 39,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 2 of Spryker\\Zed\\ProductConfiguration\\Persistence\\Propel\\Mapper\\ProductConfigurationMapper::mapProductConfigurationEntityCollectionToProductConfigurationTransferCollection expects Propel\\Runtime\\Collection\\ObjectCollection, possibly different type Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\ProductConfiguration\\Persistence\\SpyProductConfiguration> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductConfiguration/src/Spryker/Zed/ProductConfiguration/Persistence/ProductConfigurationRepository.php",
+            "snippet": "                $productConfigurationQuery->find()",
+            "selected_text": "$productConfigurationQuery->find()",
+            "error_level": 3,
+            "shortcode": 92
+        }
+    ],
+    "deprecation": []
+}

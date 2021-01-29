@@ -4,10 +4,10 @@
   "description": "MerchantRelationshipGui module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/company": "^1.0.0",
     "spryker/company-business-unit": "^1.0.0 || ^2.0.0",
-    "spryker/gui": "^3.13.0",
+    "spryker/gui": "^3.33.0",
     "spryker/kernel": "^3.30.0",
     "spryker/merchant": "^1.1.0 || ^2.3.0 || ^3.0.0",
     "spryker/merchant-relationship": "^1.7.0",
@@ -17,18 +17,27 @@
     "spryker/util-text": "^1.1.1"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*"
+    "spryker/code-sniffer": "*",
+    "spryker/container": "*",
+    "spryker/propel": "*",
+    "spryker/testify": "*",
+    "spryker/twig": "*"
   },
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"
     }
   },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerTest\\": "tests/SprykerTest/"
+    }
+  },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "scripts": {
-    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
-    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
   },
   "extra": {
     "branch-alias": {

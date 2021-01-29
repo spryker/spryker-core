@@ -4,11 +4,17 @@
   "description": "OauthExtension module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2"
+    "php": ">=7.3"
   },
   "require-dev": {
-    "league/oauth2-server": "^7.1.0 || ^8.0.0",
-    "spryker/code-sniffer": "*"
+    "psr/http-message": "^1.0.0",
+    "spryker/code-sniffer": "*",
+    "spryker/oauth": "^2.0.0"
+  },
+  "suggest": {
+    "psr/http-message": "When you want to use plugin interfaces of this module.",
+    "league/oauth2-server": "When you want to use plugin interfaces of this module.",
+    "spryker/oauth": "When you want to use plugin interfaces of this module."
   },
   "autoload": {
     "psr-4": {

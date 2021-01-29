@@ -10,16 +10,16 @@ namespace Spryker\Zed\Event\Dependency\Plugin;
 interface EventBulkHandlerInterface extends EventBaseHandlerInterface
 {
     /**
-     * Specification
+     * Specification:
      *  - Listeners needs to implement this interface to execute the codes for more
      *  than one event at same time (Bulk Operation)
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $transfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
      * @param string $eventName
      *
      * @return void
      */
-    public function handleBulk(array $transfers, $eventName);
+    public function handleBulk(array $eventEntityTransfers, $eventName);
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\ProductStorage;
 
+use Generated\Shared\Transfer\ProductConcreteStorageTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductStorageCriteriaTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
@@ -440,5 +441,59 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
         return $this->getFactory()
             ->createProductConcreteStorageReader()
             ->getProductConcreteIdsByMapping($mappingType, $identifiers, $localeName);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteStorageTransfer $productConcreteStorageTransfer
+     *
+     * @return string
+     */
+    public function buildProductConcreteUrl(ProductConcreteStorageTransfer $productConcreteStorageTransfer): string
+    {
+        return $this->getFactory()
+            ->createProductConcreteStorageUrlBuilder()
+            ->buildProductConcreteUrl($productConcreteStorageTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int[] $productConcreteIds
+     * @param string $localeName
+     *
+     * @return array
+     */
+    public function getBulkProductConcreteStorageData(
+        array $productConcreteIds,
+        string $localeName
+    ): array {
+        return $this->getFactory()
+            ->createProductConcreteStorageReader()
+            ->getBulkProductConcreteStorageDataByProductConcreteIdsAndLocaleName($productConcreteIds, $localeName);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer
+     */
+    public function expandProductViewWithProductVariant(
+        ProductViewTransfer $productViewTransfer,
+        string $localeName
+    ): ProductViewTransfer {
+        return $this->getFactory()
+            ->createVariantExpander()
+            ->expandProductViewWithProductVariant($productViewTransfer, $localeName);
     }
 }

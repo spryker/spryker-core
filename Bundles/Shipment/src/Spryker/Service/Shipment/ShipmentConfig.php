@@ -7,13 +7,13 @@
 
 namespace Spryker\Service\Shipment;
 
+use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Spryker\Service\Kernel\AbstractBundleConfig;
 
 class ShipmentConfig extends AbstractBundleConfig
 {
     /**
-     * Specification:
-     * - Returns array of field names for generation of hash for shipment.
+     * Returns array of field names for generation of hash for shipment.
      *
      * @api
      *
@@ -22,5 +22,20 @@ class ShipmentConfig extends AbstractBundleConfig
     public function getShipmentHashFields(): array
     {
         return [];
+    }
+
+    /**
+     * Returns an array of field names used to generate a hash for a shipment method.
+     *
+     * @api
+     *
+     * @return string[]
+     */
+    public function getShipmentMethodHashFields(): array
+    {
+        return [
+            ShipmentMethodTransfer::NAME,
+            ShipmentMethodTransfer::CARRIER_NAME,
+        ];
     }
 }

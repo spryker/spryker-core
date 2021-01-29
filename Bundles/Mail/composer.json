@@ -4,9 +4,9 @@
   "description": "Mail module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/glossary": "^3.0.0",
-    "spryker/kernel": "^3.30.0",
+    "spryker/kernel": "^3.52.0",
     "swiftmailer/swiftmailer": "^5.4.5 || ^6.1"
   },
   "require-dev": {
@@ -22,9 +22,6 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Testify\\Module\\": "vendor/spryker/testify/tests/_support/Module",
-      "Config\\Module\\": "vendor/spryker/config/tests/_support/Module",
-      "Transfer\\Module\\": "vendor/spryker/transfer/tests/_support/Module",
       "SprykerTest\\": "tests/SprykerTest/"
     }
   },

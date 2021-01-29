@@ -4,17 +4,17 @@
   "description": "MerchantProfileMerchantPortalGui module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/country": "^3.0.0",
     "spryker/glossary": "^3.0.0",
     "spryker/kernel": "^3.46.0",
     "spryker/locale": "^3.0.0",
     "spryker/merchant": "^3.0.0",
-    "spryker/merchant-profile": "^0.2.0",
-    "spryker/merchant-user": "^0.5.0",
+    "spryker/merchant-profile": "^0.3.0",
+    "spryker/merchant-user": "^0.5.0 || ^0.6.0",
     "spryker/symfony": "^3.0.0",
     "spryker/url": "^3.0.0",
-    "spryker/zed-ui": "^0.2.5"
+    "spryker/zed-ui": "^0.3.2"
   },
   "require-dev": {
     "spryker/code-sniffer": "*"

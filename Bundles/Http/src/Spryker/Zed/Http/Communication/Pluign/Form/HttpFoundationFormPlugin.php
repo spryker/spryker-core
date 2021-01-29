@@ -7,33 +7,13 @@
 
 namespace Spryker\Zed\Http\Communication\Pluign\Form;
 
-use Spryker\Service\Container\ContainerInterface;
-use Spryker\Shared\FormExtension\Dependency\Plugin\FormPluginInterface;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Symfony\Component\Form\FormFactoryBuilderInterface;
+use Spryker\Zed\Http\Communication\Plugin\Form\HttpFoundationFormPlugin as SprykerHttpFoundationFormPlugin;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\Http\Communication\Plugin\Form\HttpFoundationFormPlugin} instead.
+ *
  * @method \Spryker\Zed\Http\Communication\HttpCommunicationFactory getFactory()
  */
-class HttpFoundationFormPlugin extends AbstractPlugin implements FormPluginInterface
+class HttpFoundationFormPlugin extends SprykerHttpFoundationFormPlugin
 {
-    /**
-     * {@inheritDoc}
-     * - Adds the basic Symfony HttpFoundation extension.
-     *
-     * @api
-     *
-     * @param \Symfony\Component\Form\FormFactoryBuilderInterface $formFactoryBuilder
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Symfony\Component\Form\FormFactoryBuilderInterface
-     */
-    public function extend(FormFactoryBuilderInterface $formFactoryBuilder, ContainerInterface $container): FormFactoryBuilderInterface
-    {
-        $formFactoryBuilder->addTypeExtension(
-            $this->getFactory()->createFormTypeHttpFoundationExtension()
-        );
-
-        return $formFactoryBuilder;
-    }
 }

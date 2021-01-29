@@ -1,4 +1,5 @@
 parameters:
+    checkGenericClassInNonGenericObjectType: false
+    checkMissingIterableValueType: false
     ignoreErrors:
-        - '#Call to an undefined method .+Criteria::.+\(\).#'
         - '#Strict comparison using !== between null and null will always evaluate to false.#'

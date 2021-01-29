@@ -8,7 +8,15 @@
 namespace Spryker\Shared\Twig;
 
 use Twig\Extension\AbstractExtension;
+use Twig\Extension\GlobalsInterface;
 
-abstract class TwigExtension extends AbstractExtension
+abstract class TwigExtension extends AbstractExtension implements GlobalsInterface
 {
+    /**
+     * @return array
+     */
+    public function getGlobals(): array
+    {
+        return [];
+    }
 }

@@ -34,7 +34,7 @@ class ShipmentTaxRateCalculatorPlugin extends AbstractPlugin implements Calculat
     public function recalculate(QuoteTransfer $quoteTransfer)
     {
         $this->getFacade()->calculateShipmentTaxRate($quoteTransfer);
-        
+
         return $quoteTransfer;
     }
 }

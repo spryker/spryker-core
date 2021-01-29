@@ -4,9 +4,9 @@
   "description": "StorageDatabase module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/kernel": "^3.33.0",
-    "spryker/propel-orm": "^1.0.0",
+    "spryker/propel-orm": "^1.13.0",
     "spryker/storage-database-extension": "^1.0.0",
     "spryker/storage-extension": "^1.0.0",
     "spryker/synchronization-behavior": "^1.4.0",

@@ -17,13 +17,12 @@ use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
 use Orm\Zed\Locale\Persistence\SpyLocaleQuery;
 use Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttribute;
 use Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValue;
+use Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValueTranslation;
 use Spryker\Zed\ProductAttribute\Business\ProductAttributeFacadeInterface;
 use Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToProductInterface;
 use Spryker\Zed\ProductAttribute\ProductAttributeConfig;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -33,7 +32,8 @@ use Spryker\Zed\ProductAttribute\ProductAttributeConfig;
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
+ * @method \Spryker\Zed\ProductAttribute\Business\ProductAttributeFacadeInterface getFacade()
  *
  * @SuppressWarnings(PHPMD)
  */
@@ -156,14 +156,16 @@ class ProductAttributeBusinessTester extends Actor
     {
         $productManagementAttributeEntity = $this->haveProductManagementAttributeEntity();
 
-        if (!empty($values)) {
-            foreach ($values as $value) {
-                $productManagementAttributeValueEntity = new SpyProductManagementAttributeValue();
-                $productManagementAttributeValueEntity
-                    ->setFkProductManagementAttribute($productManagementAttributeEntity->getIdProductManagementAttribute())
-                    ->setValue($value);
-                $productManagementAttributeValueEntity->save();
-            }
+        if (!$values) {
+            return $productManagementAttributeEntity;
+        }
+
+        foreach ($values as $value) {
+            $productManagementAttributeValueEntity = (new SpyProductManagementAttributeValue())
+                ->setFkProductManagementAttribute($productManagementAttributeEntity->getIdProductManagementAttribute())
+                ->setValue($value);
+
+            $productManagementAttributeValueEntity->save();
         }
 
         return $productManagementAttributeEntity;
@@ -218,7 +220,7 @@ class ProductAttributeBusinessTester extends Actor
      */
     public function createSampleAbstractProduct(string $sku, ?array $data = null): ProductAbstractTransfer
     {
-        $data = (!is_array($data)) ? ProductAttributeBusinessTester::DATA_PRODUCT_ATTRIBUTES_VALUES : $data;
+        $data = (!is_array($data)) ? self::DATA_PRODUCT_ATTRIBUTES_VALUES : $data;
 
         $productAbstractTransfer = $this->haveProductAbstract([
             'attributes' => $data,
@@ -243,7 +245,7 @@ class ProductAttributeBusinessTester extends Actor
      */
     public function createSampleProduct(ProductAbstractTransfer $productAbstractTransfer, string $sku, ?array $data = null): ProductConcreteTransfer
     {
-        $data = (!is_array($data)) ? ProductAttributeBusinessTester::DATA_PRODUCT_ATTRIBUTES_VALUES : $data;
+        $data = (!is_array($data)) ? self::DATA_PRODUCT_ATTRIBUTES_VALUES : $data;
 
         $productConcreteTransfer = new ProductConcreteTransfer();
         $productConcreteTransfer->setSku($sku);
@@ -270,9 +272,7 @@ class ProductAttributeBusinessTester extends Actor
             ->setKey($key)
             ->setInputType('text');
 
-        $this->productAttributeFacade->createProductManagementAttribute($productManagementAttributeTransfer);
-
-        return $productManagementAttributeTransfer;
+        return $this->productAttributeFacade->createProductManagementAttribute($productManagementAttributeTransfer);
     }
 
     /**
@@ -280,12 +280,36 @@ class ProductAttributeBusinessTester extends Actor
      */
     public function createSampleAttributeMetadataWithSuperAttributeData(): array
     {
-        $this->createSampleAttributeMetadata(ProductAttributeBusinessTester::FOO_ATTRIBUTE_KEY, false);
-        $this->createSampleAttributeMetadata(ProductAttributeBusinessTester::SUPER_ATTRIBUTE_KEY, true);
+        $this->createSampleAttributeMetadata(self::FOO_ATTRIBUTE_KEY, false);
+        $this->createSampleAttributeMetadata(self::SUPER_ATTRIBUTE_KEY, true);
 
-        $data = ProductAttributeBusinessTester::DATA_PRODUCT_ATTRIBUTES_VALUES;
-        $data[ProductAttributeBusinessTester::SUPER_ATTRIBUTE_KEY] = ProductAttributeBusinessTester::SUPER_ATTRIBUTE_VALUE;
+        $data = self::DATA_PRODUCT_ATTRIBUTES_VALUES;
+        $data[self::SUPER_ATTRIBUTE_KEY] = self::SUPER_ATTRIBUTE_VALUE;
 
         return $data;
+    }
+
+    /**
+     * @param \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttribute $productManagementAttributeEntity
+     *
+     * @return void
+     */
+    public function addAttributeValueTranslations(SpyProductManagementAttribute $productManagementAttributeEntity): void
+    {
+        foreach ($productManagementAttributeEntity->getSpyProductManagementAttributeValues() as $productManagementAttributeValueEntity) {
+            $attributeValueTranslationEntity = new SpyProductManagementAttributeValueTranslation();
+            $attributeValueTranslationEntity
+                ->setFkProductManagementAttributeValue($productManagementAttributeValueEntity->getIdProductManagementAttributeValue())
+                ->setFkLocale($this->getLocale(static::LOCALE_ONE_NAME)->getIdLocale())
+                ->setTranslation($productManagementAttributeValueEntity->getValue() . ' translated to a language')
+                ->save();
+
+            $attributeValueTranslationEntity = new SpyProductManagementAttributeValueTranslation();
+            $attributeValueTranslationEntity
+                ->setFkProductManagementAttributeValue($productManagementAttributeValueEntity->getIdProductManagementAttributeValue())
+                ->setFkLocale($this->getLocale(static::LOCALE_TWO_NAME)->getIdLocale())
+                ->setTranslation($productManagementAttributeValueEntity->getValue() . ' translated to another language')
+                ->save();
+        }
     }
 }

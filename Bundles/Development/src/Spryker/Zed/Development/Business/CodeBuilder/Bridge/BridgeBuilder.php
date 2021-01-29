@@ -8,14 +8,14 @@
 namespace Spryker\Zed\Development\Business\CodeBuilder\Bridge;
 
 use Generated\Shared\Transfer\BridgeBuilderDataTransfer;
+use Laminas\Filter\FilterChain;
+use Laminas\Filter\Word\CamelCaseToDash;
+use Laminas\Filter\Word\UnderscoreToCamelCase;
 use ReflectionClass;
 use ReflectionMethod;
 use Spryker\Zed\Development\DevelopmentConfig;
 use Symfony\Component\Console\Exception\InvalidArgumentException;
 use Symfony\Component\Filesystem\Filesystem;
-use Zend\Filter\FilterChain;
-use Zend\Filter\Word\CamelCaseToDash;
-use Zend\Filter\Word\UnderscoreToCamelCase;
 
 class BridgeBuilder
 {
@@ -196,15 +196,15 @@ class BridgeBuilder
     protected function replacePlaceHolder(BridgeBuilderDataTransfer $bridgeBuilderDataTransfer, string $templateContent): string
     {
         $replacements = [
-            '{vendor}' => $bridgeBuilderDataTransfer->getVendor(),
-            '{application}' => $bridgeBuilderDataTransfer->getApplication(),
-            '{module}' => $bridgeBuilderDataTransfer->getModule(),
-            '{type}' => $bridgeBuilderDataTransfer->getType(),
+            '{vendor}' => (string)$bridgeBuilderDataTransfer->getVendor(),
+            '{application}' => (string)$bridgeBuilderDataTransfer->getApplication(),
+            '{module}' => (string)$bridgeBuilderDataTransfer->getModule(),
+            '{type}' => (string)$bridgeBuilderDataTransfer->getType(),
 
-            '{toVendor}' => $bridgeBuilderDataTransfer->getToVendor(),
-            '{toApplication}' => $bridgeBuilderDataTransfer->getToApplication(),
-            '{toModule}' => $bridgeBuilderDataTransfer->getToModule(),
-            '{toType}' => $bridgeBuilderDataTransfer->getToType(),
+            '{toVendor}' => (string)$bridgeBuilderDataTransfer->getToVendor(),
+            '{toApplication}' => (string)$bridgeBuilderDataTransfer->getToApplication(),
+            '{toModule}' => (string)$bridgeBuilderDataTransfer->getToModule(),
+            '{toType}' => (string)$bridgeBuilderDataTransfer->getToType(),
 
             '{toModuleLayer}' => '',
             '{toModuleVariable}' => lcfirst($bridgeBuilderDataTransfer->getToModule()),

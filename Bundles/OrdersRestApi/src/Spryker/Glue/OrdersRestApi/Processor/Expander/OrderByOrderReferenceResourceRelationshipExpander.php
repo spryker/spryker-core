@@ -42,7 +42,10 @@ class OrderByOrderReferenceResourceRelationshipExpander implements OrderByOrderR
         }
 
         foreach ($resources as $resource) {
-            if (!$resource->getAttributes()->offsetExists(static::ORDER_REFERENCE)) {
+            if (
+                !$resource->getAttributes()->offsetExists(static::ORDER_REFERENCE)
+                || !$resource->getAttributes()->offsetGet(static::ORDER_REFERENCE)
+            ) {
                 continue;
             }
             $orderReference = $resource->getAttributes()->offsetGet(static::ORDER_REFERENCE);

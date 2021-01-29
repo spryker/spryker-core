@@ -3,30 +3,6 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 41,
-            "line_to": 41,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockCategoryStorage/src/Spryker/Client/CmsBlockCategoryStorage/CmsBlockCategoryStorageDependencyProvider.php",
-            "snippet": "            return new CmsBlockCategoryStorageToStorageClientBridge($container->getLocator()->storage()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 55,
-            "line_to": 55,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockCategoryStorage/src/Spryker/Client/CmsBlockCategoryStorage/CmsBlockCategoryStorageDependencyProvider.php",
-            "snippet": "            return new CmsBlockCategoryStorageToSynchronizationServiceBridge($container->getLocator()->synchronization()->service());",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 114,
             "line_to": 114,
             "type": "PossiblyNullArrayOffset",
@@ -51,75 +27,27 @@
         },
         {
             "severity": "info",
-            "line_from": 33,
-            "line_to": 33,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockCategoryStorage/src/Spryker/Zed/CmsBlockCategoryStorage/CmsBlockCategoryStorageDependencyProvider.php",
-            "snippet": "            return new CmsBlockCategoryStorageToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 47,
-            "line_to": 47,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockCategoryStorage/src/Spryker/Zed/CmsBlockCategoryStorage/CmsBlockCategoryStorageDependencyProvider.php",
-            "snippet": "            return new CmsBlockCategoryStorageToUtilSanitizeServiceBridge($container->getLocator()->utilSanitize()->service());",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 61,
-            "line_to": 61,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::querycontainer does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockCategoryStorage/src/Spryker/Zed/CmsBlockCategoryStorage/CmsBlockCategoryStorageDependencyProvider.php",
-            "snippet": "            return new CmsBlockCategoryStorageToCmsBlockCategoryConnectorQueryContainerBridge($container->getLocator()->cmsBlockCategoryConnector()->queryContainer());",
-            "selected_text": "queryContainer",
-            "error_level": 4,
-            "shortcode": 219
+            "line_from": 46,
+            "line_to": 46,
+            "type": "MoreSpecificImplementedParamType",
+            "message": "Argument 1 of Spryker\\Zed\\CmsBlockCategoryStorage\\Communication\\Plugin\\Event\\CmsBlockCategoryEventResourceQueryContainerPlugin::queryData has the more specific type 'array<array-key, int>', expecting 'array<array-key, int|string>' as defined by Spryker\\Zed\\EventBehavior\\Dependency\\Plugin\\EventResourceQueryContainerPluginInterface::queryData",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockCategoryStorage/src/Spryker/Zed/CmsBlockCategoryStorage/Communication/Plugin/Event/CmsBlockCategoryEventResourceQueryContainerPlugin.php",
+            "snippet": "    public function queryData(array $ids = []): ?ModelCriteria",
+            "selected_text": "$ids",
+            "error_level": 5,
+            "shortcode": 140
         },
         {
             "severity": "info",
             "line_from": 34,
             "line_to": 34,
             "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\CmsBlockCategoryConnector\\Persistence\\SpyCmsBlockCategoryConnector|Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface|mixed> variable ",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\CmsBlockCategoryConnector\\Persistence\\SpyCmsBlockCategoryConnector|Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/CmsBlockCategoryStorage/src/Spryker/Zed/CmsBlockCategoryStorage/Communication/Plugin/Event/Listener/CmsBlockCategoryPositionStorageListener.php",
             "snippet": "        $idCategories = $this->getQueryContainer()->queryCategoryIdsByPositionIds($idPosition)->find()->getData();",
             "selected_text": "getData",
             "error_level": 3,
             "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 64,
-            "line_to": 64,
-            "type": "PossiblyUndefinedMethod",
-            "message": "Method Propel\\Runtime\\ActiveQuery\\Criteria::withcolumn does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockCategoryStorage/src/Spryker/Zed/CmsBlockCategoryStorage/Persistence/CmsBlockCategoryStorageQueryContainer.php",
-            "snippet": "            ->withColumn(SpyCmsBlockCategoryPositionTableMap::COL_NAME, static::POSITION)",
-            "selected_text": "withColumn",
-            "error_level": 3,
-            "shortcode": 108
-        },
-        {
-            "severity": "info",
-            "line_from": 97,
-            "line_to": 97,
-            "type": "PossiblyUndefinedMethod",
-            "message": "Method Propel\\Runtime\\ActiveQuery\\Criteria::withcolumn does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockCategoryStorage/src/Spryker/Zed/CmsBlockCategoryStorage/Persistence/CmsBlockCategoryStorageQueryContainer.php",
-            "snippet": "            ->withColumn(SpyCmsBlockCategoryPositionTableMap::COL_NAME, static::POSITION)",
-            "selected_text": "withColumn",
-            "error_level": 3,
-            "shortcode": 108
         }
     ],
     "deprecation": [
@@ -185,8 +113,8 @@
         },
         {
             "severity": "info",
-            "line_from": 25,
-            "line_to": 25,
+            "line_from": 26,
+            "line_to": 26,
             "type": "DeprecatedTrait",
             "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/CmsBlockCategoryStorage/src/Spryker/Zed/CmsBlockCategoryStorage/Communication/Plugin/Event/Listener/CmsBlockCategoryConnectorPublishStorageListener.php",
@@ -197,8 +125,8 @@
         },
         {
             "severity": "info",
-            "line_from": 26,
-            "line_to": 26,
+            "line_from": 27,
+            "line_to": 27,
             "type": "DeprecatedTrait",
             "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/CmsBlockCategoryStorage/src/Spryker/Zed/CmsBlockCategoryStorage/Communication/Plugin/Event/Listener/CmsBlockCategoryConnectorStorageListener.php",

@@ -10,6 +10,9 @@ namespace Spryker\Zed\MerchantOms\Business;
 use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantOmsTriggerRequestTransfer;
 use Generated\Shared\Transfer\MerchantOmsTriggerResponseTransfer;
+use Generated\Shared\Transfer\MerchantOrderItemCollectionTransfer;
+use Generated\Shared\Transfer\MerchantOrderTransfer;
+use Generated\Shared\Transfer\StateMachineItemTransfer;
 use Generated\Shared\Transfer\StateMachineProcessTransfer;
 
 interface MerchantOmsFacadeInterface
@@ -92,4 +95,59 @@ interface MerchantOmsFacadeInterface
     public function getMerchantOmsProcessByMerchant(
         MerchantCriteriaTransfer $merchantCriteriaTransfer
     ): StateMachineProcessTransfer;
+
+    /**
+     * Specification:
+     * - Expands MerchantOrderTransfer with Merchant OMS unique item states.
+     * - Expands MerchantOrderTransfer with Merchant OMS unique item manual events.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantOrderTransfer
+     */
+    public function expandMerchantOrderWithMerchantOmsData(MerchantOrderTransfer $merchantOrderTransfer): MerchantOrderTransfer;
+
+    /**
+     * Specification:
+     * - Finds merchant order item.
+     * - Returns StateMachineItem transfer filled with state name.
+     *
+     * @api
+     *
+     * @param int $idSalesOrderItem
+     *
+     * @return \Generated\Shared\Transfer\StateMachineItemTransfer|null
+     */
+    public function findCurrentStateByIdSalesOrderItem(int $idSalesOrderItem): ?StateMachineItemTransfer;
+
+    /**
+     * Specification:
+     * - Gets state history for MerchantOrder.items.
+     * - Groups to array where key is MerchantOrderItem.id and value is array of states.
+     *
+     * @api
+     *
+     * @phpstan-return array<int, array<\Generated\Shared\Transfer\StateMachineItemTransfer>>
+     *
+     * @param int[] $merchantOrderItemIds
+     *
+     * @return array
+     */
+    public function getMerchantOrderItemsStateHistory(array $merchantOrderItemIds): array;
+
+    /**
+     * Specification:
+     * - Adds MerchantOrderItemTransfer.manualEvents to each merchant order item.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantOrderItemCollectionTransfer $merchantOrderItemCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantOrderItemCollectionTransfer
+     */
+    public function expandMerchantOrderItemsWithManualEvents(
+        MerchantOrderItemCollectionTransfer $merchantOrderItemCollectionTransfer
+    ): MerchantOrderItemCollectionTransfer;
 }

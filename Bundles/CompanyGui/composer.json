@@ -4,10 +4,10 @@
   "description": "CompanyGui module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/company": "^1.2.0",
     "spryker/company-gui-extension": "^1.0.0",
-    "spryker/gui": "^3.17.0",
+    "spryker/gui": "^3.33.0",
     "spryker/kernel": "^3.30.0",
     "spryker/symfony": "^3.0.0",
     "spryker/util-text": "^1.1.0"

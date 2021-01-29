@@ -8,8 +8,8 @@
 namespace Spryker\Zed\SalesMerchantPortalGui\Communication\Controller;
 
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @method \Spryker\Zed\SalesMerchantPortalGui\Communication\SalesMerchantPortalGuiCommunicationFactory getFactory()
@@ -18,36 +18,30 @@ use Symfony\Component\HttpFoundation\Request;
 class OrdersController extends AbstractController
 {
     /**
+     * @phpstan-return array<mixed>
+     *
      * @return array
      */
     public function indexAction(): array
     {
         return $this->viewResponse([
-            'merchantOrderTableConfiguration' => $this->getFactory()->createMerchantOrderGuiTableConfigurationProvider()->getConfiguration(),
+            'merchantOrderTableConfiguration' => $this->getFactory()
+                ->createMerchantOrderGuiTableConfigurationProvider()
+                ->getConfiguration(),
         ]);
     }
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function tableDataAction(Request $request): JsonResponse
+    public function tableDataAction(Request $request): Response
     {
-        $guiTableFacade = $this->getFactory()->getGuiTableFacade();
-        $guiTableConfigurationTransfer = $this->getFactory()
-            ->createMerchantOrderGuiTableConfigurationProvider()
-            ->getConfiguration();
-        $guiTableDataRequestTransfer = $guiTableFacade->buildGuiTableDataRequest(
-            $request->query->all(),
-            $guiTableConfigurationTransfer
-        );
-        $guiTableDataResponseTransfer = $this->getFactory()
-            ->createMerchantOrderTableDataProvider()
-            ->getData($guiTableDataRequestTransfer);
-
-        return $this->jsonResponse(
-            $guiTableFacade->formatGuiTableDataResponse($guiTableDataResponseTransfer, $guiTableConfigurationTransfer)
+        return $this->getFactory()->getGuiTableHttpDataRequestExecutor()->execute(
+            $request,
+            $this->getFactory()->createMerchantOrderGuiTableDataProvider(),
+            $this->getFactory()->createMerchantOrderGuiTableConfigurationProvider()->getConfiguration()
         );
     }
 }

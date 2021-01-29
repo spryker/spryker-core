@@ -91,6 +91,8 @@ interface PropelConstants
      * Specification:
      * - MySql database engine.
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @api
      */
     public const ZED_DB_ENGINE_MYSQL = 'ZED_DB_ENGINE_MYSQL';
@@ -99,6 +101,8 @@ interface PropelConstants
      * Specification:
      * - Postgres database engine.
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @api
      */
     public const ZED_DB_ENGINE_PGSQL = 'ZED_DB_ENGINE_PGSQL';
@@ -106,6 +110,8 @@ interface PropelConstants
     /**
      * Specification:
      * - Array of supported database engines.
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @api
      */
@@ -123,6 +129,8 @@ interface PropelConstants
      * Specification:
      * - Pattern for schema files path.
      * - Path is used with glob to find path.
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @api
      */

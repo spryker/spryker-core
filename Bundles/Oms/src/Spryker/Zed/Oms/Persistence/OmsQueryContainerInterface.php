@@ -19,6 +19,9 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 interface OmsQueryContainerInterface extends QueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $states
@@ -59,6 +62,9 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
     public function queryProcess(string $processName): SpyOmsOrderProcessQuery;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idOrder
@@ -68,6 +74,9 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
     public function querySalesOrderItemsByIdOrder($idOrder);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
@@ -77,6 +86,9 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
     public function queryLogForOrder(SpySalesOrder $order);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idOrder
@@ -87,6 +99,9 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
     public function queryLogByIdOrder($idOrder, $orderById = true);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \DateTime $now
@@ -100,6 +115,9 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
     );
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @deprecated Use {@link \Spryker\Zed\Oms\Persistence\OmsRepositoryInterface::getSalesOrderItemsBySkuAndStatesNames()} instead.
@@ -113,6 +131,9 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
     public function sumProductQuantitiesForAllSalesOrderItemsBySku(array $states, $sku, $returnTest = true);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @deprecated Use {@link \Spryker\Zed\Oms\Persistence\OmsRepositoryInterface::getSalesOrderItemsBySkuAndStatesNames()} instead.
@@ -134,6 +155,9 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
     );
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Spryker\Zed\Oms\Business\Process\StateInterface[] $states
@@ -145,6 +169,9 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
     public function querySalesOrderItemsForSku(array $states, $sku, $returnTest = true);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $orderItemIds
@@ -154,6 +181,9 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
     public function querySalesOrderItems(array $orderItemIds);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idOrder
@@ -163,6 +193,9 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
     public function querySalesOrderById($idOrder);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string[] $activeProcesses
@@ -172,6 +205,9 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
     public function queryActiveProcesses(array $activeProcesses);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $orderItemStates
@@ -181,6 +217,9 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
     public function queryOrderItemStates(array $orderItemStates);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @deprecated Use {@link queryGroupedMatrixOrderItems()} instead
@@ -193,6 +232,9 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
     public function queryMatrixOrderItems(array $processIds, array $stateBlacklist);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int[] $processIds
@@ -203,6 +245,9 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
     public function queryGroupedMatrixOrderItems(array $processIds, array $stateBlacklist): SpySalesOrderItemQuery;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string[] $orderItemStates
@@ -212,6 +257,9 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
     public function querySalesOrderItemStatesByName(array $orderItemStates);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idOrder
@@ -221,6 +269,9 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
     public function querySalesOrderItemsByIdSalesOrder($idOrder);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \DateTime $expirationDate
@@ -230,6 +281,9 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
     public function queryLockedItemsByExpirationDate(DateTime $expirationDate);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $identifier
@@ -239,6 +293,9 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
     public function queryLockItemsByIdentifier($identifier);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $sku
@@ -248,6 +305,9 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
     public function queryOmsProductReservationBySku($sku);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $sku
@@ -258,6 +318,9 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
     public function queryProductReservationBySkuAndStore($sku, $idStore);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $sku
@@ -268,6 +331,9 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
     public function queryOmsProductReservationStoreBySkuForStore($sku, $storeName);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $sku
@@ -277,13 +343,19 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
     public function queryOmsProductReservationStoreBySku($sku);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
-     * @return \Orm\Zed\Oms\Persistence\SpyOmsProductReservationStoreQuery
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsProductReservationChangeVersionQuery
      */
     public function queryMaxReservationChangeVersion();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $lastExportedVersion
@@ -294,6 +366,9 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
     public function queryReservationChangeVersion($lastExportedVersion, $maxVisibleVersion);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\Oms\Persistence\SpyOmsProductReservationLastExportedVersionQuery
@@ -301,6 +376,9 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
     public function queryOmsProductReservationLastExportedVersion();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idOmsProductReservation
@@ -310,6 +388,9 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
     public function queryOmsProductReservationById($idOmsProductReservation);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $identifiers

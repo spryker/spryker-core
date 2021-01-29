@@ -11,8 +11,6 @@ use Codeception\Actor;
 use SprykerTest\Zed\CategoryImage\_generated\CategoryImageBusinessTesterActions;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -22,15 +20,11 @@ use SprykerTest\Zed\CategoryImage\_generated\CategoryImageBusinessTesterActions;
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  *
  * @SuppressWarnings(PHPMD)
  */
 class CategoryImageBusinessTester extends Actor
 {
     use CategoryImageBusinessTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 }

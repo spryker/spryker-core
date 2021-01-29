@@ -22,18 +22,18 @@ class CategoryImageSetStorageListener extends AbstractPlugin implements EventBul
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $transfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
      * @param string $eventName
      *
      * @return void
      */
-    public function handleBulk(array $transfers, $eventName)
+    public function handleBulk(array $eventEntityTransfers, $eventName)
     {
         $this->preventTransaction();
 
         $categoryIds = $this->getFactory()
             ->getEventBehaviorFacade()
-            ->getEventTransferForeignKeys($transfers, SpyCategoryImageSetTableMap::COL_FK_CATEGORY);
+            ->getEventTransferForeignKeys($eventEntityTransfers, SpyCategoryImageSetTableMap::COL_FK_CATEGORY);
         $this->getFacade()->publishCategoryImages($categoryIds);
     }
 }

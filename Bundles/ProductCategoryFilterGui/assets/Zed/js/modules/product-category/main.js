@@ -7,6 +7,6 @@
 
 var categoryTable = require('./category-table');
 
-$(document).ready(function() {
+$(document).ready(function () {
     categoryTable.initialize('#root-node-table');
 });

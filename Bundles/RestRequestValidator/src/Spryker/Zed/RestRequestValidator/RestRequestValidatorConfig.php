@@ -103,6 +103,6 @@ class RestRequestValidatorConfig extends AbstractBundleConfig
      */
     public function getStoreModulesPattern(): string
     {
-        return RestRequestValidatorConfig::PATH_PATTERN_STORE_MODULES;
+        return static::PATH_PATTERN_STORE_MODULES;
     }
 }

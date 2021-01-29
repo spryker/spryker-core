@@ -1,3 +1,5 @@
 parameters:
+    checkGenericClassInNonGenericObjectType: false
+    checkMissingIterableValueType: false
     ignoreErrors:
         - '#Strict comparison using === between [a-zA-Z\\]* and null will always evaluate to false.#'

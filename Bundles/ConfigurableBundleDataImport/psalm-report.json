@@ -1,0 +1,18 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 45,
+            "line_to": 45,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Zed\\ConfigurableBundleDataImport\\Business\\ConfigurableBundleDataImportStep\\ConfigurableBundleTemplateImageWriterStep::addPublishEvents cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundleDataImport/src/Spryker/Zed/ConfigurableBundleDataImport/Business/ConfigurableBundleDataImportStep/ConfigurableBundleTemplateImageWriterStep.php",
+            "snippet": "            $productImageSetEntity->getFkResourceConfigurableBundleTemplate()",
+            "selected_text": "$productImageSetEntity->getFkResourceConfigurableBundleTemplate()",
+            "error_level": 3,
+            "shortcode": 78
+        }
+    ],
+    "deprecation": []
+}

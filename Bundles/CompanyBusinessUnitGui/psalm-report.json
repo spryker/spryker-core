@@ -1,0 +1,175 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 86,
+            "line_to": 86,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'array<array-key, int>' for Spryker\\Zed\\CompanyBusinessUnitGui\\Communication\\Form\\DataProvider\\CompanyBusinessUnitFormDataProvider::prepareCompanyChoices is incorrect, got 'array<array-key|mixed, int|mixed|null>'",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyBusinessUnitGui/src/Spryker/Zed/CompanyBusinessUnitGui/Communication/Form/DataProvider/CompanyBusinessUnitFormDataProvider.php",
+            "snippet": "     * @return int[] [company name => company id]",
+            "selected_text": "int[]",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 96,
+            "line_to": 96,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'array<array-key|mixed, int|mixed|null>' does not match the declared return type 'array<array-key, int>' for Spryker\\Zed\\CompanyBusinessUnitGui\\Communication\\Form\\DataProvider\\CompanyBusinessUnitFormDataProvider::prepareCompanyChoices",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyBusinessUnitGui/src/Spryker/Zed/CompanyBusinessUnitGui/Communication/Form/DataProvider/CompanyBusinessUnitFormDataProvider.php",
+            "snippet": "        return $result;",
+            "selected_text": "$result",
+            "error_level": 6,
+            "shortcode": 128
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 43,
+            "line_to": 43,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\CompanyBusinessUnitTransfer> variable $companyBusinessUnits",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyBusinessUnitGui/src/Spryker/Zed/CompanyBusinessUnitGui/Business/CompanyBusinessUnit/CompanyBusinessUnitGuiReader.php",
+            "snippet": "        if ($companyBusinessUnits->count() > 0) {",
+            "selected_text": "count",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 44,
+            "line_to": 44,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\CompanyBusinessUnitTransfer> variable $companyBusinessUnits",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyBusinessUnitGui/src/Spryker/Zed/CompanyBusinessUnitGui/Business/CompanyBusinessUnit/CompanyBusinessUnitGuiReader.php",
+            "snippet": "            $companyBusinessUnitName = $companyBusinessUnits->offsetGet(0)->getName();",
+            "selected_text": "offsetGet",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 65,
+            "line_to": 65,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\CompanyBusinessUnitGui\\Communication\\Controller\\AddCompanyBusinessUnitController::redirectResponse cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyBusinessUnitGui/src/Spryker/Zed/CompanyBusinessUnitGui/Communication/Controller/AddCompanyBusinessUnitController.php",
+            "snippet": "            return $this->redirectResponse($redirectUrl);",
+            "selected_text": "$redirectUrl",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 67,
+            "line_to": 67,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getName on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyBusinessUnitGui/src/Spryker/Zed/CompanyBusinessUnitGui/Communication/Controller/DeleteCompanyBusinessUnitController.php",
+            "snippet": "                    ->getName(),",
+            "selected_text": "getName",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 76,
+            "line_to": 76,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getName on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyBusinessUnitGui/src/Spryker/Zed/CompanyBusinessUnitGui/Communication/Controller/DeleteCompanyBusinessUnitController.php",
+            "snippet": "                ->getName(),",
+            "selected_text": "getName",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 81,
+            "line_to": 81,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\CompanyBusinessUnitGui\\Communication\\Controller\\EditCompanyBusinessUnitController::redirectResponse cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyBusinessUnitGui/src/Spryker/Zed/CompanyBusinessUnitGui/Communication/Controller/EditCompanyBusinessUnitController.php",
+            "snippet": "            return $this->redirectResponse($redirectUrl);",
+            "selected_text": "$redirectUrl",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 93,
+            "line_to": 93,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $result[mixed|null|string] using possibly null offset mixed|null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyBusinessUnitGui/src/Spryker/Zed/CompanyBusinessUnitGui/Communication/Form/DataProvider/CompanyBusinessUnitFormDataProvider.php",
+            "snippet": "            $result[$company->getName()] = $company->getIdCompany();",
+            "selected_text": "$result",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 126,
+            "line_to": 126,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyBusinessUnitGui/src/Spryker/Zed/CompanyBusinessUnitGui/Communication/Form/DataProvider/CompanyBusinessUnitFormDataProvider.php",
+            "snippet": "            $unitKey = sprintf('%s - %s', $businessUnit->getIdCompanyBusinessUnit(), $businessUnit->getName());",
+            "selected_text": "$businessUnit->getIdCompanyBusinessUnit()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 126,
+            "line_to": 126,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 3 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyBusinessUnitGui/src/Spryker/Zed/CompanyBusinessUnitGui/Communication/Form/DataProvider/CompanyBusinessUnitFormDataProvider.php",
+            "snippet": "            $unitKey = sprintf('%s - %s', $businessUnit->getIdCompanyBusinessUnit(), $businessUnit->getName());",
+            "selected_text": "$businessUnit->getName()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 78,
+            "line_to": 78,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyBusinessUnitGui/src/Spryker/Zed/CompanyBusinessUnitGui/Communication/Form/DataProvider/CompanyUserBusinessUnitFormDataProvider.php",
+            "snippet": "        return sprintf(static::FORMAT_NAME, $companyBusinessUnitTransfer->getName(), $companyBusinessUnitTransfer->getIdCompanyBusinessUnit());",
+            "selected_text": "$companyBusinessUnitTransfer->getName()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 78,
+            "line_to": 78,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 3 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyBusinessUnitGui/src/Spryker/Zed/CompanyBusinessUnitGui/Communication/Form/DataProvider/CompanyUserBusinessUnitFormDataProvider.php",
+            "snippet": "        return sprintf(static::FORMAT_NAME, $companyBusinessUnitTransfer->getName(), $companyBusinessUnitTransfer->getIdCompanyBusinessUnit());",
+            "selected_text": "$companyBusinessUnitTransfer->getIdCompanyBusinessUnit()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 139,
+            "line_to": 139,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\CompanyUnitAddress\\Persistence\\SpyCompanyUnitAddressToCompanyBusinessUnit> variable $spyCompanyUnitAddress",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyBusinessUnitGui/src/Spryker/Zed/CompanyBusinessUnitGui/Communication/Table/CompanyBusinessUnitTable.php",
+            "snippet": "        if (!$spyCompanyUnitAddress->isEmpty()) {",
+            "selected_text": "isEmpty",
+            "error_level": 3,
+            "shortcode": 113
+        }
+    ],
+    "deprecation": []
+}

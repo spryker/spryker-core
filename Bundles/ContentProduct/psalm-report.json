@@ -1,0 +1,67 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 66,
+            "line_to": 66,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'array<string, Generated\\Shared\\Transfer\\ContentProductAbstractListTypeTransfer>' for Spryker\\Client\\ContentProduct\\Mapper\\ContentProductAbstractListTypeMapper::executeProductAbstractListTypeByKeys is incorrect, got 'array<int(0)|string, Generated\\Shared\\Transfer\\ContentProductAbstractListTypeTransfer>'",
+            "file_name": "vendor/spryker/spryker/Bundles/ContentProduct/src/Spryker/Client/ContentProduct/Mapper/ContentProductAbstractListTypeMapper.php",
+            "snippet": "     * @phpstan-return array<string, \\Generated\\Shared\\Transfer\\ContentProductAbstractListTypeTransfer>",
+            "selected_text": "array<string, \\Generated\\Shared\\Transfer\\ContentProductAbstractListTypeTransfer>",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 96,
+            "line_to": 96,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'non-empty-array<int(0)|string, Generated\\Shared\\Transfer\\ContentProductAbstractListTypeTransfer>' does not match the declared return type 'array<string, Generated\\Shared\\Transfer\\ContentProductAbstractListTypeTransfer>' for Spryker\\Client\\ContentProduct\\Mapper\\ContentProductAbstractListTypeMapper::executeProductAbstractListTypeByKeys",
+            "file_name": "vendor/spryker/spryker/Bundles/ContentProduct/src/Spryker/Client/ContentProduct/Mapper/ContentProductAbstractListTypeMapper.php",
+            "snippet": "        return $contentProductAbstractListTypeTransfers;",
+            "selected_text": "$contentProductAbstractListTypeTransfers",
+            "error_level": 6,
+            "shortcode": 128
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 56,
+            "line_to": 56,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ContentProduct/src/Spryker/Client/ContentProduct/Mapper/ContentProductAbstractListTypeMapper.php",
+            "snippet": "                sprintf('There is no matching Term for ProductAbstractListType when provided with term %s.', $term)",
+            "selected_text": "$term",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 93,
+            "line_to": 93,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $contentProductAbstractListTypeTransfers[null|string] using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/ContentProduct/src/Spryker/Client/ContentProduct/Mapper/ContentProductAbstractListTypeMapper.php",
+            "snippet": "            $contentProductAbstractListTypeTransfers[$contentTypeContextTransfer->getKey()] = $productAbstractListTermToBannerTypeExecutor->execute($contentTypeContextTransfer);",
+            "selected_text": "$contentProductAbstractListTypeTransfers",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 47,
+            "line_to": 47,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\MessageTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/ContentProduct/src/Spryker/Zed/ContentProduct/Business/Validator/ContentProductAbstractListValidator.php",
+            "snippet": "        if ($contentParameterMessageTransfer->getMessages()->count()) {",
+            "selected_text": "count",
+            "error_level": 3,
+            "shortcode": 113
+        }
+    ],
+    "deprecation": []
+}

@@ -4,10 +4,10 @@
   "description": "CmsContentWidgetCmsBlockConnector module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/cms-block-storage": "^1.1.0 || ^2.0.0",
     "spryker/cms-content-widget": "^1.0.0",
-    "spryker/kernel": "^3.30.0"
+    "spryker/kernel": "^3.52.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

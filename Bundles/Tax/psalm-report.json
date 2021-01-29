@@ -808,6 +808,18 @@
         },
         {
             "severity": "info",
+            "line_from": 299,
+            "line_to": 299,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\Tax\\Persistence\\TaxQueryContainerInterface::queryTaxRate cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Tax/src/Spryker/Zed/Tax/Business/Model/TaxWriter.php",
+            "snippet": "            $taxRateEntity = $this->queryContainer->queryTaxRate($taxRateTransfer->getIdTaxRate())->findOne();",
+            "selected_text": "$taxRateTransfer->getIdTaxRate()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
             "line_from": 218,
             "line_to": 218,
             "type": "InvalidNullableReturnType",
@@ -952,8 +964,8 @@
         },
         {
             "severity": "info",
-            "line_from": 50,
-            "line_to": 50,
+            "line_from": 53,
+            "line_to": 53,
             "type": "InvalidNullableReturnType",
             "message": "The declared return type 'Generated\\Shared\\Transfer\\TaxRateTransfer' for Spryker\\Zed\\Tax\\Communication\\TaxCommunicationFactory::getTaxRateFormData is not nullable, but 'Generated\\Shared\\Transfer\\TaxRateTransfer|null' contains null",
             "file_name": "vendor/spryker/spryker/Bundles/Tax/src/Spryker/Zed/Tax/Communication/TaxCommunicationFactory.php",
@@ -964,8 +976,8 @@
         },
         {
             "severity": "info",
-            "line_from": 54,
-            "line_to": 55,
+            "line_from": 57,
+            "line_to": 58,
             "type": "NullableReturnStatement",
             "message": "The declared return type 'Generated\\Shared\\Transfer\\TaxRateTransfer' for Spryker\\Zed\\Tax\\Communication\\TaxCommunicationFactory::getTaxRateFormData is not nullable, but the function returns 'Generated\\Shared\\Transfer\\TaxRateTransfer|null'",
             "file_name": "vendor/spryker/spryker/Bundles/Tax/src/Spryker/Zed/Tax/Communication/TaxCommunicationFactory.php",
@@ -973,30 +985,6 @@
             "selected_text": "$taxRateFormDataProvider ? $taxRateFormDataProvider->getData()\n            : $this->createTaxRateFormDataProvider()->getData()",
             "error_level": 5,
             "shortcode": 139
-        },
-        {
-            "severity": "info",
-            "line_from": 46,
-            "line_to": 46,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Tax/src/Spryker/Zed/Tax/TaxDependencyProvider.php",
-            "snippet": "            return new TaxToCountryBridge($container->getLocator()->country()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 50,
-            "line_to": 50,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Tax/src/Spryker/Zed/Tax/TaxDependencyProvider.php",
-            "snippet": "            return $container->getLocator()->utilDateTime()->service();",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [

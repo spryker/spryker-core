@@ -53,4 +53,16 @@ interface ProductDiscontinuedProductLabelConnectorFacadeInterface
      * @return \Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer[]
      */
     public function findProductLabelProductAbstractRelationChanges(): array;
+
+    /**
+     * Specification:
+     *  - Removes label "Discontinued" if applicable for all applicable products.
+     *
+     * @api
+     *
+     * @param int[] $productConcreteIds
+     *
+     * @return void
+     */
+    public function removeProductAbstractRelationsForLabelInBulk(array $productConcreteIds): void;
 }

@@ -191,6 +191,7 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
     {
         $productConcreteQuery = $this->getFactory()
             ->createProductQuery();
+        /** @var \Propel\Runtime\Collection\ObjectCollection|null $productConcreteIds */
         $productConcreteIds = $productConcreteQuery
             ->filterByFkProductAbstract($idProductAbstract)
             ->select([SpyProductTableMap::COL_ID_PRODUCT])
@@ -305,7 +306,7 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
                 ->joinWithLocale()
             ->endUse()
             ->useSpyProductAbstractQuery()
-                ->joinWithSpyProductAbstractStore()
+                ->joinSpyProductAbstractStore()
                 ->useSpyProductAbstractStoreQuery()
                     ->joinWithSpyStore()
                 ->endUse()
@@ -446,6 +447,9 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
             ->createProductQuery()
             ->joinWithSpyProductAbstract()
             ->joinWithSpyProductLocalizedAttributes()
+            ->useSpyProductLocalizedAttributesQuery()
+                ->joinWithLocale()
+            ->endUse()
             ->filterBySku_In($productConcreteSkus)
             ->find();
 
@@ -583,6 +587,40 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
     {
         $productAbstractEntities = $this->getFactory()->createProductAbstractQuery()
             ->filterBySku_In($productAbstractSkus)
+            ->find();
+
+        return $this->mapProductAbstractEntitiesToProductAbstractTransfersWithoutRelations($productAbstractEntities);
+    }
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer[]
+     */
+    public function getActiveProductAbstractsByProductAbstractIds(array $productAbstractIds): array
+    {
+        /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Product\Persistence\SpyProductAbstract[] $productAbstractEntities */
+        $productAbstractEntities = $this->getFactory()
+            ->createProductAbstractQuery()
+            ->filterByIdProductAbstract_In($productAbstractIds)
+            ->joinWithSpyProduct()
+            ->useSpyProductQuery()
+                ->filterByIsActive(true)
+            ->endUse()
+            ->find();
+
+        return $this->mapProductAbstractEntitiesToProductAbstractTransfersWithoutRelations($productAbstractEntities);
+    }
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer[]
+     */
+    public function getRawProductAbstractsByProductAbstractIds(array $productAbstractIds): array
+    {
+        $productAbstractEntities = $this->getFactory()->createProductAbstractQuery()
+            ->filterByIdProductAbstract_In($productAbstractIds)
             ->find();
 
         return $this->mapProductAbstractEntitiesToProductAbstractTransfersWithoutRelations($productAbstractEntities);

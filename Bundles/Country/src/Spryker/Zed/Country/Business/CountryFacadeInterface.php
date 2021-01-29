@@ -14,6 +14,9 @@ use Generated\Shared\Transfer\CountryCollectionTransfer;
 interface CountryFacadeInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return void
@@ -21,6 +24,9 @@ interface CountryFacadeInterface
     public function install();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $iso2Code
@@ -30,6 +36,9 @@ interface CountryFacadeInterface
     public function hasCountry($iso2Code);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @deprecated Use {@link getCountryByIso2Code()} instead.
@@ -55,6 +64,7 @@ interface CountryFacadeInterface
     /**
      * Specification:
      * - Verifies if countries can be found by countryIso2Codes given in CheckoutDataTransfer.billingAddress and CheckoutDataTransfer.shippingAddress.
+     * - Verifies if countries can be found by countryIso2Codes given in CheckoutDataTransfer.shipments.shippingAddress.
      *
      * @api
      *
@@ -77,6 +87,9 @@ interface CountryFacadeInterface
     public function getCountryByIso3Code($iso3Code);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Generated\Shared\Transfer\CountryCollectionTransfer
@@ -84,6 +97,9 @@ interface CountryFacadeInterface
     public function getAvailableCountries();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $countryName

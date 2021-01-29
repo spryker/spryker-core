@@ -1,3 +1,7 @@
+{# @var cmsPage \Generated\Shared\Transfer\CmsPageTransfer #}
+{# @var cmsGlossary \Generated\Shared\Transfer\CmsGlossaryTransfer #}
+{# @var cmsVersion \Generated\Shared\Transfer\CmsVersionTransfer #}
+
 {% extends '@Cms/Layout/layout.twig' %}
 
 {% set pageName = '' %}
@@ -22,7 +26,7 @@
     {%  if isPageTemplateWithPlaceholders is not defined or isPageTemplateWithPlaceholders %}
         {{ editActionButton(url('/cms-gui/create-glossary', {'id-cms-page': cmsPage.fkPage}), 'Edit placeholders' | trans) }}
     {% endif %}
-    {{ include ('@CmsGui/_template/activate-button.twig', { 'isActive': cmsPage.isActive, 'idCmsPage': cmsPage.fkPage }) }}
+    {{ include('@CmsGui/_template/activate-button.twig') }}
     {{ backActionButton('/cms-gui/list-page', 'Back to CMS' | trans) }}
 {% endblock %}
 
@@ -32,18 +36,18 @@
         <div class="alert alert-info">
             <p>
                 <i class="fa fa-info-circle" aria-hidden="true"></i>
-                {% filter trans|raw -%}
+                {% apply trans|raw -%}
                     You are viewing a published page. It was published
-                {%- endfilter %}
+                {%- endapply %}
                 {% if cmsVersion.firstName is not null %}
                     {{ 'by' | trans }} <b>{{ cmsVersion.firstName }} {{ cmsVersion.lastName }}</b>
                 {% endif %}
                     {{ 'on' | trans }} <b>{{ cmsVersion.createdAt | formatDateTime }}</b>.
             </p>
             <p>
-                {% filter trans|raw -%}
+                {% apply trans|raw -%}
                     You can edit the page or placeholders to modify the current working draft. You can publish the current working draft to create a new version
-                {%- endfilter %}
+                {%- endapply %}
             </p>
         </div>
     {% endif %}

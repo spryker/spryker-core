@@ -3,6 +3,18 @@
     "warning": [
         {
             "severity": "info",
+            "line_from": 38,
+            "line_to": 38,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getPriceToPay on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/Nopayment/src/Spryker/Zed/Nopayment/Business/Nopayment/NopaymentMethodFilter.php",
+            "snippet": "        if ($quoteTransfer->getTotals() && $quoteTransfer->getTotals()->getPriceToPay() === 0) {",
+            "selected_text": "getPriceToPay",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
             "line_from": 62,
             "line_to": 62,
             "type": "PossiblyInvalidMethodCall",

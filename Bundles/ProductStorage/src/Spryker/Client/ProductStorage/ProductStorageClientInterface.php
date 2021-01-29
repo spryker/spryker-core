@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\ProductStorage;
 
+use Generated\Shared\Transfer\ProductConcreteStorageTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductStorageCriteriaTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
@@ -109,6 +110,11 @@ interface ProductStorageClientInterface
     public function findProductConcreteStorageData(int $idProductConcrete, string $localeName): ?array;
 
     /**
+     * Specification:
+     * - Filters restricted products.
+     * - Retrieves product concrete storage data by given product concrete ids.
+     * - Returns an array of ProductConcreteStorageTransfers mapped from product concrete storage data.
+     *
      * @api
      *
      * @param int[] $productIds
@@ -213,6 +219,11 @@ interface ProductStorageClientInterface
     public function isProductConcreteRestricted(int $idProductConcrete): bool;
 
     /**
+     * Specification:
+     * - Filters restricted products.
+     * - Retrieves product concrete storage data by given mapping type and identifier.
+     * - Returns null if product concrete storage data was not found.
+     *
      * @api
      *
      * @param string $mappingType
@@ -374,4 +385,53 @@ interface ProductStorageClientInterface
         array $identifiers,
         string $localeName
     ): array;
+
+    /**
+     * Specification:
+     * - Requires ProductConcreteStorageTransfer.url, ProductConcreteStorageTransfer.attributes and ProductConcreteStorageTransfer.superAttributesDefinition properties to be set.
+     * - Builds product concrete URL.
+     * - Returns resolved URL.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteStorageTransfer $productConcreteStorageTransfer
+     *
+     * @return string
+     */
+    public function buildProductConcreteUrl(ProductConcreteStorageTransfer $productConcreteStorageTransfer): string;
+
+    /**
+     * Specification:
+     * - Filters restricted products.
+     * - Retrieves product concrete resources from storage in bulk by ids and locale name.
+     *
+     * @api
+     *
+     * @param int[] $productConcreteIds
+     * @param string $localeName
+     *
+     * @return array
+     */
+    public function getBulkProductConcreteStorageData(
+        array $productConcreteIds,
+        string $localeName
+    ): array;
+
+    /**
+     * Specification:
+     * - Expands the product view with an attribute map and a product variant map.
+     * - Marks the product variants with an only one possible value as the selected ones.
+     * - Expands the product view with product concrete ID using the values of `selectedAttributes`.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer
+     */
+    public function expandProductViewWithProductVariant(
+        ProductViewTransfer $productViewTransfer,
+        string $localeName
+    ): ProductViewTransfer;
 }

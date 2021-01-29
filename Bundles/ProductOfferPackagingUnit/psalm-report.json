@@ -27,18 +27,6 @@
         },
         {
             "severity": "info",
-            "line_from": 45,
-            "line_to": 45,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Orm\\Zed\\Oms\\Persistence\\SpyOmsEventTimeoutQuery::innerjoinprocess does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductOfferPackagingUnit/src/Spryker/Zed/ProductOfferPackagingUnit/Persistence/ProductOfferPackagingUnitRepository.php",
-            "snippet": "            ->innerJoinProcess()",
-            "selected_text": "innerJoinProcess",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 55,
             "line_to": 55,
             "type": "PossiblyNullArgument",
@@ -48,18 +36,6 @@
             "selected_text": "$reservationRequestTransfer->getSku()",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 67,
-            "line_to": 67,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Propel\\Runtime\\ActiveQuery\\ModelCriteria::useorderquery does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductOfferPackagingUnit/src/Spryker/Zed/ProductOfferPackagingUnit/Persistence/ProductOfferPackagingUnitRepository.php",
-            "snippet": "                ->useOrderQuery()",
-            "selected_text": "useOrderQuery",
-            "error_level": 4,
-            "shortcode": 219
         },
         {
             "severity": "info",

@@ -11,10 +11,11 @@ use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\SearchElasticsearch\Dependency\Client\SearchElasticsearchToMoneyClientBridge;
 use Spryker\Client\SearchElasticsearch\Dependency\Client\SearchElasticsearchToMoneyClientInterface;
+use Spryker\Client\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreClientBridge;
+use Spryker\Client\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreClientInterface;
 use Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToLocaleClientBridge;
 use Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToLocaleClientInterface;
-use Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreClientBridge;
-use Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreClientInterface;
+use Spryker\Shared\SearchElasticsearch\Dependency\Service\SearchElasticsearchToUtilEncodingServiceBridge;
 
 /**
  * @method \Spryker\Client\SearchElasticsearch\SearchElasticsearchConfig getConfig()
@@ -28,6 +29,8 @@ class SearchElasticsearchDependencyProvider extends AbstractDependencyProvider
     public const PLUGINS_SEARCH_CONFIG_EXPANDER = 'PLUGINS_SEARCH_CONFIG_EXPANDER';
     public const PLUGINS_SEARCH_CONFIG_BUILDER = 'PLUGINS_SEARCH_CONFIG_BUILDER';
 
+    public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+
     /**
      * @param \Spryker\Client\Kernel\Container $container
      *
@@ -40,6 +43,7 @@ class SearchElasticsearchDependencyProvider extends AbstractDependencyProvider
         $container = $this->addSearchConfigBuilderPlugins($container);
         $container = $this->addSearchConfigExpanderPlugins($container);
         $container = $this->addMoneyClient($container);
+        $container = $this->addUtilEncodingService($container);
 
         return $container;
     }
@@ -134,6 +138,22 @@ class SearchElasticsearchDependencyProvider extends AbstractDependencyProvider
         $container->set(static::CLIENT_MONEY, function (Container $container): SearchElasticsearchToMoneyClientInterface {
             return new SearchElasticsearchToMoneyClientBridge(
                 $container->getLocator()->money()->client()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addUtilEncodingService(Container $container): Container
+    {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
+            return new SearchElasticsearchToUtilEncodingServiceBridge(
+                $container->getLocator()->utilEncoding()->service()
             );
         });
 

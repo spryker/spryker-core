@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MerchantOrderCollectionTransfer;
 use Generated\Shared\Transfer\MerchantOrderCriteriaTransfer;
+use Generated\Shared\Transfer\MerchantOrderItemCollectionTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemResponseTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemTransfer;
@@ -43,7 +44,7 @@ interface MerchantSalesOrderFacadeInterface
     public function createMerchantOrderCollection(OrderTransfer $orderTransfer): MerchantOrderCollectionTransfer;
 
     /**
-     * Specification
+     * Specification:
      * - Requires MerchantOrderItem.idMerchantOrderItem transfer field to be set.
      * - Updates existing merchant order item based on MerchantOrderItem.idMerchantOrderItem in database.
      * - Returns MerchantOrderItemResponse transfer with isSuccessful = false when merchant order item not found.
@@ -76,6 +77,7 @@ interface MerchantSalesOrderFacadeInterface
      * Specification:
      * - Returns a merchant order found using MerchantOrderCriteriaTransfer.
      * - Returns NULL if merchant order is not found.
+     * - Executes MerchantOrderExpanderPluginInterface plugins.
      *
      * @api
      *
@@ -117,7 +119,7 @@ interface MerchantSalesOrderFacadeInterface
     ): SpySalesOrderItemEntityTransfer;
 
     /**
-     * Specification
+     * Specification:
      * - Expands expense transfer with merchant reference from items.
      * - Doesn't expand if items have different merchant references or given expense is not of shipment type.
      * - Requires ShipmentGroup.items property to be set.
@@ -136,7 +138,7 @@ interface MerchantSalesOrderFacadeInterface
     ): ExpenseTransfer;
 
     /**
-     * Specification
+     * Specification:
      * - Expands order items with merchant order reference.
      *
      * @api
@@ -158,4 +160,28 @@ interface MerchantSalesOrderFacadeInterface
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function expandOrderWithMerchantReferences(OrderTransfer $orderTransfer): OrderTransfer;
+
+    /**
+     * Specification:
+     * - Returns number of merchant orders filtered by given merchant order criteria.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer
+     *
+     * @return int
+     */
+    public function getMerchantOrdersCount(MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer): int;
+
+    /**
+     * Specification:
+     * - Returns a merchant order item collection found using provided criteria.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantOrderItemCriteriaTransfer $merchantOrderItemCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantOrderItemCollectionTransfer
+     */
+    public function getMerchantOrderItemCollection(MerchantOrderItemCriteriaTransfer $merchantOrderItemCriteriaTransfer): MerchantOrderItemCollectionTransfer;
 }

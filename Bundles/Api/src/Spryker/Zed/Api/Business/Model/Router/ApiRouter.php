@@ -24,12 +24,12 @@ class ApiRouter implements RouterInterface
     /**
      * @var \Symfony\Component\Routing\RequestContext
      */
-    private $context;
+    protected $context;
 
     /**
      * @var \Silex\Application
      */
-    private $app;
+    protected $app;
 
     /**
      * @param \Silex\Application $app

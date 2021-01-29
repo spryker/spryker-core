@@ -712,6 +712,22 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @api
      *
+     * @param string[] $productConcreteSkus
+     *
+     * @return void
+     */
+    public function deactivateProductConcretesByConcreteSkus(array $productConcreteSkus): void
+    {
+        $this->getFactory()
+            ->createProductConcreteActivator()
+            ->deactivateProductConcretesByConcreteSkus($productConcreteSkus);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param array $superAttributes
      * @param int $idProductConcrete
      *

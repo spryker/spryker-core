@@ -8,8 +8,10 @@
 namespace Spryker\Zed\User\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\User\Communication\Form\ActivateUserForm;
 use Spryker\Zed\User\Communication\Form\DataProvider\UserFormDataProvider;
 use Spryker\Zed\User\Communication\Form\DataProvider\UserUpdateFormDataProvider;
+use Spryker\Zed\User\Communication\Form\DeactivateUserForm;
 use Spryker\Zed\User\Communication\Form\ResetPasswordForm;
 use Spryker\Zed\User\Communication\Form\UserDeleteConfirmForm;
 use Spryker\Zed\User\Communication\Form\UserForm;
@@ -95,6 +97,22 @@ class UserCommunicationFactory extends AbstractCommunicationFactory
     public function getUserDeleteConfirmForm(): FormInterface
     {
         return $this->getFormFactory()->create(UserDeleteConfirmForm::class);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createActivateUserForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(ActivateUserForm::class);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createDeactivateUserForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(DeactivateUserForm::class);
     }
 
     /**

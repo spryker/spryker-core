@@ -1,0 +1,126 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 98,
+            "line_to": 98,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\CompanyGui\\Communication\\Controller\\EditCompanyController::redirectResponse cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyGui/src/Spryker/Zed/CompanyGui/Communication/Controller/EditCompanyController.php",
+            "snippet": "            return $this->redirectResponse($redirectUrl);",
+            "selected_text": "$redirectUrl",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 114,
+            "line_to": 114,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\CompanyGui\\Communication\\Controller\\EditCompanyController::redirectResponse cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyGui/src/Spryker/Zed/CompanyGui/Communication/Controller/EditCompanyController.php",
+            "snippet": "        return $this->redirectResponse($redirectUrl);",
+            "selected_text": "$redirectUrl",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 132,
+            "line_to": 132,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\CompanyGui\\Communication\\Controller\\EditCompanyController::redirectResponse cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyGui/src/Spryker/Zed/CompanyGui/Communication/Controller/EditCompanyController.php",
+            "snippet": "            return $this->redirectResponse($redirectUrl);",
+            "selected_text": "$redirectUrl",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 146,
+            "line_to": 146,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\CompanyGui\\Communication\\Controller\\EditCompanyController::redirectResponse cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyGui/src/Spryker/Zed/CompanyGui/Communication/Controller/EditCompanyController.php",
+            "snippet": "        return $this->redirectResponse($redirectUrl);",
+            "selected_text": "$redirectUrl",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 164,
+            "line_to": 164,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\CompanyGui\\Communication\\Controller\\EditCompanyController::redirectResponse cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyGui/src/Spryker/Zed/CompanyGui/Communication/Controller/EditCompanyController.php",
+            "snippet": "            return $this->redirectResponse($redirectUrl);",
+            "selected_text": "$redirectUrl",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 176,
+            "line_to": 176,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\CompanyGui\\Communication\\Controller\\EditCompanyController::redirectResponse cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyGui/src/Spryker/Zed/CompanyGui/Communication/Controller/EditCompanyController.php",
+            "snippet": "        return $this->redirectResponse($redirectUrl);",
+            "selected_text": "$redirectUrl",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 194,
+            "line_to": 194,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\CompanyGui\\Communication\\Controller\\EditCompanyController::redirectResponse cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyGui/src/Spryker/Zed/CompanyGui/Communication/Controller/EditCompanyController.php",
+            "snippet": "            return $this->redirectResponse($redirectUrl);",
+            "selected_text": "$redirectUrl",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 206,
+            "line_to": 206,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\CompanyGui\\Communication\\Controller\\EditCompanyController::redirectResponse cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyGui/src/Spryker/Zed/CompanyGui/Communication/Controller/EditCompanyController.php",
+            "snippet": "        return $this->redirectResponse($redirectUrl);",
+            "selected_text": "$redirectUrl",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 161,
+            "line_to": 161,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\CompanyGui\\Communication\\Table\\CompanyTable::generateButton cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyGui/src/Spryker/Zed/CompanyGui/Communication/Table/CompanyTable.php",
+            "snippet": "                $button->getUrl(),",
+            "selected_text": "$button->getUrl()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 162,
+            "line_to": 162,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Zed\\CompanyGui\\Communication\\Table\\CompanyTable::generateButton cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyGui/src/Spryker/Zed/CompanyGui/Communication/Table/CompanyTable.php",
+            "snippet": "                $button->getTitle(),",
+            "selected_text": "$button->getTitle()",
+            "error_level": 3,
+            "shortcode": 78
+        }
+    ],
+    "deprecation": []
+}

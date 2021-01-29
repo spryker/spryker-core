@@ -15,6 +15,7 @@ use InvalidArgumentException;
 use Serializable;
 use Spryker\Service\UtilEncoding\Model\Json;
 use Spryker\Shared\Kernel\Transfer\Exception\ArrayAccessReadyOnlyException;
+use Spryker\Shared\Kernel\Transfer\Exception\NullValueException;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Shared\Kernel\Transfer\Exception\TransferUnserializationException;
 
@@ -194,46 +195,23 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
      */
     protected function processArrayObject($elementType, $arrayObject, $ignoreMissingProperty = false): ArrayObject
     {
-        $transferObjectsArray = new ArrayObject();
-        foreach ($arrayObject as $arrayElement) {
+        $result = new ArrayObject();
+        foreach ($arrayObject as $key => $arrayElement) {
             if (!is_array($arrayElement)) {
-                $transferObjectsArray->append(new $elementType());
+                $result->offsetSet($key, new $elementType());
 
                 continue;
             }
 
-            if ($this->isAssociativeArray($arrayElement)) {
+            if ($arrayElement) {
                 /** @var \Spryker\Shared\Kernel\Transfer\TransferInterface $transferObject */
                 $transferObject = new $elementType();
                 $transferObject->fromArray($arrayElement, $ignoreMissingProperty);
-                $transferObjectsArray->append($transferObject);
-
-                continue;
-            }
-
-            foreach ($arrayElement as $arrayElementItem) {
-                /** @var \Spryker\Shared\Kernel\Transfer\TransferInterface $transferObject */
-                $transferObject = new $elementType();
-                $transferObject->fromArray($arrayElementItem, $ignoreMissingProperty);
-                $transferObjectsArray->append($transferObject);
+                $result->offsetSet($key, $transferObject);
             }
         }
 
-        return $transferObjectsArray;
-    }
-
-    /**
-     * @param array $arr
-     *
-     * @return bool
-     */
-    protected function isAssociativeArray(array $arr): bool
-    {
-        if ($arr === []) {
-            return false;
-        }
-
-        return array_keys($arr) !== range(0, count($arr) - 1);
+        return $result;
     }
 
     /**
@@ -430,5 +408,19 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
     public function offsetUnset($offset)
     {
         throw new ArrayAccessReadyOnlyException('Transfer object as an array is available only for read');
+    }
+
+    /**
+     * @param string $propertyName
+     *
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\NullValueException
+     *
+     * @return void
+     */
+    protected function throwNullValueException(string $propertyName): void
+    {
+        throw new NullValueException(
+            sprintf('Property "%s" of transfer `%s` is null.', $propertyName, static::class)
+        );
     }
 }

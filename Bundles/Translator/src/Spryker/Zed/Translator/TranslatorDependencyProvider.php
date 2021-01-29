@@ -7,21 +7,33 @@
 
 namespace Spryker\Zed\Translator;
 
+use Spryker\Shared\Kernel\ContainerInterface;
 use Spryker\Shared\Kernel\Store;
-use Spryker\Shared\TranslatorExtension\Dependency\Plugin\TranslatorPluginInterface;
+use Spryker\Shared\TranslatorExtension\Dependency\Plugin\Translator\TranslatorPluginInterface;
+use Spryker\Shared\TranslatorExtension\Dependency\Plugin\TranslatorPluginInterface as LegacyTranslatorPluginInterface;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Translator\Communication\Plugin\TranslatorPlugin;
+use Spryker\Zed\Translator\Communication\Plugin\Translator\TranslatorPlugin;
+use Spryker\Zed\Translator\Communication\Plugin\TranslatorPlugin as LegacyTranslatorPlugin;
 use Spryker\Zed\Translator\Dependency\Facade\TranslatorToLocaleFacadeBridge;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @method \Spryker\Zed\Translator\TranslatorConfig getConfig()
  */
 class TranslatorDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const SERVICE_TRANSLATOR = 'SERVICE_TRANSLATOR';
+    /**
+     * @uses \Spryker\Zed\Translator\Communication\Plugin\Application\TranslatorApplicationPlugin::SERVICE_TRANSLATOR
+     */
+    public const SERVICE_TRANSLATOR = 'translator';
+
+    /**
+     * @deprecated Will be removed in favor of accessing the service you need directly.
+     */
     public const APPLICATION = 'APPLICATION';
+
     public const STORE = 'STORE';
 
     public const FACADE_LOCALE = 'FACADE_LOCALE';
@@ -54,6 +66,8 @@ class TranslatorDependencyProvider extends AbstractBundleDependencyProvider
         $container = parent::provideCommunicationLayerDependencies($container);
 
         $container = $this->addApplication($container);
+
+        $container = $this->addTranslator($container);
         $container = $this->addLocaleFacade($container);
         $container = $this->addTranslatorPlugin($container);
 
@@ -61,6 +75,22 @@ class TranslatorDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addTranslator(Container $container): Container
+    {
+        $container->set(static::SERVICE_TRANSLATOR, function (ContainerInterface $container) {
+            return $container->getApplicationService(static::SERVICE_TRANSLATOR);
+        });
+
+        return $container;
+    }
+
+    /**
+     * @deprecated Please add the service you need directly.
+     *
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -109,18 +139,30 @@ class TranslatorDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addTranslatorPlugin(Container $container): Container
     {
-        $container->set(static::PLUGIN_TRANSLATOR, function (): TranslatorPluginInterface {
-            return $this->getTranslatorPlugin();
+        $container->set(static::PLUGIN_TRANSLATOR, function () {
+            if (interface_exists(TranslatorInterface::class)) {
+                return $this->getTranslatorPlugin();
+            }
+
+            return $this->getLegacyTranslatorPlugin();
         });
 
         return $container;
     }
 
     /**
-     * @return \Spryker\Shared\TranslatorExtension\Dependency\Plugin\TranslatorPluginInterface
+     * @return \Spryker\Shared\TranslatorExtension\Dependency\Plugin\Translator\TranslatorPluginInterface
      */
     protected function getTranslatorPlugin(): TranslatorPluginInterface
     {
         return new TranslatorPlugin();
+    }
+
+    /**
+     * @return \Spryker\Shared\TranslatorExtension\Dependency\Plugin\TranslatorPluginInterface
+     */
+    protected function getLegacyTranslatorPlugin(): LegacyTranslatorPluginInterface
+    {
+        return new LegacyTranslatorPlugin();
     }
 }

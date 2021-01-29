@@ -106,6 +106,8 @@ class IndexController extends AbstractController
             ->getFactory()
             ->createDiscountFormTabs($discountForm, $voucherForm, $discountConfiguratorTransfer);
 
+        $discountVisibilityForm = $this->getFactory()->createDiscountVisibilityForm();
+
         return [
             'discountForm' => $discountForm->createView(),
             'idDiscount' => $idDiscount,
@@ -113,6 +115,7 @@ class IndexController extends AbstractController
             'voucherForm' => $voucherForm->createView(),
             'discountConfigurator' => $discountConfiguratorTransfer,
             'discountFormTabs' => $discountFormTabs->createView(),
+            'discountVisibilityForm' => $discountVisibilityForm->createView(),
         ];
     }
 
@@ -130,6 +133,10 @@ class IndexController extends AbstractController
             $voucherCreateInfoTransfer = $this->getFacade()->saveVoucherCodes($voucherForm->getData());
 
             return $this->addVoucherCreateMessage($voucherCreateInfoTransfer);
+        }
+
+        foreach ($voucherForm->getErrors(true) as $formError) {
+            $this->addErrorMessage($formError->getMessage());
         }
 
         return false;
@@ -247,8 +254,20 @@ class IndexController extends AbstractController
     public function toggleDiscountVisibilityAction(Request $request)
     {
         $idDiscount = $this->castId($request->query->get(self::URL_PARAM_ID_DISCOUNT));
-        $visibility = $request->query->get(self::URL_PARAM_VISIBILITY);
-        $redirectUrl = $request->query->get(self::URL_PARAM_REDIRECT_URL);
+
+        $form = $this->getFactory()->createDiscountVisibilityForm()->handleRequest($request);
+        $redirectUrl = $request->query->get(static::URL_PARAM_REDIRECT_URL);
+        if (!$redirectUrl) {
+            $redirectUrl = $this->createEditRedirectUrl($idDiscount);
+        }
+
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            $this->addErrorMessage('CSRF token is not valid.');
+
+            return $this->redirectResponse($redirectUrl);
+        }
+
+        $visibility = $request->get(static::URL_PARAM_VISIBILITY);
 
         $isActive = mb_convert_case($visibility, MB_CASE_LOWER, 'UTF-8') == 'activate' ? true : false;
 
@@ -261,10 +280,6 @@ class IndexController extends AbstractController
                 'Discount successfully %s.',
                 $isActive ? 'activated' : 'deactivated'
             ));
-        }
-
-        if (!$redirectUrl) {
-            $redirectUrl = $this->createEditRedirectUrl($idDiscount);
         }
 
         return new RedirectResponse($redirectUrl);

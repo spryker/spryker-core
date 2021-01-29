@@ -8,8 +8,11 @@
 namespace Spryker\Zed\MerchantOms\Persistence;
 
 use Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItemQuery;
+use Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateHistoryQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\MerchantOms\MerchantOmsDependencyProvider;
+use Spryker\Zed\MerchantOms\Persistence\Propel\Mapper\MerchantOmsMapper;
+use Spryker\Zed\MerchantOms\Persistence\Propel\Mapper\StateMachineItemMapper;
 
 /**
  * @method \Spryker\Zed\MerchantOms\MerchantOmsConfig getConfig()
@@ -23,5 +26,29 @@ class MerchantOmsPersistenceFactory extends AbstractPersistenceFactory
     public function getMerchantSalesOrderItemPropelQuery(): SpyMerchantSalesOrderItemQuery
     {
         return $this->getProvidedDependency(MerchantOmsDependencyProvider::PROPEL_QUERY_MERCHANT_SALES_ORDER_ITEM);
+    }
+
+    /**
+     * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateHistoryQuery
+     */
+    public function getStateMachineItemStateHistoryPropelQuery(): SpyStateMachineItemStateHistoryQuery
+    {
+        return $this->getProvidedDependency(MerchantOmsDependencyProvider::PROPEL_QUERY_STATE_MACHINE_ITEM_STATE_HISTORY);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantOms\Persistence\Propel\Mapper\StateMachineItemMapper
+     */
+    public function createStateMachineItemMapper(): StateMachineItemMapper
+    {
+        return new StateMachineItemMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantOms\Persistence\Propel\Mapper\MerchantOmsMapper
+     */
+    public function createMerchantOmsMapper(): MerchantOmsMapper
+    {
+        return new MerchantOmsMapper();
     }
 }

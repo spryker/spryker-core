@@ -4,14 +4,15 @@
   "description": "MerchantProfile module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/country": "^3.0.0",
     "spryker/glossary": "^3.0.0",
     "spryker/kernel": "^3.33.0",
     "spryker/locale": "^3.0.0",
     "spryker/merchant": "^3.0.0",
     "spryker/merchant-extension": "^1.1.0",
-    "spryker/propel-orm": "^1.0.0"
+    "spryker/propel-orm": "^1.0.0",
+    "spryker/transfer": "^3.25.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

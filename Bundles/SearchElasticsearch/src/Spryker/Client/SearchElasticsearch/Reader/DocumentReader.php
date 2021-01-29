@@ -11,7 +11,6 @@ use Elastica\Client;
 use Elastica\Document;
 use Elastica\Index;
 use Generated\Shared\Transfer\SearchDocumentTransfer;
-use Spryker\Client\SearchElasticsearch\SearchElasticsearchConfig;
 
 class DocumentReader implements DocumentReaderInterface
 {
@@ -21,18 +20,11 @@ class DocumentReader implements DocumentReaderInterface
     protected $elasticaClient;
 
     /**
-     * @var \Spryker\Client\SearchElasticsearch\SearchElasticsearchConfig
-     */
-    protected $config;
-
-    /**
      * @param \Elastica\Client $elasticaClient
-     * @param \Spryker\Client\SearchElasticsearch\SearchElasticsearchConfig $config
      */
-    public function __construct(Client $elasticaClient, SearchElasticsearchConfig $config)
+    public function __construct(Client $elasticaClient)
     {
         $this->elasticaClient = $elasticaClient;
-        $this->config = $config;
     }
 
     /**
@@ -42,15 +34,13 @@ class DocumentReader implements DocumentReaderInterface
      */
     public function readDocument(SearchDocumentTransfer $searchDocumentTransfer): SearchDocumentTransfer
     {
-        $elasticsearchContextTransfer = $searchDocumentTransfer->requireSearchContext()
-            ->getSearchContext()
-            ->requireElasticsearchContext()
-            ->getElasticsearchContext();
-        $indexName = $elasticsearchContextTransfer->requireIndexName()->getIndexName();
-        $elasticaIndex = $this->elasticaClient->getIndex($indexName);
-        $typeName = $elasticsearchContextTransfer->getTypeName() ?? $this->readMappingTypeNameFromElasticsearch($elasticaIndex);
-
-        $elasticaDocument = $elasticaIndex->getType($typeName)->getDocument($searchDocumentTransfer->getId());
+        $elasticaDocument = $this->elasticaClient
+            ->getIndex(
+                $this->getIndexName($searchDocumentTransfer)
+            )
+            ->getDocument(
+                $searchDocumentTransfer->getId()
+            );
 
         return $this->mapElasticaDocumentToSearchDocumentTransfer($elasticaDocument, $searchDocumentTransfer);
     }
@@ -78,5 +68,20 @@ class DocumentReader implements DocumentReaderInterface
     protected function readMappingTypeNameFromElasticsearch(Index $elasticaIndex): string
     {
         return key($elasticaIndex->getMapping());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer $searchDocumentTransfer
+     *
+     * @return string
+     */
+    protected function getIndexName(SearchDocumentTransfer $searchDocumentTransfer): string
+    {
+        return $searchDocumentTransfer->requireSearchContext()
+            ->getSearchContext()
+            ->requireElasticsearchContext()
+            ->getElasticsearchContext()
+            ->requireIndexName()
+            ->getIndexName();
     }
 }

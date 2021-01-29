@@ -3,18 +3,6 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 169,
-            "line_to": 169,
-            "type": "PossiblyInvalidArgument",
-            "message": "Argument 1 of Symfony\\Component\\Form\\FormFactoryInterface::create expects string, possibly different type Symfony\\Component\\Form\\FormTypeInterface|string provided",
-            "file_name": "vendor/spryker/spryker/Bundles/StepEngine/src/Spryker/Yves/StepEngine/Form/FormCollectionHandler.php",
-            "snippet": "        return $this->formFactory->create($formType, null, $formOptions);",
-            "selected_text": "$formType",
-            "error_level": 3,
-            "shortcode": 92
-        },
-        {
-            "severity": "info",
             "line_from": 134,
             "line_to": 134,
             "type": "InvalidOperand",

@@ -1,0 +1,30 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 54,
+            "line_to": 54,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method requireItem on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CartNoteMerchantPortalGui/src/Spryker/Zed/CartNoteMerchantPortalGui/Communication/Expander/MerchantOrderItemTableExpander.php",
+            "snippet": "                ->requireItem()",
+            "selected_text": "requireItem",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 56,
+            "line_to": 56,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getCartNote on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CartNoteMerchantPortalGui/src/Spryker/Zed/CartNoteMerchantPortalGui/Communication/Expander/MerchantOrderItemTableExpander.php",
+            "snippet": "                ->getCartNote();",
+            "selected_text": "getCartNote",
+            "error_level": 3,
+            "shortcode": 83
+        }
+    ],
+    "deprecation": []
+}

@@ -9,11 +9,11 @@ namespace Spryker\Zed\SearchElasticsearch\Business;
 
 use Elastica\Client;
 use Elastica\Snapshot as ElasticaSnapshot;
-use Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreClientInterface;
+use Spryker\Shared\SearchElasticsearch\Dependency\Service\SearchElasticsearchToUtilEncodingServiceInterface;
 use Spryker\Shared\SearchElasticsearch\ElasticaClient\ElasticaClientFactory;
 use Spryker\Shared\SearchElasticsearch\ElasticaClient\ElasticaClientFactoryInterface;
-use Spryker\Shared\SearchElasticsearch\Index\IndexNameResolver;
-use Spryker\Shared\SearchElasticsearch\Index\IndexNameResolverInterface;
+use Spryker\Shared\SearchElasticsearch\MappingType\MappingTypeSupportDetector;
+use Spryker\Shared\SearchElasticsearch\MappingType\MappingTypeSupportDetectorInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\SearchElasticsearch\Business\Definition\Builder\IndexDefinitionBuilder;
 use Spryker\Zed\SearchElasticsearch\Business\Definition\Builder\IndexDefinitionBuilderInterface;
@@ -31,10 +31,12 @@ use Spryker\Zed\SearchElasticsearch\Business\Installer\Index\IndexInstallBroker;
 use Spryker\Zed\SearchElasticsearch\Business\Installer\Index\IndexInstallBrokerInterface;
 use Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Install\IndexInstaller as ES6IndexInstaller;
 use Spryker\Zed\SearchElasticsearch\Business\Installer\Index\InstallerInterface;
-use Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Mapping\MappingBuilder;
+use Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Mapping\MappingBuilderFactory;
+use Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Mapping\MappingBuilderFactoryInterface;
 use Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Mapping\MappingBuilderInterface;
 use Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Update\IndexSettingsUpdater;
-use Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Update\IndexUpdater;
+use Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Update\IndexUpdaterFactory;
+use Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Update\IndexUpdaterFactoryInterface;
 use Spryker\Zed\SearchElasticsearch\Business\Installer\IndexMap\Cleaner\IndexMapCleaner as CleanerIndexMapCleaner;
 use Spryker\Zed\SearchElasticsearch\Business\Installer\IndexMap\Cleaner\IndexMapCleanerInterface;
 use Spryker\Zed\SearchElasticsearch\Business\Installer\IndexMap\Generator\IndexMapGenerator as GeneratorIndexMapGenerator;
@@ -45,7 +47,8 @@ use Spryker\Zed\SearchElasticsearch\Business\Snapshot\Repository;
 use Spryker\Zed\SearchElasticsearch\Business\Snapshot\RepositoryInterface;
 use Spryker\Zed\SearchElasticsearch\Business\Snapshot\Snapshot;
 use Spryker\Zed\SearchElasticsearch\Business\Snapshot\SnapshotInterface;
-use Spryker\Zed\SearchElasticsearch\Dependency\Service\SearchElasticsearchToUtilEncodingServiceInterface;
+use Spryker\Zed\SearchElasticsearch\Business\SourceIdentifier\SourceIdentifier;
+use Spryker\Zed\SearchElasticsearch\Business\SourceIdentifier\SourceIdentifierInterface;
 use Spryker\Zed\SearchElasticsearch\Dependency\Service\SearchElasticsearchToUtilSanitizeServiceInterface;
 use Spryker\Zed\SearchElasticsearch\SearchElasticsearchDependencyProvider;
 use Twig\Environment;
@@ -73,7 +76,8 @@ class SearchElasticsearchBusinessFactory extends AbstractBusinessFactory
     {
         return new IndexDefinitionLoader(
             $this->createIndexDefinitionFinder(),
-            $this->createIndexDefinitionReader()
+            $this->createIndexDefinitionReader(),
+            $this->createSourceIdentifier()
         );
     }
 
@@ -98,7 +102,7 @@ class SearchElasticsearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\SearchElasticsearch\Dependency\Service\SearchElasticsearchToUtilEncodingServiceInterface
+     * @return \Spryker\Shared\SearchElasticsearch\Dependency\Service\SearchElasticsearchToUtilEncodingServiceInterface
      */
     public function getUtilEncodingService(): SearchElasticsearchToUtilEncodingServiceInterface
     {
@@ -114,12 +118,12 @@ class SearchElasticsearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Shared\SearchElasticsearch\Index\IndexNameResolverInterface
+     * @return \Spryker\Zed\SearchElasticsearch\Business\SourceIdentifier\SourceIdentifierInterface
      */
-    public function createIndexNameResolver(): IndexNameResolverInterface
+    public function createSourceIdentifier(): SourceIdentifierInterface
     {
-        return new IndexNameResolver(
-            $this->getStoreClient()
+        return new SourceIdentifier(
+            $this->getConfig()->getSupportedSourceIdentifiers()
         );
     }
 
@@ -141,8 +145,7 @@ class SearchElasticsearchBusinessFactory extends AbstractBusinessFactory
     {
         return new IndexDefinitionBuilder(
             $this->createIndexDefinitionLoader(),
-            $this->createIndexDefinitionMerger(),
-            $this->createIndexNameResolver()
+            $this->createIndexDefinitionMerger()
         );
     }
 
@@ -176,7 +179,19 @@ class SearchElasticsearchBusinessFactory extends AbstractBusinessFactory
      */
     public function createMappingBuilder(): MappingBuilderInterface
     {
-        return new MappingBuilder();
+        return $this->createMappingBuilderFactory()->createMappingBuilder();
+    }
+
+    /**
+     * @deprecated Will be removed once the support of Elasticsearch 6 and lower is dropped.
+     *
+     * @return \Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Mapping\MappingBuilderFactoryInterface
+     */
+    public function createMappingBuilderFactory(): MappingBuilderFactoryInterface
+    {
+        return new MappingBuilderFactory(
+            $this->createMappingTypeSupportDetector()
+        );
     }
 
     /**
@@ -184,9 +199,20 @@ class SearchElasticsearchBusinessFactory extends AbstractBusinessFactory
      */
     public function createIndexUpdater(): InstallerInterface
     {
-        return new IndexUpdater(
+        return $this->createIndexUpdaterFactory()->createIndexUpdater();
+    }
+
+    /**
+     * @deprecated Will be removed once the support of Elasticsearch 6 and lower is dropped.
+     *
+     * @return \Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Update\IndexUpdaterFactoryInterface
+     */
+    public function createIndexUpdaterFactory(): IndexUpdaterFactoryInterface
+    {
+        return new IndexUpdaterFactory(
             $this->getElasticsearchClient(),
-            $this->createMappingBuilder()
+            $this->createMappingBuilder(),
+            $this->createMappingTypeSupportDetector()
         );
     }
 
@@ -262,14 +288,6 @@ class SearchElasticsearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreClientInterface
-     */
-    public function getStoreClient(): SearchElasticsearchToStoreClientInterface
-    {
-        return $this->getProvidedDependency(SearchElasticsearchDependencyProvider::CLIENT_STORE);
-    }
-
-    /**
      * @return \Spryker\Zed\SearchElasticsearch\Dependency\Service\SearchElasticsearchToUtilSanitizeServiceInterface
      */
     public function getUtilSanitizeService(): SearchElasticsearchToUtilSanitizeServiceInterface
@@ -284,7 +302,7 @@ class SearchElasticsearchBusinessFactory extends AbstractBusinessFactory
     {
         return new Index(
             $this->getElasticsearchClient(),
-            $this->createIndexNameResolver(),
+            $this->createSourceIdentifier(),
             $this->getConfig()
         );
     }
@@ -315,5 +333,13 @@ class SearchElasticsearchBusinessFactory extends AbstractBusinessFactory
     public function createElasticaSnapshot(): ElasticaSnapshot
     {
         return new ElasticaSnapshot($this->getElasticsearchClient());
+    }
+
+    /**
+     * @return \Spryker\Shared\SearchElasticsearch\MappingType\MappingTypeSupportDetectorInterface
+     */
+    public function createMappingTypeSupportDetector(): MappingTypeSupportDetectorInterface
+    {
+        return new MappingTypeSupportDetector();
     }
 }

@@ -14,7 +14,7 @@ class Validator implements ValidatorInterface
     /**
      * @var array
      */
-    private $messages = [];
+    protected $messages = [];
 
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $salesOrderItem

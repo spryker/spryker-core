@@ -97,14 +97,14 @@ class CatalogSearchResourceMapperTest extends Unit
             ->mapPrices($this->restSearchAttributesTransfer, $this->getPriceModeInformation());
 
         $products = $this->getProductsFromRestCatalogSearchAttributesTransfer();
-        $this->assertEquals(1, $products->count());
-        $this->assertEquals('cameras', $this->restSearchAttributesTransfer->getSpellingSuggestion());
+        $this->assertSame(1, $products->count());
+        $this->assertSame('cameras', $this->restSearchAttributesTransfer->getSpellingSuggestion());
 
         $product = $products[0];
-        $this->assertEquals('Toshiba CAMILEO S20', $product->getAbstractName());
-        $this->assertEquals(19568, $product->getPrice());
-        $this->assertEquals('209', $product->getAbstractSku());
-        $this->assertEquals(19568, $product->getPrices()[0][static::GROSS_AMOUNT]);
+        $this->assertSame('Toshiba CAMILEO S20', $product->getAbstractName());
+        $this->assertSame(19568, $product->getPrice());
+        $this->assertSame('209', $product->getAbstractSku());
+        $this->assertSame(19568, $product->getPrices()[0][static::GROSS_AMOUNT]);
         $this->assertArrayNotHasKey('id_product_abstract', $product);
         $this->assertArrayNotHasKey('id_product_labels', $product);
 
@@ -113,19 +113,19 @@ class CatalogSearchResourceMapperTest extends Unit
         $this->assertArrayNotHasKey('id_product_image_set_to_product_image', $product->getImages()[0]);
         $this->assertArrayNotHasKey('fk_product_image', $product->getImages()[0]);
 
-        $this->assertEquals('//images.icecat.biz/img/norm/medium/15743_12554247-9579.jpg', $product->getImages()[0]['externalUrlSmall']);
-        $this->assertEquals('//images.icecat.biz/img/norm/high/15743_12554247-9579.jpg', $product->getImages()[0]['externalUrlLarge']);
+        $this->assertSame('//images.icecat.biz/img/norm/medium/15743_12554247-9579.jpg', $product->getImages()[0]['externalUrlSmall']);
+        $this->assertSame('//images.icecat.biz/img/norm/high/15743_12554247-9579.jpg', $product->getImages()[0]['externalUrlLarge']);
 
-        $this->assertEquals('name_asc', $this->restSearchAttributesTransfer->getSort()->getCurrentSortOrder());
-        $this->assertEquals('1', $this->restSearchAttributesTransfer->getSort()->getCurrentSortParam());
+        $this->assertSame('name_asc', $this->restSearchAttributesTransfer->getSort()->getCurrentSortOrder());
+        $this->assertSame('1', $this->restSearchAttributesTransfer->getSort()->getCurrentSortParam());
         $fields = ['rating', 'name_asc', 'name_desc', 'price_asc', 'price_desc'];
         $this->assertArraySubset($this->restSearchAttributesTransfer->getSort()->getSortParamNames(), $fields);
         $this->assertTrue(array_intersect($fields, $this->restSearchAttributesTransfer->getSort()->getSortParamNames()) === $fields);
 
-        $this->assertEquals(1, $this->restSearchAttributesTransfer->getPagination()->getCurrentPage());
-        $this->assertEquals(12, $this->restSearchAttributesTransfer->getPagination()->getCurrentItemsPerPage());
-        $this->assertEquals(1, $this->restSearchAttributesTransfer->getPagination()->getMaxPage());
-        $this->assertEquals(3, $this->restSearchAttributesTransfer->getPagination()->getNumFound());
+        $this->assertSame(1, $this->restSearchAttributesTransfer->getPagination()->getCurrentPage());
+        $this->assertSame(12, $this->restSearchAttributesTransfer->getPagination()->getCurrentItemsPerPage());
+        $this->assertSame(1, $this->restSearchAttributesTransfer->getPagination()->getMaxPage());
+        $this->assertSame(3, $this->restSearchAttributesTransfer->getPagination()->getNumFound());
 
         $this->assertCount(1, $this->restSearchAttributesTransfer->getValueFacets());
         $this->assertSame('label', $this->restSearchAttributesTransfer->getValueFacets()[0]['name']);

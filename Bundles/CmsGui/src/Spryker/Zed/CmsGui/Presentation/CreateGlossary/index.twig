@@ -1,3 +1,5 @@
+{# @var cmsPage \Generated\Shared\Transfer\CmsPageTransfer #}
+
 {% extends '@Cms/Layout/layout.twig' %}
 
     {% set pageName = '' %}
@@ -14,7 +16,7 @@
 
 {% block action %}
     {% set redirectUrl = url('/cms-gui/create-glossary', {'id-cms-page' : idCmsPage}) %}
-    {{ include ('@CmsGui/_template/version-button.twig', { 'id-cms-page': idCmsPage, 'redirect-url' : redirectUrl}) }}
+    {% include '@CmsGui/_template/version-button.twig' %}
     {% for buttonTransfer in viewActionButtons %}
         {{ viewActionButton(buttonTransfer.url, buttonTransfer.title | trans, buttonTransfer.defaultOptions) }}
     {% endfor %}
@@ -22,13 +24,13 @@
     {% if cmsVersion is not null %}
         {{ removeActionButton(url('/cms-gui/version-page/discard', {'id-cms-page': idCmsPage, 'redirect-url' : redirectUrl}), 'Discard Draft' | trans) }}
     {% endif %}
-    {{ include ('@CmsGui/_template/activate-button.twig', { 'id-cms-page': idCmsPage, 'isActive': cmsPage.isActive}) }}
+    {% include '@CmsGui/_template/activate-button.twig' %}
     {{ backActionButton('/cms-gui/list-page', 'Back to CMS' | trans) }}
 {% endblock %}
 
 {% block content %}
 
-    {{ include ('@CmsGui/_template/edit-notes.twig') }}
+    {% include '@CmsGui/_template/edit-notes.twig' %}
 
     {% if placeholderTabs.tabs | length > 0 %}
 

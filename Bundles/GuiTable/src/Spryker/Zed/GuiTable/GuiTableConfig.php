@@ -7,9 +7,11 @@
 
 namespace Spryker\Zed\GuiTable;
 
+use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
+use Spryker\Shared\GuiTable\Configuration\GuiTableConfigInterface;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
-class GuiTableConfig extends AbstractBundleConfig
+class GuiTableConfig extends AbstractBundleConfig implements GuiTableConfigInterface
 {
     /**
      * @api
@@ -29,12 +31,12 @@ class GuiTableConfig extends AbstractBundleConfig
     public function getDefaultEnabledFeatures(): array
     {
         return [
-            'pagination',
-            'filters',
-            'search',
-            'rowActions',
-            'itemSelection',
-            'syncStateUrl',
+            GuiTableConfigurationTransfer::PAGINATION,
+            GuiTableConfigurationTransfer::FILTERS,
+            GuiTableConfigurationTransfer::SEARCH,
+            GuiTableConfigurationTransfer::ROW_ACTIONS,
+            GuiTableConfigurationTransfer::SYNC_STATE_URL,
+            GuiTableConfigurationTransfer::COLUMN_CONFIGURATOR,
         ];
     }
 

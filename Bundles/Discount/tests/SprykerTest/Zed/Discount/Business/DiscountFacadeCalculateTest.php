@@ -85,7 +85,7 @@ class DiscountFacadeCalculateTest extends Unit
         $this->assertCount(1, $cartRuleDiscounts);
 
         $discountTransfer = $cartRuleDiscounts[0];
-        $this->assertEquals($discountEntity->getAmount(), $discountTransfer->getAmount());
+        $this->assertSame($discountEntity->getAmount(), $discountTransfer->getAmount());
     }
 
     /**
@@ -132,7 +132,7 @@ class DiscountFacadeCalculateTest extends Unit
         $this->assertCount(1, $cartRuleDiscounts);
 
         $discountTransfer = $cartRuleDiscounts[0];
-        $this->assertEquals($discountEntity->getAmount(), $discountTransfer->getAmount());
+        $this->assertSame($discountEntity->getAmount(), $discountTransfer->getAmount());
     }
 
     /**
@@ -155,7 +155,7 @@ class DiscountFacadeCalculateTest extends Unit
         $this->assertCount(1, $cartRuleDiscounts);
 
         $discountTransfer = $cartRuleDiscounts[0];
-        $this->assertEquals($discountEntity->getAmount(), $discountTransfer->getAmount());
+        $this->assertSame($discountEntity->getAmount(), $discountTransfer->getAmount());
     }
 
     /**
@@ -214,7 +214,7 @@ class DiscountFacadeCalculateTest extends Unit
 
         $this->assertCount(1, $quoteTransfer->getVoucherDiscounts());
         $this->assertCount(1, $quoteTransfer->getUsedNotAppliedVoucherCodes());
-        $this->assertEquals($code1, $discountTransfer->getVoucherCode());
+        $this->assertSame($code1, $discountTransfer->getVoucherCode());
     }
 
     /**
@@ -235,7 +235,6 @@ class DiscountFacadeCalculateTest extends Unit
             ->expects($this->once())
             ->method('filter')
             ->willReturnCallback(function (CollectedDiscountTransfer $collectedDiscountTransfer) {
-
                 $discountableItems = new ArrayObject();
                 foreach ($collectedDiscountTransfer->getDiscountableItems() as $discountableItemTransfer) {
                     if ($discountableItemTransfer->getOriginalItem()->getSku() !== '123') {
@@ -284,7 +283,7 @@ class DiscountFacadeCalculateTest extends Unit
         // Assert
         $this->assertCount(1, $quoteTransfer->getVoucherDiscounts());
         $this->assertCount(1, $quoteTransfer->getUsedNotAppliedVoucherCodes());
-        $this->assertEquals($code1, $quoteTransfer->getVoucherDiscounts()[0]->getVoucherCode());
+        $this->assertSame($code1, $quoteTransfer->getVoucherDiscounts()[0]->getVoucherCode());
     }
 
     /**

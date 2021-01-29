@@ -4,7 +4,7 @@
   "description": "Queue module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/gui": "^3.0.0",
     "spryker/kernel": "^3.30.0",
     "spryker/propel-orm": "^1.0.0",
@@ -18,6 +18,9 @@
     "spryker/event": "*",
     "spryker/propel": "*",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "ext-pcntl": "If you want gracefully shutdown worker when signal is received."
   },
   "autoload": {
     "psr-4": {

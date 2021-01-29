@@ -132,7 +132,7 @@ class LocatorHelper extends Module
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\LocatorLocatorInterface|\Generated\Zed\Ide\AutoCompletion|\Generated\Service\Ide\AutoCompletion
+     * @return \Spryker\Shared\Kernel\LocatorLocatorInterface|\Generated\Zed\Ide\AutoCompletion|\Generated\Service\Ide\AutoCompletion|\Generated\Glue\Ide\AutoCompletion
      */
     public function getLocator()
     {
@@ -140,7 +140,7 @@ class LocatorHelper extends Module
     }
 
     /**
-     * @deprecated Use {@link \SprykerTest\Zed\Testify\Helper\BusinessHelper::getFacade()} instead.
+     * @deprecated Use {@link \SprykerTest\Zed\Testify\Helper\Business\BusinessHelper::getFacade()} instead.
      *
      * @return \Spryker\Zed\Kernel\Business\AbstractFacade
      */

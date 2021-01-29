@@ -110,7 +110,7 @@ class QuotePermissionGroupQuoteExpanderPluginTest extends Test
 
         // Assert
         $this->assertNotNull($quoteTransfer->getQuotePermissionGroup());
-        $this->assertEquals(
+        $this->assertSame(
             $quoteTransfer->getQuotePermissionGroup()->getIdQuotePermissionGroup(),
             $this->quotePermissionGroupEntityTransfer->getIdQuotePermissionGroup()
         );

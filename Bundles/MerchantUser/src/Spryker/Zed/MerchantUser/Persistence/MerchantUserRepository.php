@@ -60,6 +60,8 @@ class MerchantUserRepository extends AbstractRepository implements MerchantUserR
     }
 
     /**
+     * @module Merchant
+     *
      * @param \Generated\Shared\Transfer\MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantUserTransfer[]
@@ -67,9 +69,10 @@ class MerchantUserRepository extends AbstractRepository implements MerchantUserR
     public function getMerchantUsers(MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer): array
     {
         $merchantUserQuery = $this->getFactory()->createMerchantUserPropelQuery();
+        $merchantUserQuery->joinWithSpyMerchant();
         $merchantUserQuery = $this->applyCriteria($merchantUserQuery, $merchantUserCriteriaTransfer);
 
-        $merchantUserEntities = $merchantUserQuery->find();
+        $merchantUserEntities = $merchantUserQuery->joinWithSpyMerchant()->find();
 
         return $this->getFactory()
             ->createMerchantUserMapper()
@@ -77,6 +80,10 @@ class MerchantUserRepository extends AbstractRepository implements MerchantUserR
     }
 
     /**
+     * @phpstan-param \Orm\Zed\MerchantUser\Persistence\SpyMerchantUserQuery<\Orm\Zed\MerchantUser\Persistence\SpyMerchantUser> $merchantUserQuery
+     *
+     * @phpstan-return \Orm\Zed\MerchantUser\Persistence\SpyMerchantUserQuery<\Orm\Zed\MerchantUser\Persistence\SpyMerchantUser> $merchantUserQuery
+     *
      * @param \Orm\Zed\MerchantUser\Persistence\SpyMerchantUserQuery $merchantUserQuery
      * @param \Generated\Shared\Transfer\MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer
      *
@@ -96,6 +103,24 @@ class MerchantUserRepository extends AbstractRepository implements MerchantUserR
 
         if ($merchantUserCriteriaTransfer->getIdMerchantUser() !== null) {
             $merchantUserQuery->filterByIdMerchantUser($merchantUserCriteriaTransfer->getIdMerchantUser());
+        }
+
+        if ($merchantUserCriteriaTransfer->getUsername()) {
+            $merchantUserQuery->useSpyUserQuery()
+                    ->filterByUsername($merchantUserCriteriaTransfer->getUsername())
+                ->endUse();
+        }
+
+        if ($merchantUserCriteriaTransfer->getStatus()) {
+            $merchantUserQuery->useSpyUserQuery()
+                    ->filterByStatus($merchantUserCriteriaTransfer->getStatus())
+                ->endUse();
+        }
+
+        if ($merchantUserCriteriaTransfer->getMerchantStatus()) {
+            $merchantUserQuery->useSpyMerchantQuery()
+                    ->filterByStatus($merchantUserCriteriaTransfer->getMerchantStatus())
+                ->endUse();
         }
 
         $merchantUserQuery->orderByIdMerchantUser();

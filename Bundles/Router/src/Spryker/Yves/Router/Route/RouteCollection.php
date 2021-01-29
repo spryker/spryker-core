@@ -26,17 +26,18 @@ class RouteCollection extends SymfonyRouteCollection
     }
 
     /**
-     * @param string $routeName
+     * @param string $name
      * @param \Symfony\Component\Routing\Route|\Spryker\Yves\Router\Route\Route $route
+     * @param int $priority
      *
      * @return void
      */
-    public function add($routeName, Route $route): void
+    public function add($name, Route $route, int $priority = 0): void
     {
         foreach ($this->routeManipulator as $routeManipulator) {
-            $route = $routeManipulator->manipulate($routeName, $route);
+            $route = $routeManipulator->manipulate($name, $route);
         }
 
-        parent::add($routeName, $route);
+        parent::add($name, $route, $priority);
     }
 }

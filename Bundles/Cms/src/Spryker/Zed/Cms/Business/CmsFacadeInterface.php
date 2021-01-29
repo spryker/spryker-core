@@ -22,6 +22,9 @@ use Generated\Shared\Transfer\UrlTransfer;
 interface CmsFacadeInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $name
@@ -34,6 +37,9 @@ interface CmsFacadeInterface
     public function createTemplate(string $name, string $path): CmsTemplateTransfer;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $path
@@ -45,6 +51,9 @@ interface CmsFacadeInterface
     public function getTemplate(string $path): CmsTemplateTransfer;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $path
@@ -54,6 +63,9 @@ interface CmsFacadeInterface
     public function hasTemplate(string $path): bool;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @deprecated Use {@link createPage()} or {@link updatePage()} instead.
@@ -67,6 +79,9 @@ interface CmsFacadeInterface
     public function savePage(PageTransfer $pageTransfer): PageTransfer;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\PageKeyMappingTransfer $pageKeyMappingTransfer
@@ -76,6 +91,9 @@ interface CmsFacadeInterface
     public function savePageKeyMapping(PageKeyMappingTransfer $pageKeyMappingTransfer): PageKeyMappingTransfer;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\PageKeyMappingTransfer $pageKeyMappingTransfer
@@ -86,6 +104,9 @@ interface CmsFacadeInterface
     public function savePageKeyMappingAndTouch(PageKeyMappingTransfer $pageKeyMappingTransfer, ?LocaleTransfer $localeTransfer = null): PageKeyMappingTransfer;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idPage
@@ -96,6 +117,9 @@ interface CmsFacadeInterface
     public function hasPagePlaceholderMapping(int $idPage, string $placeholder): bool;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idPage
@@ -108,6 +132,9 @@ interface CmsFacadeInterface
     public function getPagePlaceholderMapping(int $idPage, string $placeholder): PageKeyMappingTransfer;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CmsTemplateTransfer $cmsTemplateTransfer
@@ -117,6 +144,9 @@ interface CmsFacadeInterface
     public function saveTemplate(CmsTemplateTransfer $cmsTemplateTransfer): CmsTemplateTransfer;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idPage
@@ -131,6 +161,9 @@ interface CmsFacadeInterface
     public function translatePlaceholder(int $idPage, string $placeholder, array $data = []): string;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
@@ -150,6 +183,9 @@ interface CmsFacadeInterface
     ): PageKeyMappingTransfer;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
@@ -164,6 +200,9 @@ interface CmsFacadeInterface
     public function deletePageKeyMapping(PageTransfer $pageTransfer, string $placeholder): bool;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
@@ -174,6 +213,9 @@ interface CmsFacadeInterface
     public function touchPageActive(PageTransfer $pageTransfer, ?LocaleTransfer $localeTransfer = null): void;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
@@ -183,6 +225,9 @@ interface CmsFacadeInterface
     public function savePageUrlAndTouch(PageTransfer $pageTransfer): UrlTransfer;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idPage
@@ -192,6 +237,9 @@ interface CmsFacadeInterface
     public function deleteGlossaryKeysByIdPage(int $idPage): bool;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $cmsTemplateFolderPath
@@ -201,6 +249,9 @@ interface CmsFacadeInterface
     public function syncTemplate(string $cmsTemplateFolderPath): bool;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $templateName

@@ -14,6 +14,9 @@ use Generated\Shared\Transfer\UserTransfer;
 interface UserFacadeInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return void
@@ -21,6 +24,9 @@ interface UserFacadeInterface
     public function install();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $username
@@ -30,6 +36,9 @@ interface UserFacadeInterface
     public function hasUserByUsername($username);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $username
@@ -39,6 +48,9 @@ interface UserFacadeInterface
     public function hasActiveUserByUsername($username);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $username
@@ -48,6 +60,9 @@ interface UserFacadeInterface
     public function getUserByUsername($username);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idUser
@@ -84,6 +99,9 @@ interface UserFacadeInterface
     public function findUser(UserCriteriaTransfer $userCriteriaTransfer): ?UserTransfer;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idUser
@@ -93,6 +111,9 @@ interface UserFacadeInterface
     public function getActiveUserById($idUser);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @deprecated Use {@link \Spryker\Zed\User\Business\UserFacadeInterface::createUser()} instead.
@@ -121,6 +142,9 @@ interface UserFacadeInterface
     public function createUser(UserTransfer $userTransfer): UserTransfer;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\UserTransfer $user
@@ -132,6 +156,9 @@ interface UserFacadeInterface
     public function updateUser(UserTransfer $user);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\UserTransfer $user
@@ -141,6 +168,9 @@ interface UserFacadeInterface
     public function setCurrentUser(UserTransfer $user);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Generated\Shared\Transfer\UserTransfer
@@ -148,6 +178,9 @@ interface UserFacadeInterface
     public function getCurrentUser();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return bool
@@ -155,6 +188,9 @@ interface UserFacadeInterface
     public function hasCurrentUser();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $password
@@ -165,6 +201,9 @@ interface UserFacadeInterface
     public function isValidPassword($password, $hash);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\UserTransfer $user
@@ -174,6 +213,9 @@ interface UserFacadeInterface
     public function isSystemUser(UserTransfer $user);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Generated\Shared\Transfer\CollectionTransfer
@@ -181,6 +223,9 @@ interface UserFacadeInterface
     public function getSystemUsers();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idUser
@@ -190,6 +235,9 @@ interface UserFacadeInterface
     public function removeUser($idUser);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idUser
@@ -199,6 +247,9 @@ interface UserFacadeInterface
     public function activateUser($idUser);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idUser
@@ -213,6 +264,8 @@ interface UserFacadeInterface
      * - Expands the given mail transfer with an additional user data.
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement. Handling of user password reset mail is implemented in UserPasswordReset module.
      *
      * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
      *

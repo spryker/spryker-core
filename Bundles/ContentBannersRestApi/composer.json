@@ -4,8 +4,8 @@
   "description": "ContentBannersRestApi module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
-    "spryker/content-banner": "^2.0.0",
+    "php": ">=7.3",
+    "spryker/content-banner": "^2.2.0",
     "spryker/glue-application": "^1.8.0",
     "spryker/glue-application-extension": "^1.0.0",
     "spryker/kernel": "^3.30.0",

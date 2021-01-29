@@ -4,12 +4,12 @@
   "description": "MerchantProductOffersRestApi module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/carts-rest-api-extension": "^1.5.0",
     "spryker/glue-application": "^1.0.0",
     "spryker/glue-application-extension": "^1.0.0",
     "spryker/kernel": "^3.33.0",
-    "spryker/merchant-product-offer-storage": "^0.9.0",
+    "spryker/merchant-product-offer-storage": "^0.11.0",
     "spryker/symfony": "^3.0.0"
   },
   "require-dev": {

@@ -9,6 +9,7 @@ namespace Spryker\Shared\Twig;
 
 use Spryker\Shared\Kernel\AbstractSharedConfig;
 use Spryker\Shared\Kernel\KernelConstants;
+use Twig\Cache\FilesystemCache;
 
 class TwigConfig extends AbstractSharedConfig
 {
@@ -52,5 +53,47 @@ class TwigConfig extends AbstractSharedConfig
     public function getCoreNamespaces(): array
     {
         return $this->get(KernelConstants::CORE_NAMESPACES);
+    }
+
+    /**
+     * Specification:
+     * - Defines the default path to the Twig `.pathCache` file.
+     * - Can be redefined on Yves or Zed configs.
+     *
+     * @api
+     *
+     * @param string $application
+     *
+     * @return string
+     */
+    public function getDefaultPathCache($application = APPLICATION): string
+    {
+        return sprintf(
+            '%s/src/Generated/%s/Twig/codeBucket/.pathCache',
+            APPLICATION_ROOT_DIR,
+            ucfirst(strtolower($application))
+        );
+    }
+
+    /**
+     * Specification:
+     * - Defines the default twig options.
+     *
+     * @api
+     *
+     * @return array
+     */
+    public function getDefaultTwigOptions(): array
+    {
+        return [
+            'cache' => new FilesystemCache(
+                sprintf(
+                    '%s/src/Generated/%s/Twig/codeBucket',
+                    APPLICATION_ROOT_DIR,
+                    ucfirst(strtolower(APPLICATION))
+                ),
+                FilesystemCache::FORCE_BYTECODE_INVALIDATION
+            ),
+        ];
     }
 }

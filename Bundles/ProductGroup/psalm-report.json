@@ -3,32 +3,8 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 41,
-            "line_to": 41,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductGroup/src/Spryker/Client/ProductGroup/ProductGroupDependencyProvider.php",
-            "snippet": "            return new ProductGroupToStorageBridge($container->getLocator()->storage()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 53,
-            "line_to": 53,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductGroup/src/Spryker/Client/ProductGroup/ProductGroupDependencyProvider.php",
-            "snippet": "            return new ProductGroupToProductBridge($container->getLocator()->product()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 41,
-            "line_to": 41,
+            "line_from": 40,
+            "line_to": 40,
             "type": "LessSpecificImplementedReturnType",
             "message": "The inherited return type 'array<array-key, Twig\\TwigFunction>' for Twig\\Extension\\ExtensionInterface::getFunctions is more specific than the implemented return type for Spryker\\Yves\\ProductGroup\\Twig\\ProductGroupTwigExtension::getfunctions 'array<array-key, mixed>'",
             "file_name": "vendor/spryker/spryker/Bundles/ProductGroup/src/Spryker/Yves/ProductGroup/Twig/ProductGroupTwigExtension.php",
@@ -156,18 +132,6 @@
             "selected_text": "delete",
             "error_level": 3,
             "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 41,
-            "line_to": 41,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductGroup/src/Spryker/Zed/ProductGroup/ProductGroupDependencyProvider.php",
-            "snippet": "            return new ProductGroupToTouchBridge($container->getLocator()->touch()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [
@@ -197,8 +161,44 @@
         },
         {
             "severity": "info",
-            "line_from": 27,
-            "line_to": 27,
+            "line_from": 35,
+            "line_to": 35,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Yves\\ProductGroup\\ProductGroupDependencyProvider::providePluginApplication has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductGroup/src/Spryker/Yves/ProductGroup/ProductGroupDependencyProvider.php",
+            "snippet": "        $this->providePluginApplication($container);",
+            "selected_text": "providePluginApplication",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 63,
+            "line_to": 63,
+            "type": "DeprecatedConstant",
+            "message": "Constant Spryker\\Yves\\ProductGroup\\ProductGroupDependencyProvider::PLUGIN_APPLICATION is deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductGroup/src/Spryker/Yves/ProductGroup/ProductGroupDependencyProvider.php",
+            "snippet": "        $container->set(static::PLUGIN_APPLICATION, function () {",
+            "selected_text": "static::PLUGIN_APPLICATION",
+            "error_level": 2,
+            "shortcode": 170
+        },
+        {
+            "severity": "info",
+            "line_from": 64,
+            "line_to": 64,
+            "type": "DeprecatedClass",
+            "message": "Spryker\\Yves\\Kernel\\Plugin\\Pimple is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductGroup/src/Spryker/Yves/ProductGroup/ProductGroupDependencyProvider.php",
+            "snippet": "            $pimplePlugin = new Pimple();",
+            "selected_text": "new Pimple()",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 37,
+            "line_to": 37,
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Yves\\Kernel\\Application is marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductGroup/src/Spryker/Yves/ProductGroup/ProductGroupFactory.php",
@@ -209,39 +209,15 @@
         },
         {
             "severity": "info",
-            "line_from": 26,
-            "line_to": 26,
-            "type": "DeprecatedClass",
-            "message": "Class Spryker\\Yves\\Kernel\\Application is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductGroup/src/Spryker/Yves/ProductGroup/Twig/ProductGroupTwigExtension.php",
-            "snippet": "     * @var \\Spryker\\Yves\\Kernel\\Application",
-            "selected_text": "\\Spryker\\Yves\\Kernel\\Application",
+            "line_from": 41,
+            "line_to": 41,
+            "type": "DeprecatedConstant",
+            "message": "Constant Spryker\\Yves\\ProductGroup\\ProductGroupDependencyProvider::PLUGIN_APPLICATION is deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductGroup/src/Spryker/Yves/ProductGroup/ProductGroupFactory.php",
+            "snippet": "        return $this->getProvidedDependency(ProductGroupDependencyProvider::PLUGIN_APPLICATION);",
+            "selected_text": "ProductGroupDependencyProvider::PLUGIN_APPLICATION",
             "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 32,
-            "line_to": 32,
-            "type": "DeprecatedClass",
-            "message": "Class Spryker\\Yves\\Kernel\\Application is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductGroup/src/Spryker/Yves/ProductGroup/Twig/ProductGroupTwigExtension.php",
-            "snippet": "     * @param \\Spryker\\Yves\\Kernel\\Application $application",
-            "selected_text": "\\Spryker\\Yves\\Kernel\\Application",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 78,
-            "line_to": 78,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Service\\Container\\Container::offsetGet has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductGroup/src/Spryker/Yves/ProductGroup/Twig/ProductGroupTwigExtension.php",
-            "snippet": "        return $this->application['locale'];",
-            "selected_text": "$this->application",
-            "error_level": 2,
-            "shortcode": 1
+            "shortcode": 170
         },
         {
             "severity": "info",

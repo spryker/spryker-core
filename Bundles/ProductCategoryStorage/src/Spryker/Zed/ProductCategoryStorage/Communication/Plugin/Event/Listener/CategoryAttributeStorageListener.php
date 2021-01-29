@@ -26,18 +26,18 @@ class CategoryAttributeStorageListener extends AbstractPlugin implements EventBu
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
      * @param string $eventName
      *
      * @return void
      */
-    public function handleBulk(array $eventTransfers, $eventName)
+    public function handleBulk(array $eventEntityTransfers, $eventName)
     {
         $this->preventTransaction();
         if ($eventName === CategoryEvents::ENTITY_SPY_CATEGORY_ATTRIBUTE_DELETE) {
-            $categoryIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($eventTransfers, SpyCategoryAttributeTableMap::COL_FK_CATEGORY);
+            $categoryIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($eventEntityTransfers, SpyCategoryAttributeTableMap::COL_FK_CATEGORY);
         } else {
-            $categoryIds = $this->getValidCategoryIds($eventTransfers);
+            $categoryIds = $this->getValidCategoryIds($eventEntityTransfers);
         }
 
         if (empty($categoryIds)) {

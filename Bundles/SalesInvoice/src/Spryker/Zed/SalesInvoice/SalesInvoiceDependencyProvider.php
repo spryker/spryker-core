@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SalesInvoice;
 
+use Spryker\Shared\Kernel\ContainerInterface;
 use Spryker\Zed\Glossary\Communication\Plugin\TwigTranslatorPlugin;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
@@ -28,6 +29,11 @@ class SalesInvoiceDependencyProvider extends AbstractBundleDependencyProvider
     public const TWIG_ENVIRONMENT = 'TWIG_ENVIRONMENT';
     public const PLUGINS_ORDER_INVOICE_BEFORE_SAVE = 'PLUGINS_ORDER_INVOICE_BEFORE_SAVE';
     public const PLUGINS_ORDER_INVOICES_EXPANDER = 'PLUGINS_ORDER_INVOICES_EXPANDER';
+
+    /**
+     * @uses \Spryker\Zed\Twig\Communication\Plugin\Application\TwigApplicationPlugin::SERVICE_TWIG
+     */
+    public const SERVICE_TWIG = 'twig';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -71,8 +77,8 @@ class SalesInvoiceDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addTwigEnvironment(Container $container): Container
     {
-        $container->set(static::TWIG_ENVIRONMENT, function () {
-            $twig = $this->getTwigEnvironment();
+        $container->set(static::TWIG_ENVIRONMENT, function (ContainerInterface $container) {
+            $twig = $container->getApplicationService(static::SERVICE_TWIG);
             if (!$twig->hasExtension(TwigTranslatorPlugin::class)) {
                 $translator = new TwigTranslatorPlugin();
                 $twig->addExtension($translator);
@@ -85,6 +91,8 @@ class SalesInvoiceDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Twig\Environment
      */
     protected function getTwigEnvironment(): Environment

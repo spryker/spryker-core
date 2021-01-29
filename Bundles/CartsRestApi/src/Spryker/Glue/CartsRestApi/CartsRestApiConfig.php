@@ -64,11 +64,12 @@ class CartsRestApiConfig extends AbstractBundleConfig
     public const HEADER_ANONYMOUS_CUSTOMER_UNIQUE_ID = 'X-Anonymous-Customer-Unique-Id';
 
     protected const GUEST_CART_RESOURCES = [
-        CartsRestApiConfig::RESOURCE_GUEST_CARTS,
-        CartsRestApiConfig::RESOURCE_GUEST_CARTS_ITEMS,
+        self::RESOURCE_GUEST_CARTS,
+        self::RESOURCE_GUEST_CARTS_ITEMS,
     ];
 
     protected const ALLOWED_CART_ITEM_EAGER_RELATIONSHIP = true;
+    protected const ALLOWED_GUEST_CART_ITEM_EAGER_RELATIONSHIP = true;
 
     /**
      * @api
@@ -172,6 +173,9 @@ class CartsRestApiConfig extends AbstractBundleConfig
     }
 
     /**
+     * Specification:
+     * - Returns true if `carts` resource should automatically get `items` relationship.
+     *
      * @api
      *
      * @return bool
@@ -179,5 +183,18 @@ class CartsRestApiConfig extends AbstractBundleConfig
     public function getAllowedCartItemEagerRelationship(): bool
     {
         return static::ALLOWED_CART_ITEM_EAGER_RELATIONSHIP;
+    }
+
+    /**
+     * Specification:
+     * - Returns true if `guest-carts` resource should automatically get `guest-cart-items` relationship.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function getAllowedGuestCartItemEagerRelationship(): bool
+    {
+        return static::ALLOWED_GUEST_CART_ITEM_EAGER_RELATIONSHIP;
     }
 }

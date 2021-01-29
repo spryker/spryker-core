@@ -79,7 +79,7 @@ class PredisAdapter implements RedisAdapterInterface
      *
      * @return bool
      */
-    public function eval(string $script, int $numKeys, $keysOrArgs): bool
+    public function eval(string $script, int $numKeys, array $keysOrArgs): bool
     {
         return (bool)$this->client->eval($script, $numKeys, ...$keysOrArgs);
     }
@@ -173,5 +173,15 @@ class PredisAdapter implements RedisAdapterInterface
     public function flushDb(): void
     {
         $this->client->flushdb();
+    }
+
+    /**
+     * @param string $key
+     *
+     * @return int
+     */
+    public function incr(string $key): int
+    {
+        return $this->client->incr($key);
     }
 }

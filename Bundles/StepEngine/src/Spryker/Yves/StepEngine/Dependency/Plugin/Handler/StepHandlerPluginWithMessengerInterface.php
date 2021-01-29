@@ -14,16 +14,22 @@ use Symfony\Component\HttpFoundation\Request;
 interface StepHandlerPluginWithMessengerInterface extends StepHandlerPluginInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function addToDataClass(Request $request, AbstractTransfer $dataTransfer);
+    public function addToDataClass(Request $request, AbstractTransfer $quoteTransfer);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Spryker\Yves\Messenger\FlashMessenger\FlashMessengerInterface $flashMessenger

@@ -13,6 +13,8 @@ use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\KernelLogServic
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
+ * @deprecated Will be removed without replacement.
+ *
  * Auto-generated group annotations
  *
  * @group SprykerTest

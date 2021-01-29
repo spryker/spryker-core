@@ -4,12 +4,12 @@
   "description": "Api module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/application": "^3.0.0",
     "spryker/event-dispatcher-extension": "^1.0.0",
-    "spryker/kernel": "^3.30.0",
-    "spryker/silex": "^2.0.0",
-    "spryker/symfony": "^3.0.0",
+    "spryker/kernel": "^3.52.0",
+    "spryker/router-extension": "^1.0.0",
+    "spryker/symfony": "^3.5.0",
     "spryker/util-encoding": "^2.0.1",
     "spryker/util-text": "^1.1.1"
   },
@@ -18,12 +18,14 @@
     "spryker/container": "*",
     "spryker/event-dispatcher": "*",
     "spryker/log": "*",
+    "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "suggest": {
     "spryker/container": "Add this module when you want to use the Container.",
     "spryker/event-dispatcher": "Add this module when you want to use the EventDispatcher.",
-    "spryker/log": "For logging request and response."
+    "spryker/log": "For logging request and response.",
+    "spryker/silex": "Add this when you still want to use the abandoned Silex."
   },
   "autoload": {
     "psr-4": {

@@ -7,10 +7,10 @@
 
 namespace Spryker\Shared\Config\Profiler;
 
-use Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\DataCollector\DataCollectorInterface;
+use Throwable;
 
 class ConfigProfilerCollector implements DataCollectorInterface, ConfigProfilerCollectorInterface
 {
@@ -32,11 +32,11 @@ class ConfigProfilerCollector implements DataCollectorInterface, ConfigProfilerC
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Symfony\Component\HttpFoundation\Response $response
-     * @param \Exception|null $exception
+     * @param \Throwable|null $exception
      *
      * @return void
      */
-    public function collect(Request $request, Response $response, ?Exception $exception = null)
+    public function collect(Request $request, Response $response, ?Throwable $exception = null)
     {
     }
 

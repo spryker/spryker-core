@@ -31,16 +31,16 @@ class ProductViewImageExpanderPlugin extends AbstractPlugin implements ProductVi
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductViewTransfer $storageProductTransfer
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      * @param array $productData
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
-    public function expandProductViewTransfer(ProductViewTransfer $storageProductTransfer, array $productData, $localeName)
+    public function expandProductViewTransfer(ProductViewTransfer $productViewTransfer, array $productData, $localeName)
     {
         return $this->getFactory()
             ->createProductViewImageExpander()
-            ->expandProductViewImageData($storageProductTransfer, $localeName, $this->imageSetName);
+            ->expandProductViewImageData($productViewTransfer, $localeName, $this->imageSetName);
     }
 }

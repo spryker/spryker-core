@@ -28,30 +28,6 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 43,
-            "line_to": 43,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/TaxProductStorage/src/Spryker/Client/TaxProductStorage/TaxProductStorageDependencyProvider.php",
-            "snippet": "            return new TaxProductStorageToStorageClientBridge($container->getLocator()->storage()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 57,
-            "line_to": 57,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/TaxProductStorage/src/Spryker/Client/TaxProductStorage/TaxProductStorageDependencyProvider.php",
-            "snippet": "            return new TaxProductStorageToSynchronizationServiceBridge($container->getLocator()->synchronization()->service());",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 47,
             "line_to": 47,
             "type": "PossiblyNullArgument",
@@ -121,18 +97,6 @@
             "selected_text": "getArrayCopy",
             "error_level": 3,
             "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 73,
-            "line_to": 73,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/TaxProductStorage/src/Spryker/Zed/TaxProductStorage/TaxProductStorageDependencyProvider.php",
-            "snippet": "                $container->getLocator()->eventBehavior()->facade()",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [

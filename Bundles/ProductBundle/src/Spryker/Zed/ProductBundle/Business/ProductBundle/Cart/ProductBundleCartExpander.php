@@ -372,7 +372,6 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
         ProductConcreteTransfer $productConcreteTransfer,
         LocaleTransfer $currentLocaleTransfer
     ) {
-
         $localeMapKey = $currentLocaleTransfer->getLocaleName() . $productConcreteTransfer->getIdProductConcrete();
 
         if (!isset(static::$localizedProductNameCache[$localeMapKey])) {
@@ -396,9 +395,11 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
         $totalBundleItemAmount = (int)array_reduce($bundledProducts, function ($total, ItemTransfer $itemTransfer) use ($priceMode) {
             if ($priceMode === $this->priceFacade->getNetPriceModeIdentifier()) {
                 $total += $itemTransfer->getUnitNetPrice();
-            } else {
-                $total += $itemTransfer->getUnitGrossPrice();
+
+                return $total;
             }
+
+            $total += $itemTransfer->getUnitGrossPrice();
 
             return $total;
         });

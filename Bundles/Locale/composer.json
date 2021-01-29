@@ -4,10 +4,10 @@
   "description": "Locale module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/application-extension": "^1.0.0",
     "spryker/event-dispatcher-extension": "^1.0.0",
-    "spryker/kernel": "^3.30.0",
+    "spryker/kernel": "^3.52.0",
     "spryker/locale-extension": "^1.0.0",
     "spryker/propel-orm": "^1.8.0"
   },
@@ -31,6 +31,7 @@
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Yves\\Locale\\Helper\\": "tests/SprykerTest/Yves/Locale/_support/Helper/",
       "SprykerTest\\Zed\\Locale\\Helper\\": "tests/SprykerTest/Zed/Locale/_support/Helper/"
     }
   },

@@ -2,6 +2,18 @@
     "error": [
         {
             "severity": "error",
+            "line_from": 19,
+            "line_to": 19,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'Spryker\\Shared\\Kernel\\ContainerInterface' for Spryker\\Shared\\Kernel\\ContainerMocker\\ContainerMocker::overwriteForTesting is incorrect, got 'Spryker\\Service\\Container\\ContainerInterface|Spryker\\Shared\\Kernel\\ContainerInterface'",
+            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Shared/Kernel/ContainerMocker/ContainerMocker.php",
+            "snippet": "     * @return \\Spryker\\Shared\\Kernel\\ContainerInterface",
+            "selected_text": "\\Spryker\\Shared\\Kernel\\ContainerInterface",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
             "line_from": 115,
             "line_to": 115,
             "type": "InvalidReturnType",
@@ -26,30 +38,6 @@
         },
         {
             "severity": "error",
-            "line_from": 132,
-            "line_to": 132,
-            "type": "InvalidReturnType",
-            "message": "The declared return type 'Spryker\\Shared\\Application\\Application' for Spryker\\Shared\\Testify\\SystemUnderTestBootstrap::bootstrapYves is incorrect, got 'Spryker\\Shared\\Application\\Application|Spryker\\Yves\\Kernel\\Application'",
-            "file_name": "vendor/spryker/spryker/Bundles/Testify/src/Spryker/Shared/Testify/SystemUnderTestBootstrap.php",
-            "snippet": "     * @return \\Spryker\\Shared\\Application\\Application",
-            "selected_text": "\\Spryker\\Shared\\Application\\Application",
-            "error_level": 6,
-            "shortcode": 11
-        },
-        {
-            "severity": "error",
-            "line_from": 144,
-            "line_to": 144,
-            "type": "InvalidReturnStatement",
-            "message": "The inferred type 'Spryker\\Shared\\Application\\Application|Spryker\\Yves\\Kernel\\Application' does not match the declared return type 'Spryker\\Shared\\Application\\Application' for Spryker\\Shared\\Testify\\SystemUnderTestBootstrap::bootstrapYves",
-            "file_name": "vendor/spryker/spryker/Bundles/Testify/src/Spryker/Shared/Testify/SystemUnderTestBootstrap.php",
-            "snippet": "        return $kernel;",
-            "selected_text": "$kernel",
-            "error_level": 6,
-            "shortcode": 128
-        },
-        {
-            "severity": "error",
             "line_from": 29,
             "line_to": 29,
             "type": "InvalidArgument",
@@ -64,8 +52,8 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 55,
-            "line_to": 55,
+            "line_from": 56,
+            "line_to": 56,
             "type": "TypeDoesNotContainType",
             "message": "string(devtest) cannot be identical to string()",
             "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Shared/Kernel/ContainerMocker/ContainerMocker.php",
@@ -174,8 +162,8 @@
     "deprecation": [
         {
             "severity": "info",
-            "line_from": 45,
-            "line_to": 45,
+            "line_from": 46,
+            "line_to": 46,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Shared\\Kernel\\ContainerMocker\\ContainerMocker::getOverwriteContainerForTestingDefaultValue has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Shared/Kernel/ContainerMocker/ContainerMocker.php",
@@ -183,6 +171,18 @@
             "selected_text": "getOverwriteContainerForTestingDefaultValue",
             "error_level": 2,
             "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 120,
+            "line_to": 120,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Zed\\Application\\Communication\\ZedBootstrap is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Testify/src/Spryker/Shared/Testify/SystemUnderTestBootstrap.php",
+            "snippet": "        /** @var \\Spryker\\Zed\\Application\\Communication\\ZedBootstrap $application */\n        $application = $this->getBootstrapClass(TestifyConstants::BOOTSTRAP_CLASS_ZED);",
+            "selected_text": "$application",
+            "error_level": 2,
+            "shortcode": 98
         },
         {
             "severity": "info",
@@ -198,13 +198,13 @@
         },
         {
             "severity": "info",
-            "line_from": 142,
-            "line_to": 142,
+            "line_from": 77,
+            "line_to": 77,
             "type": "DeprecatedClass",
-            "message": "Class Spryker\\Yves\\Kernel\\Application is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Testify/src/Spryker/Shared/Testify/SystemUnderTestBootstrap.php",
-            "snippet": "        $kernel = $application->boot();",
-            "selected_text": "$application->boot()",
+            "message": "Spryker\\Zed\\Kernel\\Communication\\Plugin\\Pimple is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Testify/src/Spryker/Zed/Testify/Bootstrap/ZedBootstrap.php",
+            "snippet": "            Pimple::setApplication($this->legacyApplication);",
+            "selected_text": "Pimple::setApplication($this->legacyApplication)",
             "error_level": 2,
             "shortcode": 98
         },

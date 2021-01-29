@@ -22,15 +22,10 @@ use Codeception\Actor;
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method void pause()
- * @method \Spryker\Zed\GuiTable\Business\GuiTableFacadeInterface getFacade()
  *
  * @SuppressWarnings(PHPMD)
  */
 class GuiTableBusinessTester extends Actor
 {
     use _generated\GuiTableBusinessTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 }

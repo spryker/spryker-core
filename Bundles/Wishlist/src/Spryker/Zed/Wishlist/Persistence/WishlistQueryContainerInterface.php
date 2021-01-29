@@ -12,6 +12,9 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 interface WishlistQueryContainerInterface extends QueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\Wishlist\Persistence\SpyWishlistQuery
@@ -19,6 +22,9 @@ interface WishlistQueryContainerInterface extends QueryContainerInterface
     public function queryWishlist();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\Wishlist\Persistence\SpyWishlistItemQuery
@@ -26,6 +32,9 @@ interface WishlistQueryContainerInterface extends QueryContainerInterface
     public function queryWishlistItem();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idCustomer
@@ -35,6 +44,9 @@ interface WishlistQueryContainerInterface extends QueryContainerInterface
     public function queryWishlistByCustomerId($idCustomer);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idWishlist

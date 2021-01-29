@@ -26,13 +26,13 @@
         },
         {
             "severity": "error",
-            "line_from": 62,
-            "line_to": 62,
+            "line_from": 84,
+            "line_to": 84,
             "type": "InvalidArgument",
-            "message": "Argument 1 of Spryker\\Glue\\ProductOfferAvailabilitiesRestApi\\Processor\\Reader\\ProductOfferAvailabilityReader::getProductOfferAvailabilityRestResources expects array<array-key, string>, array{null|string} provided",
+            "message": "Argument 1 of Spryker\\Glue\\ProductOfferAvailabilitiesRestApi\\Dependency\\Client\\ProductOfferAvailabilitiesRestApiToProductOfferAvailabilityStorageClientInterface::getByProductOfferReferences expects array<array-key, string>, array<int, null|string> provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductOfferAvailabilitiesRestApi/src/Spryker/Glue/ProductOfferAvailabilitiesRestApi/Processor/Reader/ProductOfferAvailabilityReader.php",
-            "snippet": "        $productOfferAvailabilityRestResources = $this->getProductOfferAvailabilityRestResources([$productOfferRestResource->getId()]);",
-            "selected_text": "[$productOfferRestResource->getId()]",
+            "snippet": "            ->getByProductOfferReferences($productOfferReferences, $currentStoreName);",
+            "selected_text": "$productOfferReferences",
             "error_level": 6,
             "shortcode": 4
         }
@@ -52,8 +52,20 @@
         },
         {
             "severity": "info",
-            "line_from": 82,
-            "line_to": 82,
+            "line_from": 79,
+            "line_to": 79,
+            "type": "MoreSpecificImplementedParamType",
+            "message": "Argument 1 of Spryker\\Glue\\ProductOfferAvailabilitiesRestApi\\Processor\\Reader\\ProductOfferAvailabilityReader::getProductOfferAvailabilityRestResources has the more specific type 'array<int, null|string>', expecting 'array<array-key, string>' as defined by Spryker\\Glue\\ProductOfferAvailabilitiesRestApi\\Processor\\Reader\\ProductOfferAvailabilityReaderInterface::getProductOfferAvailabilityRestResources",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOfferAvailabilitiesRestApi/src/Spryker/Glue/ProductOfferAvailabilitiesRestApi/Processor/Reader/ProductOfferAvailabilityReader.php",
+            "snippet": "    public function getProductOfferAvailabilityRestResources(array $productOfferReferences): array",
+            "selected_text": "$productOfferReferences",
+            "error_level": 5,
+            "shortcode": 140
+        },
+        {
+            "severity": "info",
+            "line_from": 84,
+            "line_to": 84,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Glue\\ProductOfferAvailabilitiesRestApi\\Dependency\\Client\\ProductOfferAvailabilitiesRestApiToProductOfferAvailabilityStorageClientInterface::getByProductOfferReferences cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductOfferAvailabilitiesRestApi/src/Spryker/Glue/ProductOfferAvailabilitiesRestApi/Processor/Reader/ProductOfferAvailabilityReader.php",
@@ -61,30 +73,6 @@
             "selected_text": "$currentStoreName",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 46,
-            "line_to": 46,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductOfferAvailabilitiesRestApi/src/Spryker/Glue/ProductOfferAvailabilitiesRestApi/ProductOfferAvailabilitiesRestApiDependencyProvider.php",
-            "snippet": "                $container->getLocator()->productOfferAvailabilityStorage()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 62,
-            "line_to": 62,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductOfferAvailabilitiesRestApi/src/Spryker/Glue/ProductOfferAvailabilitiesRestApi/ProductOfferAvailabilitiesRestApiDependencyProvider.php",
-            "snippet": "                $container->getLocator()->store()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": []

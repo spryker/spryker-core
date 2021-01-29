@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductSetGui\Communication;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\ProductSetGui\Communication\Form\ActivateProductSetForm;
 use Spryker\Zed\ProductSetGui\Communication\Form\CreateProductSetFormType;
 use Spryker\Zed\ProductSetGui\Communication\Form\DataMapper\CreateFormDataToTransferMapper;
 use Spryker\Zed\ProductSetGui\Communication\Form\DataMapper\ReorderFormDataToTransferMapper;
@@ -16,6 +17,8 @@ use Spryker\Zed\ProductSetGui\Communication\Form\DataMapper\UpdateFormDataToTran
 use Spryker\Zed\ProductSetGui\Communication\Form\DataProvider\CreateFormDataProvider;
 use Spryker\Zed\ProductSetGui\Communication\Form\DataProvider\ReorderProductSetsFormDataProvider;
 use Spryker\Zed\ProductSetGui\Communication\Form\DataProvider\UpdateFormDataProvider;
+use Spryker\Zed\ProductSetGui\Communication\Form\DeactivateProductSetForm;
+use Spryker\Zed\ProductSetGui\Communication\Form\DeleteProductSetForm;
 use Spryker\Zed\ProductSetGui\Communication\Form\ReorderProductSetsFormType;
 use Spryker\Zed\ProductSetGui\Communication\Form\UpdateProductSetFormType;
 use Spryker\Zed\ProductSetGui\Communication\Table\Helper\ProductAbstractTableHelper;
@@ -26,6 +29,7 @@ use Spryker\Zed\ProductSetGui\Communication\Table\ProductSetTable;
 use Spryker\Zed\ProductSetGui\Communication\Table\ProductTable;
 use Spryker\Zed\ProductSetGui\Communication\Tabs\ProductSetFormTabs;
 use Spryker\Zed\ProductSetGui\ProductSetGuiDependencyProvider;
+use Symfony\Component\Form\FormInterface;
 
 /**
  * @method \Spryker\Zed\ProductSetGui\ProductSetGuiConfig getConfig()
@@ -60,6 +64,22 @@ class ProductSetGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createCreateProductSetForm(array $data = [], array $options = [])
     {
         return $this->getFormFactory()->create($this->createCreateProductSetFormType(), $data, $options);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createActivateProductSetForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(ActivateProductSetForm::class);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createDeactivateProductSetForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(DeactivateProductSetForm::class);
     }
 
     /**
@@ -254,6 +274,14 @@ class ProductSetGuiCommunicationFactory extends AbstractCommunicationFactory
             $this->getPriceProductFacade(),
             $this->getMoneyFacade()
         );
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createDeleteProductSetForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(DeleteProductSetForm::class, null, ['fields' => []]);
     }
 
     /**

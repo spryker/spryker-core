@@ -1,0 +1,54 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 26,
+            "line_to": 26,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\CompanySupplier\\Persistence\\CompanySupplierEntityManager::deleteCompanySupplierRelationsById cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanySupplier/src/Spryker/Zed/CompanySupplier/Persistence/CompanySupplierEntityManager.php",
+            "snippet": "        $this->deleteCompanySupplierRelationsById($productConcreteTransfer->getIdProductConcrete());",
+            "selected_text": "$productConcreteTransfer->getIdProductConcrete()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 29,
+            "line_to": 29,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Orm\\Zed\\CompanySupplier\\Persistence\\SpyCompanySupplierToProduct::setFkProduct cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanySupplier/src/Spryker/Zed/CompanySupplier/Persistence/CompanySupplierEntityManager.php",
+            "snippet": "            $productCompanySupplier->setFkProduct($productConcreteTransfer->getIdProductConcrete());",
+            "selected_text": "$productConcreteTransfer->getIdProductConcrete()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 30,
+            "line_to": 30,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Orm\\Zed\\CompanySupplier\\Persistence\\SpyCompanySupplierToProduct::setFkCompany cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanySupplier/src/Spryker/Zed/CompanySupplier/Persistence/CompanySupplierEntityManager.php",
+            "snippet": "            $productCompanySupplier->setFkCompany($supplier->getIdCompany());",
+            "selected_text": "$supplier->getIdCompany()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 72,
+            "line_to": 72,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\CompanySupplier\\Persistence\\CompanySupplierRepository::getCompanySupplierCollectionFromQuery expects Orm\\Zed\\Company\\Persistence\\SpyCompanyQuery, possibly different type Orm\\Zed\\Company\\Persistence\\SpyCompanyQuery|Orm\\Zed\\Product\\Persistence\\SpyProductQuery provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanySupplier/src/Spryker/Zed/CompanySupplier/Persistence/CompanySupplierRepository.php",
+            "snippet": "        return $this->getCompanySupplierCollectionFromQuery($query);",
+            "selected_text": "$query",
+            "error_level": 3,
+            "shortcode": 92
+        }
+    ],
+    "deprecation": []
+}

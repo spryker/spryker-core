@@ -1,0 +1,2 @@
+concrete_sku,configurator_key,is_complete,default_configuration,default_display_data
+product_configuration_test_sku,installation_appointment,0,{“time_of_day”: “2”},{“Preferred time of the day”: “Afternoon”}

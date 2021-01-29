@@ -41,6 +41,9 @@
         <property name="idMerchant" type="int"/>
         <property name="idUser" type="int"/>
         <property name="withUser" type="bool"/>
+        <property name="username" type="string"/>
+        <property name="status" type="string"/>
+        <property name="merchantStatus" type="string"/>
     </transfer>
 
     <transfer name="MerchantUserResponse">
@@ -51,6 +54,7 @@
 
     <transfer name="Message">
         <property name="message" type="string"/>
+        <property name="value" type="string"/>
     </transfer>
 
     <transfer name="Role">
@@ -73,11 +77,16 @@
         <property name="username" type="string"/>
         <property name="status" type="string"/>
         <property name="lastName" type="string"/>
+        <property name="lastLogin" type="string"/>
     </transfer>
 
     <transfer name="UserCriteria">
         <property name="idUser" type="int"/>
         <property name="email" type="string"/>
+    </transfer>
+
+    <transfer name="MerchantCriteria">
+        <property name="idMerchant" type="int"/>
     </transfer>
 
 </transfers>

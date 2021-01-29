@@ -15,14 +15,14 @@ use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 interface StepEnginePreRenderPluginInterface
 {
     /**
-     * Specifications:
+     * Specification:
      * - Prepares data for each step of process, before template rendering.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function execute(AbstractTransfer $dataTransfer): AbstractTransfer;
+    public function execute(AbstractTransfer $quoteTransfer): AbstractTransfer;
 }

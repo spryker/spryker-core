@@ -7,8 +7,13 @@
 
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Persistence;
 
+use DateTime;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
+use Generated\Shared\Transfer\MerchantProductOfferCountsTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
+use Generated\Shared\Transfer\PriceProductOfferTableCriteriaTransfer;
+use Generated\Shared\Transfer\PriceProductOfferTableViewCollectionTransfer;
+use Generated\Shared\Transfer\PriceProductOfferTableViewTransfer;
 use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductImageTransfer;
@@ -18,6 +23,12 @@ use Generated\Shared\Transfer\ProductOfferTableCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Generated\Shared\Transfer\ProductOfferValidityTransfer;
 use Generated\Shared\Transfer\ProductTableCriteriaTransfer;
+use Orm\Zed\Currency\Persistence\Map\SpyCurrencyTableMap;
+use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductStoreTableMap;
+use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductTableMap;
+use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceTypeTableMap;
+use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery;
+use Orm\Zed\PriceProductOffer\Persistence\Map\SpyPriceProductOfferTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
@@ -32,7 +43,7 @@ use Orm\Zed\ProductOfferValidity\Persistence\Map\SpyProductOfferValidityTableMap
 use Orm\Zed\ProductValidity\Persistence\Map\SpyProductValidityTableMap;
 use Orm\Zed\Store\Persistence\Map\SpyStoreTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
-use Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion;
+use Propel\Runtime\ActiveQuery\Criterion\LikeCriterion;
 use Propel\Runtime\ActiveQuery\Join;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Util\PropelModelPager;
@@ -45,6 +56,22 @@ use Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\Propel\ProductTableDat
  */
 class ProductOfferMerchantPortalGuiRepository extends AbstractRepository implements ProductOfferMerchantPortalGuiRepositoryInterface
 {
+    /**
+     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductOfferGuiTableConfigurationProvider::COL_KEY_OFFER_REFERENCE
+     */
+    protected const COL_KEY_OFFER_REFERENCE = 'offerReference';
+
+    /**
+     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductGuiTableConfigurationProvider::COL_KEY_SKU
+     */
+    protected const COL_KEY_PRODUCT_SKU = 'sku';
+
+    protected const SUFFIX_PRICE_TYPE_NET = '_net';
+    protected const SUFFIX_PRICE_TYPE_GROSS = '_gross';
+
+    protected const COL_PRICE_PRODUCT_OFFER_IDS = 'price_product_offer_ids';
+    protected const COL_TYPE_PRICE_PRODUCT_OFFER_IDS = 'type_price_product_offer_ids';
+
     /**
      * @param \Generated\Shared\Transfer\ProductTableCriteriaTransfer $productTableCriteriaTransfer
      *
@@ -78,6 +105,7 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
     /**
      * @module ProductOffer
      * @module ProductImage
+     * @module ProductValidity
      *
      * @param \Generated\Shared\Transfer\ProductTableCriteriaTransfer $productTableCriteriaTransfer
      *
@@ -86,11 +114,17 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
     protected function buildProductTableBaseQuery(ProductTableCriteriaTransfer $productTableCriteriaTransfer): SpyProductQuery
     {
         $productConcreteQuery = $this->getFactory()->getProductConcretePropelQuery();
-        $idLocale = $productTableCriteriaTransfer->requireIdLocale()->getIdLocale();
+
+        /** @var \Generated\Shared\Transfer\LocaleTransfer $localeTransfer */
+        $localeTransfer = $productTableCriteriaTransfer->requireLocale()->getLocale();
+        /** @var int $idLocale */
+        $idLocale = $localeTransfer->requireIdLocale()->getIdLocale();
+        /** @var int $idMerchant */
         $idMerchant = $productTableCriteriaTransfer->requireIdMerchant()->getIdMerchant();
 
         $productConcreteQuery = $this->addLocalizedAttributesToProductTableQuery($productConcreteQuery, $idLocale);
         $productConcreteQuery->leftJoinSpyProductValidity()
+            ->addAsColumn(ProductConcreteTransfer::ID_PRODUCT_CONCRETE, SpyProductTableMap::COL_ID_PRODUCT)
             ->addAsColumn(ProductConcreteTransfer::SKU, SpyProductTableMap::COL_SKU)
             ->addAsColumn(ProductConcreteTransfer::ATTRIBUTES, SpyProductTableMap::COL_ATTRIBUTES)
             ->addAsColumn(ProductConcreteTransfer::LOCALIZED_ATTRIBUTES, SpyProductLocalizedAttributesTableMap::COL_ATTRIBUTES)
@@ -200,8 +234,8 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
         SpyProductQuery $productConcreteQuery,
         ProductTableCriteriaTransfer $productTableCriteriaTransfer
     ): SpyProductQuery {
-        $orderColumn = $productTableCriteriaTransfer->getOrderBy();
-        $orderDirection = $productTableCriteriaTransfer->getOrderDirection();
+        $orderColumn = $productTableCriteriaTransfer->getOrderBy() ?? static::COL_KEY_PRODUCT_SKU;
+        $orderDirection = $productTableCriteriaTransfer->getOrderDirection() ?? Criteria::DESC;
 
         if (!$orderColumn || !$orderDirection) {
             return $productConcreteQuery;
@@ -216,20 +250,6 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
         $productConcreteQuery->orderBy($orderColumn, $orderDirection);
 
         return $productConcreteQuery;
-    }
-
-    /**
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
-     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
-     *
-     * @return \Propel\Runtime\Util\PropelModelPager
-     */
-    protected function getPagerForQuery(ModelCriteria $query, PaginationTransfer $paginationTransfer): PropelModelPager
-    {
-        return $query->paginate(
-            $paginationTransfer->requirePage()->getPage(),
-            $paginationTransfer->requireMaxPerPage()->getMaxPerPage()
-        );
     }
 
     /**
@@ -360,7 +380,9 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
             return $productConcreteQuery;
         }
 
+        /** @var int $merchantUserId */
         $merchantUserId = $productTableCriteriaTransfer->requireIdMerchant()->getIdMerchant();
+
         $productConcreteQuery->where(
             sprintf(
                 '(%s) %s 0',
@@ -417,21 +439,32 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
     protected function buildProductOfferTableBaseQuery(
         ProductOfferTableCriteriaTransfer $productOfferTableCriteriaTransfer
     ): SpyProductOfferQuery {
-        $idLocale = $productOfferTableCriteriaTransfer->requireIdLocale()->getIdLocale();
-        $idMerchant = $productOfferTableCriteriaTransfer->requireIdMerchant()->getIdMerchant();
-
         $productOfferQuery = $this->getFactory()->getProductOfferPropelQuery();
+        /** @var int $idMerchant */
+        $idMerchant = $productOfferTableCriteriaTransfer->requireIdMerchant()->getIdMerchant();
+        /** @var \Generated\Shared\Transfer\LocaleTransfer $localeTransfer */
+        $localeTransfer = $productOfferTableCriteriaTransfer->requireLocale()->getLocale();
+        /** @var int $idLocale */
+        $idLocale = $localeTransfer->requireIdLocale()->getIdLocale();
 
         $productOfferQuery = $this->joinProductLocalizedAttributesToProductOfferQuery($productOfferQuery, $idLocale);
-        $productOfferQuery->leftJoinSpyProductOfferValidity()
+        $productOfferQuery->filterByFkMerchant($idMerchant)
+            ->leftJoinSpyProductOfferValidity()
             ->leftJoinProductOfferStock()
+            ->useProductOfferStockQuery(null, Criteria::LEFT_JOIN)
+                ->useStockQuery()
+                    ->useSpyMerchantStockQuery()
+                        ->filterByIsDefault(true)
+                    ->endUse()
+                ->endUse()
+            ->endUse()
+            ->addAsColumn(ProductOfferTransfer::ID_PRODUCT_OFFER, SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER)
             ->addAsColumn(ProductOfferTransfer::PRODUCT_OFFER_REFERENCE, SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE)
             ->addAsColumn(ProductOfferTransfer::MERCHANT_SKU, SpyProductOfferTableMap::COL_MERCHANT_SKU)
             ->addAsColumn(ProductOfferTransfer::CONCRETE_SKU, SpyProductOfferTableMap::COL_CONCRETE_SKU)
             ->addAsColumn(ProductImageTransfer::EXTERNAL_URL_SMALL, sprintf('(%s)', $this->createProductImagesSubquery($idLocale)))
             ->addAsColumn(ProductOfferTransfer::STORES, sprintf('(%s)', $this->createProductOfferStoresSubquery()))
             ->addAsColumn(ProductOfferStockTransfer::QUANTITY, SpyProductOfferStockTableMap::COL_QUANTITY)
-            ->addAsColumn(ProductOfferStockTransfer::IS_NEVER_OUT_OF_STOCK, SpyProductOfferStockTableMap::COL_IS_NEVER_OUT_OF_STOCK)
             ->addAsColumn(ProductOfferTransfer::IS_ACTIVE, SpyProductOfferTableMap::COL_IS_ACTIVE)
             ->addAsColumn(LocalizedAttributesTransfer::NAME, SpyProductLocalizedAttributesTableMap::COL_NAME)
             ->addAsColumn(ProductOfferTransfer::PRODUCT_ATTRIBUTES, SpyProductTableMap::COL_ATTRIBUTES)
@@ -440,7 +473,6 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
             ->addAsColumn(ProductOfferValidityTransfer::VALID_TO, SpyProductOfferValidityTableMap::COL_VALID_TO)
             ->addAsColumn(ProductOfferTransfer::CREATED_AT, SpyProductOfferTableMap::COL_CREATED_AT)
             ->addAsColumn(ProductOfferTransfer::UPDATED_AT, SpyProductOfferTableMap::COL_UPDATED_AT)
-            ->filterByFkMerchant($idMerchant)
             ->select([
                 ProductOfferTransfer::PRODUCT_OFFER_REFERENCE,
                 ProductOfferTransfer::MERCHANT_SKU,
@@ -448,7 +480,6 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
                 ProductImageTransfer::EXTERNAL_URL_SMALL,
                 ProductOfferTransfer::STORES,
                 ProductOfferStockTransfer::QUANTITY,
-                ProductOfferStockTransfer::IS_NEVER_OUT_OF_STOCK,
                 ProductOfferTransfer::IS_ACTIVE,
                 LocalizedAttributesTransfer::NAME,
                 ProductOfferTransfer::PRODUCT_ATTRIBUTES,
@@ -506,60 +537,72 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
      * @param \Propel\Runtime\ActiveQuery\Criteria $criteria
      * @param string $searchTerm
      *
-     * @return \Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion
+     * @return \Propel\Runtime\ActiveQuery\Criterion\LikeCriterion
      */
-    protected function getProductNameSearchCriteria(Criteria $criteria, string $searchTerm): AbstractCriterion
+    protected function getProductNameSearchCriteria(Criteria $criteria, string $searchTerm): LikeCriterion
     {
-        return $criteria->getNewCriterion(
+        /** @var \Propel\Runtime\ActiveQuery\Criterion\LikeCriterion $likeCriterion */
+        $likeCriterion = $criteria->getNewCriterion(
             SpyProductLocalizedAttributesTableMap::COL_NAME,
             '%' . $searchTerm . '%',
             Criteria::LIKE
         );
+
+        return $likeCriterion->setIgnoreCase(true);
     }
 
     /**
      * @param \Propel\Runtime\ActiveQuery\Criteria $criteria
      * @param string $searchTerm
      *
-     * @return \Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion
+     * @return \Propel\Runtime\ActiveQuery\Criterion\LikeCriterion
      */
-    protected function getProductSkuSearchCriteria(Criteria $criteria, string $searchTerm): AbstractCriterion
+    protected function getProductSkuSearchCriteria(Criteria $criteria, string $searchTerm): LikeCriterion
     {
-        return $criteria->getNewCriterion(
+        /** @var \Propel\Runtime\ActiveQuery\Criterion\LikeCriterion $likeCriterion */
+        $likeCriterion = $criteria->getNewCriterion(
             SpyProductTableMap::COL_SKU,
             '%' . $searchTerm . '%',
             Criteria::LIKE
         );
+
+        return $likeCriterion->setIgnoreCase(true);
     }
 
     /**
      * @param \Propel\Runtime\ActiveQuery\Criteria $criteria
      * @param string $searchTerm
      *
-     * @return \Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion
+     * @return \Propel\Runtime\ActiveQuery\Criterion\LikeCriterion
      */
-    protected function getProductOfferReferenceSearchCriteria(Criteria $criteria, string $searchTerm): AbstractCriterion
+    protected function getProductOfferReferenceSearchCriteria(Criteria $criteria, string $searchTerm): LikeCriterion
     {
-        return $criteria->getNewCriterion(
+        /** @var \Propel\Runtime\ActiveQuery\Criterion\LikeCriterion $likeCriterion */
+        $likeCriterion = $criteria->getNewCriterion(
             SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE,
             '%' . $searchTerm . '%',
             Criteria::LIKE
         );
+
+        return $likeCriterion->setIgnoreCase(true);
     }
 
     /**
      * @param \Propel\Runtime\ActiveQuery\Criteria $criteria
      * @param string $searchTerm
      *
-     * @return \Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion
+     * @return \Propel\Runtime\ActiveQuery\Criterion\LikeCriterion
      */
-    protected function getProductOfferMerchantSkuSearchCriteria(Criteria $criteria, string $searchTerm): AbstractCriterion
+    protected function getProductOfferMerchantSkuSearchCriteria(Criteria $criteria, string $searchTerm): LikeCriterion
     {
-        return $criteria->getNewCriterion(
+        /** @var \Propel\Runtime\ActiveQuery\Criterion\LikeCriterion $likeCriterion */
+        $likeCriterion = $criteria->getNewCriterion(
             SpyProductOfferTableMap::COL_MERCHANT_SKU,
             '%' . $searchTerm . '%',
             Criteria::LIKE
         );
+
+        return $likeCriterion->setIgnoreCase(true);
     }
 
     /**
@@ -649,10 +692,10 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
             return $productOfferQuery;
         }
 
-        $productOfferQuery->useSpyProductOfferStoreQuery()
-            ->filterByFkStore_In($productOfferTableCriteriaTransfer->getFilterInStores())
-            ->endUse()
-            ->distinct();
+        $productOfferQuery->distinct()
+            ->useSpyProductOfferStoreQuery()
+                ->filterByFkStore_In($productOfferTableCriteriaTransfer->getFilterInStores())
+            ->endUse();
 
         return $productOfferQuery;
     }
@@ -758,8 +801,8 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
         SpyProductOfferQuery $productOfferQuery,
         ProductOfferTableCriteriaTransfer $productOfferTableCriteriaTransfer
     ): SpyProductOfferQuery {
-        $orderColumn = $productOfferTableCriteriaTransfer->getOrderBy();
-        $orderDirection = $productOfferTableCriteriaTransfer->getOrderDirection();
+        $orderColumn = $productOfferTableCriteriaTransfer->getOrderBy() ?? static::COL_KEY_OFFER_REFERENCE;
+        $orderDirection = $productOfferTableCriteriaTransfer->getOrderDirection() ?? Criteria::DESC;
 
         if (!$orderColumn || !$orderDirection) {
             return $productOfferQuery;
@@ -800,6 +843,224 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
             $query->addDescendingOrderByColumn("LENGTH($orderColumn)");
         }
 
+        // DISTINCT query requires it to be in SELECT
+        $query->withColumn("LENGTH($orderColumn)");
+
         return $query;
+    }
+
+    /**
+     * @module ProductOffer
+     * @module ProductOfferStock
+     * @module ProductOfferValidity
+     *
+     * @param int $idMerchant
+     *
+     * @return \Generated\Shared\Transfer\MerchantProductOfferCountsTransfer
+     */
+    public function getOffersDashboardCardCounts(int $idMerchant): MerchantProductOfferCountsTransfer
+    {
+        $productOfferMerchantPortalGuiConfig = $this->getFactory()->getConfig();
+        $dashboardExpiringOffersLimit = $productOfferMerchantPortalGuiConfig->getDashboardExpiringOffersDaysThreshold();
+        $dashboardLowStockThreshold = $productOfferMerchantPortalGuiConfig->getDashboardLowStockThreshold();
+        $currentDateTime = (new DateTime())->format('Y-m-d H:i:s');
+        $expiringOffersDateTime = (new DateTime(sprintf('+%s Days', $dashboardExpiringOffersLimit)))->format('Y-m-d H:i:s');
+
+        /** @var array $merchantProductOfferCounts */
+        $merchantProductOfferCounts = $this->getFactory()->getProductOfferPropelQuery()
+            ->leftJoinSpyProductOfferValidity()
+            ->leftJoinProductOfferStock()
+            ->filterByFkMerchant($idMerchant)
+            ->addAsColumn(MerchantProductOfferCountsTransfer::TOTAL, 'COUNT(*)')
+            ->addAsColumn(
+                MerchantProductOfferCountsTransfer::ACTIVE,
+                'COUNT(CASE WHEN ' . SpyProductOfferTableMap::COL_IS_ACTIVE . ' IS TRUE THEN 1 END)'
+            )
+            ->addAsColumn(
+                MerchantProductOfferCountsTransfer::WITH_STOCK,
+                'COUNT(CASE WHEN ' . SpyProductOfferStockTableMap::COL_QUANTITY . ' > 0 THEN 1 END)'
+            )
+            ->addAsColumn(
+                MerchantProductOfferCountsTransfer::LOW_IN_STOCK,
+                'COUNT(CASE WHEN ' . SpyProductOfferStockTableMap::COL_QUANTITY . ' < ' . $dashboardLowStockThreshold . ' THEN 1 END)'
+            )
+            ->addAsColumn(
+                MerchantProductOfferCountsTransfer::WITH_VALID_DATES,
+                'COUNT(CASE WHEN (' .
+                    SpyProductOfferValidityTableMap::COL_VALID_FROM . " <= '" . $currentDateTime .
+                        "' OR " . SpyProductOfferValidityTableMap::COL_VALID_FROM . ' IS NULL)' .
+                    ' AND (' . SpyProductOfferValidityTableMap::COL_VALID_TO . " >= '" . $currentDateTime .
+                        "' OR " . SpyProductOfferValidityTableMap::COL_VALID_TO . ' IS NULL)' .
+                    ' OR ' . SpyProductOfferValidityTableMap::COL_ID_PRODUCT_OFFER_VALIDITY . ' IS NULL THEN 1 END)'
+            )
+            ->addAsColumn(
+                MerchantProductOfferCountsTransfer::EXPIRING,
+                "COUNT(CASE WHEN '" . $currentDateTime . "' < " . SpyProductOfferValidityTableMap::COL_VALID_TO
+                . " AND '" . $expiringOffersDateTime . "' > " . SpyProductOfferValidityTableMap::COL_VALID_TO . ' THEN 1 END)'
+            )
+            ->addAsColumn(
+                MerchantProductOfferCountsTransfer::VISIBLE,
+                'COUNT(CASE WHEN ' . SpyProductOfferTableMap::COL_IS_ACTIVE . " IS TRUE
+                    AND " . SpyProductOfferStockTableMap::COL_QUANTITY . ' > 0 AND ((' .
+                        SpyProductOfferValidityTableMap::COL_VALID_FROM . " <= '" . $currentDateTime .
+                            "' OR " . SpyProductOfferValidityTableMap::COL_VALID_FROM . ' IS NULL)' .
+                        ' AND (' . SpyProductOfferValidityTableMap::COL_VALID_TO . " >= '" . $currentDateTime .
+                            "' OR " . SpyProductOfferValidityTableMap::COL_VALID_TO . ' IS NULL)' .
+                        ' OR ' . SpyProductOfferValidityTableMap::COL_ID_PRODUCT_OFFER_VALIDITY . " IS NULL
+                    ) THEN 1 END)"
+            )
+            ->select([
+                MerchantProductOfferCountsTransfer::TOTAL,
+                MerchantProductOfferCountsTransfer::ACTIVE,
+                MerchantProductOfferCountsTransfer::WITH_STOCK,
+                MerchantProductOfferCountsTransfer::LOW_IN_STOCK,
+                MerchantProductOfferCountsTransfer::WITH_VALID_DATES,
+                MerchantProductOfferCountsTransfer::EXPIRING,
+                MerchantProductOfferCountsTransfer::VISIBLE,
+            ])
+            ->findOne();
+
+        $merchantProductOfferCountsTransfer = (new MerchantProductOfferCountsTransfer())->fromArray($merchantProductOfferCounts, true);
+        $inactiveCount = $merchantProductOfferCountsTransfer->getTotal() - $merchantProductOfferCountsTransfer->getActive();
+        $merchantProductOfferCountsTransfer->setInactive($inactiveCount > 0 ? $inactiveCount : 0);
+
+        return $merchantProductOfferCountsTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductOfferTableCriteriaTransfer $productOfferPriceTableCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductOfferTableViewCollectionTransfer
+     */
+    public function getProductOfferPriceTableData(
+        PriceProductOfferTableCriteriaTransfer $productOfferPriceTableCriteriaTransfer
+    ): PriceProductOfferTableViewCollectionTransfer {
+        $productOfferPriceTableCriteriaTransfer->requireIdProductOffer();
+        $productOfferPriceTableCriteriaTransfer->requireIdMerchant();
+
+        $priceProductStoreQuery = $this->getFactory()
+            ->getPriceProductStorePropelQuery()
+            ->select([SpyStoreTableMap::COL_NAME, SpyCurrencyTableMap::COL_CODE])
+            ->addAsColumn(PriceProductOfferTableViewTransfer::STORE, SpyStoreTableMap::COL_NAME)
+            ->addAsColumn(PriceProductOfferTableViewTransfer::CURRENCY, SpyCurrencyTableMap::COL_CODE);
+
+        $priceTypeValues = $this->getFactory()->getPriceProductFacade()->getPriceTypeValues();
+
+        foreach ($priceTypeValues as $priceTypeTransfer) {
+            if (!$priceTypeTransfer->getIdPriceType()) {
+                continue;
+            }
+
+            /** @var string $priceTypeName */
+            $priceTypeName = $priceTypeTransfer->getName();
+
+            $priceTypeName = mb_strtolower($priceTypeName);
+            $grossColumnName = $priceTypeName . static::SUFFIX_PRICE_TYPE_GROSS;
+            $grossClause = sprintf(
+                'MAX(CASE WHEN %s = %s THEN %s END)',
+                SpyPriceProductTableMap::COL_FK_PRICE_TYPE,
+                $priceTypeTransfer->getIdPriceType(),
+                SpyPriceProductStoreTableMap::COL_GROSS_PRICE
+            );
+
+            $netColumnName = $priceTypeName . static::SUFFIX_PRICE_TYPE_NET;
+            $netClause = sprintf(
+                'MAX(CASE WHEN %s = %s THEN %s END)',
+                SpyPriceProductTableMap::COL_FK_PRICE_TYPE,
+                $priceTypeTransfer->getIdPriceType(),
+                SpyPriceProductStoreTableMap::COL_NET_PRICE
+            );
+
+            $priceProductStoreQuery->addAsColumn($grossColumnName, $grossClause)
+                ->addAsColumn($netColumnName, $netClause);
+        }
+
+        $priceProductStoreQuery->addAsColumn(
+            static::COL_PRICE_PRODUCT_OFFER_IDS,
+            sprintf('GROUP_CONCAT(%s)', SpyPriceProductOfferTableMap::COL_ID_PRICE_PRODUCT_OFFER)
+        )->addAsColumn(
+            static::COL_TYPE_PRICE_PRODUCT_OFFER_IDS,
+            sprintf(
+                'GROUP_CONCAT(CONCAT(%s,\':\',%s))',
+                SpyPriceTypeTableMap::COL_NAME,
+                SpyPriceProductOfferTableMap::COL_ID_PRICE_PRODUCT_OFFER
+            )
+        );
+
+        $priceProductStoreQuery = $this->applyPriceProductOfferFilters(
+            $priceProductStoreQuery,
+            $productOfferPriceTableCriteriaTransfer
+        );
+
+        $priceProductStoreQuery->usePriceProductQuery()
+                ->innerJoinPriceType()
+            ->endUse()
+            ->groupBy(SpyStoreTableMap::COL_NAME)
+            ->groupBy(SpyCurrencyTableMap::COL_CODE);
+
+        if ($productOfferPriceTableCriteriaTransfer->getOrderBy()) {
+            /** @var string $orderBy */
+            $orderBy = $productOfferPriceTableCriteriaTransfer->getOrderBy();
+            /** @var string $orderDirection */
+            $orderDirection = $productOfferPriceTableCriteriaTransfer->getOrderDirection();
+            $priceProductStoreQuery->orderBy($orderBy, $orderDirection);
+        }
+
+        $paginate = $priceProductStoreQuery->paginate(
+            $productOfferPriceTableCriteriaTransfer->requirePage()->getPage(),
+            $productOfferPriceTableCriteriaTransfer->requirePageSize()->getPageSize()
+        );
+
+        $paginationTransfer = $this->hydratePaginationTransfer($paginate);
+
+        $priceProductOfferTableViewCollectionTransfer = $this->getFactory()
+            ->createPriceProductOfferTableDataMapper()
+            ->mapPriceProductOfferTableDataArrayToPriceProductOfferTableViewCollectionTransfer(
+                $paginate->getResults()->getData(),
+                new PriceProductOfferTableViewCollectionTransfer()
+            );
+
+        $priceProductOfferTableViewCollectionTransfer->setPagination($paginationTransfer);
+
+        return $priceProductOfferTableViewCollectionTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery $priceProductStoreQuery
+     * @param \Generated\Shared\Transfer\PriceProductOfferTableCriteriaTransfer $productOfferPriceTableCriteriaTransfer
+     *
+     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery
+     */
+    protected function applyPriceProductOfferFilters(
+        SpyPriceProductStoreQuery $priceProductStoreQuery,
+        PriceProductOfferTableCriteriaTransfer $productOfferPriceTableCriteriaTransfer
+    ): SpyPriceProductStoreQuery {
+        $priceProductStoreQuery
+            ->useSpyPriceProductOfferQuery()
+                ->useSpyProductOfferQuery()
+                    ->filterByFkMerchant($productOfferPriceTableCriteriaTransfer->getIdMerchant())
+                    ->filterByIdProductOffer($productOfferPriceTableCriteriaTransfer->getIdProductOffer())
+                ->endUse()
+            ->endUse();
+
+        if (count($productOfferPriceTableCriteriaTransfer->getFilterInStores()) > 0) {
+            $priceProductStoreQuery
+                ->useStoreQuery(SpyStoreTableMap::TABLE_NAME, Criteria::INNER_JOIN)
+                    ->filterByIdStore_In($productOfferPriceTableCriteriaTransfer->getFilterInStores())
+                ->endUse();
+        } else {
+            $priceProductStoreQuery->innerJoinStore();
+        }
+
+        if (count($productOfferPriceTableCriteriaTransfer->getFilterInCurrencies()) > 0) {
+            $priceProductStoreQuery
+                ->useCurrencyQuery()
+                    ->filterByIdCurrency_In($productOfferPriceTableCriteriaTransfer->getFilterInCurrencies())
+                ->endUse();
+        } else {
+            $priceProductStoreQuery->innerJoinCurrency();
+        }
+
+        return $priceProductStoreQuery;
     }
 }

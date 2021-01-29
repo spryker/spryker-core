@@ -1,42 +1,19 @@
 {
-    "error": [],
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 79,
+            "line_to": 80,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed' does not match the declared return type 'array<array-key, Generated\\Shared\\Transfer\\SpyMerchantOpeningHoursStorageEntityTransfer>' for Spryker\\Zed\\MerchantOpeningHoursStorage\\Persistence\\MerchantOpeningHoursStorageRepository::getFilteredMerchantOpeningHoursStorageEntityTransfers",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantOpeningHoursStorage/src/Spryker/Zed/MerchantOpeningHoursStorage/Persistence/MerchantOpeningHoursStorageRepository.php",
+            "snippet": "        return $this->buildQueryFromCriteria($merchantOpeningHoursStoragePropelQuery, $merchantOpeningHoursStorageCriteriaFilterTransfer->getFilter())\n            ->find();",
+            "selected_text": "$this->buildQueryFromCriteria($merchantOpeningHoursStoragePropelQuery, $merchantOpeningHoursStorageCriteriaFilterTransfer->getFilter())\n            ->find()",
+            "error_level": 6,
+            "shortcode": 128
+        }
+    ],
     "warning": [
-        {
-            "severity": "info",
-            "line_from": 46,
-            "line_to": 46,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/MerchantOpeningHoursStorage/src/Spryker/Client/MerchantOpeningHoursStorage/MerchantOpeningHoursStorageDependencyProvider.php",
-            "snippet": "            return new MerchantOpeningHoursStorageToSynchronizationServiceBridge($container->getLocator()->synchronization()->service());",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 60,
-            "line_to": 60,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/MerchantOpeningHoursStorage/src/Spryker/Client/MerchantOpeningHoursStorage/MerchantOpeningHoursStorageDependencyProvider.php",
-            "snippet": "            return new MerchantOpeningHoursStorageToStorageClientBridge($container->getLocator()->storage()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 75,
-            "line_to": 75,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/MerchantOpeningHoursStorage/src/Spryker/Client/MerchantOpeningHoursStorage/MerchantOpeningHoursStorageDependencyProvider.php",
-            "snippet": "                $container->getLocator()->utilEncoding()->service()",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
-        },
         {
             "severity": "info",
             "line_from": 50,
@@ -96,30 +73,6 @@
             "selected_text": "getArrayCopy",
             "error_level": 3,
             "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 64,
-            "line_to": 64,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/MerchantOpeningHoursStorage/src/Spryker/Zed/MerchantOpeningHoursStorage/MerchantOpeningHoursStorageDependencyProvider.php",
-            "snippet": "                $container->getLocator()->eventBehavior()->facade()",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 80,
-            "line_to": 80,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/MerchantOpeningHoursStorage/src/Spryker/Zed/MerchantOpeningHoursStorage/MerchantOpeningHoursStorageDependencyProvider.php",
-            "snippet": "                $container->getLocator()->merchant()->facade()",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
         },
         {
             "severity": "info",

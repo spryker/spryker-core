@@ -66,21 +66,21 @@ class YvesRouterPluginTest extends Unit
     /**
      * @dataProvider dataProvider
      *
-     * @param string $url
+     * @param string $expectedUrl
      * @param string $routeName
      *
      * @return void
      */
-    public function testGenerateReturnsUrlForRouteName(string $url, string $routeName): void
+    public function testGenerateReturnsUrlForRouteName(string $expectedUrl, string $routeName): void
     {
         $routerPlugin = new YvesRouterPlugin();
         $routerPlugin->setFactory($this->tester->getFactory());
 
         $router = $routerPlugin->getRouter();
 
-        $url = $router->generate($routeName);
+        $actualUrl = $router->generate($routeName);
 
-        $this->assertSame($url, $url);
+        $this->assertSame($expectedUrl, $actualUrl);
     }
 
     /**

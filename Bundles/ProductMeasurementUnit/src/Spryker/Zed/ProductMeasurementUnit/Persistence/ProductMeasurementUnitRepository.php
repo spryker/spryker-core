@@ -55,6 +55,7 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
             ->leftJoinWithSpyProductMeasurementSalesUnitStore()
             ->leftJoinWith('SpyProductMeasurementSalesUnitStore.SpyStore');
 
+        /** @var \Propel\Runtime\Collection\ObjectCollection|null $productMeasurementSalesUnitEntityCollection */
         $productMeasurementSalesUnitEntityCollection = $query->find();
         if (!$productMeasurementSalesUnitEntityCollection) {
             throw new EntityNotFoundException(sprintf(static::ERROR_NO_SALES_UNIT_BY_ID, $idProductMeasurementSalesUnit));
@@ -304,6 +305,7 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
             return [];
         }
 
+        /** @var array $productMeasurementSalesUnitsData */
         $productMeasurementSalesUnitsData = $this->getFactory()
             ->createProductMeasurementSalesUnitQuery()
             ->filterByFkProduct_In($productConcreteIds)
@@ -335,6 +337,7 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
             return [];
         }
 
+        /** @var array $productMeasurementBaseUnitsData */
         $productMeasurementBaseUnitsData = $this->getFactory()
             ->createProductMeasurementBaseUnitQuery()
             ->filterByFkProductAbstract_In($productAbstractIds)
@@ -446,6 +449,7 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
     public function findIndexedStoreAwareProductMeasurementSalesUnitIds(array $productConcreteSkus, int $idStore): array
     {
         $indexedProductMeasurementSalesUnitIds = [];
+        /** @var array $productMeasurementSalesUnitIdCollection */
         $productMeasurementSalesUnitIdCollection = $this->getFactory()
             ->createProductMeasurementSalesUnitQuery()
             ->useProductQuery()
@@ -466,17 +470,17 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
     }
 
     /**
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $criteria
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $modelCriteria
      * @param \Generated\Shared\Transfer\FilterTransfer|null $filterTransfer
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    public function buildQueryFromCriteria(ModelCriteria $criteria, ?FilterTransfer $filterTransfer = null): ModelCriteria
+    public function buildQueryFromCriteria(ModelCriteria $modelCriteria, ?FilterTransfer $filterTransfer = null): ModelCriteria
     {
-        $criteria = parent::buildQueryFromCriteria($criteria, $filterTransfer);
+        $modelCriteria = parent::buildQueryFromCriteria($modelCriteria, $filterTransfer);
 
-        $criteria->setFormatter(ModelCriteria::FORMAT_OBJECT);
+        $modelCriteria->setFormatter(ModelCriteria::FORMAT_OBJECT);
 
-        return $criteria;
+        return $modelCriteria;
     }
 }

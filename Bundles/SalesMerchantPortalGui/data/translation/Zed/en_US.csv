@@ -11,3 +11,40 @@ Search,Search
 States,States
 Store,Store
 Stores,Stores
+Details,Details
+Order,Order
+"Order date","Order date"
+"Number of products","Number of products"
+Items,Items
+Shipments,Shipments
+Subtotal,Subtotal
+Shipment,Shipment
+"Included Taxes","Included Taxes"
+"Client name","Client name"
+"Client email","Client email"
+"Total orders","Total orders"
+Overview,Overview
+Totals,Totals
+"From the last %daysNumber% days","From the last %daysNumber% days"
+"Manage Orders","Manage Orders"
+New,New
+"Per Store","Per Store"
+"The state is updated successfully.","The state is updated successfully."
+"Only matching states items will be updated.","Only matching states items will be updated."
+"Order's Items state","Order's Items state"
+"Merchant order not found for id %d.","Merchant order not found for id %d."
+"Event name is empty.","Event name is empty."
+"Merchant order ids are empty.","Merchant order ids are empty."
+Method,Method
+Carrier,Carrier
+"Delivery address","Delivery address"
+"Requested Date","Requested Date"
+SKU,SKU
+Image,Image
+Name,Name
+Quantity,Quantity
+State,State
+"There are no applicable actions for the selected items.","There are no applicable actions for the selected items."
+"Shipment %index% of %total%","Shipment %index% of %total%"
+"Canceled Amount","Canceled Amount"
+"Discount Amount","Discount Amount"

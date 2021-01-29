@@ -26,4 +26,21 @@ interface ContentBannerClientInterface
      * @return \Generated\Shared\Transfer\ContentBannerTypeTransfer|null
      */
     public function executeBannerTypeByKey(string $contentKey, string $localeName): ?ContentBannerTypeTransfer;
+
+    /**
+     * Specification:
+     * - Finds content items in the key-value storage by content keys and locale name.
+     * - Gets stored term for found content items.
+     * - Executes stored term with found content items to get a collection of content banner type.
+     *
+     * @api
+     *
+     * @phpstan-return array<string, \Generated\Shared\Transfer\ContentBannerTypeTransfer>
+     *
+     * @param string[] $contentKeys
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\ContentBannerTypeTransfer[]
+     */
+    public function executeBannerTypeByKeys(array $contentKeys, string $localeName): array;
 }

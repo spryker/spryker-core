@@ -1,5 +1,5 @@
 {% block form_row %}
-    {% spaceless %}
+    {% apply spaceless %}
         {{ form_label(form) }}
         {{ form_widget(form) }}
         {% for attrname,attrvalue in attr %}
@@ -8,5 +8,5 @@
             {% endif %}
         {% endfor %}
         {{ form_errors(form) }}
-    {% endspaceless %}
+    {% endapply %}
 {% endblock form_row %}

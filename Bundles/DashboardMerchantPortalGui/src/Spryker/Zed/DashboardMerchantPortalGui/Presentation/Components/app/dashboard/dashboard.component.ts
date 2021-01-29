@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewEncapsulation, Input } from '@angular/core';
 
 @Component({
     selector: 'mp-dashboard',
@@ -7,5 +7,4 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
 })
-export class DashboardComponent {
-}
+export class DashboardComponent {}

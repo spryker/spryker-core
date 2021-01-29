@@ -12,8 +12,6 @@ use Orm\Zed\CmsSlotStorage\Persistence\SpyCmsSlotStorage;
 use Orm\Zed\CmsSlotStorage\Persistence\SpyCmsSlotStorageQuery;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)

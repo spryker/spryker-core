@@ -42,7 +42,8 @@ class OrdersRestApiFactory extends AbstractFactory
     {
         return new OrderMapper(
             $this->createOrderShipmentMapper(),
-            $this->getRestOrderItemsAttributesMapperPlugins()
+            $this->getRestOrderItemsAttributesMapperPlugins(),
+            $this->getRestOrderDetailsAttributesMapperPlugins()
         );
     }
 
@@ -98,5 +99,13 @@ class OrdersRestApiFactory extends AbstractFactory
     public function getRestOrderItemsAttributesMapperPlugins(): array
     {
         return $this->getProvidedDependency(OrdersRestApiDependencyProvider::PLUGINS_REST_ORDER_ITEMS_ATTRIBUTES_MAPPER);
+    }
+
+    /**
+     * @return \Spryker\Glue\OrdersRestApiExtension\Dependency\Plugin\RestOrderDetailsAttributesMapperPluginInterface[]
+     */
+    public function getRestOrderDetailsAttributesMapperPlugins(): array
+    {
+        return $this->getProvidedDependency(OrdersRestApiDependencyProvider::PLUGINS_REST_ORDER_DETAILS_ATTRIBUTES_MAPPER);
     }
 }

@@ -54,7 +54,7 @@ class DataExportCsvFormatterTest extends Unit
         //Arrange
         $this->assertTrue($dataExportFormatResponseTransfer->getIsSuccessful());
         $csvString = $dataExportFormatResponseTransfer->getDataFormatted();
-        $this->assertEquals(
+        $this->assertSame(
             $this->getExpectedCsvString(static::CSV_DATA),
             $csvString,
             'Formatted csv data does not equals to an expected csv string.'
@@ -97,7 +97,7 @@ class DataExportCsvFormatterTest extends Unit
         $extension = $dataExportCsvFormatter->getFormatExtension($dataExportConfigurationTransfer);
 
         //Assert
-        $this->assertEquals('csv', $extension, 'Expected extension is "csv"');
+        $this->assertSame('csv', $extension, 'Expected extension is "csv"');
     }
 
     /**

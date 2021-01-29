@@ -68,8 +68,8 @@ class ResponseRelationshipTest extends Unit
         $this->assertCount(1, $resource->getRelationships());
 
         $this->assertCount(1, $resource->getRelationships()['related']);
-        $this->assertEquals(1, $resource->getRelationships()['related'][0]->getId());
-        $this->assertEquals('related', $resource->getRelationships()['related'][0]->getType());
+        $this->assertSame('1', $resource->getRelationships()['related'][0]->getId());
+        $this->assertSame('related', $resource->getRelationships()['related'][0]->getType());
     }
 
     /**
@@ -89,8 +89,8 @@ class ResponseRelationshipTest extends Unit
         $included = $responseRelationship->processIncluded([$resource], $restRequest);
 
         $this->assertCount(1, $included);
-        $this->assertEquals('related', $included[0]->getType());
-        $this->assertEquals('1', $included[0]->getId());
+        $this->assertSame('related', $included[0]->getType());
+        $this->assertSame('1', $included[0]->getId());
     }
 
     /**

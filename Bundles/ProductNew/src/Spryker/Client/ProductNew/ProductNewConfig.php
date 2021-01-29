@@ -8,7 +8,7 @@
 namespace Spryker\Client\ProductNew;
 
 use Spryker\Client\Kernel\AbstractBundleConfig;
-use Spryker\Shared\ProductNew\ProductNewConfig as SprykerSharedProductNewConfig;
+use Spryker\Shared\ProductNew\ProductNewConfig as SharedProductNewConfig;
 
 class ProductNewConfig extends AbstractBundleConfig
 {
@@ -19,6 +19,6 @@ class ProductNewConfig extends AbstractBundleConfig
      */
     public function getLabelNewName()
     {
-        return SprykerSharedProductNewConfig::DEFAULT_LABEL_NAME;
+        return SharedProductNewConfig::DEFAULT_LABEL_NAME;
     }
 }

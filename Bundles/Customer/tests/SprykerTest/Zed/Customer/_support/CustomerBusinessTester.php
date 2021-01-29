@@ -8,11 +8,11 @@
 namespace SprykerTest\Zed\Customer;
 
 use Codeception\Actor;
+use Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\NativePasswordEncoder;
+use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -22,7 +22,7 @@ use Symfony\Component\Security\Core\Encoder\NativePasswordEncoder;
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  *
  * @SuppressWarnings(PHPMD)
  *
@@ -34,15 +34,27 @@ class CustomerBusinessTester extends Actor
 
     /**
      * @param string $hash
-     * @param string $rowPassword
+     * @param string $rawPassword
      * @param string $salt
      *
      * @return void
      */
-    public function assertPasswordsEqual(string $hash, string $rowPassword, string $salt = ''): void
+    public function assertPasswordsEqual(string $hash, string $rawPassword, string $salt = ''): void
     {
-        $nativePasswordEncoder = new NativePasswordEncoder();
+        $passwordEncoder = $this->getPasswordEncoder();
 
-        $this->assertTrue($nativePasswordEncoder->isPasswordValid($hash, $rowPassword, $salt), 'Passwords are now equal.');
+        $this->assertTrue($passwordEncoder->isPasswordValid($hash, $rawPassword, $salt), 'Passwords are not equal.');
+    }
+
+    /**
+     * @return \Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface
+     */
+    protected function getPasswordEncoder(): PasswordEncoderInterface
+    {
+        if (class_exists(BCryptPasswordEncoder::class)) {
+            return new BCryptPasswordEncoder(12);
+        }
+
+        return new NativePasswordEncoder(null, null, 12);
     }
 }

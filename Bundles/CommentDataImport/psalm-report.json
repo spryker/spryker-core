@@ -1,0 +1,18 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 25,
+            "line_to": 25,
+            "type": "MethodSignatureMismatch",
+            "message": "Method Spryker\\Zed\\CommentDataImport\\Business\\CommentDataImportBusinessFactory::createTransactionAwareDataSetStepBroker has fewer parameters than parent method Spryker\\Zed\\DataImport\\Business\\DataImportBusinessFactory::createTransactionAwareDataSetStepBroker",
+            "file_name": "vendor/spryker/spryker/Bundles/CommentDataImport/src/Spryker/Zed/CommentDataImport/Business/CommentDataImportBusinessFactory.php",
+            "snippet": "class CommentDataImportBusinessFactory extends DataImportBusinessFactory",
+            "selected_text": "CommentDataImportBusinessFactory",
+            "error_level": 7,
+            "shortcode": 42
+        }
+    ],
+    "warning": [],
+    "deprecation": []
+}

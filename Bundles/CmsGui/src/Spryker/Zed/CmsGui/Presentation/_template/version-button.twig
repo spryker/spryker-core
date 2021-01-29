@@ -1,5 +1,13 @@
 {% set viewUrl = url('/cms-gui/view-page', {'id-cms-page' : idCmsPage}) %}
-{{ createActionButton(url('/cms-gui/version-page/publish', {'id-cms-page': idCmsPage, 'redirect-url' : viewUrl}), 'Publish' | trans, {'icon' : '<i class="fa fa-upload"></i> '}) }}
+{{ form_start(publishForm, {
+    'action': url('/cms-gui/version-page/publish', {'id-cms-page': idCmsPage}),
+    'attr': {'class': 'form-inline'}
+}) }}
+    <input type="hidden" name="redirect-url" value="{{ viewUrl }}">
+    <button type="submit" class="btn btn-sm btn-outline safe-submit btn-create">
+        <i class="fa fa-upload"></i> {{ 'Publish' | trans }}
+    </button>
+{{ form_end(publishForm) }}
 
 {% if cmsVersion is not null %}
     {{ viewActionButton(url('/cms-gui/view-page/index', {'id-cms-page': idCmsPage, 'redirect-url' : redirectUrl}), 'View' | trans) }}

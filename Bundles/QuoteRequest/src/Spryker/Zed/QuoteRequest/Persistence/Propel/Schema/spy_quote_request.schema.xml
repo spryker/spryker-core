@@ -56,7 +56,7 @@
         <column name="version" type="INTEGER" required="true"/>
         <column name="version_reference" type="VARCHAR" size="255"/>
         <column name="metadata" type="LONGVARCHAR" required="false"/>
-        <column name="quote" type="LONGVARCHAR"/>
+        <column name="quote" type="CLOB"/>
 
         <index name="spy_quote_request_version-fk_quote_request">
             <index-column name="fk_quote_request"/>

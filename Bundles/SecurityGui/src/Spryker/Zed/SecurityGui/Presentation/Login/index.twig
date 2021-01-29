@@ -1,0 +1,29 @@
+{% extends '@SecurityGui/Layout/layout.twig' %}
+
+{% form_theme form '@SecurityGui/Layout/form.twig' %}
+
+{% block content %}
+
+    <div>
+        {{ form_start(form) }}
+
+            {% include '@SecurityGui/Partial/form-message.twig' %}
+
+            {{ form_errors(form) }}
+
+            {{ form_row(form.username) }}
+            {{ form_row(form.password) }}
+
+            <div class="form-group"><button class="btn btn-success btn-block btn-outline btn" type="submit">{{ 'Login' | trans }}</button></div>
+            <div class="form-group forgot">
+                <a href="/security-gui/password/reset-request">{{ 'Forgot password?' | trans }}</a>
+            </div>
+
+            {% include '@SecurityGui/Partial/authentication-links.twig' %}
+
+            {{ form_rest(form) }}
+
+        {{ form_end(form) }}
+    </div>
+
+{% endblock %}

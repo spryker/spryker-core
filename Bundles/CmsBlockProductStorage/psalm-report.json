@@ -3,30 +3,6 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 41,
-            "line_to": 41,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockProductStorage/src/Spryker/Client/CmsBlockProductStorage/CmsBlockProductStorageDependencyProvider.php",
-            "snippet": "            return new CmsBlockProductStorageToStorageClientBridge($container->getLocator()->storage()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 55,
-            "line_to": 55,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockProductStorage/src/Spryker/Client/CmsBlockProductStorage/CmsBlockProductStorageDependencyProvider.php",
-            "snippet": "            return new CmsBlockProductStorageToSynchronizationServiceBridge($container->getLocator()->synchronization()->service());",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
             "line_from": 113,
             "line_to": 113,
             "type": "PossiblyNullArrayOffset",
@@ -51,63 +27,15 @@
         },
         {
             "severity": "info",
-            "line_from": 33,
-            "line_to": 33,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockProductStorage/src/Spryker/Zed/CmsBlockProductStorage/CmsBlockProductStorageDependencyProvider.php",
-            "snippet": "            return new CmsBlockProductStorageToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 47,
-            "line_to": 47,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockProductStorage/src/Spryker/Zed/CmsBlockProductStorage/CmsBlockProductStorageDependencyProvider.php",
-            "snippet": "            return new CmsBlockProductStorageToUtilSanitizeServiceBridge($container->getLocator()->utilSanitize()->service());",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 61,
-            "line_to": 61,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::querycontainer does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockProductStorage/src/Spryker/Zed/CmsBlockProductStorage/CmsBlockProductStorageDependencyProvider.php",
-            "snippet": "            return new CmsBlockProductStorageToCmsBlockProductConnectorQueryContainerBridge($container->getLocator()->cmsBlockProductConnector()->queryContainer());",
-            "selected_text": "queryContainer",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 59,
-            "line_to": 59,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Propel\\Runtime\\ActiveQuery\\ModelCriteria::filterbyfkproductabstract_in does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockProductStorage/src/Spryker/Zed/CmsBlockProductStorage/Persistence/CmsBlockProductStorageQueryContainer.php",
-            "snippet": "        return $query->filterByFkProductAbstract_In($productIds);",
-            "selected_text": "filterByFkProductAbstract_In",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 78,
-            "line_to": 78,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Propel\\Runtime\\ActiveQuery\\ModelCriteria::filterbyidcmsblockproductconnector_in does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockProductStorage/src/Spryker/Zed/CmsBlockProductStorage/Persistence/CmsBlockProductStorageQueryContainer.php",
-            "snippet": "            ->filterByIdCmsBlockProductConnector_In($cmsBlockProductIds);",
-            "selected_text": "filterByIdCmsBlockProductConnector_In",
-            "error_level": 4,
-            "shortcode": 219
+            "line_from": 46,
+            "line_to": 46,
+            "type": "MoreSpecificImplementedParamType",
+            "message": "Argument 1 of Spryker\\Zed\\CmsBlockProductStorage\\Communication\\Plugin\\Event\\CmsBlockProductEventResourceQueryContainerPlugin::queryData has the more specific type 'array<array-key, int>', expecting 'array<array-key, int|string>' as defined by Spryker\\Zed\\EventBehavior\\Dependency\\Plugin\\EventResourceQueryContainerPluginInterface::queryData",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockProductStorage/src/Spryker/Zed/CmsBlockProductStorage/Communication/Plugin/Event/CmsBlockProductEventResourceQueryContainerPlugin.php",
+            "snippet": "    public function queryData(array $ids = []): ?ModelCriteria",
+            "selected_text": "$ids",
+            "error_level": 5,
+            "shortcode": 140
         }
     ],
     "deprecation": [
@@ -173,8 +101,8 @@
         },
         {
             "severity": "info",
-            "line_from": 25,
-            "line_to": 25,
+            "line_from": 26,
+            "line_to": 26,
             "type": "DeprecatedTrait",
             "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/CmsBlockProductStorage/src/Spryker/Zed/CmsBlockProductStorage/Communication/Plugin/Event/Listener/CmsBlockProductConnectorPublishStorageListener.php",
@@ -185,8 +113,8 @@
         },
         {
             "severity": "info",
-            "line_from": 26,
-            "line_to": 26,
+            "line_from": 27,
+            "line_to": 27,
             "type": "DeprecatedTrait",
             "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/CmsBlockProductStorage/src/Spryker/Zed/CmsBlockProductStorage/Communication/Plugin/Event/Listener/CmsBlockProductConnectorStorageListener.php",

@@ -19,10 +19,14 @@
 
     <transfer name="PriceProductFilter">
         <property name="productOfferReference" type="string"/>
+        <property name="idProductAbstract" type="int"/>
+        <property name="idProduct" type="int"/>
+        <property name="quantity" type="int"/>
     </transfer>
 
     <transfer name="CurrentProductPrice">
         <property name="priceDimension" type="PriceProductDimension"/>
+        <property name="price" type="int"/>
     </transfer>
 
     <transfer name="ProductView">
@@ -58,5 +62,16 @@
 
     <transfer name="Store">
         <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="ProductOfferStorage">
+        <property name="idProductAbstract" type="int"/>
+        <property name="idProductConcrete" type="int"/>
+        <property name="productOfferReference" type="string"/>
+        <property name="price" type="CurrentProductPrice"/>
+    </transfer>
+
+    <transfer name="ProductOfferStorageCollection">
+        <property name="productOffersStorage" type="ProductOfferStorage[]" singular="productOfferStorage"/>
     </transfer>
 </transfers>

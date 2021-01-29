@@ -46,7 +46,7 @@
 </td>
 <td>
     <div>
-        {% include '@SalesReclamationGui/partials/items/discounted-price.twig' with {
+        {% include '@SalesReclamationGui/Partials/items/discounted-price.twig' with {
             subtotal: orderItem.unitPrice,
             priceToPay: orderItem.unitPrice - orderItem.unitDiscountAmountFullAggregation | default(0),
             reclamation: reclamation,
@@ -56,7 +56,7 @@
 </td>
 {% if displayTotals %}
     <td data-qa="item-total-amount" data-qa-raw="{{ orderItem.unitPriceToPayAggregation }}">
-        {% include '@SalesReclamationGui/partials/items/discounted-price.twig' with {
+        {% include '@SalesReclamationGui/Partials/items/discounted-price.twig' with {
             subtotal: orderItem.unitSubtotalAggregation,
             priceToPay: orderItem.unitPriceToPayAggregation,
             reclamation: reclamation,

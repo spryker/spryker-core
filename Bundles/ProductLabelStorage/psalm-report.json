@@ -2,30 +2,6 @@
     "error": [
         {
             "severity": "error",
-            "line_from": 44,
-            "line_to": 44,
-            "type": "InvalidReturnType",
-            "message": "The declared return type 'array<array-key, array<array-key, Generated\\Shared\\Transfer\\ProductLabelDictionaryItemTransfer>>' for Spryker\\Zed\\ProductLabelStorage\\Business\\Mapper\\ProductLabelDictionaryItemMapper::mapProductLabelTransferToProductLabelDictionaryItemTransfersByStoreNameAndLocaleName is incorrect, got 'array<array-key|null, array<array-key, Generated\\Shared\\Transfer\\ProductLabelDictionaryItemTransfer>>'",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelStorage/src/Spryker/Zed/ProductLabelStorage/Business/Mapper/ProductLabelDictionaryItemMapper.php",
-            "snippet": "     * @return \\Generated\\Shared\\Transfer\\ProductLabelDictionaryItemTransfer[][]",
-            "selected_text": "\\Generated\\Shared\\Transfer\\ProductLabelDictionaryItemTransfer[][]",
-            "error_level": 6,
-            "shortcode": 11
-        },
-        {
-            "severity": "error",
-            "line_from": 64,
-            "line_to": 64,
-            "type": "InvalidReturnStatement",
-            "message": "The inferred type 'array<array-key|null, array<array-key, Generated\\Shared\\Transfer\\ProductLabelDictionaryItemTransfer>>' does not match the declared return type 'array<array-key, array<array-key, Generated\\Shared\\Transfer\\ProductLabelDictionaryItemTransfer>>' for Spryker\\Zed\\ProductLabelStorage\\Business\\Mapper\\ProductLabelDictionaryItemMapper::mapProductLabelTransferToProductLabelDictionaryItemTransfersByStoreNameAndLocaleName",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelStorage/src/Spryker/Zed/ProductLabelStorage/Business/Mapper/ProductLabelDictionaryItemMapper.php",
-            "snippet": "        return $productLabelDictionaryItemTransfers;",
-            "selected_text": "$productLabelDictionaryItemTransfers",
-            "error_level": 6,
-            "shortcode": 128
-        },
-        {
-            "severity": "error",
             "line_from": 211,
             "line_to": 211,
             "type": "InvalidReturnType",
@@ -47,45 +23,33 @@
             "selected_text": "$groupedLabelsByProductAbstractId",
             "error_level": 6,
             "shortcode": 128
+        },
+        {
+            "severity": "error",
+            "line_from": 103,
+            "line_to": 105,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed' does not match the declared return type 'array<array-key, Generated\\Shared\\Transfer\\SynchronizationDataTransfer>' for Spryker\\Zed\\ProductLabelStorage\\Persistence\\ProductLabelStorageRepository::getProductAbstractLabelStorageDataTransfersByIds",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelStorage/src/Spryker/Zed/ProductLabelStorage/Persistence/ProductLabelStorageRepository.php",
+            "snippet": "        return $this->buildQueryFromCriteria($query, $filterTransfer)\n            ->setFormatter(SynchronizationDataTransferObjectFormatter::class)\n            ->find();",
+            "selected_text": "$this->buildQueryFromCriteria($query, $filterTransfer)\n            ->setFormatter(SynchronizationDataTransferObjectFormatter::class)\n            ->find()",
+            "error_level": 6,
+            "shortcode": 128
+        },
+        {
+            "severity": "error",
+            "line_from": 127,
+            "line_to": 129,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed' does not match the declared return type 'array<array-key, Generated\\Shared\\Transfer\\SynchronizationDataTransfer>' for Spryker\\Zed\\ProductLabelStorage\\Persistence\\ProductLabelStorageRepository::getProductLabelDictionaryStorageDataTransfersByIds",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelStorage/src/Spryker/Zed/ProductLabelStorage/Persistence/ProductLabelStorageRepository.php",
+            "snippet": "        return $this->buildQueryFromCriteria($query, $filterTransfer)\n            ->setFormatter(SynchronizationDataTransferObjectFormatter::class)\n            ->find();",
+            "selected_text": "$this->buildQueryFromCriteria($query, $filterTransfer)\n            ->setFormatter(SynchronizationDataTransferObjectFormatter::class)\n            ->find()",
+            "error_level": 6,
+            "shortcode": 128
         }
     ],
     "warning": [
-        {
-            "severity": "info",
-            "line_from": 51,
-            "line_to": 51,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelStorage/src/Spryker/Client/ProductLabelStorage/ProductLabelStorageDependencyProvider.php",
-            "snippet": "            return new ProductLabelStorageToStorageClientBridge($container->getLocator()->storage()->client());",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 65,
-            "line_to": 65,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelStorage/src/Spryker/Client/ProductLabelStorage/ProductLabelStorageDependencyProvider.php",
-            "snippet": "            return new ProductLabelStorageToSynchronizationServiceBridge($container->getLocator()->synchronization()->service());",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 80,
-            "line_to": 80,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelStorage/src/Spryker/Client/ProductLabelStorage/ProductLabelStorageDependencyProvider.php",
-            "snippet": "                $container->getLocator()->utilEncoding()->service()",
-            "selected_text": "service",
-            "error_level": 4,
-            "shortcode": 219
-        },
         {
             "severity": "info",
             "line_from": 41,
@@ -196,32 +160,32 @@
         },
         {
             "severity": "info",
-            "line_from": 163,
-            "line_to": 163,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelStorage/src/Spryker/Client/ProductLabelStorage/Storage/ProductAbstractLabelReader.php",
-            "snippet": "            $productLabelClient = $clientLocatorClassName::getInstance()->productLabel()->client();",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
+            "line_from": 63,
+            "line_to": 63,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $localeNameMapByStoreName[null|string] using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelStorage/src/Spryker/Zed/ProductLabelStorage/Business/Mapper/ProductLabelDictionaryItemMapper.php",
+            "snippet": "            $localeNameMapByStoreName[$storeTransfer->getName()] = $storeTransfer->getAvailableLocaleIsoCodes();",
+            "selected_text": "$localeNameMapByStoreName",
+            "error_level": 3,
+            "shortcode": 125
         },
         {
             "severity": "info",
-            "line_from": 27,
-            "line_to": 27,
+            "line_from": 116,
+            "line_to": 116,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getStores on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ProductLabelStorage/src/Spryker/Zed/ProductLabelStorage/Business/Mapper/ProductLabelDictionaryItemMapper.php",
-            "snippet": "            foreach ($productLabelTransfer->getStoreRelation()->getStores() as $storeTransfer) {",
+            "snippet": "        foreach ($productLabelTransfer->getStoreRelation()->getStores() as $storeTransfer) {",
             "selected_text": "getStores",
             "error_level": 3,
             "shortcode": 83
         },
         {
             "severity": "info",
-            "line_from": 53,
-            "line_to": 53,
+            "line_from": 136,
+            "line_to": 136,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getLocaleName on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ProductLabelStorage/src/Spryker/Zed/ProductLabelStorage/Business/Mapper/ProductLabelDictionaryItemMapper.php",
@@ -232,15 +196,51 @@
         },
         {
             "severity": "info",
-            "line_from": 61,
-            "line_to": 61,
+            "line_from": 137,
+            "line_to": 137,
             "type": "PossiblyNullArrayOffset",
-            "message": "Cannot access value on variable $productLabelDictionaryItemTransfers[$storeName] using possibly null offset null|string",
+            "message": "Cannot access value on variable $mappedProductLabelLocalizedAttributesTransfer[$localeName] using possibly null offset mixed|null|string",
             "file_name": "vendor/spryker/spryker/Bundles/ProductLabelStorage/src/Spryker/Zed/ProductLabelStorage/Business/Mapper/ProductLabelDictionaryItemMapper.php",
-            "snippet": "            $productLabelDictionaryItemTransfers[$storeName][$localeName][] = $productLabelDictionaryItemTransfer;",
-            "selected_text": "$productLabelDictionaryItemTransfers",
+            "snippet": "            $mappedProductLabelLocalizedAttributesTransfer[$localeName] = $productLabelLocalizedAttributesTransfer;",
+            "selected_text": "$mappedProductLabelLocalizedAttributesTransfer",
             "error_level": 3,
             "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 148,
+            "line_to": 148,
+            "type": "InvalidNullableReturnType",
+            "message": "The declared return type 'string' for Spryker\\Zed\\ProductLabelStorage\\Business\\Mapper\\ProductLabelDictionaryItemMapper::getLocalizedProductLabelName is not nullable, but 'null|string' contains null",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelStorage/src/Spryker/Zed/ProductLabelStorage/Business/Mapper/ProductLabelDictionaryItemMapper.php",
+            "snippet": "     * @return string",
+            "selected_text": "string",
+            "error_level": 5,
+            "shortcode": 144
+        },
+        {
+            "severity": "info",
+            "line_from": 158,
+            "line_to": 158,
+            "type": "NullableReturnStatement",
+            "message": "The declared return type 'string' for Spryker\\Zed\\ProductLabelStorage\\Business\\Mapper\\ProductLabelDictionaryItemMapper::getLocalizedProductLabelName is not nullable, but the function returns 'null|string'",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelStorage/src/Spryker/Zed/ProductLabelStorage/Business/Mapper/ProductLabelDictionaryItemMapper.php",
+            "snippet": "            return $productLabelLocalizedAttributesTransfer->getName();",
+            "selected_text": "$productLabelLocalizedAttributesTransfer->getName()",
+            "error_level": 5,
+            "shortcode": 139
+        },
+        {
+            "severity": "info",
+            "line_from": 161,
+            "line_to": 161,
+            "type": "NullableReturnStatement",
+            "message": "The declared return type 'string' for Spryker\\Zed\\ProductLabelStorage\\Business\\Mapper\\ProductLabelDictionaryItemMapper::getLocalizedProductLabelName is not nullable, but the function returns 'null|string'",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelStorage/src/Spryker/Zed/ProductLabelStorage/Business/Mapper/ProductLabelDictionaryItemMapper.php",
+            "snippet": "        return $productLabelTransfer->getName();",
+            "selected_text": "$productLabelTransfer->getName()",
+            "error_level": 5,
+            "shortcode": 139
         },
         {
             "severity": "info",
@@ -289,6 +289,30 @@
             "selected_text": "$productLabelDictionaryItemTransfersMappedByStoreAndLocale",
             "error_level": 3,
             "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 48,
+            "line_to": 48,
+            "type": "MoreSpecificImplementedParamType",
+            "message": "Argument 1 of Spryker\\Zed\\ProductLabelStorage\\Communication\\Plugin\\Event\\ProductAbstractLabelEventResourceQueryContainerPlugin::queryData has the more specific type 'array<array-key, int>', expecting 'array<array-key, int|string>' as defined by Spryker\\Zed\\EventBehavior\\Dependency\\Plugin\\EventResourceQueryContainerPluginInterface::queryData",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelStorage/src/Spryker/Zed/ProductLabelStorage/Communication/Plugin/Event/ProductAbstractLabelEventResourceQueryContainerPlugin.php",
+            "snippet": "    public function queryData(array $ids = []): ?ModelCriteria",
+            "selected_text": "$ids",
+            "error_level": 5,
+            "shortcode": 140
+        },
+        {
+            "severity": "info",
+            "line_from": 47,
+            "line_to": 47,
+            "type": "MoreSpecificImplementedParamType",
+            "message": "Argument 1 of Spryker\\Zed\\ProductLabelStorage\\Communication\\Plugin\\Event\\ProductLabelDictionaryEventResourceQueryContainerPlugin::queryData has the more specific type 'array<array-key, int>', expecting 'array<array-key, int|string>' as defined by Spryker\\Zed\\EventBehavior\\Dependency\\Plugin\\EventResourceQueryContainerPluginInterface::queryData",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelStorage/src/Spryker/Zed/ProductLabelStorage/Communication/Plugin/Event/ProductLabelDictionaryEventResourceQueryContainerPlugin.php",
+            "snippet": "    public function queryData(array $ids = []): ?ModelCriteria",
+            "selected_text": "$ids",
+            "error_level": 5,
+            "shortcode": 140
         },
         {
             "severity": "info",
@@ -364,58 +388,10 @@
         },
         {
             "severity": "info",
-            "line_from": 58,
-            "line_to": 58,
-            "type": "MoreSpecificReturnType",
-            "message": "The declared return type 'Orm\\Zed\\ProductLabel\\Persistence\\SpyProductLabelProductAbstractQuery' for Spryker\\Zed\\ProductLabelStorage\\Persistence\\ProductLabelStorageQueryContainer::queryProductLabelProductAbstractByProductAbstractIds is more specific than the inferred return type 'Propel\\Runtime\\ActiveQuery\\ModelCriteria'",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelStorage/src/Spryker/Zed/ProductLabelStorage/Persistence/ProductLabelStorageQueryContainer.php",
-            "snippet": "     * @return \\Orm\\Zed\\ProductLabel\\Persistence\\SpyProductLabelProductAbstractQuery",
-            "selected_text": "\\Orm\\Zed\\ProductLabel\\Persistence\\SpyProductLabelProductAbstractQuery",
-            "error_level": 3,
-            "shortcode": 70
-        },
-        {
-            "severity": "info",
-            "line_from": 62,
-            "line_to": 68,
-            "type": "LessSpecificReturnStatement",
-            "message": "The type 'Orm\\Zed\\ProductLabel\\Persistence\\SpyProductLabelProductAbstractQuery&static|Propel\\Runtime\\ActiveQuery\\ModelCriteria' is more general than the declared return type 'Orm\\Zed\\ProductLabel\\Persistence\\SpyProductLabelProductAbstractQuery' for Spryker\\Zed\\ProductLabelStorage\\Persistence\\ProductLabelStorageQueryContainer::queryProductLabelProductAbstractByProductAbstractIds",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelStorage/src/Spryker/Zed/ProductLabelStorage/Persistence/ProductLabelStorageQueryContainer.php",
-            "snippet": "        return $this->getFactory()\n            ->getProductLabelQueryContainer()\n            ->queryAllProductLabelProductAbstractRelations()\n            ->filterByFkProductAbstract_In($productAbstractIds)\n            ->joinWithSpyProductLabel()\n            ->orderBy(SpyProductLabelTableMap::COL_POSITION)\n            ->setFormatter(ModelCriteria::FORMAT_ARRAY);",
-            "selected_text": "$this->getFactory()\n            ->getProductLabelQueryContainer()\n            ->queryAllProductLabelProductAbstractRelations()\n            ->filterByFkProductAbstract_In($productAbstractIds)\n            ->joinWithSpyProductLabel()\n            ->orderBy(SpyProductLabelTableMap::COL_POSITION)\n            ->setFormatter(ModelCriteria::FORMAT_ARRAY)",
-            "error_level": 3,
-            "shortcode": 129
-        },
-        {
-            "severity": "info",
-            "line_from": 107,
-            "line_to": 107,
-            "type": "MoreSpecificReturnType",
-            "message": "The declared return type 'Orm\\Zed\\ProductLabel\\Persistence\\SpyProductLabelLocalizedAttributesQuery' for Spryker\\Zed\\ProductLabelStorage\\Persistence\\ProductLabelStorageQueryContainer::queryProductLabelLocalizedAttributes is more specific than the inferred return type 'Propel\\Runtime\\ActiveQuery\\Criteria'",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelStorage/src/Spryker/Zed/ProductLabelStorage/Persistence/ProductLabelStorageQueryContainer.php",
-            "snippet": "     * @return \\Orm\\Zed\\ProductLabel\\Persistence\\SpyProductLabelLocalizedAttributesQuery",
-            "selected_text": "\\Orm\\Zed\\ProductLabel\\Persistence\\SpyProductLabelLocalizedAttributesQuery",
-            "error_level": 3,
-            "shortcode": 70
-        },
-        {
-            "severity": "info",
-            "line_from": 111,
-            "line_to": 116,
-            "type": "LessSpecificReturnStatement",
-            "message": "The type 'Orm\\Zed\\ProductLabel\\Persistence\\SpyProductLabelLocalizedAttributesQuery&static|Propel\\Runtime\\ActiveQuery\\Criteria' is more general than the declared return type 'Orm\\Zed\\ProductLabel\\Persistence\\SpyProductLabelLocalizedAttributesQuery' for Spryker\\Zed\\ProductLabelStorage\\Persistence\\ProductLabelStorageQueryContainer::queryProductLabelLocalizedAttributes",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelStorage/src/Spryker/Zed/ProductLabelStorage/Persistence/ProductLabelStorageQueryContainer.php",
-            "snippet": "        return $this->getFactory()\n            ->getProductLabelQueryContainer()\n            ->queryAllLocalizedAttributesLabels()\n            ->joinWithSpyLocale()\n            ->joinWithSpyProductLabel()\n            ->addAnd(SpyProductLabelTableMap::COL_IS_ACTIVE, true, Criteria::EQUAL);",
-            "selected_text": "$this->getFactory()\n            ->getProductLabelQueryContainer()\n            ->queryAllLocalizedAttributesLabels()\n            ->joinWithSpyLocale()\n            ->joinWithSpyProductLabel()\n            ->addAnd(SpyProductLabelTableMap::COL_IS_ACTIVE, true, Criteria::EQUAL)",
-            "error_level": 3,
-            "shortcode": 129
-        },
-        {
-            "severity": "info",
             "line_from": 36,
             "line_to": 36,
             "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ProductLabel\\Persistence\\SpyProductLabel|Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface|mixed> variable ",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ProductLabel\\Persistence\\SpyProductLabel> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/ProductLabelStorage/src/Spryker/Zed/ProductLabelStorage/Persistence/ProductLabelStorageRepository.php",
             "snippet": "            ->getData();",
             "selected_text": "getData",
@@ -457,42 +433,6 @@
             "selected_text": "count",
             "error_level": 3,
             "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 83,
-            "line_to": 83,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelStorage/src/Spryker/Zed/ProductLabelStorage/ProductLabelStorageDependencyProvider.php",
-            "snippet": "                $container->getLocator()->eventBehavior()->facade()",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 99,
-            "line_to": 99,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::querycontainer does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelStorage/src/Spryker/Zed/ProductLabelStorage/ProductLabelStorageDependencyProvider.php",
-            "snippet": "                $container->getLocator()->productLabel()->queryContainer()",
-            "selected_text": "queryContainer",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 129,
-            "line_to": 129,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelStorage/src/Spryker/Zed/ProductLabelStorage/ProductLabelStorageDependencyProvider.php",
-            "snippet": "                $container->getLocator()->productLabel()->facade()",
-            "selected_text": "facade",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": [
@@ -719,7 +659,7 @@
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Zed\\ProductLabel\\Dependency\\ProductLabelEvents is deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductLabelStorage/src/Spryker/Zed/ProductLabelStorage/Communication/Plugin/Event/Subscriber/ProductLabelStorageEventSubscriber.php",
-            "snippet": "        $eventCollection->addListenerQueued(ProductLabelEvents::PRODUCT_LABEL_PRODUCT_ABSTRACT_PUBLISH, new ProductLabelPublishStorageListener());",
+            "snippet": "        $eventCollection->addListenerQueued(ProductLabelEvents::PRODUCT_LABEL_PRODUCT_ABSTRACT_PUBLISH, new ProductLabelPublishStorageListener(), 0, null, $this->getConfig()->getProductAbstractLabelEventQueueName());",
             "selected_text": "ProductLabelEvents::PRODUCT_LABEL_PRODUCT_ABSTRACT_PUBLISH",
             "error_level": 2,
             "shortcode": 98
@@ -731,7 +671,7 @@
             "type": "DeprecatedClass",
             "message": "Spryker\\Zed\\ProductLabelStorage\\Communication\\Plugin\\Event\\Listener\\ProductLabelPublishStorageListener is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductLabelStorage/src/Spryker/Zed/ProductLabelStorage/Communication/Plugin/Event/Subscriber/ProductLabelStorageEventSubscriber.php",
-            "snippet": "        $eventCollection->addListenerQueued(ProductLabelEvents::PRODUCT_LABEL_PRODUCT_ABSTRACT_PUBLISH, new ProductLabelPublishStorageListener());",
+            "snippet": "        $eventCollection->addListenerQueued(ProductLabelEvents::PRODUCT_LABEL_PRODUCT_ABSTRACT_PUBLISH, new ProductLabelPublishStorageListener(), 0, null, $this->getConfig()->getProductAbstractLabelEventQueueName());",
             "selected_text": "new ProductLabelPublishStorageListener()",
             "error_level": 2,
             "shortcode": 98
@@ -743,7 +683,7 @@
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Zed\\ProductLabel\\Dependency\\ProductLabelEvents is deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductLabelStorage/src/Spryker/Zed/ProductLabelStorage/Communication/Plugin/Event/Subscriber/ProductLabelStorageEventSubscriber.php",
-            "snippet": "        $eventCollection->addListenerQueued(ProductLabelEvents::PRODUCT_LABEL_PRODUCT_ABSTRACT_UNPUBLISH, new ProductLabelPublishStorageListener());",
+            "snippet": "        $eventCollection->addListenerQueued(ProductLabelEvents::PRODUCT_LABEL_PRODUCT_ABSTRACT_UNPUBLISH, new ProductLabelPublishStorageListener(), 0, null, $this->getConfig()->getProductAbstractLabelEventQueueName());",
             "selected_text": "ProductLabelEvents::PRODUCT_LABEL_PRODUCT_ABSTRACT_UNPUBLISH",
             "error_level": 2,
             "shortcode": 98
@@ -755,7 +695,7 @@
             "type": "DeprecatedClass",
             "message": "Spryker\\Zed\\ProductLabelStorage\\Communication\\Plugin\\Event\\Listener\\ProductLabelPublishStorageListener is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductLabelStorage/src/Spryker/Zed/ProductLabelStorage/Communication/Plugin/Event/Subscriber/ProductLabelStorageEventSubscriber.php",
-            "snippet": "        $eventCollection->addListenerQueued(ProductLabelEvents::PRODUCT_LABEL_PRODUCT_ABSTRACT_UNPUBLISH, new ProductLabelPublishStorageListener());",
+            "snippet": "        $eventCollection->addListenerQueued(ProductLabelEvents::PRODUCT_LABEL_PRODUCT_ABSTRACT_UNPUBLISH, new ProductLabelPublishStorageListener(), 0, null, $this->getConfig()->getProductAbstractLabelEventQueueName());",
             "selected_text": "new ProductLabelPublishStorageListener()",
             "error_level": 2,
             "shortcode": 98
@@ -767,7 +707,7 @@
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Zed\\ProductLabel\\Dependency\\ProductLabelEvents is deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductLabelStorage/src/Spryker/Zed/ProductLabelStorage/Communication/Plugin/Event/Subscriber/ProductLabelStorageEventSubscriber.php",
-            "snippet": "        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_PRODUCT_ABSTRACT_CREATE, new ProductLabelStorageListener());",
+            "snippet": "        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_PRODUCT_ABSTRACT_CREATE, new ProductLabelStorageListener(), 0, null, $this->getConfig()->getProductAbstractLabelEventQueueName());",
             "selected_text": "ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_PRODUCT_ABSTRACT_CREATE",
             "error_level": 2,
             "shortcode": 98
@@ -779,7 +719,7 @@
             "type": "DeprecatedClass",
             "message": "Spryker\\Zed\\ProductLabelStorage\\Communication\\Plugin\\Event\\Listener\\ProductLabelStorageListener is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductLabelStorage/src/Spryker/Zed/ProductLabelStorage/Communication/Plugin/Event/Subscriber/ProductLabelStorageEventSubscriber.php",
-            "snippet": "        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_PRODUCT_ABSTRACT_CREATE, new ProductLabelStorageListener());",
+            "snippet": "        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_PRODUCT_ABSTRACT_CREATE, new ProductLabelStorageListener(), 0, null, $this->getConfig()->getProductAbstractLabelEventQueueName());",
             "selected_text": "new ProductLabelStorageListener()",
             "error_level": 2,
             "shortcode": 98
@@ -791,7 +731,7 @@
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Zed\\ProductLabel\\Dependency\\ProductLabelEvents is deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductLabelStorage/src/Spryker/Zed/ProductLabelStorage/Communication/Plugin/Event/Subscriber/ProductLabelStorageEventSubscriber.php",
-            "snippet": "        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_PRODUCT_ABSTRACT_UPDATE, new ProductLabelStorageListener());",
+            "snippet": "        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_PRODUCT_ABSTRACT_UPDATE, new ProductLabelStorageListener(), 0, null, $this->getConfig()->getProductAbstractLabelEventQueueName());",
             "selected_text": "ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_PRODUCT_ABSTRACT_UPDATE",
             "error_level": 2,
             "shortcode": 98
@@ -803,7 +743,7 @@
             "type": "DeprecatedClass",
             "message": "Spryker\\Zed\\ProductLabelStorage\\Communication\\Plugin\\Event\\Listener\\ProductLabelStorageListener is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductLabelStorage/src/Spryker/Zed/ProductLabelStorage/Communication/Plugin/Event/Subscriber/ProductLabelStorageEventSubscriber.php",
-            "snippet": "        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_PRODUCT_ABSTRACT_UPDATE, new ProductLabelStorageListener());",
+            "snippet": "        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_PRODUCT_ABSTRACT_UPDATE, new ProductLabelStorageListener(), 0, null, $this->getConfig()->getProductAbstractLabelEventQueueName());",
             "selected_text": "new ProductLabelStorageListener()",
             "error_level": 2,
             "shortcode": 98
@@ -815,7 +755,7 @@
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Zed\\ProductLabel\\Dependency\\ProductLabelEvents is deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductLabelStorage/src/Spryker/Zed/ProductLabelStorage/Communication/Plugin/Event/Subscriber/ProductLabelStorageEventSubscriber.php",
-            "snippet": "        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_PRODUCT_ABSTRACT_DELETE, new ProductLabelStorageListener());",
+            "snippet": "        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_PRODUCT_ABSTRACT_DELETE, new ProductLabelStorageListener(), 0, null, $this->getConfig()->getProductAbstractLabelEventQueueName());",
             "selected_text": "ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_PRODUCT_ABSTRACT_DELETE",
             "error_level": 2,
             "shortcode": 98
@@ -827,7 +767,7 @@
             "type": "DeprecatedClass",
             "message": "Spryker\\Zed\\ProductLabelStorage\\Communication\\Plugin\\Event\\Listener\\ProductLabelStorageListener is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductLabelStorage/src/Spryker/Zed/ProductLabelStorage/Communication/Plugin/Event/Subscriber/ProductLabelStorageEventSubscriber.php",
-            "snippet": "        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_PRODUCT_ABSTRACT_DELETE, new ProductLabelStorageListener());",
+            "snippet": "        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_PRODUCT_ABSTRACT_DELETE, new ProductLabelStorageListener(), 0, null, $this->getConfig()->getProductAbstractLabelEventQueueName());",
             "selected_text": "new ProductLabelStorageListener()",
             "error_level": 2,
             "shortcode": 98
@@ -839,7 +779,7 @@
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Zed\\ProductLabel\\Dependency\\ProductLabelEvents is deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductLabelStorage/src/Spryker/Zed/ProductLabelStorage/Communication/Plugin/Event/Subscriber/ProductLabelStorageEventSubscriber.php",
-            "snippet": "        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_CREATE, new ProductLabelDictionaryStoragePublishListener());",
+            "snippet": "        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_CREATE, new ProductLabelDictionaryStoragePublishListener(), 0, null, $this->getConfig()->getProductLabelDictionaryEventQueueName());",
             "selected_text": "ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_CREATE",
             "error_level": 2,
             "shortcode": 98
@@ -851,7 +791,7 @@
             "type": "DeprecatedClass",
             "message": "Spryker\\Zed\\ProductLabelStorage\\Communication\\Plugin\\Event\\Listener\\ProductLabelDictionaryStoragePublishListener is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductLabelStorage/src/Spryker/Zed/ProductLabelStorage/Communication/Plugin/Event/Subscriber/ProductLabelStorageEventSubscriber.php",
-            "snippet": "        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_CREATE, new ProductLabelDictionaryStoragePublishListener());",
+            "snippet": "        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_CREATE, new ProductLabelDictionaryStoragePublishListener(), 0, null, $this->getConfig()->getProductLabelDictionaryEventQueueName());",
             "selected_text": "new ProductLabelDictionaryStoragePublishListener()",
             "error_level": 2,
             "shortcode": 98
@@ -863,7 +803,7 @@
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Zed\\ProductLabel\\Dependency\\ProductLabelEvents is deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductLabelStorage/src/Spryker/Zed/ProductLabelStorage/Communication/Plugin/Event/Subscriber/ProductLabelStorageEventSubscriber.php",
-            "snippet": "        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_UPDATE, new ProductLabelDictionaryStoragePublishListener());",
+            "snippet": "        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_UPDATE, new ProductLabelDictionaryStoragePublishListener(), 0, null, $this->getConfig()->getProductLabelDictionaryEventQueueName());",
             "selected_text": "ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_UPDATE",
             "error_level": 2,
             "shortcode": 98
@@ -875,7 +815,7 @@
             "type": "DeprecatedClass",
             "message": "Spryker\\Zed\\ProductLabelStorage\\Communication\\Plugin\\Event\\Listener\\ProductLabelDictionaryStoragePublishListener is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductLabelStorage/src/Spryker/Zed/ProductLabelStorage/Communication/Plugin/Event/Subscriber/ProductLabelStorageEventSubscriber.php",
-            "snippet": "        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_UPDATE, new ProductLabelDictionaryStoragePublishListener());",
+            "snippet": "        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_UPDATE, new ProductLabelDictionaryStoragePublishListener(), 0, null, $this->getConfig()->getProductLabelDictionaryEventQueueName());",
             "selected_text": "new ProductLabelDictionaryStoragePublishListener()",
             "error_level": 2,
             "shortcode": 98
@@ -887,7 +827,7 @@
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Zed\\ProductLabel\\Dependency\\ProductLabelEvents is deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductLabelStorage/src/Spryker/Zed/ProductLabelStorage/Communication/Plugin/Event/Subscriber/ProductLabelStorageEventSubscriber.php",
-            "snippet": "        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_DELETE, new ProductLabelDictionaryStoragePublishListener());",
+            "snippet": "        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_DELETE, new ProductLabelDictionaryStoragePublishListener(), 0, null, $this->getConfig()->getProductLabelDictionaryEventQueueName());",
             "selected_text": "ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_DELETE",
             "error_level": 2,
             "shortcode": 98
@@ -899,7 +839,7 @@
             "type": "DeprecatedClass",
             "message": "Spryker\\Zed\\ProductLabelStorage\\Communication\\Plugin\\Event\\Listener\\ProductLabelDictionaryStoragePublishListener is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductLabelStorage/src/Spryker/Zed/ProductLabelStorage/Communication/Plugin/Event/Subscriber/ProductLabelStorageEventSubscriber.php",
-            "snippet": "        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_DELETE, new ProductLabelDictionaryStoragePublishListener());",
+            "snippet": "        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_DELETE, new ProductLabelDictionaryStoragePublishListener(), 0, null, $this->getConfig()->getProductLabelDictionaryEventQueueName());",
             "selected_text": "new ProductLabelDictionaryStoragePublishListener()",
             "error_level": 2,
             "shortcode": 98
@@ -911,7 +851,7 @@
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Zed\\ProductLabel\\Dependency\\ProductLabelEvents is deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductLabelStorage/src/Spryker/Zed/ProductLabelStorage/Communication/Plugin/Event/Subscriber/ProductLabelStorageEventSubscriber.php",
-            "snippet": "        $eventCollection->addListenerQueued(ProductLabelEvents::PRODUCT_LABEL_DICTIONARY_PUBLISH, new ProductLabelDictionaryStoragePublishListener());",
+            "snippet": "        $eventCollection->addListenerQueued(ProductLabelEvents::PRODUCT_LABEL_DICTIONARY_PUBLISH, new ProductLabelDictionaryStoragePublishListener(), 0, null, $this->getConfig()->getProductLabelDictionaryEventQueueName());",
             "selected_text": "ProductLabelEvents::PRODUCT_LABEL_DICTIONARY_PUBLISH",
             "error_level": 2,
             "shortcode": 98
@@ -923,7 +863,7 @@
             "type": "DeprecatedClass",
             "message": "Spryker\\Zed\\ProductLabelStorage\\Communication\\Plugin\\Event\\Listener\\ProductLabelDictionaryStoragePublishListener is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductLabelStorage/src/Spryker/Zed/ProductLabelStorage/Communication/Plugin/Event/Subscriber/ProductLabelStorageEventSubscriber.php",
-            "snippet": "        $eventCollection->addListenerQueued(ProductLabelEvents::PRODUCT_LABEL_DICTIONARY_PUBLISH, new ProductLabelDictionaryStoragePublishListener());",
+            "snippet": "        $eventCollection->addListenerQueued(ProductLabelEvents::PRODUCT_LABEL_DICTIONARY_PUBLISH, new ProductLabelDictionaryStoragePublishListener(), 0, null, $this->getConfig()->getProductLabelDictionaryEventQueueName());",
             "selected_text": "new ProductLabelDictionaryStoragePublishListener()",
             "error_level": 2,
             "shortcode": 98
@@ -935,7 +875,7 @@
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Zed\\ProductLabel\\Dependency\\ProductLabelEvents is deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductLabelStorage/src/Spryker/Zed/ProductLabelStorage/Communication/Plugin/Event/Subscriber/ProductLabelStorageEventSubscriber.php",
-            "snippet": "        $eventCollection->addListenerQueued(ProductLabelEvents::PRODUCT_LABEL_DICTIONARY_UNPUBLISH, new ProductLabelDictionaryStorageUnpublishListener());",
+            "snippet": "        $eventCollection->addListenerQueued(ProductLabelEvents::PRODUCT_LABEL_DICTIONARY_UNPUBLISH, new ProductLabelDictionaryStorageUnpublishListener(), 0, null, $this->getConfig()->getProductLabelDictionaryEventQueueName());",
             "selected_text": "ProductLabelEvents::PRODUCT_LABEL_DICTIONARY_UNPUBLISH",
             "error_level": 2,
             "shortcode": 98
@@ -947,7 +887,7 @@
             "type": "DeprecatedClass",
             "message": "Spryker\\Zed\\ProductLabelStorage\\Communication\\Plugin\\Event\\Listener\\ProductLabelDictionaryStorageUnpublishListener is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductLabelStorage/src/Spryker/Zed/ProductLabelStorage/Communication/Plugin/Event/Subscriber/ProductLabelStorageEventSubscriber.php",
-            "snippet": "        $eventCollection->addListenerQueued(ProductLabelEvents::PRODUCT_LABEL_DICTIONARY_UNPUBLISH, new ProductLabelDictionaryStorageUnpublishListener());",
+            "snippet": "        $eventCollection->addListenerQueued(ProductLabelEvents::PRODUCT_LABEL_DICTIONARY_UNPUBLISH, new ProductLabelDictionaryStorageUnpublishListener(), 0, null, $this->getConfig()->getProductLabelDictionaryEventQueueName());",
             "selected_text": "new ProductLabelDictionaryStorageUnpublishListener()",
             "error_level": 2,
             "shortcode": 98
@@ -959,7 +899,7 @@
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Zed\\ProductLabel\\Dependency\\ProductLabelEvents is deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductLabelStorage/src/Spryker/Zed/ProductLabelStorage/Communication/Plugin/Event/Subscriber/ProductLabelStorageEventSubscriber.php",
-            "snippet": "        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_LOCALIZED_ATTRIBUTE_CREATE, new ProductLabelDictionaryStoragePublishListener());",
+            "snippet": "        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_LOCALIZED_ATTRIBUTE_CREATE, new ProductLabelDictionaryStoragePublishListener(), 0, null, $this->getConfig()->getProductLabelDictionaryEventQueueName());",
             "selected_text": "ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_LOCALIZED_ATTRIBUTE_CREATE",
             "error_level": 2,
             "shortcode": 98
@@ -971,7 +911,7 @@
             "type": "DeprecatedClass",
             "message": "Spryker\\Zed\\ProductLabelStorage\\Communication\\Plugin\\Event\\Listener\\ProductLabelDictionaryStoragePublishListener is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductLabelStorage/src/Spryker/Zed/ProductLabelStorage/Communication/Plugin/Event/Subscriber/ProductLabelStorageEventSubscriber.php",
-            "snippet": "        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_LOCALIZED_ATTRIBUTE_CREATE, new ProductLabelDictionaryStoragePublishListener());",
+            "snippet": "        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_LOCALIZED_ATTRIBUTE_CREATE, new ProductLabelDictionaryStoragePublishListener(), 0, null, $this->getConfig()->getProductLabelDictionaryEventQueueName());",
             "selected_text": "new ProductLabelDictionaryStoragePublishListener()",
             "error_level": 2,
             "shortcode": 98
@@ -983,7 +923,7 @@
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Zed\\ProductLabel\\Dependency\\ProductLabelEvents is deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductLabelStorage/src/Spryker/Zed/ProductLabelStorage/Communication/Plugin/Event/Subscriber/ProductLabelStorageEventSubscriber.php",
-            "snippet": "        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_LOCALIZED_ATTRIBUTE_UPDATE, new ProductLabelDictionaryStoragePublishListener());",
+            "snippet": "        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_LOCALIZED_ATTRIBUTE_UPDATE, new ProductLabelDictionaryStoragePublishListener(), 0, null, $this->getConfig()->getProductLabelDictionaryEventQueueName());",
             "selected_text": "ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_LOCALIZED_ATTRIBUTE_UPDATE",
             "error_level": 2,
             "shortcode": 98
@@ -995,7 +935,7 @@
             "type": "DeprecatedClass",
             "message": "Spryker\\Zed\\ProductLabelStorage\\Communication\\Plugin\\Event\\Listener\\ProductLabelDictionaryStoragePublishListener is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductLabelStorage/src/Spryker/Zed/ProductLabelStorage/Communication/Plugin/Event/Subscriber/ProductLabelStorageEventSubscriber.php",
-            "snippet": "        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_LOCALIZED_ATTRIBUTE_UPDATE, new ProductLabelDictionaryStoragePublishListener());",
+            "snippet": "        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_LOCALIZED_ATTRIBUTE_UPDATE, new ProductLabelDictionaryStoragePublishListener(), 0, null, $this->getConfig()->getProductLabelDictionaryEventQueueName());",
             "selected_text": "new ProductLabelDictionaryStoragePublishListener()",
             "error_level": 2,
             "shortcode": 98
@@ -1007,7 +947,7 @@
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Zed\\ProductLabel\\Dependency\\ProductLabelEvents is deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductLabelStorage/src/Spryker/Zed/ProductLabelStorage/Communication/Plugin/Event/Subscriber/ProductLabelStorageEventSubscriber.php",
-            "snippet": "        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_LOCALIZED_ATTRIBUTE_DELETE, new ProductLabelDictionaryStoragePublishListener());",
+            "snippet": "        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_LOCALIZED_ATTRIBUTE_DELETE, new ProductLabelDictionaryStoragePublishListener(), 0, null, $this->getConfig()->getProductLabelDictionaryEventQueueName());",
             "selected_text": "ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_LOCALIZED_ATTRIBUTE_DELETE",
             "error_level": 2,
             "shortcode": 98
@@ -1019,7 +959,7 @@
             "type": "DeprecatedClass",
             "message": "Spryker\\Zed\\ProductLabelStorage\\Communication\\Plugin\\Event\\Listener\\ProductLabelDictionaryStoragePublishListener is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductLabelStorage/src/Spryker/Zed/ProductLabelStorage/Communication/Plugin/Event/Subscriber/ProductLabelStorageEventSubscriber.php",
-            "snippet": "        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_LOCALIZED_ATTRIBUTE_DELETE, new ProductLabelDictionaryStoragePublishListener());",
+            "snippet": "        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_LOCALIZED_ATTRIBUTE_DELETE, new ProductLabelDictionaryStoragePublishListener(), 0, null, $this->getConfig()->getProductLabelDictionaryEventQueueName());",
             "selected_text": "new ProductLabelDictionaryStoragePublishListener()",
             "error_level": 2,
             "shortcode": 98

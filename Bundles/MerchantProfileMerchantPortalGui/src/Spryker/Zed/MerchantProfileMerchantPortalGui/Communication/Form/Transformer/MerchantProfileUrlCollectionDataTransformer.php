@@ -13,6 +13,8 @@ use Symfony\Component\Form\DataTransformerInterface;
 class MerchantProfileUrlCollectionDataTransformer implements DataTransformerInterface
 {
     /**
+     * @phpstan-return \ArrayObject<int, \Generated\Shared\Transfer\UrlTransfer>
+     *
      * @param \Generated\Shared\Transfer\UrlTransfer[] $value
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\UrlTransfer[]
@@ -25,6 +27,11 @@ class MerchantProfileUrlCollectionDataTransformer implements DataTransformerInte
         }
         foreach ($value as $urlTransfer) {
             $url = $urlTransfer->getUrl();
+
+            if (!$url) {
+                continue;
+            }
+
             $url = preg_replace('#^' . $urlTransfer->getUrlPrefix() . '#i', '', $url);
             $urlTransfer->setUrl($url);
             $merchantProfileUrlCollection->append($urlTransfer);
@@ -34,6 +41,8 @@ class MerchantProfileUrlCollectionDataTransformer implements DataTransformerInte
     }
 
     /**
+     * @phpstan-return \ArrayObject<int, \Generated\Shared\Transfer\UrlTransfer>
+     *
      * @param \Generated\Shared\Transfer\UrlTransfer[] $value
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\UrlTransfer[]
@@ -72,6 +81,10 @@ class MerchantProfileUrlCollectionDataTransformer implements DataTransformerInte
      */
     protected function getUrlWithPrefix(?string $url, string $urlPrefix): string
     {
+        if (!$url) {
+            return $urlPrefix;
+        }
+
         $url = preg_replace('#^/#', '', $url);
 
         return $urlPrefix . $url;
@@ -85,6 +98,10 @@ class MerchantProfileUrlCollectionDataTransformer implements DataTransformerInte
      */
     protected function hasUrlPrefix(?string $url, string $urlPrefix): bool
     {
-        return preg_match('#^' . $urlPrefix . '#i', $url) > 0;
+        if (!$url) {
+            return false;
+        }
+
+        return (bool)preg_match('#^' . $urlPrefix . '#i', $url);
     }
 }

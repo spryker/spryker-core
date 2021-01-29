@@ -63,7 +63,7 @@ class SystemUnderTestBootstrap
     /**
      * @param string $application
      *
-     * @return \Spryker\Shared\Application\Application|null
+     * @return \Spryker\Shared\Application\ApplicationInterface|null
      */
     public function bootstrap($application = self::APPLICATION_ZED)
     {
@@ -129,7 +129,7 @@ class SystemUnderTestBootstrap
     }
 
     /**
-     * @return \Spryker\Shared\Application\Application
+     * @return \Spryker\Shared\Application\ApplicationInterface
      */
     protected function bootstrapYves()
     {

@@ -1,4 +1,5 @@
 parameters:
+    checkMissingIterableValueType: false
     ignoreErrors:
-        - '#Call to an undefined method .+Criteria::.+\(\).#'
         - '#Method .+ should return .+Query but returns .+Criteria#'
+        - '#Call to an undefined method Generated\\Zed\\Ide\\AutoCompletion#'

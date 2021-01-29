@@ -7,6 +7,7 @@
 
 namespace Spryker\Shared\Application;
 
+use Spryker\Service\Container\Container;
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface;
 use Spryker\Shared\ApplicationExtension\Dependency\Plugin\BootableApplicationPluginInterface;
@@ -18,7 +19,7 @@ use Symfony\Component\HttpKernel\TerminableInterface;
 use Symfony\Component\Routing\Loader\ClosureLoader;
 use Symfony\Component\Routing\Router;
 
-class Application implements HttpKernelInterface, TerminableInterface
+class Application extends Container implements HttpKernelInterface, TerminableInterface, ApplicationInterface
 {
     /**
      * @see \Symfony\Cmf\Component\Routing\ChainRouterInterface
@@ -36,11 +37,6 @@ class Application implements HttpKernelInterface, TerminableInterface
     public const SERVICE_REQUEST_STACK = 'request_stack';
 
     /**
-     * @var \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[]
-     */
-    protected $plugins = [];
-
-    /**
      * @var \Spryker\Shared\ApplicationExtension\Dependency\Plugin\BootableApplicationPluginInterface[]
      */
     protected $bootablePlugins = [];
@@ -56,11 +52,23 @@ class Application implements HttpKernelInterface, TerminableInterface
     protected $booted = false;
 
     /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
+     * @param \Spryker\Service\Container\ContainerInterface|null $container
+     * @param \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[] $applicationPlugins
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(?ContainerInterface $container = null, array $applicationPlugins = [])
     {
+        parent::__construct();
+
+        if ($container === null) {
+            $container = new Container();
+        }
+
         $this->container = $container;
+        $this->enableHttpMethodParameterOverride();
+
+        foreach ($applicationPlugins as $applicationPlugin) {
+            $this->registerApplicationPlugin($applicationPlugin);
+        }
     }
 
     /**
@@ -70,7 +78,6 @@ class Application implements HttpKernelInterface, TerminableInterface
      */
     public function registerApplicationPlugin(ApplicationPluginInterface $applicationPlugin)
     {
-        $this->plugins[] = $applicationPlugin;
         $this->container = $applicationPlugin->provide($this->container);
 
         if ($applicationPlugin instanceof BootableApplicationPluginInterface) {
@@ -117,7 +124,10 @@ class Application implements HttpKernelInterface, TerminableInterface
     public function handle(Request $request, $type = self::MASTER_REQUEST, $catch = true): Response
     {
         $this->container->set('request', $request);
-        $this->flushControllers();
+
+        if ($this->container->has('controllers')) {
+            $this->flushControllers();
+        }
 
         $response = $this->getKernel()->handle($request);
 
@@ -178,5 +188,16 @@ class Application implements HttpKernelInterface, TerminableInterface
     protected function getKernel(): HttpKernel
     {
         return $this->container->get('kernel');
+    }
+
+    /**
+     * Allow overriding http method. Needed to use the "_method" parameter in forms.
+     * This should not be changeable by projects
+     *
+     * @return void
+     */
+    protected function enableHttpMethodParameterOverride()
+    {
+        Request::enableHttpMethodParameterOverride();
     }
 }

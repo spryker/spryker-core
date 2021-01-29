@@ -12,12 +12,12 @@
     <div class="ibox-content">
         <div class="alert alert-info alert-dismissable">
             <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
-            {% filter trans|raw %}
+            {% apply trans|raw %}
                 <ul>
                     <li>{{ 'If a navigation node is inactive, then this item and all navigation items under this one will not be visible.' | trans }}</li>
                     <li>{{ 'You can drag and drop to define item order.' | trans }}</li>
                 </ul>
-            {% endfilter %}
+            {% endapply %}
         </div>
 
         <div id="navigation-tree-content"></div>

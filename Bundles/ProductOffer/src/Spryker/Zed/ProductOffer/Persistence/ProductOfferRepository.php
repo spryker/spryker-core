@@ -12,10 +12,8 @@ use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
-use Orm\Zed\ProductOffer\Persistence\SpyProductOffer;
 use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -33,6 +31,7 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
      */
     public function find(ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter): ProductOfferCollectionTransfer
     {
+        $productOfferMapper = $this->getFactory()->createProductOfferMapper();
         $productOfferCollectionTransfer = new ProductOfferCollectionTransfer();
         $productOfferQuery = $this->getFactory()->createProductOfferPropelQuery();
 
@@ -41,11 +40,13 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
         $productOfferEntities = $this->getPaginatedCollection($productOfferQuery, $productOfferCriteriaFilter->getPagination());
 
         foreach ($productOfferEntities as $productOfferEntity) {
-            $productOfferTransfer = $this->getFactory()
-                ->createPropelProductOfferMapper()
-                ->mapProductOfferEntityToProductOfferTransfer($productOfferEntity, (new ProductOfferTransfer()));
-
-            $productOfferTransfer->setStores($this->getStoresByProductOfferEntity($productOfferEntity));
+            $productOfferTransfer = $productOfferMapper->mapProductOfferEntityToProductOfferTransfer(
+                $productOfferEntity,
+                new ProductOfferTransfer()
+            );
+            $productOfferTransfer->setStores(new ArrayObject(
+                $productOfferMapper->mapProductOfferStoreEntitiesToStoreTransfers($productOfferEntity->getSpyProductOfferStores())
+            ));
 
             $productOfferCollectionTransfer->addProductOffer($productOfferTransfer);
         }
@@ -69,29 +70,66 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
             return null;
         }
 
-        return $this->getFactory()->createPropelProductOfferMapper()
-            ->mapProductOfferEntityToProductOfferTransfer($productOfferEntity, new ProductOfferTransfer());
+        $productOfferMapper = $this->getFactory()->createProductOfferMapper();
+        $productOfferTransfer = $productOfferMapper->mapProductOfferEntityToProductOfferTransfer(
+            $productOfferEntity,
+            new ProductOfferTransfer()
+        );
+        $productOfferTransfer->setStores(new ArrayObject(
+            $productOfferMapper->mapProductOfferStoreEntitiesToStoreTransfers($productOfferEntity->getSpyProductOfferStores())
+        ));
+
+        return $productOfferTransfer;
     }
 
     /**
-     * @param \Orm\Zed\ProductOffer\Persistence\SpyProductOffer $spyProductOfferEntity
-     *
-     * @return \Generated\Shared\Transfer\StoreTransfer[]|\ArrayObject
+     * @return int
      */
-    protected function getStoresByProductOfferEntity(SpyProductOffer $spyProductOfferEntity): ArrayObject
+    public function getMaxIdProductOffer(): int
     {
-        $storeTransfers = [];
-        foreach ($spyProductOfferEntity->getSpyStores() as $storeEntity) {
-            $storeTransfers[] = $this->getFactory()->createPropelProductOfferMapper()->mapStoreEntityToStoreTransfer(
-                $storeEntity,
-                new StoreTransfer()
-            );
-        }
+        $idProductOffer = $this->getFactory()->createProductOfferPropelQuery()
+            ->orderByIdProductOffer(Criteria::DESC)
+            ->select(SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER)
+            ->findOne();
 
-        return new ArrayObject($storeTransfers);
+        return $idProductOffer ?: 0;
     }
 
     /**
+     * @param int $idProductOffer
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     */
+    public function getProductOfferStores(int $idProductOffer): array
+    {
+        $productOfferStoreEntities = $this->getFactory()
+            ->createProductOfferStoreQuery()
+            ->filterByFkProductOffer($idProductOffer)
+            ->find();
+
+        return $this->getFactory()
+            ->createProductOfferMapper()
+            ->mapProductOfferStoreEntitiesToStoreTransfers($productOfferStoreEntities);
+    }
+
+    /**
+     * @param string $productOfferReference
+     *
+     * @return bool
+     */
+    public function isProductOfferReferenceUsed(string $productOfferReference): bool
+    {
+        return $this->getFactory()
+            ->createProductOfferPropelQuery()
+            ->filterByProductOfferReference($productOfferReference)
+            ->exists();
+    }
+
+    /**
+     * @phpstan-param \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery<mixed> $productOfferQuery
+     *
+     * @phpstan-return \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery<mixed>
+     *
      * @param \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery $productOfferQuery
      * @param \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter
      *
@@ -111,6 +149,10 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
 
         if ($productOfferCriteriaFilter->getIdProductOffer()) {
             $productOfferQuery->filterByIdProductOffer($productOfferCriteriaFilter->getIdProductOffer());
+        }
+
+        if ($productOfferCriteriaFilter->getMerchantIds()) {
+            $productOfferQuery->filterByFkMerchant_In($productOfferCriteriaFilter->getMerchantIds());
         }
 
         if ($productOfferCriteriaFilter->getProductOfferIds()) {
@@ -152,6 +194,8 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
     }
 
     /**
+     * @phpstan-param \Propel\Runtime\ActiveQuery\ModelCriteria<mixed> $query
+     *
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param \Generated\Shared\Transfer\PaginationTransfer|null $paginationTransfer
      *

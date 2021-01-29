@@ -26,13 +26,13 @@ function TableHandler(sourceTable, destinationTable, labelCaption, labelId, form
         labelCaption: labelCaption,
         formFieldId: formFieldId,
         sourceTable: sourceTable,
-        destinationTable: destinationTable
+        destinationTable: destinationTable,
     };
 
     var destinationTableItemSelector = ItemSelector.create();
 
-    tableHandler.toggleSelection = function() {
-        $('input[type="checkbox"]', sourceTable).each(function(index, checkboxNode) {
+    tableHandler.toggleSelection = function () {
+        $('input[type="checkbox"]', sourceTable).each(function (index, checkboxNode) {
             var $checkbox = $(checkboxNode);
             $checkbox.prop('checked', !$checkbox.prop('checked'));
             $checkbox.trigger('change');
@@ -41,8 +41,8 @@ function TableHandler(sourceTable, destinationTable, labelCaption, labelId, form
         return false;
     };
 
-    tableHandler.selectAll = function() {
-        $('input[type="checkbox"]', sourceTable).each(function(index, checkboxNode) {
+    tableHandler.selectAll = function () {
+        $('input[type="checkbox"]', sourceTable).each(function (index, checkboxNode) {
             var $checkbox = $(checkboxNode);
             $checkbox.prop('checked', true);
             $checkbox.trigger('change');
@@ -51,8 +51,8 @@ function TableHandler(sourceTable, destinationTable, labelCaption, labelId, form
         return false;
     };
 
-    tableHandler.deSelectAll = function() {
-        $('input[type="checkbox"]', sourceTable).each(function(index, checkboxNode) {
+    tableHandler.deSelectAll = function () {
+        $('input[type="checkbox"]', sourceTable).each(function (index, checkboxNode) {
             var $checkbox = $(checkboxNode);
             $checkbox.prop('checked', false);
             $checkbox.trigger('change');
@@ -61,7 +61,7 @@ function TableHandler(sourceTable, destinationTable, labelCaption, labelId, form
         return false;
     };
 
-    tableHandler.addSelectedItem = function(idItem, email, firstName, lastName) {
+    tableHandler.addSelectedItem = function (idItem, email, firstName, lastName) {
         idItem = parseInt(idItem, 10);
 
         if (destinationTableItemSelector.isItemSelected(idItem)) {
@@ -69,14 +69,14 @@ function TableHandler(sourceTable, destinationTable, labelCaption, labelId, form
         }
         destinationTableItemSelector.addItemToSelection(idItem);
 
-        destinationTable.DataTable()
-            .row
-            .add([
+        destinationTable
+            .DataTable()
+            .row.add([
                 idItem,
                 decodeURIComponent((email + '').replace(/\+/g, '%20')),
                 decodeURIComponent((firstName + '').replace(/\+/g, '%20')),
                 decodeURIComponent((lastName + '').replace(/\+/g, '%20')),
-                '<div><a data-id="' + idItem + '" href="#" class="btn btn-xs remove-item">Remove</a></div>'
+                '<div><a data-id="' + idItem + '" href="#" class="btn btn-xs remove-item">Remove</a></div>',
             ])
             .draw();
 
@@ -86,67 +86,72 @@ function TableHandler(sourceTable, destinationTable, labelCaption, labelId, form
         tableHandler.updateSelectedItemsLabelCount();
     };
 
-    tableHandler.removeSelectedItem = function(idItem) {
+    tableHandler.removeSelectedItem = function (idItem) {
         idItem = parseInt(idItem, 10);
 
-        destinationTable.DataTable().rows().every(function(rowIndex, tableLoop, rowLoop) {
-            if (!this.data()) {
-                return;
-            }
+        destinationTable
+            .DataTable()
+            .rows()
+            .every(function (rowIndex, tableLoop, rowLoop) {
+                if (!this.data()) {
+                    return;
+                }
 
-            var rowItemId = parseInt(this.data()[0], 10);
-            if (idItem !== rowItemId) {
-                return;
-            }
+                var rowItemId = parseInt(this.data()[0], 10);
+                if (idItem !== rowItemId) {
+                    return;
+                }
 
-            destinationTableItemSelector.removeItemFromSelection(idItem);
+                destinationTableItemSelector.removeItemFromSelection(idItem);
 
-            this.remove();
+                this.remove();
 
-            var $checkbox = $('input[value="' + idItem + '"]', sourceTable);
-            tableHandler.unCheckCheckbox($checkbox);
-        });
+                var $checkbox = $('input[value="' + idItem + '"]', sourceTable);
+                tableHandler.unCheckCheckbox($checkbox);
+            });
 
         destinationTable.DataTable().draw();
         tableHandler.updateSelectedItemsLabelCount();
     };
 
-    tableHandler.getSelector = function() {
+    tableHandler.getSelector = function () {
         return destinationTableItemSelector;
     };
 
-    tableHandler.updateSelectedItemsLabelCount = function() {
-        $(tableHandler.getLabelId()).text(labelCaption + ' (' + Object.keys(this.getSelector().getSelected()).length + ')');
+    tableHandler.updateSelectedItemsLabelCount = function () {
+        $(tableHandler.getLabelId()).text(
+            labelCaption + ' (' + Object.keys(this.getSelector().getSelected()).length + ')',
+        );
         var itemIds = Object.keys(this.getSelector().getSelected());
         var s = itemIds.join(',');
         var field = $(tableHandler.getFormFieldId());
         field.attr('value', s);
     };
 
-    tableHandler.getLabelId = function() {
+    tableHandler.getLabelId = function () {
         return tableHandler.labelId;
     };
 
-    tableHandler.getLabelCaption = function() {
+    tableHandler.getLabelCaption = function () {
         return tableHandler.labelCaption;
     };
 
-    tableHandler.getFormFieldId = function() {
+    tableHandler.getFormFieldId = function () {
         return tableHandler.formFieldId;
     };
 
-    tableHandler.getSourceTable = function() {
+    tableHandler.getSourceTable = function () {
         return tableHandler.sourceTable;
     };
 
-    tableHandler.getDestinationTable = function() {
+    tableHandler.getDestinationTable = function () {
         return tableHandler.destinationTable;
     };
 
     /**
      * @returns {string}
      */
-    tableHandler.getInitialCheckboxCheckedState = function() {
+    tableHandler.getInitialCheckboxCheckedState = function () {
         return CHECKBOX_CHECKED_STATE_UN_CHECKED;
     };
 
@@ -154,7 +159,7 @@ function TableHandler(sourceTable, destinationTable, labelCaption, labelId, form
      * @param {jQuery} $checkbox
      * @return {boolean}
      */
-    tableHandler.isCheckboxActive = function($checkbox) {
+    tableHandler.isCheckboxActive = function ($checkbox) {
         if (tableHandler.getInitialCheckboxCheckedState() === CHECKBOX_CHECKED_STATE_UN_CHECKED) {
             return $checkbox.prop('checked');
         }
@@ -165,16 +170,16 @@ function TableHandler(sourceTable, destinationTable, labelCaption, labelId, form
     /**
      * @param {jQuery} $checkbox
      */
-    tableHandler.checkCheckbox = function($checkbox) {
-        var checkedState = (tableHandler.getInitialCheckboxCheckedState() === CHECKBOX_CHECKED_STATE_UN_CHECKED);
+    tableHandler.checkCheckbox = function ($checkbox) {
+        var checkedState = tableHandler.getInitialCheckboxCheckedState() === CHECKBOX_CHECKED_STATE_UN_CHECKED;
         $checkbox.prop('checked', checkedState);
     };
 
     /**
      * @param {jQuery} $checkbox
      */
-    tableHandler.unCheckCheckbox = function($checkbox) {
-        var checkedState = (tableHandler.getInitialCheckboxCheckedState() !== CHECKBOX_CHECKED_STATE_UN_CHECKED);
+    tableHandler.unCheckCheckbox = function ($checkbox) {
+        var checkedState = tableHandler.getInitialCheckboxCheckedState() !== CHECKBOX_CHECKED_STATE_UN_CHECKED;
         $checkbox.prop('checked', checkedState);
     };
 
@@ -192,9 +197,9 @@ module.exports = {
      *
      * @return {TableHandler}
      */
-    create: function(sourceTable, destinationTable, labelCaption, labelId, formFieldId, onRemoveCallback) {
+    create: function (sourceTable, destinationTable, labelCaption, labelId, formFieldId, onRemoveCallback) {
         return new TableHandler(sourceTable, destinationTable, labelCaption, labelId, formFieldId, onRemoveCallback);
     },
     CHECKBOX_CHECKED_STATE_CHECKED: CHECKBOX_CHECKED_STATE_CHECKED,
-    CHECKBOX_CHECKED_STATE_UN_CHECKED: CHECKBOX_CHECKED_STATE_UN_CHECKED
+    CHECKBOX_CHECKED_STATE_UN_CHECKED: CHECKBOX_CHECKED_STATE_UN_CHECKED,
 };

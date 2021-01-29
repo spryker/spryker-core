@@ -11,10 +11,10 @@ use Generated\Shared\Search\PageIndexMap;
 use Generated\Shared\Transfer\CategoryMapTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageMapTransfer;
+use Laminas\Filter\Word\UnderscoreToDash;
 use Spryker\Zed\Search\Business\Exception\InvalidPropertyNameException;
 use Spryker\Zed\Search\Business\Exception\PluginNotFoundException;
 use Spryker\Zed\Search\Dependency\Plugin\PageMapInterface;
-use Zend\Filter\Word\UnderscoreToDash;
 
 /**
  * @deprecated Will be removed without replacement.
@@ -32,7 +32,7 @@ class PageDataMapper implements PageDataMapperInterface
     protected $pageMapBuilder;
 
     /**
-     * @var \Zend\Filter\Word\UnderscoreToDash
+     * @var \Laminas\Filter\Word\UnderscoreToDash
      */
     protected $underscoreToDashFilter;
 

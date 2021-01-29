@@ -1,4 +1,21 @@
 parameters:
+    checkMissingIterableValueType: false
     ignoreErrors:
-    - '#Call to an undefined method .+Criteria::.+\(\).#'
-    - '#Call to an undefined method .+Locator::store\(\).#'
+        - '#Call to an undefined method .+Locator::store\(\).#'
+        - '#Method .+Type::addDocuments\(\) invoked with 2 parameters, 1 required.#'
+        - '#Property .*TypelessMappingAdapter::\$elasticaMapping has unknown class Elastica\\Mapping as its type.#'
+        - '#Instantiated class Elastica\\Mapping not found.#'
+        - '#Call to method send\(\) on an unknown class Elastica\\Mapping.#'
+        - { message: '#Call to method setMeta\(\) on an unknown class Elastica\\Type\\Mapping.#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/Business/Exporter/Writer/Search/ElasticsearchMarkerWriter.php' }
+        - { message: '#Call to method addDocuments\(\) on an unknown class Elastica\\Type.#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/Business/Index/TypeAwareIndexAdapter.php' }
+        - { message: '#Call to method getName\(\) on an unknown class Elastica\\Type.#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/Business/Index/TypeAwareIndexAdapter.php' }
+        - { message: '#Call to method getMapping\(\) on an unknown class Elastica\\Type.#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/Business/Index/TypeAwareIndexAdapter.php' }
+        - { message: '#Call to method getDocument\(\) on an unknown class Elastica\\Type.#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/Business/Index/TypeAwareIndexAdapter.php' }
+        - { message: '#Return typehint of method Spryker\\Zed\\Collector\\Business\\Index\\TypeAwareIndexAdapter::getType\(\) has invalid type Elastica\\Type.#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/Business/Index/TypeAwareIndexAdapter.php' }
+        - { message: '#Call to an undefined method Elastica\\Index::getType\(\).#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/Business/Index/TypeAwareIndexAdapter.php' }
+        - { message: '#Return typehint of method Spryker\\Zed\\Collector\\Business\\Mapping\\MappingFactory::createMapping\(\) has invalid type Elastica\\Type\\Mapping.#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/Business/Mapping/MappingFactory.php' }
+        - { message: '#Instantiated class Elastica\\Type\\Mapping not found.#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/Business/Mapping/MappingFactory.php' }
+        - { message: '#Call to an undefined method Elastica\\Index::getType\(\).#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/Business/Mapping/MappingFactory.php' }
+        - { message: '#Return typehint of method Spryker\\Zed\\Collector\\Business\\Mapping\\MappingFactoryInterface::createMapping\(\) has invalid type Elastica\\Type\\Mapping.#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/Business/Mapping/MappingFactoryInterface.php' }
+        - { message: '#Return typehint of method Spryker\\Zed\\Collector\\Business\\Exporter\\Writer\\Search\\ElasticsearchMarkerWriter::getMapping\(\) has invalid type Elastica\\Type\\Mapping.#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/Business/Exporter/Writer/Search/ElasticsearchMarkerWriter.php' }
+    reportUnmatchedIgnoredErrors: false

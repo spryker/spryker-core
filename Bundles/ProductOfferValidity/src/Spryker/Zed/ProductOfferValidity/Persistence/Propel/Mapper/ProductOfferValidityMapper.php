@@ -15,6 +15,8 @@ use Propel\Runtime\Collection\ObjectCollection;
 class ProductOfferValidityMapper
 {
     /**
+     * @phpstan-param \Propel\Runtime\Collection\ObjectCollection<mixed> $productOfferValidityEntities
+     *
      * @param \Propel\Runtime\Collection\ObjectCollection $productOfferValidityEntities
      * @param \Generated\Shared\Transfer\ProductOfferValidityCollectionTransfer $productOfferValidityCollectionTransfer
      *
@@ -50,5 +52,21 @@ class ProductOfferValidityMapper
         $productOfferValidityTransfer->setIdProductOffer($productOfferValidityEntity->getFkProductOffer());
 
         return $productOfferValidityTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferValidityTransfer $productOfferValidityTransfer
+     * @param \Orm\Zed\ProductOfferValidity\Persistence\SpyProductOfferValidity $productOfferValidityEntity
+     *
+     * @return \Orm\Zed\ProductOfferValidity\Persistence\SpyProductOfferValidity
+     */
+    public function mapProductOfferValidityTransferToProductOfferValidityEntity(
+        ProductOfferValidityTransfer $productOfferValidityTransfer,
+        SpyProductOfferValidity $productOfferValidityEntity
+    ): SpyProductOfferValidity {
+        $productOfferValidityEntity->fromArray($productOfferValidityTransfer->toArray(false));
+        $productOfferValidityEntity->setFkProductOffer($productOfferValidityTransfer->getIdProductOffer());
+
+        return $productOfferValidityEntity;
     }
 }

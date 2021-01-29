@@ -33,6 +33,7 @@ class ShoppingListPermissionGroupNameToIdShoppingListPermissionGroupStep impleme
         $shoppingListPermissionGroupName = $dataSet[ShoppingListCompanyUserDataSetInterface::COLUMN_PERMISSION_GROUP_NAME];
         if (!isset($this->idPermissionGroupCache[$shoppingListPermissionGroupName])) {
             $shoppingListPermissionGroupQuery = new SpyShoppingListPermissionGroupQuery();
+            /** @var int|null $idPermissionGroup */
             $idPermissionGroup = $shoppingListPermissionGroupQuery
                 ->select([SpyShoppingListPermissionGroupTableMap::COL_ID_SHOPPING_LIST_PERMISSION_GROUP])
                 ->findOneByName($shoppingListPermissionGroupName);

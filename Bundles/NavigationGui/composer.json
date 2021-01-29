@@ -4,7 +4,7 @@
   "description": "NavigationGui module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/category": "^3.0.0 || ^4.0.0",
     "spryker/cms": "^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0",
     "spryker/gui": "^3.32.0",

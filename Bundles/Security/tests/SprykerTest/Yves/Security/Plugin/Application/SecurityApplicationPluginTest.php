@@ -97,7 +97,7 @@ class SecurityApplicationPluginTest extends Unit
         $httpKernelBrowser = $this->tester->getHttpKernelBrowser();
 
         $httpKernelBrowser->request('get', '/');
-        $this->assertEquals('ANONYMOUS', $httpKernelBrowser->getResponse()->getContent());
+        $this->assertSame('ANONYMOUS', $httpKernelBrowser->getResponse()->getContent());
 
         $httpKernelBrowser->request('post', '/login_check', ['_username' => 'user', '_password' => 'bar']);
         $this->assertStringContainsString('Bad credentials', $container->get('security.last_error')($httpKernelBrowser->getRequest()));
@@ -105,38 +105,38 @@ class SecurityApplicationPluginTest extends Unit
         $httpKernelBrowser->getRequest()->getSession()->save();
 
         $httpKernelBrowser->request('post', '/login_check', ['_username' => 'user', '_password' => 'foo']);
-        $this->assertEquals('', $container->get('security.last_error')($httpKernelBrowser->getRequest()));
+        $this->assertNull($container->get('security.last_error')($httpKernelBrowser->getRequest()));
         $httpKernelBrowser->getRequest()->getSession()->save();
-        $this->assertEquals(302, $httpKernelBrowser->getResponse()->getStatusCode());
-        $this->assertEquals('http://localhost/', $httpKernelBrowser->getResponse()->getTargetUrl());
+        $this->assertSame(302, $httpKernelBrowser->getResponse()->getStatusCode());
+        $this->assertSame('http://localhost/', $httpKernelBrowser->getResponse()->getTargetUrl());
 
         $httpKernelBrowser->request('get', '/');
-        $this->assertEquals('userAUTHENTICATED', $httpKernelBrowser->getResponse()->getContent());
+        $this->assertSame('userAUTHENTICATED', $httpKernelBrowser->getResponse()->getContent());
 
         $this->expectException(AccessDeniedHttpException::class);
         $httpKernelBrowser->request('get', '/admin');
 
         $httpKernelBrowser->request('get', '/logout');
-        $this->assertEquals(302, $httpKernelBrowser->getResponse()->getStatusCode());
-        $this->assertEquals('http://localhost/', $httpKernelBrowser->getResponse()->getTargetUrl());
+        $this->assertSame(302, $httpKernelBrowser->getResponse()->getStatusCode());
+        $this->assertSame('http://localhost/', $httpKernelBrowser->getResponse()->getTargetUrl());
 
         $httpKernelBrowser->request('get', '/');
-        $this->assertEquals('ANONYMOUS', $httpKernelBrowser->getResponse()->getContent());
+        $this->assertSame('ANONYMOUS', $httpKernelBrowser->getResponse()->getContent());
 
         $httpKernelBrowser->request('get', '/admin');
-        $this->assertEquals(302, $httpKernelBrowser->getResponse()->getStatusCode());
-        $this->assertEquals('http://localhost/login', $httpKernelBrowser->getResponse()->getTargetUrl());
+        $this->assertSame(302, $httpKernelBrowser->getResponse()->getStatusCode());
+        $this->assertSame('http://localhost/login', $httpKernelBrowser->getResponse()->getTargetUrl());
 
         $httpKernelBrowser->request('post', '/login_check', ['_username' => 'admin', '_password' => 'foo']);
-        $this->assertEquals('', $container->get('security.last_error')($httpKernelBrowser->getRequest()));
+        $this->assertSame('', $container->get('security.last_error')($httpKernelBrowser->getRequest()));
         $httpKernelBrowser->getRequest()->getSession()->save();
-        $this->assertEquals(302, $httpKernelBrowser->getResponse()->getStatusCode());
-        $this->assertEquals('http://localhost/admin', $httpKernelBrowser->getResponse()->getTargetUrl());
+        $this->assertSame(302, $httpKernelBrowser->getResponse()->getStatusCode());
+        $this->assertSame('http://localhost/admin', $httpKernelBrowser->getResponse()->getTargetUrl());
 
         $httpKernelBrowser->request('get', '/');
-        $this->assertEquals('adminAUTHENTICATEDADMIN', $httpKernelBrowser->getResponse()->getContent());
+        $this->assertSame('adminAUTHENTICATEDADMIN', $httpKernelBrowser->getResponse()->getContent());
         $httpKernelBrowser->request('get', '/admin');
-        $this->assertEquals('admin', $httpKernelBrowser->getResponse()->getContent());
+        $this->assertSame('admin', $httpKernelBrowser->getResponse()->getContent());
     }
 
     /**
@@ -149,11 +149,11 @@ class SecurityApplicationPluginTest extends Unit
         $httpKernelBrowser = $this->tester->getHttpKernelBrowser();
 
         $httpKernelBrowser->request('get', '/');
-        $this->assertEquals(401, $httpKernelBrowser->getResponse()->getStatusCode());
-        $this->assertEquals('Basic realm="Secured"', $httpKernelBrowser->getResponse()->headers->get('www-authenticate'));
+        $this->assertSame(401, $httpKernelBrowser->getResponse()->getStatusCode());
+        $this->assertSame('Basic realm="Secured"', $httpKernelBrowser->getResponse()->headers->get('www-authenticate'));
 
         $httpKernelBrowser->request('get', '/', [], [], ['PHP_AUTH_USER' => 'user', 'PHP_AUTH_PW' => 'foo']);
-        $this->assertEquals('userAUTHENTICATED', $httpKernelBrowser->getResponse()->getContent());
+        $this->assertSame('userAUTHENTICATED', $httpKernelBrowser->getResponse()->getContent());
 
         $this->expectException(AccessDeniedHttpException::class);
         $httpKernelBrowser->request('get', '/admin');
@@ -161,13 +161,13 @@ class SecurityApplicationPluginTest extends Unit
         $httpKernelBrowser->restart();
 
         $httpKernelBrowser->request('get', '/');
-        $this->assertEquals(401, $httpKernelBrowser->getResponse()->getStatusCode());
-        $this->assertEquals('Basic realm="Secured"', $httpKernelBrowser->getResponse()->headers->get('www-authenticate'));
+        $this->assertSame(401, $httpKernelBrowser->getResponse()->getStatusCode());
+        $this->assertSame('Basic realm="Secured"', $httpKernelBrowser->getResponse()->headers->get('www-authenticate'));
 
         $httpKernelBrowser->request('get', '/', [], [], ['PHP_AUTH_USER' => 'admin', 'PHP_AUTH_PW' => 'foo']);
-        $this->assertEquals('adminAUTHENTICATEDADMIN', $httpKernelBrowser->getResponse()->getContent());
+        $this->assertSame('adminAUTHENTICATEDADMIN', $httpKernelBrowser->getResponse()->getContent());
         $httpKernelBrowser->request('get', '/admin');
-        $this->assertEquals('admin', $httpKernelBrowser->getResponse()->getContent());
+        $this->assertSame('admin', $httpKernelBrowser->getResponse()->getContent());
     }
 
     /**
@@ -179,19 +179,19 @@ class SecurityApplicationPluginTest extends Unit
 
         $httpKernelBrowser = $this->tester->getHttpKernelBrowser();
         $httpKernelBrowser->request('get', '/');
-        $this->assertEquals(401, $httpKernelBrowser->getResponse()->getStatusCode(), 'The entry point is configured');
-        $this->assertEquals('{"message":"Authentication Required"}', $httpKernelBrowser->getResponse()->getContent());
+        $this->assertSame(401, $httpKernelBrowser->getResponse()->getStatusCode(), 'The entry point is configured');
+        $this->assertSame('{"message":"Authentication Required"}', $httpKernelBrowser->getResponse()->getContent());
 
         $httpKernelBrowser->request('get', '/', [], [], ['HTTP_X_AUTH_TOKEN' => 'lili:not the secret']);
-        $this->assertEquals(403, $httpKernelBrowser->getResponse()->getStatusCode(), 'User not found');
-        $this->assertEquals('{"message":"Username could not be found."}', $httpKernelBrowser->getResponse()->getContent());
+        $this->assertSame(403, $httpKernelBrowser->getResponse()->getStatusCode(), 'User not found');
+        $this->assertSame('{"message":"Username could not be found."}', $httpKernelBrowser->getResponse()->getContent());
 
         $httpKernelBrowser->request('get', '/', [], [], ['HTTP_X_AUTH_TOKEN' => 'victoria:not the secret']);
-        $this->assertEquals(403, $httpKernelBrowser->getResponse()->getStatusCode(), 'Invalid credentials');
-        $this->assertEquals('{"message":"Invalid credentials."}', $httpKernelBrowser->getResponse()->getContent());
+        $this->assertSame(403, $httpKernelBrowser->getResponse()->getStatusCode(), 'Invalid credentials');
+        $this->assertSame('{"message":"Invalid credentials."}', $httpKernelBrowser->getResponse()->getContent());
 
         $httpKernelBrowser->request('get', '/', [], [], ['HTTP_X_AUTH_TOKEN' => 'victoria:victoriasecret']);
-        $this->assertEquals('victoria', $httpKernelBrowser->getResponse()->getContent());
+        $this->assertSame('victoria', $httpKernelBrowser->getResponse()->getContent());
     }
 
     /**
@@ -208,17 +208,17 @@ class SecurityApplicationPluginTest extends Unit
         $httpKernelBrowser = $this->tester->getHttpKernelBrowser();
 
         $httpKernelBrowser->request('post', '/login_check', ['_username' => 'admin', '_password' => 'foo']);
-        $this->assertEquals('', $container->get('security.last_error')($httpKernelBrowser->getRequest()));
+        $this->assertNull($container->get('security.last_error')($httpKernelBrowser->getRequest()));
         $httpKernelBrowser->getRequest()->getSession()->save();
 
         $httpKernelBrowser->request('get', '/');
-        $this->assertEquals('adminAUTHENTICATEDADMIN', $httpKernelBrowser->getResponse()->getContent());
+        $this->assertSame('adminAUTHENTICATEDADMIN', $httpKernelBrowser->getResponse()->getContent());
 
         $httpKernelBrowser->request('get', '/?_switch_user=user');
-        $this->assertEquals('userAUTHENTICATED', $httpKernelBrowser->getResponse()->getContent());
+        $this->assertSame('userAUTHENTICATED', $httpKernelBrowser->getResponse()->getContent());
 
         $httpKernelBrowser->request('get', '/?_switch_user=_exit');
-        $this->assertEquals('adminAUTHENTICATEDADMIN', $httpKernelBrowser->getResponse()->getContent());
+        $this->assertSame('adminAUTHENTICATEDADMIN', $httpKernelBrowser->getResponse()->getContent());
     }
 
     /**
@@ -285,7 +285,8 @@ class SecurityApplicationPluginTest extends Unit
             ],
         ]);
         $securityConfiguration->addAuthenticationSuccessHandler('default', function () {
-            return new class implements AuthenticationSuccessHandlerInterface {
+            return new class implements AuthenticationSuccessHandlerInterface
+            {
                 /**
                  * @param \Symfony\Component\HttpFoundation\Request $request
                  * @param \Symfony\Component\Security\Core\Authentication\Token\TokenInterface $token
@@ -326,7 +327,8 @@ class SecurityApplicationPluginTest extends Unit
             ],
         ]);
         $securityConfiguration->addAuthenticationFailureHandler('default', function () {
-            return new class implements AuthenticationFailureHandlerInterface {
+            return new class implements AuthenticationFailureHandlerInterface
+            {
                 /**
                  * @param \Symfony\Component\HttpFoundation\Request $request
                  * @param \Symfony\Component\Security\Core\Exception\AuthenticationException $exception
@@ -370,10 +372,10 @@ class SecurityApplicationPluginTest extends Unit
 
         $httpKernelBrowser = $this->tester->getHttpKernelBrowser();
         $httpKernelBrowser->request('get', '/');
-        $this->assertEquals(200, $httpKernelBrowser->getResponse()->getStatusCode());
+        $this->assertSame(200, $httpKernelBrowser->getResponse()->getStatusCode());
 
         $httpKernelBrowser->request('post', '/');
-        $this->assertEquals(401, $httpKernelBrowser->getResponse()->getStatusCode());
+        $this->assertSame(401, $httpKernelBrowser->getResponse()->getStatusCode());
     }
 
     /**
@@ -397,10 +399,10 @@ class SecurityApplicationPluginTest extends Unit
 
         $httpKernelBrowser = $this->tester->getHttpKernelBrowser();
         $httpKernelBrowser->request('get', 'http://localhost2/');
-        $this->assertEquals(401, $httpKernelBrowser->getResponse()->getStatusCode());
+        $this->assertSame(401, $httpKernelBrowser->getResponse()->getStatusCode());
 
         $httpKernelBrowser->request('get', 'http://localhost1/');
-        $this->assertEquals(200, $httpKernelBrowser->getResponse()->getStatusCode());
+        $this->assertSame(200, $httpKernelBrowser->getResponse()->getStatusCode());
     }
 
     /**
@@ -432,7 +434,7 @@ class SecurityApplicationPluginTest extends Unit
             'HTTP_PHP_AUTH_PW' => 'foo',
         ]);
         $this->assertInstanceOf(UserInterface::class, $container->get('user'));
-        $this->assertEquals('user', $container->get('user')->getUsername());
+        $this->assertSame('user', $container->get('user')->getUsername());
     }
 
     /**
@@ -467,7 +469,7 @@ class SecurityApplicationPluginTest extends Unit
             'HTTP_PHP_AUTH_PW' => 'foo',
         ]);
         $this->assertInstanceOf(UserInterface::class, $container->get('user'));
-        $this->assertEquals('user', $container->get('user')->getUsername());
+        $this->assertSame('user', $container->get('user')->getUsername());
     }
 
     /**
@@ -576,14 +578,14 @@ class SecurityApplicationPluginTest extends Unit
         $httpKernelBrowser = $this->tester->getHttpKernelBrowser();
 
         $httpKernelBrowser->request('get', '/');
-        $this->assertEquals('ANONYMOUS', $httpKernelBrowser->getResponse()->getContent());
+        $this->assertSame('ANONYMOUS', $httpKernelBrowser->getResponse()->getContent());
 
         $httpKernelBrowser->request('post', '/login_check', ['_username' => 'user', '_password' => 'bar']);
-        $this->assertEquals('The presented password is invalid.', $container->get('security.last_error')($httpKernelBrowser->getRequest()));
+        $this->assertSame('The presented password is invalid.', $container->get('security.last_error')($httpKernelBrowser->getRequest()));
         $httpKernelBrowser->getRequest()->getSession()->save();
 
         $httpKernelBrowser->request('post', '/login_check', ['_username' => 'unknown', '_password' => 'bar']);
-        $this->assertEquals('Username "unknown" does not exist.', $container->get('security.last_error')($httpKernelBrowser->getRequest()));
+        $this->assertSame('Username "unknown" does not exist.', $container->get('security.last_error')($httpKernelBrowser->getRequest()));
         $httpKernelBrowser->getRequest()->getSession()->save();
     }
 

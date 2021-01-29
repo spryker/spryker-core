@@ -225,8 +225,8 @@ class SynchronizationFacadeTest extends Unit
             $storageMock->expects($this->once())->method('set')->will(
                 $this->returnCallback(
                     function ($key, $value): void {
-                        $this->assertEquals($key, 'testKey');
-                        $this->assertEquals($value, ['data' => 'testValue']);
+                        $this->assertSame('testKey', $key);
+                        $this->assertSame(['data' => 'testValue'], $value);
                     }
                 )
             );
@@ -259,7 +259,7 @@ class SynchronizationFacadeTest extends Unit
             $storageMock->expects($this->once())->method('delete')->will(
                 $this->returnCallback(
                     function ($key): void {
-                        $this->assertEquals($key, 'testKey');
+                        $this->assertSame('testKey', $key);
                     }
                 )
             );
@@ -279,8 +279,6 @@ class SynchronizationFacadeTest extends Unit
     }
 
     /**
-     * @throws \Elastica\Exception\NotFoundException
-     *
      * @return void
      */
     public function testSynchronizationWritesDataToSearch(): void
@@ -291,8 +289,8 @@ class SynchronizationFacadeTest extends Unit
             $searchMock->expects($this->once())->method('write')->will(
                 $this->returnCallback(
                     function ($data): void {
-                        $this->assertEquals(key($data), 'testKey');
-                        $this->assertEquals(current($data), ['data' => 'testValue']);
+                        $this->assertSame('testKey', key($data));
+                        $this->assertSame(['data' => 'testValue'], current($data));
                     }
                 )
             );
@@ -319,8 +317,6 @@ class SynchronizationFacadeTest extends Unit
     }
 
     /**
-     * @throws \Elastica\Exception\NotFoundException
-     *
      * @return void
      */
     public function testSynchronizationDeleteDataToSearch(): void
@@ -331,7 +327,7 @@ class SynchronizationFacadeTest extends Unit
             $searchMock->expects($this->once())->method('delete')->will(
                 $this->returnCallback(
                     function ($data): void {
-                        $this->assertEquals(key($data), 'testKey');
+                        $this->assertSame('testKey', key($data));
                     }
                 )
             );

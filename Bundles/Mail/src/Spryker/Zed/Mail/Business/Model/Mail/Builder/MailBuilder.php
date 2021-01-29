@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\MailTransfer;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Mail\Business\Exception\MissingMailTransferException;
 use Spryker\Zed\Mail\Dependency\Facade\MailToGlossaryInterface;
+use Spryker\Zed\Mail\MailConfig;
 
 class MailBuilder implements MailBuilderInterface
 {
@@ -29,11 +30,20 @@ class MailBuilder implements MailBuilderInterface
     protected $glossaryFacade;
 
     /**
-     * @param \Spryker\Zed\Mail\Dependency\Facade\MailToGlossaryInterface $glossaryFacade
+     * @var \Spryker\Zed\Mail\MailConfig
      */
-    public function __construct(MailToGlossaryInterface $glossaryFacade)
-    {
+    protected $mailConfig;
+
+    /**
+     * @param \Spryker\Zed\Mail\Dependency\Facade\MailToGlossaryInterface $glossaryFacade
+     * @param \Spryker\Zed\Mail\MailConfig $mailConfig
+     */
+    public function __construct(
+        MailToGlossaryInterface $glossaryFacade,
+        MailConfig $mailConfig
+    ) {
         $this->glossaryFacade = $glossaryFacade;
+        $this->mailConfig = $mailConfig;
     }
 
     /**
@@ -144,6 +154,25 @@ class MailBuilder implements MailBuilderInterface
         $mailSenderTransfer
             ->setEmail($this->translate($email))
             ->setName($this->translate($name));
+
+        $this->getMailTransfer()->setSender($mailSenderTransfer);
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function useDefaultSender()
+    {
+        $mailSenderTransfer = new MailSenderTransfer();
+
+        $senderEmail = $this->mailConfig->getSenderEmail() ?: $this->translate('mail.sender.email');
+        $senderName = $this->mailConfig->getSenderName() ?: $this->translate('mail.sender.name');
+
+        $mailSenderTransfer
+            ->setEmail($senderEmail)
+            ->setName($senderName);
 
         $this->getMailTransfer()->setSender($mailSenderTransfer);
 

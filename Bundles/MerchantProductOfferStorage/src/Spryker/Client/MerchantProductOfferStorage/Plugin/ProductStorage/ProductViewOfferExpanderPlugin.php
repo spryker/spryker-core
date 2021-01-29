@@ -7,21 +7,24 @@
 
 namespace Spryker\Client\MerchantProductOfferStorage\Plugin\ProductStorage;
 
-use Generated\Shared\Transfer\ProductOfferStorageCriteriaTransfer;
 use Generated\Shared\Transfer\ProductStorageCriteriaTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductViewExpanderByCriteriaPluginInterface;
-use Spryker\Shared\MerchantProductOfferStorage\MerchantProductOfferStorageConfig;
 
 /**
  * @method \Spryker\Client\MerchantProductOfferStorage\MerchantProductOfferStorageClientInterface getClient()
+ * @method \Spryker\Client\MerchantProductOfferStorage\MerchantProductOfferStorageFactory getFactory()
  */
 class ProductViewOfferExpanderPlugin extends AbstractPlugin implements ProductViewExpanderByCriteriaPluginInterface
 {
     /**
      * {@inheritDoc}
      * - Expands the transfer object with the product offer reference according to provided criteria.
+     *
+     * @api
+     *
+     * @phpstan-param array<mixed> $productData
      *
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      * @param array $productData
@@ -36,27 +39,9 @@ class ProductViewOfferExpanderPlugin extends AbstractPlugin implements ProductVi
         $localeName,
         ?ProductStorageCriteriaTransfer $productStorageCriteriaTransfer = null
     ): ProductViewTransfer {
-        if (!$productStorageCriteriaTransfer) {
-            return $productViewTransfer;
-        }
-
-        if (!$productViewTransfer->getIdProductConcrete()) {
-            return $productViewTransfer;
-        }
-
-        $productOfferStorageCriteriaTransfer = (new ProductOfferStorageCriteriaTransfer())->fromArray(
-            $productStorageCriteriaTransfer->modifiedToArray(),
-            true
-        );
-
-        $selectedAttributes = $productViewTransfer->getSelectedAttributes();
-        if (isset($selectedAttributes[MerchantProductOfferStorageConfig::PRODUCT_OFFER_REFERENCE_ATTRIBUTE])) {
-            $productOfferStorageCriteriaTransfer->setProductOfferReference($selectedAttributes[MerchantProductOfferStorageConfig::PRODUCT_OFFER_REFERENCE_ATTRIBUTE]);
-        }
-        $productOfferStorageCriteriaTransfer->addProductConcreteSku($productViewTransfer->getSku());
-
-        return $productViewTransfer->setProductOfferReference(
-            $this->getClient()->findProductConcreteDefaultProductOffer($productOfferStorageCriteriaTransfer)
+        return $this->getFactory()->createProductViewOfferExpander()->expandProductViewTransfer(
+            $productViewTransfer,
+            $productStorageCriteriaTransfer
         );
     }
 }

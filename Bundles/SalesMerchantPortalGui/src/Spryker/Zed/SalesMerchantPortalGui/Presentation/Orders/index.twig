@@ -5,18 +5,16 @@
 {% endblock %}
 
 {% block content %}
-
-    <web-mp-offer-orders
+    <web-mp-sales-orders
         cloak
-        title="{{ 'Orders' | trans }}"
-        table-config='{{ guiTableConfiguration(merchantOrderTableConfiguration) }}'
-    >
-    </web-mp-offer-orders>
-
+        table-id="web-mp-sales-orders"
+        table-config='{{ guiTableConfiguration(merchantOrderTableConfiguration) }}'>
+        <span title>{{ 'Orders' | trans }}</span>
+    </web-mp-sales-orders>
 {% endblock %}
 
 {% block footerJs %}
     {{ parent() }}
-    <script src="{{ assetsPath('js/mp-offer-orders/main-es2015.js') }}" type="module"></script>
-    <script src="{{ assetsPath('js/mp-offer-orders/main-es5.js') }}" nomodule defer></script>
+    <script src="{{ assetsPath('js/mp/spy/sales-merchant-portal-gui-es2015.js') }}" type="module"></script>
+    <script src="{{ assetsPath('js/mp/spy/sales-merchant-portal-gui-es5.js') }}" nomodule defer></script>
 {% endblock %}

@@ -1,4 +1,5 @@
-@import '~@spryker/styles/src/lib/themes/default/external-variables.less';
+@import '~@spryker/styles/src/lib/themes/default/variables/index.less';
+@import '~@spryker/styles/src/lib/themes/default/mixins/index.less';
 
 @logo-height: 77px;
 @logo-width: 190px;
@@ -6,43 +7,52 @@
 @content-horizontal-padding: 80px;
 @sidebar-collapse-transition-time: 0.2s;
 @header-height: 56px;
+@layout-content-padding: @content-vertical-padding @content-vertical-padding;
+@layout-logo-padding: 10px 30px 27px;
+@layout-logo-collapsed-padding-x: 10px;
 
 .mp-layout-main {
-    height: 100%;
-    display: flex;
+    spy-layout > nz-layout > span {
+        height: 100%;
+    }
 
-    &__main {
-        flex: auto;
+    &-cnt {
+        height: 100%;
         display: flex;
-        flex-direction: column;
-        overflow-x: hidden;
-    }
 
-    &__header {
-        flex-shrink: 0;
-        height: @header-height;
-    }
-
-    &__content {
-        flex-grow: 1;
-        overflow-y: auto;
-        padding: @content-vertical-padding @content-vertical-padding;
-    }
-
-    &__logo {
-        padding: 10px 30px 27px;
-        overflow: hidden;
-        width: 100%;
-        transition: padding @sidebar-collapse-transition-time;
-
-        &--collapsed {
-            padding-left: 10px;
-            padding-right: 10px;
+        &__main {
+            flex: auto;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
         }
 
-        &-inner {
-            height: @logo-height;
-            min-width: @logo-width;
+        &__header {
+            flex-shrink: 0;
+            height: @header-height;
+        }
+
+        &__content {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: @layout-content-padding;
+        }
+
+        &__logo {
+            .transition-mixin(padding, @sidebar-collapse-transition-time);
+            padding: @layout-logo-padding;
+            overflow: hidden;
+            width: 100%;
+
+            &-inner {
+                height: @logo-height;
+                min-width: @logo-width;
+            }
         }
     }
+}
+
+.@{layout-prefix-cls}-sider-collapsed .mp-layout-main-cnt__logo {
+    padding-left: @layout-logo-collapsed-padding-x;
+    padding-right: @layout-logo-collapsed-padding-x;
 }

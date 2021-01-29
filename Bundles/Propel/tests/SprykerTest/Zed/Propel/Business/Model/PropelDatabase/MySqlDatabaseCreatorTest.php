@@ -51,9 +51,23 @@ class MySqlDatabaseCreatorTest extends Unit
      */
     protected function getMySqlDatabaseCreatorMock(): MySqlDatabaseCreator
     {
-        $mySqlDatabaseCreatorMock = $this->getMockBuilder(MySqlDatabaseCreator::class)->setMethods(['getConnection'])->getMock();
-        $pdo = new PDO('sqlite::memory:');
-        $mySqlDatabaseCreatorMock->expects($this->once())->method('getConnection')->willReturn($pdo);
+        $mySqlDatabaseCreatorMock = $this->getMockBuilder(MySqlDatabaseCreator::class)
+            ->onlyMethods(['getConnection', 'getQuery'])
+            ->getMock();
+        $pdoMock = $this->getMockBuilder(PDO::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['exec'])
+            ->getMock();
+
+        $mySqlDatabaseCreatorMock->expects($this->once())
+            ->method('getConnection')
+            ->willReturn($pdoMock);
+
+        $mySqlDatabaseCreatorMock->expects($this->once())
+            ->method('getQuery');
+
+        $pdoMock->expects($this->once())
+            ->method('exec');
 
         return $mySqlDatabaseCreatorMock;
     }

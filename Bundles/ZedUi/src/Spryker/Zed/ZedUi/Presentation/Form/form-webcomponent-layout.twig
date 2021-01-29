@@ -24,12 +24,64 @@ For more information on this topic, see
     {{- form_rest(form) -}}
 {%- endblock form_widget_compound -%}
 
+{%- block form_start -%}
+    {%- do form.setMethodRendered() -%}
+    {% set additionalAttributes = attr %}
+    {% set method = method|upper %}
+
+    {%- if method in ["GET", "POST"] -%}
+        {% set form_method = method %}
+    {%- else -%}
+        {% set form_method = "POST" %}
+    {%- endif -%}
+
+    {% if multipart %}
+        {% set additionalAttributes = attr | merge({
+            enctype: 'multipart/form-data',
+        }) %}
+    {%- endif -%}
+
+    {%- for attrname, attrvalue in attr -%}
+        {%- if attrname == 'title' -%}
+            {% set additionalAttributes = additionalAttributes | merge({
+                title: translation_domain is same as(false)
+                    ? attrvalue
+                    : attrvalue | trans(attr_translation_parameters, translation_domain),
+            }) %}
+        {%- endif -%}
+    {%- endfor -%}
+
+    {% if attr.excludeFormTag is not defined or not attr.excludeFormTag %}
+        <web-mp-form
+            method="{{ form_method | lower }}"
+            attrs="{{ additionalAttributes | json_encode }}"
+            {% if name != '' %} name="{{ name }}"{% endif %}
+            {% if action != '' %} action="{{ action }}"{% endif %}
+            {% if attr.withMonitor is defined and attr.withMonitor %} with-monitor{% endif %}
+        >
+    {% endif %}
+
+    {%- if form_method != method -%}
+        <input type="hidden" name="_method" value="{{ method }}" />
+    {%- endif -%}
+{%- endblock form_start -%}
+
+{%- block form_end -%}
+        {%- if not render_rest is defined or render_rest -%}
+            {{ form_rest(form) }}
+        {%- endif -%}
+
+    {% if attr.excludeFormTag is not defined or not attr.excludeFormTag %}
+        </web-mp-form>
+    {% endif %}
+{%- endblock form_end -%}
+
 {%- block form_errors -%}
     {%- if errors|length > 0 -%}
         {%- for error in errors -%}
-            <spy-notification type="error">
+            <web-spy-notification type="error">
                 <span title>{{ error.message | trans }}</span>
-            </spy-notification>
+            </web-spy-notification>
         {%- endfor -%}
     {%- endif -%}
 {%- endblock form_errors -%}
@@ -40,7 +92,8 @@ For more information on this topic, see
         {%- set widget_attr = {attr: {'aria-describedby': id ~"_help"}} -%}
     {%- endif -%}
     {%- if not form.children -%}
-        <spy-form-item
+        {%- set row_attr = row_attr | default([]) | merge({required: required}) -%}
+        <web-spy-form-item
             for="{{ form.vars.id }}" {% with {attr: row_attr} %}{{ block('attributes') }}{% endwith %}
             {% if form.vars.errors %}error="{{ form.vars.errors[0].message | default | trans }}"{% endif %}
             {% if not label %}no-label="true"{% endif %}>
@@ -49,25 +102,25 @@ For more information on this topic, see
         {{- form_widget(form, widget_attr) -}}
         {{- form_help(form) -}}
     {%- if not form.children -%}
-        </spy-form-item>
+        </web-spy-form-item>
     {%- endif -%}
 {%- endblock form_row -%}
 
 {%- block form_widget_simple -%}
     {%- set type = type|default('text') -%}
-    {%- if type == 'range' or type == 'color' -%}
-        {# Attribute "required" is not supported #}
-        {%- set required = false -%}
-    {%- endif -%}
+    {# Attribute "required" is on the level of form_row #}
+    {%- set required = false -%}
+
     {%- if type == 'hidden' -%}
         <input type="{{ type }}" id="{{ id }}" name="{{ full_name }}" {{ block('attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
     {%- else -%}
-        <spy-input control type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %} cloak/>
+        <web-spy-input control type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %} cloak></web-spy-input>
     {%- endif -%}
 
 {%- endblock form_widget_simple -%}
 
 {%- block button_row -%}
+    {%- set row_attr = row_attr | default([]) -%}
     {%- if row_attr is not empty -%}
         <div{% with {attr: row_attr} %}{{ block('attributes') }}{% endwith %}>
     {%- endif -%}
@@ -88,7 +141,7 @@ For more information on this topic, see
             {% set label = name|humanize %}
         {%- endif -%}
     {%- endif -%}
-    <spy-button type="{{ type|default('button') }}" {{ block('button_attributes') }} cloak>{{ translation_domain is same as(false) or label is same as(false) ? label : label|trans(label_translation_parameters, translation_domain) }}</spy-button>
+    <web-spy-button type="{{ type|default('button') }}" {{ block('button_attributes') }} cloak>{{ translation_domain is same as(false) or label is same as(false) ? label : label|trans(label_translation_parameters, translation_domain) }}</web-spy-button>
 {%- endblock button_widget -%}
 
 {%- block form_label -%}
@@ -103,11 +156,13 @@ For more information on this topic, see
                 {% set label = name|humanize %}
             {%- endif -%}
         {%- endif -%}
-        {%- if translation_domain is same as(false) -%}
-            {{- label -}}
-        {%- else -%}
-            {{- label|trans(label_translation_parameters, translation_domain) -}}
-        {%- endif -%}
+        <{{ element|default('label') }}{% if label_attr %}{% with { attr: label_attr } %}{{ block('attributes') }}{% endwith %}{% endif %}>
+            {%- if translation_domain is same as(false) -%}
+                {{- label -}}
+            {%- else -%}
+                {{- label|trans(label_translation_parameters, translation_domain) -}}
+            {%- endif -%}
+        </{{ element|default('label') }}>
     {%- endif -%}
 {%- endblock form_label -%}
 
@@ -120,7 +175,7 @@ For more information on this topic, see
 {%- endblock widget_attributes -%}
 
 {%- block textarea_widget -%}
-    <spy-textarea control {{ block('widget_attributes') }} value="{{ value }}"></spy-textarea>
+    <web-spy-textarea control {{ block('widget_attributes') }} value="{{ value }}"></web-spy-textarea>
 {%- endblock textarea_widget -%}
 
 {%- block choice_widget -%}
@@ -129,15 +184,21 @@ For more information on this topic, see
     {%- endif -%}
     {%- set options = choices -%}
     {%- set render_preferred_choices = false -%}
-    <spy-select control {{ block('widget_attributes') }} value="{{ value }}" {{ block('choice_widget_options') }}{% if multiple %} multiple="multiple"{% endif %}>
-    </spy-select>
+
+    {% if multiple %}
+        {% set selectedData = choices | filter(choice => choice.value in value) %}
+        {% set value = selectedData | reduce((accumulator, choice) => accumulator | merge([choice.value]), []) %}
+    {% endif %}
+
+    <web-spy-select control {{ block('widget_attributes') }} value="{{ value | json_encode() }}" {{ block('choice_widget_options') }}{% if multiple %} multiple="multiple"{% endif %}>
+    </web-spy-select>
 {%- endblock choice_widget -%}
 
 {%- block choice_widget_options -%}
     {% set translatedChoices = [] %}
     {% for group_label, choice in options %}
         {% set translatedChoices = translatedChoices | merge([{
-            'label' : choice_translation_domain is same as(false) ? choice.label : choice.label|trans({}, choice_translation_domain),
+            'title' : choice_translation_domain is same as(false) ? choice.label : choice.label|trans({}, choice_translation_domain),
             'value' : choice.value,
         }]) %}
     {% endfor %}
@@ -149,9 +210,17 @@ For more information on this topic, see
 {%- endblock checkbox_row -%}
 
 {%- block checkbox_widget -%}
-    <spy-toggle
-        control
-        {{ block('widget_attributes') }}
-        value="{{ checked ? 'true' : 'false' }}"
-    ></spy-toggle>
+    {% if toggle is defined and toggle %}
+        <web-spy-toggle
+            control
+            {{ block('widget_attributes') }}
+            value="{{ checked ? 'true' : 'false' }}"
+        ></web-spy-toggle>
+    {% else %}
+        <web-spy-checkbox
+            control
+            {{ block('widget_attributes') }}
+            checked="{{ checked ? 'true' : 'false' }}"
+        >{{ label | trans }}</web-spy-checkbox>
+    {% endif %}
 {%- endblock checkbox_widget -%}

@@ -14,40 +14,40 @@ class Finder
     /**
      * @var string
      */
-    private $bundleDirectory;
+    protected $moduleDirectory;
 
     /**
      * @var string
      */
-    private $application;
+    protected $application;
 
     /**
      * @var string
      */
-    private $bundle;
+    protected $module;
 
     /**
      * @var string
      */
-    private $layer;
+    protected $layer;
 
     /**
      * @var string
      */
-    private $name;
+    protected $name;
 
     /**
-     * @param string $bundleDirectory
+     * @param string $moduleDirectory
      * @param string $application
-     * @param string $bundle
+     * @param string $module
      * @param string $layer
      * @param string $name
      */
-    public function __construct($bundleDirectory, $application = '*', $bundle = '*', $layer = '*', $name = '*.php')
+    public function __construct($moduleDirectory, $application = '*', $module = '*', $layer = '*', $name = '*.php')
     {
-        $this->bundleDirectory = $bundleDirectory;
+        $this->moduleDirectory = $moduleDirectory;
         $this->application = $application;
-        $this->bundle = $bundle;
+        $this->module = $module;
         $this->layer = $layer;
         $this->name = $name;
     }
@@ -111,9 +111,9 @@ class Finder
         }
 
         return [
-            $this->bundleDirectory . '/' . $this->bundle . '/src/Spryker/Zed/' . $this->bundle . '/' . $layer,
-            $this->bundleDirectory . '/' . $this->bundle . '/tests/_support/',
-            $this->bundleDirectory . '/' . $this->bundle . '/tests/SprykerTest/',
+            $this->moduleDirectory . '/' . $this->module . '/src/Spryker/Zed/' . $this->module . '/' . $layer,
+            $this->moduleDirectory . '/' . $this->module . '/tests/_support/',
+            $this->moduleDirectory . '/' . $this->module . '/tests/SprykerTest/',
         ];
     }
 
@@ -123,9 +123,9 @@ class Finder
     private function getServiceDirectories()
     {
         return [
-            $this->bundleDirectory . '/' . $this->bundle . '/src/Spryker/Service/' . $this->bundle,
-            $this->bundleDirectory . '/' . $this->bundle . '/tests/_support/',
-            $this->bundleDirectory . '/' . $this->bundle . '/tests/SprykerTest/',
+            $this->moduleDirectory . '/' . $this->module . '/src/Spryker/Service/' . $this->module,
+            $this->moduleDirectory . '/' . $this->module . '/tests/_support/',
+            $this->moduleDirectory . '/' . $this->module . '/tests/SprykerTest/',
         ];
     }
 
@@ -135,9 +135,9 @@ class Finder
     private function getYvesDirectories()
     {
         return [
-            $this->bundleDirectory . '/' . $this->bundle . '/src/Spryker/Yves/' . $this->bundle,
-            $this->bundleDirectory . '/' . $this->bundle . '/tests/_support/',
-            $this->bundleDirectory . '/' . $this->bundle . '/tests/SprykerTest/',
+            $this->moduleDirectory . '/' . $this->module . '/src/Spryker/Yves/' . $this->module,
+            $this->moduleDirectory . '/' . $this->module . '/tests/_support/',
+            $this->moduleDirectory . '/' . $this->module . '/tests/SprykerTest/',
         ];
     }
 
@@ -147,9 +147,9 @@ class Finder
     private function getClientDirectories()
     {
         return [
-            $this->bundleDirectory . '/' . $this->bundle . '/src/Spryker/Client/' . $this->bundle,
-            $this->bundleDirectory . '/' . $this->bundle . '/tests/_support/',
-            $this->bundleDirectory . '/' . $this->bundle . '/tests/SprykerTest/',
+            $this->moduleDirectory . '/' . $this->module . '/src/Spryker/Client/' . $this->module,
+            $this->moduleDirectory . '/' . $this->module . '/tests/_support/',
+            $this->moduleDirectory . '/' . $this->module . '/tests/SprykerTest/',
         ];
     }
 
@@ -159,9 +159,9 @@ class Finder
     private function getSharedDirectories()
     {
         return [
-            $this->bundleDirectory . '/' . $this->bundle . '/src/Spryker/Shared/' . $this->bundle . '/',
-            $this->bundleDirectory . '/' . $this->bundle . '/tests/_support/',
-            $this->bundleDirectory . '/' . $this->bundle . '/tests/SprykerTest/',
+            $this->moduleDirectory . '/' . $this->module . '/src/Spryker/Shared/' . $this->module . '/',
+            $this->moduleDirectory . '/' . $this->module . '/tests/_support/',
+            $this->moduleDirectory . '/' . $this->module . '/tests/SprykerTest/',
         ];
     }
 }

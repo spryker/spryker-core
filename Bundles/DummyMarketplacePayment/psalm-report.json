@@ -1,5 +1,30 @@
 {
-    "error": [],
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 24,
+            "line_to": 24,
+            "type": "ParamNameMismatch",
+            "message": "Argument 1 of Spryker\\Yves\\DummyMarketplacePayment\\Form\\Constraint\\DateOfBirthValueConstraintValidator::validate has wrong name $dateOfBirth, expecting $value as defined by Symfony\\Component\\Validator\\ConstraintValidatorInterface::validate",
+            "file_name": "vendor/spryker/spryker/Bundles/DummyMarketplacePayment/src/Spryker/Yves/DummyMarketplacePayment/Form/Constraint/DateOfBirthValueConstraintValidator.php",
+            "snippet": "    public function validate($dateOfBirth, Constraint $constraint): void",
+            "selected_text": "$dateOfBirth",
+            "error_level": 7,
+            "shortcode": 230
+        },
+        {
+            "severity": "error",
+            "line_from": 31,
+            "line_to": 31,
+            "type": "ParamNameMismatch",
+            "message": "Argument 2 of Spryker\\Yves\\DummyMarketplacePayment\\Plugin\\StepEngine\\DummyMarketplacePaymentHandlerPlugin::addToDataClass has wrong name $quoteTransfer, expecting $dataTransfer as defined by Spryker\\Yves\\StepEngine\\Dependency\\Plugin\\Handler\\StepHandlerPluginInterface::addToDataClass",
+            "file_name": "vendor/spryker/spryker/Bundles/DummyMarketplacePayment/src/Spryker/Yves/DummyMarketplacePayment/Plugin/StepEngine/DummyMarketplacePaymentHandlerPlugin.php",
+            "snippet": "    public function addToDataClass(Request $request, AbstractTransfer $quoteTransfer)",
+            "selected_text": "$quoteTransfer",
+            "error_level": 7,
+            "shortcode": 230
+        }
+    ],
     "warning": [
         {
             "severity": "info",
@@ -34,6 +59,18 @@
             "file_name": "vendor/spryker/spryker/Bundles/DummyMarketplacePayment/src/Spryker/Yves/DummyMarketplacePayment/Form/DataProvider/InvoiceFormDataProvider.php",
             "snippet": "        $quoteTransfer->getPayment()->setDummyMarketplacePaymentInvoice(new DummyMarketplacePaymentTransfer());",
             "selected_text": "setDummyMarketplacePaymentInvoice",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 79,
+            "line_to": 79,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getPaymentProviderKey on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/DummyMarketplacePayment/src/Spryker/Zed/DummyMarketplacePayment/Business/Filter/PaymentMethodFilter.php",
+            "snippet": "            && $paymentMethodTransfer->getPaymentProvider()->getPaymentProviderKey() === DummyMarketplacePaymentConfig::PAYMENT_PROVIDER_NAME;",
+            "selected_text": "getPaymentProviderKey",
             "error_level": 3,
             "shortcode": 83
         }

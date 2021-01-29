@@ -44,7 +44,7 @@ class TranslatorFacadeTest extends Test
         $this->getFacadeMock()->generateTranslationCache();
 
         // Assert
-        $this->tester->assertEquals(2, $this->tester->findFiles(codecept_output_dir())->count());
+        $this->tester->assertSame(2, $this->tester->findFiles(codecept_output_dir())->count());
     }
 
     /**
@@ -61,7 +61,7 @@ class TranslatorFacadeTest extends Test
         $this->getFacadeMock()->cleanTranslationCache();
 
         // Assert
-        $this->tester->assertEquals(0, $this->tester->findFiles(codecept_output_dir())->count());
+        $this->tester->assertSame(0, $this->tester->findFiles(codecept_output_dir())->count());
     }
 
     /**

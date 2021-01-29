@@ -10,14 +10,11 @@ namespace SprykerTest\Zed\SearchElasticsearch\Business;
 use Codeception\Test\Unit;
 use Elastica\Index;
 use Elastica\Request;
-use Generated\Shared\Transfer\StoreTransfer;
 use Psr\Log\NullLogger;
-use Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreClientInterface;
-use Spryker\Shared\SearchElasticsearch\Index\IndexNameResolverInterface;
 use Spryker\Zed\SearchElasticsearch\Business\Snapshot\Repository;
 use Spryker\Zed\SearchElasticsearch\Business\Snapshot\RepositoryInterface;
+use Spryker\Zed\SearchElasticsearch\Business\SourceIdentifier\SourceIdentifierInterface;
 use Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig;
-use Spryker\Zed\SearchElasticsearch\SearchElasticsearchDependencyProvider;
 use SprykerTest\Shared\SearchElasticsearch\Helper\ElasticsearchHelper;
 
 /**
@@ -50,7 +47,7 @@ class SearchElasticsearchFacadeTest extends Unit
     {
         // Arrange
         $this->tester->mockConfigMethod('getJsonSchemaDefinitionDirectories', $this->tester->getFixturesSchemaDirectory());
-        $this->setupStoreClientDependency();
+        $this->tester->mockConfigMethod('getSupportedSourceIdentifiers', [static::FIXTURE_SOURCE_IDENTIFIER]);
         $expectedIndexName = $this->tester->translateSourceIdentifierToIndexName(static::FIXTURE_SOURCE_IDENTIFIER);
         $this->tester->addCleanupForIndexByName($expectedIndexName);
 
@@ -69,6 +66,7 @@ class SearchElasticsearchFacadeTest extends Unit
         // Arrange
         $this->tester->mockConfigMethod('getJsonSchemaDefinitionDirectories', $this->tester->getFixturesSchemaDirectory());
         $this->tester->mockConfigMethod('getClassTargetDirectory', $this->tester->getFixturesIndexMapDirectory());
+        $this->tester->mockConfigMethod('getSupportedSourceIdentifiers', [static::FIXTURE_SOURCE_IDENTIFIER]);
 
         // Act
         $this->tester->getFacade()->installMapper(new NullLogger());
@@ -92,7 +90,7 @@ class SearchElasticsearchFacadeTest extends Unit
 
         // Assert
         $this->assertTrue($result);
-        $this->assertEquals(SearchElasticsearchConfig::INDEX_CLOSE_STATE, $this->getIndexState($index));
+        $this->assertSame(SearchElasticsearchConfig::INDEX_CLOSE_STATE, $this->getIndexState($index));
     }
 
     /**
@@ -130,7 +128,7 @@ class SearchElasticsearchFacadeTest extends Unit
 
         // Assert
         $this->assertTrue($result);
-        $this->assertEquals(SearchElasticsearchConfig::INDEX_OPEN_STATE, $this->getIndexState($index));
+        $this->assertSame(SearchElasticsearchConfig::INDEX_OPEN_STATE, $this->getIndexState($index));
     }
 
     /**
@@ -184,31 +182,6 @@ class SearchElasticsearchFacadeTest extends Unit
 
         // Assert
         $this->assertAllIndexesAreDeleted([$index, $anotherIndex]);
-    }
-
-    /**
-     * @return void
-     */
-    protected function setupStoreClientDependency(): void
-    {
-        $this->tester->setDependency(
-            SearchElasticsearchDependencyProvider::CLIENT_STORE,
-            $this->getStoreClientMock()
-        );
-    }
-
-    /**
-     * @return \Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreClientInterface|\PHPUnit\Framework\MockObject\MockObject
-     */
-    protected function getStoreClientMock(): SearchElasticsearchToStoreClientInterface
-    {
-        $mockStoreTransfer = new StoreTransfer();
-        $mockStoreTransfer->setName(static::CURRENT_STORE);
-
-        $storeMock = $this->createMock(SearchElasticsearchToStoreClientInterface::class);
-        $storeMock->method('getCurrentStore')->willReturn($mockStoreTransfer);
-
-        return $storeMock;
     }
 
     /**
@@ -286,6 +259,8 @@ class SearchElasticsearchFacadeTest extends Unit
             $this->tester->buildSearchContextTransferFromIndexName($sourceIndex->getName()),
             $this->tester->buildSearchContextTransferFromIndexName($destIndex->getName())
         );
+
+        $destIndex->refresh();
 
         // Assert
         $this->assertDocumentInIndexHasExpectedContent($destIndex, $documentId, $documentContent);
@@ -452,11 +427,11 @@ class SearchElasticsearchFacadeTest extends Unit
             return $index->getName();
         }, $indexes);
 
-        $indexNameResolverMock = $this->createMock(IndexNameResolverInterface::class);
-        $indexNameResolverMock->method('resolve')->willReturnArgument(0);
+        $sourceIdentifierMock = $this->createMock(SourceIdentifierInterface::class);
+        $sourceIdentifierMock->method('translateToIndexName')->willReturnArgument(0);
 
         $this->tester->mockConfigMethod('getSupportedSourceIdentifiers', array_unique($indexNames));
-        $this->tester->mockFactoryMethod('createIndexNameResolver', $indexNameResolverMock);
+        $this->tester->mockFactoryMethod('createSourceIdentifier', $sourceIdentifierMock);
         $this->tester->mockFactoryMethod('getConfig', $this->tester->getModuleConfig());
     }
 }

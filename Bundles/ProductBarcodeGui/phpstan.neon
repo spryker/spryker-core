@@ -1,3 +1,2 @@
 parameters:
-    ignoreErrors:
-    - '#Method .+ProductBarcodeTable::prepareTableQuery\(\) should return .+Spy.+Query but returns Propel\\Runtime\\ActiveQuery\\ModelCriteria#'
+    checkMissingIterableValueType: false

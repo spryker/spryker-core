@@ -104,7 +104,7 @@ class GlueRest extends REST implements LastConnectionProviderInterface
             HttpCode::getDescription($this->grabResponseCode()),
             strlen($rawResponse) > $responseLimit ? substr($rawResponse, 0, $responseLimit) . '...' : $rawResponse
         );
-        $this->assertEquals($code, $this->grabResponseCode(), $failureMessage);
+        $this->assertSame($code, $this->grabResponseCode(), $failureMessage);
     }
 
     /**
@@ -491,6 +491,51 @@ class GlueRest extends REST implements LastConnectionProviderInterface
                 $attribute
             )
         );
+    }
+
+    /**
+     * @part json
+     *
+     * @param string $code
+     * @param string $index
+     *
+     * @return void
+     */
+    public function seeResponseErrorsHaveCode(string $code, string $index = '*'): void
+    {
+        $this->getJsonPathModule()->seeResponseJsonPathContains([
+            'code' => $code,
+        ], sprintf('$.errors[%s]', $index));
+    }
+
+    /**
+     * @part json
+     *
+     * @param int $status
+     * @param string $index
+     *
+     * @return void
+     */
+    public function seeResponseErrorsHaveStatus(int $status, string $index = '*'): void
+    {
+        $this->getJsonPathModule()->seeResponseJsonPathContains([
+            'status' => $status,
+        ], sprintf('$.errors[%s]', $index));
+    }
+
+    /**
+     * @part json
+     *
+     * @param string $detail
+     * @param string $index
+     *
+     * @return void
+     */
+    public function seeResponseErrorsHaveDetail(string $detail, string $index = '*'): void
+    {
+        $this->getJsonPathModule()->seeResponseJsonPathContains([
+            'detail' => $detail,
+        ], sprintf('$.errors[%s]', $index));
     }
 
     /**

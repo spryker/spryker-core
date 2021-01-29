@@ -50,6 +50,7 @@ class MerchantProfileRepository extends AbstractRepository implements MerchantPr
     public function find(MerchantProfileCriteriaFilterTransfer $merchantProfileCriteriaFilterTransfer): MerchantProfileCollectionTransfer
     {
         $merchantProfileCollectionTransfer = new MerchantProfileCollectionTransfer();
+        /** @var \Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfileQuery $merchantProfileQuery */
         $merchantProfileQuery = $this->getFactory()
             ->createMerchantProfileQuery()
             ->joinWithSpyMerchant()
@@ -73,17 +74,17 @@ class MerchantProfileRepository extends AbstractRepository implements MerchantPr
     }
 
     /**
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $criteria
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $modelCriteria
      * @param \Generated\Shared\Transfer\FilterTransfer|null $filterTransfer
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    public function buildQueryFromCriteria(ModelCriteria $criteria, ?FilterTransfer $filterTransfer = null): ModelCriteria
+    public function buildQueryFromCriteria(ModelCriteria $modelCriteria, ?FilterTransfer $filterTransfer = null): ModelCriteria
     {
-        $criteria = parent::buildQueryFromCriteria($criteria, $filterTransfer);
-        $criteria->setFormatter(ModelCriteria::FORMAT_OBJECT);
+        $modelCriteria = parent::buildQueryFromCriteria($modelCriteria, $filterTransfer);
+        $modelCriteria->setFormatter(ModelCriteria::FORMAT_OBJECT);
 
-        return $criteria;
+        return $modelCriteria;
     }
 
     /**

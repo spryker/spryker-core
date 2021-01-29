@@ -2,6 +2,18 @@
     "error": [
         {
             "severity": "error",
+            "line_from": 34,
+            "line_to": 34,
+            "type": "ParamNameMismatch",
+            "message": "Argument 1 of Spryker\\Glue\\ProductOptionsRestApi\\Processor\\Expander\\ProductOptionByProductAbstractSkuExpander::addResourceRelationships has wrong name $restResources, expecting $resources as defined by Spryker\\Glue\\ProductOptionsRestApi\\Processor\\Expander\\ProductOptionByProductAbstractSkuExpanderInterface::addResourceRelationships",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOptionsRestApi/src/Spryker/Glue/ProductOptionsRestApi/Processor/Expander/ProductOptionByProductAbstractSkuExpander.php",
+            "snippet": "    public function addResourceRelationships(array $restResources, RestRequestInterface $restRequest): void",
+            "selected_text": "$restResources",
+            "error_level": 7,
+            "shortcode": 230
+        },
+        {
+            "severity": "error",
             "line_from": 42,
             "line_to": 42,
             "type": "InvalidArgument",
@@ -193,54 +205,6 @@
             "selected_text": "getArrayCopy",
             "error_level": 3,
             "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 52,
-            "line_to": 52,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductOptionsRestApi/src/Spryker/Glue/ProductOptionsRestApi/ProductOptionsRestApiDependencyProvider.php",
-            "snippet": "                $container->getLocator()->productOptionStorage()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 68,
-            "line_to": 68,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductOptionsRestApi/src/Spryker/Glue/ProductOptionsRestApi/ProductOptionsRestApiDependencyProvider.php",
-            "snippet": "                $container->getLocator()->productStorage()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 84,
-            "line_to": 84,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductOptionsRestApi/src/Spryker/Glue/ProductOptionsRestApi/ProductOptionsRestApiDependencyProvider.php",
-            "snippet": "                $container->getLocator()->glossaryStorage()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
-        },
-        {
-            "severity": "info",
-            "line_from": 100,
-            "line_to": 100,
-            "type": "UndefinedMagicMethod",
-            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductOptionsRestApi/src/Spryker/Glue/ProductOptionsRestApi/ProductOptionsRestApiDependencyProvider.php",
-            "snippet": "                $container->getLocator()->currency()->client()",
-            "selected_text": "client",
-            "error_level": 4,
-            "shortcode": 219
         }
     ],
     "deprecation": []

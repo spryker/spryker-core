@@ -4,7 +4,7 @@
   "description": "ShipmentCartConnector module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.3",
     "spryker/cart-extension": "^4.2.0",
     "spryker/kernel": "^3.33.0",
     "spryker/price": "^5.0.0",

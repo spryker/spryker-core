@@ -29,7 +29,7 @@ class ConvertGuestQuoteToCustomerQuoteTest extends Unit
     /**
      * @var \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacadeInterface
      */
-    private $cartsRestApiFacade;
+    protected $cartsRestApiFacade;
 
     /**
      * @return void

@@ -70,14 +70,19 @@ class MerchantTranslator implements MerchantTranslatorInterface
         $glossaryKeys = [];
 
         foreach ($merchantStorageTransfers as $merchantStorageTransfer) {
+            /**
+             * @var \Generated\Shared\Transfer\MerchantStorageProfileTransfer $merchantStorageProfileTransfer
+             */
+            $merchantStorageProfileTransfer = $merchantStorageTransfer->requireMerchantProfile()->getMerchantProfile();
+
             $merchantStorageTransferGlossaryKeys = [
-                $merchantStorageTransfer->getMerchantProfile()->getBannerUrlGlossaryKey(),
-                $merchantStorageTransfer->getMerchantProfile()->getCancellationPolicyGlossaryKey(),
-                $merchantStorageTransfer->getMerchantProfile()->getDataPrivacyGlossaryKey(),
-                $merchantStorageTransfer->getMerchantProfile()->getDeliveryTimeGlossaryKey(),
-                $merchantStorageTransfer->getMerchantProfile()->getDescriptionGlossaryKey(),
-                $merchantStorageTransfer->getMerchantProfile()->getImprintGlossaryKey(),
-                $merchantStorageTransfer->getMerchantProfile()->getTermsConditionsGlossaryKey(),
+                $merchantStorageProfileTransfer->getBannerUrlGlossaryKey(),
+                $merchantStorageProfileTransfer->getCancellationPolicyGlossaryKey(),
+                $merchantStorageProfileTransfer->getDataPrivacyGlossaryKey(),
+                $merchantStorageProfileTransfer->getDeliveryTimeGlossaryKey(),
+                $merchantStorageProfileTransfer->getDescriptionGlossaryKey(),
+                $merchantStorageProfileTransfer->getImprintGlossaryKey(),
+                $merchantStorageProfileTransfer->getTermsConditionsGlossaryKey(),
             ];
 
             $glossaryKeys = array_merge($glossaryKeys, $merchantStorageTransferGlossaryKeys);
@@ -97,7 +102,10 @@ class MerchantTranslator implements MerchantTranslatorInterface
         $translatedMerchantStorageTransfers = [];
 
         foreach ($merchantStorageTransfers as $merchantStorageTransfer) {
-            $merchantStorageProfileTransfer = $merchantStorageTransfer->getMerchantProfile();
+            /**
+             * @var \Generated\Shared\Transfer\MerchantStorageProfileTransfer $merchantStorageProfileTransfer
+             */
+            $merchantStorageProfileTransfer = $merchantStorageTransfer->requireMerchantProfile()->getMerchantProfile();
 
             if (isset($translations[$merchantStorageProfileTransfer->getBannerUrlGlossaryKey()])) {
                 $merchantStorageProfileTransfer->setBannerUrl($translations[$merchantStorageProfileTransfer->getBannerUrlGlossaryKey()]);

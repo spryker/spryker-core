@@ -1,12 +1,12 @@
 {% for message in app.session.flashbag.get('flash.messages.success') %}
-    <spy-notification type="success" closeable="true">
+    <web-spy-notification type="success" closeable="true">
         <span title>{{ 'Success!' | trans }}</span>
         <span description>{{ message | trans }}</span>
-    </spy-notification>
+    </web-spy-notification>
 {% endfor %}
 
 {% for message in app.session.flashbag.get('flash.messages.error') %}
-    <spy-notification type="error">
+    <web-spy-notification type="error">
         <span title>{{ message | trans }}</span>
-    </spy-notification>
+    </web-spy-notification>
 {% endfor %}

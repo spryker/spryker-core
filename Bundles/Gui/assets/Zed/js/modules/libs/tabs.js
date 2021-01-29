@@ -7,20 +7,20 @@ function Tabs(selector, onTabChange) {
     this.currentUrlHash = window.location.hash;
     this.tabsContainer = $(selector);
     this.tabUrls = this.tabsContainer.find('.nav li a');
-    this.onTabChange = onTabChange || function(){};
+    this.onTabChange = onTabChange || function () {};
 
     this.checkErrors();
     this.setNavigation();
 }
 
-Tabs.prototype.checkErrors = function() {
+Tabs.prototype.checkErrors = function () {
     var self = this;
 
     if (self.tabsContainer.data('autoErrors') !== true) {
         return;
     }
 
-    self.tabsContainer.find('.tab-content .tab-pane').each(function(i, tab) {
+    self.tabsContainer.find('.tab-content .tab-pane').each(function (i, tab) {
         var hasError = $(tab).find('.has-error, .alert-danger').length;
         var tabHeader = self.tabsContainer.find('.nav-tabs li[data-tab-content-id="' + tab.id + '"]');
 
@@ -32,7 +32,7 @@ Tabs.prototype.checkErrors = function() {
     });
 };
 
-Tabs.prototype.setNavigation = function() {
+Tabs.prototype.setNavigation = function () {
     var self = this;
 
     if (self.tabsContainer.data('isNavigable') !== true) {
@@ -45,9 +45,9 @@ Tabs.prototype.setNavigation = function() {
     this.listenNavigationButtons();
 };
 
-Tabs.prototype.listenNavigationButtons = function() {
+Tabs.prototype.listenNavigationButtons = function () {
     var self = this;
-    self.tabsContainer.find('.btn-tab-previous').on('click', function(event) {
+    self.tabsContainer.find('.btn-tab-previous').on('click', function (event) {
         event.preventDefault();
         var element = $(this);
         var hash = element.attr('hash');
@@ -59,7 +59,7 @@ Tabs.prototype.listenNavigationButtons = function() {
         self.showHideNavigationButtons();
     });
 
-    self.tabsContainer.find('.btn-tab-next').on('click', function(event) {
+    self.tabsContainer.find('.btn-tab-next').on('click', function (event) {
         event.preventDefault();
         var element = $(this);
         var hash = element.attr('href');
@@ -72,11 +72,11 @@ Tabs.prototype.listenNavigationButtons = function() {
     });
 };
 
-Tabs.prototype.checkActivatedTab = function() {
+Tabs.prototype.checkActivatedTab = function () {
     var self = this;
     var position = 0;
     var positionChanged = false;
-    self.tabUrls.each(function() {
+    self.tabUrls.each(function () {
         var element = $(this);
         if (positionChanged === false && element.attr('href') === self.currentUrlHash) {
             self.currentTabPosition = position;
@@ -85,13 +85,13 @@ Tabs.prototype.checkActivatedTab = function() {
             self.activateTab(element, self.currentUrlHash);
             self.showHideNavigationButtons();
         }
-        position++
+        position++;
     });
 };
 
-Tabs.prototype.changeTabsOnClick = function() {
+Tabs.prototype.changeTabsOnClick = function () {
     var self = this;
-    self.tabUrls.on('click', function(event) {
+    self.tabUrls.on('click', function (event) {
         event.preventDefault();
         var selectedElement = $(this);
         var hash = selectedElement.attr('href');
@@ -99,7 +99,7 @@ Tabs.prototype.changeTabsOnClick = function() {
         var position = 0;
         var positionChanged = false;
 
-        self.tabUrls.each(function() {
+        self.tabUrls.each(function () {
             var element = $(this);
             if (positionChanged === false && element.attr('href') === selectedElement.attr('href')) {
                 self.currentTabPosition = position;
@@ -109,25 +109,24 @@ Tabs.prototype.changeTabsOnClick = function() {
                 self.activateTab(element, self.currentUrlHash);
                 self.showHideNavigationButtons();
             }
-            position++
+            position++;
         });
     });
 };
 
-Tabs.prototype.activateTab = function(element, hash) {
-    window.location.hash = hash;
+Tabs.prototype.activateTab = function (element, hash) {
+    window.history.pushState(null, null, hash);
     element.tab('show');
-
     this.onTabChange(element.attr('href'));
 };
 
-Tabs.prototype.showHideNavigationButtons = function() {
+Tabs.prototype.showHideNavigationButtons = function () {
     var self = this;
 
     if (self.currentTabPosition === 0) {
         self.tabsContainer.find('.btn-tab-previous').addClass('hidden');
         self.tabsContainer.find('.btn-tab-next').removeClass('hidden');
-    } else  if (self.currentTabPosition === (self.tabUrls.length - 1)) {
+    } else if (self.currentTabPosition === self.tabUrls.length - 1) {
         self.tabsContainer.find('.btn-tab-previous').removeClass('hidden');
         self.tabsContainer.find('.btn-tab-next').addClass('hidden');
     } else {
@@ -136,7 +135,7 @@ Tabs.prototype.showHideNavigationButtons = function() {
     }
 };
 
-Tabs.prototype.navigateElement = function() {
+Tabs.prototype.navigateElement = function () {
     var self = this;
     var element = self.tabsContainer.find('[data-toggle="tab"]:eq(' + this.currentTabPosition + ')');
     var hash = element.attr('href');
@@ -144,7 +143,7 @@ Tabs.prototype.navigateElement = function() {
     this.proceedChange(element, hash);
 };
 
-Tabs.prototype.proceedChange = function(element, hash) {
+Tabs.prototype.proceedChange = function (element, hash) {
     this.activateTab(element, hash);
     this.checkActivatedTab();
 };

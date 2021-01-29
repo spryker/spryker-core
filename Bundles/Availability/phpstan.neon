@@ -1,4 +1,4 @@
 parameters:
+    checkMissingIterableValueType: false
     ignoreErrors:
-    - '#Call to an undefined method .+Criteria::.+\(\).#'
-    - '#Method .+AvailabilityQueryContainer::query.+\(\) should return .+Spy.+Query but returns Propel\\Runtime\\ActiveQuery\\ModelCriteria.#'
+        - '#Call to an undefined method .+Criteria::.+\(\).#'

@@ -20,6 +20,8 @@ use Symfony\Component\Routing\RouteCollection;
 
 class RouterDebugYvesConsole extends Command
 {
+    protected const CODE_SUCCESS = 0;
+
     protected const NAME = 'router:debug';
     protected const NAME_ALIAS = 'router:debug:yves';
 
@@ -55,9 +57,9 @@ class RouterDebugYvesConsole extends Command
      *
      * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
      *
-     * @return int|null|void
+     * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
         $name = $input->getArgument(static::ARGUMENT_ROUTE_NAME);
@@ -91,6 +93,8 @@ class RouterDebugYvesConsole extends Command
                 'output' => $io,
             ]);
         }
+
+        return static::CODE_SUCCESS;
     }
 
     /**

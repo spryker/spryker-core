@@ -10,11 +10,11 @@ namespace Spryker\Zed\ProductDiscontinuedProductLabelConnector\Dependency\Facade
 interface ProductDiscontinuedProductLabelConnectorToProductInterface
 {
     /**
-     * @param int $idProduct
+     * @param int $idConcrete
      *
      * @return int|null
      */
-    public function findProductAbstractIdByConcreteId(int $idProduct): ?int;
+    public function findProductAbstractIdByConcreteId(int $idConcrete): ?int;
 
     /**
      * @param int $idProductAbstract
@@ -22,4 +22,11 @@ interface ProductDiscontinuedProductLabelConnectorToProductInterface
      * @return int[]
      */
     public function findProductConcreteIdsByAbstractProductId(int $idProductAbstract): array;
+
+    /**
+     * @param array $productConcreteIds
+     *
+     * @return array
+     */
+    public function getProductAbstractIdsByProductConcreteIds(array $productConcreteIds): array;
 }
