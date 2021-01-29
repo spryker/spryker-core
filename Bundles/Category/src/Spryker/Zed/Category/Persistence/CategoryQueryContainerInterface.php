@@ -211,18 +211,6 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
      *
      * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
      */
-    public function queryUrlByIdCategoryNode($idCategoryNode);
-
-    /**
-     * Specification:
-     * - TODO: Add method specification.
-     *
-     * @api
-     *
-     * @param int $idCategoryNode
-     *
-     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
-     */
     public function queryResourceUrlByCategoryNodeId($idCategoryNode);
 
     /**

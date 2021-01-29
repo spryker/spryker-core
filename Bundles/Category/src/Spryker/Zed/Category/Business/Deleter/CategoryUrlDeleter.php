@@ -70,21 +70,6 @@ class CategoryUrlDeleter implements CategoryUrlDeleterInterface
     }
 
     /**
-     * @param int[] $categoryNodeIds
-     *
-     * @return void
-     */
-    public function deleteCategoryUrlsForCategoryNodes(array $categoryNodeIds): void
-    {
-        $categoryNodeUrlFilterTransfer = (new CategoryNodeUrlFilterTransfer())
-            ->setCategoryNodeIds($categoryNodeIds);
-
-        $this->getTransactionHandler()->handleTransaction(function () use ($categoryNodeUrlFilterTransfer) {
-            $this->executeDeleteUrlsByCategoryNodeUrlFilterTransaction($categoryNodeUrlFilterTransfer);
-        });
-    }
-
-    /**
      * @param int $idCategory
      *
      * @return int[]

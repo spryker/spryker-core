@@ -169,18 +169,6 @@ interface CategoryFacadeInterface
 
     /**
      * Specification:
-     * - Takes template list from defined config
-     * - Creates new template records
-     * - Does not delete/update existing template records (safe)
-     *
-     * @api
-     *
-     * @return void
-     */
-    public function syncCategoryTemplate(): void;
-
-    /**
-     * Specification:
      * - Checks if there is a category node on the same level with provided category by name
      *
      * @api

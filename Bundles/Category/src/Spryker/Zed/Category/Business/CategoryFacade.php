@@ -155,20 +155,6 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @api
      *
-     * @return void
-     */
-    public function syncCategoryTemplate(): void
-    {
-        $this->getFactory()
-            ->createCategoryTemplateSync()
-            ->syncFromConfig();
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
      * @param string $name
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *

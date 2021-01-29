@@ -34,6 +34,7 @@ class ProductCategoryRelationReadPlugin extends AbstractPlugin implements Catego
 
     /**
      * {@inheritDoc}
+     * - Returns product names related to the category.
      *
      * @api
      *

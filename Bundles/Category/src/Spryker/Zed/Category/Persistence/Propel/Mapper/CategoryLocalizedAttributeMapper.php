@@ -27,17 +27,4 @@ class CategoryLocalizedAttributeMapper
 
         return $categoryAttributeEntity;
     }
-
-    /**
-     * @param \Orm\Zed\Category\Persistence\SpyCategoryAttribute $categoryAttributeEntity
-     * @param \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer $categoryLocalizedAttributesTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer
-     */
-    public function mapCategoryAttributeEntityToCategoryLocalizedAttributeTransfer(
-        SpyCategoryAttribute $categoryAttributeEntity,
-        CategoryLocalizedAttributesTransfer $categoryLocalizedAttributesTransfer
-    ): CategoryLocalizedAttributesTransfer {
-        return $categoryLocalizedAttributesTransfer->fromArray($categoryAttributeEntity->toArray(), true);
-    }
 }

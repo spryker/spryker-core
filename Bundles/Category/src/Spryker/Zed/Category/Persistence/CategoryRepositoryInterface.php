@@ -133,12 +133,4 @@ interface CategoryRepositoryInterface
      * @return \Generated\Shared\Transfer\NodeTransfer|null
      */
     public function findCategoryNodeByIdCategoryNode(int $idCategoryNode): ?NodeTransfer;
-
-    /**
-     * @param int $idCategory
-     * @param int $idStore
-     *
-     * @return bool
-     */
-    public function isParentCategoryHasRelationToStore(int $idCategory, int $idStore): bool;
 }

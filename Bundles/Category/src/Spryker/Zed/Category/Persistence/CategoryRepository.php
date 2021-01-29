@@ -43,7 +43,6 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
 
     public const NODE_PATH_GLUE = '/';
     public const CATEGORY_NODE_PATH_GLUE = ' / ';
-    public const EXCLUDE_NODE_PATH_ROOT = true;
     public const NODE_PATH_NULL_DEPTH = null;
     public const NODE_PATH_ZERO_DEPTH = 0;
     public const IS_NOT_ROOT_NODE = 0;
@@ -575,28 +574,6 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
         return $this->getFactory()
             ->createCategoryNodeMapper()
             ->mapCategoryNode($categoryNodeEntity, new NodeTransfer());
-    }
-
-    /**
-     * @param int $idCategory
-     * @param int $idStore
-     *
-     * @return bool
-     */
-    public function isParentCategoryHasRelationToStore(int $idCategory, int $idStore): bool
-    {
-        return $this->getFactory()->createCategoryNodeQuery()
-            ->filterByFkCategory($idCategory)
-            ->useParentCategoryNodeQuery('parentCategory', Criteria::LEFT_JOIN)
-                ->useCategoryQuery(null, Criteria::LEFT_JOIN)
-                    ->useSpyCategoryStoreQuery(null, Criteria::LEFT_JOIN)
-                        ->filterByFkStore($idStore)
-                    ->endUse()
-                ->endUse()
-            ->endUse()
-            ->_or()
-            ->where(SpyCategoryNodeTableMap::COL_FK_PARENT_CATEGORY_NODE . ' IS NULL')
-            ->exists();
     }
 
     /**

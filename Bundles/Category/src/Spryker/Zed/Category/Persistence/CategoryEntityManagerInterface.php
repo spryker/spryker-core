@@ -135,12 +135,4 @@ interface CategoryEntityManagerInterface
      * @return void
      */
     public function deleteCategoryStoreRelationForStores(int $idCategory, array $storeIds): void;
-
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     * @param int[] $parentCategoryNodeIds
-     *
-     * @return void
-     */
-    public function deleteExtraCategoryNodesForCategory(CategoryTransfer $categoryTransfer, array $parentCategoryNodeIds): void;
 }
