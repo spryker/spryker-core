@@ -161,6 +161,8 @@ class CategoryNodePageSearchWriter implements CategoryNodePageSearchWriterInterf
                     $localeName,
                     $storeName
                 );
+
+                continue;
             }
 
             $this->storeDataSet($nodeTransfer, $storeName, $localeName);
