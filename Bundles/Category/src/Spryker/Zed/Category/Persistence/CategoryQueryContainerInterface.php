@@ -598,6 +598,8 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
      *
      * @api
      *
+     * @deprecated Will be removed with next major release.
+     *
      * @param int $idCategoryNode
      *
      * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
