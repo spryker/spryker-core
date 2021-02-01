@@ -10,6 +10,9 @@ namespace Spryker\Client\CategoryExporter;
 interface CategoryExporterClientInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $locale
@@ -19,6 +22,9 @@ interface CategoryExporterClientInterface
     public function getNavigationCategories($locale);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $categoryNode

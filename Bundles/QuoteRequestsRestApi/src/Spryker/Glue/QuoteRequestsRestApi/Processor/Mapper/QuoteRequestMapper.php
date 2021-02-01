@@ -48,11 +48,16 @@ class QuoteRequestMapper implements QuoteRequestMapperInterface
         QuoteRequestTransfer $quoteRequestTransfer,
         RestQuoteRequestsAttributesTransfer $restQuoteRequestsAttributesTransfer
     ): RestQuoteRequestsAttributesTransfer {
-        $quoteRequestVersionTransfer = $quoteRequestTransfer->getLatestVersionOrFail();
+        $quoteRequestVersionTransfer = $quoteRequestTransfer->getLatestVersion();
         $restQuoteRequestVersionTransfer = (new RestQuoteRequestVersionTransfer())
             ->fromArray($quoteRequestVersionTransfer->toArray(), true)
-            ->setMeta($quoteRequestVersionTransfer->getMetadata())
-            ->setCart($this->buildRestCartTransfer($quoteRequestVersionTransfer->getQuoteOrFail()));
+            ->setMeta($quoteRequestVersionTransfer->getMetadata());
+
+        if ($quoteRequestVersionTransfer->getQuote() !== null) {
+            $restQuoteRequestVersionTransfer->setCart(
+                $this->buildRestCartTransfer($quoteRequestVersionTransfer->getQuote())
+            );
+        }
 
         $restQuoteRequestsAttributesTransfer
             ->fromArray($quoteRequestTransfer->toArray(), true)
@@ -74,9 +79,9 @@ class QuoteRequestMapper implements QuoteRequestMapperInterface
             return $restCartTransfer;
         }
 
-        $restCartTransfer->setPriceMode($quoteTransfer->getPriceModeOrFail());
-        $restCartTransfer->setCurrency($quoteTransfer->getCurrencyOrFail()->getCodeOrFail());
-        $restCartTransfer->setStore($quoteTransfer->getStoreOrFail()->getNameOrFail());
+        $restCartTransfer->setPriceMode($quoteTransfer->getPriceMode());
+        $restCartTransfer->setCurrency($quoteTransfer->getCurrency()->getCode());
+        $restCartTransfer->setStore($quoteTransfer->getStore()->getName());
         $restCartTransfer = $this->setBillingAddressToRestCartTransfer(
             $quoteTransfer,
             $restCartTransfer
@@ -130,8 +135,8 @@ class QuoteRequestMapper implements QuoteRequestMapperInterface
     ): RestQuoteRequestsCartTransfer {
         if ($quoteTransfer->getTotals() !== null) {
             $restTotalsTransfer = (new RestQuoteRequestsTotalsTransfer())
-                ->fromArray($quoteTransfer->getTotalsOrFail()->toArray(), true)
-                ->setTaxTotal($quoteTransfer->getTotalsOrFail()->getTaxTotalOrFail()->getAmountOrFail());
+                ->fromArray($quoteTransfer->getTotals()->toArray(), true)
+                ->setTaxTotal($quoteTransfer->getTotals()->getTaxTotal()->getAmount());
 
             $restCartTransfer->setTotals($restTotalsTransfer);
         }
@@ -203,8 +208,8 @@ class QuoteRequestMapper implements QuoteRequestMapperInterface
         $shipmentGroupTransfers = $this->shipmentService->groupItemsByShipment($quoteTransfer->getItems());
 
         foreach ($shipmentGroupTransfers as $shipmentGroupTransfer) {
-            $shipmentTransfer = $shipmentGroupTransfer->getShipmentOrFail();
-            $shipmentAddress = $shipmentTransfer->getShippingAddressOrFail();
+            $shipmentTransfer = $shipmentGroupTransfer->getShipment();
+            $shipmentAddress = $shipmentTransfer->getShippingAddress();
 
             $restAddressTransfer = (new RestQuoteRequestsAddressTransfer())
                 ->fromArray($shipmentAddress->toArray(), true);
@@ -228,7 +233,7 @@ class QuoteRequestMapper implements QuoteRequestMapperInterface
             if ($shipmentTransfer->getMethod() !== null) {
                 $restShipmentTransfer->setMethod(
                     (new RestQuoteRequestShipmentMethodTransfer())
-                        ->fromArray($shipmentTransfer->getMethodOrFail()->toArray(), true)
+                        ->fromArray($shipmentTransfer->getMethod()->toArray(), true)
                         ->setPrice($shipmentTransfer->getMethod()->getStoreCurrencyPrice())
                 );
             }

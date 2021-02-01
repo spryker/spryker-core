@@ -12,6 +12,9 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 interface CustomerApiQueryContainerInterface extends QueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery
@@ -19,6 +22,9 @@ interface CustomerApiQueryContainerInterface extends QueryContainerInterface
     public function queryFind();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idCustomer
@@ -28,6 +34,9 @@ interface CustomerApiQueryContainerInterface extends QueryContainerInterface
     public function queryGet($idCustomer);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idCustomer
