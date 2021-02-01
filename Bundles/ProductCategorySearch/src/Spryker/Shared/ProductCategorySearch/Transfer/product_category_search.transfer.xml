@@ -29,4 +29,7 @@
     <transfer name="PageMap">
     </transfer>
 
+    <transfer name="Store">
+    </transfer>
+
 </transfers>

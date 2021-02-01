@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductCategorySearch\Persistence;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 
 interface ProductCategorySearchRepositoryInterface
 {
@@ -20,10 +21,11 @@ interface ProductCategorySearchRepositoryInterface
 
     /**
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return int[]
      */
-    public function getCategoryNodeIdsByLocale(LocaleTransfer $localeTransfer): array;
+    public function getCategoryNodeIdsByLocaleAndStore(LocaleTransfer $localeTransfer, StoreTransfer $storeTransfer): array;
 
     /**
      * @return array
