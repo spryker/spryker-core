@@ -19,7 +19,7 @@ class ProductViewOfferAvailabilityExpanderPlugin extends AbstractPlugin implemen
 {
     /**
      * {@inheritDoc}
-     * - Expands the ProductView transfer object with the available.
+     * - Expands the ProductView transfer object with the available ones.
      * - Checks if product offer exists by provided ProductStorageCriteria.product_offer_reference transfer property.
      *
      * @api
@@ -36,7 +36,7 @@ class ProductViewOfferAvailabilityExpanderPlugin extends AbstractPlugin implemen
     public function expandProductViewTransfer(
         ProductViewTransfer $productViewTransfer,
         array $productData,
-        $localeName,
+        string $localeName,
         ?ProductStorageCriteriaTransfer $productStorageCriteriaTransfer = null
     ): ProductViewTransfer {
         return $this->getFactory()
