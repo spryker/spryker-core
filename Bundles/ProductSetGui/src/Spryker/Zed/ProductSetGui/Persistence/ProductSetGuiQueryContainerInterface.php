@@ -12,6 +12,9 @@ use Generated\Shared\Transfer\LocaleTransfer;
 interface ProductSetGuiQueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
@@ -21,6 +24,9 @@ interface ProductSetGuiQueryContainerInterface
     public function queryProductSet(LocaleTransfer $localeTransfer);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
@@ -30,6 +36,9 @@ interface ProductSetGuiQueryContainerInterface
     public function queryProductAbstract(LocaleTransfer $localeTransfer);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProductSet
@@ -40,6 +49,9 @@ interface ProductSetGuiQueryContainerInterface
     public function queryProductAbstractForAssignment($idProductSet, LocaleTransfer $localeTransfer);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProductSet
@@ -50,6 +62,9 @@ interface ProductSetGuiQueryContainerInterface
     public function queryProductAbstractByIdProductSet($idProductSet, LocaleTransfer $localeTransfer);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\ProductSet\Persistence\SpyProductSetQuery
@@ -57,6 +72,9 @@ interface ProductSetGuiQueryContainerInterface
     public function queryProductSetWeights();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $productSetKey

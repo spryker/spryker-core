@@ -158,8 +158,8 @@ class QuoteRequestsRestResponseBuilder implements QuoteRequestsRestResponseBuild
         $totalItems = 0;
         $limit = 0;
         if ($quoteRequestCollectionTransfer->getPagination()) {
-            $totalItems = $quoteRequestCollectionTransfer->getPagination()->getNbResultsOrFail();
-            $limit = $quoteRequestCollectionTransfer->getPagination()->getMaxPerPageOrFail();
+            $totalItems = $quoteRequestCollectionTransfer->getPagination()->getNbResults() ?? 0;
+            $limit = $quoteRequestCollectionTransfer->getPagination()->getMaxPerPage() ?? 0;
         }
 
         $restResponse = $this->restResourceBuilder->createRestResponse($totalItems, $limit);

@@ -67,25 +67,28 @@ class QuoteRequestCreator implements QuoteRequestCreatorInterface
     {
         $quoteResponseTransfer = $this->getQuote($restRequest);
 
-        if (!$quoteResponseTransfer->getIsSuccessful()) {
+        if (!$quoteResponseTransfer->getIsSuccessful() || $quoteResponseTransfer->getQuoteTransfer() === null) {
             return $this->quoteRequestsRestResponseBuilder->createCartNotFoundErrorResponse();
         }
-        if (!$quoteResponseTransfer->getQuoteTransferOrFail()->getItems()->count()) {
+
+        if (!$quoteResponseTransfer->getQuoteTransfer()->getItems()->count()) {
             return $this->quoteRequestsRestResponseBuilder->createCartIsEmptyErrorResponse();
         }
 
         $quoteRequestTransfer = $this->quoteRequestsRequestMapper
-            ->mapRestRequestToQuoteRequestTransfer($restRequest, $quoteResponseTransfer->getQuoteTransferOrFail());
+            ->mapRestRequestToQuoteRequestTransfer($restRequest, $quoteResponseTransfer->getQuoteTransfer());
 
         $quoteRequestResponseTransfer = $this->quoteRequestClient->createQuoteRequest($quoteRequestTransfer);
 
-        if (!$quoteRequestResponseTransfer->getIsSuccessfulOrFail()) {
+        if (
+            !$quoteRequestResponseTransfer->getIsSuccessful()
+            || $quoteRequestResponseTransfer->getQuoteRequest() === null
+        ) {
             return $this->quoteRequestsRestResponseBuilder->createFailedErrorResponse($quoteRequestResponseTransfer->getMessages());
         }
 
-        $quoteRequestTransfer = $quoteRequestResponseTransfer->getQuoteRequestOrFail();
-
-        return $this->quoteRequestsRestResponseBuilder->createQuoteRequestRestResponse($quoteRequestTransfer);
+        return $this->quoteRequestsRestResponseBuilder
+            ->createQuoteRequestRestResponse($quoteRequestResponseTransfer->getQuoteRequest());
     }
 
     /**
@@ -99,16 +102,16 @@ class QuoteRequestCreator implements QuoteRequestCreatorInterface
         $restQuoteRequestsRequestAttributesTransfer = $restRequest->getResource()->getAttributes();
 
         $companyUserTransfer = (new CompanyUserTransfer())
-            ->setIdCompanyUser($restRequest->getRestUser()->getIdCompanyUserOrFail());
+            ->setIdCompanyUser($restRequest->getRestUser()->getIdCompanyUser());
 
         $customerTransfer = (new CustomerTransfer())
-            ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifierOrFail())
-            ->setIdCustomer($restRequest->getRestUser()->getSurrogateIdentifierOrFail())
+            ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier())
+            ->setIdCustomer($restRequest->getRestUser()->getSurrogateIdentifier())
             ->setCompanyUserTransfer($companyUserTransfer);
 
         $quoteTransfer = (new QuoteTransfer())
-            ->setUuid($restQuoteRequestsRequestAttributesTransfer->getCartUuidOrFail())
-            ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifierOrFail())
+            ->setUuid($restQuoteRequestsRequestAttributesTransfer->getCartUuid())
+            ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier())
             ->setCustomer($customerTransfer);
 
         return $this->cartsRestApiClient->findQuoteByUuid($quoteTransfer);

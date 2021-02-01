@@ -34,7 +34,7 @@ class RedisClientTester extends Actor
 {
     use _generated\RedisClientTesterActions;
 
-    public const DEFAULT_REDIS_PROTOCOL = 'redis';
+    public const DEFAULT_REDIS_SCHEME = 'redis';
     public const DEFAULT_REDIS_HOST = 'localhost';
     public const DEFAULT_REDIS_PORT = 6379;
     public const DEFAULT_REDIS_DATABASE = 1;
@@ -45,7 +45,7 @@ class RedisClientTester extends Actor
     protected $redisToUtilEncodingServiceBridge;
 
     /**
-     * @param string $protocol
+     * @param string $scheme
      * @param string $host
      * @param int $port
      * @param string $database
@@ -53,13 +53,13 @@ class RedisClientTester extends Actor
      * @return \Spryker\Shared\Redis\Logger\RedisInMemoryLogger
      */
     public function createRedisInMemoryLogger(
-        string $protocol = self::DEFAULT_REDIS_PROTOCOL,
+        string $scheme = self::DEFAULT_REDIS_SCHEME,
         string $host = self::DEFAULT_REDIS_HOST,
         int $port = self::DEFAULT_REDIS_PORT,
         string $database = self::DEFAULT_REDIS_DATABASE
     ): RedisInMemoryLogger {
         $connectionCredentials = (new RedisCredentialsTransfer())
-            ->setProtocol($protocol)
+            ->setScheme($scheme)
             ->setHost($host)
             ->setPort($port)
             ->setDatabase($database);
