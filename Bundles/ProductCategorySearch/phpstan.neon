@@ -1,3 +1,5 @@
 parameters:
     checkMissingIterableValueType: false
     checkGenericClassInNonGenericObjectType: false
+    ignoreErrors:
+        - '#Call to an undefined method Orm\\Zed\\Category\\Persistence\\SpyCategoryQuery\|Orm\\Zed\\Locale\\Persistence\\SpyLocaleQuery::useSpyCategoryStoreQuery\(\)#'

@@ -8,15 +8,17 @@
 namespace Spryker\Zed\ProductCategorySearch\Business\Builder;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 
 interface ProductCategoryTreeBuilderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return int[][]
      */
-    public function buildProductCategoryTree(LocaleTransfer $localeTransfer): array;
+    public function buildProductCategoryTree(LocaleTransfer $localeTransfer, StoreTransfer $storeTransfer): array;
 
     /**
      * @param int[] $categoryIds

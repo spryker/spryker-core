@@ -8,10 +8,12 @@
 namespace Spryker\Zed\ProductCategorySearch\Persistence;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryClosureTableTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryTableMap;
+use Orm\Zed\Store\Persistence\Map\SpyStoreTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\PropelOrm\Business\Model\Formatter\PropelArraySetFormatter;
@@ -28,6 +30,7 @@ class ProductCategorySearchRepository extends AbstractRepository implements Prod
     protected const COLUMN_NAME = 'name';
     protected const COLUMN_CATEGORY_KEY = 'category_key';
     protected const COLUMN_FK_LOCALE = 'fk_locale';
+    protected const COLUMN_STORE_NAME = 'store_name';
 
     /**
      * @module Category
@@ -63,16 +66,22 @@ class ProductCategorySearchRepository extends AbstractRepository implements Prod
 
     /**
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return int[]
      */
-    public function getCategoryNodeIdsByLocale(LocaleTransfer $localeTransfer): array
+    public function getCategoryNodeIdsByLocaleAndStore(LocaleTransfer $localeTransfer, StoreTransfer $storeTransfer): array
     {
         return $this->getFactory()
             ->getCategoryNodePropelQuery()
             ->useCategoryQuery()
                 ->useAttributeQuery()
                     ->filterByFkLocale($localeTransfer->getIdLocale())
+                ->endUse()
+                ->useSpyCategoryStoreQuery()
+                    ->useSpyStoreQuery()
+                        ->filterByName($storeTransfer->getNameOrFail())
+                    ->endUse()
                 ->endUse()
             ->endUse()
             ->withColumn(SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE, static::COLUMN_ID_CATEGORY_NODE)
@@ -97,7 +106,9 @@ class ProductCategorySearchRepository extends AbstractRepository implements Prod
                 ->filterByDepth(null, Criteria::NOT_EQUAL)
             ->endUse()
             ->useCategoryQuery()
-                ->useAttributeQuery()
+                ->leftJoinWithAttribute()
+                ->useSpyCategoryStoreQuery(null, Criteria::LEFT_JOIN)
+                    ->leftJoinWithSpyStore()
                 ->endUse()
             ->endUse();
 
@@ -107,7 +118,8 @@ class ProductCategorySearchRepository extends AbstractRepository implements Prod
             ->withColumn(SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE_DESCENDANT, static::COLUMN_FK_CATEGORY_NODE_DESCENDANT)
             ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, static::COLUMN_NAME)
             ->withColumn(SpyCategoryTableMap::COL_CATEGORY_KEY, static::COLUMN_CATEGORY_KEY)
-            ->withColumn(SpyCategoryAttributeTableMap::COL_FK_LOCALE, static::COLUMN_FK_LOCALE);
+            ->withColumn(SpyCategoryAttributeTableMap::COL_FK_LOCALE, static::COLUMN_FK_LOCALE)
+            ->withColumn(SpyStoreTableMap::COL_NAME, static::COLUMN_STORE_NAME);
 
         /** @var array $categoryNodes */
         $categoryNodes = $categoryNodeQuery

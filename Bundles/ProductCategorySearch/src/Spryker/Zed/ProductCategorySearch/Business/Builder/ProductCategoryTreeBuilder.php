@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductCategorySearch\Business\Builder;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\ProductCategorySearch\Persistence\ProductCategorySearchRepositoryInterface;
 
 class ProductCategoryTreeBuilder implements ProductCategoryTreeBuilderInterface
@@ -17,6 +18,7 @@ class ProductCategoryTreeBuilder implements ProductCategoryTreeBuilderInterface
     protected const COLUMN_FK_LOCALE = 'fk_locale';
     protected const COLUMN_FK_CATEGORY = 'fk_category';
     protected const COLUMN_CATEGORY_NAME = 'category_name';
+    protected const COLUMN_STORE_NAME = 'store_name';
 
     /**
      * @var \Spryker\Zed\ProductCategorySearch\Persistence\ProductCategorySearchRepositoryInterface
@@ -33,22 +35,23 @@ class ProductCategoryTreeBuilder implements ProductCategoryTreeBuilderInterface
 
     /**
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return int[][]
      */
-    public function buildProductCategoryTree(LocaleTransfer $localeTransfer): array
+    public function buildProductCategoryTree(LocaleTransfer $localeTransfer, StoreTransfer $storeTransfer): array
     {
         $categoryTree = [];
 
-        $categoryNodeIds = $this->productCategorySearchRepository->getCategoryNodeIdsByLocale($localeTransfer);
+        $categoryNodeIds = $this->productCategorySearchRepository->getCategoryNodeIdsByLocaleAndStore($localeTransfer, $storeTransfer);
         $categoryNodes = $this->productCategorySearchRepository->getAllCategoriesWithAttributesAndOrderByDescendant();
-        $formattedCategoriesByLocaleAndNodeIds = $this->formatCategoriesWithLocaleAndNodIds($categoryNodes);
+        $formattedCategoriesByLocaleAndStoreAndNodeIds = $this->formatCategoriesWithLocaleAndStoreAndNodIds($categoryNodes);
 
         foreach ($categoryNodeIds as $idCategoryNode) {
-            $categoryTree = $this->buildProductCategoryTreeByIdCategoryNode(
+            $categoryTree = $this->buildProductCategoryTreeByIdCategoryNodeForStoreAndLocale(
                 $categoryTree,
                 $idCategoryNode,
-                $formattedCategoriesByLocaleAndNodeIds[$localeTransfer->getIdLocale()][$idCategoryNode] ?? []
+                $formattedCategoriesByLocaleAndStoreAndNodeIds[$storeTransfer->getName()][$localeTransfer->getIdLocale()][$idCategoryNode] ?? []
             );
         }
 
@@ -86,7 +89,7 @@ class ProductCategoryTreeBuilder implements ProductCategoryTreeBuilderInterface
      *
      * @return int[][]
      */
-    protected function buildProductCategoryTreeByIdCategoryNode(
+    protected function buildProductCategoryTreeByIdCategoryNodeForStoreAndLocale(
         array $categoryTree,
         int $idCategoryNode,
         array $categories
@@ -109,12 +112,12 @@ class ProductCategoryTreeBuilder implements ProductCategoryTreeBuilderInterface
      *
      * @return array
      */
-    protected function formatCategoriesWithLocaleAndNodIds(array $categoryNodes): array
+    protected function formatCategoriesWithLocaleAndStoreAndNodIds(array $categoryNodes): array
     {
         $categories = [];
 
         foreach ($categoryNodes as $categoryNode) {
-            $categories[$categoryNode[static::COLUMN_FK_LOCALE]][$categoryNode[static::COLUMN_FK_CATEGORY_NODE_DESCENDANT]][] = $categoryNode;
+            $categories[$categoryNode[static::COLUMN_STORE_NAME]][$categoryNode[static::COLUMN_FK_LOCALE]][$categoryNode[static::COLUMN_FK_CATEGORY_NODE_DESCENDANT]][] = $categoryNode;
         }
 
         return $categories;
