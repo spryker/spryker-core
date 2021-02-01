@@ -290,6 +290,7 @@ class ProductPageDataExpander implements ProductPageDataExpanderInterface
     {
         $storeName = $storeTransfer->getNameOrFail();
         $idLocale = $localeTransfer->getIdLocaleOrFail();
+
         if (!isset(static::$categoryTreeIds[$storeName][$idLocale])) {
             static::$categoryTreeIds[$storeName][$idLocale] = $this->productCategoryTreeBuilder->buildProductCategoryTree(
                 $localeTransfer,

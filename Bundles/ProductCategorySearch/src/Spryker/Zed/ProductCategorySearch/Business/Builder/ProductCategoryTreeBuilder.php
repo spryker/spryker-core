@@ -45,7 +45,7 @@ class ProductCategoryTreeBuilder implements ProductCategoryTreeBuilderInterface
 
         $categoryNodeIds = $this->productCategorySearchRepository->getCategoryNodeIdsByLocaleAndStore($localeTransfer, $storeTransfer);
         $categoryNodes = $this->productCategorySearchRepository->getAllCategoriesWithAttributesAndOrderByDescendant();
-        $formattedCategoriesByLocaleAndStoreAndNodeIds = $this->formatCategoriesWithLocaleAndStoreAndNodIds($categoryNodes);
+        $formattedCategoriesByLocaleAndStoreAndNodeIds = $this->formatCategoriesByNodeIdsForLocaleAndStore($categoryNodes);
 
         foreach ($categoryNodeIds as $idCategoryNode) {
             $categoryTree = $this->buildProductCategoryTreeByIdCategoryNodeForStoreAndLocale(
@@ -112,7 +112,7 @@ class ProductCategoryTreeBuilder implements ProductCategoryTreeBuilderInterface
      *
      * @return array
      */
-    protected function formatCategoriesWithLocaleAndStoreAndNodIds(array $categoryNodes): array
+    protected function formatCategoriesByNodeIdsForLocaleAndStore(array $categoryNodes): array
     {
         $categories = [];
 
