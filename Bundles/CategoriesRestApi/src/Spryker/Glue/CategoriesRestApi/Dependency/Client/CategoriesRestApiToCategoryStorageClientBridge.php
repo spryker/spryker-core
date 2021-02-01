@@ -36,11 +36,11 @@ class CategoriesRestApiToCategoryStorageClientBridge implements CategoriesRestAp
     /**
      * @param int $idCategoryNode
      * @param string $localeName
-     * @param string|null $storeName
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer
      */
-    public function getCategoryNodeById($idCategoryNode, $localeName, ?string $storeName = null)
+    public function getCategoryNodeById($idCategoryNode, $localeName, string $storeName)
     {
         return $this->categoryStorageClient->getCategoryNodeById($idCategoryNode, $localeName, $storeName);
     }
@@ -48,11 +48,11 @@ class CategoriesRestApiToCategoryStorageClientBridge implements CategoriesRestAp
     /**
      * @param int[] $categoryNodeIds
      * @param string $localeName
-     * @param string|null $storeName
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[]
      */
-    public function getCategoryNodeByIds(array $categoryNodeIds, string $localeName, ?string $storeName = null): array
+    public function getCategoryNodeByIds(array $categoryNodeIds, string $localeName, string $storeName): array
     {
         return $this->categoryStorageClient->getCategoryNodeByIds($categoryNodeIds, $localeName, $storeName);
     }

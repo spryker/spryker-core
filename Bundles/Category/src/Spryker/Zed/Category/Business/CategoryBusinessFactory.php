@@ -251,7 +251,6 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     public function createCategoryTreeReader(): CategoryTreeReader
     {
         return new CategoryTreeReader(
-            $this->getQueryContainer(),
             $this->getRepository()
         );
     }

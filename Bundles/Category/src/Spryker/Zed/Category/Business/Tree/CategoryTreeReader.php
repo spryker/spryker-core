@@ -11,30 +11,20 @@ use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\NodeCollectionTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
-use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use Spryker\Zed\Category\Persistence\CategoryRepositoryInterface;
 
 class CategoryTreeReader implements CategoryTreeReaderInterface
 {
-    /**
-     * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
-     */
-    protected $categoryQueryContainer;
-
     /**
      * @var \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface
      */
     protected $categoryRepository;
 
     /**
-     * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $categoryQueryContainer
      * @param \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface $categoryRepository
      */
-    public function __construct(
-        CategoryQueryContainerInterface $categoryQueryContainer,
-        CategoryRepositoryInterface $categoryRepository
-    ) {
-        $this->categoryQueryContainer = $categoryQueryContainer;
+    public function __construct(CategoryRepositoryInterface $categoryRepository)
+    {
         $this->categoryRepository = $categoryRepository;
     }
 

@@ -16,6 +16,7 @@
     "spryker/synchronization": "^1.0.0",
     "spryker/synchronization-behavior": "^1.0.0",
     "spryker/synchronization-extension": "^1.0.0",
+    "spryker/transfer": "^3.25.0",
     "spryker/util-sanitize": "^2.1.0"
   },
   "require-dev": {

@@ -26,7 +26,8 @@ interface ProductCategoryStorageQueryContainerInterface extends QueryContainerIn
 
     /**
      * Specification:
-     * - TODO: Add method specification.
+     * - Creates product abstract category storage query.
+     * - Filters query on the `fk_product_abstract` column.
      *
      * @api
      *
@@ -38,7 +39,8 @@ interface ProductCategoryStorageQueryContainerInterface extends QueryContainerIn
 
     /**
      * Specification:
-     * - TODO: Add method specification.
+     * - Creates product category query.
+     * - Filters query on the `fk_category` column.
      *
      * @api
      *
@@ -50,7 +52,9 @@ interface ProductCategoryStorageQueryContainerInterface extends QueryContainerIn
 
     /**
      * Specification:
-     * - TODO: Add method specification.
+     * - Creates category node query.
+     * - Finds all category node entities sorted by node order.
+     * - Filters query on the `id_category_node` column.
      *
      * @api
      *

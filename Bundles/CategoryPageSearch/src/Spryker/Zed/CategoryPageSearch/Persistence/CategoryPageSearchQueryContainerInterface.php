@@ -14,7 +14,9 @@ interface CategoryPageSearchQueryContainerInterface extends QueryContainerInterf
 {
     /**
      * Specification:
-     * - TODO: Add method specification.
+     * - Creates category node query.
+     * - Finds all category node entities sorted by node order.
+     * - Filters query on the `fk_category` column.
      *
      * @api
      *
@@ -28,7 +30,8 @@ interface CategoryPageSearchQueryContainerInterface extends QueryContainerInterf
 
     /**
      * Specification:
-     * - TODO: Add method specification.
+     * - Creates category node page query.
+     * - Filters query on the `fk_category_node` column.
      *
      * @api
      *
@@ -40,7 +43,9 @@ interface CategoryPageSearchQueryContainerInterface extends QueryContainerInterf
 
     /**
      * Specification:
-     * - TODO: Add method specification.
+     * - Creates category node query.
+     * - Finds all category node entities sorted by node order.
+     * - Filters query on the `fk_category_template` column.
      *
      * @api
      *
@@ -52,7 +57,9 @@ interface CategoryPageSearchQueryContainerInterface extends QueryContainerInterf
 
     /**
      * Specification:
-     * - TODO: Add method specification.
+     * - Creates category node query.
+     * - Finds all category node entities sorted by node order.
+     * - Filters query on the `id_category_node` column.
      *
      * @api
      *

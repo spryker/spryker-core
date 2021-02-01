@@ -58,7 +58,7 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
 
     /**
      * Specification:
-     * - Creates category attribute query with virtual columns.
+     * - Creates category attribute query for root nodes with virtual columns.
      *
      * @api
      *
