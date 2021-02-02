@@ -331,9 +331,13 @@ class ReservationReader implements ReservationReaderInterface
             return false;
         }
 
-        $groupedStateProcessNames = $this->activeProcessFetcher->getReservedStateNamesWithMainActiveProcessNames();
-        $stateProcessNames = $groupedStateProcessNames[$stateName] ?? [];
+        if ($omsStateTransfer->getProcesses()->offsetExists($processName)) {
+            return true;
+        }
 
-        return $omsStateTransfer->getProcesses()->offsetExists($processName) || in_array($processName, $stateProcessNames, true);
+        $reservedStateNames = $this->activeProcessFetcher
+            ->getReservedStateNamesForActiveProcessByProcessName($processName);
+
+        return in_array($stateName, $reservedStateNames, true);
     }
 }

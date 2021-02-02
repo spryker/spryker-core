@@ -71,51 +71,49 @@ class ActiveProcessFetcher implements ActiveProcessFetcherInterface
     }
 
     /**
-     * @return string[][]
+     * @param string $processName
+     *
+     * @return string[]
      */
-    public function getReservedStateNamesWithMainActiveProcessNames(): array
+    public function getReservedStateNamesForActiveProcessByProcessName(string $processName): array
     {
-        if (!static::$reservedStateProcessNamesCache) {
-            static::$reservedStateProcessNamesCache = $this->retrieveReservedStateNamesWithActiveMainProcessNames();
-        }
-
-        return static::$reservedStateProcessNamesCache;
-    }
-
-    /**
-     * @return string[][]
-     */
-    protected function retrieveReservedStateNamesWithActiveMainProcessNames(): array
-    {
-        $reservedStateProcessNames = [];
-        foreach ($this->activeProcesses as $processName) {
-            $builder = clone $this->builder;
-            $process = $builder->createProcess($processName);
-            $reservedStateProcessNames = $this->prepareStateMainProcessNames(
-                $process->getAllReservedStates(),
-                $reservedStateProcessNames,
+        if (!isset(static::$reservedStateProcessNamesCache[$processName])) {
+            static::$reservedStateProcessNamesCache[$processName] = $this->retrieveReservedStateNamesForActiveProcessByProcessName(
                 $processName
             );
         }
 
-        return $reservedStateProcessNames;
+        return static::$reservedStateProcessNamesCache[$processName];
+    }
+
+    /**
+     * @param string $processName
+     *
+     * @return string[]
+     */
+    protected function retrieveReservedStateNamesForActiveProcessByProcessName(string $processName): array
+    {
+        if (!in_array($processName, $this->activeProcesses->getArrayCopy(), true)) {
+            return [];
+        }
+
+        $builder = clone $this->builder;
+        $process = $builder->createProcess($processName);
+
+        return $this->getReservedStateNames($process->getAllReservedStates());
     }
 
     /**
      * @param \Spryker\Zed\Oms\Business\Process\StateInterface[] $processReservedStates
-     * @param string[][] $reservedStateProcessNames
-     * @param string $processName
      *
-     * @return string[][]
+     * @return string[]
      */
-    protected function prepareStateMainProcessNames(
-        array $processReservedStates,
-        array $reservedStateProcessNames,
-        string $processName
-    ): array {
+    protected function getReservedStateNames(array $processReservedStates): array
+    {
+        $reservedStateProcessNames = [];
+
         foreach ($processReservedStates as $reservedState) {
-            $stateProcesses = $reservedStateProcessNames[$reservedState->getName()] ?? [];
-            $reservedStateProcessNames[$reservedState->getName()] = array_merge($stateProcesses, [$processName]);
+            $reservedStateProcessNames[] = $reservedState->getName();
         }
 
         return $reservedStateProcessNames;

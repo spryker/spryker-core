@@ -15,7 +15,9 @@ interface ActiveProcessFetcherInterface
     public function getReservedStatesFromAllActiveProcesses(): array;
 
     /**
-     * @return string[][]
+     * @param string $processName
+     *
+     * @return string[]
      */
-    public function getReservedStateNamesWithMainActiveProcessNames(): array;
+    public function getReservedStateNamesForActiveProcessByProcessName(string $processName): array;
 }
