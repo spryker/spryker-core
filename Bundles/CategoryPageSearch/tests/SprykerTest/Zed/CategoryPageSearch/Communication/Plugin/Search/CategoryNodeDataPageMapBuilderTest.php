@@ -71,6 +71,7 @@ class CategoryNodeDataPageMapBuilderTest extends Unit
             ->where(SpyCategoryTableMap::COL_IS_ACTIVE . ' = ?', true)
             ->where(SpyCategoryTableMap::COL_IS_IN_MENU . ' = ?', true)
             ->orderByIdCategoryNode()
-            ->findOne();
+            ->find()
+            ->getFirst();
     }
 }

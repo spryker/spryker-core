@@ -61,9 +61,9 @@ class CategoryFilterOptionsProvider implements CategoryFilterOptionsProviderInte
         $categoryOptionTree = [];
         foreach ($this->getCategoryChildNodeCollection($categoryTransfer)->getNodes() as $nodeTransfer) {
             $categoryOptionTree[] = (new OptionSelectGuiTableFilterTypeOptionsTransfer())
-                ->setValue($nodeTransfer->getIdCategoryNode())
-                ->setTitle($nodeTransfer->getCategory()->getLocalizedAttributes()->offsetGet(0)->getName())
-                ->setChildren(new ArrayObject($this->getCategoryChildren($nodeTransfer->getChildrenNodes())));
+                ->setValue((string)$nodeTransfer->getIdCategoryNode())
+                ->setTitle($nodeTransfer->getCategoryOrFail()->getLocalizedAttributes()->offsetGet(0)->getName())
+                ->setChildren(new ArrayObject($this->getCategoryChildren($nodeTransfer->getChildrenNodesOrFail())));
         }
 
         return $categoryOptionTree;
@@ -79,9 +79,9 @@ class CategoryFilterOptionsProvider implements CategoryFilterOptionsProviderInte
         $categoryOptionTree = [];
         foreach ($nodeCollectionTransfer->getNodes() as $nodeTransfer) {
             $categoryOptionTree[] = (new OptionSelectGuiTableFilterTypeOptionsTransfer())
-                ->setValue($nodeTransfer->getIdCategoryNode())
-                ->setTitle($nodeTransfer->getCategory()->getLocalizedAttributes()->offsetGet(0)->getName())
-                ->setChildren(new ArrayObject($this->getCategoryChildren($nodeTransfer->getChildrenNodes())));
+                ->setValue((string)$nodeTransfer->getIdCategoryNode())
+                ->setTitle($nodeTransfer->getCategoryOrFail()->getLocalizedAttributes()->offsetGet(0)->getName())
+                ->setChildren(new ArrayObject($this->getCategoryChildren($nodeTransfer->getChildrenNodesOrFail())));
         }
 
         return $categoryOptionTree;
@@ -103,9 +103,9 @@ class CategoryFilterOptionsProvider implements CategoryFilterOptionsProviderInte
     }
 
     /**
-     * @return \Generated\Shared\Transfer\CategoryTransfer
+     * @return \Generated\Shared\Transfer\CategoryTransfer|null
      */
-    protected function findCategory(): CategoryTransfer
+    protected function findCategory(): ?CategoryTransfer
     {
         $categoryCriteriaTransfer = (new CategoryCriteriaTransfer())
             ->setIdCategory($this->productMerchantPortalGuiConfig->getMainCategoryIdForCategoryFilter())

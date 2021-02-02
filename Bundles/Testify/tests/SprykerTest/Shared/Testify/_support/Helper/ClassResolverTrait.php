@@ -69,12 +69,22 @@ trait ClassResolverTrait
         $namespaceParts = explode('\\', $config['namespace']);
 
         $classNameCandidates = [];
-        $classNameCandidates[] = sprintf($classNamePattern, rtrim($namespaceParts[0], 'Test'), $namespaceParts[1], $moduleName);
+        $classNameCandidates[] = sprintf($classNamePattern, $this->trimTestNamespacePostfix($namespaceParts[0]), $namespaceParts[1], $moduleName);
 
         foreach ($this->coreNamespaces as $coreNamespace) {
             $classNameCandidates[] = sprintf($classNamePattern, $coreNamespace, $namespaceParts[1], $moduleName);
         }
 
         return $classNameCandidates;
+    }
+
+    /**
+     * @param string $namespacePart
+     *
+     * @return string
+     */
+    protected function trimTestNamespacePostfix(string $namespacePart): string
+    {
+        return preg_replace('/Test$/', '', $namespacePart);
     }
 }

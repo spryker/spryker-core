@@ -152,11 +152,22 @@ class SessionRedisConfig extends AbstractBundleConfig
     protected function getZedConnectionCredentials(): RedisCredentialsTransfer
     {
         return (new RedisCredentialsTransfer())
-            ->setProtocol($this->get(SessionRedisConstants::ZED_SESSION_REDIS_PROTOCOL))
+            ->setScheme($this->getZedScheme())
             ->setHost($this->get(SessionRedisConstants::ZED_SESSION_REDIS_HOST))
             ->setPort($this->get(SessionRedisConstants::ZED_SESSION_REDIS_PORT))
             ->setDatabase($this->get(SessionRedisConstants::ZED_SESSION_REDIS_DATABASE))
             ->setPassword($this->get(SessionRedisConstants::ZED_SESSION_REDIS_PASSWORD, false));
+    }
+
+    /**
+     * @deprecated Use $this->get(SessionRedisConstants::ZED_SESSION_REDIS_SCHEME) instead. Added for BC reason only.
+     *
+     * @return string
+     */
+    protected function getZedScheme(): string
+    {
+        return $this->get(SessionRedisConstants::ZED_SESSION_REDIS_SCHEME, false) ?:
+            $this->get(SessionRedisConstants::ZED_SESSION_REDIS_PROTOCOL);
     }
 
     /**
@@ -181,11 +192,22 @@ class SessionRedisConfig extends AbstractBundleConfig
     protected function getYvesConnectionCredentials(): RedisCredentialsTransfer
     {
         return (new RedisCredentialsTransfer())
-            ->setProtocol($this->get(SessionRedisConstants::YVES_SESSION_REDIS_PROTOCOL))
+            ->setScheme($this->getYvesScheme())
             ->setHost($this->get(SessionRedisConstants::YVES_SESSION_REDIS_HOST))
             ->setPort($this->get(SessionRedisConstants::YVES_SESSION_REDIS_PORT))
             ->setDatabase($this->get(SessionRedisConstants::YVES_SESSION_REDIS_DATABASE))
             ->setPassword($this->get(SessionRedisConstants::YVES_SESSION_REDIS_PASSWORD, false));
+    }
+
+    /**
+     * @deprecated Use $this->get(SessionRedisConstants::YVES_SESSION_REDIS_SCHEME) instead. Added for BC reason only.
+     *
+     * @return string
+     */
+    protected function getYvesScheme(): string
+    {
+        return $this->get(SessionRedisConstants::YVES_SESSION_REDIS_SCHEME, false) ?:
+            $this->get(SessionRedisConstants::YVES_SESSION_REDIS_PROTOCOL);
     }
 
     /**

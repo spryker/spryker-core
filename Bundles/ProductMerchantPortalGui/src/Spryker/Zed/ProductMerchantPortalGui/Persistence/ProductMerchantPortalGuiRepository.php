@@ -94,7 +94,7 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
         MerchantProductTableCriteriaTransfer $merchantProductTableCriteriaTransfer
     ): SpyMerchantProductAbstractQuery {
         $merchantProductAbstractPropelQuery = $this->getFactory()->getMerchantProductAbstractPropelQuery();
-        $idLocale = $merchantProductTableCriteriaTransfer->requireLocale()->getLocale()->requireIdLocale()->getIdLocale();
+        $idLocale = $merchantProductTableCriteriaTransfer->getLocaleOrFail()->getIdLocaleOrFail();
         $idMerchant = $merchantProductTableCriteriaTransfer->requireIdMerchant()->getIdMerchant();
 
         $merchantProductAbstractPropelQuery->filterByFkMerchant($idMerchant)
@@ -213,18 +213,20 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
      */
     protected function createProductAbstractCategoriesSubquery(int $idLocale): string
     {
+        /** @var \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery $productStoresSubquery */
         $productStoresSubquery = $this->getFactory()->getProductCategoryPropelQuery()
             ->joinSpyCategory()
             ->useSpyCategoryQuery()
                 ->joinAttribute()
-            ->endUse()
-            ->where(sprintf(
-                '%s = %s AND %s = %s',
-                SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
-                SpyProductCategoryTableMap::COL_FK_PRODUCT_ABSTRACT,
-                SpyCategoryAttributeTableMap::COL_FK_LOCALE,
-                $idLocale
-            ));
+            ->endUse();
+
+        $productStoresSubquery->where(sprintf(
+            '%s = %s AND %s = %s',
+            SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
+            SpyProductCategoryTableMap::COL_FK_PRODUCT_ABSTRACT,
+            SpyCategoryAttributeTableMap::COL_FK_LOCALE,
+            $idLocale
+        ));
         $productStoresSubquery->addAsColumn('category_names', sprintf('GROUP_CONCAT(DISTINCT %s)', SpyCategoryAttributeTableMap::COL_NAME));
         $params = [];
 

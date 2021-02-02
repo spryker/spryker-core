@@ -245,15 +245,15 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
 
         $nodeQuery
             ->useClosureTableQuery()
-            ->orderByFkCategoryNodeDescendant(Criteria::DESC)
-            ->orderByDepth(Criteria::DESC)
-            ->filterByFkCategoryNodeDescendant($idNode)
-            ->filterByDepth($depth, Criteria::NOT_EQUAL)
+                ->orderByFkCategoryNodeDescendant(Criteria::DESC)
+                ->orderByDepth(Criteria::DESC)
+                ->filterByFkCategoryNodeDescendant($idNode)
+                ->filterByDepth($depth, Criteria::NOT_EQUAL)
             ->endUse()
             ->useCategoryQuery()
-            ->useAttributeQuery()
-            ->filterByFkLocale($idLocale)
-            ->endUse()
+                ->useAttributeQuery()
+                    ->filterByFkLocale($idLocale)
+                ->endUse()
             ->endUse();
 
         $nodeQuery

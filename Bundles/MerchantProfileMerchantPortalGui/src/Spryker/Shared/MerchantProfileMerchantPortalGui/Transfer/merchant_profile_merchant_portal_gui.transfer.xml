@@ -52,10 +52,6 @@
         <property name="fkMerchantProfile" type="int"/>
     </transfer>
 
-    <transfer name="MerchantProfileAddressCollection">
-        <property name="addresses" type="MerchantProfileAddress[]" singular="address"/>
-    </transfer>
-
     <transfer name="MerchantProfile">
         <property name="idMerchantProfile" type="int"/>
         <property name="merchantProfileLocalizedGlossaryAttributes" type="MerchantProfileLocalizedGlossaryAttributes[]" singular="merchantProfileLocalizedGlossaryAttribute"/>
