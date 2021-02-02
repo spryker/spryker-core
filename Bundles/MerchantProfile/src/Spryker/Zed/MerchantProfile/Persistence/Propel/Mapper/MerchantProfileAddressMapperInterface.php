@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\MerchantProfile\Persistence\Propel\Mapper;
 
-use Generated\Shared\Transfer\MerchantProfileAddressCollectionTransfer;
+use ArrayObject;
 use Generated\Shared\Transfer\MerchantProfileAddressTransfer;
 use Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfileAddress;
 use Propel\Runtime\Collection\ObjectCollection;
@@ -26,15 +26,19 @@ interface MerchantProfileAddressMapperInterface
     ): SpyMerchantProfileAddress;
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfileAddress[] $merchantProfileAddressEntities
-     * @param \Generated\Shared\Transfer\MerchantProfileAddressCollectionTransfer $merchantProfileAddressCollectionTransfer
+     * @phpstan-param \ArrayObject<int,\Generated\Shared\Transfer\MerchantProfileAddressTransfer> $merchantProfileAddressTransfers
      *
-     * @return \Generated\Shared\Transfer\MerchantProfileAddressCollectionTransfer
+     * @phpstan-return \ArrayObject<int,\Generated\Shared\Transfer\MerchantProfileAddressTransfer>
+     *
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfileAddress[] $merchantProfileAddressEntities
+     * @param \ArrayObject|\Generated\Shared\Transfer\MerchantProfileAddressTransfer[] $merchantProfileAddressTransfers
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\MerchantProfileAddressTransfer[]
      */
-    public function mapMerchantProfileAddressEntityCollectionToMerchantProfileAddressCollectionTransfer(
+    public function mapMerchantProfileAddressEntityCollectionToMerchantProfileAddressTransfers(
         ObjectCollection $merchantProfileAddressEntities,
-        MerchantProfileAddressCollectionTransfer $merchantProfileAddressCollectionTransfer
-    ): MerchantProfileAddressCollectionTransfer;
+        ArrayObject $merchantProfileAddressTransfers
+    ): ArrayObject;
 
     /**
      * @param \Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfileAddress $merchantProfileAddressEntity
