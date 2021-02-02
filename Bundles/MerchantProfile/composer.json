@@ -11,7 +11,8 @@
     "spryker/locale": "^3.0.0",
     "spryker/merchant": "^3.0.0",
     "spryker/merchant-extension": "^1.1.0",
-    "spryker/propel-orm": "^1.0.0"
+    "spryker/propel-orm": "^1.0.0",
+    "spryker/transfer": "^3.25.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
