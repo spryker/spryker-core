@@ -67,7 +67,7 @@ class UrlStorageCategoryNodeMapper implements UrlStorageCategoryNodeMapperInterf
 
         $resourceKey = $this->generateKey(
             $idCategoryNode,
-            $this->storeClient->getCurrentStore()->getName(),
+            $this->storeClient->getCurrentStore()->getNameOrFail(),
             $options['locale'] ?? $this->localeClient->getCurrentLocale()
         );
 

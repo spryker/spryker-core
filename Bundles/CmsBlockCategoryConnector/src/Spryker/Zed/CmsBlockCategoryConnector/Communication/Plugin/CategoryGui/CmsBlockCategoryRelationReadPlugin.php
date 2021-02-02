@@ -34,6 +34,7 @@ class CmsBlockCategoryRelationReadPlugin extends AbstractPlugin implements Categ
 
     /**
      * {@inheritDoc}
+     * - Returns cms block names related to the category, indexed by IdCmsBlock.
      *
      * @api
      *

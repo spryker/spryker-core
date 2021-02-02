@@ -188,6 +188,10 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
             ->filterByIdCategory($categoryTransfer->getIdCategoryOrFail())
             ->findOne();
 
+        if (!$categoryEntity) {
+            return;
+        }
+
         $categoryEntity = $this->getFactory()
             ->createCategoryMapper()
             ->mapCategoryTransferToCategoryEntity($categoryTransfer, $categoryEntity);
@@ -206,6 +210,10 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
         $categoryNodeEntity = $this->getFactory()
             ->createCategoryNodeQuery()
             ->findOneByIdCategoryNode($nodeTransfer->getIdCategoryNodeOrFail());
+
+        if (!$categoryNodeEntity) {
+            return $nodeTransfer;
+        }
 
         $categoryNodeMapper->mapNodeTransferToCategoryNodeEntity($nodeTransfer, $categoryNodeEntity);
         $categoryNodeEntity->save();
@@ -343,27 +351,6 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
             ->createCategoryStoreQuery()
             ->filterByFkCategory($idCategory)
             ->filterByFkStore_In($storeIds)
-            ->find()
-            ->delete();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     * @param int[] $parentCategoryNodeIds
-     *
-     * @return void
-     */
-    public function deleteExtraCategoryNodesForCategory(CategoryTransfer $categoryTransfer, array $parentCategoryNodeIds): void
-    {
-        if ($parentCategoryNodeIds === []) {
-            return;
-        }
-
-        $this->getFactory()
-            ->createCategoryNodeQuery()
-            ->filterByIsMain(false)
-            ->filterByFkCategory($categoryTransfer->getIdCategoryOrFail())
-            ->filterByFkParentCategoryNode_In($parentCategoryNodeIds)
             ->find()
             ->delete();
     }

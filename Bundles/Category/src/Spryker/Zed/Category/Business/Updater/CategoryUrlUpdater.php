@@ -70,13 +70,19 @@ class CategoryUrlUpdater implements CategoryUrlUpdaterInterface
      */
     protected function executeUpdateCategoryUrlTransaction(CategoryTransfer $categoryTransfer): void
     {
-        $categoryNodeUrlFilterTransfer = (new CategoryNodeUrlFilterTransfer())
-            ->setCategoryNodeIds($this->getCategoryNodeIdsFromNodeCollection($categoryTransfer->getNodeCollectionOrFail()));
+        $categoryNodeUrlFilterTransfer = new CategoryNodeUrlFilterTransfer();
+
+        if ($categoryTransfer->getNodeCollection() !== null) {
+            $categoryNodeUrlFilterTransfer->setCategoryNodeIds(
+                $this->getCategoryNodeIdsFromNodeCollection($categoryTransfer->getNodeCollectionOrFail())
+            );
+        }
+
         $urlTransfers = $this->categoryRepository->getCategoryNodeUrls($categoryNodeUrlFilterTransfer);
 
         foreach ($categoryTransfer->getLocalizedAttributes() as $categoryLocalizedAttributesTransfer) {
             $this->updateUrlsForNodes(
-                $categoryTransfer->getNodeCollection(),
+                $categoryTransfer->getNodeCollectionOrFail(),
                 $urlTransfers,
                 $categoryLocalizedAttributesTransfer->getLocaleOrFail()
             );
@@ -97,7 +103,7 @@ class CategoryUrlUpdater implements CategoryUrlUpdaterInterface
             if (!$nodeTransfer->getChildrenNodes()) {
                 continue;
             }
-            $this->updateUrlsForNodes($nodeTransfer->getChildrenNodes(), $urlTransfers, $localeTransfer);
+            $this->updateUrlsForNodes($nodeTransfer->getChildrenNodesOrFail(), $urlTransfers, $localeTransfer);
         }
     }
 
@@ -144,7 +150,7 @@ class CategoryUrlUpdater implements CategoryUrlUpdaterInterface
 
             $categoryNodeIds = array_merge(
                 $categoryNodeIds,
-                $this->getCategoryNodeIdsFromNodeCollection($nodeTransfer->getChildrenNodes())
+                $this->getCategoryNodeIdsFromNodeCollection($nodeTransfer->getChildrenNodesOrFail())
             );
         }
 

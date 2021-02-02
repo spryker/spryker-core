@@ -83,6 +83,7 @@ interface CategoryStorageFacadeInterface
     public function writeCategoryNodeStorageCollectionByCategoryStoreEvents(array $eventEntityTransfers): void;
 
     /**
+     * Specification:
      * - Extracts category store IDs from the $eventTransfers created by category store publish events.
      * - Finds all category node IDs related to category store IDs.
      * - Queries all category nodes with category node IDs.

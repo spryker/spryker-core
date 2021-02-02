@@ -28,7 +28,6 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 /**
  * @method \Spryker\Zed\CategoryStorage\CategoryStorageConfig getConfig()
  * @method \Spryker\Zed\CategoryStorage\Persistence\CategoryStorageQueryContainerInterface getQueryContainer()
- * @method \Spryker\Zed\CategoryStorage\Persistence\CategoryStorageRepositoryInterface getRepository()
  * @method \Spryker\Zed\CategoryStorage\Persistence\CategoryStorageEntityManagerInterface getEntityManager()
  */
 class CategoryStorageBusinessFactory extends AbstractBusinessFactory
@@ -53,7 +52,6 @@ class CategoryStorageBusinessFactory extends AbstractBusinessFactory
     public function createCategoryTreeStorageWriter(): CategoryTreeStorageWriterInterface
     {
         return new CategoryTreeStorageWriter(
-            $this->getRepository(),
             $this->getEntityManager(),
             $this->createCategoryStorageNodeTreeBuilder(),
             $this->getCategoryFacade()

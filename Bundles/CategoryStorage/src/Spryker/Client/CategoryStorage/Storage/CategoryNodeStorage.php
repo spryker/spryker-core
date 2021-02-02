@@ -118,7 +118,7 @@ class CategoryNodeStorage implements CategoryNodeStorageInterface
             ->fromArray($decodedCategoryNodeStorageData, true);
 
         $this->cacheCategoryNodeDataByIdCategoryNodeAndLocaleName(
-            $categoryNodeStorageTransfer->getNodeId(),
+            $categoryNodeStorageTransfer->getNodeIdOrFail(),
             $localeName,
             $storeName,
             $categoryNodeStorageTransfer

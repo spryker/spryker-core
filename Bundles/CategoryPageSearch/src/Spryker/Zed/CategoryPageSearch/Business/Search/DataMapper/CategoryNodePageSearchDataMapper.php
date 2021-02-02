@@ -26,7 +26,7 @@ class CategoryNodePageSearchDataMapper implements CategoryNodePageSearchDataMapp
      * @param string $storeName
      * @param string $localeName
      *
-     * @return array<string, mixed>
+     * @return array
      */
     public function mapNodeTransferToCategoryNodePageSearchDataForStoreAndLocale(
         NodeTransfer $nodeTransfer,
@@ -55,7 +55,7 @@ class CategoryNodePageSearchDataMapper implements CategoryNodePageSearchDataMapp
      * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
      * @param \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer|null $categoryLocalizedAttributesTransfer
      *
-     * @return array<string, mixed>
+     * @return array
      */
     protected function getSearchResultData(
         NodeTransfer $nodeTransfer,
@@ -79,7 +79,7 @@ class CategoryNodePageSearchDataMapper implements CategoryNodePageSearchDataMapp
     /**
      * @param \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer|null $categoryLocalizedAttributesTransfer
      *
-     * @return string[]
+     * @return array
      */
     protected function getFullTextBoostedData(?CategoryLocalizedAttributesTransfer $categoryLocalizedAttributesTransfer): array
     {
@@ -89,7 +89,7 @@ class CategoryNodePageSearchDataMapper implements CategoryNodePageSearchDataMapp
     /**
      * @param \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer|null $categoryLocalizedAttributesTransfer
      *
-     * @return string[]
+     * @return array
      */
     protected function getFullTextData(?CategoryLocalizedAttributesTransfer $categoryLocalizedAttributesTransfer): array
     {
@@ -107,7 +107,7 @@ class CategoryNodePageSearchDataMapper implements CategoryNodePageSearchDataMapp
     /**
      * @param \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer|null $categoryLocalizedAttributesTransfer
      *
-     * @return string[]
+     * @return array
      */
     protected function getSuggestionTermsData(?CategoryLocalizedAttributesTransfer $categoryLocalizedAttributesTransfer): array
     {
@@ -117,7 +117,7 @@ class CategoryNodePageSearchDataMapper implements CategoryNodePageSearchDataMapp
     /**
      * @param \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer|null $categoryLocalizedAttributesTransfer
      *
-     * @return string[]
+     * @return array
      */
     protected function getCompletionTermsData(?CategoryLocalizedAttributesTransfer $categoryLocalizedAttributesTransfer): array
     {
@@ -135,7 +135,7 @@ class CategoryNodePageSearchDataMapper implements CategoryNodePageSearchDataMapp
         string $localeName
     ): ?CategoryLocalizedAttributesTransfer {
         foreach ($categoryLocalizedAttributesTransfers as $categoryLocalizedAttributesTransfer) {
-            if ($localeName === $categoryLocalizedAttributesTransfer->getLocale()->getLocaleName()) {
+            if ($localeName === $categoryLocalizedAttributesTransfer->getLocaleOrFail()->getLocaleName()) {
                 return $categoryLocalizedAttributesTransfer;
             }
         }

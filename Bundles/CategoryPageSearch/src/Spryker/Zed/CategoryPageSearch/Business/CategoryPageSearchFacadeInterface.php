@@ -14,7 +14,7 @@ interface CategoryPageSearchFacadeInterface
      * - Queries all category nodes with these ids
      * - Creates a data structure tree
      * - Stores data as json encoded to search table
-     * - Sends a copy of data to queue based on module config
+     * - Sends a copy of data to the queue.
      *
      * @api
      *
@@ -27,7 +27,7 @@ interface CategoryPageSearchFacadeInterface
     /**
      * Specification:
      * - Finds and deletes category node search entities based on these ids
-     * - Sends delete message to queue based on module config
+     * - Sends a copy of data to the queue.
      *
      * @api
      *
@@ -44,7 +44,7 @@ interface CategoryPageSearchFacadeInterface
      * - Queries all category nodes with these ids.
      * - Creates a data structure tree.
      * - Stores data as json encoded to search table.
-     * - Sends a copy of data to queue based on module config.
+     * - Sends a copy of data to the queue.
      *
      * @api
      *
@@ -61,7 +61,7 @@ interface CategoryPageSearchFacadeInterface
      * - Queries all category nodes with these ids.
      * - Creates a data structure tree.
      * - Stores data as json encoded to search table.
-     * - Sends a copy of data to queue based on module config.
+     * - Sends a copy of data to the queue.
      *
      * @api
      *

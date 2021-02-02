@@ -8,7 +8,6 @@
 namespace Spryker\Zed\CategoryPageSearch\Business\Writer;
 
 use Generated\Shared\Transfer\CategoryNodeCriteriaTransfer;
-use Generated\Shared\Transfer\CategoryNodeFilterTransfer;
 use Generated\Shared\Transfer\CategoryNodePageSearchTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\NodeCollectionTransfer;
@@ -86,7 +85,7 @@ class CategoryNodePageSearchWriter implements CategoryNodePageSearchWriterInterf
     {
         $categoryIds = $this->eventBehaviorFacade->getEventTransferForeignKeys($eventEntityTransfers, SpyCategoryStoreTableMap::COL_FK_CATEGORY);
         $nodeCollectionTransfer = $this->categoryFacade->getCategoryNodesByCriteria(
-            (new CategoryNodeFilterTransfer())->setCategoryIds($categoryIds)
+            (new CategoryNodeCriteriaTransfer())->setCategoryIds($categoryIds)
         );
 
         $categoryNodeIds = $this->extractCategoryNodeIdsFromNodeCollection($nodeCollectionTransfer);
@@ -103,7 +102,7 @@ class CategoryNodePageSearchWriter implements CategoryNodePageSearchWriterInterf
     {
         $categoryIds = $this->eventBehaviorFacade->getEventTransferIds($eventEntityTransfers);
         $nodeCollectionTransfer = $this->categoryFacade->getCategoryNodesByCriteria(
-            (new CategoryNodeFilterTransfer())->setCategoryIds($categoryIds)
+            (new CategoryNodeCriteriaTransfer())->setCategoryIds($categoryIds)
         );
 
         $categoryNodeIds = $this->extractCategoryNodeIdsFromNodeCollection($nodeCollectionTransfer);
@@ -120,9 +119,10 @@ class CategoryNodePageSearchWriter implements CategoryNodePageSearchWriterInterf
     {
         $categoryNodeCriteriaTransfer = (new CategoryNodeCriteriaTransfer())
             ->setCategoryNodeIds($categoryNodeIds)
-            ->setIsActive(true);
+            ->setIsActive(true)
+            ->setWithRelations(true);
 
-        $nodeCollectionTransfer = $this->categoryFacade->getCategoryNodeCollectionByCriteria($categoryNodeCriteriaTransfer);
+        $nodeCollectionTransfer = $this->categoryFacade->getCategoryNodesByCriteria($categoryNodeCriteriaTransfer);
 
         $this->storeData($nodeCollectionTransfer);
     }
@@ -157,7 +157,7 @@ class CategoryNodePageSearchWriter implements CategoryNodePageSearchWriterInterf
         foreach ($nodeCollectionTransfers->getNodes() as $nodeTransfer) {
             if (!$this->isCategoryHasStoreRelation($nodeTransfer->getCategoryOrFail(), $storeName)) {
                 $this->categoryPageSearchEntityManager->deleteCategoryNodePageSearchByIdCategoryNodeForLocaleAndStore(
-                    $nodeTransfer->getIdCategoryNode(),
+                    $nodeTransfer->getIdCategoryNodeOrFail(),
                     $localeName,
                     $storeName
                 );
@@ -231,7 +231,7 @@ class CategoryNodePageSearchWriter implements CategoryNodePageSearchWriterInterf
         $categoryNodeIds = [];
 
         foreach ($nodeCollectionTransfer->getNodes() as $nodeTransfer) {
-            $categoryNodeIds[] = $nodeTransfer->getIdCategoryNode();
+            $categoryNodeIds[] = $nodeTransfer->getIdCategoryNodeOrFail();
         }
 
         return $categoryNodeIds;

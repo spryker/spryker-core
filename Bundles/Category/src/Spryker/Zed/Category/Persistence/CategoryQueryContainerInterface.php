@@ -12,6 +12,9 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 interface CategoryQueryContainerInterface extends QueryContainerInterface
 {
     /**
+     * Specification:
+     * - Filters category node query on the `id_category_node` column.
+     *
      * @api
      *
      * @param int $idNode
@@ -32,7 +35,7 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
 
     /**
      * Specification:
-     * - TODO: Add method specification.
+     * - Creates category attribute query.
      *
      * @api
      *
@@ -42,7 +45,8 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
 
     /**
      * Specification:
-     * - TODO: Add method specification.
+     * - Filters category node query on the `fk_parent_category_node` column.
+     * - Finds category node entities sorted by node order.
      *
      * @api
      *
@@ -54,7 +58,7 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
 
     /**
      * Specification:
-     * - TODO: Add method specification.
+     * - Creates category attribute query for root nodes with virtual columns.
      *
      * @api
      *
@@ -64,7 +68,7 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
 
     /**
      * Specification:
-     * - TODO: Add method specification.
+     * - Filters category closure table query on the `fk_category_node` or `fk_category_node_descendant` column.
      *
      * @api
      *
@@ -76,7 +80,7 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
 
     /**
      * Specification:
-     * - TODO: Add method specification.
+     * - Filters category closure table query on the `fk_category_node` column with additional joins.
      *
      * @api
      *
@@ -90,7 +94,7 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
 
     /**
      * Specification:
-     * - TODO: Add method specification.
+     * - Filters category closure table query on the `fk_category_node` column.
      *
      * @api
      *
@@ -102,7 +106,7 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
 
     /**
      * Specification:
-     * - TODO: Add method specification.
+     * - Filters category closure table query on the `fk_category_node_descendant` column.
      *
      * @api
      *
@@ -114,7 +118,8 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
 
     /**
      * Specification:
-     * - TODO: Add method specification.
+     * - Creates category node query with virtual columns.
+     * - Filters category node query on the `fk_category_node_descendant` and `fk_locale` columns.
      *
      * @api
      *
@@ -131,7 +136,9 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
 
     /**
      * Specification:
-     * - TODO: Add method specification.
+     * - Creates category node query.
+     * - Filter the query on the `is_root` column is true.
+     * - Finds category node entities sorted by node order.
      *
      * @api
      *
@@ -141,7 +148,8 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
 
     /**
      * Specification:
-     * - TODO: Add method specification.
+     * - Creates category attribute query.
+     * - Filter query on the `fk_category` column.
      *
      * @api
      *
@@ -153,7 +161,8 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
 
     /**
      * Specification:
-     * - TODO: Add method specification.
+     * - Creates category node query.
+     * - Filter query on the `fk_category` column.
      *
      * @api
      *
@@ -165,7 +174,8 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
 
     /**
      * Specification:
-     * - TODO: Add method specification.
+     * - Creates category query.
+     * - Filter query on the `id_category` column.
      *
      * @api
      *
@@ -177,7 +187,7 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
 
     /**
      * Specification:
-     * - TODO: Add method specification.
+     * - Creates category query with virtual columns.
      *
      * @api
      *
@@ -189,7 +199,8 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
 
     /**
      * Specification:
-     * - TODO: Add method specification.
+     * - Creates category node query with virtual columns.
+     * - Filter query on the `fk_locale` column.
      *
      * @api
      *
@@ -203,19 +214,8 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
 
     /**
      * Specification:
-     * - TODO: Add method specification.
-     *
-     * @api
-     *
-     * @param int $idCategoryNode
-     *
-     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
-     */
-    public function queryUrlByIdCategoryNode($idCategoryNode);
-
-    /**
-     * Specification:
-     * - TODO: Add method specification.
+     * - Creates url query.
+     * - Filter query on the `fk_resource_categorynode` column.
      *
      * @api
      *
@@ -227,7 +227,7 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
 
     /**
      * Specification:
-     * - TODO: Add method specification.
+     * - Creates category template query.
      *
      * @api
      *
@@ -237,7 +237,8 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
 
     /**
      * Specification:
-     * - TODO: Add method specification.
+     * - Creates category template query.
+     * - Filter query on the `name` column.
      *
      * @api
      *

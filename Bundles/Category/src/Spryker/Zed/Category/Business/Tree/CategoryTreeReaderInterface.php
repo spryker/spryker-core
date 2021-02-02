@@ -14,13 +14,6 @@ use Generated\Shared\Transfer\NodeCollectionTransfer;
 interface CategoryTreeReaderInterface
 {
     /**
-     * @param int $idCategory
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNode[]|\Propel\Runtime\Collection\ObjectCollection
-     */
-    public function getAllNodesByIdCategory($idCategory);
-
-    /**
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer $categoryCriteriaTransfer
      *

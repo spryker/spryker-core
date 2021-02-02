@@ -10,7 +10,6 @@ namespace Spryker\Zed\Category\Business;
 use Generated\Shared\Transfer\CategoryCollectionTransfer;
 use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryNodeCriteriaTransfer;
-use Generated\Shared\Transfer\CategoryNodeFilterTransfer;
 use Generated\Shared\Transfer\CategoryNodeUrlFilterTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
@@ -36,15 +35,9 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      */
     public function getAllNodesByIdCategory($idCategory)
     {
-        $nodeEntities = $this
-            ->getFactory()
-            ->createCategoryTreeReader()
+        return $this->getFactory()
+            ->createCategoryNodeReader()
             ->getAllNodesByIdCategory($idCategory);
-
-        return $this
-            ->getFactory()
-            ->createCategoryTransferGenerator()
-            ->convertCategoryNodeCollection($nodeEntities);
     }
 
     /**
@@ -129,23 +122,6 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      * @api
      *
      * @param int $idCategoryNode
-     * @param int $idChildrenDestinationNode
-     *
-     * @return void
-     */
-    public function deleteNodeById($idCategoryNode, $idChildrenDestinationNode)
-    {
-        $this->getFactory()
-            ->createCategoryNodeDeleter()
-            ->deleteNodeById($idCategoryNode, $idChildrenDestinationNode);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param int $idCategoryNode
      * @param int $position
      *
      * @return void
@@ -155,21 +131,6 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
         $this->getFactory()
             ->createCategoryNodeUpdater()
             ->updateCategoryNodeOrder($idCategoryNode, $position);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @return void
-     */
-    public function rebuildClosureTable()
-    {
-        $this
-            ->getFactory()
-            ->createClosureTableWriter()
-            ->rebuildCategoryNodes();
     }
 
     /**
@@ -194,20 +155,6 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @api
      *
-     * @return void
-     */
-    public function syncCategoryTemplate(): void
-    {
-        $this->getFactory()
-            ->createCategoryTemplateSync()
-            ->syncFromConfig();
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
      * @param string $name
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
@@ -224,15 +171,14 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
      */
-    public function getAllCategoryCollection(LocaleTransfer $localeTransfer, string $storeName): CategoryCollectionTransfer
+    public function getAllCategoryCollection(LocaleTransfer $localeTransfer): CategoryCollectionTransfer
     {
         return $this->getFactory()
             ->createCategoryReader()
-            ->getAllCategoryCollection($localeTransfer, $storeName);
+            ->getAllCategoryCollection($localeTransfer);
     }
 
     /**
@@ -330,26 +276,12 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CategoryNodeFilterTransfer $categoryNodeFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\NodeCollectionTransfer
-     */
-    public function getCategoryNodesByCriteria(CategoryNodeFilterTransfer $categoryNodeFilterTransfer): NodeCollectionTransfer
-    {
-        return $this->getRepository()->getCategoryNodesByCriteria($categoryNodeFilterTransfer);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\NodeCollectionTransfer
      */
-    public function getCategoryNodeCollectionByCriteria(CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer): NodeCollectionTransfer
+    public function getCategoryNodesByCriteria(CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer): NodeCollectionTransfer
     {
-        return $this->getRepository()->getCategoryNodeCollectionByCriteria($categoryNodeCriteriaTransfer);
+        return $this->getRepository()->getCategoryNodesByCriteria($categoryNodeCriteriaTransfer);
     }
 }

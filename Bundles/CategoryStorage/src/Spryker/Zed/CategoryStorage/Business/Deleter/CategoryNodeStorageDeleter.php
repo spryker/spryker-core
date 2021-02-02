@@ -58,7 +58,7 @@ class CategoryNodeStorageDeleter implements CategoryNodeStorageDeleterInterface
     protected function getCategoryNodeIdsFromNodeTransfers(array $nodeTransfers): array
     {
         return array_map(function (NodeTransfer $nodeTransfer): int {
-            return $nodeTransfer->getIdCategoryNode();
+            return $nodeTransfer->getIdCategoryNodeOrFail();
         }, $nodeTransfers);
     }
 

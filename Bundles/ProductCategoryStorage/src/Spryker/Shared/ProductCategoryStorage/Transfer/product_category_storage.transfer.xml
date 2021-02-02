@@ -45,10 +45,6 @@
         <property name="reference" type="string"/>
     </transfer>
 
-    <transfer name="Node">
-        <property name="idCategoryNode" type="int"/>
-    </transfer>
-
     <transfer name="CategoryNodeAggregation">
         <property name="idCategoryNode" type="int"/>
         <property name="idCategoryNodeDescendant" type="int"/>

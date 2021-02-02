@@ -27,7 +27,7 @@ class CategoryStoreRelationMapper
         foreach ($categoryStoreEntities as $categoryStoreEntity) {
             $storeTransfer = $this->mapStoreEntityToStoreTransfer($categoryStoreEntity->getSpyStore(), new StoreTransfer());
             $storeRelationTransfer->addStores($storeTransfer);
-            $storeRelationTransfer->addIdStores($storeTransfer->getIdStore());
+            $storeRelationTransfer->addIdStores($storeTransfer->getIdStoreOrFail());
         }
 
         return $storeRelationTransfer;

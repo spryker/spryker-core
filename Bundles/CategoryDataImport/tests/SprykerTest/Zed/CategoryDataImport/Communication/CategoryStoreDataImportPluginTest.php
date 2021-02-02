@@ -28,7 +28,7 @@ class CategoryStoreDataImportPluginTest extends Unit
 {
     protected const STORE_NAME_DE = 'DE';
     protected const STORE_NAME_AT = 'AT';
-    protected const CATEGORY_NAME_DEMOSHOP = 'demoshop';
+    protected const CATEGORY_NAME_TEST = 'test-category';
 
     protected const EXPECTED_IMPORT_COUNT = 1;
 
@@ -70,7 +70,7 @@ class CategoryStoreDataImportPluginTest extends Unit
         // Arrange
         $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
         $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_AT]);
-        $this->tester->haveCategory([CategoryTransfer::NAME => static::CATEGORY_NAME_DEMOSHOP]);
+        $this->tester->haveCategory([CategoryTransfer::CATEGORY_KEY => static::CATEGORY_NAME_TEST]);
 
         $dataImporterReaderConfigurationTransfer = (new DataImporterReaderConfigurationTransfer())
             ->setFileName(codecept_data_dir() . 'import/category_store.csv');

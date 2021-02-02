@@ -401,23 +401,6 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      *
      * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
      */
-    public function queryUrlByIdCategoryNode($idCategoryNode)
-    {
-        return $this->getFactory()->createUrlQuery()
-            ->joinSpyLocale()
-            ->filterByFkResourceCategorynode($idCategoryNode)
-            ->withColumn(SpyLocaleTableMap::COL_LOCALE_NAME);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param int $idCategoryNode
-     *
-     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
-     */
     public function queryResourceUrlByCategoryNodeId($idCategoryNode)
     {
         $query = $this->getFactory()->createUrlQuery();

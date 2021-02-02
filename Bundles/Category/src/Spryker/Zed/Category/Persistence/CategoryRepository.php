@@ -10,7 +10,6 @@ namespace Spryker\Zed\Category\Persistence;
 use Generated\Shared\Transfer\CategoryCollectionTransfer;
 use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryNodeCriteriaTransfer;
-use Generated\Shared\Transfer\CategoryNodeFilterTransfer;
 use Generated\Shared\Transfer\CategoryNodeUrlFilterTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\CategoryUrlPathCriteriaTransfer;
@@ -44,7 +43,6 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
 
     public const NODE_PATH_GLUE = '/';
     public const CATEGORY_NODE_PATH_GLUE = ' / ';
-    public const EXCLUDE_NODE_PATH_ROOT = true;
     public const NODE_PATH_NULL_DEPTH = null;
     public const NODE_PATH_ZERO_DEPTH = 0;
     public const IS_NOT_ROOT_NODE = 0;
@@ -90,7 +88,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
     {
         $nodePathQuery = $this->queryNodePathWithRootNode(
             $idCategoryNode,
-            $localeTransfer->getIdLocale(),
+            $localeTransfer->getIdLocaleOrFail(),
             static::NODE_PATH_ZERO_DEPTH
         );
 
@@ -107,7 +105,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
     {
         $nodePathQuery = $this->queryNodePathWithoutRootNode(
             $idNode,
-            $localeTransfer->getIdLocale(),
+            $localeTransfer->getIdLocaleOrFail(),
             static::NODE_PATH_NULL_DEPTH
         );
 
@@ -188,7 +186,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
     {
         return $this->getFactory()->createCategoryNodeQuery()
             ->setIgnoreCase(true)
-            ->filterByFkParentCategoryNode($categoryTransfer->getParentCategoryNode()->getIdCategoryNode())
+            ->filterByFkParentCategoryNode($categoryTransfer->getParentCategoryNodeOrFail()->getIdCategoryNodeOrFail())
             ->useCategoryQuery()
                 ->filterByIdCategory($categoryTransfer->getIdCategory(), Criteria::NOT_EQUAL)
                 ->useAttributeQuery()
@@ -280,12 +278,15 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
         CategoryTransfer $categoryTransfer,
         CategoryCriteriaTransfer $categoryCriteriaTransfer
     ): array {
+        /** @var \Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery $categoryClosureTableQuery */
         $categoryClosureTableQuery = $this->getFactory()
             ->createCategoryClosureTableQuery()
             ->leftJoinWithDescendantNode()
             ->useNodeQuery('node')
                 ->filterByFkCategory($categoryTransfer->getIdCategoryOrFail())
-            ->endUse()
+            ->endUse();
+
+        $categoryClosureTableQuery
             ->useDescendantNodeQuery()
                 ->leftJoinWithCategory()
                 ->orderByNodeOrder(Criteria::DESC)
@@ -374,28 +375,6 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CategoryNodeFilterTransfer $categoryNodeFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\NodeCollectionTransfer
-     */
-    public function getCategoryNodesByCriteria(CategoryNodeFilterTransfer $categoryNodeFilterTransfer): NodeCollectionTransfer
-    {
-        $categoryNodeQuery = $this->getFactory()->createCategoryNodeQuery();
-
-        if ($categoryNodeFilterTransfer->getCategoryIds()) {
-            $categoryNodeQuery->filterByFkCategory_In($categoryNodeFilterTransfer->getCategoryIds());
-        }
-
-        if ($categoryNodeFilterTransfer->getIsMain() !== null) {
-            $categoryNodeQuery->filterByIsMain($categoryNodeFilterTransfer->getIsMain());
-        }
-
-        return $this->getFactory()
-            ->createCategoryNodeMapper()
-            ->mapNodeCollection($categoryNodeQuery->find(), new NodeCollectionTransfer());
-    }
-
-    /**
      * @module Locale
      * @module Store
      * @module Url
@@ -415,6 +394,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
 
         $categoryNodeIdsImploded = implode(', ', $categoryNodeIds);
 
+        /** @var \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery $categoryNodeQuery */
         $categoryNodeQuery = $this->getFactory()
             ->createCategoryNodeQuery()
             ->leftJoinClosureTable(SpyCategoryClosureTableTableMap::TABLE_NAME)
@@ -439,7 +419,9 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
             ->endUse()
             ->where(sprintf('%s IN (%s)', SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE_DESCENDANT, $categoryNodeIdsImploded))
             ->_or()
-            ->where(sprintf('%s IN (%s)', SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE, $categoryNodeIdsImploded))
+            ->where(sprintf('%s IN (%s)', SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE, $categoryNodeIdsImploded));
+
+        $categoryNodeQuery
             ->orderByNodeOrder(Criteria::DESC)
             ->distinct();
 
@@ -475,24 +457,17 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
      *
      * @return \Generated\Shared\Transfer\NodeCollectionTransfer
      */
-    public function getCategoryNodeCollectionByCriteria(CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer): NodeCollectionTransfer
+    public function getCategoryNodesByCriteria(CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer): NodeCollectionTransfer
     {
         $categoryNodeQuery = $this->getFactory()
             ->createCategoryNodeQuery();
 
-        if ($categoryNodeCriteriaTransfer->getCategoryNodeIds()) {
-            $categoryNodeQuery->filterByIdCategoryNode_In($categoryNodeCriteriaTransfer->getCategoryNodeIds());
-        }
+        $categoryNodeQuery = $this->setCategoryNodeFilters($categoryNodeQuery, $categoryNodeCriteriaTransfer);
 
-        if ($categoryNodeCriteriaTransfer->getIsActive() !== null) {
-            $categoryNodeQuery
-                ->useCategoryQuery(null, Criteria::LEFT_JOIN)
-                    ->filterByIsActive($categoryNodeCriteriaTransfer->getIsActive())
-                ->endUse();
-        }
-
-        if ($categoryNodeCriteriaTransfer->getIsRoot() !== null) {
-            $categoryNodeQuery->filterByIsRoot($categoryNodeCriteriaTransfer->getIsRoot());
+        if (!$categoryNodeCriteriaTransfer->getWithRelations()) {
+            return $this->getFactory()
+                ->createCategoryNodeMapper()
+                ->mapNodeCollection($categoryNodeQuery->find(), new NodeCollectionTransfer());
         }
 
         $categoryNodeQuery
@@ -516,6 +491,42 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
                 $categoryNodeQuery->find(),
                 new NodeCollectionTransfer()
             );
+    }
+
+    /**
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery $categoryNodeQuery
+     * @param \Generated\Shared\Transfer\CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
+     */
+    protected function setCategoryNodeFilters(
+        SpyCategoryNodeQuery $categoryNodeQuery,
+        CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
+    ): SpyCategoryNodeQuery {
+        if ($categoryNodeCriteriaTransfer->getCategoryNodeIds()) {
+            $categoryNodeQuery->filterByIdCategoryNode_In($categoryNodeCriteriaTransfer->getCategoryNodeIds());
+        }
+
+        if ($categoryNodeCriteriaTransfer->getIsActive() !== null) {
+            $categoryNodeQuery
+                ->useCategoryQuery(null, Criteria::LEFT_JOIN)
+                    ->filterByIsActive($categoryNodeCriteriaTransfer->getIsActive())
+                ->endUse();
+        }
+
+        if ($categoryNodeCriteriaTransfer->getIsRoot() !== null) {
+            $categoryNodeQuery->filterByIsRoot($categoryNodeCriteriaTransfer->getIsRoot());
+        }
+
+        if ($categoryNodeCriteriaTransfer->getCategoryIds()) {
+            $categoryNodeQuery->filterByFkCategory_In($categoryNodeCriteriaTransfer->getCategoryIds());
+        }
+
+        if ($categoryNodeCriteriaTransfer->getIsMain() !== null) {
+            $categoryNodeQuery->filterByIsMain($categoryNodeCriteriaTransfer->getIsMain());
+        }
+
+        return $categoryNodeQuery;
     }
 
     /**
@@ -563,28 +574,6 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
         return $this->getFactory()
             ->createCategoryNodeMapper()
             ->mapCategoryNode($categoryNodeEntity, new NodeTransfer());
-    }
-
-    /**
-     * @param int $idCategory
-     * @param int $idStore
-     *
-     * @return bool
-     */
-    public function isParentCategoryHasRelationToStore(int $idCategory, int $idStore): bool
-    {
-        return $this->getFactory()->createCategoryNodeQuery()
-            ->filterByFkCategory($idCategory)
-            ->useParentCategoryNodeQuery('parentCategory', Criteria::LEFT_JOIN)
-                ->useCategoryQuery(null, Criteria::LEFT_JOIN)
-                    ->useSpyCategoryStoreQuery(null, Criteria::LEFT_JOIN)
-                        ->filterByFkStore($idStore)
-                    ->endUse()
-                ->endUse()
-            ->endUse()
-            ->_or()
-            ->where(SpyCategoryNodeTableMap::COL_FK_PARENT_CATEGORY_NODE . ' IS NULL')
-            ->exists();
     }
 
     /**

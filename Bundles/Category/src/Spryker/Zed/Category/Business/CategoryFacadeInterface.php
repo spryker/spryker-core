@@ -10,7 +10,6 @@ namespace Spryker\Zed\Category\Business;
 use Generated\Shared\Transfer\CategoryCollectionTransfer;
 use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryNodeCriteriaTransfer;
-use Generated\Shared\Transfer\CategoryNodeFilterTransfer;
 use Generated\Shared\Transfer\CategoryNodeUrlFilterTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
@@ -142,21 +141,6 @@ interface CategoryFacadeInterface
 
     /**
      * Specification:
-     *  - Finds sub-trees for the category node to be deleted and moves them under the destination node
-     *  - Touches deleted category-node deleted (via TouchFacade)
-     *  - Triggers CategoryEvents::CATEGORY_NODE_PUBLISH event for parent and children nodes
-     *
-     * @api
-     *
-     * @param int $idCategoryNode
-     * @param int $idChildrenDestinationNode
-     *
-     * @return void
-     */
-    public function deleteNodeById($idCategoryNode, $idChildrenDestinationNode);
-
-    /**
-     * Specification:
      *  - Finds category-node entity, updates node_order field, and persists it
      *  - Touches category-node entity active
      *  - Touches navigation active
@@ -171,13 +155,6 @@ interface CategoryFacadeInterface
     public function updateCategoryNodeOrder($idCategoryNode, $position): void;
 
     /**
-     * @api
-     *
-     * @return void
-     */
-    public function rebuildClosureTable();
-
-    /**
      * Specification:
      *  - Finds all category-node entities for idCategory
      *  - Touches all nodes active
@@ -189,18 +166,6 @@ interface CategoryFacadeInterface
      * @return void
      */
     public function touchCategoryActive($idCategory);
-
-    /**
-     * Specification:
-     * - Takes template list from defined config
-     * - Creates new template records
-     * - Does not delete/update existing template records (safe)
-     *
-     * @api
-     *
-     * @return void
-     */
-    public function syncCategoryTemplate(): void;
 
     /**
      * Specification:
@@ -218,16 +183,15 @@ interface CategoryFacadeInterface
     /**
      * Specification:
      * - Retrieves collection with all categories from DB.
-     * - Filters collection by related locale and store.
+     * - Filters collection by related locale.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
      */
-    public function getAllCategoryCollection(LocaleTransfer $localeTransfer, string $storeName): CategoryCollectionTransfer;
+    public function getAllCategoryCollection(LocaleTransfer $localeTransfer): CategoryCollectionTransfer;
 
     /**
      * Specification:
@@ -312,19 +276,7 @@ interface CategoryFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves category nodes by criteria filter (without any relationships).
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CategoryNodeFilterTransfer $categoryNodeFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\NodeCollectionTransfer
-     */
-    public function getCategoryNodesByCriteria(CategoryNodeFilterTransfer $categoryNodeFilterTransfer): NodeCollectionTransfer;
-
-    /**
-     * Specification:
-     * - Retrieves category node collection by criteria filter (with relationships).
+     * - Retrieves category nodes by criteria filter.
      *
      * @api
      *
@@ -332,5 +284,5 @@ interface CategoryFacadeInterface
      *
      * @return \Generated\Shared\Transfer\NodeCollectionTransfer
      */
-    public function getCategoryNodeCollectionByCriteria(CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer): NodeCollectionTransfer;
+    public function getCategoryNodesByCriteria(CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer): NodeCollectionTransfer;
 }

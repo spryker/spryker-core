@@ -42,23 +42,6 @@ class CategoryStorageQueryContainer extends AbstractQueryContainer implements Ca
      *
      * @api
      *
-     * @deprecated Will be removed with next major release.
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
-     */
-    public function queryCategoryRoot()
-    {
-        return $this->getFactory()
-            ->getCategoryQueryContainer()
-            ->queryAllCategoryNodes()
-            ->filterByIsRoot(true);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
      * @return \Orm\Zed\CategoryStorage\Persistence\SpyCategoryTreeStorageQuery
      */
     public function queryCategoryStorage()

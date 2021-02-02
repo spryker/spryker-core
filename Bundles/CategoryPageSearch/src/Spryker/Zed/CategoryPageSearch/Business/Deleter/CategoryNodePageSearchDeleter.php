@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\CategoryPageSearch\Business\Deleter;
 
-use Generated\Shared\Transfer\NodeCollectionTransfer;
-use Generated\Shared\Transfer\NodeTransfer;
 use Spryker\Zed\CategoryPageSearch\Persistence\CategoryPageSearchEntityManagerInterface;
 
 class CategoryNodePageSearchDeleter implements CategoryNodePageSearchDeleterInterface
@@ -34,17 +32,5 @@ class CategoryNodePageSearchDeleter implements CategoryNodePageSearchDeleterInte
     public function deleteCategoryNodePageSearchCollection(array $categoryNodeIds): void
     {
         $this->categoryPageSearchEntityManager->deleteCategoryNodePageSearchByCategoryNodeIds($categoryNodeIds);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\NodeCollectionTransfer $nodeCollectionTransfer
-     *
-     * @return int[]
-     */
-    protected function getCategoryNodeIdsFromNodeTransfers(NodeCollectionTransfer $nodeCollectionTransfer): array
-    {
-        return array_map(function (NodeTransfer $nodeTransfer): int {
-            return $nodeTransfer->getIdCategoryNode();
-        }, $nodeCollectionTransfer->getNodes()->getArrayCopy());
     }
 }

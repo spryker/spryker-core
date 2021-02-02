@@ -11,45 +11,21 @@ use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\NodeCollectionTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
-use Propel\Runtime\ActiveQuery\Criteria;
-use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use Spryker\Zed\Category\Persistence\CategoryRepositoryInterface;
 
 class CategoryTreeReader implements CategoryTreeReaderInterface
 {
-    /**
-     * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
-     */
-    protected $categoryQueryContainer;
-
     /**
      * @var \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface
      */
     protected $categoryRepository;
 
     /**
-     * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $categoryQueryContainer
      * @param \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface $categoryRepository
      */
-    public function __construct(
-        CategoryQueryContainerInterface $categoryQueryContainer,
-        CategoryRepositoryInterface $categoryRepository
-    ) {
-        $this->categoryQueryContainer = $categoryQueryContainer;
-        $this->categoryRepository = $categoryRepository;
-    }
-
-    /**
-     * @param int $idCategory
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNode[]|\Propel\Runtime\Collection\ObjectCollection
-     */
-    public function getAllNodesByIdCategory($idCategory)
+    public function __construct(CategoryRepositoryInterface $categoryRepository)
     {
-        return $this->categoryQueryContainer
-            ->queryAllNodesByCategoryId($idCategory)
-            ->orderByNodeOrder(Criteria::ASC)
-            ->find();
+        $this->categoryRepository = $categoryRepository;
     }
 
     /**
@@ -72,7 +48,7 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
             return $nodeCollectionTransfer;
         }
 
-        $categoryNodeTransfer = $this->buildNodeTree($categoryNodes, $categoryTransfer->getCategoryNode());
+        $categoryNodeTransfer = $this->buildNodeTree($categoryNodes, $categoryTransfer->getCategoryNodeOrFail());
 
         return $nodeCollectionTransfer->addNode($categoryNodeTransfer);
     }

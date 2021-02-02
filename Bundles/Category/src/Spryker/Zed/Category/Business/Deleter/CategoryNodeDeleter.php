@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Category\Business\Deleter;
 
-use Generated\Shared\Transfer\CategoryNodeFilterTransfer;
+use Generated\Shared\Transfer\CategoryNodeCriteriaTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Spryker\Zed\Category\Business\Model\CategoryToucherInterface;
 use Spryker\Zed\Category\Business\Model\CategoryTree\CategoryTreeInterface;
@@ -119,29 +119,16 @@ class CategoryNodeDeleter implements CategoryNodeDeleterInterface
     }
 
     /**
-     * @param int $idCategoryNode
-     * @param int $idChildrenDestinationNode
-     *
-     * @return void
-     */
-    public function deleteNodeById(int $idCategoryNode, int $idChildrenDestinationNode): void
-    {
-        $this->getTransactionHandler()->handleTransaction(function () use ($idCategoryNode, $idChildrenDestinationNode) {
-            $this->executeDeleteNodeByIdTransaction($idCategoryNode, $idChildrenDestinationNode);
-        });
-    }
-
-    /**
      * @param int $idCategory
      *
      * @return void
      */
     protected function executeDeleteCategoryNodesForCategoryTransaction(int $idCategory): void
     {
-        $categoryNodeFilterTransfer = (new CategoryNodeFilterTransfer())
+        $categoryNodeCriteriaTransfer = (new CategoryNodeCriteriaTransfer())
             ->addIdCategory($idCategory);
 
-        $nodeCollectionTransfer = $this->categoryRepository->getCategoryNodesByCriteria($categoryNodeFilterTransfer);
+        $nodeCollectionTransfer = $this->categoryRepository->getCategoryNodesByCriteria($categoryNodeCriteriaTransfer);
 
         foreach ($nodeCollectionTransfer->getNodes() as $nodeTransfer) {
             $this->deleteNode($nodeTransfer);
@@ -155,11 +142,11 @@ class CategoryNodeDeleter implements CategoryNodeDeleterInterface
      */
     protected function executeDeleteCategoryExtraParentNodesTransaction(int $idCategory): void
     {
-        $categoryNodeFilterTransfer = (new CategoryNodeFilterTransfer())
+        $categoryNodeCriteriaTransfer = (new CategoryNodeCriteriaTransfer())
             ->addIdCategory($idCategory)
             ->setIsMain(false);
 
-        $nodeCollectionTransfer = $this->categoryRepository->getCategoryNodesByCriteria($categoryNodeFilterTransfer);
+        $nodeCollectionTransfer = $this->categoryRepository->getCategoryNodesByCriteria($categoryNodeCriteriaTransfer);
 
         foreach ($nodeCollectionTransfer->getNodes() as $nodeTransfer) {
             $this->deleteExtraParentNode($nodeTransfer);
@@ -179,19 +166,6 @@ class CategoryNodeDeleter implements CategoryNodeDeleterInterface
     }
 
     /**
-     * @param int $idCategoryNode
-     * @param int $idChildrenDestinationNode
-     *
-     * @return void
-     */
-    protected function executeDeleteNodeByIdTransaction(int $idCategoryNode, int $idChildrenDestinationNode): void
-    {
-        $nodeTransfer = (new NodeTransfer())->setIdCategoryNode($idCategoryNode);
-
-        $this->deleteNode($nodeTransfer, $idChildrenDestinationNode);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
      * @param int|null $idDestinationCategoryNode
      *
@@ -199,19 +173,21 @@ class CategoryNodeDeleter implements CategoryNodeDeleterInterface
      */
     protected function deleteNode(NodeTransfer $nodeTransfer, ?int $idDestinationCategoryNode = null): void
     {
-        do {
-            $childrenMoved = $this->categoryTree->moveSubTree(
-                $nodeTransfer->getIdCategoryNode(),
-                $idDestinationCategoryNode ?? $nodeTransfer->getFkParentCategoryNode()
-            );
-        } while ($childrenMoved > 0);
+        if ($nodeTransfer->getFkParentCategoryNode() !== null) {
+            do {
+                $childrenMoved = $this->categoryTree->moveSubTree(
+                    $nodeTransfer->getIdCategoryNodeOrFail(),
+                    $idDestinationCategoryNode ?? $nodeTransfer->getFkParentCategoryNodeOrFail()
+                );
+            } while ($childrenMoved > 0);
+        }
 
-        $this->categoryNodePublisher->triggerBulkCategoryNodePublishEventForUpdate($nodeTransfer->getIdCategoryNode());
+        $this->categoryNodePublisher->triggerBulkCategoryNodePublishEventForUpdate($nodeTransfer->getIdCategoryNodeOrFail());
 
-        $this->categoryClosureTableDeleter->deleteCategoryClosureTable($nodeTransfer->getIdCategoryNode());
-        $this->categoryEntityManager->deleteCategoryNode($nodeTransfer->getIdCategoryNode());
+        $this->categoryClosureTableDeleter->deleteCategoryClosureTable($nodeTransfer->getIdCategoryNodeOrFail());
+        $this->categoryEntityManager->deleteCategoryNode($nodeTransfer->getIdCategoryNodeOrFail());
 
-        $this->categoryToucher->touchCategoryNodeDeleted($nodeTransfer->getIdCategoryNode());
+        $this->categoryToucher->touchCategoryNodeDeleted($nodeTransfer->getIdCategoryNodeOrFail());
     }
 
     /**
@@ -221,12 +197,15 @@ class CategoryNodeDeleter implements CategoryNodeDeleterInterface
      */
     protected function deleteExtraParentNode(NodeTransfer $nodeTransfer): void
     {
-        $this->categoryTree->moveSubTree($nodeTransfer->getIdCategoryNode(), $nodeTransfer->getFkParentCategoryNode());
+        $this->categoryTree->moveSubTree(
+            $nodeTransfer->getIdCategoryNodeOrFail(),
+            $nodeTransfer->getFkParentCategoryNodeOrFail()
+        );
 
-        $this->categoryUrlDeleter->deleteCategoryUrlsForCategoryNode($nodeTransfer->getIdCategoryNode());
-        $this->categoryClosureTableDeleter->deleteCategoryClosureTable($nodeTransfer->getIdCategoryNode());
-        $this->categoryEntityManager->deleteCategoryNode($nodeTransfer->getIdCategoryNode());
+        $this->categoryUrlDeleter->deleteCategoryUrlsForCategoryNode($nodeTransfer->getIdCategoryNodeOrFail());
+        $this->categoryClosureTableDeleter->deleteCategoryClosureTable($nodeTransfer->getIdCategoryNodeOrFail());
+        $this->categoryEntityManager->deleteCategoryNode($nodeTransfer->getIdCategoryNodeOrFail());
 
-        $this->categoryToucher->touchCategoryNodeDeleted($nodeTransfer->getIdCategoryNode());
+        $this->categoryToucher->touchCategoryNodeDeleted($nodeTransfer->getIdCategoryNodeOrFail());
     }
 }

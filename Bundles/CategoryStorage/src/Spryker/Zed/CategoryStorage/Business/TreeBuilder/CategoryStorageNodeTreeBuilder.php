@@ -127,7 +127,7 @@ class CategoryStorageNodeTreeBuilder implements CategoryStorageNodeTreeBuilderIn
         array $indexedCategoryNodeStorageTransfers
     ): CategoryNodeStorageTransfer {
         $childrenCategoryNodeStorageTransfers = $this->findChildren(
-            $categoryNodeStorageTransfer->getNodeId(),
+            $categoryNodeStorageTransfer->getNodeIdOrFail(),
             $indexedNodeTransfers,
             $indexedCategoryNodeStorageTransfers
         );
@@ -161,7 +161,7 @@ class CategoryStorageNodeTreeBuilder implements CategoryStorageNodeTreeBuilderIn
         }
 
         $parentCategoryNodeStorageTransfers = $this->findParents(
-            $nodeTransfer->getFkParentCategoryNode(),
+            $nodeTransfer->getFkParentCategoryNodeOrFail(),
             $indexedCategoryNodeStorageTransfers
         );
         foreach ($parentCategoryNodeStorageTransfers as $parentCategoryNodeStorageTransfer) {
