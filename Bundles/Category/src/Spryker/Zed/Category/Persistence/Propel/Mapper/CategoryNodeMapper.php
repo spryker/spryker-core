@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\Category\Persistence\Propel\Mapper;
 
+use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\NodeCollectionTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
+use Orm\Zed\Category\Persistence\SpyCategory;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;
 use Propel\Runtime\Collection\ObjectCollection;
 
@@ -51,5 +53,25 @@ class CategoryNodeMapper
     public function mapCategoryNode(SpyCategoryNode $spyCategoryNode, NodeTransfer $nodeTransfer): NodeTransfer
     {
         return $nodeTransfer->fromArray($spyCategoryNode->toArray(), true);
+    }
+
+    /**
+     * @param \Orm\Zed\Category\Persistence\SpyCategory $categoryEntity
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryTransfer
+     */
+    public function mapCategoryNodes(SpyCategory $categoryEntity, CategoryTransfer $categoryTransfer): CategoryTransfer
+    {
+        foreach ($categoryEntity->getNodes() as $categoryNodeEntity) {
+            if (!$categoryNodeEntity->isMain()) {
+                continue;
+            }
+            $nodeTransfer = $this->mapCategoryNode($categoryNodeEntity, new NodeTransfer());
+            $nodeTransfer->setCategory(clone $categoryTransfer);
+            $categoryTransfer->setCategoryNode($nodeTransfer);
+        }
+
+        return $categoryTransfer;
     }
 }

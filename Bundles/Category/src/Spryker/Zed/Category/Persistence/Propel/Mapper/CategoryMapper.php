@@ -78,7 +78,7 @@ class CategoryMapper implements CategoryMapperInterface
             $spyCategory->getCategoryTemplate(),
             new CategoryTemplateTransfer()
         ));
-        $categoryTransfer = $this->mapCategoryNodes($spyCategory, $categoryTransfer);
+        $categoryTransfer = $this->categoryNodeMapper->mapCategoryNodes($spyCategory, $categoryTransfer);
         $storeRelationTransfer = $this->categoryStoreRelationMapper->mapCategoryStoreEntitiesToStoreRelationTransfer(
             $spyCategory->getSpyCategoryStores(),
             (new StoreRelationTransfer())->setIdEntity($spyCategory->getIdCategory())
@@ -86,17 +86,6 @@ class CategoryMapper implements CategoryMapperInterface
         $categoryTransfer->setStoreRelation($storeRelationTransfer);
 
         return $categoryTransfer;
-    }
-
-    /**
-     * @param \Orm\Zed\Category\Persistence\SpyCategoryNode $spyCategoryNode
-     * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
-     *
-     * @return \Generated\Shared\Transfer\NodeTransfer
-     */
-    public function mapCategoryNode(SpyCategoryNode $spyCategoryNode, NodeTransfer $nodeTransfer): NodeTransfer
-    {
-        return $nodeTransfer->fromArray($spyCategoryNode->toArray(), true);
     }
 
     /**
@@ -209,26 +198,6 @@ class CategoryMapper implements CategoryMapperInterface
         $categoryEntity->fromArray($categoryTransfer->modifiedToArray());
 
         return $categoryEntity;
-    }
-
-    /**
-     * @param \Orm\Zed\Category\Persistence\SpyCategory $categoryEntity
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryTransfer
-     */
-    protected function mapCategoryNodes(SpyCategory $categoryEntity, CategoryTransfer $categoryTransfer): CategoryTransfer
-    {
-        foreach ($categoryEntity->getNodes() as $categoryNodeEntity) {
-            if (!$categoryNodeEntity->isMain()) {
-                continue;
-            }
-            $nodeTransfer = $this->categoryNodeMapper->mapCategoryNode($categoryNodeEntity, new NodeTransfer());
-            $nodeTransfer->setCategory(clone $categoryTransfer);
-            $categoryTransfer->setCategoryNode($nodeTransfer);
-        }
-
-        return $categoryTransfer;
     }
 
     /**
