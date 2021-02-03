@@ -1,7 +1,7 @@
 {
-  "include": {
-    "spryker/customer": "Defined for forward-compatibility reasons.",
-    "spryker/glossary": "Defined for forward-compatibility reasons.",
-    "spryker/locale": "Defined for forward-compatibility reasons."
-  }
+    "include": {
+        "spryker/customer": "Defined for forward-compatibility reasons.",
+        "spryker/glossary": "Defined for forward-compatibility reasons.",
+        "spryker/locale": "Defined for forward-compatibility reasons."
+    }
 }

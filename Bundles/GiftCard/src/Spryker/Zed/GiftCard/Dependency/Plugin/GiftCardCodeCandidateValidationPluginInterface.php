@@ -10,6 +10,9 @@ namespace Spryker\Zed\GiftCard\Dependency\Plugin;
 interface GiftCardCodeCandidateValidationPluginInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $codeCandidate

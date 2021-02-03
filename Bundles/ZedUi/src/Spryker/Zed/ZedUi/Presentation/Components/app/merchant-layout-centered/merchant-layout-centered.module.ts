@@ -9,5 +9,4 @@ import { MerchantLayoutCenteredComponent } from './merchant-layout-centered.comp
     declarations: [MerchantLayoutCenteredComponent],
     exports: [MerchantLayoutCenteredComponent],
 })
-export class MerchantLayoutCenteredModule {
-}
+export class MerchantLayoutCenteredModule {}

@@ -5,8 +5,8 @@
 
 'use strict';
 
-$(document).ready(function() {
-    $('.gui-table-data, .gui-table-data-no-search').on('draw.dt', function() {
+$(document).ready(function () {
+    $('.gui-table-data, .gui-table-data-no-search').on('draw.dt', function () {
         disableInputs();
     });
 
@@ -14,7 +14,7 @@ $(document).ready(function() {
 });
 
 function disableInputs() {
-    var $tabContent =  $('#tab-content-product-assignment');
+    var $tabContent = $('#tab-content-product-assignment');
 
     $tabContent.find(':checkbox').attr('disabled', true);
     $tabContent.find('a.btn').attr('disabled', true);
