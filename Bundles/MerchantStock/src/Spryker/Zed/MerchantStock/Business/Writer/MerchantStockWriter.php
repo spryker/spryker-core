@@ -50,6 +50,7 @@ class MerchantStockWriter implements MerchantStockWriterInterface
         $stockTransfer = (new StockTransfer())
             ->setName($this->generateStockNameByMerchant($merchantTransfer))
             ->setIsActive(true);
+
         $stockTransfer = $this->stockFacade->createStock($stockTransfer)->getStock();
 
         $merchantStockTransfer = (new MerchantStockTransfer())
@@ -57,12 +58,12 @@ class MerchantStockWriter implements MerchantStockWriterInterface
             ->setIdStock($stockTransfer->getIdStock())
             ->setIsDefault(true);
 
-            $this->merchantStockEntityManager->createMerchantStock($merchantStockTransfer);
-            $merchantTransfer->addStock($stockTransfer);
+        $this->merchantStockEntityManager->createMerchantStock($merchantStockTransfer);
+        $merchantTransfer->addStock($stockTransfer);
 
-            return (new MerchantResponseTransfer())
-                ->setIsSuccess(true)
-                ->setMerchant($merchantTransfer);
+        return (new MerchantResponseTransfer())
+            ->setIsSuccess(true)
+            ->setMerchant($merchantTransfer);
     }
 
     /**
