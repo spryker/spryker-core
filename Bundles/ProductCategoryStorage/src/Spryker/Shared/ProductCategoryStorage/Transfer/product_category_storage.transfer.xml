@@ -12,6 +12,7 @@
 
     <transfer name="ProductCategory">
         <property name="category" type="Category"/>
+        <property name="fkProductAbstract" type="int"/>
     </transfer>
 
     <transfer name="Category">
@@ -43,6 +44,7 @@
     <transfer name="SynchronizationData">
         <property name="locale" type="string"/>
         <property name="reference" type="string"/>
+        <property name="store" type="string"/>
     </transfer>
 
     <transfer name="CategoryNodeAggregation">
@@ -53,6 +55,11 @@
         <property name="url" type="string"/>
         <property name="locale" type="string"/>
         <property name="store" type="string"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="name" type="string"/>
+        <property name="availableLocaleIsoCodes" type="array" singular="availableLocaleCode"/>
     </transfer>
 
 </transfers>
