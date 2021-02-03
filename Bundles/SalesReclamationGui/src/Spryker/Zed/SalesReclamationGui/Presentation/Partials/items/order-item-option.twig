@@ -1,4 +1,3 @@
-
 {% for productOption in orderItem.productOptions %}
     <tr class="addition-row">
         <td></td>
@@ -8,13 +7,13 @@
                 <a target="_blank" href="{{ url('/product-option/view/index', {'id-product-option-group': productOption.idGroup}) }}">{{ productOption.value }}</a>
             </div>
             <div class="sku">
-              {{ 'Sku' | trans }}: {{ productOption.sku }}
+                {{ 'Sku' | trans }}: {{ productOption.sku }}
             </div>
         </td>
         <td>
 
             <div>
-                {% embed '@SalesReclamationGui/partials/items/discounted-price.twig' with {subtotal: productOption.unitPrice, priceToPay: productOption.unitPrice - productOption.unitDiscountAmountFullAggregation | default(0)} %} {% endembed %}
+                {% embed '@SalesReclamationGui/Partials/items/discounted-price.twig' with {subtotal: productOption.unitPrice, priceToPay: productOption.unitPrice - productOption.unitDiscountAmountFullAggregation | default(0)} %} {% endembed %}
             </div>
             <div class="tax-info">incl. {{ productOption.taxRate|default(0) }} % tax </div>
         </td>
