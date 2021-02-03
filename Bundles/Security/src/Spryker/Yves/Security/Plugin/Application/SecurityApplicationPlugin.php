@@ -70,6 +70,8 @@ use Symfony\Component\Security\Http\Firewall\UsernamePasswordFormAuthenticationL
 use Symfony\Component\Security\Http\FirewallMap;
 use Symfony\Component\Security\Http\FirewallMapInterface;
 use Symfony\Component\Security\Http\HttpUtils;
+use Symfony\Component\Security\Http\Logout\DefaultLogoutSuccessHandler;
+use Symfony\Component\Security\Http\Logout\LogoutSuccessHandlerInterface;
 use Symfony\Component\Security\Http\Logout\SessionLogoutHandler;
 use Symfony\Component\Security\Http\Session\SessionAuthenticationStrategyInterface;
 
@@ -101,6 +103,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
     protected const SERVICE_SECURITY_EXCEPTION_LISTENER_PROTO = 'security.exception_listener._proto';
     protected const SERVICE_SECURITY_AUTHENTICATION_SUCCESS_HANDLER_PROTO = 'security.authentication.success_handler._proto';
     protected const SERVICE_SECURITY_AUTHENTICATION_FAILURE_HANDLER_PROTO = 'security.authentication.failure_handler._proto';
+    protected const SERVICE_SECURITY_AUTHENTICATION_LOGOUT_HANDLER_PROTO = 'security.authentication.logout_handler._proto';
     protected const SERVICE_SECURITY_AUTHENTICATION_LISTENER_GUARD_PROTO = 'security.authentication_listener.guard._proto';
     protected const SERVICE_SECURITY_AUTHENTICATION_GUARD_HANDLER = 'security.authentication.guard_handler';
     protected const SERVICE_SECURITY_AUTHENTICATION_LISTENER_FORM_PROTO = 'security.authentication_listener.form._proto';
@@ -854,6 +857,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
     {
         $container = $this->addAuthenticationSuccessHandlerPrototype($container);
         $container = $this->addAuthenticationFailureHandlerPrototype($container);
+        $container = $this->addAuthenticationLogoutHandlerPrototype($container);
 
         return $container;
     }
@@ -894,6 +898,25 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
                     $container->get(static::SERVICE_SECURITY_HTTP_UTILS),
                     $options,
                     $this->getLogger($container)
+                );
+            };
+        }));
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Service\Container\ContainerInterface $container
+     *
+     * @return \Spryker\Service\Container\ContainerInterface
+     */
+    protected function addAuthenticationLogoutHandlerPrototype(ContainerInterface $container): ContainerInterface
+    {
+        $container->set(static::SERVICE_SECURITY_AUTHENTICATION_LOGOUT_HANDLER_PROTO, $container->protect(function ($name, $options) use ($container) {
+            return function () use ($options, $container) {
+                return new DefaultLogoutSuccessHandler(
+                    $container->get(static::SERVICE_SECURITY_HTTP_UTILS),
+                    $options['target_url'] ?? '/'
                 );
             };
         }));
@@ -1100,32 +1123,58 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
     protected function addAuthenticationListenerLogoutPrototype(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_SECURITY_AUTHENTICATION_LISTENER_LOGOUT_PROTO, $container->protect(function ($name, $options) use ($container) {
-            return function () use ($container, $options) {
+            return function () use ($container, $name, $options) {
                 $tmp = $options['logout_path'] ?? '/logout';
                 $targetUrl = $options['target_url'] ?? '/';
                 $this->addSecurityRoute('get', $tmp);
 
+                $logoutEventClassExist = class_exists(LogoutEvent::class);
                 /** @var \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher */
                 $eventDispatcher = $this->getDispatcher($container);
-                $httpUtils = $container->get(static::SERVICE_SECURITY_HTTP_UTILS);
-                $eventDispatcher->addSubscriber(new DefaultLogoutListener($httpUtils, $targetUrl));
-                $eventDispatcher->addSubscriber(new SessionLogoutListener());
+                if ($logoutEventClassExist) {
+                    $httpUtils = $container->get(static::SERVICE_SECURITY_HTTP_UTILS);
+                    $eventDispatcher->addSubscriber(new DefaultLogoutListener($httpUtils, $targetUrl));
+                    $eventDispatcher->addSubscriber(new SessionLogoutListener());
+                }
 
                 $listener = new LogoutListener(
                     $container->get(static::SERVICE_SECURITY_TOKEN_STORAGE),
                     $container->get(static::SERVICE_SECURITY_HTTP_UTILS),
-                    $eventDispatcher,
+                    ($logoutEventClassExist) ? $eventDispatcher : $this->getLogoutHandler($container, $name, $options),
                     $options,
                     $this->getCsrfTokenManager($container, $options)
                 );
 
-                $listener = $this->addSessionLogoutHandler($listener, $options);
+                if (!$logoutEventClassExist) {
+                    $listener = $this->addSessionLogoutHandler($listener, $options);
+                }
 
                 return $listener;
             };
         }));
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Service\Container\ContainerInterface $container
+     * @param string $firewallName
+     * @param array $options
+     *
+     * @return \Symfony\Component\Security\Http\Logout\LogoutSuccessHandlerInterface
+     */
+    protected function getLogoutHandler(ContainerInterface $container, string $firewallName, array $options): LogoutSuccessHandlerInterface
+    {
+        $securityConfiguration = $this->getSecurityConfiguration($container);
+        if (isset($securityConfiguration->getLogoutHandlers()[$firewallName])) {
+            return call_user_func($securityConfiguration->getLogoutHandlers()[$firewallName], $container, $options);
+        }
+
+        if (!$container->has('security.authentication.logout_handler.' . $firewallName)) {
+            $container->set('security.authentication.logout_handler.' . $firewallName, $container->get(static::SERVICE_SECURITY_AUTHENTICATION_LOGOUT_HANDLER_PROTO)($firewallName, $options));
+        }
+
+        return $container->get('security.authentication.logout_handler.' . $firewallName);
     }
 
     /**
