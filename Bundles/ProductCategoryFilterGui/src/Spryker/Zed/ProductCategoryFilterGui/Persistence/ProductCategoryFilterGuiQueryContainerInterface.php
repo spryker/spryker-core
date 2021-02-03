@@ -10,6 +10,9 @@ namespace Spryker\Zed\ProductCategoryFilterGui\Persistence;
 interface ProductCategoryFilterGuiQueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idCategory
@@ -20,6 +23,9 @@ interface ProductCategoryFilterGuiQueryContainerInterface
     public function queryCategoryByIdAndLocale($idCategory, $idLocale);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idCategory

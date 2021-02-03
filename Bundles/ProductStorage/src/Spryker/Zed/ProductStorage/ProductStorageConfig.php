@@ -62,4 +62,17 @@ class ProductStorageConfig extends AbstractBundleConfig
     {
         return null;
     }
+
+    /**
+     * Specification:
+     *  - Determines whether to include the single-valued product super attributes into a product map.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isProductAttributesWithSingleValueIncluded(): bool
+    {
+        return true;
+    }
 }

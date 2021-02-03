@@ -10,16 +10,14 @@ describe('ZedMerchantLayoutCentralComponent', () => {
 
     @Component({
         selector: 'test',
-        template: `
-            <mp-merchant-layout-centered>Content</mp-merchant-layout-centered>
-        `
+        template: ` <mp-merchant-layout-centered>Content</mp-merchant-layout-centered> `,
     })
     class TestComponent {}
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [MerchantLayoutCenteredModule],
-            declarations: [TestComponent]
+            declarations: [TestComponent],
         }).compileComponents();
     }));
 
@@ -27,16 +25,16 @@ describe('ZedMerchantLayoutCentralComponent', () => {
         fixture = TestBed.createComponent(TestComponent);
         component = fixture.componentInstance;
 
-	    fixture.detectChanges();
+        fixture.detectChanges();
     });
 
     it('should create component', () => {
         expect(component).toBeTruthy();
     });
 
-	it('should render <mp-layout-centered>', () => {
-		const centeredLayoutElem = fixture.debugElement.query(By.css('mp-layout-centered'));
+    it('should render <mp-layout-centered>', () => {
+        const centeredLayoutElem = fixture.debugElement.query(By.css('mp-layout-centered'));
 
-		expect(centeredLayoutElem).toBeTruthy();
-	});
+        expect(centeredLayoutElem).toBeTruthy();
+    });
 });

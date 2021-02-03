@@ -28,6 +28,9 @@ use Spryker\Client\SearchElasticsearch\Config\SearchConfigInterface;
 use Spryker\Client\SearchElasticsearch\Config\SortConfig;
 use Spryker\Client\SearchElasticsearch\Config\SortConfigInterface;
 use Spryker\Client\SearchElasticsearch\Dependency\Client\SearchElasticsearchToMoneyClientInterface;
+use Spryker\Client\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreClientInterface;
+use Spryker\Client\SearchElasticsearch\Index\IndexNameResolver\IndexNameResolver;
+use Spryker\Client\SearchElasticsearch\Index\IndexNameResolver\IndexNameResolverInterface;
 use Spryker\Client\SearchElasticsearch\Index\SourceIdentifier;
 use Spryker\Client\SearchElasticsearch\Index\SourceIdentifierInterface;
 use Spryker\Client\SearchElasticsearch\Plugin\Query\SearchKeysQuery;
@@ -51,12 +54,9 @@ use Spryker\Client\SearchElasticsearch\Writer\DocumentWriterFactoryInterface;
 use Spryker\Client\SearchElasticsearch\Writer\DocumentWriterInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 use Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToLocaleClientInterface;
-use Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreClientInterface;
 use Spryker\Shared\SearchElasticsearch\Dependency\Service\SearchElasticsearchToUtilEncodingServiceInterface;
 use Spryker\Shared\SearchElasticsearch\ElasticaClient\ElasticaClientFactory;
 use Spryker\Shared\SearchElasticsearch\ElasticaClient\ElasticaClientFactoryInterface;
-use Spryker\Shared\SearchElasticsearch\Index\IndexNameResolver;
-use Spryker\Shared\SearchElasticsearch\Index\IndexNameResolverInterface;
 use Spryker\Shared\SearchElasticsearch\Logger\ElasticsearchInMemoryLogger;
 use Spryker\Shared\SearchElasticsearch\Logger\ElasticsearchLoggerInterface;
 use Spryker\Shared\SearchElasticsearch\MappingType\MappingTypeSupportDetector;
@@ -113,12 +113,13 @@ class SearchElasticsearchFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Shared\SearchElasticsearch\Index\IndexNameResolverInterface
+     * @return \Spryker\Client\SearchElasticsearch\Index\IndexNameResolver\IndexNameResolverInterface
      */
     public function createIndexNameResolver(): IndexNameResolverInterface
     {
         return new IndexNameResolver(
-            $this->getStoreClient()
+            $this->getStoreClient(),
+            $this->getConfig()
         );
     }
 
@@ -233,7 +234,7 @@ class SearchElasticsearchFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreClientInterface
+     * @return \Spryker\Client\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreClientInterface
      */
     public function getStoreClient(): SearchElasticsearchToStoreClientInterface
     {

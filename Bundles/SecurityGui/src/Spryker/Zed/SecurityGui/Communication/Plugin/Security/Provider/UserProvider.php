@@ -79,7 +79,7 @@ class UserProvider extends AbstractPlugin implements UserProviderInterface
      */
     protected function findUserByUsername(string $username): ?UserTransfer
     {
-        if (!$this->getFactory()->getUserFacade()->hasUserByUsername($username)) {
+        if (!$this->getFactory()->getUserFacade()->hasActiveUserByUsername($username)) {
             return null;
         }
 

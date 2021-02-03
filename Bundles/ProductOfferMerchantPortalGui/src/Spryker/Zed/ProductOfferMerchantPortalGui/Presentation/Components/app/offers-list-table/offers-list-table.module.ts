@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { OffersListTableComponent, } from './offers-list-table.component';
+import { OffersListTableComponent } from './offers-list-table.component';
 import { TableModule } from '@spryker/table';
 
 @NgModule({
@@ -8,5 +8,4 @@ import { TableModule } from '@spryker/table';
     declarations: [OffersListTableComponent],
     exports: [OffersListTableComponent],
 })
-export class OffersListTableModule {
-}
+export class OffersListTableModule {}

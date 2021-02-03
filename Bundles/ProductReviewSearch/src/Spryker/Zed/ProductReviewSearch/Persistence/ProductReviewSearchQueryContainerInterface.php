@@ -12,6 +12,9 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 interface ProductReviewSearchQueryContainerInterface extends QueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $productReviewIds
@@ -21,6 +24,9 @@ interface ProductReviewSearchQueryContainerInterface extends QueryContainerInter
     public function queryProductReviewSearchByIds(array $productReviewIds);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $productReviewIds
@@ -30,6 +36,9 @@ interface ProductReviewSearchQueryContainerInterface extends QueryContainerInter
     public function queryProductReviewsByIdProductReviews(array $productReviewIds);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idAbstractProduct

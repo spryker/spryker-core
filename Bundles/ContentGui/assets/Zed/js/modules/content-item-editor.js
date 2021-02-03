@@ -10,7 +10,7 @@ var editorButtons = require('./editorComponents/buttons');
 var ContentItemDialog = require('./content-item-editor-dialog');
 var ContentItemPopover = require('./content-item-editor-popover');
 
-var ContentItemEditor = function(options) {
+var ContentItemEditor = function (options) {
     var self = this;
     this.dropDownItems = [];
     this.buttonTitle = 'Insert Content';
@@ -22,13 +22,13 @@ var ContentItemEditor = function(options) {
 
     $.extend(this, options);
 
-    this.initialization = function() {
+    this.initialization = function () {
         new ContentItemDialog(
             this.title,
             this.dialogContentUrl,
             this.insertButtonTitle,
             this.editorContentWidgetTemplate,
-            this.maxWidgetNumber
+            this.maxWidgetNumber,
         );
         new ContentItemPopover();
     };
@@ -42,25 +42,23 @@ var ContentItemEditor = function(options) {
         }
 
         var contentGuiConfig = {
-            toolbar: [
-                ['insert', ['dropdownContentItem']]
-            ],
+            toolbar: [['insert', ['dropdownContentItem']]],
             buttons: {
                 dropdownContentItem: this.createDropdownButton(),
                 editWidget: this.createEditWidgetButton(),
                 editContentItem: this.createEditContentItemButton(),
-                removeContentItem: this.createRemoveContentItemButton()
+                removeContentItem: this.createRemoveContentItemButton(),
             },
             popover: {
-                'editContentItem': ['editWidget', 'editContentItem', 'removeContentItem']
+                editContentItem: ['editWidget', 'editContentItem', 'removeContentItem'],
             },
             callbacks: {
                 onKeydown: this.onKeydownHandler,
                 onChange: function () {
                     self.onChangeHandler($(this), self);
-                }
+                },
             },
-            dialogsInBody: true
+            dialogsInBody: true,
         };
 
         return editorConfig.mergeConfigs(baseConfig, contentGuiConfig);
@@ -70,29 +68,20 @@ var ContentItemEditor = function(options) {
         return editorButtons.ContentItemDropdownButton(
             this.buttonTitle,
             this.generateDropdownList(),
-            this.showDialogHandler
+            this.showDialogHandler,
         );
     };
 
     this.createEditWidgetButton = function () {
-        return editorButtons.PopoverButton(
-            this.popoverButtons.editWidget,
-            this.showDialogHandler
-        );
+        return editorButtons.PopoverButton(this.popoverButtons.editWidget, this.showDialogHandler);
     };
 
     this.createEditContentItemButton = function () {
-        return editorButtons.PopoverButton(
-            this.popoverButtons.editContentItem,
-            this.editContentItemHandler
-        );
+        return editorButtons.PopoverButton(this.popoverButtons.editContentItem, this.editContentItemHandler);
     };
 
     this.createRemoveContentItemButton = function () {
-        return editorButtons.PopoverButton(
-            this.popoverButtons.removeContentItem,
-            this.removeContentItemHandler
-        );
+        return editorButtons.PopoverButton(this.popoverButtons.removeContentItem, this.removeContentItemHandler);
     };
 
     this.showDialogHandler = function (context) {
@@ -100,18 +89,18 @@ var ContentItemEditor = function(options) {
     };
 
     this.editContentItemHandler = function () {
-        return function(event) {
+        return function (event) {
             var contentItemId = event.currentTarget.dataset.id;
             var originLink = window.location.origin;
 
             window.open(originLink + self.contentItemUrl + '?id-content=' + contentItemId, '_blank');
-        }
+        };
     };
 
     this.removeContentItemHandler = function (context) {
         return function () {
             context.invoke('contentItemDialog.removeItemFromEditor');
-        }
+        };
     };
 
     this.onKeydownHandler = function (event) {
@@ -145,7 +134,6 @@ var ContentItemEditor = function(options) {
         if (isWidget) {
             addNewLineAfterWidget($editorRange.sc.parentNode);
         }
-
     };
 
     this.onChangeHandler = function ($editor, self) {
@@ -169,11 +157,7 @@ var ContentItemEditor = function(options) {
             return;
         }
 
-        var $elementForInsert = $(
-            '<div>' +
-            $editorParentNode.html() +
-            '</div>'
-        );
+        var $elementForInsert = $('<div>' + $editorParentNode.html() + '</div>');
 
         $editorParentNode.replaceWith($elementForInsert);
         this.putCaretAtTheLineEnd($elementForInsert);
@@ -189,11 +173,15 @@ var ContentItemEditor = function(options) {
     };
 
     this.generateDropdownList = function () {
-        return this.dropDownItems.reduce(function(currentList, dropItem) {
-            var dropItemTemplate = '<li role="listitem">' +
-                '<a href="#" data-type="' + dropItem.type + '" data-new="true">' +
+        return this.dropDownItems.reduce(function (currentList, dropItem) {
+            var dropItemTemplate =
+                '<li role="listitem">' +
+                '<a href="#" data-type="' +
+                dropItem.type +
+                '" data-new="true">' +
                 dropItem.name +
-                '</a>' + '</li>';
+                '</a>' +
+                '</li>';
 
             return currentList + dropItemTemplate;
         }, '');
