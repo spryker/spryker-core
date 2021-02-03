@@ -16,6 +16,7 @@ use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
 use Orm\Zed\Store\Persistence\Map\SpyStoreTableMap;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 use Propel\Runtime\Map\TableMap;
+use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\CategoryPageSearch\Communication\Plugin\Search\CategoryNodeDataPageMapBuilder;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilder;
 
@@ -37,14 +38,13 @@ use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilder;
 class CategoryNodeDataPageMapBuilderTest extends Unit
 {
     /**
-     * @group her
      * @return void
      */
     public function testBuildPageMapWillReturnCorrectTransfer(): void
     {
         // Arrange
         $categoryNodeDataPageMapBuilder = new CategoryNodeDataPageMapBuilder();
-        $categoryNode = $this->getCategoryNodeTreeByIdCategoryTreeForLocaleAndStore(1, 46, 'DE');
+        $categoryNode = $this->getCategoryNodeTreeByIdCategoryTreeForLocaleAndStore(1, 46, Store::getInstance()->getStoreName());
 
         // Act
         $pageMapTransfer = $categoryNodeDataPageMapBuilder->buildPageMap(new PageMapBuilder(), $categoryNode->toArray(TableMap::TYPE_FIELDNAME, true, [], true), (new LocaleTransfer())->setIdLocale(46));
@@ -63,7 +63,7 @@ class CategoryNodeDataPageMapBuilderTest extends Unit
      */
     protected function getCategoryNodeTreeByIdCategoryTreeForLocaleAndStore(int $idCategoryNode, int $idLocale, string $storeName): SpyCategoryNode
     {
-        SpyCategoryNodeQuery::create()
+        return SpyCategoryNodeQuery::create()
             ->filterByIdCategoryNode($idCategoryNode)
             ->joinWithSpyUrl()
             ->joinWithCategory()
