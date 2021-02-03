@@ -81,7 +81,6 @@ class CategoryDataHelper extends Module
      */
     public function haveCategoryTemplate(array $seedData = []): ?CategoryTemplateTransfer
     {
-        $this->getCategoryFacade()->syncCategoryTemplate();
         $categoryTemplateTransfer = $this->findCategoryTemplateByName(CategoryConfig::CATEGORY_TEMPLATE_DEFAULT);
 
         $categoryTemplateTransfer->fromArray($seedData, true);
