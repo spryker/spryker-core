@@ -1,7 +1,5 @@
 {
   "include": {
-    "spryker/transfer": "Provides transfer objects definition with associative functionality.",
-    "spryker/product-offer": "Provides transfer objects definition with associative functionality.",
-    "spryker/packaging-unit": "Provides transfer objects definition with associative functionality."
+    "spryker/transfer": "Provides transfer objects definition with associative functionality."
   }
 }

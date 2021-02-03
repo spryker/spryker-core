@@ -31,18 +31,6 @@ class MerchantStockMerchantPostCreatePlugin extends AbstractPlugin implements Me
      */
     public function postCreate(MerchantTransfer $merchantTransfer): MerchantResponseTransfer
     {
-        $stockTransfer = (new StockTransfer())
-            ->setName(
-                sprintf(
-                    '%s %s %s %d',
-                    $merchantTransfer->requireName()->getName(),
-                    $merchantTransfer->requireMerchantReference()->getMerchantReference(),
-                    'Warehouse',
-                    $merchantTransfer->getStocks()->count() + 1
-                )
-            )
-            ->setIsActive(true);
-
-        return $this->getFacade()->createDefaultMerchantStock($merchantTransfer, $stockTransfer);
+        return $this->getFacade()->createDefaultMerchantStock($merchantTransfer);
     }
 }
