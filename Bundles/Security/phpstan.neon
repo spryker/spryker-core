@@ -15,4 +15,3 @@ parameters:
         - '#Method .+Factory::createPasswordEncoder\(\) should return .+PasswordEncoderInterface but returns .+BCryptPasswordEncoder.#'
         - '#Instantiated class Symfony\\Component\\Security\\Http\\EventListener\\RememberMeLogoutListener not found.#'
         - '#Parameter \#1 \$subscriber of method Symfony\\Component\\EventDispatcher\\EventDispatcherInterface::addSubscriber\(\) expects Symfony\\Component\\EventDispatcher\\EventSubscriberInterface, Symfony\\Component\\Security\\Http\\EventListener\\RememberMeLogoutListener given.#'
-        - '#Anonymous function has an unused use \$name.#'

@@ -1100,7 +1100,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
     protected function addAuthenticationListenerLogoutPrototype(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_SECURITY_AUTHENTICATION_LISTENER_LOGOUT_PROTO, $container->protect(function ($name, $options) use ($container) {
-            return function () use ($container, $name, $options) {
+            return function () use ($container, $options) {
                 $tmp = $options['logout_path'] ?? '/logout';
                 $targetUrl = $options['target_url'] ?? '/';
                 $this->addSecurityRoute('get', $tmp);
