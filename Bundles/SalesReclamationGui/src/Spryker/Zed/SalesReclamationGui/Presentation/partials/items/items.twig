@@ -7,7 +7,7 @@
 {% endset %}
 
 {% set widget_header_content %}
-    {{ 'Reclamation state' | trans ~ ': ' ~ reclamation.stete }}
+    Reclamation state: {{ reclamation.stete }}
 {% endset %}
 
 {% embed '@Gui/Partials/widget.twig' with {
@@ -26,7 +26,7 @@
                 <th>{{ 'State' | trans }}</th>
             </tr>
             </thead>
-          {% embed '@SalesReclamationGui/Partials/items/no-group-items.twig' with {items: reclamation.reclamationItems} %}{% endembed %}
+          {% embed '@SalesReclamationGui/partials/items/no-group-items.twig' with {items: reclamation.reclamationItems} %}{% endembed %}
         </table>
 
     {% endblock %}

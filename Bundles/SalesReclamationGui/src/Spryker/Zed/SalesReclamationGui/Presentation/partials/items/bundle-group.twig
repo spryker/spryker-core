@@ -3,10 +3,10 @@
 {% for orderItem in items %}
   <tr>
     {% if loop.index == 1 %}
-      {% embed '@SalesReclamationGui/Partials/items/order-item.twig' with {orderItem: orderItem, displayImage: true, displayTotals: true, group: true, rowCount: rowCount, bundleItem: bundleItem, itemCount: itemCount} %}{% endembed %}
+      {% embed '@SalesReclamationGui/partials/items/order-item.twig' with {orderItem: orderItem, displayImage: true, displayTotals: true, group: true, rowCount: rowCount, bundleItem: bundleItem, itemCount: itemCount} %}{% endembed %}
     {% else %}
-      {% embed '@SalesReclamationGui/Partials/items/order-item.twig' with {orderItem: orderItem, displayImage: false, displayTotals: false, group: false} %}{% endembed %}
+      {% embed '@SalesReclamationGui/partials/items/order-item.twig' with {orderItem: orderItem, displayImage: false, displayTotals: false, group: false} %}{% endembed %}
     {% endif %}
   </tr>
-  {% embed '@SalesReclamationGui/Partials/items/order-item-option.twig' with {orderItem: orderItem} %} {% endembed %}
+  {% embed '@SalesReclamationGui/partials/items/order-item-option.twig' with {orderItem: orderItem} %} {% endembed %}
 {% endfor %}

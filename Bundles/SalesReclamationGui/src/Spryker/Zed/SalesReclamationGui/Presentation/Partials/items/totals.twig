@@ -7,23 +7,21 @@
 
                 <table class="footable table toggle-arrow-tiny" data-qa="totals-list">
                     <tbody>
-                    {% for orderItem in order.items %}
-                        {% if orderItem.relatedBundleItemIdentifier is empty %}
+                    {% for orderItem in order.items if orderItem.relatedBundleItemIdentifier is empty %}
+                        <tr>
+                            <th>{{ orderItem.name }}</th>
+                            <th></th>
+                            <td class="text-right">{{ orderItem.unitPrice | money(true, order.currencyIsoCode)  }}</td>
+                            <th></th>
+                        </tr>
+                        {% for orderItemOption in orderItem.productOptions %}
                             <tr>
-                                <th>{{ orderItem.name }}</th>
-                                <th></th>
-                                <td class="text-right">{{ orderItem.unitPrice | money(true, order.currencyIsoCode)  }}</td>
-                                <th></th>
+                                <td> + <span class="label">{{ 'Option' | trans }}</span> {{ orderItemOption.value }}</td>
+                                <td></td>
+                                <td class="text-right">{{ orderItemOption.unitPrice | money(true, order.currencyIsoCode) }}</td>
+                                <td></td>
                             </tr>
-                            {% for orderItemOption in orderItem.productOptions %}
-                                <tr>
-                                    <td> + <span class="label">{{ 'Option' | trans }}</span> {{ orderItemOption.value }}</td>
-                                    <td></td>
-                                    <td class="text-right">{{ orderItemOption.unitPrice | money(true, order.currencyIsoCode) }}</td>
-                                    <td></td>
-                                </tr>
-                            {% endfor %}
-                        {% endif %}
+                        {% endfor %}
                     {% endfor %}
 
                     {% if order.bundleItems is defined %}
