@@ -104,6 +104,20 @@ abstract class AbstractApplicationHelper extends Framework
     }
 
     /**
+     * @param string $page
+     *
+     * @return void
+     */
+    public function amOnPage($page): void
+    {
+        if ($this->client === null) {
+            $this->getClient();
+        }
+
+        $this->_loadPage('GET', $page);
+    }
+
+    /**
      * @return \Symfony\Component\HttpKernel\HttpKernelInterface
      */
     public function getKernel(): HttpKernelInterface
