@@ -13,6 +13,7 @@ use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryTableMap;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;
 use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
+use Orm\Zed\Store\Persistence\Map\SpyStoreTableMap;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 use Propel\Runtime\Map\TableMap;
 use Spryker\Zed\CategoryPageSearch\Communication\Plugin\Search\CategoryNodeDataPageMapBuilder;
@@ -36,13 +37,14 @@ use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilder;
 class CategoryNodeDataPageMapBuilderTest extends Unit
 {
     /**
+     * @group her
      * @return void
      */
     public function testBuildPageMapWillReturnCorrectTransfer(): void
     {
         // Arrange
         $categoryNodeDataPageMapBuilder = new CategoryNodeDataPageMapBuilder();
-        $categoryNode = $this->getCategoryNodeTreeByIdCategoryTreeForLocale(1, 46);
+        $categoryNode = $this->getCategoryNodeTreeByIdCategoryTreeForLocaleAndStore(1, 46, 'DE');
 
         // Act
         $pageMapTransfer = $categoryNodeDataPageMapBuilder->buildPageMap(new PageMapBuilder(), $categoryNode->toArray(TableMap::TYPE_FIELDNAME, true, [], true), (new LocaleTransfer())->setIdLocale(46));
@@ -55,19 +57,27 @@ class CategoryNodeDataPageMapBuilderTest extends Unit
     /**
      * @param int $idCategoryNode
      * @param int $idLocale
+     * @param string $storeName
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNode
      */
-    protected function getCategoryNodeTreeByIdCategoryTreeForLocale(int $idCategoryNode, int $idLocale): SpyCategoryNode
+    protected function getCategoryNodeTreeByIdCategoryTreeForLocaleAndStore(int $idCategoryNode, int $idLocale, string $storeName): SpyCategoryNode
     {
-        return SpyCategoryNodeQuery::create()
+        SpyCategoryNodeQuery::create()
             ->filterByIdCategoryNode($idCategoryNode)
             ->joinWithSpyUrl()
             ->joinWithCategory()
-            ->joinWith('Category.Attribute')
-            ->joinWith('Category.CategoryTemplate')
+            ->useCategoryQuery()
+                ->joinWithAttribute()
+                ->joinWithCategoryTemplate()
+                ->joinWithSpyCategoryStore()
+                    ->useSpyCategoryStoreQuery()
+                        ->joinWithSpyStore()
+                    ->endUse()
+            ->endUse()
             ->where(SpyCategoryAttributeTableMap::COL_FK_LOCALE . ' = ?', $idLocale)
             ->where(SpyUrlTableMap::COL_FK_LOCALE . ' = ?', $idLocale)
+            ->where(SpyStoreTableMap::COL_NAME . ' = ?', $storeName)
             ->where(SpyCategoryTableMap::COL_IS_ACTIVE . ' = ?', true)
             ->where(SpyCategoryTableMap::COL_IS_IN_MENU . ' = ?', true)
             ->orderByIdCategoryNode()
