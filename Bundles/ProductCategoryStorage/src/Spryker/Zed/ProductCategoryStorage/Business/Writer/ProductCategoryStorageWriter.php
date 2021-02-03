@@ -137,7 +137,7 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
 
         foreach ($localeNameMapByStoreName as $storeName => $storeLocales) {
             foreach ($storeLocales as $localeName) {
-                $this->saveProductAbstractCategoryStorages(
+                $productAbstractCategoryStorageTransfers = $this->saveProductAbstractCategoryStorages(
                     $productCategoryTransfers,
                     $productAbstractCategoryStorageTransfers,
                     $productAbstractLocalizedAttributesTransfers,
@@ -157,7 +157,7 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
      * @param string $storeName
      * @param string $localeName
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer[][][]
      */
     protected function saveProductAbstractCategoryStorages(
         array $productCategoryTransfers,
@@ -165,13 +165,20 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
         array $productAbstractLocalizedAttributesTransfers,
         string $storeName,
         string $localeName
-    ): void {
+    ): array {
         foreach ($productAbstractLocalizedAttributesTransfers as $productAbstractLocalizedAttributesTransfer) {
             if ($productAbstractLocalizedAttributesTransfer->getLocaleOrFail()->getLocaleName() !== $localeName) {
+                $productAbstractCategoryStorageTransfers = $this->unsetProductAbstractCategoryStorage(
+                    $productAbstractCategoryStorageTransfers,
+                    $productAbstractLocalizedAttributesTransfer,
+                    $storeName,
+                    $localeName
+                );
+
                 continue;
             }
 
-            $this->saveProductAbstractCategoryStorage(
+            $productAbstractCategoryStorageTransfers = $this->saveProductAbstractCategoryStorage(
                 $productCategoryTransfers,
                 $productAbstractCategoryStorageTransfers,
                 $productAbstractLocalizedAttributesTransfer,
@@ -179,6 +186,35 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
                 $localeName
             );
         }
+
+        return $productAbstractCategoryStorageTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer[][][] $productAbstractCategoryStorageTransfers
+     * @param \Generated\Shared\Transfer\ProductAbstractLocalizedAttributesTransfer $productAbstractLocalizedAttributesTransfer
+     * @param string $storeName
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer[][][]
+     */
+    protected function unsetProductAbstractCategoryStorage(
+        array $productAbstractCategoryStorageTransfers,
+        ProductAbstractLocalizedAttributesTransfer $productAbstractLocalizedAttributesTransfer,
+        string $storeName,
+        string $localeName
+    ): array {
+        $idProductAbstract = $productAbstractLocalizedAttributesTransfer->getIdProductAbstractOrFail();
+
+        $productAbstractCategoryStorageTransfer
+            = $productAbstractCategoryStorageTransfers[$idProductAbstract][$storeName][$localeName]
+            ?? null;
+
+        if ($productAbstractCategoryStorageTransfer) {
+            unset($productAbstractCategoryStorageTransfers[$idProductAbstract][$storeName][$localeName]);
+        }
+
+        return $productAbstractCategoryStorageTransfers;
     }
 
     /**
@@ -188,7 +224,7 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
      * @param string $storeName
      * @param string $localeName
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer[][][]
      */
     protected function saveProductAbstractCategoryStorage(
         array $productCategoryTransfers,
@@ -196,7 +232,7 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
         ProductAbstractLocalizedAttributesTransfer $productAbstractLocalizedAttributesTransfer,
         string $storeName,
         string $localeName
-    ): void {
+    ): array {
         $idProductAbstract = $productAbstractLocalizedAttributesTransfer->getIdProductAbstractOrFail();
         $productCategoryStorageTransfers = $this->productCategoryStorageReader->getProductCategoryStoragesFromCategoryTree(
             $productCategoryTransfers[$idProductAbstract] ?? [],
@@ -221,7 +257,7 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
         }
 
         if (!count($productCategoryStorageTransfers)) {
-            return;
+            return $productAbstractCategoryStorageTransfers;
         }
 
         $productAbstractCategoryStorageTransfer = (new ProductAbstractCategoryStorageTransfer())
@@ -234,6 +270,8 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
             $localeName,
             $productAbstractCategoryStorageTransfer
         );
+
+        return $productAbstractCategoryStorageTransfers;
     }
 
     /**
