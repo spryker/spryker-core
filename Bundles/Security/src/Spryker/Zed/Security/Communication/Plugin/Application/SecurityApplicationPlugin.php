@@ -1090,12 +1090,12 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
                 $this->addSecurityRoute($options['logout_path'] ?? '/logout');
 
                 $logoutEventClassExist = class_exists(LogoutEvent::class);
-                /** @var \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher */
+                /** @var \Symfony\Contracts\EventDispatcher\EventDispatcherInterface|\Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher */
                 $eventDispatcher = $this->getDispatcher($container);
                 if ($logoutEventClassExist) {
                     $httpUtils = $container->get(static::SERVICE_SECURITY_HTTP_UTILS);
-                    $eventDispatcher->addSubscriber(new DefaultLogoutListener($httpUtils, '/'));
-                    $eventDispatcher->addSubscriber(new SessionLogoutListener());
+                    $this->getDispatcher($container)->addSubscriber(new DefaultLogoutListener($httpUtils, '/'));
+                    $this->getDispatcher($container)->addSubscriber(new SessionLogoutListener());
                 }
 
                 $listener = new LogoutListener(
