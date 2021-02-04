@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\Wishlist\Business\Transfer;
 
+use Generated\Shared\Transfer\WishlistItemMetaTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
+use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Wishlist\Persistence\SpyWishlist;
 use Orm\Zed\Wishlist\Persistence\SpyWishlistItem;
 use Propel\Runtime\Collection\ObjectCollection;
@@ -87,5 +89,18 @@ class WishlistTransferMapper implements WishlistTransferMapperInterface
         }
 
         return $transferCollection;
+    }
+
+    /**
+     * @param \Orm\Zed\Product\Persistence\SpyProduct $productEntity
+     * @param \Generated\Shared\Transfer\WishlistItemMetaTransfer $wishlistItemMetaTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemMetaTransfer
+     */
+    public function mapProductEntityToWishlistItemMetaTransfer(
+        SpyProduct $productEntity,
+        WishlistItemMetaTransfer $wishlistItemMetaTransfer
+    ): WishlistItemMetaTransfer {
+        return $wishlistItemMetaTransfer->fromArray($productEntity->toArray(), true);
     }
 }

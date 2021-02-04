@@ -18,6 +18,7 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 use Spryker\Zed\Wishlist\Business\Exception\WishlistExistsException;
 use Spryker\Zed\Wishlist\Dependency\Facade\WishlistToProductInterface;
+use Spryker\Zed\Wishlist\Persistence\WishlistEntityManagerInterface;
 use Spryker\Zed\Wishlist\Persistence\WishlistQueryContainerInterface;
 
 class Writer implements WriterInterface
@@ -42,6 +43,11 @@ class Writer implements WriterInterface
     protected $reader;
 
     /**
+     * @var \Spryker\Zed\Wishlist\Persistence\WishlistEntityManagerInterface
+     */
+    protected $wishlistEntityManager;
+
+    /**
      * @var \Spryker\Zed\Wishlist\Dependency\Facade\WishlistToProductInterface|null
      */
     protected $productFacade;
@@ -54,17 +60,20 @@ class Writer implements WriterInterface
     /**
      * @param \Spryker\Zed\Wishlist\Persistence\WishlistQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Wishlist\Business\Model\ReaderInterface $reader
+     * @param \Spryker\Zed\Wishlist\Persistence\WishlistEntityManagerInterface $wishlistEntityManager
      * @param \Spryker\Zed\Wishlist\Dependency\Facade\WishlistToProductInterface|null $productFacade
      * @param \Spryker\Zed\WishlistExtension\Dependency\Plugin\AddItemPreCheckPluginInterface[] $addItemPreCheckPlugins
      */
     public function __construct(
         WishlistQueryContainerInterface $queryContainer,
         ReaderInterface $reader,
+        WishlistEntityManagerInterface $wishlistEntityManager,
         ?WishlistToProductInterface $productFacade = null,
         array $addItemPreCheckPlugins = []
     ) {
         $this->queryContainer = $queryContainer;
         $this->reader = $reader;
+        $this->wishlistEntityManager = $wishlistEntityManager;
         $this->productFacade = $productFacade;
         $this->addItemPreCheckPlugins = $addItemPreCheckPlugins;
     }
@@ -305,16 +314,9 @@ class Writer implements WriterInterface
             $wishlistItemTransfer->getFkCustomer()
         );
 
-        $wishlistItemEntity = $this->queryContainer->queryWishlistItem()
-            ->filterByFkWishlist($idWishlist)
-            ->filterBySku($wishlistItemTransfer->getSku())
-            ->findOneOrCreate();
+        $wishlistItemTransfer->setFkWishlist($idWishlist);
 
-        $wishlistItemEntity->save();
-
-        $wishlistItemTransfer->setIdWishlistItem($wishlistItemEntity->getIdWishlistItem());
-
-        return $wishlistItemTransfer;
+        return $this->wishlistEntityManager->addItem($wishlistItemTransfer);
     }
 
     /**
@@ -331,10 +333,7 @@ class Writer implements WriterInterface
             $wishlistItemTransfer->getFkCustomer()
         );
 
-        $this->queryContainer->queryWishlistItem()
-            ->filterByFkWishlist($idWishlist)
-            ->filterBySku($wishlistItemTransfer->getSku())
-            ->delete();
+        $this->wishlistEntityManager->deleteItem($wishlistItemTransfer);
 
         return $wishlistItemTransfer;
     }
@@ -450,6 +449,8 @@ class Writer implements WriterInterface
     }
 
     /**
+     * @phpstan-param \Orm\Zed\Wishlist\Persistence\SpyWishlistQuery<mixed> $query
+     *
      * @param \Orm\Zed\Wishlist\Persistence\SpyWishlistQuery $query
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *

@@ -63,7 +63,8 @@ class ProductAlternativeMapper implements ProductAlternativeMapperInterface
             )
         );
         foreach ($productConcreteIds as $idProduct) {
-            $productViewTransferList[] = $this->findConcreteProductViewTransfer($idProduct, $localeName);
+            $concreteProductViewTransfer = $this->findConcreteProductViewTransfer($idProduct, $localeName);
+            $productViewTransferList[] = clone $productViewTransfer->fromArray($concreteProductViewTransfer->modifiedToArray());
         }
 
         return array_filter($productViewTransferList);
