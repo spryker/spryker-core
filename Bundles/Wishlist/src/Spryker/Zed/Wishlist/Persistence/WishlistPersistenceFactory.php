@@ -18,11 +18,12 @@ use Spryker\Zed\Wishlist\Persistence\Mapper\WishlistMapperInterface;
  * @method \Spryker\Zed\Wishlist\WishlistConfig getConfig()
  * @method \Spryker\Zed\Wishlist\Persistence\WishlistQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Wishlist\Persistence\WishlistRepositoryInterface getRepository()
+ * @method \Spryker\Zed\Wishlist\Persistence\WishlistEntityManagerInterface getEntityManager()
  */
 class WishlistPersistenceFactory extends AbstractPersistenceFactory
 {
     /**
-     * @return \Orm\Zed\Wishlist\Persistence\SpyWishlistQuery
+     * @return \Orm\Zed\Wishlist\Persistence\SpyWishlistQuery<\Orm\Zed\Wishlist\Persistence\SpyWishlist>
      */
     public function createWishlistQuery()
     {
@@ -30,7 +31,7 @@ class WishlistPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Orm\Zed\Wishlist\Persistence\SpyWishlistItemQuery
+     * @return \Orm\Zed\Wishlist\Persistence\SpyWishlistItemQuery<\Orm\Zed\Wishlist\Persistence\SpyWishlistItem>
      */
     public function createWishlistItemQuery()
     {
@@ -38,7 +39,7 @@ class WishlistPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery<\Orm\Zed\Product\Persistence\SpyProduct>
      */
     public function createProductQuery()
     {

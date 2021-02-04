@@ -20,7 +20,7 @@ class ProductViewOfferAvailabilityExpanderPlugin extends AbstractPlugin implemen
     /**
      * {@inheritDoc}
      * - Expands the ProductView transfer object with the available ones.
-     * - Checks if product offer exists by provided ProductStorageCriteria.product_offer_reference transfer property.
+     * - Checks if product offer exists by provided `ProductStorageCriteria::product_offer_reference`.
      *
      * @api
      *
