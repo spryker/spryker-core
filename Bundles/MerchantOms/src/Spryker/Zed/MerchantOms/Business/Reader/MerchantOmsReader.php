@@ -25,7 +25,7 @@ class MerchantOmsReader implements MerchantOmsReaderInterface
     }
 
     /**
-     * @phpstan-return array<int, array<\Generated\Shared\Transfer\StateMachineItemTransfer>>
+     * @phpstan-return array<int|string, array<int, \Generated\Shared\Transfer\StateMachineItemTransfer>>
      *
      * @param int[] $merchantOrderItemIds
      *
@@ -39,7 +39,10 @@ class MerchantOmsReader implements MerchantOmsReaderInterface
         $stateMachineItemTransfersGroupedByIdMerchantOrderItem = [];
 
         foreach ($stateMachineItemTransfers as $stateMachineItemTransfer) {
-            $stateMachineItemTransfersGroupedByIdMerchantOrderItem[$stateMachineItemTransfer->getIdentifier()][] = $stateMachineItemTransfer;
+            /** @var int $identifier */
+            $identifier = $stateMachineItemTransfer->getIdentifier();
+
+            $stateMachineItemTransfersGroupedByIdMerchantOrderItem[$identifier][] = $stateMachineItemTransfer;
         }
 
         return $stateMachineItemTransfersGroupedByIdMerchantOrderItem;

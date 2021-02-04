@@ -122,7 +122,7 @@ class DetailController extends AbstractController
         if (!$merchantOrderTransfer) {
             return null;
         }
-
+        /** @var int[] $merchantOrderItemIds */
         $merchantOrderItemIds = $this->extractMerchantOrderItemIds($merchantOrderTransfer->getMerchantOrderItems());
         $merchantOrderItemsStateHistory = $this->getFactory()
             ->getMerchantOmsFacade()
@@ -162,6 +162,8 @@ class DetailController extends AbstractController
     /**
      * @phpstan-param \ArrayObject<int,\Generated\Shared\Transfer\MerchantOrderItemTransfer> $merchantOrderItems
      *
+     * @phpstan-return array<array-key, int|null>
+     *
      * @param \ArrayObject|\Generated\Shared\Transfer\MerchantOrderItemTransfer[] $merchantOrderItems
      *
      * @return int[]
@@ -194,7 +196,10 @@ class DetailController extends AbstractController
         foreach ($groupedMerchantOrderItemsByShipment as $shipmentGroupTransfer) {
             $eventsForGroup = [];
             foreach ($shipmentGroupTransfer->getItems() as $itemTransfer) {
-                $merchantOrderItemTransfer = $merchantOrderItemsWithOrderItemIdKey[$itemTransfer->getIdSalesOrderItem()];
+                /** @var int $idSalesOrderItem */
+                $idSalesOrderItem = $itemTransfer->getIdSalesOrderItem();
+
+                $merchantOrderItemTransfer = $merchantOrderItemsWithOrderItemIdKey[$idSalesOrderItem];
                 $eventsForGroup = array_merge($eventsForGroup, $merchantOrderItemTransfer->getManualEvents());
             }
 
