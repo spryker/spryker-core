@@ -5,7 +5,7 @@
 
 'use strict';
 
-require('jquery-query-builder');
+require('@spryker/jquery-query-builder');
 
 var SqlQueryBuilder = function (options) {
     this.idProductRelation = null;
