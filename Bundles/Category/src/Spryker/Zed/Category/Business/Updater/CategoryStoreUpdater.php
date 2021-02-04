@@ -96,7 +96,7 @@ class CategoryStoreUpdater implements CategoryStoreUpdaterInterface
         }
 
         if ($categoryTransfer->getParentCategoryNode()) {
-            $parentStoreRelationTransfer = $this->categoryRepository->getCategoryStoreRelationByIdCategory(
+            $parentStoreRelationTransfer = $this->categoryRepository->getCategoryStoreRelationByIdCategoryNode(
                 $categoryTransfer->getParentCategoryNodeOrFail()->getFkCategoryOrFail()
             );
         }
