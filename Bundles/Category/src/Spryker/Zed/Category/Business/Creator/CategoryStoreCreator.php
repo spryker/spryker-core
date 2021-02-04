@@ -49,7 +49,7 @@ class CategoryStoreCreator implements CategoryStoreCreatorInterface
         $storeIdsToAdd = $categoryTransfer->getStoreRelationOrFail()->getIdStores();
         if ($categoryTransfer->getParentCategoryNode()) {
             $storeIdsToAdd = $this->filterOutStoreIdsMissingInParentCategoryStoreRelation(
-                $categoryTransfer->getParentCategoryNodeOrFail()->getFkCategoryOrFail(),
+                $categoryTransfer->getParentCategoryNodeOrFail()->getIdCategoryNodeOrFail(),
                 $storeIdsToAdd
             );
         }
@@ -61,14 +61,14 @@ class CategoryStoreCreator implements CategoryStoreCreatorInterface
     }
 
     /**
-     * @param int $parentIdCategory
+     * @param int $parentIdCategoryNode
      * @param int[] $storeIds
      *
      * @return int[]
      */
-    protected function filterOutStoreIdsMissingInParentCategoryStoreRelation(int $parentIdCategory, array $storeIds): array
+    protected function filterOutStoreIdsMissingInParentCategoryStoreRelation(int $parentIdCategoryNode, array $storeIds): array
     {
-        $parentStoreRelationTransfer = $this->categoryRepository->getCategoryStoreRelationByIdCategory($parentIdCategory);
+        $parentStoreRelationTransfer = $this->categoryRepository->getCategoryStoreRelationByIdCategoryNode($parentIdCategoryNode);
 
         return array_intersect($parentStoreRelationTransfer->getIdStores(), $storeIds);
     }

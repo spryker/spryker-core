@@ -530,17 +530,23 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
     }
 
     /**
-     * @param int $idCategory
+     * @param int $idCategoryNode
      *
      * @return \Generated\Shared\Transfer\StoreRelationTransfer
      */
-    public function getCategoryStoreRelationByIdCategory(int $idCategory): StoreRelationTransfer
+    public function getCategoryStoreRelationByIdCategoryNode(int $idCategoryNode): StoreRelationTransfer
     {
-        $storeRelationTransfer = (new StoreRelationTransfer())->setIdEntity($idCategory);
+        $storeRelationTransfer = (new StoreRelationTransfer())->setIdEntity($idCategoryNode);
 
         $categoryStoreEntities = $this->getFactory()
             ->createCategoryStoreQuery()
-            ->filterByFkCategory($idCategory)
+            ->joinWithSpyCategory()
+            ->useSpyCategoryQuery()
+                ->joinWithNode()
+                ->useNodeQuery()
+                    ->filterByIdCategoryNode($idCategoryNode)
+                ->endUse()
+            ->endUse()
             ->find();
 
         if (!$categoryStoreEntities->count()) {
