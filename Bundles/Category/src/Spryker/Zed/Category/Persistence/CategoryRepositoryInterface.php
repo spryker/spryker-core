@@ -121,11 +121,11 @@ interface CategoryRepositoryInterface
     public function getCategoryNodesByCriteria(CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer): NodeCollectionTransfer;
 
     /**
-     * @param int $idCategory
+     * @param int $idCategoryNode
      *
      * @return \Generated\Shared\Transfer\StoreRelationTransfer
      */
-    public function getCategoryStoreRelationByIdCategory(int $idCategory): StoreRelationTransfer;
+    public function getCategoryStoreRelationByIdCategoryNode(int $idCategoryNode): StoreRelationTransfer;
 
     /**
      * @param int $idCategoryNode
