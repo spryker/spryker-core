@@ -53,6 +53,7 @@
         <property name="items" type="WishlistItem[]" singular="item"/>
         <property name="pagination" type="WishlistPagination"/>
         <property name="meta" type="WishlistOverviewMeta"/>
+        <property name="errors" type="Message[]" singular="error"/>
     </transfer>
 
     <transfer name="StorageProduct">
@@ -114,6 +115,11 @@
 
     <transfer name="WishlistPreAddItemCheckResponse">
         <property name="isSuccess" type="bool"/>
+    </transfer>
+
+    <transfer name="WishlistItemValidationResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="messages" type="Message[]" singular="message"/>
     </transfer>
 
     <transfer name="Item">

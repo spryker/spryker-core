@@ -9,11 +9,13 @@
 
     <transfer name="MerchantSwitchRequest">
         <property name="quote" type="Quote"/>
+        <property name="wishlist" type="Wishlist"/>
         <property name="merchantReference" type="string"/>
     </transfer>
 
     <transfer name="MerchantSwitchResponse">
         <property name="quote" type="Quote"/>
+        <property name="wishlist" type="Wishlist"/>
     </transfer>
 
     <transfer name="Quote">
@@ -82,4 +84,19 @@
         <property name="isSuccessful" type="bool"/>
         <property name="errors" type="Message[]" singular="error"/>
     </transfer>
+
+    <transfer name="SingleMerchantWishlistItemsValidationResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="errors" type="Message[]" singular="error"/>
+    </transfer>
+
+    <transfer name="Wishlist">
+        <property name="merchantReference" type="string"/>
+    </transfer>
+
+    <transfer name="WishlistItem">
+        <property name="productOfferReference" type="string"/>
+        <property name="merchantReference" type="string"/>
+    </transfer>
+
 </transfers>
