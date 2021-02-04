@@ -35,7 +35,7 @@ class ProductConfigurationConcreteProductsResourceExpanderPlugin extends Abstrac
         RestRequestInterface $restRequest
     ): ConcreteProductsRestAttributesTransfer {
         return $this->getFactory()
-            ->createConcreteProductsProductConfigurationResourceExpander()
+            ->createProductConfigurationProductConcreteExpander()
             ->expandWithProductConfigurationInstance($concreteProductsRestAttributesTransfer);
     }
 }

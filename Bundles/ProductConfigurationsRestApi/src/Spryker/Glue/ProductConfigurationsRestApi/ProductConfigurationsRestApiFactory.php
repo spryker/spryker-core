@@ -17,7 +17,7 @@ class ProductConfigurationsRestApiFactory extends AbstractFactory
     /**
      * @return \Spryker\Glue\ProductConfigurationsRestApi\Processor\Expander\ProductConfigurationProductConcreteExpanderInterface
      */
-    public function createConcreteProductsProductConfigurationResourceExpander(): ProductConfigurationProductConcreteExpanderInterface
+    public function createProductConfigurationProductConcreteExpander(): ProductConfigurationProductConcreteExpanderInterface
     {
         return new ProductConfigurationProductConcreteExpander($this->getProductConfigurationStorageClient());
     }
