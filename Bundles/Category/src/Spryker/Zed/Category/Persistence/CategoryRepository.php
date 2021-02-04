@@ -536,7 +536,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
      */
     public function getCategoryStoreRelationByIdCategoryNode(int $idCategoryNode): StoreRelationTransfer
     {
-        $storeRelationTransfer = (new StoreRelationTransfer())->setIdEntity($idCategoryNode);
+        $storeRelationTransfer = new StoreRelationTransfer();
 
         $categoryStoreEntities = $this->getFactory()
             ->createCategoryStoreQuery()
