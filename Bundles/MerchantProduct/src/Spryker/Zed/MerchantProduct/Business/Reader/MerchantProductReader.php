@@ -8,11 +8,12 @@
 namespace Spryker\Zed\MerchantProduct\Business\Reader;
 
 use Generated\Shared\Transfer\MerchantProductCriteriaTransfer;
+use Generated\Shared\Transfer\MerchantProductTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Spryker\Zed\MerchantProduct\Dependency\Facade\MerchantProductToProductFacadeInterface;
 use Spryker\Zed\MerchantProduct\Persistence\MerchantProductRepositoryInterface;
 
-class ProductAbstractReader implements ProductAbstractReaderInterface
+class MerchantProductReader implements MerchantProductReaderInterface
 {
     /**
      * @var \Spryker\Zed\MerchantProduct\Persistence\MerchantProductRepositoryInterface
@@ -39,17 +40,21 @@ class ProductAbstractReader implements ProductAbstractReaderInterface
     /**
      * @param \Generated\Shared\Transfer\MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer|null
+     * @return \Generated\Shared\Transfer\MerchantProductTransfer|null
      */
-    public function findProductAbstract(
+    public function findMerchantProduct(
         MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer
-    ): ?ProductAbstractTransfer {
+    ): ?MerchantProductTransfer {
         $merchantProductTransfer = $this->merchantProductRepository->findMerchantProduct($merchantProductCriteriaTransfer);
 
         if (!$merchantProductTransfer || $merchantProductTransfer->getIdProductAbstract() === null) {
             return null;
         }
 
-        return $this->productFacade->findProductAbstractById($merchantProductTransfer->getIdProductAbstract());
+        $merchantProductTransfer->setProductAbstract(
+            $this->productFacade->findProductAbstractById($merchantProductTransfer->getIdProductAbstract())
+        );
+
+        return $merchantProductTransfer;
     }
 }

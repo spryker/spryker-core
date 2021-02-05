@@ -17,6 +17,7 @@ use Generated\Shared\Transfer\ValidationResponseTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Laminas\Filter\StringToUpper;
 
 /**
  * @method \Spryker\Zed\ProductMerchantPortalGui\Communication\ProductMerchantPortalGuiCommunicationFactory getFactory()
@@ -28,6 +29,17 @@ class SavePriceProductAbstractController extends AbstractController
      * @uses \Spryker\Shared\PriceProduct\PriceProductConfig::PRICE_DIMENSION_DEFAULT
      */
     protected const PRICE_DIMENSION_TYPE_DEFAULT = 'PRICE_DIMENSION_DEFAULT';
+
+    protected const RESPONSE_MESSAGE_SUCCESS = 'Product prices saved successfully.';
+
+    protected const RESPONSE_KEY_POST_ACTIONS = 'postActions';
+    protected const RESPONSE_KEY_NOTIFICATIONS = 'notifications';
+    protected const RESPONSE_KEY_TYPE = 'type';
+    protected const RESPONSE_KEY_MESSAGE = 'message';
+
+    protected const RESPONSE_TYPE_REFRESH_TABLE = 'refresh_table';
+    protected const RESPONSE_TYPE_SUCCESS = 'success';
+    protected const RESPONSE_TYPE_ERROR = 'error';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -71,7 +83,7 @@ class SavePriceProductAbstractController extends AbstractController
         array $data
     ): ArrayObject {
         $key = (string)key($data);
-        $priceTypeName = mb_strtoupper((string)strstr($key, '[', true));
+        $priceTypeName = (new StringToUpper)->filter((string)strstr($key, '[', true));
         $priceProductStoreIds = $this->getPriceProductStoreIds($key, $priceTypeName, $typePriceProductStoreIds);
 
         if (!$priceProductStoreIds) {
@@ -140,15 +152,15 @@ class SavePriceProductAbstractController extends AbstractController
     protected function getSuccessJsonResponse(): JsonResponse
     {
         $response = [
-            'notifications' => [
+            static::RESPONSE_KEY_NOTIFICATIONS => [
                 [
-                    'type' => 'success',
-                    'message' => 'Product prices saved successfully.',
+                    static::RESPONSE_KEY_TYPE => static::RESPONSE_TYPE_SUCCESS,
+                    static::RESPONSE_KEY_MESSAGE => static::RESPONSE_MESSAGE_SUCCESS,
                 ],
             ],
-            'postActions' => [
+            static::RESPONSE_KEY_POST_ACTIONS => [
                 [
-                    'type' => 'refresh_table',
+                    static::RESPONSE_KEY_TYPE => static::RESPONSE_TYPE_REFRESH_TABLE,
                 ],
             ],
         ];
@@ -167,11 +179,11 @@ class SavePriceProductAbstractController extends AbstractController
         /** @var \Generated\Shared\Transfer\ValidationErrorTransfer $validationErrorTransfer */
         $validationErrorTransfer = $validationResponseTransfer->getValidationErrors()->offsetGet(0);
         $notifications[] = [
-            'type' => 'error',
-            'message' => $validationErrorTransfer->getMessage(),
+            static::RESPONSE_KEY_TYPE => static::RESPONSE_TYPE_ERROR,
+            static::RESPONSE_KEY_MESSAGE => $validationErrorTransfer->getMessage(),
         ];
         $response = [
-            'notifications' => $notifications,
+            static::RESPONSE_KEY_NOTIFICATIONS => $notifications,
         ];
 
         return new JsonResponse($response);

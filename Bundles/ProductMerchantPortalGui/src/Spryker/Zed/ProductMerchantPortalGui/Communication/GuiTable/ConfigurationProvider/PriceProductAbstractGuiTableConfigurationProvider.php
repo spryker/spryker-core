@@ -29,6 +29,11 @@ class PriceProductAbstractGuiTableConfigurationProvider implements PriceProductA
     protected const TITLE_FILTER_IN_CURRENCIES = 'Currencies';
 
     protected const TITLE_ROW_ACTION_DELETE = 'Delete';
+    protected const TITLE_EDITABLE_BUTTON = 'Add';
+
+    protected const FORMAT_STRING_PRICE_KEY = '%s[%s][%s]';
+    protected const FORMAT_STRING_DATA_URL = '%s?%s=%s';
+    protected const FORMAT_STRING_PRICES_URL = '%s?%s=${row.%s}&%s=${row.%s}';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\UpdateProductAbstractController::tableDataAction()
@@ -128,7 +133,7 @@ class PriceProductAbstractGuiTableConfigurationProvider implements PriceProductA
         $formInputName = sprintf('%s[%s]', ProductAbstractForm::BLOCK_PREFIX, ProductAbstractTransfer::PRICES);
 
         $guiTableConfigurationBuilder->enableAddingNewRows($formInputName, $initialData, [
-            GuiTableEditableButtonTransfer::TITLE => 'Add',
+            GuiTableEditableButtonTransfer::TITLE => static::TITLE_EDITABLE_BUTTON,
         ]);
         $guiTableConfigurationBuilder = $this->addEditableColumns($guiTableConfigurationBuilder);
         $guiTableConfigurationBuilder->enableInlineDataEditing($this->getSavePricesUrl(), 'POST');
@@ -162,14 +167,14 @@ class PriceProductAbstractGuiTableConfigurationProvider implements PriceProductA
             $idPriceTypeName = mb_strtolower($priceTypeTransfer->getName());
             $titlePriceTypeName = ucfirst($idPriceTypeName);
             $idNetColumn = sprintf(
-                '%s[%s][%s]',
+                static::FORMAT_STRING_PRICE_KEY,
                 $idPriceTypeName,
                 PriceProductTransfer::MONEY_VALUE,
                 MoneyValueTransfer::NET_AMOUNT
             );
 
             $idGrossColumn = sprintf(
-                '%s[%s][%s]',
+                static::FORMAT_STRING_PRICE_KEY,
                 $idPriceTypeName,
                 PriceProductTransfer::MONEY_VALUE,
                 MoneyValueTransfer::GROSS_AMOUNT
@@ -214,13 +219,13 @@ class PriceProductAbstractGuiTableConfigurationProvider implements PriceProductA
             $idPriceTypeName = mb_strtolower($priceTypeTransfer->getName());
             $titlePriceTypeName = ucfirst($idPriceTypeName);
             $idNetColumn = sprintf(
-                '%s[%s][%s]',
+                static::FORMAT_STRING_PRICE_KEY,
                 $idPriceTypeName,
                 PriceProductTransfer::MONEY_VALUE,
                 MoneyValueTransfer::NET_AMOUNT
             );
             $idGrossColumn = sprintf(
-                '%s[%s][%s]',
+                static::FORMAT_STRING_PRICE_KEY,
                 $idPriceTypeName,
                 PriceProductTransfer::MONEY_VALUE,
                 MoneyValueTransfer::GROSS_AMOUNT
@@ -292,7 +297,7 @@ class PriceProductAbstractGuiTableConfigurationProvider implements PriceProductA
     protected function getDataUrl(int $idProductAbstract): string
     {
         return sprintf(
-            '%s?%s=%s',
+            static::FORMAT_STRING_DATA_URL,
             static::DATA_URL,
             PriceProductAbstractTableViewTransfer::ID_PRODUCT_ABSTRACT,
             $idProductAbstract
@@ -305,7 +310,7 @@ class PriceProductAbstractGuiTableConfigurationProvider implements PriceProductA
     protected function getSavePricesUrl(): string
     {
         return sprintf(
-            '%s?%s=${row.%s}&%s=${row.%s}',
+            static::FORMAT_STRING_PRICES_URL,
             static::URL_SAVE_PRICES,
             PriceProductAbstractTableViewTransfer::TYPE_PRICE_PRODUCT_STORE_IDS,
             PriceProductAbstractTableViewTransfer::TYPE_PRICE_PRODUCT_STORE_IDS,
@@ -320,7 +325,7 @@ class PriceProductAbstractGuiTableConfigurationProvider implements PriceProductA
     protected function getDeletePricesUrl(): string
     {
         return sprintf(
-            '%s?%s=${row.%s}&%s=${row.%s}',
+            static::FORMAT_STRING_PRICES_URL,
             static::URL_DELETE_PRICE,
             PriceProductAbstractTableViewTransfer::ID_PRODUCT_ABSTRACT,
             PriceProductAbstractTableViewTransfer::ID_PRODUCT_ABSTRACT,

@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductMerchantPortalGui\Persistence\Propel;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Propel\Runtime\Util\PropelModelPager;
 
-class PropelModelPagerMapper
+class PropelModelPagerConverter
 {
     /**
      * @phpstan-param \Propel\Runtime\Util\PropelModelPager<mixed> $propelPager

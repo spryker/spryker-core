@@ -21,6 +21,8 @@ use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortal
 
 class PriceProductMapper implements PriceProductMapperInterface
 {
+    protected const ROW_ERROR_PROPERTY_PATH_NESTING = 3;
+
     protected const MAP_FIELD_NAMES = [
         MoneyValueTransfer::FK_STORE => PriceProductAbstractTableViewTransfer::STORE,
         MoneyValueTransfer::FK_CURRENCY => PriceProductAbstractTableViewTransfer::CURRENCY,
@@ -50,13 +52,13 @@ class PriceProductMapper implements PriceProductMapperInterface
 
     /**
      * @param \Generated\Shared\Transfer\ValidationResponseTransfer $validationResponseTransfer
-     * @param mixed[] $initialData
+     * @param mixed[] $initialDataErrors
      *
      * @return mixed[]
      */
     public function mapValidationResponseTransferToInitialDataErrors(
         ValidationResponseTransfer $validationResponseTransfer,
-        array $initialData
+        array $initialDataErrors
     ): array {
         $validationErrorTransfers = $validationResponseTransfer->getValidationErrors();
         $priceTypeTransfers = $this->priceProductFacade->getPriceTypeValues();
@@ -66,10 +68,10 @@ class PriceProductMapper implements PriceProductMapperInterface
                 continue;
             }
 
-            $initialData = $this->addInitialDataErrors($validationErrorTransfer, $priceTypeTransfers, $initialData);
+            $initialDataErrors = $this->addInitialDataErrors($validationErrorTransfer, $priceTypeTransfers, $initialDataErrors);
         }
 
-        return $initialData;
+        return $initialDataErrors;
     }
 
     /**
@@ -77,42 +79,42 @@ class PriceProductMapper implements PriceProductMapperInterface
      *
      * @param \Generated\Shared\Transfer\ValidationErrorTransfer $validationErrorTransfer
      * @param \Generated\Shared\Transfer\PriceTypeTransfer[] $priceTypeTransfers
-     * @param mixed[] $initialData
+     * @param mixed[] $initialDataErrors
      *
      * @return mixed[]
      */
     protected function addInitialDataErrors(
         ValidationErrorTransfer $validationErrorTransfer,
         array $priceTypeTransfers,
-        array $initialData
+        array $initialDataErrors
     ): array {
         $propertyPath = $this->extractPropertyPathValues($validationErrorTransfer->getPropertyPath());
 
         if (!$propertyPath || !is_array($propertyPath)) {
-            return $initialData;
+            return $initialDataErrors;
         }
 
         $rowNumber = (int)$propertyPath[0] === 0 ? 0 : round(((int)$propertyPath[0] - 1) / count($priceTypeTransfers));
-        $isRowError = count($propertyPath) < 3;
+        $isRowError = count($propertyPath) < static::ROW_ERROR_PROPERTY_PATH_NESTING;
         $errorMessage = $validationErrorTransfer->getMessage();
 
         if ($isRowError) {
-            $initialData[GuiTableEditableInitialDataTransfer::ERRORS][$rowNumber][GuiTableEditableDataErrorTransfer::ROW_ERROR] = $errorMessage;
-            $initialData[GuiTableEditableInitialDataTransfer::ERRORS][$rowNumber][GuiTableEditableDataErrorTransfer::COLUMN_ERRORS][PriceProductAbstractTableViewTransfer::STORE] = true;
-            $initialData[GuiTableEditableInitialDataTransfer::ERRORS][$rowNumber][GuiTableEditableDataErrorTransfer::COLUMN_ERRORS][PriceProductAbstractTableViewTransfer::CURRENCY] = true;
+            $initialDataErrors[GuiTableEditableInitialDataTransfer::ERRORS][$rowNumber][GuiTableEditableDataErrorTransfer::ROW_ERROR] = $errorMessage;
+            $initialDataErrors[GuiTableEditableInitialDataTransfer::ERRORS][$rowNumber][GuiTableEditableDataErrorTransfer::COLUMN_ERRORS][PriceProductAbstractTableViewTransfer::STORE] = true;
+            $initialDataErrors[GuiTableEditableInitialDataTransfer::ERRORS][$rowNumber][GuiTableEditableDataErrorTransfer::COLUMN_ERRORS][PriceProductAbstractTableViewTransfer::CURRENCY] = true;
 
-            return $initialData;
+            return $initialDataErrors;
         }
 
         $idColumn = $this->transformPropertyPathToColumnId($propertyPath, $priceTypeTransfers);
 
         if (!$idColumn) {
-            return $initialData;
+            return $initialDataErrors;
         }
 
-        $initialData[GuiTableEditableInitialDataTransfer::ERRORS][$rowNumber][GuiTableEditableDataErrorTransfer::COLUMN_ERRORS][$idColumn] = $errorMessage;
+        $initialDataErrors[GuiTableEditableInitialDataTransfer::ERRORS][$rowNumber][GuiTableEditableDataErrorTransfer::COLUMN_ERRORS][$idColumn] = $errorMessage;
 
-        return $initialData;
+        return $initialDataErrors;
     }
 
     /**

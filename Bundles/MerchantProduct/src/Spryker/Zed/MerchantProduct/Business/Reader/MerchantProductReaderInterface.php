@@ -8,16 +8,16 @@
 namespace Spryker\Zed\MerchantProduct\Business\Reader;
 
 use Generated\Shared\Transfer\MerchantProductCriteriaTransfer;
-use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\MerchantProductTransfer;
 
-interface ProductAbstractReaderInterface
+interface MerchantProductReaderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer|null
+     * @return \Generated\Shared\Transfer\MerchantProductTransfer|null
      */
-    public function findProductAbstract(
+    public function findMerchantProduct(
         MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer
-    ): ?ProductAbstractTransfer;
+    ): ?MerchantProductTransfer;
 }

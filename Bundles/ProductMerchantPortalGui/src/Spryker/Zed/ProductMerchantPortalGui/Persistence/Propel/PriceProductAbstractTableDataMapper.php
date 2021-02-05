@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\PriceProductAbstractTableViewCollectionTransfer;
 use Generated\Shared\Transfer\PriceProductAbstractTableViewTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToPriceProductFacadeInterface;
+use Laminas\Filter\StringToLower;
 
 class PriceProductAbstractTableDataMapper
 {
@@ -80,7 +81,7 @@ class PriceProductAbstractTableDataMapper
         $prices = [];
 
         foreach ($priceTypeTransfers as $priceTypeTransfer) {
-            $priceTypeName = mb_strtolower($priceTypeTransfer->getName());
+            $priceTypeName = (new StringToLower())->filter($priceTypeTransfer->getName());
             $keyNetPrice = $priceTypeName . static::SUFFIX_PRICE_TYPE_NET;
             $keyGrossPrice = $priceTypeName . static::SUFFIX_PRICE_TYPE_GROSS;
 

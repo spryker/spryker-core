@@ -29,6 +29,9 @@ class ProductAbstractGuiTableConfigurationProvider implements ProductAbstractGui
 
     protected const SEARCH_PLACEHOLDER = 'Search by SKU, Name';
 
+    protected const TITLE_ROW_ACTION_UPDATE_PRODUCT = 'Manage Product';
+    protected const URL_ROW_ACTION_UPDATE_PRODUCT = '/product-merchant-portal-gui/update-product-abstract?product-abstract-id=${row.%s}';
+
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\ProductsController::tableDataAction()
      */
@@ -143,9 +146,9 @@ class ProductAbstractGuiTableConfigurationProvider implements ProductAbstractGui
     {
         $guiTableConfigurationBuilder->addRowActionOpenFormOverlay(
             'update-product',
-            'Manage Product',
+            static::TITLE_ROW_ACTION_UPDATE_PRODUCT,
             sprintf(
-                '/product-merchant-portal-gui/update-product-abstract?product-abstract-id=${row.%s}',
+                static::URL_ROW_ACTION_UPDATE_PRODUCT,
                 ProductAbstractTransfer::ID_PRODUCT_ABSTRACT
             )
         )->setRowClickAction('update-product');

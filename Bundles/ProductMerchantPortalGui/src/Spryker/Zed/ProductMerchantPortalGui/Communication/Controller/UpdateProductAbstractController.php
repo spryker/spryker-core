@@ -12,12 +12,13 @@ use Generated\Shared\Transfer\MerchantProductTransfer;
 use Generated\Shared\Transfer\PriceProductAbstractTableViewTransfer;
 use Generated\Shared\Transfer\ProductAbstractResponseTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ValidationResponseTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Exception\MerchantProductNotFoundException;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \Spryker\Zed\ProductMerchantPortalGui\Communication\ProductMerchantPortalGuiCommunicationFactory getFactory()
@@ -27,10 +28,23 @@ class UpdateProductAbstractController extends AbstractController
 {
     protected const PARAM_ID_PRODUCT_ABSTRACT = 'product-abstract-id';
 
+    protected const RESPONSE_MESSAGE_SUCCESS = 'The Product is saved.';
+    protected const RESPONSE_MESSAGE_ERROR = 'Please resolve all errors.';
+
+    protected const RESPONSE_KEY_POST_ACTIONS = 'postActions';
+    protected const RESPONSE_KEY_NOTIFICATIONS = 'notifications';
+    protected const RESPONSE_KEY_TYPE = 'type';
+    protected const RESPONSE_KEY_MESSAGE = 'message';
+
+    protected const RESPONSE_TYPE_REFRESH_TABLE = 'refresh_table';
+    protected const RESPONSE_TYPE_CLOSE_OVERLAY = 'close_overlay';
+    protected const RESPONSE_TYPE_SUCCESS = 'success';
+    protected const RESPONSE_TYPE_ERROR = 'error';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws \Spryker\Zed\ProductMerchantPortalGui\Communication\Exception\MerchantProductNotFoundException
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
@@ -42,14 +56,9 @@ class UpdateProductAbstractController extends AbstractController
         $productAbstractTransfer = $this->getFactory()
             ->createProductAbstractFormDataProvider()
             ->findProductAbstract($idProductAbstract, $idMerchant);
-        $initialCategoryIds = $productAbstractTransfer->getCategoryIds();
 
         if (!$productAbstractTransfer) {
-            throw new NotFoundHttpException(sprintf(
-                'Product abstract is not found for product abstract id %d and merchant id %d.',
-                $idProductAbstract,
-                $idMerchant
-            ));
+            throw new MerchantProductNotFoundException($idProductAbstract, $idMerchant);
         }
 
         $productAbstractForm = $this->getFactory()->createProductAbstractForm(
@@ -57,33 +66,18 @@ class UpdateProductAbstractController extends AbstractController
             $this->getFactory()->createProductAbstractFormDataProvider()->getOptions()
         );
         $productAbstractForm->handleRequest($request);
-        $productAbstractResponseTransfer = new ProductAbstractResponseTransfer();
         $initialData = $this->getDefaultInitialData($request, $productAbstractForm->getName());
 
-        if (!$productAbstractForm->isSubmitted()) {
-            return $this->getResponse($productAbstractForm, $productAbstractTransfer, $productAbstractResponseTransfer, $initialData);
+        if ($productAbstractForm->isSubmitted()) {
+            return $this->executeProductAbstractFormSubmission(
+                $productAbstractForm,
+                $productAbstractTransfer,
+                $idMerchant,
+                $initialData
+            );
         }
 
-        $validationResponseTransfer = $this->getFactory()
-            ->getPriceProductFacade()
-            ->validatePrices($productAbstractForm->getData()->getPrices());
-
-        if ($productAbstractForm->isValid() && $validationResponseTransfer->getIsSuccess()) {
-            $productAbstractTransfer = $productAbstractForm->getData();
-            $merchantProductTransfer = (new MerchantProductTransfer())->setProductAbstract($productAbstractTransfer)
-                ->setIdMerchant($idMerchant);
-
-            $productAbstractResponseTransfer = $this->getFactory()
-                ->getMerchantProductFacade()->updateProductAbstract($merchantProductTransfer);
-            $this->updateProductCategories($productAbstractTransfer, $initialCategoryIds);
-        }
-
-        $initialData = $this->getFactory()->createPriceProductMapper()->mapValidationResponseTransferToInitialDataErrors(
-            $validationResponseTransfer,
-            $initialData
-        );
-
-        return $this->getResponse($productAbstractForm, $productAbstractTransfer, $productAbstractResponseTransfer, $initialData);
+        return $this->getResponse($productAbstractForm, $productAbstractTransfer, new ValidationResponseTransfer(), $initialData);
     }
 
     /**
@@ -91,7 +85,52 @@ class UpdateProductAbstractController extends AbstractController
      *
      * @param \Symfony\Component\Form\FormInterface $productAbstractForm
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     * @param \Generated\Shared\Transfer\ProductAbstractResponseTransfer $productAbstractResponseTransfer
+     * @param int $idMerchant
+     * @param mixed[] $initialData
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    protected function executeProductAbstractFormSubmission(
+        FormInterface $productAbstractForm,
+        ProductAbstractTransfer $productAbstractTransfer,
+        int $idMerchant,
+        array $initialData
+    ): JsonResponse {
+        $pricesValidationResponseTransfer = $this->getFactory()
+            ->getPriceProductFacade()
+            ->validatePrices($productAbstractForm->getData()->getPrices());
+        $merchantProductValidationResponseTransfer = new ValidationResponseTransfer();
+
+        if ($productAbstractForm->isValid() && $pricesValidationResponseTransfer->getIsSuccess()) {
+            $initialCategoryIds = $productAbstractTransfer->getCategoryIds();
+            $productAbstractTransfer = $productAbstractForm->getData();
+            $merchantProductTransfer = (new MerchantProductTransfer())->setProductAbstract($productAbstractTransfer)
+                ->setIdMerchant($idMerchant);
+
+            $merchantProductValidationResponseTransfer = $this->getFactory()
+                ->getMerchantProductFacade()->validateMerchantProduct($merchantProductTransfer);
+
+            if ($merchantProductValidationResponseTransfer->getIsSuccess()) {
+                $this->getFactory()->getProductFacade()->saveProductAbstract($productAbstractTransfer);
+            }
+
+            $this->updateProductCategories($productAbstractTransfer, $initialCategoryIds);
+        }
+
+        $initialData = $this->getFactory()->createPriceProductMapper()->mapValidationResponseTransferToInitialDataErrors(
+            $pricesValidationResponseTransfer,
+            $initialData
+        );
+
+        return $this->getResponse($productAbstractForm, $productAbstractTransfer, $merchantProductValidationResponseTransfer, $initialData);
+    }
+
+    /**
+     * @phpstan-param \Symfony\Component\Form\FormInterface<mixed> $productAbstractForm
+     *
+     * @param \Symfony\Component\Form\FormInterface $productAbstractForm
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param \Generated\Shared\Transfer\ValidationResponseTransfer $validationResponseTransfer
      * @param mixed[] $initialData
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
@@ -99,7 +138,7 @@ class UpdateProductAbstractController extends AbstractController
     protected function getResponse(
         FormInterface $productAbstractForm,
         ProductAbstractTransfer $productAbstractTransfer,
-        ProductAbstractResponseTransfer $productAbstractResponseTransfer,
+        ValidationResponseTransfer $validationResponseTransfer,
         array $initialData
     ): JsonResponse {
         $localeTransfer = $this->getFactory()->getLocaleFacade()->getCurrentLocale();
@@ -126,40 +165,79 @@ class UpdateProductAbstractController extends AbstractController
             return new JsonResponse($responseData);
         }
 
-        if ($productAbstractForm->isValid() && $productAbstractResponseTransfer->getIsSuccessful()) {
-            $responseData['postActions'] = [
-                [
-                    'type' => 'close_overlay',
-                ],
-                [
-                    'type' => 'refresh_table',
-                ],
-            ];
-            $responseData['notifications'] = [[
-                'type' => 'success',
-                'message' => 'The Product is saved.',
-            ]];
+        if ($productAbstractForm->isValid() && $validationResponseTransfer->getIsSuccess()) {
+            $responseData = $this->addSuccessResponseDataToResponse($responseData);
 
             return new JsonResponse($responseData);
         }
 
         if (!$productAbstractForm->isValid()) {
-            $responseData['notifications'][] = [
-                'type' => 'error',
-                'message' => 'Please resolve all errors.',
-            ];
+            $responseData = $this->addErrorResponseDataToResponse($responseData);
         }
 
-        if (!$productAbstractResponseTransfer->getIsSuccessful()) {
-            foreach ($productAbstractResponseTransfer->getMessages() as $messageTransfer) {
-                $responseData['notifications'][] = [
-                    'type' => 'error',
-                    'message' => $messageTransfer->getValue(),
-                ];
-            }
+        if (!$validationResponseTransfer->getIsSuccess()) {
+            $responseData = $this->addValidationResponseMessagesToResponse($responseData, $validationResponseTransfer);
         }
 
         return new JsonResponse($responseData);
+    }
+
+    /**
+     * @param mixed[] $responseData
+     *
+     * @return mixed[]
+     */
+    protected function addSuccessResponseDataToResponse(array $responseData): array
+    {
+        $responseData[static::RESPONSE_KEY_POST_ACTIONS] = [
+            [
+                static::RESPONSE_KEY_TYPE => static::RESPONSE_TYPE_CLOSE_OVERLAY,
+            ],
+            [
+                static::RESPONSE_KEY_TYPE => static::RESPONSE_TYPE_REFRESH_TABLE,
+            ],
+        ];
+        $responseData[static::RESPONSE_KEY_NOTIFICATIONS] = [[
+            static::RESPONSE_KEY_TYPE => static::RESPONSE_TYPE_SUCCESS,
+            static::RESPONSE_KEY_MESSAGE => static::RESPONSE_MESSAGE_SUCCESS,
+        ]];
+
+        return $responseData;
+    }
+
+    /**
+     * @param mixed[] $responseData
+     *
+     * @return mixed[]
+     */
+    protected function addErrorResponseDataToResponse(array $responseData): array
+    {
+        $responseData[static::RESPONSE_KEY_NOTIFICATIONS][] = [
+            static::RESPONSE_KEY_TYPE => static::RESPONSE_TYPE_ERROR,
+            static::RESPONSE_KEY_MESSAGE => static::RESPONSE_MESSAGE_ERROR,
+        ];
+
+        return $responseData;
+    }
+
+    /**
+     * @param mixed[] $responseData
+     * @param \Generated\Shared\Transfer\ValidationResponseTransfer $validationResponseTransfer
+     *
+     * @return mixed[]
+     */
+    protected function addValidationResponseMessagesToResponse(
+        array $responseData,
+        ValidationResponseTransfer $validationResponseTransfer
+    ): array {
+        foreach ($validationResponseTransfer->getValidationErrors() as $validationErrorTransfer) {
+            $responseData[static::RESPONSE_KEY_NOTIFICATIONS][] = [
+                static::RESPONSE_KEY_TYPE => static::RESPONSE_TYPE_ERROR,
+                static::RESPONSE_KEY_MESSAGE => $validationErrorTransfer->getMessage(),
+            ];
+        }
+
+        return $responseData;
     }
 
     /**

@@ -77,7 +77,7 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
             $merchantProductTableCriteriaTransfer->requirePageSize()->getPageSize()
         );
 
-        $paginationTransfer = $this->getFactory()->createPropelModelPagerMapper()->mapPropelModelPagerToPaginationTransfer($propelPager);
+        $paginationTransfer = $this->getFactory()->createPropelModelPagerConverter()->mapPropelModelPagerToPaginationTransfer($propelPager);
         $productAbstractCollectionTransfer = $this->getFactory()
             ->createProductAbstractTableDataMapper()
             ->mapProductAbstractTableDataArrayToProductAbstractCollectionTransfer(
@@ -525,7 +525,7 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
             $priceProductAbstractTableCriteriaTransfer->requirePage()->getPage(),
             $priceProductAbstractTableCriteriaTransfer->requirePageSize()->getPageSize()
         );
-        $paginationTransfer = $this->getFactory()->createPropelModelPagerMapper()->mapPropelModelPagerToPaginationTransfer($propelPager);
+        $paginationTransfer = $this->getFactory()->createPropelModelPagerConverter()->mapPropelModelPagerToPaginationTransfer($propelPager);
 
         $priceProductAbstractTableViewCollectionTransfer = $this->getFactory()
             ->createPriceProductAbstractTableDataMapper()

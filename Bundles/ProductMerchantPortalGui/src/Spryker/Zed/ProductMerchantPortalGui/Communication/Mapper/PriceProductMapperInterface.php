@@ -14,13 +14,13 @@ interface PriceProductMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ValidationResponseTransfer $validationResponseTransfer
-     * @param mixed[] $initialData
+     * @param mixed[] $initialDataErrors
      *
      * @return mixed[]
      */
     public function mapValidationResponseTransferToInitialDataErrors(
         ValidationResponseTransfer $validationResponseTransfer,
-        array $initialData
+        array $initialDataErrors
     ): array;
 
     /**

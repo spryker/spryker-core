@@ -17,9 +17,12 @@ use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortal
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToPriceProductFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Service\ProductMerchantPortalGuiToUtilEncodingServiceInterface;
 use Symfony\Component\Form\DataTransformerInterface;
+use Laminas\Filter\StringToLower;
 
 class PriceProductTransformer implements DataTransformerInterface
 {
+    protected const PRICE_KEY = '%s[%s][%s]';
+
     /**
      * @var int
      */
@@ -154,7 +157,7 @@ class PriceProductTransformer implements DataTransformerInterface
                 ->setFkStore($newPriceProduct[PriceProductAbstractTableViewTransfer::STORE])
                 ->setFkCurrency($newPriceProduct[PriceProductAbstractTableViewTransfer::CURRENCY]);
 
-            $priceTypeName = mb_strtolower($priceTypeTransfer->getName());
+            $priceTypeName = (new StringToLower())->filter($priceTypeTransfer->getName());
             $netAmountKey = $this->createNetKey($priceTypeName);
             $grossAmountKey = $this->createGrossKey($priceTypeName);
 
@@ -202,7 +205,7 @@ class PriceProductTransformer implements DataTransformerInterface
                 continue;
             }
 
-            $priceTypeName = mb_strtolower((string)$priceTypeName);
+            $priceTypeName = (new StringToLower())->filter((string)$priceTypeName);
             $netAmountKey = $this->createNetKey($priceTypeName);
             $grossAmountKey = $this->createGrossKey($priceTypeName);
             /** @var \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer */
@@ -223,7 +226,7 @@ class PriceProductTransformer implements DataTransformerInterface
     protected function createGrossKey(string $pryceTypeName): string
     {
         return sprintf(
-            '%s[%s][%s]',
+            static::PRICE_KEY,
             $pryceTypeName,
             PriceProductTransfer::MONEY_VALUE,
             MoneyValueTransfer::GROSS_AMOUNT
@@ -238,7 +241,7 @@ class PriceProductTransformer implements DataTransformerInterface
     protected function createNetKey(string $pryceTypeName): string
     {
         return sprintf(
-            '%s[%s][%s]',
+            static::PRICE_KEY,
             $pryceTypeName,
             PriceProductTransfer::MONEY_VALUE,
             MoneyValueTransfer::NET_AMOUNT

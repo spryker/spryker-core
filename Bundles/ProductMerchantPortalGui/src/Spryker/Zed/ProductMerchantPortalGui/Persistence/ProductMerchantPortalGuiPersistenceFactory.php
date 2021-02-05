@@ -18,7 +18,7 @@ use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortal
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Service\ProductMerchantPortalGuiToUtilEncodingServiceInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Persistence\Propel\PriceProductAbstractTableDataMapper;
 use Spryker\Zed\ProductMerchantPortalGui\Persistence\Propel\ProductAbstractTableDataMapper;
-use Spryker\Zed\ProductMerchantPortalGui\Persistence\Propel\PropelModelPagerMapper;
+use Spryker\Zed\ProductMerchantPortalGui\Persistence\Propel\PropelModelPagerConverter;
 use Spryker\Zed\ProductMerchantPortalGui\ProductMerchantPortalGuiDependencyProvider;
 
 /**
@@ -44,11 +44,11 @@ class ProductMerchantPortalGuiPersistenceFactory extends AbstractPersistenceFact
     }
 
     /**
-     * @return \Spryker\Zed\ProductMerchantPortalGui\Persistence\Propel\PropelModelPagerMapper
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Persistence\Propel\PropelModelPagerConverter
      */
-    public function createPropelModelPagerMapper(): PropelModelPagerMapper
+    public function createPropelModelPagerConverter(): PropelModelPagerConverter
     {
-        return new PropelModelPagerMapper();
+        return new PropelModelPagerConverter();
     }
 
     /**

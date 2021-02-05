@@ -20,6 +20,18 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DeletePriceProductAbstractController extends AbstractController
 {
+    protected const RESPONSE_MESSAGE_SUCCESS = 'Success! The Price is deleted.';
+    protected const RESPONSE_MESSAGE_ERROR = 'Something went wrong, please try again.';
+
+    protected const RESPONSE_KEY_POST_ACTIONS = 'postActions';
+    protected const RESPONSE_KEY_NOTIFICATIONS = 'notifications';
+    protected const RESPONSE_KEY_TYPE = 'type';
+    protected const RESPONSE_KEY_MESSAGE = 'message';
+
+    protected const RESPONSE_TYPE_REFRESH_TABLE = 'refresh_table';
+    protected const RESPONSE_TYPE_SUCCESS = 'success';
+    protected const RESPONSE_TYPE_ERROR = 'error';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -41,30 +53,33 @@ class DeletePriceProductAbstractController extends AbstractController
         }
 
         $idMerchant = $this->getFactory()->getMerchantUserFacade()->getCurrentMerchantUser()->getIdMerchant();
-        $productAbstractTransfer = $this->getFactory()->getMerchantProductFacade()->findProductAbstract(
+        $merchantProductTransfer = $this->getFactory()->getMerchantProductFacade()->findMerchantProduct(
             (new MerchantProductCriteriaTransfer())->addIdMerchant($idMerchant)->setIdProductAbstract($idProductAbstract)
         );
 
-        if (!$productAbstractTransfer) {
+        if (!$merchantProductTransfer || !$merchantProductTransfer->getProductAbstract()) {
             return $this->getErrorResponse();
         }
 
-        $priceProductTransfersToRemove = $this->getProductTransfersToRemove($productAbstractTransfer, $priceProductDefaultIds);
+        $priceProductTransfersToRemove = $this->getProductTransfersToRemove(
+            $merchantProductTransfer->getProductAbstract(),
+            $priceProductDefaultIds
+        );
 
         foreach ($priceProductTransfersToRemove as $priceProductTransfer) {
             $this->getFactory()->getPriceProductFacade()->removePriceProductDefaultForPriceProduct($priceProductTransfer);
         }
 
         $responseData = [
-            'postActions' => [
+            static::RESPONSE_KEY_POST_ACTIONS => [
                 [
-                    'type' => 'refresh_table',
+                    static::RESPONSE_KEY_TYPE => static::RESPONSE_TYPE_REFRESH_TABLE,
                 ],
             ],
-            'notifications' => [
+            static::RESPONSE_KEY_NOTIFICATIONS => [
                 [
-                    'type' => 'success',
-                    'message' => 'Success! The Price is deleted.',
+                    static::RESPONSE_KEY_TYPE => static::RESPONSE_TYPE_SUCCESS,
+                    static::RESPONSE_KEY_MESSAGE => static::RESPONSE_MESSAGE_SUCCESS,
                 ],
             ],
         ];
@@ -77,9 +92,9 @@ class DeletePriceProductAbstractController extends AbstractController
      */
     protected function getErrorResponse(): JsonResponse
     {
-        $responseData['notifications'][] = [
-            'type' => 'error',
-            'message' => 'Something went wrong, please try again.',
+        $responseData[static::RESPONSE_KEY_NOTIFICATIONS][] = [
+            static::RESPONSE_KEY_TYPE => static::RESPONSE_TYPE_ERROR,
+            static::RESPONSE_KEY_MESSAGE => static::RESPONSE_MESSAGE_ERROR,
         ];
 
         return new JsonResponse($responseData);

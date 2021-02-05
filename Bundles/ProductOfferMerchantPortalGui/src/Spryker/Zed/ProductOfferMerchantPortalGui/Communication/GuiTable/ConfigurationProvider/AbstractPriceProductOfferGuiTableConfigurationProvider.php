@@ -34,6 +34,8 @@ abstract class AbstractPriceProductOfferGuiTableConfigurationProvider
     protected const TITLE_COLUMN_PREFIX_PRICE_TYPE_NET = 'Net';
     protected const TITLE_COLUMN_PREFIX_PRICE_TYPE_GROSS = 'Gross';
 
+    protected const TITLE_EDITABLE_BUTTON = 'Add';
+
     /**
      * @var \Spryker\Shared\GuiTable\GuiTableFactoryInterface
      */
@@ -89,7 +91,7 @@ abstract class AbstractPriceProductOfferGuiTableConfigurationProvider
         $formInputName = sprintf('%s[%s]', static::BLOCK_PREFIX, static::FIELD_PRODUCT_OFFER_PRICES);
 
         $guiTableConfigurationBuilder->enableAddingNewRows($formInputName, $initialData, [
-            GuiTableEditableButtonTransfer::TITLE => 'Add',
+            GuiTableEditableButtonTransfer::TITLE => static::TITLE_EDITABLE_BUTTON,
         ]);
         $guiTableConfigurationBuilder = $this->addEditableColumns($guiTableConfigurationBuilder, $priceTypeTransfers);
 

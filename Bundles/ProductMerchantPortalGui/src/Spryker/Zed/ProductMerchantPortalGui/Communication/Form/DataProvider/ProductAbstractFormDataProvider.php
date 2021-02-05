@@ -97,9 +97,20 @@ class ProductAbstractFormDataProvider implements ProductAbstractFormDataProvider
      */
     public function findProductAbstract(int $idProductAbstract, int $idMerchant): ?ProductAbstractTransfer
     {
-        $productAbstractTransfer = $this->merchantProductFacade->findProductAbstract(
+        $merchantProductTransfer = $this->merchantProductFacade->findMerchantProduct(
             (new MerchantProductCriteriaTransfer())->addIdMerchant($idMerchant)->setIdProductAbstract($idProductAbstract)
         );
+
+        if (!$merchantProductTransfer) {
+            return null;
+        }
+
+        $productAbstractTransfer = $merchantProductTransfer->getProductAbstract();
+
+        if (!$productAbstractTransfer) {
+            return null;
+        }
+
         $productAbstractTransfer = $this->expandProductAbstractWithCategoryIds($productAbstractTransfer);
 
         return $productAbstractTransfer;

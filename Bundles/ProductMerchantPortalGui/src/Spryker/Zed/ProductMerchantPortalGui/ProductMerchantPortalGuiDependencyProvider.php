@@ -23,6 +23,7 @@ use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortal
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMoneyFacadeBridge;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToPriceProductFacadeBridge;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductCategoryFacadeBridge;
+use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductFacadeBridge;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToStoreFacadeBridge;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToTranslatorFacadeBridge;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Service\ProductMerchantPortalGuiToUtilEncodingServiceBridge;
@@ -42,6 +43,7 @@ class ProductMerchantPortalGuiDependencyProvider extends AbstractBundleDependenc
     public const FACADE_PRICE_PRODUCT = 'FACADE_PRICE_PRODUCT';
     public const FACADE_MONEY = 'FACADE_MONEY';
     public const FACADE_CURRENCY = 'FACADE_CURRENCY';
+    public const FACADE_PRODUCT = 'FACADE_PRODUCT';
 
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
@@ -85,6 +87,7 @@ class ProductMerchantPortalGuiDependencyProvider extends AbstractBundleDependenc
         $container = $this->addPriceProductFacade($container);
         $container = $this->addCurrencyFacade($container);
         $container = $this->addUtilEncodingService($container);
+        $container = $this->addProductFacade($container);
 
         return $container;
     }
@@ -275,6 +278,20 @@ class ProductMerchantPortalGuiDependencyProvider extends AbstractBundleDependenc
     {
         $container->set(static::FACADE_CURRENCY, function (Container $container) {
             return new ProductMerchantPortalGuiToCurrencyFacadeBridge($container->getLocator()->currency()->facade());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_PRODUCT, function (Container $container) {
+            return new ProductMerchantPortalGuiToProductFacadeBridge($container->getLocator()->product()->facade());
         });
 
         return $container;

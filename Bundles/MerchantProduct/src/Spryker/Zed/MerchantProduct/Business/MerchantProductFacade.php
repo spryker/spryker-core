@@ -13,8 +13,7 @@ use Generated\Shared\Transfer\MerchantProductCollectionTransfer;
 use Generated\Shared\Transfer\MerchantProductCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantProductTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
-use Generated\Shared\Transfer\ProductAbstractResponseTransfer;
-use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ValidationResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -74,12 +73,12 @@ class MerchantProductFacade extends AbstractFacade implements MerchantProductFac
      *
      * @param \Generated\Shared\Transfer\MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer|null
+     * @return \Generated\Shared\Transfer\MerchantProductTransfer|null
      */
-    public function findProductAbstract(
+    public function findMerchantProduct(
         MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer
-    ): ?ProductAbstractTransfer {
-        return $this->getFactory()->createProductAbstractReader()->findProductAbstract($merchantProductCriteriaTransfer);
+    ): ?MerchantProductTransfer {
+        return $this->getFactory()->createMerchantProductReader()->findMerchantProduct($merchantProductCriteriaTransfer);
     }
 
     /**
@@ -89,10 +88,10 @@ class MerchantProductFacade extends AbstractFacade implements MerchantProductFac
      *
      * @param \Generated\Shared\Transfer\MerchantProductTransfer $merchantProductTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractResponseTransfer
+     * @return \Generated\Shared\Transfer\ValidationResponseTransfer
      */
-    public function updateProductAbstract(MerchantProductTransfer $merchantProductTransfer): ProductAbstractResponseTransfer
+    public function validateMerchantProduct(MerchantProductTransfer $merchantProductTransfer): ValidationResponseTransfer
     {
-        return $this->getFactory()->createProductAbstractUpdater()->updateProductAbstract($merchantProductTransfer);
+        return $this->getFactory()->createMerchantProductValidator()->validateMerchantProduct($merchantProductTransfer);
     }
 }

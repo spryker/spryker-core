@@ -19,6 +19,9 @@ class ProductAttributeGuiTableConfigurationProvider implements ProductAttributeG
 
     protected const DATA_SOURCE_TYPE_INLINE = 'inline';
 
+    protected const TITLE_COLUMN_ATTRIBUTE_NAME = 'Attribute';
+    protected const TITLE_COLUMN_ATTRIBUTE_DEFAULT = 'Default';
+
     /**
      * @var \Spryker\Shared\GuiTable\GuiTableFactoryInterface
      */
@@ -53,8 +56,8 @@ class ProductAttributeGuiTableConfigurationProvider implements ProductAttributeG
     {
         $guiTableConfigurationBuilder = $this->guiTableFactory->createConfigurationBuilder();
 
-        $guiTableConfigurationBuilder->addColumnText(static::COL_KEY_ATTRIBUTE_NAME, 'Attribute', true, false)
-            ->addColumnText(static::COL_KEY_ATTRIBUTE_DEFAULT, 'Default', true, false);
+        $guiTableConfigurationBuilder->addColumnText(static::COL_KEY_ATTRIBUTE_NAME, static::TITLE_COLUMN_ATTRIBUTE_NAME, true, false)
+            ->addColumnText(static::COL_KEY_ATTRIBUTE_DEFAULT, static::TITLE_COLUMN_ATTRIBUTE_DEFAULT, true, false);
 
         foreach ($localizedAttributeTransfers as $localizedAttributesTransfer) {
             $localeTransfer = $localizedAttributesTransfer->getLocaleOrFail();
