@@ -377,6 +377,7 @@
     "spryker/merchant-relationship-sales-order-threshold-gui": "*",
     "spryker/merchant-relationship-sales-order-threshold-gui-extension": "*",
     "spryker/merchant-sales-order": "*",
+    "spryker/merchant-sales-order-data-export": "*",
     "spryker/merchant-sales-order-extension": "*",
     "spryker/merchant-sales-order-merchant-user-gui": "*",
     "spryker/merchant-sales-order-threshold-gui": "*",
