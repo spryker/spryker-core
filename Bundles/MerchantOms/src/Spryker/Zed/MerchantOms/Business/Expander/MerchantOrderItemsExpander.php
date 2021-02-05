@@ -51,6 +51,7 @@ class MerchantOrderItemsExpander implements MerchantOrderItemsExpanderInterface
         }
 
         foreach ($merchantOrderItemTransfers as $merchantOrderItemTransfer) {
+            /** @var int[] $stateMachineItemStateIds */
             $stateMachineItemStateIds[] = $merchantOrderItemTransfer
                 ->requireFkStateMachineItemState()
                 ->getFkStateMachineItemState();
