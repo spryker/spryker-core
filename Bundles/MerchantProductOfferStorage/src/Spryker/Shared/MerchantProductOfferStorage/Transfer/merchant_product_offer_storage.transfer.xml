@@ -62,6 +62,7 @@
         <property name="idProductConcrete" type="int"/>
         <property name="sku" type="string"/>
         <property name="selectedAttributes" type="array" singular="selectedAttribute"/>
+        <property name="available" type="bool"/>
     </transfer>
 
     <transfer name="ProductOfferStorageCriteria">

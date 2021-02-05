@@ -132,4 +132,7 @@
         <property name="prices" type="array" singular="price"/>
     </transfer>
 
+    <transfer name="Message">
+    </transfer>
+
 </transfers>
