@@ -1034,7 +1034,7 @@ class OrderStateMachine implements OrderStateMachineInterface
                     if (array_key_exists($event->getName(), $orderItemsWithTimeoutEvent) === false) {
                         $orderItemsWithTimeoutEvent[$event->getName()] = [];
                     }
-                    $orderItemsWithTimeoutEvent[$event->getName()][] = $orderItem;
+                    $orderItemsWithTimeoutEvent[$event->getName()][$orderItem->getIdSalesOrderItem() . '_' . $orderItem->getFkOmsOrderItemState()] = $orderItem;
                 }
             }
         }
