@@ -11,8 +11,8 @@ use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductAbstractTableViewCollectionTransfer;
 use Generated\Shared\Transfer\PriceProductAbstractTableViewTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
-use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToPriceProductFacadeInterface;
 use Laminas\Filter\StringToLower;
+use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToPriceProductFacadeInterface;
 
 class PriceProductAbstractTableDataMapper
 {

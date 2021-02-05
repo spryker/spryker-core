@@ -9,7 +9,6 @@ namespace Spryker\Zed\MerchantProduct\Business\Reader;
 
 use Generated\Shared\Transfer\MerchantProductCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantProductTransfer;
-use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Spryker\Zed\MerchantProduct\Dependency\Facade\MerchantProductToProductFacadeInterface;
 use Spryker\Zed\MerchantProduct\Persistence\MerchantProductRepositoryInterface;
 

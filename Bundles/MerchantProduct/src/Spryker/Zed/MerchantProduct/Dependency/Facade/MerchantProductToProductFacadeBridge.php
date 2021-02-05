@@ -29,7 +29,7 @@ class MerchantProductToProductFacadeBridge implements MerchantProductToProductFa
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer|null
      */
-    public function findProductAbstractById($idProductAbstract)
+    public function findProductAbstractById(int $idProductAbstract)
     {
         return $this->productFacade->findProductAbstractById($idProductAbstract);
     }

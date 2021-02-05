@@ -9,8 +9,6 @@ namespace Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\MerchantProductCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantProductTransfer;
-use Generated\Shared\Transfer\ProductAbstractResponseTransfer;
-use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ValidationResponseTransfer;
 
 class ProductMerchantPortalGuiToMerchantProductFacadeBridge implements ProductMerchantPortalGuiToMerchantProductFacadeInterface

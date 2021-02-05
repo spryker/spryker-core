@@ -10,7 +10,6 @@ namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Controller;
 use Generated\Shared\Transfer\GuiTableEditableInitialDataTransfer;
 use Generated\Shared\Transfer\MerchantProductTransfer;
 use Generated\Shared\Transfer\PriceProductAbstractTableViewTransfer;
-use Generated\Shared\Transfer\ProductAbstractResponseTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ValidationResponseTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;

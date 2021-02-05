@@ -12,12 +12,12 @@ use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductAbstractTableViewTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Laminas\Filter\StringToLower;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToCurrencyFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMoneyFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToPriceProductFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Service\ProductMerchantPortalGuiToUtilEncodingServiceInterface;
 use Symfony\Component\Form\DataTransformerInterface;
-use Laminas\Filter\StringToLower;
 
 class PriceProductTransformer implements DataTransformerInterface
 {

@@ -14,10 +14,10 @@ use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ValidationResponseTransfer;
+use Laminas\Filter\StringToUpper;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Laminas\Filter\StringToUpper;
 
 /**
  * @method \Spryker\Zed\ProductMerchantPortalGui\Communication\ProductMerchantPortalGuiCommunicationFactory getFactory()
@@ -83,7 +83,7 @@ class SavePriceProductAbstractController extends AbstractController
         array $data
     ): ArrayObject {
         $key = (string)key($data);
-        $priceTypeName = (new StringToUpper)->filter((string)strstr($key, '[', true));
+        $priceTypeName = (new StringToUpper())->filter((string)strstr($key, '[', true));
         $priceProductStoreIds = $this->getPriceProductStoreIds($key, $priceTypeName, $typePriceProductStoreIds);
 
         if (!$priceProductStoreIds) {
