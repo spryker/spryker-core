@@ -18,7 +18,6 @@ use Spryker\Zed\CategoryPageSearch\Communication\Plugin\Event\Listener\CategoryN
 use Spryker\Zed\CategoryPageSearch\Communication\Plugin\Event\Listener\CategoryNodeCategoryPageSearchUnpublishListener;
 use Spryker\Zed\CategoryPageSearch\Communication\Plugin\Event\Listener\CategoryNodeCategoryTemplateSearchPublishListener;
 use Spryker\Zed\CategoryPageSearch\Communication\Plugin\Event\Listener\CategoryNodeCategoryTemplateSearchUnpublishListener;
-use Spryker\Zed\CategoryPageSearch\Communication\Plugin\Event\Listener\CategoryNodeSearchPublishListener;
 use Spryker\Zed\CategoryPageSearch\Communication\Plugin\Event\Listener\CategoryNodeSearchUnpublishListener;
 
 /**
@@ -38,31 +37,6 @@ use Spryker\Zed\CategoryPageSearch\Communication\Plugin\Event\Listener\CategoryN
  */
 class CategoryNodePageSearchListenerTest extends Unit
 {
-    /**
-     * @return void
-     */
-    public function testCategoryPageSearchPublishListener(): void
-    {
-        // Prepare
-        SpyCategoryNodePageSearchQuery::create()->filterByFkCategoryNode(1)->delete();
-        $beforeCount = SpyCategoryNodePageSearchQuery::create()->count();
-
-        // Act
-        $categoryNodeSearchPublishListener = new CategoryNodeSearchPublishListener();
-        $categoryNodeSearchPublishListener->setFacade($this->tester->getFacade());
-
-        $eventTransfers = [
-            (new EventEntityTransfer())->setId(1),
-        ];
-
-        $categoryNodeSearchPublishListener->handleBulk($eventTransfers, CategoryEvents::CATEGORY_NODE_PUBLISH);
-
-        // Assert
-        $afterCount = SpyCategoryNodePageSearchQuery::create()->count();
-        $this->assertGreaterThan($beforeCount, $afterCount);
-        $this->assertCategoryPageSearch();
-    }
-
     /**
      * @return void
      */
