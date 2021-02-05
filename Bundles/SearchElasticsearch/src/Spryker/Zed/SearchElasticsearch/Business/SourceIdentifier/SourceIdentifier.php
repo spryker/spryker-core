@@ -8,6 +8,7 @@
 namespace Spryker\Zed\SearchElasticsearch\Business\SourceIdentifier;
 
 use Spryker\Zed\SearchElasticsearch\Business\Exception\InvalidSourceIdentifierException;
+use Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig;
 
 class SourceIdentifier implements SourceIdentifierInterface
 {
@@ -16,16 +17,16 @@ class SourceIdentifier implements SourceIdentifierInterface
     protected const INVALID_SOURCE_IDENTIFIER_MESSAGE_TEMPLATE = 'Provided source identifier `%s` is not supported or cannot be installed for store `%s`.';
 
     /**
-     * @var string[]
+     * @var \Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig
      */
-    protected $supportedSourceIdentifiers;
+    protected $searchElasticsearchConfig;
 
     /**
-     * @param string[] $supportedSourceIdentifiers
+     * @param \Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig $searchElasticsearchConfig
      */
-    public function __construct(array $supportedSourceIdentifiers)
+    public function __construct(SearchElasticsearchConfig $searchElasticsearchConfig)
     {
-        $this->supportedSourceIdentifiers = $supportedSourceIdentifiers;
+        $this->searchElasticsearchConfig = $searchElasticsearchConfig;
     }
 
     /**
@@ -48,10 +49,10 @@ class SourceIdentifier implements SourceIdentifierInterface
         }
 
         if ($this->isPrefixedWithStoreName($sourceIdentifier)) {
-            return $sourceIdentifier;
+            return $this->buildIndexName($sourceIdentifier);
         }
 
-        return $this->buildIndexName($sourceIdentifier);
+        return $this->buildIndexName($sourceIdentifier, $this->getCurrentStore());
     }
 
     /**
@@ -104,18 +105,19 @@ class SourceIdentifier implements SourceIdentifierInterface
 
     /**
      * @param string $sourceIdentifier
+     * @param string|null $currentStore
      *
      * @return string
      */
-    protected function buildIndexName(string $sourceIdentifier): string
+    protected function buildIndexName(string $sourceIdentifier, ?string $currentStore = null): string
     {
-        $indexName = sprintf(
-            '%s_%s',
-            $this->getCurrentStore(),
-            $sourceIdentifier
-        );
+        $indexParameters = [
+            $this->searchElasticsearchConfig->getIndexPrefix(),
+            $currentStore,
+            $sourceIdentifier,
+        ];
 
-        return mb_strtolower($indexName);
+        return mb_strtolower(implode('_', array_filter($indexParameters)));
     }
 
     /**
@@ -125,7 +127,9 @@ class SourceIdentifier implements SourceIdentifierInterface
      */
     protected function findMatchingConfigSourceIdentifier(string $sourceIdentifier): ?string
     {
-        foreach ($this->supportedSourceIdentifiers as $supportedSourceIdentifier) {
+        $supportedSourceIdentifiers = $this->searchElasticsearchConfig->getSupportedSourceIdentifiers();
+
+        foreach ($supportedSourceIdentifiers as $supportedSourceIdentifier) {
             if (preg_match(sprintf('/(.+%s)?%s$/', static::STORE_PREFIX_DELIMITER, $supportedSourceIdentifier), $sourceIdentifier)) {
                 return $supportedSourceIdentifier;
             }

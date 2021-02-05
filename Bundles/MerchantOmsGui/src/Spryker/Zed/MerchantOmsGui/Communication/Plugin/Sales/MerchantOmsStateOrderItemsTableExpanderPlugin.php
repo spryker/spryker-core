@@ -45,10 +45,16 @@ class MerchantOmsStateOrderItemsTableExpanderPlugin extends AbstractPlugin imple
         if ($itemTransfer->getIdSalesOrderItem() === null) {
             return '';
         }
+        /** @var int $idSalesOrderItem */
+        $idSalesOrderItem = $itemTransfer->getIdSalesOrderItem();
+
         $stateMachineItemTransfer = $this->getFactory()
             ->getMerchantOmsFacade()
-            ->findCurrentStateByIdSalesOrderItem($itemTransfer->getIdSalesOrderItem());
+            ->findCurrentStateByIdSalesOrderItem($idSalesOrderItem);
 
-        return $stateMachineItemTransfer ? $stateMachineItemTransfer->getStateName() : '';
+        /** @var string $columnCellContent */
+        $columnCellContent = $stateMachineItemTransfer ? $stateMachineItemTransfer->getStateName() : '';
+
+        return $columnCellContent;
     }
 }
