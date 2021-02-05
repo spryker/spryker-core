@@ -47,13 +47,13 @@
 
     tr {
         &:first-child {
-            .btn[data-direction="up"] {
+            .btn[data-direction='up'] {
                 display: none;
             }
         }
 
         &:last-child {
-            .btn[data-direction="down"] {
+            .btn[data-direction='down'] {
                 display: none;
             }
         }

@@ -32,7 +32,7 @@
         <property name="faxNumber" type="string"/>
         <property name="merchantReference" type="string"/>
         <property name="merchantProfileLocalizedGlossaryAttributes" type="MerchantProfileLocalizedGlossaryAttributes[]" singular="merchantProfileLocalizedGlossaryAttribute"/>
-        <property name="addressCollection" type="MerchantProfileAddressCollection" singular="address"/>
+        <property name="addressCollection" type="MerchantProfileAddress[]" singular="address"/>
     </transfer>
 
     <transfer name="MerchantProfileCollection">
@@ -71,10 +71,6 @@
     <transfer name="Filter">
         <property name="limit" type="int"/>
         <property name="offset" type="int"/>
-    </transfer>
-
-    <transfer name="MerchantProfileAddressCollection">
-        <property name="addresses" type="MerchantProfileAddress[]" singular="address"/>
     </transfer>
 
     <transfer name="MerchantProfileAddress">

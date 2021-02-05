@@ -10,7 +10,8 @@ namespace Spryker\Zed\Oms\Dependency\Plugin\Command;
 interface CommandCollectionInterface
 {
     /**
-     * Add new command to list of commands
+     * Specification:
+     * - Add new command to list of commands
      *
      * @api
      *
@@ -22,7 +23,8 @@ interface CommandCollectionInterface
     public function add($command, $name);
 
     /**
-     * Return command from list of commands
+     * Specification:
+     * - Return command from list of commands
      *
      * @api
      *

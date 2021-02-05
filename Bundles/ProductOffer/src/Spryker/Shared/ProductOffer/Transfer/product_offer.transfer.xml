@@ -54,6 +54,7 @@
         <property name="approvalStatuses" type="string[]" singular="approvalStatus"/>
         <property name="isActiveConcreteProduct" type="bool"/>
         <property name="pagination" type="Pagination"/>
+        <property name="merchantIds" type="int[]" singular="idMerchant"/>
     </transfer>
 
     <transfer name="Pagination">

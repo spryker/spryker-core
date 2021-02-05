@@ -128,6 +128,10 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
     /**
      * @module Product
      *
+     * @phpstan-param \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery<mixed> $productOfferQuery
+     *
+     * @phpstan-return \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery<mixed>
+     *
      * @param \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery $productOfferQuery
      * @param \Generated\Shared\Transfer\ProductOfferCriteriaTransfer $productOfferCriteria
      *
@@ -147,6 +151,10 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
 
         if ($productOfferCriteria->getIdProductOffer()) {
             $productOfferQuery->filterByIdProductOffer($productOfferCriteria->getIdProductOffer());
+        }
+
+        if ($productOfferCriteria->getMerchantIds()) {
+            $productOfferQuery->filterByFkMerchant_In($productOfferCriteria->getMerchantIds());
         }
 
         if ($productOfferCriteria->getProductOfferIds()) {
@@ -188,6 +196,8 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
     }
 
     /**
+     * @phpstan-param \Propel\Runtime\ActiveQuery\ModelCriteria<mixed> $query
+     *
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param \Generated\Shared\Transfer\PaginationTransfer|null $paginationTransfer
      *

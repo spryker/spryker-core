@@ -1,3 +1,3 @@
- 'use strict';
+'use strict';
 
- require('./modules/main');
+require('./modules/main');

@@ -33,7 +33,7 @@ interface CompanyUsersRestApiFacadeInterface
     ): CustomerIdentifierTransfer;
 
     /**
-     * Specification
+     * Specification:
      * - Retrieves company user collection.
      * - The resulting collection can be filtered by company ID, company user IDs, company business unit IDs,
      * company role IDs and/or active flag.
@@ -50,7 +50,7 @@ interface CompanyUsersRestApiFacadeInterface
     ): CompanyUserCollectionTransfer;
 
     /**
-     * Specification
+     * Specification:
      * - Expands `QuoteTransfer.customer.companyUserTransfer`.
      * - Expects `QuoteTransfer.customer.companyUserTransfer.idCompanyUser` to be set.
      *
@@ -63,7 +63,7 @@ interface CompanyUsersRestApiFacadeInterface
     public function expandQuoteCustomerWithCompanyUser(QuoteTransfer $quoteTransfer): QuoteTransfer;
 
     /**
-     * Specification
+     * Specification:
      * - Expands `QuoteTransfer.customer.companyUserTransfer`.
      * - Expects `RestCheckoutRequestAttributesTransfer.customer.idCompanyUser` to be set.
      *
