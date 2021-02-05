@@ -1031,10 +1031,10 @@ class OrderStateMachine implements OrderStateMachineInterface
             if ($targetState->hasTimeoutEvent()) {
                 $events = $targetState->getTimeoutEvents();
                 foreach ($events as $event) {
-                    if (array_key_exists($event->getName(), $orderItemsWithTimeoutEvent) === false) {
-                        $orderItemsWithTimeoutEvent[$event->getName()] = [];
+                    $orderItemKey = sprintf('%s_%s', $orderItem->getIdSalesOrderItem(), $orderItem->getFkOmsOrderItemState());
+                    if (!isset($orderItemsWithTimeoutEvent[$event->getName()][$orderItemKey])) {
+                        $orderItemsWithTimeoutEvent[$event->getName()][$orderItemKey] = $orderItem;
                     }
-                    $orderItemsWithTimeoutEvent[$event->getName()][$orderItem->getIdSalesOrderItem() . '_' . $orderItem->getFkOmsOrderItemState()] = $orderItem;
                 }
             }
         }
