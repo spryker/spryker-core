@@ -10,6 +10,8 @@ namespace Spryker\Zed\MerchantOpeningHoursStorage\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\MerchantOpeningHoursStorage\Business\Publisher\MerchantOpeningHoursStoragePublisher;
 use Spryker\Zed\MerchantOpeningHoursStorage\Business\Publisher\MerchantOpeningHoursStoragePublisherInterface;
+use Spryker\Zed\MerchantOpeningHoursStorage\Dependency\Facade\MerchantOpeningHoursStorageToMerchantFacadeInterface;
+use Spryker\Zed\MerchantOpeningHoursStorage\MerchantOpeningHoursStorageDependencyProvider;
 
 /**
  * @method \Spryker\Zed\MerchantOpeningHoursStorage\MerchantOpeningHoursStorageConfig getConfig()
@@ -25,7 +27,16 @@ class MerchantOpeningHoursStorageBusinessFactory extends AbstractBusinessFactory
     {
         return new MerchantOpeningHoursStoragePublisher(
             $this->getEntityManager(),
-            $this->getRepository()
+            $this->getRepository(),
+            $this->getMerchantFacade()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantOpeningHoursStorage\Dependency\Facade\MerchantOpeningHoursStorageToMerchantFacadeInterface
+     */
+    public function getMerchantFacade(): MerchantOpeningHoursStorageToMerchantFacadeInterface
+    {
+        return $this->getProvidedDependency(MerchantOpeningHoursStorageDependencyProvider::FACADE_MERCHANT);
     }
 }

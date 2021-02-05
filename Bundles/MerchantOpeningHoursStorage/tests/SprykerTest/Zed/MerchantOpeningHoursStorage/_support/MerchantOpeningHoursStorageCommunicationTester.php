@@ -89,14 +89,14 @@ class MerchantOpeningHoursStorageCommunicationTester extends Actor
     }
 
     /**
-     * @param int $fkMerchant
+     * @param string $merchantReference
      *
      * @return \Orm\Zed\MerchantOpeningHoursStorage\Persistence\SpyMerchantOpeningHoursStorage|null
      */
-    public function findMerchantOpeningHoursByFkMerchant(int $fkMerchant): ?SpyMerchantOpeningHoursStorage
+    public function findMerchantOpeningHoursByMerchantReference(string $merchantReference): ?SpyMerchantOpeningHoursStorage
     {
         return $this->getMerchantOpeningHoursStoragePropelQuery()
-            ->filterByFkMerchant($fkMerchant)
+            ->filterByMerchantReference($merchantReference)
             ->findOne();
     }
 
@@ -110,7 +110,7 @@ class MerchantOpeningHoursStorageCommunicationTester extends Actor
             ->setDate($dateScheduleTransfer->getDate())
             ->setTimeFrom($dateScheduleTransfer->getTimeFrom())
             ->setTimeTo($dateScheduleTransfer->getTimeTo())
-            ->setNote($dateScheduleTransfer->getNote());
+            ->setNoteGlossaryKey($dateScheduleTransfer->getNoteGlossaryKey());
 
         $dateScheduleEntity->save();
 

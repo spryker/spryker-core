@@ -7,17 +7,17 @@
 
 namespace Spryker\Zed\MerchantSwitcher\Dependency\Facade;
 
-use Generated\Shared\Transfer\MerchantProductOfferCriteriaFilterTransfer;
+use Generated\Shared\Transfer\MerchantProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 
 interface MerchantSwitcherToMerchantProductOfferFacadeInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\MerchantProductOfferCriteriaFilterTransfer $merchantProductOfferCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\MerchantProductOfferCriteriaTransfer $merchantProductOfferCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOfferCollectionTransfer
      */
     public function getProductOfferCollection(
-        MerchantProductOfferCriteriaFilterTransfer $merchantProductOfferCriteriaFilterTransfer
+        MerchantProductOfferCriteriaTransfer $merchantProductOfferCriteriaTransfer
     ): ProductOfferCollectionTransfer;
 }

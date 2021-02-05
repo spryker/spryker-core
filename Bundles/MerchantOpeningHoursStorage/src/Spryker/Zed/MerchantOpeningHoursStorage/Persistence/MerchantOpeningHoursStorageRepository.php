@@ -8,8 +8,11 @@
 namespace Spryker\Zed\MerchantOpeningHoursStorage\Persistence;
 
 use ArrayObject;
-use Generated\Shared\Transfer\MerchantOpeningHoursStorageCriteriaFilterTransfer;
+use Generated\Shared\Transfer\MerchantOpeningHoursStorageCriteriaTransfer;
+use Orm\Zed\Merchant\Persistence\Map\SpyMerchantTableMap;
+use Orm\Zed\MerchantOpeningHoursStorage\Persistence\Map\SpyMerchantOpeningHoursStorageTableMap;
 use Orm\Zed\MerchantOpeningHoursStorage\Persistence\SpyMerchantOpeningHoursStorageQuery;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -64,34 +67,39 @@ class MerchantOpeningHoursStorageRepository extends AbstractRepository implement
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantOpeningHoursStorageCriteriaFilterTransfer $merchantOpeningHoursStorageCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\MerchantOpeningHoursStorageCriteriaTransfer $merchantOpeningHoursStorageCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\SpyMerchantOpeningHoursStorageEntityTransfer[]
      */
     public function getFilteredMerchantOpeningHoursStorageEntityTransfers(
-        MerchantOpeningHoursStorageCriteriaFilterTransfer $merchantOpeningHoursStorageCriteriaFilterTransfer
+        MerchantOpeningHoursStorageCriteriaTransfer $merchantOpeningHoursStorageCriteriaTransfer
     ): array {
         $merchantOpeningHoursStoragePropelQuery = $this->applyFilters(
             $this->getFactory()->getMerchantOpeningHoursStoragePropelQuery(),
-            $merchantOpeningHoursStorageCriteriaFilterTransfer
+            $merchantOpeningHoursStorageCriteriaTransfer
         );
 
-        return $this->buildQueryFromCriteria($merchantOpeningHoursStoragePropelQuery, $merchantOpeningHoursStorageCriteriaFilterTransfer->getFilter())
+        return $this->buildQueryFromCriteria($merchantOpeningHoursStoragePropelQuery, $merchantOpeningHoursStorageCriteriaTransfer->getFilter())
             ->find();
     }
 
     /**
      * @param \Orm\Zed\MerchantOpeningHoursStorage\Persistence\SpyMerchantOpeningHoursStorageQuery $merchantOpeningHoursStoragePropelQuery
-     * @param \Generated\Shared\Transfer\MerchantOpeningHoursStorageCriteriaFilterTransfer $merchantOpeningHoursStorageCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\MerchantOpeningHoursStorageCriteriaTransfer $merchantOpeningHoursStorageCriteriaTransfer
      *
      * @return \Orm\Zed\MerchantOpeningHoursStorage\Persistence\SpyMerchantOpeningHoursStorageQuery
      */
     protected function applyFilters(
         SpyMerchantOpeningHoursStorageQuery $merchantOpeningHoursStoragePropelQuery,
-        MerchantOpeningHoursStorageCriteriaFilterTransfer $merchantOpeningHoursStorageCriteriaFilterTransfer
+        MerchantOpeningHoursStorageCriteriaTransfer $merchantOpeningHoursStorageCriteriaTransfer
     ): SpyMerchantOpeningHoursStorageQuery {
-        if ($merchantOpeningHoursStorageCriteriaFilterTransfer->getMerchantIds()) {
-            $merchantOpeningHoursStoragePropelQuery->filterByFkMerchant_In($merchantOpeningHoursStorageCriteriaFilterTransfer->getMerchantIds());
+        if ($merchantOpeningHoursStorageCriteriaTransfer->getMerchantIds()) {
+            $merchantOpeningHoursStoragePropelQuery->addJoin(
+                SpyMerchantOpeningHoursStorageTableMap::COL_MERCHANT_REFERENCE,
+                SpyMerchantTableMap::COL_MERCHANT_REFERENCE,
+                Criteria::INNER_JOIN
+            );
+            $merchantOpeningHoursStoragePropelQuery->where(SpyMerchantTableMap::COL_ID_MERCHANT . ' IN (' . implode(',', $merchantOpeningHoursStorageCriteriaTransfer->getMerchantIds()) . ')');
         }
 
         return $merchantOpeningHoursStoragePropelQuery;

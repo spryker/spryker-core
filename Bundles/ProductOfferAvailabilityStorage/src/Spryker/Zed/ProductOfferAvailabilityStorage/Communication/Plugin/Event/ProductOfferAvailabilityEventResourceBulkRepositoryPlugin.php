@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ProductOfferAvailabilityStorage\Communication\Plugin\Event;
 
 use Generated\Shared\Transfer\PaginationTransfer;
-use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductOfferCriteriaTransfer;
 use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
 use Spryker\Shared\ProductOfferAvailabilityStorage\ProductOfferAvailabilityStorageConfig;
 use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceBulkRepositoryPluginInterface;
@@ -47,7 +47,7 @@ class ProductOfferAvailabilityEventResourceBulkRepositoryPlugin extends Abstract
      */
     public function getData(int $offset, int $limit): array
     {
-        $productOfferCriteriaFilterTransfer = (new ProductOfferCriteriaFilterTransfer())
+        $productOfferCriteriaTransfer = (new ProductOfferCriteriaTransfer())
             ->setPagination(
                 (new PaginationTransfer())
                     ->setPage(($offset / $limit) + 1)
@@ -56,11 +56,11 @@ class ProductOfferAvailabilityEventResourceBulkRepositoryPlugin extends Abstract
 
         $productOfferTransfers = $this->getFactory()
             ->getProductOfferFacade()
-            ->find($productOfferCriteriaFilterTransfer)
+            ->get($productOfferCriteriaTransfer)
             ->getProductOffers()
             ->getArrayCopy();
 
-        if ($this->isOutOfPages($productOfferCriteriaFilterTransfer->getPagination())) {
+        if ($this->isOutOfPages($productOfferCriteriaTransfer->getPagination())) {
             return [];
         }
 

@@ -15,7 +15,7 @@ use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 use Spryker\Zed\MerchantOpeningHoursDataImport\Business\MerchantOpeningHours\DataSet\MerchantOpeningHoursDataSetInterface;
 
-class MerchantKeyToIdMerchantStep implements DataImportStepInterface
+class MerchantReferenceToIdMerchantStep implements DataImportStepInterface
 {
     /**
      * @var int[]
@@ -31,42 +31,42 @@ class MerchantKeyToIdMerchantStep implements DataImportStepInterface
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        $merchantKey = $dataSet[MerchantOpeningHoursDataSetInterface::MERCHANT_KEY];
+        $merchantReference = $dataSet[MerchantOpeningHoursDataSetInterface::MERCHANT_REFERENCE];
 
-        if (!$merchantKey) {
-            throw new InvalidDataException(sprintf('"%s" is required.', MerchantOpeningHoursDataSetInterface::MERCHANT_KEY));
+        if (!$merchantReference) {
+            throw new InvalidDataException(sprintf('"%s" is required.', MerchantOpeningHoursDataSetInterface::MERCHANT_REFERENCE));
         }
 
-        $idMerchant = $this->getIdMerchant($merchantKey);
+        $idMerchant = $this->getIdMerchant($merchantReference);
 
         $dataSet[MerchantOpeningHoursDataSetInterface::FK_MERCHANT] = $idMerchant;
     }
 
     /**
-     * @param string $merchantKey
+     * @param string $merchantReference
      *
      * @throws \Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException
      *
      * @return int
      */
-    protected function getIdMerchant(string $merchantKey): int
+    protected function getIdMerchant(string $merchantReference): int
     {
-        if (isset($this->idMerchantCache[$merchantKey])) {
-            return $this->idMerchantCache[$merchantKey];
+        if (isset($this->idMerchantCache[$merchantReference])) {
+            return $this->idMerchantCache[$merchantReference];
         }
 
         /** @var \Orm\Zed\Merchant\Persistence\SpyMerchantQuery $merchantQuery */
         $merchantQuery = SpyMerchantQuery::create()
             ->select(SpyMerchantTableMap::COL_ID_MERCHANT);
         /** @var int $idMerchant */
-        $idMerchant = $merchantQuery->findOneByMerchantKey($merchantKey);
+        $idMerchant = $merchantQuery->findOneByMerchantReference($merchantReference);
 
         if (!$idMerchant) {
-            throw new EntityNotFoundException(sprintf('Could not find Merchant by key "%s"', $merchantKey));
+            throw new EntityNotFoundException(sprintf('Could not find Merchant by reference "%s"', $merchantReference));
         }
 
-        $this->idMerchantCache[$merchantKey] = $idMerchant;
+        $this->idMerchantCache[$merchantReference] = $idMerchant;
 
-        return $this->idMerchantCache[$merchantKey];
+        return $this->idMerchantCache[$merchantReference];
     }
 }

@@ -49,7 +49,7 @@ class DateScheduleWriterStep implements DataImportStepInterface
             ->setDate($dataSet[MerchantOpeningHoursDateScheduleDataSetInterface::DATE])
             ->setTimeFrom($dataSet[MerchantOpeningHoursDateScheduleDataSetInterface::TIME_FROM])
             ->setTimeTo($dataSet[MerchantOpeningHoursDateScheduleDataSetInterface::TIME_TO])
-            ->setNote($dataSet[MerchantOpeningHoursDateScheduleDataSetInterface::NOTE]);
+            ->setNoteGlossaryKey($dataSet[MerchantOpeningHoursDateScheduleDataSetInterface::NOTE_GLOSSARY_KEY]);
 
         $dateScheduleEntity->save();
 

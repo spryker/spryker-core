@@ -58,7 +58,7 @@ class MerchantOpeningHoursWeekdayScheduleStoragePublishListenerTest extends Unit
     {
         // Arrange
         $merchantTransfer = $this->tester->haveMerchant();
-        $merchantOpeningHoursWeekdayScheduleEntity = $this->tester->createMerchantOpeningHoursWeekdaySchedule($merchantTransfer);
+        $this->tester->createMerchantOpeningHoursWeekdaySchedule($merchantTransfer);
         $merchantOpeningHoursWeekdayScheduleStoragePublishListener = new MerchantOpeningHoursWeekdayScheduleStoragePublishListener();
         $merchantOpeningHoursWeekdayScheduleStoragePublishListener->setFacade($this->tester->getFacade());
         $eventTransfers = [
@@ -72,7 +72,7 @@ class MerchantOpeningHoursWeekdayScheduleStoragePublishListenerTest extends Unit
 
         // Assert
         $this->assertNotNull(
-            $this->tester->findMerchantOpeningHoursByFkMerchant($merchantOpeningHoursWeekdayScheduleEntity->getFkMerchant())
+            $this->tester->findMerchantOpeningHoursByMerchantReference($merchantTransfer->getMerchantReference())
         );
     }
 }

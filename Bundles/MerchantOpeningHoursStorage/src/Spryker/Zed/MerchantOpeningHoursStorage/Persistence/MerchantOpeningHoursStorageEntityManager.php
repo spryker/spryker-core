@@ -17,20 +17,20 @@ class MerchantOpeningHoursStorageEntityManager extends AbstractEntityManager imp
 {
     /**
      * @param \Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer $merchantOpenHoursStorageTransfer
-     * @param int $fkMerchant
+     * @param string $merchantReference
      *
      * @return void
      */
-    public function saveMerchantOpenHoursStorage(MerchantOpeningHoursStorageTransfer $merchantOpenHoursStorageTransfer, int $fkMerchant): void
+    public function saveMerchantOpenHoursStorage(MerchantOpeningHoursStorageTransfer $merchantOpenHoursStorageTransfer, string $merchantReference): void
     {
         $merchantOpenHoursStorageEntity = $this->getFactory()
             ->getMerchantOpeningHoursStoragePropelQuery()
-            ->filterByFkMerchant($fkMerchant)
+            ->filterByMerchantReference($merchantReference)
             ->findOneOrCreate();
 
         $merchantOpenHoursStorageEntity
             ->setData($merchantOpenHoursStorageTransfer->toArray())
-            ->setFkMerchant($fkMerchant)
+            ->setMerchantReference($merchantReference)
             ->save();
     }
 }

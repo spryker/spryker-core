@@ -23,7 +23,7 @@ class MerchantProductOfferStorageEntityManager extends AbstractEntityManager imp
      *
      * @return void
      */
-    public function saveProductConcreteProductOffersStorage(string $concreteSku, array $data, string $storeName): void
+    public function saveProductConcreteProductOffers(string $concreteSku, array $data, string $storeName): void
     {
         $productConcreteProductOffersStorageEntity = $this->getFactory()
             ->createProductConcreteProductOffersStoragePropelQuery()

@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\MerchantProductOfferStorage\Business\Writer;
 
-use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
 use Spryker\Zed\MerchantProductOfferStorage\Business\Deleter\ProductOfferStorageDeleterInterface;
@@ -97,9 +97,9 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
      */
     protected function writeByProductOfferReferences(array $productOfferReferences): void
     {
-        $productOfferCriteriaFilterTransfer = $this->createProductOfferCriteriaFilterTransfer($productOfferReferences);
+        $productOfferCriteriaTransfer = $this->createProductOfferCriteriaTransfer($productOfferReferences);
         $productOfferCollectionTransfer = $this->merchantProductOfferStorageRepository
-            ->getProductOffersByFilterCriteria($productOfferCriteriaFilterTransfer);
+            ->getProductOffersByFilterCriteria($productOfferCriteriaTransfer);
 
         foreach ($productOfferCollectionTransfer->getProductOffers() as $productOfferTransfer) {
             $this->merchantProductOfferStorageEntityManager->saveProductOfferStorage($productOfferTransfer);
@@ -110,11 +110,11 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
     /**
      * @param string[] $productOfferReferences
      *
-     * @return \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer
+     * @return \Generated\Shared\Transfer\ProductOfferCriteriaTransfer
      */
-    protected function createProductOfferCriteriaFilterTransfer(array $productOfferReferences): ProductOfferCriteriaFilterTransfer
+    protected function createProductOfferCriteriaTransfer(array $productOfferReferences): ProductOfferCriteriaTransfer
     {
-        return (new ProductOfferCriteriaFilterTransfer())
+        return (new ProductOfferCriteriaTransfer())
             ->setProductOfferReferences($productOfferReferences)
             ->setIsActive(true)
             ->setIsActiveConcreteProduct(true)

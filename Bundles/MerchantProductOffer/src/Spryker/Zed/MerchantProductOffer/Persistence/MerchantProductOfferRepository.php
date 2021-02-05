@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\MerchantProductOffer\Persistence;
 
-use Generated\Shared\Transfer\MerchantProductOfferCriteriaFilterTransfer;
+use Generated\Shared\Transfer\MerchantProductOfferCriteriaTransfer;
 use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
 use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -18,14 +18,14 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class MerchantProductOfferRepository extends AbstractRepository implements MerchantProductOfferRepositoryInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\MerchantProductOfferCriteriaFilterTransfer $merchantProductOfferCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\MerchantProductOfferCriteriaTransfer $merchantProductOfferCriteriaTransfer
      *
      * @return int[]
      */
-    public function getProductOfferIds(MerchantProductOfferCriteriaFilterTransfer $merchantProductOfferCriteriaFilterTransfer): array
+    public function getProductOfferIds(MerchantProductOfferCriteriaTransfer $merchantProductOfferCriteriaTransfer): array
     {
         $productOfferQuery = $this->applyFilters(
-            $merchantProductOfferCriteriaFilterTransfer,
+            $merchantProductOfferCriteriaTransfer,
             $this->getFactory()->getProductOfferPropelQuery()
         );
 
@@ -35,27 +35,27 @@ class MerchantProductOfferRepository extends AbstractRepository implements Merch
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantProductOfferCriteriaFilterTransfer $merchantProductOfferCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\MerchantProductOfferCriteriaTransfer $merchantProductOfferCriteriaTransfer
      * @param \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery $productOfferQuery
      *
      * @return \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery
      */
     protected function applyFilters(
-        MerchantProductOfferCriteriaFilterTransfer $merchantProductOfferCriteriaFilterTransfer,
+        MerchantProductOfferCriteriaTransfer $merchantProductOfferCriteriaTransfer,
         SpyProductOfferQuery $productOfferQuery
     ): SpyProductOfferQuery {
-        if ($merchantProductOfferCriteriaFilterTransfer->getSkus()) {
-            $productOfferQuery->filterByConcreteSku_In($merchantProductOfferCriteriaFilterTransfer->getSkus());
+        if ($merchantProductOfferCriteriaTransfer->getSkus()) {
+            $productOfferQuery->filterByConcreteSku_In($merchantProductOfferCriteriaTransfer->getSkus());
         }
 
-        if ($merchantProductOfferCriteriaFilterTransfer->getIsActive() !== null) {
-            $productOfferQuery->filterByIsActive($merchantProductOfferCriteriaFilterTransfer->getIsActive());
+        if ($merchantProductOfferCriteriaTransfer->getIsActive() !== null) {
+            $productOfferQuery->filterByIsActive($merchantProductOfferCriteriaTransfer->getIsActive());
         }
 
-        if ($merchantProductOfferCriteriaFilterTransfer->getMerchantReference()) {
+        if ($merchantProductOfferCriteriaTransfer->getMerchantReference()) {
             $productOfferQuery
                 ->useSpyMerchantQuery()
-                    ->filterByMerchantReference($merchantProductOfferCriteriaFilterTransfer->getMerchantReference())
+                    ->filterByMerchantReference($merchantProductOfferCriteriaTransfer->getMerchantReference())
                 ->endUse();
         }
 

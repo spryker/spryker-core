@@ -42,7 +42,7 @@
         <property name="productOffers" type="ProductOffer[]" singular="productOffer"/>
     </transfer>
 
-    <transfer name="ProductOfferCriteriaFilter">
+    <transfer name="ProductOfferCriteria">
         <property name="idProductOffer" type="int"/>
         <property name="productOfferIds" type="int[]" singular="idProductOffer"/>
         <property name="idStore" type="int"/>

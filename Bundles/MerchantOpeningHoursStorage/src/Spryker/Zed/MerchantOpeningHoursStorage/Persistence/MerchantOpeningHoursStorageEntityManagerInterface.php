@@ -13,9 +13,9 @@ interface MerchantOpeningHoursStorageEntityManagerInterface
 {
     /**
      * @param \Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer $merchantOpenHoursStorageTransfer
-     * @param int $fkMerchant
+     * @param string $merchantReference
      *
      * @return void
      */
-    public function saveMerchantOpenHoursStorage(MerchantOpeningHoursStorageTransfer $merchantOpenHoursStorageTransfer, int $fkMerchant): void;
+    public function saveMerchantOpenHoursStorage(MerchantOpeningHoursStorageTransfer $merchantOpenHoursStorageTransfer, string $merchantReference): void;
 }

@@ -16,7 +16,7 @@
         <property name="date" type="string"/>
         <property name="timeFrom" type="string"/>
         <property name="timeTo" type="string"/>
-        <property name="note" type="string"/>
+        <property name="noteGlossaryKey" type="string"/>
     </transfer>
 
     <transfer name="MerchantStorage">
@@ -45,7 +45,7 @@
         <property name="date" type="string"/>
         <property name="timeFrom" type="string"/>
         <property name="timeTo" type="string"/>
-        <property name="note" type="string"/>
+        <property name="noteGlossaryKey" type="string"/>
     </transfer>
 
 </transfers>

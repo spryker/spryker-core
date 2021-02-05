@@ -82,4 +82,7 @@
 
     <transfer name="Store">
     </transfer>
+
+    <transfer name="PriceProductFilter">
+    </transfer>
 </transfers>

@@ -8,14 +8,14 @@
 namespace Spryker\Zed\ProductOfferAvailabilityStorage\Dependency\Facade;
 
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
-use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductOfferCriteriaTransfer;
 
 interface ProductOfferAvailabilityStorageToProductOfferFacadeInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter
+     * @param \Generated\Shared\Transfer\ProductOfferCriteriaTransfer $productOfferCriteria
      *
      * @return \Generated\Shared\Transfer\ProductOfferCollectionTransfer
      */
-    public function find(ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter): ProductOfferCollectionTransfer;
+    public function get(ProductOfferCriteriaTransfer $productOfferCriteria): ProductOfferCollectionTransfer;
 }

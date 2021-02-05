@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\PriceProductOfferVolumeGui\Communication\Controller;
 
-use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductOfferCriteriaTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\PriceProductOfferVolumeGui\PriceProductOfferVolumeGuiConfig;
@@ -37,12 +37,12 @@ class ViewController extends AbstractController
         $storeName = $request->get(static::PARAM_STORE_NAME);
         $currencyCode = $request->get(static::PARAM_CURRENCY_CODE);
 
-        $productOfferCriteriaFilter = (new ProductOfferCriteriaFilterTransfer())
+        $productOfferCriteria = (new ProductOfferCriteriaTransfer())
             ->setIdProductOffer($idProductOffer);
 
         $productOfferTransfer = $this->getFactory()
             ->getProductOfferFacade()
-            ->findOne($productOfferCriteriaFilter);
+            ->findOne($productOfferCriteria);
 
         $response = [
             'backUrl' => $this->generateUrl(PriceProductOfferVolumeGuiConfig::PRODUCT_OFFER_URL_VIEW, [

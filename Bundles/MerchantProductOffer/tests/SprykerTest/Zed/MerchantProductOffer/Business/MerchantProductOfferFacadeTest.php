@@ -8,7 +8,7 @@
 namespace SprykerTest\Zed\MerchantProductOffer\Business;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\MerchantProductOfferCriteriaFilterTransfer;
+use Generated\Shared\Transfer\MerchantProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 
 /**
@@ -41,13 +41,13 @@ class MerchantProductOfferFacadeTest extends Unit
             ProductOfferTransfer::FK_MERCHANT => $merchantTransfer->getIdMerchant(),
         ]);
 
-        $merchantProductOfferCriteriaFilterTransfer = (new MerchantProductOfferCriteriaFilterTransfer())
+        $merchantProductOfferCriteriaTransfer = (new MerchantProductOfferCriteriaTransfer())
             ->setMerchantReference($merchantTransfer->getMerchantReference())
             ->setSkus([$productOfferTransfer->getConcreteSku()])
             ->setIsActive(true);
 
         // Act
-        $productOfferCollectionTransfer = $this->tester->getFacade()->getProductOfferCollection($merchantProductOfferCriteriaFilterTransfer);
+        $productOfferCollectionTransfer = $this->tester->getFacade()->getProductOfferCollection($merchantProductOfferCriteriaTransfer);
 
         // Assert
         $this->assertNotEmpty($productOfferCollectionTransfer->getProductOffers());

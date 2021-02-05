@@ -21,7 +21,7 @@
     </transfer>
 
     <transfer name="MerchantCollection">
-        <property name="merchants" type="Merchant[]" singular="merchants"/>
+        <property name="merchants" type="Merchant[]" singular="merchant"/>
     </transfer>
 
     <transfer name="CompanyBusinessUnit">
@@ -41,9 +41,6 @@
     </transfer>
 
     <transfer name="MerchantCriteria">
-    </transfer>
-
-    <transfer name="MerchantCriteriaFilter">
     </transfer>
 
 </transfers>

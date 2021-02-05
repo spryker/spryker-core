@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\GuiTableColumnConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableDataResponseTransfer;
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
-use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductOfferCriteriaTransfer;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToProductOfferFacadeInterface;
 
 class MerchantOrderItemTableExpander implements MerchantOrderItemTableExpanderInterface
@@ -95,8 +95,8 @@ class MerchantOrderItemTableExpander implements MerchantOrderItemTableExpanderIn
             return $guiTableDataResponseTransfer;
         }
 
-        $productOfferCollectionTransfer = $this->productOfferFacade->find(
-            (new ProductOfferCriteriaFilterTransfer())->setProductOfferReferences($productOfferReferences)
+        $productOfferCollectionTransfer = $this->productOfferFacade->get(
+            (new ProductOfferCriteriaTransfer())->setProductOfferReferences($productOfferReferences)
         );
         $merchantSkus = $this->getMerchantSkusIndexedByProductOfferReferences($productOfferCollectionTransfer);
 

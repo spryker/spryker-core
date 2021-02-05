@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\MerchantProfile\Communication\Plugin\Merchant;
 
-use Generated\Shared\Transfer\MerchantProfileCriteriaFilterTransfer;
+use Generated\Shared\Transfer\MerchantProfileCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantExpanderPluginInterface;
@@ -31,8 +31,8 @@ class MerchantProfileExpanderPlugin extends AbstractPlugin implements MerchantEx
      */
     public function expand(MerchantTransfer $merchantTransfer): MerchantTransfer
     {
-        $merchantProfileCriteriaFilterTransfer = $this->createMerchantProfileCriteriaFilterTransfer($merchantTransfer);
-        $merchantProfileTransfer = $this->getFacade()->findOne($merchantProfileCriteriaFilterTransfer);
+        $merchantProfileCriteriaTransfer = $this->createMerchantProfileCriteriaTransfer($merchantTransfer);
+        $merchantProfileTransfer = $this->getFacade()->findOne($merchantProfileCriteriaTransfer);
 
         if ($merchantProfileTransfer !== null) {
             $merchantTransfer->setMerchantProfile($merchantProfileTransfer);
@@ -44,13 +44,13 @@ class MerchantProfileExpanderPlugin extends AbstractPlugin implements MerchantEx
     /**
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantProfileCriteriaFilterTransfer
+     * @return \Generated\Shared\Transfer\MerchantProfileCriteriaTransfer
      */
-    protected function createMerchantProfileCriteriaFilterTransfer(MerchantTransfer $merchantTransfer): MerchantProfileCriteriaFilterTransfer
+    protected function createMerchantProfileCriteriaTransfer(MerchantTransfer $merchantTransfer): MerchantProfileCriteriaTransfer
     {
-        $merchantProfileCriteriaFilterTransfer = new MerchantProfileCriteriaFilterTransfer();
-        $merchantProfileCriteriaFilterTransfer->setFkMerchant($merchantTransfer->getIdMerchant());
+        $merchantProfileCriteriaTransfer = new MerchantProfileCriteriaTransfer();
+        $merchantProfileCriteriaTransfer->setFkMerchant($merchantTransfer->getIdMerchant());
 
-        return $merchantProfileCriteriaFilterTransfer;
+        return $merchantProfileCriteriaTransfer;
     }
 }

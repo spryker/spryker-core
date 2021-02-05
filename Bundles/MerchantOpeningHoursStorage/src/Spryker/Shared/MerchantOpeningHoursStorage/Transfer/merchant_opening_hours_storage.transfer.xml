@@ -18,7 +18,7 @@
         <property name="date" type="string"/>
         <property name="timeFrom" type="string"/>
         <property name="timeTo" type="string"/>
-        <property name="note" type="string"/>
+        <property name="noteGlossaryKey" type="string"/>
     </transfer>
 
     <transfer name="SynchronizationData">
@@ -35,18 +35,20 @@
 
     <transfer name="Merchant">
         <property name="idMerchant" type="int"/>
+        <property name="merchantReference" type="string"/>
     </transfer>
 
     <transfer name="MerchantCollection">
-        <property name="merchants" type="Merchant[]" singular="merchants"/>
+        <property name="merchants" type="Merchant[]" singular="merchant"/>
     </transfer>
 
-    <transfer name="MerchantOpeningHoursStorageCriteriaFilter">
+    <transfer name="MerchantOpeningHoursStorageCriteria">
         <property name="merchantIds" type="int[]" singular="idMerchant"/>
         <property name="filter" type="Filter"/>
     </transfer>
 
     <transfer name="MerchantCriteria">
+        <property name="merchantIds" type="array" singular="merchantId"/>
         <property name="filter" type="Filter"/>
     </transfer>
 

@@ -8,22 +8,22 @@
 namespace Spryker\Zed\MerchantProfile\Persistence;
 
 use Generated\Shared\Transfer\MerchantProfileCollectionTransfer;
-use Generated\Shared\Transfer\MerchantProfileCriteriaFilterTransfer;
+use Generated\Shared\Transfer\MerchantProfileCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantProfileTransfer;
 
 interface MerchantProfileRepositoryInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\MerchantProfileCriteriaFilterTransfer $merchantProfileCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\MerchantProfileCriteriaTransfer $merchantProfileCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantProfileTransfer|null
      */
-    public function findOne(MerchantProfileCriteriaFilterTransfer $merchantProfileCriteriaFilterTransfer): ?MerchantProfileTransfer;
+    public function findOne(MerchantProfileCriteriaTransfer $merchantProfileCriteriaTransfer): ?MerchantProfileTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantProfileCriteriaFilterTransfer $merchantProfileCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\MerchantProfileCriteriaTransfer $merchantProfileCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantProfileCollectionTransfer
      */
-    public function find(MerchantProfileCriteriaFilterTransfer $merchantProfileCriteriaFilterTransfer): MerchantProfileCollectionTransfer;
+    public function get(MerchantProfileCriteriaTransfer $merchantProfileCriteriaTransfer): MerchantProfileCollectionTransfer;
 }

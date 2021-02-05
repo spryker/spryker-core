@@ -18,7 +18,7 @@ interface MerchantProductOfferStorageEntityManagerInterface
      *
      * @return void
      */
-    public function saveProductConcreteProductOffersStorage(string $concreteSku, array $data, string $storeName): void;
+    public function saveProductConcreteProductOffers(string $concreteSku, array $data, string $storeName): void;
 
     /**
      * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer

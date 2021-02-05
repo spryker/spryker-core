@@ -69,7 +69,7 @@
             "type": "PossiblyNullArrayOffset",
             "message": "Cannot access value on variable $translatedNotes using possibly null offset mixed|null|string",
             "file_name": "vendor/spryker/spryker/Bundles/MerchantOpeningHoursRestApi/src/Spryker/Glue/MerchantOpeningHoursRestApi/Processor/Translator/MerchantOpeningHoursTranslator.php",
-            "snippet": "                    $dateScheduleTransfer->setNote($translatedNotes[$dateScheduleTransfer->getNote()]);",
+            "snippet": "                    $dateScheduleTransfer->setNoteGlossaryKey($translatedNotes[$dateScheduleTransfer->getNoteGlossaryKey()]);",
             "selected_text": "$translatedNotes",
             "error_level": 3,
             "shortcode": 125

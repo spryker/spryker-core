@@ -9,7 +9,7 @@
         <property name="date" dataBuilderRule="dateTimeBetween('now', '+1 year')->format('Y-m-d')"/>
         <property name="timeFrom" dataBuilderRule="date('H:i:s')"/>
         <property name="timeTo" dataBuilderRule="date('H:i:s')"/>
-        <property name="note" dataBuilderRule="word"/>
+        <property name="noteGlossaryKey" dataBuilderRule="word"/>
     </transfer>
 
 </transfers>

@@ -189,7 +189,7 @@
         <property name="stocks" type="Stock[]" singular="stock"/>
     </transfer>
 
-    <transfer name="ProductOfferCriteriaFilter">
+    <transfer name="ProductOfferCriteria">
         <property name="idProductOffer" type="int"/>
         <property name="productOfferReferences" type="string[]" singular="productOfferReference"/>
     </transfer>
