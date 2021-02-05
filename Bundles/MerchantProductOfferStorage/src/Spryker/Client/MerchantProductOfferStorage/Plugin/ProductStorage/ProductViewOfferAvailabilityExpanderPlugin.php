@@ -36,7 +36,7 @@ class ProductViewOfferAvailabilityExpanderPlugin extends AbstractPlugin implemen
     public function expandProductViewTransfer(
         ProductViewTransfer $productViewTransfer,
         array $productData,
-        string $localeName,
+        $localeName,
         ?ProductStorageCriteriaTransfer $productStorageCriteriaTransfer = null
     ): ProductViewTransfer {
         return $this->getFactory()
