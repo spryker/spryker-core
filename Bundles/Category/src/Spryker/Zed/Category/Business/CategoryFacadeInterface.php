@@ -64,6 +64,7 @@ interface CategoryFacadeInterface
      *  - Generates urls from category names for all given locales (names are part of the attributes)
      *  - Finds url entities, hydrates them with generated URLs, and persists them
      *  - Updates the relationships between category and store if data is provided.
+     *  - Cleanups store relations in case empty `StoreRelationTransfer.idStores` property.
      *  - Touches modified category-node entities active (via TouchFacade)
      *  - Touches modified url entities active (via TouchFacade)
      *  - Touches navigation active (via TouchFacade)
@@ -276,7 +277,7 @@ interface CategoryFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves category nodes by criteria filter.
+     * - Retrieves category nodes by criteria.
      *
      * @api
      *
