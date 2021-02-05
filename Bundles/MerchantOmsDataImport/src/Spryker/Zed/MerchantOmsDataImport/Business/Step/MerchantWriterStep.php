@@ -23,6 +23,8 @@ class MerchantWriterStep extends PublishAwareStep implements DataImportStepInter
     ];
 
     /**
+     * @phpstan-param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface<mixed> $dataSet
+     *
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
      * @throws \Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException
@@ -47,6 +49,8 @@ class MerchantWriterStep extends PublishAwareStep implements DataImportStepInter
     }
 
     /**
+     * @phpstan-return \Orm\Zed\Merchant\Persistence\SpyMerchantQuery<\Orm\Zed\Merchant\Persistence\SpyMerchant>
+     *
      * @return \Orm\Zed\Merchant\Persistence\SpyMerchantQuery
      */
     protected function createMerchantPropelQuery(): SpyMerchantQuery
@@ -55,6 +59,8 @@ class MerchantWriterStep extends PublishAwareStep implements DataImportStepInter
     }
 
     /**
+     * @phpstan-param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface<mixed> $dataSet
+     *
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
      * @throws \Spryker\Zed\DataImport\Business\Exception\InvalidDataException

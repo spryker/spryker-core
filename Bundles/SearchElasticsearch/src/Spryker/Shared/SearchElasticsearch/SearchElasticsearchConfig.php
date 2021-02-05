@@ -58,4 +58,14 @@ class SearchElasticsearchConfig extends AbstractSharedConfig
     {
         return static::SUPPORTED_SOURCE_IDENTIFIERS;
     }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getIndexPrefix(): string
+    {
+        return $this->get(SearchElasticsearchConstants::INDEX_PREFIX, '');
+    }
 }
