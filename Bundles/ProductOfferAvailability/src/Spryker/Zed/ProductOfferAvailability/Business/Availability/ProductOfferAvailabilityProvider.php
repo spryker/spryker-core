@@ -48,7 +48,9 @@ class ProductOfferAvailabilityProvider implements ProductOfferAvailabilityProvid
     public function findProductConcreteAvailabilityForRequest(
         ProductOfferAvailabilityRequestTransfer $productOfferAvailabilityRequestTransfer
     ): ?ProductConcreteAvailabilityTransfer {
+        /** @var \Generated\Shared\Transfer\ProductOfferStockResultTransfer $productOfferStockResultTransfer */
         $productOfferStockResultTransfer = $this->getProductOfferStockResultTransfer($productOfferAvailabilityRequestTransfer);
+
         $availability = $this->calculateAvailabilityForRequest($productOfferStockResultTransfer, $productOfferAvailabilityRequestTransfer);
 
         return (new ProductConcreteAvailabilityTransfer())
@@ -80,7 +82,13 @@ class ProductOfferAvailabilityProvider implements ProductOfferAvailabilityProvid
 
         $reservationResponseTransfer = $this->omsFacade->getOmsReservedProductQuantity($reservationRequestTransfer);
 
-        return $quantity->subtract($reservationResponseTransfer->getReservationQuantity());
+        /** @var \Spryker\DecimalObject\Decimal $reservationQuantity */
+        $reservationQuantity = $reservationResponseTransfer->getReservationQuantity();
+
+        /** @var \Spryker\DecimalObject\Decimal $quantity */
+        $quantity->subtract($reservationQuantity);
+
+        return $quantity;
     }
 
     /**
