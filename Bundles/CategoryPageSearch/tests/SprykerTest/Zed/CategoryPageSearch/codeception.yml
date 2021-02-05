@@ -12,23 +12,6 @@ coverage:
     whitelist: { include: ['../../../../src/*'] }
 
 suites:
-    Business:
-        path: Business
-        class_name: CategoryPageSearchBusinessTester
-        modules:
-            enabled:
-            - Asserts
-            - \SprykerTest\Shared\Testify\Helper\Environment
-            - \SprykerTest\Shared\Testify\Helper\BusinessHelper
-            - \SprykerTest\Shared\Testify\Helper\ConfigHelper
-            - \SprykerTest\Shared\Testify\Helper\LocatorHelper
-            - \SprykerTest\Shared\Testify\Helper\DependencyHelper
-            - \SprykerTest\Shared\Propel\Helper\ConnectionHelper
-            - \SprykerTest\Shared\Propel\Helper\TransactionHelper
-            - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
-            - \SprykerTest\Zed\Category\Helper\CategoryDataHelper
-            - \SprykerTest\Shared\Store\Helper\StoreDataHelper
-
     Communication:
         path: Communication
         class_name: CategoryPageSearchCommunicationTester
@@ -41,3 +24,19 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
                 - \SprykerTest\Shared\Propel\Helper\ConnectionHelper
 
+    Business:
+        path: Business
+        class_name: CategoryPageSearchBusinessTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Testify\Helper\BusinessHelper
+                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+                - \SprykerTest\Shared\Propel\Helper\ConnectionHelper
+                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+                - \SprykerTest\Zed\Category\Helper\CategoryDataHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDataHelper
