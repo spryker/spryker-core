@@ -7,20 +7,16 @@
 
 namespace Spryker\Zed\CategoryDataImport\Dependency\Facade;
 
-use Generated\Shared\Transfer\StoreRelationTransfer;
+use Generated\Shared\Transfer\UpdateCategoryStoreRelationRequestTransfer;
 
 interface CategoryDataImportToCategoryFacadeInterface
 {
     /**
-     * @param int $idCategory
-     * @param \Generated\Shared\Transfer\StoreRelationTransfer $newStoreAssignment
-     * @param \Generated\Shared\Transfer\StoreRelationTransfer|null $currentStoreAssignment
+     * @param \Generated\Shared\Transfer\UpdateCategoryStoreRelationRequestTransfer $updateCategoryStoreRelationRequestTransfer
      *
      * @return void
      */
-    public function updateCategoryStoreRelationWithMainChildrenPropagation(
-        int $idCategory,
-        StoreRelationTransfer $newStoreAssignment,
-        ?StoreRelationTransfer $currentStoreAssignment = null
+    public function updateCategoryStoreRelation(
+        UpdateCategoryStoreRelationRequestTransfer $updateCategoryStoreRelationRequestTransfer
     ): void;
 }

@@ -10,11 +10,10 @@ namespace Spryker\Zed\Category\Business;
 use Generated\Shared\Transfer\CategoryCollectionTransfer;
 use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryNodeCriteriaTransfer;
-use Generated\Shared\Transfer\CategoryNodeUrlFilterTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeCollectionTransfer;
-use Generated\Shared\Transfer\StoreRelationTransfer;
+use Generated\Shared\Transfer\UpdateCategoryStoreRelationRequestTransfer;
 
 interface CategoryFacadeInterface
 {
@@ -30,7 +29,7 @@ interface CategoryFacadeInterface
      *
      * @return \Generated\Shared\Transfer\NodeTransfer[]
      */
-    public function getAllNodesByIdCategory($idCategory);
+    public function getAllNodesByIdCategory(int $idCategory): array;
 
     /**
      * Specification:
@@ -100,20 +99,29 @@ interface CategoryFacadeInterface
     /**
      * Specification:
      * - Updates category store relation of provided category.
-     * - Updates category store relation for all main children nodes of provided category.
+     * - Executes `CategoryStoreAssignerPluginInterface` plugin stack.
      *
      * @api
      *
-     * @param int $idCategory
-     * @param \Generated\Shared\Transfer\StoreRelationTransfer $newStoreAssignment
-     * @param \Generated\Shared\Transfer\StoreRelationTransfer|null $currentStoreAssignment
+     * @param \Generated\Shared\Transfer\UpdateCategoryStoreRelationRequestTransfer $updateCategoryStoreRelationRequestTransfer
+     *
+     * @return void
+     */
+    public function updateCategoryStoreRelation(UpdateCategoryStoreRelationRequestTransfer $updateCategoryStoreRelationRequestTransfer): void;
+
+    /**
+     * Specification:
+     * - Updates category store relation for passed category.
+     * - Updates category store relation for children category nodes where `category_node.is_main` is true.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\UpdateCategoryStoreRelationRequestTransfer $updateCategoryStoreRelationRequestTransfer
      *
      * @return void
      */
     public function updateCategoryStoreRelationWithMainChildrenPropagation(
-        int $idCategory,
-        StoreRelationTransfer $newStoreAssignment,
-        ?StoreRelationTransfer $currentStoreAssignment = null
+        UpdateCategoryStoreRelationRequestTransfer $updateCategoryStoreRelationRequestTransfer
     ): void;
 
     /**
@@ -138,7 +146,7 @@ interface CategoryFacadeInterface
      *
      * @return void
      */
-    public function delete($idCategory): void;
+    public function delete(int $idCategory): void;
 
     /**
      * Specification:
@@ -153,7 +161,7 @@ interface CategoryFacadeInterface
      *
      * @return void
      */
-    public function updateCategoryNodeOrder($idCategoryNode, $position): void;
+    public function updateCategoryNodeOrder(int $idCategoryNode, int $position): void;
 
     /**
      * Specification:
@@ -166,7 +174,7 @@ interface CategoryFacadeInterface
      *
      * @return void
      */
-    public function touchCategoryActive($idCategory);
+    public function touchCategoryActive(int $idCategory): void;
 
     /**
      * Specification:
@@ -248,19 +256,6 @@ interface CategoryFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves urls entities from Persistent.
-     * - Filters by category node ids when provided.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CategoryNodeUrlFilterTransfer $categoryNodeFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\UrlTransfer[]
-     */
-    public function getCategoryNodeUrls(CategoryNodeUrlFilterTransfer $categoryNodeFilterTransfer): array;
-
-    /**
-     * Specification:
      * - Retrieves all NodeTransfers by categoryNodeIds and all their parents and children NodeTransfers.
      * - Filters category nodes according to `CategoryNodeCriteriaTransfer`.
      * - Requires `CategoryNodeCriteriaTransfer.categoryNodeIds` to be set.
@@ -269,11 +264,11 @@ interface CategoryFacadeInterface
      *
      * @param \Generated\Shared\Transfer\CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\NodeTransfer[]
+     * @return \Generated\Shared\Transfer\NodeCollectionTransfer
      */
-    public function getCategoryNodesWithRelativeNodesByCriteria(
+    public function getCategoryNodesWithRelativeNodes(
         CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
-    ): array;
+    ): NodeCollectionTransfer;
 
     /**
      * Specification:
@@ -285,5 +280,5 @@ interface CategoryFacadeInterface
      *
      * @return \Generated\Shared\Transfer\NodeCollectionTransfer
      */
-    public function getCategoryNodesByCriteria(CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer): NodeCollectionTransfer;
+    public function getCategoryNodes(CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer): NodeCollectionTransfer;
 }

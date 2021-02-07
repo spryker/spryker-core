@@ -130,11 +130,11 @@
     <transfer name="LocalizedAttributes">
     </transfer>
 
-    <transfer name="CategoryNodeUrlFilter">
+    <transfer name="CategoryNodeUrlCriteria">
         <property name="categoryNodeIds" type="int[]" singular="idCategoryNode"/>
     </transfer>
 
-    <transfer name="CategoryUrlPathCriteria">
+    <transfer name="CategoryNodeUrlPathCriteria">
         <property name="idCategoryNode" type="int"/>
         <property name="idLocale" type="int"/>
         <property name="excludeRootNode" type="bool"/>
@@ -148,6 +148,12 @@
     </transfer>
 
     <transfer name="Store">
+    </transfer>
+
+    <transfer name="UpdateCategoryStoreRelationRequest">
+        <property name="idCategory" type="int"/>
+        <property name="newStoreAssignment" type="StoreRelation"/>
+        <property name="currentStoreAssignment" type="StoreRelation"/>
     </transfer>
 
 </transfers>

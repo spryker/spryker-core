@@ -10,9 +10,9 @@ namespace Spryker\Zed\Category\Persistence;
 use Generated\Shared\Transfer\CategoryCollectionTransfer;
 use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryNodeCriteriaTransfer;
-use Generated\Shared\Transfer\CategoryNodeUrlFilterTransfer;
+use Generated\Shared\Transfer\CategoryNodeUrlCriteriaTransfer;
+use Generated\Shared\Transfer\CategoryNodeUrlPathCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
-use Generated\Shared\Transfer\CategoryUrlPathCriteriaTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeCollectionTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
@@ -314,19 +314,19 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CategoryNodeUrlFilterTransfer $categoryNodeFilterTransfer
+     * @param \Generated\Shared\Transfer\CategoryNodeUrlCriteriaTransfer $categoryNodeUrlCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\UrlTransfer[]
      */
-    public function getCategoryNodeUrls(CategoryNodeUrlFilterTransfer $categoryNodeFilterTransfer): array
+    public function getCategoryNodeUrls(CategoryNodeUrlCriteriaTransfer $categoryNodeUrlCriteriaTransfer): array
     {
         $urlQuery = $this->getFactory()
             ->createUrlQuery()
             ->joinSpyLocale()
             ->withColumn(static::COL_LOCALE_NAME);
 
-        if ($categoryNodeFilterTransfer->getCategoryNodeIds()) {
-            $urlQuery->filterByFkResourceCategorynode_In(array_unique($categoryNodeFilterTransfer->getCategoryNodeIds()));
+        if ($categoryNodeUrlCriteriaTransfer->getCategoryNodeIds()) {
+            $urlQuery->filterByFkResourceCategorynode_In(array_unique($categoryNodeUrlCriteriaTransfer->getCategoryNodeIds()));
         }
 
         $urlTransfers = [];
@@ -339,16 +339,16 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CategoryUrlPathCriteriaTransfer $categoryUrlPathCriteriaTransfer
+     * @param \Generated\Shared\Transfer\CategoryNodeUrlPathCriteriaTransfer $categoryNodeUrlPathCriteriaTransfer
      *
      * @return array
      */
-    public function getCategoryUrlPathParts(CategoryUrlPathCriteriaTransfer $categoryUrlPathCriteriaTransfer): array
+    public function getCategoryNodeUrlPathParts(CategoryNodeUrlPathCriteriaTransfer $categoryNodeUrlPathCriteriaTransfer): array
     {
-        $depth = $categoryUrlPathCriteriaTransfer->getOnlyParents() ? 0 : null;
+        $depth = $categoryNodeUrlPathCriteriaTransfer->getOnlyParents() ? 0 : null;
 
         $nodeQuery = $this->getFactory()->createCategoryNodeQuery();
-        if ($categoryUrlPathCriteriaTransfer->getExcludeRootNode()) {
+        if ($categoryNodeUrlPathCriteriaTransfer->getExcludeRootNode()) {
             $nodeQuery->filterByIsRoot(false);
         }
 
@@ -356,12 +356,12 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
             ->useClosureTableQuery()
                 ->orderByFkCategoryNodeDescendant(Criteria::DESC)
                 ->orderByDepth(Criteria::DESC)
-                ->filterByFkCategoryNodeDescendant($categoryUrlPathCriteriaTransfer->getIdCategoryNodeOrFail())
+                ->filterByFkCategoryNodeDescendant($categoryNodeUrlPathCriteriaTransfer->getIdCategoryNodeOrFail())
                 ->filterByDepth($depth, Criteria::NOT_EQUAL)
             ->endUse()
             ->useCategoryQuery()
                 ->useAttributeQuery()
-                    ->filterByFkLocale($categoryUrlPathCriteriaTransfer->getIdLocaleOrFail())
+                    ->filterByFkLocale($categoryNodeUrlPathCriteriaTransfer->getIdLocaleOrFail())
                 ->endUse()
             ->endUse()
             ->withColumn(SpyCategoryNodeTableMap::COL_FK_CATEGORY, static::KEY_FK_CATEGORY)
@@ -381,15 +381,16 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
      *
      * @param \Generated\Shared\Transfer\CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\NodeTransfer[]
+     * @return \Generated\Shared\Transfer\NodeCollectionTransfer
      */
-    public function getCategoryNodesWithRelativeNodesByCriteria(
+    public function getCategoryNodesWithRelativeNodes(
         CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
-    ): array {
+    ): NodeCollectionTransfer {
+        $nodeCollectionTransfer = new NodeCollectionTransfer();
         $categoryNodeIds = $categoryNodeCriteriaTransfer->requireCategoryNodeIds()->getCategoryNodeIds();
 
         if ($categoryNodeIds === []) {
-            return [];
+            return $nodeCollectionTransfer;
         }
 
         $categoryNodeIdsImploded = implode(', ', $categoryNodeIds);
@@ -440,12 +441,12 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
         $categoryNodeEntities = $categoryNodeQuery->find()->toKeyIndex();
 
         if ($categoryNodeEntities === []) {
-            return [];
+            return $nodeCollectionTransfer;
         }
 
         return $this->getFactory()
             ->createCategoryMapper()
-            ->mapCategoryNodeEntitiesToNodeTransfersIndexedByIdCategoryNode($categoryNodeEntities, []);
+            ->mapCategoryNodeEntitiesToNodeCollectionTransfer($categoryNodeEntities, $nodeCollectionTransfer);
     }
 
     /**
@@ -457,7 +458,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
      *
      * @return \Generated\Shared\Transfer\NodeCollectionTransfer
      */
-    public function getCategoryNodesByCriteria(CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer): NodeCollectionTransfer
+    public function getCategoryNodes(CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer): NodeCollectionTransfer
     {
         $categoryNodeQuery = $this->getFactory()
             ->createCategoryNodeQuery();
@@ -538,6 +539,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
     {
         $storeRelationTransfer = new StoreRelationTransfer();
 
+        /** @var \Orm\Zed\Category\Persistence\SpyCategoryStore[]|\Propel\Runtime\Collection\ObjectCollection $categoryStoreEntities */
         $categoryStoreEntities = $this->getFactory()
             ->createCategoryStoreQuery()
             ->joinWithSpyCategory()

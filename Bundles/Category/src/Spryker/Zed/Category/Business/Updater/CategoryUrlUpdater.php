@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Category\Business\Updater;
 
-use Generated\Shared\Transfer\CategoryNodeUrlFilterTransfer;
+use Generated\Shared\Transfer\CategoryNodeUrlCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeCollectionTransfer;
@@ -70,15 +70,15 @@ class CategoryUrlUpdater implements CategoryUrlUpdaterInterface
      */
     protected function executeUpdateCategoryUrlTransaction(CategoryTransfer $categoryTransfer): void
     {
-        $categoryNodeUrlFilterTransfer = new CategoryNodeUrlFilterTransfer();
+        $categoryNodeUrlCriteriaTransfer = new CategoryNodeUrlCriteriaTransfer();
 
         if ($categoryTransfer->getNodeCollection() !== null) {
-            $categoryNodeUrlFilterTransfer->setCategoryNodeIds(
+            $categoryNodeUrlCriteriaTransfer->setCategoryNodeIds(
                 $this->getCategoryNodeIdsFromNodeCollection($categoryTransfer->getNodeCollectionOrFail())
             );
         }
 
-        $urlTransfers = $this->categoryRepository->getCategoryNodeUrls($categoryNodeUrlFilterTransfer);
+        $urlTransfers = $this->categoryRepository->getCategoryNodeUrls($categoryNodeUrlCriteriaTransfer);
 
         foreach ($categoryTransfer->getLocalizedAttributes() as $categoryLocalizedAttributesTransfer) {
             $this->updateUrlsForNodes(

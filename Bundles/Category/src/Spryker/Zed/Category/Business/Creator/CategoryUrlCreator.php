@@ -8,8 +8,8 @@
 namespace Spryker\Zed\Category\Business\Creator;
 
 use ArrayObject;
+use Generated\Shared\Transfer\CategoryNodeUrlPathCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
-use Generated\Shared\Transfer\CategoryUrlPathCriteriaTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
@@ -172,12 +172,12 @@ class CategoryUrlCreator implements CategoryUrlCreatorInterface
      */
     protected function getUrlPathPartsForCategoryNode(NodeTransfer $nodeTransfer, LocaleTransfer $localeTransfer): array
     {
-        $categoryUrlPathCriteriaTransfer = (new CategoryUrlPathCriteriaTransfer())
+        $categoryNodeUrlPathCriteriaTransfer = (new CategoryNodeUrlPathCriteriaTransfer())
             ->setIdCategoryNode($nodeTransfer->getIdCategoryNodeOrFail())
             ->setIdLocale($localeTransfer->getIdLocaleOrFail())
             ->setExcludeRootNode(true);
 
-        $categoryUrlPathParts = $this->categoryRepository->getCategoryUrlPathParts($categoryUrlPathCriteriaTransfer);
+        $categoryUrlPathParts = $this->categoryRepository->getCategoryNodeUrlPathParts($categoryNodeUrlPathCriteriaTransfer);
 
         return $this->executeCategoryUrlPathPlugins($categoryUrlPathParts, $localeTransfer);
     }

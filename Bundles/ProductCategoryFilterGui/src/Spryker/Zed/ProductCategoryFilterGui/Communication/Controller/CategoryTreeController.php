@@ -42,7 +42,6 @@ class CategoryTreeController extends AbstractController
 
         return $this->viewResponse([
             'mainCategory' => $mainCategory,
-            'categoryTree' => [], //@deprecated Use parameter `nodeCollection` instead.
             'categoriesWithSpecificFilters' => $categoriesWithSpecificFilters,
             'nodeCollection' => $this->findCategoryNodeTree($idRootNode),
         ]);

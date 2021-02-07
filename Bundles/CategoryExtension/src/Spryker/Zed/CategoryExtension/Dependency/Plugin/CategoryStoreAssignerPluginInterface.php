@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CategoryExtension\Dependency\Plugin;
 
-use Generated\Shared\Transfer\StoreRelationTransfer;
+use Generated\Shared\Transfer\UpdateCategoryStoreRelationRequestTransfer;
 
 /**
  * Use this plugin interface to handle updating of the category store relations.
@@ -20,15 +20,9 @@ interface CategoryStoreAssignerPluginInterface
      *
      * @api
      *
-     * @param int $idCategory
-     * @param \Generated\Shared\Transfer\StoreRelationTransfer $newStoreAssignment
-     * @param \Generated\Shared\Transfer\StoreRelationTransfer|null $currentStoreAssignment
+     * @param \Generated\Shared\Transfer\UpdateCategoryStoreRelationRequestTransfer $updateCategoryStoreRelationRequestTransfer
      *
      * @return void
      */
-    public function handleStoreRelationUpdate(
-        int $idCategory,
-        StoreRelationTransfer $newStoreAssignment,
-        ?StoreRelationTransfer $currentStoreAssignment = null
-    ): void;
+    public function handleStoreRelationUpdate(UpdateCategoryStoreRelationRequestTransfer $updateCategoryStoreRelationRequestTransfer): void;
 }

@@ -84,7 +84,7 @@ class CategoryNodePageSearchWriter implements CategoryNodePageSearchWriterInterf
     public function writeCategoryNodePageSearchCollectionByCategoryStoreEvents(array $eventEntityTransfers): void
     {
         $categoryIds = $this->eventBehaviorFacade->getEventTransferForeignKeys($eventEntityTransfers, SpyCategoryStoreTableMap::COL_FK_CATEGORY);
-        $nodeCollectionTransfer = $this->categoryFacade->getCategoryNodesByCriteria(
+        $nodeCollectionTransfer = $this->categoryFacade->getCategoryNodes(
             (new CategoryNodeCriteriaTransfer())->setCategoryIds($categoryIds)
         );
 
@@ -101,7 +101,7 @@ class CategoryNodePageSearchWriter implements CategoryNodePageSearchWriterInterf
     public function writeCategoryNodePageSearchCollectionByCategoryStorePublishEvents(array $eventEntityTransfers): void
     {
         $categoryIds = $this->eventBehaviorFacade->getEventTransferIds($eventEntityTransfers);
-        $nodeCollectionTransfer = $this->categoryFacade->getCategoryNodesByCriteria(
+        $nodeCollectionTransfer = $this->categoryFacade->getCategoryNodes(
             (new CategoryNodeCriteriaTransfer())->setCategoryIds($categoryIds)
         );
 
@@ -122,7 +122,7 @@ class CategoryNodePageSearchWriter implements CategoryNodePageSearchWriterInterf
             ->setIsActive(true)
             ->setWithRelations(true);
 
-        $nodeCollectionTransfer = $this->categoryFacade->getCategoryNodesByCriteria($categoryNodeCriteriaTransfer);
+        $nodeCollectionTransfer = $this->categoryFacade->getCategoryNodes($categoryNodeCriteriaTransfer);
 
         $this->storeData($nodeCollectionTransfer);
     }

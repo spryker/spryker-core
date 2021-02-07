@@ -46,11 +46,14 @@ interface CategoryMapperInterface
 
     /**
      * @param \Orm\Zed\Category\Persistence\SpyCategoryNode[] $categoryNodeEntities
-     * @param \Generated\Shared\Transfer\NodeTransfer[] $nodeTransfers
+     * @param \Generated\Shared\Transfer\NodeCollectionTransfer $nodeCollectionTransfer
      *
-     * @return \Generated\Shared\Transfer\NodeTransfer[]
+     * @return \Generated\Shared\Transfer\NodeCollectionTransfer
      */
-    public function mapCategoryNodeEntitiesToNodeTransfersIndexedByIdCategoryNode(array $categoryNodeEntities, array $nodeTransfers): array;
+    public function mapCategoryNodeEntitiesToNodeCollectionTransfer(
+        array $categoryNodeEntities,
+        NodeCollectionTransfer $nodeCollectionTransfer
+    ): NodeCollectionTransfer;
 
     /**
      * @param \Orm\Zed\Category\Persistence\SpyCategoryNode[]|\Propel\Runtime\Collection\ObjectCollection $nodeEntities

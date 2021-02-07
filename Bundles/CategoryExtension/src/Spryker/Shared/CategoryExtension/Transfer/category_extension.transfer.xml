@@ -9,7 +9,7 @@
     <transfer name="TabsView">
     </transfer>
 
-    <transfer name="StoreRelation">
+    <transfer name="UpdateCategoryStoreRelationRequest">
     </transfer>
 
     <transfer name="Locale">

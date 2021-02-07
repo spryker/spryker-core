@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\NodeCollectionTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
+use Generated\Shared\Transfer\UpdateCategoryStoreRelationRequestTransfer;
 use Spryker\Zed\Category\Business\Exception\MissingCategoryException;
 use Spryker\Zed\Category\Business\Reader\CategoryReaderInterface;
 use Spryker\Zed\Category\Dependency\CategoryEvents;
@@ -62,35 +63,32 @@ class CategoryStoreUpdater implements CategoryStoreUpdaterInterface
     }
 
     /**
-     * @param int $idCategory
-     * @param \Generated\Shared\Transfer\StoreRelationTransfer $newStoreAssignment
-     * @param \Generated\Shared\Transfer\StoreRelationTransfer|null $currentStoreAssignment
+     * @param \Generated\Shared\Transfer\UpdateCategoryStoreRelationRequestTransfer $updateCategoryStoreRelationRequestTransfer
      *
      * @return void
      */
     public function updateCategoryStoreRelationWithMainChildrenPropagation(
-        int $idCategory,
-        StoreRelationTransfer $newStoreAssignment,
-        ?StoreRelationTransfer $currentStoreAssignment = null
+        UpdateCategoryStoreRelationRequestTransfer $updateCategoryStoreRelationRequestTransfer
     ): void {
-        $this->getTransactionHandler()->handleTransaction(function () use ($idCategory, $newStoreAssignment, $currentStoreAssignment) {
-            $this->executeUpdateCategoryStoreRelationWithMainChildrenPropagationTransaction($idCategory, $newStoreAssignment, $currentStoreAssignment);
+        $this->getTransactionHandler()->handleTransaction(function () use ($updateCategoryStoreRelationRequestTransfer) {
+            $this->executeUpdateCategoryStoreRelationWithMainChildrenPropagationTransaction($updateCategoryStoreRelationRequestTransfer);
         });
     }
 
     /**
-     * @param int $idCategory
-     * @param \Generated\Shared\Transfer\StoreRelationTransfer $newStoreAssignment
-     * @param \Generated\Shared\Transfer\StoreRelationTransfer|null $currentStoreAssignment
+     * @param \Generated\Shared\Transfer\UpdateCategoryStoreRelationRequestTransfer $updateCategoryStoreRelationRequestTransfer
      *
      * @return void
      */
     protected function executeUpdateCategoryStoreRelationWithMainChildrenPropagationTransaction(
-        int $idCategory,
-        StoreRelationTransfer $newStoreAssignment,
-        ?StoreRelationTransfer $currentStoreAssignment = null
+        UpdateCategoryStoreRelationRequestTransfer $updateCategoryStoreRelationRequestTransfer
     ): void {
+        $idCategory = $updateCategoryStoreRelationRequestTransfer->getIdCategoryOrFail();
+        $currentStoreAssignment = $updateCategoryStoreRelationRequestTransfer->getCurrentStoreAssignment();
+        $newStoreAssignment = $updateCategoryStoreRelationRequestTransfer->getNewStoreAssignmentOrFail();
+
         $categoryTransfer = $this->getCurrentCategoryTransfer($idCategory);
+
         if (!$currentStoreAssignment) {
             $currentStoreAssignment = $categoryTransfer->getStoreRelationOrFail();
         }

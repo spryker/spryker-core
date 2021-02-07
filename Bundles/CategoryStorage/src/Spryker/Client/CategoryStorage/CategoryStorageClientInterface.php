@@ -8,6 +8,7 @@
 namespace Spryker\Client\CategoryStorage;
 
 use ArrayObject;
+use Generated\Shared\Transfer\CategoryNodeStorageTransfer;
 
 interface CategoryStorageClientInterface
 {
@@ -17,12 +18,12 @@ interface CategoryStorageClientInterface
      *
      * @api
      *
-     * @param string $locale
+     * @param string $localeName
      * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[]|\ArrayObject
      */
-    public function getCategories($locale, string $storeName);
+    public function getCategories(string $localeName, string $storeName): ArrayObject;
 
     /**
      * Specification:
@@ -36,7 +37,7 @@ interface CategoryStorageClientInterface
      *
      * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer
      */
-    public function getCategoryNodeById($idCategoryNode, $localeName, string $storeName);
+    public function getCategoryNodeById(int $idCategoryNode, string $localeName, string $storeName): CategoryNodeStorageTransfer;
 
     /**
      * Specification:
@@ -50,7 +51,7 @@ interface CategoryStorageClientInterface
      *
      * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[]
      */
-    public function getCategoryNodeByIds($categoryNodeIds, $localeName, string $storeName): array;
+    public function getCategoryNodeByIds(array $categoryNodeIds, string $localeName, string $storeName): array;
 
     /**
      * Specification:
