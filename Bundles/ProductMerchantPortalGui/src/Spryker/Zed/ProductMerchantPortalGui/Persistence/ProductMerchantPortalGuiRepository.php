@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductMerchantPortalGui\Persistence;
 
 use Generated\Shared\Transfer\MerchantProductTableCriteriaTransfer;
+use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\PriceProductAbstractTableCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductAbstractTableViewCollectionTransfer;
 use Generated\Shared\Transfer\PriceProductAbstractTableViewTransfer;
@@ -77,7 +78,10 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
             $merchantProductTableCriteriaTransfer->requirePageSize()->getPageSize()
         );
 
-        $paginationTransfer = $this->getFactory()->createPropelModelPagerConverter()->mapPropelModelPagerToPaginationTransfer($propelPager);
+        $paginationTransfer = $this->getFactory()->createPropelModelPagerMapper()->mapPropelModelPagerToPaginationTransfer(
+            $propelPager,
+            new PaginationTransfer()
+        );
         $productAbstractCollectionTransfer = $this->getFactory()
             ->createProductAbstractTableDataMapper()
             ->mapProductAbstractTableDataArrayToProductAbstractCollectionTransfer(
@@ -525,7 +529,10 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
             $priceProductAbstractTableCriteriaTransfer->requirePage()->getPage(),
             $priceProductAbstractTableCriteriaTransfer->requirePageSize()->getPageSize()
         );
-        $paginationTransfer = $this->getFactory()->createPropelModelPagerConverter()->mapPropelModelPagerToPaginationTransfer($propelPager);
+        $paginationTransfer = $this->getFactory()->createPropelModelPagerMapper()->mapPropelModelPagerToPaginationTransfer(
+            $propelPager,
+            new PaginationTransfer()
+        );
 
         $priceProductAbstractTableViewCollectionTransfer = $this->getFactory()
             ->createPriceProductAbstractTableDataMapper()
