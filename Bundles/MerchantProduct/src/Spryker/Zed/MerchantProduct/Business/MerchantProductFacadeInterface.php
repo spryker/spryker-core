@@ -44,7 +44,7 @@ interface MerchantProductFacadeInterface
     public function get(MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer): MerchantProductCollectionTransfer;
 
     /**
-     * Specifications:
+     * Specification:
      * - Validates that merchant references in the cart items match existing merchant products.
      *
      * @api

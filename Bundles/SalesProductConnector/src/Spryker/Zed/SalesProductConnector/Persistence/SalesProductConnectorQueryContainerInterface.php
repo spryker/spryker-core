@@ -12,6 +12,9 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 interface SalesProductConnectorQueryContainerInterface extends QueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $fkSalesOrderItem
@@ -21,6 +24,9 @@ interface SalesProductConnectorQueryContainerInterface extends QueryContainerInt
     public function queryProductMetadata($fkSalesOrderItem);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $sku
@@ -30,6 +36,9 @@ interface SalesProductConnectorQueryContainerInterface extends QueryContainerInt
     public function queryProductConcreteBySku($sku);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $attributeKeys

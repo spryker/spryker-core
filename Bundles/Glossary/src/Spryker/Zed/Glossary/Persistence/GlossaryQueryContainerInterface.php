@@ -14,6 +14,9 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 interface GlossaryQueryContainerInterface extends QueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $keyName
@@ -23,6 +26,9 @@ interface GlossaryQueryContainerInterface extends QueryContainerInterface
     public function queryKey($keyName);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $keyName
@@ -32,6 +38,9 @@ interface GlossaryQueryContainerInterface extends QueryContainerInterface
     public function queryActiveKeysByName($keyName);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery
@@ -39,6 +48,9 @@ interface GlossaryQueryContainerInterface extends QueryContainerInterface
     public function queryKeys();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $keyName
@@ -49,6 +61,9 @@ interface GlossaryQueryContainerInterface extends QueryContainerInterface
     public function queryTranslationByNames($keyName, $localeName);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idKey
@@ -59,6 +74,9 @@ interface GlossaryQueryContainerInterface extends QueryContainerInterface
     public function queryTranslationByIds($idKey, $idLocale);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery
@@ -66,6 +84,9 @@ interface GlossaryQueryContainerInterface extends QueryContainerInterface
     public function queryTranslations();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $keyName
@@ -75,6 +96,9 @@ interface GlossaryQueryContainerInterface extends QueryContainerInterface
     public function queryTranslationsByKey($keyName);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $localeName
@@ -84,6 +108,9 @@ interface GlossaryQueryContainerInterface extends QueryContainerInterface
     public function queryTranslationsByLocale($localeName);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idGlossaryTranslation
@@ -93,6 +120,9 @@ interface GlossaryQueryContainerInterface extends QueryContainerInterface
     public function queryTranslationById($idGlossaryTranslation);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery $query
@@ -102,6 +132,9 @@ interface GlossaryQueryContainerInterface extends QueryContainerInterface
     public function joinTranslationQueryWithKeysAndLocales(SpyGlossaryTranslationQuery $query);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $relevantLocales
@@ -113,6 +146,9 @@ interface GlossaryQueryContainerInterface extends QueryContainerInterface
     public function queryAllPossibleTranslations(array $relevantLocales);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $relevantLocales
@@ -122,6 +158,9 @@ interface GlossaryQueryContainerInterface extends QueryContainerInterface
     public function queryAllMissingTranslations(array $relevantLocales);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idKey
@@ -132,6 +171,9 @@ interface GlossaryQueryContainerInterface extends QueryContainerInterface
     public function queryMissingTranslationsForKey($idKey, array $relevantLocales);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
@@ -141,6 +183,9 @@ interface GlossaryQueryContainerInterface extends QueryContainerInterface
     public function queryDistinctKeysFromQuery(ModelCriteria $query);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
@@ -150,6 +195,9 @@ interface GlossaryQueryContainerInterface extends QueryContainerInterface
     public function queryDistinctLocalesFromQuery(ModelCriteria $query);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $key
@@ -159,6 +207,9 @@ interface GlossaryQueryContainerInterface extends QueryContainerInterface
     public function queryByKey($key);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $fkGlossaryKey
@@ -169,6 +220,9 @@ interface GlossaryQueryContainerInterface extends QueryContainerInterface
     public function queryGlossaryKeyTranslationsByLocale($fkGlossaryKey, array $locales);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $value
@@ -178,6 +232,9 @@ interface GlossaryQueryContainerInterface extends QueryContainerInterface
     public function queryTranslationByValue($value);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $idGlossaryKeys
@@ -187,6 +244,9 @@ interface GlossaryQueryContainerInterface extends QueryContainerInterface
     public function queryGlossaryKeyByIdGlossaryKeys(array $idGlossaryKeys);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $idGlossaryKeys

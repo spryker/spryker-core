@@ -8,7 +8,6 @@
 namespace Spryker\Zed\SearchElasticsearch\Business\Definition\Builder;
 
 use Generated\Shared\Transfer\IndexDefinitionTransfer;
-use Spryker\Shared\SearchElasticsearch\Index\IndexNameResolverInterface;
 use Spryker\Zed\SearchElasticsearch\Business\Definition\Loader\IndexDefinitionLoaderInterface;
 use Spryker\Zed\SearchElasticsearch\Business\Definition\Merger\IndexDefinitionMergerInterface;
 
@@ -25,23 +24,15 @@ class IndexDefinitionBuilder implements IndexDefinitionBuilderInterface
     protected $indexDefinitionMerger;
 
     /**
-     * @var \Spryker\Shared\SearchElasticsearch\Index\IndexNameResolverInterface
-     */
-    protected $indexNameResolver;
-
-    /**
      * @param \Spryker\Zed\SearchElasticsearch\Business\Definition\Loader\IndexDefinitionLoaderInterface $indexDefinitionLoader
      * @param \Spryker\Zed\SearchElasticsearch\Business\Definition\Merger\IndexDefinitionMergerInterface $indexDefinitionMerger
-     * @param \Spryker\Shared\SearchElasticsearch\Index\IndexNameResolverInterface $indexNameResolver
      */
     public function __construct(
         IndexDefinitionLoaderInterface $indexDefinitionLoader,
-        IndexDefinitionMergerInterface $indexDefinitionMerger,
-        IndexNameResolverInterface $indexNameResolver
+        IndexDefinitionMergerInterface $indexDefinitionMerger
     ) {
         $this->indexDefinitionLoader = $indexDefinitionLoader;
         $this->indexDefinitionMerger = $indexDefinitionMerger;
-        $this->indexNameResolver = $indexNameResolver;
     }
 
     /**
@@ -51,7 +42,7 @@ class IndexDefinitionBuilder implements IndexDefinitionBuilderInterface
     {
         $indexDefinitions = [];
         foreach ($this->indexDefinitionLoader->load() as $indexDefinition) {
-            $indexDefinitions = $this->mergeAndAddIndexDefinition($indexDefinitions, $indexDefinition['name'], $indexDefinition['definition']);
+            $indexDefinitions = $this->mergeAndAddIndexDefinition($indexDefinitions, $indexDefinition);
         }
 
         return $this->buildIndexDefinitionTransferCollection($indexDefinitions);
@@ -59,13 +50,15 @@ class IndexDefinitionBuilder implements IndexDefinitionBuilderInterface
 
     /**
      * @param array $indexDefinitions
-     * @param string $indexName
      * @param array $indexDefinition
      *
      * @return array
      */
-    protected function mergeAndAddIndexDefinition(array $indexDefinitions, string $indexName, array $indexDefinition): array
+    protected function mergeAndAddIndexDefinition(array $indexDefinitions, array $indexDefinition): array
     {
+        $indexName = $indexDefinition['name'];
+        $indexDefinition = $indexDefinition['definition'];
+
         if (isset($indexDefinitions[$indexName])) {
             $indexDefinition = $this->indexDefinitionMerger->merge(
                 $indexDefinitions[$indexName],
@@ -105,8 +98,7 @@ class IndexDefinitionBuilder implements IndexDefinitionBuilderInterface
         $mappings = $indexDefinition['mappings'] ?? [];
 
         $indexDefinitionTransfer = new IndexDefinitionTransfer();
-        $indexDefinitionTransfer
-            ->setIndexName($this->indexNameResolver->resolve($indexName))
+        $indexDefinitionTransfer->setIndexName($indexName)
             ->setSettings($settings)
             ->setMappings($mappings);
 

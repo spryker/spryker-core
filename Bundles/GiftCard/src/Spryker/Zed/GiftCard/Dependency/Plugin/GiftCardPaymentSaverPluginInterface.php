@@ -13,6 +13,9 @@ use Generated\Shared\Transfer\PaymentTransfer;
 interface GiftCardPaymentSaverPluginInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\PaymentTransfer $paymentTransfer

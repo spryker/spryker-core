@@ -10,6 +10,9 @@ namespace Spryker\Zed\ProductLabel\Persistence;
 interface ProductLabelQueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @deprecated Use {@link \Spryker\Zed\ProductLabel\Persistence\ProductLabelRepositoryInterface::getAllProductLabelsSortedByPosition()} instead.
@@ -19,6 +22,9 @@ interface ProductLabelQueryContainerInterface
     public function queryProductLabelsSortedByPosition();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @deprecated Use {@link \Spryker\Zed\ProductLabel\Persistence\ProductLabelRepositoryInterface::findProductLabelById} instead.
@@ -30,6 +36,9 @@ interface ProductLabelQueryContainerInterface
     public function queryProductLabelById($idProductLabel);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @deprecated Use {@link \Spryker\Zed\ProductLabel\Persistence\ProductLabelRepositoryInterface::findProductLabelByName} instead.
@@ -41,6 +50,9 @@ interface ProductLabelQueryContainerInterface
     public function queryProductLabelByName($labelName);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @deprecated Use {@link \Spryker\Zed\ProductLabel\Persistence\ProductLabelRepositoryInterface::getProductLabelsByIdProductAbstract} instead.
@@ -52,6 +64,9 @@ interface ProductLabelQueryContainerInterface
     public function queryProductsLabelByIdProductAbstract($idProductAbstract);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @deprecated Use {@link \Spryker\Zed\ProductLabel\Persistence\ProductLabelRepositoryInterface::getActiveProductLabelIdsByIdProductAbstract} instead.
@@ -63,6 +78,9 @@ interface ProductLabelQueryContainerInterface
     public function queryActiveProductsLabelByIdProductAbstract($idProductAbstract);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @deprecated Will be removed without replacement.
@@ -74,6 +92,9 @@ interface ProductLabelQueryContainerInterface
     public function queryLocalizedAttributesByIdProductLabel($idProductLabel);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelLocalizedAttributesQuery
@@ -81,6 +102,9 @@ interface ProductLabelQueryContainerInterface
     public function queryAllLocalizedAttributesLabels();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @deprecated Will be removed without replacement.
@@ -93,6 +117,9 @@ interface ProductLabelQueryContainerInterface
     public function queryLocalizedAttributesByIdProductLabelAndIdLocale($idProductLabel, $idLocale);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @deprecated Will be removed without replacement.
@@ -102,6 +129,9 @@ interface ProductLabelQueryContainerInterface
     public function queryMaxPosition();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProductLabel
@@ -111,6 +141,9 @@ interface ProductLabelQueryContainerInterface
     public function queryProductAbstractRelationsByIdProductLabel($idProductLabel);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery
@@ -118,6 +151,9 @@ interface ProductLabelQueryContainerInterface
     public function queryAllProductLabelProductAbstractRelations();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProductLabel
@@ -131,6 +167,9 @@ interface ProductLabelQueryContainerInterface
     );
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery
@@ -138,6 +177,9 @@ interface ProductLabelQueryContainerInterface
     public function queryUnpublishedProductLabelsBecomingValid();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery
@@ -145,6 +187,9 @@ interface ProductLabelQueryContainerInterface
     public function queryPublishedProductLabelsBecomingInvalid();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProductAbstract
