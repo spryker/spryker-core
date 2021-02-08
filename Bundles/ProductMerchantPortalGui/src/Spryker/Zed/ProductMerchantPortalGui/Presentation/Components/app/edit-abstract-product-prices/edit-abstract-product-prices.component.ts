@@ -6,7 +6,7 @@ import { TableConfig } from '@spryker/table';
     templateUrl: './edit-abstract-product-prices.component.html',
     styleUrls: ['./edit-abstract-product-prices.component.less'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
 })
 export class EditAbstractProductPricesComponent {
     @Input() config: TableConfig;
