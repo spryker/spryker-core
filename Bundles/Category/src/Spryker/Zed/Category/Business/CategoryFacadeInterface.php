@@ -99,7 +99,7 @@ interface CategoryFacadeInterface
     /**
      * Specification:
      * - Updates category store relation of provided category.
-     * - Executes `CategoryStoreAssignerPluginInterface` plugin stack.
+     * - Executes `CategoryStoreAssignerPluginInterface` plugin.
      *
      * @api
      *
