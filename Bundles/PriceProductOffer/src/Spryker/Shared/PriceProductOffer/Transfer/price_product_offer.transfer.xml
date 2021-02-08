@@ -127,5 +127,6 @@
     </transfer>
 
     <transfer name="PriceProductFilter">
+        <property name="productOfferReference" type="string"/>
     </transfer>
 </transfers>

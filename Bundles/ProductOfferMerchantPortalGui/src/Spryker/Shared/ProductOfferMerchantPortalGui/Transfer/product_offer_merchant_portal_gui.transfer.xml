@@ -333,6 +333,10 @@
         <property name="productOfferCriteriaFilter" type="ProductOfferCriteriaFilter"/>
     </transfer>
 
+    <transfer name="ProductOfferCriteriaFilter">
+        <property name="merchantIds" type="int[]" singular="idMerchant"/>
+    </transfer>
+
     <transfer name="ValidationResponse">
         <property name="isSuccess" type="bool"/>
         <property name="validationErrors" type="ValidationError[]" singular="validationError"/>
