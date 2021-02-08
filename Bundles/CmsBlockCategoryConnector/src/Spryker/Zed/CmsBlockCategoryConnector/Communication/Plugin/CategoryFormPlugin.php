@@ -26,8 +26,6 @@ class CategoryFormPlugin extends AbstractPlugin implements CategoryFormPluginInt
      *
      * @api
      *
-     * @deprecated Use {@link \Spryker\Zed\CmsBlockCategoryConnector\Communication\Plugin\CmsBlockSubformCategoryFormPlugin::buildForm()} instead.
-     *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
      * @return void

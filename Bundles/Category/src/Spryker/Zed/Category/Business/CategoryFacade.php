@@ -10,11 +10,10 @@ namespace Spryker\Zed\Category\Business;
 use Generated\Shared\Transfer\CategoryCollectionTransfer;
 use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryNodeCriteriaTransfer;
-use Generated\Shared\Transfer\CategoryNodeUrlFilterTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeCollectionTransfer;
-use Generated\Shared\Transfer\StoreRelationTransfer;
+use Generated\Shared\Transfer\UpdateCategoryStoreRelationRequestTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -33,7 +32,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @return \Generated\Shared\Transfer\NodeTransfer[]
      */
-    public function getAllNodesByIdCategory($idCategory)
+    public function getAllNodesByIdCategory(int $idCategory): array
     {
         return $this->getFactory()
             ->createCategoryNodeReader()
@@ -81,22 +80,33 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @api
      *
-     * @param int $idCategory
-     * @param \Generated\Shared\Transfer\StoreRelationTransfer $newStoreAssignment
-     * @param \Generated\Shared\Transfer\StoreRelationTransfer|null $currentStoreAssignment
+     * @param \Generated\Shared\Transfer\UpdateCategoryStoreRelationRequestTransfer $updateCategoryStoreRelationRequestTransfer
      *
-     * @throws \Spryker\Zed\Category\Business\Exception\MissingCategoryException
+     * @return void
+     */
+    public function updateCategoryStoreRelation(
+        UpdateCategoryStoreRelationRequestTransfer $updateCategoryStoreRelationRequestTransfer
+    ): void {
+        $this->getFactory()
+            ->createCategoryStoreRelationUpdater()
+            ->updateCategoryStoreRelation($updateCategoryStoreRelationRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\UpdateCategoryStoreRelationRequestTransfer $updateCategoryStoreRelationRequestTransfer
      *
      * @return void
      */
     public function updateCategoryStoreRelationWithMainChildrenPropagation(
-        int $idCategory,
-        StoreRelationTransfer $newStoreAssignment,
-        ?StoreRelationTransfer $currentStoreAssignment = null
+        UpdateCategoryStoreRelationRequestTransfer $updateCategoryStoreRelationRequestTransfer
     ): void {
         $this->getFactory()
             ->createCategoryStoreUpdater()
-            ->updateCategoryStoreRelationWithMainChildrenPropagation($idCategory, $newStoreAssignment, $currentStoreAssignment);
+            ->updateCategoryStoreRelationWithMainChildrenPropagation($updateCategoryStoreRelationRequestTransfer);
     }
 
     /**
@@ -108,7 +118,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @return void
      */
-    public function delete($idCategory): void
+    public function delete(int $idCategory): void
     {
         $this
             ->getFactory()
@@ -126,7 +136,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @return void
      */
-    public function updateCategoryNodeOrder($idCategoryNode, $position): void
+    public function updateCategoryNodeOrder(int $idCategoryNode, int $position): void
     {
         $this->getFactory()
             ->createCategoryNodeUpdater()
@@ -142,7 +152,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @return void
      */
-    public function touchCategoryActive($idCategory)
+    public function touchCategoryActive(int $idCategory): void
     {
         $this
             ->getFactory()
@@ -246,29 +256,15 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CategoryNodeUrlFilterTransfer $categoryNodeFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\UrlTransfer[]
-     */
-    public function getCategoryNodeUrls(CategoryNodeUrlFilterTransfer $categoryNodeFilterTransfer): array
-    {
-        return $this->getRepository()->getCategoryNodeUrls($categoryNodeFilterTransfer);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\NodeTransfer[]
+     * @return \Generated\Shared\Transfer\NodeCollectionTransfer
      */
-    public function getCategoryNodesWithRelativeNodesByCriteria(
+    public function getCategoryNodesWithRelativeNodes(
         CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
-    ): array {
+    ): NodeCollectionTransfer {
         return $this->getRepository()
-            ->getCategoryNodesWithRelativeNodesByCriteria($categoryNodeCriteriaTransfer);
+            ->getCategoryNodesWithRelativeNodes($categoryNodeCriteriaTransfer);
     }
 
     /**
@@ -280,8 +276,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @return \Generated\Shared\Transfer\NodeCollectionTransfer
      */
-    public function getCategoryNodesByCriteria(CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer): NodeCollectionTransfer
+    public function getCategoryNodes(CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer): NodeCollectionTransfer
     {
-        return $this->getRepository()->getCategoryNodesByCriteria($categoryNodeCriteriaTransfer);
+        return $this->getRepository()->getCategoryNodes($categoryNodeCriteriaTransfer);
     }
 }

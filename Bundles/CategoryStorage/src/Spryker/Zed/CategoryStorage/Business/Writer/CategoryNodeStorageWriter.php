@@ -72,7 +72,7 @@ class CategoryNodeStorageWriter implements CategoryNodeStorageWriterInterface
     public function writeCategoryNodeStorageCollectionByCategoryStoreEvents(array $eventEntityTransfers): void
     {
         $categoryIds = $this->eventBehaviorFacade->getEventTransferForeignKeys($eventEntityTransfers, SpyCategoryStoreTableMap::COL_FK_CATEGORY);
-        $nodeCollectionTransfer = $this->categoryFacade->getCategoryNodesByCriteria(
+        $nodeCollectionTransfer = $this->categoryFacade->getCategoryNodes(
             (new CategoryNodeCriteriaTransfer())->setCategoryIds($categoryIds)
         );
 
@@ -89,7 +89,7 @@ class CategoryNodeStorageWriter implements CategoryNodeStorageWriterInterface
     public function writeCategoryNodeStorageCollectionByCategoryStorePublishEvents(array $eventEntityTransfers): void
     {
         $categoryIds = $this->eventBehaviorFacade->getEventTransferIds($eventEntityTransfers);
-        $nodeCollectionTransfer = $this->categoryFacade->getCategoryNodesByCriteria(
+        $nodeCollectionTransfer = $this->categoryFacade->getCategoryNodes(
             (new CategoryNodeCriteriaTransfer())->setCategoryIds($categoryIds)
         );
 
@@ -105,9 +105,10 @@ class CategoryNodeStorageWriter implements CategoryNodeStorageWriterInterface
      */
     public function writeCategoryNodeStorageCollection(array $categoryNodeIds): void
     {
-        $nodeTransfers = $this->categoryFacade->getCategoryNodesWithRelativeNodesByCriteria(
-            (new CategoryNodeCriteriaTransfer())->setCategoryNodeIds($categoryNodeIds)
-        );
+        $nodeTransfers = $this->categoryFacade
+            ->getCategoryNodesWithRelativeNodes((new CategoryNodeCriteriaTransfer())->setCategoryNodeIds($categoryNodeIds))
+            ->getNodes()
+            ->getArrayCopy();
 
         $categoryNodeStorageTransferTreesIndexedByLocaleAndStore = $this->categoryStorageNodeTreeBuilder
             ->buildCategoryNodeStorageTransferTreesForLocaleAndStore(

@@ -60,6 +60,8 @@ use Spryker\Zed\Category\Business\Updater\CategoryNodeUpdater;
 use Spryker\Zed\Category\Business\Updater\CategoryNodeUpdaterInterface;
 use Spryker\Zed\Category\Business\Updater\CategoryRelationshipUpdater;
 use Spryker\Zed\Category\Business\Updater\CategoryRelationshipUpdaterInterface;
+use Spryker\Zed\Category\Business\Updater\CategoryStoreRelationUpdater;
+use Spryker\Zed\Category\Business\Updater\CategoryStoreRelationUpdaterInterface;
 use Spryker\Zed\Category\Business\Updater\CategoryStoreUpdater;
 use Spryker\Zed\Category\Business\Updater\CategoryStoreUpdaterInterface;
 use Spryker\Zed\Category\Business\Updater\CategoryUpdater;
@@ -183,7 +185,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
             $this->createCategoryUrlUpdater(),
             $this->createCategoryAttributeUpdater(),
             $this->createCategoryTemplateSync(),
-            $this->getCategoryStoreAssignerPlugin(),
+            $this->createCategoryStoreRelationUpdater(),
             $this->getCategoryRelationUpdatePlugins()
         );
     }
@@ -198,6 +200,16 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->createCategoryReader(),
             $this->getEventFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\Updater\CategoryStoreRelationUpdaterInterface
+     */
+    public function createCategoryStoreRelationUpdater(): CategoryStoreRelationUpdaterInterface
+    {
+        return new CategoryStoreRelationUpdater(
+            $this->getCategoryStoreAssignerPlugin()
         );
     }
 

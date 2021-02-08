@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Category\Communication\Plugin\Category;
 
-use Generated\Shared\Transfer\StoreRelationTransfer;
+use Generated\Shared\Transfer\UpdateCategoryStoreRelationRequestTransfer;
 use Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryStoreAssignerPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -26,21 +26,12 @@ class MainChildrenPropagationCategoryStoreAssignerPlugin extends AbstractPlugin 
      *
      * @api
      *
-     * @param int $idCategory
-     * @param \Generated\Shared\Transfer\StoreRelationTransfer $newStoreAssignment
-     * @param \Generated\Shared\Transfer\StoreRelationTransfer|null $currentStoreAssignment
+     * @param \Generated\Shared\Transfer\UpdateCategoryStoreRelationRequestTransfer $updateCategoryStoreRelationRequestTransfer
      *
      * @return void
      */
-    public function handleStoreRelationUpdate(
-        int $idCategory,
-        StoreRelationTransfer $newStoreAssignment,
-        ?StoreRelationTransfer $currentStoreAssignment = null
-    ): void {
-        $this->getFacade()->updateCategoryStoreRelationWithMainChildrenPropagation(
-            $idCategory,
-            $newStoreAssignment,
-            $currentStoreAssignment
-        );
+    public function handleStoreRelationUpdate(UpdateCategoryStoreRelationRequestTransfer $updateCategoryStoreRelationRequestTransfer): void
+    {
+        $this->getFacade()->updateCategoryStoreRelationWithMainChildrenPropagation($updateCategoryStoreRelationRequestTransfer);
     }
 }

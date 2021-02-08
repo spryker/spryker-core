@@ -6,7 +6,6 @@
   "require": {
     "php": ">=7.3",
     "spryker/category": "^4.0.0",
-    "spryker/category-gui-extension": "^1.0.0",
     "spryker/gui": "^3.0.0",
     "spryker/kernel": "^3.30.0",
     "spryker/locale": "^3.0.0",

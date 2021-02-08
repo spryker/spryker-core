@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CategoryDataImport\Business\Writer\CategoryStore;
 
 use Generated\Shared\Transfer\StoreRelationTransfer;
+use Generated\Shared\Transfer\UpdateCategoryStoreRelationRequestTransfer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryStoreTableMap;
 use Orm\Zed\Category\Persistence\SpyCategoryStoreQuery;
 use Spryker\Zed\CategoryDataImport\Business\Writer\CategoryStore\DataSet\CategoryStoreDataSetInterface;
@@ -50,11 +51,12 @@ class CategoryStoreWriteStep extends PublishAwareStep implements DataImportStepI
 
         $newStoreRelationTransfer = $this->createStoreRelationTransferToAssign($storeIdsToAdd, $storeIdsToDelete, $existingStoreRelationTransfer);
 
-        $this->categoryFacade->updateCategoryStoreRelationWithMainChildrenPropagation(
-            $dataSet[CategoryStoreDataSetInterface::ID_CATEGORY],
-            $newStoreRelationTransfer,
-            $existingStoreRelationTransfer
-        );
+        $updateCategoryStoreRelationRequestTransfer = (new UpdateCategoryStoreRelationRequestTransfer())
+            ->setIdCategory($dataSet[CategoryStoreDataSetInterface::ID_CATEGORY])
+            ->setNewStoreAssignment($newStoreRelationTransfer)
+            ->setCurrentStoreAssignment($existingStoreRelationTransfer);
+
+        $this->categoryFacade->updateCategoryStoreRelation($updateCategoryStoreRelationRequestTransfer);
 
         $this->addPublishEvents(static::EVENT_CATEGORY_STORE_PUBLISH, $dataSet[CategoryStoreDataSetInterface::ID_CATEGORY]);
     }

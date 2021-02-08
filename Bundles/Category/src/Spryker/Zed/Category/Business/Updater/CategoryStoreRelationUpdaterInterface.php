@@ -9,14 +9,12 @@ namespace Spryker\Zed\Category\Business\Updater;
 
 use Generated\Shared\Transfer\UpdateCategoryStoreRelationRequestTransfer;
 
-interface CategoryStoreUpdaterInterface
+interface CategoryStoreRelationUpdaterInterface
 {
     /**
      * @param \Generated\Shared\Transfer\UpdateCategoryStoreRelationRequestTransfer $updateCategoryStoreRelationRequestTransfer
      *
      * @return void
      */
-    public function updateCategoryStoreRelationWithMainChildrenPropagation(
-        UpdateCategoryStoreRelationRequestTransfer $updateCategoryStoreRelationRequestTransfer
-    ): void;
+    public function updateCategoryStoreRelation(UpdateCategoryStoreRelationRequestTransfer $updateCategoryStoreRelationRequestTransfer): void;
 }

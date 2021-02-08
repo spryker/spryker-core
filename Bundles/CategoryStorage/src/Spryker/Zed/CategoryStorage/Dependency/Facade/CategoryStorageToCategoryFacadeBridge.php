@@ -28,12 +28,12 @@ class CategoryStorageToCategoryFacadeBridge implements CategoryStorageToCategory
     /**
      * @param \Generated\Shared\Transfer\CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\NodeTransfer[]
+     * @return \Generated\Shared\Transfer\NodeCollectionTransfer
      */
-    public function getCategoryNodesWithRelativeNodesByCriteria(
+    public function getCategoryNodesWithRelativeNodes(
         CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
-    ): array {
-        return $this->categoryFacade->getCategoryNodesWithRelativeNodesByCriteria($categoryNodeCriteriaTransfer);
+    ): NodeCollectionTransfer {
+        return $this->categoryFacade->getCategoryNodesWithRelativeNodes($categoryNodeCriteriaTransfer);
     }
 
     /**
@@ -41,8 +41,8 @@ class CategoryStorageToCategoryFacadeBridge implements CategoryStorageToCategory
      *
      * @return \Generated\Shared\Transfer\NodeCollectionTransfer
      */
-    public function getCategoryNodesByCriteria(CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer): NodeCollectionTransfer
+    public function getCategoryNodes(CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer): NodeCollectionTransfer
     {
-        return $this->categoryFacade->getCategoryNodesByCriteria($categoryNodeCriteriaTransfer);
+        return $this->categoryFacade->getCategoryNodes($categoryNodeCriteriaTransfer);
     }
 }

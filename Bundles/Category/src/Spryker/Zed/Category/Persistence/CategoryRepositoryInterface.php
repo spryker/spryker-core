@@ -10,9 +10,9 @@ namespace Spryker\Zed\Category\Persistence;
 use Generated\Shared\Transfer\CategoryCollectionTransfer;
 use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryNodeCriteriaTransfer;
-use Generated\Shared\Transfer\CategoryNodeUrlFilterTransfer;
+use Generated\Shared\Transfer\CategoryNodeUrlCriteriaTransfer;
+use Generated\Shared\Transfer\CategoryNodeUrlPathCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
-use Generated\Shared\Transfer\CategoryUrlPathCriteriaTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeCollectionTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
@@ -91,34 +91,34 @@ interface CategoryRepositoryInterface
     ): array;
 
     /**
-     * @param \Generated\Shared\Transfer\CategoryNodeUrlFilterTransfer $categoryNodeFilterTransfer
+     * @param \Generated\Shared\Transfer\CategoryNodeUrlCriteriaTransfer $categoryNodeUrlCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\UrlTransfer[]
      */
-    public function getCategoryNodeUrls(CategoryNodeUrlFilterTransfer $categoryNodeFilterTransfer): array;
+    public function getCategoryNodeUrls(CategoryNodeUrlCriteriaTransfer $categoryNodeUrlCriteriaTransfer): array;
 
     /**
-     * @param \Generated\Shared\Transfer\CategoryUrlPathCriteriaTransfer $categoryUrlPathCriteriaTransfer
+     * @param \Generated\Shared\Transfer\CategoryNodeUrlPathCriteriaTransfer $categoryNodeUrlPathCriteriaTransfer
      *
      * @return array
      */
-    public function getCategoryUrlPathParts(CategoryUrlPathCriteriaTransfer $categoryUrlPathCriteriaTransfer): array;
-
-    /**
-     * @param \Generated\Shared\Transfer\CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\NodeTransfer[]
-     */
-    public function getCategoryNodesWithRelativeNodesByCriteria(
-        CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
-    ): array;
+    public function getCategoryNodeUrlPathParts(CategoryNodeUrlPathCriteriaTransfer $categoryNodeUrlPathCriteriaTransfer): array;
 
     /**
      * @param \Generated\Shared\Transfer\CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\NodeCollectionTransfer
      */
-    public function getCategoryNodesByCriteria(CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer): NodeCollectionTransfer;
+    public function getCategoryNodesWithRelativeNodes(
+        CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
+    ): NodeCollectionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\NodeCollectionTransfer
+     */
+    public function getCategoryNodes(CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer): NodeCollectionTransfer;
 
     /**
      * @param int $idCategoryNode

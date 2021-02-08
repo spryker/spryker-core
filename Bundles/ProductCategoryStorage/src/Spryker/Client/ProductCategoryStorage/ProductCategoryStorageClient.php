@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\ProductCategoryStorage;
 
+use Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -20,16 +21,19 @@ class ProductCategoryStorageClient extends AbstractClient implements ProductCate
      * @api
      *
      * @param int $idProductAbstract
-     * @param string $locale
+     * @param string $localeName
      * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer|null
      */
-    public function findProductAbstractCategory($idProductAbstract, $locale, string $storeName)
-    {
+    public function findProductAbstractCategory(
+        int $idProductAbstract,
+        string $localeName,
+        string $storeName
+    ): ?ProductAbstractCategoryStorageTransfer {
         return $this->getFactory()
             ->createProductCategoryStorageReader()
-            ->findProductAbstractCategory($idProductAbstract, $locale, $storeName);
+            ->findProductAbstractCategory($idProductAbstract, $localeName, $storeName);
     }
 
     /**

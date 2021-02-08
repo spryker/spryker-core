@@ -13,8 +13,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
- * @deprecated Use {@link \Spryker\Zed\CategoryImageGui\Communication\Plugin\ImageSetSubformCategoryFormPlugin} instead.
- *
  * @method \Spryker\Zed\CategoryImageGui\Communication\CategoryImageGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\CategoryImageGui\CategoryImageGuiConfig getConfig()
  */

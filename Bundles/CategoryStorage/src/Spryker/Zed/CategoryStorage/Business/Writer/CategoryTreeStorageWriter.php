@@ -106,7 +106,7 @@ class CategoryTreeStorageWriter implements CategoryTreeStorageWriterInterface
             ->setIsRoot(true)
             ->setWithRelations(true);
 
-        $nodeCollectionTransfer = $this->categoryFacade->getCategoryNodesByCriteria($categoryNodeCriteriaTransfer);
+        $nodeCollectionTransfer = $this->categoryFacade->getCategoryNodes($categoryNodeCriteriaTransfer);
 
         if (!$nodeCollectionTransfer->getNodes()->count()) {
             return [];
@@ -119,9 +119,10 @@ class CategoryTreeStorageWriter implements CategoryTreeStorageWriterInterface
             ->setIsInMenu(true)
             ->setCategoryNodeIds($categoryNodeIds);
 
-        $categoryNodeTransfers = $this->categoryFacade->getCategoryNodesWithRelativeNodesByCriteria(
-            $categoryNodeCriteriaTransfer
-        );
+        $categoryNodeTransfers = $this->categoryFacade
+            ->getCategoryNodesWithRelativeNodes($categoryNodeCriteriaTransfer)
+            ->getNodes()
+            ->getArrayCopy();
 
         return $this->categoryStorageNodeTreeBuilder->buildCategoryNodeStorageTransferTreesForLocaleAndStore(
             $categoryNodeIds,

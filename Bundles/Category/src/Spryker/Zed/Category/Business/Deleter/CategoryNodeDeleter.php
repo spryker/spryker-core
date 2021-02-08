@@ -128,7 +128,7 @@ class CategoryNodeDeleter implements CategoryNodeDeleterInterface
         $categoryNodeCriteriaTransfer = (new CategoryNodeCriteriaTransfer())
             ->addIdCategory($idCategory);
 
-        $nodeCollectionTransfer = $this->categoryRepository->getCategoryNodesByCriteria($categoryNodeCriteriaTransfer);
+        $nodeCollectionTransfer = $this->categoryRepository->getCategoryNodes($categoryNodeCriteriaTransfer);
 
         foreach ($nodeCollectionTransfer->getNodes() as $nodeTransfer) {
             $this->deleteNode($nodeTransfer);
@@ -146,7 +146,7 @@ class CategoryNodeDeleter implements CategoryNodeDeleterInterface
             ->addIdCategory($idCategory)
             ->setIsMain(false);
 
-        $nodeCollectionTransfer = $this->categoryRepository->getCategoryNodesByCriteria($categoryNodeCriteriaTransfer);
+        $nodeCollectionTransfer = $this->categoryRepository->getCategoryNodes($categoryNodeCriteriaTransfer);
 
         foreach ($nodeCollectionTransfer->getNodes() as $nodeTransfer) {
             $this->deleteExtraParentNode($nodeTransfer);

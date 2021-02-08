@@ -5,10 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\Category\Business;
+namespace SprykerTest\Zed\Category\Persistence;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\CategoryNodeUrlFilterTransfer;
+use Generated\Shared\Transfer\CategoryNodeUrlCriteriaTransfer;
+use Spryker\Zed\Category\Persistence\CategoryRepository;
 
 /**
  * Auto-generated group annotations
@@ -16,7 +17,7 @@ use Generated\Shared\Transfer\CategoryNodeUrlFilterTransfer;
  * @group SprykerTest
  * @group Zed
  * @group Category
- * @group Business
+ * @group Persistence
  * @group GetCategoryNodeUrlsTest
  * Add your own group annotations below this line
  */
@@ -28,6 +29,21 @@ class GetCategoryNodeUrlsTest extends Unit
     protected $tester;
 
     /**
+     * @var \Spryker\Zed\Category\Persistence\CategoryRepository
+     */
+    protected $categoryRepository;
+
+    /**
+     * @return void
+     */
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->categoryRepository = new CategoryRepository();
+    }
+
+    /**
      * @return void
      */
     public function testGetCategoryNodeUrlsFindsUrls(): void
@@ -37,7 +53,7 @@ class GetCategoryNodeUrlsTest extends Unit
         $this->tester->haveLocalizedCategory(['locale' => $localeTransfer]);
 
         // Act
-        $urlTransfers = $this->tester->getFacade()->getCategoryNodeUrls(new CategoryNodeUrlFilterTransfer());
+        $urlTransfers = $this->categoryRepository->getCategoryNodeUrls(new CategoryNodeUrlCriteriaTransfer());
 
         // Assert
         $this->assertNotEmpty($urlTransfers);
@@ -54,12 +70,12 @@ class GetCategoryNodeUrlsTest extends Unit
         $firstCategoryTransfer = $this->tester->haveLocalizedCategory(['locale' => $localeTransfer]);
         $secondCategoryTransfer = $this->tester->haveLocalizedCategory(['locale' => $localeTransfer]);
 
-        $categoryCriteriaTransfer = (new CategoryNodeUrlFilterTransfer())
+        $categoryNodeUrlCriteriaTransfer = (new CategoryNodeUrlCriteriaTransfer())
             ->addIdCategoryNode($firstCategoryTransfer->getCategoryNode()->getIdCategoryNode())
             ->addIdCategoryNode($secondCategoryTransfer->getCategoryNode()->getIdCategoryNode());
 
         // Act
-        $urlTransfers = $this->tester->getFacade()->getCategoryNodeUrls($categoryCriteriaTransfer);
+        $urlTransfers = $this->categoryRepository->getCategoryNodeUrls($categoryNodeUrlCriteriaTransfer);
 
         // Assert
         $this->assertCount(2, $urlTransfers);

@@ -36,7 +36,7 @@ class CategoryNodeReader implements CategoryNodeReaderInterface
             ->addIdCategory($idCategory);
 
         return $this->categoryRepository
-            ->getCategoryNodesByCriteria($categoryNodeCriteriaTransfer)
+            ->getCategoryNodes($categoryNodeCriteriaTransfer)
             ->getNodes()
             ->getArrayCopy();
     }

@@ -8,8 +8,8 @@
 namespace Spryker\Zed\Category\Business\Updater;
 
 use Generated\Shared\Transfer\CategoryTransfer;
+use Generated\Shared\Transfer\UpdateCategoryStoreRelationRequestTransfer;
 use Spryker\Zed\Category\Business\Model\CategoryTemplate\CategoryTemplateSyncInterface;
-use Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryStoreAssignerPluginInterface;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
 class CategoryRelationshipUpdater implements CategoryRelationshipUpdaterInterface
@@ -37,9 +37,9 @@ class CategoryRelationshipUpdater implements CategoryRelationshipUpdaterInterfac
     protected $categoryTemplateSync;
 
     /**
-     * @var \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryStoreAssignerPluginInterface
+     * @var \Spryker\Zed\Category\Business\Updater\CategoryStoreRelationUpdaterInterface
      */
-    protected $categoryStoreAssignerPlugin;
+    protected $categoryStoreRelationUpdater;
 
     /**
      * @var \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryRelationUpdatePluginInterface[]
@@ -51,7 +51,7 @@ class CategoryRelationshipUpdater implements CategoryRelationshipUpdaterInterfac
      * @param \Spryker\Zed\Category\Business\Updater\CategoryUrlUpdaterInterface $categoryUrlUpdater
      * @param \Spryker\Zed\Category\Business\Updater\CategoryAttributeUpdaterInterface $categoryAttributeUpdater
      * @param \Spryker\Zed\Category\Business\Model\CategoryTemplate\CategoryTemplateSyncInterface $categoryTemplateSync
-     * @param \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryStoreAssignerPluginInterface $categoryStoreAssignerPlugin
+     * @param \Spryker\Zed\Category\Business\Updater\CategoryStoreRelationUpdaterInterface $categoryStoreRelationUpdater
      * @param \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryRelationUpdatePluginInterface[] $categoryRelationUpdatePlugins
      */
     public function __construct(
@@ -59,14 +59,14 @@ class CategoryRelationshipUpdater implements CategoryRelationshipUpdaterInterfac
         CategoryUrlUpdaterInterface $categoryUrlUpdater,
         CategoryAttributeUpdaterInterface $categoryAttributeUpdater,
         CategoryTemplateSyncInterface $categoryTemplateSync,
-        CategoryStoreAssignerPluginInterface $categoryStoreAssignerPlugin,
+        CategoryStoreRelationUpdaterInterface $categoryStoreRelationUpdater,
         array $categoryRelationUpdatePlugins
     ) {
         $this->categoryNodeUpdater = $categoryNodeUpdater;
         $this->categoryUrlUpdater = $categoryUrlUpdater;
         $this->categoryAttributeUpdater = $categoryAttributeUpdater;
         $this->categoryTemplateSync = $categoryTemplateSync;
-        $this->categoryStoreAssignerPlugin = $categoryStoreAssignerPlugin;
+        $this->categoryStoreRelationUpdater = $categoryStoreRelationUpdater;
         $this->categoryRelationUpdatePlugins = $categoryRelationUpdatePlugins;
     }
 
@@ -98,12 +98,7 @@ class CategoryRelationshipUpdater implements CategoryRelationshipUpdaterInterfac
         $this->categoryUrlUpdater->updateCategoryUrl($categoryTransfer);
         $this->categoryNodeUpdater->updateExtraParentCategoryNodes($categoryTransfer);
 
-        if ($categoryTransfer->getStoreRelation() !== null) {
-            $this->categoryStoreAssignerPlugin->handleStoreRelationUpdate(
-                $categoryTransfer->getIdCategoryOrFail(),
-                $categoryTransfer->getStoreRelationOrFail()
-            );
-        }
+        $this->handleStoreRelationUpdate($categoryTransfer);
     }
 
     /**
@@ -116,5 +111,23 @@ class CategoryRelationshipUpdater implements CategoryRelationshipUpdaterInterfac
         foreach ($this->categoryRelationUpdatePlugins as $categoryRelationUpdatePlugin) {
             $categoryRelationUpdatePlugin->update($categoryTransfer);
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return void
+     */
+    protected function handleStoreRelationUpdate(CategoryTransfer $categoryTransfer): void
+    {
+        if ($categoryTransfer->getStoreRelation() === null) {
+            return;
+        }
+
+        $updateCategoryStoreRelationRequestTransfer = (new UpdateCategoryStoreRelationRequestTransfer())
+            ->setIdCategory($categoryTransfer->getIdCategoryOrFail())
+            ->setNewStoreAssignment($categoryTransfer->getStoreRelationOrFail());
+
+        $this->categoryStoreRelationUpdater->updateCategoryStoreRelation($updateCategoryStoreRelationRequestTransfer);
     }
 }

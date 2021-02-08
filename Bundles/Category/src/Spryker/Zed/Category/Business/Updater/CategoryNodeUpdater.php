@@ -171,7 +171,7 @@ class CategoryNodeUpdater implements CategoryNodeUpdaterInterface
             ->setIsMain(false);
 
         $existingExtraParentCategoryNodeTransferCollection = $this->categoryRepository
-            ->getCategoryNodesByCriteria($categoryNodeCriteriaTransfer);
+            ->getCategoryNodes($categoryNodeCriteriaTransfer);
 
         $newExtraParentCategoryNodeIds = $this->getCategoryNodeIdsFromNodeTransfers($categoryTransfer->getExtraParents());
         $existingExtraParentCategoryNodeIds = $this->getCategoryNodeIdsFromNodeTransfers($existingExtraParentCategoryNodeTransferCollection->getNodes());
@@ -206,7 +206,7 @@ class CategoryNodeUpdater implements CategoryNodeUpdaterInterface
         NodeTransfer $currentCategoryNodeTransfer,
         CategoryTransfer $categoryTransfer
     ): ?int {
-        if ($categoryTransfer->getCategoryNode()->getIsRoot()) {
+        if ($categoryTransfer->getCategoryNodeOrFail()->getIsRoot()) {
             return null;
         }
         $parentCategoryNodeTransfer = $categoryTransfer->getParentCategoryNodeOrFail();
