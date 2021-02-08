@@ -1,0 +1,16 @@
+<div class="mp-edit-abstract-product__information">
+	<div class="mp-edit-abstract-product__heading">
+		<div class="mp-edit-abstract-product__heading-col">
+			<h3 class="mp-edit-abstract-product__title">{{ product.name }}</h3>
+			<span class="mp-edit-abstract-product__sku">{{ product.sku }}</span>
+		</div>
+
+		<div class="mp-edit-abstract-product__heading-col">
+			<ng-content select="[action]"></ng-content>
+		</div>
+	</div>
+</div>
+
+<div class="mp-edit-abstract-product__content">
+	<ng-content></ng-content>
+</div>

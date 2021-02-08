@@ -298,6 +298,17 @@ interface GuiTableConfigurationBuilderInterface
     public function setNoBatchActionsMessage(string $noBatchActionsMessage);
 
     /**
+     * Sets data retrieval type.
+     *
+     * @api
+     *
+     * @param string $type
+     *
+     * @return $this
+     */
+    public function setDataSourceType(string $type);
+
+    /**
      * Sets URL which will be used for receiving the table data.
      *
      * @api
@@ -307,6 +318,17 @@ interface GuiTableConfigurationBuilderInterface
      * @return $this
      */
     public function setDataSourceUrl(string $url);
+
+    /**
+     * Sets default data.
+     *
+     * @api
+     *
+     * @param string[][] $data
+     *
+     * @return $this
+     */
+    public function setDataSourceData(array $data);
 
     /**
      * Sets a number if rows which will be displayed by default.
@@ -360,11 +382,24 @@ interface GuiTableConfigurationBuilderInterface
     public function setIsItemSelectionEnabled(bool $isItemSelectionEnabled);
 
     /**
+     * Sets table title.
+     *
      * @param string $title
      *
      * @return $this
      */
     public function setTableTitle(string $title);
+
+    /**
+     * Sets if pagination is enabled.
+     *
+     * @api
+     *
+     * @param bool $isPaginationEnabled
+     *
+     * @return $this
+     */
+    public function setIsPaginationEnabled(bool $isPaginationEnabled);
 
     /**
      * @api
