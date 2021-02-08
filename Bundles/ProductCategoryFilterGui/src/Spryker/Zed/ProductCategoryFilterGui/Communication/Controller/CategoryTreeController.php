@@ -32,7 +32,7 @@ class CategoryTreeController extends AbstractController
         $localeTransfer = $this->getCurrentLocale();
 
         $mainCategory = $this->getQueryContainer()
-            ->queryCategoryByIdAndLocale($idRootNode, $localeTransfer->getIdLocale())
+            ->queryCategoryByIdAndLocale($idRootNode, $localeTransfer->getIdLocaleOrFail())
             ->findOne();
 
         $categoriesWithSpecificFilters = $this

@@ -12,10 +12,10 @@ use ArrayObject;
 interface CategoryTreeStorageReaderInterface
 {
     /**
-     * @param string $locale
+     * @param string $localeName
      * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[]|\ArrayObject
      */
-    public function getCategories(string $locale, string $storeName): ArrayObject;
+    public function getCategories(string $localeName, string $storeName): ArrayObject;
 }

@@ -423,7 +423,7 @@ class CategoryFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetCategoryNodesByCriteriaWillReturnCorrectCategoryNodes(): void
+    public function testGetCategoryNodesWillReturnCorrectCategoryNodes(): void
     {
         // Arrange
         $categoryTransfer1 = $this->tester->haveCategory();
@@ -453,7 +453,7 @@ class CategoryFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetCategoryNodesByCriteriaWillReturnCorrectNodeTransfers(): void
+    public function testGetCategoryNodesWillReturnCorrectNodeTransfers(): void
     {
         // Arrange
         $categoryTransfer1 = $this->tester->haveCategory();
