@@ -7,40 +7,40 @@
 @edit-image-sets-images-size: 60px + @edit-image-sets-images-padding * 2;
 
 .mp-image-sets {
-  display: block;
-  padding: @edit-image-sets-padding;
-  border-radius: @edit-image-sets-radius;
-  background: @white;
-
-  &__title {
     display: block;
-    font: @font-size-sm @font-family;
-    color: @gray-darker;
-    padding-bottom: @edit-image-sets-title-padding-bottom;
-  }
+    padding: @edit-image-sets-padding;
+    border-radius: @edit-image-sets-radius;
+    background: @white;
 
-  &__name {
-    color: @ink;
-  }
+    &__title {
+        display: block;
+        font: @font-size-sm @font-family;
+        color: @gray-darker;
+        padding-bottom: @edit-image-sets-title-padding-bottom;
+    }
 
-  &__images {
-    display: flex;
-    flex-wrap: wrap;
-    margin: -@edit-image-sets-images-padding;
-  }
+    &__name {
+        color: @ink;
+    }
 
-  &__image-container {
-    width: @edit-image-sets-images-size;
-    height: @edit-image-sets-images-size;
-    padding: @edit-image-sets-images-padding;
-    text-align: center;
-  }
+    &__images {
+        display: flex;
+        flex-wrap: wrap;
+        margin: -@edit-image-sets-images-padding;
+    }
 
-  &__image {
-    max-width: 100%;
-    max-height: 100%;
-    position: relative;
-    top: 50%;
-    transform: translateY(-50%);
-  }
+    &__image-container {
+        width: @edit-image-sets-images-size;
+        height: @edit-image-sets-images-size;
+        padding: @edit-image-sets-images-padding;
+        text-align: center;
+    }
+
+    &__image {
+        max-width: 100%;
+        max-height: 100%;
+        position: relative;
+        top: 50%;
+        transform: translateY(-50%);
+    }
 }

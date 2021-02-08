@@ -2,8 +2,8 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation, Input } from '@a
 import { ToJson } from '@spryker/utils';
 
 interface ProductDetails {
-  name: string;
-  sku: string;
+    name: string;
+    sku: string;
 }
 
 @Component({

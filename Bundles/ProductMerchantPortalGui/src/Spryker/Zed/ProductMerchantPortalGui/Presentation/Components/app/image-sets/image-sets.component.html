@@ -1,9 +1,9 @@
 <ng-content></ng-content>
 
 <div class="mp-image-sets__images" *ngIf="images">
-	<ng-container *ngFor="let image of images">
-		<div class="mp-image-sets__image-container">
-			<img [src]="image.src" [alt]="image.alt" class="mp-image-sets__image">
-		</div>
-	</ng-container>
+    <ng-container *ngFor="let image of images">
+        <div class="mp-image-sets__image-container">
+            <img [src]="image.src" [alt]="image.alt" class="mp-image-sets__image" />
+        </div>
+    </ng-container>
 </div>
