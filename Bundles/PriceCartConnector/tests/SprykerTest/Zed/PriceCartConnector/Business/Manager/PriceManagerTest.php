@@ -13,6 +13,8 @@ use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Zed\PriceCartConnector\Business\Filter\Comparator\ItemComparator;
+use Spryker\Zed\PriceCartConnector\Business\Filter\Comparator\ItemComparatorInterface;
 use Spryker\Zed\PriceCartConnector\Business\Filter\PriceProductFilter;
 use Spryker\Zed\PriceCartConnector\Business\Filter\PriceProductFilterInterface;
 use Spryker\Zed\PriceCartConnector\Business\Manager\PriceManager;
@@ -22,6 +24,7 @@ use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceInterface;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceProductInterface;
 use Spryker\Zed\PriceCartConnector\Dependency\Service\PriceCartConnectorToPriceProductServiceBridge;
 use Spryker\Zed\PriceCartConnector\Dependency\Service\PriceCartConnectorToPriceProductServiceInterface;
+use Spryker\Zed\PriceCartConnector\PriceCartConnectorConfig;
 use SprykerTest\Zed\PriceCartConnector\Business\Fixture\PriceProductFacadeStub;
 
 /**
@@ -169,7 +172,8 @@ class PriceManagerTest extends Unit
             $priceProductCartToPriceBridge,
             $priceFacadeMock,
             $this->createCurrencyFacadeBridgeMock(),
-            []
+            [],
+            $this->createItemComparator()
         );
     }
 
@@ -179,6 +183,24 @@ class PriceManagerTest extends Unit
     protected function createCurrencyFacadeBridgeMock(): PriceCartConnectorToCurrencyFacadeInterface
     {
         return $this->getMockBuilder(PriceCartConnectorToCurrencyFacadeInterface::class)->getMock();
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceCartConnector\Business\Filter\Comparator\ItemComparatorInterface
+     */
+    protected function createItemComparator(): ItemComparatorInterface
+    {
+        return new ItemComparator($this->createPriceCartConnectorConfigMock());
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\PriceCartConnector\PriceCartConnectorConfig
+     */
+    protected function createPriceCartConnectorConfigMock(): PriceCartConnectorConfig
+    {
+        return $this->getMockBuilder(PriceCartConnectorConfig::class)
+            ->enableProxyingToOriginalMethods()
+            ->getMock();
     }
 
     /**
