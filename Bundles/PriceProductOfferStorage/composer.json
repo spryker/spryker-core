@@ -11,7 +11,6 @@
     "spryker/kernel": "^3.30.0",
     "spryker/merchant-product-offer-storage-extension": "^0.2.0",
     "spryker/price-product": "^4.9.0",
-    "spryker/price-product-extension": "^1.2.0",
     "spryker/price-product-offer": "^0.6.0",
     "spryker/price-product-offer-storage-extension": "^0.1.0",
     "spryker/price-product-storage": "^4.5.1",
