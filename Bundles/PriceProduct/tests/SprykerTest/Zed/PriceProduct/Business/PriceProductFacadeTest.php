@@ -1222,7 +1222,7 @@ class PriceProductFacadeTest extends Unit
 
         // Assert
         $this->assertFalse($validationResponseTransfer->getIsSuccess());
-        $this->assertGreaterThanOrEqual(1, $validationResponseTransfer->getValidationErrors()->count());
+        $this->assertCount(1, $validationResponseTransfer->getValidationErrors());
         $this->assertSame(
             sprintf(
                 'Currency "%s" is not assigned to the store "%s"',
