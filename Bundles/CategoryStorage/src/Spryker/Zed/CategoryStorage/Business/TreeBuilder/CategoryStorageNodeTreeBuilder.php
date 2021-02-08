@@ -44,25 +44,42 @@ class CategoryStorageNodeTreeBuilder implements CategoryStorageNodeTreeBuilderIn
     public function buildCategoryNodeStorageTransferTreesForLocaleAndStore(array $categoryNodeIds, array $nodeTransfers): array
     {
         $localeNameMapByStoreName = $this->getLocaleNameMapByStoreName();
+        $indexedNodeTransfers = $this->indexCategoryNodesByIdCategoryNode($nodeTransfers);
 
         $categoryNodeStorageTransferTrees = [];
         foreach ($localeNameMapByStoreName as $storeName => $localeNames) {
             foreach ($localeNames as $localeName) {
                 $categoryNodeStorageTransfers = $this->categoryNodeStorageMapper->mapNodeTransfersToCategoryNodeStorageTransfersByLocaleAndStore(
-                    $nodeTransfers,
+                    $indexedNodeTransfers,
                     $localeName,
                     $storeName
                 );
 
                 $categoryNodeStorageTransferTrees[$storeName][$localeName] = $this->buildCategoryNodeStorageTransferTrees(
                     $categoryNodeIds,
-                    $nodeTransfers,
+                    $indexedNodeTransfers,
                     $categoryNodeStorageTransfers
                 );
             }
         }
 
         return $categoryNodeStorageTransferTrees;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\NodeTransfer[] $nodeTransfers
+     *
+     * @return \Generated\Shared\Transfer\NodeTransfer[]
+     */
+    protected function indexCategoryNodesByIdCategoryNode(array $nodeTransfers): array
+    {
+        $indexedNodeTransfers = [];
+
+        foreach ($nodeTransfers as $nodeTransfer) {
+            $indexedNodeTransfers[$nodeTransfer->getIdCategoryNodeOrFail()] = $nodeTransfer;
+        }
+
+        return $indexedNodeTransfers;
     }
 
     /**
