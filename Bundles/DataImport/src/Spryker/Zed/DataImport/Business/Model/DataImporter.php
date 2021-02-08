@@ -166,7 +166,7 @@ class DataImporter implements
     /**
      * This method is turned into a `\Generator` by using the `yield` operator. Every iteration of it will be fully
      * completed until a signal was received.
-     * 
+     *
      * @param \Spryker\Zed\DataImport\Business\Model\DataReader\DataReaderInterface $dataReader
      * @param \Generated\Shared\Transfer\DataImporterReportTransfer $dataImporterReportTransfer
      * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer

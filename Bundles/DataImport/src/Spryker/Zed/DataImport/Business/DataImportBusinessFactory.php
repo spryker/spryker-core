@@ -203,7 +203,8 @@ class DataImportBusinessFactory extends AbstractBusinessFactory
             $queueDataImporterConfigurationTransfer->getImportType(),
             $dataReader,
             $this->getQueueClient(),
-            $this->createQueueMessageHelper()
+            $this->createQueueMessageHelper(),
+            $this->getGracefulRunnerFacade()
         );
     }
 
@@ -223,7 +224,7 @@ class DataImportBusinessFactory extends AbstractBusinessFactory
      */
     public function createDataImporterWriterAware($importType, DataReaderInterface $reader)
     {
-        return new DataImporterDataSetWriterAware($importType, $reader);
+        return new DataImporterDataSetWriterAware($importType, $reader, $this->getGracefulRunnerFacade());
     }
 
     /**
