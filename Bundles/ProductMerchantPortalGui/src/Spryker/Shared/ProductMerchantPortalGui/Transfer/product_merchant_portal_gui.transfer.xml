@@ -218,6 +218,7 @@
 
     <transfer name="PriceProductDimension">
         <property name="idPriceProductDefault" type="int"/>
+        <property name="type" type="string"/>
     </transfer>
 
     <transfer name="GuiTableEditableButton">
