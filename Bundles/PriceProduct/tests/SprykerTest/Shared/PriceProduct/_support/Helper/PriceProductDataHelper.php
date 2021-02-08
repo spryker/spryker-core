@@ -17,6 +17,7 @@ use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\PriceTypeTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery;
 use Spryker\Shared\PriceProduct\PriceProductConfig;
 use Spryker\Zed\Currency\Business\CurrencyFacadeInterface;
 use Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface;
@@ -294,5 +295,15 @@ class PriceProductDataHelper extends Module
     protected function getCurrencyFacade(): CurrencyFacadeInterface
     {
         return $this->getLocator()->currency()->facade();
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
+     */
+    public function removePriceProductByIdProductAbstract(int $idProductAbstract): void
+    {
+        SpyPriceProductQuery::create()->filterByFkProductAbstract($idProductAbstract)->delete();
     }
 }

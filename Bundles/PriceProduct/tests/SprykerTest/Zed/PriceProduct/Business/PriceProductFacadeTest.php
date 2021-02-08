@@ -1207,6 +1207,7 @@ class PriceProductFacadeTest extends Unit
     {
         // Arrange
         $productTransfer = $this->tester->haveProduct();
+        $this->tester->removePriceProductByIdProductAbstract($productTransfer->getFkProductAbstract());
         $priceProductTransfer = $this->tester->havePriceProductAbstract($productTransfer->getFkProductAbstract(), [
             PriceProductTransfer::SKU_PRODUCT_ABSTRACT => 'sku',
         ]);
