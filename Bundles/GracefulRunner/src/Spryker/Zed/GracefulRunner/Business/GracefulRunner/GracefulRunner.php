@@ -26,12 +26,12 @@ class GracefulRunner implements GracefulRunnerInterface
     {
         $signalHandler = SignalHandler::create();
 
-        while (true) {
+        while ($generator->valid()) {
             $generator->next();
 
             $this->executedIterations++;
 
-            if ($signalHandler->isTriggered() || !$generator->valid()) {
+            if ($signalHandler->isTriggered()) {
                 break;
             }
         }

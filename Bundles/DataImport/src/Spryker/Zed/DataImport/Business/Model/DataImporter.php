@@ -12,6 +12,7 @@ use Exception;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportMessageTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
+use Generator;
 use Spryker\Shared\ErrorHandler\ErrorLogger;
 use Spryker\Zed\DataImport\Business\DataImporter\DataImporterImportGroupAwareInterface;
 use Spryker\Zed\DataImport\Business\Exception\DataImportException;
@@ -22,6 +23,7 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerAwareInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerInterface;
 use Spryker\Zed\DataImport\DataImportConfig;
+use Spryker\Zed\DataImport\Dependency\Facade\DataImportToGracefulRunnerInterface;
 
 class DataImporter implements
     DataImporterBeforeImportAwareInterface,
@@ -61,13 +63,20 @@ class DataImporter implements
     protected $importGroup;
 
     /**
+     * @var \Spryker\Zed\DataImport\Dependency\Facade\DataImportToGracefulRunnerInterface
+     */
+    protected $gracefulRunnerFacade;
+
+    /**
      * @param string $importType
      * @param \Spryker\Zed\DataImport\Business\Model\DataReader\DataReaderInterface $dataReader
+     * @param \Spryker\Zed\DataImport\Dependency\Facade\DataImportToGracefulRunnerInterface $gracefulRunnerFacade
      */
-    public function __construct($importType, DataReaderInterface $dataReader)
+    public function __construct($importType, DataReaderInterface $dataReader, DataImportToGracefulRunnerInterface $gracefulRunnerFacade)
     {
         $this->importType = $importType;
         $this->dataReader = $dataReader;
+        $this->gracefulRunnerFacade = $gracefulRunnerFacade;
     }
 
     /**
@@ -126,6 +135,7 @@ class DataImporter implements
     public function import(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null)
     {
         $start = microtime(true);
+
         $dataImporterReportTransfer = $this->importByDataImporterConfiguration($dataImporterConfigurationTransfer);
         $dataImporterReportTransfer->setImportTime(microtime(true) - $start);
 
@@ -136,8 +146,6 @@ class DataImporter implements
 
     /**
      * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
-     *
-     * @throws \Spryker\Zed\DataImport\Business\Exception\DataImportException
      *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
      */
@@ -150,7 +158,31 @@ class DataImporter implements
 
         $this->beforeImport();
 
+        $this->gracefulRunnerFacade->run($this->runGraceful($dataReader, $dataImporterReportTransfer, $dataImporterConfigurationTransfer));
+
+        return $dataImporterReportTransfer;
+    }
+
+    /**
+     * This method is turned into a `\Generator` by using the `yield` operator. Every iteration of it will be fully
+     * completed until a signal was received.
+     * 
+     * @param \Spryker\Zed\DataImport\Business\Model\DataReader\DataReaderInterface $dataReader
+     * @param \Generated\Shared\Transfer\DataImporterReportTransfer $dataImporterReportTransfer
+     * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
+     *
+     * @throws \Spryker\Zed\DataImport\Business\Exception\DataImportException
+     *
+     * @return \Generator
+     */
+    protected function runGraceful(
+        DataReaderInterface $dataReader,
+        DataImporterReportTransfer $dataImporterReportTransfer,
+        ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
+    ): Generator {
         foreach ($dataReader as $dataSet) {
+            yield;
+
             try {
                 $this->processDataSet($dataSet, $dataImporterReportTransfer);
             } catch (Exception $dataImportException) {
@@ -175,8 +207,6 @@ class DataImporter implements
 
             unset($dataSet);
         }
-
-        return $dataImporterReportTransfer;
     }
 
     /**

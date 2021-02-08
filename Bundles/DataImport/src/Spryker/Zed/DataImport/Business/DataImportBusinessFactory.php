@@ -177,7 +177,15 @@ class DataImportBusinessFactory extends AbstractBusinessFactory
      */
     public function createDataImporter($importType, DataReaderInterface $reader)
     {
-        return new DataImporter($importType, $reader);
+        return new DataImporter($importType, $reader, $this->getGracefulRunnerFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\DataImport\Dependency\Facade\DataImportToGracefulRunnerInterface
+     */
+    public function getGracefulRunnerFacade()
+    {
+        return $this->getProvidedDependency(DataImportDependencyProvider::FACADE_GRACEFUL_RUNNER);
     }
 
     /**
