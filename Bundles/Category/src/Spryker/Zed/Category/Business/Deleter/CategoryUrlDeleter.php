@@ -46,6 +46,11 @@ class CategoryUrlDeleter implements CategoryUrlDeleterInterface
      */
     public function deleteCategoryUrlsForCategory(int $idCategory): void
     {
+        $categoryNodeIds = $this->getCategoryNodeIdsForCategory($idCategory);
+        if ($categoryNodeIds === []) {
+            return;
+        }
+
         $categoryNodeUrlCriteriaTransfer = (new CategoryNodeUrlCriteriaTransfer())
             ->setCategoryNodeIds($this->getCategoryNodeIdsForCategory($idCategory));
 

@@ -58,9 +58,9 @@ class CategoryDataHelper extends Module
     {
         $parentNode = $this->getCategoryFacade()->getAllNodesByIdCategory(2)[0];
 
-        $seedData = $seedData + [
-            'categoryNode' => $this->generateCategoryNodeTransfer(),
-            'parentCategoryNode' => $parentNode,
+        $seedData += [
+            'categoryNode' => $seedData[CategoryTransfer::CATEGORY_NODE] ?? $this->generateCategoryNodeTransfer(),
+            'parentCategoryNode' => $seedData[CategoryTransfer::PARENT_CATEGORY_NODE] ?? $parentNode,
         ];
 
         $categoryTransfer = $this->generateLocalizedCategoryTransfer($seedData);

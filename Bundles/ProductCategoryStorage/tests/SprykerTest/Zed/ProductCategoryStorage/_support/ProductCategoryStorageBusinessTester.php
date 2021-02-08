@@ -8,7 +8,9 @@
 namespace SprykerTest\Zed\ProductCategoryStorage;
 
 use Codeception\Actor;
+use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
 use Orm\Zed\ProductCategoryStorage\Persistence\SpyProductAbstractCategoryStorageQuery;
 use Propel\Runtime\Collection\ObjectCollection;
 
@@ -30,6 +32,18 @@ use Propel\Runtime\Collection\ObjectCollection;
 class ProductCategoryStorageBusinessTester extends Actor
 {
     use _generated\ProductCategoryStorageBusinessTesterActions;
+
+    /**
+     * @return \Generated\Shared\Transfer\NodeTransfer
+     */
+    public function getRootCategoryNode(): NodeTransfer
+    {
+        $categoryNodeEntity = SpyCategoryNodeQuery::create()
+            ->filterByIsRoot(true)
+            ->findOne();
+
+        return (new NodeTransfer())->fromArray($categoryNodeEntity->toArray(), true);
+    }
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer

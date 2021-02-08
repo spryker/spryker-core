@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\ProductCategoryStorage\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryStoreTableMap;
@@ -58,7 +59,10 @@ class ProductCategoryStorageFacadeTest extends Unit
         });
 
         $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_DE]);
-        $this->categoryTransfer = $this->tester->haveLocalizedCategory();
+
+        $this->categoryTransfer = $this->tester->haveLocalizedCategory([
+            CategoryTransfer::PARENT_CATEGORY_NODE => $this->tester->getRootCategoryNode()->toArray(),
+        ]);
 
         $this->tester->haveCategoryStoreRelation(
             $this->categoryTransfer->getIdCategory(),
@@ -69,9 +73,9 @@ class ProductCategoryStorageFacadeTest extends Unit
     /**
      * @return void
      */
-    protected function _after(): void
+    protected function tearDown(): void
     {
-        parent::_after();
+        parent::tearDown();
 
         $this->cleanStaticProperty();
     }
