@@ -126,6 +126,8 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Client\Wishlist\WishlistClient::deleteItem()} instead.
+     *
      * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistItemTransfer
@@ -139,6 +141,8 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Use {@link \Spryker\Client\Wishlist\WishlistClient::deleteItemCollection()} instead.
      *
      * @param \Generated\Shared\Transfer\WishlistItemCollectionTransfer $wishlistItemTransferCollection
      *
@@ -270,5 +274,33 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     public function getWishlistByFilter(WishlistFilterTransfer $wishlistFilterTransfer): WishlistResponseTransfer
     {
         return $this->getZedStub()->getWishlistByFilter($wishlistFilterTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemTransfer
+     */
+    public function deleteItem(WishlistItemTransfer $wishlistItemTransfer): WishlistItemTransfer
+    {
+        return $this->getZedStub()->deleteItem($wishlistItemTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\WishlistItemCollectionTransfer $wishlistItemTransferCollection
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemCollectionTransfer
+     */
+    public function deleteItemCollection(WishlistItemCollectionTransfer $wishlistItemTransferCollection): WishlistItemCollectionTransfer
+    {
+        return $this->getZedStub()->deleteItemCollection($wishlistItemTransferCollection);
     }
 }

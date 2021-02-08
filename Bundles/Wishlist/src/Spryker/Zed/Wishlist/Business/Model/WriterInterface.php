@@ -61,7 +61,7 @@ interface WriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
-     * @param array $wishlistItemCollection
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer[] $wishlistItemCollection
      *
      * @return void
      */
@@ -82,6 +82,8 @@ interface WriterInterface
     public function addItem(WishlistItemTransfer $wishlistItemTransfer);
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Wishlist\Business\Model\WriterInterface::deleteItem()} instead.
+     *
      * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistItemTransfer
@@ -89,9 +91,25 @@ interface WriterInterface
     public function removeItem(WishlistItemTransfer $wishlistItemTransfer);
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Wishlist\Business\Model\WriterInterface::deleteItemCollection()} instead.
+     *
      * @param \Generated\Shared\Transfer\WishlistItemCollectionTransfer $wishlistItemTransferCollection
      *
      * @return \Generated\Shared\Transfer\WishlistItemCollectionTransfer
      */
     public function removeItemCollection(WishlistItemCollectionTransfer $wishlistItemTransferCollection);
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemTransfer
+     */
+    public function deleteItem(WishlistItemTransfer $wishlistItemTransfer): WishlistItemTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistItemCollectionTransfer $wishlistItemTransferCollection
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemCollectionTransfer
+     */
+    public function deleteItemCollection(WishlistItemCollectionTransfer $wishlistItemTransferCollection): WishlistItemCollectionTransfer;
 }

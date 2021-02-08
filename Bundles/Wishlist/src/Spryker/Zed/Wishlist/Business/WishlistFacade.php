@@ -173,6 +173,8 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\Wishlist\Business\WishlistFacade::deleteItem()} instead.
+     *
      * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistItemTransfer
@@ -188,6 +190,8 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\Wishlist\Business\WishlistFacade::deleteItemCollection()} instead.
      *
      * @param \Generated\Shared\Transfer\WishlistItemCollectionTransfer $wishlistItemTransferCollection
      *
@@ -264,5 +268,37 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
         return $this->getFactory()
             ->createReader()
             ->getWishlistByFilter($wishlistFilterTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemTransfer
+     */
+    public function deleteItem(WishlistItemTransfer $wishlistItemTransfer): WishlistItemTransfer
+    {
+        return $this->getFactory()
+            ->createWriter()
+            ->deleteItem($wishlistItemTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\WishlistItemCollectionTransfer $wishlistItemTransferCollection
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemCollectionTransfer
+     */
+    public function deleteItemCollection(WishlistItemCollectionTransfer $wishlistItemTransferCollection): WishlistItemCollectionTransfer
+    {
+        return $this->getFactory()
+            ->createWriter()
+            ->deleteItemCollection($wishlistItemTransferCollection);
     }
 }

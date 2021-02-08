@@ -92,6 +92,8 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Wishlist\Communication\Controller\GatewayController::deleteItemAction()} instead.
+     *
      * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemUpdateRequestTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistItemTransfer
@@ -102,6 +104,8 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Wishlist\Communication\Controller\GatewayController::deleteItemCollectionAction()} instead.
+     *
      * @param \Generated\Shared\Transfer\WishlistItemCollectionTransfer $wishlistItemTransferCollection
      *
      * @return \Generated\Shared\Transfer\WishlistItemCollectionTransfer
@@ -149,5 +153,25 @@ class GatewayController extends AbstractGatewayController
     public function getWishlistByFilterAction(WishlistFilterTransfer $wishlistFilterTransfer): WishlistResponseTransfer
     {
         return $this->getFacade()->getWishlistByFilter($wishlistFilterTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemUpdateRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemTransfer
+     */
+    public function deleteItemAction(WishlistItemTransfer $wishlistItemUpdateRequestTransfer): WishlistItemTransfer
+    {
+        return $this->getFacade()->deleteItem($wishlistItemUpdateRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistItemCollectionTransfer $wishlistItemTransferCollection
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemCollectionTransfer
+     */
+    public function deleteItemCollectionAction(WishlistItemCollectionTransfer $wishlistItemTransferCollection): WishlistItemCollectionTransfer
+    {
+        return $this->getFacade()->deleteItemCollection($wishlistItemTransferCollection);
     }
 }

@@ -67,6 +67,8 @@ interface WishlistStubInterface
     public function addItem(WishlistItemTransfer $wishlistItemTransfer);
 
     /**
+     * @deprecated Use {@link \Spryker\Client\Wishlist\Zed\WishlistStub::deleteItem()} instead.
+     *
      * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistItemTransfer
@@ -74,6 +76,8 @@ interface WishlistStubInterface
     public function removeItem(WishlistItemTransfer $wishlistItemTransfer);
 
     /**
+     * @deprecated Use {@link \Spryker\Client\Wishlist\Zed\WishlistStub::deleteItemCollection()} instead.
+     *
      * @param \Generated\Shared\Transfer\WishlistItemCollectionTransfer $wishlistItemTransferCollection
      *
      * @return \Generated\Shared\Transfer\WishlistItemCollectionTransfer
@@ -107,4 +111,18 @@ interface WishlistStubInterface
      * @return \Generated\Shared\Transfer\WishlistResponseTransfer
      */
     public function getWishlistByFilter(WishlistFilterTransfer $wishlistFilterTransfer): WishlistResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemTransfer
+     */
+    public function deleteItem(WishlistItemTransfer $wishlistItemTransfer): WishlistItemTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistItemCollectionTransfer $wishlistItemTransferCollection
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemCollectionTransfer
+     */
+    public function deleteItemCollection(WishlistItemCollectionTransfer $wishlistItemTransferCollection): WishlistItemCollectionTransfer;
 }

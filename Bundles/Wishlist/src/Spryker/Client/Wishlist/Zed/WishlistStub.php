@@ -123,6 +123,8 @@ class WishlistStub implements WishlistStubInterface
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Client\Wishlist\Zed\WishlistStub::deleteItem()} instead.
+     *
      * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistItemTransfer
@@ -136,6 +138,8 @@ class WishlistStub implements WishlistStubInterface
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Client\Wishlist\Zed\WishlistStub::deleteItemCollection()} instead.
+     *
      * @param \Generated\Shared\Transfer\WishlistItemCollectionTransfer $wishlistItemTransferCollection
      *
      * @return \Generated\Shared\Transfer\WishlistItemCollectionTransfer
@@ -200,5 +204,31 @@ class WishlistStub implements WishlistStubInterface
         $wishlistResponseTransfer = $this->zedStub->call('/wishlist/gateway/get-wishlist-by-filter', $wishlistFilterTransfer);
 
         return $wishlistResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemTransfer
+     */
+    public function deleteItem(WishlistItemTransfer $wishlistItemTransfer): WishlistItemTransfer
+    {
+        /** @var \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer */
+        $wishlistItemTransfer = $this->zedStub->call('/wishlist/gateway/delete-item', $wishlistItemTransfer);
+
+        return $wishlistItemTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistItemCollectionTransfer $wishlistItemTransferCollection
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemCollectionTransfer
+     */
+    public function deleteItemCollection(WishlistItemCollectionTransfer $wishlistItemTransferCollection): WishlistItemCollectionTransfer
+    {
+        /** @var \Generated\Shared\Transfer\WishlistItemCollectionTransfer $wishlistItemCollectionTransfer */
+        $wishlistItemCollectionTransfer = $this->zedStub->call('/wishlist/gateway/delete-item-collection', $wishlistItemTransferCollection);
+
+        return $wishlistItemCollectionTransfer;
     }
 }

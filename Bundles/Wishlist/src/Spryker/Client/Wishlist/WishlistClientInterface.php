@@ -112,6 +112,8 @@ interface WishlistClientInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Client\Wishlist\WishlistClientInterface::deleteItem()} instead.
+     *
      * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistItemTransfer
@@ -123,6 +125,8 @@ interface WishlistClientInterface
      * - TODO: Add method specification.
      *
      * @api
+     *
+     * @deprecated Use {@link \Spryker\Client\Wishlist\WishlistClientInterface::deleteItemCollection()} instead.
      *
      * @param \Generated\Shared\Transfer\WishlistItemCollectionTransfer $wishlistItemTransferCollection
      *
@@ -217,4 +221,28 @@ interface WishlistClientInterface
      * @return \Generated\Shared\Transfer\WishlistResponseTransfer
      */
     public function getWishlistByFilter(WishlistFilterTransfer $wishlistFilterTransfer): WishlistResponseTransfer;
+
+    /**
+     * Specification:
+     * - Deletes wishlist item from wishlist.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemTransfer
+     */
+    public function deleteItem(WishlistItemTransfer $wishlistItemTransfer);
+
+    /**
+     * Specification:
+     * - Deletes wishlist items collection from wishlist.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\WishlistItemCollectionTransfer $wishlistItemTransferCollection
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemCollectionTransfer
+     */
+    public function deleteItemCollection(WishlistItemCollectionTransfer $wishlistItemTransferCollection);
 }

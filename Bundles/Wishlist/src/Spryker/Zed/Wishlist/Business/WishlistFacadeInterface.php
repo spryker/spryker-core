@@ -156,6 +156,8 @@ interface WishlistFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\Wishlist\Business\WishlistFacadeInterface::deleteItem()} instead.
+     *
      * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistItemTransfer
@@ -169,6 +171,8 @@ interface WishlistFacadeInterface
      *    In case wishlist name is not provided the default value will be used
      *
      * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\Wishlist\Business\WishlistFacadeInterface::deleteItemCollection()} instead.
      *
      * @param \Generated\Shared\Transfer\WishlistItemCollectionTransfer $wishlistItemTransferCollection
      *
@@ -235,4 +239,33 @@ interface WishlistFacadeInterface
      * @return \Generated\Shared\Transfer\WishlistResponseTransfer
      */
     public function getWishlistByFilter(WishlistFilterTransfer $wishlistFilterTransfer): WishlistResponseTransfer;
+
+    /**
+     * Specification:
+     *  - Removes item from wishlist
+     *  - Required values of WishlistItem transfer object: fkCustomer, idWishlistItem. Optional: wishlistName
+     *    In case wishlist name is not provided the default value will be used
+     *  - Returns WishlistItemTransfer
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemTransfer
+     */
+    public function deleteItem(WishlistItemTransfer $wishlistItemTransfer): WishlistItemTransfer;
+
+    /**
+     * Specification:
+     *  - Removes item from wishlist
+     *  - Required values of WishlistItem transfer object: fkCustomer, idWishlistItem. Optional: wishlistName
+     *    In case wishlist name is not provided the default value will be used
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\WishlistItemCollectionTransfer $wishlistItemTransferCollection
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemCollectionTransfer
+     */
+    public function deleteItemCollection(WishlistItemCollectionTransfer $wishlistItemTransferCollection): WishlistItemCollectionTransfer;
 }
