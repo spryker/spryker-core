@@ -101,8 +101,6 @@ class ProductConcreteAssertionTest extends Unit
     }
 
     /**
-     * @group foo
-     *
      * @return void
      */
     public function testAssertSkuIsUniqueWhenUpdatingProduct(): void

@@ -32,7 +32,6 @@ class SharedCartRepositoryTest extends Unit
     protected $tester;
 
     /**
-     * @group foo
      * @return void
      */
     public function testFindPermissionsByCustomerShouldReturnPermissionsWithQuotes(): void

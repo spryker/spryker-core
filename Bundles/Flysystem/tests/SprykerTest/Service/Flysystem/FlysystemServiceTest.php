@@ -397,8 +397,6 @@ class FlysystemServiceTest extends Unit
     }
 
     /**
-     * @group foo
-     *
      * @return void
      */
     public function testDeleteDir(): void
