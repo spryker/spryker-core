@@ -8,7 +8,7 @@
     "spryker/data-import": "^1.0.0",
     "spryker/kernel": "^3.30.0",
     "spryker/merchant": "^1.0.0 || ^2.0.0 || ^3.0.0",
-    "spryker/merchant-oms": "^0.3.0",
+    "spryker/merchant-oms": "^0.4.0",
     "spryker/state-machine": "^1.0.0 || ^2.0.0"
   },
   "require-dev": {
