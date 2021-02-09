@@ -61,7 +61,7 @@ class DeletePriceProductAbstractController extends AbstractController
             return $this->getErrorResponse();
         }
 
-        $priceProductTransfersToRemove = $this->getProductTransfersToRemove(
+        $priceProductTransfersToRemove = $this->getPriceProductTransfersToRemove(
             $merchantProductTransfer->getProductAbstract(),
             $priceProductDefaultIds
         );
@@ -106,7 +106,7 @@ class DeletePriceProductAbstractController extends AbstractController
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    protected function getProductTransfersToRemove(
+    protected function getPriceProductTransfersToRemove(
         ProductAbstractTransfer $productAbstractTransfer,
         array $priceProductDefaultIds
     ): array {
