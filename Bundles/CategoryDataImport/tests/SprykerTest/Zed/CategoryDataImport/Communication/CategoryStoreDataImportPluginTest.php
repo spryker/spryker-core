@@ -139,12 +139,12 @@ class CategoryStoreDataImportPluginTest extends Unit
         $this->assertSame(
             2,
             $this->tester->countCategoryStoreRelations($parentCategoryTransfer->getIdCategoryOrFail()),
-            'Number of stores should match the date from csv file.'
+            'Number of store does not match expected value.'
         );
         $this->assertSame(
             1,
             $this->tester->countCategoryStoreRelations($categoryTransfer->getIdCategoryOrFail()),
-            'Number of stores should match the date from csv file.'
+            'Number of store does not match expected value.'
         );
     }
 
