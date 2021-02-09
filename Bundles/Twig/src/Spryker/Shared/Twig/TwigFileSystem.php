@@ -80,7 +80,7 @@ class TwigFileSystem extends FilesystemLoader
             }
             $path = sprintf($path, $bundle, $formattedBundleName);
             if (strpos($path, '*') !== false) {
-                $path = glob($path, GLOB_NOSORT);
+                $path = glob($path, GLOB_ONLYDIR | GLOB_NOSORT);
                 if (count($path) > 0) {
                     $paths[] = $path[0];
                 }
