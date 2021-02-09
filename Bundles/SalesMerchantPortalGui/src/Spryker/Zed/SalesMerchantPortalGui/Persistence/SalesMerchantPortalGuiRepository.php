@@ -223,7 +223,7 @@ class SalesMerchantPortalGuiRepository extends AbstractRepository implements Sal
         $merchantSalesOrderItemQuery = $this->getFactory()->getMerchantSalesOrderItemPropelQuery();
         $merchantSalesOrderItemQuery
             ->joinSalesOrderItem()
-            ->joinMerchantSalesOder()
+            ->joinMerchantSalesOrder()
             ->useSalesOrderItemQuery()
               ->joinMetadata()
             ->endUse()
