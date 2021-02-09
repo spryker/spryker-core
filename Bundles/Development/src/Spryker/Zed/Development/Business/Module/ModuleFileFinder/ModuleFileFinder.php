@@ -65,7 +65,12 @@ class ModuleFileFinder implements ModuleFileFinderInterface
     protected function getModuleDirectories(ModuleTransfer $moduleTransfer): array
     {
         $directories = $this->pathBuilder->buildPaths($moduleTransfer);
-        $directories = array_filter($directories, 'glob');
+        $directories = array_filter(
+            $directories,
+            function (string $directory) {
+                return glob($directory, GLOB_NOSORT);
+            }
+        );
 
         return $directories;
     }
