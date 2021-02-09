@@ -29,7 +29,10 @@ class ProductOfferStockResultMapper implements ProductOfferStockResultMapperInte
         $totalQuantity = new Decimal(0);
 
         foreach ($productOfferStockTransfers as $productOfferStockTransfer) {
-            $totalQuantity = $totalQuantity->add($productOfferStockTransfer->getQuantity());
+            /** @var \Spryker\DecimalObject\Decimal $quantity */
+            $quantity = $productOfferStockTransfer->getQuantity();
+
+            $totalQuantity = $totalQuantity->add($quantity);
             if ($productOfferStockTransfer->getIsNeverOutOfStock() && $productOfferStockTransfer->getIsNeverOutOfStock() !== null) {
                 $productOfferStockResultTransfer->setIsNeverOutOfStock(true);
             }

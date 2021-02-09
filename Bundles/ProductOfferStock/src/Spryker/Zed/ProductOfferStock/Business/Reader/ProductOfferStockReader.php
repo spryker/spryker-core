@@ -47,10 +47,12 @@ class ProductOfferStockReader implements ProductOfferStockReaderInterface
      */
     public function getProductOfferStockResult(ProductOfferStockRequestTransfer $productOfferStockRequestTransfer): ProductOfferStockResultTransfer
     {
-        $productOfferStockRequestTransfer->requireProductOfferReference()
-            ->requireStore()
-            ->getStore()
-            ->requireName();
+        $productOfferStockRequestTransfer->requireProductOfferReference()->requireStore();
+
+        /** @var \Generated\Shared\Transfer\StoreTransfer $storeTransfer */
+        $storeTransfer = $productOfferStockRequestTransfer->getStore();
+
+        $storeTransfer->requireName();
 
         $productOfferStockTransfers = $this->productOfferStockRepository->find($productOfferStockRequestTransfer);
 
