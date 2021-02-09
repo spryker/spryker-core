@@ -37,4 +37,16 @@ class CategoryDataImportCommunicationTester extends Actor
     {
         SpyCategoryStoreQuery::create()->deleteAll();
     }
+
+    /**
+     * @param int $idCategory
+     *
+     * @return int
+     */
+    public function countCategoryStoreRelations(int $idCategory): int
+    {
+        return SpyCategoryStoreQuery::create()
+            ->filterByFkCategory($idCategory)
+            ->count();
+    }
 }

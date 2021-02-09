@@ -9,7 +9,9 @@ namespace Spryker\Zed\CategoryDataImport\Business\Writer\CategoryStore;
 
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\UpdateCategoryStoreRelationRequestTransfer;
+use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryStoreTableMap;
+use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
 use Orm\Zed\Category\Persistence\SpyCategoryStoreQuery;
 use Spryker\Zed\CategoryDataImport\Business\Writer\CategoryStore\DataSet\CategoryStoreDataSetInterface;
 use Spryker\Zed\CategoryDataImport\Dependency\Facade\CategoryDataImportToCategoryFacadeInterface;
@@ -44,10 +46,16 @@ class CategoryStoreWriteStep extends PublishAwareStep implements DataImportStepI
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        $existingStoreRelationTransfer = $this->getExistingCategoryStoreRelations($dataSet[CategoryStoreDataSetInterface::ID_CATEGORY]);
-
         $storeIdsToAdd = $dataSet[CategoryStoreDataSetInterface::INCLUDED_STORE_IDS];
         $storeIdsToDelete = $dataSet[CategoryStoreDataSetInterface::EXCLUDED_STORE_IDS];
+
+        if ($storeIdsToAdd === []) {
+            $storeIdsToAdd = $this->getParentCategoryStoreRelations($dataSet[CategoryStoreDataSetInterface::ID_CATEGORY]);
+        }
+
+        $existingStoreRelationTransfer = $this->getExistingCategoryStoreRelations(
+            $dataSet[CategoryStoreDataSetInterface::ID_CATEGORY]
+        );
 
         $newStoreRelationTransfer = $this->createStoreRelationTransferToAssign($storeIdsToAdd, $storeIdsToDelete, $existingStoreRelationTransfer);
 
@@ -78,6 +86,36 @@ class CategoryStoreWriteStep extends PublishAwareStep implements DataImportStepI
     }
 
     /**
+     * @param int $idCategory
+     *
+     * @return int[]
+     */
+    protected function getParentCategoryStoreRelations(int $idCategory): array
+    {
+        $parentCategoryNodeId = SpyCategoryNodeQuery::create()
+            ->filterByFkCategory($idCategory)
+            ->select(SpyCategoryNodeTableMap::COL_FK_PARENT_CATEGORY_NODE)
+            ->find()
+            ->getFirst();
+
+        if ($parentCategoryNodeId === null) {
+            return [];
+        }
+
+        return SpyCategoryStoreQuery::create()
+            ->joinWithSpyCategory()
+            ->useSpyCategoryQuery()
+                ->joinWithNode()
+                ->useNodeQuery()
+                    ->filterByIdCategoryNode($parentCategoryNodeId)
+                ->endUse()
+            ->endUse()
+            ->select(SpyCategoryStoreTableMap::COL_FK_STORE)
+            ->find()
+            ->getData();
+    }
+
+    /**
      * @param int[] $storeIdsToAdd
      * @param int[] $storeIdsToDelete
      * @param \Generated\Shared\Transfer\StoreRelationTransfer $existingStoreRelationTransfer
@@ -89,7 +127,7 @@ class CategoryStoreWriteStep extends PublishAwareStep implements DataImportStepI
         array $storeIdsToDelete,
         StoreRelationTransfer $existingStoreRelationTransfer
     ): StoreRelationTransfer {
-        $newStoreRelationTransfer = (new StoreRelationTransfer())->setIdStores($storeIdsToAdd);
+        $newStoreRelationTransfer = (new StoreRelationTransfer())->setIdStores(array_diff($storeIdsToAdd, $storeIdsToDelete));
 
         foreach ($existingStoreRelationTransfer->getIdStores() as $idStore) {
             if (in_array($idStore, $storeIdsToDelete) || in_array($idStore, $newStoreRelationTransfer->getIdStores())) {
