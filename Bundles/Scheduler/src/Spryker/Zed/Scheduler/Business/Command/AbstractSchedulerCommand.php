@@ -11,7 +11,9 @@ use Generated\Shared\Transfer\SchedulerFilterTransfer;
 use Generated\Shared\Transfer\SchedulerResponseCollectionTransfer;
 use Generated\Shared\Transfer\SchedulerResponseTransfer;
 use Generated\Shared\Transfer\SchedulerScheduleTransfer;
+use Generator;
 use Spryker\Zed\Scheduler\Business\Command\Filter\SchedulerFilterInterface;
+use Spryker\Zed\Scheduler\Dependency\Facade\SchedulerToGracefulRunnerFacadeInterface;
 use Spryker\Zed\SchedulerExtension\Dependency\Plugin\SchedulerAdapterPluginInterface;
 
 abstract class AbstractSchedulerCommand implements SchedulerCommandInterface
@@ -27,15 +29,23 @@ abstract class AbstractSchedulerCommand implements SchedulerCommandInterface
     protected $schedulerFilter;
 
     /**
+     * @var \Spryker\Zed\Scheduler\Dependency\Facade\SchedulerToGracefulRunnerFacadeInterface
+     */
+    protected $gracefulFacade;
+
+    /**
      * @param \Spryker\Zed\SchedulerExtension\Dependency\Plugin\ScheduleReaderPluginInterface[] $schedulerReaderPlugins
      * @param \Spryker\Zed\Scheduler\Business\Command\Filter\SchedulerFilterInterface $schedulerFilter
+     * @param \Spryker\Zed\Scheduler\Dependency\Facade\SchedulerToGracefulRunnerFacadeInterface $gracefulFacade
      */
     public function __construct(
         array $schedulerReaderPlugins,
-        SchedulerFilterInterface $schedulerFilter
+        SchedulerFilterInterface $schedulerFilter,
+        SchedulerToGracefulRunnerFacadeInterface $gracefulFacade
     ) {
         $this->schedulerReaderPlugins = $schedulerReaderPlugins;
         $this->schedulerFilter = $schedulerFilter;
+        $this->gracefulFacade = $gracefulFacade;
     }
 
     /**
@@ -48,14 +58,31 @@ abstract class AbstractSchedulerCommand implements SchedulerCommandInterface
         $responseCollectionTransfer = $this->createSchedulerResponseCollectionTransfer();
         $schedulerAdapters = $this->schedulerFilter->getFilteredSchedulerAdapters($filterTransfer);
 
+        $this->gracefulFacade->run($this->runGraceful($filterTransfer, $schedulerAdapters, $responseCollectionTransfer));
+
+        return $responseCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SchedulerFilterTransfer $filterTransfer
+     * @param \Spryker\Zed\SchedulerExtension\Dependency\Plugin\SchedulerAdapterPluginInterface[] $schedulerAdapters
+     * @param \Generated\Shared\Transfer\SchedulerResponseCollectionTransfer $responseCollectionTransfer
+     *
+     * @return \Generator
+     */
+    protected function runGraceful(
+        SchedulerFilterTransfer $filterTransfer,
+        array $schedulerAdapters,
+        SchedulerResponseCollectionTransfer $responseCollectionTransfer
+    ): Generator {
         foreach ($schedulerAdapters as $idScheduler => $schedulerAdapterPlugin) {
+            yield;
+
             $scheduleTransfer = $this->executeScheduleReaderPlugins($idScheduler, $filterTransfer);
             $responseTransfer = $this->executeCommand($schedulerAdapterPlugin, $scheduleTransfer);
 
             $responseCollectionTransfer->addResponse($responseTransfer);
         }
-
-        return $responseCollectionTransfer;
     }
 
     /**

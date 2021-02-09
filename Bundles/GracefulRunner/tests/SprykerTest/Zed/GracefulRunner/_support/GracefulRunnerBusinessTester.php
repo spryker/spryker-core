@@ -28,8 +28,4 @@ use Codeception\Actor;
 class GracefulRunnerBusinessTester extends Actor
 {
     use _generated\GracefulRunnerBusinessTesterActions;
-
-    /**
-     * Define custom actions here
-     */
 }

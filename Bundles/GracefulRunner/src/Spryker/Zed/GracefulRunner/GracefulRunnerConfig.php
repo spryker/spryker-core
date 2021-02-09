@@ -7,8 +7,24 @@
 
 namespace Spryker\Zed\GracefulRunner;
 
+use Seld\Signal\SignalHandler;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class GracefulRunnerConfig extends AbstractBundleConfig
 {
+    /**
+     * Specification:
+     * - Returns signals a new signal handler should be attached to.
+     *
+     * @api
+     *
+     * @return array
+     */
+    public function getSignalsToAddHandlerTo(): array
+    {
+        return [
+            SignalHandler::SIGINT,
+            SignalHandler::SIGTERM,
+        ];
+    }
 }

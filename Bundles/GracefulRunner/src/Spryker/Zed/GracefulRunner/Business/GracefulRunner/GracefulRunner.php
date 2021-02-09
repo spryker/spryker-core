@@ -9,13 +9,27 @@ namespace Spryker\Zed\GracefulRunner\Business\GracefulRunner;
 
 use Generator;
 use Seld\Signal\SignalHandler;
+use Spryker\Zed\GracefulRunner\GracefulRunnerConfig;
 
 class GracefulRunner implements GracefulRunnerInterface
 {
     /**
+     * @var \Spryker\Zed\GracefulRunner\GracefulRunnerConfig
+     */
+    protected $config;
+
+    /**
      * @var int
      */
     protected $executedIterations = 0;
+
+    /**
+     * @param \Spryker\Zed\GracefulRunner\GracefulRunnerConfig $config
+     */
+    public function __construct(GracefulRunnerConfig $config)
+    {
+        $this->config = $config;
+    }
 
     /**
      * @param \Generator $generator
@@ -24,7 +38,7 @@ class GracefulRunner implements GracefulRunnerInterface
      */
     public function run(Generator $generator): int
     {
-        $signalHandler = SignalHandler::create();
+        $signalHandler = SignalHandler::create($this->config->getSignalsToAddHandlerTo());
 
         while ($generator->valid()) {
             $generator->next();

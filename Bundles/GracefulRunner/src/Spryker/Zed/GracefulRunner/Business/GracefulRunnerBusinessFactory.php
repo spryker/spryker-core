@@ -23,6 +23,6 @@ class GracefulRunnerBusinessFactory extends AbstractBusinessFactory
      */
     public function createGracefulRunner(): GracefulRunnerInterface
     {
-        return new GracefulRunner();
+        return new GracefulRunner($this->getConfig());
     }
 }

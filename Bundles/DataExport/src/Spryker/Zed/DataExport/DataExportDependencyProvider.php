@@ -94,11 +94,9 @@ class DataExportDependencyProvider extends AbstractBundleDependencyProvider
     protected function addGracefulRunnerFacade(Container $container): Container
     {
         $container->set(static::FACADE_GRACEFUL_RUNNER, function (Container $container) {
-            $dataExportToGracefulRunnerFacadeBridge = new DataExportToGracefulRunnerFacadeBridge(
+            return new DataExportToGracefulRunnerFacadeBridge(
                 $container->getLocator()->gracefulRunner()->facade()
             );
-
-            return $dataExportToGracefulRunnerFacadeBridge;
         });
 
         return $container;
