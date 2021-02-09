@@ -31,7 +31,7 @@ class ProductPageCategorySearchListener extends AbstractProductPageSearchListene
     public function handleBulk(array $eventEntityTransfers, $eventName)
     {
         $this->preventTransaction();
-        if ($eventName === CategoryEvents::ENTITY_SPY_CATEGORY_DELETE) {
+        if ($eventName === CategoryEvents::ENTITY_SPY_CATEGORY_DELETE || $eventName === CategoryEvents::ENTITY_CATEGORY_PUBLISH) {
             $categoryIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventEntityTransfers);
         } else {
             $categoryIds = $this->getValidCategoryIds($eventEntityTransfers);

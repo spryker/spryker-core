@@ -50,7 +50,7 @@ class ProductCategoryStorageReader implements ProductCategoryStorageReaderInterf
             $productCategoryStorageTransfers[] = $this->generateProductCategoryStorageTransfers($productCategoryTransfer, $storeName, $localeName);
         }
 
-        return array_merge(...$productCategoryStorageTransfers);
+        return $productCategoryStorageTransfers ? array_merge(...$productCategoryStorageTransfers) : [];
     }
 
     /**
@@ -77,7 +77,7 @@ class ProductCategoryStorageReader implements ProductCategoryStorageReaderInterf
             $productCategoryTransfers[] = $this->buildProductCategoryStorageTransfers($categoryNodeAggregationTransfers);
         }
 
-        return array_merge(...$productCategoryTransfers);
+        return $productCategoryTransfers ? array_merge(...$productCategoryTransfers) : [];
     }
 
     /**

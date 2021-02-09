@@ -20,6 +20,14 @@ interface CategoryEvents
 
     /**
      * Specification:
+     * - This events will be used for Category publish
+     *
+     * @api
+     */
+    public const ENTITY_CATEGORY_PUBLISH = 'Entity.spy_category.publish';
+
+    /**
+     * Specification:
      * - This events will be used for spy_category entity creation
      *
      * @api
@@ -97,6 +105,7 @@ interface CategoryEvents
      * @api
      */
     public const ENTITY_SPY_CATEGORY_NODE_CREATE = 'Entity.spy_category_node.create';
+    public const ENTITY_SPY_CATEGORY_STORE_CREATE = 'Entity.spy_category_store.create';
 
     /**
      * Specification:
@@ -105,6 +114,7 @@ interface CategoryEvents
      * @api
      */
     public const ENTITY_SPY_CATEGORY_NODE_UPDATE = 'Entity.spy_category_node.update';
+    public const ENTITY_SPY_CATEGORY_STORE_UPDATE = 'Entity.spy_category_store.update';
 
     /**
      * Specification:
@@ -113,6 +123,7 @@ interface CategoryEvents
      * @api
      */
     public const ENTITY_SPY_CATEGORY_NODE_DELETE = 'Entity.spy_category_node.delete';
+    public const ENTITY_SPY_CATEGORY_STORE_DELETE = 'Entity.spy_category_store.delete';
 
     /**
      * Specification:

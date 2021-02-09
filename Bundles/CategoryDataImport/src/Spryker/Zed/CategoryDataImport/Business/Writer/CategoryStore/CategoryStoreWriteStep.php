@@ -27,6 +27,11 @@ class CategoryStoreWriteStep extends PublishAwareStep implements DataImportStepI
     protected const EVENT_CATEGORY_STORE_PUBLISH = 'Category.category_store.publish';
 
     /**
+     * @uses \Spryker\Zed\Category\Dependency\CategoryEvents::ENTITY_CATEGORY_PUBLISH
+     */
+    protected const ENTITY_CATEGORY_PUBLISH = 'Entity.spy_category.publish';
+
+    /**
      * @var \Spryker\Zed\CategoryDataImport\Dependency\Facade\CategoryDataImportToCategoryFacadeInterface
      */
     protected $categoryFacade;
@@ -67,6 +72,7 @@ class CategoryStoreWriteStep extends PublishAwareStep implements DataImportStepI
         $this->categoryFacade->updateCategoryStoreRelation($updateCategoryStoreRelationRequestTransfer);
 
         $this->addPublishEvents(static::EVENT_CATEGORY_STORE_PUBLISH, $dataSet[CategoryStoreDataSetInterface::ID_CATEGORY]);
+        $this->addPublishEvents(static::ENTITY_CATEGORY_PUBLISH, $dataSet[CategoryStoreDataSetInterface::ID_CATEGORY]);
     }
 
     /**
