@@ -53,7 +53,6 @@ class CategoryStoreDataImportPluginTest extends Unit
     {
         parent::setUp();
 
-        $this->tester->ensureDatabaseTableIsEmpty();
         $this->tester->setDependency(
             CategoryDependencyProvider::PLUGIN_CATEGORY_STORE_ASSIGNER,
             new MainChildrenPropagationCategoryStoreAssignerPlugin()

@@ -31,14 +31,6 @@ class CategoryDataImportCommunicationTester extends Actor
     use _generated\CategoryDataImportCommunicationTesterActions;
 
     /**
-     * @return void
-     */
-    public function ensureDatabaseTableIsEmpty(): void
-    {
-        SpyCategoryStoreQuery::create()->deleteAll();
-    }
-
-    /**
      * @param int $idCategory
      *
      * @return int
