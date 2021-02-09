@@ -74,7 +74,7 @@ class DataExportExecutor
         $dataExportDefaultsConfigurationsTransfer = $this->getDataExportDefaultsConfiguration();
         $dataExportDefaultsConfigurationTransfer = $this->dataExportService->mergeDataExportConfigurationTransfers(
             $dataExportConfigurationsTransfer->getDefaults() ?? new DataExportConfigurationTransfer(),
-            $dataExportDefaultsConfigurationsTransfer->getDefaults()
+            $dataExportDefaultsConfigurationsTransfer->getDefaultsOrFail()
         );
 
         $this->gracefulRunnerFacade->run($this->runGraceful($dataExportConfigurationsTransfer, $dataExportDefaultsConfigurationTransfer));

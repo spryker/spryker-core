@@ -18,7 +18,7 @@ class GracefulRunnerConfig extends AbstractBundleConfig
      *
      * @api
      *
-     * @return array
+     * @return string[]
      */
     public function getSignalsToAddHandlerTo(): array
     {
