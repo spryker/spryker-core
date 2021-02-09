@@ -63,16 +63,6 @@ class CategoryStoreDataImportPluginTest extends Unit
     /**
      * @return void
      */
-    protected function tearDown(): void
-    {
-        parent::tearDown();
-
-        $this->tester->ensureDatabaseTableIsEmpty();
-    }
-
-    /**
-     * @return void
-     */
     public function testImportWillImportCategoryStoreRelationshipsData(): void
     {
         // Arrange
