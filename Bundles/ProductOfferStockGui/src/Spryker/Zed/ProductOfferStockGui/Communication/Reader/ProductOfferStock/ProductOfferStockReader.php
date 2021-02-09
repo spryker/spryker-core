@@ -56,8 +56,11 @@ class ProductOfferStockReader implements ProductOfferStockReaderInterface
             $productOfferStockTransfers = $this->productOfferStockFacade
                 ->getProductOfferStocks($productOfferStockRequestTransfer);
             foreach ($productOfferStockTransfers as $productOfferStockTransfer) {
+                /** @var \Generated\Shared\Transfer\StockTransfer $stock */
+                $stock = $productOfferStockTransfer->getStock();
+
                 $productOfferStocks[] = [
-                    'name' => $productOfferStockTransfer->getStock()->getName(),
+                    'name' => $stock->getName(),
                     'quantity' => $productOfferStockTransfer->getQuantity(),
                     'isNeverOutOfStock' => $productOfferStockTransfer->getIsNeverOutOfStock(),
                     'storeName' => $storeTransfer->getName(),
