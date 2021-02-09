@@ -42,7 +42,7 @@
             <reference local="fk_sales_order_item" foreign="id_sales_order_item"/>
         </foreign-key>
 
-        <foreign-key name="spy_merchant_sales_order_item-fk_merchant_sales_order" foreignTable="spy_merchant_sales_order" phpName="MerchantSalesOder" refPhpName="MerchantSalesOrderItem">
+        <foreign-key name="spy_merchant_sales_order_item-fk_merchant_sales_order" foreignTable="spy_merchant_sales_order" phpName="MerchantSalesOrder" refPhpName="MerchantSalesOrderItem">
             <reference local="fk_merchant_sales_order" foreign="id_merchant_sales_order"/>
         </foreign-key>
 
