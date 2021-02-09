@@ -74,6 +74,7 @@ class CategoryPageSearchFacadeTest extends Unit
         // Assert
         $categoryNodePageSearchEntity = SpyCategoryNodePageSearchQuery::create()
             ->filterByFkCategoryNode($categoryTransfer->getCategoryNode()->getIdCategoryNode())
+            ->filterByLocale($categoryLocalizedAttributesTransfer->getLocale()->getLocaleName())
             ->findOne();
         $this->assertNotNull($categoryNodePageSearchEntity, 'CategoryNodePageSearchEntity should exist.');
 
@@ -107,6 +108,7 @@ class CategoryPageSearchFacadeTest extends Unit
         // Assert
         $categoryNodePageSearchEntity = SpyCategoryNodePageSearchQuery::create()
             ->filterByFkCategoryNode($categoryTransfer->getCategoryNode()->getIdCategoryNode())
+            ->filterByLocale($categoryLocalizedAttributesTransfer->getLocale()->getLocaleName())
             ->findOne();
         $this->assertNotNull($categoryNodePageSearchEntity, 'CategoryNodePageSearchEntity should exist.');
 

@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\Category\Persistence;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CategoryNodeUrlCriteriaTransfer;
+use Generated\Shared\Transfer\UrlTransfer;
 use Spryker\Zed\Category\Persistence\CategoryRepository;
 
 /**
@@ -79,7 +80,10 @@ class GetCategoryNodeUrlsTest extends Unit
 
         // Assert
         $this->assertCount(2, $urlTransfers);
-        $this->assertSame($firstCategoryTransfer->getCategoryNode()->getIdCategoryNode(), $urlTransfers[0]->getFkResourceCategorynode());
-        $this->assertSame($secondCategoryTransfer->getCategoryNode()->getIdCategoryNode(), $urlTransfers[1]->getFkResourceCategorynode());
+        $retrievedFkResourceCategoryNodes = array_map(function (UrlTransfer $urlTransfer) {
+            return $urlTransfer->getFkResourceCategorynode();
+        }, $urlTransfers);
+        $this->assertTrue(in_array($firstCategoryTransfer->getCategoryNode()->getIdCategoryNode(), $retrievedFkResourceCategoryNodes));
+        $this->assertTrue(in_array($secondCategoryTransfer->getCategoryNode()->getIdCategoryNode(), $retrievedFkResourceCategoryNodes));
     }
 }
