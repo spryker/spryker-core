@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
-use Pyz\Zed\Category\CategoryDependencyProvider;
+use Spryker\Zed\Category\CategoryDependencyProvider;
 use Spryker\Zed\Category\Communication\Plugin\Category\MainChildrenPropagationCategoryStoreAssignerPlugin;
 use Spryker\Zed\CategoryDataImport\Communication\Plugin\DataImport\CategoryStoreDataImportPlugin;
 
