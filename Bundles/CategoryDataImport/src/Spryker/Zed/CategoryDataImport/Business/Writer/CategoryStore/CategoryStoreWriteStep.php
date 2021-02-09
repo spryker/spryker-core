@@ -94,6 +94,7 @@ class CategoryStoreWriteStep extends PublishAwareStep implements DataImportStepI
     {
         $parentCategoryNodeId = SpyCategoryNodeQuery::create()
             ->filterByFkCategory($idCategory)
+            ->filterByIsMain(true)
             ->select(SpyCategoryNodeTableMap::COL_FK_PARENT_CATEGORY_NODE)
             ->find()
             ->getFirst();
