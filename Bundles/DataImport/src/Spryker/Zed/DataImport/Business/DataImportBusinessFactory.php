@@ -43,6 +43,7 @@ use Spryker\Zed\DataImport\Business\Model\Publisher\DataImporterPublisher;
 use Spryker\Zed\DataImport\DataImportDependencyProvider;
 use Spryker\Zed\DataImport\Dependency\Client\DataImportToQueueClientInterface;
 use Spryker\Zed\DataImport\Dependency\Facade\DataImportToEventFacadeInterface;
+use Spryker\Zed\DataImport\Dependency\Facade\DataImportToGracefulRunnerInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -183,7 +184,7 @@ class DataImportBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\DataImport\Dependency\Facade\DataImportToGracefulRunnerInterface
      */
-    public function getGracefulRunnerFacade()
+    public function getGracefulRunnerFacade(): DataImportToGracefulRunnerInterface
     {
         return $this->getProvidedDependency(DataImportDependencyProvider::FACADE_GRACEFUL_RUNNER);
     }

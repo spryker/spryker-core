@@ -158,9 +158,11 @@ class DataImporter implements
 
         $this->beforeImport();
 
-        $this->gracefulRunnerFacade->run($this->runGraceful($dataReader, $dataImporterReportTransfer, $dataImporterConfigurationTransfer));
+        $dataImportGenerator = $this->createDataImportGenerator($dataReader, $dataImporterReportTransfer, $dataImporterConfigurationTransfer);
 
-        return $dataImporterReportTransfer;
+        $this->gracefulRunnerFacade->run($dataImportGenerator);
+
+        return $dataImportGenerator->getReturn();
     }
 
     /**
@@ -175,7 +177,7 @@ class DataImporter implements
      *
      * @return \Generator
      */
-    protected function runGraceful(
+    protected function createDataImportGenerator(
         DataReaderInterface $dataReader,
         DataImporterReportTransfer $dataImporterReportTransfer,
         ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
@@ -207,6 +209,8 @@ class DataImporter implements
 
             unset($dataSet);
         }
+
+        return $dataImporterReportTransfer;
     }
 
     /**

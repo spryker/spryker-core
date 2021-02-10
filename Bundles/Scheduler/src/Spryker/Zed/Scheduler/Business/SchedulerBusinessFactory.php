@@ -24,6 +24,7 @@ use Spryker\Zed\Scheduler\Business\PhpScheduleReader\Mapper\PhpScheduleMapper;
 use Spryker\Zed\Scheduler\Business\PhpScheduleReader\Mapper\PhpScheduleMapperInterface;
 use Spryker\Zed\Scheduler\Business\PhpScheduleReader\PhpScheduleReader;
 use Spryker\Zed\Scheduler\Business\PhpScheduleReader\PhpScheduleReaderInterface;
+use Spryker\Zed\Scheduler\Dependency\Facade\SchedulerToGracefulRunnerFacadeInterface;
 use Spryker\Zed\Scheduler\SchedulerDependencyProvider;
 
 /**
@@ -172,7 +173,7 @@ class SchedulerBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Scheduler\Dependency\Facade\SchedulerToGracefulRunnerFacadeInterface
      */
-    public function getGracefulRunnerFacade()
+    public function getGracefulRunnerFacade(): SchedulerToGracefulRunnerFacadeInterface
     {
         return $this->getProvidedDependency(SchedulerDependencyProvider::FACADE_GRACEFUL_RUNNER);
     }

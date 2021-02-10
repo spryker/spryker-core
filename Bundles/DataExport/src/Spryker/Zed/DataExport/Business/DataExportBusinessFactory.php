@@ -10,6 +10,7 @@ namespace Spryker\Zed\DataExport\Business;
 use Spryker\Service\DataExport\DataExportServiceInterface;
 use Spryker\Zed\DataExport\Business\Exporter\DataExportExecutor;
 use Spryker\Zed\DataExport\DataExportDependencyProvider;
+use Spryker\Zed\DataExport\Dependency\Facade\DataExportToGracefulRunnerFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -49,7 +50,7 @@ class DataExportBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\DataExport\Dependency\Facade\DataExportToGracefulRunnerFacadeInterface
      */
-    public function getGracefulRunnerFacade()
+    public function getGracefulRunnerFacade(): DataExportToGracefulRunnerFacadeInterface
     {
         return $this->getProvidedDependency(DataExportDependencyProvider::FACADE_GRACEFUL_RUNNER);
     }

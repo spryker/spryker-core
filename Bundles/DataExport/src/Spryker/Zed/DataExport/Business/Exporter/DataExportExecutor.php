@@ -69,17 +69,17 @@ class DataExportExecutor
      */
     public function exportDataEntities(DataExportConfigurationsTransfer $dataExportConfigurationsTransfer): array
     {
-        $dataExportResultTransfers = [];
-
         $dataExportDefaultsConfigurationsTransfer = $this->getDataExportDefaultsConfiguration();
         $dataExportDefaultsConfigurationTransfer = $this->dataExportService->mergeDataExportConfigurationTransfers(
             $dataExportConfigurationsTransfer->getDefaults() ?? new DataExportConfigurationTransfer(),
             $dataExportDefaultsConfigurationsTransfer->getDefaultsOrFail()
         );
 
-        $this->gracefulRunnerFacade->run($this->runGraceful($dataExportConfigurationsTransfer, $dataExportDefaultsConfigurationTransfer));
+        $dataExportGenerator = $this->createDataExportGenerator($dataExportConfigurationsTransfer, $dataExportDefaultsConfigurationTransfer);
 
-        return $dataExportResultTransfers;
+        $this->gracefulRunnerFacade->run($dataExportGenerator);
+
+        return $dataExportGenerator->getReturn();
     }
 
     /**
@@ -91,10 +91,12 @@ class DataExportExecutor
      *
      * @return \Generator
      */
-    protected function runGraceful(
+    protected function createDataExportGenerator(
         DataExportConfigurationsTransfer $dataExportConfigurationsTransfer,
         DataExportConfigurationTransfer $dataExportDefaultsConfigurationTransfer
     ): Generator {
+        $dataExportResultTransfers = [];
+
         foreach ($dataExportConfigurationsTransfer->getActions() as $dataExportConfigurationTransfer) {
             yield;
 
@@ -106,6 +108,8 @@ class DataExportExecutor
 
             $dataExportResultTransfers[] = $this->runExport($dataExportConfigurationTransfer);
         }
+
+        return $dataExportResultTransfers;
     }
 
     /**

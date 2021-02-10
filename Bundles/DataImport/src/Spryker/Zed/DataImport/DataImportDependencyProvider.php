@@ -113,7 +113,7 @@ class DataImportDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addGracefulRunnerFacade(Container $container)
+    protected function addGracefulRunnerFacade(Container $container): Container
     {
         $container->set(static::FACADE_GRACEFUL_RUNNER, function (Container $container) {
             return new DataImportToGracefulRunnerBridge(

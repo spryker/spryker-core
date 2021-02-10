@@ -1,11 +1,12 @@
 {
   "name": "spryker/graceful-runner",
+  "type": "library",
   "description": "GracefulRunner module",
   "license": "proprietary",
   "require": {
     "php": ">=7.3",
-    "spryker/kernel": "^3.30.0",
-    "seld/signal-handler": "^1.2.0"
+    "seld/signal-handler": "^1.2.0",
+    "spryker/kernel": "^3.30.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
@@ -16,11 +17,16 @@
       "Spryker\\": "src/Spryker/"
     }
   },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerTest\\": "tests/SprykerTest/"
+    }
+  },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "scripts": {
-    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
-    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/"
   },
   "extra": {
     "branch-alias": {
