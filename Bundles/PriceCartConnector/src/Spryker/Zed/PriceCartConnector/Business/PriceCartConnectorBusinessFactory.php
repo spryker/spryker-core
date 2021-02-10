@@ -8,6 +8,8 @@
 namespace Spryker\Zed\PriceCartConnector\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\PriceCartConnector\Business\Filter\Comparator\ItemComparator;
+use Spryker\Zed\PriceCartConnector\Business\Filter\Comparator\ItemComparatorInterface;
 use Spryker\Zed\PriceCartConnector\Business\Filter\ItemFilterInterface;
 use Spryker\Zed\PriceCartConnector\Business\Filter\ItemsWithoutPriceFilter;
 use Spryker\Zed\PriceCartConnector\Business\Filter\PriceProductFilter;
@@ -61,7 +63,8 @@ class PriceCartConnectorBusinessFactory extends AbstractBusinessFactory
             $this->getPriceProductFacade(),
             $this->getPriceFacade(),
             $this->getCurrencyFacade(),
-            $this->getCartItemQuantityCounterStrategyPlugins()
+            $this->getCartItemQuantityCounterStrategyPlugins(),
+            $this->createItemComparator()
         );
     }
 
@@ -84,6 +87,14 @@ class PriceCartConnectorBusinessFactory extends AbstractBusinessFactory
     public function createSourcePriceSanitizer(): SourcePriceSanitizerInterface
     {
         return new SourcePriceSanitizer();
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceCartConnector\Business\Filter\Comparator\ItemComparatorInterface
+     */
+    public function createItemComparator(): ItemComparatorInterface
+    {
+        return new ItemComparator($this->getConfig());
     }
 
     /**

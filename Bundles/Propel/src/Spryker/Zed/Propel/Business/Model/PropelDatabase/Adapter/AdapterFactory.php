@@ -12,12 +12,15 @@ use Spryker\Zed\Propel\Business\Model\PropelDatabase\Adapter\MySql\DropMySqlData
 use Spryker\Zed\Propel\Business\Model\PropelDatabase\Adapter\MySql\DropMySqlDatabaseTables;
 use Spryker\Zed\Propel\Business\Model\PropelDatabase\Adapter\MySql\ExportMySqlDatabase;
 use Spryker\Zed\Propel\Business\Model\PropelDatabase\Adapter\MySql\ImportMySqlDatabase;
+use Spryker\Zed\Propel\Business\Model\PropelDatabase\Adapter\MySql\TableExistenceMySQLDatabase;
 use Spryker\Zed\Propel\Business\Model\PropelDatabase\Adapter\PostgreSql\CreatePostgreSqlDatabase;
 use Spryker\Zed\Propel\Business\Model\PropelDatabase\Adapter\PostgreSql\DropPostgreSqlDatabase;
 use Spryker\Zed\Propel\Business\Model\PropelDatabase\Adapter\PostgreSql\DropPostgreSqlDatabaseTables;
 use Spryker\Zed\Propel\Business\Model\PropelDatabase\Adapter\PostgreSql\ExportPostgreSqlDatabase;
 use Spryker\Zed\Propel\Business\Model\PropelDatabase\Adapter\PostgreSql\ImportPostgreSqlDatabase;
+use Spryker\Zed\Propel\Business\Model\PropelDatabase\Adapter\PostgreSql\TableExistencePostgreSqlDatabase;
 use Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\DropDatabaseTablesInterface;
+use Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\TableExistenceInterface;
 use Spryker\Zed\Propel\PropelConfig;
 
 class AdapterFactory implements AdapterFactoryInterface
@@ -46,7 +49,8 @@ class AdapterFactory implements AdapterFactoryInterface
             $this->createMySqlDropCommand(),
             $this->createMySqlExportCommand(),
             $this->createMySqlImportCommand(),
-            $this->createDropMySqlDatabaseTablesCommand()
+            $this->createDropMySqlDatabaseTablesCommand(),
+            $this->createMySqlTableExistenceCommand()
         );
 
         return $mySqlAdapter;
@@ -85,6 +89,14 @@ class AdapterFactory implements AdapterFactoryInterface
     }
 
     /**
+     * @return \Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\TableExistenceInterface|\Spryker\Zed\Propel\Business\Model\PropelDatabase\Adapter\MySql\TableExistenceMySQLDatabase
+     */
+    protected function createMySqlTableExistenceCommand(): TableExistenceInterface
+    {
+        return new TableExistenceMySQLDatabase($this->config);
+    }
+
+    /**
      * @return \Spryker\Zed\Propel\Business\Model\PropelDatabase\Adapter\AdapterInterface
      */
     public function createPostgreSqlAdapter()
@@ -95,7 +107,8 @@ class AdapterFactory implements AdapterFactoryInterface
             $this->createPostgreSqlDropCommand(),
             $this->createPostgreSqlExportCommand(),
             $this->createPostgreSqlImportCommand(),
-            $this->createDropPostgreSqlDatabaseTablesCommand()
+            $this->createDropPostgreSqlDatabaseTablesCommand(),
+            $this->createPostgreSqlTableExistenceCommand()
         );
 
         return $postgreSqlAdapter;
@@ -147,5 +160,13 @@ class AdapterFactory implements AdapterFactoryInterface
     public function createDropMySqlDatabaseTablesCommand(): DropDatabaseTablesInterface
     {
         return new DropMySqlDatabaseTables();
+    }
+
+    /**
+     * @return \Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\TableExistenceInterface
+     */
+    protected function createPostgreSqlTableExistenceCommand(): TableExistenceInterface
+    {
+        return new TableExistencePostgreSqlDatabase();
     }
 }
