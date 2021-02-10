@@ -13,9 +13,6 @@ use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
 use ReflectionClass;
-use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBroker;
-use Spryker\Zed\PriceProductMerchantRelationshipDataImport\Business\PriceProductMerchantRelationshipDataImportBusinessFactory;
-use Spryker\Zed\PriceProductMerchantRelationshipDataImport\Business\PriceProductMerchantRelationshipDataImportFacade;
 use Spryker\Zed\PriceProductMerchantRelationshipDataImport\Communication\Plugin\PriceProductMerchantRelationshipDataImportPlugin;
 use Spryker\Zed\PriceProductMerchantRelationshipDataImport\PriceProductMerchantRelationshipDataImportConfig;
 
@@ -71,7 +68,7 @@ class PriceProductMerchantRelationshipDataImportPluginTest extends Unit
 
         $facadePropertyReflection = $pluginReflection->getParentClass()->getProperty('facade');
         $facadePropertyReflection->setAccessible(true);
-        $facadePropertyReflection->setValue($PriceProductMerchantRelationshipDataImportPlugin, $this->getFacadeMock());
+        $facadePropertyReflection->setValue($PriceProductMerchantRelationshipDataImportPlugin, $this->tester->getFacade());
 
         $dataImporterReportTransfer = $PriceProductMerchantRelationshipDataImportPlugin->import($dataImportConfigurationTransfer);
 
@@ -109,33 +106,5 @@ class PriceProductMerchantRelationshipDataImportPluginTest extends Unit
             'fkMerchant' => $idMerchant,
             'fkCompanyBusinessUnit' => $companyBusinessUnitTransfer->getIdCompanyBusinessUnit(),
         ]);
-    }
-
-    /**
-     * @return \Spryker\Zed\PriceProductMerchantRelationshipDataImport\Business\PriceProductMerchantRelationshipDataImportFacade|\PHPUnit\Framework\MockObject\MockObject
-     */
-    public function getFacadeMock(): PriceProductMerchantRelationshipDataImportFacade
-    {
-        /** @var \Spryker\Zed\PriceProductMerchantRelationshipDataImport\Business\PriceProductMerchantRelationshipDataImportBusinessFactory|\PHPUnit\Framework\MockObject\MockObject $factoryMock */
-        $factoryMock = $this->getMockBuilder(PriceProductMerchantRelationshipDataImportBusinessFactory::class)
-            ->setMethods(
-                [
-                    'createTransactionAwareDataSetStepBroker',
-                    'getConfig',
-                ]
-            )
-            ->getMock();
-
-        $factoryMock
-            ->method('createTransactionAwareDataSetStepBroker')
-            ->willReturn(new DataSetStepBroker());
-
-        $factoryMock->method('getConfig')
-            ->willReturn(new PriceProductMerchantRelationshipDataImportConfig());
-
-        $facade = new PriceProductMerchantRelationshipDataImportFacade();
-        $facade->setFactory($factoryMock);
-
-        return $facade;
     }
 }

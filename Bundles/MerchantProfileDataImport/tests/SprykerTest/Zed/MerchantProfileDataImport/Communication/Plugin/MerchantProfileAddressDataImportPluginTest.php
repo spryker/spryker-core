@@ -13,10 +13,6 @@ use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use ReflectionClass;
-use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBroker;
-use Spryker\Zed\MerchantProfileDataImport\Business\MerchantProfileDataImportBusinessFactory;
-use Spryker\Zed\MerchantProfileDataImport\Business\MerchantProfileDataImportFacade;
-use Spryker\Zed\MerchantProfileDataImport\Business\MerchantProfileDataImportFacadeInterface;
 use Spryker\Zed\MerchantProfileDataImport\Communication\Plugin\MerchantProfileAddressDataImportPlugin;
 use Spryker\Zed\MerchantProfileDataImport\MerchantProfileDataImportConfig;
 
@@ -64,7 +60,7 @@ class MerchantProfileAddressDataImportPluginTest extends Unit
 
         $facadePropertyReflection = $pluginReflection->getParentClass()->getProperty('facade');
         $facadePropertyReflection->setAccessible(true);
-        $facadePropertyReflection->setValue($dataImportPlugin, $this->getFacadeMock());
+        $facadePropertyReflection->setValue($dataImportPlugin, $this->tester->getFacade());
 
         $dataImporterReportTransfer = $dataImportPlugin->import($dataImportConfigurationTransfer);
 
@@ -80,32 +76,5 @@ class MerchantProfileAddressDataImportPluginTest extends Unit
     {
         $dataImportPlugin = new MerchantProfileAddressDataImportPlugin();
         $this->assertSame(MerchantProfileDataImportConfig::IMPORT_TYPE_MERCHANT_PROFILE_ADDRESS, $dataImportPlugin->getImportType());
-    }
-
-    /**
-     * @return \Spryker\Zed\MerchantProfileDataImport\Business\MerchantProfileDataImportFacade
-     */
-    public function getFacadeMock(): MerchantProfileDataImportFacadeInterface
-    {
-        $factoryMock = $this->getMockBuilder(MerchantProfileDataImportBusinessFactory::class)
-            ->setMethods(
-                [
-                    'createTransactionAwareDataSetStepBroker',
-                    'getConfig',
-                ]
-            )
-            ->getMock();
-
-        $factoryMock
-            ->method('createTransactionAwareDataSetStepBroker')
-            ->willReturn(new DataSetStepBroker());
-
-        $factoryMock->method('getConfig')
-            ->willReturn(new MerchantProfileDataImportConfig());
-
-        $facade = new MerchantProfileDataImportFacade();
-        $facade->setFactory($factoryMock);
-
-        return $facade;
     }
 }

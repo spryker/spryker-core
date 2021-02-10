@@ -12,11 +12,8 @@ use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
 use ReflectionClass;
-use Spryker\Zed\CompanyDataImport\Business\CompanyDataImportBusinessFactory;
-use Spryker\Zed\CompanyDataImport\Business\CompanyDataImportFacade;
 use Spryker\Zed\CompanyDataImport\Communication\Plugin\CompanyDataImportPlugin;
 use Spryker\Zed\CompanyDataImport\CompanyDataImportConfig;
-use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBroker;
 
 /**
  * Auto-generated group annotations
@@ -56,7 +53,7 @@ class CompanyDataImportPluginTest extends Unit
 
         $facadePropertyReflection = $pluginReflection->getParentClass()->getProperty('facade');
         $facadePropertyReflection->setAccessible(true);
-        $facadePropertyReflection->setValue($companyDataImportPlugin, $this->getFacadeMock());
+        $facadePropertyReflection->setValue($companyDataImportPlugin, $this->tester->getFacade());
 
         $dataImporterReportTransfer = $companyDataImportPlugin->import($dataImportConfigurationTransfer);
 
@@ -72,32 +69,5 @@ class CompanyDataImportPluginTest extends Unit
     {
         $companyDataImportPlugin = new CompanyDataImportPlugin();
         $this->assertSame(CompanyDataImportConfig::IMPORT_TYPE_COMPANY, $companyDataImportPlugin->getImportType());
-    }
-
-    /**
-     * @return \Spryker\Zed\CompanyDataImport\Business\CompanyDataImportFacade
-     */
-    public function getFacadeMock(): CompanyDataImportFacade
-    {
-        $factoryMock = $this->getMockBuilder(CompanyDataImportBusinessFactory::class)
-            ->setMethods(
-                [
-                    'createTransactionAwareDataSetStepBroker',
-                    'getConfig',
-                ]
-            )
-            ->getMock();
-
-        $factoryMock
-            ->method('createTransactionAwareDataSetStepBroker')
-            ->willReturn(new DataSetStepBroker());
-
-        $factoryMock->method('getConfig')
-            ->willReturn(new CompanyDataImportConfig());
-
-        $facade = new CompanyDataImportFacade();
-        $facade->setFactory($factoryMock);
-
-        return $facade;
     }
 }
