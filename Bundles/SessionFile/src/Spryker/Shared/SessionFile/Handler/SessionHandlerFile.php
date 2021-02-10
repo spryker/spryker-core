@@ -143,7 +143,7 @@ class SessionHandlerFile implements SessionHandlerInterface
         foreach ($files as $file) {
             $fileTime = filemtime($file);
             $fileExpired = $fileTime + $maxLifetime < $time;
-            $fileExist = (bool) $fileTime;
+            $fileExist = (bool)$fileTime;
             if ($fileExist && $fileExpired) {
                 unlink($file);
             }
@@ -152,6 +152,9 @@ class SessionHandlerFile implements SessionHandlerInterface
         return true;
     }
 
+    /**
+     * @return string
+     */
     protected function buildSessionFilePattern(): string
     {
         return sprintf(
