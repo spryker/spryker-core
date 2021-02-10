@@ -90,6 +90,7 @@
         <property name="productConfigurationInstance" type="ProductConfigurationInstance"/>
         <property name="sku" type="string"/>
         <property name="groupKey" type="string"/>
+        <property name="quantity" type="int"/>
     </transfer>
 
     <transfer name="ProductConcrete">
