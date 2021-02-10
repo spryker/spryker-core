@@ -95,10 +95,37 @@ class QuoteItemReplacer implements QuoteItemReplacerInterface
             ->setGroupKey(null)
             ->setProductConfigurationInstance($productConfiguratorResponseTransfer->getProductConfigurationInstance());
 
+        $newItemTransfer = $this->replaceItemQuantity($productConfiguratorResponseTransfer, $newItemTransfer);
+
         return (new ItemReplaceTransfer())
             ->setItemToBeReplaced($itemToBeReplacedTransfer)
             ->setNewItem($newItemTransfer)
             ->setQuote($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function replaceItemQuantity(
+        ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer,
+        ItemTransfer $itemTransfer
+    ): ItemTransfer {
+        $productConfigurationInstanceTransfer = $productConfiguratorResponseTransfer->getProductConfigurationInstance();
+
+        if (!$productConfigurationInstanceTransfer) {
+            return $itemTransfer;
+        }
+
+        $availableQuantity = $productConfigurationInstanceTransfer->getAvailableQuantity();
+
+        if ($availableQuantity && $availableQuantity < $itemTransfer->getQuantity()) {
+            $itemTransfer->setQuantity($availableQuantity);
+        }
+
+        return $itemTransfer;
     }
 
     /**
