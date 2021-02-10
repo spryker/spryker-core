@@ -38,7 +38,7 @@ class GracefulRunner implements GracefulRunnerInterface
      */
     public function run(Generator $generator): int
     {
-        $signalHandler = SignalHandler::create($this->config->getSignalsToAddHandlerTo());
+        $signalHandler = $this->createSignalHandler();
 
         while ($generator->valid()) {
             $generator->next();
@@ -51,5 +51,13 @@ class GracefulRunner implements GracefulRunnerInterface
         }
 
         return $this->executedIterations;
+    }
+
+    /**
+     * @return \Seld\Signal\SignalHandler
+     */
+    protected function createSignalHandler(): SignalHandler
+    {
+        return SignalHandler::create($this->config->getSignalsToAddHandlerTo());
     }
 }
