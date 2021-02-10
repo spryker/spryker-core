@@ -56,7 +56,10 @@ class ProductGroupCollectorQueryTest extends Unit
 
         // Act
         $productGroupCollectorQuery->prepare();
-        $result = $productGroupCollectorQuery->getTouchQuery()->find()->toArray();
+        $result = $productGroupCollectorQuery->getTouchQuery()
+            ->filterByItemType('product_group')
+            ->find()
+            ->toArray();
 
         // Assert
         $this->assertNotEmpty($result);

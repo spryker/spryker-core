@@ -59,6 +59,7 @@ class ProductAbstractGroupsCollectorQueryTest extends Unit
         // Act
         $result = $productAbstractGroupsCollectorQuery->prepare()
             ->getTouchQuery()
+            ->filterByItemType('product_abstract_groups')
             ->find()
             ->toArray();
 
