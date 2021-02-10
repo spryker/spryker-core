@@ -36,9 +36,11 @@ class ProductConfigurationProductConcreteExpander implements ProductConfiguratio
     ): ConcreteProductsRestAttributesTransfer {
         $productConfigurationInstanceTransfer = $this->productConfigurationStorageClient
             ->findProductConfigurationInstanceBySku($concreteProductsRestAttributesTransfer->getSkuOrFail());
+
         if (!$productConfigurationInstanceTransfer) {
             return $concreteProductsRestAttributesTransfer;
         }
+
         $restProductConfigurationInstanceAttributesTransfer = (new RestProductConfigurationInstanceAttributesTransfer())
             ->fromArray($productConfigurationInstanceTransfer->toArray(), true);
 

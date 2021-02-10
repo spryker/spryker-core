@@ -12,7 +12,7 @@ use Spryker\Glue\Kernel\Container;
 use Spryker\Glue\ProductConfigurationsRestApi\Dependency\Client\ProductConfigurationsRestApiToProductConfigurationStorageClientBridge;
 
 /**
- * @method \Spryker\Glue\ProductConfigurationsRestApi\ProductDiscontinuedRestApiConfig getConfig()
+ * @method \Spryker\Glue\ProductConfigurationsRestApi\ProductConfigurationsRestApiConfig getConfig()
  */
 class ProductConfigurationsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
