@@ -105,6 +105,7 @@ class ReplaceItemQuantityTest extends Unit
     {
         return [
             [10, 5, 5],
+            [10, 0, 10],
             [10, null, 10],
             [10, 10, 10],
             [10, 15, 10],
