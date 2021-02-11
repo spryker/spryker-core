@@ -13,6 +13,9 @@ namespace Spryker\Zed\CmsContentWidgetProductSetConnector\Persistence;
 interface CmsContentWidgetProductSetConnectorQueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $keyList

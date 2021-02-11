@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\StorageDatabase\Storage\Reader;
 
-use PDOStatement;
+use Propel\Runtime\Connection\StatementInterface;
 
 class MySqlStorageReader extends AbstractStorageReader
 {
@@ -23,9 +23,9 @@ class MySqlStorageReader extends AbstractStorageReader
     /**
      * @param string $resourceKey
      *
-     * @return \PDOStatement
+     * @return \Propel\Runtime\Connection\StatementInterface
      */
-    protected function createSingleSelectStatementForResourceKey(string $resourceKey): PDOStatement
+    protected function createSingleSelectStatementForResourceKey(string $resourceKey): StatementInterface
     {
         $tableName = $this->tableNameResolver->resolveByResourceKey($resourceKey);
         $selectSqlString = $this->buildSelectQuerySql($tableName);
@@ -39,9 +39,9 @@ class MySqlStorageReader extends AbstractStorageReader
     /**
      * @param array $resourceKeys
      *
-     * @return \PDOStatement
+     * @return \Propel\Runtime\Connection\StatementInterface
      */
-    protected function createMultiSelectStatementForResourceKeys(array $resourceKeys): PDOStatement
+    protected function createMultiSelectStatementForResourceKeys(array $resourceKeys): StatementInterface
     {
         $queryDataPerTable = $this->prepareMultiTableQueryData($resourceKeys);
         $statement = $this->buildMultiTableSelectStatement($queryDataPerTable);
@@ -74,9 +74,9 @@ class MySqlStorageReader extends AbstractStorageReader
     /**
      * @param array $queryDataPerTable
      *
-     * @return \PDOStatement
+     * @return \Propel\Runtime\Connection\StatementInterface
      */
-    protected function buildMultiTableSelectStatement(array $queryDataPerTable): PDOStatement
+    protected function buildMultiTableSelectStatement(array $queryDataPerTable): StatementInterface
     {
         $selectFragments = [];
 
@@ -93,13 +93,15 @@ class MySqlStorageReader extends AbstractStorageReader
     }
 
     /**
-     * @param \PDOStatement $statement
+     * @param \Propel\Runtime\Connection\StatementInterface $statement
      * @param string[][][] $queryDataPerTable
      *
-     * @return \PDOStatement
+     * @return \Propel\Runtime\Connection\StatementInterface
      */
-    protected function bindValuesToStatement(PDOStatement $statement, array $queryDataPerTable): PDOStatement
-    {
+    protected function bindValuesToStatement(
+        StatementInterface $statement,
+        array $queryDataPerTable
+    ): StatementInterface {
         foreach ($queryDataPerTable as $queryData) {
             foreach (array_merge(...$queryData) as $placeholder => $value) {
                 $statement->bindValue($placeholder, $value);

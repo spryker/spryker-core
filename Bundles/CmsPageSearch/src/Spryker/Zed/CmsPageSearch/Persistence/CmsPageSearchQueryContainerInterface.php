@@ -12,6 +12,9 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 interface CmsPageSearchQueryContainerInterface extends QueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $cmsPageIds
@@ -33,6 +36,9 @@ interface CmsPageSearchQueryContainerInterface extends QueryContainerInterface
     public function queryCmsPageByIds(array $cmsPageIds);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $cmsPageIds
@@ -42,6 +48,9 @@ interface CmsPageSearchQueryContainerInterface extends QueryContainerInterface
     public function queryCmsPageSearchEntities(array $cmsPageIds);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $localeNames

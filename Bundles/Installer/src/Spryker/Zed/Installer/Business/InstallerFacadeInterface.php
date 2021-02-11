@@ -10,6 +10,9 @@ namespace Spryker\Zed\Installer\Business;
 interface InstallerFacadeInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Spryker\Zed\Installer\Dependency\Plugin\InstallerPluginInterface[]

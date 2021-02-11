@@ -12,7 +12,7 @@
  * @return {void}
  */
 function initialize(validFromSelector, validToSelector) {
-    initDatePicker(validFromSelector, function(e) {
+    initDatePicker(validFromSelector, function (e) {
         var selectedDate = $(validFromSelector).datepicker('getDate');
         if (!selectedDate) {
             return;
@@ -22,7 +22,7 @@ function initialize(validFromSelector, validToSelector) {
         $(validToSelector).datepicker('option', 'minDate', selectedDate);
     });
 
-    initDatePicker(validToSelector, function() {
+    initDatePicker(validToSelector, function () {
         var selectedDate = $(validToSelector).datepicker('getDate');
         if (!selectedDate) {
             return;
@@ -46,10 +46,10 @@ function initDatePicker(nodeSelector, onCloseCallback) {
         changeYear: true,
         numberOfMonths: 2,
         defaultDate: 0,
-        onClose: onCloseCallback
+        onClose: onCloseCallback,
     });
 }
 
 module.exports = {
-    initialize: initialize
+    initialize: initialize,
 };

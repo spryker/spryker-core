@@ -9,7 +9,11 @@ namespace SprykerTest\Zed\Category\Business;
 
 use ArrayObject;
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\CategoryLocalizedAttributesBuilder;
+use Generated\Shared\Transfer\CategoryCriteriaTransfer;
+use Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
 use Spryker\Zed\Category\Business\CategoryFacadeInterface;
 
@@ -23,12 +27,15 @@ use Spryker\Zed\Category\Business\CategoryFacadeInterface;
  * @group Facade
  * @group CategoryFacadeTest
  * Add your own group annotations below this line
- *
- * @property \SprykerTest\Zed\Category\CategoryBusinessTester $tester
  */
 class CategoryFacadeTest extends Unit
 {
     public const CATEGORY_NODE_ID_ROOT = 1;
+
+    /**
+     * @var \SprykerTest\Zed\Category\CategoryBusinessTester
+     */
+    protected $tester;
 
     /**
      * @return void
@@ -97,6 +104,138 @@ class CategoryFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testFindCategoryWillFindExistingCategory(): void
+    {
+        // Arrange
+        $categoryTransfer = $this->tester->haveCategory();
+        $categoryCriteriaTransfer = (new CategoryCriteriaTransfer())->setIdCategory($categoryTransfer->getIdCategory());
+
+        // Act
+        $resultCategoryTransfer = $this->getFacade()->findCategory($categoryCriteriaTransfer);
+
+        // Assert
+        $this->assertEquals($resultCategoryTransfer->getIdCategory(), $categoryTransfer->getIdCategory());
+        $this->assertEquals($resultCategoryTransfer->getCategoryKey(), $categoryTransfer->getCategoryKey());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindCategoryWillFindExistingCategoryWithRequiredLocale(): void
+    {
+        // Arrange
+        $localeTransfer1 = $this->tester->haveLocale();
+        $localeTransfer2 = $this->tester->haveLocale();
+        $categoryLocalizedAttributesTransfer1 = $this->createCategoryLocalizedAttributesTransferForLocale($localeTransfer1);
+        $categoryLocalizedAttributesTransfer2 = $this->createCategoryLocalizedAttributesTransferForLocale($localeTransfer2);
+        $categoryTransfer = $this->tester->haveCategory([
+            CategoryTransfer::LOCALIZED_ATTRIBUTES => [
+                $categoryLocalizedAttributesTransfer1->toArray(),
+                $categoryLocalizedAttributesTransfer2->toArray(),
+            ],
+        ]);
+
+        $categoryCriteriaTransfer = (new CategoryCriteriaTransfer())
+            ->setIdCategory($categoryTransfer->getIdCategory())
+            ->setLocaleName($localeTransfer1->getLocaleName());
+
+        // Act
+        $resultCategoryTransfer = $this->getFacade()->findCategory($categoryCriteriaTransfer);
+
+        // Assert
+        $this->assertEquals($resultCategoryTransfer->getIdCategory(), $categoryTransfer->getIdCategory());
+        $this->assertEquals($resultCategoryTransfer->getCategoryKey(), $categoryTransfer->getCategoryKey());
+        $this->assertCount(1, $resultCategoryTransfer->getLocalizedAttributes());
+        $this->assertEquals(
+            $localeTransfer1->getLocaleName(),
+            $resultCategoryTransfer->getLocalizedAttributes()->offsetGet(0)->getLocale()->getLocaleName()
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindCategoryWillFindExistingCategoryWithFirstLevelChildrenOnly(): void
+    {
+        // Arrange
+        $categoryTransfer1 = $this->tester->haveCategory();
+        $categoryTransfer2 = $this->tester->haveCategory([
+            CategoryTransfer::PARENT_CATEGORY_NODE => $categoryTransfer1->getCategoryNode()->toArray(),
+        ]);
+        $categoryTransfer3 = $this->tester->haveCategory([
+            CategoryTransfer::PARENT_CATEGORY_NODE => $categoryTransfer2->getCategoryNode()->toArray(),
+        ]);
+
+        $categoryCriteriaTransfer = (new CategoryCriteriaTransfer())
+            ->setIdCategory($categoryTransfer1->getIdCategory())
+            ->setWithChildren(true);
+
+        // Act
+        $resultCategoryTransfer = $this->getFacade()->findCategory($categoryCriteriaTransfer);
+
+        // Assert
+        $this->assertEquals($resultCategoryTransfer->getIdCategory(), $categoryTransfer1->getIdCategory());
+        $this->assertEquals($resultCategoryTransfer->getCategoryKey(), $categoryTransfer1->getCategoryKey());
+        $nodeCollectionTransfer = $resultCategoryTransfer->getNodeCollection();
+        $this->assertCount(1, $nodeCollectionTransfer->getNodes());
+        /** @var \Generated\Shared\Transfer\NodeTransfer $childNode */
+        $childNode = $nodeCollectionTransfer->getNodes()->offsetGet(0);
+        $this->assertEquals($childNode->getIdCategoryNode(), $categoryTransfer1->getCategoryNode()->getIdCategoryNode());
+        $childNodeCollectionTransfer = $childNode->getChildrenNodes();
+        $this->assertCount(1, $childNodeCollectionTransfer->getNodes());
+        /** @var \Generated\Shared\Transfer\NodeTransfer $childChildNode */
+        $childChildNode = $childNodeCollectionTransfer->getNodes()->offsetGet(0);
+        $this->assertEquals($childChildNode->getIdCategoryNode(), $categoryTransfer2->getCategoryNode()->getIdCategoryNode());
+        $this->assertCount(0, $childChildNode->getChildrenNodes()->getNodes());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindCategoryWillFindExistingCategoryWithAllChildren(): void
+    {
+        // Arrange
+        $categoryTransfer1 = $this->tester->haveCategory();
+        $categoryTransfer2 = $this->tester->haveCategory([
+            CategoryTransfer::PARENT_CATEGORY_NODE => $categoryTransfer1->getCategoryNode()->toArray(),
+        ]);
+        $categoryTransfer3 = $this->tester->haveCategory([
+            CategoryTransfer::PARENT_CATEGORY_NODE => $categoryTransfer2->getCategoryNode()->toArray(),
+        ]);
+
+        $categoryCriteriaTransfer = (new CategoryCriteriaTransfer())
+            ->setIdCategory($categoryTransfer1->getIdCategory())
+            ->setWithChildrenRecursively(true);
+
+        // Act
+        $resultCategoryTransfer = $this->getFacade()->findCategory($categoryCriteriaTransfer);
+
+        // Assert
+        $this->assertEquals($resultCategoryTransfer->getIdCategory(), $categoryTransfer1->getIdCategory());
+        $this->assertEquals($resultCategoryTransfer->getCategoryKey(), $categoryTransfer1->getCategoryKey());
+
+        $nodeCollectionTransfer = $resultCategoryTransfer->getNodeCollection();
+        $this->assertCount(1, $nodeCollectionTransfer->getNodes());
+        /** @var \Generated\Shared\Transfer\NodeTransfer $selfNode */
+        $selfNode = $nodeCollectionTransfer->getNodes()->offsetGet(0);
+        $this->assertEquals($selfNode->getIdCategoryNode(), $categoryTransfer1->getCategoryNode()->getIdCategoryNode());
+
+        $firstChildNodeCollectionTransfer = $selfNode->getChildrenNodes();
+        $this->assertCount(1, $firstChildNodeCollectionTransfer->getNodes());
+        /** @var \Generated\Shared\Transfer\NodeTransfer $firstChildNode */
+        $firstChildNode = $firstChildNodeCollectionTransfer->getNodes()->offsetGet(0);
+        $this->assertEquals($firstChildNode->getIdCategoryNode(), $categoryTransfer2->getCategoryNode()->getIdCategoryNode());
+
+        $secondChildNodeCollectionTransfer = $firstChildNode->getChildrenNodes();
+        $this->assertCount(1, $secondChildNodeCollectionTransfer->getNodes());
+        /** @var \Generated\Shared\Transfer\NodeTransfer $firstChildNode */
+        $secondChildNode = $secondChildNodeCollectionTransfer->getNodes()->offsetGet(0);
+        $this->assertEquals($secondChildNode->getIdCategoryNode(), $categoryTransfer3->getCategoryNode()->getIdCategoryNode());
+    }
+
+    /**
      * @return int
      */
     protected function getRootCategoryId(): int
@@ -126,5 +265,17 @@ class CategoryFacadeTest extends Unit
     protected function getFacade(): CategoryFacadeInterface
     {
         return $this->tester->getFacade();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer
+     */
+    protected function createCategoryLocalizedAttributesTransferForLocale(LocaleTransfer $localeTransfer): CategoryLocalizedAttributesTransfer
+    {
+        return (new CategoryLocalizedAttributesBuilder([
+            CategoryLocalizedAttributesTransfer::LOCALE => $localeTransfer->toArray(),
+        ]))->build();
     }
 }

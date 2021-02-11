@@ -7,7 +7,8 @@
 
 namespace Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade;
 
-use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\CategoryCriteriaTransfer;
+use Generated\Shared\Transfer\CategoryTransfer;
 
 class ProductMerchantPortalGuiToCategoryFacadeBridge implements ProductMerchantPortalGuiToCategoryFacadeInterface
 {
@@ -25,15 +26,12 @@ class ProductMerchantPortalGuiToCategoryFacadeBridge implements ProductMerchantP
     }
 
     /**
-     * {@inheritDoc}
+     * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer $categoryCriteriaTransfer
      *
-     * @param int $idCategory
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return mixed[]
+     * @return \Generated\Shared\Transfer\CategoryTransfer|null
      */
-    public function getTreeNodeChildrenByIdCategoryAndLocale($idCategory, LocaleTransfer $localeTransfer)
+    public function findCategory(CategoryCriteriaTransfer $categoryCriteriaTransfer): ?CategoryTransfer
     {
-        return $this->categoryFacade->getTreeNodeChildrenByIdCategoryAndLocale($idCategory, $localeTransfer);
+        return $this->categoryFacade->findCategory($categoryCriteriaTransfer);
     }
 }

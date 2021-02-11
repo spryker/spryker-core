@@ -21,11 +21,16 @@ class CategoryStorageClient extends AbstractClient implements CategoryStorageCli
      * @api
      *
      * @param string $locale
+     * @param string|null $storeName
      *
      * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[]|\ArrayObject
      */
-    public function getCategories($locale)
+    public function getCategories($locale, ?string $storeName = null)
     {
+        if ($storeName === null) {
+            trigger_error('Pass the $storeName parameter for the forward compatibility with next major version.', E_USER_DEPRECATED);
+        }
+
         return $this->getFactory()
             ->createCategoryTreeStorageReader()
             ->getCategories($locale);
@@ -38,11 +43,16 @@ class CategoryStorageClient extends AbstractClient implements CategoryStorageCli
      *
      * @param int $idCategoryNode
      * @param string $localeName
+     * @param string|null $storeName
      *
      * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer
      */
-    public function getCategoryNodeById($idCategoryNode, $localeName)
+    public function getCategoryNodeById($idCategoryNode, $localeName, ?string $storeName = null)
     {
+        if ($storeName === null) {
+            trigger_error('Pass the $storeName parameter for the forward compatibility with next major version.', E_USER_DEPRECATED);
+        }
+
         return $this->getFactory()
             ->createCategoryNodeStorage()
             ->getCategoryNodeById($idCategoryNode, $localeName);
@@ -55,11 +65,16 @@ class CategoryStorageClient extends AbstractClient implements CategoryStorageCli
      *
      * @param int[] $categoryNodeIds
      * @param string $localeName
+     * @param string|null $storeName
      *
      * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[]
      */
-    public function getCategoryNodeByIds(array $categoryNodeIds, string $localeName): array
+    public function getCategoryNodeByIds(array $categoryNodeIds, string $localeName, ?string $storeName = null): array
     {
+        if ($storeName === null) {
+            trigger_error('Pass the $storeName parameter for the forward compatibility with next major version.', E_USER_DEPRECATED);
+        }
+
         return $this->getFactory()
             ->createCategoryNodeStorage()
             ->getCategoryNodeByIds($categoryNodeIds, $localeName);
@@ -71,11 +86,21 @@ class CategoryStorageClient extends AbstractClient implements CategoryStorageCli
      * @api
      *
      * @param array $docCountAggregation
+     * @param string|null $localeName
+     * @param string|null $storeName
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\CategoryNodeSearchResultTransfer[]
      */
-    public function formatCategoryTreeFilter(array $docCountAggregation): ArrayObject
+    public function formatCategoryTreeFilter(array $docCountAggregation, ?string $localeName = null, ?string $storeName = null): ArrayObject
     {
+        if ($localeName === null) {
+            trigger_error('Pass the $localeName parameter for the forward compatibility with next major version.', E_USER_DEPRECATED);
+        }
+
+        if ($storeName === null) {
+            trigger_error('Pass the $storeName parameter for the forward compatibility with next major version.', E_USER_DEPRECATED);
+        }
+
         return $this->getFactory()
             ->createCategoryTreeFilterFormatter()
             ->formatCategoryTreeFilter($docCountAggregation);

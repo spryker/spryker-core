@@ -79,7 +79,8 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     {
         return new CategoryTreeReader(
             $this->getQueryContainer(),
-            $this->createCategoryTreeFormatter()
+            $this->createCategoryTreeFormatter(),
+            $this->getRepository()
         );
     }
 
@@ -392,7 +393,8 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     {
         return new CategoryReader(
             $this->getRepository(),
-            $this->createPluginExecutor()
+            $this->createPluginExecutor(),
+            $this->createCategoryTreeReader()
         );
     }
 

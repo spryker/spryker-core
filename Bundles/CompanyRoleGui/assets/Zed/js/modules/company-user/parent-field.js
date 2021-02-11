@@ -27,7 +27,6 @@ const attributeIdCompany = 'id_company';
 const attributeIsDefault = 'is_default';
 
 function initialize() {
-
     const companyField = new CompanyFieldHandler();
 
     companyField.init();
@@ -47,7 +46,7 @@ function CompanyFieldHandler() {
     }
 
     function setRoleNames() {
-        $roleField.find('input[type="checkbox"]').each(function(index, item) {
+        $roleField.find('input[type="checkbox"]').each(function (index, item) {
             toggleOption(item);
         });
     }
@@ -58,12 +57,12 @@ function CompanyFieldHandler() {
 
         if ($roleOption.data(attributeIdCompany) === companyId) {
             if ($roleOption.data(attributeIsDefault)) {
-                $roleOption.prop("checked", true);
+                $roleOption.prop('checked', true);
             }
 
             $roleOption.parent().show();
         } else {
-            $roleOption.removeAttr("checked");
+            $roleOption.removeAttr('checked');
             $roleOption.parent().hide();
         }
     }

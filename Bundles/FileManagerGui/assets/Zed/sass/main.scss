@@ -9,19 +9,19 @@
  * Inactive nodes
  */
 .jstree-default .jstree-node.node-inactive > a {
-  opacity: 0.5;
+    opacity: 0.5;
 }
 
 .file-directory-progress {
-  width: 100%;
+    width: 100%;
 }
 
 .file-directory-progress-container {
-  &.progress-inline {
-    margin: 5px 0;
-  }
+    &.progress-inline {
+        margin: 5px 0;
+    }
 }
 
 .ui-datepicker {
-  z-index: 2 !important;
+    z-index: 2 !important;
 }

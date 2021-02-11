@@ -7,7 +7,9 @@
 
 namespace Spryker\Glue\CustomersRestApi;
 
+use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\Kernel\AbstractBundleConfig;
+use Symfony\Component\HttpFoundation\Response;
 
 class CustomersRestApiConfig extends AbstractBundleConfig
 {
@@ -16,6 +18,7 @@ class CustomersRestApiConfig extends AbstractBundleConfig
     public const RESOURCE_CUSTOMER_PASSWORD = 'customer-password';
     public const RESOURCE_FORGOTTEN_PASSWORD = 'customer-forgotten-password';
     public const RESOURCE_CUSTOMER_RESTORE_PASSWORD = 'customer-restore-password';
+    public const RESOURCE_CUSTOMER_CONFIRMATION = 'customer-confirmation';
 
     public const CONTROLLER_CUSTOMER_FORGOTTEN_PASSWORD = 'customer-forgotten-password-resource';
     public const CONTROLLER_CUSTOMER_RESTORE_PASSWORD = 'customer-restore-password-resource';
@@ -88,6 +91,39 @@ class CustomersRestApiConfig extends AbstractBundleConfig
 
     public const RESPONSE_CODE_CUSTOMER_PASSWORD_DENY_LIST = '422';
     public const RESPONSE_MESSAGE_CUSTOMER_PASSWORD_DENY_LIST = 'The password is listed as common.';
+
+    public const RESPONSE_CODE_CONFIRMATION_CODE_INVALID = '423';
+    public const RESPONSE_MESSAGE_CONFIRMATION_CODE_INVALID = 'This email confirmation code is invalid or has been already used.';
+
+    public const RESPONSE_CODE_CONFIRMATION_CODE_MISSING = '424';
+    public const RESPONSE_MESSAGE_CONFIRMATION_CODE_MISSING = 'Token is invalid.';
+
+    public const RESPONSE_CODE_CONFIRMATION_FAILED = '425';
+    public const RESPONSE_MESSAGE_CONFIRMATION_FAILED = 'Failed to confirm a customer.';
+
+    /**
+     * @uses \Spryker\Zed\Customer\Business\Customer\Customer::GLOSSARY_KEY_CONFIRM_EMAIL_LINK_INVALID_OR_USEDFIRM_EMAIL_LINK_INVALID_OR_USED
+     */
+    protected const ERROR_CUSTOMER_CONFIRMATION_CODE_INVALID_OR_USED = 'customer.error.confirm_email_link.invalid_or_used';
+
+    /**
+     * Specification:
+     * - Returns a mapping of possible customer module errors to Glue errors.
+     *
+     * @api
+     *
+     * @return mixed[][]
+     */
+    public function getErrorMapping(): array
+    {
+        return [
+            static::ERROR_CUSTOMER_CONFIRMATION_CODE_INVALID_OR_USED => [
+                RestErrorMessageTransfer::CODE => static::RESPONSE_CODE_CONFIRMATION_CODE_INVALID,
+                RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
+                RestErrorMessageTransfer::DETAIL => static::RESPONSE_MESSAGE_CONFIRMATION_CODE_INVALID,
+            ],
+        ];
+    }
 
     /**
      * @deprecated Will be removed without replacement.

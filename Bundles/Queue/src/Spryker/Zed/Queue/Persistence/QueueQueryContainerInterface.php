@@ -12,6 +12,9 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 interface QueueQueryContainerInterface extends QueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $serverId
@@ -22,6 +25,9 @@ interface QueueQueryContainerInterface extends QueryContainerInterface
     public function queryProcessesByServerIdAndQueueName($serverId, $queueName);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $serverId
@@ -31,6 +37,9 @@ interface QueueQueryContainerInterface extends QueryContainerInterface
     public function queryProcessesByServerId($serverId);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $processIds
@@ -40,6 +49,9 @@ interface QueueQueryContainerInterface extends QueryContainerInterface
     public function queryProcessesByProcessIds(array $processIds);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\Queue\Persistence\SpyQueueProcessQuery

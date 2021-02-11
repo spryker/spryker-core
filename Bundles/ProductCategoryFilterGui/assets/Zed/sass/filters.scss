@@ -1,29 +1,32 @@
 .filter-item {
-  font-weight: bold;
-  background: #fbfbfb;
-  position: relative;
-  .dd-handle {
-    padding-left:35px;
-  }
+    font-weight: bold;
+    background: #fbfbfb;
+    position: relative;
+    .dd-handle {
+        padding-left: 35px;
+    }
 }
 
-.re-add-product-category-filter, .remove-product-category-filter{
-  position:absolute;
-  margin-top: 5px;
-  margin-left: 5px;
+.re-add-product-category-filter,
+.remove-product-category-filter {
+    position: absolute;
+    margin-top: 5px;
+    margin-left: 5px;
 }
 
 .no-padding-left {
-  padding-left: 0!important;
+    padding-left: 0 !important;
 }
 
 #save-success {
-  display:none;
-  opacity: 0.0;
-  filter: alpha(opacity=0);
+    display: none;
+    opacity: 0;
+    filter: alpha(opacity=0);
 }
 
-.non-filter-attribute .dd-handle, .non-filter-attribute .dd-handle:hover, .non-filter-attribute{
-  font-weight: lighter!important;
-  font-style: italic!important;
+.non-filter-attribute .dd-handle,
+.non-filter-attribute .dd-handle:hover,
+.non-filter-attribute {
+    font-weight: lighter !important;
+    font-style: italic !important;
 }

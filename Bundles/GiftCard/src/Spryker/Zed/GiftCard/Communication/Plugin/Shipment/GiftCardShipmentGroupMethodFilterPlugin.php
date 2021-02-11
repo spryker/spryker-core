@@ -24,7 +24,7 @@ class GiftCardShipmentGroupMethodFilterPlugin extends AbstractPlugin implements 
     /**
      * {@inheritDoc}
      * Specification:
-     *  - Filters available shipment methods for shipment group.
+     * - Filters available shipment methods for shipment group.
      *
      * @api
      *
