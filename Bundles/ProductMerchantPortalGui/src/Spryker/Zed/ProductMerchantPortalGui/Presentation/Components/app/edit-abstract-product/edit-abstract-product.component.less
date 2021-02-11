@@ -12,6 +12,7 @@
 @edit-abstract-table-padding-inside-card: 3px 5px;
 @edit-abstract-collapsible-padding-bottom: 10px;
 @edit-abstract-stores-field-max-width: 420px;
+@edit-abstract-form-item-width: 130px;
 
 .@{ajax-form-prefix-cls}-container {
     overflow-y: auto;
@@ -95,5 +96,13 @@
     &__md-field {
         display: block;
         max-width: @edit-abstract-stores-field-max-width;
+    }
+
+    .@{table-editable-feature-prefix-cls}__cell .@{form-prefix-cls}-item {
+        width: @edit-abstract-form-item-width;
+
+        &-control-input {
+            min-height: 0;
+        }
     }
 }
