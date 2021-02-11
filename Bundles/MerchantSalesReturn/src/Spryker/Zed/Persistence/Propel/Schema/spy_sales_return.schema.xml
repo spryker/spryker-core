@@ -5,6 +5,8 @@
           namespace="Orm\Zed\MerchantSalesReturn\Persistence"
           package="src.Orm.Zed.MerchantSalesReturn.Persistence">
 
-    <!-- TODO define your tables here -->
+    <table name="spy_sales_return">
+        <column name="merchant_reference" required="false" type="VARCHAR" size="255"/>
+    </table>
 
 </database>
