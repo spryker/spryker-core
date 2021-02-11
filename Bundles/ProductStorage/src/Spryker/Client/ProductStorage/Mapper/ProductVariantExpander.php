@@ -45,7 +45,8 @@ class ProductVariantExpander implements ProductVariantExpanderInterface
         $selectedVariantNode = $this->getSelectedVariantNode($productViewTransfer);
 
         if ($productViewTransfer->getSelectedAttributes()) {
-            $productViewTransfer = $this->getSelectedProductVariant($productViewTransfer, $locale, $selectedVariantNode);
+            $productViewTransfer = $this->getSelectedProductVariant($productViewTransfer, $locale,
+                $selectedVariantNode);
         }
 
         if (!$productViewTransfer->getIdProductConcrete()) {
@@ -107,6 +108,18 @@ class ProductVariantExpander implements ProductVariantExpanderInterface
             return [];
         }
 
+        $selectedAttributes = $productViewTransfer->getSelectedAttributes();
+
+        $attributeVariantCollection = $productViewTransfer->getAttributeMap()->getAttributeVariantCollection();
+
+        foreach ($attributeVariantCollection as $idProductConcrete => $productSuperAttributes) {
+            if ($selectedAttributes != $productSuperAttributes) {
+                continue;
+            }
+
+            return [ProductConfig::VARIANT_LEAF_NODE_ID => $idProductConcrete];
+        }
+
         return $this->buildAttributeMapFromSelected(
             $productViewTransfer->getSelectedAttributes(),
             $productViewTransfer->getAttributeMap()->getAttributeVariants()
@@ -121,9 +134,44 @@ class ProductVariantExpander implements ProductVariantExpanderInterface
      */
     protected function setAvailableAttributes(array $selectedVariantNode, ProductViewTransfer $storageProductTransfer)
     {
+        if ($storageProductTransfer->getAttributeMap()->getAttributeVariantCollection()) {
+            return $storageProductTransfer->setAvailableAttributes($this->getAvailableAttributes($storageProductTransfer));
+        }
+
         $storageProductTransfer->setAvailableAttributes($this->findAvailableAttributes($selectedVariantNode));
 
         return $storageProductTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $storageProductTransfer
+     *
+     * @return array
+     */
+    protected function getAvailableAttributes(ProductViewTransfer $storageProductTransfer): array
+    {
+        $availableAttributes = [];
+
+        //extract to the method
+        $selectedAttributes = array_filter($storageProductTransfer->getSelectedAttributes(), function ($value) {
+            return $value;
+        }, ARRAY_FILTER_USE_BOTH);
+
+        if (!$selectedAttributes) {
+            return [];
+        }
+
+        $attributeVariantCollection = $storageProductTransfer->getAttributeMap()->getAttributeVariantCollection();
+
+        foreach ($attributeVariantCollection as $idProductConcrete => $productSuperAttributes) {
+            if (!$this->isSubsetAttributes($selectedAttributes, $productSuperAttributes)) {
+                continue;
+            }
+
+            $availableAttributes = $this->filterAvailableAttributes($productSuperAttributes, $selectedAttributes, $availableAttributes);
+        }
+
+        return $availableAttributes;
     }
 
     /**
@@ -261,7 +309,8 @@ class ProductVariantExpander implements ProductVariantExpanderInterface
 
         $idProductConcrete = $this->extractIdOfProductConcrete($selectedVariantNode);
         $productViewTransfer->setIdProductConcrete($idProductConcrete);
-        $productConcreteStorageData = $this->productConcreteStorageReader->findProductConcreteStorageData($idProductConcrete, $locale);
+        $productConcreteStorageData = $this->productConcreteStorageReader->findProductConcreteStorageData($idProductConcrete,
+            $locale);
 
         if (!$productConcreteStorageData) {
             return $productViewTransfer;
@@ -316,5 +365,61 @@ class ProductVariantExpander implements ProductVariantExpanderInterface
         $productViewTransfer->setSelectedAttributes($autoSelectedSingleValueSuperAttributes + $originalSelectedAttributes);
 
         return $productViewTransfer;
+    }
+
+    /**
+     * Checks whether an array is a subset of another array.
+     *
+     * @param array $superAttributes
+     * @param array $superAttributeHaystack
+     *
+     * @return bool
+     */
+    protected function isSubsetAttributes(array $superAttributes, array $superAttributeHaystack): bool
+    {
+        foreach ($superAttributes as $superAttributeKey => $superAttributeValue) {
+            if (!$this->includeSameAttribute($superAttributeHaystack, $superAttributeKey, $superAttributeValue)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * @param array $superAttributeHaystack
+     * @param string $superAttributeKey
+     * @param string $superAttributeValue
+     *
+     * @return bool
+     */
+    protected function includeSameAttribute(
+        array $superAttributeHaystack,
+        string $superAttributeKey,
+        $superAttributeValue
+    ): bool {
+        return isset($superAttributeHaystack[$superAttributeKey]) && $superAttributeHaystack[$superAttributeKey] === $superAttributeValue;
+    }
+
+    /**
+     * @param $superAttributes
+     * @param array $selectedAttributes
+     * @param array $availableAttributes
+     *
+     * @return array
+     */
+    protected function filterAvailableAttributes(
+        $superAttributes,
+        array $selectedAttributes,
+        array $availableAttributes
+    ): array {
+        foreach (array_diff_assoc($superAttributes, $selectedAttributes) as $attributeKey => $attributeValue) {
+            if (isset($availableAttributes[$attributeKey]) && in_array($attributeValue, $availableAttributes[$attributeKey])) {
+                continue;
+            }
+
+            $availableAttributes[$attributeKey][] = $attributeValue;
+        }
+        return $availableAttributes;
     }
 }

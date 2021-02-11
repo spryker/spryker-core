@@ -133,6 +133,8 @@ class AttributeMap implements AttributeMapInterface
             }
         }
 
+        $test = $productConcreteSuperAttributes;
+
         if (!$this->productStorageConfig->isProductAttributesWithSingleValueIncluded()) {
             $productConcreteSuperAttributes = $this->singleValueSuperAttributeFilter->filterOutSingleValueSuperAttributes(
                 $productConcreteSuperAttributes,
@@ -143,7 +145,8 @@ class AttributeMap implements AttributeMapInterface
         return $this->createAttributeMapStorageTransfer(
             $concreteProductIds,
             $superAttributeVariations,
-            $this->buildProductVariants($productConcreteSuperAttributes)
+            $this->buildProductVariants([]),
+            $test
         );
     }
 
@@ -205,12 +208,14 @@ class AttributeMap implements AttributeMapInterface
     protected function createAttributeMapStorageTransfer(
         array $concreteProductIds,
         array $superAttributes = [],
-        array $attributeVariants = []
+        array $attributeVariants = [],
+        array $attributeVariantCollection = []
     ) {
         return (new AttributeMapStorageTransfer())
             ->setProductConcreteIds($concreteProductIds)
             ->setSuperAttributes($superAttributes)
-            ->setAttributeVariants($attributeVariants);
+            ->setAttributeVariants($attributeVariants)
+            ->setAttributeVariantCollection($attributeVariantCollection);
     }
 
     /**

@@ -7,6 +7,7 @@
         <property name="attributeVariants" type="array" singular="attributeVariants"/>
         <property name="superAttributes" type="array" singular="superAttributes"/>
         <property name="productConcreteIds" type="array" singular="productConcreteIds"/>
+        <property name="attributeVariantCollection" type="array" singular="attributeVariant"/>
     </transfer>
 
     <transfer name="ProductAbstractStorage">

@@ -16,6 +16,7 @@ class ProductAbstractAttributeMapRestrictionFilter implements ProductAbstractAtt
 {
     protected const KEY_PRODUCT_CONCRETE_IDS = 'product_concrete_ids';
     protected const KEY_ATTRIBUTE_VARIANTS = 'attribute_variants';
+    protected const KEY_ATTRIBUTE_VARIANT_COLLECTION = 'attribute_variant_collection';
     protected const KEY_SUPER_ATTRIBUTES = 'super_attributes';
 
     /**
@@ -54,6 +55,17 @@ class ProductAbstractAttributeMapRestrictionFilter implements ProductAbstractAtt
             $productStorageData[ProductStorageConfig::RESOURCE_TYPE_ATTRIBUTE_MAP][static::KEY_PRODUCT_CONCRETE_IDS],
             $restrictedProductConcreteIds
         );
+
+        if ($productStorageData[ProductStorageConfig::RESOURCE_TYPE_ATTRIBUTE_MAP][static::KEY_ATTRIBUTE_VARIANT_COLLECTION]) {
+            $productStorageData[ProductStorageConfig::RESOURCE_TYPE_ATTRIBUTE_MAP][static::KEY_ATTRIBUTE_VARIANT_COLLECTION] = $this->filterAttributeVariantCollection(
+                $productStorageData[ProductStorageConfig::RESOURCE_TYPE_ATTRIBUTE_MAP][static::KEY_ATTRIBUTE_VARIANT_COLLECTION],
+                $restrictedProductConcreteIds
+            );
+
+            $productStorageData[ProductStorageConfig::RESOURCE_TYPE_ATTRIBUTE_MAP][static::KEY_SUPER_ATTRIBUTES] = $this->filterSuperAttributesNew(
+                $productStorageData[ProductStorageConfig::RESOURCE_TYPE_ATTRIBUTE_MAP][static::KEY_ATTRIBUTE_VARIANT_COLLECTION]
+            );
+        }
 
         $productStorageData[ProductStorageConfig::RESOURCE_TYPE_ATTRIBUTE_MAP][static::KEY_ATTRIBUTE_VARIANTS] = $this->filterAttributeVariants(
             $productStorageData[ProductStorageConfig::RESOURCE_TYPE_ATTRIBUTE_MAP][static::KEY_ATTRIBUTE_VARIANTS],
@@ -204,5 +216,38 @@ class ProductAbstractAttributeMapRestrictionFilter implements ProductAbstractAtt
             $attributeKey,
             $attributeValue,
         ]);
+    }
+
+    /**
+     * @param array $attributeVariants
+     * @param array $restrictedProductConcreteIds
+     */
+    protected function filterAttributeVariantCollection(
+        array $attributeVariants,
+        array $restrictedProductConcreteIds
+    ): array {
+        foreach ($restrictedProductConcreteIds as $restrictedProductConcreteId) {
+            unset($attributeVariants[$restrictedProductConcreteId]);
+        }
+
+        return $attributeVariants;
+    }
+
+    /**
+     * @param array $superAttributes
+     *
+     * @return array
+     */
+    protected function filterSuperAttributesNew($filteredAttributeVariants): array
+    {
+        $filteredSuperAttributes = [];
+
+        foreach ($filteredAttributeVariants as $attributes) {
+            foreach ($attributes as $attributeKey => $attributeValue) {
+                $filteredSuperAttributes[$attributeKey][$attributeValue] = $attributeValue;
+            }
+        }
+
+        return $filteredSuperAttributes;
     }
 }
