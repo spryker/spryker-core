@@ -95,6 +95,31 @@
         <property name="name" type="string"/>
     </transfer>
 
+    <transfer name="Category">
+        <property name="idCategory" type="int"/>
+        <property name="nodeCollection" type="NodeCollection"/>
+        <property name="localizedAttributes" type="CategoryLocalizedAttributes[]" singular="localizedAttributes"/>
+    </transfer>
+
+    <transfer name="NodeCollection">
+        <property name="nodes" type="Node[]" singular="node"/>
+    </transfer>
+
+    <transfer name="CategoryCriteria">
+        <property name="idCategory" type="int"/>
+        <property name="localeName" type="string"/>
+        <property name="withChildrenRecursively" type="bool"/>
+    </transfer>
+
+    <transfer name="Node">
+        <property name="idCategoryNode" type="int"/>
+        <property name="category" type="Category"/>
+        <property name="childrenNodes" type="NodeCollection"/>
+    </transfer>
+
+    <transfer name="CategoryLocalizedAttributes">
+    </transfer>
+
     <transfer name="MerchantProductCriteria">
         <property name="idProductAbstract" type="int"/>
         <property name="merchantIds" type="int[]" singular="idMerchant"/>
@@ -128,10 +153,6 @@
 
     <transfer name="CategoryCollection">
         <property name="categories" type="Category[]" singular="category"/>
-    </transfer>
-
-    <transfer name="Category">
-        <property name="idCategory" type="int"/>
     </transfer>
 
     <transfer name="PriceProductAbstractTableCriteria">

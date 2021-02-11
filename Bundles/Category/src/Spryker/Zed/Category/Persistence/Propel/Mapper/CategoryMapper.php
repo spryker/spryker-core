@@ -9,12 +9,14 @@ namespace Spryker\Zed\Category\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\CategoryCollectionTransfer;
 use Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer;
+use Generated\Shared\Transfer\CategoryTemplateTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeCollectionTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Orm\Zed\Category\Persistence\SpyCategory;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;
+use Orm\Zed\Category\Persistence\SpyCategoryTemplate;
 use Propel\Runtime\Collection\ObjectCollection;
 
 class CategoryMapper implements CategoryMapperInterface
@@ -39,9 +41,13 @@ class CategoryMapper implements CategoryMapperInterface
     public function mapCategoryWithRelations(SpyCategory $spyCategory, CategoryTransfer $categoryTransfer): CategoryTransfer
     {
         $categoryTransfer = $this->mapCategory($spyCategory, $categoryTransfer);
-        $categoryTransfer = $this->mapCategoryNodes($spyCategory, $categoryTransfer);
         $categoryTransfer = $this->mapParentCategoryNodes($spyCategory, $categoryTransfer);
         $categoryTransfer = $this->mapLocalizedAttributes($spyCategory, $categoryTransfer);
+        $categoryTransfer->setCategoryTemplate($this->mapCategoryTemplateEntityToCategoryTemplateTransfer(
+            $spyCategory->getCategoryTemplate(),
+            new CategoryTemplateTransfer()
+        ));
+        $categoryTransfer = $this->mapCategoryNodes($spyCategory, $categoryTransfer);
 
         return $categoryTransfer;
     }
@@ -55,6 +61,27 @@ class CategoryMapper implements CategoryMapperInterface
     public function mapCategoryNode(SpyCategoryNode $spyCategoryNode, NodeTransfer $nodeTransfer): NodeTransfer
     {
         return $nodeTransfer->fromArray($spyCategoryNode->toArray(), true);
+    }
+
+    /**
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryNode $nodeEntity
+     * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
+     *
+     * @return \Generated\Shared\Transfer\NodeTransfer
+     */
+    public function mapCategoryNodeEntityToNodeTransferWithCategoryRelation(SpyCategoryNode $nodeEntity, NodeTransfer $nodeTransfer): NodeTransfer
+    {
+        $nodeTransfer = $this->mapCategoryNode($nodeEntity, $nodeTransfer);
+        $categoryEntity = $nodeEntity->getCategory();
+        $categoryTransfer = $this->mapCategory($categoryEntity, new CategoryTransfer());
+        $categoryTransfer = $this->mapLocalizedAttributes($categoryEntity, $categoryTransfer);
+        $categoryTemplateTransfer = $this->mapCategoryTemplateEntityToCategoryTemplateTransfer(
+            $categoryEntity->getCategoryTemplate(),
+            new CategoryTemplateTransfer()
+        );
+        $categoryTransfer->setCategoryTemplate($categoryTemplateTransfer);
+
+        return $nodeTransfer->setCategory($categoryTransfer);
     }
 
     /**
@@ -111,7 +138,9 @@ class CategoryMapper implements CategoryMapperInterface
             if (!$categoryNodeEntity->isMain()) {
                 continue;
             }
-            $categoryTransfer->setCategoryNode($this->mapCategoryNode($categoryNodeEntity, new NodeTransfer()));
+            $nodeTransfer = $this->mapCategoryNode($categoryNodeEntity, new NodeTransfer());
+            $nodeTransfer->setCategory(clone $categoryTransfer);
+            $categoryTransfer->setCategoryNode($nodeTransfer);
         }
 
         return $categoryTransfer;
@@ -128,7 +157,7 @@ class CategoryMapper implements CategoryMapperInterface
         foreach ($categoryEntity->getNodes() as $categoryNodeEntity) {
             $parentCategoryNodeEntity = $categoryNodeEntity->getParentCategoryNode();
 
-            if ($parentCategoryNodeEntity == null) {
+            if ($parentCategoryNodeEntity === null) {
                 continue;
             }
 
@@ -164,5 +193,18 @@ class CategoryMapper implements CategoryMapperInterface
         }
 
         return $categoryTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryTemplate $categoryTemplateEntity
+     * @param \Generated\Shared\Transfer\CategoryTemplateTransfer $categoryTemplateTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryTemplateTransfer
+     */
+    protected function mapCategoryTemplateEntityToCategoryTemplateTransfer(
+        SpyCategoryTemplate $categoryTemplateEntity,
+        CategoryTemplateTransfer $categoryTemplateTransfer
+    ): CategoryTemplateTransfer {
+        return $categoryTemplateTransfer->fromArray($categoryTemplateEntity->toArray(), true);
     }
 }

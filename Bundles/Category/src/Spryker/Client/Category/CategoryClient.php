@@ -19,6 +19,8 @@ class CategoryClient extends AbstractClient implements CategoryClientInterface
      *
      * @api
      *
+     * @deprecated Will be removed with next major release
+     *
      * @param int $idCategoryNode
      * @param string $localeName
      *

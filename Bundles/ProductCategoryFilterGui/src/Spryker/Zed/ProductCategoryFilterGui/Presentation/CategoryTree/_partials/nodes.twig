@@ -1,11 +1,36 @@
+{# @deprecated property "categoryTree" is deprecated: use "nodeCollection" instead. #}
+{#
+@var nodeCollection \Generated\Shared\Transfer\NodeCollectionTransfer
+@var node \Generated\Shared\Transfer\NodeTransfer
+@var node.category \Generated\Shared\Transfer\CategoryTransfer
+@var node.category.localizedAttributes \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer
+#}
+
 <ul>
-    {% for categoryNode in categoryTree %}
-        <li id="category-node-{{ categoryNode.id }}" data-id-category="{{ categoryNode.id_category }}"
-            class="jstree-open {% if not categoryNode.is_active %}node-inactive{% endif %}"
-            {% if categoryNode.id_category in categoriesWithSpecificFilters %}data-jstree='{"type":"edited-category"}'{% endif %}
-        >
-            {{ categoryNode.text }}
-            {% include '@ProductCategoryFilterGui/CategoryTree/_partials/nodes.twig' with {categoryTree: categoryNode.children, categoriesWithSpecificFilters: categoriesWithSpecificFilters} %}
-        </li>
-    {% endfor %}
+    {% if nodeCollection is not empty %}
+        {% for node in nodeCollection.nodes %}
+            <li id="category-node-{{ node.idCategoryNode }}" data-id-category="{{ node.fkCategory }}"
+                class="jstree-open {% if not node.category.isActive %}node-inactive{% endif %}"
+                {% if node.fkCategory in categoriesWithSpecificFilters %}data-jstree='{"type":"edited-category"}'{% endif %}
+            >
+                {{ node.category.localizedAttributes[0].name }}
+                {% if node.childrenNodes is defined %}
+                    {% include '@ProductCategoryFilterGui/CategoryTree/_partials/nodes.twig' with {
+                        nodeCollection: node.childrenNodes,
+                        categoriesWithSpecificFilters: categoriesWithSpecificFilters
+                    } %}
+                {% endif %}
+            </li>
+        {% endfor %}
+    {% else %}
+        {% for categoryNode in categoryTree %}
+            <li id="category-node-{{ categoryNode.id }}" data-id-category="{{ categoryNode.id_category }}"
+                class="jstree-open {% if not categoryNode.is_active %}node-inactive{% endif %}"
+                {% if categoryNode.id_category in categoriesWithSpecificFilters %}data-jstree='{"type":"edited-category"}'{% endif %}
+            >
+                {{ categoryNode.text }}
+                {% include '@ProductCategoryFilterGui/CategoryTree/_partials/nodes.twig' with {categoryTree: categoryNode.children, categoriesWithSpecificFilters: categoriesWithSpecificFilters} %}
+            </li>
+        {% endfor %}
+    {% endif %}
 </ul>

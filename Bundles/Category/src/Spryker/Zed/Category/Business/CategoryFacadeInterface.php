@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Category\Business;
 
 use Generated\Shared\Transfer\CategoryCollectionTransfer;
+use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
@@ -122,6 +123,8 @@ interface CategoryFacadeInterface
      *  - Returns CategoryTransfer
      *
      * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\Category\Business\CategoryFacadeInterface::findCategory()} instead.
      *
      * @param int $idCategory
      *
@@ -281,6 +284,8 @@ interface CategoryFacadeInterface
      *
      * @api
      *
+     * @deprecated Will be removed with next major release
+     *
      * @param int $idCategoryNode
      * @param int $idChildrenDestinationNode
      *
@@ -429,6 +434,8 @@ interface CategoryFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\Category\Business\CategoryFacadeInterface::findCategory()} instead.
+     *
      * @param int $idCategory
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
@@ -441,6 +448,8 @@ interface CategoryFacadeInterface
      * - TODO: Add method specification.
      *
      * @api
+     *
+     * @deprecated Will be removed with next major release
      *
      * @return void
      */
@@ -497,6 +506,8 @@ interface CategoryFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\Category\Business\CategoryFacadeInterface::findCategory()} instead.
+     *
      * @param int $idCategoryNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
@@ -512,6 +523,8 @@ interface CategoryFacadeInterface
      *
      * @api
      *
+     * @deprecated Will be removed with next major release
+     *
      * @return void
      */
     public function syncCategoryTemplate();
@@ -524,6 +537,8 @@ interface CategoryFacadeInterface
      *
      * @api
      *
+     * @deprecated Will be removed with next major release.
+     *
      * @param string $name
      *
      * @return \Generated\Shared\Transfer\CategoryTemplateTransfer|null
@@ -535,6 +550,8 @@ interface CategoryFacadeInterface
      * - Check exist a first level children by the category name
      *
      * @api
+     *
+     * @deprecated Will be removed with next major release.
      *
      * @param string $name
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
@@ -603,4 +620,20 @@ interface CategoryFacadeInterface
      * @return string
      */
     public function getCategoryListUrl(): string;
+
+    /**
+     * Specification:
+     *  - Finds first category-node for idCategory and finds all of its children.
+     *  - Formats all child category-nodes as a nested array structure.
+     *  - Category-node entities sorted by node order.
+     *  - If `CategoryCriteriaTransfer.withChildren`, finds one level children.
+     *  - If `CategoryCriteriaTransfer.withChildrenRecursively`, finds all children recursively.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer $categoryCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryTransfer|null
+     */
+    public function findCategory(CategoryCriteriaTransfer $categoryCriteriaTransfer): ?CategoryTransfer;
 }
