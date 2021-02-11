@@ -20,7 +20,7 @@ class TestComponent {
 const mockProduct = {
     name: 'test name',
     sku: 'test sku',
-}
+};
 
 describe('EditAbstractProductComponent', () => {
     let component: TestComponent;
@@ -57,13 +57,17 @@ describe('EditAbstractProductComponent', () => {
     });
 
     it('should render default projected content in the `.mp-edit-abstract-product__content` element', () => {
-        const projectedContent = fixture.debugElement.query(By.css('.mp-edit-abstract-product__content .projected-content'));
+        const projectedContent = fixture.debugElement.query(
+            By.css('.mp-edit-abstract-product__content .projected-content'),
+        );
 
         expect(projectedContent).toBeTruthy();
     });
 
     it('should render default projected action in the `.mp-edit-abstract-product__heading-col` element', () => {
-        const projectedAction = fixture.debugElement.query(By.css('.mp-edit-abstract-product__heading-col .projected-action'));
+        const projectedAction = fixture.debugElement.query(
+            By.css('.mp-edit-abstract-product__heading-col .projected-action'),
+        );
 
         expect(projectedAction).toBeTruthy();
     });

@@ -4,9 +4,8 @@ import { ImageSetsComponent } from './image-sets.component';
 import { TableModule } from '@spryker/table';
 
 @NgModule({
-  imports: [CommonModule, TableModule],
-  declarations: [ImageSetsComponent],
-  exports: [ImageSetsComponent],
+    imports: [CommonModule, TableModule],
+    declarations: [ImageSetsComponent],
+    exports: [ImageSetsComponent],
 })
-export class ImageSetsModule {
-}
+export class ImageSetsModule {}

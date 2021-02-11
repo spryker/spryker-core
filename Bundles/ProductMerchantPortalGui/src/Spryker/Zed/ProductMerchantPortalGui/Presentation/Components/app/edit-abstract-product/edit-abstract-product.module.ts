@@ -7,5 +7,4 @@ import { EditAbstractProductComponent } from './edit-abstract-product.component'
     declarations: [EditAbstractProductComponent],
     exports: [EditAbstractProductComponent],
 })
-export class EditAbstractProductModule {
-}
+export class EditAbstractProductModule {}

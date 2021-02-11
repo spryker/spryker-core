@@ -54,7 +54,6 @@ class SavePriceProductAbstractController extends AbstractController
         $data = $this->getFactory()->getUtilEncodingService()->decodeJson((string)$request->getContent(), true)['data'];
 
         $priceProductTransfers = $this->getPriceProductTransfers($idProductAbstract, $typePriceProductStoreIds, $data);
-        $priceProductTransfers = $this->getFactory()->createPriceProductMapper()->mapDataToPriceProductTransfers($data, $priceProductTransfers);
 
         $validationResponseTransfer = $this->getFactory()->getPriceProductFacade()->validatePrices($priceProductTransfers);
         if (!$validationResponseTransfer->getIsSuccess()) {
@@ -104,7 +103,12 @@ class SavePriceProductAbstractController extends AbstractController
             $priceProductTransfers = $this->expandPriceProductTransfersWithTypes($idProductAbstract, $priceProductTransfers);
         }
 
-        return new ArrayObject($priceProductTransfers);
+        $priceProductTransfers = $this->getFactory()->createPriceProductMapper()->mapDataToPriceProductTransfers(
+            $data,
+            new ArrayObject($priceProductTransfers)
+        );
+
+        return $priceProductTransfers;
     }
 
     /**

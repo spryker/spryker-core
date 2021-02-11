@@ -110,7 +110,7 @@ class SavePriceProductOfferController extends AbstractController
 
         $priceProductTransfers = $this->getFactory()->getPriceProductOfferFacade()->getProductOfferPrices($priceProductOfferCriteriaTransfer);
 
-        if ($priceProductTransfers && (isset($data[MoneyValueTransfer::STORE]) || isset($data[MoneyValueTransfer::CURRENCY]))) {
+        if ($priceProductTransfers->count() && (isset($data[MoneyValueTransfer::STORE]) || isset($data[MoneyValueTransfer::CURRENCY]))) {
             $priceProductTransfers = $this->expandPriceProductTransfersWithTypes($priceProductTransfers);
         }
 
@@ -118,6 +118,10 @@ class SavePriceProductOfferController extends AbstractController
     }
 
     /**
+     * @phpstan-param ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
+     *
+     * @phpstan-return ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
+     *
      * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
@@ -127,7 +131,11 @@ class SavePriceProductOfferController extends AbstractController
         $priceTypeIds = [];
 
         foreach ($priceProductTransfers as $priceProductTransfer) {
-            $priceTypeIds[] = $priceProductTransfer->getPriceType()->getIdPriceType();
+            $priceTypeIds[] = $priceProductTransfer->getPriceTypeOrFail()->getIdPriceType();
+        }
+
+        if (!isset($priceProductTransfers[0])) {
+            return $priceProductTransfers;
         }
 
         foreach ($this->getFactory()->getPriceProductFacade()->getPriceTypeValues() as $priceTypeTransfer) {
@@ -135,13 +143,13 @@ class SavePriceProductOfferController extends AbstractController
                 continue;
             }
 
-            $moneyValueTransfer = $priceProductTransfers[0]->getMoneyValue();
+            $moneyValueTransfer = $priceProductTransfers[0]->getMoneyValueOrFail();
             $priceProductTransfers->append((new PriceProductTransfer())
                 ->setPriceType($priceTypeTransfer)
                 ->setIdProduct($priceProductTransfers->getIterator()->current()->getIdProduct())
                 ->setPriceDimension(
                     (new PriceProductDimensionTransfer())
-                        ->setIdProductOffer($priceProductTransfers->getIterator()->current()->getPriceDimension()->getIdProductOffer())
+                        ->setIdProductOffer($priceProductTransfers->getIterator()->current()->getPriceDimensionOrFail()->getIdProductOffer())
                 )
                 ->setMoneyValue(
                     (new MoneyValueTransfer())

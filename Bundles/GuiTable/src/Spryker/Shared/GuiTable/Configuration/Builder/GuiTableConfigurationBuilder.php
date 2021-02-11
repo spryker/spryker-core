@@ -104,17 +104,12 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     /**
      * @var string
      */
-    protected $dataSourceType;
-
-    /**
-     * @var string
-     */
     protected $dataSourceUrl;
 
     /**
      * @var string[][]
      */
-    protected $dataSourceData;
+    protected $dataSourceInlineData;
 
     /**
      * @var int
@@ -628,20 +623,6 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     /**
      * @api
      *
-     * @param string $type
-     *
-     * @return $this
-     */
-    public function setDataSourceType(string $type)
-    {
-        $this->dataSourceType = $type;
-
-        return $this;
-    }
-
-    /**
-     * @api
-     *
      * @param string $url
      *
      * @return $this
@@ -660,9 +641,9 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
      *
      * @return $this
      */
-    public function setDataSourceData(array $data)
+    public function setDataSourceInlineData(array $data)
     {
-        $this->dataSourceData = $data;
+        $this->dataSourceInlineData = $data;
 
         return $this;
     }
@@ -1169,16 +1150,13 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     {
         $guiTableDataSourceConfigurationTransfer = new GuiTableDataSourceConfigurationTransfer();
 
-        if ($this->dataSourceType) {
-            $guiTableDataSourceConfigurationTransfer->setType($this->dataSourceType);
-        }
-
         if ($this->dataSourceUrl) {
             $guiTableDataSourceConfigurationTransfer->setUrl($this->dataSourceUrl);
         }
 
-        if ($this->dataSourceData) {
-            $guiTableDataSourceConfigurationTransfer->setData($this->dataSourceData);
+        if ($this->dataSourceInlineData) {
+            $guiTableDataSourceConfigurationTransfer->setData($this->dataSourceInlineData)
+                ->setType(GuiTableConfigurationBuilderInterface::DATA_SOURCE_TYPE_INLINE);
         }
 
         $guiTableConfigurationTransfer->setDataSource($guiTableDataSourceConfigurationTransfer);

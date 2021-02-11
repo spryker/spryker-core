@@ -14,7 +14,7 @@
     "spryker/merchant-product": "^0.2.2",
     "spryker/merchant-user": "^0.5.0 || ^0.6.0",
     "spryker/money": "^1.0.0 || ^2.0.0",
-    "spryker/price-product": "^4.20.0",
+    "spryker/price-product": "^4.21.0",
     "spryker/product": "^6.0.0",
     "spryker/product-category": "^4.6.0",
     "spryker/product-image": "^3.0.0",
@@ -22,10 +22,10 @@
     "spryker/propel-orm": "^1.0.0",
     "spryker/store": "^1.1.0",
     "spryker/symfony": "^3.0.0",
-    "spryker/translator": "^1.1.0",
     "spryker/transfer": "^3.25.0",
+    "spryker/translator": "^1.1.0",
     "spryker/util-encoding": "^2.0.0",
-    "spryker/zed-ui": "^0.3.6"
+    "spryker/zed-ui": "^0.3.13"
   },
   "require-dev": {
     "spryker/code-sniffer": "*"

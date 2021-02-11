@@ -85,6 +85,10 @@ class PriceProductDataHelper extends Module
             (new ProductAbstractTransfer())->setIdProductAbstract($idProductAbstract)->addPrice($priceProductTransfer)
         );
 
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($priceProductTransfer): void {
+            $this->cleanupPriceProduct($priceProductTransfer->getIdPriceProduct());
+        });
+
         $priceProductTransfer->setIdProductAbstract($idProductAbstract);
 
         return $priceProductTransfer;

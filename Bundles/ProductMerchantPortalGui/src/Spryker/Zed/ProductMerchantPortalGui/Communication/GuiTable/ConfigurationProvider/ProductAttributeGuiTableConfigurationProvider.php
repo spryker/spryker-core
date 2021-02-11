@@ -17,8 +17,6 @@ class ProductAttributeGuiTableConfigurationProvider implements ProductAttributeG
     public const COL_KEY_ATTRIBUTE_NAME = 'attribute_name';
     public const COL_KEY_ATTRIBUTE_DEFAULT = 'attribute_default';
 
-    protected const DATA_SOURCE_TYPE_INLINE = 'inline';
-
     protected const TITLE_COLUMN_ATTRIBUTE_NAME = 'Attribute';
     protected const TITLE_COLUMN_ATTRIBUTE_DEFAULT = 'Default';
 
@@ -71,8 +69,7 @@ class ProductAttributeGuiTableConfigurationProvider implements ProductAttributeG
         }
 
         $guiTableConfigurationBuilder
-            ->setDataSourceType(static::DATA_SOURCE_TYPE_INLINE)
-            ->setDataSourceData($this->productAttributeTableDataProvider->getData($attributes, $localizedAttributeTransfers))
+            ->setDataSourceInlineData($this->productAttributeTableDataProvider->getData($attributes, $localizedAttributeTransfers))
             ->setIsPaginationEnabled(false)
             ->isSearchEnabled(false);
 

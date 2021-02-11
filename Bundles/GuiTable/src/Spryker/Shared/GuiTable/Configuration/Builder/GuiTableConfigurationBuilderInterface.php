@@ -27,6 +27,8 @@ interface GuiTableConfigurationBuilderInterface
     public const ACTION_TYPE_HTML_OVERLAY = 'html-overlay';
     public const ACTION_TYPE_URL = 'url';
 
+    public const DATA_SOURCE_TYPE_INLINE = 'inline';
+
     /**
      * @api
      *
@@ -298,17 +300,6 @@ interface GuiTableConfigurationBuilderInterface
     public function setNoBatchActionsMessage(string $noBatchActionsMessage);
 
     /**
-     * Sets data retrieval type.
-     *
-     * @api
-     *
-     * @param string $type
-     *
-     * @return $this
-     */
-    public function setDataSourceType(string $type);
-
-    /**
      * Sets URL which will be used for receiving the table data.
      *
      * @api
@@ -320,7 +311,7 @@ interface GuiTableConfigurationBuilderInterface
     public function setDataSourceUrl(string $url);
 
     /**
-     * Sets default data.
+     * Sets inline data.
      *
      * @api
      *
@@ -328,7 +319,7 @@ interface GuiTableConfigurationBuilderInterface
      *
      * @return $this
      */
-    public function setDataSourceData(array $data);
+    public function setDataSourceInlineData(array $data);
 
     /**
      * Sets a number if rows which will be displayed by default.
