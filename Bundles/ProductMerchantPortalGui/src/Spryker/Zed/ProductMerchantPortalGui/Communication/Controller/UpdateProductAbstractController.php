@@ -60,6 +60,7 @@ class UpdateProductAbstractController extends AbstractController
             throw new MerchantProductNotFoundException($idProductAbstract, $idMerchant);
         }
 
+        $initialCategoryIds = $productAbstractTransfer->getCategoryIds();
         $productAbstractForm = $this->getFactory()->createProductAbstractForm(
             $productAbstractTransfer,
             $this->getFactory()->createProductAbstractFormDataProvider()->getOptions()
@@ -72,7 +73,8 @@ class UpdateProductAbstractController extends AbstractController
                 $productAbstractForm,
                 $productAbstractTransfer,
                 $idMerchant,
-                $initialData
+                $initialData,
+                $initialCategoryIds
             );
         }
 
@@ -86,6 +88,7 @@ class UpdateProductAbstractController extends AbstractController
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param int $idMerchant
      * @param mixed[] $initialData
+     * @param int[] $initialCategoryIds
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
@@ -93,7 +96,8 @@ class UpdateProductAbstractController extends AbstractController
         FormInterface $productAbstractForm,
         ProductAbstractTransfer $productAbstractTransfer,
         int $idMerchant,
-        array $initialData
+        array $initialData,
+        array $initialCategoryIds
     ): JsonResponse {
         $pricesValidationResponseTransfer = $this->getFactory()
             ->getPriceProductFacade()
@@ -101,7 +105,6 @@ class UpdateProductAbstractController extends AbstractController
         $merchantProductValidationResponseTransfer = new ValidationResponseTransfer();
 
         if ($productAbstractForm->isValid() && $pricesValidationResponseTransfer->getIsSuccess()) {
-            $initialCategoryIds = $productAbstractTransfer->getCategoryIds();
             $productAbstractTransfer = $productAbstractForm->getData();
             $merchantProductTransfer = (new MerchantProductTransfer())->setProductAbstract($productAbstractTransfer)
                 ->setIdMerchant($idMerchant);
