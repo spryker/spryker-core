@@ -130,7 +130,7 @@ class SavePriceProductAbstractController extends AbstractController
                 continue;
             }
 
-            $moneyValueTransfer = $priceProductTransfers[0]->getMoneyValue();
+            $moneyValueTransfer = $priceProductTransfers[0]->getMoneyValueOrFail();
             $priceProductTransfers[] = (new PriceProductTransfer())
                 ->setFkPriceType($priceTypeTransfer->getIdPriceType())
                 ->setPriceType($priceTypeTransfer)

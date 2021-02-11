@@ -613,9 +613,10 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
         );
 
         if ($priceProductAbstractTableCriteriaTransfer->getOrderBy()) {
+            $orderDirection = $priceProductAbstractTableCriteriaTransfer->getOrderDirection() ?? Criteria::ASC;
             $priceProductDefaultQuery->orderBy(
-                $priceProductAbstractTableCriteriaTransfer->getOrderBy(),
-                $priceProductAbstractTableCriteriaTransfer->getOrderDirection()
+                $priceProductAbstractTableCriteriaTransfer->getOrderByOrFail(),
+                $orderDirection
             );
         }
 
@@ -636,7 +637,7 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
         SpyPriceProductDefaultQuery $priceProductDefaultQuery,
         PriceTypeTransfer $priceTypeTransfer
     ): SpyPriceProductDefaultQuery {
-        $priceTypeName = mb_strtolower($priceTypeTransfer->getName());
+        $priceTypeName = mb_strtolower($priceTypeTransfer->getNameOrFail());
         $grossColumnName = $priceTypeName . static::SUFFIX_PRICE_TYPE_GROSS;
         $grossClause = sprintf(
             'MAX(CASE WHEN %s = %s THEN %s END)',

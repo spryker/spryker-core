@@ -96,7 +96,7 @@ class PriceProductAbstractTableDataProvider extends AbstractGuiTableDataProvider
             $guiTableDataResponseTransfer->addRow((new GuiTableRowDataResponseTransfer())->setResponseData($responseData));
         }
 
-        $paginationTransfer = $priceProductAbstractTableViewCollectionTransfer->getPagination();
+        $paginationTransfer = $priceProductAbstractTableViewCollectionTransfer->getPaginationOrFail();
 
         return $guiTableDataResponseTransfer
             ->setPage($paginationTransfer->getPage())

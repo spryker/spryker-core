@@ -157,7 +157,7 @@ class PriceProductTransformer implements DataTransformerInterface
                 ->setFkStore($newPriceProduct[PriceProductAbstractTableViewTransfer::STORE])
                 ->setFkCurrency($newPriceProduct[PriceProductAbstractTableViewTransfer::CURRENCY]);
 
-            $priceTypeName = (new StringToLower())->filter($priceTypeTransfer->getName());
+            $priceTypeName = (new StringToLower())->filter($priceTypeTransfer->getNameOrFail());
             $netAmountKey = $this->createNetKey($priceTypeName);
             $grossAmountKey = $this->createGrossKey($priceTypeName);
 

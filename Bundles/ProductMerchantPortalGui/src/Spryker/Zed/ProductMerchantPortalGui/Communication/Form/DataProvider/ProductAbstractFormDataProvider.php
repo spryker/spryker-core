@@ -140,6 +140,11 @@ class ProductAbstractFormDataProvider implements ProductAbstractFormDataProvider
             ->setLocaleName($this->localeFacade->getCurrentLocale()->getLocaleName())
             ->setWithChildrenRecursively(true);
         $categoryTransfer = $this->categoryFacade->findCategory($categoryCriteriaTransfer);
+
+        if (!$categoryTransfer || !$categoryTransfer->getNodeCollection()) {
+            return [];
+        }
+
         $nodeCollectionTransfer = $this->getCategoryChildNodeCollection($categoryTransfer);
 
         return $this->getCategoryTreeArray($nodeCollectionTransfer);
@@ -193,7 +198,7 @@ class ProductAbstractFormDataProvider implements ProductAbstractFormDataProvider
         ProductAbstractTransfer $productAbstractTransfer
     ): ProductAbstractTransfer {
         $categoryCollectionTransfer = $this->productCategoryFacade->getCategoryTransferCollectionByIdProductAbstract(
-            $productAbstractTransfer->getIdProductAbstract(),
+            $productAbstractTransfer->getIdProductAbstractOrFail(),
             $this->localeFacade->getCurrentLocale()
         );
         $productAbstractTransfer->setCategoryIds($this->getCategoryIds($categoryCollectionTransfer));
@@ -221,7 +226,7 @@ class ProductAbstractFormDataProvider implements ProductAbstractFormDataProvider
     {
         $categoryIds = [];
         foreach ($categoryCollectionTransfer->getCategories() as $categoryTransfer) {
-            $categoryIds[] = $categoryTransfer->getIdCategory();
+            $categoryIds[] = $categoryTransfer->getIdCategoryOrFail();
         }
 
         return $categoryIds;

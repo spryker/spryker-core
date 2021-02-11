@@ -36,7 +36,7 @@ class CurrencyFilterConfigurationProvider implements CurrencyFilterConfiguration
         $currencyOptions = [];
         foreach ($storeWithCurrencyTransfers as $storeWithCurrencyTransfer) {
             foreach ($storeWithCurrencyTransfer->getCurrencies() as $currencyTransfer) {
-                $currencyOptions[(int)$currencyTransfer->getIdCurrency()] = $currencyTransfer->getCode();
+                $currencyOptions[(int)$currencyTransfer->getIdCurrency()] = $currencyTransfer->getCodeOrFail();
             }
         }
 

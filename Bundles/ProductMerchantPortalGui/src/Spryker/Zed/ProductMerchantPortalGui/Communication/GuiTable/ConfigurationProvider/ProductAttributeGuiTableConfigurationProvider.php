@@ -61,8 +61,8 @@ class ProductAttributeGuiTableConfigurationProvider implements ProductAttributeG
             $localeTransfer = $localizedAttributesTransfer->getLocaleOrFail();
 
             $guiTableConfigurationBuilder->addColumnText(
-                $localeTransfer->getLocaleName(),
-                $localeTransfer->getLocaleName(),
+                $localeTransfer->getLocaleNameOrFail(),
+                $localeTransfer->getLocaleNameOrFail(),
                 true,
                 true
             );

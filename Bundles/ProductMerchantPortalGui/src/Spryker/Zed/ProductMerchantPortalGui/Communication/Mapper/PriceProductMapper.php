@@ -88,7 +88,7 @@ class PriceProductMapper implements PriceProductMapperInterface
         array $priceTypeTransfers,
         array $initialDataErrors
     ): array {
-        $propertyPath = $this->extractPropertyPathValues($validationErrorTransfer->getPropertyPath());
+        $propertyPath = $this->extractPropertyPathValues((string)$validationErrorTransfer->getPropertyPath());
 
         if (!$propertyPath || !is_array($propertyPath)) {
             return $initialDataErrors;
@@ -155,7 +155,7 @@ class PriceProductMapper implements PriceProductMapperInterface
         }
 
         if ($entityName === PriceProductTransfer::MONEY_VALUE) {
-            $priceTypeName = mb_strtolower($priceTypeTransfers[$entityNumber]->getName());
+            $priceTypeName = mb_strtolower($priceTypeTransfers[$entityNumber]->getNameOrFail());
 
             return sprintf('%s[%s][%s]', $priceTypeName, (string)$entityName, (string)$fieldName);
         }

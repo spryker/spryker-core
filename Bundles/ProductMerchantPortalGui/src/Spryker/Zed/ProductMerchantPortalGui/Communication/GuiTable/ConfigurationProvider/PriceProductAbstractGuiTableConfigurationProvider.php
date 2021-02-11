@@ -164,7 +164,7 @@ class PriceProductAbstractGuiTableConfigurationProvider implements PriceProductA
         );
 
         foreach ($this->priceProductFacade->getPriceTypeValues() as $priceTypeTransfer) {
-            $idPriceTypeName = mb_strtolower($priceTypeTransfer->getName());
+            $idPriceTypeName = mb_strtolower($priceTypeTransfer->getNameOrFail());
             $titlePriceTypeName = ucfirst($idPriceTypeName);
             $idNetColumn = sprintf(
                 static::FORMAT_STRING_PRICE_KEY,
@@ -216,7 +216,7 @@ class PriceProductAbstractGuiTableConfigurationProvider implements PriceProductA
         );
 
         foreach ($this->priceProductFacade->getPriceTypeValues() as $priceTypeTransfer) {
-            $idPriceTypeName = mb_strtolower($priceTypeTransfer->getName());
+            $idPriceTypeName = mb_strtolower($priceTypeTransfer->getNameOrFail());
             $titlePriceTypeName = ucfirst($idPriceTypeName);
             $idNetColumn = sprintf(
                 static::FORMAT_STRING_PRICE_KEY,

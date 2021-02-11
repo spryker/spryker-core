@@ -81,7 +81,7 @@ class PriceProductAbstractTableDataMapper
         $prices = [];
 
         foreach ($priceTypeTransfers as $priceTypeTransfer) {
-            $priceTypeName = (new StringToLower())->filter($priceTypeTransfer->getName());
+            $priceTypeName = (new StringToLower())->filter($priceTypeTransfer->getNameOrFail());
             $keyNetPrice = $priceTypeName . static::SUFFIX_PRICE_TYPE_NET;
             $keyGrossPrice = $priceTypeName . static::SUFFIX_PRICE_TYPE_GROSS;
 

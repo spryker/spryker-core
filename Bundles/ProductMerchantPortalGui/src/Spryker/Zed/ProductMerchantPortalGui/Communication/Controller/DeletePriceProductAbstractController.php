@@ -52,7 +52,7 @@ class DeletePriceProductAbstractController extends AbstractController
             return $this->getErrorResponse();
         }
 
-        $idMerchant = $this->getFactory()->getMerchantUserFacade()->getCurrentMerchantUser()->getIdMerchant();
+        $idMerchant = $this->getFactory()->getMerchantUserFacade()->getCurrentMerchantUser()->getIdMerchantOrFail();
         $merchantProductTransfer = $this->getFactory()->getMerchantProductFacade()->findMerchantProduct(
             (new MerchantProductCriteriaTransfer())->addIdMerchant($idMerchant)->setIdProductAbstract($idProductAbstract)
         );
@@ -62,7 +62,7 @@ class DeletePriceProductAbstractController extends AbstractController
         }
 
         $priceProductTransfersToRemove = $this->getPriceProductTransfersToRemove(
-            $merchantProductTransfer->getProductAbstract(),
+            $merchantProductTransfer->getProductAbstractOrFail(),
             $priceProductDefaultIds
         );
 
@@ -113,7 +113,7 @@ class DeletePriceProductAbstractController extends AbstractController
         $priceProductTransfersToRemove = [];
 
         foreach ($productAbstractTransfer->getPrices() as $priceProductTransfer) {
-            if (in_array($priceProductTransfer->getPriceDimension()->getIdPriceProductDefault(), $priceProductDefaultIds)) {
+            if (in_array($priceProductTransfer->getPriceDimensionOrFail()->getIdPriceProductDefault(), $priceProductDefaultIds)) {
                 $priceProductTransfersToRemove[] = $priceProductTransfer;
             }
         }

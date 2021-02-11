@@ -50,7 +50,7 @@ class UpdateProductAbstractController extends AbstractController
     public function indexAction(Request $request): JsonResponse
     {
         $idProductAbstract = $this->castId($request->get(static::PARAM_ID_PRODUCT_ABSTRACT));
-        $idMerchant = $this->getFactory()->getMerchantUserFacade()->getCurrentMerchantUser()->getIdMerchant();
+        $idMerchant = $this->getFactory()->getMerchantUserFacade()->getCurrentMerchantUser()->getIdMerchantOrFail();
 
         $productAbstractTransfer = $this->getFactory()
             ->createProductAbstractFormDataProvider()
@@ -155,7 +155,7 @@ class UpdateProductAbstractController extends AbstractController
                 'form' => $productAbstractForm->createView(),
                 'priceProductAbstractTableConfiguration' => $this->getFactory()
                     ->createPriceProductAbstractGuiTableConfigurationProvider()
-                    ->getConfiguration($productAbstractTransfer->getIdProductAbstract(), $initialData),
+                    ->getConfiguration($productAbstractTransfer->getIdProductAbstractOrFail(), $initialData),
                 'productAbstractAttributeTableConfiguration' => $this->getFactory()
                     ->createProductAttributeGuiTableConfigurationProvider()
                     ->getConfiguration($productAbstractTransfer->getAttributes(), $productAbstractTransfer->getLocalizedAttributes()),
