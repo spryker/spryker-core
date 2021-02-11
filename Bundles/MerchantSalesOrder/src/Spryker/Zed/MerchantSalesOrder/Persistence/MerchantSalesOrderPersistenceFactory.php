@@ -20,6 +20,8 @@ use Spryker\Zed\MerchantSalesOrder\Persistence\Propel\Mapper\MerchantSalesOrderM
 class MerchantSalesOrderPersistenceFactory extends AbstractPersistenceFactory
 {
     /**
+     * @phpstan-return \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery<\Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrder>
+     *
      * @return \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery
      */
     public function createMerchantSalesOrderQuery(): SpyMerchantSalesOrderQuery
@@ -28,6 +30,8 @@ class MerchantSalesOrderPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
+     * @phpstan-return \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItemQuery<\Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItem>
+     *
      * @return \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItemQuery
      */
     public function createMerchantSalesOrderItemQuery(): SpyMerchantSalesOrderItemQuery

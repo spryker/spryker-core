@@ -7,9 +7,11 @@
 
 namespace Spryker\Glue\CustomersRestApi\Processor\RestResponseBuilder;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\RestCustomersResponseAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 
 interface CustomerRestResponseBuilderInterface
 {
@@ -25,4 +27,21 @@ interface CustomerRestResponseBuilderInterface
         RestCustomersResponseAttributesTransfer $restCustomersResponseAttributesTransfer,
         ?CustomerTransfer $customerTransfer = null
     ): RestResourceInterface;
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createNoContentResponse(): RestResponseInterface;
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\CustomerErrorTransfer[] $customerErrorTransfers
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createCustomerConfirmationErrorResponse(ArrayObject $customerErrorTransfers): RestResponseInterface;
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createCustomerConfirmationCodeMissingErrorResponse(): RestResponseInterface;
 }

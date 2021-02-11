@@ -66,4 +66,14 @@ class SearchElasticsearchConfig extends AbstractBundleConfig
     {
         return APPLICATION_ENV === 'development' || APPLICATION_ENV === 'docker.dev';
     }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getIndexPrefix(): string
+    {
+        return $this->getSharedConfig()->getIndexPrefix();
+    }
 }

@@ -71,12 +71,10 @@ class IdFilterInsertTest extends Unit
         $this->assertTrue(IdFilterInsert::CHUNK_SIZE < $countAboveChunkSize);
         $ids = range(1, $countAboveChunkSize);
         $itemIdChunks = array_chunk($ids, IdFilterInsert::CHUNK_SIZE);
-
-        foreach ($itemIdChunks as $key => $itemIdChunk) {
-            $this->idFilterInsert->expects($this->at($key))
-                ->method('getIdCollection')
-                ->willReturn($itemIdChunk);
-        }
+        $this->idFilterInsert
+            ->expects($this->exactly(count($itemIdChunks)))
+            ->method('getIdCollection')
+            ->willReturnOnConsecutiveCalls(...$itemIdChunks);
 
         $result = $this->idFilterInsert->filter($ids, 'foo');
         $this->assertSame([], $result);
@@ -91,12 +89,10 @@ class IdFilterInsertTest extends Unit
 
         $ids = range(1, $countAboveChunkSize);
         $itemIdChunks = array_chunk($ids, IdFilterInsert::CHUNK_SIZE);
-
-        foreach ($itemIdChunks as $key => $itemIdChunk) {
-            $this->idFilterInsert->expects($this->at($key))
-                ->method('getIdCollection')
-                ->willReturn([]);
-        }
+        $this->idFilterInsert
+            ->expects($this->exactly(count($itemIdChunks)))
+            ->method('getIdCollection')
+            ->willReturn([]);
 
         $result = $this->idFilterInsert->filter($ids, 'foo');
         $this->assertSame($ids, $result);

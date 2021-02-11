@@ -1,5 +1,5 @@
 {
-  "include": {
-    "spryker/gui": "Javascript depends on it"
-  }
+    "include": {
+        "spryker/gui": "Javascript depends on it"
+    }
 }

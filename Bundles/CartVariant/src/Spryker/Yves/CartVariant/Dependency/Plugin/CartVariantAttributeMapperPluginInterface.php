@@ -12,6 +12,9 @@ use ArrayObject;
 interface CartVariantAttributeMapperPluginInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ItemTransfer[]|\ArrayObject $items

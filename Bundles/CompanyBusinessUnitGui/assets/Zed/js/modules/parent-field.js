@@ -47,7 +47,9 @@ function CompanyFieldHandler() {
     }
 
     function cloneOptions() {
-        $('<div id="' + parentAllOptionsFieldId + '" class="hidden"></div>').html($parentField.html()).insertAfter($parentField);
+        $('<div id="' + parentAllOptionsFieldId + '" class="hidden"></div>')
+            .html($parentField.html())
+            .insertAfter($parentField);
     }
 
     /**
@@ -70,7 +72,7 @@ function CompanyFieldHandler() {
         const $selectedParentFieldCompanyId = parseInt(getSelectedParentFieldCompanyId());
 
         if ($selectedParentFieldCompanyId !== companyId) {
-            $parentField.val("");
+            $parentField.val('');
         }
 
         if (!$parentOption.val()) {
@@ -108,7 +110,7 @@ function CompanyFieldHandler() {
     }
 
     function blinkParentField() {
-        $parentField.effect("highlight", {}, 3000);
+        $parentField.effect('highlight', {}, 3000);
     }
 
     return {

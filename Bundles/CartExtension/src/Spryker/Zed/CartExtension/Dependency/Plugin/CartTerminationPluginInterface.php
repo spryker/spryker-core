@@ -13,6 +13,9 @@ use Generated\Shared\Transfer\QuoteTransfer;
 interface CartTerminationPluginInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $terminationEventName

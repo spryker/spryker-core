@@ -36,6 +36,8 @@ class OmsFacadeSumReservedItemsTest extends Unit
 {
     public const ORDER_ITEM_SKU = 'oms-reserverd-sku-test';
     public const NOT_RESERVED_ITEM_STATE_EXCEPT_PROCESS_3 = 'paid';
+    public const NOT_RESERVED_SUBPROCESS_ITEM_STATE = 'awaiting approval';
+    public const RESERVED_SUBPROCESS_ITEM_STATE = 'payment preparations';
     public const STORE_NAME_DE = 'DE';
 
     /**
@@ -51,7 +53,8 @@ class OmsFacadeSumReservedItemsTest extends Unit
         parent::setUp();
 
         $this->tester->resetReservedStatesCache();
-        $this->tester->configureTestStateMachine(['Test01', 'Test02', 'Test03']);
+        $this->tester->resetReservedStateProcessNamesCache();
+        $this->tester->configureTestStateMachine(['Test01', 'Test02', 'Test03', 'Test06']);
     }
 
     /**
@@ -61,6 +64,7 @@ class OmsFacadeSumReservedItemsTest extends Unit
     {
         parent::tearDown();
         $this->tester->resetReservedStatesCache();
+        $this->tester->resetReservedStateProcessNamesCache();
     }
 
     /**
@@ -92,6 +96,37 @@ class OmsFacadeSumReservedItemsTest extends Unit
             $this->getOmsFacade()
                 ->sumReservedProductQuantitiesForSku(static::ORDER_ITEM_SKU)
                 ->equals(100)
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testSumReservedItemsShouldSumAllItemsInReservedStateIncludedSubProcesses(): void
+    {
+        // Arrange
+        $salesOrderEntity = $this->createTestOrder('123', 'Test06', static::NOT_RESERVED_SUBPROCESS_ITEM_STATE);
+
+        //Act
+        $sumReservedProductQuantitiesForSkuBefore = $this->getOmsFacade()
+            ->sumReservedProductQuantitiesForSku(static::ORDER_ITEM_SKU);
+
+        foreach ($salesOrderEntity->getItems() as $orderItem) {
+            $orderItem->setState($this->createOmsOrderItemState(static::RESERVED_SUBPROCESS_ITEM_STATE))->save();
+        }
+
+        $sumReservedProductQuantitiesForSkuAfter = $this->getOmsFacade()
+            ->sumReservedProductQuantitiesForSku(static::ORDER_ITEM_SKU);
+
+        // Assert
+        $this->assertTrue(
+            $sumReservedProductQuantitiesForSkuBefore->equals(0),
+            'Expected reserved product quantity to be 0 for non-reserved state of subprocess.'
+        );
+
+        $this->assertTrue(
+            $sumReservedProductQuantitiesForSkuAfter->equals(50),
+            'Expected reserved product quantity to be 50 for reserved state of subprocess.'
         );
     }
 

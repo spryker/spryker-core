@@ -12,8 +12,9 @@ use Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\DropDatabaseInterfa
 use Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\DropDatabaseTablesInterface;
 use Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\ExportDatabaseInterface;
 use Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\ImportDatabaseInterface;
+use Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\TableExistenceInterface;
 
-interface AdapterInterface extends CreateDatabaseInterface, DropDatabaseInterface, ExportDatabaseInterface, ImportDatabaseInterface, DropDatabaseTablesInterface
+interface AdapterInterface extends CreateDatabaseInterface, DropDatabaseInterface, ExportDatabaseInterface, ImportDatabaseInterface, DropDatabaseTablesInterface, TableExistenceInterface
 {
     /**
      * @return string

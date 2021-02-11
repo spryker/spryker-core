@@ -5,8 +5,8 @@ import { HeadlineModule } from '@spryker/headline';
 import { ProfileComponent } from './profile.component';
 
 @NgModule({
-	imports: [CommonModule, HeadlineModule],
-	declarations: [ProfileComponent],
-	exports: [ProfileComponent],
+    imports: [CommonModule, HeadlineModule],
+    declarations: [ProfileComponent],
+    exports: [ProfileComponent],
 })
 export class ProfileModule {}

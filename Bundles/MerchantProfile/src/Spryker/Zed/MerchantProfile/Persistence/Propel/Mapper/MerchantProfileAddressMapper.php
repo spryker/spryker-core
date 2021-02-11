@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\MerchantProfile\Persistence\Propel\Mapper;
 
-use Generated\Shared\Transfer\MerchantProfileAddressCollectionTransfer;
+use ArrayObject;
 use Generated\Shared\Transfer\MerchantProfileAddressTransfer;
 use Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfileAddress;
 use Propel\Runtime\Collection\ObjectCollection;
@@ -32,23 +32,29 @@ class MerchantProfileAddressMapper implements MerchantProfileAddressMapperInterf
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfileAddress[] $merchantProfileAddressEntities
-     * @param \Generated\Shared\Transfer\MerchantProfileAddressCollectionTransfer $merchantProfileAddressCollectionTransfer
+     * @phpstan-param \ArrayObject<int,\Generated\Shared\Transfer\MerchantProfileAddressTransfer> $merchantProfileAddressTransfers
      *
-     * @return \Generated\Shared\Transfer\MerchantProfileAddressCollectionTransfer
+     * @phpstan-return \ArrayObject<int,\Generated\Shared\Transfer\MerchantProfileAddressTransfer>
+     *
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfileAddress[] $merchantProfileAddressEntities
+     * @param \ArrayObject|\Generated\Shared\Transfer\MerchantProfileAddressTransfer[] $merchantProfileAddressTransfers
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\MerchantProfileAddressTransfer[]
      */
-    public function mapMerchantProfileAddressEntityCollectionToMerchantProfileAddressCollectionTransfer(
+    public function mapMerchantProfileAddressEntityCollectionToMerchantProfileAddressTransfers(
         ObjectCollection $merchantProfileAddressEntities,
-        MerchantProfileAddressCollectionTransfer $merchantProfileAddressCollectionTransfer
-    ): MerchantProfileAddressCollectionTransfer {
+        ArrayObject $merchantProfileAddressTransfers
+    ): ArrayObject {
         foreach ($merchantProfileAddressEntities as $merchantProfileAddressEntity) {
-            $merchantProfileAddressCollectionTransfer->addAddress($this->mapMerchantProfileAddressEntityToMerchantProfileAddressTransfer(
-                $merchantProfileAddressEntity,
-                new MerchantProfileAddressTransfer()
-            ));
+            $merchantProfileAddressTransfers->append(
+                $this->mapMerchantProfileAddressEntityToMerchantProfileAddressTransfer(
+                    $merchantProfileAddressEntity,
+                    new MerchantProfileAddressTransfer()
+                )
+            );
         }
 
-        return $merchantProfileAddressCollectionTransfer;
+        return $merchantProfileAddressTransfers;
     }
 
     /**
@@ -66,7 +72,7 @@ class MerchantProfileAddressMapper implements MerchantProfileAddressMapperInterf
             true
         );
 
-        if ($merchantProfileAddressEntity->getSpyCountry()) {
+        if ($merchantProfileAddressEntity->getSpyCountry() !== null) {
             $merchantProfileAddressTransfer->setCountryName($merchantProfileAddressEntity->getSpyCountry()->getName());
         }
 

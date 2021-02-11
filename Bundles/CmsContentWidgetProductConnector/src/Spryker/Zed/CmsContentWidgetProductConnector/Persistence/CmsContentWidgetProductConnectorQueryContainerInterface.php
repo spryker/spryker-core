@@ -13,6 +13,9 @@ namespace Spryker\Zed\CmsContentWidgetProductConnector\Persistence;
 interface CmsContentWidgetProductConnectorQueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string[] $skuList

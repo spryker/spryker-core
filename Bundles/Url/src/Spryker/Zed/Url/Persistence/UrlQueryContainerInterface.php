@@ -12,6 +12,9 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 interface UrlQueryContainerInterface extends QueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $url
@@ -21,6 +24,9 @@ interface UrlQueryContainerInterface extends QueryContainerInterface
     public function queryUrl($url);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $id
@@ -30,6 +36,9 @@ interface UrlQueryContainerInterface extends QueryContainerInterface
     public function queryUrlById($id);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
@@ -37,6 +46,9 @@ interface UrlQueryContainerInterface extends QueryContainerInterface
     public function queryUrls();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $resourceType
@@ -49,6 +61,9 @@ interface UrlQueryContainerInterface extends QueryContainerInterface
     public function queryUrlsByResourceTypeAndIds($resourceType, array $resourceIds);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\Url\Persistence\SpyUrlRedirectQuery
@@ -56,6 +71,9 @@ interface UrlQueryContainerInterface extends QueryContainerInterface
     public function queryRedirects();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idUrlRedirect
@@ -65,6 +83,9 @@ interface UrlQueryContainerInterface extends QueryContainerInterface
     public function queryRedirectById($idUrlRedirect);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $id
@@ -74,6 +95,9 @@ interface UrlQueryContainerInterface extends QueryContainerInterface
     public function queryUrlByIdWithRedirect($id);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
@@ -81,6 +105,9 @@ interface UrlQueryContainerInterface extends QueryContainerInterface
     public function queryUrlsWithRedirect();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @deprecated Use {@link \Spryker\Zed\Category\Persistence\CategoryQueryContainer::queryResourceUrlByCategoryNodeAndLocaleId()} instead.
@@ -93,6 +120,9 @@ interface UrlQueryContainerInterface extends QueryContainerInterface
     public function queryResourceUrlByCategoryNodeAndLocaleId($idCategoryNode, $idLocale);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @deprecated Use {@link \Spryker\Zed\Category\Persistence\CategoryQueryContainer::queryResourceUrlByCategoryNodeId()} instead.
@@ -104,6 +134,9 @@ interface UrlQueryContainerInterface extends QueryContainerInterface
     public function queryResourceUrlByCategoryNodeId($idCategoryNode);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $sourceUrl
@@ -113,6 +146,9 @@ interface UrlQueryContainerInterface extends QueryContainerInterface
     public function queryUrlRedirectBySourceUrl($sourceUrl);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idUrl
@@ -122,6 +158,9 @@ interface UrlQueryContainerInterface extends QueryContainerInterface
     public function queryUrlRedirectByIdUrl($idUrl);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\Url\Persistence\SpyUrlQuery

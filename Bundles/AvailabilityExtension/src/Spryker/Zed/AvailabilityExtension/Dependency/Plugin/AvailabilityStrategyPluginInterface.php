@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\StoreTransfer;
 interface AvailabilityStrategyPluginInterface
 {
     /**
+     * Specification:
      * - Returns true if availability strategy is applicable.
      *
      * @api

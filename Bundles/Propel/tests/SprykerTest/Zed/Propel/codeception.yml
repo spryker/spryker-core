@@ -25,6 +25,7 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\VirtualFilesystemHelper
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
                 - \SprykerTest\Shared\Propel\Helper\PropelSchemaHelper
+                - \SprykerTest\Shared\Propel\Helper\TableHelper
     Persistence:
         path: Persistence
         class_name: PropelPersistenceTester

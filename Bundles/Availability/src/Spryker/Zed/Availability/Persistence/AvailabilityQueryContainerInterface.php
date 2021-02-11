@@ -13,6 +13,9 @@ use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 interface AvailabilityQueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $sku
@@ -22,6 +25,9 @@ interface AvailabilityQueryContainerInterface
     public function querySpyAvailabilityBySku($sku);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $sku
@@ -32,6 +38,9 @@ interface AvailabilityQueryContainerInterface
     public function queryAvailabilityBySkuAndIdStore($sku, $idStore);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $abstractSku
@@ -41,6 +50,9 @@ interface AvailabilityQueryContainerInterface
     public function querySpyAvailabilityAbstractByAbstractSku($abstractSku);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idAvailabilityAbstract
@@ -51,6 +63,9 @@ interface AvailabilityQueryContainerInterface
     public function queryAvailabilityAbstractByIdAvailabilityAbstract($idAvailabilityAbstract, $idStore);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idAvailabilityAbstract
@@ -61,6 +76,9 @@ interface AvailabilityQueryContainerInterface
     public function querySumQuantityOfAvailabilityAbstract($idAvailabilityAbstract, $idStore);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProductAbstract
@@ -73,6 +91,9 @@ interface AvailabilityQueryContainerInterface
     public function queryAvailabilityAbstractWithStockByIdProductAbstractAndIdLocale($idProductAbstract, $idLocale, $idStore, array $stockNames = []);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int[] $productAbstractIds
@@ -90,6 +111,9 @@ interface AvailabilityQueryContainerInterface
     ): SpyProductAbstractQuery;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProductAbstract
@@ -102,6 +126,9 @@ interface AvailabilityQueryContainerInterface
     public function queryAvailabilityWithStockByIdProductAbstractAndIdLocale($idProductAbstract, $idLocale, $idStore, array $stockNames = []);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idLocale
@@ -113,6 +140,9 @@ interface AvailabilityQueryContainerInterface
     public function queryAvailabilityAbstractWithStockByIdLocale($idLocale, $idStore, array $stockNames);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idLocale
@@ -128,6 +158,9 @@ interface AvailabilityQueryContainerInterface
     ): SpyProductAbstractQuery;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idLocale
@@ -138,6 +171,9 @@ interface AvailabilityQueryContainerInterface
     public function queryAvailabilityWithStockByIdLocale($idLocale, array $stockNames = []);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idLocale
@@ -148,6 +184,9 @@ interface AvailabilityQueryContainerInterface
     public function querySpyProductAbstractAvailabilityWithStockByIdLocale($idLocale, array $stockNames = []);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $stockNames
@@ -157,6 +196,9 @@ interface AvailabilityQueryContainerInterface
     public function querySpyProductAbstractAvailabilityWithStock(array $stockNames = []);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery|\Propel\Runtime\ActiveQuery\Criteria
@@ -164,6 +206,9 @@ interface AvailabilityQueryContainerInterface
     public function querySpyProductAbstractAvailability();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery
@@ -171,6 +216,9 @@ interface AvailabilityQueryContainerInterface
     public function queryAllAvailabilityAbstracts();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idStore
