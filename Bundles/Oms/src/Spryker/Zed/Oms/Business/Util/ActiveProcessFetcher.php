@@ -27,6 +27,11 @@ class ActiveProcessFetcher implements ActiveProcessFetcherInterface
     protected static $reservedStatesCache = [];
 
     /**
+     * @var string[][]
+     */
+    protected static $reservedStateProcessNamesCache = [];
+
+    /**
      * @param \Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject $activeProcesses
      * @param \Spryker\Zed\Oms\Business\OrderStateMachine\BuilderInterface $builder
      */
@@ -63,5 +68,54 @@ class ActiveProcessFetcher implements ActiveProcessFetcherInterface
         }
 
         return $reservedStates;
+    }
+
+    /**
+     * @param string $processName
+     *
+     * @return string[]
+     */
+    public function getReservedStateNamesForActiveProcessByProcessName(string $processName): array
+    {
+        if (!isset(static::$reservedStateProcessNamesCache[$processName])) {
+            static::$reservedStateProcessNamesCache[$processName] = $this->retrieveReservedStateNamesForActiveProcessByProcessName(
+                $processName
+            );
+        }
+
+        return static::$reservedStateProcessNamesCache[$processName];
+    }
+
+    /**
+     * @param string $processName
+     *
+     * @return string[]
+     */
+    protected function retrieveReservedStateNamesForActiveProcessByProcessName(string $processName): array
+    {
+        if (!in_array($processName, $this->activeProcesses->getArrayCopy(), true)) {
+            return [];
+        }
+
+        $builder = clone $this->builder;
+        $process = $builder->createProcess($processName);
+
+        return $this->getReservedStateNames($process->getAllReservedStates());
+    }
+
+    /**
+     * @param \Spryker\Zed\Oms\Business\Process\StateInterface[] $processReservedStates
+     *
+     * @return string[]
+     */
+    protected function getReservedStateNames(array $processReservedStates): array
+    {
+        $reservedStateProcessNames = [];
+
+        foreach ($processReservedStates as $reservedState) {
+            $reservedStateProcessNames[] = $reservedState->getName();
+        }
+
+        return $reservedStateProcessNames;
     }
 }
