@@ -23,6 +23,8 @@ use SprykerTest\Zed\Category\PageObject\CategoryListPage;
 class CategoryDeleteCest
 {
     /**
+     * @skip Will be removed to GUI module.
+     *
      * @param \SprykerTest\Zed\Category\CategoryPresentationTester $i
      *
      * @return void

@@ -24,6 +24,8 @@ use SprykerTest\Zed\Category\PageObject\CategoryListPage;
 class CategoryListCest
 {
     /**
+     * @skip Will be removed to GUI module.
+     *
      * @param \SprykerTest\Zed\Category\CategoryPresentationTester $i
      *
      * @return void
@@ -35,6 +37,8 @@ class CategoryListCest
     }
 
     /**
+     * @skip Will be removed to GUI module.
+     *
      * @param \SprykerTest\Zed\Category\CategoryPresentationTester $i
      *
      * @return void
@@ -47,6 +51,8 @@ class CategoryListCest
     }
 
     /**
+     * @skip Will be removed to GUI module.
+     *
      * @param \SprykerTest\Zed\Category\CategoryPresentationTester $i
      *
      * @return void
