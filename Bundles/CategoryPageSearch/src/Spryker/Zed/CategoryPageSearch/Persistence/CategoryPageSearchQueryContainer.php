@@ -27,6 +27,8 @@ class CategoryPageSearchQueryContainer extends AbstractQueryContainer implements
      *
      * @api
      *
+     * @deprecated Will be removed with next major release.
+     *
      * @param array $localeNames
      *
      * @return \Orm\Zed\Locale\Persistence\SpyLocaleQuery
@@ -43,6 +45,8 @@ class CategoryPageSearchQueryContainer extends AbstractQueryContainer implements
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Will be removed with next major release.
      *
      * @param array $categoryNodeIds
      * @param int $idLocale
@@ -75,6 +79,8 @@ class CategoryPageSearchQueryContainer extends AbstractQueryContainer implements
      *
      * @module Url
      * @module Category
+     *
+     * @deprecated Will be removed with next major release.
      *
      * @param int[] $categoryNodeIds
      * @param int $idLocale
@@ -110,6 +116,8 @@ class CategoryPageSearchQueryContainer extends AbstractQueryContainer implements
      *
      * @api
      *
+     * @deprecated Will be removed with next major release.
+     *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
      */
     public function queryCategoryRoot()
@@ -124,6 +132,8 @@ class CategoryPageSearchQueryContainer extends AbstractQueryContainer implements
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Will be removed with next major release.
      *
      * @param int[] $categoryIds
      *

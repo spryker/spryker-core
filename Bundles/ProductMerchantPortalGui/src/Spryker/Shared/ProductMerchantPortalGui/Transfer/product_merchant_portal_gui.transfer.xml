@@ -45,6 +45,7 @@
 
     <transfer name="Locale">
         <property name="idLocale" type="int"/>
+        <property name="localeName" type="string"/>
     </transfer>
 
     <transfer name="ProductAbstractCollection">
@@ -87,6 +88,30 @@
     <transfer name="Store">
         <property name="idStore" type="int"/>
         <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="Category">
+        <property name="nodeCollection" type="NodeCollection"/>
+        <property name="localizedAttributes" type="CategoryLocalizedAttributes[]" singular="localizedAttributes"/>
+    </transfer>
+
+    <transfer name="NodeCollection">
+        <property name="nodes" type="Node[]" singular="node"/>
+    </transfer>
+
+    <transfer name="CategoryCriteria">
+        <property name="idCategory" type="int"/>
+        <property name="localeName" type="string"/>
+        <property name="withChildrenRecursively" type="bool"/>
+    </transfer>
+
+    <transfer name="Node">
+        <property name="idCategoryNode" type="int"/>
+        <property name="category" type="Category"/>
+        <property name="childrenNodes" type="NodeCollection"/>
+    </transfer>
+
+    <transfer name="CategoryLocalizedAttributes">
     </transfer>
 
 </transfers>

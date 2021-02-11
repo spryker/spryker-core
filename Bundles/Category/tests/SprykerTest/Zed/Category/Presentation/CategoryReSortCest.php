@@ -24,6 +24,8 @@ use SprykerTest\Zed\Category\PageObject\CategoryReSortPage;
 class CategoryReSortCest
 {
     /**
+     * @skip Will be removed to GUI module.
+     *
      * @param \SprykerTest\Zed\Category\CategoryPresentationTester $i
      *
      * @return void
@@ -36,6 +38,8 @@ class CategoryReSortCest
     }
 
     /**
+     * @skip Will be removed to GUI module.
+     *
      * @param \SprykerTest\Zed\Category\CategoryPresentationTester $i
      *
      * @return void
@@ -55,6 +59,8 @@ class CategoryReSortCest
     }
 
     /**
+     * @skip Will be removed to GUI module.
+     *
      * @param \SprykerTest\Zed\Category\CategoryPresentationTester $i
      *
      * @return void

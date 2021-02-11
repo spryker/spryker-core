@@ -26,6 +26,7 @@
         <property name="parentCategoryNode" type="Node"/>
         <property name="extraParents" singular="extraParent" type="Node[]"/>
         <property name="fkCategoryTemplate" type="int"/>
+        <property name="categoryTemplate" type="CategoryTemplate"/>
     </transfer>
 
     <transfer name="CategoryCollection">
@@ -49,9 +50,11 @@
         <property name="isRoot" type="bool"/>
         <property name="isMain" type="bool"/>
         <property name="nodeOrder" type="int"/>
-        <property name="name" type="string"/>
+        <property name="name" type="string" deprecated="Will be removed with next major"/>
         <property name="path" type="string"/>
-        <property name="localizedAttributes" type="CategoryLocalizedAttributes[]" singular="localizedAttributes"/>
+        <property name="localizedAttributes" type="CategoryLocalizedAttributes[]" singular="localizedAttributes" deprecated="Will be removed with next major"/>
+        <property name="childrenNodes" type="NodeCollection"/>
+        <property name="category" type="Category"/>
     </transfer>
 
     <transfer name="CategoryLocalizedAttributes">
@@ -62,6 +65,14 @@
         <property name="metaDescription" type="string"/>
         <property name="metaKeywords" type="string"/>
         <property name="image" type="Image"/>
+    </transfer>
+
+    <transfer name="CategoryCriteria">
+        <property name="idCategory" type="int"/>
+        <property name="storeName" type="string"/>
+        <property name="localeName" type="string"/>
+        <property name="withChildren" type="bool"/>
+        <property name="withChildrenRecursively" type="bool"/>
     </transfer>
 
     <transfer name="Image">
@@ -102,6 +113,9 @@
 
     <transfer name="EventEntity">
         <property name="id" type="int"/>
+    </transfer>
+
+    <transfer name="LocalizedAttributes">
     </transfer>
 
 </transfers>
