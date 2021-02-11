@@ -176,7 +176,7 @@ class LogFactory extends AbstractFactory
     protected function createStreamHandler()
     {
         $streamHandler = new StreamHandler(
-            $this->getConfig()->getLogFilePath(),
+            $this->getConfig()->getLogDestinationPath(),
             $this->getConfig()->getLogLevel()
         );
 
@@ -199,7 +199,7 @@ class LogFactory extends AbstractFactory
     public function createExceptionStreamHandler()
     {
         $streamHandler = new StreamHandler(
-            $this->getConfig()->getExceptionLogFilePath(),
+            $this->getConfig()->getExceptionLogDestinationPath(),
             Logger::ERROR
         );
         $streamHandler->setFormatter($this->createExceptionFormatter());

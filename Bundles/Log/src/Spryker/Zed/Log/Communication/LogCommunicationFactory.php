@@ -184,7 +184,7 @@ class LogCommunicationFactory extends AbstractCommunicationFactory
     protected function createStreamHandler()
     {
         $streamHandler = new StreamHandler(
-            $this->getConfig()->getLogFilePath(),
+            $this->getConfig()->getLogDestinationPath(),
             (int)$this->getConfig()->getLogLevel()
         );
 
@@ -207,7 +207,7 @@ class LogCommunicationFactory extends AbstractCommunicationFactory
     public function createExceptionStreamHandler()
     {
         $streamHandler = new StreamHandler(
-            $this->getConfig()->getExceptionLogFilePath(),
+            $this->getConfig()->getExceptionLogDestinationPath(),
             Logger::ERROR
         );
         $streamHandler->setFormatter($this->createExceptionFormatter());

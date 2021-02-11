@@ -72,7 +72,22 @@ class LogConfig extends AbstractBundleConfig
     }
 
     /**
+     * Specification:
+     * - Defines the log destination path, e.g 'php://stderr' or '/data/log/Zed/application.log'.
+     *
      * @api
+     *
+     * @return resource|string
+     */
+    public function getLogDestinationPath()
+    {
+        return $this->getLogFilePath();
+    }
+
+    /**
+     * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\Log\LogConfig::getLogDestinationPath()} instead.
      *
      * @return string
      */
@@ -96,7 +111,22 @@ class LogConfig extends AbstractBundleConfig
     }
 
     /**
+     * Specification:
+     * - Defines the log destination path, e.g 'php://stderr' or '/data/log/Zed/exception.log'.
+     *
      * @api
+     *
+     * @return resource|string
+     */
+    public function getExceptionLogDestinationPath()
+    {
+        return $this->getExceptionLogFilePath();
+    }
+
+    /**
+     * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\Log\LogConfig::getExceptionLogDestination()} instead.
      *
      * @return string
      */
