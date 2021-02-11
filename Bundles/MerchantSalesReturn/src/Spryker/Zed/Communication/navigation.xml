@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <merchant-sales-return>
+        <label>Merchant Sales Return</label>
+        <title>Merchant Sales Return</title>
+        <bundle>merchant-sales-return</bundle>
+        <controller>index</controller>
+        <action>index</action>
+    </merchant-sales-return>
+</config>
