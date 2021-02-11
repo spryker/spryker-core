@@ -118,6 +118,7 @@
     </transfer>
 
     <transfer name="CategoryLocalizedAttributes">
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="MerchantProductCriteria">
