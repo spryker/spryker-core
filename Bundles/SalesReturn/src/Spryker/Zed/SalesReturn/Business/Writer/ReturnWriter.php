@@ -53,24 +53,32 @@ class ReturnWriter implements ReturnWriterInterface
     protected $omsEventTriggerer;
 
     /**
+     * @var \Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnPreCreatePluginInterface[]
+     */
+    protected $returnPreCreatePlugins;
+
+    /**
      * @param \Spryker\Zed\SalesReturn\Persistence\SalesReturnEntityManagerInterface $salesReturnEntityManager
      * @param \Spryker\Zed\SalesReturn\Business\Validator\ReturnValidatorInterface $returnValidator
      * @param \Spryker\Zed\SalesReturn\Business\Reader\ReturnReaderInterface $returnReader
      * @param \Spryker\Zed\SalesReturn\Business\Generator\ReturnReferenceGeneratorInterface $returnReferenceGenerator
      * @param \Spryker\Zed\SalesReturn\Business\Triggerer\OmsEventTriggererInterface $omsEventTriggerer
+     * @param \Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnPreCreatePluginInterface[] $returnPreCreatePlugins
      */
     public function __construct(
         SalesReturnEntityManagerInterface $salesReturnEntityManager,
         ReturnValidatorInterface $returnValidator,
         ReturnReaderInterface $returnReader,
         ReturnReferenceGeneratorInterface $returnReferenceGenerator,
-        OmsEventTriggererInterface $omsEventTriggerer
+        OmsEventTriggererInterface $omsEventTriggerer,
+        array $returnPreCreatePlugins
     ) {
         $this->salesReturnEntityManager = $salesReturnEntityManager;
         $this->returnValidator = $returnValidator;
         $this->returnReader = $returnReader;
         $this->returnReferenceGenerator = $returnReferenceGenerator;
         $this->omsEventTriggerer = $omsEventTriggerer;
+        $this->returnPreCreatePlugins = $returnPreCreatePlugins;
     }
 
     /**
