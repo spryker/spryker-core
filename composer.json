@@ -502,6 +502,7 @@
     "spryker/product-category-filter-collector": "*",
     "spryker/product-category-filter-gui": "*",
     "spryker/product-category-filter-storage": "*",
+    "spryker/product-category-search": "*",
     "spryker/product-category-storage": "*",
     "spryker/product-configuration": "*",
     "spryker/product-configuration-data-import": "*",

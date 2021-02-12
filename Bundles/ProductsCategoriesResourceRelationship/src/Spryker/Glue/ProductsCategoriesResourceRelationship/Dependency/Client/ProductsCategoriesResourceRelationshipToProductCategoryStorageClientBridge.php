@@ -7,6 +7,8 @@
 
 namespace Spryker\Glue\ProductsCategoriesResourceRelationship\Dependency\Client;
 
+use Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer;
+
 class ProductsCategoriesResourceRelationshipToProductCategoryStorageClientBridge implements ProductsCategoriesResourceRelationshipToProductCategoryStorageClientInterface
 {
     /**
@@ -24,24 +26,27 @@ class ProductsCategoriesResourceRelationshipToProductCategoryStorageClientBridge
 
     /**
      * @param int $idProductAbstract
-     * @param string $locale
-     * @param string|null $storeName
+     * @param string $localeName
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer|null
      */
-    public function findProductAbstractCategory($idProductAbstract, $locale, ?string $storeName = null)
-    {
-        return $this->productCategoryStorageClient->findProductAbstractCategory($idProductAbstract, $locale, $storeName);
+    public function findProductAbstractCategory(
+        int $idProductAbstract,
+        string $localeName,
+        string $storeName
+    ): ?ProductAbstractCategoryStorageTransfer {
+        return $this->productCategoryStorageClient->findProductAbstractCategory($idProductAbstract, $localeName, $storeName);
     }
 
     /**
      * @param int[] $productAbstractIds
      * @param string $localeName
-     * @param string|null $storeName
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer[]
      */
-    public function findBulkProductAbstractCategory(array $productAbstractIds, string $localeName, ?string $storeName = null): array
+    public function findBulkProductAbstractCategory(array $productAbstractIds, string $localeName, string $storeName): array
     {
         return $this->productCategoryStorageClient->findBulkProductAbstractCategory($productAbstractIds, $localeName, $storeName);
     }

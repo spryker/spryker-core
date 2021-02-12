@@ -5,7 +5,7 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.3",
-    "spryker/category": "^3.0.0 || ^4.0.0",
+    "spryker/category": "^3.0.0 || ^4.0.0 || ^5.0.0",
     "spryker/cms-extension": "^1.1.0",
     "spryker/glossary": "^3.1.0",
     "spryker/gui": "^3.33.0",

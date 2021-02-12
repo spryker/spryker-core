@@ -12,5 +12,5 @@ interface CategoryTemplateSyncInterface
     /**
      * @return void
      */
-    public function syncFromConfig();
+    public function syncFromConfig(): void;
 }
