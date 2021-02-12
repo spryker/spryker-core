@@ -8,7 +8,7 @@
 namespace SprykerTest\Zed\GracefulRunner\Business;
 
 use Codeception\Test\Unit;
-use Generator;
+use SprykerTest\Zed\GracefulRunner\GracefulRunnerException;
 
 /**
  * Auto-generated group annotations
@@ -29,22 +29,17 @@ class GracefulRunnerFacadeTest extends Unit
     protected $tester;
 
     /**
-     * @var int
-     */
-    protected $numberOfExecutedIterations = 0;
-
-    /**
-     * @var int
-     */
-    protected $numberOfExecutedItems = 0;
-
-    /**
      * @return void
      */
     public function testRunReturnsNumberOfExecutedIterations(): void
     {
-        $executedIterations = $this->tester->getFacade()->run($this->getGenerator());
+        // Arrange
+        $generator = $this->tester->getGenerator();
 
+        // Act
+        $executedIterations = $this->tester->getFacade()->run($generator);
+
+        // Assert
         $this->assertSame(3, $executedIterations, sprintf('Expected to have "%s" executed iterations but got "%s"', 3, $executedIterations));
     }
 
@@ -53,10 +48,14 @@ class GracefulRunnerFacadeTest extends Unit
      */
     public function testRunWithoutSendingSignalExecutesAllIterations(): void
     {
-        $this->tester->getFacade()->run($this->getGenerator());
+        // Arrange
+        $generator = $this->tester->getGenerator();
 
-        $this->assertSame(3, $this->numberOfExecutedIterations, sprintf('Expected to have "%s" executed iterations but got "%s"', 3, $this->numberOfExecutedItems));
-        $this->assertSame(15, $this->numberOfExecutedItems, sprintf('Expected to have "%s" executed items but got "%s"', 15, $this->numberOfExecutedItems));
+        // Act
+        $this->tester->getFacade()->run($generator);
+
+        // Assert
+        $this->tester->assertGeneratorCalls(3, 15);
     }
 
     /**
@@ -64,41 +63,43 @@ class GracefulRunnerFacadeTest extends Unit
      */
     public function testRunWithSendingSignalExecutesUntilSignalIsTriggered(): void
     {
-        $this->tester->getFacade()->run($this->getGenerator(1));
+        // Arrange
+        $generator = $this->tester->getGenerator(1);
 
-        $this->assertSame(1, $this->numberOfExecutedIterations, sprintf('Expected to have "%s" executed iterations but got "%s"', 1, $this->numberOfExecutedItems));
-        $this->assertSame(5, $this->numberOfExecutedItems, sprintf('Expected to have "%s" executed items but got "%s"', 5, $this->numberOfExecutedItems));
-    }
+        // Act
+        $this->tester->getFacade()->run($generator);
 
-    /**
-     * @param int|null $breakAfter
-     *
-     * @return \Generator
-     */
-    protected function getGenerator(?int $breakAfter = null): Generator
-    {
-        foreach ([1, 2, 3] as $iteration) {
-            yield;
-
-            if ($breakAfter && $iteration === $breakAfter) {
-                posix_kill(posix_getpid(), SIGINT);
-                posix_kill(posix_getpid(), SIGTERM);
-                pcntl_signal_dispatch();
-            }
-
-            $this->executeOneIteration();
-        }
+        // Assert
+        $this->tester->assertGeneratorCalls(1, 5);
     }
 
     /**
      * @return void
      */
-    protected function executeOneIteration(): void
+    public function testRunWithSendingSignalExecutesUntilSignalIsTriggeredAndReturnsResultWhenGeneratorIsWrappedWithTryCatch(): void
     {
-        for ($i = 0; $i < 5; $i++) {
-            $this->numberOfExecutedItems++;
-        }
+        // Arrange
+        $generator = $this->tester->getGenerator(1, true);
 
-        $this->numberOfExecutedIterations++;
+        // Act
+        $this->tester->getFacade()->run($generator, GracefulRunnerException::class);
+
+        // Assert
+        $this->assertIsArray($generator->getReturn());
+    }
+
+    /**
+     * @return void
+     */
+    public function testRunAndGeneratorGetReturnIsCalledThrowsExceptionWhenGeneratorIsNotWrappedWithTryCatch(): void
+    {
+        // Arrange
+        $generator = $this->tester->getGenerator(1);
+
+        // Expect
+        $this->expectException(GracefulRunnerException::class);
+
+        // Act
+        $this->tester->getFacade()->run($generator, GracefulRunnerException::class);
     }
 }

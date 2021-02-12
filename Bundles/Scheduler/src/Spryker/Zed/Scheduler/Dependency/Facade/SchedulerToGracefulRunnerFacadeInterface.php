@@ -13,8 +13,9 @@ interface SchedulerToGracefulRunnerFacadeInterface
 {
     /**
      * @param \Generator $generator
+     * @param string|null $throwableClassName
      *
      * @return int
      */
-    public function run(Generator $generator): int;
+    public function run(Generator $generator, ?string $throwableClassName): int;
 }

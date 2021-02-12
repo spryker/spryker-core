@@ -15,6 +15,7 @@ use Spryker\Service\DataExport\DataExportServiceInterface;
 use Spryker\Zed\DataExport\Business\Exception\DataExporterNotFoundException;
 use Spryker\Zed\DataExport\DataExportConfig;
 use Spryker\Zed\DataExport\Dependency\Facade\DataExportToGracefulRunnerFacadeInterface;
+use Throwable;
 
 class DataExportExecutor
 {
@@ -97,16 +98,19 @@ class DataExportExecutor
     ): Generator {
         $dataExportResultTransfers = [];
 
-        foreach ($dataExportConfigurationsTransfer->getActions() as $dataExportConfigurationTransfer) {
-            yield;
+        try {
+            foreach ($dataExportConfigurationsTransfer->getActions() as $dataExportConfigurationTransfer) {
+                yield;
 
-            $dataExportConfigurationTransfer = $this->dataExportService->mergeDataExportConfigurationTransfers(
-                $dataExportConfigurationTransfer,
-                clone $dataExportDefaultsConfigurationTransfer
-            );
-            $dataExportConfigurationTransfer = $this->addDataExportConfigurationActionHooks($dataExportConfigurationTransfer);
+                $dataExportConfigurationTransfer = $this->dataExportService->mergeDataExportConfigurationTransfers(
+                    $dataExportConfigurationTransfer,
+                    clone $dataExportDefaultsConfigurationTransfer
+                );
+                $dataExportConfigurationTransfer = $this->addDataExportConfigurationActionHooks($dataExportConfigurationTransfer);
 
-            $dataExportResultTransfers[] = $this->runExport($dataExportConfigurationTransfer);
+                $dataExportResultTransfers[] = $this->runExport($dataExportConfigurationTransfer);
+            }
+        } catch (Throwable $throwable) {
         }
 
         return $dataExportResultTransfers;

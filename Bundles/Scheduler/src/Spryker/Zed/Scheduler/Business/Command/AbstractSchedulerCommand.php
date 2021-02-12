@@ -15,6 +15,7 @@ use Generator;
 use Spryker\Zed\Scheduler\Business\Command\Filter\SchedulerFilterInterface;
 use Spryker\Zed\Scheduler\Dependency\Facade\SchedulerToGracefulRunnerFacadeInterface;
 use Spryker\Zed\SchedulerExtension\Dependency\Plugin\SchedulerAdapterPluginInterface;
+use Throwable;
 
 abstract class AbstractSchedulerCommand implements SchedulerCommandInterface
 {
@@ -73,13 +74,16 @@ abstract class AbstractSchedulerCommand implements SchedulerCommandInterface
         $responseCollectionTransfer = $this->createSchedulerResponseCollectionTransfer();
         $schedulerAdapters = $this->schedulerFilter->getFilteredSchedulerAdapters($filterTransfer);
 
-        foreach ($schedulerAdapters as $idScheduler => $schedulerAdapterPlugin) {
-            yield;
+        try {
+            foreach ($schedulerAdapters as $idScheduler => $schedulerAdapterPlugin) {
+                yield;
 
-            $scheduleTransfer = $this->executeScheduleReaderPlugins($idScheduler, $filterTransfer);
-            $responseTransfer = $this->executeCommand($schedulerAdapterPlugin, $scheduleTransfer);
+                $scheduleTransfer = $this->executeScheduleReaderPlugins($idScheduler, $filterTransfer);
+                $responseTransfer = $this->executeCommand($schedulerAdapterPlugin, $scheduleTransfer);
 
-            $responseCollectionTransfer->addResponse($responseTransfer);
+                $responseCollectionTransfer->addResponse($responseTransfer);
+            }
+        } catch (Throwable $throwable) {
         }
 
         return $responseCollectionTransfer;

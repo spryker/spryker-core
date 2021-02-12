@@ -33,10 +33,11 @@ class GracefulRunner implements GracefulRunnerInterface
 
     /**
      * @param \Generator $generator
+     * @param string|null $throwableClassName
      *
      * @return int
      */
-    public function run(Generator $generator): int
+    public function run(Generator $generator, ?string $throwableClassName = null): int
     {
         $signalHandler = $this->createSignalHandler();
 
@@ -46,6 +47,12 @@ class GracefulRunner implements GracefulRunnerInterface
             $this->executedIterations++;
 
             if ($signalHandler->isTriggered()) {
+                if ($throwableClassName) {
+                    $generator->throw(new $throwableClassName(
+                        'Signal was received, stopped Generator execution. Wrap your Generator into try/catch to continue script execution.'
+                    ));
+                }
+
                 break;
             }
         }
