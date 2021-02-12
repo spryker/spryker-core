@@ -22,6 +22,7 @@ use Codeception\Actor;
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  *
  * @SuppressWarnings(PHPMD)
+ * @method \Spryker\Zed\Synchronization\Business\SynchronizationFacadeInterface getFacade()
  */
 class SynchronizationBusinessTester extends Actor
 {
