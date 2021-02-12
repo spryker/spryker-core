@@ -23,6 +23,8 @@ use SprykerTest\Zed\Category\PageObject\CategoryCreatePage;
 class CategoryCreateCest
 {
     /**
+     * @skip Will be removed to GUI module.
+     *
      * @param \SprykerTest\Zed\Category\CategoryPresentationTester $i
      *
      * @return void

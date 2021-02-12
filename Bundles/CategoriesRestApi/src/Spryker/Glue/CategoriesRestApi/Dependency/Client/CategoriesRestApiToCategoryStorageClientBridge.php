@@ -24,33 +24,36 @@ class CategoriesRestApiToCategoryStorageClientBridge implements CategoriesRestAp
 
     /**
      * @param string $locale
+     * @param string|null $storeName
      *
      * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[]|\ArrayObject
      */
-    public function getCategories($locale)
+    public function getCategories($locale, ?string $storeName = null)
     {
-        return $this->categoryStorageClient->getCategories($locale);
+        return $this->categoryStorageClient->getCategories($locale, $storeName);
     }
 
     /**
      * @param int $idCategoryNode
      * @param string $localeName
+     * @param string|null $storeName
      *
      * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer
      */
-    public function getCategoryNodeById($idCategoryNode, $localeName)
+    public function getCategoryNodeById($idCategoryNode, $localeName, ?string $storeName = null)
     {
-        return $this->categoryStorageClient->getCategoryNodeById($idCategoryNode, $localeName);
+        return $this->categoryStorageClient->getCategoryNodeById($idCategoryNode, $localeName, $storeName);
     }
 
     /**
      * @param int[] $categoryNodeIds
      * @param string $localeName
+     * @param string|null $storeName
      *
      * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[]
      */
-    public function getCategoryNodeByIds(array $categoryNodeIds, string $localeName): array
+    public function getCategoryNodeByIds(array $categoryNodeIds, string $localeName, ?string $storeName = null): array
     {
-        return $this->categoryStorageClient->getCategoryNodeByIds($categoryNodeIds, $localeName);
+        return $this->categoryStorageClient->getCategoryNodeByIds($categoryNodeIds, $localeName, $storeName);
     }
 }

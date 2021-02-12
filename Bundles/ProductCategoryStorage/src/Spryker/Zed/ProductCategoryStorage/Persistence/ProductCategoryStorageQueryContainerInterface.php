@@ -18,6 +18,8 @@ interface ProductCategoryStorageQueryContainerInterface extends QueryContainerIn
      *
      * @api
      *
+     * @deprecated Will be removed in the next major.
+     *
      * @param int $idProductAbstract
      *
      * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
@@ -56,6 +58,8 @@ interface ProductCategoryStorageQueryContainerInterface extends QueryContainerIn
      *
      * @api
      *
+     * @deprecated Will be removed in the next major.
+     *
      * @param int $idNode
      * @param int $idLocale
      * @param bool $excludeRootNode
@@ -72,6 +76,8 @@ interface ProductCategoryStorageQueryContainerInterface extends QueryContainerIn
      * - TODO: Add method specification.
      *
      * @api
+     *
+     * @deprecated Will be removed in the next major.
      *
      * @param int $idCategoryNode
      * @param int $idLocale
@@ -98,6 +104,8 @@ interface ProductCategoryStorageQueryContainerInterface extends QueryContainerIn
      *
      * @api
      *
+     * @deprecated Will be removed in the next major.
+     *
      * @param int[] $productAbstractIds
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery
@@ -109,6 +117,8 @@ interface ProductCategoryStorageQueryContainerInterface extends QueryContainerIn
      * - TODO: Add method specification.
      *
      * @api
+     *
+     * @deprecated Will be removed in the next major.
      *
      * @param int $idNode
      *
@@ -146,6 +156,8 @@ interface ProductCategoryStorageQueryContainerInterface extends QueryContainerIn
      *
      * @api
      *
+     * @deprecated Will be removed in the next major.
+     *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
      */
     public function queryAllCategoriesWithAttributesAndOrderByDescendant();
@@ -156,6 +168,8 @@ interface ProductCategoryStorageQueryContainerInterface extends QueryContainerIn
      *
      * @api
      *
+     * @deprecated Will be removed in the next major.
+     *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
      */
     public function queryAllCategoryNodes();
@@ -165,6 +179,8 @@ interface ProductCategoryStorageQueryContainerInterface extends QueryContainerIn
      * - TODO: Add method specification.
      *
      * @api
+     *
+     * @deprecated Will be removed in the next major.
      *
      * @param int[] $productAbstractIds
      *

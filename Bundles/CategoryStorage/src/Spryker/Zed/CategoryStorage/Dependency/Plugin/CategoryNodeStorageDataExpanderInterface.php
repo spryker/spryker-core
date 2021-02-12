@@ -9,6 +9,9 @@ namespace Spryker\Zed\CategoryStorage\Dependency\Plugin;
 
 use Generated\Shared\Transfer\CategoryNodeStorageTransfer;
 
+/**
+ * @deprecated Will be removed with next major release.
+ */
 interface CategoryNodeStorageDataExpanderInterface
 {
     /**
