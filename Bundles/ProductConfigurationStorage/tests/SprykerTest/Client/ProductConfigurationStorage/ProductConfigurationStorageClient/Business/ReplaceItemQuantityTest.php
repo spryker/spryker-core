@@ -9,7 +9,9 @@ namespace SprykerTest\Client\ProductConfigurationStorage\ProductConfigurationSto
 
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\ItemBuilder;
+use Generated\Shared\DataBuilder\ProductConfigurationInstanceBuilder;
 use Generated\Shared\Transfer\ItemReplaceTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
 use Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer;
 use Generated\Shared\Transfer\ProductConfiguratorResponseTransfer;
@@ -42,7 +44,7 @@ class ReplaceItemQuantityTest extends Unit
     protected $newItemQuantity;
 
     /**
-     * @dataProvider provideItemQuantities
+     * @dataProvider replaceItemQuantityDataProvider
      *
      * @param int $itemQuantity
      * @param int|null $availableQuantity
@@ -53,11 +55,15 @@ class ReplaceItemQuantityTest extends Unit
     public function testReplaceItemQuantity(int $itemQuantity, ?int $availableQuantity, int $newItemQuantity): void
     {
         // Arrange
-        $itemTransfer = (new ItemBuilder())->build()->setQuantity($itemQuantity);
+        $itemTransfer = (new ItemBuilder([
+            ItemTransfer::QUANTITY => $itemQuantity,
+        ]))->build();
+
         $quoteTransfer = (new QuoteTransfer())->addItem($itemTransfer);
 
-        $productConfigurationInstanceTransfer = (new ProductConfigurationInstanceTransfer())
-            ->setAvailableQuantity($availableQuantity);
+        $productConfigurationInstanceTransfer = (new ProductConfigurationInstanceBuilder([
+            ProductConfigurationInstanceTransfer::AVAILABLE_QUANTITY => $availableQuantity,
+        ]))->build();
 
         $productConfiguratorResponseTransfer = (new ProductConfiguratorResponseTransfer())
             ->setProductConfigurationInstance($productConfigurationInstanceTransfer)
@@ -80,7 +86,10 @@ class ReplaceItemQuantityTest extends Unit
     public function testReplaceItemQuantityWithoutProductConfigurationInstance(): void
     {
         // Arrange
-        $itemTransfer = (new ItemBuilder())->build()->setQuantity(10);
+        $itemTransfer = (new ItemBuilder([
+            ItemTransfer::QUANTITY => 10,
+        ]))->build();
+
         $quoteTransfer = (new QuoteTransfer())->addItem($itemTransfer);
 
         $productConfiguratorResponseTransfer = (new ProductConfiguratorResponseTransfer())
@@ -101,7 +110,7 @@ class ReplaceItemQuantityTest extends Unit
     /**
      * @return array
      */
-    public function provideItemQuantities(): array
+    public function replaceItemQuantityDataProvider(): array
     {
         return [
             [10, 5, 5],

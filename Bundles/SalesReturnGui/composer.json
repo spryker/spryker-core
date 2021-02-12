@@ -30,7 +30,7 @@
     "spryker/twig": "*"
   },
   "suggest": {
-    "spryker/sales-product-configuratio-gui": "Add the module if you want to display order item configuration."
+    "spryker/sales-product-configuration-gui": "Add the module if you want to display order item configuration."
   },
   "autoload": {
     "psr-4": {
