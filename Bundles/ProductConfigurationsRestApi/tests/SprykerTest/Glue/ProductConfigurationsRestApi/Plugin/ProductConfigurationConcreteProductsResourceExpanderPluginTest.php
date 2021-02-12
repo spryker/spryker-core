@@ -29,14 +29,14 @@ use Spryker\Glue\ProductConfigurationsRestApi\ProductConfigurationsRestApiDepend
  */
 class ProductConfigurationConcreteProductsResourceExpanderPluginTest extends Unit
 {
+    protected const TEST_ID_PRODUCT_CONCRETE = 111;
+    
     /**
      * @var \SprykerTest\Glue\ProductConfigurationsRestApi\ProductConfigurationsRestApiPluginTester
      */
     protected $tester;
 
     /**
-     * @retrun void
-     *
      * @return void
      */
     public function testExpandWillExpandConcreteProductsResourceWithProductConfiguration(): void
@@ -58,7 +58,7 @@ class ProductConfigurationConcreteProductsResourceExpanderPluginTest extends Uni
         // Act
         $concreteProductsRestAttributesTransfer = $productConfigurationConcreteProductsResourceExpanderPlugin->expand(
             $concreteProductsRestAttributesTransfer,
-            111,
+            static::TEST_ID_PRODUCT_CONCRETE,
             $this->createRestRequestMock()
         );
 
@@ -71,8 +71,6 @@ class ProductConfigurationConcreteProductsResourceExpanderPluginTest extends Uni
     }
 
     /**
-     * @retrun void
-     *
      * @return void
      */
     public function testExpandWillNotExpandConcreteProductsResourceWithoutProductConfiguration(): void
@@ -89,7 +87,7 @@ class ProductConfigurationConcreteProductsResourceExpanderPluginTest extends Uni
         // Act
         $concreteProductsRestAttributesTransfer = $productConfigurationConcreteProductsResourceExpanderPlugin->expand(
             $concreteProductsRestAttributesTransfer,
-            111,
+            static::TEST_ID_PRODUCT_CONCRETE,
             $this->createRestRequestMock()
         );
 
