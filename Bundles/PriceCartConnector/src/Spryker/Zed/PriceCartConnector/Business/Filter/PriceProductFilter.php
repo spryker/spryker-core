@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\PriceCartConnector\Business\Filter\Comparator\ItemComparatorInterface;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartConnectorToCurrencyFacadeInterface;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceInterface;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceProductInterface;
@@ -51,21 +52,29 @@ class PriceProductFilter implements PriceProductFilterInterface
     protected $cartItemQuantityCounterStrategyPlugins;
 
     /**
+     * @var \Spryker\Zed\PriceCartConnector\Business\Filter\Comparator\ItemComparatorInterface
+     */
+    protected $itemComparator;
+
+    /**
      * @param \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceProductInterface $priceProductFacade
      * @param \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceInterface $priceFacade
      * @param \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartConnectorToCurrencyFacadeInterface $currencyFacade
      * @param \Spryker\Zed\PriceCartConnectorExtension\Dependency\Plugin\CartItemQuantityCounterStrategyPluginInterface[] $cartItemQuantityCounterStrategyPlugins
+     * @param \Spryker\Zed\PriceCartConnector\Business\Filter\Comparator\ItemComparatorInterface $itemComparator
      */
     public function __construct(
         PriceCartToPriceProductInterface $priceProductFacade,
         PriceCartToPriceInterface $priceFacade,
         PriceCartConnectorToCurrencyFacadeInterface $currencyFacade,
-        array $cartItemQuantityCounterStrategyPlugins
+        array $cartItemQuantityCounterStrategyPlugins,
+        ItemComparatorInterface $itemComparator
     ) {
         $this->priceProductFacade = $priceProductFacade;
         $this->priceFacade = $priceFacade;
         $this->currencyFacade = $currencyFacade;
         $this->cartItemQuantityCounterStrategyPlugins = $cartItemQuantityCounterStrategyPlugins;
+        $this->itemComparator = $itemComparator;
     }
 
     /**
@@ -190,13 +199,13 @@ class PriceProductFilter implements PriceProductFilterInterface
 
         $quantity = static::ZERO_QUANTITY_VALUE;
         foreach ($cartChangeTransfer->getQuote()->getItems() as $quoteItemTransfer) {
-            if ($quoteItemTransfer->getSku() === $itemTransfer->getSku()) {
+            if ($this->itemComparator->isSameItem($quoteItemTransfer, $itemTransfer)) {
                 $quantity += $quoteItemTransfer->getQuantity();
             }
         }
 
         foreach ($cartChangeTransfer->getItems() as $cartChangeItemTransfer) {
-            if ($cartChangeItemTransfer->getSku() === $itemTransfer->getSku()) {
+            if ($this->itemComparator->isSameItem($cartChangeItemTransfer, $itemTransfer)) {
                 $quantity = $this->changeItemQuantityAccordingToOperation(
                     $quantity,
                     $cartChangeItemTransfer->getQuantity(),

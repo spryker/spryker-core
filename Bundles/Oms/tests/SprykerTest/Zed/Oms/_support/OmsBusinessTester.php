@@ -63,6 +63,17 @@ class OmsBusinessTester extends Actor
     }
 
     /**
+     * @return void
+     */
+    public function resetReservedStateProcessNamesCache(): void
+    {
+        $reflectionResolver = new ReflectionClass(ActiveProcessFetcher::class);
+        $reflectionProperty = $reflectionResolver->getProperty('reservedStateProcessNamesCache');
+        $reflectionProperty->setAccessible(true);
+        $reflectionProperty->setValue([]);
+    }
+
+    /**
      * @param string $stateMachineProcessName
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
@@ -175,11 +186,15 @@ class OmsBusinessTester extends Actor
         $salesOrderEntity->setStore($storeName)
             ->setOmsProcessorIdentifier($omsProcessorIdentifier)
             ->save();
+        $omsOrderItemStateEntity = $this->haveOmsOrderItemStateEntity($stateName);
+        $salesOrderEntity->getItems()->getFirst()->setState($omsOrderItemStateEntity)->save();
 
-        for ($i = 0; $i < $orderItemsAmount; $i++) {
-            $salesOrderItemEntity = $this->createSalesOrderItemForOrder($salesOrderTransferDE->getIdSalesOrder(), ['state' => $stateName, 'process' => $processName]);
+        for ($i = 1; $i < $orderItemsAmount; $i++) {
+            $salesOrderItemEntity = $this->createSalesOrderItemForOrder(
+                $salesOrderTransferDE->getIdSalesOrder(),
+                ['state' => $stateName, 'process' => $processName]
+            );
             $salesOrderEntity->addItem($salesOrderItemEntity);
-            $this->haveOmsOrderItemStateEntity($stateName);
         }
 
         return $salesOrderEntity;

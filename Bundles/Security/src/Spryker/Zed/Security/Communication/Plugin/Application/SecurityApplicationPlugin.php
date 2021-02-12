@@ -46,7 +46,9 @@ use Symfony\Component\Security\Http\Authentication\DefaultAuthenticationSuccessH
 use Symfony\Component\Security\Http\EntryPoint\BasicAuthenticationEntryPoint;
 use Symfony\Component\Security\Http\EntryPoint\FormAuthenticationEntryPoint;
 use Symfony\Component\Security\Http\Event\LogoutEvent;
+use Symfony\Component\Security\Http\EventListener\DefaultLogoutListener;
 use Symfony\Component\Security\Http\EventListener\RememberMeLogoutListener;
+use Symfony\Component\Security\Http\EventListener\SessionLogoutListener;
 use Symfony\Component\Security\Http\Firewall;
 use Symfony\Component\Security\Http\Firewall\AbstractAuthenticationListener;
 use Symfony\Component\Security\Http\Firewall\AccessListener;
@@ -1087,15 +1089,24 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
             return function () use ($container, $name, $options) {
                 $this->addSecurityRoute($options['logout_path'] ?? '/logout');
 
+                $logoutEventClassExist = class_exists(LogoutEvent::class);
+                /** @var \Symfony\Contracts\EventDispatcher\EventDispatcherInterface|\Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher */
+                $eventDispatcher = $this->getDispatcher($container);
+                if ($logoutEventClassExist) {
+                    $httpUtils = $container->get(static::SERVICE_SECURITY_HTTP_UTILS);
+                    $this->getDispatcher($container)->addSubscriber(new DefaultLogoutListener($httpUtils, '/'));
+                    $this->getDispatcher($container)->addSubscriber(new SessionLogoutListener());
+                }
+
                 $listener = new LogoutListener(
                     $container->get(static::SERVICE_SECURITY_TOKEN_STORAGE),
                     $container->get(static::SERVICE_SECURITY_HTTP_UTILS),
-                    $this->getLogoutHandler($container, $name, $options),
+                    ($logoutEventClassExist) ? $eventDispatcher : $this->getLogoutHandler($container, $name, $options),
                     $options,
                     $this->getCsrfTokenManager($container, $options)
                 );
 
-                if (!class_exists(LogoutEvent::class)) {
+                if (!$logoutEventClassExist) {
                     $listener = $this->addSessionLogoutHandler($listener, $options);
                 }
 

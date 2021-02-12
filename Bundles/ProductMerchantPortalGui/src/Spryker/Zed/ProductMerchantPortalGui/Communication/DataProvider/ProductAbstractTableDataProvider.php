@@ -101,6 +101,10 @@ class ProductAbstractTableDataProvider extends AbstractGuiTableDataProvider
 
         $paginationTransfer = $productAbstractCollectionTransfer->getPagination();
 
+        if (!$paginationTransfer) {
+            return $guiTableDataResponseTransfer;
+        }
+
         return $guiTableDataResponseTransfer
             ->setPage($paginationTransfer->getPage())
             ->setPageSize($paginationTransfer->getMaxPerPage())

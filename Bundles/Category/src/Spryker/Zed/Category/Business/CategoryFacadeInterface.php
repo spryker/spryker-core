@@ -8,71 +8,15 @@
 namespace Spryker\Zed\Category\Business;
 
 use Generated\Shared\Transfer\CategoryCollectionTransfer;
+use Generated\Shared\Transfer\CategoryCriteriaTransfer;
+use Generated\Shared\Transfer\CategoryNodeCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\NodeTransfer;
+use Generated\Shared\Transfer\NodeCollectionTransfer;
+use Generated\Shared\Transfer\UpdateCategoryStoreRelationRequestTransfer;
 
 interface CategoryFacadeInterface
 {
-    /**
-     * Specification:
-     * - TODO: Add method specification.
-     *
-     * @api
-     *
-     * @deprecated Will be removed with next major release
-     *
-     * @param string $categoryName
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return bool
-     */
-    public function hasCategoryNode($categoryName, LocaleTransfer $localeTransfer);
-
-    /**
-     * Specification:
-     * - TODO: Add method specification.
-     *
-     * @api
-     *
-     * @deprecated Will be removed with next major release
-     *
-     * @param int $idNode
-     *
-     * @return \Generated\Shared\Transfer\NodeTransfer
-     */
-    public function getNodeById($idNode);
-
-    /**
-     * Specification:
-     * - TODO: Add method specification.
-     *
-     * @api
-     *
-     * @deprecated Will be removed with next major release
-     *
-     * @param string $categoryName
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return int
-     */
-    public function getCategoryNodeIdentifier($categoryName, LocaleTransfer $localeTransfer);
-
-    /**
-     * Specification:
-     * - TODO: Add method specification.
-     *
-     * @api
-     *
-     * @deprecated Will be removed with next major release
-     *
-     * @param string $categoryName
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return int
-     */
-    public function getCategoryIdentifier($categoryName, LocaleTransfer $localeTransfer);
-
     /**
      * Specification:
      *  - Finds all category-node entities for idCategory
@@ -85,68 +29,12 @@ interface CategoryFacadeInterface
      *
      * @return \Generated\Shared\Transfer\NodeTransfer[]
      */
-    public function getAllNodesByIdCategory($idCategory);
-
-    /**
-     * Specification:
-     * - TODO: Add method specification.
-     *
-     * @api
-     *
-     * @deprecated Will be removed with next major release
-     *
-     * @param int $idCategory
-     *
-     * @return \Generated\Shared\Transfer\NodeTransfer[]
-     */
-    public function getMainNodesByIdCategory($idCategory);
-
-    /**
-     * Specification:
-     * - TODO: Add method specification.
-     *
-     * @api
-     *
-     * @deprecated Will be removed with next major release
-     *
-     * @param int $idCategory
-     *
-     * @return \Generated\Shared\Transfer\NodeTransfer[]
-     */
-    public function getNotMainNodesByIdCategory($idCategory);
-
-    /**
-     * Specification:
-     *  - Reads entity for idCategory from persistence
-     *  - Hydrates data from entities to CategoryTransfer
-     *  - Returns CategoryTransfer
-     *
-     * @api
-     *
-     * @param int $idCategory
-     *
-     * @return \Generated\Shared\Transfer\CategoryTransfer
-     */
-    public function read($idCategory);
-
-    /**
-     * Specification:
-     * - TODO: Add method specification.
-     *
-     * @api
-     *
-     * @deprecated Will be removed with next major release
-     *
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
-     *
-     * @return int
-     */
-    public function createCategory(CategoryTransfer $categoryTransfer, ?LocaleTransfer $localeTransfer = null);
+    public function getAllNodesByIdCategory(int $idCategory): array;
 
     /**
      * Specification:
      *  - Hydrates category entity from CategoryTransfer and persists it
+     *  - Creates the relationships between category and store if data is provided.
      *  - Hydrates category-node entity from nested NodeTransfer and persists it
      *  - Hydrates category-attribute entities from nested CategoryLocalizedAttributesTransfer (for all given locals) and persists them
      *  - Hydrates extra-parent category-node entities from nested NodeTransfer and persists them
@@ -164,22 +52,7 @@ interface CategoryFacadeInterface
      *
      * @return void
      */
-    public function create(CategoryTransfer $categoryTransfer);
-
-    /**
-     * Specification:
-     * - TODO: Add method specification.
-     *
-     * @api
-     *
-     * @deprecated Will be removed with next major release
-     *
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
-     *
-     * @return void
-     */
-    public function updateCategory(CategoryTransfer $categoryTransfer, ?LocaleTransfer $localeTransfer = null);
+    public function create(CategoryTransfer $categoryTransfer): void;
 
     /**
      * Specification:
@@ -189,6 +62,8 @@ interface CategoryFacadeInterface
      *  - Finds or creates extra-parent category-node entities, hydrates them from CategoryTransfer, and persists them
      *  - Generates urls from category names for all given locales (names are part of the attributes)
      *  - Finds url entities, hydrates them with generated URLs, and persists them
+     *  - Updates the relationships between category and store if data is provided.
+     *  - Cleanups store relations in case empty `StoreRelationTransfer.idStores` property.
      *  - Touches modified category-node entities active (via TouchFacade)
      *  - Touches modified url entities active (via TouchFacade)
      *  - Touches navigation active (via TouchFacade)
@@ -219,36 +94,35 @@ interface CategoryFacadeInterface
      *
      * @return void
      */
-    public function update(CategoryTransfer $categoryTransfer);
+    public function update(CategoryTransfer $categoryTransfer): void;
 
     /**
      * Specification:
-     * - TODO: Add method specification.
+     * - Updates category store relation of provided category.
+     * - Executes `CategoryStoreAssignerPluginInterface` plugin.
      *
      * @api
      *
-     * @deprecated Will be removed with next major release
-     *
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\UpdateCategoryStoreRelationRequestTransfer $updateCategoryStoreRelationRequestTransfer
      *
      * @return void
      */
-    public function addCategoryAttribute(CategoryTransfer $categoryTransfer, LocaleTransfer $localeTransfer);
+    public function updateCategoryStoreRelation(UpdateCategoryStoreRelationRequestTransfer $updateCategoryStoreRelationRequestTransfer): void;
 
     /**
      * Specification:
-     * - TODO: Add method specification.
+     * - Updates category store relation for passed category.
+     * - Updates category store relation for children category nodes where `category_node.is_main` is true.
      *
      * @api
      *
-     * @deprecated Will be removed with next major release
-     *
-     * @param int $idCategory
+     * @param \Generated\Shared\Transfer\UpdateCategoryStoreRelationRequestTransfer $updateCategoryStoreRelationRequestTransfer
      *
      * @return void
      */
-    public function deleteCategory($idCategory);
+    public function updateCategoryStoreRelationWithMainChildrenPropagation(
+        UpdateCategoryStoreRelationRequestTransfer $updateCategoryStoreRelationRequestTransfer
+    ): void;
 
     /**
      * Specification:
@@ -258,6 +132,7 @@ interface CategoryFacadeInterface
      *  - Finds extra-parent category-nodes and removes them from persistence
      *  - Finds url entities and removes them from persistence
      *  - Finds sub-trees for all category-nodes to be deleted and moves them to the next higher node in the tree
+     *  - Removes the relationships between category and store.
      *  - Updates all category-node entities of all sub-trees that are moved
      *  - Touches all deleted category-node entities deleted (via TouchFacade)
      *  - Touches all deleted url entities deleted (via TouchFacade)
@@ -271,53 +146,7 @@ interface CategoryFacadeInterface
      *
      * @return void
      */
-    public function delete($idCategory);
-
-    /**
-     * Specification:
-     *  - Finds sub-trees for the category node to be deleted and moves them under the destination node
-     *  - Touches deleted category-node deleted (via TouchFacade)
-     *  - Triggers CategoryEvents::CATEGORY_NODE_PUBLISH event for parent and children nodes
-     *
-     * @api
-     *
-     * @param int $idCategoryNode
-     * @param int $idChildrenDestinationNode
-     *
-     * @return void
-     */
-    public function deleteNodeById($idCategoryNode, $idChildrenDestinationNode);
-
-    /**
-     * Specification:
-     * - TODO: Add method specification.
-     *
-     * @api
-     *
-     * @deprecated Will be removed with next major release
-     *
-     * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
-     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
-     * @param bool $createUrlPath
-     *
-     * @return int
-     */
-    public function createCategoryNode(NodeTransfer $nodeTransfer, ?LocaleTransfer $localeTransfer = null, $createUrlPath = true);
-
-    /**
-     * Specification:
-     * - TODO: Add method specification.
-     *
-     * @api
-     *
-     * @deprecated Will be removed with next major release
-     *
-     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
-     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
-     *
-     * @return void
-     */
-    public function updateCategoryNode(NodeTransfer $categoryNodeTransfer, ?LocaleTransfer $localeTransfer = null);
+    public function delete(int $idCategory): void;
 
     /**
      * Specification:
@@ -332,149 +161,7 @@ interface CategoryFacadeInterface
      *
      * @return void
      */
-    public function updateCategoryNodeOrder($idCategoryNode, $position);
-
-    /**
-     * Specification:
-     * - TODO: Add method specification.
-     *
-     * @api
-     *
-     * @deprecated Will be removed with next major release
-     *
-     * @param int $idNode
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     * @param bool $deleteChildren
-     *
-     * @return int
-     */
-    public function deleteNode($idNode, LocaleTransfer $localeTransfer, $deleteChildren = false);
-
-    /**
-     * Specification:
-     * - TODO: Add method specification.
-     *
-     * @api
-     *
-     * @deprecated Will be removed with next major release
-     *
-     * @return bool
-     */
-    public function renderCategoryTreeVisual();
-
-    /**
-     * Specification:
-     * - TODO: Add method specification.
-     *
-     * @api
-     *
-     * @deprecated Will be removed with next major release
-     *
-     * @return \Generated\Shared\Transfer\NodeTransfer[]
-     */
-    public function getRootNodes();
-
-    /**
-     * Specification:
-     * - TODO: Add method specification.
-     *
-     * @api
-     *
-     * @deprecated Will be removed with next major release
-     *
-     * @param int $idCategory
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return array
-     */
-    public function getTree($idCategory, LocaleTransfer $localeTransfer);
-
-    /**
-     * Specification:
-     * - TODO: Add method specification.
-     *
-     * @api
-     *
-     * @deprecated Will be removed with next major release
-     *
-     * @param int $idNode
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNode[]|\Propel\Runtime\Collection\ObjectCollection
-     */
-    public function getChildren($idNode, LocaleTransfer $localeTransfer);
-
-    /**
-     * Specification:
-     * - TODO: Add method specification.
-     *
-     * @api
-     *
-     * @deprecated Will be removed with next major release
-     *
-     * @param int $idNode
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     * @param bool $excludeStartNode
-     *
-     * @return array
-     */
-    public function getParents($idNode, LocaleTransfer $localeTransfer, $excludeStartNode = true);
-
-    /**
-     * Specification:
-     *  - Finds first category-node for idCategory and finds all of its children
-     *  - Formats all child category-nodes as a nested array structure
-     *  - Category-node entities sorted by node order
-     *  - Returns array representation of sub-tree
-     *
-     * @api
-     *
-     * @param int $idCategory
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return array
-     */
-    public function getTreeNodeChildrenByIdCategoryAndLocale($idCategory, LocaleTransfer $localeTransfer);
-
-    /**
-     * Specification:
-     * - TODO: Add method specification.
-     *
-     * @api
-     *
-     * @return void
-     */
-    public function rebuildClosureTable();
-
-    /**
-     * Specification:
-     *  - Removes circular relations from closure table
-     *  - Finds all category-node entities, removes them, and re-creates them in closure table
-     *
-     * @api
-     *
-     * @deprecated Will be removed with next major release
-     *
-     * @param array $pathTokens
-     *
-     * @return string
-     */
-    public function generatePath(array $pathTokens);
-
-    /**
-     * Specification:
-     * - TODO: Add method specification.
-     *
-     * @api
-     *
-     * @deprecated Will be removed with next major release
-     *
-     * @param string $categoryKey
-     * @param int $idLocale
-     *
-     * @return \Generated\Shared\Transfer\CategoryTransfer
-     */
-    public function getCategoryByKey($categoryKey, $idLocale);
+    public function updateCategoryNodeOrder(int $idCategoryNode, int $position): void;
 
     /**
      * Specification:
@@ -487,61 +174,7 @@ interface CategoryFacadeInterface
      *
      * @return void
      */
-    public function touchCategoryActive($idCategory);
-
-    /**
-     * Specification:
-     *  - Finds all category-nodes that are children of idCategoryNode
-     *  - Formats all child category-nodes as a nested array structure
-     *  - Return array representation of ub-tree
-     *
-     * @api
-     *
-     * @param int $idCategoryNode
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return array
-     */
-    public function getSubTreeByIdCategoryNodeAndLocale($idCategoryNode, LocaleTransfer $localeTransfer);
-
-    /**
-     * Specification:
-     * - Takes template list from defined config
-     * - Creates new template records
-     * - Does not delete/update existing template records (safe)
-     *
-     * @api
-     *
-     * @return void
-     */
-    public function syncCategoryTemplate();
-
-    /**
-     * Specification:
-     * - Finds a template by the specified name
-     * - Hydrates a CategoryTemplateTransfer
-     * - Returns NULL if a template does not exist
-     *
-     * @api
-     *
-     * @param string $name
-     *
-     * @return \Generated\Shared\Transfer\CategoryTemplateTransfer|null
-     */
-    public function findCategoryTemplateByName($name);
-
-    /**
-     * Specification:
-     * - Check exist a first level children by the category name
-     *
-     * @api
-     *
-     * @param string $name
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return bool
-     */
-    public function hasFirstLevelChildrenByName(string $name, CategoryTransfer $categoryTransfer): bool;
+    public function touchCategoryActive(int $idCategory): void;
 
     /**
      * Specification:
@@ -559,6 +192,7 @@ interface CategoryFacadeInterface
     /**
      * Specification:
      * - Retrieves collection with all categories from DB.
+     * - Filters collection by related locale.
      *
      * @api
      *
@@ -603,4 +237,48 @@ interface CategoryFacadeInterface
      * @return string
      */
     public function getCategoryListUrl(): string;
+
+    /**
+     * Specification:
+     *  - Finds first category-node for idCategory and finds all of its children.
+     *  - Formats all child category-nodes as a nested array structure.
+     *  - Category-node entities sorted by node order.
+     *  - If `CategoryCriteriaTransfer.withChildren`, finds one level children.
+     *  - If `CategoryCriteriaTransfer.withChildrenRecursively`, finds all children recursively.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer $categoryCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryTransfer|null
+     */
+    public function findCategory(CategoryCriteriaTransfer $categoryCriteriaTransfer): ?CategoryTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves all NodeTransfers by categoryNodeIds and all their parents and children NodeTransfers.
+     * - Filters category nodes according to `CategoryNodeCriteriaTransfer`.
+     * - Requires `CategoryNodeCriteriaTransfer.categoryNodeIds` to be set.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\NodeCollectionTransfer
+     */
+    public function getCategoryNodesWithRelativeNodes(
+        CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
+    ): NodeCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves category nodes by criteria.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\NodeCollectionTransfer
+     */
+    public function getCategoryNodes(CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer): NodeCollectionTransfer;
 }

@@ -14,7 +14,7 @@ class CategoryStorageConstants
 {
     /**
      * Specification:
-     * - Queue name as used for processing category messages
+     * - Queue name as used for processing category messages.
      *
      * @api
      */
@@ -22,7 +22,7 @@ class CategoryStorageConstants
 
     /**
      * Specification:
-     * - Queue name as used for error category messages
+     * - Queue name as used for error category messages.
      *
      * @api
      */
@@ -30,7 +30,7 @@ class CategoryStorageConstants
 
     /**
      * Specification:
-     * - Resource name, this will use for key generating
+     * - Resource name, this will use for key generating.
      *
      * @api
      */
@@ -38,9 +38,49 @@ class CategoryStorageConstants
 
     /**
      * Specification:
-     * - Resource name, this will use for key generating
+     * - Resource name, this will use for key generating.
      *
      * @api
      */
     public const CATEGORY_TREE_RESOURCE_NAME = 'category_tree';
+
+    /**
+     * Specification
+     * - This events will be used for category_store publishing.
+     *
+     * @api
+     */
+    public const CATEGORY_STORE_PUBLISH = 'Category.category_store.publish';
+
+    /**
+     * Specification
+     * - This events will be used for category_store un-publishing.
+     *
+     * @api
+     */
+    public const CATEGORY_STORE_UNPUBLISH = 'Category.category_store.unpublish';
+
+    /**
+     * Specification:
+     * - This events will be used for spy_category_store entity creation.
+     *
+     * @api
+     */
+    public const ENTITY_SPY_CATEGORY_STORE_CREATE = 'Entity.spy_category_store.create';
+
+    /**
+     * Specification:
+     * - This events will be used for spy_category_store entity changes.
+     *
+     * @api
+     */
+    public const ENTITY_SPY_CATEGORY_STORE_UPDATE = 'Entity.spy_category_store.update';
+
+    /**
+     * Specification:
+     * - This events will be used for spy_category_store entity deletion.
+     *
+     * @api
+     */
+    public const ENTITY_SPY_CATEGORY_STORE_DELETE = 'Entity.spy_category_store.delete';
 }
