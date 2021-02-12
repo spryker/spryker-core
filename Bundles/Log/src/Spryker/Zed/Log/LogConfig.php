@@ -81,7 +81,7 @@ class LogConfig extends AbstractBundleConfig
      */
     public function getLogDestinationPath()
     {
-        return $this->getLogFilePath();
+        return $this->get(LogConstants::LOG_FILE_PATH_ZED, 'php://stderr');
     }
 
     /**
@@ -120,7 +120,7 @@ class LogConfig extends AbstractBundleConfig
      */
     public function getExceptionLogDestinationPath()
     {
-        return $this->getExceptionLogFilePath();
+        return $this->get(LogConstants::EXCEPTION_LOG_FILE_PATH_ZED, 'php://stderr');
     }
 
     /**
