@@ -141,6 +141,7 @@ class ReturnWriter implements ReturnWriterInterface
         $returnReference = $this->returnReferenceGenerator->generateReturnReference($returnTransfer);
 
         $returnTransfer->setReturnReference($returnReference);
+        $returnTransfer = $this->preCreate($returnTransfer);
 
         return $this->salesReturnEntityManager->createReturn($returnTransfer);
     }
@@ -323,5 +324,19 @@ class ReturnWriter implements ReturnWriterInterface
         }
 
         return $returnCreateRequestTransfer->getCustomer()->getCustomerReference();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
+     *
+     * @return \Generated\Shared\Transfer\ReturnTransfer
+     */
+    protected function preCreate(ReturnTransfer $returnTransfer): ReturnTransfer
+    {
+        foreach ($this->returnPreCreatePlugins as $returnPreCreatePlugin) {
+            $returnTransfer = $returnPreCreatePlugin->preCreate($returnTransfer);
+        }
+
+        return $returnTransfer;
     }
 }
