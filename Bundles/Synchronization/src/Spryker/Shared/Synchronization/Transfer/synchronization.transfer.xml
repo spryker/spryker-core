@@ -42,4 +42,9 @@
         <property name="data" type="array" singular="data"/>
     </transfer>
 
+    <transfer name="SynchronizationDataQueryExpanderStrategyConfiguration">
+        <property name="offset" type="int"/>
+        <property name="chunkSize" type="int"/>
+    </transfer>
+
 </transfers>

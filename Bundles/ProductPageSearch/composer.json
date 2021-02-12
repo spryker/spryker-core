@@ -6,7 +6,7 @@
   "require": {
     "php": ">=7.3",
     "spryker/catalog-price-product-connector": "^1.1.0",
-    "spryker/category": "^4.3.0",
+    "spryker/category": "^4.3.0 || ^5.0.0",
     "spryker/error-handler": "^2.0.0",
     "spryker/event-behavior": "^1.14.0",
     "spryker/kernel": "^3.49.0",

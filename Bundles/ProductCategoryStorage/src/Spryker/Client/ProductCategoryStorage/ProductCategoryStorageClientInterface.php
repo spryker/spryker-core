@@ -7,35 +7,39 @@
 
 namespace Spryker\Client\ProductCategoryStorage;
 
+use Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer;
+
 interface ProductCategoryStorageClientInterface
 {
     /**
      * Specification:
-     * - Returns Product Abstract Category by id.
-     * - Forward compatibility (from next major): only product abstract categories assigned with passed $storeName will be returned.
+     * - Returns Product Abstract Category by id for given store and locale.
      *
      * @api
      *
      * @param int $idProductAbstract
-     * @param string $locale
-     * @param string|null $storeName
+     * @param string $localeName
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer|null
      */
-    public function findProductAbstractCategory($idProductAbstract, $locale, ?string $storeName = null);
+    public function findProductAbstractCategory(
+        int $idProductAbstract,
+        string $localeName,
+        string $storeName
+    ): ?ProductAbstractCategoryStorageTransfer;
 
     /**
      * Specification:
-     * - Returns Categories grouped by Product Abstract id.
-     * - Forward compatibility (from next major): only product abstract categories assigned with passed $storeName will be returned.
+     * - Returns Product Abstract Categories grouped by Product Abstract ids for given store and locale.
      *
      * @api
      *
      * @param int[] $productAbstractIds
      * @param string $localeName
-     * @param string|null $storeName
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer[]
      */
-    public function findBulkProductAbstractCategory(array $productAbstractIds, string $localeName, ?string $storeName = null): array;
+    public function findBulkProductAbstractCategory(array $productAbstractIds, string $localeName, string $storeName): array;
 }
