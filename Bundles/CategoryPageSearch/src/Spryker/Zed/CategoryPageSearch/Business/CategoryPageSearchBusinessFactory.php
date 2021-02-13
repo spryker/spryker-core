@@ -7,39 +7,66 @@
 
 namespace Spryker\Zed\CategoryPageSearch\Business;
 
-use Spryker\Zed\CategoryPageSearch\Business\Search\CategoryNodePageSearch;
+use Spryker\Zed\CategoryPageSearch\Business\Deleter\CategoryNodePageSearchDeleter;
+use Spryker\Zed\CategoryPageSearch\Business\Deleter\CategoryNodePageSearchDeleterInterface;
+use Spryker\Zed\CategoryPageSearch\Business\Mapper\CategoryNodePageSearchMapper;
+use Spryker\Zed\CategoryPageSearch\Business\Mapper\CategoryNodePageSearchMapperInterface;
 use Spryker\Zed\CategoryPageSearch\Business\Search\DataMapper\CategoryNodePageSearchDataMapper;
 use Spryker\Zed\CategoryPageSearch\Business\Search\DataMapper\CategoryNodePageSearchDataMapperInterface;
+use Spryker\Zed\CategoryPageSearch\Business\Writer\CategoryNodePageSearchWriter;
+use Spryker\Zed\CategoryPageSearch\Business\Writer\CategoryNodePageSearchWriterInterface;
 use Spryker\Zed\CategoryPageSearch\CategoryPageSearchDependencyProvider;
+use Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToCategoryFacadeInterface;
+use Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToEventBehaviorFacadeInterface;
 use Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToStoreFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
  * @method \Spryker\Zed\CategoryPageSearch\CategoryPageSearchConfig getConfig()
+ * @method \Spryker\Zed\CategoryPageSearch\Persistence\CategoryPageSearchEntityManagerInterface getEntityManager()
  * @method \Spryker\Zed\CategoryPageSearch\Persistence\CategoryPageSearchQueryContainerInterface getQueryContainer()
  */
 class CategoryPageSearchBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\CategoryPageSearch\Business\Search\CategoryNodePageSearchInterface
+     * @return \Spryker\Zed\CategoryPageSearch\Business\Writer\CategoryNodePageSearchWriterInterface
      */
-    public function createCategoryNodeSearch()
+    public function createCategoryNodePageSearchWriter(): CategoryNodePageSearchWriterInterface
     {
-        return new CategoryNodePageSearch(
-            $this->getUtilEncoding(),
-            $this->createCategoryNodePageSearchDataMapper(),
-            $this->getQueryContainer(),
+        return new CategoryNodePageSearchWriter(
+            $this->getEntityManager(),
+            $this->createCategoryNodePageSearchMapper(),
+            $this->getCategoryFacade(),
             $this->getStoreFacade(),
-            $this->getConfig()->isSendingToQueue()
+            $this->getEventBehaviorFacade(),
+            $this->createCategoryNodePageSearchDeleter()
         );
     }
 
     /**
-     * @return \Spryker\Zed\CategoryPageSearch\Dependency\Service\CategoryPageSearchToUtilEncodingInterface
+     * @return \Spryker\Zed\CategoryPageSearch\Business\Mapper\CategoryNodePageSearchMapperInterface
      */
-    public function getUtilEncoding()
+    public function createCategoryNodePageSearchMapper(): CategoryNodePageSearchMapperInterface
     {
-        return $this->getProvidedDependency(CategoryPageSearchDependencyProvider::SERVICE_UTIL_ENCODING);
+        return new CategoryNodePageSearchMapper($this->createCategoryNodePageSearchDataMapper());
+    }
+
+    /**
+     * @return \Spryker\Zed\CategoryPageSearch\Business\Search\DataMapper\CategoryNodePageSearchDataMapperInterface
+     */
+    public function createCategoryNodePageSearchDataMapper(): CategoryNodePageSearchDataMapperInterface
+    {
+        return new CategoryNodePageSearchDataMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\CategoryPageSearch\Business\Deleter\CategoryNodePageSearchDeleterInterface
+     */
+    public function createCategoryNodePageSearchDeleter(): CategoryNodePageSearchDeleterInterface
+    {
+        return new CategoryNodePageSearchDeleter(
+            $this->getEntityManager()
+        );
     }
 
     /**
@@ -51,10 +78,18 @@ class CategoryPageSearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CategoryPageSearch\Business\Search\DataMapper\CategoryNodePageSearchDataMapperInterface
+     * @return \Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToCategoryFacadeInterface
      */
-    public function createCategoryNodePageSearchDataMapper(): CategoryNodePageSearchDataMapperInterface
+    public function getCategoryFacade(): CategoryPageSearchToCategoryFacadeInterface
     {
-        return new CategoryNodePageSearchDataMapper();
+        return $this->getProvidedDependency(CategoryPageSearchDependencyProvider::FACADE_CATEGORY);
+    }
+
+    /**
+     * @return \Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToEventBehaviorFacadeInterface
+     */
+    public function getEventBehaviorFacade(): CategoryPageSearchToEventBehaviorFacadeInterface
+    {
+        return $this->getProvidedDependency(CategoryPageSearchDependencyProvider::FACADE_EVENT_BEHAVIOR);
     }
 }
