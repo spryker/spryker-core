@@ -10,6 +10,9 @@ namespace Spryker\Service\MonitoringExtension\Dependency\Plugin;
 interface MonitoringExtensionPluginInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $message
@@ -20,7 +23,8 @@ interface MonitoringExtensionPluginInterface
     public function setError(string $message, $exception): void;
 
     /**
-     * Sets the name of the application, the current store and the environment.
+     * Specification:
+     * - Sets the name of the application, the current store and the environment.
      *
      * @api
      *
@@ -33,7 +37,8 @@ interface MonitoringExtensionPluginInterface
     public function setApplicationName(?string $application = null, ?string $store = null, ?string $environment = null): void;
 
     /**
-     * Name of the transaction (e.g. module/controller/action).
+     * Specification:
+     * - Name of the transaction (e.g. module/controller/action).
      *
      * @api
      *
@@ -44,7 +49,8 @@ interface MonitoringExtensionPluginInterface
     public function setTransactionName(string $name): void;
 
     /**
-     * Start recording of the current transaction.
+     * Specification:
+     * - Start recording of the current transaction.
      *
      * @api
      *
@@ -53,7 +59,8 @@ interface MonitoringExtensionPluginInterface
     public function markStartTransaction(): void;
 
     /**
-     * Stop recording the web transaction. This can be used to exclude time consuming operations that happen after
+     * Specification:
+     * - Stop recording the web transaction. This can be used to exclude time consuming operations that happen after
      * the request is completed.
      *
      * @api
@@ -63,7 +70,8 @@ interface MonitoringExtensionPluginInterface
     public function markEndOfTransaction(): void;
 
     /**
-     * Do not generate metrics for this transaction. This can be used for operations that are not relevant for the
+     * Specification:
+     * - Do not generate metrics for this transaction. This can be used for operations that are not relevant for the
      * statistics (e.g. to exclude the load balancer heartbeat check or very time consuming operations).
      *
      * @api
@@ -73,7 +81,8 @@ interface MonitoringExtensionPluginInterface
     public function markIgnoreTransaction(): void;
 
     /**
-     * Marks this transaction as a console command (e.g. for cronjobs)
+     * Specification:
+     * - Marks this transaction as a console command (e.g. for cronjobs)
      *
      * @api
      *
@@ -82,6 +91,9 @@ interface MonitoringExtensionPluginInterface
     public function markAsConsoleCommand(): void;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $key
@@ -92,6 +104,9 @@ interface MonitoringExtensionPluginInterface
     public function addCustomParameter(string $key, $value): void;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $tracer classname::function_name.

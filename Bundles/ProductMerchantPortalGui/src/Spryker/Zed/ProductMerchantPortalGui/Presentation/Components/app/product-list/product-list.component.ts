@@ -6,7 +6,7 @@ import { TableConfig } from '@spryker/table';
     templateUrl: './product-list.component.html',
     styleUrls: ['./product-list.component.less'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
 })
 export class ProductListComponent {
     @Input() tableConfig: TableConfig;

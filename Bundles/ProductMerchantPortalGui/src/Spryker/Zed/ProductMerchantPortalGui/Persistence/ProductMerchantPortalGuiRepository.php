@@ -10,9 +10,11 @@ namespace Spryker\Zed\ProductMerchantPortalGui\Persistence;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\MerchantProductTableCriteriaTransfer;
+use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\PriceProductAbstractTableCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductAbstractTableViewCollectionTransfer;
 use Generated\Shared\Transfer\PriceProductAbstractTableViewTransfer;
+use Generated\Shared\Transfer\PriceTypeTransfer;
 use Generated\Shared\Transfer\ProductAbstractCollectionTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
@@ -91,7 +93,10 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
             $merchantProductTableCriteriaTransfer->requirePageSize()->getPageSize()
         );
 
-        $paginationTransfer = $this->getFactory()->createPropelModelPagerMapper()->mapPropelModelPagerToPaginationTransfer($propelPager);
+        $paginationTransfer = $this->getFactory()->createPropelModelPagerMapper()->mapPropelModelPagerToPaginationTransfer(
+            $propelPager,
+            new PaginationTransfer()
+        );
         $productAbstractCollectionTransfer = $this->getFactory()
             ->createProductAbstractTableDataMapper()
             ->mapProductAbstractTableDataArrayToProductAbstractCollectionTransfer(
@@ -121,7 +126,7 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
         MerchantProductTableCriteriaTransfer $merchantProductTableCriteriaTransfer
     ): SpyMerchantProductAbstractQuery {
         $merchantProductAbstractPropelQuery = $this->getFactory()->getMerchantProductAbstractPropelQuery();
-        $idLocale = $merchantProductTableCriteriaTransfer->requireLocale()->getLocale()->requireIdLocale()->getIdLocale();
+        $idLocale = $merchantProductTableCriteriaTransfer->getLocaleOrFail()->getIdLocaleOrFail();
         $idMerchant = $merchantProductTableCriteriaTransfer->requireIdMerchant()->getIdMerchant();
 
         $merchantProductAbstractPropelQuery->filterByFkMerchant($idMerchant)
@@ -240,18 +245,20 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
      */
     protected function createProductAbstractCategoriesSubquery(int $idLocale): string
     {
+        /** @var \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery $productStoresSubquery */
         $productStoresSubquery = $this->getFactory()->getProductCategoryPropelQuery()
             ->joinSpyCategory()
             ->useSpyCategoryQuery()
                 ->joinAttribute()
-            ->endUse()
-            ->where(sprintf(
-                '%s = %s AND %s = %s',
-                SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
-                SpyProductCategoryTableMap::COL_FK_PRODUCT_ABSTRACT,
-                SpyCategoryAttributeTableMap::COL_FK_LOCALE,
-                $idLocale
-            ));
+            ->endUse();
+
+        $productStoresSubquery->where(sprintf(
+            '%s = %s AND %s = %s',
+            SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
+            SpyProductCategoryTableMap::COL_FK_PRODUCT_ABSTRACT,
+            SpyCategoryAttributeTableMap::COL_FK_LOCALE,
+            $idLocale
+        ));
         $productStoresSubquery->addAsColumn('category_names', sprintf('GROUP_CONCAT(DISTINCT %s)', SpyCategoryAttributeTableMap::COL_NAME));
         $params = [];
 
@@ -540,7 +547,10 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
             $priceProductAbstractTableCriteriaTransfer->requirePage()->getPage(),
             $priceProductAbstractTableCriteriaTransfer->requirePageSize()->getPageSize()
         );
-        $paginationTransfer = $this->getFactory()->createPropelModelPagerMapper()->mapPropelModelPagerToPaginationTransfer($propelPager);
+        $paginationTransfer = $this->getFactory()->createPropelModelPagerMapper()->mapPropelModelPagerToPaginationTransfer(
+            $propelPager,
+            new PaginationTransfer()
+        );
 
         $priceProductAbstractTableViewCollectionTransfer = $this->getFactory()
             ->createPriceProductAbstractTableDataMapper()
@@ -596,32 +606,14 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
             ->addAsColumn(PriceProductAbstractTableViewTransfer::ID_PRODUCT_ABSTRACT, SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT)
             ->select([SpyStoreTableMap::COL_NAME, SpyCurrencyTableMap::COL_CODE]);
 
-        $priceTypeValues = $this->getFactory()->getPriceProductFacade()->getPriceTypeValues();
+        $priceTypeTransfers = $this->getFactory()->getPriceProductFacade()->getPriceTypeValues();
 
-        foreach ($priceTypeValues as $priceTypeTransfer) {
+        foreach ($priceTypeTransfers as $priceTypeTransfer) {
             if (!$priceTypeTransfer->getIdPriceType()) {
                 continue;
             }
 
-            $priceTypeName = mb_strtolower($priceTypeTransfer->getName());
-            $grossColumnName = $priceTypeName . static::SUFFIX_PRICE_TYPE_GROSS;
-            $grossClause = sprintf(
-                'MAX(CASE WHEN %s = %s THEN %s END)',
-                SpyPriceProductTableMap::COL_FK_PRICE_TYPE,
-                $priceTypeTransfer->getIdPriceType(),
-                SpyPriceProductStoreTableMap::COL_GROSS_PRICE
-            );
-
-            $netColumnName = $priceTypeName . static::SUFFIX_PRICE_TYPE_NET;
-            $netClause = sprintf(
-                'MAX(CASE WHEN %s = %s THEN %s END)',
-                SpyPriceProductTableMap::COL_FK_PRICE_TYPE,
-                $priceTypeTransfer->getIdPriceType(),
-                SpyPriceProductStoreTableMap::COL_NET_PRICE
-            );
-
-            $priceProductDefaultQuery->addAsColumn($grossColumnName, $grossClause)
-                ->addAsColumn($netColumnName, $netClause);
+            $priceProductDefaultQuery = $this->addPriceTypeColumns($priceProductDefaultQuery, $priceTypeTransfer);
         }
 
         $priceProductDefaultQuery->addAsColumn(
@@ -637,11 +629,49 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
         );
 
         if ($priceProductAbstractTableCriteriaTransfer->getOrderBy()) {
+            $orderDirection = $priceProductAbstractTableCriteriaTransfer->getOrderDirection() ?? Criteria::ASC;
             $priceProductDefaultQuery->orderBy(
-                $priceProductAbstractTableCriteriaTransfer->getOrderBy(),
-                $priceProductAbstractTableCriteriaTransfer->getOrderDirection()
+                $priceProductAbstractTableCriteriaTransfer->getOrderByOrFail(),
+                $orderDirection
             );
         }
+
+        return $priceProductDefaultQuery;
+    }
+
+    /**
+     * @phpstan-param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductDefaultQuery<\Orm\Zed\PriceProduct\Persistence\SpyPriceProductDefaultQuery> $priceProductDefaultQuery
+     *
+     * @phpstan-return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductDefaultQuery<\Orm\Zed\PriceProduct\Persistence\SpyPriceProductDefaultQuery>
+     *
+     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductDefaultQuery $priceProductDefaultQuery
+     * @param \Generated\Shared\Transfer\PriceTypeTransfer $priceTypeTransfer
+     *
+     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductDefaultQuery
+     */
+    protected function addPriceTypeColumns(
+        SpyPriceProductDefaultQuery $priceProductDefaultQuery,
+        PriceTypeTransfer $priceTypeTransfer
+    ): SpyPriceProductDefaultQuery {
+        $priceTypeName = mb_strtolower($priceTypeTransfer->getNameOrFail());
+        $grossColumnName = $priceTypeName . static::SUFFIX_PRICE_TYPE_GROSS;
+        $grossClause = sprintf(
+            'MAX(CASE WHEN %s = %s THEN %s END)',
+            SpyPriceProductTableMap::COL_FK_PRICE_TYPE,
+            $priceTypeTransfer->getIdPriceType(),
+            SpyPriceProductStoreTableMap::COL_GROSS_PRICE
+        );
+
+        $netColumnName = $priceTypeName . static::SUFFIX_PRICE_TYPE_NET;
+        $netClause = sprintf(
+            'MAX(CASE WHEN %s = %s THEN %s END)',
+            SpyPriceProductTableMap::COL_FK_PRICE_TYPE,
+            $priceTypeTransfer->getIdPriceType(),
+            SpyPriceProductStoreTableMap::COL_NET_PRICE
+        );
+
+        $priceProductDefaultQuery->addAsColumn($grossColumnName, $grossClause)
+            ->addAsColumn($netColumnName, $netClause);
 
         return $priceProductDefaultQuery;
     }

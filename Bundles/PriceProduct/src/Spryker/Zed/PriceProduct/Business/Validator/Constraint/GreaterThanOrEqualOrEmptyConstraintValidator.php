@@ -17,7 +17,7 @@ class GreaterThanOrEqualOrEmptyConstraintValidator extends AbstractComparisonVal
      *
      * @return bool
      */
-    protected function compareValues($value1, $value2)
+    protected function compareValues($value1, $value2): bool
     {
         return $value1 === null || $value1 >= $value2;
     }

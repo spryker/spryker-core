@@ -256,7 +256,7 @@ class MerchantProductFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindProductAbstractFindsExistingProductByIdProductAbstractAndIdMerchant(): void
+    public function testFindMerchantProductFindsExistingProductByIdProductAbstractAndIdMerchant(): void
     {
         // Arrange
         $merchantTransfer = $this->tester->haveMerchant();
@@ -267,21 +267,25 @@ class MerchantProductFacadeTest extends Unit
         ]);
 
         // Act
-        $productAbstractTransfer = $this->tester->getFacade()->findProductAbstract(
+        $merchantProductTransfer = $this->tester->getFacade()->findMerchantProduct(
             (new MerchantProductCriteriaTransfer())
                 ->setIdProductAbstract($expectedProductAbstractTransfer->getIdProductAbstract())
                 ->setIdMerchant($merchantTransfer->getIdMerchant())
         );
 
         // Assert
-        $this->assertNotNull($productAbstractTransfer);
-        $this->assertSame($expectedProductAbstractTransfer->getIdProductAbstract(), $productAbstractTransfer->getIdProductAbstract());
+        $this->assertNotNull($merchantProductTransfer);
+        $this->assertNotNull($merchantProductTransfer->getProductAbstract());
+        $this->assertSame(
+            $expectedProductAbstractTransfer->getIdProductAbstract(),
+            $merchantProductTransfer->getProductAbstract()->getIdProductAbstract()
+        );
     }
 
     /**
      * @return void
      */
-    public function testFindProductAbstractReturnsNullIfMerchantProductDoesNotExist(): void
+    public function testFindMerchantProductReturnsNullIfMerchantProductDoesNotExist(): void
     {
         // Arrange
         $this->tester->ensureMerchantProductAbstractTableIsEmpty();
@@ -289,75 +293,57 @@ class MerchantProductFacadeTest extends Unit
         $productAbstractTransfer = $this->tester->haveProductAbstract();
 
         // Act
-        $productAbstractTransfer = $this->tester->getFacade()->findProductAbstract(
+        $merchantProductTransfer = $this->tester->getFacade()->findMerchantProduct(
             (new MerchantProductCriteriaTransfer())
                 ->setIdProductAbstract($productAbstractTransfer->getIdProductAbstract())
                 ->setIdMerchant($merchantTransfer->getIdMerchant())
         );
 
         // Assert
-        $this->assertNull($productAbstractTransfer);
+        $this->assertNull($merchantProductTransfer);
     }
 
     /**
      * @return void
      */
-    public function testUpdateProductAbstractUpdatesProductIfItBelongsToMerchant(): void
+    public function testValidateMerchantProductIsSuccessful(): void
     {
         // Arrange
-        $this->tester->ensureMerchantProductAbstractTableIsEmpty();
         $merchantTransfer = $this->tester->haveMerchant();
-        $expectedProductAbstractTransfer = $this->tester->haveProductAbstract();
-        $expectedProductAbstractTransfer->setSku($expectedProductAbstractTransfer->getSku() . '_changed');
-        $this->tester->haveMerchantProduct([
+        $productAbstractTransfer = $this->tester->haveProductAbstract();
+        $merchantProductTransfer = $this->tester->haveMerchantProduct([
             MerchantProductTransfer::ID_MERCHANT => $merchantTransfer->getIdMerchant(),
-            MerchantProductTransfer::ID_PRODUCT_ABSTRACT => $expectedProductAbstractTransfer->getIdProductAbstract(),
+            MerchantProductTransfer::ID_PRODUCT_ABSTRACT => $productAbstractTransfer->getIdProductAbstract(),
         ]);
+        $merchantProductTransfer->setProductAbstract($productAbstractTransfer);
 
         // Act
-        $productAbstractResponseTransfer = $this->tester->getFacade()->updateProductAbstract(
-            (new MerchantProductTransfer())
-                ->setIdProductAbstract($expectedProductAbstractTransfer->getIdProductAbstract())
-                ->setIdMerchant($merchantTransfer->getIdMerchant())
-                ->setProductAbstract($expectedProductAbstractTransfer)
-        );
-        $productAbstractTransfer = $this->tester->findProductAbstractById($expectedProductAbstractTransfer->getIdProductAbstract());
+        $validationResponseTransfer = $this->tester->getFacade()->validateMerchantProduct($merchantProductTransfer);
 
         // Assert
-        $this->assertTrue($productAbstractResponseTransfer->getIsSuccessful());
-        $this->assertNotNull($productAbstractTransfer);
-        $this->assertSame($expectedProductAbstractTransfer->getSku(), $productAbstractTransfer->getSku());
+        $this->assertTrue($validationResponseTransfer->getIsSuccess());
     }
 
     /**
      * @return void
      */
-    public function testUpdateProductAbstractDoesNotUpdateProductIfItDoesNotBelongToMerchant(): void
+    public function testValidateMerchantProductFailsIfAbstractProductDoesNotBelongToMerchant(): void
     {
         // Arrange
-        $this->tester->ensureMerchantProductAbstractTableIsEmpty();
-        $merchantTransfer1 = $this->tester->haveMerchant();
-        $merchantTransfer2 = $this->tester->haveMerchant();
-        $expectedProductAbstractTransfer = $this->tester->haveProductAbstract();
-        $expectedSku = $expectedProductAbstractTransfer->getSku();
-        $this->tester->haveMerchantProduct([
-            MerchantProductTransfer::ID_MERCHANT => $merchantTransfer1->getIdMerchant(),
-            MerchantProductTransfer::ID_PRODUCT_ABSTRACT => $expectedProductAbstractTransfer->getIdProductAbstract(),
+        $merchantTransfer = $this->tester->haveMerchant();
+        $productAbstractTransfer1 = $this->tester->haveProductAbstract();
+        $productAbstractTransfer2 = $this->tester->haveProductAbstract();
+        $merchantProductTransfer = $this->tester->haveMerchantProduct([
+            MerchantProductTransfer::ID_MERCHANT => $merchantTransfer->getIdMerchant(),
+            MerchantProductTransfer::ID_PRODUCT_ABSTRACT => $productAbstractTransfer2->getIdProductAbstract(),
         ]);
+        $merchantProductTransfer->setProductAbstract($productAbstractTransfer1);
 
         // Act
-        $productAbstractResponseTransfer = $this->tester->getFacade()->updateProductAbstract(
-            (new MerchantProductTransfer())
-                ->setIdProductAbstract($expectedProductAbstractTransfer->getIdProductAbstract())
-                ->setIdMerchant($merchantTransfer2->getIdMerchant())
-                ->setProductAbstract($expectedProductAbstractTransfer->setSku($expectedProductAbstractTransfer->getSku() . '_changed'))
-        );
-        $productAbstractTransfer = $this->tester->findProductAbstractById($expectedProductAbstractTransfer->getIdProductAbstract());
+        $validationResponseTransfer = $this->tester->getFacade()->validateMerchantProduct($merchantProductTransfer);
 
         // Assert
-        $this->assertFalse($productAbstractResponseTransfer->getIsSuccessful());
-        $this->assertNotNull($productAbstractTransfer);
-        $this->assertSame($expectedSku, $productAbstractTransfer->getSku());
+        $this->assertFalse($validationResponseTransfer->getIsSuccess());
     }
 
     /**

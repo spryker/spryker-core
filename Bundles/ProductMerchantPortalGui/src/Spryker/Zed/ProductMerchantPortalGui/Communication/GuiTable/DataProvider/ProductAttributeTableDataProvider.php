@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\DataProvider;
 
 use ArrayObject;
+use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductAttributeGuiTableConfigurationProvider;
 
 class ProductAttributeTableDataProvider implements ProductAttributeTableDataProviderInterface
@@ -25,15 +26,7 @@ class ProductAttributeTableDataProvider implements ProductAttributeTableDataProv
         $data = [];
 
         foreach ($localizedAttributeTransfers as $localizedAttributesTransfer) {
-            foreach ($localizedAttributesTransfer->getAttributes() as $attributeName => $value) {
-                if (!isset($data[$attributeName])) {
-                    $data[$attributeName] = [
-                        ProductAttributeGuiTableConfigurationProvider::COL_KEY_ATTRIBUTE_NAME => $attributeName,
-                    ];
-                }
-
-                $data[$attributeName][$localizedAttributesTransfer->getLocaleOrFail()->getLocaleName()] = $value;
-            }
+            $data = $this->addLocalizedAttributes($localizedAttributesTransfer, $data);
         }
 
         foreach ($attributes as $attributeName => $value) {
@@ -49,5 +42,28 @@ class ProductAttributeTableDataProvider implements ProductAttributeTableDataProv
         ksort($data);
 
         return array_values($data);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\LocalizedAttributesTransfer $localizedAttributesTransfer
+     * @param string[][] $data
+     *
+     * @return string[][]
+     */
+    protected function addLocalizedAttributes(
+        LocalizedAttributesTransfer $localizedAttributesTransfer,
+        array $data
+    ) {
+        foreach ($localizedAttributesTransfer->getAttributes() as $attributeName => $value) {
+            if (!isset($data[$attributeName])) {
+                $data[$attributeName] = [
+                    ProductAttributeGuiTableConfigurationProvider::COL_KEY_ATTRIBUTE_NAME => $attributeName,
+                ];
+            }
+
+            $data[$attributeName][$localizedAttributesTransfer->getLocaleOrFail()->getLocaleName()] = $value;
+        }
+
+        return $data;
     }
 }

@@ -13,24 +13,11 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 interface CategoryStorageQueryContainerInterface extends QueryContainerInterface
 {
     /**
-     * @api
+     * Specification:
+     * - Creates category node query.
+     * - Finds all category node entities sorted by node order.
+     * - Filters query on the `id_category_node` column.
      *
-     * @param array $localeNames
-     *
-     * @return \Orm\Zed\Locale\Persistence\SpyLocaleQuery
-     */
-    public function queryLocalesWithLocaleNames(array $localeNames);
-
-    /**
-     * @api
-     *
-     * @param int $idLocale
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
-     */
-    public function queryCategoryNode($idLocale);
-
-    /**
      * @api
      *
      * @param int[] $categoryNodeIds
@@ -40,22 +27,9 @@ interface CategoryStorageQueryContainerInterface extends QueryContainerInterface
     public function queryCategoryNodeByIds(array $categoryNodeIds): SpyCategoryNodeQuery;
 
     /**
-     * @api
+     * Specification:
+     * - Creates category tree storage query.
      *
-     * @param int $idLocale
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
-     */
-    public function queryCategoryNodeTree($idLocale);
-
-    /**
-     * @api
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
-     */
-    public function queryCategoryRoot();
-
-    /**
      * @api
      *
      * @return \Orm\Zed\CategoryStorage\Persistence\SpyCategoryTreeStorageQuery
@@ -63,6 +37,11 @@ interface CategoryStorageQueryContainerInterface extends QueryContainerInterface
     public function queryCategoryStorage();
 
     /**
+     * Specification:
+     * - Creates category node query.
+     * - Finds all category node entities sorted by node order.
+     * - Filters query on the `fk_category` column.
+     *
      * @api
      *
      * @param array $categoryIds
@@ -72,6 +51,10 @@ interface CategoryStorageQueryContainerInterface extends QueryContainerInterface
     public function queryCategoryNodeIdsByCategoryIds(array $categoryIds);
 
     /**
+     * Specification:
+     * - Creates category node storage query.
+     * - Filters query on the `fk_category_node` column.
+     *
      * @api
      *
      * @param array $categoryNodeIds
@@ -81,6 +64,11 @@ interface CategoryStorageQueryContainerInterface extends QueryContainerInterface
     public function queryCategoryNodeStorageByIds(array $categoryNodeIds);
 
     /**
+     * Specification:
+     * - Creates category node query.
+     * - Finds all category node entities sorted by node order.
+     * - Filters query on the `fk_category_template` column.
+     *
      * @api
      *
      * @param array $categoryTemplateIds

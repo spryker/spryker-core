@@ -16,6 +16,7 @@ use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\ProductAbstractResponseTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
+use Generated\Shared\Transfer\ValidationResponseTransfer;
 
 interface MerchantProductFacadeInterface
 {
@@ -46,7 +47,7 @@ interface MerchantProductFacadeInterface
     public function get(MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer): MerchantProductCollectionTransfer;
 
     /**
-     * Specifications:
+     * Specification:
      * - Validates that merchant references in the cart items match existing merchant products.
      *
      * @api
@@ -59,33 +60,32 @@ interface MerchantProductFacadeInterface
 
     /**
      * Specification:
-     * - Finds merchant product by provided MerchantProductCriteria and returns corresponding abstract product.
+     * - Finds merchant product by provided MerchantProductCriteria.
+     * - Sets corresponding abstract product if exists.
      * - Returns null if merchant product not found.
-     * - Returns null if abstract product not found.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer|null
+     * @return \Generated\Shared\Transfer\MerchantProductTransfer|null
      */
-    public function findProductAbstract(
+    public function findMerchantProduct(
         MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer
-    ): ?ProductAbstractTransfer;
+    ): ?MerchantProductTransfer;
 
     /**
      * Specification:
-     * - Updates abstract product if it belongs to merchant.
-     * - Returns ProductAbstractResponseTransfer.isSuccessful = true on successful update.
-     * - Returns ProductAbstractResponseTransfer.isSuccessful = false and corresponding error if product doesn't belong to merchant.
+     * - Validates abstract product belongs to a merchant.
+     * - Returns ValidationResponseTransfer transfer object.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\MerchantProductTransfer $merchantProductTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractResponseTransfer
+     * @return \Generated\Shared\Transfer\ValidationResponseTransfer
      */
-    public function updateProductAbstract(MerchantProductTransfer $merchantProductTransfer): ProductAbstractResponseTransfer;
+    public function validateMerchantProduct(MerchantProductTransfer $merchantProductTransfer): ValidationResponseTransfer;
 
     /**
      * Specification:

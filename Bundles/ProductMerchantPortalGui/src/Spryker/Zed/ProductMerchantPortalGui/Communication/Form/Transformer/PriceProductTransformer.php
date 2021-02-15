@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductAbstractTableViewTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Laminas\Filter\StringToLower;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToCurrencyFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMoneyFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToPriceProductFacadeInterface;
@@ -20,6 +21,8 @@ use Symfony\Component\Form\DataTransformerInterface;
 
 class PriceProductTransformer implements DataTransformerInterface
 {
+    protected const PRICE_KEY = '%s[%s][%s]';
+
     /**
      * @var int
      */
@@ -125,13 +128,12 @@ class PriceProductTransformer implements DataTransformerInterface
     }
 
     /**
-     * @phpstan-param array<mixed> $newPriceProduct
      * @phpstan-param array<int, \Generated\Shared\Transfer\PriceTypeTransfer> $priceTypeTransfers
      * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
      * @phpstan-return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
      *
-     * @param array $newPriceProduct
+     * @param mixed[] $newPriceProduct
      * @param \Generated\Shared\Transfer\PriceTypeTransfer[] $priceTypeTransfers
      * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      *
@@ -155,7 +157,7 @@ class PriceProductTransformer implements DataTransformerInterface
                 ->setFkStore($newPriceProduct[PriceProductAbstractTableViewTransfer::STORE])
                 ->setFkCurrency($newPriceProduct[PriceProductAbstractTableViewTransfer::CURRENCY]);
 
-            $priceTypeName = mb_strtolower($priceTypeTransfer->getName());
+            $priceTypeName = (new StringToLower())->filter($priceTypeTransfer->getNameOrFail());
             $netAmountKey = $this->createNetKey($priceTypeName);
             $grossAmountKey = $this->createGrossKey($priceTypeName);
 
@@ -181,15 +183,12 @@ class PriceProductTransformer implements DataTransformerInterface
 
     /**
      * @phpstan-param array<int, \Generated\Shared\Transfer\PriceTypeTransfer> $priceTypeTransfers
-     * @phpstan-param array<mixed> $prices
-     *
-     * @phpstan-return array<mixed>
      *
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      * @param \Generated\Shared\Transfer\PriceTypeTransfer[] $priceTypeTransfers
-     * @param array $prices
+     * @param mixed[] $prices
      *
-     * @return array
+     * @return mixed[]
      */
     protected function addPrices(
         PriceProductTransfer $priceProductTransfer,
@@ -206,7 +205,7 @@ class PriceProductTransformer implements DataTransformerInterface
                 continue;
             }
 
-            $priceTypeName = mb_strtolower((string)$priceTypeName);
+            $priceTypeName = (new StringToLower())->filter((string)$priceTypeName);
             $netAmountKey = $this->createNetKey($priceTypeName);
             $grossAmountKey = $this->createGrossKey($priceTypeName);
             /** @var \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer */
@@ -227,7 +226,7 @@ class PriceProductTransformer implements DataTransformerInterface
     protected function createGrossKey(string $pryceTypeName): string
     {
         return sprintf(
-            '%s[%s][%s]',
+            static::PRICE_KEY,
             $pryceTypeName,
             PriceProductTransfer::MONEY_VALUE,
             MoneyValueTransfer::GROSS_AMOUNT
@@ -242,7 +241,7 @@ class PriceProductTransformer implements DataTransformerInterface
     protected function createNetKey(string $pryceTypeName): string
     {
         return sprintf(
-            '%s[%s][%s]',
+            static::PRICE_KEY,
             $pryceTypeName,
             PriceProductTransfer::MONEY_VALUE,
             MoneyValueTransfer::NET_AMOUNT

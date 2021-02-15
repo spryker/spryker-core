@@ -18,7 +18,8 @@ use Generated\Shared\Transfer\UserTransfer;
 interface AclFacadeInterface
 {
     /**
-     * Main Installer Method
+     * Specification:
+     * - Main Installer Method
      *
      * @api
      *
@@ -27,6 +28,9 @@ interface AclFacadeInterface
     public function install();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $groupName
@@ -37,6 +41,9 @@ interface AclFacadeInterface
     public function addGroup($groupName, RolesTransfer $rolesTransfer);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\GroupTransfer $transfer
@@ -47,6 +54,9 @@ interface AclFacadeInterface
     public function updateGroup(GroupTransfer $transfer, RolesTransfer $rolesTransfer);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $id
@@ -56,6 +66,9 @@ interface AclFacadeInterface
     public function getGroup($id);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $name
@@ -78,6 +91,9 @@ interface AclFacadeInterface
     public function findGroup(GroupCriteriaTransfer $groupCriteriaTransfer): ?GroupTransfer;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Generated\Shared\Transfer\GroupsTransfer
@@ -85,6 +101,9 @@ interface AclFacadeInterface
     public function getAllGroups();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return bool
@@ -92,6 +111,9 @@ interface AclFacadeInterface
     public function hasCurrentUser();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Generated\Shared\Transfer\UserTransfer
@@ -99,6 +121,9 @@ interface AclFacadeInterface
     public function getCurrentUser();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $name
@@ -108,6 +133,9 @@ interface AclFacadeInterface
     public function existsRoleByName($name);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $id
@@ -129,6 +157,9 @@ interface AclFacadeInterface
     public function findRoleById(int $id): ?RoleTransfer;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $name
@@ -138,6 +169,9 @@ interface AclFacadeInterface
     public function getRoleByName($name);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $name
@@ -147,6 +181,9 @@ interface AclFacadeInterface
     public function addRole($name);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\RoleTransfer $roleTransfer
@@ -156,6 +193,9 @@ interface AclFacadeInterface
     public function updateRole(RoleTransfer $roleTransfer);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $id
@@ -165,6 +205,9 @@ interface AclFacadeInterface
     public function getRule($id);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idUser
@@ -175,6 +218,9 @@ interface AclFacadeInterface
     public function addUserToGroup($idUser, $idGroup);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idUser
@@ -185,6 +231,9 @@ interface AclFacadeInterface
     public function userHasGroupId($idUser, $idGroup);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $name
@@ -194,6 +243,9 @@ interface AclFacadeInterface
     public function hasGroupByName($name);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idUser
@@ -203,6 +255,9 @@ interface AclFacadeInterface
     public function getUserGroups($idUser);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idUser
@@ -213,6 +268,9 @@ interface AclFacadeInterface
     public function removeUserFromGroup($idUser, $idGroup);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\RuleTransfer $ruleTransfer
@@ -222,6 +280,9 @@ interface AclFacadeInterface
     public function addRule(RuleTransfer $ruleTransfer);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idGroup
@@ -231,6 +292,9 @@ interface AclFacadeInterface
     public function getGroupRoles($idGroup);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idGroup
@@ -240,6 +304,9 @@ interface AclFacadeInterface
     public function getGroupRules($idGroup);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idRole
@@ -249,6 +316,9 @@ interface AclFacadeInterface
     public function getRoleRules($idRole);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idAclRole
@@ -262,6 +332,9 @@ interface AclFacadeInterface
     public function existsRoleRule($idAclRole, $bundle, $controller, $action, $type);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idUser
@@ -271,6 +344,9 @@ interface AclFacadeInterface
     public function getUserRoles($idUser);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idGroup
@@ -280,6 +356,9 @@ interface AclFacadeInterface
     public function removeGroup($idGroup);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idRole
@@ -289,6 +368,9 @@ interface AclFacadeInterface
     public function removeRole($idRole);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idRule
@@ -298,6 +380,9 @@ interface AclFacadeInterface
     public function removeRule($idRule);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idRole
@@ -308,6 +393,9 @@ interface AclFacadeInterface
     public function addRoleToGroup($idRole, $idGroup);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\GroupTransfer $groupTransfer
@@ -318,6 +406,9 @@ interface AclFacadeInterface
     public function addRolesToGroup(GroupTransfer $groupTransfer, RolesTransfer $rolesTransfer);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\UserTransfer $user
@@ -347,6 +438,9 @@ interface AclFacadeInterface
     ): NavigationItemCollectionTransfer;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $bundle

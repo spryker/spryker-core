@@ -7,25 +7,14 @@
 
 namespace Spryker\Zed\Category\Persistence;
 
-use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
-use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
-use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface CategoryQueryContainerInterface extends QueryContainerInterface
 {
     /**
-     * @api
+     * Specification:
+     * - Filters category node query on the `id_category_node` column.
      *
-     * @deprecated Will be removed with next major release
-     *
-     * @param int $idLocale
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
-     */
-    public function queryNodeWithDirectParent($idLocale);
-
-    /**
      * @api
      *
      * @param int $idNode
@@ -45,6 +34,9 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
     public function queryAllCategoryNodes();
 
     /**
+     * Specification:
+     * - Creates category attribute query.
+     *
      * @api
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryAttributeQuery
@@ -52,6 +44,10 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
     public function queryAllCategoryAttributes();
 
     /**
+     * Specification:
+     * - Filters category node query on the `fk_parent_category_node` column.
+     * - Finds category node entities sorted by node order.
+     *
      * @api
      *
      * @param int $idNode
@@ -61,18 +57,9 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
     public function queryFirstLevelChildren($idNode);
 
     /**
-     * @api
+     * Specification:
+     * - Creates category attribute query for root nodes with virtual columns.
      *
-     * @deprecated Will be removed with next major release
-     *
-     * @param int $idCategory
-     * @param int $idParentNode
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
-     */
-    public function queryNodeByIdCategoryAndParentNode($idCategory, $idParentNode);
-
-    /**
      * @api
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryAttributeQuery
@@ -80,16 +67,9 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
     public function queryRootNodes();
 
     /**
-     * @api
+     * Specification:
+     * - Filters category closure table query on the `fk_category_node` or `fk_category_node_descendant` column.
      *
-     * @param int $idNode
-     * @param int $idLocale
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
-     */
-    public function queryFirstLevelChildrenByIdLocale($idNode, $idLocale);
-
-    /**
      * @api
      *
      * @param int $idNode
@@ -99,6 +79,9 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
     public function queryClosureTableByNodeId($idNode);
 
     /**
+     * Specification:
+     * - Filters category closure table query on the `fk_category_node` column with additional joins.
+     *
      * @api
      *
      * @param int $idNode
@@ -110,6 +93,9 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
     public function queryClosureTableParentEntries($idNode);
 
     /**
+     * Specification:
+     * - Filters category closure table query on the `fk_category_node` column.
+     *
      * @api
      *
      * @param int $idNode
@@ -119,6 +105,9 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
     public function queryClosureTableFilterByIdNode($idNode);
 
     /**
+     * Specification:
+     * - Filters category closure table query on the `fk_category_node_descendant` column.
+     *
      * @api
      *
      * @param int $idNodeDescendant
@@ -128,18 +117,10 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
     public function queryClosureTableFilterByIdNodeDescendant($idNodeDescendant);
 
     /**
-     * @api
+     * Specification:
+     * - Creates category node query with virtual columns.
+     * - Filters category node query on the `fk_category_node_descendant` and `fk_locale` columns.
      *
-     * @param int $idNode
-     * @param int $idLocale
-     * @param bool $onlyOneLevel
-     * @param bool $excludeStartNode
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
-     */
-    public function queryChildren($idNode, $idLocale, $onlyOneLevel = true, $excludeStartNode = true);
-
-    /**
      * @api
      *
      * @param int $idNode
@@ -154,31 +135,11 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
     public function queryPath($idNode, $idLocale, $excludeRootNode = true, $onlyParents = false);
 
     /**
-     * @api
+     * Specification:
+     * - Creates category node query.
+     * - Filter the query on the `is_root` column is true.
+     * - Finds category node entities sorted by node order.
      *
-     * @deprecated Will be removed with next major release
-     *
-     * @param int $idParentNode
-     * @param bool $excludeRoot
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery
-     */
-    public function getChildrenPath($idParentNode, $excludeRoot = true);
-
-    /**
-     * @api
-     *
-     * @deprecated Will be removed with next major release
-     *
-     * @param int $idChildNode
-     * @param int $idLocale
-     * @param bool $excludeRoot
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery
-     */
-    public function getParentPath($idChildNode, $idLocale, $excludeRoot = true);
-
-    /**
      * @api
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
@@ -186,17 +147,10 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
     public function queryRootNode();
 
     /**
-     * @api
+     * Specification:
+     * - Creates category attribute query.
+     * - Filter query on the `fk_category` column.
      *
-     * @deprecated Will be removed with next major release
-     *
-     * @param int $idNode
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery
-     */
-    public function queryDescendant($idNode);
-
-    /**
      * @api
      *
      * @param int $idCategory
@@ -206,6 +160,10 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
     public function queryAttributeByCategoryId($idCategory);
 
     /**
+     * Specification:
+     * - Creates category node query.
+     * - Filter query on the `fk_category` column.
+     *
      * @api
      *
      * @param int $idCategory
@@ -215,24 +173,10 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
     public function queryAllNodesByCategoryId($idCategory);
 
     /**
-     * @api
+     * Specification:
+     * - Creates category query.
+     * - Filter query on the `id_category` column.
      *
-     * @param int $idCategory
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
-     */
-    public function queryMainNodesByCategoryId($idCategory);
-
-    /**
-     * @api
-     *
-     * @param int $idCategory
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
-     */
-    public function queryNotMainNodesByCategoryId($idCategory);
-
-    /**
      * @api
      *
      * @param int $idCategory
@@ -242,33 +186,9 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
     public function queryCategoryById($idCategory);
 
     /**
-     * @api
+     * Specification:
+     * - Creates category query with virtual columns.
      *
-     * @param string $categoryKey
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryQuery
-     */
-    public function queryCategoryByKey($categoryKey);
-
-    /**
-     * @api
-     *
-     * @param string $categoryKey
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
-     */
-    public function queryMainCategoryNodeByCategoryKey($categoryKey);
-
-    /**
-     * @api
-     *
-     * @param int $idNode
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
-     */
-    public function queryCategoryNodeByNodeId($idNode);
-
-    /**
      * @api
      *
      * @param int $idLocale
@@ -278,32 +198,10 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
     public function queryCategory($idLocale);
 
     /**
-     * @api
+     * Specification:
+     * - Creates category node query with virtual columns.
+     * - Filter query on the `fk_locale` column.
      *
-     * @deprecated Will be removed with next major release
-     *
-     * @param int $idCategory
-     * @param int $idLocale
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryAttributeQuery
-     */
-    public function queryAttributeByCategoryIdAndLocale($idCategory, $idLocale);
-
-    /**
-     * @api
-     *
-     * @deprecated Will be removed with next major release
-     *
-     * @param string $name
-     * @param int $idLocale
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryAttributeQuery
-     */
-    public function queryCategoryAttributesByName($name, $idLocale);
-
-    /**
      * @api
      *
      * @param int $idLocale
@@ -315,175 +213,10 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
     public function queryCategoryNode($idLocale);
 
     /**
-     * @api
+     * Specification:
+     * - Creates url query.
+     * - Filter query on the `fk_resource_categorynode` column.
      *
-     * @deprecated Will be removed with next major release
-     *
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $expandableQuery
-     * @param string $rightTableAlias
-     * @param string $fieldIdentifier
-     * @param string $leftTableAlias
-     *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
-     */
-    public function joinCategoryQueryWithChildrenCategories(
-        ModelCriteria $expandableQuery,
-        $rightTableAlias = 'categoryChildren',
-        $fieldIdentifier = 'child',
-        $leftTableAlias = SpyCategoryNodeTableMap::TABLE_NAME
-    );
-
-    /**
-     * @api
-     *
-     * @deprecated Will be removed with next major release
-     *
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $expandableQuery
-     * @param bool $excludeDirectParent
-     * @param bool $excludeRoot
-     * @param string $leftTableAlias
-     * @param string $relationTableAlias
-     * @param string $fieldIdentifier
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
-     */
-    public function joinCategoryQueryWithParentCategories(
-        ModelCriteria $expandableQuery,
-        $excludeDirectParent = true,
-        $excludeRoot = true,
-        $leftTableAlias = SpyCategoryNodeTableMap::TABLE_NAME,
-        $relationTableAlias = 'categoryParents',
-        $fieldIdentifier = 'parent'
-    );
-
-    /**
-     * @api
-     *
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $expandableQuery
-     * @param string $leftAlias
-     *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
-     */
-    public function joinCategoryQueryWithUrls(ModelCriteria $expandableQuery, $leftAlias = SpyCategoryNodeTableMap::TABLE_NAME);
-
-    /**
-     * @api
-     *
-     * @deprecated Will be removed with next major release
-     *
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $expandableQuery
-     * @param string $relationTableAlias
-     * @param string $fieldIdentifier
-     *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
-     */
-    public function joinLocalizedRelatedCategoryQueryWithAttributes(ModelCriteria $expandableQuery, $relationTableAlias, $fieldIdentifier);
-
-    /**
-     * @api
-     *
-     * @deprecated Will be removed with next major release
-     *
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $expandableQuery
-     * @param string $relationTableAlias
-     * @param string $fieldIdentifier
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
-     */
-    public function joinRelatedCategoryQueryWithUrls(ModelCriteria $expandableQuery, $relationTableAlias, $fieldIdentifier);
-
-    /**
-     * @api
-     *
-     * @deprecated Will be removed with next major release
-     *
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $expandableQuery
-     * @param string $tableAlias
-     *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
-     */
-    public function selectCategoryAttributeColumns(ModelCriteria $expandableQuery, $tableAlias = SpyCategoryAttributeTableMap::TABLE_NAME);
-
-    /**
-     * @api
-     *
-     * @deprecated Will be removed with next major release
-     *
-     * @param int $idCategory
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryAttributeQuery
-     */
-    public function queryCategoryAttributes($idCategory);
-
-    /**
-     * @api
-     *
-     * @deprecated Will be removed with next major release
-     *
-     * @param string $categoryName
-     * @param int $idLocale
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
-     */
-    public function queryNodeByCategoryName($categoryName, $idLocale);
-
-    /**
-     * @api
-     *
-     * @param string $categoryKey
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
-     */
-    public function queryNodeByCategoryKey($categoryKey);
-
-    /**
-     * @api
-     *
-     * @deprecated Will be removed with next major release
-     *
-     * @param string $categoryKey
-     * @param int $idLocale
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryQuery
-     */
-    public function queryByCategoryKey($categoryKey, $idLocale);
-
-    /**
-     * @api
-     *
-     * @param int $idCategoryNode
-     *
-     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
-     */
-    public function queryUrlByIdCategoryNode($idCategoryNode);
-
-    /**
-     * @api
-     *
-     * @param int $idParentNode
-     * @param int $idLocale
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
-     */
-    public function getCategoryNodesWithOrder($idParentNode, $idLocale);
-
-    /**
-     * @api
-     *
-     * @param int $idCategoryNode
-     * @param int $idLocale
-     *
-     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
-     */
-    public function queryResourceUrlByCategoryNodeAndLocaleId($idCategoryNode, $idLocale);
-
-    /**
      * @api
      *
      * @param int $idCategoryNode
@@ -493,6 +226,9 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
     public function queryResourceUrlByCategoryNodeId($idCategoryNode);
 
     /**
+     * Specification:
+     * - Creates category template query.
+     *
      * @api
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryTemplateQuery
@@ -500,15 +236,10 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
     public function queryCategoryTemplate();
 
     /**
-     * @api
+     * Specification:
+     * - Creates category template query.
+     * - Filter query on the `name` column.
      *
-     * @param int $idCategoryTemplate
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryTemplateQuery
-     */
-    public function queryCategoryTemplateById($idCategoryTemplate);
-
-    /**
      * @api
      *
      * @param string $nameCategoryTemplate
@@ -516,14 +247,4 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Category\Persistence\SpyCategoryTemplateQuery
      */
     public function queryCategoryTemplateByName($nameCategoryTemplate);
-
-    /**
-     * @api
-     *
-     * @param int $idNode
-     * @param string $nodeName
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
-     */
-    public function queryFirstLevelChildrenByName(int $idNode, string $nodeName);
 }

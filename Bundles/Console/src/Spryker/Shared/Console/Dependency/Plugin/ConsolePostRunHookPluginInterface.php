@@ -13,8 +13,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 interface ConsolePostRunHookPluginInterface
 {
     /**
-     * Specification
-     *  - The post-run plugins will be executed after each console commands
+     * Specification:
+     * - The post-run plugins will be executed after each console commands
      *
      * @api
      *

@@ -10,7 +10,7 @@ namespace Spryker\Zed\Event\Dependency\Plugin;
 interface EventBulkHandlerInterface extends EventBaseHandlerInterface
 {
     /**
-     * Specification
+     * Specification:
      *  - Listeners needs to implement this interface to execute the codes for more
      *  than one event at same time (Bulk Operation)
      *

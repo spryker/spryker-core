@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\ProductAbstractTransfer;
+
 class ProductMerchantPortalGuiToProductFacadeBridge implements ProductMerchantPortalGuiToProductFacadeInterface
 {
     /**
@@ -20,6 +22,16 @@ class ProductMerchantPortalGuiToProductFacadeBridge implements ProductMerchantPo
     public function __construct($productFacade)
     {
         $this->productFacade = $productFacade;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return int
+     */
+    public function saveProductAbstract(ProductAbstractTransfer $productAbstractTransfer)
+    {
+        return $this->productFacade->saveProductAbstract($productAbstractTransfer);
     }
 
     /**

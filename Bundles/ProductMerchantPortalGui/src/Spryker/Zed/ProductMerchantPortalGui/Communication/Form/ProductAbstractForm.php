@@ -115,7 +115,7 @@ class ProductAbstractForm extends AbstractType
                 'multiple' => true,
                 'label' => static::LABEL_STORES,
                 'required' => false,
-                'empty_data' => [],
+                'empty_data' => $builder->getData()->getStoreRelation()->getIdStores(),
                 'attr' => [
                     'placeholder' => static::PLACEHOLDER_STORES,
                 ],
@@ -169,7 +169,7 @@ class ProductAbstractForm extends AbstractType
                 'multiple' => true,
                 'label' => static::LABEL_CATEGORIES,
                 'required' => false,
-                'empty_data' => [],
+                'empty_data' => $builder->getData()->getCategoryIds(),
                 'attr' => [
                     'placeholder' => static::PLACEHOLDER_CATEGORIES,
                 ],

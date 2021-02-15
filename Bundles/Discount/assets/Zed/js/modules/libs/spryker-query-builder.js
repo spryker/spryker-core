@@ -1,7 +1,7 @@
 'use strict';
 
-window.SQLParser = require('sql-parser/browser/sql-parser');
-require('jquery-query-builder');
+window.SQLParser = require('@spryker/sql-parser-mistic/browser/sql-parser');
+require('@spryker/jquery-query-builder');
 
 function SprykerQueryBuilder(options) {
     var self = this;
@@ -12,7 +12,7 @@ function SprykerQueryBuilder(options) {
     this.inputElement = options.inputElement;
     this.targetElement = options.targetElement;
     this.label = options.label || 'Build Query';
-    this.init = function() {
+    this.init = function () {
         self.builder = $(self.targetElement);
         self.createBuilder();
     };
@@ -20,22 +20,22 @@ function SprykerQueryBuilder(options) {
     this.init();
 
     if (options.disableValidation === true) {
-        self.builder.on('validationError.queryBuilder', function(e, rule, error, value){
+        self.builder.on('validationError.queryBuilder', function (e, rule, error, value) {
             e.preventDefault();
         });
     }
 }
 
-SprykerQueryBuilder.prototype.createBuilder = function() {
+SprykerQueryBuilder.prototype.createBuilder = function () {
     var self = this;
 
-    $.get(self.getFiltersUrl).done(function(filters) {
+    $.get(self.getFiltersUrl).done(function (filters) {
         self.builder.queryBuilder({
             filters: filters,
             sqlOperators: self.getSqlOperators(),
             sqlRuleOperator: self.getSqlRuleOperators(),
             allow_empty: true,
-            display_empty_filter: true
+            display_empty_filter: true,
         });
         self.builder.prepend('<label class="control-label query-builder-label">' + self.label + '</label>');
         if (typeof self.sql !== 'undefined' && self.sql !== '') {
@@ -44,7 +44,7 @@ SprykerQueryBuilder.prototype.createBuilder = function() {
     });
 };
 
-SprykerQueryBuilder.prototype.toggleButton = function(event) {
+SprykerQueryBuilder.prototype.toggleButton = function (event) {
     var self = this;
     var inputElementContainer = $(self.inputElement).parent();
     var label = '';
@@ -65,62 +65,61 @@ SprykerQueryBuilder.prototype.toggleButton = function(event) {
         self.sql = $(self.inputElement).val();
         self.createBuilder();
         label = button.data('label-plain-query');
-
     }
     button.text(label);
 };
 
-SprykerQueryBuilder.prototype.getSqlOperators = function() {
+SprykerQueryBuilder.prototype.getSqlOperators = function () {
     return {
         contains: {
             op: 'CONTAINS ?',
-            mod: '{0}'
+            mod: '{0}',
         },
         not_contains: {
             op: 'DOES NOT CONTAIN ?',
-            mod: '{0}'
+            mod: '{0}',
         },
-        in : {
+        in: {
             op: 'IS IN ?',
-            sep: ', '
+            sep: ', ',
         },
         not_in: {
             op: 'IS NOT IN ?',
-            sep: ', '
-        }
+            sep: ', ',
+        },
     };
 };
 
-SprykerQueryBuilder.prototype.getSqlRuleOperators = function() {
+SprykerQueryBuilder.prototype.getSqlRuleOperators = function () {
     return {
-        'CONTAINS': function(v) {
+        CONTAINS: function (v) {
             return {
                 val: v,
-                op: 'contains'
+                op: 'contains',
             };
         },
-        'DOES NOT CONTAIN': function(v) {
+        'DOES NOT CONTAIN': function (v) {
             return {
                 val: v,
-                op: 'not_contains'
+                op: 'not_contains',
             };
         },
-        'IS IN': function(v) {
+        'IS IN': function (v) {
             return {
                 val: v,
-                op: 'in'
+                op: 'in',
             };
         },
-        'IS NOT IN': function(v) {
+        'IS NOT IN': function (v) {
             return {
                 val: v,
-                op: 'not_in'
+                op: 'not_in',
             };
-        }
+        },
     };
 };
 
-SprykerQueryBuilder.prototype.saveQuery = function() {
+SprykerQueryBuilder.prototype.saveQuery = function () {
     if (!this.inputElement.parent().hasClass('hidden')) {
         return;
     }

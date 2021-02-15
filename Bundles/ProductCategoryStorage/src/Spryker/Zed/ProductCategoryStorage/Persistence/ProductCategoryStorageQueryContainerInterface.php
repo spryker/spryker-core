@@ -13,28 +13,8 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 interface ProductCategoryStorageQueryContainerInterface extends QueryContainerInterface
 {
     /**
-     * @api
-     *
-     * @param int $idProductAbstract
-     *
-     * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
-     */
-    public function queryProductCategoryMappings($idProductAbstract);
-
-    /**
-     * @api
-     *
-     * @deprecated Will be removed in the next major.
-     *
-     * @param int[] $productCategoryIds
-     *
-     * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
-     */
-    public function queryProductCategoryByIds($productCategoryIds);
-
-    /**
      * Specification:
-     * - Returns a a query for the table `spy_product_category` filtered by primary ids.
+     * - Returns a query for the table `spy_product_category` filtered by primary ids.
      *
      * @api
      *
@@ -45,30 +25,10 @@ interface ProductCategoryStorageQueryContainerInterface extends QueryContainerIn
     public function queryProductCategoryByProductCategoryIds($productCategoryIds): SpyProductCategoryQuery;
 
     /**
-     * @api
+     * Specification:
+     * - Creates product abstract category storage query.
+     * - Filters query on the `fk_product_abstract` column.
      *
-     * @param int $idNode
-     * @param int $idLocale
-     * @param bool $excludeRootNode
-     * @param bool $onlyParents
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
-     */
-    public function queryPath($idNode, $idLocale, $excludeRootNode = true, $onlyParents = false);
-
-    /**
-     * @api
-     *
-     * @param int $idCategoryNode
-     * @param int $idLocale
-     *
-     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
-     */
-    public function queryUrlByIdCategoryNode($idCategoryNode, $idLocale);
-
-    /**
      * @api
      *
      * @param int[] $productAbstractIds
@@ -78,24 +38,10 @@ interface ProductCategoryStorageQueryContainerInterface extends QueryContainerIn
     public function queryProductAbstractCategoryStorageByIds(array $productAbstractIds);
 
     /**
-     * @api
+     * Specification:
+     * - Creates product category query.
+     * - Filters query on the `fk_category` column.
      *
-     * @param int[] $productAbstractIds
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery
-     */
-    public function queryProductAbstractLocalizedByIds(array $productAbstractIds);
-
-    /**
-     * @api
-     *
-     * @param int $idNode
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery
-     */
-    public function queryAllCategoryIdsByNodeId($idNode);
-
-    /**
      * @api
      *
      * @param array $categoryIds
@@ -105,6 +51,11 @@ interface ProductCategoryStorageQueryContainerInterface extends QueryContainerIn
     public function queryProductAbstractIdsByCategoryIds(array $categoryIds);
 
     /**
+     * Specification:
+     * - Creates category node query.
+     * - Finds all category node entities sorted by node order.
+     * - Filters query on the `id_category_node` column.
+     *
      * @api
      *
      * @param array $nodeIds
@@ -112,27 +63,4 @@ interface ProductCategoryStorageQueryContainerInterface extends QueryContainerIn
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
      */
     public function queryCategoryIdsByNodeIds(array $nodeIds);
-
-    /**
-     * @api
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
-     */
-    public function queryAllCategoriesWithAttributesAndOrderByDescendant();
-
-    /**
-     * @api
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
-     */
-    public function queryAllCategoryNodes();
-
-    /**
-     * @api
-     *
-     * @param int[] $productAbstractIds
-     *
-     * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
-     */
-    public function queryProductCategoryWithCategoryNodes(array $productAbstractIds);
 }

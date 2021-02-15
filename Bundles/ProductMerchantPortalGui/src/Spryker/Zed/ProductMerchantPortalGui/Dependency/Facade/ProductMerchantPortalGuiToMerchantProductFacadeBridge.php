@@ -9,8 +9,7 @@ namespace Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\MerchantProductCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantProductTransfer;
-use Generated\Shared\Transfer\ProductAbstractResponseTransfer;
-use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ValidationResponseTransfer;
 use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
 
 class ProductMerchantPortalGuiToMerchantProductFacadeBridge implements ProductMerchantPortalGuiToMerchantProductFacadeInterface
@@ -31,22 +30,22 @@ class ProductMerchantPortalGuiToMerchantProductFacadeBridge implements ProductMe
     /**
      * @param \Generated\Shared\Transfer\MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer|null
+     * @return \Generated\Shared\Transfer\MerchantProductTransfer|null
      */
-    public function findProductAbstract(
+    public function findMerchantProduct(
         MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer
-    ): ?ProductAbstractTransfer {
-        return $this->merchantProductFacade->findProductAbstract($merchantProductCriteriaTransfer);
+    ): ?MerchantProductTransfer {
+        return $this->merchantProductFacade->findMerchantProduct($merchantProductCriteriaTransfer);
     }
 
     /**
      * @param \Generated\Shared\Transfer\MerchantProductTransfer $merchantProductTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractResponseTransfer
+     * @return \Generated\Shared\Transfer\ValidationResponseTransfer
      */
-    public function updateProductAbstract(MerchantProductTransfer $merchantProductTransfer): ProductAbstractResponseTransfer
+    public function validateMerchantProduct(MerchantProductTransfer $merchantProductTransfer): ValidationResponseTransfer
     {
-        return $this->merchantProductFacade->updateProductAbstract($merchantProductTransfer);
+        return $this->merchantProductFacade->validateMerchantProduct($merchantProductTransfer);
     }
 
     /**

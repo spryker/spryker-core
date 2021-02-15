@@ -11,11 +11,14 @@ use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderProcess;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderProcessQuery;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\Oms\Business\Exception\ProcessNotActiveException;
 use Spryker\Zed\Oms\OmsConfig;
 
 class PersistenceManager implements PersistenceManagerInterface
 {
+    use TransactionTrait;
+
     /**
      * @var \Spryker\Zed\Oms\OmsConfig
      */
@@ -36,15 +39,17 @@ class PersistenceManager implements PersistenceManagerInterface
      */
     protected function getStateEntity($stateName)
     {
-        $stateEntity = SpyOmsOrderItemStateQuery::create()->findOneByName($stateName);
+        return $this->getTransactionHandler()->handleTransaction(function () use ($stateName): SpyOmsOrderItemState {
+            $stateEntity = SpyOmsOrderItemStateQuery::create()
+                ->filterByName($stateName)
+                ->findOneOrCreate();
 
-        if ($stateEntity === null) {
-            $stateEntity = new SpyOmsOrderItemState();
-            $stateEntity->setName($stateName);
-            $stateEntity->save();
-        }
+            if ($stateEntity->isNew()) {
+                $stateEntity->save();
+            }
 
-        return $stateEntity;
+            return $stateEntity;
+        });
     }
 
     /**
@@ -63,15 +68,17 @@ class PersistenceManager implements PersistenceManagerInterface
             ));
         }
 
-        $processEntity = SpyOmsOrderProcessQuery::create()->findOneByName($processName);
+        return $this->getTransactionHandler()->handleTransaction(function () use ($processName): SpyOmsOrderProcess {
+            $processEntity = SpyOmsOrderProcessQuery::create()
+                ->filterByName($processName)
+                ->findOneOrCreate();
 
-        if ($processEntity === null) {
-            $processEntity = new SpyOmsOrderProcess();
-            $processEntity->setName($processName);
-            $processEntity->save();
-        }
+            if ($processEntity->isNew()) {
+                $processEntity->save();
+            }
 
-        return $processEntity;
+            return $processEntity;
+        });
     }
 
     /**

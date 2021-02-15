@@ -17,7 +17,8 @@ class ProductAttributeGuiTableConfigurationProvider implements ProductAttributeG
     public const COL_KEY_ATTRIBUTE_NAME = 'attribute_name';
     public const COL_KEY_ATTRIBUTE_DEFAULT = 'attribute_default';
 
-    protected const DATA_SOURCE_TYPE_INLINE = 'inline';
+    protected const TITLE_COLUMN_ATTRIBUTE_NAME = 'Attribute';
+    protected const TITLE_COLUMN_ATTRIBUTE_DEFAULT = 'Default';
 
     /**
      * @var \Spryker\Shared\GuiTable\GuiTableFactoryInterface
@@ -53,23 +54,22 @@ class ProductAttributeGuiTableConfigurationProvider implements ProductAttributeG
     {
         $guiTableConfigurationBuilder = $this->guiTableFactory->createConfigurationBuilder();
 
-        $guiTableConfigurationBuilder->addColumnText(static::COL_KEY_ATTRIBUTE_NAME, 'Attribute', true, false)
-            ->addColumnText(static::COL_KEY_ATTRIBUTE_DEFAULT, 'Default', true, false);
+        $guiTableConfigurationBuilder->addColumnText(static::COL_KEY_ATTRIBUTE_NAME, static::TITLE_COLUMN_ATTRIBUTE_NAME, true, false)
+            ->addColumnText(static::COL_KEY_ATTRIBUTE_DEFAULT, static::TITLE_COLUMN_ATTRIBUTE_DEFAULT, true, false);
 
         foreach ($localizedAttributeTransfers as $localizedAttributesTransfer) {
             $localeTransfer = $localizedAttributesTransfer->getLocaleOrFail();
 
             $guiTableConfigurationBuilder->addColumnText(
-                $localeTransfer->getLocaleName(),
-                $localeTransfer->getLocaleName(),
+                $localeTransfer->getLocaleNameOrFail(),
+                $localeTransfer->getLocaleNameOrFail(),
                 true,
                 true
             );
         }
 
         $guiTableConfigurationBuilder
-            ->setDataSourceType(static::DATA_SOURCE_TYPE_INLINE)
-            ->setDataSourceData($this->productAttributeTableDataProvider->getData($attributes, $localizedAttributeTransfers))
+            ->setDataSourceInlineData($this->productAttributeTableDataProvider->getData($attributes, $localizedAttributeTransfers))
             ->setIsPaginationEnabled(false)
             ->isSearchEnabled(false);
 

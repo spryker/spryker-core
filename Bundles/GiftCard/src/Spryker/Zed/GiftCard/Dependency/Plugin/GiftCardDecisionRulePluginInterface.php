@@ -13,6 +13,9 @@ use Generated\Shared\Transfer\QuoteTransfer;
 interface GiftCardDecisionRulePluginInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\GiftCardTransfer $giftCardTransfer

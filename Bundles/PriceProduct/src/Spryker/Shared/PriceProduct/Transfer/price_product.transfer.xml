@@ -131,4 +131,12 @@
         <property name="invalidValue" type="string"/>
     </transfer>
 
+    <transfer name="PriceProductFilterIdentifier">
+        <property name="sku" type="string"/>
+        <property name="currencyIsoCode" type="string"/>
+        <property name="priceMode" type="string"/>
+        <property name="priceTypeName" type="string"/>
+        <property name="quantity" type="int"/>
+    </transfer>
+
 </transfers>

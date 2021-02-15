@@ -18,6 +18,9 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class TaxProductAbstractFormExpanderPlugin extends AbstractPlugin implements ProductAbstractFormExpanderPluginInterface
 {
+    protected const LABEL_ID_TAX_SET = 'Tax Set';
+    protected const PLACEHOLDER_ID_TAX_SET = 'Select tax set';
+
     /**
      * {@inheritDoc}
      * - Expands ProductAbstractForm with Tax Set field.
@@ -37,10 +40,11 @@ class TaxProductAbstractFormExpanderPlugin extends AbstractPlugin implements Pro
     public function expand(FormBuilderInterface $builder, array $options): FormBuilderInterface
     {
         $builder->add(ProductAbstractTransfer::ID_TAX_SET, ChoiceType::class, [
-            'label' => 'Tax Set',
-            'placeholder' => 'Select tax set',
+            'label' => static::LABEL_ID_TAX_SET,
+            'placeholder' => static::PLACEHOLDER_ID_TAX_SET,
             'required' => false,
             'choices' => $this->getFactory()->createTaxProductAbstractFormDataProvider()->getTaxChoices(),
+            'empty_data' => (string)$builder->getData()->getIdTaxSet(),
         ]);
 
         return $builder;

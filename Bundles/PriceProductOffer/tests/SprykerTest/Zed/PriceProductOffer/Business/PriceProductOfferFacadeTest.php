@@ -334,7 +334,7 @@ class PriceProductOfferFacadeTest extends Unit
             $validationError->getMessage()
         );
         $this->assertSame(
-            '[0][moneyValue][fkCurrency]',
+            '[0][default][moneyValue][fkCurrency]',
             $validationError->getPropertyPath()
         );
     }
@@ -367,7 +367,7 @@ class PriceProductOfferFacadeTest extends Unit
             $validationError->getMessage()
         );
         $this->assertSame(
-            '[0][moneyValue][fkStore]',
+            '[0][default][moneyValue][fkStore]',
             $validationError->getPropertyPath()
         );
     }

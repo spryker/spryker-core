@@ -19,8 +19,10 @@ use Generated\Shared\Transfer\ValidationResponseTransfer;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMoneyFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToPriceProductFacadeInterface;
 
-class PriceProductMapper
+class PriceProductMapper implements PriceProductMapperInterface
 {
+    protected const ROW_ERROR_PROPERTY_PATH_NESTING = 3;
+
     protected const MAP_FIELD_NAMES = [
         MoneyValueTransfer::FK_STORE => PriceProductAbstractTableViewTransfer::STORE,
         MoneyValueTransfer::FK_CURRENCY => PriceProductAbstractTableViewTransfer::CURRENCY,
@@ -49,18 +51,14 @@ class PriceProductMapper
     }
 
     /**
-     * @phpstan-param array<mixed> $initialData
-     *
-     * @phpstan-return array<mixed>
-     *
      * @param \Generated\Shared\Transfer\ValidationResponseTransfer $validationResponseTransfer
-     * @param array $initialData
+     * @param mixed[] $initialDataErrors
      *
-     * @return array
+     * @return mixed[]
      */
     public function mapValidationResponseTransferToInitialDataErrors(
         ValidationResponseTransfer $validationResponseTransfer,
-        array $initialData
+        array $initialDataErrors
     ): array {
         $validationErrorTransfers = $validationResponseTransfer->getValidationErrors();
         $priceTypeTransfers = $this->priceProductFacade->getPriceTypeValues();
@@ -70,56 +68,53 @@ class PriceProductMapper
                 continue;
             }
 
-            $initialData = $this->addInitialDataErrors($validationErrorTransfer, $priceTypeTransfers, $initialData);
+            $initialDataErrors = $this->addInitialDataErrors($validationErrorTransfer, $priceTypeTransfers, $initialDataErrors);
         }
 
-        return $initialData;
+        return $initialDataErrors;
     }
 
     /**
-     * @phpstan-param array<mixed> $initialData
      * @phpstan-param array<\Generated\Shared\Transfer\PriceTypeTransfer> $priceTypeTransfers
-     *
-     * @phpstan-return array<mixed>
      *
      * @param \Generated\Shared\Transfer\ValidationErrorTransfer $validationErrorTransfer
      * @param \Generated\Shared\Transfer\PriceTypeTransfer[] $priceTypeTransfers
-     * @param array $initialData
+     * @param mixed[] $initialDataErrors
      *
-     * @return array
+     * @return mixed[]
      */
     protected function addInitialDataErrors(
         ValidationErrorTransfer $validationErrorTransfer,
         array $priceTypeTransfers,
-        array $initialData
+        array $initialDataErrors
     ): array {
-        $propertyPath = $this->extractPropertyPathValues($validationErrorTransfer->getPropertyPath());
+        $propertyPath = $this->extractPropertyPathValues((string)$validationErrorTransfer->getPropertyPath());
 
         if (!$propertyPath || !is_array($propertyPath)) {
-            return $initialData;
+            return $initialDataErrors;
         }
 
         $rowNumber = (int)$propertyPath[0] === 0 ? 0 : round(((int)$propertyPath[0] - 1) / count($priceTypeTransfers));
-        $isRowError = count($propertyPath) < 3;
+        $isRowError = count($propertyPath) < static::ROW_ERROR_PROPERTY_PATH_NESTING;
         $errorMessage = $validationErrorTransfer->getMessage();
 
         if ($isRowError) {
-            $initialData[GuiTableEditableInitialDataTransfer::ERRORS][$rowNumber][GuiTableEditableDataErrorTransfer::ROW_ERROR] = $errorMessage;
-            $initialData[GuiTableEditableInitialDataTransfer::ERRORS][$rowNumber][GuiTableEditableDataErrorTransfer::COLUMN_ERRORS][PriceProductAbstractTableViewTransfer::STORE] = true;
-            $initialData[GuiTableEditableInitialDataTransfer::ERRORS][$rowNumber][GuiTableEditableDataErrorTransfer::COLUMN_ERRORS][PriceProductAbstractTableViewTransfer::CURRENCY] = true;
+            $initialDataErrors[GuiTableEditableInitialDataTransfer::ERRORS][$rowNumber][GuiTableEditableDataErrorTransfer::ROW_ERROR] = $errorMessage;
+            $initialDataErrors[GuiTableEditableInitialDataTransfer::ERRORS][$rowNumber][GuiTableEditableDataErrorTransfer::COLUMN_ERRORS][PriceProductAbstractTableViewTransfer::STORE] = true;
+            $initialDataErrors[GuiTableEditableInitialDataTransfer::ERRORS][$rowNumber][GuiTableEditableDataErrorTransfer::COLUMN_ERRORS][PriceProductAbstractTableViewTransfer::CURRENCY] = true;
 
-            return $initialData;
+            return $initialDataErrors;
         }
 
         $idColumn = $this->transformPropertyPathToColumnId($propertyPath, $priceTypeTransfers);
 
         if (!$idColumn) {
-            return $initialData;
+            return $initialDataErrors;
         }
 
-        $initialData[GuiTableEditableInitialDataTransfer::ERRORS][$rowNumber][GuiTableEditableDataErrorTransfer::COLUMN_ERRORS][$idColumn] = $errorMessage;
+        $initialDataErrors[GuiTableEditableInitialDataTransfer::ERRORS][$rowNumber][GuiTableEditableDataErrorTransfer::COLUMN_ERRORS][$idColumn] = $errorMessage;
 
-        return $initialData;
+        return $initialDataErrors;
     }
 
     /**
@@ -160,7 +155,7 @@ class PriceProductMapper
         }
 
         if ($entityName === PriceProductTransfer::MONEY_VALUE) {
-            $priceTypeName = mb_strtolower($priceTypeTransfers[$entityNumber]->getName());
+            $priceTypeName = mb_strtolower($priceTypeTransfers[$entityNumber]->getNameOrFail());
 
             return sprintf('%s[%s][%s]', $priceTypeName, (string)$entityName, (string)$fieldName);
         }
@@ -169,19 +164,17 @@ class PriceProductMapper
     }
 
     /**
-     * @phpstan-param array<mixed> $data
      * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
      * @phpstan-return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
      *
-     * @param array $data
+     * @param mixed[] $data
      * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
      */
     public function mapDataToPriceProductTransfers(array $data, ArrayObject $priceProductTransfers): ArrayObject
     {
-        /** @var \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer */
         foreach ($priceProductTransfers as $priceProductTransfer) {
             $this->mapDataToMoneyValueTransfer($data, $priceProductTransfer->getMoneyValueOrFail());
         }
@@ -190,9 +183,7 @@ class PriceProductMapper
     }
 
     /**
-     * @phpstan-param array<mixed> $data
-     *
-     * @param array $data
+     * @param mixed[] $data
      * @param \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer
      *
      * @return \Generated\Shared\Transfer\MoneyValueTransfer
@@ -201,14 +192,14 @@ class PriceProductMapper
     {
         foreach ($data as $key => $value) {
             if (strpos($key, MoneyValueTransfer::NET_AMOUNT) !== false) {
-                $value = $this->convertDecimalToInteger((float)$value);
+                $value = $this->convertDecimalToInteger($value);
                 $moneyValueTransfer->setNetAmount($value);
 
                 continue;
             }
 
             if (strpos($key, MoneyValueTransfer::GROSS_AMOUNT) !== false) {
-                $value = $this->convertDecimalToInteger((float)$value);
+                $value = $this->convertDecimalToInteger($value);
                 $moneyValueTransfer->setGrossAmount($value);
 
                 continue;

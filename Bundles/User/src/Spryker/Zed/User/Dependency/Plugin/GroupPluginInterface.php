@@ -10,6 +10,9 @@ namespace Spryker\Zed\User\Dependency\Plugin;
 interface GroupPluginInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Generated\Shared\Transfer\GroupsTransfer
@@ -17,6 +20,9 @@ interface GroupPluginInterface
     public function getAllGroups();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idUser
@@ -26,6 +32,9 @@ interface GroupPluginInterface
     public function getUserGroups($idUser);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idUser
@@ -36,6 +45,9 @@ interface GroupPluginInterface
     public function addUserToGroup($idUser, $idGroup);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idUser

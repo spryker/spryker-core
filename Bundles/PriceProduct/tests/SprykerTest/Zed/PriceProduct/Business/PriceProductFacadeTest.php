@@ -1172,6 +1172,7 @@ class PriceProductFacadeTest extends Unit
      */
     public function testValidatePricesFailsValidUniqueStoreCurrencyGrossNetConstraint(): void
     {
+        // Arrange
         $productTransfer = $this->tester->haveProduct();
 
         $priceProductTransfer1 = $this->tester->havePriceProductAbstract($productTransfer->getFkProductAbstract(), [
@@ -1205,15 +1206,19 @@ class PriceProductFacadeTest extends Unit
     public function testValidatePricesFailsValidCurrencyAssignedToStoreConstraint(): void
     {
         // Arrange
-        $productTransfer = $this->tester->haveProduct();
-        $priceProductTransfer = $this->tester->havePriceProductAbstract($productTransfer->getFkProductAbstract(), [
-            PriceProductTransfer::SKU_PRODUCT_ABSTRACT => 'sku',
-        ]);
-
-        $priceProductTransfer->getMoneyValue()
-            ->getCurrency()
-            ->setCode(static::FAKE_CURRENCY)
-            ->setName(static::FAKE_CURRENCY);
+        $storeTransfer = $this->tester->getLocator()->store()->facade()->getCurrentStore();
+        $currencyTransfer = $this->tester->haveCurrencyTransfer();
+        $priceProductTransfer = (new PriceProductTransfer())
+            ->setPriceType($this->tester->havePriceType())
+            ->setMoneyValue(
+                (new MoneyValueTransfer())
+                    ->setStore($storeTransfer)
+                    ->setCurrency((new CurrencyTransfer())->setCode(static::FAKE_CURRENCY)->setName(static::FAKE_CURRENCY))
+                    ->setFkStore($storeTransfer->getIdStore())
+                    ->setFkCurrency($currencyTransfer->getIdCurrency())
+                    ->setGrossAmount(1)
+                    ->setNetAmount(1)
+            );
 
         // Act
         $validationResponseTransfer = $this->getPriceProductFacade()

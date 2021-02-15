@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductAbstractTableViewCollectionTransfer;
 use Generated\Shared\Transfer\PriceProductAbstractTableViewTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
+use Laminas\Filter\StringToLower;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToPriceProductFacadeInterface;
 
 class PriceProductAbstractTableDataMapper
@@ -70,27 +71,25 @@ class PriceProductAbstractTableDataMapper
      * @phpstan-param array<mixed> $priceProductAbstractTableRowDataArray
      * @phpstan-param array<\Generated\Shared\Transfer\PriceTypeTransfer> $priceTypeTransfers
      *
-     * @phpstan-return array<mixed>
-     *
      * @param array $priceProductAbstractTableRowDataArray
      * @param \Generated\Shared\Transfer\PriceTypeTransfer[] $priceTypeTransfers
      *
-     * @return array
+     * @return mixed[]
      */
     protected function preparePrices(array $priceProductAbstractTableRowDataArray, array $priceTypeTransfers): array
     {
         $prices = [];
 
         foreach ($priceTypeTransfers as $priceTypeTransfer) {
-            $priceTypeName = mb_strtolower($priceTypeTransfer->getName());
+            $priceTypeName = (new StringToLower())->filter($priceTypeTransfer->getNameOrFail());
             $keyNetPrice = $priceTypeName . static::SUFFIX_PRICE_TYPE_NET;
             $keyGrossPrice = $priceTypeName . static::SUFFIX_PRICE_TYPE_GROSS;
 
-            if (isset($priceProductAbstractTableRowDataArray[$keyGrossPrice])) {
+            if (array_key_exists($keyGrossPrice, $priceProductAbstractTableRowDataArray)) {
                 $prices[$this->createGrossKey($priceTypeName)] = $priceProductAbstractTableRowDataArray[$keyGrossPrice];
             }
 
-            if (isset($priceProductAbstractTableRowDataArray[$keyNetPrice])) {
+            if (array_key_exists($keyNetPrice, $priceProductAbstractTableRowDataArray)) {
                 $prices[$this->createNetKey($priceTypeName)] = $priceProductAbstractTableRowDataArray[$keyNetPrice];
             }
         }

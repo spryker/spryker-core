@@ -10,6 +10,9 @@ namespace Spryker\Zed\Glossary\Dependency\Plugin;
 interface GlossaryInstallerPluginInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return mixed

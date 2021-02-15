@@ -14,20 +14,4 @@ use Spryker\Client\Kernel\AbstractClient;
  */
 class CategoryClient extends AbstractClient implements CategoryClientInterface
 {
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param int $idCategoryNode
-     * @param string $localeName
-     *
-     * @return string
-     */
-    public function getTemplatePathByNodeId($idCategoryNode, $localeName)
-    {
-        return $this->getFactory()
-            ->createCategoryNodeStorage()
-            ->getTemplatePathByNodeId($idCategoryNode, $localeName);
-    }
 }

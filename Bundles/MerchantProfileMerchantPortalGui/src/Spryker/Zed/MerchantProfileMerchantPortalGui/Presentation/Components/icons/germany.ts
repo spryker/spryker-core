@@ -6,9 +6,9 @@ const svg = `
 `;
 
 @NgModule({
-  providers: [provideIcons([IconGermanyModule])],
+    providers: [provideIcons([IconGermanyModule])],
 })
 export class IconGermanyModule {
-  static icon = 'germany';
-  static svg = svg;
+    static icon = 'germany';
+    static svg = svg;
 }

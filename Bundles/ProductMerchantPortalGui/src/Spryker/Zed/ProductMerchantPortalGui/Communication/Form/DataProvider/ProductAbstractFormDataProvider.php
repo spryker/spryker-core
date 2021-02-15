@@ -8,7 +8,10 @@
 namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\CategoryCollectionTransfer;
+use Generated\Shared\Transfer\CategoryCriteriaTransfer;
+use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\MerchantProductCriteriaTransfer;
+use Generated\Shared\Transfer\NodeCollectionTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductAbstractForm;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToCategoryFacadeInterface;
@@ -97,9 +100,20 @@ class ProductAbstractFormDataProvider implements ProductAbstractFormDataProvider
      */
     public function findProductAbstract(int $idProductAbstract, int $idMerchant): ?ProductAbstractTransfer
     {
-        $productAbstractTransfer = $this->merchantProductFacade->findProductAbstract(
+        $merchantProductTransfer = $this->merchantProductFacade->findMerchantProduct(
             (new MerchantProductCriteriaTransfer())->addIdMerchant($idMerchant)->setIdProductAbstract($idProductAbstract)
         );
+
+        if (!$merchantProductTransfer) {
+            return null;
+        }
+
+        $productAbstractTransfer = $merchantProductTransfer->getProductAbstract();
+
+        if (!$productAbstractTransfer) {
+            return null;
+        }
+
         $productAbstractTransfer = $this->expandProductAbstractWithCategoryIds($productAbstractTransfer);
 
         return $productAbstractTransfer;
@@ -121,12 +135,19 @@ class ProductAbstractFormDataProvider implements ProductAbstractFormDataProvider
      */
     public function getProductCategoryTree(): array
     {
-        $treeNodeChildren = $this->categoryFacade->getTreeNodeChildrenByIdCategoryAndLocale(
-            $this->productMerchantPortalGuiConfig->getMainCategoryIdForCategoryOptions(),
-            $this->localeFacade->getCurrentLocale()
-        );
+        $categoryCriteriaTransfer = (new CategoryCriteriaTransfer())
+            ->setIdCategory($this->productMerchantPortalGuiConfig->getMainCategoryIdForCategoryFilter())
+            ->setLocaleName($this->localeFacade->getCurrentLocale()->getLocaleName())
+            ->setWithChildrenRecursively(true);
+        $categoryTransfer = $this->categoryFacade->findCategory($categoryCriteriaTransfer);
 
-        return $this->getCategoryTreeArray($treeNodeChildren);
+        if (!$categoryTransfer || !$categoryTransfer->getNodeCollection()) {
+            return [];
+        }
+
+        $nodeCollectionTransfer = $this->getCategoryChildNodeCollection($categoryTransfer);
+
+        return $this->getCategoryTreeArray($nodeCollectionTransfer);
     }
 
     /**
@@ -150,18 +171,18 @@ class ProductAbstractFormDataProvider implements ProductAbstractFormDataProvider
     }
 
     /**
-     * @param mixed[] $treeNodeChildren
+     * @param \Generated\Shared\Transfer\NodeCollectionTransfer $nodeCollectionTransfer
      *
      * @return mixed[]
      */
-    protected function getCategoryTreeArray(array $treeNodeChildren): array
+    protected function getCategoryTreeArray(NodeCollectionTransfer $nodeCollectionTransfer): array
     {
         $categoryTreeArray = [];
-        foreach ($treeNodeChildren as $child) {
+        foreach ($nodeCollectionTransfer->getNodes() as $nodeTransfer) {
             $categoryTreeArray[] = [
-                'value' => $child[static::KEY_NODE_CHILD_ID_CATEGORY],
-                'title' => $child[static::KEY_NODE_CHILD_TEXT],
-                'children' => $this->getCategoryTreeArray($child[static::KEY_NODE_CHILD_CHILDREN]),
+                'value' => $nodeTransfer->getIdCategoryNode(),
+                'title' => $nodeTransfer->getCategoryOrFail()->getLocalizedAttributes()->offsetGet(0)->getName(),
+                'children' => $this->getCategoryTreeArray($nodeTransfer->getChildrenNodesOrFail()),
             ];
         }
 
@@ -177,7 +198,7 @@ class ProductAbstractFormDataProvider implements ProductAbstractFormDataProvider
         ProductAbstractTransfer $productAbstractTransfer
     ): ProductAbstractTransfer {
         $categoryCollectionTransfer = $this->productCategoryFacade->getCategoryTransferCollectionByIdProductAbstract(
-            $productAbstractTransfer->getIdProductAbstract(),
+            $productAbstractTransfer->getIdProductAbstractOrFail(),
             $this->localeFacade->getCurrentLocale()
         );
         $productAbstractTransfer->setCategoryIds($this->getCategoryIds($categoryCollectionTransfer));
@@ -205,9 +226,24 @@ class ProductAbstractFormDataProvider implements ProductAbstractFormDataProvider
     {
         $categoryIds = [];
         foreach ($categoryCollectionTransfer->getCategories() as $categoryTransfer) {
-            $categoryIds[] = $categoryTransfer->getIdCategory();
+            $categoryIds[] = $categoryTransfer->getIdCategoryOrFail();
         }
 
         return $categoryIds;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return \Generated\Shared\Transfer\NodeCollectionTransfer
+     */
+    protected function getCategoryChildNodeCollection(CategoryTransfer $categoryTransfer): NodeCollectionTransfer
+    {
+        $categoryNodeCollectionTransfer = $categoryTransfer->getNodeCollection();
+        if (!$categoryNodeCollectionTransfer || $categoryNodeCollectionTransfer->getNodes()->count() === 0) {
+            return new NodeCollectionTransfer();
+        }
+
+        return $categoryNodeCollectionTransfer->getNodes()->offsetGet(0)->getChildrenNodes() ?? new NodeCollectionTransfer();
     }
 }

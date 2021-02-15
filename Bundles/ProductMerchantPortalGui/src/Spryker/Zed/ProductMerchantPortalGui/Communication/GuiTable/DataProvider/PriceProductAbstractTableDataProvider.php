@@ -20,6 +20,9 @@ use Spryker\Zed\ProductMerchantPortalGui\Persistence\ProductMerchantPortalGuiRep
 
 class PriceProductAbstractTableDataProvider extends AbstractGuiTableDataProvider
 {
+    protected const INDEX_PRICE_TYPE = 0;
+    protected const INDEX_AMOUNT_TYPE = 2;
+
     /**
      * @var int
      */
@@ -87,13 +90,13 @@ class PriceProductAbstractTableDataProvider extends AbstractGuiTableDataProvider
             $responseData = $priceProductAbstractTableViewTransfer->toArray(true, true);
 
             foreach ($priceProductAbstractTableViewTransfer->getPrices() as $priceType => $priceValue) {
-                $responseData[$priceType] = $this->moneyFacade->convertIntegerToDecimal((int)$priceValue);
+                $responseData[$priceType] = $this->convertIntegerToDecimal($priceValue);
             }
 
             $guiTableDataResponseTransfer->addRow((new GuiTableRowDataResponseTransfer())->setResponseData($responseData));
         }
 
-        $paginationTransfer = $priceProductAbstractTableViewCollectionTransfer->getPagination();
+        $paginationTransfer = $priceProductAbstractTableViewCollectionTransfer->getPaginationOrFail();
 
         return $guiTableDataResponseTransfer
             ->setPage($paginationTransfer->getPage())
@@ -124,14 +127,28 @@ class PriceProductAbstractTableDataProvider extends AbstractGuiTableDataProvider
         $orderByField = str_replace(']', '', $orderByField);
         $orderByField = explode('[', $orderByField);
 
-        if ($orderByField[2] === MoneyValueTransfer::NET_AMOUNT) {
-            return $priceProductAbstractTableCriteriaTransfer->setOrderBy($orderByField[0] . '_net');
+        if ($orderByField[static::INDEX_AMOUNT_TYPE] === MoneyValueTransfer::NET_AMOUNT) {
+            return $priceProductAbstractTableCriteriaTransfer->setOrderBy($orderByField[static::INDEX_PRICE_TYPE] . '_net');
         }
 
-        if ($orderByField[2] === MoneyValueTransfer::GROSS_AMOUNT) {
-            return $priceProductAbstractTableCriteriaTransfer->setOrderBy($orderByField[0] . '_gross');
+        if ($orderByField[static::INDEX_AMOUNT_TYPE] === MoneyValueTransfer::GROSS_AMOUNT) {
+            return $priceProductAbstractTableCriteriaTransfer->setOrderBy($orderByField[static::INDEX_PRICE_TYPE] . '_gross');
         }
 
         return $priceProductAbstractTableCriteriaTransfer;
+    }
+
+    /**
+     * @param mixed $value
+     *
+     * @return float|null
+     */
+    protected function convertIntegerToDecimal($value): ?float
+    {
+        if ($value === '' || $value === null) {
+            return null;
+        }
+
+        return $this->moneyFacade->convertIntegerToDecimal((int)$value);
     }
 }
