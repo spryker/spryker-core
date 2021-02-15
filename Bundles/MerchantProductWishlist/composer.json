@@ -4,7 +4,11 @@
   "description": "MerchantProductWishlist module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.3"
+    "php": ">=7.3",
+    "spryker/kernel": "^3.33.0",
+    "spryker/merchant-product": "^0.2.0",
+    "spryker/product": "^6.22.0",
+    "spryker/wishlist-extension": "^1.1.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*"

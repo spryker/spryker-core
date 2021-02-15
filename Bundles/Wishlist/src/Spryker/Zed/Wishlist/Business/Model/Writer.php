@@ -58,24 +58,32 @@ class Writer implements WriterInterface
     protected $addItemPreCheckPlugins;
 
     /**
+     * @var \Spryker\Zed\WishlistExtension\Dependency\Plugin\WishlistPreAddItemPluginInterface[]
+     */
+    protected $wishlistPreAddItemPlugins;
+
+    /**
      * @param \Spryker\Zed\Wishlist\Persistence\WishlistQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Wishlist\Business\Model\ReaderInterface $reader
      * @param \Spryker\Zed\Wishlist\Persistence\WishlistEntityManagerInterface $wishlistEntityManager
      * @param \Spryker\Zed\Wishlist\Dependency\Facade\WishlistToProductInterface|null $productFacade
      * @param \Spryker\Zed\WishlistExtension\Dependency\Plugin\AddItemPreCheckPluginInterface[] $addItemPreCheckPlugins
+     * @param \Spryker\Zed\WishlistExtension\Dependency\Plugin\WishlistPreAddItemPluginInterface[] $wishlistPreAddItemPlugins
      */
     public function __construct(
         WishlistQueryContainerInterface $queryContainer,
         ReaderInterface $reader,
         WishlistEntityManagerInterface $wishlistEntityManager,
         ?WishlistToProductInterface $productFacade = null,
-        array $addItemPreCheckPlugins = []
+        array $addItemPreCheckPlugins = [],
+        array $wishlistPreAddItemPlugins = []
     ) {
         $this->queryContainer = $queryContainer;
         $this->reader = $reader;
         $this->wishlistEntityManager = $wishlistEntityManager;
         $this->productFacade = $productFacade;
         $this->addItemPreCheckPlugins = $addItemPreCheckPlugins;
+        $this->wishlistPreAddItemPlugins = $wishlistPreAddItemPlugins;
     }
 
     /**
@@ -315,6 +323,8 @@ class Writer implements WriterInterface
         );
 
         $wishlistItemTransfer->setFkWishlist($idWishlist);
+
+        $wishlistItemTransfer = $this->executeWishlistPreAddItemPlugins($wishlistItemTransfer);
 
         return $this->wishlistEntityManager->addItem($wishlistItemTransfer);
     }
@@ -585,5 +595,19 @@ class Writer implements WriterInterface
         }
 
         return true;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemTransfer
+     */
+    protected function executeWishlistPreAddItemPlugins(WishlistItemTransfer $wishlistItemTransfer): WishlistItemTransfer
+    {
+        foreach ($this->wishlistPreAddItemPlugins as $wishlistPreAddItemPlugin) {
+            $wishlistItemTransfer = $wishlistPreAddItemPlugin->preAddItem($wishlistItemTransfer);
+        }
+
+        return $wishlistItemTransfer;
     }
 }
