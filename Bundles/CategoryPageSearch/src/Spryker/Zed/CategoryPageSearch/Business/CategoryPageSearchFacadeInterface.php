@@ -14,7 +14,7 @@ interface CategoryPageSearchFacadeInterface
      * - Queries all category nodes with these ids
      * - Creates a data structure tree
      * - Stores data as json encoded to search table
-     * - Sends a copy of data to queue based on module config
+     * - Sends a copy of data to the queue.
      *
      * @api
      *
@@ -27,7 +27,7 @@ interface CategoryPageSearchFacadeInterface
     /**
      * Specification:
      * - Finds and deletes category node search entities based on these ids
-     * - Sends delete message to queue based on module config
+     * - Sends a copy of data to the queue.
      *
      * @api
      *
@@ -36,4 +36,38 @@ interface CategoryPageSearchFacadeInterface
      * @return void
      */
     public function unpublish(array $categoryNodeIds);
+
+    /**
+     * Specification:
+     * - Extracts category store IDs from the $eventTransfers created by category store entity events.
+     * - Finds all category node IDs related to category store IDs.
+     * - Queries all category nodes with these ids.
+     * - Creates a data structure tree.
+     * - Stores data as json encoded to search table.
+     * - Sends a copy of data to the queue.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeCategoryNodePageSearchCollectionByCategoryStoreEvents(array $eventEntityTransfers): void;
+
+    /**
+     * Specification:
+     * - Extracts category store IDs from the $eventTransfers created by category store publish events.
+     * - Finds all category node IDs related to category store IDs.
+     * - Queries all category nodes with these ids.
+     * - Creates a data structure tree.
+     * - Stores data as json encoded to search table.
+     * - Sends a copy of data to the queue.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeCategoryNodePageSearchCollectionByCategoryStorePublishEvents(array $eventEntityTransfers): void;
 }

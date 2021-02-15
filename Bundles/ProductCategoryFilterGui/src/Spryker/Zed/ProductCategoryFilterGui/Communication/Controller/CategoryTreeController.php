@@ -32,13 +32,8 @@ class CategoryTreeController extends AbstractController
         $localeTransfer = $this->getCurrentLocale();
 
         $mainCategory = $this->getQueryContainer()
-            ->queryCategoryByIdAndLocale($idRootNode, $localeTransfer->getIdLocale())
+            ->queryCategoryByIdAndLocale($idRootNode, $localeTransfer->getIdLocaleOrFail())
             ->findOne();
-
-        $categoryTree = $this
-            ->getFactory()
-            ->getCategoryFacade()
-            ->getTreeNodeChildrenByIdCategoryAndLocale($idRootNode, $localeTransfer);
 
         $categoriesWithSpecificFilters = $this
             ->getFactory()
@@ -47,7 +42,6 @@ class CategoryTreeController extends AbstractController
 
         return $this->viewResponse([
             'mainCategory' => $mainCategory,
-            'categoryTree' => $categoryTree, //@deprecated Use parameter `childNodes` instead.
             'categoriesWithSpecificFilters' => $categoriesWithSpecificFilters,
             'nodeCollection' => $this->findCategoryNodeTree($idRootNode),
         ]);

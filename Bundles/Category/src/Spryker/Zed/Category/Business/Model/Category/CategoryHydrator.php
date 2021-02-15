@@ -36,7 +36,7 @@ class CategoryHydrator implements CategoryHydratorInterface
     public function hydrateCategoryCollection(CategoryCollectionTransfer $categoryCollectionTransfer, LocaleTransfer $localeTransfer): void
     {
         foreach ($categoryCollectionTransfer->getCategories() as $categoryTransfer) {
-            $this->hydrateNodeCollection($categoryTransfer->getNodeCollection(), $localeTransfer);
+            $this->hydrateNodeCollection($categoryTransfer->getNodeCollectionOrFail(), $localeTransfer);
         }
     }
 
@@ -49,7 +49,7 @@ class CategoryHydrator implements CategoryHydratorInterface
     protected function hydrateNodeCollection(NodeCollectionTransfer $nodeCollectionTransfer, LocaleTransfer $localeTransfer)
     {
         foreach ($nodeCollectionTransfer->getNodes() as $nodeTransfer) {
-            $nodeTransfer->setPath($this->categoryRepository->getNodePath($nodeTransfer->getIdCategoryNode(), $localeTransfer));
+            $nodeTransfer->setPath($this->categoryRepository->getNodePath($nodeTransfer->getIdCategoryNodeOrFail(), $localeTransfer));
         }
     }
 }

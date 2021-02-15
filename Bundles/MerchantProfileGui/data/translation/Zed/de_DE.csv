@@ -12,10 +12,10 @@ Description,Beschreibung
 "First Name",Vorname
 Imprint,Impressum
 "Last Name",Nachname
-Latitude,Längengrad
+Latitude,Breitengrad
 "Legal Information",Rechtsinformation
 "Logo URL","Logo URL"
-Longitude,Breitengrad
+Longitude,Längengrad
 "Merchant Profile",Händler-Profil
 "Merchant Reference",Händler-Referenznummer
 Number,Nummer
