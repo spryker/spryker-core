@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantSalesReturn\Business;
 
+use Generated\Shared\Transfer\ReturnTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -14,7 +15,15 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class MerchantSalesReturnFacade extends AbstractFacade implements MerchantSalesReturnFacadeInterface
 {
-
-    //TODO Implement MerchantSalesReturnFacadeInterface
-
+    /**
+     * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
+     *
+     * @return \Generated\Shared\Transfer\ReturnTransfer
+     */
+    public function prepareReturn(ReturnTransfer $returnTransfer): ReturnTransfer
+    {
+        return $this->getFactory()
+            ->createMerchantReturnPreparer()
+            ->prepareReturn($returnTransfer);
+    }
 }

@@ -8,6 +8,8 @@
 namespace Spryker\Zed\MerchantSalesReturn\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\MerchantSalesReturn\Business\Model\MerchantReturnPreparer;
+use Spryker\Zed\MerchantSalesReturn\Business\Model\MerchantReturnPreparerInterface;
 
 /**
  * @method \Spryker\Zed\MerchantSalesReturn\MerchantSalesReturnConfig getConfig()
@@ -15,7 +17,11 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class MerchantSalesReturnBusinessFactory extends AbstractBusinessFactory
 {
-
-    //TODO Add factory methods
-
+    /**
+     * @return \Spryker\Zed\MerchantSalesReturn\Business\Model\MerchantReturnPreparerInterface
+     */
+    public function createMerchantReturnPreparer(): MerchantReturnPreparerInterface
+    {
+        return new MerchantReturnPreparer();
+    }
 }

@@ -10,6 +10,9 @@ namespace Spryker\Zed\MerchantSalesReturn\Communication\Plugin;
 use Generated\Shared\Transfer\ReturnTransfer;
 use Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnPreCreatePluginInterface;
 
+/**
+ * @method \Spryker\Zed\MerchantSalesReturn\Business\MerchantSalesReturnFacade getFacade()
+ */
 class MerchantReturnPreCreatePlugin implements ReturnPreCreatePluginInterface
 {
     /**
@@ -19,6 +22,6 @@ class MerchantReturnPreCreatePlugin implements ReturnPreCreatePluginInterface
      */
     public function preCreate(ReturnTransfer $returnTransfer): ReturnTransfer
     {
-        // TODO: Implement preCreate() method.
+        return $this->getFacade()->prepareReturn($returnTransfer);
     }
 }

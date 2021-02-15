@@ -60,7 +60,8 @@ class SalesReturnBusinessFactory extends AbstractBusinessFactory
             $this->createReturnValidator(),
             $this->createReturnReader(),
             $this->createReturnReferenceGenerator(),
-            $this->createOmsEventTriggerer()
+            $this->createOmsEventTriggerer(),
+            $this->getReturnPreCreatePlugins()
         );
     }
 
@@ -166,5 +167,13 @@ class SalesReturnBusinessFactory extends AbstractBusinessFactory
     protected function getUtilDateTimeService(): SalesReturnToUtilDateTimeServiceInterface
     {
         return $this->getProvidedDependency(SalesReturnDependencyProvider::SERVICE_UTIL_DATE_TIME);
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnPreCreatePluginInterface[]
+     */
+    protected function getReturnPreCreatePlugins()
+    {
+        return $this->getProvidedDependency(SalesReturnDependencyProvider::PLUGINS_RETURN_PRE_CREATE);
     }
 }

@@ -9,11 +9,12 @@ namespace Spryker\Zed\MerchantSalesReturn\Business\Model;
 
 use Generated\Shared\Transfer\ReturnTransfer;
 
-class MerchantReturnPreparator
+interface MerchantReturnPreparerInterface
 {
-    public function prepareReturn(ReturnTransfer $returnTransfer): ReturnTransfer
-    {
-
-    }
-
+    /**
+     * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
+     *
+     * @return \Generated\Shared\Transfer\ReturnTransfer
+     */
+    public function prepareReturn(ReturnTransfer $returnTransfer): ReturnTransfer;
 }

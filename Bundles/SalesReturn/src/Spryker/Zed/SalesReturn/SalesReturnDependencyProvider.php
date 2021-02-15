@@ -27,6 +27,7 @@ class SalesReturnDependencyProvider extends AbstractBundleDependencyProvider
     public const SERVICE_UTIL_DATE_TIME = 'SERVICE_UTIL_DATE_TIME';
 
     public const PROPEL_QUERY_SALES_ORDER_ITEM = 'PROPEL_QUERY_SALES_ORDER_ITEM';
+    public const PLUGINS_RETURN_PRE_CREATE = 'PLUGINS_RETURN_PRE_CREATE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -41,6 +42,7 @@ class SalesReturnDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addSalesFacade($container);
         $container = $this->addOmsFacade($container);
         $container = $this->addUtilDateTimeService($container);
+        $container = $this->addReturnPreCreatePlugins($container);
 
         return $container;
     }
@@ -131,5 +133,27 @@ class SalesReturnDependencyProvider extends AbstractBundleDependencyProvider
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addReturnPreCreatePlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_RETURN_PRE_CREATE, function (Container $container) {
+            return $this->getReturnPreCreatePlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnPreCreatePluginInterface[]
+     */
+    protected function getReturnPreCreatePlugins(): array
+    {
+        return [];
     }
 }
