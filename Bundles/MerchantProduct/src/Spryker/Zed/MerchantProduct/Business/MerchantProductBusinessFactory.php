@@ -8,8 +8,6 @@
 namespace Spryker\Zed\MerchantProduct\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\MerchantProduct\Business\Reader\ProductConcreteReader;
-use Spryker\Zed\MerchantProduct\Business\Reader\ProductConcreteReaderInterface;
 use Spryker\Zed\MerchantProduct\Business\Reader\MerchantProductReader;
 use Spryker\Zed\MerchantProduct\Business\Reader\MerchantProductReaderInterface;
 use Spryker\Zed\MerchantProduct\Business\Validator\Constraint\ProductAbstractBelongsToMerchantConstraint;
@@ -44,17 +42,6 @@ class MerchantProductBusinessFactory extends AbstractBusinessFactory
     public function createMerchantProductReader(): MerchantProductReaderInterface
     {
         return new MerchantProductReader(
-            $this->getRepository(),
-            $this->getProductFacade()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\MerchantProduct\Business\Reader\ProductConcreteReaderInterface
-     */
-    public function createProductConcreteReader(): ProductConcreteReaderInterface
-    {
-        return new ProductConcreteReader(
             $this->getRepository(),
             $this->getProductFacade()
         );

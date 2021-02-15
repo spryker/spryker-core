@@ -1,7 +1,7 @@
 # AvailabilityMerchantPortalGui Module
 [![Build Status](https://travis-ci.org/spryker/availability-merchant-portal-gui.svg)](https://travis-ci.org/spryker/availability-merchant-portal-gui)
 
-{{ADD DESCRIPTION HERE}}
+This module provides Zed UI interface for availability management for the Merchant portal.
 
 ## Installation
 

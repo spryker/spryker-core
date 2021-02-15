@@ -108,6 +108,6 @@ class MerchantProductFacade extends AbstractFacade implements MerchantProductFac
     public function getProductConcreteCollection(
         MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer
     ): ProductConcreteCollectionTransfer {
-        return $this->getFactory()->createProductConcreteReader()->getProductConcreteCollection($merchantProductCriteriaTransfer);
+        return $this->getFactory()->createMerchantProductReader()->getProductConcreteCollection($merchantProductCriteriaTransfer);
     }
 }
