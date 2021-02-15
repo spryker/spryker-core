@@ -308,20 +308,6 @@ class ProductMerchantPortalGuiDependencyProvider extends AbstractBundleDependenc
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addProductFacade(Container $container): Container
-    {
-        $container->set(static::FACADE_PRODUCT, function (Container $container) {
-            return new ProductMerchantPortalGuiToProductFacadeBridge($container->getLocator()->product()->facade());
-        });
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addProductValidityFacade(Container $container): Container
     {
         $container->set(static::FACADE_PRODUCT_VALIDITY, function (Container $container) {
