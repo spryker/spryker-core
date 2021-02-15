@@ -30,7 +30,7 @@ class SchedulerToGracefulRunnerFacadeBridge implements SchedulerToGracefulRunner
      *
      * @return int
      */
-    public function run(Generator $generator, ?string $throwableClassName): int
+    public function run(Generator $generator, ?string $throwableClassName = null): int
     {
         return $this->gracefulRunnerFacade->run($generator);
     }

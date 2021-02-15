@@ -17,5 +17,5 @@ interface DataExportToGracefulRunnerFacadeInterface
      *
      * @return int
      */
-    public function run(Generator $generator, ?string $throwableClassName): int;
+    public function run(Generator $generator, ?string $throwableClassName = null): int;
 }
