@@ -7,10 +7,12 @@
 
 namespace Spryker\Client\MerchantProductOfferStorage\Plugin\ProductStorage;
 
+use Generated\Shared\Transfer\ProductOfferStorageCriteriaTransfer;
 use Generated\Shared\Transfer\ProductStorageCriteriaTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductViewExpanderByCriteriaPluginInterface;
+use Spryker\Shared\MerchantProductOfferStorage\MerchantProductOfferStorageConfig;
 
 /**
  * @method \Spryker\Client\MerchantProductOfferStorage\MerchantProductOfferStorageClientInterface getClient()
@@ -18,6 +20,16 @@ use Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductViewExpander
  */
 class ProductViewOfferExpanderPlugin extends AbstractPlugin implements ProductViewExpanderByCriteriaPluginInterface
 {
+    /**
+     * @uses \SprykerShop\Yves\MerchantProductWidget\Reader\MerchantProductReader::PARAM_SELECTED_MERCHANT_REFERENCE
+     */
+    protected const PARAM_SELECTED_MERCHANT_REFERENCE = 'selected_merchant_reference';
+
+    /**
+     * @uses \SprykerShop\Yves\MerchantProductWidget\Reader\MerchantProductReader::PARAM_SELECTED_MERCHANT_REFERENCE_TYPE
+     */
+    protected const PARAM_SELECTED_MERCHANT_REFERENCE_TYPE = 'selected_merchant_reference_type';
+
     /**
      * {@inheritDoc}
      * - Expands the transfer object with the product offer reference according to provided criteria.
@@ -39,9 +51,30 @@ class ProductViewOfferExpanderPlugin extends AbstractPlugin implements ProductVi
         $localeName,
         ?ProductStorageCriteriaTransfer $productStorageCriteriaTransfer = null
     ): ProductViewTransfer {
-        return $this->getFactory()->createProductViewOfferExpander()->expandProductViewTransfer(
-            $productViewTransfer,
-            $productStorageCriteriaTransfer
+        if (!$productStorageCriteriaTransfer) {
+            return $productViewTransfer;
+        }
+
+        if (!$productViewTransfer->getIdProductConcrete()) {
+            return $productViewTransfer;
+        }
+
+        $productOfferStorageCriteriaTransfer = (new ProductOfferStorageCriteriaTransfer())->fromArray(
+            $productStorageCriteriaTransfer->modifiedToArray(),
+            true
+        );
+        $productOfferStorageCriteriaTransfer->fromArray($productViewTransfer->toArray(), true);
+
+        $selectedAttributes = $productViewTransfer->getSelectedAttributes();
+        $selectedProductOfferReference = isset($selectedAttributes[static::PARAM_SELECTED_MERCHANT_REFERENCE_TYPE])
+            && $selectedAttributes[static::PARAM_SELECTED_MERCHANT_REFERENCE_TYPE] === MerchantProductOfferStorageConfig::PRODUCT_OFFER_REFERENCE_ATTRIBUTE
+            && isset($selectedAttributes[static::PARAM_SELECTED_MERCHANT_REFERENCE]) ? $selectedAttributes[static::PARAM_SELECTED_MERCHANT_REFERENCE] : null;
+
+        $productOfferStorageCriteriaTransfer->setProductOfferReference($selectedProductOfferReference);
+        $productOfferStorageCriteriaTransfer->addProductConcreteSku($productViewTransfer->getSku());
+
+        return $productViewTransfer->setProductOfferReference(
+            $this->getClient()->findProductConcreteDefaultProductOffer($productOfferStorageCriteriaTransfer)
         );
     }
 }
