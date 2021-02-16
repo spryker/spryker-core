@@ -160,7 +160,7 @@ class DataImporter implements
 
         $dataImportGenerator = $this->createDataImportGenerator($dataReader, $dataImporterReportTransfer, $dataImporterConfigurationTransfer);
 
-        $this->gracefulRunnerFacade->run($dataImportGenerator);
+        $this->gracefulRunnerFacade->run($dataImportGenerator, Exception::class);
 
         return $dataImportGenerator->getReturn();
     }
@@ -182,32 +182,35 @@ class DataImporter implements
         DataImporterReportTransfer $dataImporterReportTransfer,
         ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
     ): Generator {
-        foreach ($dataReader as $dataSet) {
-            yield;
+        try {
+            foreach ($dataReader as $dataSet) {
+                yield;
 
-            try {
-                $this->processDataSet($dataSet, $dataImporterReportTransfer);
-            } catch (Exception $dataImportException) {
-                if ($dataImportException instanceof TransactionRolledBackAwareExceptionInterface) {
-                    $dataImporterReportTransfer = $this->recalculateImportedDataSetCount($dataImporterReportTransfer, $dataImportException);
+                try {
+                    $this->processDataSet($dataSet, $dataImporterReportTransfer);
+                } catch (Exception $dataImportException) {
+                    if ($dataImportException instanceof TransactionRolledBackAwareExceptionInterface) {
+                        $dataImporterReportTransfer = $this->recalculateImportedDataSetCount($dataImporterReportTransfer, $dataImportException);
+                    }
+                    $exceptionMessage = $this->buildExceptionMessage($dataImportException, $dataImporterReportTransfer->getImportedDataSetCount() + 1);
+
+                    if ($dataImporterConfigurationTransfer && $dataImporterConfigurationTransfer->getThrowException()) {
+                        throw new DataImportException($exceptionMessage, 0, $dataImportException);
+                    }
+
+                    ErrorLogger::getInstance()->log($dataImportException);
+
+                    $dataImporterReportMessageTransfer = new DataImporterReportMessageTransfer();
+                    $dataImporterReportMessageTransfer->setMessage($exceptionMessage);
+
+                    $dataImporterReportTransfer
+                        ->setIsSuccess(false)
+                        ->addMessage($dataImporterReportMessageTransfer);
                 }
-                $exceptionMessage = $this->buildExceptionMessage($dataImportException, $dataImporterReportTransfer->getImportedDataSetCount() + 1);
 
-                if ($dataImporterConfigurationTransfer && $dataImporterConfigurationTransfer->getThrowException()) {
-                    throw new DataImportException($exceptionMessage, 0, $dataImportException);
-                }
-
-                ErrorLogger::getInstance()->log($dataImportException);
-
-                $dataImporterReportMessageTransfer = new DataImporterReportMessageTransfer();
-                $dataImporterReportMessageTransfer->setMessage($exceptionMessage);
-
-                $dataImporterReportTransfer
-                    ->setIsSuccess(false)
-                    ->addMessage($dataImporterReportMessageTransfer);
+                unset($dataSet);
             }
-
-            unset($dataSet);
+        } catch (Exception $exception) {
         }
 
         return $dataImporterReportTransfer;

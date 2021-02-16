@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\DataExport\Business\Exporter;
 
+use Exception;
 use Generated\Shared\Transfer\DataExportConfigurationsTransfer;
 use Generated\Shared\Transfer\DataExportConfigurationTransfer;
 use Generated\Shared\Transfer\DataExportReportTransfer;
@@ -78,7 +79,7 @@ class DataExportExecutor
 
         $dataExportGenerator = $this->createDataExportGenerator($dataExportConfigurationsTransfer, $dataExportDefaultsConfigurationTransfer);
 
-        $this->gracefulRunnerFacade->run($dataExportGenerator);
+        $this->gracefulRunnerFacade->run($dataExportGenerator, Exception::class);
 
         return $dataExportGenerator->getReturn();
     }

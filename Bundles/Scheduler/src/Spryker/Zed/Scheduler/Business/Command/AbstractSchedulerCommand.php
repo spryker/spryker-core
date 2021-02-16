@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Scheduler\Business\Command;
 
+use Exception;
 use Generated\Shared\Transfer\SchedulerFilterTransfer;
 use Generated\Shared\Transfer\SchedulerResponseCollectionTransfer;
 use Generated\Shared\Transfer\SchedulerResponseTransfer;
@@ -58,7 +59,7 @@ abstract class AbstractSchedulerCommand implements SchedulerCommandInterface
     {
         $schedulerGenerator = $this->createSchedulerGenerator($filterTransfer);
 
-        $this->gracefulFacade->run($schedulerGenerator);
+        $this->gracefulFacade->run($schedulerGenerator, Exception::class);
 
         return $schedulerGenerator->getReturn();
     }
