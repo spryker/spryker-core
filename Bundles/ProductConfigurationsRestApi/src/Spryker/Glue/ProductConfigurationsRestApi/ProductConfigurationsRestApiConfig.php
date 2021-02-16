@@ -9,6 +9,6 @@ namespace Spryker\Glue\ProductConfigurationsRestApi;
 
 use Spryker\Glue\Kernel\AbstractBundleConfig;
 
-class ProductDiscontinuedRestApiConfig extends AbstractBundleConfig
+class ProductConfigurationsRestApiConfig extends AbstractBundleConfig
 {
 }

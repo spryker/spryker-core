@@ -14,7 +14,7 @@ use Spryker\Glue\ProductConfigurationsRestApi\Dependency\Service\ProductConfigur
 use Spryker\Glue\ProductConfigurationsRestApi\Dependency\Service\ProductConfigurationsRestApiToUtilEncodingServiceBridge;
 
 /**
- * @method \Spryker\Glue\ProductConfigurationsRestApi\ProductDiscontinuedRestApiConfig getConfig()
+ * @method \Spryker\Glue\ProductConfigurationsRestApi\ProductConfigurationsRestApiConfig getConfig()
  */
 class ProductConfigurationsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
