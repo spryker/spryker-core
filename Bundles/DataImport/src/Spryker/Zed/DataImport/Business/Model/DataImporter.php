@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\DataImporterReportTransfer;
 use Generator;
 use Spryker\Shared\ErrorHandler\ErrorLogger;
 use Spryker\Zed\DataImport\Business\DataImporter\DataImporterImportGroupAwareInterface;
+use Spryker\Zed\DataImport\Business\Exception\DataImporterGeneratorException;
 use Spryker\Zed\DataImport\Business\Exception\DataImportException;
 use Spryker\Zed\DataImport\Business\Exception\TransactionRolledBackAwareExceptionInterface;
 use Spryker\Zed\DataImport\Business\Model\DataReader\ConfigurableDataReaderInterface;
@@ -160,7 +161,7 @@ class DataImporter implements
 
         $dataImportGenerator = $this->createDataImportGenerator($dataReader, $dataImporterReportTransfer, $dataImporterConfigurationTransfer);
 
-        $this->gracefulRunnerFacade->run($dataImportGenerator, Exception::class);
+        $this->gracefulRunnerFacade->run($dataImportGenerator, DataImporterGeneratorException::class);
 
         return $dataImportGenerator->getReturn();
     }
@@ -210,7 +211,7 @@ class DataImporter implements
 
                 unset($dataSet);
             }
-        } catch (Exception $exception) {
+        } catch (DataImporterGeneratorException $exception) {
         }
 
         return $dataImporterReportTransfer;
