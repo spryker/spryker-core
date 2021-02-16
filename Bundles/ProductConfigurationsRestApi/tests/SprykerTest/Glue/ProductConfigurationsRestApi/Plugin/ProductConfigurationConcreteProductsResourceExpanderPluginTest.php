@@ -30,7 +30,7 @@ use Spryker\Glue\ProductConfigurationsRestApi\ProductConfigurationsRestApiDepend
 class ProductConfigurationConcreteProductsResourceExpanderPluginTest extends Unit
 {
     protected const TEST_ID_PRODUCT_CONCRETE = 111;
-    
+
     /**
      * @var \SprykerTest\Glue\ProductConfigurationsRestApi\ProductConfigurationsRestApiPluginTester
      */
