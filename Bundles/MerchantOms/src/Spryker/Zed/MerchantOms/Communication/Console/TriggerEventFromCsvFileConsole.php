@@ -134,10 +134,13 @@ class TriggerEventFromCsvFileConsole extends Console
                 if ($merchantOmsTriggerResponseTransfer->getIsSuccessful()) {
                     $successfullyProcessedRowsCount++;
                 }
+                /** @var bool $isSuccessfulMerchantOmsTriggerResponse */
+                $isSuccessfulMerchantOmsTriggerResponse = $merchantOmsTriggerResponseTransfer->getIsSuccessful();
+
                 $this->logOutput(
                     $rowNumber,
                     $merchantOmsTriggerRequestTransfer,
-                    $merchantOmsTriggerResponseTransfer->getIsSuccessful()
+                    $isSuccessfulMerchantOmsTriggerResponse
                 );
             } catch (Throwable $exception) {
                 $this->logOutput(
@@ -159,12 +162,21 @@ class TriggerEventFromCsvFileConsole extends Console
      */
     protected function resolveFilePath(): ?string
     {
+        /** @var string $filePath */
+        $filePath = $this->input->getArgument(static::ARGUMENT_FILE_PATH);
+
         $filePathResolverResponseTransfer = $this->getFactory()
             ->createFilePathResolver()
-            ->resolveFilePath($this->input->getArgument(static::ARGUMENT_FILE_PATH));
+            ->resolveFilePath($filePath);
 
         if (!$filePathResolverResponseTransfer->getIsSuccessful()) {
-            $this->error($filePathResolverResponseTransfer->getMessage()->getMessage());
+            /** @var \Generated\Shared\Transfer\MessageTransfer $messageTransfer */
+            $messageTransfer = $filePathResolverResponseTransfer->getMessage();
+
+            /** @var string $message */
+            $message = $messageTransfer->getMessage();
+
+            $this->error($message);
 
             return null;
         }
@@ -177,7 +189,10 @@ class TriggerEventFromCsvFileConsole extends Console
      */
     protected function getStartFromOption(): int
     {
-        return max((int)$this->input->getOption(static::OPTION_START_FROM) - 1, 0);
+        /** @var bool|string|null $option */
+        $option = $this->input->getOption(static::OPTION_START_FROM);
+
+        return max((int)$option - 1, 0);
     }
 
     /**

@@ -27,6 +27,8 @@ class ProductVariantExpander implements ProductVariantExpanderInterface
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Client\ProductStorage\Mapper\ProductVariantExpander::expandProductViewWithProductVariant()} instead.
+     *
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      * @param string $locale
      *
@@ -36,10 +38,7 @@ class ProductVariantExpander implements ProductVariantExpanderInterface
     {
         $productViewTransfer->requireAttributeMap();
 
-        if (
-            count($productViewTransfer->getAttributeMap()->getProductConcreteIds()) === 1 ||
-            count($productViewTransfer->getAttributeMap()->getSuperAttributes()) === 0
-        ) {
+        if ($this->isOnlyOneProductVariantCanBeSelected($productViewTransfer)) {
             return $this->getFirstProductVariant($productViewTransfer, $locale);
         }
 
@@ -54,6 +53,47 @@ class ProductVariantExpander implements ProductVariantExpanderInterface
         }
 
         return $productViewTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer
+     */
+    public function expandProductViewWithProductVariant(
+        ProductViewTransfer $productViewTransfer,
+        string $localeName
+    ): ProductViewTransfer {
+        $productViewTransfer->requireAttributeMap();
+
+        if ($this->isOnlyOneProductVariantCanBeSelected($productViewTransfer)) {
+            return $this->getFirstProductVariant($productViewTransfer, $localeName);
+        }
+
+        $productViewTransfer = $this->setSingleValueAttributesAsSelected($productViewTransfer);
+        $selectedVariantNode = $this->getSelectedVariantNode($productViewTransfer);
+
+        if ($productViewTransfer->getSelectedAttributes()) {
+            $productViewTransfer = $this->getSelectedProductVariant($productViewTransfer, $localeName, $selectedVariantNode);
+        }
+
+        if (!$productViewTransfer->getIdProductConcrete()) {
+            $productViewTransfer = $this->setAvailableAttributes($selectedVariantNode, $productViewTransfer);
+        }
+
+        return $productViewTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     *
+     * @return bool
+     */
+    protected function isOnlyOneProductVariantCanBeSelected(ProductViewTransfer $productViewTransfer): bool
+    {
+        return count($productViewTransfer->getAttributeMap()->getProductConcreteIds()) === 1 ||
+            count($productViewTransfer->getAttributeMap()->getSuperAttributes()) === 0;
     }
 
     /**
@@ -171,7 +211,10 @@ class ProductVariantExpander implements ProductVariantExpanderInterface
     {
         $productConcreteIds = $productViewTransfer->getAttributeMap()->getProductConcreteIds();
         $idProductConcrete = array_shift($productConcreteIds);
-        $productConcreteStorageData = $this->productConcreteStorageReader->findProductConcreteStorageData($idProductConcrete, $locale);
+        $productConcreteStorageData = $this->productConcreteStorageReader->findProductConcreteStorageData(
+            $idProductConcrete,
+            $locale
+        );
         $productViewTransfer->getAttributeMap()->setSuperAttributes([]);
 
         if (!$productConcreteStorageData) {
@@ -187,8 +230,10 @@ class ProductVariantExpander implements ProductVariantExpanderInterface
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
-    protected function mergeAbstractAndConcreteProducts(ProductViewTransfer $productViewTransfer, array $productConcreteStorageData)
-    {
+    protected function mergeAbstractAndConcreteProducts(
+        ProductViewTransfer $productViewTransfer,
+        array $productConcreteStorageData
+    ) {
         $productConcreteStorageData = array_filter($productConcreteStorageData, function ($value) {
             return $value !== null;
         });
@@ -205,8 +250,11 @@ class ProductVariantExpander implements ProductVariantExpanderInterface
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
-    protected function getSelectedProductVariant(ProductViewTransfer $productViewTransfer, $locale, array $selectedVariantNode): ProductViewTransfer
-    {
+    protected function getSelectedProductVariant(
+        ProductViewTransfer $productViewTransfer,
+        $locale,
+        array $selectedVariantNode
+    ): ProductViewTransfer {
         if (!$this->isProductConcreteNodeReached($selectedVariantNode)) {
             return $productViewTransfer;
         }
@@ -244,5 +292,29 @@ class ProductVariantExpander implements ProductVariantExpanderInterface
         }
 
         return $selectedVariantNode[ProductConfig::VARIANT_LEAF_NODE_ID];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer
+     */
+    protected function setSingleValueAttributesAsSelected(ProductViewTransfer $productViewTransfer): ProductViewTransfer
+    {
+        $originalSelectedAttributes = $productViewTransfer->getSelectedAttributes();
+
+        $superAttributes = $productViewTransfer->getAttributeMap()->getSuperAttributes();
+
+        $autoSelectedSingleValueSuperAttributes = [];
+
+        foreach ($superAttributes as $superAttributeName => $superAttributeValues) {
+            if (count($superAttributeValues) === 1) {
+                $autoSelectedSingleValueSuperAttributes[$superAttributeName] = $superAttributeValues[0];
+            }
+        }
+
+        $productViewTransfer->setSelectedAttributes($autoSelectedSingleValueSuperAttributes + $originalSelectedAttributes);
+
+        return $productViewTransfer;
     }
 }

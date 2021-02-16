@@ -147,7 +147,12 @@ class CategoryReader implements CategoryReaderInterface
         $urlEntityCollection = SpyUrlQuery::create()->filterByFkResourceCategorynode(null, Criteria::ISNOTNULL)->find();
 
         foreach ($urlEntityCollection as $urlEntity) {
-            $categoryEntity = $urlEntity->getSpyCategoryNode()->getCategory();
+            $categoryNodeEntity = $urlEntity->getSpyCategoryNode();
+            if (!$categoryNodeEntity) {
+                return;
+            }
+            $categoryEntity = $categoryNodeEntity->getCategory();
+
             if (!$this->categoryUrls->offsetExists($categoryEntity->getCategoryKey())) {
                 $this->categoryUrls[$categoryEntity->getCategoryKey()] = [];
             }

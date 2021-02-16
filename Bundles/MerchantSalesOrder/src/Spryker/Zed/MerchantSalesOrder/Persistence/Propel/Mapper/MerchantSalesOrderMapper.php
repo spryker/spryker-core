@@ -86,10 +86,19 @@ class MerchantSalesOrderMapper
         MerchantOrderTransfer $merchantOrderTransfer,
         SpyMerchantSalesOrder $merchantSalesOrderEntity
     ): SpyMerchantSalesOrder {
+        /** @var string $merchantOrderReference */
+        $merchantOrderReference = $merchantOrderTransfer->getMerchantOrderReference();
+
+        /** @var int $idMerchantOrder */
+        $idMerchantOrder = $merchantOrderTransfer->getIdMerchantOrder();
+
+        /** @var int $idOrder */
+        $idOrder = $merchantOrderTransfer->getIdOrder();
+
         $merchantSalesOrderEntity->fromArray($merchantOrderTransfer->modifiedToArray());
-        $merchantSalesOrderEntity->setMerchantSalesOrderReference($merchantOrderTransfer->getMerchantOrderReference());
-        $merchantSalesOrderEntity->setIdMerchantSalesOrder($merchantOrderTransfer->getIdMerchantOrder());
-        $merchantSalesOrderEntity->setFkSalesOrder($merchantOrderTransfer->getIdOrder());
+        $merchantSalesOrderEntity->setMerchantSalesOrderReference($merchantOrderReference);
+        $merchantSalesOrderEntity->setIdMerchantSalesOrder($idMerchantOrder);
+        $merchantSalesOrderEntity->setFkSalesOrder($idOrder);
 
         return $merchantSalesOrderEntity;
     }
@@ -121,9 +130,19 @@ class MerchantSalesOrderMapper
         SpyMerchantSalesOrderItem $merchantSalesOrderItemEntity
     ): SpyMerchantSalesOrderItem {
         $merchantSalesOrderItemEntity->fromArray($merchantOrderItemTransfer->modifiedToArray());
-        $merchantSalesOrderItemEntity->setIdMerchantSalesOrderItem($merchantOrderItemTransfer->getIdMerchantOrderItem())
-            ->setFkSalesOrderItem($merchantOrderItemTransfer->getIdOrderItem())
-            ->setFkMerchantSalesOrder($merchantOrderItemTransfer->getIdMerchantOrder());
+
+        /** @var int $idMerchantOrderItem */
+        $idMerchantOrderItem = $merchantOrderItemTransfer->getIdMerchantOrderItem();
+
+        /** @var int $idOrderItem */
+        $idOrderItem = $merchantOrderItemTransfer->getIdOrderItem();
+
+        /** @var int $idMerchantOrder */
+        $idMerchantOrder = $merchantOrderItemTransfer->getIdMerchantOrder();
+
+        $merchantSalesOrderItemEntity->setIdMerchantSalesOrderItem($idMerchantOrderItem)
+            ->setFkSalesOrderItem($idOrderItem)
+            ->setFkMerchantSalesOrder($idMerchantOrder);
 
         return $merchantSalesOrderItemEntity;
     }
@@ -162,14 +181,19 @@ class MerchantSalesOrderMapper
         $merchantSalesOrderTotalsEntity->setOrderExpenseTotal($totalsTransfer->getExpenseTotal());
         $merchantSalesOrderTotalsEntity->setFkMerchantSalesOrder($idMerchantOrder);
 
+        /** @var \Generated\Shared\Transfer\TaxTotalTransfer $taxTotal */
+        $taxTotal = $totalsTransfer->getTaxTotal();
+
         if ($totalsTransfer->getTaxTotal()) {
-            $merchantSalesOrderTotalsEntity->setTaxTotal($totalsTransfer->getTaxTotal()->getAmount());
+            $merchantSalesOrderTotalsEntity->setTaxTotal($taxTotal->getAmount());
         }
 
         return $merchantSalesOrderTotalsEntity;
     }
 
     /**
+     * @phpstan-param \Propel\Runtime\Collection\ObjectCollection<array-key, \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItem> $merchantSalesOrderItemEntities
+     *
      * @param \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItem[]|\Propel\Runtime\Collection\ObjectCollection $merchantSalesOrderItemEntities
      * @param \Generated\Shared\Transfer\MerchantOrderItemCollectionTransfer $merchantOrderItemCollectionTransfer
      *
