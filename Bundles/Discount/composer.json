@@ -43,7 +43,8 @@
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/",
-      "SprykerTest\\Shared\\Discount\\Helper\\": "tests/SprykerTest/Shared/Discount/_support/Helper/"
+      "SprykerTest\\Shared\\Discount\\Helper\\": "tests/SprykerTest/Shared/Discount/_support/Helper/",
+      "SprykerTest\\Zed\\Discount\\PageObject\\": "tests/SprykerTest/Zed/Discount/_support/PageObject/"
     }
   },
   "autoload-dev": {

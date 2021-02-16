@@ -56,7 +56,9 @@ class ProductOfferPricesRestApiFactory extends AbstractFactory
      */
     public function createProductOfferPriceMapper(): ProductOfferPriceMapperInterface
     {
-        return new ProductOfferPriceMapper();
+        return new ProductOfferPriceMapper(
+            $this->getRestProductOfferPricesAttributesMapperPlugins()
+        );
     }
 
     /**
@@ -97,5 +99,13 @@ class ProductOfferPricesRestApiFactory extends AbstractFactory
     public function getPriceProductClient(): ProductOfferPricesRestApiToPriceProductClientInterface
     {
         return $this->getProvidedDependency(ProductOfferPricesRestApiDependencyProvider::CLIENT_PRICE_PRODUCT);
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductOfferPricesRestApiExtension\Dependency\Plugin\RestProductOfferPricesAttributesMapperPluginInterface[]
+     */
+    public function getRestProductOfferPricesAttributesMapperPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductOfferPricesRestApiDependencyProvider::PLUGINS_REST_PRODUCT_OFFER_PRICES_ATTRIBUTES_MAPPER);
     }
 }

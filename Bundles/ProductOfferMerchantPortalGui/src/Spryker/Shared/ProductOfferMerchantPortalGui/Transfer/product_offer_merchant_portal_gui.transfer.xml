@@ -357,4 +357,8 @@
         <property name="columnErrors" type="array" singular="columnError" associative="true" description="Key is column ID."/>
     </transfer>
 
+    <transfer name="GuiTableEditableButton">
+        <property name="title" type="string"/>
+    </transfer>
+
 </transfers>
