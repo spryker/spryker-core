@@ -21,6 +21,7 @@ class MerchantProfileMerchantPostUpdatePlugin extends AbstractPlugin implements 
     /**
      * {@inheritDoc}
      * - Saves merchant profile after the merchant is updated.
+     * - Does not save merchant profile if MerchantTransfer.merchantProfile is not set.
      *
      * @api
      *
@@ -30,7 +31,9 @@ class MerchantProfileMerchantPostUpdatePlugin extends AbstractPlugin implements 
      */
     public function postUpdate(MerchantTransfer $merchantTransfer): MerchantResponseTransfer
     {
-        $merchantTransfer->requireMerchantProfile();
+        if (!$merchantTransfer->getMerchantProfile()) {
+            return (new MerchantResponseTransfer())->setIsSuccess(true)->setMerchant($merchantTransfer);
+        };
 
         $merchantProfileTransfer = $merchantTransfer->getMerchantProfileOrFail();
         $merchantProfileTransfer->setFkMerchant($merchantTransfer->getIdMerchant());
