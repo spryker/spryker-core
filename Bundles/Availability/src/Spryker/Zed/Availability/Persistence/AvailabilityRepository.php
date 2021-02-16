@@ -283,7 +283,7 @@ class AvailabilityRepository extends AbstractRepository implements AvailabilityR
 
         return $this->getFactory()
             ->createAvailabilityMapper()
-            ->mapAvailabilityEntitiesToMerchantOrderItemCollectionTransfer(
+            ->mapAvailabilityEntitiesToProductConcreteAvailabilityCollectionTransfer(
                 $availabilityEntities,
                 new ProductConcreteAvailabilityCollectionTransfer()
             );

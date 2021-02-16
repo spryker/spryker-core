@@ -54,7 +54,7 @@ class AvailabilityMapper implements AvailabilityMapperInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityCollectionTransfer
      */
-    public function mapAvailabilityEntitiesToMerchantOrderItemCollectionTransfer(
+    public function mapAvailabilityEntitiesToProductConcreteAvailabilityCollectionTransfer(
         ObjectCollection $availabilityEntities,
         ProductConcreteAvailabilityCollectionTransfer $productConcreteAvailabilityCollectionTransfer
     ): ProductConcreteAvailabilityCollectionTransfer {

@@ -731,7 +731,7 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
         );
         $paginationTransfer = $this->getFactory()
             ->createPropelModelPagerMapper()
-            ->mapPropelModelPagerToPaginationTransfer($propelPager);
+            ->mapPropelModelPagerToPaginationTransfer($propelPager, new PaginationTransfer());
 
         $productConcreteCollectionTransfer = $this->getFactory()
             ->createProductTableDataMapper()
