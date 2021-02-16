@@ -66,6 +66,31 @@ class ProductDataHelper extends Module
     }
 
     /**
+     * @param array $productConcreteOverride
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function haveProductConcrete(array $productConcreteOverride = []): ProductConcreteTransfer
+    {
+        $productConcreteTransfer = (new ProductConcreteBuilder())
+            ->seed($productConcreteOverride)
+            ->build();
+
+        $this->getProductFacade()->createProductConcrete($productConcreteTransfer);
+
+        $this->debug(sprintf(
+            'Inserted Concrete Product: %d',
+            $productConcreteTransfer->getIdProductConcrete()
+        ));
+
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($productConcreteTransfer): void {
+            $this->cleanupProductConcrete($productConcreteTransfer->getIdProductConcrete());
+        });
+
+        return $productConcreteTransfer;
+    }
+
+    /**
      * @param array $productAbstractOverride
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
@@ -104,6 +129,7 @@ class ProductDataHelper extends Module
         $localizedAttributes = (new LocalizedAttributesBuilder([
             LocalizedAttributesTransfer::NAME => uniqid('Product #', true),
             LocalizedAttributesTransfer::LOCALE => $this->getCurrentLocale(),
+            LocalizedAttributesTransfer::ATTRIBUTES => $productConcreteOverride[ProductConcreteTransfer::ATTRIBUTES] ?? [],
         ]))->build()->toArray();
 
         /** @var \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer */

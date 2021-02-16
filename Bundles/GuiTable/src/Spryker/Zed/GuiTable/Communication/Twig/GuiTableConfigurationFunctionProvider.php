@@ -127,6 +127,7 @@ class GuiTableConfigurationFunctionProvider extends TwigFunctionProvider
         return [
             GuiTableDataSourceConfigurationTransfer::TYPE => $guiTableDataSourceConfigurationTransfer->getType(),
             GuiTableDataSourceConfigurationTransfer::URL => $guiTableDataSourceConfigurationTransfer->getUrl(),
+            GuiTableDataSourceConfigurationTransfer::DATA => $guiTableDataSourceConfigurationTransfer->getData(),
         ];
     }
 

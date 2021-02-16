@@ -61,7 +61,10 @@ class SharedCartRepositoryTest extends Unit
         foreach ($customerPermissions as $permission) {
             $permissionKeys[] = $permission->getKey();
             $configuration = $permission->getConfiguration();
-            $quoteIds = $configuration[SharedCartConfig::PERMISSION_CONFIG_ID_QUOTE_COLLECTION] ?? [];
+            $quoteIds = array_map(
+                'intval',
+                $configuration[SharedCartConfig::PERMISSION_CONFIG_ID_QUOTE_COLLECTION] ?? []
+            );
 
             $this->assertNotEmpty($quoteIds);
             $this->assertContains($quoteTransfer1->getIdQuote(), $quoteIds);

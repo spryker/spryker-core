@@ -25,6 +25,11 @@ class StorageInstanceBuilder
     public const DEFAULT_REDIS_DATABASE = 0;
 
     /**
+     * @uses \Spryker\Shared\StorageRedis\StorageRedisConstants::STORAGE_REDIS_SCHEME.
+     */
+    protected const STORAGE_REDIS_SCHEME = 'STORAGE_REDIS:STORAGE_REDIS_SCHEME';
+
+    /**
      * @var \Spryker\Zed\Collector\Business\Storage\Adapter\KeyValue\ReadInterface[]|\Spryker\Zed\Collector\Business\Storage\Adapter\KeyValue\ReadWriteInterface[]
      */
     protected static $storageInstances = [];
@@ -145,7 +150,7 @@ class StorageInstanceBuilder
         }
 
         $config = [
-            'protocol' => Config::get(StorageConstants::STORAGE_REDIS_PROTOCOL),
+            'scheme' => Config::get(static::STORAGE_REDIS_SCHEME, false) ?: Config::get(StorageConstants::STORAGE_REDIS_PROTOCOL),
             'port' => Config::get(StorageConstants::STORAGE_REDIS_PORT),
             'host' => Config::get(StorageConstants::STORAGE_REDIS_HOST),
             'database' => Config::get(StorageConstants::STORAGE_REDIS_DATABASE, static::DEFAULT_REDIS_DATABASE),
