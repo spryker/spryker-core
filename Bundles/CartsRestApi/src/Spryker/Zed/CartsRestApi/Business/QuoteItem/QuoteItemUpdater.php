@@ -36,6 +36,11 @@ class QuoteItemUpdater implements QuoteItemUpdaterInterface
     protected $quotePermissionChecker;
 
     /**
+     * @var \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteItemUpdateStrategyPluginInterface[]
+     */
+    protected $quoteItemUpdateStrategyPlugins;
+
+    /**
      * @param \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface $persistentCartFacade
      * @param \Spryker\Zed\CartsRestApi\Business\QuoteItem\QuoteItemReaderInterface $quoteItemReader
      * @param \Spryker\Zed\CartsRestApi\Business\PermissionChecker\QuotePermissionCheckerInterface $quotePermissionChecker
@@ -101,12 +106,7 @@ class QuoteItemUpdater implements QuoteItemUpdaterInterface
                     ->setErrorIdentifier(CartsRestApiSharedConfig::ERROR_IDENTIFIER_UNAUTHORIZED_CART_ACTION));
         }
 
-        $persistentCartChangeQuantityTransfer = $this->createPersistentCartChangeQuantityTransfer(
-            $quoteResponseTransfer->getQuoteTransfer(),
-            $cartItemRequestTransfer
-        );
-
-        $quoteResponseTransfer = $this->persistentCartFacade->changeItemQuantity($persistentCartChangeQuantityTransfer);
+        $quoteResponseTransfer = $this->executeQuoteItemUpdate($cartItemRequestTransfer, $quoteResponseTransfer);
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $quoteResponseTransfer
@@ -115,6 +115,30 @@ class QuoteItemUpdater implements QuoteItemUpdaterInterface
         }
 
         return $quoteResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartItemRequestTransfer $cartItemRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function executeQuoteItemUpdate(
+        cartItemRequestTransfer $cartItemRequestTransfer,
+        QuoteResponseTransfer $quoteResponseTransfer
+    ): QuoteResponseTransfer {
+        foreach ($this->quoteItemUpdateStrategyPlugins as $quoteItemUpdateStrategyPlugin) {
+            if ($quoteItemUpdateStrategyPlugin->isApplicable($cartItemRequestTransfer)) {
+                return $quoteItemUpdateStrategyPlugin->update($cartItemRequestTransfer, $quoteResponseTransfer);
+            }
+        }
+
+        $persistentCartChangeQuantityTransfer = $this->createPersistentCartChangeQuantityTransfer(
+            $quoteResponseTransfer->getQuoteTransfer(),
+            $cartItemRequestTransfer
+        );
+
+        return $this->persistentCartFacade->changeItemQuantity($persistentCartChangeQuantityTransfer);
     }
 
     /**
