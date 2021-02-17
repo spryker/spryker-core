@@ -252,4 +252,97 @@ class MerchantProductFacadeTest extends Unit
         $this->assertTrue($cartPreCheckResponseTransfer->getIsSuccess());
         $this->assertEmpty($cartPreCheckResponseTransfer->getMessages());
     }
+
+    /**
+     * @return void
+     */
+    public function testFindMerchantProductFindsExistingProductByIdProductAbstractAndIdMerchant(): void
+    {
+        // Arrange
+        $merchantTransfer = $this->tester->haveMerchant();
+        $expectedProductAbstractTransfer = $this->tester->haveProductAbstract();
+        $this->tester->haveMerchantProduct([
+            MerchantProductTransfer::ID_MERCHANT => $merchantTransfer->getIdMerchant(),
+            MerchantProductTransfer::ID_PRODUCT_ABSTRACT => $expectedProductAbstractTransfer->getIdProductAbstract(),
+        ]);
+
+        // Act
+        $merchantProductTransfer = $this->tester->getFacade()->findMerchantProduct(
+            (new MerchantProductCriteriaTransfer())
+                ->setIdProductAbstract($expectedProductAbstractTransfer->getIdProductAbstract())
+                ->setIdMerchant($merchantTransfer->getIdMerchant())
+        );
+
+        // Assert
+        $this->assertNotNull($merchantProductTransfer);
+        $this->assertNotNull($merchantProductTransfer->getProductAbstract());
+        $this->assertSame(
+            $expectedProductAbstractTransfer->getIdProductAbstract(),
+            $merchantProductTransfer->getProductAbstract()->getIdProductAbstract()
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindMerchantProductReturnsNullIfMerchantProductDoesNotExist(): void
+    {
+        // Arrange
+        $this->tester->ensureMerchantProductAbstractTableIsEmpty();
+        $merchantTransfer = $this->tester->haveMerchant();
+        $productAbstractTransfer = $this->tester->haveProductAbstract();
+
+        // Act
+        $merchantProductTransfer = $this->tester->getFacade()->findMerchantProduct(
+            (new MerchantProductCriteriaTransfer())
+                ->setIdProductAbstract($productAbstractTransfer->getIdProductAbstract())
+                ->setIdMerchant($merchantTransfer->getIdMerchant())
+        );
+
+        // Assert
+        $this->assertNull($merchantProductTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateMerchantProductIsSuccessful(): void
+    {
+        // Arrange
+        $merchantTransfer = $this->tester->haveMerchant();
+        $productAbstractTransfer = $this->tester->haveProductAbstract();
+        $merchantProductTransfer = $this->tester->haveMerchantProduct([
+            MerchantProductTransfer::ID_MERCHANT => $merchantTransfer->getIdMerchant(),
+            MerchantProductTransfer::ID_PRODUCT_ABSTRACT => $productAbstractTransfer->getIdProductAbstract(),
+        ]);
+        $merchantProductTransfer->setProductAbstract($productAbstractTransfer);
+
+        // Act
+        $validationResponseTransfer = $this->tester->getFacade()->validateMerchantProduct($merchantProductTransfer);
+
+        // Assert
+        $this->assertTrue($validationResponseTransfer->getIsSuccess());
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateMerchantProductFailsIfAbstractProductDoesNotBelongToMerchant(): void
+    {
+        // Arrange
+        $merchantTransfer = $this->tester->haveMerchant();
+        $productAbstractTransfer1 = $this->tester->haveProductAbstract();
+        $productAbstractTransfer2 = $this->tester->haveProductAbstract();
+        $merchantProductTransfer = $this->tester->haveMerchantProduct([
+            MerchantProductTransfer::ID_MERCHANT => $merchantTransfer->getIdMerchant(),
+            MerchantProductTransfer::ID_PRODUCT_ABSTRACT => $productAbstractTransfer2->getIdProductAbstract(),
+        ]);
+        $merchantProductTransfer->setProductAbstract($productAbstractTransfer1);
+
+        // Act
+        $validationResponseTransfer = $this->tester->getFacade()->validateMerchantProduct($merchantProductTransfer);
+
+        // Assert
+        $this->assertFalse($validationResponseTransfer->getIsSuccess());
+    }
 }
