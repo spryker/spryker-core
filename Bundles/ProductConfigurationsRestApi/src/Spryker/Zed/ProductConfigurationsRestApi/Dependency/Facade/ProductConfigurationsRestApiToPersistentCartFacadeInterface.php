@@ -12,5 +12,10 @@ use Generated\Shared\Transfer\QuoteResponseTransfer;
 
 interface ProductConfigurationsRestApiToPersistentCartFacadeInterface
 {
+    /**
+     * @param \Generated\Shared\Transfer\PersistentItemReplaceTransfer $persistentItemReplaceTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
     public function replaceItem(PersistentItemReplaceTransfer $persistentItemReplaceTransfer): QuoteResponseTransfer;
 }

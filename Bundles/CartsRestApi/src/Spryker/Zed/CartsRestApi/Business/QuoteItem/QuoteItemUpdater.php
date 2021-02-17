@@ -124,7 +124,7 @@ class QuoteItemUpdater implements QuoteItemUpdaterInterface
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function executeQuoteItemUpdate(
-        cartItemRequestTransfer $cartItemRequestTransfer,
+        CartItemRequestTransfer $cartItemRequestTransfer,
         QuoteResponseTransfer $quoteResponseTransfer
     ): QuoteResponseTransfer {
         foreach ($this->quoteItemUpdateStrategyPlugins as $quoteItemUpdateStrategyPlugin) {
