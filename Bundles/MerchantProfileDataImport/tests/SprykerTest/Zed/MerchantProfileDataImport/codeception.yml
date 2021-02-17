@@ -29,3 +29,4 @@ suites:
              - \SprykerTest\Zed\MerchantProfileDataImport\Helper\MerchantProfileAddressDataImportHelper
              - \SprykerTest\Zed\Testify\Helper\Business\BusinessHelper
              - \SprykerTest\Zed\Testify\Helper\Business\DependencyProviderHelper
+             - \SprykerTest\Shared\Testify\Helper\ConfigHelper

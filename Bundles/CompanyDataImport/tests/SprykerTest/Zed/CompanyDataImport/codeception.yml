@@ -25,3 +25,4 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\PropelTableRelationSanitizer
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
                 - \SprykerTest\Zed\CompanyDataImport\Helper\CompanyDataImportHelper
+                - \SprykerTest\Zed\Testify\Helper\Business\DependencyProviderHelper
