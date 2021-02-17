@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductStorage;
 
+use Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery;
+use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductStorage\Dependency\Facade\ProductStorageToEventBehaviorFacadeBridge;
@@ -27,6 +29,9 @@ class ProductStorageDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
     public const FACADE_STORE = 'FACADE_STORE';
     public const PLUGINS_PRODUCT_ABSTRACT_STORAGE_EXPANDER = 'PLUGINS_PRODUCT_ABSTRACT_STORAGE_EXPANDER';
+
+    public const PROPEL_QUERY_PRODUCT_ATTRIBUTE_KEY = 'PROPEL_QUERY_PRODUCT_ATTRIBUTE_KEY';
+    public const PROPEL_QUERY_PRODUCT = 'PROPEL_QUERY_PRODUCT';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -64,6 +69,9 @@ class ProductStorageDependencyProvider extends AbstractBundleDependencyProvider
         $container->set(static::QUERY_CONTAINER_PRODUCT, function (Container $container) {
             return new ProductStorageToProductQueryContainerBridge($container->getLocator()->product()->queryContainer());
         });
+
+        $container = $this->addProductAttributeKeyPropelQuery($container);
+        $container = $this->addProductPropelQuery($container);
 
         return $container;
     }
@@ -120,6 +128,38 @@ class ProductStorageDependencyProvider extends AbstractBundleDependencyProvider
         $container->set(static::PLUGINS_PRODUCT_ABSTRACT_STORAGE_EXPANDER, function () {
             return $this->getProductAbstractStorageExpanderPlugins();
         });
+
+        return $container;
+    }
+
+    /**
+     * @module Product
+     *
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductAttributeKeyPropelQuery(Container $container): Container
+    {
+        $container->set(static::PROPEL_QUERY_PRODUCT_ATTRIBUTE_KEY, $container->factory(function () {
+            return SpyProductAttributeKeyQuery::create();
+        }));
+
+        return $container;
+    }
+
+    /**
+     * @module Product
+     *
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductPropelQuery(Container $container): Container
+    {
+        $container->set(static::PROPEL_QUERY_PRODUCT, $container->factory(function () {
+            return SpyProductQuery::create();
+        }));
 
         return $container;
     }

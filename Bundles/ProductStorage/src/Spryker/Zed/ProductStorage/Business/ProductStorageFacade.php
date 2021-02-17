@@ -7,10 +7,12 @@
 
 namespace Spryker\Zed\ProductStorage\Business;
 
+use Generated\Shared\Transfer\ProductAbstractStorageTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\ProductStorage\Business\ProductStorageBusinessFactory getFactory()
+ * @method \Spryker\Zed\ProductStorage\Persistence\ProductStorageRepositoryInterface getRepository()
  */
 class ProductStorageFacade extends AbstractFacade implements ProductStorageFacadeInterface
 {
@@ -68,5 +70,22 @@ class ProductStorageFacade extends AbstractFacade implements ProductStorageFacad
     public function unpublishConcreteProducts(array $productIds)
     {
         $this->getFactory()->createProductConcreteStorageWriter()->unpublish($productIds);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductAbstractStorageTransfer $productAbstractStorageTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractStorageTransfer
+     */
+    public function expandWithAttributeVariantCollection(
+        ProductAbstractStorageTransfer $productAbstractStorageTransfer
+    ): ProductAbstractStorageTransfer {
+        return $this->getFactory()
+            ->createProductAbstractStorageExpander()
+            ->expandWithAttributeVariantCollection($productAbstractStorageTransfer);
     }
 }
