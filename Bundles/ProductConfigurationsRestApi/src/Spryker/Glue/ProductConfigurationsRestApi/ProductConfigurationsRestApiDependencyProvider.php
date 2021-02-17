@@ -48,7 +48,7 @@ class ProductConfigurationsRestApiDependencyProvider extends AbstractBundleDepen
      *
      * @return \Spryker\Glue\Kernel\Container
      */
-    public function addProductConfigurationStorageClient(Container $container): Container
+    protected function addProductConfigurationStorageClient(Container $container): Container
     {
         $container->set(static::CLIENT_PRODUCT_CONFIGURATION_STORAGE, function (Container $container) {
             return new ProductConfigurationsRestApiToProductConfigurationStorageClientBridge(
@@ -96,7 +96,7 @@ class ProductConfigurationsRestApiDependencyProvider extends AbstractBundleDepen
      *
      * @return \Spryker\Glue\Kernel\Container
      */
-    public function addProductConfigurationMapperPlugins(Container $container): Container
+    protected function addProductConfigurationMapperPlugins(Container $container): Container
     {
         $container->set(static::PLUGINS_PRODUCT_CONFIGURATION_MAPPER, function () {
             return $this->getProductConfigurationMapperPlugins();
@@ -110,7 +110,7 @@ class ProductConfigurationsRestApiDependencyProvider extends AbstractBundleDepen
      *
      * @return \Spryker\Glue\Kernel\Container
      */
-    public function addRestCartItemProductConfigurationMapperPlugins(Container $container): Container
+    protected function addRestCartItemProductConfigurationMapperPlugins(Container $container): Container
     {
         $container->set(static::PLUGINS_REST_CART_ITEM_PRODUCT_CONFIGURATION_MAPPER, function () {
             return $this->getRestCartItemProductConfigurationMapperPlugins();
@@ -122,7 +122,7 @@ class ProductConfigurationsRestApiDependencyProvider extends AbstractBundleDepen
     /**
      * @return \Spryker\Glue\ProductConfigurationsRestApiExtension\Dependency\Plugin\ProductConfigurationMapperPluginInterface[]
      */
-    public function getProductConfigurationMapperPlugins(): array
+    protected function getProductConfigurationMapperPlugins(): array
     {
         return [];
     }
@@ -130,7 +130,7 @@ class ProductConfigurationsRestApiDependencyProvider extends AbstractBundleDepen
     /**
      * @return \Spryker\Glue\ProductConfigurationsRestApiExtension\Dependency\Plugin\RestCartItemProductConfigurationMapperPluginInterface[]
      */
-    public function getRestCartItemProductConfigurationMapperPlugins(): array
+    protected function getRestCartItemProductConfigurationMapperPlugins(): array
     {
         return [];
     }
