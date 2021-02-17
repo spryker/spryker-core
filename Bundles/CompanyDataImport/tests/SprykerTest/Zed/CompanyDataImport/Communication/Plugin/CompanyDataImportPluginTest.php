@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\DataImporterReportTransfer;
 use ReflectionClass;
 use Spryker\Zed\CompanyDataImport\Communication\Plugin\CompanyDataImportPlugin;
 use Spryker\Zed\CompanyDataImport\CompanyDataImportConfig;
+use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBroker;
 
 /**
  * Auto-generated group annotations
@@ -53,6 +54,7 @@ class CompanyDataImportPluginTest extends Unit
 
         $facadePropertyReflection = $pluginReflection->getParentClass()->getProperty('facade');
         $facadePropertyReflection->setAccessible(true);
+        $this->tester->mockFactoryMethod('createTransactionAwareDataSetStepBroker', new DataSetStepBroker());
         $facadePropertyReflection->setValue($companyDataImportPlugin, $this->tester->getFacade());
 
         $dataImporterReportTransfer = $companyDataImportPlugin->import($dataImportConfigurationTransfer);

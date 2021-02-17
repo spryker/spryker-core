@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use ReflectionClass;
+use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBroker;
 use Spryker\Zed\MerchantProfileDataImport\Communication\Plugin\MerchantProfileAddressDataImportPlugin;
 use Spryker\Zed\MerchantProfileDataImport\MerchantProfileDataImportConfig;
 
@@ -60,6 +61,7 @@ class MerchantProfileAddressDataImportPluginTest extends Unit
 
         $facadePropertyReflection = $pluginReflection->getParentClass()->getProperty('facade');
         $facadePropertyReflection->setAccessible(true);
+        $this->tester->mockFactoryMethod('createTransactionAwareDataSetStepBroker', new DataSetStepBroker());
         $facadePropertyReflection->setValue($dataImportPlugin, $this->tester->getFacade());
 
         $dataImporterReportTransfer = $dataImportPlugin->import($dataImportConfigurationTransfer);
