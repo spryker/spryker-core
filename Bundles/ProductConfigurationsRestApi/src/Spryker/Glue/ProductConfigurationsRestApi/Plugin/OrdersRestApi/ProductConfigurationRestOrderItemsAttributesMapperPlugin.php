@@ -19,7 +19,7 @@ class ProductConfigurationRestOrderItemsAttributesMapperPlugin extends AbstractP
 {
     /**
      * {@inheritDoc}
-     * - Maps `ItemTransfer.ProductConfigurationInstance` to `RestOrderItemsAttributesTransfer.SalesOrderItemConfiguration`.
+     * - Maps `ItemTransfer.productConfigurationInstance` to `RestOrderItemsAttributesTransfer.salesOrderItemConfiguration`.
      *
      * @api
      *
