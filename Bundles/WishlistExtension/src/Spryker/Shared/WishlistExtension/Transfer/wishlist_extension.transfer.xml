@@ -15,4 +15,13 @@
     <transfer name="Wishlist">
     </transfer>
 
+    <transfer name="WishlistItemCollection">
+    </transfer>
+
+    <transfer name="WishlistMoveToCartRequestCollection">
+    </transfer>
+
+    <transfer name="Quote">
+    </transfer>
+
 </transfers>

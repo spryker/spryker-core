@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="WishlistMoveToCartRequestCollection">
+        <property name="requests" type="WishlistMoveToCartRequest[]" singular="request"/>
+    </transfer>
+
+    <transfer name="WishlistItemCollection">
+        <property name="items" type="WishlistItem[]" singular="item"/>
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="bundleItems" type="Item[]" singular="bundleItem"/>
+    </transfer>
+
+    <transfer name="WishlistItem">
+        <property name="sku" type="string"/>
+        <property name="merchantReference" type="string"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="merchantReference" type="string"/>
+    </transfer>
+
+    <transfer name="MerchantProductCriteria">
+        <property name="idProductAbstract" type="int"/>
+    </transfer>
+
+    <transfer name="Merchant">
+        <property name="merchantReference" type="string"/>
+    </transfer>
+
+    <transfer name="WishlistMoveToCartRequest">
+        <property name="merchantReference" type="string"/>
+        <property name="wishlistItem" type="WishlistItem"/>
+    </transfer>
+
+</transfers>
