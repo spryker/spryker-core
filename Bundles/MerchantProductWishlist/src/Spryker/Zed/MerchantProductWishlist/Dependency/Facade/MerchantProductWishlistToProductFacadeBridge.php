@@ -23,12 +23,12 @@ class MerchantProductWishlistToProductFacadeBridge implements MerchantProductWis
     }
 
     /**
-     * @param string $sku
+     * @param string $concreteSku
      *
-     * @return int|null
+     * @return int
      */
-    public function findProductAbstractIdBySku($sku)
+    public function getProductAbstractIdByConcreteSku($concreteSku)
     {
-        return $this->productFacade->findProductAbstractIdBySku($sku);
+        return $this->productFacade->getProductAbstractIdByConcreteSku($concreteSku);
     }
 }

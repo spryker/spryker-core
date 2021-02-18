@@ -10,9 +10,9 @@ namespace Spryker\Zed\MerchantProductWishlist\Dependency\Facade;
 interface MerchantProductWishlistToProductFacadeInterface
 {
     /**
-     * @param string $sku
+     * @param string $concreteSku
      *
-     * @return int|null
+     * @return int
      */
-    public function findProductAbstractIdBySku($sku);
+    public function getProductAbstractIdByConcreteSku($concreteSku);
 }

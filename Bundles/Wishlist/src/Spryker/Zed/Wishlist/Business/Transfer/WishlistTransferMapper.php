@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Wishlist\Business\Transfer;
 
+use ArrayObject;
 use Generated\Shared\Transfer\WishlistItemMetaTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
@@ -102,5 +103,33 @@ class WishlistTransferMapper implements WishlistTransferMapperInterface
         WishlistItemMetaTransfer $wishlistItemMetaTransfer
     ): WishlistItemMetaTransfer {
         return $wishlistItemMetaTransfer->fromArray($productEntity->toArray(), true);
+    }
+
+    /**
+     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\WishlistItemTransfer> $wishlistItemTransfers
+     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\WishlistItemMetaTransfer> $wishlistItemMetaTransfers
+     *
+     * @phpstan-return \ArrayObject<int, \Generated\Shared\Transfer\WishlistItemMetaTransfer>
+     *
+     * @param \ArrayObject|\Generated\Shared\Transfer\WishlistItemTransfer[] $wishlistItemTransfers
+     * @param \ArrayObject|\Generated\Shared\Transfer\WishlistItemMetaTransfer[] $wishlistItemMetaTransfers
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\WishlistItemMetaTransfer[]
+     */
+    public function mapWishlistItemTransfersToWishlistItemMetaTransfers(
+        ArrayObject $wishlistItemTransfers,
+        ArrayObject $wishlistItemMetaTransfers
+    ): ArrayObject {
+        foreach ($wishlistItemMetaTransfers as $wishlistItemMetaTransfer) {
+            foreach ($wishlistItemTransfers as $wishlistItemTransfer) {
+                if ($wishlistItemTransfer->getIdWishlistItem() !== $wishlistItemMetaTransfer->getIdWishlistItem()) {
+                    continue;
+                }
+
+                $wishlistItemMetaTransfer->fromArray($wishlistItemTransfer->toArray(), true);
+            }
+        }
+
+        return $wishlistItemMetaTransfers;
     }
 }

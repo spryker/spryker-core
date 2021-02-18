@@ -51,12 +51,7 @@ class MerchantProductWishlistItemExpander implements MerchantProductWishlistItem
         $sku = $wishlistItemTransfer->getSku();
 
         /** @var int $idProductAbstract */
-        $idProductAbstract = $this->productFacade->findProductAbstractIdBySku($sku);
-
-        if (!$idProductAbstract) {
-            return $wishlistItemTransfer;
-        }
-
+        $idProductAbstract = $this->productFacade->getProductAbstractIdByConcreteSku($sku);
         $merchantProductCriteriaTransfer = (new MerchantProductCriteriaTransfer())
             ->setIdProductAbstract($idProductAbstract);
 

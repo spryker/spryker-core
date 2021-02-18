@@ -137,14 +137,22 @@ class Reader implements ReaderInterface
         $wishlistTransfer->setWishlistItems(new ArrayObject($wishlistItems));
 
         $wishlistTransfer = $this->reloadWishlistItems($wishlistTransfer);
-
         $this->validateWishlistItems($wishlistTransfer, $wishlistOverviewResponseTransfer);
+
+        $wishlistOverviewMetaTransfer = $this->createWishlistOverviewMeta($wishlistOverviewRequestTransfer);
+
+        $wishlistOverviewMetaTransfer->setWishlistItemMetaCollection(
+            $this->transferMapper->mapWishlistItemTransfersToWishlistItemMetaTransfers(
+                $wishlistTransfer->getWishlistItems(),
+                $wishlistOverviewMetaTransfer->getWishlistItemMetaCollection()
+            )
+        );
 
         $wishlistOverviewResponseTransfer
             ->setWishlist($wishlistTransfer)
             ->setPagination($wishlistPaginationTransfer)
             ->setItems($wishlistTransfer->getWishlistItems())
-            ->setMeta($this->createWishlistOverviewMeta($wishlistOverviewRequestTransfer));
+            ->setMeta($wishlistOverviewMetaTransfer);
 
         return $wishlistOverviewResponseTransfer;
     }
