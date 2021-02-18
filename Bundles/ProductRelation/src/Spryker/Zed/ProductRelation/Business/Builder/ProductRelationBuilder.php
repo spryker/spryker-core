@@ -90,7 +90,7 @@ class ProductRelationBuilder implements ProductRelationBuilderInterface
             ->getActiveProductRelations($productRelationCriteriaFilterTransfer);
 
         foreach ($productRelationTransfers as $productRelationTransfer) {
-            $this->processRebuildRelations($productRelationTransfer);
+            $this->processRebuildRelation($productRelationTransfer);
         }
     }
 
@@ -99,7 +99,7 @@ class ProductRelationBuilder implements ProductRelationBuilderInterface
      *
      * @return void
      */
-    protected function processRebuildRelations(ProductRelationTransfer $productRelationTransfer): void
+    protected function processRebuildRelation(ProductRelationTransfer $productRelationTransfer): void
     {
         try {
             if (!$productRelationTransfer->getQuerySet()->getRules()->count()) {
