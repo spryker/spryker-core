@@ -33,7 +33,7 @@ class MerchantProfileMerchantPostUpdatePlugin extends AbstractPlugin implements 
     {
         if (!$merchantTransfer->getMerchantProfile()) {
             return (new MerchantResponseTransfer())->setIsSuccess(true)->setMerchant($merchantTransfer);
-        };
+        }
 
         $merchantProfileTransfer = $merchantTransfer->getMerchantProfileOrFail();
         $merchantProfileTransfer->setFkMerchant($merchantTransfer->getIdMerchant());
