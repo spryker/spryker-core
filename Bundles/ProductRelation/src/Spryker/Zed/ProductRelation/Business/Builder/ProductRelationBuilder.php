@@ -10,8 +10,8 @@ namespace Spryker\Zed\ProductRelation\Business\Builder;
 use Exception;
 use Generated\Shared\Transfer\ProductRelationCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductRelationTransfer;
-use Propel\Runtime\Propel;
 use Spryker\Shared\Log\LoggerTrait;
+use Spryker\Zed\Kernel\Persistence\EntityManager\InstancePoolingTrait;
 use Spryker\Zed\ProductRelation\Business\Relation\Updater\ProductRelationUpdaterInterface;
 use Spryker\Zed\ProductRelation\Persistence\ProductRelationRepositoryInterface;
 use Spryker\Zed\ProductRelation\ProductRelationConfig;
@@ -19,6 +19,7 @@ use Spryker\Zed\ProductRelation\ProductRelationConfig;
 class ProductRelationBuilder implements ProductRelationBuilderInterface
 {
     use LoggerTrait;
+    use InstancePoolingTrait;
 
     /**
      * @var \Spryker\Zed\ProductRelation\Business\Relation\Updater\ProductRelationUpdaterInterface
@@ -55,7 +56,7 @@ class ProductRelationBuilder implements ProductRelationBuilderInterface
      */
     public function rebuildRelations(): void
     {
-        $isInstancePoolingDisabledSuccessfully = Propel::disableInstancePooling();
+        $isInstancePoolingDisabledSuccessfully = $this->disableInstancePooling();
         $productRelationCount = $this->productRelationRepository->getActiveProductRelationCount();
 
         if (!$productRelationCount) {
@@ -73,7 +74,7 @@ class ProductRelationBuilder implements ProductRelationBuilderInterface
         }
 
         if ($isInstancePoolingDisabledSuccessfully) {
-            Propel::enableInstancePooling();
+            $this->enableInstancePooling();
         }
     }
 
