@@ -21,6 +21,8 @@ use Spryker\Glue\ProductConfigurationsRestApi\Processor\Mapper\ProductConfigurat
 use Spryker\Glue\ProductConfigurationsRestApi\Processor\Mapper\ProductConfigurationInstancePriceMapperInterface;
 use Spryker\Glue\ProductConfigurationsRestApi\Processor\Mapper\ProductConfigurationPriceProductVolumeMapper;
 use Spryker\Glue\ProductConfigurationsRestApi\Processor\Mapper\ProductConfigurationPriceProductVolumeMapperInterface;
+use Spryker\Glue\ProductConfigurationsRestApi\Processor\Mapper\RestCartItemProductConfigurationInstancePriceProductVolumeMapper;
+use Spryker\Glue\ProductConfigurationsRestApi\Processor\Mapper\RestCartItemProductConfigurationInstancePriceProductVolumeMapperInterface;
 
 class ProductConfigurationsRestApiFactory extends AbstractFactory
 {
@@ -50,8 +52,19 @@ class ProductConfigurationsRestApiFactory extends AbstractFactory
     {
         return new ProductConfigurationInstanceMapper(
             $this->createProductConfigurationInstancePriceMapper(),
-            $this->getProductConfigurationMapperPlugins(),
+            $this->getCartItemProductConfigurationMapperPlugins(),
             $this->getRestCartItemProductConfigurationMapperPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductConfigurationsRestApi\Processor\Mapper\RestCartItemProductConfigurationInstancePriceProductVolumeMapperInterface
+     */
+    public function createRestCartItemProductConfigurationInstancePriceProductVolumeMapper(): RestCartItemProductConfigurationInstancePriceProductVolumeMapperInterface
+    {
+        return new RestCartItemProductConfigurationInstancePriceProductVolumeMapper(
+            $this->getProductConfigurationService(),
+            $this->getUtilEncodingService()
         );
     }
 
@@ -60,10 +73,7 @@ class ProductConfigurationsRestApiFactory extends AbstractFactory
      */
     public function createProductConfigurationPriceProductVolumeMapper(): ProductConfigurationPriceProductVolumeMapperInterface
     {
-        return new ProductConfigurationPriceProductVolumeMapper(
-            $this->getProductConfigurationService(),
-            $this->getUtilEncodingService()
-        );
+        return new ProductConfigurationPriceProductVolumeMapper();
     }
 
     /**
@@ -99,11 +109,11 @@ class ProductConfigurationsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\ProductConfigurationsRestApiExtension\Dependency\Plugin\ProductConfigurationMapperPluginInterface[]
+     * @return \Spryker\Glue\ProductConfigurationsRestApiExtension\Dependency\Plugin\CartItemProductConfigurationMapperPluginInterface[]
      */
-    public function getProductConfigurationMapperPlugins(): array
+    public function getCartItemProductConfigurationMapperPlugins(): array
     {
-        return $this->getProvidedDependency(ProductConfigurationsRestApiDependencyProvider::PLUGINS_PRODUCT_CONFIGURATION_MAPPER);
+        return $this->getProvidedDependency(ProductConfigurationsRestApiDependencyProvider::PLUGINS_CART_ITEM_PRODUCT_CONFIGURATION_MAPPER);
     }
 
     /**

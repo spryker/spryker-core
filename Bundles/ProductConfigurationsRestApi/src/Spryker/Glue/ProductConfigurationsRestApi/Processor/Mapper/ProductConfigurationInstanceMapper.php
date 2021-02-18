@@ -21,9 +21,9 @@ class ProductConfigurationInstanceMapper implements ProductConfigurationInstance
     protected $productConfigurationInstancePriceMapper;
 
     /**
-     * @var \Spryker\Glue\ProductConfigurationsRestApiExtension\Dependency\Plugin\ProductConfigurationMapperPluginInterface[]
+     * @var \Spryker\Glue\ProductConfigurationsRestApiExtension\Dependency\Plugin\CartItemProductConfigurationMapperPluginInterface[]
      */
-    protected $productConfigurationMapperPlugins;
+    protected $cartItemProductConfigurationMapperPlugins;
 
     /**
      * @var \Spryker\Glue\ProductConfigurationsRestApiExtension\Dependency\Plugin\RestCartItemProductConfigurationMapperPluginInterface[]
@@ -32,16 +32,16 @@ class ProductConfigurationInstanceMapper implements ProductConfigurationInstance
 
     /**
      * @param \Spryker\Glue\ProductConfigurationsRestApi\Processor\Mapper\ProductConfigurationInstancePriceMapperInterface $productConfigurationInstancePriceMapper
-     * @param \Spryker\Glue\ProductConfigurationsRestApiExtension\Dependency\Plugin\ProductConfigurationMapperPluginInterface[] $productConfigurationMapperPlugins
+     * @param \Spryker\Glue\ProductConfigurationsRestApiExtension\Dependency\Plugin\CartItemProductConfigurationMapperPluginInterface[] $cartItemProductConfigurationMapperPlugins
      * @param \Spryker\Glue\ProductConfigurationsRestApiExtension\Dependency\Plugin\RestCartItemProductConfigurationMapperPluginInterface[] $restCartItemProductConfigurationMapperPlugins
      */
     public function __construct(
         ProductConfigurationInstancePriceMapperInterface $productConfigurationInstancePriceMapper,
-        array $productConfigurationMapperPlugins,
+        array $cartItemProductConfigurationMapperPlugins,
         array $restCartItemProductConfigurationMapperPlugins
     ) {
         $this->productConfigurationInstancePriceMapper = $productConfigurationInstancePriceMapper;
-        $this->productConfigurationMapperPlugins = $productConfigurationMapperPlugins;
+        $this->cartItemProductConfigurationMapperPlugins = $cartItemProductConfigurationMapperPlugins;
         $this->restCartItemProductConfigurationMapperPlugins = $restCartItemProductConfigurationMapperPlugins;
     }
 
@@ -51,7 +51,7 @@ class ProductConfigurationInstanceMapper implements ProductConfigurationInstance
      *
      * @return \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer
      */
-    public function mapRestCartItemProductConfigurationInstanceAttributesTransferToProductConfigurationInstanceTransfer(
+    public function mapRestCartItemProductConfigurationToProductConfigurationInstanceTransfer(
         RestCartItemProductConfigurationInstanceAttributesTransfer $restCartItemProductConfigurationInstanceAttributesTransfer,
         ProductConfigurationInstanceTransfer $productConfigurationInstanceTransfer
     ): ProductConfigurationInstanceTransfer {
@@ -117,7 +117,7 @@ class ProductConfigurationInstanceMapper implements ProductConfigurationInstance
         RestCartItemProductConfigurationInstanceAttributesTransfer $restCartItemProductConfigurationInstanceAttributesTransfer,
         ProductConfigurationInstanceTransfer $productConfigurationInstanceTransfer
     ): ProductConfigurationInstanceTransfer {
-        foreach ($this->productConfigurationMapperPlugins as $productConfigurationMapperPlugin) {
+        foreach ($this->cartItemProductConfigurationMapperPlugins as $productConfigurationMapperPlugin) {
             $productConfigurationInstanceTransfer = $productConfigurationMapperPlugin->map(
                 $restCartItemProductConfigurationInstanceAttributesTransfer,
                 $productConfigurationInstanceTransfer

@@ -8,12 +8,12 @@
 namespace Spryker\Zed\ProductConfigurationsRestApi\Business\Updater;
 
 use Generated\Shared\Transfer\CartItemRequestTransfer;
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PersistentItemReplaceTransfer;
 use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\ProductConfigurationsRestApi\Business\Comparator\ItemComparatorInterface;
 use Spryker\Zed\ProductConfigurationsRestApi\Dependency\Facade\ProductConfigurationsRestApiToPersistentCartFacadeInterface;
 
 class QuoteItemUpdater implements QuoteItemUpdaterInterface
@@ -24,15 +24,24 @@ class QuoteItemUpdater implements QuoteItemUpdaterInterface
     protected const ERROR_IDENTIFIER_ITEM_NOT_FOUND = 'ERROR_IDENTIFIER_ITEM_NOT_FOUND';
 
     /**
+     * @var \Spryker\Zed\ProductConfigurationsRestApi\Business\Comparator\ItemComparatorInterface
+     */
+    protected $itemComparator;
+
+    /**
      * @var \Spryker\Zed\ProductConfigurationsRestApi\Dependency\Facade\ProductConfigurationsRestApiToPersistentCartFacadeInterface
      */
     protected $persistentCartFacade;
 
     /**
+     * @param \Spryker\Zed\ProductConfigurationsRestApi\Business\Comparator\ItemComparatorInterface $itemComparator
      * @param \Spryker\Zed\ProductConfigurationsRestApi\Dependency\Facade\ProductConfigurationsRestApiToPersistentCartFacadeInterface $persistentCartFacade
      */
-    public function __construct(ProductConfigurationsRestApiToPersistentCartFacadeInterface $persistentCartFacade)
-    {
+    public function __construct(
+        ItemComparatorInterface $itemComparator,
+        ProductConfigurationsRestApiToPersistentCartFacadeInterface $persistentCartFacade
+    ) {
+        $this->itemComparator = $itemComparator;
         $this->persistentCartFacade = $persistentCartFacade;
     }
 
@@ -47,6 +56,7 @@ class QuoteItemUpdater implements QuoteItemUpdaterInterface
         QuoteResponseTransfer $quoteResponseTransfer
     ): QuoteResponseTransfer {
         $quoteTransfer = $quoteResponseTransfer->getQuoteTransferOrFail();
+
         $itemToBeReplaced = $this->extractQuoteItemToBeReplaced($quoteTransfer, $cartItemRequestTransfer);
         if (!$itemToBeReplaced) {
             return $quoteResponseTransfer->addError(
@@ -59,8 +69,7 @@ class QuoteItemUpdater implements QuoteItemUpdaterInterface
         $persistentItemReplaceTransfer = $this->createPersistentItemReplaceTransfer(
             $quoteTransfer,
             $itemToBeReplaced,
-            $newItemTransfer,
-            $quoteResponseTransfer->getCustomerOrFail()
+            $newItemTransfer
         );
 
         return $this->persistentCartFacade->replaceItem($persistentItemReplaceTransfer);
@@ -75,10 +84,7 @@ class QuoteItemUpdater implements QuoteItemUpdaterInterface
     protected function extractQuoteItemToBeReplaced(QuoteTransfer $quoteTransfer, CartItemRequestTransfer $cartItemRequestTransfer): ?ItemTransfer
     {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if (
-                $itemTransfer->getSkuOrFail() === $cartItemRequestTransfer->getSkuOrFail()
-                && $itemTransfer->getGroupKeyOrFail() === $cartItemRequestTransfer->getGroupKeyOrFail()
-            ) {
+            if ($this->itemComparator->isSameItem($itemTransfer, $cartItemRequestTransfer)) {
                 return $itemTransfer;
             }
         }
@@ -90,21 +96,31 @@ class QuoteItemUpdater implements QuoteItemUpdaterInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer $itemToBeReplaced
      * @param \Generated\Shared\Transfer\ItemTransfer $newItemTransfer
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\PersistentItemReplaceTransfer
      */
     protected function createPersistentItemReplaceTransfer(
         QuoteTransfer $quoteTransfer,
         ItemTransfer $itemToBeReplaced,
-        ItemTransfer $newItemTransfer,
-        CustomerTransfer $customerTransfer
+        ItemTransfer $newItemTransfer
     ): PersistentItemReplaceTransfer {
         return (new PersistentItemReplaceTransfer())
             ->setQuote($quoteTransfer)
             ->setIdQuote($quoteTransfer->getIdQuote())
             ->setItemToBeReplaced($itemToBeReplaced)
             ->setNewItem($newItemTransfer)
-            ->setCustomer($customerTransfer);
+            ->setCustomer($quoteTransfer->getCustomerOrFail());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\CartItemRequestTransfer $cartItemRequestTransfer
+     *
+     * @return bool
+     */
+    protected function isSameItem(ItemTransfer $itemTransfer, CartItemRequestTransfer $cartItemRequestTransfer): bool
+    {
+        return $itemTransfer->getSkuOrFail() === $cartItemRequestTransfer->getSkuOrFail()
+            && $itemTransfer->getGroupKeyOrFail() === $cartItemRequestTransfer->getGroupKeyOrFail();
     }
 }

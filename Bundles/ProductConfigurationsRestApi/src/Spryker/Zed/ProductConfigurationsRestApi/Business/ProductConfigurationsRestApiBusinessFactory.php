@@ -8,6 +8,8 @@
 namespace Spryker\Zed\ProductConfigurationsRestApi\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ProductConfigurationsRestApi\Business\Comparator\ItemComparator;
+use Spryker\Zed\ProductConfigurationsRestApi\Business\Comparator\ItemComparatorInterface;
 use Spryker\Zed\ProductConfigurationsRestApi\Business\Mapper\ProductConfigurationMapper;
 use Spryker\Zed\ProductConfigurationsRestApi\Business\Mapper\ProductConfigurationMapperInterface;
 use Spryker\Zed\ProductConfigurationsRestApi\Business\Updater\QuoteItemUpdater;
@@ -25,7 +27,7 @@ class ProductConfigurationsRestApiBusinessFactory extends AbstractBusinessFactor
      */
     public function createProductConfigurationMapper(): ProductConfigurationMapperInterface
     {
-        return new ProductConfigurationMapper();
+        return new ProductConfigurationMapper($this->createItemComparator());
     }
 
     /**
@@ -33,7 +35,18 @@ class ProductConfigurationsRestApiBusinessFactory extends AbstractBusinessFactor
      */
     public function createQuoteItemUpdater(): QuoteItemUpdaterInterface
     {
-        return new QuoteItemUpdater($this->getPersistentCartFacade());
+        return new QuoteItemUpdater(
+            $this->createItemComparator(),
+            $this->getPersistentCartFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductConfigurationsRestApi\Business\Comparator\ItemComparatorInterface
+     */
+    public function createItemComparator(): ItemComparatorInterface
+    {
+        return new ItemComparator($this->getConfig());
     }
 
     /**

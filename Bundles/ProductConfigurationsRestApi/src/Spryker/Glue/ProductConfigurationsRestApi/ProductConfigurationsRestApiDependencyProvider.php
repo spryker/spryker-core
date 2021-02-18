@@ -23,7 +23,7 @@ class ProductConfigurationsRestApiDependencyProvider extends AbstractBundleDepen
     public const SERVICE_PRODUCT_CONFIGURATION = 'SERVICE_PRODUCT_CONFIGURATION';
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
-    public const PLUGINS_PRODUCT_CONFIGURATION_MAPPER = 'PLUGINS_PRODUCT_CONFIGURATION_MAPPER';
+    public const PLUGINS_CART_ITEM_PRODUCT_CONFIGURATION_MAPPER = 'PLUGINS_CART_ITEM_PRODUCT_CONFIGURATION_MAPPER';
     public const PLUGINS_REST_CART_ITEM_PRODUCT_CONFIGURATION_MAPPER = 'PLUGINS_REST_CART_ITEM_PRODUCT_CONFIGURATION_MAPPER';
 
     /**
@@ -37,7 +37,7 @@ class ProductConfigurationsRestApiDependencyProvider extends AbstractBundleDepen
         $container = $this->addProductConfigurationStorageClient($container);
         $container = $this->addProductConfigurationService($container);
         $container = $this->addUtilEncodingService($container);
-        $container = $this->addProductConfigurationMapperPlugins($container);
+        $container = $this->addCartItemProductConfigurationMapperPlugins($container);
         $container = $this->addRestCartItemProductConfigurationMapperPlugins($container);
 
         return $container;
@@ -96,10 +96,10 @@ class ProductConfigurationsRestApiDependencyProvider extends AbstractBundleDepen
      *
      * @return \Spryker\Glue\Kernel\Container
      */
-    protected function addProductConfigurationMapperPlugins(Container $container): Container
+    protected function addCartItemProductConfigurationMapperPlugins(Container $container): Container
     {
-        $container->set(static::PLUGINS_PRODUCT_CONFIGURATION_MAPPER, function () {
-            return $this->getProductConfigurationMapperPlugins();
+        $container->set(static::PLUGINS_CART_ITEM_PRODUCT_CONFIGURATION_MAPPER, function () {
+            return $this->getCartItemProductConfigurationMapperPlugins();
         });
 
         return $container;
@@ -120,9 +120,9 @@ class ProductConfigurationsRestApiDependencyProvider extends AbstractBundleDepen
     }
 
     /**
-     * @return \Spryker\Glue\ProductConfigurationsRestApiExtension\Dependency\Plugin\ProductConfigurationMapperPluginInterface[]
+     * @return \Spryker\Glue\ProductConfigurationsRestApiExtension\Dependency\Plugin\CartItemProductConfigurationMapperPluginInterface[]
      */
-    protected function getProductConfigurationMapperPlugins(): array
+    protected function getCartItemProductConfigurationMapperPlugins(): array
     {
         return [];
     }

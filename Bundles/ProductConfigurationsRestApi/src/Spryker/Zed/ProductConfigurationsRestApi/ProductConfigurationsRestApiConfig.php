@@ -7,8 +7,20 @@
 
 namespace Spryker\Zed\ProductConfigurationsRestApi;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductConfigurationsRestApiConfig extends AbstractBundleConfig
 {
+    /**
+     * @api
+     *
+     * @return string[]
+     */
+    public function getItemFieldsForIsSameItemComparison(): array
+    {
+        return [
+            ItemTransfer::SKU,
+        ];
+    }
 }

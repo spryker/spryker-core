@@ -31,7 +31,9 @@ interface ProductConfigurationsRestApiFacadeInterface
 
     /**
      * Specification:
-     * - Updates Persistent quote item.
+     * - Checks if item to be updated is present in `QuoteResponseTransfer.quote`.
+     * - If item is present, updates Persistent quote item.
+     * - Returns error in case when updated item is missing in `QuoteResponseTransfer.quote`.
      *
      * @api
      *

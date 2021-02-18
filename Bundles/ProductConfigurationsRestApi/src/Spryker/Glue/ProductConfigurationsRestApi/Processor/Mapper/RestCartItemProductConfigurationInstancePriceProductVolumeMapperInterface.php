@@ -5,28 +5,20 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\ProductConfigurationsRestApiExtension\Dependency\Plugin;
+namespace Spryker\Glue\ProductConfigurationsRestApi\Processor\Mapper;
 
 use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
 use Generated\Shared\Transfer\RestCartItemProductConfigurationInstanceAttributesTransfer;
 
-/**
- * Use this plugin to map additional data from `RestCartItemProductConfigurationInstanceAttributesTransfer` to `ProductConfigurationInstanceTransfer`.
- */
-interface ProductConfigurationMapperPluginInterface
+interface RestCartItemProductConfigurationInstancePriceProductVolumeMapperInterface
 {
     /**
-     * Specification:
-     * - Maps the `RestCartItemProductConfigurationInstanceAttributesTransfer` to `ProductConfigurationInstanceTransfer`.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\RestCartItemProductConfigurationInstanceAttributesTransfer $restCartItemProductConfigurationInstanceAttributesTransfer
      * @param \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer $productConfigurationInstanceTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer
      */
-    public function map(
+    public function mapRestCartItemProductConfigurationInstanceAttributesToProductConfigurationInstanceTransfer(
         RestCartItemProductConfigurationInstanceAttributesTransfer $restCartItemProductConfigurationInstanceAttributesTransfer,
         ProductConfigurationInstanceTransfer $productConfigurationInstanceTransfer
     ): ProductConfigurationInstanceTransfer;

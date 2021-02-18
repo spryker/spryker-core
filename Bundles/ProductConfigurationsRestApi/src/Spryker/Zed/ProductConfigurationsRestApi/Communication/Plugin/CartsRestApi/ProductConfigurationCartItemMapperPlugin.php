@@ -20,6 +20,7 @@ class ProductConfigurationCartItemMapperPlugin extends AbstractPlugin implements
 {
     /**
      * {@inheritDoc}
+     * - Maps `CartItemRequestTransfer.productConfigurationInstance` to according `PersistentCartChangeTransfer.item`.
      *
      * @api
      *

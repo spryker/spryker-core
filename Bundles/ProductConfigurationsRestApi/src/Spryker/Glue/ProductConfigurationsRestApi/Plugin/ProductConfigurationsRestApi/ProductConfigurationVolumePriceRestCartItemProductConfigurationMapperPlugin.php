@@ -15,7 +15,7 @@ use Spryker\Glue\ProductConfigurationsRestApiExtension\Dependency\Plugin\RestCar
 /**
  * @method \Spryker\Glue\ProductConfigurationsRestApi\ProductConfigurationsRestApiFactory getFactory()
  */
-class RestProductConfigurationPriceRestCartItemProductConfigurationMapperPlugin extends AbstractPlugin implements RestCartItemProductConfigurationMapperPluginInterface
+class ProductConfigurationVolumePriceRestCartItemProductConfigurationMapperPlugin extends AbstractPlugin implements RestCartItemProductConfigurationMapperPluginInterface
 {
     /**
      * {@inheritDoc}

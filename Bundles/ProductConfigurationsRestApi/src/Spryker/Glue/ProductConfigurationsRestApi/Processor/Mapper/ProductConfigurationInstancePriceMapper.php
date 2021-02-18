@@ -79,7 +79,7 @@ class ProductConfigurationInstancePriceMapper implements ProductConfigurationIns
         PriceProductTransfer $priceProductTransfer
     ): PriceProductTransfer {
         $currencyTransfer = (new CurrencyTransfer())
-            ->fromArray($restProductConfigurationPriceAttributesTransfer->toArray(), true);
+            ->fromArray($restProductConfigurationPriceAttributesTransfer->getCurrencyOrFail()->toArray(), true);
         $moneyValueTransfer = (new MoneyValueTransfer())
             ->fromArray($restProductConfigurationPriceAttributesTransfer->toArray(), true)
             ->setCurrency($currencyTransfer);

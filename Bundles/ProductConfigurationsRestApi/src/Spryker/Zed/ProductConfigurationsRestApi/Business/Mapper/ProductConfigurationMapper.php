@@ -9,9 +9,23 @@ namespace Spryker\Zed\ProductConfigurationsRestApi\Business\Mapper;
 
 use Generated\Shared\Transfer\CartItemRequestTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
+use Spryker\Zed\ProductConfigurationsRestApi\Business\Comparator\ItemComparatorInterface;
 
 class ProductConfigurationMapper implements ProductConfigurationMapperInterface
 {
+    /**
+     * @var \Spryker\Zed\ProductConfigurationsRestApi\Business\Comparator\ItemComparatorInterface
+     */
+    protected $itemComparator;
+
+    /**
+     * @param \Spryker\Zed\ProductConfigurationsRestApi\Business\Comparator\ItemComparatorInterface $itemComparator
+     */
+    public function __construct(ItemComparatorInterface $itemComparator)
+    {
+        $this->itemComparator = $itemComparator;
+    }
+
     /**
      * @param \Generated\Shared\Transfer\CartItemRequestTransfer $cartItemRequestTransfer
      * @param \Generated\Shared\Transfer\PersistentCartChangeTransfer $persistentCartChangeTransfer
@@ -28,7 +42,7 @@ class ProductConfigurationMapper implements ProductConfigurationMapperInterface
         }
 
         foreach ($persistentCartChangeTransfer->getItems() as $itemTransfer) {
-            if ($itemTransfer->getSkuOrFail() !== $cartItemRequestTransfer->getSkuOrFail()) {
+            if (!$this->itemComparator->isSameItem($itemTransfer, $cartItemRequestTransfer)) {
                 continue;
             }
 

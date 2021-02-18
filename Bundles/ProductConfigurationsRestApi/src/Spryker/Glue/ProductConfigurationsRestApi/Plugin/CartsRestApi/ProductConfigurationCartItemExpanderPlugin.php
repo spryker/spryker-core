@@ -18,8 +18,12 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 class ProductConfigurationCartItemExpanderPlugin extends AbstractPlugin implements CartItemExpanderPluginInterface
 {
     /**
-     * Specification:
+     * {@inheritDoc}
      * - Expands cart item data with product configuration data.
+     * - Maps `RestCartItemsAttributesTransfer.restCartItemProductConfigurationInstanceAttributes` data to `CartItemRequestTransfer.productConfigurationInstance`.
+     * - Executes `ProductConfigurationMapperPluginInterface` plugin stack.
+     *
+     * @api
      *
      * @param \Generated\Shared\Transfer\CartItemRequestTransfer $cartItemRequestTransfer
      * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer

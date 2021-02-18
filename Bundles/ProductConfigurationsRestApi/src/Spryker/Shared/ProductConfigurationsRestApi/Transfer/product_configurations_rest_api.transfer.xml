@@ -77,7 +77,6 @@
 
     <transfer name="QuoteResponse">
         <property name="quoteTransfer" type="Quote"/>
-        <property name="customer" type="Customer"/>
         <property name="errors" type="QuoteError[]" singular="error"/>
     </transfer>
 
@@ -88,6 +87,7 @@
     <transfer name="Quote">
         <property name="idQuote" type="int"/>
         <property name="items" type="Item[]" singular="item"/>
+        <property name="customer" type="Customer"/>
     </transfer>
 
     <transfer name="PersistentItemReplace">

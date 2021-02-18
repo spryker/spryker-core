@@ -20,6 +20,7 @@ class ProductConfigurationQuoteItemUpdateStrategyPlugin extends AbstractPlugin i
 {
     /**
      * {@inheritDoc}
+     * - Checks that `CartItemRequestTransfer.productConfigurationInstance` is set.
      *
      * @api
      *
@@ -34,7 +35,9 @@ class ProductConfigurationQuoteItemUpdateStrategyPlugin extends AbstractPlugin i
 
     /**
      * {@inheritDoc}
-     * -
+     * - Checks if item to be updated is present in `QuoteResponseTransfer.quote`.
+     * - If item is present, updates Persistent quote item.
+     * - Returns error in case when updated item is missing in `QuoteResponseTransfer.quote`.
      *
      * @api
      *

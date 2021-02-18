@@ -13,17 +13,6 @@ use Generated\Shared\Transfer\RestCartItemProductConfigurationInstanceAttributes
 interface ProductConfigurationPriceProductVolumeMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\RestCartItemProductConfigurationInstanceAttributesTransfer $restCartItemProductConfigurationInstanceAttributesTransfer
-     * @param \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer $productConfigurationInstanceTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer
-     */
-    public function mapRestCartItemProductConfigurationInstanceAttributesToProductConfigurationInstanceTransfer(
-        RestCartItemProductConfigurationInstanceAttributesTransfer $restCartItemProductConfigurationInstanceAttributesTransfer,
-        ProductConfigurationInstanceTransfer $productConfigurationInstanceTransfer
-    ): ProductConfigurationInstanceTransfer;
-
-    /**
      * @param \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer $productConfigurationInstanceTransfer
      * @param \Generated\Shared\Transfer\RestCartItemProductConfigurationInstanceAttributesTransfer $restCartItemProductConfigurationInstanceAttributesTransfer
      *

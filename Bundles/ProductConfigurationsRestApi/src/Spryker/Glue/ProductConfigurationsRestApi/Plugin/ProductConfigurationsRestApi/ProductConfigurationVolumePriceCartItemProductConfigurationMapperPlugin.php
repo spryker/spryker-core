@@ -10,12 +10,12 @@ namespace Spryker\Glue\ProductConfigurationsRestApi\Plugin\ProductConfigurations
 use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
 use Generated\Shared\Transfer\RestCartItemProductConfigurationInstanceAttributesTransfer;
 use Spryker\Glue\Kernel\AbstractPlugin;
-use Spryker\Glue\ProductConfigurationsRestApiExtension\Dependency\Plugin\ProductConfigurationMapperPluginInterface;
+use Spryker\Glue\ProductConfigurationsRestApiExtension\Dependency\Plugin\CartItemProductConfigurationMapperPluginInterface;
 
 /**
  * @method \Spryker\Glue\ProductConfigurationsRestApi\ProductConfigurationsRestApiFactory getFactory()
  */
-class RestProductConfigurationPriceAttributesMapperPlugin extends AbstractPlugin implements ProductConfigurationMapperPluginInterface
+class ProductConfigurationVolumePriceCartItemProductConfigurationMapperPlugin extends AbstractPlugin implements CartItemProductConfigurationMapperPluginInterface
 {
     /**
      * {@inheritDoc}
@@ -33,7 +33,7 @@ class RestProductConfigurationPriceAttributesMapperPlugin extends AbstractPlugin
         ProductConfigurationInstanceTransfer $productConfigurationInstanceTransfer
     ): ProductConfigurationInstanceTransfer {
         return $this->getFactory()
-            ->createProductConfigurationPriceProductVolumeMapper()
+            ->createRestCartItemProductConfigurationInstancePriceProductVolumeMapper()
             ->mapRestCartItemProductConfigurationInstanceAttributesToProductConfigurationInstanceTransfer(
                 $restCartItemProductConfigurationInstanceAttributesTransfer,
                 $productConfigurationInstanceTransfer
