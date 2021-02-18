@@ -9,9 +9,15 @@ namespace SprykerTest\Zed\CategoryPageSearch\Communication\Plugin\Event\Listener
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
+use Orm\Zed\Category\Persistence\Map\SpyCategoryTableMap;
+use Orm\Zed\Category\Persistence\SpyCategoryNode;
+use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
+use Orm\Zed\Store\Persistence\Map\SpyStoreTableMap;
+use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 use Propel\Runtime\Map\TableMap;
+use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\CategoryPageSearch\Communication\Plugin\Search\CategoryNodeDataPageMapBuilder;
-use Spryker\Zed\CategoryPageSearch\Persistence\CategoryPageSearchQueryContainer;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilder;
 
 /**
@@ -36,12 +42,46 @@ class CategoryNodeDataPageMapBuilderTest extends Unit
      */
     public function testBuildPageMapWillReturnCorrectTransfer(): void
     {
-        $query = new CategoryPageSearchQueryContainer();
+        // Arrange
         $categoryNodeDataPageMapBuilder = new CategoryNodeDataPageMapBuilder();
-        $categoryNode = $query->queryCategoryNodeTree([1], 46)->orderByIdCategoryNode()->find()->getFirst();
+        $categoryNode = $this->getCategoryNodeTreeByIdCategoryTreeForLocaleAndStore(1, 46, Store::getInstance()->getStoreName());
+
+        // Act
         $pageMapTransfer = $categoryNodeDataPageMapBuilder->buildPageMap(new PageMapBuilder(), $categoryNode->toArray(TableMap::TYPE_FIELDNAME, true, [], true), (new LocaleTransfer())->setIdLocale(46));
 
+        // Assert
         $this->assertSame(3, count($pageMapTransfer->getFullText()));
         $this->assertSame('Demoshop', $pageMapTransfer->getFullTextBoosted()[0]);
+    }
+
+    /**
+     * @param int $idCategoryNode
+     * @param int $idLocale
+     * @param string $storeName
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNode
+     */
+    protected function getCategoryNodeTreeByIdCategoryTreeForLocaleAndStore(int $idCategoryNode, int $idLocale, string $storeName): SpyCategoryNode
+    {
+        return SpyCategoryNodeQuery::create()
+            ->filterByIdCategoryNode($idCategoryNode)
+            ->joinWithSpyUrl()
+            ->joinWithCategory()
+            ->useCategoryQuery()
+                ->joinWithAttribute()
+                ->joinWithCategoryTemplate()
+                ->joinWithSpyCategoryStore()
+                    ->useSpyCategoryStoreQuery()
+                        ->joinWithSpyStore()
+                    ->endUse()
+            ->endUse()
+            ->where(SpyCategoryAttributeTableMap::COL_FK_LOCALE . ' = ?', $idLocale)
+            ->where(SpyUrlTableMap::COL_FK_LOCALE . ' = ?', $idLocale)
+            ->where(SpyStoreTableMap::COL_NAME . ' = ?', $storeName)
+            ->where(SpyCategoryTableMap::COL_IS_ACTIVE . ' = ?', true)
+            ->where(SpyCategoryTableMap::COL_IS_IN_MENU . ' = ?', true)
+            ->orderByIdCategoryNode()
+            ->find()
+            ->getFirst();
     }
 }

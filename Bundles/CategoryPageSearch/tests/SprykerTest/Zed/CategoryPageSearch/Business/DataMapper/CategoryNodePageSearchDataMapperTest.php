@@ -8,7 +8,7 @@
 namespace SprykerTest\Zed\CategoryPageSearch\Business\DataMapper;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\NodeTransfer;
 use Spryker\Zed\CategoryPageSearch\Business\Search\DataMapper\CategoryNodePageSearchDataMapper;
 
 /**
@@ -31,19 +31,23 @@ class CategoryNodePageSearchDataMapperTest extends Unit
      *
      * @param array $inputData
      * @param array $expected
+     * @param string $storeName
      * @param string $localeName
      *
      * @return void
      */
-    public function testCanTransformPageMapToDocumentByMapperName(array $inputData, array $expected, string $localeName): void
+    public function testCanTransformPageMapToDocumentByMapperName(array $inputData, array $expected, string $storeName, string $localeName): void
     {
         // Arrange
         $categoryNodePageSearchDataMapper = new CategoryNodePageSearchDataMapper();
-        $localeTransfer = new LocaleTransfer();
-        $localeTransfer->setLocaleName($localeName);
+        $nodeTransfer = (new NodeTransfer())->fromArray($inputData, true);
 
         // Act
-        $result = $categoryNodePageSearchDataMapper->mapCategoryNodeDataToSearchData($inputData, $localeTransfer);
+        $result = $categoryNodePageSearchDataMapper->mapNodeTransferToCategoryNodePageSearchDataForStoreAndLocale(
+            $nodeTransfer,
+            $storeName,
+            $localeName
+        );
 
         // Assert
         $this->assertEquals($expected, $result);

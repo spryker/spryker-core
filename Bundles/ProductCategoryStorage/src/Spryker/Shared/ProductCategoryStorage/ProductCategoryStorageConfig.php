@@ -34,4 +34,44 @@ class ProductCategoryStorageConfig extends AbstractBundleConfig
      * @api
      */
     public const PRODUCT_ABSTRACT_CATEGORY_RESOURCE_NAME = 'product_abstract_category';
+
+    /**
+     * Specification
+     * - This events will be used for category_store publishing.
+     *
+     * @api
+     */
+    public const CATEGORY_STORE_PUBLISH = 'Category.category_store.publish';
+
+    /**
+     * Specification
+     * - This events will be used for category_store un-publishing.
+     *
+     * @api
+     */
+    public const CATEGORY_STORE_UNPUBLISH = 'Category.category_store.unpublish';
+
+    /**
+     * Specification:
+     * - This events will be used for spy_category_store entity creation.
+     *
+     * @api
+     */
+    public const ENTITY_SPY_CATEGORY_STORE_CREATE = 'Entity.spy_category_store.create';
+
+    /**
+     * Specification:
+     * - This events will be used for spy_category_store entity changes.
+     *
+     * @api
+     */
+    public const ENTITY_SPY_CATEGORY_STORE_UPDATE = 'Entity.spy_category_store.update';
+
+    /**
+     * Specification:
+     * - This events will be used for spy_category_store entity deletion.
+     *
+     * @api
+     */
+    public const ENTITY_SPY_CATEGORY_STORE_DELETE = 'Entity.spy_category_store.delete';
 }

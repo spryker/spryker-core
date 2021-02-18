@@ -35,13 +35,7 @@ class MerchantProfileAddressWriterStep extends PublishAwareStep implements DataI
         $this->validateDataSet($dataSet);
 
         $merchantProfileAddressEntity = SpyMerchantProfileAddressQuery::create()
-            ->filterByAddress1($dataSet[MerchantProfileAddressDataSetInterface::ADDRESS1])
-            ->filterByAddress2($dataSet[MerchantProfileAddressDataSetInterface::ADDRESS2])
-            ->filterByAddress3($dataSet[MerchantProfileAddressDataSetInterface::ADDRESS3])
-            ->filterByCity($dataSet[MerchantProfileAddressDataSetInterface::CITY])
-            ->filterByZipCode($dataSet[MerchantProfileAddressDataSetInterface::ZIP_CODE])
             ->filterByFkMerchantProfile($dataSet[MerchantProfileAddressDataSetInterface::ID_MERCHANT_PROFILE])
-            ->filterByFkCountry($dataSet[MerchantProfileAddressDataSetInterface::ID_COUNTRY])
             ->findOneOrCreate();
 
         $merchantProfileAddressEntity

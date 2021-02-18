@@ -1,12 +1,42 @@
+Attributes,Attributes
 Categories,Categories
+Currencies,Currencies
+Currency,Currency
+Default,Default
+Description,Description
 Image,Image
+"Image Set","Image Set"
+Images,Images
+"Manage Product","Manage Product"
 Name,Name
+"Name & Description","Name & Description"
 Offline,Offline
 Online,Online
+"Please resolve all errors.","Please resolve all errors."
+Price,Price
 Products,Products
+"Product Details","Product Details"
+"Provide a name","Provide a name"
+"Provide description","Provide description"
+Save,Save
+Select,Select
+"Select Stores","Select Stores"
+"Select Tax Set","Select Tax Set"
+"Select Categories","Select Categories"
 SKU,SKU
 "Search by SKU, Name","Search by SKU, Name"
+Store,Store
 Stores,Stores
 "Super Attributes","Super Attributes"
+"Tax Set","Tax Set"
+"The Product is saved.","The Product is saved."
+"The value cannot be empty. Please fill in this input.","The value cannot be empty. Please fill in this input."
 Variants,Variants
 Visibility,Visibility
+"Success! The Price is deleted.","Success! The Price is deleted."
+"Something went wrong, please try again.","Something went wrong, please try again."
+"Product prices saved successfully.","Product prices saved successfully."
+Net,Net
+Gross,Gross
+Delete,Delete
+Add,Add

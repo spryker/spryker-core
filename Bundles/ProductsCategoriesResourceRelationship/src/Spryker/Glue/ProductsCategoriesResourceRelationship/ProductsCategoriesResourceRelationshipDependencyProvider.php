@@ -11,6 +11,7 @@ use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
 use Spryker\Glue\ProductsCategoriesResourceRelationship\Dependency\Client\ProductsCategoriesResourceRelationshipToProductCategoryStorageClientBridge;
 use Spryker\Glue\ProductsCategoriesResourceRelationship\Dependency\Client\ProductsCategoriesResourceRelationshipToProductStorageClientBridge;
+use Spryker\Glue\ProductsCategoriesResourceRelationship\Dependency\Client\ProductsCategoriesResourceRelationshipToStoreClientBridge;
 use Spryker\Glue\ProductsCategoriesResourceRelationship\Dependency\RestResource\ProductsCategoriesResourceRelationToCategoriesRestApiResourceBridge;
 
 /**
@@ -21,6 +22,7 @@ class ProductsCategoriesResourceRelationshipDependencyProvider extends AbstractB
     public const RESOURCE_CATEGORY = 'RESOURCE_CATEGORY';
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
     public const CLIENT_PRODUCT_CATEGORY_STORAGE = 'CLIENT_PRODUCT_CATEGORY_STORAGE';
+    public const CLIENT_STORE = 'CLIENT_STORE';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
@@ -33,6 +35,7 @@ class ProductsCategoriesResourceRelationshipDependencyProvider extends AbstractB
         $container = $this->addCategoriesResource($container);
         $container = $this->addProductStorageClient($container);
         $container = $this->addProductCategoryStorageClient($container);
+        $container = $this->addStoreClient($container);
 
         return $container;
     }
@@ -79,6 +82,22 @@ class ProductsCategoriesResourceRelationshipDependencyProvider extends AbstractB
         $container->set(static::CLIENT_PRODUCT_CATEGORY_STORAGE, function (Container $container) {
             return new ProductsCategoriesResourceRelationshipToProductCategoryStorageClientBridge(
                 $container->getLocator()->productCategoryStorage()->client()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addStoreClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_STORE, function (Container $container) {
+            return new ProductsCategoriesResourceRelationshipToStoreClientBridge(
+                $container->getLocator()->store()->client()
             );
         });
 

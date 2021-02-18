@@ -50,7 +50,7 @@ class RedirectUrlValidator implements RedirectUrlValidatorInterface
      */
     protected function isAllowedDomain(string $domain, Request $currentRequest): bool
     {
-        if (!$domain || $domain === $currentRequest->getHost()) {
+        if (!$domain || $domain === $currentRequest->getHost() || !Config::get(KernelConstants::STRICT_DOMAIN_REDIRECT, true)) {
             return true;
         }
 
