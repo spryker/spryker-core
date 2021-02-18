@@ -219,7 +219,7 @@ class ProductAbstractAttributeMapRestrictionFilter implements ProductAbstractAtt
 
     /**
      * @param array $productStorageData
-     * @param array $restrictedProductConcreteIds
+     * @param int[] $restrictedProductConcreteIds
      *
      * @return array
      */
@@ -236,7 +236,7 @@ class ProductAbstractAttributeMapRestrictionFilter implements ProductAbstractAtt
             $restrictedProductConcreteIds
         );
 
-        $productStorageData[ProductStorageConfig::RESOURCE_TYPE_ATTRIBUTE_MAP][static::KEY_SUPER_ATTRIBUTES] = $this->filterSuperAttributesByAttributeVariantCollection(
+        $productStorageData[ProductStorageConfig::RESOURCE_TYPE_ATTRIBUTE_MAP][static::KEY_SUPER_ATTRIBUTES] = $this->mapSuperAttributesByAttributeVariantCollection(
             $productStorageData[ProductStorageConfig::RESOURCE_TYPE_ATTRIBUTE_MAP][static::KEY_ATTRIBUTE_VARIANT_COLLECTION]
         );
 
@@ -245,7 +245,7 @@ class ProductAbstractAttributeMapRestrictionFilter implements ProductAbstractAtt
 
     /**
      * @param array $attributeVariantCollection
-     * @param array $restrictedProductConcreteIds
+     * @param int[] $restrictedProductConcreteIds
      *
      * @return array
      */
@@ -265,7 +265,7 @@ class ProductAbstractAttributeMapRestrictionFilter implements ProductAbstractAtt
      *
      * @return array
      */
-    protected function filterSuperAttributesByAttributeVariantCollection(array $attributeVariantCollection): array
+    protected function mapSuperAttributesByAttributeVariantCollection(array $attributeVariantCollection): array
     {
         $filteredSuperAttributes = [];
 

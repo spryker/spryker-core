@@ -12,6 +12,7 @@ use Spryker\Client\ProductStorage\Builder\ProductConcreteStorageUrlBuilder;
 use Spryker\Client\ProductStorage\Builder\ProductConcreteStorageUrlBuilderInterface;
 use Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToStoreClientInterface;
 use Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToUtilEncodingServiceInterface;
+use Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToUtilSanitizeServiceInterface;
 use Spryker\Client\ProductStorage\Filter\ProductAbstractAttributeMapRestrictionFilter;
 use Spryker\Client\ProductStorage\Filter\ProductAbstractAttributeMapRestrictionFilterInterface;
 use Spryker\Client\ProductStorage\Finder\ProductAbstractViewTransferFinder;
@@ -49,6 +50,14 @@ class ProductStorageFactory extends AbstractFactory
     public function getUtilEncodingService(): ProductStorageToUtilEncodingServiceInterface
     {
         return $this->getProvidedDependency(ProductStorageDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
+
+    /**
+     * @return \Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToUtilSanitizeServiceInterface
+     */
+    public function getUtilSanitizeService(): ProductStorageToUtilSanitizeServiceInterface
+    {
+        return $this->getProvidedDependency(ProductStorageDependencyProvider::SERVICE_UTIL_SANITIZE);
     }
 
     /**
@@ -139,7 +148,10 @@ class ProductStorageFactory extends AbstractFactory
      */
     public function createVariantExpander()
     {
-        return new ProductVariantExpander($this->createProductConcreteStorageReader());
+        return new ProductVariantExpander(
+            $this->createProductConcreteStorageReader(),
+            $this->getUtilSanitizeService()
+        );
     }
 
     /**

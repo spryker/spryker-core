@@ -17,6 +17,7 @@ use Generated\Shared\Transfer\ProductConcreteStorageTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use ReflectionProperty;
 use Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToStorageClientInterface;
+use Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToUtilSanitizeServiceInterface;
 use Spryker\Client\ProductStorage\Mapper\ProductVariantExpander;
 use Spryker\Client\ProductStorage\ProductStorageDependencyProvider;
 use Spryker\Client\ProductStorage\ProductStorageFactory;
@@ -100,9 +101,10 @@ class ProductStorageClientTest extends Unit
         // Arrange
         $productViewTransfer = $this->tester->createProductViewTransfer();
         $productConcreteStorageReaderMock = $this->getProductConcreteStorageReaderMock();
+        $sanitizeServiceMock = $this->getSanitizeServiceMock();
 
         // Act
-        $productConcreteStorageData = (new ProductVariantExpander($productConcreteStorageReaderMock))
+        $productConcreteStorageData = (new ProductVariantExpander($productConcreteStorageReaderMock, $sanitizeServiceMock))
             ->expandProductVariantData($productViewTransfer, static::LOCALE_NAME);
 
         // Assert
@@ -236,6 +238,14 @@ class ProductStorageClientTest extends Unit
         );
 
         return $storageClientMock;
+    }
+
+    /**
+     * @return \Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToUtilSanitizeServiceInterface|\PHPUnit\Framework\MockObject\MockObject
+     */
+    protected function getSanitizeServiceMock(): ProductStorageToUtilSanitizeServiceInterface
+    {
+        return $this->getMockBuilder(ProductStorageToUtilSanitizeServiceInterface::class)->getMock();
     }
 
     /**

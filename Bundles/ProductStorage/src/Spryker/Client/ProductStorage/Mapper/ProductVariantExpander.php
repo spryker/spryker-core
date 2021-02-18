@@ -8,6 +8,7 @@
 namespace Spryker\Client\ProductStorage\Mapper;
 
 use Generated\Shared\Transfer\ProductViewTransfer;
+use Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToUtilSanitizeServiceInterface;
 use Spryker\Client\ProductStorage\Storage\ProductConcreteStorageReaderInterface;
 use Spryker\Shared\Product\ProductConfig;
 
@@ -19,11 +20,20 @@ class ProductVariantExpander implements ProductVariantExpanderInterface
     protected $productConcreteStorageReader;
 
     /**
-     * @param \Spryker\Client\ProductStorage\Storage\ProductConcreteStorageReaderInterface $productConcreteStorageReader
+     * @var \Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToUtilSanitizeServiceInterface
      */
-    public function __construct(ProductConcreteStorageReaderInterface $productConcreteStorageReader)
-    {
+    protected $utilSanitizeService;
+
+    /**
+     * @param \Spryker\Client\ProductStorage\Storage\ProductConcreteStorageReaderInterface $productConcreteStorageReader
+     * @param \Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToUtilSanitizeServiceInterface $utilSanitizeService
+     */
+    public function __construct(
+        ProductConcreteStorageReaderInterface $productConcreteStorageReader,
+        ProductStorageToUtilSanitizeServiceInterface $utilSanitizeService
+    ) {
         $this->productConcreteStorageReader = $productConcreteStorageReader;
+        $this->utilSanitizeService = $utilSanitizeService;
     }
 
     /**
@@ -339,7 +349,7 @@ class ProductVariantExpander implements ProductVariantExpanderInterface
     protected function getAvailableAttributes(ProductViewTransfer $productViewTransfer): array
     {
         $availableAttributes = [];
-        $selectedAttributes = $this->sanitizeEmptySelectedAttributes($productViewTransfer);
+        $selectedAttributes = $this->utilSanitizeService->arrayFilterRecursive($productViewTransfer->getSelectedAttributes());
 
         if (!$selectedAttributes) {
             return [];
@@ -360,18 +370,6 @@ class ProductVariantExpander implements ProductVariantExpanderInterface
         }
 
         return $availableAttributes;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     *
-     * @return array
-     */
-    protected function sanitizeEmptySelectedAttributes(ProductViewTransfer $productViewTransfer): array
-    {
-        return array_filter($productViewTransfer->getSelectedAttributes(), function ($attribute) {
-            return $attribute;
-        }, ARRAY_FILTER_USE_BOTH);
     }
 
     /**

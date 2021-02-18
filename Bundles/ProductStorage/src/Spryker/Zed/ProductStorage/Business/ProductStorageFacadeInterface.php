@@ -61,7 +61,7 @@ interface ProductStorageFacadeInterface
 
     /**
      * Specification:
-     * - Expands the provided ProductAbstractStorage transfer object.
+     * - Expands the provided `ProductAbstractStorage` transfer object.
      * - Expects `ProductAbstractStorage.attributeMap.productConcreteIds` to be provided.
      * - Populates `ProductAbstractStorage.attributeMap.attributeVariantCollection` using provided product concretes.
      *
