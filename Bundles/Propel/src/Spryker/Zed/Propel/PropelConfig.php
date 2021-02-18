@@ -251,4 +251,14 @@ class PropelConfig extends AbstractBundleConfig
     {
         return false;
     }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getCurrentZedDatabaseName(): string
+    {
+        return $this->get(PropelConstants::ZED_DB_DATABASE);
+    }
 }

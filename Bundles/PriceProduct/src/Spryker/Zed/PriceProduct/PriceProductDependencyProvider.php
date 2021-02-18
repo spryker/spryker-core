@@ -10,6 +10,7 @@ namespace Spryker\Zed\PriceProduct;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\PriceProduct\Communication\Plugin\DefaultPriceQueryCriteriaPlugin;
+use Spryker\Zed\PriceProduct\Dependency\External\PriceProductToValidationAdapter;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToCurrencyFacadeBridge;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToPriceFacadeBridge;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductFacadeBridge;
@@ -39,6 +40,8 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGIN_PRICE_PRODUCT_STORE_PRE_DELETE = 'PLUGIN_PRICE_PRODUCT_STORE_PRE_DELETE';
     public const PLUGIN_PRICE_PRODUCT_EXTERNAL_PROVIDER = 'PLUGIN_PRICE_PRODUCT_PROVIDER';
 
+    public const EXTERNAL_ADAPTER_VALIDATION = 'EXTERNAL_ADAPTER_VALIDATION';
+
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -59,6 +62,7 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addPriceProductPricesExtractorPlugins($container);
         $container = $this->addPriceProductStorePreDeletePlugins($container);
         $container = $this->addUtilEncodingService($container);
+        $container = $this->addValidationAdapter($container);
 
         return $container;
     }
@@ -332,6 +336,20 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::SERVICE_PRICE_PRODUCT, function (Container $container) {
             return $container->getLocator()->priceProduct()->service();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addValidationAdapter(Container $container): Container
+    {
+        $container->set(static::EXTERNAL_ADAPTER_VALIDATION, function () {
+            return new PriceProductToValidationAdapter();
         });
 
         return $container;

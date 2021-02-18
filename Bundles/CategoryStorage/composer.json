@@ -5,16 +5,18 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.3",
-    "spryker/category": "^4.3.0",
+    "spryker/category": "^5.0.0",
     "spryker/event-behavior": "^1.6.0",
     "spryker/kernel": "^3.30.0",
     "spryker/locale": "^3.1.0",
     "spryker/propel-orm": "^1.5.0",
+    "spryker/publisher-extension": "^1.0.0",
     "spryker/storage": "^3.4.0",
-    "spryker/synchronization": "^0.2.0 || ^1.0.0",
+    "spryker/store": "^1.4.0",
+    "spryker/synchronization": "^1.0.0",
     "spryker/synchronization-behavior": "^1.0.0",
     "spryker/synchronization-extension": "^1.0.0",
-    "spryker/url": "^3.3.0",
+    "spryker/transfer": "^3.25.0",
     "spryker/util-sanitize": "^2.1.0"
   },
   "require-dev": {
@@ -22,6 +24,7 @@
     "spryker/elastica": "*",
     "spryker/event": "*",
     "spryker/propel": "*",
+    "spryker/queue": "*",
     "spryker/search-elasticsearch": "*",
     "spryker/testify": "*",
     "spryker/url-storage": "*"
@@ -50,7 +53,7 @@
   },
   "extra": {
     "branch-alias": {
-      "dev-master": "1.0.x-dev"
+      "dev-master": "2.0.x-dev"
     }
   },
   "config": {
