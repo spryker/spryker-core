@@ -59,9 +59,9 @@ class ResetPassword implements ResetPasswordInterface
     protected $resetConfig;
 
     /**
-     * @var array|\Spryker\Zed\UserPasswordResetExtension\Dependency\Plugin\UserPasswordResetRequestHandlerPluginInterface[]
+     * @var array|\Spryker\Zed\UserPasswordResetExtension\Dependency\Plugin\UserPasswordResetRequestStrategyPluginInterface[]
      */
-    protected $userPasswordResetRequestHandlerPlugins;
+    protected $userPasswordResetRequestStrategyPlugins;
 
     /**
      * @param \Spryker\Zed\UserPasswordReset\Dependency\Facade\UserPasswordResetToUserFacadeInterface $userFacade
@@ -69,7 +69,7 @@ class ResetPassword implements ResetPasswordInterface
      * @param \Spryker\Zed\UserPasswordReset\Persistence\UserPasswordResetEntityManagerInterface $userPasswordResetEntityManager
      * @param \Spryker\Zed\UserPasswordReset\Persistence\UserPasswordResetRepositoryInterface $passwordResetRepository
      * @param \Spryker\Zed\UserPasswordReset\UserPasswordResetConfig $resetConfig
-     * @param \Spryker\Zed\UserPasswordResetExtension\Dependency\Plugin\UserPasswordResetRequestHandlerPluginInterface[] $userPasswordResetRequestHandlerPlugins
+     * @param \Spryker\Zed\UserPasswordResetExtension\Dependency\Plugin\UserPasswordResetRequestStrategyPluginInterface[] $userPasswordResetRequestStrategyPlugins
      */
     public function __construct(
         UserPasswordResetToUserFacadeInterface $userFacade,
@@ -77,14 +77,14 @@ class ResetPassword implements ResetPasswordInterface
         UserPasswordResetEntityManagerInterface $userPasswordResetEntityManager,
         UserPasswordResetRepositoryInterface $passwordResetRepository,
         UserPasswordResetConfig $resetConfig,
-        array $userPasswordResetRequestHandlerPlugins
+        array $userPasswordResetRequestStrategyPlugins
     ) {
         $this->userFacade = $userFacade;
         $this->utilTextService = $utilTextService;
         $this->userPasswordResetEntityManager = $userPasswordResetEntityManager;
         $this->passwordResetRepository = $passwordResetRepository;
         $this->resetConfig = $resetConfig;
-        $this->userPasswordResetRequestHandlerPlugins = $userPasswordResetRequestHandlerPlugins;
+        $this->userPasswordResetRequestStrategyPlugins = $userPasswordResetRequestStrategyPlugins;
     }
 
     /**
@@ -108,7 +108,7 @@ class ResetPassword implements ResetPasswordInterface
                 ->setStatus(static::STATUS_ACTIVE)
         );
 
-        $this->executeUserPasswordResetRequestHandlerPlugins(
+        $this->executeUserPasswordResetRequestStrategyPlugins(
             $this->createUserPasswordResetRequestTransfer($userTransfer, $token)
         );
 
@@ -237,10 +237,14 @@ class ResetPassword implements ResetPasswordInterface
      *
      * @return void
      */
-    protected function executeUserPasswordResetRequestHandlerPlugins(UserPasswordResetRequestTransfer $userPasswordResetRequestTransfer): void
+    protected function executeUserPasswordResetRequestStrategyPlugins(UserPasswordResetRequestTransfer $userPasswordResetRequestTransfer): void
     {
-        foreach ($this->userPasswordResetRequestHandlerPlugins as $userPasswordResetRequestHandlerPlugin) {
-            $userPasswordResetRequestHandlerPlugin->handleUserPasswordResetRequest($userPasswordResetRequestTransfer);
+        foreach ($this->userPasswordResetRequestStrategyPlugins as $userPasswordResetRequestStrategyPlugin) {
+            if ($userPasswordResetRequestStrategyPlugin->isApplicable($userPasswordResetRequestTransfer)) {
+                $userPasswordResetRequestStrategyPlugin->handleUserPasswordResetRequest($userPasswordResetRequestTransfer);
+
+                return;
+            }
         }
     }
 }

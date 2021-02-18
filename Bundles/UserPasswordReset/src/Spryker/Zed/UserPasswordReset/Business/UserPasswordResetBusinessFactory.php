@@ -32,7 +32,7 @@ class UserPasswordResetBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->getRepository(),
             $this->getConfig(),
-            $this->getUserPasswordResetRequestHandlerPlugins()
+            $this->getUserPasswordResetRequestStrategyPlugins()
         );
     }
 
@@ -53,9 +53,9 @@ class UserPasswordResetBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\UserPasswordResetExtension\Dependency\Plugin\UserPasswordResetRequestHandlerPluginInterface[]
+     * @return \Spryker\Zed\UserPasswordResetExtension\Dependency\Plugin\UserPasswordResetRequestStrategyPluginInterface[]
      */
-    public function getUserPasswordResetRequestHandlerPlugins(): array
+    public function getUserPasswordResetRequestStrategyPlugins(): array
     {
         return $this->getProvidedDependency(UserPasswordResetDependencyProvider::PLUGINS_USER_PASSWORD_RESET_REQUEST_HANDLER);
     }

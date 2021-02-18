@@ -10,7 +10,7 @@ namespace SprykerTest\Zed\UserPasswordResetMail\Communication\UserPasswordReset;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\UserPasswordResetRequestTransfer;
 use Spryker\Zed\Mail\Business\MailFacadeInterface;
-use Spryker\Zed\UserPasswordResetMail\Communication\Plugin\UserPasswordReset\MailUserPasswordResetRequestHandlerPlugin;
+use Spryker\Zed\UserPasswordResetMail\Communication\Plugin\UserPasswordReset\MailUserPasswordResetRequestStrategyPlugin;
 use Spryker\Zed\UserPasswordResetMail\Dependency\Facade\UserPasswordResetMailToMailFacadeBridge;
 use Spryker\Zed\UserPasswordResetMail\UserPasswordResetMailDependencyProvider;
 
@@ -22,10 +22,10 @@ use Spryker\Zed\UserPasswordResetMail\UserPasswordResetMailDependencyProvider;
  * @group UserPasswordResetMail
  * @group Communication
  * @group UserPasswordReset
- * @group MailUserPasswordResetRequestHandlerPluginTest
+ * @group MailUserPasswordResetRequestStrategyPluginTest
  * Add your own group annotations below this line
  */
-class MailUserPasswordResetRequestHandlerPluginTest extends Unit
+class MailUserPasswordResetRequestStrategyPluginTest extends Unit
 {
     /**
      * @var \SprykerTest\Zed\UserPasswordResetMail\UserPasswordResetMailCommunicationTester
@@ -35,7 +35,7 @@ class MailUserPasswordResetRequestHandlerPluginTest extends Unit
     /**
      * @return void
      */
-    public function testMailUserPasswordResetRequestHandlerPluginCallsMailFacade(): void
+    public function testMailUserPasswordResetRequestStrategyPluginCallsMailFacade(): void
     {
         // Arrange
         $mailFacade = $this->createMailFacadeMock();
@@ -43,7 +43,7 @@ class MailUserPasswordResetRequestHandlerPluginTest extends Unit
         $userPasswordResetRequestTransfer = (new UserPasswordResetRequestTransfer())
             ->setUser($userTransfer)
             ->setResetPasswordLink('');
-        $mailUserPasswordResetPlugin = new MailUserPasswordResetRequestHandlerPlugin();
+        $mailUserPasswordResetPlugin = new MailUserPasswordResetRequestStrategyPlugin();
 
         // Assert
         $mailFacade->expects($this->once())
