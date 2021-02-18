@@ -47,8 +47,6 @@ class AbstractProductsResourceMapper implements AbstractProductsResourceMapperIn
             $attributeMap[static::KEY_ATTRIBUTE_VARIANTS] = $this->changeVariantsIdsToSkus($attributeMap[static::KEY_ATTRIBUTE_VARIANTS], $productConcreteIds);
         }
 
-        // TODO: check $restAbstractProductsAttributesTransfer->getAttributeMap() with new collection
-
         $attributeMap[static::KEY_PRODUCT_CONCRETE_IDS] = array_values($productConcreteIds);
 
         return $restAbstractProductsAttributesTransfer

@@ -110,7 +110,7 @@ class ProductVariantExpander implements ProductVariantExpanderInterface
         if ($productViewTransfer->getAttributeMap()->getAttributeVariantCollection()) {
             return $this->buildAttributeMapByAttributeVariantCollection(
                 $productViewTransfer->getSelectedAttributes(),
-                $productViewTransfer->getAttributeMap()->getAttributeVariantCollection() ?? []
+                $productViewTransfer->getAttributeMap()->getAttributeVariantCollection()
             );
         }
 
