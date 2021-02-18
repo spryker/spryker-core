@@ -24,4 +24,9 @@ class MerchantSalesReturnBusinessFactory extends AbstractBusinessFactory
     {
         return new MerchantReturnPreparer();
     }
+
+    public function createMerchantReturnValidator()
+    {
+
+    }
 }

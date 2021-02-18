@@ -16,6 +16,10 @@ use Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnPreCreatePluginInte
 class MerchantReturnPreCreatePlugin implements ReturnPreCreatePluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
      *
      * @return \Generated\Shared\Transfer\ReturnTransfer

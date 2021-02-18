@@ -77,11 +77,9 @@ class ReturnValidator implements ReturnValidatorInterface
             return $this->createErrorReturnResponse(static::GLOSSARY_KEY_CREATE_RETURN_STORE_ERROR);
         }
 
-        foreach ($this->returnRequestValidatorPlugins as $requestValidatorPlugin) {
-            $returnResponseTransfer = $requestValidatorPlugin->validate($returnCreateRequestTransfer, $itemTransfers);
-            if (!$returnResponseTransfer->getIsSuccessful()) {
-                return $returnResponseTransfer;
-            }
+        $returnResponseTransfer = $this->validateReturnRequest($returnCreateRequestTransfer, $itemTransfers);
+        if (!$returnResponseTransfer->getIsSuccessful()) {
+            return $returnResponseTransfer;
         }
 
         return (new ReturnResponseTransfer())
@@ -135,5 +133,26 @@ class ReturnValidator implements ReturnValidatorInterface
         return (new ReturnResponseTransfer())
             ->setIsSuccessful(false)
             ->addMessage($messageTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ReturnCreateRequestTransfer $returnCreateRequestTransfer
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ReturnResponseTransfer
+     */
+    protected function executeValidatorPlugins(
+        ReturnCreateRequestTransfer $returnCreateRequestTransfer,
+        ArrayObject $itemTransfers
+    ): ReturnResponseTransfer {
+        foreach ($this->returnRequestValidatorPlugins as $requestValidatorPlugin) {
+            $returnResponseTransfer = $requestValidatorPlugin->validate($returnCreateRequestTransfer, $itemTransfers);
+            if (!$returnResponseTransfer->getIsSuccessful()) {
+                return $returnResponseTransfer;
+            }
+        }
+
+        return (new ReturnResponseTransfer())
+            ->setIsSuccessful(true);
     }
 }
