@@ -12,6 +12,9 @@ use Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\WishlistExtension\Dependency\Plugin\WishlistPostMoveToCartCollectionExpanderPluginInterface;
 
+/**
+ * @method \Spryker\Client\MerchantProductWishlist\MerchantProductWishlistFactory getFactory()
+ */
 class WishlistMerchantProductPostMoveToCartCollectionExpanderPlugin extends AbstractPlugin implements WishlistPostMoveToCartCollectionExpanderPluginInterface
 {
     /**
@@ -31,36 +34,12 @@ class WishlistMerchantProductPostMoveToCartCollectionExpanderPlugin extends Abst
         QuoteTransfer $quoteTransfer,
         WishlistMoveToCartRequestCollectionTransfer $wishlistMoveToCartRequestCollectionDiffTransfer
     ): WishlistMoveToCartRequestCollectionTransfer {
-        $merchantReferenceIndex = [];
-
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if (!$itemTransfer->getMerchantReference()) {
-                continue;
-            }
-
-            $merchantReferenceIndex[$itemTransfer->getMerchantReference()] = true;
-        }
-
-        foreach ($quoteTransfer->getBundleItems() as $itemTransfer) {
-            if (!$itemTransfer->getMerchantReference()) {
-                continue;
-            }
-
-            $merchantReferenceIndex[$itemTransfer->getMerchantReference()] = true;
-        }
-
-        if (!$merchantReferenceIndex) {
-            return $wishlistMoveToCartRequestCollectionDiffTransfer;
-        }
-
-        foreach ($wishlistMoveToCartRequestCollectionTransfer->getRequests() as $wishlistMoveToCartRequestTransfer) {
-            if (isset($merchantReferenceIndex[$wishlistMoveToCartRequestTransfer->getMerchantReference()])) {
-                continue;
-            }
-
-            $wishlistMoveToCartRequestCollectionDiffTransfer->addRequest($wishlistMoveToCartRequestTransfer);
-        }
-
-        return $wishlistMoveToCartRequestCollectionDiffTransfer;
+        return $this->getFactory()
+            ->createMerchantProductWishlistExpander()
+            ->expandWishlistMoveToCartRequestCollectionTransfer(
+                $wishlistMoveToCartRequestCollectionTransfer,
+                $quoteTransfer,
+                $wishlistMoveToCartRequestCollectionDiffTransfer
+            );
     }
 }

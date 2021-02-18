@@ -5,40 +5,37 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\MerchantProductOfferWishlist\Plugin\Wishlist;
+namespace Spryker\Client\MerchantProductWishlist\Expander;
 
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\WishlistItemCollectionTransfer;
 use Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer;
-use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\WishlistExtension\Dependency\Plugin\WishlistCollectionToRemoveExpanderPluginInterface;
 
-/**
- * @method \Spryker\Client\MerchantProductOfferWishlist\MerchantProductOfferWishlistFactory getFactory()
- */
-class WishlistProductOfferCollectionToRemoveExpanderPlugin extends AbstractPlugin implements WishlistCollectionToRemoveExpanderPluginInterface
+interface MerchantProductWishlistExpanderInterface
 {
     /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer $wishlistMoveToCartRequestCollectionTransfer
      * @param \Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer $failedWishlistMoveToCartRequestCollectionTransfer
      * @param \Generated\Shared\Transfer\WishlistItemCollectionTransfer $wishlistItemCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistItemCollectionTransfer
      */
-    public function expand(
+    public function expandWishlistItemCollectionTransfer(
         WishlistMoveToCartRequestCollectionTransfer $wishlistMoveToCartRequestCollectionTransfer,
         WishlistMoveToCartRequestCollectionTransfer $failedWishlistMoveToCartRequestCollectionTransfer,
         WishlistItemCollectionTransfer $wishlistItemCollectionTransfer
-    ): WishlistItemCollectionTransfer {
-        return $this->getFactory()
-            ->createMerchantProductOfferWishlistExpander()
-            ->expandWishlistItemCollectionTransfer(
-                $wishlistMoveToCartRequestCollectionTransfer,
-                $failedWishlistMoveToCartRequestCollectionTransfer,
-                $wishlistItemCollectionTransfer
-            );
-    }
+    ): WishlistItemCollectionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer $wishlistMoveToCartRequestCollectionTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer $wishlistMoveToCartRequestCollectionDiffTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer
+     */
+    public function expandWishlistMoveToCartRequestCollectionTransfer(
+        WishlistMoveToCartRequestCollectionTransfer $wishlistMoveToCartRequestCollectionTransfer,
+        QuoteTransfer $quoteTransfer,
+        WishlistMoveToCartRequestCollectionTransfer $wishlistMoveToCartRequestCollectionDiffTransfer
+    ): WishlistMoveToCartRequestCollectionTransfer;
 }

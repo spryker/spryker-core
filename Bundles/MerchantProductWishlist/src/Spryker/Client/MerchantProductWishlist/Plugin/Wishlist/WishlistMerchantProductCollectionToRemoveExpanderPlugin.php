@@ -12,6 +12,9 @@ use Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\WishlistExtension\Dependency\Plugin\WishlistCollectionToRemoveExpanderPluginInterface;
 
+/**
+ * @method \Spryker\Client\MerchantProductWishlist\MerchantProductWishlistFactory getFactory()
+ */
 class WishlistMerchantProductCollectionToRemoveExpanderPlugin extends AbstractPlugin implements WishlistCollectionToRemoveExpanderPluginInterface
 {
     /**
@@ -31,22 +34,12 @@ class WishlistMerchantProductCollectionToRemoveExpanderPlugin extends AbstractPl
         WishlistMoveToCartRequestCollectionTransfer $failedWishlistMoveToCartRequestCollectionTransfer,
         WishlistItemCollectionTransfer $wishlistItemCollectionTransfer
     ): WishlistItemCollectionTransfer {
-        $failedMerchantReferences = [];
-
-        foreach ($failedWishlistMoveToCartRequestCollectionTransfer->getRequests() as $failedMoveToCartRequestTransfer) {
-            $failedMerchantReferences[] = $failedMoveToCartRequestTransfer->getMerchantReference();
-        }
-
-        foreach ($wishlistMoveToCartRequestCollectionTransfer->getRequests() as $moveToCartRequestTransfer) {
-            if (in_array($moveToCartRequestTransfer->getMerchantReference(), $failedMerchantReferences)) {
-                continue;
-            }
-
-            /** @var \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer */
-            $wishlistItemTransfer = $moveToCartRequestTransfer->getWishlistItem();
-            $wishlistItemCollectionTransfer->addItem($wishlistItemTransfer);
-        }
-
-        return $wishlistItemCollectionTransfer;
+        return $this->getFactory()
+            ->createMerchantProductWishlistExpander()
+            ->expandWishlistItemCollectionTransfer(
+                $wishlistMoveToCartRequestCollectionTransfer,
+                $failedWishlistMoveToCartRequestCollectionTransfer,
+                $wishlistItemCollectionTransfer
+            );
     }
 }
