@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\ResetPasswordCriteriaTransfer;
 use Generated\Shared\Transfer\ResetPasswordTransfer;
 use Generated\Shared\Transfer\UserCriteriaTransfer;
 use Generated\Shared\Transfer\UserPasswordResetRequestTransfer;
-use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\UserPasswordReset\Dependency\Facade\UserPasswordResetToUserFacadeInterface;
 use Spryker\Zed\UserPasswordReset\Dependency\Service\UserPasswordResetToUtilTextServiceInterface;
 use Spryker\Zed\UserPasswordReset\Persistence\UserPasswordResetEntityManagerInterface;
@@ -88,13 +87,15 @@ class ResetPassword implements ResetPasswordInterface
     }
 
     /**
-     * @param string $email
+     * @param \Generated\Shared\Transfer\UserPasswordResetRequestTransfer $userPasswordResetRequestTransfer
      *
      * @return bool
      */
-    public function requestPasswordReset(string $email): bool
+    public function requestPasswordReset(UserPasswordResetRequestTransfer $userPasswordResetRequestTransfer): bool
     {
-        $userTransfer = $this->userFacade->findUser((new UserCriteriaTransfer())->setEmail($email));
+        $userPasswordResetRequestTransfer->requireEmail();
+
+        $userTransfer = $this->userFacade->findUser((new UserCriteriaTransfer())->setEmail($userPasswordResetRequestTransfer->getEmail()));
 
         if (!$userTransfer) {
             return false;
@@ -108,8 +109,12 @@ class ResetPassword implements ResetPasswordInterface
                 ->setStatus(static::STATUS_ACTIVE)
         );
 
+        $userPasswordResetRequestTransfer
+            ->setUser($userTransfer)
+            ->setResetPasswordLink($this->createResetPasswordLink($userPasswordResetRequestTransfer, $token));
+
         $this->executeUserPasswordResetRequestStrategyPlugins(
-            $this->createUserPasswordResetRequestTransfer($userTransfer, $token)
+            $userPasswordResetRequestTransfer
         );
 
         return (bool)$resetPasswordTransfer->getIdResetPassword();
@@ -196,28 +201,18 @@ class ResetPassword implements ResetPasswordInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
-     * @param string $token
-     *
-     * @return \Generated\Shared\Transfer\UserPasswordResetRequestTransfer
-     */
-    protected function createUserPasswordResetRequestTransfer(UserTransfer $userTransfer, string $token): UserPasswordResetRequestTransfer
-    {
-        return (new UserPasswordResetRequestTransfer())
-            ->setUser($userTransfer)
-            ->setResetPasswordLink($this->createResetPasswordLink($token));
-    }
-
-    /**
+     * @param \Generated\Shared\Transfer\UserPasswordResetRequestTransfer $userPasswordResetRequestTransfer
      * @param string $token
      *
      * @return string
      */
-    protected function createResetPasswordLink(string $token): string
+    protected function createResetPasswordLink(UserPasswordResetRequestTransfer $userPasswordResetRequestTransfer, string $token): string
     {
         $query = $this->generateResetPasswordLinkQuery($token);
 
-        return sprintf('%s%s?%s', $this->resetConfig->getBaseUrlZed(), $this->resetConfig->getPasswordResetPath(), $query);
+        $passwordResetPath = $userPasswordResetRequestTransfer->getResetPasswordPath() ?? $this->resetConfig->getPasswordResetPath();
+
+        return sprintf('%s%s?%s', $this->resetConfig->getBaseUrlZed(), $passwordResetPath, $query);
     }
 
     /**

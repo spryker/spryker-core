@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\MerchantUserCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantUserResponseTransfer;
 use Generated\Shared\Transfer\MerchantUserTransfer;
 use Generated\Shared\Transfer\UserCriteriaTransfer;
+use Generated\Shared\Transfer\UserPasswordResetRequestTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserPasswordResetFacadeInterface;
@@ -110,7 +111,8 @@ class MerchantUserUpdater implements MerchantUserUpdaterInterface
             $updatedUserTransfer->getStatus() === static::USER_STATUS_ACTIVE
             && $originalUserTransfer->getStatus() !== $updatedUserTransfer->getStatus()
         ) {
-            $this->userPasswordResetFacade->requestPasswordReset($updatedUserTransfer->getUsernameOrFail());
+            $email = $updatedUserTransfer->getUsernameOrFail();
+            $this->userPasswordResetFacade->requestPasswordReset((new UserPasswordResetRequestTransfer())->setEmail($email));
         }
     }
 }
