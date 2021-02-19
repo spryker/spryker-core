@@ -68,7 +68,7 @@ class ModuleFileFinder implements ModuleFileFinderInterface
         $directories = array_filter(
             $directories,
             function (string $directory) {
-                return glob($directory, GLOB_NOSORT);
+                return glob($directory, GLOB_NOSORT, GLOB_ONLYDIR);
             }
         );
 
