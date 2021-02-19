@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\MerchantSalesReturn\Business;
 
+use ArrayObject;
+use Generated\Shared\Transfer\ReturnCreateRequestTransfer;
+use Generated\Shared\Transfer\ReturnResponseTransfer;
 use Generated\Shared\Transfer\ReturnTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -25,5 +28,20 @@ class MerchantSalesReturnFacade extends AbstractFacade implements MerchantSalesR
         return $this->getFactory()
             ->createMerchantReturnPreparer()
             ->prepareReturn($returnTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ReturnCreateRequestTransfer $returnCreateRequestTransfer
+     * @param \ArrayObject $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ReturnResponseTransfer
+     */
+    public function validateReturn(
+        ReturnCreateRequestTransfer $returnCreateRequestTransfer,
+        ArrayObject $itemTransfers
+    ): ReturnResponseTransfer {
+        return $this->getFactory()
+            ->createMerchantReturnValidator()
+            ->validate($returnCreateRequestTransfer, $itemTransfers);
     }
 }

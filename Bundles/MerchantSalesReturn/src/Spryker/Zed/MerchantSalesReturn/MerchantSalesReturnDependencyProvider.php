@@ -9,18 +9,22 @@ namespace Spryker\Zed\MerchantSalesReturn;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\MerchantSalesReturn\Dependency\Facade\MerchantSalesReturnToSalesFacadeBridge;
 
 class MerchantSalesReturnDependencyProvider extends AbstractBundleDependencyProvider
 {
+    public const FACADE_SALES = 'FACADE_SALES';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideCommunicationLayerDependencies(Container $container)
+    public function provideBusinessLayerDependencies(Container $container): Container
     {
-        //TODO Provide dependencies
+        $container = parent::provideBusinessLayerDependencies($container);
+
+        $container = $this->addSalesFacade($container);
 
         return $container;
     }
@@ -30,23 +34,12 @@ class MerchantSalesReturnDependencyProvider extends AbstractBundleDependencyProv
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideBusinessLayerDependencies(Container $container)
+    protected function addSalesFacade(Container $container): Container
     {
-        //TODO Provide dependencies
+        $container->set(static::FACADE_SALES, function (Container $container) {
+            return new MerchantSalesReturnToSalesFacadeBridge($container->getLocator()->sales()->facade());
+        });
 
         return $container;
     }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    public function providePersistenceLayerDependencies(Container $container)
-    {
-        //TODO Provide dependencies
-
-        return $container;
-    }
-
 }

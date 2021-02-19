@@ -32,6 +32,7 @@ class MerchantReturnRequestValidatorPlugin extends AbstractPlugin implements Ret
         ReturnCreateRequestTransfer $returnCreateRequestTransfer,
         ArrayObject $itemTransfers
     ): ReturnResponseTransfer {
-
+        return $this->getFacade()
+            ->validateReturn($returnCreateRequestTransfer, $itemTransfers);
     }
 }
