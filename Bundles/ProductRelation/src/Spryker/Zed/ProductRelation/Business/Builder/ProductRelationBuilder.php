@@ -68,7 +68,7 @@ class ProductRelationBuilder implements ProductRelationBuilderInterface
             ->setLimit($productRelationUpdateChunkSize);
 
         for ($offset = 0; $offset <= $productRelationCount; $offset += $productRelationUpdateChunkSize) {
-            $this->rebuildProductRelationsBatch(
+            $this->rebuildProductRelationBatch(
                 $productRelationCriteriaFilterTransfer->setOffset($offset)
             );
         }
@@ -83,14 +83,14 @@ class ProductRelationBuilder implements ProductRelationBuilderInterface
      *
      * @return void
      */
-    protected function rebuildProductRelationsBatch(
+    protected function rebuildProductRelationBatch(
         ProductRelationCriteriaFilterTransfer $productRelationCriteriaFilterTransfer
     ): void {
         $productRelationTransfers = $this->productRelationRepository
             ->getActiveProductRelations($productRelationCriteriaFilterTransfer);
 
         foreach ($productRelationTransfers as $productRelationTransfer) {
-            $this->processRebuildRelation($productRelationTransfer);
+            $this->processRebuildRelations($productRelationTransfer);
         }
     }
 
@@ -99,7 +99,7 @@ class ProductRelationBuilder implements ProductRelationBuilderInterface
      *
      * @return void
      */
-    protected function processRebuildRelation(ProductRelationTransfer $productRelationTransfer): void
+    protected function processRebuildRelations(ProductRelationTransfer $productRelationTransfer): void
     {
         try {
             if (!$productRelationTransfer->getQuerySet()->getRules()->count()) {
