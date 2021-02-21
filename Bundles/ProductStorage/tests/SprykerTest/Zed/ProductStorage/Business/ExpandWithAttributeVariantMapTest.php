@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\ProductAbstractStorageTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use ReflectionProperty;
-use Spryker\Zed\ProductStorage\Business\Expander\ProductAbstractStorageExpander;
+use Spryker\Zed\ProductStorage\Business\Generator\AttributeVariantMapGenerator;
 
 /**
  * Auto-generated group annotations
@@ -22,10 +22,10 @@ use Spryker\Zed\ProductStorage\Business\Expander\ProductAbstractStorageExpander;
  * @group Zed
  * @group ProductStorage
  * @group Business
- * @group ExpandWithAttributeVariantCollectionTest
+ * @group ExpandWithAttributeVariantMapTest
  * Add your own group annotations below this line
  */
-class ExpandWithAttributeVariantCollectionTest extends Unit
+class ExpandWithAttributeVariantMapTest extends Unit
 {
     /**
      * @var \SprykerTest\Zed\ProductStorage\ProductStorageBusinessTester
@@ -35,14 +35,18 @@ class ExpandWithAttributeVariantCollectionTest extends Unit
     protected const FAKE_SKU_1 = 'fake-sku-1';
     protected const FAKE_SKU_2 = 'fake-sku-2';
 
-    protected const FAKE_ATTRIBUTES_1 = [
+    protected const FAKE_PRODUCT_ATTRIBUTES_1 = [
         'attribute_1' => 'value_1_1',
         'attribute_2' => 'value_1_2',
     ];
 
-    protected const FAKE_ATTRIBUTES_2 = [
+    protected const FAKE_PRODUCT_ATTRIBUTES_2 = [
         'attribute_1' => 'value_2_1',
         'attribute_2' => 'value_2_2',
+    ];
+
+    protected const FAKE_SUPER_ATTRIBUTES = [
+        'attribute_1', 'attribute_2', 'attribute_3', 'attribute_4', 'attribute_5', 'attribute_6',
     ];
 
     /**
@@ -52,22 +56,22 @@ class ExpandWithAttributeVariantCollectionTest extends Unit
     {
         parent::setUp();
 
-        $this->resetSuperAttributesCache();
+        $this->mockSuperAttributesCache();
     }
 
     /**
      * @return void
      */
-    public function testExpandWithAttributeVariantCollection(): void
+    public function testExpandWithAttributeVariantMap(): void
     {
         //Arrange
         $productAbstractTransfer = $this->tester->haveProductAbstract();
         $firstProductConcreteTransfer = $this->tester->haveFullProduct(
-            [ProductConcreteTransfer::ATTRIBUTES => static::FAKE_ATTRIBUTES_1],
+            [ProductConcreteTransfer::ATTRIBUTES => static::FAKE_PRODUCT_ATTRIBUTES_1],
             [ProductAbstractTransfer::ID_PRODUCT_ABSTRACT => $productAbstractTransfer->getIdProductAbstract()]
         );
         $secondProductConcreteTransfer = $this->tester->haveFullProduct(
-            [ProductConcreteTransfer::ATTRIBUTES => static::FAKE_ATTRIBUTES_2],
+            [ProductConcreteTransfer::ATTRIBUTES => static::FAKE_PRODUCT_ATTRIBUTES_2],
             [ProductAbstractTransfer::ID_PRODUCT_ABSTRACT => $productAbstractTransfer->getIdProductAbstract()]
         );
 
@@ -79,23 +83,23 @@ class ExpandWithAttributeVariantCollectionTest extends Unit
 
         // Act
         $productAbstractStorageTransfer = $this->tester->getFacade()
-            ->expandWithAttributeVariantCollection($productAbstractStorageTransfer);
+            ->expandWithAttributeVariantMap($productAbstractStorageTransfer);
 
         // Assert
         $this->assertSame(
-            static::FAKE_ATTRIBUTES_1,
-            $productAbstractStorageTransfer->getAttributeMap()->getAttributeVariantCollection()[$firstProductConcreteTransfer->getIdProductConcrete()]
+            static::FAKE_PRODUCT_ATTRIBUTES_1,
+            $productAbstractStorageTransfer->getAttributeMap()->getAttributeVariantMap()[$firstProductConcreteTransfer->getIdProductConcrete()]
         );
         $this->assertSame(
-            static::FAKE_ATTRIBUTES_2,
-            $productAbstractStorageTransfer->getAttributeMap()->getAttributeVariantCollection()[$secondProductConcreteTransfer->getIdProductConcrete()]
+            static::FAKE_PRODUCT_ATTRIBUTES_2,
+            $productAbstractStorageTransfer->getAttributeMap()->getAttributeVariantMap()[$secondProductConcreteTransfer->getIdProductConcrete()]
         );
     }
 
     /**
      * @return void
      */
-    public function testExpandWithAttributeVariantCollectionWithoutAttributeMap(): void
+    public function testExpandWithAttributeVariantMapWithoutAttributeMap(): void
     {
         //Arrange
         $productAbstractStorageTransfer = (new ProductAbstractStorageTransfer())
@@ -103,7 +107,7 @@ class ExpandWithAttributeVariantCollectionTest extends Unit
 
         // Act
         $productAbstractStorageTransfer = $this->tester->getFacade()
-            ->expandWithAttributeVariantCollection($productAbstractStorageTransfer);
+            ->expandWithAttributeVariantMap($productAbstractStorageTransfer);
 
         // Assert
         $this->assertNull($productAbstractStorageTransfer->getAttributeMap());
@@ -112,7 +116,7 @@ class ExpandWithAttributeVariantCollectionTest extends Unit
     /**
      * @return void
      */
-    public function testExpandWithAttributeVariantCollectionWithoutProductConcreteIds(): void
+    public function testExpandWithAttributeVariantMapWithoutProductConcreteIds(): void
     {
         //Arrange
         $productAbstractStorageTransfer = (new ProductAbstractStorageTransfer())
@@ -120,16 +124,16 @@ class ExpandWithAttributeVariantCollectionTest extends Unit
 
         // Act
         $productAbstractStorageTransfer = $this->tester->getFacade()
-            ->expandWithAttributeVariantCollection($productAbstractStorageTransfer);
+            ->expandWithAttributeVariantMap($productAbstractStorageTransfer);
 
         // Assert
-        $this->assertEmpty($productAbstractStorageTransfer->getAttributeMap()->getAttributeVariantCollection());
+        $this->assertEmpty($productAbstractStorageTransfer->getAttributeMap()->getAttributeVariantMap());
     }
 
     /**
      * @return void
      */
-    public function testExpandWithAttributeVariantCollectionWithEmptyProductConcreteIds(): void
+    public function testExpandWithAttributeVariantMapWithEmptyProductConcreteIds(): void
     {
         //Arrange
         $productAbstractStorageTransfer = (new ProductAbstractStorageTransfer())
@@ -137,16 +141,16 @@ class ExpandWithAttributeVariantCollectionTest extends Unit
 
         // Act
         $productAbstractStorageTransfer = $this->tester->getFacade()
-            ->expandWithAttributeVariantCollection($productAbstractStorageTransfer);
+            ->expandWithAttributeVariantMap($productAbstractStorageTransfer);
 
         // Assert
-        $this->assertEmpty($productAbstractStorageTransfer->getAttributeMap()->getAttributeVariantCollection());
+        $this->assertEmpty($productAbstractStorageTransfer->getAttributeMap()->getAttributeVariantMap());
     }
 
     /**
      * @return void
      */
-    public function testExpandWithAttributeVariantCollectionWithFakeProductConcreteIds(): void
+    public function testExpandWithAttributeVariantMapWithFakeProductConcreteIds(): void
     {
         //Arrange
         $productAbstractStorageTransfer = (new ProductAbstractStorageTransfer())
@@ -157,19 +161,19 @@ class ExpandWithAttributeVariantCollectionTest extends Unit
 
         // Act
         $productAbstractStorageTransfer = $this->tester->getFacade()
-            ->expandWithAttributeVariantCollection($productAbstractStorageTransfer);
+            ->expandWithAttributeVariantMap($productAbstractStorageTransfer);
 
         // Assert
-        $this->assertEmpty($productAbstractStorageTransfer->getAttributeMap()->getAttributeVariantCollection());
+        $this->assertEmpty($productAbstractStorageTransfer->getAttributeMap()->getAttributeVariantMap());
     }
 
     /**
      * @return void
      */
-    protected function resetSuperAttributesCache(): void
+    protected function mockSuperAttributesCache(): void
     {
-        $reflection = new ReflectionProperty(ProductAbstractStorageExpander::class, 'superAttributesCache');
+        $reflection = new ReflectionProperty(AttributeVariantMapGenerator::class, 'superAttributesCache');
         $reflection->setAccessible(true);
-        $reflection->setValue(null, null);
+        $reflection->setValue(null, array_flip(static::FAKE_SUPER_ATTRIBUTES));
     }
 }

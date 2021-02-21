@@ -142,9 +142,9 @@ class AttributeMap implements AttributeMapInterface
 
         $attributeVariants = [];
 
-        if ($this->productStorageConfig->isAttributeVariantsMapEnabled()) {
+//        if ($this->productStorageConfig->isAttributeVariantsMapEnabled()) {
             $attributeVariants = $this->buildProductVariants($productConcreteSuperAttributes);
-        }
+//        }
 
         return $this->createAttributeMapStorageTransfer(
             $concreteProductIds,
@@ -334,7 +334,7 @@ class AttributeMap implements AttributeMapInterface
     }
 
     /**
-     * @deprecated Exists for Backward Compatibility reasons only.
+     * @deprecated Exists for Backward Compatibility reasons only. Use {@link \Spryker\Zed\ProductStorage\Communication\Plugin\ProductStorage\AttributeVariantMapProductAbstractStorageExpanderPlugin} instead.
      *
      * @param array $productSuperAttributes
      *

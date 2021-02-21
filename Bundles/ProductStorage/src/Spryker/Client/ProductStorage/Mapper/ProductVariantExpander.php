@@ -8,7 +8,7 @@
 namespace Spryker\Client\ProductStorage\Mapper;
 
 use Generated\Shared\Transfer\ProductViewTransfer;
-use Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToUtilSanitizeServiceInterface;
+use Spryker\Client\ProductStorage\Filter\ProductAttributeFilterInterface;
 use Spryker\Client\ProductStorage\Storage\ProductConcreteStorageReaderInterface;
 use Spryker\Shared\Product\ProductConfig;
 
@@ -20,20 +20,20 @@ class ProductVariantExpander implements ProductVariantExpanderInterface
     protected $productConcreteStorageReader;
 
     /**
-     * @var \Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToUtilSanitizeServiceInterface
+     * @var \Spryker\Client\ProductStorage\Filter\ProductAttributeFilterInterface
      */
-    protected $utilSanitizeService;
+    protected $productAttributeFilter;
 
     /**
      * @param \Spryker\Client\ProductStorage\Storage\ProductConcreteStorageReaderInterface $productConcreteStorageReader
-     * @param \Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToUtilSanitizeServiceInterface $utilSanitizeService
+     * @param \Spryker\Client\ProductStorage\Filter\ProductAttributeFilterInterface $productAttributeFilter
      */
     public function __construct(
         ProductConcreteStorageReaderInterface $productConcreteStorageReader,
-        ProductStorageToUtilSanitizeServiceInterface $utilSanitizeService
+        ProductAttributeFilterInterface $productAttributeFilter
     ) {
         $this->productConcreteStorageReader = $productConcreteStorageReader;
-        $this->utilSanitizeService = $utilSanitizeService;
+        $this->productAttributeFilter = $productAttributeFilter;
     }
 
     /**
@@ -117,10 +117,10 @@ class ProductVariantExpander implements ProductVariantExpanderInterface
             return [];
         }
 
-        if ($productViewTransfer->getAttributeMap()->getAttributeVariantCollection()) {
-            return $this->buildAttributeMapByAttributeVariantCollection(
+        if ($productViewTransfer->getAttributeMap()->getAttributeVariantMap()) {
+            return $this->getVariantNodeByAttributeVariantMap(
                 $productViewTransfer->getSelectedAttributes(),
-                $productViewTransfer->getAttributeMap()->getAttributeVariantCollection()
+                $productViewTransfer->getAttributeMap()->getAttributeVariantMap()
             );
         }
 
@@ -136,19 +136,16 @@ class ProductVariantExpander implements ProductVariantExpanderInterface
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
-    protected function setAvailableAttributes(array $selectedVariantNode, ProductViewTransfer $storageProductTransfer)
+    protected function setAvailableAttributes(array $selectedVariantNode, ProductViewTransfer $storageProductTransfer): ProductViewTransfer
     {
-        if ($storageProductTransfer->getAttributeMap()->getAttributeVariantCollection()) {
-            return $storageProductTransfer->setAvailableAttributes($this->getAvailableAttributes($storageProductTransfer));
-        }
+        $availableAttributes = $this->productAttributeFilter
+            ->filterAvailableProductAttributes($selectedVariantNode, $storageProductTransfer);
 
-        $storageProductTransfer->setAvailableAttributes($this->findAvailableAttributes($selectedVariantNode));
-
-        return $storageProductTransfer;
+        return $storageProductTransfer->setAvailableAttributes($availableAttributes);
     }
 
     /**
-     * @deprecated Exists for Backward Compatibility reasons only.
+     * @deprecated Exists for Backward Compatibility reasons only. Use {@link getVariantNodeByAttributeVariantMap()} instead.
      *
      * @param array $selectedAttributes
      * @param array $attributeVariants
@@ -162,22 +159,6 @@ class ProductVariantExpander implements ProductVariantExpanderInterface
         $attributePath = $this->buildAttributePath($selectedAttributes);
 
         return $this->findSelectedNode($attributeVariants, $attributePath);
-    }
-
-    /**
-     * @param array $selectedNode
-     * @param array $filteredAttributes
-     *
-     * @return array
-     */
-    protected function findAvailableAttributes(array $selectedNode, array $filteredAttributes = [])
-    {
-        foreach (array_keys($selectedNode) as $attributePath) {
-            [$key, $value] = explode(ProductConfig::ATTRIBUTE_MAP_PATH_DELIMITER, $attributePath);
-            $filteredAttributes[$key][] = $value;
-        }
-
-        return $filteredAttributes;
     }
 
     /**
@@ -342,47 +323,14 @@ class ProductVariantExpander implements ProductVariantExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     *
-     * @return array
-     */
-    protected function getAvailableAttributes(ProductViewTransfer $productViewTransfer): array
-    {
-        $availableAttributes = [];
-        $selectedAttributes = $this->utilSanitizeService->arrayFilterRecursive($productViewTransfer->getSelectedAttributes());
-
-        if (!$selectedAttributes) {
-            return [];
-        }
-
-        $attributeVariantCollection = $productViewTransfer->getAttributeMap()->getAttributeVariantCollection();
-
-        foreach ($attributeVariantCollection as $idProductConcrete => $productSuperAttributes) {
-            if (!$this->isSubsetAttributes($selectedAttributes, $productSuperAttributes)) {
-                continue;
-            }
-
-            $availableAttributes = $this->filterAvailableAttributes(
-                $productSuperAttributes,
-                $selectedAttributes,
-                $availableAttributes
-            );
-        }
-
-        return $availableAttributes;
-    }
-
-    /**
      * @param array $selectedAttributes
-     * @param array $attributeVariantCollection
+     * @param array $attributeVariantMap
      *
      * @return array
      */
-    protected function buildAttributeMapByAttributeVariantCollection(
-        array $selectedAttributes,
-        array $attributeVariantCollection
-    ): array {
-        foreach ($attributeVariantCollection as $idProductConcrete => $productSuperAttributes) {
+    protected function getVariantNodeByAttributeVariantMap(array $selectedAttributes, array $attributeVariantMap): array
+    {
+        foreach ($attributeVariantMap as $idProductConcrete => $productSuperAttributes) {
             if ($selectedAttributes != $productSuperAttributes) {
                 continue;
             }
@@ -391,60 +339,5 @@ class ProductVariantExpander implements ProductVariantExpanderInterface
         }
 
         return [];
-    }
-
-    /**
-     * @param array $superAttributes
-     * @param array $superAttributeHaystack
-     *
-     * @return bool
-     */
-    protected function isSubsetAttributes(array $superAttributes, array $superAttributeHaystack): bool
-    {
-        foreach ($superAttributes as $superAttributeKey => $superAttributeValue) {
-            if (!$this->includeSameAttribute($superAttributeHaystack, $superAttributeKey, $superAttributeValue)) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    /**
-     * @param array $superAttributeHaystack
-     * @param string $superAttributeKey
-     * @param string $superAttributeValue
-     *
-     * @return bool
-     */
-    protected function includeSameAttribute(
-        array $superAttributeHaystack,
-        string $superAttributeKey,
-        string $superAttributeValue
-    ): bool {
-        return isset($superAttributeHaystack[$superAttributeKey]) && $superAttributeHaystack[$superAttributeKey] === $superAttributeValue;
-    }
-
-    /**
-     * @param array $superAttributes
-     * @param array $selectedAttributes
-     * @param array $availableAttributes
-     *
-     * @return array
-     */
-    protected function filterAvailableAttributes(
-        array $superAttributes,
-        array $selectedAttributes,
-        array $availableAttributes
-    ): array {
-        foreach (array_diff_assoc($superAttributes, $selectedAttributes) as $attributeKey => $attributeValue) {
-            if (isset($availableAttributes[$attributeKey]) && in_array($attributeValue, $availableAttributes[$attributeKey])) {
-                continue;
-            }
-
-            $availableAttributes[$attributeKey][] = $attributeValue;
-        }
-
-        return $availableAttributes;
     }
 }

@@ -61,9 +61,9 @@ interface ProductStorageFacadeInterface
 
     /**
      * Specification:
-     * - Expands the provided `ProductAbstractStorage` transfer object.
+     * - Expands the provided `ProductAbstractStorage` with an attribute variant map.
      * - Expects `ProductAbstractStorage.attributeMap.productConcreteIds` to be provided.
-     * - Populates `ProductAbstractStorage.attributeMap.attributeVariantCollection` using provided product concretes.
+     * - Populates `ProductAbstractStorage.attributeMap.attributeVariantMap` using provided product concretes.
      *
      * @api
      *
@@ -71,7 +71,7 @@ interface ProductStorageFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductAbstractStorageTransfer
      */
-    public function expandWithAttributeVariantCollection(
+    public function expandWithAttributeVariantMap(
         ProductAbstractStorageTransfer $productAbstractStorageTransfer
     ): ProductAbstractStorageTransfer;
 }

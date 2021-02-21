@@ -8,36 +8,31 @@
 namespace Spryker\Zed\ProductStorage\Business\Expander;
 
 use Generated\Shared\Transfer\ProductAbstractStorageTransfer;
-use Spryker\Zed\ProductStorage\Dependency\Facade\ProductStorageToProductInterface;
+use Spryker\Zed\ProductStorage\Business\Generator\AttributeVariantMapGeneratorInterface;
 use Spryker\Zed\ProductStorage\Persistence\ProductStorageRepositoryInterface;
 
 class ProductAbstractStorageExpander implements ProductAbstractStorageExpanderInterface
 {
-    /**
-     * @var array|null
-     */
-    protected static $superAttributesCache;
-
-    /**
-     * @var \Spryker\Zed\ProductStorage\Dependency\Facade\ProductStorageToProductInterface
-     */
-    protected $productFacade;
-
     /**
      * @var \Spryker\Zed\ProductStorage\Persistence\ProductStorageRepositoryInterface
      */
     protected $productStorageRepository;
 
     /**
-     * @param \Spryker\Zed\ProductStorage\Dependency\Facade\ProductStorageToProductInterface $productFacade
+     * @var \Spryker\Zed\ProductStorage\Business\Generator\AttributeVariantMapGeneratorInterface
+     */
+    protected $attributeVariantMapGenerator;
+
+    /**
      * @param \Spryker\Zed\ProductStorage\Persistence\ProductStorageRepositoryInterface $productStorageRepository
+     * @param \Spryker\Zed\ProductStorage\Business\Generator\AttributeVariantMapGeneratorInterface $attributeVariantMapGenerator
      */
     public function __construct(
-        ProductStorageToProductInterface $productFacade,
-        ProductStorageRepositoryInterface $productStorageRepository
+        ProductStorageRepositoryInterface $productStorageRepository,
+        AttributeVariantMapGeneratorInterface $attributeVariantMapGenerator
     ) {
-        $this->productFacade = $productFacade;
         $this->productStorageRepository = $productStorageRepository;
+        $this->attributeVariantMapGenerator = $attributeVariantMapGenerator;
     }
 
     /**
@@ -45,7 +40,7 @@ class ProductAbstractStorageExpander implements ProductAbstractStorageExpanderIn
      *
      * @return \Generated\Shared\Transfer\ProductAbstractStorageTransfer
      */
-    public function expandWithAttributeVariantCollection(
+    public function expandWithAttributeVariantMap(
         ProductAbstractStorageTransfer $productAbstractStorageTransfer
     ): ProductAbstractStorageTransfer {
         $attributeMapStorageTransfer = $productAbstractStorageTransfer->getAttributeMap();
@@ -54,123 +49,12 @@ class ProductAbstractStorageExpander implements ProductAbstractStorageExpanderIn
             return $productAbstractStorageTransfer;
         }
 
-        $productAttributes = $this->productStorageRepository
+        $productAttributeMapByIdProduct = $this->productStorageRepository
             ->getMappedProductAttributes($attributeMapStorageTransfer->getProductConcreteIds());
 
-        $attributeVariantCollection = $this->generateAttributeVariantCollection($productAttributes);
-        $productAbstractStorageTransfer->getAttributeMap()->setAttributeVariantCollection($attributeVariantCollection);
+        $attributeVariantMap = $this->attributeVariantMapGenerator->generateAttributeVariantMap($productAttributeMapByIdProduct);
+        $productAbstractStorageTransfer->getAttributeMap()->setAttributeVariantMap($attributeVariantMap);
 
         return $productAbstractStorageTransfer;
-    }
-
-    /**
-     * @param array $productAttributes
-     *
-     * @return array
-     */
-    protected function generateAttributeVariantCollection(array $productAttributes): array
-    {
-        $productAttributes = $this->decodeProductAttributes($productAttributes);
-        $superAttributes = $this->getSuperAttributes($productAttributes);
-
-        if (count($superAttributes) < 1) {
-            return [];
-        }
-
-        return $this->mapAttributeVariantCollection($productAttributes, $superAttributes);
-    }
-
-    /**
-     * @param array $productAttributes
-     * @param array $superAttributes
-     *
-     * @return array
-     */
-    protected function mapAttributeVariantCollection(array $productAttributes, array $superAttributes): array
-    {
-        $attributeVariantCollection = [];
-
-        foreach ($productAttributes as $idProductConcrete => $productAttribute) {
-            foreach ($productAttribute as $key => $value) {
-                if (!isset($superAttributes[$key])) {
-                    continue;
-                }
-
-                $attributeVariantCollection[$idProductConcrete][$key] = $value;
-            }
-        }
-
-        return $attributeVariantCollection;
-    }
-
-    /**
-     * @param array $productAttributes
-     *
-     * @return array
-     */
-    protected function decodeProductAttributes(array $productAttributes): array
-    {
-        $decodedProductAttributes = [];
-
-        foreach ($productAttributes as $idProductConcrete => $productAttribute) {
-            $decodedProductAttributes[$idProductConcrete] = $this->productFacade
-                ->decodeProductAttributes($productAttribute);
-        }
-
-        return $decodedProductAttributes;
-    }
-
-    /**
-     * @param array $productAttributes
-     *
-     * @return array
-     */
-    protected function getSuperAttributes(array $productAttributes): array
-    {
-        $uniqueAttributeKeys = $this->filterUniqueAttributeKeys($productAttributes);
-
-        if (static::$superAttributesCache === null) {
-            $superAttributeList = $this->productStorageRepository->getProductAttributeKeys();
-
-            static::$superAttributesCache = array_flip($superAttributeList);
-        }
-
-        $superAttributes = $this->filterSuperAttributes(array_keys($uniqueAttributeKeys));
-        $superAttributes = array_flip($superAttributes);
-
-        return $superAttributes;
-    }
-
-    /**
-     * @param array $productAttributes
-     *
-     * @return array
-     */
-    protected function filterSuperAttributes(array $productAttributes): array
-    {
-        return array_filter($productAttributes, function (string $attribute) {
-            return isset(static::$superAttributesCache[$attribute]);
-        });
-    }
-
-    /**
-     * @param array $productAttributes
-     *
-     * @return array
-     */
-    protected function filterUniqueAttributeKeys(array $productAttributes)
-    {
-        $uniqueAttributes = [];
-        foreach ($productAttributes as $attributes) {
-            foreach (array_keys($attributes) as $key) {
-                if (isset($uniqueAttributes[$key])) {
-                    continue;
-                }
-
-                $uniqueAttributes[$key] = true;
-            }
-        }
-
-        return $uniqueAttributes;
     }
 }

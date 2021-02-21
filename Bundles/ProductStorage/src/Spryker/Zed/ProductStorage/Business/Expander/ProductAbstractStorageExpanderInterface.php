@@ -16,7 +16,7 @@ interface ProductAbstractStorageExpanderInterface
      *
      * @return \Generated\Shared\Transfer\ProductAbstractStorageTransfer
      */
-    public function expandWithAttributeVariantCollection(
+    public function expandWithAttributeVariantMap(
         ProductAbstractStorageTransfer $productAbstractStorageTransfer
     ): ProductAbstractStorageTransfer;
 }

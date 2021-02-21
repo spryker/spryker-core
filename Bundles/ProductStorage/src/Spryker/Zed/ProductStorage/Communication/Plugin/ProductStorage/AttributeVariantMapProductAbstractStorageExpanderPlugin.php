@@ -17,13 +17,13 @@ use Spryker\Zed\ProductStorageExtension\Dependency\Plugin\ProductAbstractStorage
  * @method \Spryker\Zed\ProductStorage\ProductStorageConfig getConfig()
  * @method \Spryker\Zed\ProductStorage\Persistence\ProductStorageQueryContainerInterface getQueryContainer()
  */
-class AttributeVariantCollectionProductAbstractStorageExpanderPlugin extends AbstractPlugin implements ProductAbstractStorageExpanderPluginInterface
+class AttributeVariantMapProductAbstractStorageExpanderPlugin extends AbstractPlugin implements ProductAbstractStorageExpanderPluginInterface
 {
     /**
      * {@inheritDoc}
-     * - Expands the provided `ProductAbstractStorage` transfer object.
+     * - Expands the provided `ProductAbstractStorage` with an attribute variant map.
      * - Expects `ProductAbstractStorage.attributeMap.productConcreteIds` to be provided.
-     * - Populates `ProductAbstractStorage.attributeMap.attributeVariantCollection` using provided product concretes.
+     * - Populates `ProductAbstractStorage.attributeMap.attributeVariantMap` using provided product concretes.
      *
      * @api
      *
@@ -33,6 +33,6 @@ class AttributeVariantCollectionProductAbstractStorageExpanderPlugin extends Abs
      */
     public function expand(ProductAbstractStorageTransfer $productAbstractStorageTransfer): ProductAbstractStorageTransfer
     {
-        return $this->getFacade()->expandWithAttributeVariantCollection($productAbstractStorageTransfer);
+        return $this->getFacade()->expandWithAttributeVariantMap($productAbstractStorageTransfer);
     }
 }

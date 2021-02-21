@@ -13,6 +13,8 @@ use Spryker\Zed\ProductStorage\Business\Expander\ProductAbstractStorageExpander;
 use Spryker\Zed\ProductStorage\Business\Expander\ProductAbstractStorageExpanderInterface;
 use Spryker\Zed\ProductStorage\Business\Filter\SingleValueSuperAttributeFilter;
 use Spryker\Zed\ProductStorage\Business\Filter\SingleValueSuperAttributeFilterInterface;
+use Spryker\Zed\ProductStorage\Business\Generator\AttributeVariantMapGenerator;
+use Spryker\Zed\ProductStorage\Business\Generator\AttributeVariantMapGeneratorInterface;
 use Spryker\Zed\ProductStorage\Business\Storage\ProductAbstractStorageWriter;
 use Spryker\Zed\ProductStorage\Business\Storage\ProductConcreteStorageWriter;
 use Spryker\Zed\ProductStorage\Dependency\Facade\ProductStorageToStoreFacadeInterface;
@@ -79,8 +81,19 @@ class ProductStorageBusinessFactory extends AbstractBusinessFactory
     public function createProductAbstractStorageExpander(): ProductAbstractStorageExpanderInterface
     {
         return new ProductAbstractStorageExpander(
-            $this->getProductFacade(),
-            $this->getRepository()
+            $this->getRepository(),
+            $this->createAttributeVariantMapGenerator()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductStorage\Business\Generator\AttributeVariantMapGeneratorInterface
+     */
+    public function createAttributeVariantMapGenerator(): AttributeVariantMapGeneratorInterface
+    {
+        return new AttributeVariantMapGenerator(
+            $this->getRepository(),
+            $this->getProductFacade()
         );
     }
 

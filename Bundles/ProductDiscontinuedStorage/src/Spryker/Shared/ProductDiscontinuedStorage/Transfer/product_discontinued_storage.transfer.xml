@@ -35,7 +35,7 @@
 
     <transfer name="AttributeMapStorage">
         <property name="superAttributes" type="array" singular="superAttributes"/>
-        <property name="attributeVariants" type="array" singular="attributeVariants" deprecated="Use attributeVariantCollection instead."/>
+        <property name="attributeVariants" type="array" singular="attributeVariants" deprecated="Use attributeVariantMap instead."/>
         <property name="productConcreteIds" type="array" singular="productConcreteIds"/>
     </transfer>
 

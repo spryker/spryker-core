@@ -81,11 +81,11 @@ class ProductStorageFacade extends AbstractFacade implements ProductStorageFacad
      *
      * @return \Generated\Shared\Transfer\ProductAbstractStorageTransfer
      */
-    public function expandWithAttributeVariantCollection(
+    public function expandWithAttributeVariantMap(
         ProductAbstractStorageTransfer $productAbstractStorageTransfer
     ): ProductAbstractStorageTransfer {
         return $this->getFactory()
             ->createProductAbstractStorageExpander()
-            ->expandWithAttributeVariantCollection($productAbstractStorageTransfer);
+            ->expandWithAttributeVariantMap($productAbstractStorageTransfer);
     }
 }

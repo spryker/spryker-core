@@ -15,6 +15,8 @@ use Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToUtilEncodin
 use Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToUtilSanitizeServiceInterface;
 use Spryker\Client\ProductStorage\Filter\ProductAbstractAttributeMapRestrictionFilter;
 use Spryker\Client\ProductStorage\Filter\ProductAbstractAttributeMapRestrictionFilterInterface;
+use Spryker\Client\ProductStorage\Filter\ProductAttributeFilter;
+use Spryker\Client\ProductStorage\Filter\ProductAttributeFilterInterface;
 use Spryker\Client\ProductStorage\Finder\ProductAbstractViewTransferFinder;
 use Spryker\Client\ProductStorage\Finder\ProductConcreteViewTransferFinder;
 use Spryker\Client\ProductStorage\Finder\ProductViewTransferFinderInterface;
@@ -150,6 +152,16 @@ class ProductStorageFactory extends AbstractFactory
     {
         return new ProductVariantExpander(
             $this->createProductConcreteStorageReader(),
+            $this->createProductAttributeFilter()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\ProductStorage\Filter\ProductAttributeFilterInterface
+     */
+    public function createProductAttributeFilter(): ProductAttributeFilterInterface
+    {
+        return new ProductAttributeFilter(
             $this->getUtilSanitizeService()
         );
     }

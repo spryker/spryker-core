@@ -78,7 +78,7 @@ class ProductStorageConfig extends AbstractBundleConfig
 
     /**
      * Specification:
-     * - Determines if an attribute map should be filled with `ProductAbstractStorage.attributeMap.attributeVariant`.
+     * - Determines if an attribute map of abstract product should be filled `ProductAbstractStorage.attributeMap.attributeVariants`.
      *
      * @api
      *
