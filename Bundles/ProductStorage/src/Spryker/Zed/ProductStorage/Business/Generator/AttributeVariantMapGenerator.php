@@ -161,7 +161,7 @@ class AttributeVariantMapGenerator implements AttributeVariantMapGeneratorInterf
      * @param array $uniqueAttributes
      * @param array $attributes
      *
-     * @return array<string, bool>
+     * @return array
      */
     protected function filterUniqueAttributeKeys(array $uniqueAttributes, array $attributes): array
     {
