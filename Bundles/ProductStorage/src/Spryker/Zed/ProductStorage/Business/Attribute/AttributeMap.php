@@ -142,9 +142,9 @@ class AttributeMap implements AttributeMapInterface
 
         $attributeVariants = [];
 
-//        if ($this->productStorageConfig->isAttributeVariantsMapEnabled()) {
+        if ($this->productStorageConfig->isAttributeVariantsMapEnabled()) {
             $attributeVariants = $this->buildProductVariants($productConcreteSuperAttributes);
-//        }
+        }
 
         return $this->createAttributeMapStorageTransfer(
             $concreteProductIds,
