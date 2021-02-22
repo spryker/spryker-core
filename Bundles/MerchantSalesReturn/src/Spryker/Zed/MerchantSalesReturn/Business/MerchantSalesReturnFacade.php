@@ -19,6 +19,10 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class MerchantSalesReturnFacade extends AbstractFacade implements MerchantSalesReturnFacadeInterface
 {
     /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
      *
      * @return \Generated\Shared\Transfer\ReturnTransfer
@@ -31,6 +35,10 @@ class MerchantSalesReturnFacade extends AbstractFacade implements MerchantSalesR
     }
 
     /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ReturnCreateRequestTransfer $returnCreateRequestTransfer
      * @param \ArrayObject $itemTransfers
      *

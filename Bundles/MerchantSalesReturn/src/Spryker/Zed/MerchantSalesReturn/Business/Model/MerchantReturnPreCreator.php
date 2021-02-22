@@ -7,10 +7,11 @@
 
 namespace Spryker\Zed\MerchantSalesReturn\Business\Model;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Generated\Shared\Transfer\ReturnTransfer;
-use ArrayObject;
+use Spryker\Zed\MerchantSalesReturn\Business\Exception\NotFoundException;
 use Spryker\Zed\MerchantSalesReturn\Dependency\Facade\MerchantSalesReturnToSalesFacadeInterface;
 
 class MerchantReturnPreCreator implements MerchantReturnPreCreatorInterface
@@ -39,7 +40,6 @@ class MerchantReturnPreCreator implements MerchantReturnPreCreatorInterface
             ->requireReturnItems()
             ->getReturnItems();
 
-
         $firstOrderItemTransfer = $this->getFirstOrderItem($returnItemTransfers);
 
         $merchantReference = $firstOrderItemTransfer
@@ -53,8 +53,9 @@ class MerchantReturnPreCreator implements MerchantReturnPreCreatorInterface
     /**
      * @param \ArrayObject $returnItemTransfers
      *
+     * @throws \Spryker\Zed\MerchantSalesReturn\Business\Exception\NotFoundException
+     *
      * @return \Generated\Shared\Transfer\ItemTransfer
-     * @throws \Exception
      */
     public function getFirstOrderItem(ArrayObject $returnItemTransfers): ItemTransfer
     {
@@ -72,6 +73,6 @@ class MerchantReturnPreCreator implements MerchantReturnPreCreatorInterface
             }
         }
 
-        throw new \Exception();
+        throw new NotFoundException();
     }
 }

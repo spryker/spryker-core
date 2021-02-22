@@ -30,7 +30,7 @@ class MerchantReturnValidator implements MerchantReturnValidatorInterface
         $currentMerchantReference = null;
         foreach ($itemTransfers as $itemTransfer) {
             if ($currentMerchantReference && $itemTransfer->getMerchantReference() !== $currentMerchantReference) {
-                $this->addErrorMessageToResponse('', $returnResponseTransfer);
+                return $this->addErrorMessageToResponse('', $returnResponseTransfer);
             }
 
             $currentMerchantReference = $itemTransfer->getMerchantReference();
@@ -43,15 +43,19 @@ class MerchantReturnValidator implements MerchantReturnValidatorInterface
      * @param string $message
      * @param \Generated\Shared\Transfer\ReturnResponseTransfer $returnResponseTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ReturnResponseTransfer
      */
-    protected function addErrorMessageToResponse(string $message, ReturnResponseTransfer $returnResponseTransfer): void
-    {
+    protected function addErrorMessageToResponse(
+        string $message,
+        ReturnResponseTransfer $returnResponseTransfer
+    ): ReturnResponseTransfer {
         $messageTransfer = (new MessageTransfer())
             ->setValue($message);
 
         $returnResponseTransfer
             ->setIsSuccessful(false)
             ->addMessage($messageTransfer);
+
+        return $returnResponseTransfer;
     }
 }
