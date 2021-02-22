@@ -44,15 +44,18 @@ class QuoteItemUpdater implements QuoteItemUpdaterInterface
      * @param \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface $persistentCartFacade
      * @param \Spryker\Zed\CartsRestApi\Business\QuoteItem\QuoteItemReaderInterface $quoteItemReader
      * @param \Spryker\Zed\CartsRestApi\Business\PermissionChecker\QuotePermissionCheckerInterface $quotePermissionChecker
+     * @param \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteItemUpdateStrategyPluginInterface[] $quoteItemUpdateStrategyPlugins
      */
     public function __construct(
         CartsRestApiToPersistentCartFacadeInterface $persistentCartFacade,
         QuoteItemReaderInterface $quoteItemReader,
-        QuotePermissionCheckerInterface $quotePermissionChecker
+        QuotePermissionCheckerInterface $quotePermissionChecker,
+        array $quoteItemUpdateStrategyPlugins
     ) {
         $this->persistentCartFacade = $persistentCartFacade;
         $this->quoteItemReader = $quoteItemReader;
         $this->quotePermissionChecker = $quotePermissionChecker;
+        $this->quoteItemUpdateStrategyPlugins = $quoteItemUpdateStrategyPlugins;
     }
 
     /**

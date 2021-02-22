@@ -6,6 +6,9 @@
   "require": {
     "php": ">=7.3"
   },
+  "require-dev": {
+    "spryker/code-sniffer": "*"
+  },
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"

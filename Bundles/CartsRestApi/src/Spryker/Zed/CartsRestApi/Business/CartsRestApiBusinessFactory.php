@@ -198,7 +198,8 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
         return new QuoteItemUpdater(
             $this->getPersistentCartFacade(),
             $this->createQuoteItemReader(),
-            $this->createQuotePermissionChecker()
+            $this->createQuotePermissionChecker(),
+            $this->getQuoteItemUpdateStrategyPlugins()
         );
     }
 
@@ -304,5 +305,13 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
     public function getQuoteItemReadValidatorPlugins(): array
     {
         return $this->getProvidedDependency(CartsRestApiDependencyProvider::PLUGINS_QUOTE_ITEM_READ_VALIDATOR);
+    }
+
+    /**
+     * @return \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteItemUpdateStrategyPluginInterface[]
+     */
+    protected function getQuoteItemUpdateStrategyPlugins(): array
+    {
+        return $this->getProvidedDependency(CartsRestApiDependencyProvider::PLUGINS_QUOTE_ITEM_UPDATE_STRATEGY);
     }
 }
