@@ -46,6 +46,12 @@ class ItemComparator implements ItemComparatorInterface
                 );
             }
 
+            if (!$cartItemRequestTransfer->offsetExists($fieldName)) {
+                throw new TransferPropertyNotFoundException(
+                    sprintf('The property "%s" can\'t be found in CartItemRequestTransfer.', $fieldName)
+                );
+            }
+
             if ($cartItemRequestTransfer[$fieldName] !== $itemTransfer[$fieldName]) {
                 return false;
             }

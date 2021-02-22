@@ -53,6 +53,7 @@ class ProductConfigurationVolumePriceCartItemProductConfigurationMapperPluginTes
             ->withVolumePrice()
             ->withAnotherVolumePrice()
             ->build();
+
         $restCartItemProductConfigurationInstanceAttributesTransfer = (new RestCartItemProductConfigurationInstanceAttributesBuilder([
             RestCartItemProductConfigurationInstanceAttributesTransfer::PRICES => [$restProductConfigurationPriceAttributesTransfer->toArray()],
         ]))->build();
@@ -62,6 +63,7 @@ class ProductConfigurationVolumePriceCartItemProductConfigurationMapperPluginTes
                 MoneyValueTransfer::CURRENCY => (new CurrencyBuilder([CurrencyTransfer::NAME => static::CURRENCY_NAME]))->build()->toArray(),
             ])
             ->build();
+
         $productConfigurationInstanceTransfer = (new ProductConfigurationInstanceBuilder([
             ProductConfigurationInstanceTransfer::PRICES => [$priceProductTransfer->toArray()],
         ]))->build();

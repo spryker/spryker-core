@@ -39,6 +39,7 @@ class ProductConfigurationCartItemExpanderPluginTest extends Unit
             RestCartItemsAttributesTransfer::GROUP_KEY => static::TEST_SKU,
         ]))->withProductConfigurationInstance()
             ->build();
+
         $cartItemRequestTransfer = (new CartItemRequestBuilder([
             CartItemRequestTransfer::SKU => static::TEST_SKU,
             CartItemRequestTransfer::GROUP_KEY => static::TEST_SKU,

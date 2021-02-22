@@ -40,6 +40,7 @@ class ProductConfigurationRestCartItemsAttributesMapperPluginTest extends Unit
             CartItemRequestTransfer::GROUP_KEY => static::TEST_SKU,
         ]))->withProductConfigurationInstance()
             ->build();
+
         $restItemsAttributesTransfer = (new RestItemsAttributesBuilder([
             RestCartItemsAttributesTransfer::SKU => static::TEST_SKU,
             RestCartItemsAttributesTransfer::GROUP_KEY => static::TEST_SKU,

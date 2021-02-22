@@ -33,6 +33,7 @@ class ProductConfigurationRestOrderItemsAttributesMapperPluginTest extends Unit
         $itemTransfer = (new ItemBuilder())
             ->withProductConfigurationInstance()
             ->build();
+
         $restOrderItemsAttributesTransfer = (new RestOrderItemsAttributesBuilder())->build();
 
         $productConfigurationRestOrderItemsAttributesMapperPlugin = new ProductConfigurationRestOrderItemsAttributesMapperPlugin();

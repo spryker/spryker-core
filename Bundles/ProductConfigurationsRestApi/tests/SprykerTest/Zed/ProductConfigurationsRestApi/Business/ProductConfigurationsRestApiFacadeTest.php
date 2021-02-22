@@ -75,7 +75,7 @@ class ProductConfigurationsRestApiFacadeTest extends Unit
      *
      * @return void
      */
-    public function testUpdateQuoteItem(): void
+    public function testUpdateQuoteItemWillUpdateQuoteItemQuantity(): void
     {
         // Arrange
         $originalQuantity = 5;
@@ -107,6 +107,52 @@ class ProductConfigurationsRestApiFacadeTest extends Unit
         $this->assertTrue($quoteResponseTransfer->getIsSuccessful());
         $this->assertCount(1, $quoteResponseTransfer->getQuoteTransfer()->getItems());
         $this->assertEquals($newQuantity, $quoteResponseTransfer->getQuoteTransfer()->getItems()->offsetGet(0)->getQuantity());
+    }
+
+    /**
+     * @retrun void
+     *
+     * @return void
+     */
+    public function testUpdateQuoteItemWillUpdateProductConfigurationInstance(): void
+    {
+        // Arrange
+        $quoteTransfer = $this->tester->havePersistentQuote([
+            QuoteTransfer::CUSTOMER => $this->tester->haveCustomer(),
+            QuoteTransfer::STORE => [StoreTransfer::NAME => 'DE'],
+            QuoteTransfer::ITEMS => [
+                [
+                    ItemTransfer::SKU => static::TEST_ITEM_SKU,
+                    ItemTransfer::GROUP_KEY => static::TEST_ITEM_SKU,
+                    ItemTransfer::QUANTITY => 1,
+                    ItemTransfer::PRODUCT_CONFIGURATION_INSTANCE => (new ProductConfigurationInstanceBuilder())->build()->toArray(),
+                ],
+            ],
+        ]);
+
+        $productConfigurationInstanceTransfer = (new ProductConfigurationInstanceBuilder())->build();
+        $cartItemRequestTransfer = (new CartItemRequestBuilder([
+            CartItemRequestTransfer::SKU => static::TEST_ITEM_SKU,
+            CartItemRequestTransfer::GROUP_KEY => static::TEST_ITEM_SKU,
+            CartItemRequestTransfer::QUANTITY => 1,
+            CartItemRequestTransfer::PRODUCT_CONFIGURATION_INSTANCE => $productConfigurationInstanceTransfer->toArray(),
+        ]))->build();
+
+        $quoteResponseTransfer = (new QuoteResponseTransfer())
+            ->setCustomer($quoteTransfer->getCustomer())
+            ->setQuoteTransfer($quoteTransfer);
+
+        // Act
+        $quoteResponseTransfer = $this->tester->getFacade()->updateQuoteItem($cartItemRequestTransfer, $quoteResponseTransfer);
+
+        // Assert
+        $this->assertTrue($quoteResponseTransfer->getIsSuccessful());
+        $this->assertCount(1, $quoteResponseTransfer->getQuoteTransfer()->getItems());
+        $this->assertNotNull($quoteResponseTransfer->getQuoteTransfer()->getItems()->offsetGet(0)->getProductConfigurationInstance());
+        $this->assertEqualsCanonicalizing(
+            $productConfigurationInstanceTransfer->toArray(),
+            $quoteResponseTransfer->getQuoteTransfer()->getItems()->offsetGet(0)->getProductConfigurationInstance()->toArray()
+        );
     }
 
     /**
