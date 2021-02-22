@@ -71,8 +71,6 @@ class ProductConfigurationsRestApiFacadeTest extends Unit
     }
 
     /**
-     * @retrun void
-     *
      * @return void
      */
     public function testUpdateQuoteItemWillUpdateQuoteItemQuantity(): void
@@ -110,8 +108,6 @@ class ProductConfigurationsRestApiFacadeTest extends Unit
     }
 
     /**
-     * @retrun void
-     *
      * @return void
      */
     public function testUpdateQuoteItemWillUpdateProductConfigurationInstance(): void

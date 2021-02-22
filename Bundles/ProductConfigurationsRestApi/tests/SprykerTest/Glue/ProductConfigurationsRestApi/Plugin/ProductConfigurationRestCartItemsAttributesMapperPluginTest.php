@@ -44,13 +44,12 @@ class ProductConfigurationRestCartItemsAttributesMapperPluginTest extends Unit
         $restItemsAttributesTransfer = (new RestItemsAttributesBuilder([
             RestCartItemsAttributesTransfer::SKU => static::TEST_SKU,
             RestCartItemsAttributesTransfer::GROUP_KEY => static::TEST_SKU,
-        ]))->withProductConfigurationInstance()
-            ->build();
+        ]))->build();
 
         $productConfigurationCartItemExpanderPlugin = new ProductConfigurationRestCartItemsAttributesMapperPlugin();
 
         // Act
-        $itemTransfer = $productConfigurationCartItemExpanderPlugin->mapItemTransferToRestItemsAttributesTransfer(
+        $restItemsAttributesTransfer = $productConfigurationCartItemExpanderPlugin->mapItemTransferToRestItemsAttributesTransfer(
             $itemTransfer,
             $restItemsAttributesTransfer,
             static::TEST_LOCALE
