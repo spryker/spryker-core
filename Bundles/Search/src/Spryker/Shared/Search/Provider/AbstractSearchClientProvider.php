@@ -77,7 +77,7 @@ abstract class AbstractSearchClientProvider extends AbstractClientProvider
 
         if ($authHeader !== '') {
             $config['headers'] = [
-                'Authorization' => 'Basic ' . Config::get(SearchConstants::ELASTICA_PARAMETER__AUTH_HEADER),
+                'Authorization' => 'Basic ' . $authHeader,
             ];
         }
 

@@ -302,8 +302,8 @@ class ProductReviewTable extends AbstractTable
             Url::generate('/customer/view', [
                 'id-customer' => $productReviewEntity->getVirtualColumn(ProductReviewTableConstants::COL_PRODUCT_REVIEW_GUI_ID_CUSTOMER),
             ]),
-            $productReviewEntity->getVirtualColumn(ProductReviewTableConstants::COL_PRODUCT_REVIEW_GUI_FIRST_NAME),
-            $productReviewEntity->getVirtualColumn(ProductReviewTableConstants::COL_PRODUCT_REVIEW_GUI_LAST_NAME)
+            $this->utilSanitizeService->escapeHtml($productReviewEntity->getVirtualColumn(ProductReviewTableConstants::COL_PRODUCT_REVIEW_GUI_FIRST_NAME)),
+            $this->utilSanitizeService->escapeHtml($productReviewEntity->getVirtualColumn(ProductReviewTableConstants::COL_PRODUCT_REVIEW_GUI_LAST_NAME))
         );
     }
 
@@ -319,7 +319,7 @@ class ProductReviewTable extends AbstractTable
             Url::generate('/product-management/view', [
                 'id-product-abstract' => $productReviewEntity->getFkProductAbstract(),
             ]),
-            $productReviewEntity->getVirtualColumn(ProductReviewTableConstants::COL_PRODUCT_NAME)
+            $this->utilSanitizeService->escapeHtml($productReviewEntity->getVirtualColumn(ProductReviewTableConstants::COL_PRODUCT_NAME))
         );
     }
 
