@@ -20,10 +20,113 @@
     </transfer>
 
     <transfer name="ProductConfigurationInstance">
+        <property name="prices" type="PriceProduct[]" singular="price"/>
+    </transfer>
+
+    <transfer name="RestCartItemProductConfigurationInstanceAttributes">
+        <property name="displayData" type="string"/>
+        <property name="configuration" type="string"/>
+        <property name="configuratorKey" type="string"/>
+        <property name="isComplete" type="bool"/>
+        <property name="quantity" type="int"/>
+        <property name="availableQuantity" type="int"/>
+        <property name="prices" type="RestProductConfigurationPriceAttributes[]" singular="price"/>
+    </transfer>
+
+    <transfer name="RestProductConfigurationPriceAttributes">
+        <property name="priceTypeName" type="string"/>
+        <property name="netAmount" type="int"/>
+        <property name="grossAmount" type="int"/>
+        <property name="currency" type="RestCurrency"/>
+        <property name="volumeQuantity" type="int"/>
+        <property name="volumePrices" type="RestProductPriceVolumesAttributes[]" singular="volumePrice"/>
+    </transfer>
+
+    <transfer name="RestProductPriceVolumesAttributes">
+        <property name="netAmount" type="int"/>
+        <property name="grossAmount" type="int"/>
+        <property name="quantity" type="int"/>
+    </transfer>
+
+    <transfer name="RestCurrency">
+        <property name="code" type="string"/>
+        <property name="name" type="string"/>
+        <property name="symbol" type="string"/>
+    </transfer>
+
+    <transfer name="CartItemRequest">
+        <property name="sku" type="string"/>
+        <property name="groupKey" type="string"/>
+        <property name="productConfigurationInstance" type="ProductConfigurationInstance"/>
+    </transfer>
+
+    <transfer name="RestCartItemsAttributes">
+        <property name="sku" type="string"/>
+        <property name="productConfigurationInstance" type="RestCartItemProductConfigurationInstanceAttributes" restRequestParameter="yes"/>
+    </transfer>
+
+    <transfer name="RestItemsAttributes">
+        <property name="productConfigurationInstance" type="RestCartItemProductConfigurationInstanceAttributes"/>
     </transfer>
 
     <transfer name="Item">
+        <property name="sku" type="string"/>
+        <property name="groupKey" type="string"/>
         <property name="productConfigurationInstance" type="ProductConfigurationInstance"/>
+    </transfer>
+
+    <transfer name="PersistentCartChange">
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="QuoteResponse">
+        <property name="quoteTransfer" type="Quote"/>
+        <property name="errors" type="QuoteError[]" singular="error"/>
+    </transfer>
+
+    <transfer name="QuoteError">
+        <property name="errorIdentifier" type="string"/>
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="idQuote" type="int"/>
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="customer" type="Customer"/>
+    </transfer>
+
+    <transfer name="PersistentItemReplace">
+        <property name="idQuote" type="int"/>
+        <property name="quote" type="Quote"/>
+        <property name="itemToBeReplaced" type="Item"/>
+        <property name="newItem" type="Item"/>
+        <property name="customer" type="Customer"/>
+    </transfer>
+
+    <transfer name="Customer">
+    </transfer>
+
+    <transfer name="PriceProduct">
+        <property name="moneyValue" type="MoneyValue"/>
+        <property name="priceTypeName" type="string"/>
+        <property name="groupKey" type="string"/>
+        <property name="priceDimension" type="PriceProductDimension"/>
+        <property name="volumeQuantity" type="int"/>
+        <property name="isMergeable" type="bool"/>
+    </transfer>
+
+    <transfer name="MoneyValue">
+        <property name="currency" type="Currency"/>
+        <property name="netAmount" type="int"/>
+        <property name="grossAmount" type="int"/>
+        <property name="priceData" type="string"/>
+    </transfer>
+
+    <transfer name="Currency">
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="PriceProductDimension">
+        <property name="productConfigurationInstanceHash" type="string"/>
     </transfer>
 
 </transfers>

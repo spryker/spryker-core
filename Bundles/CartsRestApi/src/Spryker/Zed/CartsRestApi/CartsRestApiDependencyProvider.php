@@ -34,6 +34,7 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_QUOTE_COLLECTION_EXPANDER = 'PLUGINS_QUOTE_COLLECTION_EXPANDER';
     public const PLUGINS_QUOTE_EXPANDER = 'PLUGINS_QUOTE_EXPANDER';
     public const PLUGINS_QUOTE_ITEM_READ_VALIDATOR = 'PLUGINS_QUOTE_ITEM_READ_VALIDATOR';
+    public const PLUGINS_QUOTE_ITEM_UPDATE_STRATEGY = 'PLUGINS_QUOTE_ITEM_UPDATE_STRATEGY';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -52,6 +53,7 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addQuoteExpanderPlugins($container);
         $container = $this->addCartItemMapperPlugins($container);
         $container = $this->addQuoteItemReadValidatorPlugins($container);
+        $container = $this->addQuoteItemUpdateStrategyPlugins($container);
 
         return $container;
     }
@@ -245,6 +247,28 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteItemReadValidatorPluginInterface[]
      */
     protected function getQuoteItemReadValidatorPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addQuoteItemUpdateStrategyPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_QUOTE_ITEM_UPDATE_STRATEGY, function () {
+            return $this->getQuoteItemUpdateStrategyPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteItemUpdateStrategyPluginInterface[]
+     */
+    protected function getQuoteItemUpdateStrategyPlugins(): array
     {
         return [];
     }

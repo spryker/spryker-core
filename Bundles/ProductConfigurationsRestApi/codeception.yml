@@ -1,6 +1,7 @@
 namespace: ProductConfigurationsRestApi
 include:
     - tests/SprykerTest/Glue/ProductConfigurationsRestApi
+    - tests/SprykerTest/Zed/ProductConfigurationsRestApi
 paths:
     tests: tests
     log: tests/_output
