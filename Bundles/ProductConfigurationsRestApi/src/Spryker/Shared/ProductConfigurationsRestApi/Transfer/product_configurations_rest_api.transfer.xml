@@ -15,6 +15,10 @@
         <property name="isComplete" type="bool"/>
     </transfer>
 
+    <transfer name="RestOrderItemsAttributes">
+        <property name="salesOrderItemConfiguration" type="RestProductConfigurationInstanceAttributes"/>
+    </transfer>
+
     <transfer name="ProductConfigurationInstance">
         <property name="prices" type="PriceProduct[]" singular="price"/>
     </transfer>

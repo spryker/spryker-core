@@ -21,6 +21,8 @@ use Spryker\Glue\ProductConfigurationsRestApi\Processor\Mapper\ProductConfigurat
 use Spryker\Glue\ProductConfigurationsRestApi\Processor\Mapper\ProductConfigurationInstancePriceMapperInterface;
 use Spryker\Glue\ProductConfigurationsRestApi\Processor\Mapper\ProductConfigurationPriceProductVolumeMapper;
 use Spryker\Glue\ProductConfigurationsRestApi\Processor\Mapper\ProductConfigurationPriceProductVolumeMapperInterface;
+use Spryker\Glue\ProductConfigurationsRestApi\Processor\Mapper\ProductConfigurationRestOrderAttributesMapper;
+use Spryker\Glue\ProductConfigurationsRestApi\Processor\Mapper\ProductConfigurationRestOrderAttributesMapperInterface;
 use Spryker\Glue\ProductConfigurationsRestApi\Processor\Mapper\RestCartItemProductConfigurationPriceProductVolumeMapper;
 use Spryker\Glue\ProductConfigurationsRestApi\Processor\Mapper\RestCartItemProductConfigurationPriceProductVolumeMapperInterface;
 
@@ -32,6 +34,14 @@ class ProductConfigurationsRestApiFactory extends AbstractFactory
     public function createProductConfigurationProductConcreteExpander(): ProductConfigurationProductConcreteExpanderInterface
     {
         return new ProductConfigurationProductConcreteExpander($this->getProductConfigurationStorageClient());
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductConfigurationsRestApi\Processor\Mapper\ProductConfigurationRestOrderAttributesMapperInterface
+     */
+    public function createProductConfigurationRestOrderAttributesMapper(): ProductConfigurationRestOrderAttributesMapperInterface
+    {
+        return new ProductConfigurationRestOrderAttributesMapper();
     }
 
     /**
