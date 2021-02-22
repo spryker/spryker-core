@@ -15,7 +15,7 @@ interface ProductConfigurationsRestApiFacadeInterface
 {
     /**
      * Specification:
-     * - Maps `ProductConfigurationInstance` from `CartItemRequestTransfer` to `PersistentCartChangeTransfer`.
+     * - Maps `CartItemRequestTransfer.productConfigurationInstance` to according `PersistentCartChangeTransfer.item`.
      *
      * @api
      *

@@ -122,7 +122,7 @@ interface CartsRestApiFacadeInterface
      * - Updates cart item quantity.
      * - quoteUuid, CustomerTransfer.customerReference, sku and quantity must be set in the CartItemRequestTransfer.
      * - Checks user permission to update an item of shared cart if CartItemRequestTransfer.Customer.CompanyUserTransfer.idCompanyUser is set.
-     * - Uses `QuoteItemUpdateStrategyPluginInterface` plugins to update item quantity if any applicable plugin is provided.
+     * - Executes `QuoteItemUpdateStrategyPluginInterface` plugin stack to update item if any applicable plugin is provided.
      *
      * @api
      *

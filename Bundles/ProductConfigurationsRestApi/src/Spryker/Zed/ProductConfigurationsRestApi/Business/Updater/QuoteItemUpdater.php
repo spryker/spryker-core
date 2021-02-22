@@ -111,16 +111,4 @@ class QuoteItemUpdater implements QuoteItemUpdaterInterface
             ->setNewItem($newItemTransfer)
             ->setCustomer($quoteTransfer->getCustomerOrFail());
     }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param \Generated\Shared\Transfer\CartItemRequestTransfer $cartItemRequestTransfer
-     *
-     * @return bool
-     */
-    protected function isSameItem(ItemTransfer $itemTransfer, CartItemRequestTransfer $cartItemRequestTransfer): bool
-    {
-        return $itemTransfer->getSkuOrFail() === $cartItemRequestTransfer->getSkuOrFail()
-            && $itemTransfer->getGroupKeyOrFail() === $cartItemRequestTransfer->getGroupKeyOrFail();
-    }
 }

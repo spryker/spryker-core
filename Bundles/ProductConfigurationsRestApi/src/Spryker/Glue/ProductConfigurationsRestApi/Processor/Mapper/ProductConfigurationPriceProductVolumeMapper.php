@@ -22,7 +22,7 @@ class ProductConfigurationPriceProductVolumeMapper implements ProductConfigurati
      *
      * @return \Generated\Shared\Transfer\RestCartItemProductConfigurationInstanceAttributesTransfer
      */
-    public function mapProductConfigurationInstanceTransferToRestCartItemProductConfigurationInstanceAttributesTransfer(
+    public function mapProductConfigurationInstanceToRestCartItemProductConfigurationInstanceAttributes(
         ProductConfigurationInstanceTransfer $productConfigurationInstanceTransfer,
         RestCartItemProductConfigurationInstanceAttributesTransfer $restCartItemProductConfigurationInstanceAttributesTransfer
     ): RestCartItemProductConfigurationInstanceAttributesTransfer {
@@ -30,7 +30,7 @@ class ProductConfigurationPriceProductVolumeMapper implements ProductConfigurati
             return $restCartItemProductConfigurationInstanceAttributesTransfer;
         }
 
-        $volumePriceProductTransfers = $this->extractVolumePriceProductTransfersFromProductConfigurationPrices($productConfigurationInstanceTransfer->getPrices());
+        $volumePriceProductTransfers = $this->extractVolumePriceProductTransfers($productConfigurationInstanceTransfer->getPrices());
 
         $restProductConfigurationPriceAttributesTransfers = [];
         foreach ($productConfigurationInstanceTransfer->getPrices() as $priceProductTransfer) {
@@ -38,7 +38,7 @@ class ProductConfigurationPriceProductVolumeMapper implements ProductConfigurati
                 continue;
             }
 
-            $restProductConfigurationPriceAttributesTransferToMap = $this->extractRestProductConfigurationPriceAttributesTransferToMapVolumePrices(
+            $restProductConfigurationPriceAttributesTransferToMap = $this->extractRestProductConfigurationPriceAttributesTransfer(
                 $priceProductTransfer,
                 $restCartItemProductConfigurationInstanceAttributesTransfer->getPrices()
             );
@@ -106,7 +106,7 @@ class ProductConfigurationPriceProductVolumeMapper implements ProductConfigurati
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    protected function extractVolumePriceProductTransfersFromProductConfigurationPrices(ArrayObject $priceProductTransfers): array
+    protected function extractVolumePriceProductTransfers(ArrayObject $priceProductTransfers): array
     {
         return array_filter($priceProductTransfers->getArrayCopy(), function (PriceProductTransfer $priceProductTransfer) {
             return $priceProductTransfer->getMoneyValueOrFail()->getPriceData() !== null;
@@ -119,13 +119,13 @@ class ProductConfigurationPriceProductVolumeMapper implements ProductConfigurati
      *
      * @return \Generated\Shared\Transfer\RestProductConfigurationPriceAttributesTransfer|null
      */
-    protected function extractRestProductConfigurationPriceAttributesTransferToMapVolumePrices(
+    protected function extractRestProductConfigurationPriceAttributesTransfer(
         PriceProductTransfer $priceProductTransfer,
         ArrayObject $restProductConfigurationPriceAttributesTransfers
     ): ?RestProductConfigurationPriceAttributesTransfer {
         foreach ($restProductConfigurationPriceAttributesTransfers as $restProductConfigurationPriceAttributesTransfer) {
             if (
-                $this->isPriceProductTransferCorrespondsToRestProductConfigurationPriceAttributesTransfer(
+                $this->isSamePriceProduct(
                     $priceProductTransfer,
                     $restProductConfigurationPriceAttributesTransfer
                 )
@@ -143,7 +143,7 @@ class ProductConfigurationPriceProductVolumeMapper implements ProductConfigurati
      *
      * @return bool
      */
-    protected function isPriceProductTransferCorrespondsToRestProductConfigurationPriceAttributesTransfer(
+    protected function isSamePriceProduct(
         PriceProductTransfer $priceProductTransfer,
         RestProductConfigurationPriceAttributesTransfer $restProductConfigurationPriceAttributesTransfer
     ): bool {

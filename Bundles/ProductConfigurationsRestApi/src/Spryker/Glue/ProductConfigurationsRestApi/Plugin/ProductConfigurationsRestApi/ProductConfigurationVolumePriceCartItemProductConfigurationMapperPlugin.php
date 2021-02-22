@@ -33,8 +33,8 @@ class ProductConfigurationVolumePriceCartItemProductConfigurationMapperPlugin ex
         ProductConfigurationInstanceTransfer $productConfigurationInstanceTransfer
     ): ProductConfigurationInstanceTransfer {
         return $this->getFactory()
-            ->createRestCartItemProductConfigurationInstancePriceProductVolumeMapper()
-            ->mapRestCartItemProductConfigurationInstanceAttributesToProductConfigurationInstanceTransfer(
+            ->createRestCartItemProductConfigurationPriceProductVolumeMapper()
+            ->mapRestCartItemProductConfigurationInstanceAttributesToProductConfigurationInstance(
                 $restCartItemProductConfigurationInstanceAttributesTransfer,
                 $productConfigurationInstanceTransfer
             );

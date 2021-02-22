@@ -13,6 +13,10 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class ProductConfigurationsRestApiConfig extends AbstractBundleConfig
 {
     /**
+     * Specification:
+     * - Defines fields for comparing items.
+     * - Used to compare items during cart item product configuration update.
+     *
      * @api
      *
      * @return string[]

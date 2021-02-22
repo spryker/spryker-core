@@ -51,7 +51,7 @@ class ProductConfigurationInstanceMapper implements ProductConfigurationInstance
      *
      * @return \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer
      */
-    public function mapRestCartItemProductConfigurationToProductConfigurationInstanceTransfer(
+    public function mapRestCartItemProductConfigurationToProductConfigurationInstance(
         RestCartItemProductConfigurationInstanceAttributesTransfer $restCartItemProductConfigurationInstanceAttributesTransfer,
         ProductConfigurationInstanceTransfer $productConfigurationInstanceTransfer
     ): ProductConfigurationInstanceTransfer {

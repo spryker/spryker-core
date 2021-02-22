@@ -32,13 +32,14 @@ class ProductConfigurationRestCartItemsAttributesMapperPluginTest extends Unit
     /**
      * @return void
      */
-    public function testExpandWillExpandCartItemRequestTransferWithProductConfigurationData(): void
+    public function testMapItemTransferToRestItemsAttributesTransferWillMapProductConfigurationData(): void
     {
         // Arrange
         $itemTransfer = (new ItemBuilder([
             CartItemRequestTransfer::SKU => static::TEST_SKU,
             CartItemRequestTransfer::GROUP_KEY => static::TEST_SKU,
-        ]))->build();
+        ]))->withProductConfigurationInstance()
+            ->build();
         $restItemsAttributesTransfer = (new RestItemsAttributesBuilder([
             RestCartItemsAttributesTransfer::SKU => static::TEST_SKU,
             RestCartItemsAttributesTransfer::GROUP_KEY => static::TEST_SKU,

@@ -21,8 +21,8 @@ use Spryker\Glue\ProductConfigurationsRestApi\Processor\Mapper\ProductConfigurat
 use Spryker\Glue\ProductConfigurationsRestApi\Processor\Mapper\ProductConfigurationInstancePriceMapperInterface;
 use Spryker\Glue\ProductConfigurationsRestApi\Processor\Mapper\ProductConfigurationPriceProductVolumeMapper;
 use Spryker\Glue\ProductConfigurationsRestApi\Processor\Mapper\ProductConfigurationPriceProductVolumeMapperInterface;
-use Spryker\Glue\ProductConfigurationsRestApi\Processor\Mapper\RestCartItemProductConfigurationInstancePriceProductVolumeMapper;
-use Spryker\Glue\ProductConfigurationsRestApi\Processor\Mapper\RestCartItemProductConfigurationInstancePriceProductVolumeMapperInterface;
+use Spryker\Glue\ProductConfigurationsRestApi\Processor\Mapper\RestCartItemProductConfigurationPriceProductVolumeMapper;
+use Spryker\Glue\ProductConfigurationsRestApi\Processor\Mapper\RestCartItemProductConfigurationPriceProductVolumeMapperInterface;
 
 class ProductConfigurationsRestApiFactory extends AbstractFactory
 {
@@ -58,11 +58,11 @@ class ProductConfigurationsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\ProductConfigurationsRestApi\Processor\Mapper\RestCartItemProductConfigurationInstancePriceProductVolumeMapperInterface
+     * @return \Spryker\Glue\ProductConfigurationsRestApi\Processor\Mapper\RestCartItemProductConfigurationPriceProductVolumeMapperInterface
      */
-    public function createRestCartItemProductConfigurationInstancePriceProductVolumeMapper(): RestCartItemProductConfigurationInstancePriceProductVolumeMapperInterface
+    public function createRestCartItemProductConfigurationPriceProductVolumeMapper(): RestCartItemProductConfigurationPriceProductVolumeMapperInterface
     {
-        return new RestCartItemProductConfigurationInstancePriceProductVolumeMapper(
+        return new RestCartItemProductConfigurationPriceProductVolumeMapper(
             $this->getProductConfigurationService(),
             $this->getUtilEncodingService()
         );

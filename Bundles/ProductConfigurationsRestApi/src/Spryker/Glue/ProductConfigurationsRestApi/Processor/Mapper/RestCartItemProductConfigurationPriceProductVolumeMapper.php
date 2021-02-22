@@ -20,7 +20,7 @@ use Generated\Shared\Transfer\RestProductPriceVolumesAttributesTransfer;
 use Spryker\Glue\ProductConfigurationsRestApi\Dependency\Service\ProductConfigurationsRestApiToProductConfigurationServiceInterface;
 use Spryker\Glue\ProductConfigurationsRestApi\Dependency\Service\ProductConfigurationsRestApiToUtilEncodingServiceInterface;
 
-class RestCartItemProductConfigurationInstancePriceProductVolumeMapper implements RestCartItemProductConfigurationInstancePriceProductVolumeMapperInterface
+class RestCartItemProductConfigurationPriceProductVolumeMapper implements RestCartItemProductConfigurationPriceProductVolumeMapperInterface
 {
     /**
      * @var \Spryker\Glue\ProductConfigurationsRestApi\Dependency\Service\ProductConfigurationsRestApiToProductConfigurationServiceInterface
@@ -50,7 +50,7 @@ class RestCartItemProductConfigurationInstancePriceProductVolumeMapper implement
      *
      * @return \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer
      */
-    public function mapRestCartItemProductConfigurationInstanceAttributesToProductConfigurationInstanceTransfer(
+    public function mapRestCartItemProductConfigurationInstanceAttributesToProductConfigurationInstance(
         RestCartItemProductConfigurationInstanceAttributesTransfer $restCartItemProductConfigurationInstanceAttributesTransfer,
         ProductConfigurationInstanceTransfer $productConfigurationInstanceTransfer
     ): ProductConfigurationInstanceTransfer {

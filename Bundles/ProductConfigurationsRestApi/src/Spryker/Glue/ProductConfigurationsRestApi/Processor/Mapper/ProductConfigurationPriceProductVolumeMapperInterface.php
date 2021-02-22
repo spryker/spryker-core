@@ -18,7 +18,7 @@ interface ProductConfigurationPriceProductVolumeMapperInterface
      *
      * @return \Generated\Shared\Transfer\RestCartItemProductConfigurationInstanceAttributesTransfer
      */
-    public function mapProductConfigurationInstanceTransferToRestCartItemProductConfigurationInstanceAttributesTransfer(
+    public function mapProductConfigurationInstanceToRestCartItemProductConfigurationInstanceAttributes(
         ProductConfigurationInstanceTransfer $productConfigurationInstanceTransfer,
         RestCartItemProductConfigurationInstanceAttributesTransfer $restCartItemProductConfigurationInstanceAttributesTransfer
     ): RestCartItemProductConfigurationInstanceAttributesTransfer;
