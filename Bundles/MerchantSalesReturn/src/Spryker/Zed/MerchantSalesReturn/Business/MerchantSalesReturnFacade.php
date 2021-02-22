@@ -26,7 +26,7 @@ class MerchantSalesReturnFacade extends AbstractFacade implements MerchantSalesR
     public function prepareReturn(ReturnTransfer $returnTransfer): ReturnTransfer
     {
         return $this->getFactory()
-            ->createMerchantReturnPreparer()
+            ->createMerchantReturnPreCreator()
             ->prepareReturn($returnTransfer);
     }
 

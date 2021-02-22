@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\ReturnTransfer;
 use ArrayObject;
 use Spryker\Zed\MerchantSalesReturn\Dependency\Facade\MerchantSalesReturnToSalesFacadeInterface;
 
-class MerchantReturnPreparer implements MerchantReturnPreparerInterface
+class MerchantReturnPreCreator implements MerchantReturnPreCreatorInterface
 {
     /**
      * @var \Spryker\Zed\MerchantSalesReturn\Dependency\Facade\MerchantSalesReturnToSalesFacadeInterface

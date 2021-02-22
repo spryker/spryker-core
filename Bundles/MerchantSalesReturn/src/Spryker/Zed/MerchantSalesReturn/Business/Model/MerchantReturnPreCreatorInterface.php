@@ -9,7 +9,7 @@ namespace Spryker\Zed\MerchantSalesReturn\Business\Model;
 
 use Generated\Shared\Transfer\ReturnTransfer;
 
-interface MerchantReturnPreparerInterface
+interface MerchantReturnPreCreatorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
