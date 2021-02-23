@@ -1,0 +1,12 @@
+{% extends '@ZedUi/Layout/merchant-layout-centered.twig' %}
+
+{% block headTitle %}
+    {{ 'Merchant Portal' | trans }}
+{% endblock %}
+
+{% block content %}
+    {%- include '@ZedUi/Partials/FlashMessages/flash-messages.twig' -%}
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+{% endblock %}

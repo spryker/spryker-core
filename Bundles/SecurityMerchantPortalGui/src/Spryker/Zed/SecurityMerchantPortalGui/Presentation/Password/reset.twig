@@ -1,0 +1,24 @@
+{% extends '@ZedUi/Layout/merchant-layout-centered.twig' %}
+
+{% block headTitle %}
+    {{ 'Merchant Portal' | trans }}
+{% endblock %}
+
+{% block content %}
+
+    {{ form_start(form) }}
+        {% include '@SecurityGui/Partial/form-message.twig' %}
+
+        {{ form_errors(form) }}
+
+        {{ form_row(form.password.first) }}
+        {{ form_row(form.password.second) }}
+
+        <div class="form-group">
+            <button type="submit">{{ 'Reset' | trans }}</button>
+        </div>
+
+        {{ form_rest(form) }}
+    {{ form_end(form) }}
+
+{% endblock %}

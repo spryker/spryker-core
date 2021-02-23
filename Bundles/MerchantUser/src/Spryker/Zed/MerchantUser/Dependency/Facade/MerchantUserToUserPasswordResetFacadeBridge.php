@@ -33,4 +33,25 @@ class MerchantUserToUserPasswordResetFacadeBridge implements MerchantUserToUserP
     {
         return $this->userPasswordResetFacade->requestPasswordReset($userPasswordResetRequestTransfer);
     }
+
+    /**
+     * @param string $token
+     *
+     * @return bool
+     */
+    public function isValidPasswordResetToken(string $token): bool
+    {
+        return $this->userPasswordResetFacade->isValidPasswordResetToken($token);
+    }
+
+    /**
+     * @param string $token
+     * @param string $password
+     *
+     * @return bool
+     */
+    public function setNewPassword(string $token, string $password): bool
+    {
+        return $this->userPasswordResetFacade->setNewPassword($token, $password);
+    }
 }
