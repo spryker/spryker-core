@@ -9,8 +9,8 @@
     "spryker/decimal-object": "^1.0.0",
     "spryker/kernel": "^3.30.0",
     "spryker/merchant-stock": "^0.3.0",
-    "spryker/merchant-user": "^0.5.0",
-    "spryker/product-merchant-portal-gui-extension": "^0.2.0",
+    "spryker/merchant-user": "^0.6.0",
+    "spryker/product-merchant-portal-gui-extension": "^0.1.1",
     "spryker/transfer": "^3.25.0"
   },
   "require-dev": {
