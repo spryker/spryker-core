@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\ProductConfigurationsRestApi\Processor\Mapper;
+namespace Spryker\Glue\ProductConfigurationsPriceProductVolumesRestApi\Processor\Mapper;
 
 use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
 use Generated\Shared\Transfer\RestCartItemProductConfigurationInstanceAttributesTransfer;

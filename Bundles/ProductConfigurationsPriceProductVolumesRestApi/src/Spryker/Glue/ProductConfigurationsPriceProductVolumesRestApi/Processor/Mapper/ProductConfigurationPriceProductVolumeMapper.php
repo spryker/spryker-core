@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\ProductConfigurationsRestApi\Processor\Mapper;
+namespace Spryker\Glue\ProductConfigurationsPriceProductVolumesRestApi\Processor\Mapper;
 
 use ArrayObject;
 use Generated\Shared\Transfer\PriceProductTransfer;
@@ -32,27 +32,11 @@ class ProductConfigurationPriceProductVolumeMapper implements ProductConfigurati
 
         $volumePriceProductTransfers = $this->extractVolumePriceProductTransfers($productConfigurationInstanceTransfer->getPrices());
 
-        $restProductConfigurationPriceAttributesTransfers = [];
-        foreach ($productConfigurationInstanceTransfer->getPrices() as $priceProductTransfer) {
-            if ($priceProductTransfer->getVolumeQuantity() !== null) {
-                continue;
-            }
-
-            $restProductConfigurationPriceAttributesTransferToMap = $this->extractRestProductConfigurationPriceAttributesTransfer(
-                $priceProductTransfer,
-                $restCartItemProductConfigurationInstanceAttributesTransfer->getPrices()
-            );
-
-            if (!$restProductConfigurationPriceAttributesTransferToMap) {
-                continue;
-            }
-
-            $restProductConfigurationPriceAttributesTransfers[] = $this->mapVolumePriceProductTransfersToRestCartItemProductConfigurationInstanceAttributesTransfer(
-                $volumePriceProductTransfers,
-                $restProductConfigurationPriceAttributesTransferToMap,
-                $priceProductTransfer
-            );
-        }
+        $restProductConfigurationPriceAttributesTransfers = $this->getRestProductConfigurationPriceAttributesTransfers(
+            $productConfigurationInstanceTransfer,
+            $restCartItemProductConfigurationInstanceAttributesTransfer,
+            $volumePriceProductTransfers
+        );
 
         return $restCartItemProductConfigurationInstanceAttributesTransfer->setPrices(new ArrayObject($restProductConfigurationPriceAttributesTransfers));
     }
@@ -111,6 +95,44 @@ class ProductConfigurationPriceProductVolumeMapper implements ProductConfigurati
         return array_filter($priceProductTransfers->getArrayCopy(), function (PriceProductTransfer $priceProductTransfer) {
             return $priceProductTransfer->getMoneyValueOrFail()->getPriceData() !== null;
         });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer $productConfigurationInstanceTransfer
+     * @param \Generated\Shared\Transfer\RestCartItemProductConfigurationInstanceAttributesTransfer $restCartItemProductConfigurationInstanceAttributesTransfer
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $volumePriceProductTransfers
+     *
+     * @return \Generated\Shared\Transfer\RestProductConfigurationPriceAttributesTransfer[]
+     */
+    protected function getRestProductConfigurationPriceAttributesTransfers(
+        ProductConfigurationInstanceTransfer $productConfigurationInstanceTransfer,
+        RestCartItemProductConfigurationInstanceAttributesTransfer $restCartItemProductConfigurationInstanceAttributesTransfer,
+        array $volumePriceProductTransfers
+    ): array {
+        $restProductConfigurationPriceAttributesTransfers = [];
+
+        foreach ($productConfigurationInstanceTransfer->getPrices() as $priceProductTransfer) {
+            if ($priceProductTransfer->getVolumeQuantity() !== null) {
+                continue;
+            }
+
+            $restProductConfigurationPriceAttributesTransferToMap = $this->extractRestProductConfigurationPriceAttributesTransfer(
+                $priceProductTransfer,
+                $restCartItemProductConfigurationInstanceAttributesTransfer->getPrices()
+            );
+
+            if (!$restProductConfigurationPriceAttributesTransferToMap) {
+                continue;
+            }
+
+            $restProductConfigurationPriceAttributesTransfers[] = $this->mapVolumePriceProductTransfersToRestCartItemProductConfigurationInstanceAttributesTransfer(
+                $volumePriceProductTransfers,
+                $restProductConfigurationPriceAttributesTransferToMap,
+                $priceProductTransfer
+            );
+        }
+
+        return $restProductConfigurationPriceAttributesTransfers;
     }
 
     /**

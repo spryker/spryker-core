@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\ProductConfigurationsRestApi\Processor\Mapper;
+namespace Spryker\Glue\ProductConfigurationsPriceProductVolumesRestApi\Processor\Mapper;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CurrencyTransfer;
@@ -17,28 +17,28 @@ use Generated\Shared\Transfer\RestCartItemProductConfigurationInstanceAttributes
 use Generated\Shared\Transfer\RestCurrencyTransfer;
 use Generated\Shared\Transfer\RestProductConfigurationPriceAttributesTransfer;
 use Generated\Shared\Transfer\RestProductPriceVolumesAttributesTransfer;
-use Spryker\Glue\ProductConfigurationsRestApi\Dependency\Service\ProductConfigurationsRestApiToProductConfigurationServiceInterface;
-use Spryker\Glue\ProductConfigurationsRestApi\Dependency\Service\ProductConfigurationsRestApiToUtilEncodingServiceInterface;
+use Spryker\Glue\ProductConfigurationsPriceProductVolumesRestApi\Dependency\Service\ProductConfigurationsPriceProductVolumesRestApiToProductConfigurationServiceInterface;
+use Spryker\Glue\ProductConfigurationsPriceProductVolumesRestApi\Dependency\Service\ProductConfigurationsPriceProductVolumesRestApiToUtilEncodingServiceInterface;
 
 class RestCartItemProductConfigurationPriceProductVolumeMapper implements RestCartItemProductConfigurationPriceProductVolumeMapperInterface
 {
     /**
-     * @var \Spryker\Glue\ProductConfigurationsRestApi\Dependency\Service\ProductConfigurationsRestApiToProductConfigurationServiceInterface
+     * @var \Spryker\Glue\ProductConfigurationsPriceProductVolumesRestApi\Dependency\Service\ProductConfigurationsPriceProductVolumesRestApiToProductConfigurationServiceInterface
      */
     protected $productConfigurationService;
 
     /**
-     * @var \Spryker\Glue\ProductConfigurationsRestApi\Dependency\Service\ProductConfigurationsRestApiToUtilEncodingServiceInterface
+     * @var \Spryker\Glue\ProductConfigurationsPriceProductVolumesRestApi\Dependency\Service\ProductConfigurationsPriceProductVolumesRestApiToUtilEncodingServiceInterface
      */
     protected $utilEncodingService;
 
     /**
-     * @param \Spryker\Glue\ProductConfigurationsRestApi\Dependency\Service\ProductConfigurationsRestApiToProductConfigurationServiceInterface $productConfigurationService
-     * @param \Spryker\Glue\ProductConfigurationsRestApi\Dependency\Service\ProductConfigurationsRestApiToUtilEncodingServiceInterface $utilEncodingService
+     * @param \Spryker\Glue\ProductConfigurationsPriceProductVolumesRestApi\Dependency\Service\ProductConfigurationsPriceProductVolumesRestApiToProductConfigurationServiceInterface $productConfigurationService
+     * @param \Spryker\Glue\ProductConfigurationsPriceProductVolumesRestApi\Dependency\Service\ProductConfigurationsPriceProductVolumesRestApiToUtilEncodingServiceInterface $utilEncodingService
      */
     public function __construct(
-        ProductConfigurationsRestApiToProductConfigurationServiceInterface $productConfigurationService,
-        ProductConfigurationsRestApiToUtilEncodingServiceInterface $utilEncodingService
+        ProductConfigurationsPriceProductVolumesRestApiToProductConfigurationServiceInterface $productConfigurationService,
+        ProductConfigurationsPriceProductVolumesRestApiToUtilEncodingServiceInterface $utilEncodingService
     ) {
         $this->productConfigurationService = $productConfigurationService;
         $this->utilEncodingService = $utilEncodingService;

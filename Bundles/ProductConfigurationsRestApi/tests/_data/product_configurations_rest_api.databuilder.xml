@@ -9,4 +9,10 @@
         <property name="sku" dataBuilderRule="word"/>
     </transfer>
 
+    <transfer name="SalesOrderItemConfiguration">
+        <property name="displayData" dataBuilderRule="sentence(4)"/>
+        <property name="configuration" dataBuilderRule="sentence(4)"/>
+        <property name="configuratorKey" dataBuilderRule="word"/>
+    </transfer>
+
 </transfers>

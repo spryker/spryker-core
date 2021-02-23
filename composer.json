@@ -509,6 +509,7 @@
     "spryker/product-configuration-data-import": "*",
     "spryker/product-configuration-extension": "*",
     "spryker/product-configuration-gui": "*",
+    "spryker/product-configurations-price-product-volumes-rest-api": "*",
     "spryker/product-configurations-rest-api": "*",
     "spryker/product-configurations-rest-api-extension": "*",
     "spryker/product-configuration-storage": "*",

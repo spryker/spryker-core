@@ -59,13 +59,27 @@ class ProductConfigurationCartItemExpander implements ProductConfigurationCartIt
             return $cartItemRequestTransfer->setProductConfigurationInstance($productConfigurationInstanceTransfer);
         }
 
+        $productConcreteSku = $this->resolveProductConcreteSku($cartItemRequestTransfer, $restCartItemsAttributesTransfer);
         $productConfigurationInstanceTransfer = $this->productConfigurationStorageClient
-            ->findProductConfigurationInstanceBySku($cartItemRequestTransfer->getSkuOrFail());
+            ->findProductConfigurationInstanceBySku($productConcreteSku);
 
         if (!$productConfigurationInstanceTransfer) {
             return $cartItemRequestTransfer;
         }
 
         return $cartItemRequestTransfer->setProductConfigurationInstance($productConfigurationInstanceTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartItemRequestTransfer $cartItemRequestTransfer
+     * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
+     *
+     * @return string
+     */
+    protected function resolveProductConcreteSku(
+        CartItemRequestTransfer $cartItemRequestTransfer,
+        RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
+    ): string {
+        return $restCartItemsAttributesTransfer->getSku() ?? $cartItemRequestTransfer->getSkuOrFail();
     }
 }

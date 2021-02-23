@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\ProductConfigurationsRestApi\Dependency\Service;
+namespace Spryker\Glue\ProductConfigurationsPriceProductVolumesRestApi\Dependency\Service;
 
-class ProductConfigurationsRestApiToUtilEncodingServiceBridge implements ProductConfigurationsRestApiToUtilEncodingServiceInterface
+class ProductConfigurationsPriceProductVolumesRestApiToUtilEncodingServiceBridge implements ProductConfigurationsPriceProductVolumesRestApiToUtilEncodingServiceInterface
 {
     /**
      * @var \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface

@@ -38,14 +38,6 @@
         <property name="netAmount" type="int"/>
         <property name="grossAmount" type="int"/>
         <property name="currency" type="RestCurrency"/>
-        <property name="volumeQuantity" type="int"/>
-        <property name="volumePrices" type="RestProductPriceVolumesAttributes[]" singular="volumePrice"/>
-    </transfer>
-
-    <transfer name="RestProductPriceVolumesAttributes">
-        <property name="netAmount" type="int"/>
-        <property name="grossAmount" type="int"/>
-        <property name="quantity" type="int"/>
     </transfer>
 
     <transfer name="RestCurrency">
@@ -73,6 +65,7 @@
         <property name="sku" type="string"/>
         <property name="groupKey" type="string"/>
         <property name="productConfigurationInstance" type="ProductConfigurationInstance"/>
+        <property name="salesOrderItemConfiguration" type="SalesOrderItemConfiguration"/>
     </transfer>
 
     <transfer name="PersistentCartChange">
@@ -110,7 +103,6 @@
         <property name="priceTypeName" type="string"/>
         <property name="groupKey" type="string"/>
         <property name="priceDimension" type="PriceProductDimension"/>
-        <property name="volumeQuantity" type="int"/>
         <property name="isMergeable" type="bool"/>
     </transfer>
 
@@ -118,15 +110,15 @@
         <property name="currency" type="Currency"/>
         <property name="netAmount" type="int"/>
         <property name="grossAmount" type="int"/>
-        <property name="priceData" type="string"/>
     </transfer>
 
     <transfer name="Currency">
-        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="PriceProductDimension">
-        <property name="productConfigurationInstanceHash" type="string"/>
+    </transfer>
+
+    <transfer name="SalesOrderItemConfiguration">
     </transfer>
 
 </transfers>

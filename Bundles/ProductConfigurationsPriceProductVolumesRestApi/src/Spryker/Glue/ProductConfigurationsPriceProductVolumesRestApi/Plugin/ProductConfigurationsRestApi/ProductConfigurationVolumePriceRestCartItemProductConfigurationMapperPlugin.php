@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\ProductConfigurationsRestApi\Plugin\ProductConfigurationsRestApi;
+namespace Spryker\Glue\ProductConfigurationsPriceProductVolumesRestApi\Plugin\ProductConfigurationsRestApi;
 
 use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
 use Generated\Shared\Transfer\RestCartItemProductConfigurationInstanceAttributesTransfer;
@@ -13,7 +13,7 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 use Spryker\Glue\ProductConfigurationsRestApiExtension\Dependency\Plugin\RestCartItemProductConfigurationMapperPluginInterface;
 
 /**
- * @method \Spryker\Glue\ProductConfigurationsRestApi\ProductConfigurationsRestApiFactory getFactory()
+ * @method \Spryker\Glue\ProductConfigurationsPriceProductVolumesRestApi\ProductConfigurationsPriceProductVolumesRestApiFactory getFactory()
  */
 class ProductConfigurationVolumePriceRestCartItemProductConfigurationMapperPlugin extends AbstractPlugin implements RestCartItemProductConfigurationMapperPluginInterface
 {

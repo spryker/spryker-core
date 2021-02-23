@@ -31,7 +31,7 @@ class ProductConfigurationRestOrderItemsAttributesMapperPluginTest extends Unit
     {
         // Arrange
         $itemTransfer = (new ItemBuilder())
-            ->withProductConfigurationInstance()
+            ->withSalesOrderItemConfiguration()
             ->build();
 
         $restOrderItemsAttributesTransfer = (new RestOrderItemsAttributesBuilder())->build();
@@ -47,12 +47,11 @@ class ProductConfigurationRestOrderItemsAttributesMapperPluginTest extends Unit
         // Assert
         $this->assertNotNull($restOrderItemsAttributesTransfer->getSalesOrderItemConfiguration());
 
-        $productConfigurationInstanceTransfer = $itemTransfer->getProductConfigurationInstance();
+        $productConfigurationInstanceTransfer = $itemTransfer->getSalesOrderItemConfiguration();
         $restProductConfigurationInstanceAttributesTransfer = $restOrderItemsAttributesTransfer->getSalesOrderItemConfiguration();
         $this->assertSame($restProductConfigurationInstanceAttributesTransfer->getConfiguration(), $productConfigurationInstanceTransfer->getConfiguration());
         $this->assertSame($restProductConfigurationInstanceAttributesTransfer->getConfiguratorKey(), $productConfigurationInstanceTransfer->getConfiguratorKey());
         $this->assertSame($restProductConfigurationInstanceAttributesTransfer->getDisplayData(), $productConfigurationInstanceTransfer->getDisplayData());
-        $this->assertSame($restProductConfigurationInstanceAttributesTransfer->getIsComplete(), $productConfigurationInstanceTransfer->getIsComplete());
     }
 
     /**

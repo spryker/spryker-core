@@ -23,13 +23,13 @@ class ProductConfigurationRestOrderAttributesMapper implements ProductConfigurat
         ItemTransfer $itemTransfer,
         RestOrderItemsAttributesTransfer $restOrderItemsAttributesTransfer
     ): RestOrderItemsAttributesTransfer {
-        $productConfigurationInstanceTransfer = $itemTransfer->getProductConfigurationInstance();
-        if (!$productConfigurationInstanceTransfer) {
+        $salesOrderItemConfigurationTransfer = $itemTransfer->getSalesOrderItemConfiguration();
+        if (!$salesOrderItemConfigurationTransfer) {
             return $restOrderItemsAttributesTransfer;
         }
 
         $restProductConfigurationInstanceAttributesTransfer = (new RestProductConfigurationInstanceAttributesTransfer())
-            ->fromArray($productConfigurationInstanceTransfer->toArray(), true);
+            ->fromArray($salesOrderItemConfigurationTransfer->toArray(), true);
 
         return $restOrderItemsAttributesTransfer->setSalesOrderItemConfiguration($restProductConfigurationInstanceAttributesTransfer);
     }

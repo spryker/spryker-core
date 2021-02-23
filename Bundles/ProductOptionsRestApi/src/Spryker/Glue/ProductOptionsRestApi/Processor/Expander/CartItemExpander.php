@@ -38,7 +38,7 @@ class CartItemExpander implements CartItemExpanderInterface
         RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
     ): CartItemRequestTransfer {
         $productOptionIds = $this->productOptionStorageReader->getProductOptionIdsByProductConcreteSku(
-            $cartItemRequestTransfer->getSku()
+            $this->resolveProductConcreteSku($cartItemRequestTransfer, $restCartItemsAttributesTransfer)
         );
         foreach ($restCartItemsAttributesTransfer->getProductOptions() as $restCartItemsProductOptionTransfer) {
             if (!isset($productOptionIds[$restCartItemsProductOptionTransfer->getSku()])) {
@@ -52,5 +52,18 @@ class CartItemExpander implements CartItemExpanderInterface
         }
 
         return $cartItemRequestTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartItemRequestTransfer $cartItemRequestTransfer
+     * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
+     *
+     * @return string|null
+     */
+    protected function resolveProductConcreteSku(
+        CartItemRequestTransfer $cartItemRequestTransfer,
+        RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
+    ): ?string {
+        return $restCartItemsAttributesTransfer->getSku() ?? $cartItemRequestTransfer->getSku();
     }
 }

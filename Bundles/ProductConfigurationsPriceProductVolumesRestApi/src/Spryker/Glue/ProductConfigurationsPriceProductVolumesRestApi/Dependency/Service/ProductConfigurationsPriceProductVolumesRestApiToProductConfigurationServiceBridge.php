@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\ProductConfigurationsRestApi\Dependency\Service;
+namespace Spryker\Glue\ProductConfigurationsPriceProductVolumesRestApi\Dependency\Service;
 
 use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
 
-class ProductConfigurationsRestApiToProductConfigurationServiceBridge implements ProductConfigurationsRestApiToProductConfigurationServiceInterface
+class ProductConfigurationsPriceProductVolumesRestApiToProductConfigurationServiceBridge implements ProductConfigurationsPriceProductVolumesRestApiToProductConfigurationServiceInterface
 {
     /**
      * @var \Spryker\Service\ProductConfiguration\ProductConfigurationServiceInterface

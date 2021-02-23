@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Glue\ProductConfigurationsRestApi\Plugin;
+namespace SprykerTest\Glue\ProductConfigurationsPriceProductVolumesRestApi\Plugin;
 
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\MoneyValueBuilder;
@@ -16,14 +16,14 @@ use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\RestCurrencyTransfer;
 use Generated\Shared\Transfer\RestProductConfigurationPriceAttributesTransfer;
-use Spryker\Glue\ProductConfigurationsRestApi\Plugin\ProductConfigurationsRestApi\ProductConfigurationVolumePriceRestCartItemProductConfigurationMapperPlugin;
+use Spryker\Glue\ProductConfigurationsPriceProductVolumesRestApi\Plugin\ProductConfigurationsRestApi\ProductConfigurationVolumePriceRestCartItemProductConfigurationMapperPlugin;
 
 /**
  * Auto-generated group annotations
  *
  * @group SprykerTest
  * @group Glue
- * @group ProductConfigurationsRestApi
+ * @group ProductConfigurationsPriceProductVolumesRestApi
  * @group Plugin
  * @group ProductConfigurationVolumePriceRestCartItemProductConfigurationMapperPluginTest
  * Add your own group annotations below this line

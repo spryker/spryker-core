@@ -21,7 +21,7 @@ class ProductConfigurationCartItemExpanderPlugin extends AbstractPlugin implemen
      * {@inheritDoc}
      * - Expands cart item with product configuration data.
      * - Maps `RestCartItemsAttributesTransfer.restCartItemProductConfigurationInstanceAttributes` data to `CartItemRequestTransfer.productConfigurationInstance`.
-     * - Executes `ProductConfigurationMapperPluginInterface` plugin stack.
+     * - Executes `CartItemProductConfigurationMapperPluginInterface` plugin stack.
      *
      * @api
      *
