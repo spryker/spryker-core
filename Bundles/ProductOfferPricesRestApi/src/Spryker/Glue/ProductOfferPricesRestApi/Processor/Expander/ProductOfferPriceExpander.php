@@ -66,7 +66,9 @@ class ProductOfferPriceExpander implements ProductOfferPriceExpanderInterface
                 continue;
             }
 
-            $productOfferReferences[] = $resource->getId();
+            if ($resource->getId() !== null) {
+                $productOfferReferences[] = $resource->getId();
+            }
         }
 
         return $productOfferReferences;
