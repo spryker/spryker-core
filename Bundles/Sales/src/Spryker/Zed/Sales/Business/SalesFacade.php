@@ -488,6 +488,8 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
      */
     public function restrictDuplicatedOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool
     {
-        // TODO: Implement restrictDuplicatedOrders() method.
+        return $this->getFactory()
+            ->createOrderRestrictor()
+            ->restrictDuplicatedOrder($quoteTransfer, $checkoutResponseTransfer);
     }
 }

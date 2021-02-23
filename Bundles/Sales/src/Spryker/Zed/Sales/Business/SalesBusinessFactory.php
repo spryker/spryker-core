@@ -45,6 +45,7 @@ use Spryker\Zed\Sales\Business\Order\OrderHydrator as OrderHydratorWithMultiShip
 use Spryker\Zed\Sales\Business\Order\OrderHydratorInterface;
 use Spryker\Zed\Sales\Business\Order\OrderReader as OrderReaderWithMultiShippingAddress;
 use Spryker\Zed\Sales\Business\Order\OrderReaderInterface;
+use Spryker\Zed\Sales\Business\Order\OrderRestrictor;
 use Spryker\Zed\Sales\Business\OrderItem\SalesOrderItemGrouper;
 use Spryker\Zed\Sales\Business\OrderItem\SalesOrderItemGrouperInterface;
 use Spryker\Zed\Sales\Business\Reader\OrderItemReader;
@@ -395,6 +396,14 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     public function createItemCurrencyExpander(): ItemCurrencyExpanderInterface
     {
         return new ItemCurrencyExpander($this->getRepository());
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\Order\OrderRestrictor
+     */
+    public function createOrderRestrictor(): OrderRestrictor
+    {
+        return new OrderRestrictor();
     }
 
     /**
