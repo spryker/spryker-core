@@ -24,7 +24,7 @@ class TokenResourceController extends FormatAbstractController
      */
     public function postAction(Request $httpRequest): JsonResponse
     {
-        $oauthRequestTransfer = (new OauthRequestTransfer())->fromArray($httpRequest->request->all());
+        $oauthRequestTransfer = (new OauthRequestTransfer())->fromArray($httpRequest->request->all(), true);
 
         return $this->getFactory()->createOauthToken()->createAccessToken($oauthRequestTransfer);
     }
