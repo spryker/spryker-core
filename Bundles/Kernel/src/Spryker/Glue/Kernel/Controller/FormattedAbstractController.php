@@ -7,6 +7,6 @@
 
 namespace Spryker\Glue\Kernel\Controller;
 
-class FormatAbstractController extends AbstractController
+class FormattedAbstractController extends AbstractController
 {
 }

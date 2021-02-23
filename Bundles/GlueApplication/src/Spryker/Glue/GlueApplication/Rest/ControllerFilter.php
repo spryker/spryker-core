@@ -22,7 +22,7 @@ use Spryker\Glue\GlueApplication\Rest\Response\ResponseHeadersInterface;
 use Spryker\Glue\GlueApplication\Rest\User\RestUserValidatorInterface;
 use Spryker\Glue\GlueApplication\Rest\User\UserProviderInterface;
 use Spryker\Glue\Kernel\Controller\AbstractController;
-use Spryker\Glue\Kernel\Controller\FormatAbstractController;
+use Spryker\Glue\Kernel\Controller\FormattedAbstractController;
 use Spryker\Shared\Log\LoggerTrait;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -132,7 +132,7 @@ class ControllerFilter implements ControllerFilterInterface
                 return new Response($restErrorMessageTransfer->getDetail(), $restErrorMessageTransfer->getStatus());
             }
 
-            if ($controller instanceof FormatAbstractController) {
+            if ($controller instanceof FormattedAbstractController) {
                 return $controller->$action($httpRequest);
             }
 

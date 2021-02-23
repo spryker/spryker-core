@@ -8,14 +8,14 @@
 namespace Spryker\Glue\AuthRestApi\Controller;
 
 use Generated\Shared\Transfer\OauthRequestTransfer;
-use Spryker\Glue\Kernel\Controller\FormatAbstractController;
+use Spryker\Glue\Kernel\Controller\FormattedAbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Glue\AuthRestApi\AuthRestApiFactory getFactory()
  */
-class TokenResourceController extends FormatAbstractController
+class TokenResourceController extends FormattedAbstractController
 {
     /**
      * @param \Symfony\Component\HttpFoundation\Request $httpRequest
