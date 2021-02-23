@@ -88,7 +88,7 @@ interface MerchantProductFacadeInterface
     /**
      * Specification:
      * - Requires merchant ID.
-     * - Returns the list of concrete products related to the provided merchant by checking abstract product - merchant relationship and criteria.
+     * - Returns the list of concrete products related to the provided merchant by criteria.
      *
      * @api
      *
