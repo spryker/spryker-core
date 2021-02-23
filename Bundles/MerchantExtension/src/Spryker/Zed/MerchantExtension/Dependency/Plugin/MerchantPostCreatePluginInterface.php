@@ -10,6 +10,9 @@ namespace Spryker\Zed\MerchantExtension\Dependency\Plugin;
 use Generated\Shared\Transfer\MerchantResponseTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 
+/**
+ * Provides extension capabilities for executing business logic code after creation of MerchantTransfer
+ */
 interface MerchantPostCreatePluginInterface
 {
     /**

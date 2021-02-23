@@ -87,7 +87,7 @@ class MerchantOrderDiscountFilter implements MerchantOrderDiscountFilterInterfac
 
             /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
             $itemTransfer = $merchantOrderItemTransfer->requireOrderItem()->getOrderItem();
-            $grouppedCalculatedDiscounts = $this->getGrouppedCalculatedDiscounts(
+            $grouppedCalculatedDiscounts = $this->getGroupedCalculatedDiscounts(
                 $itemTransfer,
                 $grouppedCalculatedDiscounts
             );
@@ -102,7 +102,7 @@ class MerchantOrderDiscountFilter implements MerchantOrderDiscountFilterInterfac
      *
      * @return \Generated\Shared\Transfer\CalculatedDiscountTransfer[]
      */
-    protected function getGrouppedCalculatedDiscounts(ItemTransfer $itemTransfer, array $grouppedCalculatedDiscounts): array
+    protected function getGroupedCalculatedDiscounts(ItemTransfer $itemTransfer, array $grouppedCalculatedDiscounts): array
     {
         foreach ($itemTransfer->getCalculatedDiscounts() as $calculatedDiscountTransfer) {
             if (!isset($grouppedCalculatedDiscounts[$calculatedDiscountTransfer->getDisplayName()])) {

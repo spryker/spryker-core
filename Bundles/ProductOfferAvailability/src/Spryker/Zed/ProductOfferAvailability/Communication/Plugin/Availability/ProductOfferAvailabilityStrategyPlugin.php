@@ -69,6 +69,6 @@ class ProductOfferAvailabilityStrategyPlugin extends AbstractPlugin implements A
             ->setProductOfferReference($productAvailabilityCriteriaTransfer->getProductOfferReference());
 
         return $this->getFacade()
-            ->findProductConcreteAvailabilityForRequest($productOfferAvailabilityRequestTransfer);
+            ->findProductConcreteAvailability($productOfferAvailabilityRequestTransfer);
     }
 }

@@ -5,7 +5,7 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
-namespace Spryker\Zed\ProductOfferValidityDataImport\Communication;
+namespace Spryker\Zed\ProductOfferValidityDataImport\Communication\DataImport;
 
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;

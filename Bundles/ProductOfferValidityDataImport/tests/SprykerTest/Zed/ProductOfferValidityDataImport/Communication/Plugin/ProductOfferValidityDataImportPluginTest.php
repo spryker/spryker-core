@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
-use Spryker\Zed\ProductOfferValidityDataImport\Communication\ProductOfferValidityDataImportPlugin;
+use Spryker\Zed\ProductOfferValidityDataImport\Communication\DataImport\ProductOfferValidityDataImportPlugin;
 use Spryker\Zed\ProductOfferValidityDataImport\ProductOfferValidityDataImportConfig;
 
 /**

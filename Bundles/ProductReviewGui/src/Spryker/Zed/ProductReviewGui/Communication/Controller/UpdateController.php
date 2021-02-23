@@ -20,7 +20,6 @@ use Symfony\Component\HttpFoundation\Request;
 class UpdateController extends AbstractController
 {
     public const PARAM_ID = 'id';
-    protected const ROUTE_TEMPLATES_LIST = '/product-review-gui';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -29,14 +28,6 @@ class UpdateController extends AbstractController
      */
     public function approveAction(Request $request)
     {
-        $form = $this->getFactory()->getStatusProductReviewForm()->handleRequest($request);
-
-        if (!$form->isSubmitted() || !$form->isValid()) {
-            $this->addErrorMessage('CSRF token is not valid.');
-
-            return $this->redirectResponse(static::ROUTE_TEMPLATES_LIST);
-        }
-
         $idProductReview = $this->castId($request->query->get(static::PARAM_ID));
 
         $productReviewTransfer = new ProductReviewTransfer();
@@ -50,7 +41,9 @@ class UpdateController extends AbstractController
 
         $this->addSuccessMessage('Product Review #%d has been approved.', ['%d' => $idProductReview]);
 
-        return $this->redirectResponse(Url::generate(static::ROUTE_TEMPLATES_LIST)->build());
+        return $this->redirectResponse(
+            Url::generate('/product-review-gui')->build()
+        );
     }
 
     /**
@@ -60,14 +53,6 @@ class UpdateController extends AbstractController
      */
     public function rejectAction(Request $request)
     {
-        $form = $this->getFactory()->getStatusProductReviewForm()->handleRequest($request);
-
-        if (!$form->isSubmitted() || !$form->isValid()) {
-            $this->addErrorMessage('CSRF token is not valid.');
-
-            return $this->redirectResponse(static::ROUTE_TEMPLATES_LIST);
-        }
-
         $idProductReview = $this->castId($request->query->get(static::PARAM_ID));
 
         $productReviewTransfer = new ProductReviewTransfer();
@@ -81,6 +66,8 @@ class UpdateController extends AbstractController
 
         $this->addSuccessMessage('Product Review #%d has been rejected.', ['%d' => $idProductReview]);
 
-        return $this->redirectResponse(Url::generate(static::ROUTE_TEMPLATES_LIST)->build());
+        return $this->redirectResponse(
+            Url::generate('/product-review-gui')->build()
+        );
     }
 }

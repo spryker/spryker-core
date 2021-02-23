@@ -69,7 +69,7 @@ class ProductOfferAvailabilityFacadeTest extends Unit
 
         // Act
         $productConcreteAvailabilityTransfer = $this->tester->getFacade()
-            ->findProductConcreteAvailabilityForRequest($productOfferAvailabilityRequestTransfer);
+            ->findProductConcreteAvailability($productOfferAvailabilityRequestTransfer);
 
         // Assert
         $this->assertNotNull($productConcreteAvailabilityTransfer);

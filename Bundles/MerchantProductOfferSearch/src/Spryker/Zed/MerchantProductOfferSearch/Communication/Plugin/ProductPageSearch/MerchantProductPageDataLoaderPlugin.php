@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantProductOfferSearch\Communication\Plugin\PageDataLoader;
+namespace Spryker\Zed\MerchantProductOfferSearch\Communication\Plugin\ProductPageSearch;
 
 use Generated\Shared\Transfer\ProductAbstractMerchantTransfer;
 use Generated\Shared\Transfer\ProductPageLoadTransfer;

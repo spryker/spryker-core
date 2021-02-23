@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\MerchantProductOfferSearch\Plugin;
+namespace Spryker\Client\MerchantProductOfferSearch\Plugin\Search;
 
 use Elastica\Query;
 use Elastica\Query\BoolQuery;

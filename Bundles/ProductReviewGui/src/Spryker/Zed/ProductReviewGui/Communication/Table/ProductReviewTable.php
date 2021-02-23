@@ -13,7 +13,6 @@ use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\ProductReviewGui\Communication\Form\DeleteProductReviewForm;
-use Spryker\Zed\ProductReviewGui\Communication\Form\StatusProductReviewForm;
 use Spryker\Zed\ProductReviewGui\Dependency\Service\ProductReviewGuiToUtilDateTimeInterface;
 use Spryker\Zed\ProductReviewGui\Dependency\Service\ProductReviewGuiToUtilSanitizeInterface;
 use Spryker\Zed\ProductReviewGui\Persistence\ProductReviewGuiQueryContainerInterface;
@@ -209,61 +208,62 @@ class ProductReviewTable extends AbstractTable
      *
      * @return string
      */
-    protected function generateStatusChangeButton(SpyProductReview $productReviewEntity): string
+    protected function generateStatusChangeButton(SpyProductReview $productReviewEntity)
     {
-        $buttons = [];
+        $buttonGroupItems = [];
         switch ($productReviewEntity->getStatus()) {
             case ProductReviewTableConstants::COL_PRODUCT_REVIEW_STATUS_REJECTED:
-                $buttons[] = $this->generateApproveButton($productReviewEntity);
+                $buttonGroupItems[] = $this->generateApproveButtonGroupItem($productReviewEntity);
 
                 break;
             case ProductReviewTableConstants::COL_PRODUCT_REVIEW_STATUS_APPROVED:
-                $buttons[] = $this->generateRejectButton($productReviewEntity);
+                $buttonGroupItems[] = $this->generateRejectButtonGroupItem($productReviewEntity);
 
                 break;
             case ProductReviewTableConstants::COL_PRODUCT_REVIEW_STATUS_PENDING:
             default:
-                $buttons[] = $this->generateApproveButton($productReviewEntity);
-                $buttons[] = $this->generateRejectButton($productReviewEntity);
+                $buttonGroupItems[] = $this->generateApproveButtonGroupItem($productReviewEntity);
+                $buttonGroupItems[] = $this->generateRejectButtonGroupItem($productReviewEntity);
 
                 break;
         }
 
-        return implode(' ', $buttons);
-    }
-
-    /**
-     * @param \Orm\Zed\ProductReview\Persistence\SpyProductReview $productReviewEntity
-     *
-     * @return string
-     */
-    protected function generateApproveButton(SpyProductReview $productReviewEntity): string
-    {
-        return $this->generateFormButton(
-            Url::generate('/product-review-gui/update/approve', [
-                ProductReviewTableConstants::PARAM_ID => $productReviewEntity->getIdProductReview(),
-            ]),
-            'Approve',
-            StatusProductReviewForm::class
+        return $this->generateButtonGroup(
+            $buttonGroupItems,
+            'Change status',
+            [
+                'icon' => '',
+            ]
         );
     }
 
     /**
      * @param \Orm\Zed\ProductReview\Persistence\SpyProductReview $productReviewEntity
      *
-     * @return string
+     * @return array
      */
-    protected function generateRejectButton(SpyProductReview $productReviewEntity): string
+    protected function generateApproveButtonGroupItem(SpyProductReview $productReviewEntity)
     {
-        return $this->generateFormButton(
+        return $this->createButtonGroupItem(
+            'Approve',
+            Url::generate('/product-review-gui/update/approve', [
+                ProductReviewTableConstants::PARAM_ID => $productReviewEntity->getIdProductReview(),
+            ])
+        );
+    }
+
+    /**
+     * @param \Orm\Zed\ProductReview\Persistence\SpyProductReview $productReviewEntity
+     *
+     * @return array
+     */
+    protected function generateRejectButtonGroupItem(SpyProductReview $productReviewEntity)
+    {
+        return $this->createButtonGroupItem(
+            'Reject',
             Url::generate('/product-review-gui/update/reject', [
                 ProductReviewTableConstants::PARAM_ID => $productReviewEntity->getIdProductReview(),
-            ]),
-            'Reject',
-            StatusProductReviewForm::class,
-            [
-                static::BUTTON_CLASS => 'btn-warning',
-            ]
+            ])
         );
     }
 

@@ -11,7 +11,6 @@ use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\CustomerGroup\Dependency\Service\CustomerGroupToUtilEncodingInterface;
-use Spryker\Zed\CustomerGroup\Dependency\Service\CustomerGroupToUtilSanitizeServiceInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -36,11 +35,6 @@ abstract class AbstractAssignmentTable extends AbstractTable
     protected $tableQueryBuilder;
 
     /**
-     * @var \Spryker\Zed\CustomerGroup\Dependency\Service\CustomerGroupToUtilSanitizeServiceInterface
-     */
-    protected $utilSanitizeService;
-
-    /**
      * @var int
      */
     protected $idCustomerGroup;
@@ -49,18 +43,15 @@ abstract class AbstractAssignmentTable extends AbstractTable
      * @param \Spryker\Zed\CustomerGroup\Communication\Table\Assignment\AssignmentCustomerQueryBuilderInterface $tableQueryBuilder
      * @param \Spryker\Zed\CustomerGroup\Dependency\Service\CustomerGroupToUtilEncodingInterface $utilEncoding
      * @param int $idCustomerGroup
-     * @param \Spryker\Zed\CustomerGroup\Dependency\Service\CustomerGroupToUtilSanitizeServiceInterface $utilSanitizeService
      */
     public function __construct(
         AssignmentCustomerQueryBuilderInterface $tableQueryBuilder,
         CustomerGroupToUtilEncodingInterface $utilEncoding,
-        $idCustomerGroup,
-        CustomerGroupToUtilSanitizeServiceInterface $utilSanitizeService
+        $idCustomerGroup
     ) {
         $this->tableQueryBuilder = $tableQueryBuilder;
         $this->utilEncoding = $utilEncoding;
         $this->idCustomerGroup = $idCustomerGroup;
-        $this->utilSanitizeService = $utilSanitizeService;
     }
 
     /**
@@ -217,11 +208,11 @@ abstract class AbstractAssignmentTable extends AbstractTable
             'js-item-checkbox',
             $customerEntity->getIdCustomer(),
             $this->getCheckboxCheckedAttribute(),
-            $this->utilSanitizeService->escapeHtml($this->utilEncoding->encodeJson([
+            htmlspecialchars($this->utilEncoding->encodeJson([
                 'id' => $customerEntity->getIdCustomer(),
                 'email' => $customerEntity->getEmail(),
-                'firstName' => $this->utilSanitizeService->escapeHtml($customerEntity->getFirstName()),
-                'lastName' => $this->utilSanitizeService->escapeHtml($customerEntity->getLastName()),
+                'firstName' => $customerEntity->getFirstName(),
+                'lastName' => $customerEntity->getLastName(),
             ]))
         );
     }

@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\MerchantOrderItemTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Spryker\Zed\MerchantSalesOrderMerchantUserGui\MerchantSalesOrderMerchantUserGuiConfig;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -45,8 +44,9 @@ class DetailController extends AbstractController
     public function indexAction(Request $request)
     {
         $idMerchantSalesOrder = $this->castId(
-            $request->query->getInt(MerchantSalesOrderMerchantUserGuiConfig::REQUEST_PARAM_ID_MERCHANT_SALES_ORDER)
+            $request->query->getInt(static::PARAM_ID_MERCHANT_SALES_ORDER)
         );
+
         $idMerchant = $this->getFactory()->getMerchantUserFacade()->getCurrentMerchantUser()->getIdMerchant();
 
         if (!$idMerchant) {

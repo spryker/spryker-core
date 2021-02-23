@@ -10,6 +10,9 @@ namespace Spryker\Glue\MerchantsRestApiExtension\Dependency\Plugin;
 use Generated\Shared\Transfer\MerchantStorageTransfer;
 use Generated\Shared\Transfer\RestMerchantsAttributesTransfer;
 
+/**
+ * Provides extension capabilities for expanding RestMerchantsAttributesTransfer from MerchantStorageTransfer
+ */
 interface MerchantRestAttributesMapperPluginInterface
 {
     /**

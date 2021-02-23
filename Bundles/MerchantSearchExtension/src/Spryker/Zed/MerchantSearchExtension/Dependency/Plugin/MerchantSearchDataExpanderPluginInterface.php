@@ -9,6 +9,9 @@ namespace Spryker\Zed\MerchantSearchExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\MerchantSearchCollectionTransfer;
 
+/**
+ * Provides extension capabilities to expand the Merchant Search Collection before saving to search engine.
+ */
 interface MerchantSearchDataExpanderPluginInterface
 {
     /**

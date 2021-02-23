@@ -9,6 +9,9 @@ namespace Spryker\Zed\MerchantRelationshipGuiExtension\Dependency\Plugin;
 
 use Symfony\Component\Form\FormBuilderInterface;
 
+/**
+ * Provides extension capabilities for the "MerchantRelationshipEditForm" during creation of the form
+ */
 interface MerchantRelationshipEditFormExpanderPluginInterface
 {
     /**

@@ -5,7 +5,7 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
-namespace Spryker\Zed\MerchantProductOfferDataImport\Communication\Plugin;
+namespace Spryker\Zed\MerchantProductOfferDataImport\Communication\Plugin\DataImport;
 
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
@@ -17,14 +17,12 @@ use Spryker\Zed\MerchantProductOfferDataImport\MerchantProductOfferDataImportCon
  * @method \Spryker\Zed\MerchantProductOfferDataImport\Business\MerchantProductOfferDataImportFacadeInterface getFacade()
  * @method \Spryker\Zed\MerchantProductOfferDataImport\MerchantProductOfferDataImportConfig getConfig()
  */
-class MerchantProductOfferDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
+class MerchantProductOfferStoreDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
 {
     /**
      * {@inheritDoc}
-     *
-     * - Validates Merchant key.
-     * - Validates concrete product sku.
-     * - Inserts merchant product offer into DB.
+     * - Validates offer reference.
+     * - Inserts merchant product offer stores into DB.
      *
      * @api
      *
@@ -35,7 +33,7 @@ class MerchantProductOfferDataImportPlugin extends AbstractPlugin implements Dat
     public function import(
         ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
     ): DataImporterReportTransfer {
-        return $this->getFacade()->importMerchantProductOfferData($dataImporterConfigurationTransfer);
+        return $this->getFacade()->importMerchantProductOfferStoreData($dataImporterConfigurationTransfer);
     }
 
     /**
@@ -47,6 +45,6 @@ class MerchantProductOfferDataImportPlugin extends AbstractPlugin implements Dat
      */
     public function getImportType(): string
     {
-        return MerchantProductOfferDataImportConfig::IMPORT_TYPE_MERCHANT_PRODUCT_OFFER;
+        return MerchantProductOfferDataImportConfig::IMPORT_TYPE_MERCHANT_PRODUCT_OFFER_STORE;
     }
 }

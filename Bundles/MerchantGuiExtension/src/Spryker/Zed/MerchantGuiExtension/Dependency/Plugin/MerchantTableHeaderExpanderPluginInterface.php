@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\MerchantGuiExtension\Dependency\Plugin;
 
+/**
+ * Provides extension capabilities for the headers data expanding during configuration of the MerchantTable headers
+ */
 interface MerchantTableHeaderExpanderPluginInterface
 {
     /**

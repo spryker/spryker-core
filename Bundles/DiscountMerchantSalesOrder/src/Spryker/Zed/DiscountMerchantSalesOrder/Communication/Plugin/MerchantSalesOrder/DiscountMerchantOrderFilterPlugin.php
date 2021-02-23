@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\DiscountMerchantSalesOrder\Communication\Plugin;
+namespace Spryker\Zed\DiscountMerchantSalesOrder\Communication\Plugin\MerchantSalesOrder;
 
 use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;

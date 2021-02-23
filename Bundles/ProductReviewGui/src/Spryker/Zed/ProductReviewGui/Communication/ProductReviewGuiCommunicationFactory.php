@@ -10,7 +10,6 @@ namespace Spryker\Zed\ProductReviewGui\Communication;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ProductReviewGui\Communication\Form\DeleteProductReviewForm;
-use Spryker\Zed\ProductReviewGui\Communication\Form\StatusProductReviewForm;
 use Spryker\Zed\ProductReviewGui\Communication\Table\ProductReviewTable;
 use Spryker\Zed\ProductReviewGui\ProductReviewGuiDependencyProvider;
 use Symfony\Component\Form\FormInterface;
@@ -71,13 +70,5 @@ class ProductReviewGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getLocaleFacade()
     {
         return $this->getProvidedDependency(ProductReviewGuiDependencyProvider::FACADE_LOCALE);
-    }
-
-    /**
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    public function getStatusProductReviewForm(): FormInterface
-    {
-        return $this->getFormFactory()->create(StatusProductReviewForm::class);
     }
 }

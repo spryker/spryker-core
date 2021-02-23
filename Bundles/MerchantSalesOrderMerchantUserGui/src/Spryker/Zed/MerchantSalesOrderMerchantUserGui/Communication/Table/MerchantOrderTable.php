@@ -16,6 +16,7 @@ use Orm\Zed\StateMachine\Persistence\Map\SpyStateMachineItemStateTableMap;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Controller\DetailController;
 use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Facade\MerchantSalesOrderMerchantUserGuiToCustomerFacadeInterface;
 use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Facade\MerchantSalesOrderMerchantUserGuiToMerchantUserFacadeInterface;
 use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Facade\MerchantSalesOrderMerchantUserGuiToMoneyFacadeInterface;
@@ -258,7 +259,7 @@ class MerchantOrderTable extends AbstractTable
         $buttons[] = $this->generateViewButton(
             Url::generate(
                 static::ROUTE_REDIRECT,
-                [MerchantSalesOrderMerchantUserGuiConfig::REQUEST_PARAM_ID_MERCHANT_SALES_ORDER => $item[SpyMerchantSalesOrderTableMap::COL_ID_MERCHANT_SALES_ORDER]]
+                [DetailController::REQUEST_PARAM_ID_MERCHANT_SALES_ORDER => $item[SpyMerchantSalesOrderTableMap::COL_ID_MERCHANT_SALES_ORDER]]
             ),
             'View'
         );

@@ -45,7 +45,7 @@ class ProductOfferAvailabilityProvider implements ProductOfferAvailabilityProvid
      *
      * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null
      */
-    public function findProductConcreteAvailabilityForRequest(
+    public function findProductConcreteAvailability(
         ProductOfferAvailabilityRequestTransfer $productOfferAvailabilityRequestTransfer
     ): ?ProductConcreteAvailabilityTransfer {
         $productOfferStockTransfer = $this->getProductOfferStockTransfer($productOfferAvailabilityRequestTransfer);

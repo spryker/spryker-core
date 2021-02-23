@@ -9,6 +9,9 @@ namespace Spryker\Zed\MerchantGuiExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\TabsViewTransfer;
 
+/**
+ * Provides extension capabilities for the "TabsViewTransfer" expanding during build of the MerchantFormTabs
+ */
 interface MerchantFormTabExpanderPluginInterface
 {
     /**
