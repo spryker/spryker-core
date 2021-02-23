@@ -20,7 +20,7 @@ class SalesCheckoutRestrictDuplicatedOrdersPlugin extends AbstractPlugin impleme
 {
     /**
      * {@inheritDoc}
-     * - Restricts orders to be duplicated if quote transfer is sent again
+     * - Restricts order to be duplicated if quote transfer is sent again
      *
      * @api
      *
@@ -31,6 +31,6 @@ class SalesCheckoutRestrictDuplicatedOrdersPlugin extends AbstractPlugin impleme
      */
     public function checkCondition(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
-        return $this->getFacade()->restrictDuplicatedOrders($quoteTransfer, $checkoutResponseTransfer);
+        return $this->getFacade()->restrictDuplicatedOrder($quoteTransfer, $checkoutResponseTransfer);
     }
 }
