@@ -475,4 +475,19 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
             ->createOrderWriter()
             ->cancelOrder($orderCancelRequestTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
+     */
+    public function restrictDuplicatedOrders(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): CheckoutResponseTransfer
+    {
+        // TODO: Implement restrictDuplicatedOrders() method.
+    }
 }

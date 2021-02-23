@@ -420,4 +420,17 @@ interface SalesFacadeInterface
      * @return \Generated\Shared\Transfer\OrderCancelResponseTransfer
      */
     public function cancelOrder(OrderCancelRequestTransfer $orderCancelRequestTransfer): OrderCancelResponseTransfer;
+
+    /**
+     * Specification:
+     * - Checks QuoteTransfer::orderReference.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
+     */
+    public function restrictDuplicatedOrders(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): CheckoutResponseTransfer;
 }
