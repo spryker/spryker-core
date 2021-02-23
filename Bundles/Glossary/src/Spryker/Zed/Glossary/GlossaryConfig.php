@@ -26,8 +26,8 @@ class GlossaryConfig extends AbstractBundleConfig
     public function getGlossaryFilePaths()
     {
         $paths = array_merge(
-            glob(APPLICATION_SOURCE_DIR . '/*/*/*/Resources/glossary.yml'),
-            glob(APPLICATION_VENDOR_DIR . '/*/*/src/*/*/*/Resources/glossary.yml')
+            glob(APPLICATION_SOURCE_DIR . '/*/*/*/Resources/glossary.yml', GLOB_NOSORT),
+            glob(APPLICATION_VENDOR_DIR . '/*/*/src/*/*/*/Resources/glossary.yml', GLOB_NOSORT)
         );
 
         return $paths;
