@@ -79,4 +79,9 @@
         <property name="customerReference" type="string"/>
     </transfer>
 
+    <transfer name="RestTokenAttributesTransfer">
+        <property name="grantType" type="string"/>
+        <property name="username" type="string"/>
+        <property name="password" type="string"/>
+    </transfer>
 </transfers>

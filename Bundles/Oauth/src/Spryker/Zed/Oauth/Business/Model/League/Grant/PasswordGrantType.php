@@ -95,7 +95,7 @@ class PasswordGrantType extends AbstractGrant implements GrantTypeInterface
         if (!($user instanceof UserEntityInterface)) {
             $this->getEmitter()->emit($this->createRequestEvent(RequestEvent::USER_AUTHENTICATION_FAILED, $request));
 
-            throw OAuthServerException::invalidGrant();
+            throw OAuthServerException::invalidCredentials();
         }
 
         return $user;
