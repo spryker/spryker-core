@@ -79,7 +79,7 @@
         <property name="customerReference" type="string"/>
     </transfer>
 
-    <transfer name="RestTokenAttributesTransfer">
+    <transfer name="RestTokenAttributes">
         <property name="grantType" type="string"/>
         <property name="username" type="string"/>
         <property name="password" type="string"/>
