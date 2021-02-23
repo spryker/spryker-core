@@ -38,7 +38,7 @@ class CartItemExpander implements CartItemExpanderInterface
         RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
     ): CartItemRequestTransfer {
         $productOptionIds = $this->productOptionStorageReader->getProductOptionIdsByProductConcreteSku(
-            $restCartItemsAttributesTransfer->getSku()
+            $cartItemRequestTransfer->getSku()
         );
         foreach ($restCartItemsAttributesTransfer->getProductOptions() as $restCartItemsProductOptionTransfer) {
             if (!isset($productOptionIds[$restCartItemsProductOptionTransfer->getSku()])) {

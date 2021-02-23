@@ -60,7 +60,7 @@ class ProductConfigurationCartItemExpander implements ProductConfigurationCartIt
         }
 
         $productConfigurationInstanceTransfer = $this->productConfigurationStorageClient
-            ->findProductConfigurationInstanceBySku($restCartItemsAttributesTransfer->getSkuOrFail());
+            ->findProductConfigurationInstanceBySku($cartItemRequestTransfer->getSkuOrFail());
 
         if (!$productConfigurationInstanceTransfer) {
             return $cartItemRequestTransfer;

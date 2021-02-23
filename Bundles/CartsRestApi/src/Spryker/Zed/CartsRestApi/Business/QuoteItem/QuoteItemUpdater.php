@@ -98,10 +98,6 @@ class QuoteItemUpdater implements QuoteItemUpdaterInterface
             return $quoteResponseTransfer;
         }
 
-        if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $quoteResponseTransfer;
-        }
-
         if (!$this->quotePermissionChecker->checkQuoteWritePermission($quoteResponseTransfer->getQuoteTransfer())) {
             return $quoteResponseTransfer
                 ->setIsSuccessful(false)
@@ -126,7 +122,7 @@ class QuoteItemUpdater implements QuoteItemUpdaterInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function executeQuoteItemUpdate(
+    protected function executeQuoteItemUpdate(
         CartItemRequestTransfer $cartItemRequestTransfer,
         QuoteResponseTransfer $quoteResponseTransfer
     ): QuoteResponseTransfer {
