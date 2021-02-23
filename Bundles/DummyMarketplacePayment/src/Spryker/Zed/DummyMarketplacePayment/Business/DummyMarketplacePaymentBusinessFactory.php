@@ -9,6 +9,10 @@ namespace Spryker\Zed\DummyMarketplacePayment\Business;
 
 use Spryker\Zed\DummyMarketplacePayment\Business\Filter\PaymentMethodFilter;
 use Spryker\Zed\DummyMarketplacePayment\Business\Filter\PaymentMethodFilterInterface;
+use Spryker\Zed\DummyMarketplacePayment\Business\Payment\MarketplaceRefund;
+use Spryker\Zed\DummyMarketplacePayment\Business\Payment\MarketplaceRefundInterface;
+use Spryker\Zed\DummyMarketplacePayment\Dependency\Facade\DummyMarketplacePaymentToRefundInterface;
+use Spryker\Zed\DummyMarketplacePayment\DummyMarketplacePaymentDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -22,5 +26,23 @@ class DummyMarketplacePaymentBusinessFactory extends AbstractBusinessFactory
     public function createPaymentMethodFilter(): PaymentMethodFilterInterface
     {
         return new PaymentMethodFilter();
+    }
+
+    /**
+     * @return \Spryker\Zed\DummyMarketplacePayment\Business\Payment\MarketplaceRefundInterface
+     */
+    public function createMarketplaceRefund(): MarketplaceRefundInterface
+    {
+        return new MarketplaceRefund(
+            $this->getRefundFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\DummyMarketplacePayment\Dependency\Facade\DummyMarketplacePaymentToRefundInterface
+     */
+    public function getRefundFacade(): DummyMarketplacePaymentToRefundInterface
+    {
+        return $this->getProvidedDependency(DummyMarketplacePaymentDependencyProvider::FACADE_REFUND);
     }
 }
