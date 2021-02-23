@@ -26,7 +26,8 @@ class MerchantShipmentItemExpanderPlugin extends AbstractPlugin implements ItemE
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
-     *@api
+     *
+     * @api
      *
      */
     public function expandItems(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
