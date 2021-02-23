@@ -486,10 +486,29 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
      *
      * @return bool
      */
-    public function restrictDuplicatedOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool
+    public function checkOrderReference(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool
     {
         return $this->getFactory()
-            ->createOrderRestrictor()
+            ->createOrderReferenceManager()
             ->restrictDuplicatedOrder($quoteTransfer, $checkoutResponseTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return void
+     */
+    public function setOrderReference(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
+    {
+        $this->getFactory()
+            ->createOrderReferenceManager()
+            ->setOrderReference($quoteTransfer, $checkoutResponseTransfer);
+    }
+
+
 }

@@ -9,28 +9,24 @@ namespace Spryker\Zed\Sales\Communication\Plugin\Checkout;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface;
+use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPostSaveHookInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\Sales\Business\SalesFacadeInterface getFacade()
  * @method \Spryker\Zed\Sales\SalesConfig getConfig()
  */
-class SalesCheckoutRestrictDuplicatedOrdersPlugin extends AbstractPlugin implements CheckoutPreConditionInterface
+class SalesCheckoutOrderReferenceHookPlugin extends AbstractPlugin implements CheckoutPostSaveHookInterface
 {
     /**
-     * {@inheritDoc}
-     * - Restricts order to be duplicated if quote transfer is sent again
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
-     * @return bool
+     * @return void
      */
-    public function checkCondition(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
+    public function executeHook(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
-        return $this->getFacade()->checkOrderReference($quoteTransfer, $checkoutResponseTransfer);
+        $this->getFacade()->setOrderReference($quoteTransfer, $checkoutResponseTransfer);
     }
+
 }

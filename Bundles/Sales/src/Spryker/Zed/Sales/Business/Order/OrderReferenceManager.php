@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
-class OrderRestrictor
+class OrderReferenceManager
 {
     public function restrictDuplicatedOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool
     {
@@ -23,6 +23,20 @@ class OrderRestrictor
                 (new CheckoutErrorTransfer())->setMessage('Order already exists')
             );
             // TODO: maybe redirect to orders page?
+            return false;
         }
+
+        return true;
+    }
+
+    public function setOrderReference(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
+    {
+        if ($checkoutResponseTransfer->getSaveOrder() !== null) {
+            $quoteTransfer->setOrderReference(
+                $checkoutResponseTransfer->getSaveOrder()->getOrderReference()
+            );
+        }
+
+        // TODO: needs quoteClient
     }
 }
