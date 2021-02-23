@@ -16,7 +16,6 @@ class AuthRestApiConfig extends AbstractBundleConfig
 {
     public const RESOURCE_TOKEN = 'token';
 
-
     public const RESOURCE_ACCESS_TOKENS = 'access-tokens';
     public const RESOURCE_REFRESH_TOKENS = 'refresh-tokens';
 
