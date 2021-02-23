@@ -36,7 +36,7 @@ class DataExportConfig extends AbstractBundleConfig
      */
     public function getExportConfigurationsPath(): string
     {
-        return realpath(
+        return (string)realpath(
             APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . 'export' . DIRECTORY_SEPARATOR . 'config'
         );
     }

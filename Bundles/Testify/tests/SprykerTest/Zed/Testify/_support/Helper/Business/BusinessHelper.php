@@ -21,7 +21,6 @@ use Spryker\Zed\Kernel\Container;
 use SprykerTest\Shared\Testify\Helper\ClassResolverTrait;
 use SprykerTest\Shared\Testify\Helper\ConfigHelper;
 use SprykerTest\Shared\Testify\Helper\ConfigHelperTrait;
-use SprykerTest\Zed\Testify\Helper\Communication\DependencyProviderHelper;
 use Throwable;
 
 class BusinessHelper extends Module
