@@ -8,11 +8,13 @@
 namespace Spryker\Glue\AuthRestApi\Controller;
 
 use Generated\Shared\Transfer\OauthRequestTransfer;
-use Spryker\Client\AuthRestApi\AuthRestApiClient;
 use Spryker\Glue\Kernel\Controller\FormatAbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @method \Spryker\Glue\AuthRestApi\AuthRestApiFactory getFactory()
+ */
 class TokenResourceController extends FormatAbstractController
 {
     /**
@@ -24,13 +26,12 @@ class TokenResourceController extends FormatAbstractController
     {
         $oauthRequestTransfer = (new OauthRequestTransfer())->fromArray($httpRequest->request->all());
 
-        $authRestApiClient = new AuthRestApiClient();
-        $oauthResponseTransfer = $authRestApiClient->createAccessToken($oauthRequestTransfer);
+        $oauthResponseTransfer = $this->getFactory()->getClient()->createAccessToken($oauthRequestTransfer);
 
         $response = new JsonResponse();
         if (!$oauthResponseTransfer->getIsValid()) {
             /**
-             * https://tools.ietf.org/html/rfc6749#section-5.2
+             * @see https://tools.ietf.org/html/rfc6749#section-5.2
              */
             return $response->setData([
                 'error' => $oauthResponseTransfer->getError()->getErrorType(),
@@ -39,7 +40,7 @@ class TokenResourceController extends FormatAbstractController
         }
 
         /**
-         * https://tools.ietf.org/html/rfc6749#section-5.1
+         * @see https://tools.ietf.org/html/rfc6749#section-5.1
          */
         return $response->setData([
             'access_token' => $oauthResponseTransfer->getAccessToken(),
