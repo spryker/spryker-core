@@ -40,6 +40,16 @@
         <property name="anonymousCustomerReference" type="string"/>
         <property name="customerReference" type="string"/>
         <property name="isValid" type="bool"/>
+        <property name="error" type="OauthError"/>
+        <property name="accessToken" type="string"/>
+        <property name="tokenType" type="string"/>
+        <property name="expiresIn" type="string"/>
+        <property name="refreshToken" type="string"/>
+    </transfer>
+
+    <transfer name="OauthError">
+        <property name="errorType" type="string"/>
+        <property name="message" type="string"/>
     </transfer>
 
     <transfer name="RestUser">
