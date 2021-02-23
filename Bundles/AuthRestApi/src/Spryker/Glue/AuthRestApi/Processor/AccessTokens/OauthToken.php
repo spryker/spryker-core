@@ -9,10 +9,19 @@ namespace Spryker\Glue\AuthRestApi\Processor\AccessTokens;
 
 use Generated\Shared\Transfer\OauthRequestTransfer;
 use Spryker\Client\AuthRestApi\AuthRestApiClientInterface;
+use Spryker\Glue\AuthRestApi\AuthRestApiConfig;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class OauthToken implements OauthTokenInterface
 {
+    /**
+     * @var array
+     */
+    protected const ALLOWED_GRANT_TYPES = [
+        AuthRestApiConfig::CLIENT_GRANT_PASSWORD,
+        AuthRestApiConfig::CLIENT_GRANT_REFRESH_TOKEN,
+    ];
+
     /**
      * @var \Spryker\Client\AuthRestApi\AuthRestApiClientInterface
      */
@@ -33,8 +42,17 @@ class OauthToken implements OauthTokenInterface
      */
     public function createAccessToken(OauthRequestTransfer $oauthRequestTransfer): JsonResponse
     {
-        $oauthResponseTransfer = $this->authRestApiClient->createAccessToken($oauthRequestTransfer);
         $response = new JsonResponse();
+        if (!in_array($oauthRequestTransfer->getGrantType(), static::ALLOWED_GRANT_TYPES)) {
+            return $response->setData([
+                'error' => 'invalid_grant',
+                'error_description' => 'The provided authorization grant (e.g., authorization code, resource owner credentials) or refresh token '
+                    . 'is invalid, expired, revoked, does not match the redirection URI used in the authorization request, '
+                    . 'or was issued to another client.',
+            ])->setStatusCode(400);
+        }
+
+        $oauthResponseTransfer = $this->authRestApiClient->createAccessToken($oauthRequestTransfer);
         if (!$oauthResponseTransfer->getIsValid()) {
             /**
              * @see https://tools.ietf.org/html/rfc6749#section-5.2
