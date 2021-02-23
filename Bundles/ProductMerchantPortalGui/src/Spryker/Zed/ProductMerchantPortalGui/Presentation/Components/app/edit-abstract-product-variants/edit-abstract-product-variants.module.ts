@@ -4,9 +4,8 @@ import { EditAbstractProductVariantsComponent } from './edit-abstract-product-va
 import { TableModule } from '@spryker/table';
 
 @NgModule({
-  imports: [CommonModule, TableModule],
-  declarations: [EditAbstractProductVariantsComponent],
-  exports: [EditAbstractProductVariantsComponent],
+    imports: [CommonModule, TableModule],
+    declarations: [EditAbstractProductVariantsComponent],
+    exports: [EditAbstractProductVariantsComponent],
 })
-export class EditAbstractProductVariantsModule {
-}
+export class EditAbstractProductVariantsModule {}

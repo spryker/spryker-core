@@ -10,17 +10,16 @@ import { DateRangePickerModule } from '@spryker/date-picker';
 import { BulkEditProductVariantsComponent } from './bulk-edit-product-variants.component';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    NotificationModule,
-    CardModule,
-    ToggleModule,
-    FormItemModule,
-    CheckboxModule,
-    DateRangePickerModule,
-  ],
-  declarations: [BulkEditProductVariantsComponent],
-  exports: [BulkEditProductVariantsComponent],
+    imports: [
+        CommonModule,
+        NotificationModule,
+        CardModule,
+        ToggleModule,
+        FormItemModule,
+        CheckboxModule,
+        DateRangePickerModule,
+    ],
+    declarations: [BulkEditProductVariantsComponent],
+    exports: [BulkEditProductVariantsComponent],
 })
-export class BulkEditProductVariantsModule {
-}
+export class BulkEditProductVariantsModule {}
