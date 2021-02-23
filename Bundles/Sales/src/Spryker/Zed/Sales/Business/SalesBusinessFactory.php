@@ -403,7 +403,9 @@ class SalesBusinessFactory extends AbstractBusinessFactory
      */
     public function createOrderReferenceManager(): OrderReferenceManager
     {
-        return new OrderReferenceManager();
+        return new OrderReferenceManager(
+            $this->getProvidedDependency(SalesDependencyProvider::CLIENT_QUOTE)
+        );
     }
 
     /**

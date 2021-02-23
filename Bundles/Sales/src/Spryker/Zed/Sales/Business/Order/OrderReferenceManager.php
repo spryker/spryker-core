@@ -10,9 +10,17 @@ namespace Spryker\Zed\Sales\Business\Order;
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\Sales\Dependency\Client\SalesToQuoteClientInterface;
 
 class OrderReferenceManager
 {
+    private $quoteClient;
+
+    public function __construct(SalesToQuoteClientInterface $quoteClient)
+    {
+        $this->quoteClient = $quoteClient;
+    }
+
     public function restrictDuplicatedOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool
     {
         // TODO: restrict order creation
@@ -37,6 +45,6 @@ class OrderReferenceManager
             );
         }
 
-        // TODO: needs quoteClient
+        $this->quoteClient->setQuote($quoteTransfer);
     }
 }

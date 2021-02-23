@@ -18,12 +18,14 @@ use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToSequenceNumberBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToUserBridge;
 use Spryker\Zed\Sales\Dependency\Service\SalesToUtilSanitizeBridge;
+use Spryker\Zed\Sales\Dependency\Client\SalesToQuoteClientBridge;
 
 /**
  * @method \Spryker\Zed\Sales\SalesConfig getConfig()
  */
 class SalesDependencyProvider extends AbstractBundleDependencyProvider
 {
+    public const CLIENT_QUOTE = 'CLIENT_QUOTE';
     public const FACADE_COUNTRY = 'FACADE_COUNTRY';
     public const FACADE_OMS = 'FACADE_OMS';
     public const FACADE_SEQUENCE_NUMBER = 'FACADE_SEQUENCE_NUMBER';
@@ -82,6 +84,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addSearchOrderExpanderPlugins($container);
         $container = $this->addOrderSearchQueryExpanderPlugins($container);
         $container = $this->addCustomerOrderAccessCheckPlugins($container);
+        $container = $this->addQuoteClient($container);
 
         return $container;
     }
@@ -438,6 +441,20 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::PLUGINS_ORDER_ITEMS_TABLE_EXPANDER, function () {
             return $this->getOrderItemsTableExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addQuoteClient(Container $container)
+    {
+        $container->set(static::CLIENT_QUOTE, function (Container $container) {
+            return new SalesToQuoteClientBridge($container->getLocator()->quote()->client());
         });
 
         return $container;
