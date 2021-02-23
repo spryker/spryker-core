@@ -1,4 +1,6 @@
 namespace: ProductConfigurationsPriceProductVolumesRestApi
+include:
+    - tests/SprykerTest/Glue/ProductConfigurationsPriceProductVolumesRestApi
 actor: Tester
 paths:
     tests: tests
