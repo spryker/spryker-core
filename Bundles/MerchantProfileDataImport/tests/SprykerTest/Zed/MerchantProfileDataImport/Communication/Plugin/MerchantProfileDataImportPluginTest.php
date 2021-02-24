@@ -26,7 +26,7 @@ use Spryker\Zed\MerchantProfileDataImport\MerchantProfileDataImportConfig;
  */
 class MerchantProfileDataImportPluginTest extends Unit
 {
-    public const MERCHANT_KEY = 'merchant-profile-data-import-test-key';
+    public const MERCHANT_REFERENCE = 'merchant-profile-data-import-test-reference';
 
     /**
      * @var \SprykerTest\Zed\MerchantProfileDataImport\MerchantProfileDataImportCommunicationTester
@@ -36,13 +36,21 @@ class MerchantProfileDataImportPluginTest extends Unit
     /**
      * @return void
      */
+    protected function setUp(): void
+    {
+        parent::setUp();
+    }
+
+    /**
+     * @return void
+     */
     public function testMerchantProfileDataImportFacade(): void
     {
         // Arrange
-        $merchantEntity = $this->tester->findMerchantByKey(static::MERCHANT_KEY);
+        $merchantEntity = $this->tester->findMerchantByReference(static::MERCHANT_REFERENCE);
         if ($merchantEntity === null) {
             $this->tester->haveMerchant([
-                'merchant_key' => static::MERCHANT_KEY,
+                'merchant_reference' => static::MERCHANT_REFERENCE,
             ]);
         }
 
@@ -56,7 +64,7 @@ class MerchantProfileDataImportPluginTest extends Unit
 
         // Act
         $dataImportPlugin->import($dataImportConfigurationTransfer);
-        $merchantEntity = $this->tester->findMerchantByKey(static::MERCHANT_KEY);
+        $merchantEntity = $this->tester->findMerchantByReference(static::MERCHANT_REFERENCE);
 
         // Assert
 

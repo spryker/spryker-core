@@ -21,6 +21,13 @@ use Spryker\Zed\MerchantProductOfferDataImport\Business\Model\DataSet\MerchantPr
 
 class MerchantProductOfferWriterStep implements DataImportStepInterface, DataImportStepAfterExecuteInterface
 {
+    protected const PRODUCT_OFFER_REFERENCE = MerchantProductOfferDataSetInterface::PRODUCT_OFFER_REFERENCE;
+    protected const ID_MERCHANT = MerchantProductOfferDataSetInterface::ID_MERCHANT;
+    protected const CONCRETE_SKU = MerchantProductOfferDataSetInterface::CONCRETE_SKU;
+    protected const MERCHANT_SKU = MerchantProductOfferDataSetInterface::MERCHANT_SKU;
+    protected const IS_ACTIVE = MerchantProductOfferDataSetInterface::IS_ACTIVE;
+    protected const APPROVAL_STATUS = MerchantProductOfferDataSetInterface::APPROVAL_STATUS;
+
     /**
      * @var \Generated\Shared\Transfer\EventEntityTransfer[]
      */
@@ -48,18 +55,18 @@ class MerchantProductOfferWriterStep implements DataImportStepInterface, DataImp
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        if (empty($dataSet[MerchantProductOfferDataSetInterface::PRODUCT_OFFER_REFERENCE])) {
+        if (empty($dataSet[static::PRODUCT_OFFER_REFERENCE])) {
             throw new EntityNotFoundException('Product offer reference is a required field');
         }
 
         $productOfferEntity = SpyProductOfferQuery::create()
-            ->filterByProductOfferReference($dataSet[MerchantProductOfferDataSetInterface::PRODUCT_OFFER_REFERENCE])
+            ->filterByProductOfferReference($dataSet[static::PRODUCT_OFFER_REFERENCE])
             ->findOneOrCreate();
-        $productOfferEntity->setFkMerchant($dataSet[MerchantProductOfferDataSetInterface::ID_MERCHANT]);
-        $productOfferEntity->setConcreteSku($dataSet[MerchantProductOfferDataSetInterface::CONCRETE_SKU]);
-        $productOfferEntity->setMerchantSku($dataSet[MerchantProductOfferDataSetInterface::MERCHANT_SKU] ?: null);
-        $productOfferEntity->setIsActive($dataSet[MerchantProductOfferDataSetInterface::IS_ACTIVE]);
-        $productOfferEntity->setApprovalStatus($dataSet[MerchantProductOfferDataSetInterface::APPROVAL_STATUS]);
+        $productOfferEntity->setFkMerchant($dataSet[static::ID_MERCHANT]);
+        $productOfferEntity->setConcreteSku($dataSet[static::CONCRETE_SKU]);
+        $productOfferEntity->setMerchantSku($dataSet[static::MERCHANT_SKU] ?: null);
+        $productOfferEntity->setIsActive($dataSet[static::IS_ACTIVE]);
+        $productOfferEntity->setApprovalStatus($dataSet[static::APPROVAL_STATUS]);
         $productOfferEntity->save();
 
         $this->addPublishEvent($productOfferEntity);
