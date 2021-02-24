@@ -328,9 +328,9 @@ class ProductTable extends AbstractProductTable
     /**
      * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
      *
-     * @return mixed
+     * @return string|null
      */
-    protected function resolveProductName(SpyProductAbstract $productAbstractEntity)
+    protected function resolveProductName(SpyProductAbstract $productAbstractEntity): ?string
     {
         return $productAbstractEntity->getVirtualColumn(static::COL_NAME) ?? $productAbstractEntity->getVirtualColumn(static::COL_NAME_FALLBACK);
     }
