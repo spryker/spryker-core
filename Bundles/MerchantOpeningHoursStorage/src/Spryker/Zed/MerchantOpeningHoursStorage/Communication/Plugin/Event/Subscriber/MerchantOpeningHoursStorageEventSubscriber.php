@@ -16,6 +16,8 @@ use Spryker\Zed\MerchantOpeningHoursStorage\Communication\Plugin\Event\Listener\
 use Spryker\Zed\MerchantOpeningHoursStorage\Communication\Plugin\Event\Listener\MerchantOpeningHoursWeekdayScheduleStoragePublishListener;
 
 /**
+ * @deprecated Use {@link \MerchantOpeningHoursStoragePublisherPlugin} instead
+ *
  * @method \Spryker\Zed\MerchantOpeningHoursStorage\MerchantOpeningHoursStorageConfig getConfig()
  * @method \Spryker\Zed\MerchantOpeningHoursStorage\Business\MerchantOpeningHoursStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\MerchantOpeningHoursStorage\Communication\MerchantOpeningHoursStorageCommunicationFactory getFactory()
