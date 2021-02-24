@@ -16,7 +16,13 @@
     </transfer>
 
     <transfer name="RestOrderItemsAttributes">
-        <property name="salesOrderItemConfiguration" type="RestProductConfigurationInstanceAttributes"/>
+        <property name="salesOrderItemConfiguration" type="RestSalesOrderItemProductConfigurationInstanceAttributes"/>
+    </transfer>
+
+    <transfer name="RestSalesOrderItemProductConfigurationInstanceAttributes">
+        <property name="displayData" type="string"/>
+        <property name="configuration" type="string"/>
+        <property name="configuratorKey" type="string"/>
     </transfer>
 
     <transfer name="ProductConfigurationInstance">

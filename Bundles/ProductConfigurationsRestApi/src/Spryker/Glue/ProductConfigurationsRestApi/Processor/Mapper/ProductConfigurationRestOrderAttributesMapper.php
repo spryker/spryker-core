@@ -9,7 +9,7 @@ namespace Spryker\Glue\ProductConfigurationsRestApi\Processor\Mapper;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\RestOrderItemsAttributesTransfer;
-use Generated\Shared\Transfer\RestProductConfigurationInstanceAttributesTransfer;
+use Generated\Shared\Transfer\RestSalesOrderItemProductConfigurationInstanceAttributesTransfer;
 
 class ProductConfigurationRestOrderAttributesMapper implements ProductConfigurationRestOrderAttributesMapperInterface
 {
@@ -28,9 +28,9 @@ class ProductConfigurationRestOrderAttributesMapper implements ProductConfigurat
             return $restOrderItemsAttributesTransfer;
         }
 
-        $restProductConfigurationInstanceAttributesTransfer = (new RestProductConfigurationInstanceAttributesTransfer())
+        $restSalesOrderItemProductConfigurationInstanceAttributesTransfer = (new RestSalesOrderItemProductConfigurationInstanceAttributesTransfer())
             ->fromArray($salesOrderItemConfigurationTransfer->toArray(), true);
 
-        return $restOrderItemsAttributesTransfer->setSalesOrderItemConfiguration($restProductConfigurationInstanceAttributesTransfer);
+        return $restOrderItemsAttributesTransfer->setSalesOrderItemConfiguration($restSalesOrderItemProductConfigurationInstanceAttributesTransfer);
     }
 }

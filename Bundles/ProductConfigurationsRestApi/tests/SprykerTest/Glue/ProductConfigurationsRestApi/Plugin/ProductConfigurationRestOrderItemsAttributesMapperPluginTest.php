@@ -48,10 +48,10 @@ class ProductConfigurationRestOrderItemsAttributesMapperPluginTest extends Unit
         $this->assertNotNull($restOrderItemsAttributesTransfer->getSalesOrderItemConfiguration());
 
         $productConfigurationInstanceTransfer = $itemTransfer->getSalesOrderItemConfiguration();
-        $restProductConfigurationInstanceAttributesTransfer = $restOrderItemsAttributesTransfer->getSalesOrderItemConfiguration();
-        $this->assertSame($restProductConfigurationInstanceAttributesTransfer->getConfiguration(), $productConfigurationInstanceTransfer->getConfiguration());
-        $this->assertSame($restProductConfigurationInstanceAttributesTransfer->getConfiguratorKey(), $productConfigurationInstanceTransfer->getConfiguratorKey());
-        $this->assertSame($restProductConfigurationInstanceAttributesTransfer->getDisplayData(), $productConfigurationInstanceTransfer->getDisplayData());
+        $restSalesOrderItemProductConfigurationInstanceAttributesTransfer = $restOrderItemsAttributesTransfer->getSalesOrderItemConfiguration();
+        $this->assertSame($restSalesOrderItemProductConfigurationInstanceAttributesTransfer->getConfiguration(), $productConfigurationInstanceTransfer->getConfiguration());
+        $this->assertSame($restSalesOrderItemProductConfigurationInstanceAttributesTransfer->getConfiguratorKey(), $productConfigurationInstanceTransfer->getConfiguratorKey());
+        $this->assertSame($restSalesOrderItemProductConfigurationInstanceAttributesTransfer->getDisplayData(), $productConfigurationInstanceTransfer->getDisplayData());
     }
 
     /**
@@ -61,7 +61,7 @@ class ProductConfigurationRestOrderItemsAttributesMapperPluginTest extends Unit
     {
         // Arrange
         $itemTransfer = (new ItemBuilder())->build();
-        $itemTransfer->setProductConfigurationInstance(null);
+        $itemTransfer->setSalesOrderItemConfiguration(null);
         $restOrderItemsAttributesTransfer = (new RestOrderItemsAttributesBuilder())->build();
 
         $productConfigurationRestOrderItemsAttributesMapperPlugin = new ProductConfigurationRestOrderItemsAttributesMapperPlugin();
