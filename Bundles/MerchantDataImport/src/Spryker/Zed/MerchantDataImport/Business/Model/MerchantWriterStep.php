@@ -23,7 +23,6 @@ use Spryker\Zed\Url\Dependency\UrlEvents;
 class MerchantWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
     protected const REQUIRED_DATA_SET_KEYS = [
-        MerchantDataSetInterface::MERCHANT_KEY,
         MerchantDataSetInterface::MERCHANT_REFERENCE,
         MerchantDataSetInterface::NAME,
         MerchantDataSetInterface::REGISTRATION_NUMBER,
@@ -54,7 +53,7 @@ class MerchantWriterStep extends PublishAwareStep implements DataImportStepInter
         $this->validateDataSet($dataSet);
 
         $merchantEntity = SpyMerchantQuery::create()
-            ->filterByMerchantKey($dataSet[MerchantDataSetInterface::MERCHANT_KEY])
+            ->filterByMerchantReference($dataSet[MerchantDataSetInterface::MERCHANT_REFERENCE])
             ->findOneOrCreate();
 
         $merchantEntity
@@ -62,7 +61,6 @@ class MerchantWriterStep extends PublishAwareStep implements DataImportStepInter
             ->setRegistrationNumber($dataSet[MerchantDataSetInterface::REGISTRATION_NUMBER])
             ->setStatus($dataSet[MerchantDataSetInterface::STATUS])
             ->setEmail($dataSet[MerchantDataSetInterface::EMAIL])
-            ->setMerchantReference($dataSet[MerchantDataSetInterface::MERCHANT_REFERENCE])
             ->setIsActive($dataSet[MerchantDataSetInterface::IS_ACTIVE])
             ->save();
 

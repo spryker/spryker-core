@@ -83,10 +83,9 @@ class DataImporterCollectionTest extends Unit
             $dataImporterPluginB,
         ]);
 
-        $dataImportCollectionMock->expects($this->at(0))->method('executeDataImporter')->with($dataImporterA);
-        $dataImportCollectionMock->expects($this->at(1))->method('executeDataImporter')->with($dataImporterPluginA);
-        $dataImportCollectionMock->expects($this->at(2))->method('executeDataImporter')->with($dataImporterB);
-        $dataImportCollectionMock->expects($this->at(3))->method('executeDataImporter')->with($dataImporterPluginB);
+        $dataImportCollectionMock->expects($this->exactly(4))
+            ->method('executeDataImporter')
+            ->withConsecutive([$dataImporterA], [$dataImporterPluginA], [$dataImporterB], [$dataImporterPluginB]);
 
         $dataImportCollectionMock->import();
     }
@@ -109,9 +108,9 @@ class DataImporterCollectionTest extends Unit
             [$dataImporterPluginA, 'catface'],
         ]);
 
-        $dataImportCollectionMock->expects($this->at(0))->method('executeDataImporter')->with($dataImporterA);
-        $dataImportCollectionMock->expects($this->at(1))->method('executeDataImporter')->with($dataImporterB);
-        $dataImportCollectionMock->expects($this->at(2))->method('executeDataImporter')->with($dataImporterPluginA);
+        $dataImportCollectionMock->expects($this->exactly(3))
+            ->method('executeDataImporter')
+            ->withConsecutive([$dataImporterA], [$dataImporterB], [$dataImporterPluginA]);
 
         $dataImportCollectionMock->import();
     }
@@ -134,9 +133,9 @@ class DataImporterCollectionTest extends Unit
             $dataImporterPlugin,
         ]);
 
-        $dataImportCollectionMock->expects($this->at(0))->method('executeDataImporter')->with($dataImporter);
-        $dataImportCollectionMock->expects($this->at(1))->method('executeDataImporter')->with($dataImporterGroupAware);
-        $dataImportCollectionMock->expects($this->at(2))->method('executeDataImporter')->with($dataImporterPlugin);
+        $dataImportCollectionMock->expects($this->exactly(3))
+            ->method('executeDataImporter')
+            ->withConsecutive([$dataImporter], [$dataImporterGroupAware], [$dataImporterPlugin]);
 
         $dataImportCollectionMock->import();
     }

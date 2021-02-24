@@ -134,10 +134,6 @@ class PropelInstallHelper extends Module
     private function copyFromTestBundle(): void
     {
         $testBundleSchemaDirectory = Configuration::projectDir() . 'src/Spryker/Zed/*/Persistence/Propel/Schema';
-        if (count(glob($testBundleSchemaDirectory)) === 0) {
-            return;
-        }
-
         $finder = $this->getBundleSchemaFinder($testBundleSchemaDirectory);
 
         if ($finder->count() === 0) {

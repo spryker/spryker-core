@@ -16,6 +16,8 @@ use Spryker\Zed\PriceProductOfferDataImport\Business\DataSet\PriceProductOfferDa
 
 class CurrencyToIdCurrencyStep implements DataImportStepInterface
 {
+    protected const CURRENCY = PriceProductOfferDataSetInterface::CURRENCY;
+
     /**
      * @var array
      */
@@ -30,7 +32,7 @@ class CurrencyToIdCurrencyStep implements DataImportStepInterface
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        $currencyCode = $dataSet[PriceProductOfferDataSetInterface::CURRENCY];
+        $currencyCode = $dataSet[static::CURRENCY];
 
         if (!isset($this->idCurrencyCache[$currencyCode])) {
             $currencyQuery = SpyCurrencyQuery::create();

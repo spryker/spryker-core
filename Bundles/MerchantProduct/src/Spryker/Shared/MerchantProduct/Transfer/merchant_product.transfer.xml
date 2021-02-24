@@ -16,6 +16,7 @@
         <property name="idMerchantProductAbstract" type="int"/>
         <property name="idProductAbstract" type="int"/>
         <property name="idMerchant" type="int"/>
+        <property name="productAbstract" type="ProductAbstract"/>
     </transfer>
 
     <transfer name="MerchantProductCollection">
@@ -42,4 +43,27 @@
         <property name="merchantReference" type="string"/>
         <property name="productOfferReference" type="string"/>
     </transfer>
+
+    <transfer name="ProductAbstract">
+        <property name="idProductAbstract" type="int"/>
+    </transfer>
+
+    <transfer name="ProductAbstractResponse">
+        <property name="productAbstract" type="ProductAbstract"/>
+        <property name="isSuccessful" type="bool"/>
+        <property name="messages" type="Message[]" singular="message"/>
+    </transfer>
+
+    <transfer name="ValidationResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="validationErrors" type="ValidationError[]" singular="validationError"/>
+    </transfer>
+
+    <transfer name="ValidationError">
+        <property name="message" type="string"/>
+        <property name="root" type="object"/>
+        <property name="propertyPath" type="string"/>
+        <property name="invalidValue" type="string"/>
+    </transfer>
+
 </transfers>

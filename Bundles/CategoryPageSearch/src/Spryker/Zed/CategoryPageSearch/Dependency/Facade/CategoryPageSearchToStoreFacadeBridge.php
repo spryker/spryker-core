@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\CategoryPageSearch\Dependency\Facade;
 
-use Generated\Shared\Transfer\StoreTransfer;
-
 class CategoryPageSearchToStoreFacadeBridge implements CategoryPageSearchToStoreFacadeInterface
 {
     /**
@@ -25,20 +23,10 @@ class CategoryPageSearchToStoreFacadeBridge implements CategoryPageSearchToStore
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     *
      * @return \Generated\Shared\Transfer\StoreTransfer[]
      */
-    public function getStoresWithSharedPersistence(StoreTransfer $storeTransfer)
+    public function getAllStores()
     {
-        return $this->storeFacade->getStoresWithSharedPersistence($storeTransfer);
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\StoreTransfer
-     */
-    public function getCurrentStore()
-    {
-        return $this->storeFacade->getCurrentStore();
+        return $this->storeFacade->getAllStores();
     }
 }

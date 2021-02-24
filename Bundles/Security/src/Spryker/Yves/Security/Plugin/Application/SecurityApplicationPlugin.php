@@ -1128,23 +1128,24 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
                 $targetUrl = $options['target_url'] ?? '/';
                 $this->addSecurityRoute('get', $tmp);
 
-                if (class_exists(LogoutEvent::class)) {
+                $logoutEventClassExist = class_exists(LogoutEvent::class);
+                /** @var \Symfony\Contracts\EventDispatcher\EventDispatcherInterface|\Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher */
+                $eventDispatcher = $this->getDispatcher($container);
+                if ($logoutEventClassExist) {
                     $httpUtils = $container->get(static::SERVICE_SECURITY_HTTP_UTILS);
                     $this->getDispatcher($container)->addSubscriber(new DefaultLogoutListener($httpUtils, $targetUrl));
                     $this->getDispatcher($container)->addSubscriber(new SessionLogoutListener());
                 }
 
-                /** @var \Symfony\Contracts\EventDispatcher\EventDispatcherInterface $eventDispatcher */
-                $eventDispatcher = $this->getDispatcher($container);
                 $listener = new LogoutListener(
                     $container->get(static::SERVICE_SECURITY_TOKEN_STORAGE),
                     $container->get(static::SERVICE_SECURITY_HTTP_UTILS),
-                    (class_exists(LogoutEvent::class)) ? $eventDispatcher : $this->getLogoutHandler($container, $name, $options),
+                    ($logoutEventClassExist) ? $eventDispatcher : $this->getLogoutHandler($container, $name, $options),
                     $options,
                     $this->getCsrfTokenManager($container, $options)
                 );
 
-                if (!class_exists(LogoutEvent::class)) {
+                if (!$logoutEventClassExist) {
                     $listener = $this->addSessionLogoutHandler($listener, $options);
                 }
 

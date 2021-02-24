@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\PriceProduct\Persistence;
 
+use ArrayObject;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\QueryCriteriaTransfer;
@@ -168,4 +169,13 @@ interface PriceProductRepositoryInterface
     public function isPriceProductByProductIdentifierAndPriceTypeExists(
         PriceProductTransfer $priceProductTransfer
     ): bool;
+
+    /**
+     * @phpstan-return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
+     *
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function getProductPricesByCriteria(PriceProductCriteriaTransfer $priceProductCriteriaTransfer): ArrayObject;
 }

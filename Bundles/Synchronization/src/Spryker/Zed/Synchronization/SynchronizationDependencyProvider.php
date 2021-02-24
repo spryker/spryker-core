@@ -9,6 +9,7 @@ namespace Spryker\Zed\Synchronization;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Synchronization\Communication\Plugin\Synchronization\SynchronizationDataQueryExpanderOffsetLimitStrategyPlugin;
 use Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToQueueClientBridge;
 use Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToSearchClientBridge;
 use Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToStorageClientBridge;
@@ -24,6 +25,7 @@ class SynchronizationDependencyProvider extends AbstractBundleDependencyProvider
     public const CLIENT_QUEUE = 'CLIENT_QUEUE';
     public const SERVICE_UTIL_ENCODING = 'UTIL_ENCODING_SERVICE';
     public const PLUGINS_SYNCHRONIZATION_DATA = 'PLUGINS_SYNCHRONIZATION_DATA';
+    public const PLUGIN_SYNCHRONIZATION_DATA_QUERY_EXPANDER_STRATEGY = 'PLUGIN_SYNCHRONIZATION_DATA_QUERY_EXPANDER_STRATEGY';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -37,6 +39,7 @@ class SynchronizationDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addQueueClient($container);
         $container = $this->addUtilEncodingService($container);
         $container = $this->addSynchronizationDataPlugins($container);
+        $container = $this->addSynchronizationDataQueryExpanderStrategyPlugin($container);
 
         return $container;
     }
@@ -129,5 +132,27 @@ class SynchronizationDependencyProvider extends AbstractBundleDependencyProvider
     protected function getSynchronizationDataPlugins()
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addSynchronizationDataQueryExpanderStrategyPlugin($container)
+    {
+        $container->set(static::PLUGIN_SYNCHRONIZATION_DATA_QUERY_EXPANDER_STRATEGY, function (Container $container) {
+            return $this->getSynchronizationDataQueryExpanderStrategyPlugin();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryExpanderStrategyPluginInterface
+     */
+    protected function getSynchronizationDataQueryExpanderStrategyPlugin()
+    {
+        return new SynchronizationDataQueryExpanderOffsetLimitStrategyPlugin();
     }
 }
