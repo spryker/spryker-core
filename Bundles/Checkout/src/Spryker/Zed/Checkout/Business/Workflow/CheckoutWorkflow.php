@@ -78,10 +78,13 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
             return $checkoutResponseTransfer;
         }
 
-        $quoteTransfer = $this->doPreSave($quoteTransfer, $checkoutResponseTransfer);
-        $quoteTransfer = $this->doSaveOrder($quoteTransfer, $checkoutResponseTransfer);
+        if ($quoteTransfer->getOrderReference() === null) {
+            $quoteTransfer = $this->doPreSave($quoteTransfer, $checkoutResponseTransfer);
+            $quoteTransfer = $this->doSaveOrder($quoteTransfer, $checkoutResponseTransfer);
 
-        $this->runStateMachine($checkoutResponseTransfer->getSaveOrder());
+            $this->runStateMachine($checkoutResponseTransfer->getSaveOrder());
+        }
+
         $this->doPostSave($quoteTransfer, $checkoutResponseTransfer);
 
         return $checkoutResponseTransfer;

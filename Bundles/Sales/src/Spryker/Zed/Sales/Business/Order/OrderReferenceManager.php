@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Sales\Business\Order;
 
-use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Sales\Dependency\Client\SalesToQuoteClientInterface;
@@ -23,15 +22,10 @@ class OrderReferenceManager
 
     public function checkOrderReference(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool
     {
-        // TODO: restrict order creation
-
         if ($quoteTransfer->getOrderReference() !== null) {
-            $checkoutResponseTransfer->addError(
-            // TODO: add proper message with translation
-                (new CheckoutErrorTransfer())->setMessage('Order already exists')
+            $checkoutResponseTransfer->getSaveOrder()->setOrderReference(
+                $quoteTransfer->getOrderReference()
             );
-            // TODO: maybe redirect to orders page?
-            return false;
         }
 
         return true;
@@ -39,12 +33,14 @@ class OrderReferenceManager
 
     public function setOrderReference(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
-        if ($checkoutResponseTransfer->getSaveOrder() !== null) {
+        if ($quoteTransfer->getOrderReference() === null
+            && $checkoutResponseTransfer->getIsSuccess()
+            && $checkoutResponseTransfer->getSaveOrder() !== null
+        ) {
             $quoteTransfer->setOrderReference(
                 $checkoutResponseTransfer->getSaveOrder()->getOrderReference()
             );
+            $this->quoteClient->setQuote($quoteTransfer);
         }
-
-        $this->quoteClient->setQuote($quoteTransfer);
     }
 }
