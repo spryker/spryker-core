@@ -148,7 +148,8 @@ class ProductTable extends AbstractProductTable
             ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME, static::COL_NAME)
             ->leftJoinSpyProductAbstractLocalizedAttributes(static::RELATION_LOCALE_FALLBACK)
             ->withColumn(static::RELATION_LOCALE_FALLBACK . '.name', static::COL_NAME_FALLBACK)
-            ->withColumn(SpyTaxSetTableMap::COL_NAME, static::COL_TAX_SET);
+            ->withColumn(SpyTaxSetTableMap::COL_NAME, static::COL_TAX_SET)
+            ->groupByIdProductAbstract();
 
         $query = $this->expandPropelQuery($query);
 
