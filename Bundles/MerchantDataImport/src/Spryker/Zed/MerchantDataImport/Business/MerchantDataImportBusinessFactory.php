@@ -10,7 +10,7 @@ namespace Spryker\Zed\MerchantDataImport\Business;
 use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
 use Spryker\Zed\DataImport\Business\Model\DataImporterInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
-use Spryker\Zed\MerchantDataImport\Business\MerchantStore\Step\MerchantKeyToIdMerchantStep;
+use Spryker\Zed\MerchantDataImport\Business\MerchantStore\Step\MerchantReferenceToIdMerchantStep;
 use Spryker\Zed\MerchantDataImport\Business\MerchantStore\Step\MerchantStoreWriterStep;
 use Spryker\Zed\MerchantDataImport\Business\MerchantStore\Step\StoreNameToIdStoreStep;
 use Spryker\Zed\MerchantDataImport\Business\Model\DataSet\MerchantDataSetInterface;
@@ -55,7 +55,7 @@ class MerchantDataImportBusinessFactory extends DataImportBusinessFactory
         );
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
-        $dataSetStepBroker->addStep($this->createMerchantKeyToIdMerchantStep())
+        $dataSetStepBroker->addStep($this->createMerchantReferenceToIdMerchantStep())
             ->addStep($this->createStoreNameToIdStoreStep())
             ->addStep(new MerchantStoreWriterStep());
 
@@ -67,9 +67,9 @@ class MerchantDataImportBusinessFactory extends DataImportBusinessFactory
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
      */
-    public function createMerchantKeyToIdMerchantStep(): DataImportStepInterface
+    public function createMerchantReferenceToIdMerchantStep(): DataImportStepInterface
     {
-        return new MerchantKeyToIdMerchantStep();
+        return new MerchantReferenceToIdMerchantStep();
     }
 
     /**
