@@ -9,7 +9,6 @@ namespace Spryker\Client\ProductStorage\Filter;
 
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToUtilSanitizeServiceInterface;
-use Spryker\Shared\Product\ProductConfig;
 
 class ProductAttributeFilter implements ProductAttributeFilterInterface
 {
