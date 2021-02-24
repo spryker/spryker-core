@@ -75,8 +75,11 @@ class MerchantSalesReturnFacadeTest extends Unit
         $returnTransfer = new ReturnTransfer();
 
         foreach ($saveOrderTransfer->getOrderItems() as $orderItem) {
+            $orderItemTransfer = (new ItemTransfer())
+                ->setIdSalesOrderItem(324)
+                ->setMerchantReference(static::TEST_MERCHANT_REFERENCE_1);
             $returnItemTransfer = new ReturnItemTransfer();
-            $returnItemTransfer->setOrderItem(new ItemTransfer());
+            $returnItemTransfer->setOrderItem($orderItemTransfer);
             $returnTransfer->addReturnItem($returnItemTransfer);
         }
 
