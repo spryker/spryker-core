@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\MerchantUserCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantUserTransfer;
 use Generated\Shared\Transfer\UserCriteriaTransfer;
+use Generated\Shared\Transfer\UserPasswordResetRequestTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Orm\Zed\MerchantUser\Persistence\SpyMerchantUser;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface;
@@ -37,6 +38,10 @@ class MerchantUserFacadeTest extends Unit
      * @see \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_STATUS_BLOCKED
      */
     protected const USER_STATUS_BLOCKED = 'blocked';
+
+    protected const USER_AUTHENTICATION_TOKEN = 'token';
+
+    protected const USER_PASSWORD = 'password';
 
     /**
      * @var \Generated\Shared\Transfer\MerchantUserTransfer
@@ -67,7 +72,7 @@ class MerchantUserFacadeTest extends Unit
 
         $this->userPasswordResetFacadeMock = $this->getMockBuilder(MerchantUserToUserPasswordResetFacadeInterface::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['requestPasswordReset'])
+            ->onlyMethods(['requestPasswordReset', 'isValidPasswordResetToken', 'setNewPassword'])
             ->getMockForAbstractClass();
 
         $this->userFacadeMock = $this->getMockBuilder(MerchantUserToUserFacadeInterface::class)
@@ -401,6 +406,71 @@ class MerchantUserFacadeTest extends Unit
 
         // Act
         $this->tester->getFacade()->authenticateMerchantUser($merchantUserTransfer->setUser($userTransfer));
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindUserCallUserFacade(): void
+    {
+        // Arrange
+        $this->initializeFacadeMocks();
+        $userTransfer = $this->tester->haveUser();
+
+        // Assert
+        $this->userFacadeMock->expects($this->once())->method('findUser');
+
+        // Act
+        $this->tester->getFacade()->findUser((new UserCriteriaTransfer())->setIdUser($userTransfer->getIdUser()));
+    }
+
+    /**
+     * @return void
+     */
+    public function testRequestPasswordResetCallRequestPasswordResetFacade(): void
+    {
+        // Arrange
+        $this->initializeFacadeMocks();
+        $userTransfer = $this->tester->haveUser();
+
+        // Assert
+        $this->userPasswordResetFacadeMock->expects($this->once())->method('requestPasswordReset');
+
+        // Act
+        $this->tester->getFacade()->requestPasswordReset(
+            (new UserPasswordResetRequestTransfer())
+                ->setEmail($userTransfer->getUsername())
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsValidPasswordResetTokenCallRequestPasswordResetFacade(): void
+    {
+        /// Arrange
+        $this->initializeFacadeMocks();
+
+        // Assert
+        $this->userPasswordResetFacadeMock->expects($this->once())->method('isValidPasswordResetToken');
+
+        // Act
+        $this->tester->getFacade()->isValidPasswordResetToken(static::USER_AUTHENTICATION_TOKEN);
+    }
+
+    /**
+     * @return void
+     */
+    public function testSetNewPasswordCallRequestPasswordResetFacade(): void
+    {
+        /// Arrange
+        $this->initializeFacadeMocks();
+
+        // Assert
+        $this->userPasswordResetFacadeMock->expects($this->once())->method('setNewPassword');
+
+        // Act
+        $this->tester->getFacade()->setNewPassword(static::USER_AUTHENTICATION_TOKEN, static::USER_PASSWORD);
     }
 
     /**
