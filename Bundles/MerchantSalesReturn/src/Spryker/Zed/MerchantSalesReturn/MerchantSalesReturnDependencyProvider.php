@@ -11,6 +11,9 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\MerchantSalesReturn\Dependency\Facade\MerchantSalesReturnToSalesFacadeBridge;
 
+/**
+ * @method \Spryker\Zed\MerchantSalesReturn\MerchantSalesReturnConfig getConfig()
+ */
 class MerchantSalesReturnDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_SALES = 'FACADE_SALES';

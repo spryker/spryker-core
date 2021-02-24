@@ -11,6 +11,8 @@ use Generated\Shared\Transfer\ReturnTransfer;
 use Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnPreCreatePluginInterface;
 
 /**
+ * @method \Spryker\Zed\MerchantSalesReturn\Persistence\MerchantSalesReturnQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\MerchantSalesReturn\MerchantSalesReturnConfig getConfig()
  * @method \Spryker\Zed\MerchantSalesReturn\Business\MerchantSalesReturnFacade getFacade()
  */
 class MerchantReturnPreCreatePlugin implements ReturnPreCreatePluginInterface
