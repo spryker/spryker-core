@@ -10,6 +10,7 @@ namespace Spryker\Zed\MerchantSalesReturn\Communication\Plugin;
 use ArrayObject;
 use Generated\Shared\Transfer\ReturnCreateRequestTransfer;
 use Generated\Shared\Transfer\ReturnResponseTransfer;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnRequestValidatorPluginInterface;
 
@@ -17,6 +18,7 @@ use Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnRequestValidatorPlu
  * @method \Spryker\Zed\MerchantSalesReturn\Persistence\MerchantSalesReturnQueryContainer getQueryContainer()
  * @method \Spryker\Zed\MerchantSalesReturn\MerchantSalesReturnConfig getConfig()
  * @method \Spryker\Zed\MerchantSalesReturn\Business\MerchantSalesReturnFacade getFacade()
+ * @method \Spryker\Zed\MerchantSalesReturn\Communication\MerchantSalesReturnCommunicationFactory getFactory()
  */
 class MerchantReturnRequestValidatorPlugin extends AbstractPlugin implements ReturnRequestValidatorPluginInterface
 {
