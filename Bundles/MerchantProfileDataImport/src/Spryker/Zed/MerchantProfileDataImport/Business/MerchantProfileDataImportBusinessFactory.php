@@ -11,11 +11,11 @@ use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
 use Spryker\Zed\DataImport\Business\Model\DataImporterInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\MerchantProfileDataImport\Business\Address\Step\CountryIsoCodeToIdCountryStep;
-use Spryker\Zed\MerchantProfileDataImport\Business\Address\Step\MerchantKeyToIdMerchantProfileStep;
 use Spryker\Zed\MerchantProfileDataImport\Business\Address\Step\MerchantProfileAddressWriterStep;
+use Spryker\Zed\MerchantProfileDataImport\Business\Address\Step\MerchantReferenceToIdMerchantProfileStep;
 use Spryker\Zed\MerchantProfileDataImport\Business\MerchantProfile\DataSet\MerchantProfileDataSetInterface;
 use Spryker\Zed\MerchantProfileDataImport\Business\MerchantProfile\MerchantProfileWriterStep;
-use Spryker\Zed\MerchantProfileDataImport\Business\MerchantProfile\Step\MerchantKeyToIdMerchantStep;
+use Spryker\Zed\MerchantProfileDataImport\Business\MerchantProfile\Step\MerchantReferenceToIdMerchantStep;
 
 /**
  * @method \Spryker\Zed\MerchantProfileDataImport\MerchantProfileDataImportConfig getConfig()
@@ -34,7 +34,7 @@ class MerchantProfileDataImportBusinessFactory extends DataImportBusinessFactory
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
         $dataSetStepBroker
             ->addStep($this->createAddLocalesStep())
-            ->addStep($this->createMerchantKeyToIdMerchantStep())
+            ->addStep($this->createMerchantReferenceToIdMerchantStep())
             ->addStep($this->createLocalizedAttributesExtractorStep([
                 MerchantProfileDataSetInterface::DESCRIPTION_GLOSSARY_KEY,
                 MerchantProfileDataSetInterface::BANNER_URL_GLOSSARY_KEY,
@@ -62,7 +62,7 @@ class MerchantProfileDataImportBusinessFactory extends DataImportBusinessFactory
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
         $dataSetStepBroker
-            ->addStep($this->createMerchantKeyToIdMerchantProfileStep())
+            ->addStep($this->createMerchantReferenceToIdMerchantProfileStep())
             ->addStep($this->createCountryIsoCodeToIdCountryStep())
             ->addStep($this->createMerchantProfileAddressWriterStep());
 
@@ -82,17 +82,17 @@ class MerchantProfileDataImportBusinessFactory extends DataImportBusinessFactory
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
      */
-    public function createMerchantKeyToIdMerchantStep(): DataImportStepInterface
+    public function createMerchantReferenceToIdMerchantStep(): DataImportStepInterface
     {
-        return new MerchantKeyToIdMerchantStep();
+        return new MerchantReferenceToIdMerchantStep();
     }
 
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
      */
-    public function createMerchantKeyToIdMerchantProfileStep(): DataImportStepInterface
+    public function createMerchantReferenceToIdMerchantProfileStep(): DataImportStepInterface
     {
-        return new MerchantKeyToIdMerchantProfileStep();
+        return new MerchantReferenceToIdMerchantProfileStep();
     }
 
     /**

@@ -11,6 +11,7 @@ use Propel\Runtime\Propel;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\DataImport\Dependency\Client\DataImportToQueueClientBridge;
 use Spryker\Zed\DataImport\Dependency\Facade\DataImportToEventBridge;
+use Spryker\Zed\DataImport\Dependency\Facade\DataImportToGracefulRunnerBridge;
 use Spryker\Zed\DataImport\Dependency\Facade\DataImportToTouchBridge;
 use Spryker\Zed\DataImport\Dependency\Propel\DataImportToPropelConnectionBridge;
 use Spryker\Zed\DataImport\Dependency\Service\DataImportToUtilDataReaderServiceBridge;
@@ -25,6 +26,7 @@ class DataImportDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_TOUCH = 'touch facade';
     public const FACADE_EVENT = 'event facade';
+    public const FACADE_GRACEFUL_RUNNER = 'FACADE_GRACEFUL_RUNNER';
 
     public const DATA_IMPORTER_PLUGINS = 'IMPORTER_PLUGINS';
     public const DATA_IMPORT_BEFORE_HOOK_PLUGINS = 'DATA_IMPORT_BEFORE_HOOK_PLUGINS';
@@ -48,6 +50,7 @@ class DataImportDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = $this->addTouchFacade($container);
         $container = $this->addEventFacade($container);
+        $container = $this->addGracefulRunnerFacade($container);
         $container = $this->addPropelConnection($container);
         $container = $this->addDataImporterPlugins($container);
         $container = $this->addStore($container);
@@ -99,6 +102,22 @@ class DataImportDependencyProvider extends AbstractBundleDependencyProvider
         $container->set(static::FACADE_EVENT, function (Container $container) {
             return new DataImportToEventBridge(
                 $container->getLocator()->event()->facade()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addGracefulRunnerFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_GRACEFUL_RUNNER, function (Container $container) {
+            return new DataImportToGracefulRunnerBridge(
+                $container->getLocator()->gracefulRunner()->facade()
             );
         });
 

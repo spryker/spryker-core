@@ -19,7 +19,9 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\Choice;
 use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\NotCompromisedPassword;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
@@ -161,6 +163,11 @@ class UserForm extends AbstractType
             ->add(self::FIELD_PASSWORD, RepeatedType::class, [
                 'constraints' => [
                     new NotBlank(),
+                    new Length([
+                        'min' => $this->getConfig()->getUserPasswordMinLength(),
+                        'max' => $this->getConfig()->getUserPasswordMaxLength(),
+                    ]),
+                    new NotCompromisedPassword(),
                 ],
                 'invalid_message' => 'The password fields must match.',
                 'first_options' => ['label' => 'Password', 'attr' => ['autocomplete' => 'off']],
