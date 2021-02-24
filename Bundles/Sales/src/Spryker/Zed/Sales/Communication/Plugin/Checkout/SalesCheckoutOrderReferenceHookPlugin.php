@@ -26,7 +26,7 @@ class SalesCheckoutOrderReferenceHookPlugin extends AbstractPlugin implements Ch
      */
     public function executeHook(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
-        $this->getFacade()->setOrderReference($quoteTransfer, $checkoutResponseTransfer);
+        $this->getFacade()->updateQuoteOrderReference($quoteTransfer, $checkoutResponseTransfer);
     }
 
 }

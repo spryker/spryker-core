@@ -31,7 +31,7 @@ class OrderReferenceManager
         return true;
     }
 
-    public function setOrderReference(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
+    public function updateQuoteOrderReference(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
         if ($quoteTransfer->getOrderReference() === null
             && $checkoutResponseTransfer->getIsSuccess()

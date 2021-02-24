@@ -503,11 +503,11 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
      *
      * @return void
      */
-    public function setOrderReference(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
+    public function updateQuoteOrderReference(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
         $this->getFactory()
             ->createOrderReferenceManager()
-            ->setOrderReference($quoteTransfer, $checkoutResponseTransfer);
+            ->updateQuoteOrderReference($quoteTransfer, $checkoutResponseTransfer);
     }
 
 
