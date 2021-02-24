@@ -16,17 +16,10 @@ interface MerchantSalesReturnFacadeInterface
 {
     /**
      * Specification:
-     * @TODO update specifications
-     * - Requires OrderTransfer.idSalesOrder.
-     * - Requires OrderTransfer.orderReference.
-     * - Requires OrderTransfer.items.
-     * - Iterates through the order items of given order looking for merchant reference presence.
-     * - Skips all the order items without merchant reference.
-     * - Creates a new merchant order for each unique merchant reference found.
-     * - Creates a new merchant order item for each order item with merchant reference and assign it to a merchant order accordingly.
-     * - Creates a new merchant order totals and assign it to a merchant order accordingly.
-     * - Returns a collection of merchant orders filled with merchant order items and merchant order totals.
-     * - Executes MerchantOrderPostCreatePluginInterface plugin stack.
+     * - Requires ReturnTransfer.returnItems.item.idSalesOrderItem
+     * - Takes the first ReturnItemTransfer of the ReturnTransfer and finds the related ItemTransfer in the database.
+     * - Sets ReturnTransfer.merchantReference by using the data from the first ItemTransfer.
+     * - Returns ReturnTransfer object.
      *
      * @api
      *
@@ -34,13 +27,13 @@ interface MerchantSalesReturnFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ReturnTransfer
      */
-    public function prepareReturn(ReturnTransfer $returnTransfer): ReturnTransfer;
+    public function preCreate(ReturnTransfer $returnTransfer): ReturnTransfer;
 
     /**
      * Specification:
      * - Iterates through the order items ensuring all have set the same merchant reference.
      * - Requires ItemTransfer.merchantReference for all items.
-     * - Returns ReturnResponseTransfer
+     * - Returns ReturnResponseTransfer containing a message in case of a failed validation.
      *
      * @api
      *

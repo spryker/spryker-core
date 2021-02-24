@@ -16,5 +16,5 @@ interface MerchantReturnPreCreatorInterface
      *
      * @return \Generated\Shared\Transfer\ReturnTransfer
      */
-    public function prepareReturn(ReturnTransfer $returnTransfer): ReturnTransfer;
+    public function preCreate(ReturnTransfer $returnTransfer): ReturnTransfer;
 }

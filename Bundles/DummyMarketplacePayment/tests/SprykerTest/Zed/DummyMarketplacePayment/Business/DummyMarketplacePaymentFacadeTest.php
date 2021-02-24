@@ -13,6 +13,8 @@ use Generated\Shared\Transfer\PaymentMethodsTransfer;
 use Generated\Shared\Transfer\PaymentMethodTransfer;
 use Generated\Shared\Transfer\PaymentProviderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Orm\Zed\Sales\Persistence\SpySalesOrder;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Spryker\Shared\DummyMarketplacePayment\DummyMarketplacePaymentConfig;
 
 /**
@@ -30,6 +32,7 @@ use Spryker\Shared\DummyMarketplacePayment\DummyMarketplacePaymentConfig;
 class DummyMarketplacePaymentFacadeTest extends Unit
 {
     protected const TEST_PRODUCT_MERCHANT = 'TEST_PRODUCT_MERCHANT';
+    protected const TEST_STATE_MACHINE_NAME = 'Test01';
 
     /**
      * @var \SprykerTest\Zed\DummyMarketplacePayment\DummyMarketplacePaymentBusinessTester
@@ -80,5 +83,27 @@ class DummyMarketplacePaymentFacadeTest extends Unit
 
         // Assert
         $this->assertEmpty($filteredPaymentMethodsTransfer->getMethods()->getArrayCopy());
+    }
+
+    /**
+     * @return void
+     */
+    public function testRefundShouldDelegateToRefundModel(): void
+    {
+        // Arrange
+        $this->tester->configureTestStateMachine([static::TEST_STATE_MACHINE_NAME]);
+
+        $salesOrderTransfer = $this->tester->haveOrder([], static::TEST_STATE_MACHINE_NAME);
+        $salesOrder = new SpySalesOrder();
+        $salesOrder->setIdSalesOrder($salesOrderTransfer->getIdSalesOrder());
+
+        $salesOrderItems = [];
+        foreach ($salesOrderTransfer->getOrderItems() as $orderItemTransfer) {
+            $salesOrderItems[] = (new SpySalesOrderItem())
+                ->setIdSalesOrderItem($orderItemTransfer->getIdSalesOrderItem());
+        }
+
+        // Act
+        $this->tester->getFacade()->refund($salesOrderItems, $salesOrder);
     }
 }

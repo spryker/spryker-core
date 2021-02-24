@@ -34,7 +34,7 @@ class MerchantReturnPreCreator implements MerchantReturnPreCreatorInterface
      *
      * @return \Generated\Shared\Transfer\ReturnTransfer
      */
-    public function prepareReturn(ReturnTransfer $returnTransfer): ReturnTransfer
+    public function preCreate(ReturnTransfer $returnTransfer): ReturnTransfer
     {
         $returnItemTransfers = $returnTransfer
             ->requireReturnItems()
@@ -63,12 +63,15 @@ class MerchantReturnPreCreator implements MerchantReturnPreCreatorInterface
         $firstReturnItem = $returnItemTransfers->offsetGet(0);
 
         $orderItemFilterTransfer = (new OrderItemFilterTransfer())
-            ->addSalesOrderItemId($firstReturnItem->getOrderItem()->getId());
+            ->addSalesOrderItemId($firstReturnItem->getOrderItem()->getIdSalesOrderItem());
 
         /** @var \Generated\Shared\Transfer\ItemTransfer[] $orderItemTransfers */
-        $orderItemTransfers = $this->salesFacade->getOrderItems($orderItemFilterTransfer);
+        $orderItemTransfers = $this->salesFacade
+            ->getOrderItems($orderItemFilterTransfer)
+            ->getItems();
+
         foreach ($orderItemTransfers as $orderItemTransfer) {
-            if ($orderItemTransfer->getId() === $firstReturnItem->getOrderItem()->getId()) {
+            if ($orderItemTransfer->getIdSalesOrderItem() === $firstReturnItem->getOrderItem()->getIdSalesOrderItem()) {
                 return $orderItemTransfer;
             }
         }

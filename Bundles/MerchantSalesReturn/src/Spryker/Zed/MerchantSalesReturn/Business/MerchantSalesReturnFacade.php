@@ -27,11 +27,11 @@ class MerchantSalesReturnFacade extends AbstractFacade implements MerchantSalesR
      *
      * @return \Generated\Shared\Transfer\ReturnTransfer
      */
-    public function prepareReturn(ReturnTransfer $returnTransfer): ReturnTransfer
+    public function preCreate(ReturnTransfer $returnTransfer): ReturnTransfer
     {
         return $this->getFactory()
             ->createMerchantReturnPreCreator()
-            ->prepareReturn($returnTransfer);
+            ->preCreate($returnTransfer);
     }
 
     /**

@@ -26,6 +26,6 @@ class MerchantReturnPreCreatePlugin implements ReturnPreCreatePluginInterface
      */
     public function preCreate(ReturnTransfer $returnTransfer): ReturnTransfer
     {
-        return $this->getFacade()->prepareReturn($returnTransfer);
+        return $this->getFacade()->preCreate($returnTransfer);
     }
 }
