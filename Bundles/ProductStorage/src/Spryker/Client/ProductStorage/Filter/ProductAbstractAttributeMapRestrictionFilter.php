@@ -60,7 +60,7 @@ class ProductAbstractAttributeMapRestrictionFilter implements ProductAbstractAtt
             $restrictedProductConcreteIds
         );
 
-        $productStorageData = $this->filterAttributeMapByAttributeVariantCollection($productStorageData, $restrictedProductConcreteIds);
+        $productStorageData = $this->filterAttributeMapByAttributeVariantMap($productStorageData, $restrictedProductConcreteIds);
 
         $productStorageData[ProductStorageConfig::RESOURCE_TYPE_ATTRIBUTE_MAP][static::KEY_ATTRIBUTE_VARIANTS] = $this->filterAttributeVariants(
             $productStorageData[ProductStorageConfig::RESOURCE_TYPE_ATTRIBUTE_MAP][static::KEY_ATTRIBUTE_VARIANTS],
@@ -223,7 +223,7 @@ class ProductAbstractAttributeMapRestrictionFilter implements ProductAbstractAtt
      *
      * @return array
      */
-    protected function filterAttributeMapByAttributeVariantCollection(
+    protected function filterAttributeMapByAttributeVariantMap(
         array $productStorageData,
         array $restrictedProductConcreteIds
     ): array {
@@ -244,32 +244,32 @@ class ProductAbstractAttributeMapRestrictionFilter implements ProductAbstractAtt
     }
 
     /**
-     * @param array $attributeVariantCollection
+     * @param array $attributeVariantMap
      * @param int[] $restrictedProductConcreteIds
      *
      * @return array
      */
     protected function filterOutRestrictedAttributeVariants(
-        array $attributeVariantCollection,
+        array $attributeVariantMap,
         array $restrictedProductConcreteIds
     ): array {
         foreach ($restrictedProductConcreteIds as $restrictedProductConcreteId) {
-            unset($attributeVariantCollection[$restrictedProductConcreteId]);
+            unset($attributeVariantMap[$restrictedProductConcreteId]);
         }
 
-        return $attributeVariantCollection;
+        return $attributeVariantMap;
     }
 
     /**
-     * @param array $attributeVariantCollection
+     * @param array $attributeVariantMap
      *
      * @return array
      */
-    protected function mapSuperAttributesByAttributeVariantMap(array $attributeVariantCollection): array
+    protected function mapSuperAttributesByAttributeVariantMap(array $attributeVariantMap): array
     {
         $filteredSuperAttributes = [];
 
-        foreach ($attributeVariantCollection as $attributeVariant) {
+        foreach ($attributeVariantMap as $attributeVariant) {
             foreach ($attributeVariant as $attributeKey => $attributeValue) {
                 $filteredSuperAttributes[$attributeKey][$attributeValue] = $attributeValue;
             }

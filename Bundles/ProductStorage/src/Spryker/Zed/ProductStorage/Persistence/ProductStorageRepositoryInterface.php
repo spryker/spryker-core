@@ -14,7 +14,7 @@ interface ProductStorageRepositoryInterface
      *
      * @return array
      */
-    public function getMappedProductAttributes(array $productConcreteIds): array;
+    public function getProductAttributesGroupedByIdProduct(array $productConcreteIds): array;
 
     /**
      * @return string[]

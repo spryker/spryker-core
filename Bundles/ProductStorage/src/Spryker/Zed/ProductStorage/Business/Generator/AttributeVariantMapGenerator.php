@@ -12,6 +12,8 @@ use Spryker\Zed\ProductStorage\Persistence\ProductStorageRepositoryInterface;
 
 class AttributeVariantMapGenerator implements AttributeVariantMapGeneratorInterface
 {
+    protected const MIN_AMOUNT_OF_SUPER_ATTRIBUTES = 1;
+
     /**
      * @var array|null
      */
@@ -49,7 +51,7 @@ class AttributeVariantMapGenerator implements AttributeVariantMapGeneratorInterf
         $productAttributeMapByIdProduct = $this->decodeProductAttributes($productAttributeMapByIdProduct);
         $superAttributes = $this->getSuperAttributes($productAttributeMapByIdProduct);
 
-        if (count($superAttributes) < 1) {
+        if (count($superAttributes) < static::MIN_AMOUNT_OF_SUPER_ATTRIBUTES) {
             return [];
         }
 
@@ -65,22 +67,22 @@ class AttributeVariantMapGenerator implements AttributeVariantMapGeneratorInterf
     {
         $decodedProductAttributes = [];
 
-        foreach ($productAttributeMapByIdProduct as $idProductConcrete => $productAttribute) {
+        foreach ($productAttributeMapByIdProduct as $idProductConcrete => $productAttributes) {
             $decodedProductAttributes[$idProductConcrete] = $this->productFacade
-                ->decodeProductAttributes($productAttribute);
+                ->decodeProductAttributes($productAttributes);
         }
 
         return $decodedProductAttributes;
     }
 
     /**
-     * @param array $productAttributes
+     * @param array $productAttributeMapByIdProduct
      *
-     * @return array
+     * @return string[]
      */
-    protected function getSuperAttributes(array $productAttributes): array
+    protected function getSuperAttributes(array $productAttributeMapByIdProduct): array
     {
-        $uniqueAttributeKeys = $this->filterUniqueProductAttributeKeys($productAttributes);
+        $uniqueAttributeKeys = $this->filterUniqueProductAttributeKeys($productAttributeMapByIdProduct);
 
         if (static::$superAttributesCache === null) {
             $superAttributeList = $this->productStorageRepository->getProductAttributeKeys();
@@ -96,7 +98,7 @@ class AttributeVariantMapGenerator implements AttributeVariantMapGeneratorInterf
 
     /**
      * @param array $productAttributeMapByIdProduct
-     * @param array $superAttributes
+     * @param string[] $superAttributes
      *
      * @return array
      */
@@ -118,7 +120,7 @@ class AttributeVariantMapGenerator implements AttributeVariantMapGeneratorInterf
 
     /**
      * @param array $attributeVariantMap
-     * @param array $superAttributes
+     * @param string[] $superAttributes
      * @param int $idProductConcrete
      * @param array $productAttributes
      *
@@ -179,7 +181,7 @@ class AttributeVariantMapGenerator implements AttributeVariantMapGeneratorInterf
     /**
      * @param string[] $productAttributeKeys
      *
-     * @return array
+     * @return string[]
      */
     protected function filterSuperAttributes(array $productAttributeKeys): array
     {

@@ -50,7 +50,7 @@ class ProductAbstractStorageExpander implements ProductAbstractStorageExpanderIn
         }
 
         $productAttributeMapByIdProduct = $this->productStorageRepository
-            ->getMappedProductAttributes($attributeMapStorageTransfer->getProductConcreteIds());
+            ->getProductAttributesGroupedByIdProduct($attributeMapStorageTransfer->getProductConcreteIds());
 
         $attributeVariantMap = $this->attributeVariantMapGenerator->generateAttributeVariantMap($productAttributeMapByIdProduct);
         $productAbstractStorageTransfer->getAttributeMap()->setAttributeVariantMap($attributeVariantMap);
