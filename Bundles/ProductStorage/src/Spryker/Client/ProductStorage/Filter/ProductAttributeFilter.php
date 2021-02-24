@@ -14,6 +14,11 @@ use Spryker\Shared\Product\ProductConfig;
 class ProductAttributeFilter implements ProductAttributeFilterInterface
 {
     /**
+     * @uses \Spryker\Zed\Product\ProductConfig::ATTRIBUTE_MAP_PATH_DELIMITER
+     */
+    protected const ATTRIBUTE_MAP_PATH_DELIMITER = ':';
+
+    /**
      * @var \Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToUtilSanitizeServiceInterface
      */
     protected $utilSanitizeService;
@@ -85,8 +90,8 @@ class ProductAttributeFilter implements ProductAttributeFilterInterface
     protected function findAvailableAttributes(array $selectedNode, array $filteredAttributes = [])
     {
         foreach (array_keys($selectedNode) as $attributePath) {
-            [$key, $value] = explode(ProductConfig::ATTRIBUTE_MAP_PATH_DELIMITER, $attributePath);
-            $filteredAttributes[$key][] = $value;
+            [$attributeKey, $attributeValue] = explode(static::ATTRIBUTE_MAP_PATH_DELIMITER, $attributePath);
+            $filteredAttributes[$attributeKey][] = $attributeValue;
         }
 
         return $filteredAttributes;
@@ -107,7 +112,7 @@ class ProductAttributeFilter implements ProductAttributeFilterInterface
         $attributesToAdd = array_diff_assoc($superAttributes, $selectedAttributes);
 
         foreach ($attributesToAdd as $attributeKey => $attributeValue) {
-            if (isset($availableAttributes[$attributeKey]) && in_array($attributeValue, $availableAttributes[$attributeKey], true)) {
+            if ($this->hasAttributeWithValue($availableAttributes, $attributeKey, $attributeValue)) {
                 continue;
             }
 
@@ -147,5 +152,17 @@ class ProductAttributeFilter implements ProductAttributeFilterInterface
         string $superAttributeValue
     ): bool {
         return isset($superAttributeHaystack[$superAttributeKey]) && $superAttributeHaystack[$superAttributeKey] === $superAttributeValue;
+    }
+
+    /**
+     * @param array $availableAttributes
+     * @param string $attributeKey
+     * @param string $attributeValue
+     *
+     * @return bool
+     */
+    protected function hasAttributeWithValue(array $availableAttributes, string $attributeKey, string $attributeValue): bool
+    {
+        return isset($availableAttributes[$attributeKey]) && in_array($attributeValue, $availableAttributes[$attributeKey], true);
     }
 }
