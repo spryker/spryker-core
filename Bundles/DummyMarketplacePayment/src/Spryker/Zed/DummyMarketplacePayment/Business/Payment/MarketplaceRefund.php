@@ -14,7 +14,7 @@ use Spryker\Zed\DummyMarketplacePayment\Dependency\Facade\DummyMarketplacePaymen
 class MarketplaceRefund implements MarketplaceRefundInterface
 {
     /**
-     * @var \Spryker\Zed\DummyPayment\Dependency\Facade\DummyPaymentToRefundInterface
+     * @var \Spryker\Zed\DummyMarketplacePayment\Dependency\Facade\DummyMarketplacePaymentToRefundInterface
      */
     protected $refundFacade;
 

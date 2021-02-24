@@ -63,7 +63,7 @@ class MerchantReturnPreCreator implements MerchantReturnPreCreatorInterface
         $firstReturnItem = $returnItemTransfers->offsetGet(0);
 
         $orderItemFilterTransfer = (new OrderItemFilterTransfer())
-            ->addSalesOrderItemId($firstReturnItem->getOrderItem()->getIdSalesOrderItem());
+            ->addSalesOrderItemId($firstReturnItem->getOrderItemOrFail()->getIdSalesOrderItemOrFail());
 
         /** @var \Generated\Shared\Transfer\ItemTransfer[] $orderItemTransfers */
         $orderItemTransfers = $this->salesFacade
@@ -71,7 +71,12 @@ class MerchantReturnPreCreator implements MerchantReturnPreCreatorInterface
             ->getItems();
 
         foreach ($orderItemTransfers as $orderItemTransfer) {
-            if ($orderItemTransfer->getIdSalesOrderItem() === $firstReturnItem->getOrderItem()->getIdSalesOrderItem()) {
+            $idSalesOrderItem = $orderItemTransfer->getIdSalesOrderItemOrFail();
+            $firstIdSalesOrderItem = $firstReturnItem
+                ->getOrderItemOrFail()
+                ->getIdSalesOrderItemOrFail();
+
+            if ($idSalesOrderItem === $firstIdSalesOrderItem) {
                 return $orderItemTransfer;
             }
         }
