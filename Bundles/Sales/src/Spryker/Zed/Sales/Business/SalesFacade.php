@@ -490,7 +490,7 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     {
         return $this->getFactory()
             ->createOrderReferenceManager()
-            ->restrictDuplicatedOrder($quoteTransfer, $checkoutResponseTransfer);
+            ->checkOrderReference($quoteTransfer, $checkoutResponseTransfer);
     }
 
     /**

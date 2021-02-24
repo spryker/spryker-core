@@ -16,7 +16,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\Sales\Business\SalesFacadeInterface getFacade()
  * @method \Spryker\Zed\Sales\SalesConfig getConfig()
  */
-class SalesCheckoutRestrictDuplicatedOrdersPlugin extends AbstractPlugin implements CheckoutPreConditionInterface
+class SalesCheckoutOrderReferenceCheckPlugin extends AbstractPlugin implements CheckoutPreConditionInterface
 {
     /**
      * {@inheritDoc}

@@ -21,7 +21,7 @@ class OrderReferenceManager
         $this->quoteClient = $quoteClient;
     }
 
-    public function restrictDuplicatedOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool
+    public function checkOrderReference(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool
     {
         // TODO: restrict order creation
 
