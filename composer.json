@@ -306,6 +306,7 @@
     "spryker/glossary-storage": "*",
     "spryker/glue-application": "*",
     "spryker/glue-application-extension": "*",
+    "spryker/graceful-runner": "*",
     "spryker/graph": "*",
     "spryker/graphviz": "*",
     "spryker/gui": "*",
