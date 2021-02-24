@@ -41,4 +41,8 @@
         <property name="paymentProviderKey" type="string"/>
     </transfer>
 
+    <transfer name="Refund">
+        <property name="amount" type="int"/>
+    </transfer>
+
 </transfers>
