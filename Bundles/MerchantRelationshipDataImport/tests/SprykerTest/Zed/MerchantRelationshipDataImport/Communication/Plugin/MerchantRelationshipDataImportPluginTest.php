@@ -114,7 +114,7 @@ class MerchantRelationshipDataImportPluginTest extends Unit
         $this->createCompanyBusinessUnit($idCompany, 'ttest-business-unit-3');
 
         $this->tester->haveMerchant([
-            'merchantKey' => 'oryx-merchant-test',
+            'merchantReference' => 'oryx-merchant-test',
         ]);
     }
 }

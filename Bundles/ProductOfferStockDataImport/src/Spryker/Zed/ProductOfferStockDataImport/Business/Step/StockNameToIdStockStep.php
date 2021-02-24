@@ -16,6 +16,9 @@ use Spryker\Zed\ProductOfferStockDataImport\Business\DataSet\ProductOfferStockDa
 
 class StockNameToIdStockStep implements DataImportStepInterface
 {
+    protected const FK_STOCK = ProductOfferStockDataSetInterface::FK_STOCK;
+    protected const PRODUCT_STOCK_NAME = ProductOfferStockDataSetInterface::PRODUCT_STOCK_NAME;
+
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
@@ -26,12 +29,12 @@ class StockNameToIdStockStep implements DataImportStepInterface
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        $stockName = $dataSet[ProductOfferStockDataSetInterface::PRODUCT_STOCK_NAME];
+        $stockName = $dataSet[static::PRODUCT_STOCK_NAME];
 
         if (!$stockName) {
             throw new DataKeyNotFoundInDataSetException(sprintf(
                 '"%s" key must be in the data set. Given: "%s"',
-                ProductOfferStockDataSetInterface::PRODUCT_STOCK_NAME,
+                static::PRODUCT_STOCK_NAME,
                 implode(', ', array_keys($dataSet->getArrayCopy()))
             ));
         }
@@ -44,6 +47,6 @@ class StockNameToIdStockStep implements DataImportStepInterface
             throw new EntityNotFoundException(sprintf('Stock not found for name %s', $stockName));
         }
 
-        $dataSet[ProductOfferStockDataSetInterface::FK_STOCK] = $stockEntity->getIdStock();
+        $dataSet[static::FK_STOCK] = $stockEntity->getIdStock();
     }
 }

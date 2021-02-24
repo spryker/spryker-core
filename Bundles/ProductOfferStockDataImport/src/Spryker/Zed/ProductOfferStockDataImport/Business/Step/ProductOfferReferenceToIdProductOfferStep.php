@@ -17,6 +17,8 @@ use Spryker\Zed\ProductOfferStockDataImport\Dependency\Facade\ProductOfferStockD
 
 class ProductOfferReferenceToIdProductOfferStep implements DataImportStepInterface
 {
+    protected const PRODUCT_OFFER_REFERENCE = ProductOfferStockDataSetInterface::PRODUCT_OFFER_REFERENCE;
+
     /**
      * @var \Spryker\Zed\ProductOfferStockDataImport\Dependency\Facade\ProductOfferStockDataImportToProductOfferFacadeInterface
      */
@@ -40,12 +42,12 @@ class ProductOfferReferenceToIdProductOfferStep implements DataImportStepInterfa
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        $productOfferReference = $dataSet[ProductOfferStockDataSetInterface::PRODUCT_OFFER_REFERENCE];
+        $productOfferReference = $dataSet[static::PRODUCT_OFFER_REFERENCE];
 
         if (!$productOfferReference) {
             throw new DataKeyNotFoundInDataSetException(sprintf(
                 '"%s" key must be in the data set. Given: "%s"',
-                ProductOfferStockDataSetInterface::PRODUCT_OFFER_REFERENCE,
+                static::PRODUCT_OFFER_REFERENCE,
                 implode(', ', array_keys($dataSet->getArrayCopy()))
             ));
         }
