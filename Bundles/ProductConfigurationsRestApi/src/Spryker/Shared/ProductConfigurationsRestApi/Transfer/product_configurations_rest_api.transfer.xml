@@ -34,7 +34,6 @@
         <property name="configuration" type="string"/>
         <property name="configuratorKey" type="string"/>
         <property name="isComplete" type="bool"/>
-        <property name="quantity" type="int"/>
         <property name="availableQuantity" type="int"/>
         <property name="prices" type="RestProductConfigurationPriceAttributes[]" singular="price"/>
     </transfer>
