@@ -22,7 +22,7 @@ class MerchantProfileAddressWriterStep extends PublishAwareStep implements DataI
         MerchantProfileAddressDataSetInterface::ADDRESS2,
         MerchantProfileAddressDataSetInterface::CITY,
         MerchantProfileAddressDataSetInterface::ZIP_CODE,
-        MerchantProfileAddressDataSetInterface::MERCHANT_KEY,
+        MerchantProfileAddressDataSetInterface::MERCHANT_REFERENCE,
     ];
 
     /**

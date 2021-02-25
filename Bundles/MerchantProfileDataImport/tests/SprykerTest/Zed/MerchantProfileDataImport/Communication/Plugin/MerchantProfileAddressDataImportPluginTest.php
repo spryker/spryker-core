@@ -46,7 +46,7 @@ class MerchantProfileAddressDataImportPluginTest extends Unit
         $this->tester->assertMerchantProfileAddressDatabaseTableIsEmpty();
 
         $merchantTransfer = $this->tester->haveMerchant([
-            MerchantTransfer::MERCHANT_KEY => 'test',
+            MerchantTransfer::MERCHANT_REFERENCE => 'test',
         ]);
         $this->tester->haveMerchantProfile($merchantTransfer);
 

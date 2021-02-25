@@ -15,6 +15,9 @@ use Spryker\Zed\StockDataImport\Business\Writer\DataSet\StockStoreDataSetInterfa
 
 class StockNameToIdStockStep implements DataImportStepInterface
 {
+    protected const WAREHOUSE_NAME = StockStoreDataSetInterface::COLUMN_WAREHOUSE_NAME;
+    protected const ID_STOCK = StockStoreDataSetInterface::COLUMN_ID_STOCK;
+
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
@@ -24,7 +27,7 @@ class StockNameToIdStockStep implements DataImportStepInterface
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        $stockName = $dataSet[StockStoreDataSetInterface::COLUMN_WAREHOUSE_NAME];
+        $stockName = $dataSet[static::WAREHOUSE_NAME];
 
         if (!$stockName) {
             throw new EntityNotFoundException(sprintf('Invalid warehouse name'));
@@ -38,6 +41,6 @@ class StockNameToIdStockStep implements DataImportStepInterface
             throw new EntityNotFoundException(sprintf('Warehouse not found'));
         }
 
-        $dataSet[StockStoreDataSetInterface::COLUMN_ID_STOCK] = $stockEntity->getIdStock();
+        $dataSet[static::ID_STOCK] = $stockEntity->getIdStock();
     }
 }
