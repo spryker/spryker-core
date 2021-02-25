@@ -486,7 +486,7 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
      *
      * @return void
      */
-    public function updateQuoteOrderReference(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
+    public function updateQuoteOrderReference(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): void
     {
         $this->getFactory()
             ->createOrderReferenceManager()

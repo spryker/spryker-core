@@ -423,20 +423,10 @@ interface SalesFacadeInterface
 
     /**
      * Specification:
-     * - Checks QuoteTransfer::orderReference.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
-     *
-     * @return bool
-     */
-    public function checkOrderReference(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool;
-
-    /**
-     * Specification:
+     * - Checks CheckoutResponseTransfer::getIsSuccess
+     * - Checks CheckoutResponseTransfer::getSaveOrder
      * - Sets QuoteTransfer::orderReference.
+     * - Updates QuoteReference in quote session storage
      *
      * @api
      *
@@ -445,5 +435,5 @@ interface SalesFacadeInterface
      *
      * @return void
      */
-    public function updateQuoteOrderReference(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer);
+    public function updateQuoteOrderReference(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): void;
 }
