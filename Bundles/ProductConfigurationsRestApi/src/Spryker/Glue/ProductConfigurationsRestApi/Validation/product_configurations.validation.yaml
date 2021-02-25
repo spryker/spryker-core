@@ -78,10 +78,6 @@ items:
                     - NotNull
                     - Type:
                         type: boolean
-                  quantity:
-                    - NotBlank
-                    - Type:
-                        type: numeric
                   availableQuantity:
                     - NotBlank
                     - Type:
