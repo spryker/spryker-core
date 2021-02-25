@@ -28,5 +28,4 @@ class SalesCheckoutOrderReferenceHookPlugin extends AbstractPlugin implements Ch
     {
         $this->getFacade()->updateQuoteOrderReference($quoteTransfer, $checkoutResponseTransfer);
     }
-
 }

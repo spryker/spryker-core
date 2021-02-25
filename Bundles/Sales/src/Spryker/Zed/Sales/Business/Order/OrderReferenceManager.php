@@ -20,17 +20,6 @@ class OrderReferenceManager
         $this->quoteClient = $quoteClient;
     }
 
-    public function checkOrderReference(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool
-    {
-        if ($quoteTransfer->getOrderReference() !== null) {
-            $checkoutResponseTransfer->getSaveOrder()->setOrderReference(
-                $quoteTransfer->getOrderReference()
-            );
-        }
-
-        return true;
-    }
-
     public function updateQuoteOrderReference(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
         if ($quoteTransfer->getOrderReference() === null

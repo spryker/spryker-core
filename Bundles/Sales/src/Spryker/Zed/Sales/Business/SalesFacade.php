@@ -484,23 +484,6 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
-     * @return bool
-     */
-    public function checkOrderReference(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool
-    {
-        return $this->getFactory()
-            ->createOrderReferenceManager()
-            ->checkOrderReference($quoteTransfer, $checkoutResponseTransfer);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
-     *
      * @return void
      */
     public function updateQuoteOrderReference(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
@@ -509,6 +492,4 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
             ->createOrderReferenceManager()
             ->updateQuoteOrderReference($quoteTransfer, $checkoutResponseTransfer);
     }
-
-
 }
