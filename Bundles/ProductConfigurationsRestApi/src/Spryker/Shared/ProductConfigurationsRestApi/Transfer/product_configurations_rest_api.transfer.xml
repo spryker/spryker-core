@@ -124,6 +124,9 @@
     </transfer>
 
     <transfer name="SalesOrderItemConfiguration">
+        <property name="displayData" type="string"/>
+        <property name="configuration" type="string"/>
+        <property name="configuratorKey" type="string"/>
     </transfer>
 
 </transfers>
