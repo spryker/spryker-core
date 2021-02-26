@@ -60,9 +60,8 @@ class CartItemProductConfigurationRestRequestValidator implements CartItemProduc
             return null;
         }
 
-        /** @var \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer */
         $restCartItemsAttributesTransfer = $restRequest->getResource()->getAttributes();
-        if (!$restCartItemsAttributesTransfer) {
+        if (!$restCartItemsAttributesTransfer instanceof RestCartItemsAttributesTransfer) {
             return null;
         }
 
