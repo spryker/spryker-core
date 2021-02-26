@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<statemachine
+        xmlns="spryker:state-machine-01"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="spryker:state-machine-01 http://static.spryker.com/state-machine-01.xsd">
+
+    <process name="TestProcessWithoutEvent" main="true">
+        <states>
+            <state name="new"/>
+            <state name="created"/>
+            <state name="ready"/>
+        </states>
+
+        <transitions>
+            <transition happy="true">
+                <source>new</source>
+                <target>created</target>
+                <event>initiate</event>
+            </transition>
+
+            <transition happy="true">
+                <source>created</source>
+                <target>ready</target>
+            </transition>
+        </transitions>
+
+        <events>
+            <event name="initiate" onEnter="true"/>
+        </events>
+    </process>
+</statemachine>

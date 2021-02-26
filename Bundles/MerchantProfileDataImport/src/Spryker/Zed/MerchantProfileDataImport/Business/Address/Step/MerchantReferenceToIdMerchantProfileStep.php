@@ -15,7 +15,7 @@ use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 use Spryker\Zed\MerchantProfileDataImport\Business\Address\DataSet\MerchantProfileAddressDataSetInterface;
 
-class MerchantKeyToIdMerchantProfileStep implements DataImportStepInterface
+class MerchantReferenceToIdMerchantProfileStep implements DataImportStepInterface
 {
     /**
      * @var array
@@ -31,37 +31,37 @@ class MerchantKeyToIdMerchantProfileStep implements DataImportStepInterface
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        $merchantKey = $dataSet[MerchantProfileAddressDataSetInterface::MERCHANT_KEY];
+        $merchantReference = $dataSet[MerchantProfileAddressDataSetInterface::MERCHANT_REFERENCE];
 
-        if (!$merchantKey) {
-            throw new InvalidDataException(sprintf('"%s" is required.', MerchantProfileAddressDataSetInterface::MERCHANT_KEY));
+        if (!$merchantReference) {
+            throw new InvalidDataException(sprintf('"%s" is required.', MerchantProfileAddressDataSetInterface::MERCHANT_REFERENCE));
         }
 
-        if (!isset($this->idMerchantProfileCache[$merchantKey])) {
-            $this->idMerchantProfileCache[$merchantKey] = $this->getIdMerchantProfile($merchantKey);
+        if (!isset($this->idMerchantProfileCache[$merchantReference])) {
+            $this->idMerchantProfileCache[$merchantReference] = $this->getIdMerchantProfile($merchantReference);
         }
 
-        $dataSet[MerchantProfileAddressDataSetInterface::ID_MERCHANT_PROFILE] = $this->idMerchantProfileCache[$merchantKey];
+        $dataSet[MerchantProfileAddressDataSetInterface::ID_MERCHANT_PROFILE] = $this->idMerchantProfileCache[$merchantReference];
     }
 
     /**
-     * @param string $merchantKey
+     * @param string $merchantReference
      *
      * @throws \Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException
      *
      * @return int
      */
-    protected function getIdMerchantProfile(string $merchantKey): int
+    protected function getIdMerchantProfile(string $merchantReference): int
     {
         /** @var \Orm\Zed\Merchant\Persistence\SpyMerchantQuery $merchantQuery */
         $merchantQuery = SpyMerchantQuery::create()
             ->select(SpyMerchantProfileTableMap::COL_ID_MERCHANT_PROFILE);
         /** @var int $idMerchantProfile */
         $idMerchantProfile = $merchantQuery->innerJoinSpyMerchantProfile()
-            ->findOneByMerchantKey($merchantKey);
+            ->findOneByMerchantReference($merchantReference);
 
         if (!$idMerchantProfile) {
-            throw new EntityNotFoundException(sprintf('Could not find Merchant by key "%s"', $merchantKey));
+            throw new EntityNotFoundException(sprintf('Could not find Merchant by reference "%s"', $merchantReference));
         }
 
         return $idMerchantProfile;

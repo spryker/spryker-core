@@ -22,6 +22,11 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AbstractProductOfferController extends AbstractController
 {
+    protected const DEFAULT_INITIAL_DATA = [
+        GuiTableEditableInitialDataTransfer::DATA => [],
+        GuiTableEditableInitialDataTransfer::ERRORS => [],
+    ];
+
     /**
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
@@ -87,22 +92,24 @@ class AbstractProductOfferController extends AbstractController
     protected function getDefaultInitialData(Request $request, string $formName): array
     {
         $requestTableData = $request->get($formName);
+
+        if (!$requestTableData) {
+            return static::DEFAULT_INITIAL_DATA;
+        }
+
         $requestTableData = $this->getFactory()->getUtilEncodingService()->decodeJson(
             $requestTableData[PriceProductOfferTableViewTransfer::PRICES],
             true
         );
 
         if (!$requestTableData) {
-            return [
-                GuiTableEditableInitialDataTransfer::DATA => [],
-                GuiTableEditableInitialDataTransfer::ERRORS => [],
-            ];
+            return static::DEFAULT_INITIAL_DATA;
         }
 
-        return [
-            GuiTableEditableInitialDataTransfer::DATA => $requestTableData,
-            GuiTableEditableInitialDataTransfer::ERRORS => [],
-        ];
+        $defaultInitialData = static::DEFAULT_INITIAL_DATA;
+        $defaultInitialData[GuiTableEditableInitialDataTransfer::DATA] = $requestTableData;
+
+        return $defaultInitialData;
     }
 
     /**
