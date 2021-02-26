@@ -145,8 +145,7 @@ class CartsRestApiFactory extends AbstractFactory
         return new CartItemUpdater(
             $this->getClient(),
             $this->createCartRestResponseBuilder(),
-            $this->getCustomerExpanderPlugins(),
-            $this->getCartItemExpanderPlugins()
+            $this->getCustomerExpanderPlugins()
         );
     }
 
@@ -196,8 +195,7 @@ class CartsRestApiFactory extends AbstractFactory
         return new GuestCartItemUpdater(
             $this->getClient(),
             $this->createGuestCartRestResponseBuilder(),
-            $this->getCustomerExpanderPlugins(),
-            $this->getCartItemExpanderPlugins()
+            $this->getCustomerExpanderPlugins()
         );
     }
 

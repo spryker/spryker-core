@@ -37,12 +37,9 @@ class CartItemExpander implements CartItemExpanderInterface
         CartItemRequestTransfer $cartItemRequestTransfer,
         RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
     ): CartItemRequestTransfer {
-        $productConcreteSku = $this->resolveProductConcreteSku($cartItemRequestTransfer, $restCartItemsAttributesTransfer);
-        if (!$productConcreteSku) {
-            return $cartItemRequestTransfer;
-        }
-
-        $productOptionIds = $this->productOptionStorageReader->getProductOptionIdsByProductConcreteSku($productConcreteSku);
+        $productOptionIds = $this->productOptionStorageReader->getProductOptionIdsByProductConcreteSku(
+            $restCartItemsAttributesTransfer->getSku()
+        );
         foreach ($restCartItemsAttributesTransfer->getProductOptions() as $restCartItemsProductOptionTransfer) {
             if (!isset($productOptionIds[$restCartItemsProductOptionTransfer->getSku()])) {
                 continue;
@@ -55,18 +52,5 @@ class CartItemExpander implements CartItemExpanderInterface
         }
 
         return $cartItemRequestTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CartItemRequestTransfer $cartItemRequestTransfer
-     * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
-     *
-     * @return string|null
-     */
-    protected function resolveProductConcreteSku(
-        CartItemRequestTransfer $cartItemRequestTransfer,
-        RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
-    ): ?string {
-        return $restCartItemsAttributesTransfer->getSku() ?? $cartItemRequestTransfer->getSku();
     }
 }

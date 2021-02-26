@@ -36,26 +36,18 @@ class QuoteItemUpdater implements QuoteItemUpdaterInterface
     protected $quotePermissionChecker;
 
     /**
-     * @var \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteItemUpdateStrategyPluginInterface[]
-     */
-    protected $quoteItemUpdateStrategyPlugins;
-
-    /**
      * @param \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface $persistentCartFacade
      * @param \Spryker\Zed\CartsRestApi\Business\QuoteItem\QuoteItemReaderInterface $quoteItemReader
      * @param \Spryker\Zed\CartsRestApi\Business\PermissionChecker\QuotePermissionCheckerInterface $quotePermissionChecker
-     * @param \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteItemUpdateStrategyPluginInterface[] $quoteItemUpdateStrategyPlugins
      */
     public function __construct(
         CartsRestApiToPersistentCartFacadeInterface $persistentCartFacade,
         QuoteItemReaderInterface $quoteItemReader,
-        QuotePermissionCheckerInterface $quotePermissionChecker,
-        array $quoteItemUpdateStrategyPlugins
+        QuotePermissionCheckerInterface $quotePermissionChecker
     ) {
         $this->persistentCartFacade = $persistentCartFacade;
         $this->quoteItemReader = $quoteItemReader;
         $this->quotePermissionChecker = $quotePermissionChecker;
-        $this->quoteItemUpdateStrategyPlugins = $quoteItemUpdateStrategyPlugins;
     }
 
     /**
@@ -98,6 +90,10 @@ class QuoteItemUpdater implements QuoteItemUpdaterInterface
             return $quoteResponseTransfer;
         }
 
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
+            return $quoteResponseTransfer;
+        }
+
         if (!$this->quotePermissionChecker->checkQuoteWritePermission($quoteResponseTransfer->getQuoteTransfer())) {
             return $quoteResponseTransfer
                 ->setIsSuccessful(false)
@@ -105,7 +101,12 @@ class QuoteItemUpdater implements QuoteItemUpdaterInterface
                     ->setErrorIdentifier(CartsRestApiSharedConfig::ERROR_IDENTIFIER_UNAUTHORIZED_CART_ACTION));
         }
 
-        $quoteResponseTransfer = $this->executeQuoteItemUpdate($cartItemRequestTransfer, $quoteResponseTransfer);
+        $persistentCartChangeQuantityTransfer = $this->createPersistentCartChangeQuantityTransfer(
+            $quoteResponseTransfer->getQuoteTransfer(),
+            $cartItemRequestTransfer
+        );
+
+        $quoteResponseTransfer = $this->persistentCartFacade->changeItemQuantity($persistentCartChangeQuantityTransfer);
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $quoteResponseTransfer
@@ -114,30 +115,6 @@ class QuoteItemUpdater implements QuoteItemUpdaterInterface
         }
 
         return $quoteResponseTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CartItemRequestTransfer $cartItemRequestTransfer
-     * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    protected function executeQuoteItemUpdate(
-        CartItemRequestTransfer $cartItemRequestTransfer,
-        QuoteResponseTransfer $quoteResponseTransfer
-    ): QuoteResponseTransfer {
-        foreach ($this->quoteItemUpdateStrategyPlugins as $quoteItemUpdateStrategyPlugin) {
-            if ($quoteItemUpdateStrategyPlugin->isApplicable($cartItemRequestTransfer)) {
-                return $quoteItemUpdateStrategyPlugin->update($cartItemRequestTransfer, $quoteResponseTransfer);
-            }
-        }
-
-        $persistentCartChangeQuantityTransfer = $this->createPersistentCartChangeQuantityTransfer(
-            $quoteResponseTransfer->getQuoteTransfer(),
-            $cartItemRequestTransfer
-        );
-
-        return $this->persistentCartFacade->changeItemQuantity($persistentCartChangeQuantityTransfer);
     }
 
     /**
