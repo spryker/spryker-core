@@ -423,10 +423,10 @@ interface SalesFacadeInterface
 
     /**
      * Specification:
-     * - Checks CheckoutResponseTransfer::getIsSuccess
-     * - Checks CheckoutResponseTransfer::getSaveOrder
-     * - Sets QuoteTransfer::orderReference.
-     * - Updates QuoteReference in quote session storage
+     * - Checks `CheckoutResponseTransfer.isSuccess`.
+     * - Checks `CheckoutResponseTransfer.saveOrder`.
+     * - Sets `QuoteTransfer::orderReference`.
+     * - Updates `QuoteTransfer` data in quote session storage.
      *
      * @api
      *
