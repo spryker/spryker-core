@@ -13,16 +13,29 @@ use Spryker\Zed\Sales\Dependency\Client\SalesToQuoteClientInterface;
 
 class OrderReferenceManager
 {
+    /**
+     * @var \Spryker\Zed\Sales\Dependency\Client\SalesToQuoteClientInterface
+     */
     private $quoteClient;
 
+    /**
+     * @param \Spryker\Zed\Sales\Dependency\Client\SalesToQuoteClientInterface $quoteClient
+     */
     public function __construct(SalesToQuoteClientInterface $quoteClient)
     {
         $this->quoteClient = $quoteClient;
     }
 
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return void
+     */
     public function updateQuoteOrderReference(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
-        if ($quoteTransfer->getOrderReference() === null
+        if (
+            $quoteTransfer->getOrderReference() === null
             && $checkoutResponseTransfer->getIsSuccess()
             && $checkoutResponseTransfer->getSaveOrder() !== null
         ) {
