@@ -51,14 +51,14 @@ class UpdateQuoteOrderReferenceTest extends Test
     /**
      * @return void
      */
-    public function testUpdateQuoteOrderReferenceWithResponseIsSuccess()
+    public function testUpdateQuoteOrderReferenceWithResponseIsSuccess(): void
     {
         // Arange
         $quoteTransfer = new QuoteTransfer();
         $checkoutResponseTransfer = new CheckoutResponseTransfer();
         $checkoutResponseTransfer->setIsSuccess(true)
             ->setSaveOrder(
-                (new SaveOrderTransfer())->setOrderReference(self::TEST_ORDER_REFERENCE)
+                (new SaveOrderTransfer())->setOrderReference(static::TEST_ORDER_REFERENCE)
             );
 
         // Act
@@ -67,20 +67,20 @@ class UpdateQuoteOrderReferenceTest extends Test
             ->updateQuoteOrderReference($quoteTransfer, $checkoutResponseTransfer);
 
         // Assert
-        $this->assertEquals(self::TEST_ORDER_REFERENCE, $quoteTransfer->getOrderReference());
+        $this->assertEquals(static::TEST_ORDER_REFERENCE, $quoteTransfer->getOrderReference());
     }
 
     /**
      * @return void
      */
-    public function testUpdateQuoteOrderReferenceWithResponseIsFailure()
+    public function testUpdateQuoteOrderReferenceWithResponseIsFailure(): void
     {
         // Arange
         $quoteTransfer = new QuoteTransfer();
         $checkoutResponseTransfer = new CheckoutResponseTransfer();
         $checkoutResponseTransfer->setIsSuccess(false)
             ->setSaveOrder(
-                (new SaveOrderTransfer())->setOrderReference(self::TEST_ORDER_REFERENCE)
+                (new SaveOrderTransfer())->setOrderReference(static::TEST_ORDER_REFERENCE)
             );
 
         // Act
@@ -95,7 +95,7 @@ class UpdateQuoteOrderReferenceTest extends Test
     /**
      * @return void
      */
-    public function testUpdateQuoteOrderReferenceWithResponseIsSuccessButNoSaveOrder()
+    public function testUpdateQuoteOrderReferenceWithResponseIsSuccessButNoSaveOrder(): void
     {
         // Arange
         $quoteTransfer = new QuoteTransfer();
