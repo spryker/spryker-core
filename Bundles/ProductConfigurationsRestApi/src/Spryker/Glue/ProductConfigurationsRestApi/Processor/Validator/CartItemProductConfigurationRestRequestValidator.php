@@ -7,6 +7,8 @@
 
 namespace Spryker\Glue\ProductConfigurationsRestApi\Processor\Validator;
 
+use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
+use Generated\Shared\Transfer\RestCartItemProductConfigurationInstanceAttributesTransfer;
 use Generated\Shared\Transfer\RestCartItemsAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorCollectionTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
@@ -72,10 +74,7 @@ class CartItemProductConfigurationRestRequestValidator implements CartItemProduc
 
         $productConfigurationInstanceTransfer = $this->productConfigurationStorageClient->findProductConfigurationInstanceBySku($productConcreteSku);
 
-        if (
-            $productConfigurationInstanceTransfer
-            && $productConfigurationInstanceTransfer->getConfiguratorKey() === $restCartItemProductConfigurationInstanceAttributesTransfer->getConfiguratorKey()
-        ) {
+        if ($this->isSameProductConfigurationInstance($restCartItemProductConfigurationInstanceAttributesTransfer, $productConfigurationInstanceTransfer)) {
             return null;
         }
 
@@ -113,5 +112,24 @@ class CartItemProductConfigurationRestRequestValidator implements CartItemProduc
                 $sku,
                 $productConfigurationInstanceKey
             ));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestCartItemProductConfigurationInstanceAttributesTransfer $restCartItemProductConfigurationInstanceAttributesTransfer
+     * @param \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer|null $productConfigurationInstanceTransfer
+     *
+     * @return bool
+     */
+    protected function isSameProductConfigurationInstance(
+        RestCartItemProductConfigurationInstanceAttributesTransfer $restCartItemProductConfigurationInstanceAttributesTransfer,
+        ?ProductConfigurationInstanceTransfer $productConfigurationInstanceTransfer
+    ): bool {
+        return $productConfigurationInstanceTransfer
+            && $productConfigurationInstanceTransfer->getConfiguratorKey()
+            && $restCartItemProductConfigurationInstanceAttributesTransfer->getConfiguratorKey()
+            && strcasecmp(
+                $productConfigurationInstanceTransfer->getConfiguratorKeyOrFail(),
+                $restCartItemProductConfigurationInstanceAttributesTransfer->getConfiguratorKeyOrFail()
+            ) === 0;
     }
 }

@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductConfigurationsRestApi\Business;
 
 use Generated\Shared\Transfer\CartItemRequestTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
-use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -37,24 +36,5 @@ class ProductConfigurationsRestApiFacade extends AbstractFacade implements Produ
                 $cartItemRequestTransfer,
                 $persistentCartChangeTransfer
             );
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CartItemRequestTransfer $cartItemRequestTransfer
-     * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    public function updateQuoteItem(
-        CartItemRequestTransfer $cartItemRequestTransfer,
-        QuoteResponseTransfer $quoteResponseTransfer
-    ): QuoteResponseTransfer {
-        return $this->getFactory()
-            ->createQuoteItemUpdater()
-            ->updateQuoteItem($cartItemRequestTransfer, $quoteResponseTransfer);
     }
 }

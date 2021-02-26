@@ -5,12 +5,11 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.3",
-    "spryker/carts-rest-api-extension": "^1.7.0",
+    "spryker/carts-rest-api-extension": "^1.5.0",
     "spryker/glue-application": "^1.6.0",
     "spryker/glue-application-extension": "^1.1.0",
     "spryker/kernel": "^3.56.0",
     "spryker/orders-rest-api-extension": "^1.0.0",
-    "spryker/persistent-cart": "^3.5.0",
     "spryker/product-configuration-storage": "^0.1.2",
     "spryker/product-configurations-rest-api-extension": "^0.1.0",
     "spryker/products-rest-api-extension": "^1.0.0",
@@ -19,9 +18,6 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/customer": "*",
-    "spryker/propel": "*",
-    "spryker/quote": "*",
     "spryker/testify": "*"
   },
   "suggest": {

@@ -12,10 +12,6 @@ use Spryker\Zed\ProductConfigurationsRestApi\Business\Comparator\ItemComparator;
 use Spryker\Zed\ProductConfigurationsRestApi\Business\Comparator\ItemComparatorInterface;
 use Spryker\Zed\ProductConfigurationsRestApi\Business\Mapper\ProductConfigurationMapper;
 use Spryker\Zed\ProductConfigurationsRestApi\Business\Mapper\ProductConfigurationMapperInterface;
-use Spryker\Zed\ProductConfigurationsRestApi\Business\Updater\QuoteItemUpdater;
-use Spryker\Zed\ProductConfigurationsRestApi\Business\Updater\QuoteItemUpdaterInterface;
-use Spryker\Zed\ProductConfigurationsRestApi\Dependency\Facade\ProductConfigurationsRestApiToPersistentCartFacadeInterface;
-use Spryker\Zed\ProductConfigurationsRestApi\ProductConfigurationsRestApiDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductConfigurationsRestApi\ProductConfigurationsRestApiConfig getConfig()
@@ -31,29 +27,10 @@ class ProductConfigurationsRestApiBusinessFactory extends AbstractBusinessFactor
     }
 
     /**
-     * @return \Spryker\Zed\ProductConfigurationsRestApi\Business\Updater\QuoteItemUpdaterInterface
-     */
-    public function createQuoteItemUpdater(): QuoteItemUpdaterInterface
-    {
-        return new QuoteItemUpdater(
-            $this->createItemComparator(),
-            $this->getPersistentCartFacade()
-        );
-    }
-
-    /**
      * @return \Spryker\Zed\ProductConfigurationsRestApi\Business\Comparator\ItemComparatorInterface
      */
     public function createItemComparator(): ItemComparatorInterface
     {
         return new ItemComparator($this->getConfig());
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductConfigurationsRestApi\Dependency\Facade\ProductConfigurationsRestApiToPersistentCartFacadeInterface
-     */
-    public function getPersistentCartFacade(): ProductConfigurationsRestApiToPersistentCartFacadeInterface
-    {
-        return $this->getProvidedDependency(ProductConfigurationsRestApiDependencyProvider::FACADE_PERSISTENT_CART);
     }
 }
