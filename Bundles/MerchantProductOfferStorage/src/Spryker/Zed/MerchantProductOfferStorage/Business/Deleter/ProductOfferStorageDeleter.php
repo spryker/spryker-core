@@ -64,4 +64,12 @@ class ProductOfferStorageDeleter implements ProductOfferStorageDeleterInterface
             $storeName
         );
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function deleteProductOfferStorageByIds(array $ids): void
+    {
+        $this->merchantProductOfferStorageEntityManager->deleteProductOfferStorageEntitiesByIdProductOfferStorage($ids);
+    }
 }

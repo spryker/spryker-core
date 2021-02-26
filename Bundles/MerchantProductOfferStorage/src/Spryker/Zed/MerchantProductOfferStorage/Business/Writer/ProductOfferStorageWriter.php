@@ -97,6 +97,8 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
      */
     protected function writeByProductOfferReferences(array $productOfferReferences): void
     {
+        $this->deleteIncorrectProductOfferStorages($productOfferReferences);
+
         $productOfferCriteriaFilterTransfer = $this->createProductOfferCriteriaFilterTransfer($productOfferReferences);
         $productOfferCollectionTransfer = $this->merchantProductOfferStorageRepository
             ->getProductOffersByFilterCriteria($productOfferCriteriaFilterTransfer);
@@ -119,6 +121,19 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
             ->setIsActive(true)
             ->setIsActiveConcreteProduct(true)
             ->addApprovalStatus(static::STATUS_APPROVED);
+    }
+
+    /**
+     * @param string[] $productOfferReferences
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer
+     */
+    protected function createIncorrectProductOfferCriteriaFilterTransfer(array $productOfferReferences): ProductOfferCriteriaFilterTransfer
+    {
+        return (new ProductOfferCriteriaFilterTransfer())
+            ->setProductOfferReferences($productOfferReferences)
+            ->setIsActive(false)
+            ->setIsActiveMerchant(false);
     }
 
     /**
@@ -169,5 +184,29 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
         }
 
         return $this->storeTransfers;
+    }
+
+    /**
+     * @param array $productOfferReferences
+     *
+     * @return void
+     */
+    protected function deleteIncorrectProductOfferStorages(array $productOfferReferences): void
+    {
+        $productIncorrectOfferCriteriaFilterTransfer = $this->createIncorrectProductOfferCriteriaFilterTransfer(
+            $productOfferReferences
+        );
+
+        $incorrectProductOfferCollectionTransfer = $this->merchantProductOfferStorageRepository
+            ->getProductOffersByFilterCriteria($productIncorrectOfferCriteriaFilterTransfer);
+
+        $incorrectProductOfferIds = [];
+        foreach ($incorrectProductOfferCollectionTransfer->getProductOffers() as $incorrectProductOfferTransfer) {
+            $incorrectProductOfferIds[] = $incorrectProductOfferTransfer->getIdProductOffer();
+        }
+
+        if (empty($incorrectProductOfferIds) === false) {
+            $this->productOfferStorageDeleter->deleteProductOfferStorageByIds($incorrectProductOfferIds);
+        }
     }
 }
