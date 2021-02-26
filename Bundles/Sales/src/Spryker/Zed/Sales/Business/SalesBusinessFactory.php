@@ -58,6 +58,7 @@ use Spryker\Zed\Sales\Business\Triggerer\OmsEventTriggerer;
 use Spryker\Zed\Sales\Business\Triggerer\OmsEventTriggererInterface;
 use Spryker\Zed\Sales\Business\Writer\OrderWriter;
 use Spryker\Zed\Sales\Business\Writer\OrderWriterInterface;
+use Spryker\Zed\Sales\Dependency\Client\SalesToQuoteClientInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCustomerInterface;
 use Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesOrderItemMapper;
 use Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesOrderItemMapperInterface;
@@ -403,9 +404,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
      */
     public function createOrderReferenceManager(): OrderReferenceManager
     {
-        return new OrderReferenceManager(
-            $this->getProvidedDependency(SalesDependencyProvider::CLIENT_QUOTE)
-        );
+        return new OrderReferenceManager($this->getQuoteClient());
     }
 
     /**
@@ -600,5 +599,13 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     public function getCustomerOrderAccessCheckPlugins(): array
     {
         return $this->getProvidedDependency(SalesDependencyProvider::PLUGINS_CUSTOMER_ORDER_ACCESS_CHECK);
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Dependency\Client\SalesToQuoteClientBridge
+     */
+    protected function getQuoteClient(): SalesToQuoteClientInterface
+    {
+        return $this->getProvidedDependency(SalesDependencyProvider::CLIENT_QUOTE);
     }
 }

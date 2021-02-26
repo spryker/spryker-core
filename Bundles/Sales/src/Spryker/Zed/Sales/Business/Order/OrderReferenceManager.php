@@ -34,15 +34,24 @@ class OrderReferenceManager
      */
     public function updateQuoteOrderReference(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
-        if (
-            $quoteTransfer->getOrderReference() === null
-            && $checkoutResponseTransfer->getIsSuccess()
-            && $checkoutResponseTransfer->getSaveOrder() !== null
-        ) {
+        if ($this->isReadyToQuoteUpdate($quoteTransfer, $checkoutResponseTransfer)) {
             $quoteTransfer->setOrderReference(
                 $checkoutResponseTransfer->getSaveOrder()->getOrderReference()
             );
             $this->quoteClient->setQuote($quoteTransfer);
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return bool
+     */
+    private function isReadyToQuoteUpdate(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool
+    {
+        return $quoteTransfer->getOrderReference() === null
+            && $checkoutResponseTransfer->getIsSuccess()
+            && $checkoutResponseTransfer->getSaveOrder() !== null;
     }
 }
