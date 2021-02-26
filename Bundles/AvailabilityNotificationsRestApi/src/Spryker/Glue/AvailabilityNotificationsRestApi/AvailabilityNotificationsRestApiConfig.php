@@ -14,6 +14,10 @@ class AvailabilityNotificationsRestApiConfig extends AbstractBundleConfig
     public const CONTROLLER_AVAILABILITY_NOTIFICATIONS = "availability-notifications-resource";
 
     public const RESPONSE_CODE_PRODUCT_NOT_FOUND = "4601";
+    public const RESPONSE_CODE_SUBSCRIPTION_ALREADY_EXISTS = "4602";
+    public const RESPONSE_CODE_SUBSCRIPTION_NOT_EXISTS = "4603";
 
     public const RESPONSE_DETAIL_PRODUCT_NOT_FOUND = "Product not found.";
+    public const RESPONSE_DETAIL_SUBSCRIPTION_ALREADY_EXISTS = "Subscription already exists.";
+    public const RESPONSE_DETAIL_SUBSCRIPTION_NOT_EXISTS = "Subscription doesn't exists.";
 }

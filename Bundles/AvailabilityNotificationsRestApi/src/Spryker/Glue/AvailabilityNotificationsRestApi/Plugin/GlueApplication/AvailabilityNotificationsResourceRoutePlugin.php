@@ -5,12 +5,13 @@ namespace Spryker\Glue\AvailabilityNotificationsRestApi\Plugin\GlueApplication;
 use Generated\Shared\Transfer\RestAvailabilityNotificationsAttributesTransfer;
 use Spryker\Glue\AvailabilityNotificationsRestApi\AvailabilityNotificationsRestApiConfig;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface;
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
 
 /**
  * @method \Spryker\Glue\WishlistsRestApi\WishlistsRestApiFactory getFactory()
  */
-class AvailabilityNotificationsResourceRoutePlugin extends AbstractPlugin
+class AvailabilityNotificationsResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface
 {
     /**
      * {@inheritDoc}
@@ -24,9 +25,9 @@ class AvailabilityNotificationsResourceRoutePlugin extends AbstractPlugin
     public function configure(ResourceRouteCollectionInterface $resourceRouteCollection): ResourceRouteCollectionInterface
     {
         $resourceRouteCollection
-            ->addGet('get')
-            ->addPost('post')
-            ->addDelete('delete')
+            ->addGet('get', true)
+            ->addPost('post', false)
+            ->addDelete('delete', false)
         ;
 
         return $resourceRouteCollection;
