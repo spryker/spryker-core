@@ -5,8 +5,11 @@
 {% endblock %}
 
 {% block content %}
-    <web-mp-login cloak>
+    <web-mp-login-layout cloak>
         {%- include '@ZedUi/Partials/FlashMessages/flash-messages.twig' -%}
+
+        <span sub-title>{{ 'Merchant Portal' | trans }}</span>
+        <span title>{{ 'Login' | trans }}</span>
 
         {% form_theme form '@ZedUi/Form/form-webcomponent-layout.twig' %}
 
@@ -16,7 +19,9 @@
             {{ form_row(form.password) }}
             {{ form_row(form.login, {attr: {class: 'login__submit'}}) }}
         {{ form_end(form) }}
-    </web-mp-login>
+
+        <web-spy-button-link class="login__link" url="/security-merchant-portal-gui/password/reset-request" variant="link">{{ 'Forgot password?' | trans }}</web-spy-button-link>
+    </web-mp-login-layout>
 {% endblock %}
 
 {% block footerJs %}
