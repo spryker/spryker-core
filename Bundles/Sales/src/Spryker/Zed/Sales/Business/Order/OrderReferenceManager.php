@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Sales\Dependency\Client\SalesToQuoteClientInterface;
 
-class OrderReferenceManager
+class OrderReferenceManager implements OrderReferenceManagerInterface
 {
     /**
      * @var \Spryker\Zed\Sales\Dependency\Client\SalesToQuoteClientInterface
@@ -32,7 +32,7 @@ class OrderReferenceManager
      *
      * @return void
      */
-    public function updateQuoteOrderReference(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
+    public function updateQuoteOrderReference(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): void
     {
         if ($this->isReadyToQuoteUpdate($quoteTransfer, $checkoutResponseTransfer)) {
             $quoteTransfer->setOrderReference(

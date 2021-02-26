@@ -46,6 +46,7 @@ use Spryker\Zed\Sales\Business\Order\OrderHydratorInterface;
 use Spryker\Zed\Sales\Business\Order\OrderReader as OrderReaderWithMultiShippingAddress;
 use Spryker\Zed\Sales\Business\Order\OrderReaderInterface;
 use Spryker\Zed\Sales\Business\Order\OrderReferenceManager;
+use Spryker\Zed\Sales\Business\Order\OrderReferenceManagerInterface;
 use Spryker\Zed\Sales\Business\OrderItem\SalesOrderItemGrouper;
 use Spryker\Zed\Sales\Business\OrderItem\SalesOrderItemGrouperInterface;
 use Spryker\Zed\Sales\Business\Reader\OrderItemReader;
@@ -400,9 +401,9 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Sales\Business\Order\OrderReferenceManager
+     * @return \Spryker\Zed\Sales\Business\Order\OrderReferenceManagerInterface
      */
-    public function createOrderReferenceManager(): OrderReferenceManager
+    public function createOrderReferenceManager(): OrderReferenceManagerInterface
     {
         return new OrderReferenceManager($this->getQuoteClient());
     }
