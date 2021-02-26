@@ -19,6 +19,8 @@ use Spryker\Glue\ProductConfigurationsRestApi\Processor\Mapper\ProductConfigurat
 use Spryker\Glue\ProductConfigurationsRestApi\Processor\Mapper\ProductConfigurationInstancePriceMapperInterface;
 use Spryker\Glue\ProductConfigurationsRestApi\Processor\Mapper\ProductConfigurationRestOrderAttributesMapper;
 use Spryker\Glue\ProductConfigurationsRestApi\Processor\Mapper\ProductConfigurationRestOrderAttributesMapperInterface;
+use Spryker\Glue\ProductConfigurationsRestApi\Processor\Validator\CartItemProductConfigurationRestRequestValidator;
+use Spryker\Glue\ProductConfigurationsRestApi\Processor\Validator\CartItemProductConfigurationRestRequestValidatorInterface;
 
 class ProductConfigurationsRestApiFactory extends AbstractFactory
 {
@@ -67,6 +69,16 @@ class ProductConfigurationsRestApiFactory extends AbstractFactory
     public function createProductConfigurationInstancePriceMapper(): ProductConfigurationInstancePriceMapperInterface
     {
         return new ProductConfigurationInstancePriceMapper();
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductConfigurationsRestApi\Processor\Validator\CartItemProductConfigurationRestRequestValidatorInterface
+     */
+    public function createCartItemProductConfigurationRestRequestValidator(): CartItemProductConfigurationRestRequestValidatorInterface
+    {
+        return new CartItemProductConfigurationRestRequestValidator(
+            $this->getProductConfigurationStorageClient()
+        );
     }
 
     /**
