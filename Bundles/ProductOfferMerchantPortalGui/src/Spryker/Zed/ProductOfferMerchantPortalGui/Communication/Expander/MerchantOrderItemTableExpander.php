@@ -130,10 +130,10 @@ class MerchantOrderItemTableExpander implements MerchantOrderItemTableExpanderIn
     ): array {
         $merchantSkus = [];
         foreach ($productOfferCollectionTransfer->getProductOffers() as $productOfferTransfer) {
-            $productOfferReference = $productOfferTransfer->getProductOfferReference();
+            $productOfferReference = $productOfferTransfer->getProductOfferReferenceOrFail();
             $merchantSku = $productOfferTransfer->getMerchantSku();
 
-            if (!$productOfferReference || !$merchantSku) {
+            if (!$merchantSku) {
                 continue;
             }
 
