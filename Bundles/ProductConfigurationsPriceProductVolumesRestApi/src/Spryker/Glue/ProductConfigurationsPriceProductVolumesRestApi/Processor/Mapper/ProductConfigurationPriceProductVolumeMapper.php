@@ -59,7 +59,7 @@ class ProductConfigurationPriceProductVolumeMapper implements ProductConfigurati
             }
 
             $restProductPriceVolumesAttributesTransfer = $this->mapPriceProductTransferToRestProductPriceVolumesAttributesTransfer(
-                $priceProductTransfer,
+                $volumePriceProductTransfer,
                 new RestProductPriceVolumesAttributesTransfer()
             );
             $restProductPriceVolumesAttributesTransfer->setQuantity($volumePriceProductTransfer->getVolumeQuantity());

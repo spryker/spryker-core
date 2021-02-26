@@ -74,10 +74,7 @@ class CartItemProductConfigurationRestRequestValidator implements CartItemProduc
 
         $productConfigurationInstanceTransfer = $this->productConfigurationStorageClient->findProductConfigurationInstanceBySku($productConcreteSku);
 
-        if (
-            $productConfigurationInstanceTransfer
-            && $productConfigurationInstanceTransfer->getConfiguratorKey() === $restCartItemProductConfigurationInstanceAttributesTransfer->getConfiguratorKey()
-        ) {
+        if ($this->isSameProductConfigurationInstance($restCartItemProductConfigurationInstanceAttributesTransfer, $productConfigurationInstanceTransfer)) {
             return null;
         }
 
