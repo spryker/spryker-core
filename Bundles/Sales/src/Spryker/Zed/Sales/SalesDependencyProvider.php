@@ -10,6 +10,7 @@ namespace Spryker\Zed\Sales;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Sales\Dependency\Client\SalesToQuoteClientBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCalculationBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCountryBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCustomerBridge;
@@ -18,7 +19,6 @@ use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToSequenceNumberBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToUserBridge;
 use Spryker\Zed\Sales\Dependency\Service\SalesToUtilSanitizeBridge;
-use Spryker\Zed\Sales\Dependency\Client\SalesToQuoteClientBridge;
 
 /**
  * @method \Spryker\Zed\Sales\SalesConfig getConfig()
