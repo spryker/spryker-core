@@ -7,10 +7,9 @@ declare(strict_types = 1);
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\PriceProductOfferStorage\Plugin\PriceProductStorage;
+namespace Spryker\Client\PriceProductOfferStorage\Plugin\MerchantProductOfferStorage;
 
 use Generated\Shared\Transfer\ProductOfferStorageCollectionTransfer;
-use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\MerchantProductOfferStorageExtension\Dependency\Plugin\ProductOfferStorageCollectionSorterPluginInterface;
 
 class DefaultProductOfferStorageCollectionSorterPlugin implements ProductOfferStorageCollectionSorterPluginInterface
