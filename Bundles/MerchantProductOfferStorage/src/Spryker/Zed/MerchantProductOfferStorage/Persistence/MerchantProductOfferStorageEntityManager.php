@@ -97,15 +97,4 @@ class MerchantProductOfferStorageEntityManager extends AbstractEntityManager imp
 
         $query->find()->delete();
     }
-
-    /**
-     * @inheritDoc
-     */
-    public function deleteProductOfferStorageEntitiesByIdProductOfferStorage(array $idsProductOfferStorage): void
-    {
-        $entities = $this->getFactory()
-            ->createProductOfferStoragePropelQuery()
-            ->filterByIdProductOfferStorage_In($idsProductOfferStorage)
-            ->delete();
-    }
 }

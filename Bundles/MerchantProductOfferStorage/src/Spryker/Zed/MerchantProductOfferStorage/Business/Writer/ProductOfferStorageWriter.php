@@ -16,6 +16,9 @@ use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOff
 use Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStorageEntityManagerInterface;
 use Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStorageRepositoryInterface;
 
+/**
+ * @method \Spryker\Zed\MerchantProductOfferStorage\Business\MerchantProductOfferStorageBusinessFactory getFactory()
+ */
 class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
 {
     /**
@@ -99,7 +102,7 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
     {
         $this->deleteIncorrectProductOfferStorages($productOfferReferences);
 
-        $productOfferCriteriaFilterTransfer = $this->createProductOfferCriteriaFilterTransfer($productOfferReferences);
+        $productOfferCriteriaFilterTransfer = $this->getFactory()->createProductOfferCriteriaFilterTransfer($productOfferReferences);
         $productOfferCollectionTransfer = $this->merchantProductOfferStorageRepository
             ->getProductOffersByFilterCriteria($productOfferCriteriaFilterTransfer);
 
@@ -107,33 +110,6 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
             $this->merchantProductOfferStorageEntityManager->saveProductOfferStorage($productOfferTransfer);
             $this->deleteProductOfferReferenceByStore($productOfferTransfer);
         }
-    }
-
-    /**
-     * @param string[] $productOfferReferences
-     *
-     * @return \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer
-     */
-    protected function createProductOfferCriteriaFilterTransfer(array $productOfferReferences): ProductOfferCriteriaFilterTransfer
-    {
-        return (new ProductOfferCriteriaFilterTransfer())
-            ->setProductOfferReferences($productOfferReferences)
-            ->setIsActive(true)
-            ->setIsActiveConcreteProduct(true)
-            ->addApprovalStatus(static::STATUS_APPROVED);
-    }
-
-    /**
-     * @param string[] $productOfferReferences
-     *
-     * @return \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer
-     */
-    protected function createIncorrectProductOfferCriteriaFilterTransfer(array $productOfferReferences): ProductOfferCriteriaFilterTransfer
-    {
-        return (new ProductOfferCriteriaFilterTransfer())
-            ->setProductOfferReferences($productOfferReferences)
-            ->setIsActive(false)
-            ->setIsActiveMerchant(false);
     }
 
     /**
@@ -193,20 +169,20 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
      */
     protected function deleteIncorrectProductOfferStorages(array $productOfferReferences): void
     {
-        $productIncorrectOfferCriteriaFilterTransfer = $this->createIncorrectProductOfferCriteriaFilterTransfer(
+        $productIncorrectOfferCriteriaFilterTransfer = $this->getFactory()->createIncorrectProductOfferCriteriaFilterTransfer(
             $productOfferReferences
         );
 
         $incorrectProductOfferCollectionTransfer = $this->merchantProductOfferStorageRepository
             ->getProductOffersByFilterCriteria($productIncorrectOfferCriteriaFilterTransfer);
 
-        $incorrectProductOfferIds = [];
+        $incorrectProductOfferReferences = [];
         foreach ($incorrectProductOfferCollectionTransfer->getProductOffers() as $incorrectProductOfferTransfer) {
-            $incorrectProductOfferIds[] = $incorrectProductOfferTransfer->getIdProductOffer();
+            $incorrectProductOfferReferences[] = $incorrectProductOfferTransfer->getProductOfferReference();
         }
 
-        if (empty($incorrectProductOfferIds) === false) {
-            $this->productOfferStorageDeleter->deleteProductOfferStorageByIds($incorrectProductOfferIds);
+        if (empty($incorrectProductOfferReferences) === false) {
+            $this->productOfferStorageDeleter->deleteCollectionByProductOfferReferences($incorrectProductOfferReferences);
         }
     }
 }

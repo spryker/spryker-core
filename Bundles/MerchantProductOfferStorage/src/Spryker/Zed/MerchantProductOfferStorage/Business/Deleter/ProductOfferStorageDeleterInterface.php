@@ -23,11 +23,4 @@ interface ProductOfferStorageDeleterInterface
      * @return void
      */
     public function deleteCollectionByProductOfferReferences(array $productOfferReferences, ?string $storeName = null): void;
-
-    /**
-     * @param int[] $ids
-     *
-     * @return void
-     */
-    public function deleteProductOfferStorageByIds(array $ids): void;
 }
