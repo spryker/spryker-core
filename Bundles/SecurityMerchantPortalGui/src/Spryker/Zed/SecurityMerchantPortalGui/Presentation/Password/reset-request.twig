@@ -1,12 +1,23 @@
-{% extends '@ZedUi/Layout/merchant-layout-centered.twig' %}
+{% extends '@SecurityMerchantPortalGui/Layout/layout.twig' %}
 
-{% block headTitle %}
-    {{ 'Merchant Portal' | trans }}
-{% endblock %}
+{% set isFormRendered = not form.email.vars.value %}
 
 {% block content %}
-    {%- include '@ZedUi/Partials/FlashMessages/flash-messages.twig' -%}
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
-    {{ form_end(form) }}
+    {% set linkClass = linkClass ~ (not isFormRendered ? ' ' ~ layoutComponentClass ~ '__link--spacingless') %}
+    {% set linkUrl = '/security-merchant-portal-gui/login' %}
+    {% set linkText = 'Back to Login' | trans %}
+    {% set title = 'Reset Password' | trans %}
+
+    {{ parent() }}
+{% endblock %}
+
+{% block form %}
+    {% if isFormRendered %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block formContent %}
+    {{ form_row(form.email) }}
+    {{ form_row(form.submit, {attr: {class: submitButtonClass}}) }}
 {% endblock %}

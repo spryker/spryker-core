@@ -33,6 +33,7 @@
         "@spryker/html-renderer": "^0.1.0-next.4",
         "@spryker/icon": "^0.2.0-next.8",
         "@spryker/input": "^0.2.0-next.1",
+        "@spryker/input.password": "^0.1.0-next.0",
         "@spryker/interception": "^0.1.0-next.4",
         "@spryker/layout": "^0.2.0-next.1",
         "@spryker/locale": "^0.2.0-next.8",
