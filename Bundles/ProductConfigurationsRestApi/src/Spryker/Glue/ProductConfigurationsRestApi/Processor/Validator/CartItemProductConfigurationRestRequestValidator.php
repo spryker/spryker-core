@@ -35,6 +35,10 @@ class CartItemProductConfigurationRestRequestValidator implements CartItemProduc
         self::RESOURCE_CART_ITEMS,
     ];
 
+    protected const VALIDATED_REQUEST_METHODS = [
+        Request::METHOD_POST,
+    ];
+
     /**
      * @var \Spryker\Glue\ProductConfigurationsRestApi\Dependency\Client\ProductConfigurationsRestApiToProductConfigurationStorageClientInterface
      */
@@ -56,7 +60,9 @@ class CartItemProductConfigurationRestRequestValidator implements CartItemProduc
      */
     public function validate(Request $httpRequest, RestRequestInterface $restRequest): ?RestErrorCollectionTransfer
     {
-        if (!in_array($restRequest->getResource()->getType(), static::VALIDATED_RESOURCE_NAMES, true)) {
+        if (!in_array($httpRequest->getMethod(), static::VALIDATED_REQUEST_METHODS, true)
+            || !in_array($restRequest->getResource()->getType(), static::VALIDATED_RESOURCE_NAMES, true)
+        ) {
             return null;
         }
 
