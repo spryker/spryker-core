@@ -60,7 +60,8 @@ class CartItemProductConfigurationRestRequestValidator implements CartItemProduc
      */
     public function validate(Request $httpRequest, RestRequestInterface $restRequest): ?RestErrorCollectionTransfer
     {
-        if (!in_array($httpRequest->getMethod(), static::VALIDATED_REQUEST_METHODS, true)
+        if (
+            !in_array($httpRequest->getMethod(), static::VALIDATED_REQUEST_METHODS, true)
             || !in_array($restRequest->getResource()->getType(), static::VALIDATED_RESOURCE_NAMES, true)
         ) {
             return null;
