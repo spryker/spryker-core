@@ -252,7 +252,7 @@ interface AvailabilityFacadeInterface
 
     /**
      * Specification:
-     * - Reads availability from DB.
+     * - Reads product availabilities from DB.
      * - Returns ProductConcreteAvailability transfers collection by provided criteria.
      *
      * @api

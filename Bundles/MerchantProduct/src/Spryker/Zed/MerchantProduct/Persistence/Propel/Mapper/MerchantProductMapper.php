@@ -8,6 +8,7 @@
 namespace Spryker\Zed\MerchantProduct\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\MerchantProductTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstract;
 use Propel\Runtime\Collection\ObjectCollection;
 
@@ -48,7 +49,10 @@ class MerchantProductMapper
         ObjectCollection $productEntities
     ): MerchantProductTransfer {
         foreach ($productEntities as $productEntity) {
-            $merchantProductTransfer->addIdProductConcrete($productEntity->getIdProduct());
+            $productConcreteTransfer = (new ProductConcreteTransfer())->fromArray($productEntity->toArray(), true);
+            $productConcreteTransfer->setIdProductConcrete($productEntity->getIdProduct());
+
+            $merchantProductTransfer->addProduct($productConcreteTransfer);
         }
 
         return $merchantProductTransfer;

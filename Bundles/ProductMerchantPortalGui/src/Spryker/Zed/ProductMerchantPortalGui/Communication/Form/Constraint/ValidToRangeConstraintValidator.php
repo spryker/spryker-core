@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Constraint;
 
 use DateTime;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Kernel\Communication\Validator\AbstractConstraintValidator;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
@@ -34,10 +35,8 @@ class ValidToRangeConstraintValidator extends AbstractConstraintValidator
             throw new UnexpectedTypeException($constraint, ValidToRangeConstraint::class);
         }
 
-        /** @var \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer */
-        $productConcreteTransfer = $this->context->getRoot()->getData();
-
-        $validFrom = $productConcreteTransfer->getValidFrom();
+        $formData = $this->context->getRoot()->getData();
+        $validFrom = $formData[ProductConcreteTransfer::VALID_FROM];
 
         if (!$validFrom) {
             return;

@@ -89,8 +89,8 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
         );
 
         $propelPager = $merchantProductAbstractPropelQuery->paginate(
-            $merchantProductTableCriteriaTransfer->requirePage()->getPage(),
-            $merchantProductTableCriteriaTransfer->requirePageSize()->getPageSize()
+            $merchantProductTableCriteriaTransfer->getPageOrFail(),
+            $merchantProductTableCriteriaTransfer->getPageSizeOrFail()
         );
 
         $paginationTransfer = $this->getFactory()->createPropelModelPagerMapper()->mapPropelModelPagerToPaginationTransfer(
@@ -127,7 +127,7 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
     ): SpyMerchantProductAbstractQuery {
         $merchantProductAbstractPropelQuery = $this->getFactory()->getMerchantProductAbstractPropelQuery();
         $idLocale = $merchantProductTableCriteriaTransfer->getLocaleOrFail()->getIdLocaleOrFail();
-        $idMerchant = $merchantProductTableCriteriaTransfer->requireIdMerchant()->getIdMerchant();
+        $idMerchant = $merchantProductTableCriteriaTransfer->getIdMerchantOrFail();
 
         $merchantProductAbstractPropelQuery->filterByFkMerchant($idMerchant)
             ->distinct()
@@ -544,8 +544,8 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
         );
 
         $propelPager = $priceProductDefaultQuery->paginate(
-            $priceProductAbstractTableCriteriaTransfer->requirePage()->getPage(),
-            $priceProductAbstractTableCriteriaTransfer->requirePageSize()->getPageSize()
+            $priceProductAbstractTableCriteriaTransfer->getPageOrFail(),
+            $priceProductAbstractTableCriteriaTransfer->getPageSizeOrFail()
         );
         $paginationTransfer = $this->getFactory()->createPropelModelPagerMapper()->mapPropelModelPagerToPaginationTransfer(
             $propelPager,
@@ -578,8 +578,8 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
     protected function buildPriceProductAbstractTableBaseQuery(
         PriceProductAbstractTableCriteriaTransfer $priceProductAbstractTableCriteriaTransfer
     ): SpyPriceProductDefaultQuery {
-        $idMerchant = $priceProductAbstractTableCriteriaTransfer->requireIdMerchant()->getIdMerchant();
-        $idProductAbstract = $priceProductAbstractTableCriteriaTransfer->requireIdProductAbstract()->getIdProductAbstract();
+        $idMerchant = $priceProductAbstractTableCriteriaTransfer->getIdMerchantOrFail();
+        $idProductAbstract = $priceProductAbstractTableCriteriaTransfer->getIdProductAbstractOrFail();
         $priceProductDefaultQuery = $this->getFactory()->getPriceProductDefaultPropelQuery();
 
         $priceProductDefaultQuery->joinPriceProductStore()
@@ -726,8 +726,8 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
         $productConcreteQuery = $this->applyProductConcreteFilters($productConcreteQuery, $productTableCriteriaTransfer);
 
         $propelPager = $productConcreteQuery->paginate(
-            $productTableCriteriaTransfer->requirePage()->getPage(),
-            $productTableCriteriaTransfer->requirePageSize()->getPageSize()
+            $productTableCriteriaTransfer->getPageOrFail(),
+            $productTableCriteriaTransfer->getPageSizeOrFail()
         );
         $paginationTransfer = $this->getFactory()
             ->createPropelModelPagerMapper()
@@ -771,7 +771,6 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
 
         $productConcreteQuery = $this->getFactory()->getProductConcretePropelQuery();
         $productConcreteQuery->leftJoinSpyProductValidity()
-            ->joinSpyProductAbstract()
             ->filterByFkProductAbstract($idProductAbstract)
             ->useSpyProductAbstractQuery()
                 ->joinSpyMerchantProductAbstract()
@@ -779,7 +778,6 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
                     ->filterByFkMerchant($idMerchant)
                 ->endUse()
             ->endUse()
-            ->joinSpyProductLocalizedAttributes()
             ->useSpyProductLocalizedAttributesQuery()
                 ->filterByFkLocale($idLocale)
             ->endUse()

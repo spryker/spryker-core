@@ -1,30 +1,31 @@
 {% block body %}
-    {% set validityErrors = productConcreteBulkForm.children.validFrom.vars.errors | merge(
-        productConcreteBulkForm.children.validTo.vars.errors
+    {% set productConcreteBulkFormFields = productConcreteBulkForm.children %}
+    {% set validityErrors = productConcreteBulkFormFields.validFrom.vars.errors | merge(
+        productConcreteBulkFormFields.validTo.vars.errors
     ) %}
     {% set bulkSections = {
         status: {
             title: 'Status' | trans,
             activationName: activationNameStatus,
-            name: productConcreteBulkForm.children.isActive.vars.full_name,
-            placeholder: productConcreteBulkForm.children.isActive.vars.label | trans,
+            name: productConcreteBulkFormFields.isActive.vars.full_name,
+            placeholder: productConcreteBulkFormFields.isActive.vars.label | trans,
             value: false,
-            error: productConcreteBulkForm.children.isActive.vars.errors[0].message | default | trans,
+            error: productConcreteBulkFormFields.isActive.vars.errors[0].message | default | trans,
         },
         validity: {
             title: 'Validity Dates & Time' | trans,
             activationName: activationNameValidity,
             name: {
-                from: productConcreteBulkForm.children.validFrom.vars.full_name,
-                to: productConcreteBulkForm.children.validTo.vars.full_name,
+                from: productConcreteBulkFormFields.validFrom.vars.full_name,
+                to: productConcreteBulkFormFields.validTo.vars.full_name,
             },
             placeholder: {
-                from: productConcreteBulkForm.children.validFrom.vars.label | trans,
-                to: productConcreteBulkForm.children.validTo.vars.label | trans,
+                from: productConcreteBulkFormFields.validFrom.vars.label | trans,
+                to: productConcreteBulkFormFields.validTo.vars.label | trans,
             },
             value: {
-                from: productConcreteBulkForm.children.validFrom.vars.value,
-                to: productConcreteBulkForm.children.validTo.vars.value,
+                from: productConcreteBulkFormFields.validFrom.vars.value,
+                to: productConcreteBulkFormFields.validTo.vars.value,
             },
             error: validityErrors[0].message | default | trans,
         }

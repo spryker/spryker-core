@@ -102,25 +102,27 @@ class ProductsConcreteController extends AbstractController
         FormInterface $productConcreteBulkForm,
         ProductConcreteCollectionTransfer $productConcreteCollectionTransfer
     ): void {
-        /** @var \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransferToSave */
-        $productConcreteTransferToSave = $productConcreteBulkForm->getData();
-
         if (!$request->get(static::PARAM_ACTIVATION_NAME_STATUS) && !$request->get(static::PARAM_ACTIVATION_NAME_VALIDITY)) {
             return;
         }
+
+        $formData = $productConcreteBulkForm->getData();
 
         foreach ($productConcreteCollectionTransfer->getProducts() as $productConcreteTransfer) {
             $idProductConcrete = $productConcreteTransfer->getIdProductConcrete();
 
             if ($request->get(static::PARAM_ACTIVATION_NAME_STATUS)) {
-                $productConcreteTransferToSave->getIsActive()
+                $formData[ProductConcreteTransfer::IS_ACTIVE]
                     ? $this->getFactory()->getProductFacade()->activateProductConcrete($idProductConcrete)
                     : $this->getFactory()->getProductFacade()->deactivateProductConcrete($idProductConcrete);
             }
 
             if ($request->get(static::PARAM_ACTIVATION_NAME_VALIDITY)) {
                 $this->getFactory()->getProductValidityFacade()->saveProductValidity(
-                    $productConcreteTransferToSave->setIdProductConcrete($idProductConcrete)
+                    (new ProductConcreteTransfer())
+                        ->setIdProductConcrete($idProductConcrete)
+                        ->setValidFrom($formData[ProductConcreteTransfer::VALID_FROM])
+                        ->setValidTo($formData[ProductConcreteTransfer::VALID_TO])
                 );
             }
         }

@@ -87,7 +87,7 @@ interface MerchantProductFacadeInterface
 
     /**
      * Specification:
-     * - Requires merchant ID.
+     * - Requires MerchantProductCriteriaTransfer.idMerchant.
      * - Returns the list of concrete products related to the provided merchant by criteria.
      *
      * @api

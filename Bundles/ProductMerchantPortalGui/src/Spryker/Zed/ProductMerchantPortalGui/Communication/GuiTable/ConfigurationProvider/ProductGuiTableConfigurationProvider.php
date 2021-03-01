@@ -81,8 +81,15 @@ class ProductGuiTableConfigurationProvider implements ProductGuiTableConfigurati
         $guiTableConfigurationBuilder = $this->addFilters($guiTableConfigurationBuilder);
         $guiTableConfigurationBuilder = $this->addBatchActions($guiTableConfigurationBuilder);
 
+        $dataSourceUrl = sprintf(
+            '%s?%s=%s',
+            static::DATA_URL,
+            ProductConcreteTransfer::FK_PRODUCT_ABSTRACT,
+            $idProductAbstract
+        );
+
         $guiTableConfigurationBuilder
-            ->setDataSourceUrl($this->getDataUrl($idProductAbstract))
+            ->setDataSourceUrl($dataSourceUrl)
             ->setSearchPlaceholder(static::SEARCH_PLACEHOLDER)
             ->setDefaultPageSize(10)
             ->setIsItemSelectionEnabled(true);
@@ -114,21 +121,6 @@ class ProductGuiTableConfigurationProvider implements ProductGuiTableConfigurati
             ->addColumnDate(static::COL_KEY_VALID_TO, 'Valid To', true, true);
 
         return $guiTableConfigurationBuilder;
-    }
-
-    /**
-     * @param int $idProductAbstract
-     *
-     * @return string
-     */
-    protected function getDataUrl(int $idProductAbstract): string
-    {
-        return sprintf(
-            '%s?%s=%s',
-            static::DATA_URL,
-            ProductConcreteTransfer::FK_PRODUCT_ABSTRACT,
-            $idProductAbstract
-        );
     }
 
     /**

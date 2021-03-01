@@ -94,16 +94,20 @@ class ProductConcreteTableExpander implements ProductConcreteTableExpanderInterf
             return $guiTableRowDataResponseTransfer->getResponseData()[static::COL_KEY_SKU];
         }, $guiTableDataResponseTransfer->getRows()->getArrayCopy());
         $idMerchant = $this->merchantUserFacade->getCurrentMerchantUser()->getIdMerchant();
-        $stockTransfer = $this->merchantStockFacade->get(
+        $stockTransfers = $this->merchantStockFacade->get(
             ((new MerchantStockCriteriaTransfer())->setIdMerchant($idMerchant)->setIsDefault(true))
-        )->getStocks()[0];
+        )->getStocks();
+
+        if (!$stockTransfers->count()) {
+            return $guiTableDataResponseTransfer;
+        }
 
         $productConcreteAvailabilityCollectionTransfer = $this->availabilityFacade->getProductConcreteAvailabilityCollection(
             (new ProductAvailabilityCriteriaTransfer())
                 ->setProductConcreteSkus($productConcreteSkus)
-                ->setStoreIds($stockTransfer->getStoreRelationOrFail()->getIdStores())
+                ->setStoreIds($stockTransfers->offsetGet(0)->getStoreRelationOrFail()->getIdStores())
         );
-        $productAvailabilities = $this->getProductAvailabilitiesIndexedByProductSkus(
+        $productAvailabilities = $this->getProductAvailabilitiesGroupedByProductSkus(
             $productConcreteAvailabilityCollectionTransfer
         );
 
@@ -124,7 +128,7 @@ class ProductConcreteTableExpander implements ProductConcreteTableExpanderInterf
      *
      * @return float[][]
      */
-    protected function getProductAvailabilitiesIndexedByProductSkus(
+    protected function getProductAvailabilitiesGroupedByProductSkus(
         ProductConcreteAvailabilityCollectionTransfer $productConcreteAvailabilityCollectionTransfer
     ): array {
         $productAvailabilities = [];

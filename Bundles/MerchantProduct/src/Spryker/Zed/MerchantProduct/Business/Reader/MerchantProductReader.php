@@ -11,6 +11,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\MerchantProductCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantProductTransfer;
 use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\MerchantProduct\Dependency\Facade\MerchantProductToProductFacadeInterface;
 use Spryker\Zed\MerchantProduct\Persistence\MerchantProductRepositoryInterface;
 
@@ -68,19 +69,21 @@ class MerchantProductReader implements MerchantProductReaderInterface
         MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer
     ): ProductConcreteCollectionTransfer {
         $merchantProductCriteriaTransfer->requireIdMerchant();
+        $merchantProductCriteriaTransfer->addIdMerchant($merchantProductCriteriaTransfer->getIdMerchant());
 
         $merchantProductCollectionTransfer = $this->merchantProductRepository->get($merchantProductCriteriaTransfer);
 
         $productConcreteIds = [];
         foreach ($merchantProductCollectionTransfer->getMerchantProducts() as $merchantProductTransfer) {
-            $productConcreteIds = array_merge($productConcreteIds, $merchantProductTransfer->getProductConcreteIds());
+            $merchantProductConcreteIds = array_map(function (ProductConcreteTransfer $productConcreteTransfer) {
+                return $productConcreteTransfer->getIdProductConcrete();
+            }, $merchantProductTransfer->getProducts()->getArrayCopy());
+
+            $productConcreteIds = array_merge($productConcreteIds, $merchantProductConcreteIds);
         }
 
         $productConcreteTransfers = $this->productFacade->getProductConcreteTransfersByProductIds($productConcreteIds);
 
-        $productConcreteCollectionTransfer = (new ProductConcreteCollectionTransfer())
-            ->setProducts(new ArrayObject($productConcreteTransfers));
-
-        return $productConcreteCollectionTransfer;
+        return (new ProductConcreteCollectionTransfer())->setProducts(new ArrayObject($productConcreteTransfers));
     }
 }

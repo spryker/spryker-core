@@ -47,12 +47,12 @@ Status,Status
 "Valid From","Gültig von"
 "Valid To","Gültig bis"
 Validity,Gültigkeit
-"Validity Dates & Time","Validity Dates & Time"
-"Enabling an option below will overwrite the existing input.","Enabling an option below will overwrite the existing input."
-"Bulk edit %number% variants","Bulk edit %number% variants"
-"The first date cannot be later than the second one.","The first date cannot be later than the second one."
-"The first date is the same as the second one.","The first date is the same as the second one."
-"The second date cannot be earlier than the first one.","The second date cannot be earlier than the first one."
+"Validity Dates & Time",Gültigkeitsdatum
+"Enabling an option below will overwrite the existing input.","Die Auswahl einer der folgenden Optionen wird die vorhandene Eingabe überschreiben."
+"Bulk edit %number% variants","Massenbearbeitung von %Anzahl% Varianten"
+"The first date cannot be later than the second one.","Das erste Datum darf nicht nach dem zweiten liegen."
+"The first date is the same as the second one.","Das erste Datum ist identisch mit dem ersten."
+"The second date cannot be earlier than the first one.","Das zweite Datum darf nicht vor dem ersten liegen."
 From,Von
 To,Bis
-"Bulk edit","Bulk edit"
+"Bulk edit",Massenbearbeitung

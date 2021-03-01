@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Constraint;
 
 use DateTime;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Kernel\Communication\Validator\AbstractConstraintValidator;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
@@ -34,10 +35,8 @@ class ValidFromRangeConstraintValidator extends AbstractConstraintValidator
             throw new UnexpectedTypeException($constraint, ValidFromRangeConstraint::class);
         }
 
-        /** @var \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer */
-        $productConcreteTransfer = $this->context->getRoot()->getData();
-
-        $validTo = $productConcreteTransfer->getValidTo();
+        $formData = $this->context->getRoot()->getData();
+        $validTo = $formData[ProductConcreteTransfer::VALID_TO];
 
         if (!$validTo) {
             return;
@@ -50,7 +49,7 @@ class ValidFromRangeConstraintValidator extends AbstractConstraintValidator
             $this->context->addViolation('The first date cannot be later than the second one.');
         }
 
-        if ($validFrom === $validTo) {
+        if ($validFrom->format('Y-m-d') === $validTo->format('Y-m-d')) {
             $this->context->addViolation('The first date is the same as the second one.');
         }
     }

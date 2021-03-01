@@ -219,7 +219,7 @@ interface GuiTableConfigurationBuilderInterface
     );
 
     /**
-     * Adds a new batch action with type url for rows.
+     * Adds a new batch action for rows. If $type is not set url type is used as default.
      *
      * @api
      *

@@ -27,12 +27,12 @@ class StockStoreRelationMapper
         StoreRelationTransfer $storeRelationTransfer
     ): StoreRelationTransfer {
         $storeTransfers = $this->mapStoreTransfers($stockStoreEntities);
-        $idStores = $this->getIdStoresFromStoreTransferCollection($storeTransfers);
+        $storeIds = $this->getStoreIdsFromStoreTransferCollection($storeTransfers);
 
         $storeRelationTransfer
             ->setIdEntity($idStock)
             ->setStores(new ArrayObject($storeTransfers))
-            ->setIdStores($idStores);
+            ->setIdStores($storeIds);
 
         return $storeRelationTransfer;
     }
@@ -68,7 +68,7 @@ class StockStoreRelationMapper
      *
      * @return int[]
      */
-    protected function getIdStoresFromStoreTransferCollection(array $storeTransfers): array
+    protected function getStoreIdsFromStoreTransferCollection(array $storeTransfers): array
     {
         return array_map(function (StoreTransfer $storeTransfer): int {
             return $storeTransfer->getIdStore();
