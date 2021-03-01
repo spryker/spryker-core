@@ -95,6 +95,29 @@ class MerchantProductRepository extends AbstractRepository implements MerchantPr
     }
 
     /**
+     * @param \Generated\Shared\Transfer\MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantProductTransfer|null
+     */
+    public function findMerchantProduct(
+        MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer
+    ): ?MerchantProductTransfer {
+        $merchantProductAbstractQuery = $this->getFactory()->getMerchantProductAbstractPropelQuery();
+        $merchantProductAbstractQuery = $this->applyFilters($merchantProductAbstractQuery, $merchantProductCriteriaTransfer);
+
+        $merchantProductAbstractEntity = $merchantProductAbstractQuery->findOne();
+
+        if (!$merchantProductAbstractEntity) {
+            return null;
+        }
+
+        return $this->getFactory()->createMerchantProductMapper()->mapMerchantProductEntityToMerchantProductTransfer(
+            $merchantProductAbstractEntity,
+            new MerchantProductTransfer()
+        );
+    }
+
+    /**
      * @param \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery $merchantProductAbstractQuery
      * @param \Generated\Shared\Transfer\MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer
      *

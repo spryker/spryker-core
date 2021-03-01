@@ -16,6 +16,9 @@ use Spryker\Zed\MerchantProductOfferDataImport\Business\Model\DataSet\MerchantPr
 
 class MerchantSkuValidationStep implements DataImportStepInterface
 {
+    protected const MERCHANT_SKU = MerchantProductOfferDataSetInterface::MERCHANT_SKU;
+    protected const ID_MERCHANT = MerchantProductOfferDataSetInterface::ID_MERCHANT;
+
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
@@ -25,13 +28,13 @@ class MerchantSkuValidationStep implements DataImportStepInterface
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        $merchantSku = $dataSet[MerchantProductOfferDataSetInterface::MERCHANT_SKU];
+        $merchantSku = $dataSet[static::MERCHANT_SKU];
 
         if (!$merchantSku) {
             return;
         }
 
-        $fkMerchant = $dataSet[MerchantProductOfferDataSetInterface::ID_MERCHANT];
+        $fkMerchant = $dataSet[static::ID_MERCHANT];
 
         /** @var \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery $productOfferQuery */
         $productOfferQuery = SpyProductOfferQuery::create();

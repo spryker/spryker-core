@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\PriceProduct\Business;
 
+use ArrayObject;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
@@ -14,6 +15,7 @@ use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\PriceTypeTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ValidationResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -613,5 +615,23 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
         return $this->getFactory()
             ->createPriceProductConcreteReader()
             ->expandProductConcreteWithPrices($productConcreteTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
+     *
+     * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     *
+     * @return \Generated\Shared\Transfer\ValidationResponseTransfer
+     */
+    public function validatePrices(ArrayObject $priceProductTransfers): ValidationResponseTransfer
+    {
+        return $this->getFactory()
+            ->createPriceProductValidator()
+            ->validatePrices($priceProductTransfers);
     }
 }
