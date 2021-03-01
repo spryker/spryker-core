@@ -238,11 +238,14 @@ class CartItemProductConfigurationRestRequestValidatorPluginTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\HttpFoundation\Request
+     * @return \PHPUnit\Framework\MokObject\MockObject|\Symfony\Component\HttpFoundation\Request
      */
     protected function createHttpRequestMock(): Request
     {
-        return $this->getMockBuilder(Request::class)->getMock();
+        $requestMock = $this->getMockBuilder(Request::class)->getMock();
+        $requestMock->method('getMethod')->willReturn(Request::METHOD_POST);
+
+        return $requestMock;
     }
 
     /**
