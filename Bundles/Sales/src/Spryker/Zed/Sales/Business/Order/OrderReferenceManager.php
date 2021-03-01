@@ -34,7 +34,7 @@ class OrderReferenceManager implements OrderReferenceManagerInterface
      */
     public function updateQuoteOrderReference(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): void
     {
-        if ($this->isReadyToQuoteUpdate($quoteTransfer, $checkoutResponseTransfer)) {
+        if ($this->isOrderAlreadyPlaced($quoteTransfer, $checkoutResponseTransfer)) {
             $quoteTransfer->setOrderReference(
                 $checkoutResponseTransfer->getSaveOrder()->getOrderReference()
             );
@@ -48,7 +48,7 @@ class OrderReferenceManager implements OrderReferenceManagerInterface
      *
      * @return bool
      */
-    private function isReadyToQuoteUpdate(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool
+    private function isOrderAlreadyPlaced(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool
     {
         return $quoteTransfer->getOrderReference() === null
             && $checkoutResponseTransfer->getIsSuccess()
