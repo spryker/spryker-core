@@ -37,10 +37,11 @@ class OrderReferenceManager implements OrderReferenceManagerInterface
         if (!$this->isOrderAlreadyPlaced($quoteTransfer, $checkoutResponseTransfer)) {
             return;
         }
-        
+
         $quoteTransfer->setOrderReference(
             $checkoutResponseTransfer->getSaveOrder()->getOrderReference()
         );
+
         $this->quoteClient->setQuote($quoteTransfer);
     }
 
