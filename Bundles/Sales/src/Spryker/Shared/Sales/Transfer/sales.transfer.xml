@@ -44,6 +44,8 @@
         <property name="shippingAddress" type="Address" deprecated="Use item level shipping addresses (item.shipment.shippingAddress) instead."/>
         <property name="priceMode" type="string"/>
         <property name="store" type="Store"/>
+        <property name="orderReference" type="string"/>
+        <property name="isSuccess" type="bool"/>
     </transfer>
 
     <transfer name="Totals">
