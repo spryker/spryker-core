@@ -34,12 +34,14 @@ class OrderReferenceManager implements OrderReferenceManagerInterface
      */
     public function updateQuoteOrderReference(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): void
     {
-        if ($this->isOrderAlreadyPlaced($quoteTransfer, $checkoutResponseTransfer)) {
-            $quoteTransfer->setOrderReference(
-                $checkoutResponseTransfer->getSaveOrder()->getOrderReference()
-            );
-            $this->quoteClient->setQuote($quoteTransfer);
+        if (!$this->isOrderAlreadyPlaced($quoteTransfer, $checkoutResponseTransfer)) {
+            return;
         }
+        
+        $quoteTransfer->setOrderReference(
+            $checkoutResponseTransfer->getSaveOrder()->getOrderReference()
+        );
+        $this->quoteClient->setQuote($quoteTransfer);
     }
 
     /**
