@@ -605,7 +605,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Sales\Dependency\Client\SalesToQuoteClientBridge
      */
-    protected function getQuoteClient(): SalesToQuoteClientInterface
+    public function getQuoteClient(): SalesToQuoteClientInterface
     {
         return $this->getProvidedDependency(SalesDependencyProvider::CLIENT_QUOTE);
     }
