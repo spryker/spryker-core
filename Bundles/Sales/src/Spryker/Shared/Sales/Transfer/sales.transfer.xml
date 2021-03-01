@@ -45,7 +45,6 @@
         <property name="priceMode" type="string"/>
         <property name="store" type="Store"/>
         <property name="orderReference" type="string"/>
-        <property name="isSuccess" type="bool"/>
     </transfer>
 
     <transfer name="Totals">
@@ -90,6 +89,7 @@
 
     <transfer name="CheckoutResponse">
         <property name="saveOrder" type="SaveOrder" deprecated="Use SaveOrderTransfer directly/decoupled from the checkout response"/>
+        <property name="isSuccess" type="bool"/>
     </transfer>
 
     <transfer name="Address">
