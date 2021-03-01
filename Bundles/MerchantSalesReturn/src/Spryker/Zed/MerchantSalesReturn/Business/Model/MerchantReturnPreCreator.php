@@ -8,25 +8,24 @@
 namespace Spryker\Zed\MerchantSalesReturn\Business\Model;
 
 use ArrayObject;
-use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\OrderItemFilterTransfer;
+use Generated\Shared\Transfer\MerchantOrderCriteriaTransfer;
+use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Generated\Shared\Transfer\ReturnTransfer;
-use Spryker\Zed\MerchantSalesReturn\Business\Exception\NotFoundException;
-use Spryker\Zed\MerchantSalesReturn\Dependency\Facade\MerchantSalesReturnToSalesFacadeInterface;
+use Spryker\Zed\MerchantSalesReturn\Dependency\Facade\MerchantSalesReturnToMerchantSalesOrderFacadeInterface;
 
 class MerchantReturnPreCreator implements MerchantReturnPreCreatorInterface
 {
     /**
-     * @var \Spryker\Zed\MerchantSalesReturn\Dependency\Facade\MerchantSalesReturnToSalesFacadeInterface
+     * @var \Spryker\Zed\MerchantSalesReturn\Dependency\Facade\MerchantSalesReturnToMerchantSalesOrderFacadeInterface
      */
-    protected $salesFacade;
+    protected $merchantSalesOrderFacade;
 
     /**
-     * @param \Spryker\Zed\MerchantSalesReturn\Dependency\Facade\MerchantSalesReturnToSalesFacadeInterface $salesFacade
+     * @param \Spryker\Zed\MerchantSalesReturn\Dependency\Facade\MerchantSalesReturnToMerchantSalesOrderFacadeInterface $merchantSalesOrderFacade
      */
-    public function __construct(MerchantSalesReturnToSalesFacadeInterface $salesFacade)
+    public function __construct(MerchantSalesReturnToMerchantSalesOrderFacadeInterface $merchantSalesOrderFacade)
     {
-        $this->salesFacade = $salesFacade;
+        $this->merchantSalesOrderFacade = $merchantSalesOrderFacade;
     }
 
     /**
@@ -40,47 +39,31 @@ class MerchantReturnPreCreator implements MerchantReturnPreCreatorInterface
             ->requireReturnItems()
             ->getReturnItems();
 
-        $firstOrderItemTransfer = $this->getFirstOrderItem($returnItemTransfers);
+        $merchantOrderTransfer = $this->getMerchantOrder($returnItemTransfers);
 
-        $merchantReference = $firstOrderItemTransfer
-            ->getMerchantReferenceOrFail();
+        if ($merchantOrderTransfer !== null) {
+            $merchantOrderReference = $merchantOrderTransfer->getMerchantOrderReference();
 
-        $returnTransfer->setMerchantReference($merchantReference);
+            $returnTransfer->setMerchantSalesOrderReference($merchantOrderReference);
+        }
 
         return $returnTransfer;
     }
 
     /**
-     * @param \ArrayObject $returnItemTransfers
+     * @param \Generated\Shared\Transfer\ReturnItemTransfer[]|\ArrayObject $returnItemTransfers
      *
-     * @throws \Spryker\Zed\MerchantSalesReturn\Business\Exception\NotFoundException
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer
+     * @return \Generated\Shared\Transfer\MerchantOrderTransfer|null
      */
-    public function getFirstOrderItem(ArrayObject $returnItemTransfers): ItemTransfer
+    public function getMerchantOrder(ArrayObject $returnItemTransfers): ?MerchantOrderTransfer
     {
         /** @var \Generated\Shared\Transfer\ReturnItemTransfer $firstReturnItem */
         $firstReturnItem = $returnItemTransfers->offsetGet(0);
 
-        $orderItemFilterTransfer = (new OrderItemFilterTransfer())
-            ->addSalesOrderItemId($firstReturnItem->getOrderItemOrFail()->getIdSalesOrderItemOrFail());
+        $merchantOrderItemCriteriaTransfer = (new MerchantOrderCriteriaTransfer())
+            ->setIdOrderItem($firstReturnItem->getOrderItemOrFail()->getIdSalesOrderItemOrFail());
 
-        /** @var \Generated\Shared\Transfer\ItemTransfer[] $orderItemTransfers */
-        $orderItemTransfers = $this->salesFacade
-            ->getOrderItems($orderItemFilterTransfer)
-            ->getItems();
-
-        foreach ($orderItemTransfers as $orderItemTransfer) {
-            $idSalesOrderItem = $orderItemTransfer->getIdSalesOrderItemOrFail();
-            $firstIdSalesOrderItem = $firstReturnItem
-                ->getOrderItemOrFail()
-                ->getIdSalesOrderItemOrFail();
-
-            if ($idSalesOrderItem === $firstIdSalesOrderItem) {
-                return $orderItemTransfer;
-            }
-        }
-
-        throw new NotFoundException();
+        return $this->merchantSalesOrderFacade
+            ->findMerchantOrder($merchantOrderItemCriteriaTransfer);
     }
 }

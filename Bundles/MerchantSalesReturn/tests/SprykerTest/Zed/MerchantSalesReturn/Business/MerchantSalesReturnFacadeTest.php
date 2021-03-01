@@ -12,8 +12,6 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ReturnCreateRequestTransfer;
 use Generated\Shared\Transfer\ReturnItemTransfer;
-use Generated\Shared\Transfer\ReturnTransfer;
-use Spryker\Zed\MerchantSalesReturn\Business\Exception\NotFoundException;
 
 /**
  * Auto-generated group annotations
@@ -46,11 +44,16 @@ class MerchantSalesReturnFacadeTest extends Unit
         $merchantTransfer = $this->tester->haveMerchant();
         $saveOrderTransfer = $this->tester->getSaveOrderTransfer($merchantTransfer, static::TEST_STATE_MACHINE);
 
+        $merchantOrderTransfer = $this->tester->createMerchantOrderWithRelatedData(
+            $saveOrderTransfer,
+            $merchantTransfer
+        );
+
         $returnTransfer = new ReturnTransfer();
 
         foreach ($saveOrderTransfer->getOrderItems() as $orderItem) {
             $returnItemTransfer = new ReturnItemTransfer();
-            $returnItemTransfer->setOrderItem((new ItemTransfer())->setIdSalesOrderItem($orderItem->getIdSalesOrderItem()));
+            $returnItemTransfer->setOrderItem($orderItem);
             $returnTransfer->addReturnItem($returnItemTransfer);
         }
 
@@ -60,13 +63,16 @@ class MerchantSalesReturnFacadeTest extends Unit
             ->preCreate($returnTransfer);
 
         //Assert
-        $this->assertSame($merchantTransfer->getMerchantReference(), $actualReturnTransfer->getMerchantReference());
+        $this->assertSame(
+            $merchantOrderTransfer->getMerchantOrderReference(),
+            $actualReturnTransfer->getMerchantSalesOrderReference()
+        );
     }
 
     /**
      * @return void
      */
-    public function testPreCreateThrowsNotFoundException(): void
+    public function testPreCreateThrowsNotFoundSet(): void
     {
         //Arrange
         $merchantTransfer = $this->tester->haveMerchant();
@@ -83,12 +89,13 @@ class MerchantSalesReturnFacadeTest extends Unit
             $returnTransfer->addReturnItem($returnItemTransfer);
         }
 
-        //Act & Assert
-        $this->tester->expectThrowable(NotFoundException::class, function () use ($returnTransfer) {
-            $this->tester
-                ->getFacade()
-                ->preCreate($returnTransfer);
-        });
+        //Act
+        $actualReturnTransfer = $this->tester
+            ->getFacade()
+            ->preCreate($returnTransfer);
+
+        //Assert
+        $this->assertNull($actualReturnTransfer->getMerchantSalesOrderReference());
     }
 
     /**

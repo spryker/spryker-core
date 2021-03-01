@@ -253,6 +253,18 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
             );
         }
 
+        if ($merchantOrderCriteriaTransfer->getIdOrderItem() !== null) {
+            $merchantSalesOrderQuery->addJoin(
+                SpyMerchantSalesOrderTableMap::COL_ID_MERCHANT_SALES_ORDER,
+                SpyMerchantSalesOrderItemTableMap::COL_FK_MERCHANT_SALES_ORDER,
+                Criteria::INNER_JOIN
+            );
+            $merchantSalesOrderQuery->addAnd(
+                SpyMerchantSalesOrderItemTableMap::COL_FK_SALES_ORDER_ITEM,
+                $merchantOrderCriteriaTransfer->getIdOrderItem()
+            );
+        }
+
         if ($merchantOrderCriteriaTransfer->getCustomerReference()) {
             $merchantSalesOrderQuery->useOrderQuery()
                     ->filterByCustomerReference($merchantOrderCriteriaTransfer->getCustomerReference())
@@ -318,16 +330,16 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
             $merchantSalesOrderItemQuery
         );
 
-        $merchantSalesOrderEntity = $merchantSalesOrderItemQuery->findOne();
+        $merchantSalesOrderItemEntity = $merchantSalesOrderItemQuery->findOne();
 
-        if (!$merchantSalesOrderEntity) {
+        if (!$merchantSalesOrderItemEntity) {
             return null;
         }
 
         return $this->getFactory()
             ->createMerchantSalesOrderMapper()
             ->mapMerchantSalesOrderItemEntityToMerchantOrderItemTransfer(
-                $merchantSalesOrderEntity,
+                $merchantSalesOrderItemEntity,
                 new MerchantOrderItemTransfer()
             );
     }

@@ -77,7 +77,7 @@ class ReturnValidator implements ReturnValidatorInterface
             return $this->createErrorReturnResponse(static::GLOSSARY_KEY_CREATE_RETURN_STORE_ERROR);
         }
 
-        $returnResponseTransfer = $this->validateReturnRequest($returnCreateRequestTransfer, $itemTransfers);
+        $returnResponseTransfer = $this->executeValidatorPlugins($returnCreateRequestTransfer, $itemTransfers);
         if (!$returnResponseTransfer->getIsSuccessful()) {
             return $returnResponseTransfer;
         }
