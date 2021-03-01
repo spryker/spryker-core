@@ -37,4 +37,12 @@
     <transfer name="ReturnCreateRequest">
     </transfer>
 
+    <transfer name="MerchantOrder">
+        <property name="merchantOrderReference" type="string"/>
+    </transfer>
+
+    <transfer name="MerchantOrderCriteria">
+        <property name="idOrderItem" type="int"/>
+    </transfer>
+
 </transfers>
