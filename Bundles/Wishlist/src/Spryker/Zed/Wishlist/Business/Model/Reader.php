@@ -541,7 +541,7 @@ class Reader implements ReaderInterface
                 continue;
             }
 
-            foreach ($validationResponseTransfer->getMessages() as $messageTransfer) {
+            foreach ($validationResponseTransfer->getErrorMessages() as $messageTransfer) {
                 $wishlistOverviewResponseTransfer->addError($messageTransfer);
             }
         }

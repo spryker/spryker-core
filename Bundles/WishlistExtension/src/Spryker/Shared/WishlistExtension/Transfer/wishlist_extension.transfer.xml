@@ -9,7 +9,7 @@
     <transfer name="WishlistPreAddItemCheckResponse">
     </transfer>
 
-    <transfer name="WishlistItemValidationResponse">
+    <transfer name="ValidationResponse">
     </transfer>
 
     <transfer name="Wishlist">

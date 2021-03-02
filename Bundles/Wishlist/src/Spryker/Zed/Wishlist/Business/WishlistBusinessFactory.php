@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Wishlist\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Wishlist\Business\Deleter\WishlistDeleter;
+use Spryker\Zed\Wishlist\Business\Deleter\WishlistDeleterInterface;
 use Spryker\Zed\Wishlist\Business\Model\Reader;
 use Spryker\Zed\Wishlist\Business\Model\Writer;
 use Spryker\Zed\Wishlist\Business\Transfer\WishlistTransferMapper;
@@ -58,6 +60,16 @@ class WishlistBusinessFactory extends AbstractBusinessFactory
     {
         return new WishlistTransferMapper(
             $this->getItemExpanderPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Wishlist\Business\Deleter\WishlistDeleterInterface
+     */
+    public function createDeleter(): WishlistDeleterInterface
+    {
+        return new WishlistDeleter(
+            $this->getEntityManager()
         );
     }
 

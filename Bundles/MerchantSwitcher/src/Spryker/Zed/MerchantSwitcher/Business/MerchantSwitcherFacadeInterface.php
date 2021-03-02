@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\MerchantSwitchRequestTransfer;
 use Generated\Shared\Transfer\MerchantSwitchResponseTransfer;
 use Generated\Shared\Transfer\SingleMerchantQuoteValidationRequestTransfer;
 use Generated\Shared\Transfer\SingleMerchantQuoteValidationResponseTransfer;
-use Generated\Shared\Transfer\SingleMerchantWishlistItemsValidationResponseTransfer;
+use Generated\Shared\Transfer\ValidationResponseTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 
 interface MerchantSwitcherFacadeInterface
@@ -82,13 +82,13 @@ interface MerchantSwitcherFacadeInterface
     /**
      * Specification:
      * - Validates that all items in the wishlist have the requested merchant reference.
-     * - Returns `SingleMerchantWishlistItemsValidationResponse` transfer object that contains a list of errors in case of a failed validation.
+     * - Returns `ValidationResponseTransfer` transfer object that contains a list of errors in case of a failed validation.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
-     * @return \Generated\Shared\Transfer\SingleMerchantWishlistItemsValidationResponseTransfer
+     * @return \Generated\Shared\Transfer\ValidationResponseTransfer
      */
-    public function validateWishlistItems(WishlistTransfer $wishlistTransfer): SingleMerchantWishlistItemsValidationResponseTransfer;
+    public function validateWishlistItems(WishlistTransfer $wishlistTransfer): ValidationResponseTransfer;
 }

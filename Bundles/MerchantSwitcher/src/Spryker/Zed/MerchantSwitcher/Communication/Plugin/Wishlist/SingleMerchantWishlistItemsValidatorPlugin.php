@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\MerchantSwitcher\Communication\Plugin\Wishlist;
 
-use Generated\Shared\Transfer\WishlistItemValidationResponseTransfer;
+use Generated\Shared\Transfer\ValidationResponseTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\WishlistExtension\Dependency\Plugin\WishlistItemsValidatorPluginInterface;
@@ -39,15 +39,11 @@ class SingleMerchantWishlistItemsValidatorPlugin extends AbstractPlugin implemen
      *
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
-     * @return \Generated\Shared\Transfer\WishlistItemValidationResponseTransfer
+     * @return \Generated\Shared\Transfer\ValidationResponseTransfer
      */
-    public function validateItems(WishlistTransfer $wishlistTransfer): WishlistItemValidationResponseTransfer
+    public function validateItems(WishlistTransfer $wishlistTransfer): ValidationResponseTransfer
     {
-        $validationResponseTransfer = $this->getFacade()
+        return $validationResponseTransfer = $this->getFacade()
             ->validateWishlistItems($wishlistTransfer);
-
-        return (new WishlistItemValidationResponseTransfer())
-            ->setMessages($validationResponseTransfer->getErrors())
-            ->setIsSuccess($validationResponseTransfer->getIsSuccessful());
     }
 }

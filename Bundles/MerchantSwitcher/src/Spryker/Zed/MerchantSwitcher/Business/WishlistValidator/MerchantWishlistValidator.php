@@ -8,7 +8,7 @@
 namespace Spryker\Zed\MerchantSwitcher\Business\WishlistValidator;
 
 use Generated\Shared\Transfer\MessageTransfer;
-use Generated\Shared\Transfer\SingleMerchantWishlistItemsValidationResponseTransfer;
+use Generated\Shared\Transfer\ValidationResponseTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 
@@ -17,12 +17,12 @@ class MerchantWishlistValidator implements MerchantWishlistValidatorInterface
     /**
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
-     * @return \Generated\Shared\Transfer\SingleMerchantWishlistItemsValidationResponseTransfer
+     * @return \Generated\Shared\Transfer\ValidationResponseTransfer
      */
-    public function validateItems(WishlistTransfer $wishlistTransfer): SingleMerchantWishlistItemsValidationResponseTransfer
+    public function validateItems(WishlistTransfer $wishlistTransfer): ValidationResponseTransfer
     {
-        $validationResponseTransfer = (new SingleMerchantWishlistItemsValidationResponseTransfer())
-            ->setIsSuccessful(true);
+        $validationResponseTransfer = (new ValidationResponseTransfer())
+            ->setIsSuccess(true);
 
         $wishlistItemTransfers = $wishlistTransfer->getWishlistItems();
         foreach ($wishlistItemTransfers as $itemTransfer) {
@@ -30,8 +30,8 @@ class MerchantWishlistValidator implements MerchantWishlistValidatorInterface
 
             foreach ($errorMessageTransfers as $errorMessageTransfer) {
                 $validationResponseTransfer
-                    ->setIsSuccessful(false)
-                    ->addError($errorMessageTransfer);
+                    ->setIsSuccess(false)
+                    ->addErrorMessage($errorMessageTransfer);
             }
         }
 

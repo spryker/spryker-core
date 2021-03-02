@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\WishlistExtension\Dependency\Plugin;
 
-use Generated\Shared\Transfer\WishlistItemValidationResponseTransfer;
+use Generated\Shared\Transfer\ValidationResponseTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 
 /**
@@ -35,7 +35,7 @@ interface WishlistItemsValidatorPluginInterface
      *
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
-     * @return \Generated\Shared\Transfer\WishlistItemValidationResponseTransfer
+     * @return \Generated\Shared\Transfer\ValidationResponseTransfer
      */
-    public function validateItems(WishlistTransfer $wishlistTransfer): WishlistItemValidationResponseTransfer;
+    public function validateItems(WishlistTransfer $wishlistTransfer): ValidationResponseTransfer;
 }

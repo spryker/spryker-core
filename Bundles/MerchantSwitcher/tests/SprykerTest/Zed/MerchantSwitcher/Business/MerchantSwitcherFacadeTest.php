@@ -403,13 +403,13 @@ class MerchantSwitcherFacadeTest extends Unit
         $wishlistTransfer->addWishlistItem($wishlistItemTransfer2);
 
         // Act
-        $singleMerchantWishlistItemsValidationResponseTransfer = $this->tester
+        $validationResponseTransfer = $this->tester
             ->getFacade()
             ->validateWishlistItems($wishlistTransfer);
 
         // Assert
-        $this->assertTrue($singleMerchantWishlistItemsValidationResponseTransfer->getIsSuccessful());
-        $this->assertEquals(0, $singleMerchantWishlistItemsValidationResponseTransfer->getErrors()->count());
+        $this->assertTrue($validationResponseTransfer->getIsSuccessful());
+        $this->assertEquals(0, $validationResponseTransfer->getErrors()->count());
     }
 
     /**
@@ -440,12 +440,12 @@ class MerchantSwitcherFacadeTest extends Unit
         $wishlistTransfer->addWishlistItem($wishlistItemTransfer2);
 
         // Act
-        $singleMerchantWishlistItemsValidationResponseTransfer = $this->tester
+        $validationResponseTransfer = $this->tester
             ->getFacade()
             ->validateWishlistItems($wishlistTransfer);
 
         // Assert
-        $this->assertFalse($singleMerchantWishlistItemsValidationResponseTransfer->getIsSuccessful());
-        $this->assertEquals(2, $singleMerchantWishlistItemsValidationResponseTransfer->getErrors()->count());
+        $this->assertFalse($validationResponseTransfer->getIsSuccessful());
+        $this->assertEquals(2, $validationResponseTransfer->getErrors()->count());
     }
 }

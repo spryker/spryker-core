@@ -281,9 +281,7 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
      */
     public function deleteItem(WishlistItemTransfer $wishlistItemTransfer): void
     {
-        $this->getFactory()
-            ->createWriter()
-            ->deleteItem($wishlistItemTransfer);
+        $this->getFactory()->getEntityManager()->deleteItem($wishlistItemTransfer);
     }
 
     /**
@@ -298,7 +296,7 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
     public function deleteItemCollection(WishlistItemCollectionTransfer $wishlistItemTransferCollection): void
     {
         $this->getFactory()
-            ->createWriter()
+            ->createDeleter()
             ->deleteItemCollection($wishlistItemTransferCollection);
     }
 }

@@ -118,9 +118,9 @@
         <property name="isSuccess" type="bool"/>
     </transfer>
 
-    <transfer name="WishlistItemValidationResponse">
+    <transfer name="ValidationResponse">
         <property name="isSuccess" type="bool"/>
-        <property name="messages" type="Message[]" singular="message"/>
+        <property name="errorMessages" type="Message[]" singular="errorMessage"/>
     </transfer>
 
     <transfer name="Item">

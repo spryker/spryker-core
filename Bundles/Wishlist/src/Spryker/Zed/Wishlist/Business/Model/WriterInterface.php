@@ -82,7 +82,7 @@ interface WriterInterface
     public function addItem(WishlistItemTransfer $wishlistItemTransfer);
 
     /**
-     * @deprecated Use {@link \Spryker\Zed\Wishlist\Business\Model\WriterInterface::deleteItem()} instead.
+     * @deprecated Use {@link \Spryker\Zed\Wishlist\Persistence\WishlistEntityManager::deleteItem()} instead.
      *
      * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
      *
@@ -91,7 +91,7 @@ interface WriterInterface
     public function removeItem(WishlistItemTransfer $wishlistItemTransfer);
 
     /**
-     * @deprecated Use {@link \Spryker\Zed\Wishlist\Business\Model\WriterInterface::deleteItemCollection()} instead.
+     * @deprecated Use {@link \Spryker\Zed\Wishlist\Business\Deleter\WishlistDeleterInterface::deleteItemCollection()} instead.
      *
      * @param \Generated\Shared\Transfer\WishlistItemCollectionTransfer $wishlistItemTransferCollection
      *
