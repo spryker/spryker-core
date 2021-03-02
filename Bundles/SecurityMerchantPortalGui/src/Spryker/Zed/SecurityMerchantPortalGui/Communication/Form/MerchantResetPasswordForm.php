@@ -20,6 +20,8 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 class MerchantResetPasswordForm extends AbstractType
 {
     public const FIELD_PASSWORD = 'password';
+    public const LABEL_NEW_PASSWORD = 'New password';
+    public const LABEL_RE_ENTER_PASSWORD = 'Re-enter password';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -53,15 +55,15 @@ class MerchantResetPasswordForm extends AbstractType
             ],
             'invalid_message' => 'The password fields must match.',
             'first_options' => [
-                'label' => 'Password',
+                'label' => static::LABEL_NEW_PASSWORD,
                 'attr' => [
-                    'placeholder' => 'Password',
+                    'placeholder' => 'Enter a new password',
                 ],
             ],
             'second_options' => [
-                'label' => 'Repeat Password',
+                'label' => static::LABEL_RE_ENTER_PASSWORD,
                 'attr' => [
-                    'placeholder' => 'Repeat Password',
+                    'placeholder' => 'Re-enter the new password',
                 ],
             ],
             'required' => true,

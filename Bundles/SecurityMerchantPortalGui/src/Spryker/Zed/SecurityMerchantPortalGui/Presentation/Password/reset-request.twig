@@ -1,6 +1,6 @@
 {% extends '@SecurityMerchantPortalGui/Layout/layout.twig' %}
 
-{% set isFormRendered = not form.email.vars.value %}
+{% set isFormRendered = form is defined %}
 
 {% block content %}
     {% set linkClass = linkClass ~ (not isFormRendered ? ' ' ~ layoutComponentClass ~ '__link--spacingless') %}

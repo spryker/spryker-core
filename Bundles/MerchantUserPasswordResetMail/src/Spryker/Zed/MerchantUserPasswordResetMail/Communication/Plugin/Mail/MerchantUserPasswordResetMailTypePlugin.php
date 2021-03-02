@@ -57,7 +57,7 @@ class MerchantUserPasswordResetMailTypePlugin extends AbstractPlugin implements 
      */
     protected function setSubject(MailBuilderInterface $mailBuilder)
     {
-        $mailBuilder->setSubject('mail.auth.restore_password.subject');
+        $mailBuilder->setSubject('mail.merchant.restore_password.subject');
 
         return $this;
     }

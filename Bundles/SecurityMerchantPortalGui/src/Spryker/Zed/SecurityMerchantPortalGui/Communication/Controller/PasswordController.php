@@ -54,6 +54,8 @@ class PasswordController extends AbstractController
             $this->addSuccessMessage(
                 'If there is an account associated with this email, you will receive an Email with further instructions.'
             );
+
+            return $this->viewResponse([]);
         }
 
         return $this->viewResponse([
@@ -91,7 +93,7 @@ class PasswordController extends AbstractController
                 );
 
             if ($isPasswordReset) {
-                $this->addSuccessMessage('Password updated.');
+                $this->addSuccessMessage('Success! The password is updated.');
             } else {
                 $this->addErrorMessage('Could not update password.');
             }

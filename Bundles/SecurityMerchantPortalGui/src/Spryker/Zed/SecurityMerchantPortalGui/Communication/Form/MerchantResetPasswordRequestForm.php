@@ -21,8 +21,11 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 class MerchantResetPasswordRequestForm extends AbstractType
 {
     public const FIELD_EMAIL = 'email';
+    public const LABEL_EMAIL = 'email';
     public const FIELD_SUBMIT = 'submit';
-    public const LABEL_SUBMIT = 'Recover password';
+    public const LABEL_SEND_EMAIL = 'Send email';
+    public const VALIDATION_NOT_BLANK_MESSAGE = 'The value cannot be blank. Please fill in this input';
+    public const VALIDATION_EMAIL_FORMAT_MESSAGE = 'Please fill in a valid email address for this input';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -53,12 +56,13 @@ class MerchantResetPasswordRequestForm extends AbstractType
     {
         $builder
             ->add(self::FIELD_EMAIL, TextType::class, [
+                'label' => static::LABEL_EMAIL,
                 'constraints' => [
-                    new NotBlank(),
-                    new Email(),
+                    new NotBlank(['message' => static::VALIDATION_NOT_BLANK_MESSAGE]),
+                    new Email(['message' => static::VALIDATION_EMAIL_FORMAT_MESSAGE]),
                 ],
                 'attr' => [
-                    'placeholder' => 'Email Address',
+                    'placeholder' => 'example@spryker.com',
                 ],
             ]);
 
@@ -74,7 +78,7 @@ class MerchantResetPasswordRequestForm extends AbstractType
     {
         $builder
             ->add(static::FIELD_SUBMIT, SubmitType::class, [
-                'label' => static::LABEL_SUBMIT,
+                'label' => static::LABEL_SEND_EMAIL,
             ]);
 
         return $this;
