@@ -9,11 +9,9 @@ namespace SprykerTest\Zed\MerchantSalesReturn\Business;
 
 use ArrayObject;
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ReturnCreateRequestTransfer;
 use Generated\Shared\Transfer\ReturnItemTransfer;
 use Generated\Shared\Transfer\ReturnTransfer;
-use Spryker\Zed\MerchantSalesReturn\Business\Exception\NotFoundException;
 
 /**
  * Auto-generated group annotations
@@ -42,53 +40,52 @@ class MerchantSalesReturnFacadeTest extends Unit
      */
     public function testPreCreateSetsMerchantReferenceSuccessfully(): void
     {
-        //Arrange
+        // Arrange
         $merchantTransfer = $this->tester->haveMerchant();
         $saveOrderTransfer = $this->tester->getSaveOrderTransfer($merchantTransfer, static::TEST_STATE_MACHINE);
 
         $returnTransfer = new ReturnTransfer();
-
         foreach ($saveOrderTransfer->getOrderItems() as $orderItem) {
-            $returnItemTransfer = new ReturnItemTransfer();
-            $returnItemTransfer->setOrderItem((new ItemTransfer())->setIdSalesOrderItem($orderItem->getIdSalesOrderItem()));
+            $orderItemTransfer = $this->tester->createItemTransfer(null, $orderItem->getIdSalesOrderItem());
+            $returnItemTransfer = (new ReturnItemTransfer())->setOrderItem($orderItemTransfer);
+
             $returnTransfer->addReturnItem($returnItemTransfer);
         }
 
-        //Act
+        // Act
         $actualReturnTransfer = $this->tester
             ->getFacade()
             ->preCreate($returnTransfer);
 
-        //Assert
+        // Assert
         $this->assertSame($merchantTransfer->getMerchantReference(), $actualReturnTransfer->getMerchantReference());
     }
 
     /**
      * @return void
      */
-    public function testPreCreateThrowsNotFoundException(): void
+    public function testPreCreateReturnsResultWithoutMerchantReferenceWhenOrderItensIsNotValid(): void
     {
-        //Arrange
+        // Arrange
         $merchantTransfer = $this->tester->haveMerchant();
         $saveOrderTransfer = $this->tester->getSaveOrderTransfer($merchantTransfer, static::TEST_STATE_MACHINE);
 
         $returnTransfer = new ReturnTransfer();
 
         foreach ($saveOrderTransfer->getOrderItems() as $orderItem) {
-            $orderItemTransfer = (new ItemTransfer())
-                ->setIdSalesOrderItem(324)
-                ->setMerchantReference(static::TEST_MERCHANT_REFERENCE_1);
-            $returnItemTransfer = new ReturnItemTransfer();
-            $returnItemTransfer->setOrderItem($orderItemTransfer);
+            $orderItemTransfer = $this->tester->createItemTransfer(static::TEST_MERCHANT_REFERENCE_1, 324);
+            $returnItemTransfer = (new ReturnItemTransfer())->setOrderItem($orderItemTransfer);
+
             $returnTransfer->addReturnItem($returnItemTransfer);
         }
 
-        //Act & Assert
-        $this->tester->expectThrowable(NotFoundException::class, function () use ($returnTransfer) {
-            $this->tester
-                ->getFacade()
-                ->preCreate($returnTransfer);
-        });
+        // Act
+        $actualReturnTransfer = $this->tester
+            ->getFacade()
+            ->preCreate($returnTransfer);
+
+        // Assert
+        $this->assertSame(null, $actualReturnTransfer->getMerchantReference());
     }
 
     /**
@@ -96,7 +93,7 @@ class MerchantSalesReturnFacadeTest extends Unit
      */
     public function testValidateReturnSuccessfully(): void
     {
-        //Arrange
+        // Arrange
         $returnCreateRequestTransfer = new ReturnCreateRequestTransfer();
 
         $itemTransfers = new ArrayObject();
@@ -104,14 +101,14 @@ class MerchantSalesReturnFacadeTest extends Unit
         $itemTransfers->append($this->tester->createItemTransfer(self::TEST_MERCHANT_REFERENCE_1));
         $itemTransfers->append($this->tester->createItemTransfer(self::TEST_MERCHANT_REFERENCE_1));
 
-        //Act
+        // Act
         $returnResponseTransfer = $this->tester
             ->getFacade()
             ->validateReturn($returnCreateRequestTransfer, $itemTransfers);
 
         $messageTransfers = $returnResponseTransfer->getMessages();
 
-        //Assert
+        // Assert
         $this->assertTrue($returnResponseTransfer->getIsSuccessful());
         $this->assertSame(0, $messageTransfers->count());
     }
@@ -121,7 +118,7 @@ class MerchantSalesReturnFacadeTest extends Unit
      */
     public function testValidateReturnFailed(): void
     {
-        //Arrange
+        // Arrange
         $returnCreateRequestTransfer = new ReturnCreateRequestTransfer();
 
         $itemTransfers = new ArrayObject();
@@ -129,14 +126,14 @@ class MerchantSalesReturnFacadeTest extends Unit
         $itemTransfers->append($this->tester->createItemTransfer(self::TEST_MERCHANT_REFERENCE_1));
         $itemTransfers->append($this->tester->createItemTransfer(self::TEST_MERCHANT_REFERENCE_2));
 
-        //Act
+        // Act
         $returnResponseTransfer = $this->tester
             ->getFacade()
             ->validateReturn($returnCreateRequestTransfer, $itemTransfers);
 
         $messageTransfers = $returnResponseTransfer->getMessages();
 
-        //Assert
+        // Assert
         $this->assertFalse($returnResponseTransfer->getIsSuccessful());
         $this->assertSame(1, $messageTransfers->count());
     }

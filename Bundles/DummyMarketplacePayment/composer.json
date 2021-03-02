@@ -16,6 +16,7 @@
         "spryker/oms": "*",
         "spryker/payment": "*",
         "spryker/propel": "*",
+        "spryker/propel-orm": "^1.0.0",
         "spryker/testify": "*"
     },
     "suggest": {

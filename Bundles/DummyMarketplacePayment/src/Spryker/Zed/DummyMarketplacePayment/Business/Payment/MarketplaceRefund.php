@@ -49,7 +49,7 @@ class MarketplaceRefund implements MarketplaceRefundInterface
      *
      * @return bool
      */
-    protected function refundPayment(RefundTransfer $refundTransfer)
+    protected function refundPayment(RefundTransfer $refundTransfer): bool
     {
         return ($refundTransfer->getAmount() > 0);
     }

@@ -17,6 +17,7 @@ interface ReturnPreCreatePluginInterface
     /**
      * Specification:
      * - Executed before return creation.
+     * - Returns `ReturnTransfer` object.
      *
      * @api
      *

@@ -23,6 +23,7 @@ class MerchantReturnRequestValidatorPlugin extends AbstractPlugin implements Ret
 {
     /**
      * {@inheritDoc}
+     * - Checkes if each item in the `$itemTransfers` has the same merchant reference.
      *
      * @api
      *
