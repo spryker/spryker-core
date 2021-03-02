@@ -1,4 +1,5 @@
 <?php
+// phpcs:ignoreFile
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
@@ -9,25 +10,50 @@ namespace SprykerTest\Shared\KeyBuilder\Fixtures;
 
 use Spryker\Shared\KeyBuilder\KeyBuilderTrait;
 
-class KeyBuilder
-{
-    use KeyBuilderTrait;
-
-    /**
-     * @return string
-     */
-    public function getBundleName(): string
+if (version_compare(phpversion(), '8.0.0', '>=')) {
+    class KeyBuilder
     {
-        return 'key-builder';
+        use KeyBuilderTrait;
+
+        /**
+         * @return string
+         */
+        public function getBundleName(): string
+        {
+            return 'key-builder';
+        }
+
+        /**
+         * @param string $data
+         *
+         * @return string
+         */
+        protected function buildKey($data)
+        {
+            return 'identifier.' . $data;
+        }
     }
-
-    /**
-     * @param string $data
-     *
-     * @return string
-     */
-    protected function buildKey(string $data): string
+} else {
+    class KeyBuilder
     {
-        return 'identifier.' . $data;
+        use KeyBuilderTrait;
+
+        /**
+         * @return string
+         */
+        public function getBundleName(): string
+        {
+            return 'key-builder';
+        }
+
+        /**
+         * @param string $data
+         *
+         * @return string
+         */
+        protected function buildKey(string $data): string
+        {
+            return 'identifier.' . $data;
+        }
     }
 }

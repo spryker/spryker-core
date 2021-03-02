@@ -1,8 +1,23 @@
 parameters:
     checkGenericClassInNonGenericObjectType: false
     checkMissingIterableValueType: false
+    excludePaths:
+        - %rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Client/Search/Model/Elasticsearch/Query/QueryBuilder.php
+        - %rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Client/Search/Model/Elasticsearch/Query/QueryBuilderInterface.php
+        - %rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Client/Search/Plugin/Elasticsearch/QueryExpander/IsActiveQueryExpanderPlugin.php
+        - %rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Client/Search/Plugin/Elasticsearch/QueryExpander/LocalizedQueryExpanderPlugin.php
+        - %rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Client/Search/Plugin/Elasticsearch/QueryExpander/StoreQueryExpanderPlugin.php
+        - %rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Client/Search/Plugin/Elasticsearch/QueryExpander/AbstractSuggestionExpanderPlugin.php
+        - %rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Client/Search/Plugin/Elasticsearch/QueryExpander/CompletionQueryExpanderPlugin.php
+        - %rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Client/Search/Plugin/Elasticsearch/QueryExpander/FacetQueryExpanderPlugin.php
+        - %rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Client/Search/Plugin/Elasticsearch/QueryExpander/IsActiveInDateRangeQueryExpanderPlugin.php
+        - %rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Client/Search/Plugin/Elasticsearch/QueryExpander/PaginatedQueryExpanderPlugin.php
+        - %rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Client/Search/Plugin/Elasticsearch/QueryExpander/SortedCategoryQueryExpanderPlugin.php
+        - %rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Client/Search/Plugin/Elasticsearch/QueryExpander/SuggestionByTypeQueryExpanderPlugin.php
+        - %rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Client/Search/Plugin/Elasticsearch/QueryExpander/SortedQueryExpanderPlugin.php
     ignoreErrors:
         - '#Parameter \#2 \$callback of function array_filter expects callable\(mixed, mixed\): bool, ''strlen'' given.#'
+        - '#Parameter \#2 \$callback of function array_filter expects \(callable\(mixed, mixed\): bool\)|null, ''strlen'' given.#'
         - { message: '#Call to an undefined method .+QueryInterface::.+\(\).#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Client/Search/Delegator/SearchDelegator.php' }
         - { message: '#If condition is always false.#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Client/Search/Dependency/Plugin/QueryInterface.php' }
         - { message: '#If condition is always false.#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Client/Search/Dependency/Plugin/ResultFormatterPluginInterface.php' }
