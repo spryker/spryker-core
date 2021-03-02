@@ -59,14 +59,14 @@ class AvailabilityNotificationSubscriber implements AvailabilityNotificationSubs
         ;
 
         /**
-         * @var \Generated\Shared\Transfer\RestAvailabilityNotificationsAttributesTransfer $restAvailabilityNotificationsAttributesTransfer
+         * @var \Generated\Shared\Transfer\RestAvailabilityNotificationRequestAttributesTransfer $restAvailabilityNotificationRequestAttributesTransfer
          */
-        $restAvailabilityNotificationsAttributesTransfer = $restRequest->getResource()->getAttributes();
+        $restAvailabilityNotificationRequestAttributesTransfer = $restRequest->getResource()->getAttributes();
 
         $availabilityNotificationSubscriptionTransfer = new AvailabilityNotificationSubscriptionTransfer();
         $availabilityNotificationSubscriptionTransfer->fromArray(
             array_merge(
-                $restAvailabilityNotificationsAttributesTransfer->toArray(),
+                $restAvailabilityNotificationRequestAttributesTransfer->toArray(),
                 [
                     "locale" => $localeTransfer,
                     "store" => $storeTransfer,

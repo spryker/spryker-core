@@ -48,6 +48,10 @@
         <property name="idAvailabilityNotificationSubscription" type="int"/>
     </transfer>
 
+    <transfer name="AvailabilityNotificationSubscriptionCollection">
+        <property name="availabilityNotificationSubscriptions" type="AvailabilityNotificationSubscription[]" singular="availabilityNotificationSubscription" />
+    </transfer>
+
     <transfer name="AvailabilityNotificationSubscriptionResponse">
         <property name="errorMessage" type="string"/>
         <property name="isSuccess" type="bool"/>
@@ -92,6 +96,11 @@
 
     <transfer name="ProductImage">
         <property name="externalUrlLarge" type="string"/>
+    </transfer>
+
+    <transfer name="AvailabilityNotificationCriteria">
+        <property name="customerReferences" type="string[]" singular="customerReference"/>
+        <property name="pagination" type="Pagination"/>
     </transfer>
 
 </transfers>

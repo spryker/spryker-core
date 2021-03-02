@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\AvailabilityNotification\Persistence;
 
+use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionCollectionTransfer;
 use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer;
 use Orm\Zed\AvailabilityNotification\Persistence\SpyAvailabilityNotificationSubscriptionQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -108,24 +109,26 @@ class AvailabilityNotificationRepository extends AbstractRepository implements A
      * @param string $customerReference
      * @param int $fkStore
      *
-     * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer[]
+     * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionCollectionTransfer
      */
-    public function findByCustomerReference(string $customerReference, int $fkStore): array
+    public function findByCustomerReference(string $customerReference, int $fkStore): AvailabilityNotificationSubscriptionCollectionTransfer
     {
         $availabilityNotificationSubscriptionEntities = $this->querySubscription()
             ->filterByCustomerReference($customerReference)
             ->filterByFkStore($fkStore)
             ->find();
 
-        $availabilityNotificationSubscriptions = [];
+        $availabilityNotificationSubscriptionCollectionTransfer = new AvailabilityNotificationSubscriptionCollectionTransfer();
 
         foreach ($availabilityNotificationSubscriptionEntities as $availabilityNotificationSubscriptionEntity) {
-            $availabilityNotificationSubscriptions[] = $this->getFactory()
-                ->createAvailabilityNotificationSubscriptionMapper()
-                ->mapAvailabilityNotificationSubscriptionTransfer($availabilityNotificationSubscriptionEntity);
+            $availabilityNotificationSubscriptionCollectionTransfer->addAvailabilityNotificationSubscription(
+                $this->getFactory()
+                    ->createAvailabilityNotificationSubscriptionMapper()
+                    ->mapAvailabilityNotificationSubscriptionTransfer($availabilityNotificationSubscriptionEntity)
+            );
         }
 
-        return $availabilityNotificationSubscriptions;
+        return $availabilityNotificationSubscriptionCollectionTransfer;
     }
 
     /**
