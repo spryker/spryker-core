@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\MerchantsRestApi\Dependency\Client;
 
+use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantStorageTransfer;
 
 class MerchantsRestApiToMerchantStorageClientBridge implements MerchantsRestApiToMerchantStorageClientInterface
@@ -25,13 +26,13 @@ class MerchantsRestApiToMerchantStorageClientBridge implements MerchantsRestApiT
     }
 
     /**
-     * @param int[] $merchantIds
+     * @param \Generated\Shared\Transfer\MerchantCriteriaTransfer $merchantCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantStorageTransfer[]
      */
-    public function get(array $merchantIds): array
+    public function get(MerchantCriteriaTransfer $merchantCriteriaTransfer): array
     {
-        return $this->merchantStorageClient->get($merchantIds);
+        return $this->merchantStorageClient->get($merchantCriteriaTransfer);
     }
 
     /**
@@ -55,12 +56,12 @@ class MerchantsRestApiToMerchantStorageClientBridge implements MerchantsRestApiT
     }
 
     /**
-     * @param int $idMerchant
+     * @param \Generated\Shared\Transfer\MerchantCriteriaTransfer $merchantCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantStorageTransfer|null
      */
-    public function findOne(int $idMerchant): ?MerchantStorageTransfer
+    public function findOne(MerchantCriteriaTransfer $merchantCriteriaTransfer): ?MerchantStorageTransfer
     {
-        return $this->merchantStorageClient->findOne($idMerchant);
+        return $this->merchantStorageClient->findOne($merchantCriteriaTransfer);
     }
 }
