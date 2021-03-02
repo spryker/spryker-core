@@ -8,14 +8,16 @@
 namespace Spryker\Zed\MerchantSalesReturn\Communication\Plugin;
 
 use Generated\Shared\Transfer\ReturnTransfer;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnPreCreatePluginInterface;
 
 /**
  * @method \Spryker\Zed\MerchantSalesReturn\Persistence\MerchantSalesReturnQueryContainer getQueryContainer()
  * @method \Spryker\Zed\MerchantSalesReturn\MerchantSalesReturnConfig getConfig()
  * @method \Spryker\Zed\MerchantSalesReturn\Business\MerchantSalesReturnFacade getFacade()
+ * @method \Spryker\Zed\MerchantSalesReturn\Communication\MerchantSalesReturnCommunicationFactory getFactory()
  */
-class MerchantReturnPreCreatePlugin implements ReturnPreCreatePluginInterface
+class MerchantReturnPreCreatePlugin extends AbstractPlugin implements ReturnPreCreatePluginInterface
 {
     /**
      * {@inheritDoc}
