@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\MerchantSalesReturn\Business;
 
 use ArrayObject;
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ReturnCreateRequestTransfer;
 use Generated\Shared\Transfer\ReturnItemTransfer;
 use Generated\Shared\Transfer\ReturnTransfer;
