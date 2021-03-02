@@ -16,6 +16,8 @@ use Spryker\Zed\PriceProductOfferDataImport\Business\DataSet\PriceProductOfferDa
 
 class StoreToIdStoreStep implements DataImportStepInterface
 {
+    protected const STORE = PriceProductOfferDataSetInterface::STORE;
+
     /**
      * @var array
      */
@@ -30,7 +32,7 @@ class StoreToIdStoreStep implements DataImportStepInterface
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        $storeName = $dataSet[PriceProductOfferDataSetInterface::STORE];
+        $storeName = $dataSet[static::STORE];
 
         if (!isset($this->idStoreCache[$storeName])) {
             $storeQuery = new SpyStoreQuery();

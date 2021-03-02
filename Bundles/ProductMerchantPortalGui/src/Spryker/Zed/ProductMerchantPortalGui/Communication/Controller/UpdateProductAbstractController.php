@@ -40,6 +40,11 @@ class UpdateProductAbstractController extends AbstractController
     protected const RESPONSE_TYPE_SUCCESS = 'success';
     protected const RESPONSE_TYPE_ERROR = 'error';
 
+    protected const DEFAULT_INITIAL_DATA = [
+        GuiTableEditableInitialDataTransfer::DATA => [],
+        GuiTableEditableInitialDataTransfer::ERRORS => [],
+    ];
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -267,22 +272,24 @@ class UpdateProductAbstractController extends AbstractController
     protected function getDefaultInitialData(Request $request, string $formName): array
     {
         $requestTableData = $request->get($formName);
+
+        if (!$requestTableData) {
+            return static::DEFAULT_INITIAL_DATA;
+        }
+
         $requestTableData = $this->getFactory()->getUtilEncodingService()->decodeJson(
             $requestTableData[PriceProductAbstractTableViewTransfer::PRICES],
             true
         );
 
         if (!$requestTableData) {
-            return [
-                GuiTableEditableInitialDataTransfer::DATA => [],
-                GuiTableEditableInitialDataTransfer::ERRORS => [],
-            ];
+            return static::DEFAULT_INITIAL_DATA;
         }
 
-        return [
-            GuiTableEditableInitialDataTransfer::DATA => $requestTableData,
-            GuiTableEditableInitialDataTransfer::ERRORS => [],
-        ];
+        $defaultInitialData = static::DEFAULT_INITIAL_DATA;
+        $defaultInitialData[GuiTableEditableInitialDataTransfer::DATA] = $requestTableData;
+
+        return $defaultInitialData;
     }
 
     /**

@@ -11,7 +11,7 @@
     "spryker/documentation-generator-rest-api-extension": "^1.0.0",
     "spryker/event-dispatcher-extension": "^1.0.0",
     "spryker/glue-application-extension": "^1.3.0",
-    "spryker/kernel": "^3.52.0",
+    "spryker/kernel": "^3.58.0",
     "spryker/log": "^3.0.0",
     "spryker/session": "^3.0.0 || ^4.0.0",
     "spryker/store": "^1.7.0",

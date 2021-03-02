@@ -1,0 +1,143 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="ConcreteProductsRestAttributes">
+        <property name="sku" type="string"/>
+        <property name="productConfigurationInstance" type="RestProductConfigurationInstanceAttributes"/>
+    </transfer>
+
+    <transfer name="RestProductConfigurationInstanceAttributes">
+        <property name="displayData" type="string"/>
+        <property name="configuration" type="string"/>
+        <property name="configuratorKey" type="string"/>
+        <property name="isComplete" type="bool"/>
+    </transfer>
+
+    <transfer name="RestOrderItemsAttributes">
+        <property name="salesOrderItemConfiguration" type="RestSalesOrderItemProductConfigurationInstanceAttributes"/>
+    </transfer>
+
+    <transfer name="RestSalesOrderItemProductConfigurationInstanceAttributes">
+        <property name="displayData" type="string"/>
+        <property name="configuration" type="string"/>
+        <property name="configuratorKey" type="string"/>
+    </transfer>
+
+    <transfer name="ProductConfigurationInstance">
+        <property name="prices" type="PriceProduct[]" singular="price"/>
+        <property name="configuratorKey" type="string"/>
+    </transfer>
+
+    <transfer name="RestCartItemProductConfigurationInstanceAttributes">
+        <property name="displayData" type="string"/>
+        <property name="configuration" type="string"/>
+        <property name="configuratorKey" type="string"/>
+        <property name="isComplete" type="bool"/>
+        <property name="availableQuantity" type="int"/>
+        <property name="prices" type="RestProductConfigurationPriceAttributes[]" singular="price"/>
+    </transfer>
+
+    <transfer name="RestProductConfigurationPriceAttributes">
+        <property name="priceTypeName" type="string"/>
+        <property name="netAmount" type="int"/>
+        <property name="grossAmount" type="int"/>
+        <property name="currency" type="RestCurrency"/>
+    </transfer>
+
+    <transfer name="RestCurrency">
+        <property name="code" type="string"/>
+        <property name="name" type="string"/>
+        <property name="symbol" type="string"/>
+    </transfer>
+
+    <transfer name="CartItemRequest">
+        <property name="sku" type="string"/>
+        <property name="groupKey" type="string"/>
+        <property name="productConfigurationInstance" type="ProductConfigurationInstance"/>
+    </transfer>
+
+    <transfer name="RestCartItemsAttributes">
+        <property name="sku" type="string"/>
+        <property name="productConfigurationInstance" type="RestCartItemProductConfigurationInstanceAttributes" restRequestParameter="yes"/>
+    </transfer>
+
+    <transfer name="RestItemsAttributes">
+        <property name="productConfigurationInstance" type="RestCartItemProductConfigurationInstanceAttributes"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="sku" type="string"/>
+        <property name="groupKey" type="string"/>
+        <property name="productConfigurationInstance" type="ProductConfigurationInstance"/>
+        <property name="salesOrderItemConfiguration" type="SalesOrderItemConfiguration"/>
+    </transfer>
+
+    <transfer name="PersistentCartChange">
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="QuoteResponse">
+        <property name="quoteTransfer" type="Quote"/>
+        <property name="errors" type="QuoteError[]" singular="error"/>
+    </transfer>
+
+    <transfer name="QuoteError">
+        <property name="errorIdentifier" type="string"/>
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="idQuote" type="int"/>
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="customer" type="Customer"/>
+    </transfer>
+
+    <transfer name="PersistentItemReplace">
+        <property name="idQuote" type="int"/>
+        <property name="quote" type="Quote"/>
+        <property name="itemToBeReplaced" type="Item"/>
+        <property name="newItem" type="Item"/>
+        <property name="customer" type="Customer"/>
+    </transfer>
+
+    <transfer name="Customer">
+    </transfer>
+
+    <transfer name="PriceProduct">
+        <property name="moneyValue" type="MoneyValue"/>
+        <property name="priceTypeName" type="string"/>
+        <property name="groupKey" type="string"/>
+        <property name="priceDimension" type="PriceProductDimension"/>
+        <property name="isMergeable" type="bool"/>
+    </transfer>
+
+    <transfer name="MoneyValue">
+        <property name="currency" type="Currency"/>
+        <property name="netAmount" type="int"/>
+        <property name="grossAmount" type="int"/>
+    </transfer>
+
+    <transfer name="Currency">
+    </transfer>
+
+    <transfer name="PriceProductDimension">
+    </transfer>
+
+    <transfer name="SalesOrderItemConfiguration">
+        <property name="displayData" type="string"/>
+        <property name="configuration" type="string"/>
+        <property name="configuratorKey" type="string"/>
+    </transfer>
+
+    <transfer name="RestErrorCollection">
+        <property name="restErrors" type="RestErrorMessage[]" singular="restError"/>
+    </transfer>
+
+    <transfer name="RestErrorMessage">
+        <property name="code" type="string"/>
+        <property name="status" type="int"/>
+        <property name="detail" type="string"/>
+    </transfer>
+
+</transfers>

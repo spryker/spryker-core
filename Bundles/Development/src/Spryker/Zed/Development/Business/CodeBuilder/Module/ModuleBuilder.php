@@ -100,7 +100,7 @@ class ModuleBuilder
     {
         $moduleDirectory = $this->getDirectoryName($namespace);
 
-        $moduleDirectories = glob($moduleDirectory . '*');
+        $moduleDirectories = glob($moduleDirectory . '*', GLOB_NOSORT);
 
         $modules = [];
         foreach ($moduleDirectories as $moduleDirectory) {

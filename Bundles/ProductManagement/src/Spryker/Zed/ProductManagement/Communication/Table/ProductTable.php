@@ -32,6 +32,9 @@ class ProductTable extends AbstractProductTable
     public const COL_STORE_RELATION = 'store_relation';
     public const COL_PRODUCT_TYPES = 'product_types';
 
+    protected const COL_NAME_FALLBACK = 'name_fallback';
+    protected const RELATION_LOCALE_FALLBACK = 'locale_fallback';
+
     /**
      * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
      */
@@ -140,11 +143,13 @@ class ProductTable extends AbstractProductTable
             ->productQueryQueryContainer
             ->queryProductAbstract()
             ->innerJoinSpyTaxSet()
-            ->useSpyProductAbstractLocalizedAttributesQuery()
-            ->filterByFkLocale($this->localeTransfer->getIdLocale())
-            ->endUse()
+            ->leftJoinSpyProductAbstractLocalizedAttributes()
+            ->addJoinCondition('SpyProductAbstractLocalizedAttributes', 'SpyProductAbstractLocalizedAttributes.fkLocale = ?', $this->localeTransfer->getIdLocale())
             ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME, static::COL_NAME)
-            ->withColumn(SpyTaxSetTableMap::COL_NAME, static::COL_TAX_SET);
+            ->leftJoinSpyProductAbstractLocalizedAttributes(static::RELATION_LOCALE_FALLBACK)
+            ->withColumn(static::RELATION_LOCALE_FALLBACK . '.name', static::COL_NAME_FALLBACK)
+            ->withColumn(SpyTaxSetTableMap::COL_NAME, static::COL_TAX_SET)
+            ->groupByIdProductAbstract();
 
         $query = $this->expandPropelQuery($query);
 
@@ -168,7 +173,7 @@ class ProductTable extends AbstractProductTable
         $item = [
             static::COL_ID_PRODUCT_ABSTRACT => $productAbstractEntity->getIdProductAbstract(),
             static::COL_SKU => $productAbstractEntity->getSku(),
-            static::COL_NAME => $productAbstractEntity->getVirtualColumn(static::COL_NAME),
+            static::COL_NAME => $this->resolveProductName($productAbstractEntity),
             static::COL_TAX_SET => $productAbstractEntity->getVirtualColumn(static::COL_TAX_SET),
             static::COL_VARIANT_COUNT => $productAbstractEntity->getSpyProducts()->count(),
             static::COL_STATUS => $this->getAbstractProductStatusLabel($productAbstractEntity),
@@ -319,5 +324,15 @@ class ProductTable extends AbstractProductTable
     protected function expandPropelQuery(ModelCriteria $query): ModelCriteria
     {
         return $this->productManagementRepository->expandQuery($query);
+    }
+
+    /**
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
+     *
+     * @return string|null
+     */
+    protected function resolveProductName(SpyProductAbstract $productAbstractEntity): ?string
+    {
+        return $productAbstractEntity->getVirtualColumn(static::COL_NAME) ?? $productAbstractEntity->getVirtualColumn(static::COL_NAME_FALLBACK);
     }
 }
