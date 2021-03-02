@@ -27,6 +27,7 @@ use Generated\Shared\Transfer\ReturnTransfer;
 class MerchantSalesReturnFacadeTest extends Unit
 {
     protected const TEST_STATE_MACHINE = 'Test01';
+    protected const TEST_MERCHANT_SALES_ORDER_REFERENCE_1 = 'test-merchant-sales-order-reference-1';
     protected const TEST_MERCHANT_REFERENCE_1 = 'test-merchant-reference-1';
     protected const TEST_MERCHANT_REFERENCE_2 = 'test-merchant-reference-2';
 
@@ -81,9 +82,11 @@ class MerchantSalesReturnFacadeTest extends Unit
         $returnTransfer = new ReturnTransfer();
 
         foreach ($saveOrderTransfer->getOrderItems() as $orderItem) {
-            $orderItemTransfer = $this->tester->createItemTransfer($orderItem->getMerchantReference(), 324);
-            $returnItemTransfer = (new ReturnItemTransfer())->setOrderItem($orderItemTransfer);
-
+            $orderItemTransfer = (new ItemTransfer())
+                ->setIdSalesOrderItem(324)
+                ->setMerchantReference(static::TEST_MERCHANT_SALES_ORDER_REFERENCE_1);
+            $returnItemTransfer = new ReturnItemTransfer();
+            $returnItemTransfer->setOrderItem($orderItemTransfer);
             $returnTransfer->addReturnItem($returnItemTransfer);
         }
 
@@ -99,7 +102,7 @@ class MerchantSalesReturnFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testValidateReturnReturnsSuccessfulReturnResponseTransfer(): void
+    public function testValidateReturnSuccessfully(): void
     {
         // Arrange
         $returnCreateRequestTransfer = new ReturnCreateRequestTransfer();

@@ -16,7 +16,7 @@ use Spryker\Zed\MerchantSalesReturn\Dependency\Facade\MerchantSalesReturnToMerch
  */
 class MerchantSalesReturnDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const FACADE_MERCHANT_SALES_ORDER = 'FACADE_SALES';
+    public const FACADE_MERCHANT_SALES_ORDER = 'FACADE_MERCHANT_SALES_ORDER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -27,7 +27,7 @@ class MerchantSalesReturnDependencyProvider extends AbstractBundleDependencyProv
     {
         $container = parent::provideBusinessLayerDependencies($container);
 
-        $container = $this->addSalesFacade($container);
+        $container = $this->addMerchantSalesOrderFacade($container);
 
         return $container;
     }
@@ -37,7 +37,7 @@ class MerchantSalesReturnDependencyProvider extends AbstractBundleDependencyProv
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addSalesFacade(Container $container): Container
+    protected function addMerchantSalesOrderFacade(Container $container): Container
     {
         $container->set(static::FACADE_MERCHANT_SALES_ORDER, function (Container $container) {
             return new MerchantSalesReturnToMerchantSalesOrderFacadeBridge($container->getLocator()->merchantSalesOrder()->facade());
