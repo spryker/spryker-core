@@ -6,7 +6,7 @@
           package="src.Orm.Zed.SalesReturn.Persistence">
 
     <table name="spy_sales_return">
-        <column name="merchant_reference" required="false" type="VARCHAR" size="255"/>
+        <column name="merchant_sales_order_reference" required="false" type="VARCHAR" size="255"/>
     </table>
 
 </database>

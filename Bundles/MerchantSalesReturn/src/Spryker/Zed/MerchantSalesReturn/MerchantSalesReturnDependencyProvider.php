@@ -9,14 +9,14 @@ namespace Spryker\Zed\MerchantSalesReturn;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\MerchantSalesReturn\Dependency\Facade\MerchantSalesReturnToSalesFacadeBridge;
+use Spryker\Zed\MerchantSalesReturn\Dependency\Facade\MerchantSalesReturnToMerchantSalesOrderFacadeBridge;
 
 /**
  * @method \Spryker\Zed\MerchantSalesReturn\MerchantSalesReturnConfig getConfig()
  */
 class MerchantSalesReturnDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const FACADE_SALES = 'FACADE_SALES';
+    public const FACADE_MERCHANT_SALES_ORDER = 'FACADE_SALES';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -39,8 +39,8 @@ class MerchantSalesReturnDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addSalesFacade(Container $container): Container
     {
-        $container->set(static::FACADE_SALES, function (Container $container) {
-            return new MerchantSalesReturnToSalesFacadeBridge($container->getLocator()->sales()->facade());
+        $container->set(static::FACADE_MERCHANT_SALES_ORDER, function (Container $container) {
+            return new MerchantSalesReturnToMerchantSalesOrderFacadeBridge($container->getLocator()->merchantSalesOrder()->facade());
         });
 
         return $container;

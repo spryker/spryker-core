@@ -4,7 +4,7 @@
    xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="Return">
-        <property name="merchantReference" type="string"/>
+        <property name="merchantSalesOrderReference" type="string"/>
         <property name="returnItems" type="ReturnItem[]" singular="returnItem"/>
     </transfer>
 
@@ -35,6 +35,14 @@
     </transfer>
 
     <transfer name="ReturnCreateRequest">
+    </transfer>
+
+    <transfer name="MerchantOrder">
+        <property name="merchantOrderReference" type="string"/>
+    </transfer>
+
+    <transfer name="MerchantOrderCriteria">
+        <property name="idOrderItem" type="int"/>
     </transfer>
 
 </transfers>

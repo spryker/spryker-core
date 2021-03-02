@@ -29,7 +29,10 @@ class MerchantReturnValidator implements MerchantReturnValidatorInterface
 
         $currentMerchantReference = null;
         foreach ($itemTransfers as $itemTransfer) {
-            if ($currentMerchantReference && $itemTransfer->getMerchantReference() !== $currentMerchantReference) {
+            if (
+                $currentMerchantReference
+                && $itemTransfer->getMerchantReference() !== $currentMerchantReference
+            ) {
                 return $this->addErrorMessageToResponse(
                     'merchant_sales_return.message.items_from_different_merchant_detected',
                     $returnResponseTransfer

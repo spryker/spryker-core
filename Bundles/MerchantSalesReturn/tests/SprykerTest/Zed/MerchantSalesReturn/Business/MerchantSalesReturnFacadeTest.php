@@ -38,15 +38,50 @@ class MerchantSalesReturnFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testPreCreateSetsMerchantReferenceSuccessfully(): void
+    public function testPreCreateSetsMerchantOrderReferenceSuccessfully(): void
+    {
+        // Arrange
+        $merchantTransfer = $this->tester->haveMerchant();
+        $saveOrderTransfer = $this->tester->getSaveOrderTransfer($merchantTransfer, static::TEST_STATE_MACHINE);
+
+        $merchantOrderTransfer = $this->tester->createMerchantOrderWithRelatedData(
+            $saveOrderTransfer,
+            $merchantTransfer
+        );
+
+        $returnTransfer = new ReturnTransfer();
+
+        foreach ($saveOrderTransfer->getOrderItems() as $orderItem) {
+            $returnItemTransfer = new ReturnItemTransfer();
+            $returnItemTransfer->setOrderItem($orderItem);
+            $returnTransfer->addReturnItem($returnItemTransfer);
+        }
+
+        // Act
+        $actualReturnTransfer = $this->tester
+            ->getFacade()
+            ->preCreate($returnTransfer);
+
+        // Assert
+        $this->assertSame(
+            $merchantOrderTransfer->getMerchantOrderReference(),
+            $actualReturnTransfer->getMerchantSalesOrderReference()
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testPreCreateReturnsResultWithoutMerchantOrderReferenceWhenOrderItemsIsNotValid(): void
     {
         // Arrange
         $merchantTransfer = $this->tester->haveMerchant();
         $saveOrderTransfer = $this->tester->getSaveOrderTransfer($merchantTransfer, static::TEST_STATE_MACHINE);
 
         $returnTransfer = new ReturnTransfer();
+
         foreach ($saveOrderTransfer->getOrderItems() as $orderItem) {
-            $orderItemTransfer = $this->tester->createItemTransfer(null, $orderItem->getIdSalesOrderItem());
+            $orderItemTransfer = $this->tester->createItemTransfer($orderItem->getMerchantReference(), 324);
             $returnItemTransfer = (new ReturnItemTransfer())->setOrderItem($orderItemTransfer);
 
             $returnTransfer->addReturnItem($returnItemTransfer);
@@ -58,40 +93,13 @@ class MerchantSalesReturnFacadeTest extends Unit
             ->preCreate($returnTransfer);
 
         // Assert
-        $this->assertSame($merchantTransfer->getMerchantReference(), $actualReturnTransfer->getMerchantReference());
+        $this->assertNull($actualReturnTransfer->getMerchantSalesOrderReference());
     }
 
     /**
      * @return void
      */
-    public function testPreCreateReturnsResultWithoutMerchantReferenceWhenOrderItensIsNotValid(): void
-    {
-        // Arrange
-        $merchantTransfer = $this->tester->haveMerchant();
-        $saveOrderTransfer = $this->tester->getSaveOrderTransfer($merchantTransfer, static::TEST_STATE_MACHINE);
-
-        $returnTransfer = new ReturnTransfer();
-
-        foreach ($saveOrderTransfer->getOrderItems() as $orderItem) {
-            $orderItemTransfer = $this->tester->createItemTransfer(static::TEST_MERCHANT_REFERENCE_1, 324);
-            $returnItemTransfer = (new ReturnItemTransfer())->setOrderItem($orderItemTransfer);
-
-            $returnTransfer->addReturnItem($returnItemTransfer);
-        }
-
-        // Act
-        $actualReturnTransfer = $this->tester
-            ->getFacade()
-            ->preCreate($returnTransfer);
-
-        // Assert
-        $this->assertSame(null, $actualReturnTransfer->getMerchantReference());
-    }
-
-    /**
-     * @return void
-     */
-    public function testValidateReturnSuccessfully(): void
+    public function testValidateReturnReturnsSuccessfulReturnResponseTransfer(): void
     {
         // Arrange
         $returnCreateRequestTransfer = new ReturnCreateRequestTransfer();

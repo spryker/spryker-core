@@ -12,7 +12,7 @@ use Spryker\Zed\MerchantSalesReturn\Business\Model\MerchantReturnPreCreator;
 use Spryker\Zed\MerchantSalesReturn\Business\Model\MerchantReturnPreCreatorInterface;
 use Spryker\Zed\MerchantSalesReturn\Business\Model\MerchantReturnValidator;
 use Spryker\Zed\MerchantSalesReturn\Business\Model\MerchantReturnValidatorInterface;
-use Spryker\Zed\MerchantSalesReturn\Dependency\Facade\MerchantSalesReturnToSalesFacadeInterface;
+use Spryker\Zed\MerchantSalesReturn\Dependency\Facade\MerchantSalesReturnToMerchantSalesOrderFacadeInterface;
 use Spryker\Zed\MerchantSalesReturn\MerchantSalesReturnDependencyProvider;
 
 /**
@@ -26,7 +26,7 @@ class MerchantSalesReturnBusinessFactory extends AbstractBusinessFactory
      */
     public function createMerchantReturnPreCreator(): MerchantReturnPreCreatorInterface
     {
-        return new MerchantReturnPreCreator($this->getSalesFacade());
+        return new MerchantReturnPreCreator($this->getMerchantSalesOrderFacade());
     }
 
     /**
@@ -38,10 +38,10 @@ class MerchantSalesReturnBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\MerchantSalesReturn\Dependency\Facade\MerchantSalesReturnToSalesFacadeInterface
+     * @return \Spryker\Zed\MerchantSalesReturn\Dependency\Facade\MerchantSalesReturnToMerchantSalesOrderFacadeInterface
      */
-    public function getSalesFacade(): MerchantSalesReturnToSalesFacadeInterface
+    public function getMerchantSalesOrderFacade(): MerchantSalesReturnToMerchantSalesOrderFacadeInterface
     {
-        return $this->getProvidedDependency(MerchantSalesReturnDependencyProvider::FACADE_SALES);
+        return $this->getProvidedDependency(MerchantSalesReturnDependencyProvider::FACADE_MERCHANT_SALES_ORDER);
     }
 }

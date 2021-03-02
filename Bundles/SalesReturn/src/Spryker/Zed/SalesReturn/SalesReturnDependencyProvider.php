@@ -44,6 +44,7 @@ class SalesReturnDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addOmsFacade($container);
         $container = $this->addUtilDateTimeService($container);
         $container = $this->addReturnPreCreatePlugins($container);
+        $container = $this->addReturnRequestValidatorPlugins($container);
 
         return $container;
     }
