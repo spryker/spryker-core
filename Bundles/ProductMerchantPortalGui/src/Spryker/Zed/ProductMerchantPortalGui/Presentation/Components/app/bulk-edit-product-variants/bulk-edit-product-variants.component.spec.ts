@@ -81,7 +81,9 @@ describe('BulkEditProductVariantsComponent', () => {
     });
 
     it('should render projected notification in the `mp-bulk-edit-product-variants__content` element', () => {
-        const notificationComponent = fixture.debugElement.query(By.css('.mp-bulk-edit-product-variants__content .projected-notification'));
+        const notificationComponent = fixture.debugElement.query(
+            By.css('.mp-bulk-edit-product-variants__content .projected-notification'),
+        );
 
         expect(notificationComponent).toBeTruthy();
     });
