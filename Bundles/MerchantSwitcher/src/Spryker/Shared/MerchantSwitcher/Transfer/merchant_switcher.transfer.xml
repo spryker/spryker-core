@@ -89,6 +89,7 @@
     <transfer name="ValidationResponse">
         <property name="isSuccess" type="bool"/>
         <property name="validationErrors" type="ValidationError[]" singular="validationError"/>
+        <property name="errorMessages" type="Message[]" singular="errorMessage"/>
     </transfer>
 
     <transfer name="ValidationError">
@@ -96,11 +97,6 @@
         <property name="root" type="object"/>
         <property name="propertyPath" type="string"/>
         <property name="invalidValue" type="string"/>
-    </transfer>
-
-    <transfer name="ValidationResponse">
-        <property name="isSuccess" type="bool"/>
-        <property name="errorMessages" type="Message[]" singular="errorMessage"/>
     </transfer>
 
     <transfer name="Wishlist">
