@@ -17,7 +17,6 @@ use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
 use Generated\Shared\Transfer\WishlistResponseTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 use Spryker\Client\Kernel\AbstractClient;
-use Spryker\Client\ZedRequest\Client\Response;
 
 /**
  * @method \Spryker\Client\Wishlist\WishlistFactory getFactory()
@@ -284,9 +283,9 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
      *
      * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
      *
-     * @return \Spryker\Client\ZedRequest\Client\Response
+     * @return \Generated\Shared\Transfer\WishlistItemTransfer
      */
-    public function deleteItem(WishlistItemTransfer $wishlistItemTransfer): Response
+    public function deleteItem(WishlistItemTransfer $wishlistItemTransfer): WishlistItemTransfer
     {
         return $this->getZedStub()->deleteItem($wishlistItemTransfer);
     }
@@ -298,9 +297,9 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
      *
      * @param \Generated\Shared\Transfer\WishlistItemCollectionTransfer $wishlistItemTransferCollection
      *
-     * @return \Spryker\Client\ZedRequest\Client\Response
+     * @return \Generated\Shared\Transfer\WishlistItemCollectionTransfer
      */
-    public function deleteItemCollection(WishlistItemCollectionTransfer $wishlistItemTransferCollection): Response
+    public function deleteItemCollection(WishlistItemCollectionTransfer $wishlistItemTransferCollection): WishlistItemCollectionTransfer
     {
         return $this->getZedStub()->deleteItemCollection($wishlistItemTransferCollection);
     }

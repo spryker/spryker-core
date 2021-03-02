@@ -16,7 +16,6 @@ use Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
 use Generated\Shared\Transfer\WishlistResponseTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
-use Spryker\Client\ZedRequest\Client\Response;
 
 /**
  * @method \Spryker\Client\Wishlist\WishlistFactory getFactory()
@@ -231,9 +230,9 @@ interface WishlistClientInterface
      *
      * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
      *
-     * @return \Spryker\Client\ZedRequest\Client\Response
+     * @return \Generated\Shared\Transfer\WishlistItemTransfer
      */
-    public function deleteItem(WishlistItemTransfer $wishlistItemTransfer): Response;
+    public function deleteItem(WishlistItemTransfer $wishlistItemTransfer): WishlistItemTransfer;
 
     /**
      * Specification:
@@ -243,7 +242,7 @@ interface WishlistClientInterface
      *
      * @param \Generated\Shared\Transfer\WishlistItemCollectionTransfer $wishlistItemTransferCollection
      *
-     * @return \Spryker\Client\ZedRequest\Client\Response
+     * @return \Generated\Shared\Transfer\WishlistItemCollectionTransfer
      */
-    public function deleteItemCollection(WishlistItemCollectionTransfer $wishlistItemTransferCollection): Response;
+    public function deleteItemCollection(WishlistItemCollectionTransfer $wishlistItemTransferCollection): WishlistItemCollectionTransfer;
 }

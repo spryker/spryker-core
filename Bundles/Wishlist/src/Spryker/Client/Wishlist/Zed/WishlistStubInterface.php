@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
 use Generated\Shared\Transfer\WishlistResponseTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
-use Spryker\Client\ZedRequest\Client\Response;
 
 interface WishlistStubInterface
 {
@@ -116,14 +115,14 @@ interface WishlistStubInterface
     /**
      * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
      *
-     * @return \Spryker\Client\ZedRequest\Client\Response
+     * @return \Generated\Shared\Transfer\WishlistItemTransfer
      */
-    public function deleteItem(WishlistItemTransfer $wishlistItemTransfer): Response;
+    public function deleteItem(WishlistItemTransfer $wishlistItemTransfer): WishlistItemTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\WishlistItemCollectionTransfer $wishlistItemTransferCollection
      *
-     * @return \Spryker\Client\ZedRequest\Client\Response
+     * @return \Generated\Shared\Transfer\WishlistItemCollectionTransfer
      */
-    public function deleteItemCollection(WishlistItemCollectionTransfer $wishlistItemTransferCollection): Response;
+    public function deleteItemCollection(WishlistItemCollectionTransfer $wishlistItemTransferCollection): WishlistItemCollectionTransfer;
 }

@@ -98,18 +98,4 @@ interface WriterInterface
      * @return \Generated\Shared\Transfer\WishlistItemCollectionTransfer
      */
     public function removeItemCollection(WishlistItemCollectionTransfer $wishlistItemTransferCollection);
-
-    /**
-     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
-     *
-     * @return void
-     */
-    public function deleteItem(WishlistItemTransfer $wishlistItemTransfer): void;
-
-    /**
-     * @param \Generated\Shared\Transfer\WishlistItemCollectionTransfer $wishlistItemTransferCollection
-     *
-     * @return void
-     */
-    public function deleteItemCollection(WishlistItemCollectionTransfer $wishlistItemTransferCollection): void;
 }

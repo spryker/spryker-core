@@ -21,7 +21,7 @@ interface WishlistEntityManagerInterface
     /**
      * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\WishlistItemTransfer
      */
-    public function deleteItem(WishlistItemTransfer $wishlistItemTransfer): void;
+    public function deleteItem(WishlistItemTransfer $wishlistItemTransfer): WishlistItemTransfer;
 }
