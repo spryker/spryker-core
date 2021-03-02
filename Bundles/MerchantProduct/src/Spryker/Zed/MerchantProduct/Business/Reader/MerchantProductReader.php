@@ -68,15 +68,14 @@ class MerchantProductReader implements MerchantProductReaderInterface
     public function getProductConcreteCollection(
         MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer
     ): ProductConcreteCollectionTransfer {
-        $merchantProductCriteriaTransfer->requireIdMerchant();
-        $merchantProductCriteriaTransfer->addIdMerchant($merchantProductCriteriaTransfer->getIdMerchant());
+        $merchantProductCriteriaTransfer->addIdMerchant($merchantProductCriteriaTransfer->getIdMerchantOrFail());
 
         $merchantProductCollectionTransfer = $this->merchantProductRepository->get($merchantProductCriteriaTransfer);
 
         $productConcreteIds = [];
         foreach ($merchantProductCollectionTransfer->getMerchantProducts() as $merchantProductTransfer) {
             $merchantProductConcreteIds = array_map(function (ProductConcreteTransfer $productConcreteTransfer) {
-                return $productConcreteTransfer->getIdProductConcrete();
+                return $productConcreteTransfer->getIdProductConcreteOrFail();
             }, $merchantProductTransfer->getProducts()->getArrayCopy());
 
             $productConcreteIds = array_merge($productConcreteIds, $merchantProductConcreteIds);

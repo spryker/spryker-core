@@ -51,6 +51,7 @@ class MerchantProductRepository extends AbstractRepository implements MerchantPr
      */
     public function get(MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer): MerchantProductCollectionTransfer
     {
+        /** @var \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery $merchantProductAbstractQuery */
         $merchantProductAbstractQuery = $this->getFactory()
             ->getMerchantProductAbstractPropelQuery()
             ->leftJoinWithProductAbstract()

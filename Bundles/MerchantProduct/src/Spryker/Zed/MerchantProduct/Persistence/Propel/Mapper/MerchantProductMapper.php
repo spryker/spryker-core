@@ -28,12 +28,10 @@ class MerchantProductMapper
             ->setIdProductAbstract($merchantProductEntity->getFkProductAbstract())
             ->setIdMerchant($merchantProductEntity->getFkMerchant());
 
-        if ($merchantProductEntity->getProductAbstract() && $merchantProductEntity->getProductAbstract()->getSpyProducts()) {
-            $this->mapConcreteProductsToMerchantProductTransfer(
-                $merchantProductTransfer,
-                $merchantProductEntity->getProductAbstract()->getSpyProducts()
-            );
-        }
+        $this->mapConcreteProductsToMerchantProductTransfer(
+            $merchantProductTransfer,
+            $merchantProductEntity->getProductAbstract()->getSpyProducts()
+        );
 
         return $merchantProductTransfer;
     }

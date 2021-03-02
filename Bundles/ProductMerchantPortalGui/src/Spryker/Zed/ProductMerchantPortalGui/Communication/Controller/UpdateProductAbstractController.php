@@ -166,7 +166,7 @@ class UpdateProductAbstractController extends AbstractController
                     ->getConfiguration($productAbstractTransfer->getAttributes(), $productAbstractTransfer->getLocalizedAttributes()),
                 'productConcreteTableConfiguration' => $this->getFactory()
                     ->createProductGuiTableConfigurationProvider()
-                    ->getConfiguration($productAbstractTransfer->getIdProductAbstract()),
+                    ->getConfiguration($productAbstractTransfer->getIdProductAbstractOrFail()),
                 'productCategoryTree' => $this->getFactory()->createProductAbstractFormDataProvider()->getProductCategoryTree(),
             ])->getContent(),
         ];

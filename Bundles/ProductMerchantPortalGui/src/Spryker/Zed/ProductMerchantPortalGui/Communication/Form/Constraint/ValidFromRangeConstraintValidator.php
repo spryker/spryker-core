@@ -49,7 +49,7 @@ class ValidFromRangeConstraintValidator extends AbstractConstraintValidator
             $this->context->addViolation('The first date cannot be later than the second one.');
         }
 
-        if ($validFrom->format('Y-m-d') === $validTo->format('Y-m-d')) {
+        if ($validFrom == $validTo) {
             $this->context->addViolation('The first date is the same as the second one.');
         }
     }

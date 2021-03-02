@@ -109,7 +109,7 @@ class ProductsConcreteController extends AbstractController
         $formData = $productConcreteBulkForm->getData();
 
         foreach ($productConcreteCollectionTransfer->getProducts() as $productConcreteTransfer) {
-            $idProductConcrete = $productConcreteTransfer->getIdProductConcrete();
+            $idProductConcrete = $productConcreteTransfer->getIdProductConcreteOrFail();
 
             if ($request->get(static::PARAM_ACTIVATION_NAME_STATUS)) {
                 $formData[ProductConcreteTransfer::IS_ACTIVE]
