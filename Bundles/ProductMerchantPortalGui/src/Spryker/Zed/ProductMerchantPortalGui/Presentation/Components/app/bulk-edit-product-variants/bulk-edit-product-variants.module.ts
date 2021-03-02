@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NotificationModule } from '@spryker/notification';
 import { CardModule } from '@spryker/card';
 import { ToggleModule } from '@spryker/toggle';
 import { CheckboxModule } from '@spryker/checkbox';
@@ -12,7 +11,6 @@ import { BulkEditProductVariantsComponent } from './bulk-edit-product-variants.c
 @NgModule({
     imports: [
         CommonModule,
-        NotificationModule,
         CardModule,
         ToggleModule,
         FormItemModule,

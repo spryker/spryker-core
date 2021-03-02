@@ -13,6 +13,7 @@ import { BulkEditProductVariantSections } from './types';
         <mp-bulk-edit-product-variants [sections]="sections" [notificationText]="notificationText">
             <span title class="projected-title"></span>
             <span action class="projected-action"></span>
+            <span notification class="projected-notification"></span>
         </mp-bulk-edit-product-variants>
     `,
 })
@@ -79,36 +80,10 @@ describe('BulkEditProductVariantsComponent', () => {
         expect(projectedAction).toBeTruthy();
     });
 
-    it('should render `spy-notification` component', () => {
-        const notificationComponent = fixture.debugElement.query(By.css('spy-notification'));
+    it('should render projected notification in the `mp-bulk-edit-product-variants__content` element', () => {
+        const notificationComponent = fixture.debugElement.query(By.css('.mp-bulk-edit-product-variants__content .projected-notification'));
 
         expect(notificationComponent).toBeTruthy();
-    });
-
-    it('should bound `NotificationType.Info` to `type` of the `spy-notification` component', () => {
-        const notificationComponent = fixture.debugElement.query(By.css('spy-notification'));
-
-        fixture.detectChanges();
-
-        expect(notificationComponent.properties.type).toBe(NotificationType.Info);
-    });
-
-    it('should bound `false` to `floating` of the `spy-notification` component', () => {
-        const notificationComponent = fixture.debugElement.query(By.css('spy-notification'));
-
-        fixture.detectChanges();
-
-        expect(notificationComponent.attributes.floating).toBe('false');
-    });
-
-    it('should render `notificationText` inside `spy-notification` component', () => {
-        const notificationComponent = fixture.debugElement.query(By.css('spy-notification'));
-        const mockNotification = 'mockNotification';
-
-        component.notificationText = mockNotification;
-        fixture.detectChanges();
-
-        expect(notificationComponent.nativeElement.textContent).toContain(mockNotification);
     });
 
     describe('Status section', () => {

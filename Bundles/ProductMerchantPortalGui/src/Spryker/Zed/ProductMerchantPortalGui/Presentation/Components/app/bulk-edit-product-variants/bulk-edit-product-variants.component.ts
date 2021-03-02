@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { ToJson } from '@spryker/utils';
-import { NotificationType } from '@spryker/notification';
 import { DateRangeValueInput } from '@spryker/date-picker';
 
 import { BulkEditProductVariantSections } from './types';
@@ -18,7 +17,6 @@ import { BulkEditProductVariantSections } from './types';
 export class BulkEditProductVariantsComponent implements OnChanges {
     @Input() @ToJson() sections?: BulkEditProductVariantSections;
 
-    notificationType = NotificationType;
     statusValue = false;
     isStatusActive = false;
     validityDates: DateRangeValueInput = {};
@@ -52,11 +50,11 @@ export class BulkEditProductVariantsComponent implements OnChanges {
     }
 
     private setDefaultStatus() {
-        this.statusValue = this.sections.status.value ?? false;
+        this.statusValue = this.sections?.status?.value ?? false;
     }
 
     private setDefaultValidityDates() {
-        this.validityDates = this.sections.validity.value
+        this.validityDates = this.sections?.validity?.value
             ? {
                   from: this.sections.validity.value.from,
                   to: this.sections.validity.value.to,
