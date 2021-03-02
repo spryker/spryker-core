@@ -6,7 +6,9 @@
 
 {% block content %}
     {%- include '@ZedUi/Partials/FlashMessages/flash-messages.twig' -%}
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
-    {{ form_end(form) }}
+    {% if form is defined %}
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        {{ form_end(form) }}
+    {% endif %}
 {% endblock %}
