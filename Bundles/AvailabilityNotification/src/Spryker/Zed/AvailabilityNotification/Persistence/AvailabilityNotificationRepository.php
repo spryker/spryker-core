@@ -7,9 +7,13 @@
 
 namespace Spryker\Zed\AvailabilityNotification\Persistence;
 
+use Generated\Shared\Transfer\AvailabilityNotificationCriteriaTransfer;
 use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionCollectionTransfer;
 use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer;
+use Generated\Shared\Transfer\PaginationTransfer;
 use Orm\Zed\AvailabilityNotification\Persistence\SpyAvailabilityNotificationSubscriptionQuery;
+use Propel\Runtime\ActiveQuery\Criteria;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -106,17 +110,22 @@ class AvailabilityNotificationRepository extends AbstractRepository implements A
     }
 
     /**
-     * @param string $customerReference
+     * @param \Generated\Shared\Transfer\AvailabilityNotificationCriteriaTransfer $availabilityNotificationCriteriaTransfer
      * @param int $fkStore
      *
      * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionCollectionTransfer
      */
-    public function findByCustomerReference(string $customerReference, int $fkStore): AvailabilityNotificationSubscriptionCollectionTransfer
+    public function findByCustomerReference(AvailabilityNotificationCriteriaTransfer $availabilityNotificationCriteriaTransfer, int $fkStore): AvailabilityNotificationSubscriptionCollectionTransfer
     {
-        $availabilityNotificationSubscriptionEntities = $this->querySubscription()
-            ->filterByCustomerReference($customerReference)
-            ->filterByFkStore($fkStore)
-            ->find();
+        $querySubscription = $this->querySubscription()
+                            ->filterByCustomerReference($availabilityNotificationCriteriaTransfer->getCustomerReferences(), Criteria::IN)
+                            ->filterByFkStore($fkStore)
+        ;
+        if ($availabilityNotificationCriteriaTransfer->getPagination()) {
+            $querySubscription = $this->preparePagination($querySubscription, $availabilityNotificationCriteriaTransfer->getPagination());
+        }
+
+        $availabilityNotificationSubscriptionEntities = $querySubscription->find();
 
         $availabilityNotificationSubscriptionCollectionTransfer = new AvailabilityNotificationSubscriptionCollectionTransfer();
 
@@ -128,6 +137,10 @@ class AvailabilityNotificationRepository extends AbstractRepository implements A
             );
         }
 
+        if ($availabilityNotificationCriteriaTransfer->getPagination()) {
+            $availabilityNotificationSubscriptionCollectionTransfer->setPagination($availabilityNotificationCriteriaTransfer->getPagination());
+        }
+
         return $availabilityNotificationSubscriptionCollectionTransfer;
     }
 
@@ -137,5 +150,36 @@ class AvailabilityNotificationRepository extends AbstractRepository implements A
     protected function querySubscription(): SpyAvailabilityNotificationSubscriptionQuery
     {
         return $this->getFactory()->createAvailabilityNotificationSubscriptionQuery();
+    }
+
+    /**
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
+     *
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    protected function preparePagination(ModelCriteria $query, PaginationTransfer $paginationTransfer): ModelCriteria
+    {
+        $page = $paginationTransfer
+            ->requirePage()
+            ->getPage();
+
+        $maxPerPage = $paginationTransfer
+            ->requireMaxPerPage()
+            ->getMaxPerPage();
+
+        $paginationModel = $query->paginate($page, $maxPerPage);
+
+        $paginationTransfer->setNbResults($paginationModel->getNbResults())
+            ->setFirstIndex($paginationModel->getFirstIndex())
+            ->setLastIndex($paginationModel->getLastIndex())
+            ->setFirstPage($paginationModel->getFirstPage())
+            ->setLastPage($paginationModel->getLastPage())
+            ->setNextPage($paginationModel->getNextPage())
+            ->setPreviousPage($paginationModel->getPreviousPage());
+
+        $query = $paginationModel->getQuery();
+
+        return $query;
     }
 }

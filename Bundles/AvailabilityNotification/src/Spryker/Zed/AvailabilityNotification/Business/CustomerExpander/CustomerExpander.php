@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\AvailabilityNotification\Business\CustomerExpander;
 
+use Generated\Shared\Transfer\AvailabilityNotificationCriteriaTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilityNotificationSubscriptionReaderInterface;
 
@@ -34,7 +35,10 @@ class CustomerExpander implements CustomerExpanderInterface
     {
         $availabilityNotificationSubscriptions = $this
                             ->availabilityNotificationSubscriptionReader
-                            ->findByCustomerReference($customerTransfer->getCustomerReference())// todo criteria
+                            ->findByCustomerReference(
+                                (new AvailabilityNotificationCriteriaTransfer())
+                                    ->setCustomerReferences([$customerTransfer->getCustomerReference()])
+                            )
                             ->getAvailabilityNotificationSubscriptions()
         ;
         $skus = [];

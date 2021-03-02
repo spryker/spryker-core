@@ -39,17 +39,18 @@
     </transfer>
 
     <transfer name="AvailabilityNotificationSubscription">
-        <property name="store" type="Store"/>
-        <property name="locale" type="Locale"/>
+        <property name="idAvailabilityNotificationSubscription" type="int"/>
         <property name="subscriptionKey" type="string"/>
-        <property name="customerReference" type="string"/>
         <property name="email" type="string"/>
         <property name="sku" type="string"/>
-        <property name="idAvailabilityNotificationSubscription" type="int"/>
+        <property name="customerReference" type="string"/>
+        <property name="store" type="Store"/>
+        <property name="locale" type="Locale"/>
     </transfer>
 
     <transfer name="AvailabilityNotificationSubscriptionCollection">
         <property name="availabilityNotificationSubscriptions" type="AvailabilityNotificationSubscription[]" singular="availabilityNotificationSubscription" />
+        <property name="pagination" type="Pagination"/>
     </transfer>
 
     <transfer name="AvailabilityNotificationSubscriptionResponse">

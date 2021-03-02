@@ -15,7 +15,7 @@ class AvailabilityNotificationsRestApiToStoreClientBridge implements Availabilit
     /**
      * @param \Spryker\Client\Store\StoreClientInterface $storeClient
      */
-    public function __construct(StoreClientInterface $storeClient)
+    public function __construct($storeClient)
     {
         $this->storeClient = $storeClient;
     }

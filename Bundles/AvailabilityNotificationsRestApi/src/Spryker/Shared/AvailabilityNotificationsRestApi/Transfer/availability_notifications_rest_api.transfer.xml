@@ -4,14 +4,34 @@
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="RestAvailabilityNotificationRequestAttributes">
-        <property name="sku" type="string" />
         <property name="email" type="string" />
+        <property name="sku" type="string" />
     </transfer>
 
     <transfer name="RestAvailabilityNotificationsAttributes">
-        <property name="sku" type="string" />
-        <property name="email" type="string" />
+        <property name="idAvailabilityNotificationSubscription" type="int"/>
+        <property name="subscriptionKey" type="string"/>
         <property name="locale" type="string" />
+        <property name="email" type="string" />
+        <property name="sku" type="string" />
+    </transfer>
+
+    <transfer name="AvailabilityNotificationSubscriptionCollection">
+        <property name="availabilityNotificationSubscriptions" type="AvailabilityNotificationSubscription[]" singular="availabilityNotificationSubscription" />
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="AvailabilityNotificationSubscription">
+        <property name="idAvailabilityNotificationSubscription" type="int"/>
+        <property name="subscriptionKey" type="string"/>
+        <property name="locale" type="Locale"/>
+        <property name="email" type="string"/>
+        <property name="sku" type="string"/>
+    </transfer>
+
+    <transfer name="AvailabilityNotificationCriteria">
+        <property name="customerReferences" type="string[]" singular="customerReference"/>
+        <property name="pagination" type="Pagination"/>
     </transfer>
 
 </transfers>

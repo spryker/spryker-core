@@ -141,7 +141,7 @@ class AvailabilityNotificationFacade extends AbstractFacade implements Availabil
         return $this
             ->getFactory()
             ->createAvailabilityNotificationReader()
-            ->findByCustomerReference($availabilityNotificationCriteriaTransfer->getCustomerReference())
+            ->findByCustomerReference($availabilityNotificationCriteriaTransfer)
         ;
     }
 }

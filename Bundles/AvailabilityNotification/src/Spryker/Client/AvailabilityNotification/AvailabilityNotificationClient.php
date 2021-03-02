@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\AvailabilityNotification;
 
+use Generated\Shared\Transfer\AvailabilityNotificationCriteriaTransfer;
+use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionCollectionTransfer;
 use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer;
 use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer;
 use Spryker\Client\Kernel\AbstractClient;
@@ -65,5 +67,24 @@ class AvailabilityNotificationClient extends AbstractClient implements Availabil
         return $this->getFactory()
             ->createZedAvailabilityNotificationStub()
             ->unsubscribeBySubscriptionKey($availabilityNotificationSubscriptionTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AvailabilityNotificationCriteriaTransfer $availabilityNotificationCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionCollectionTransfer
+     */
+    public function getByCustomerAction(
+        AvailabilityNotificationCriteriaTransfer $availabilityNotificationCriteriaTransfer
+    ): AvailabilityNotificationSubscriptionCollectionTransfer
+    {
+        return $this->getFactory()
+            ->createZedAvailabilityNotificationStub()
+            ->getByCustomerAction($availabilityNotificationCriteriaTransfer)
+        ;
     }
 }

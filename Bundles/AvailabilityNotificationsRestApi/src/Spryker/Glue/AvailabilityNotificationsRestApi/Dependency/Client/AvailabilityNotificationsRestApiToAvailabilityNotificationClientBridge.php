@@ -2,6 +2,8 @@
 
 namespace Spryker\Glue\AvailabilityNotificationsRestApi\Dependency\Client;
 
+use Generated\Shared\Transfer\AvailabilityNotificationCriteriaTransfer;
+use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionCollectionTransfer;
 use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer;
 use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer;
 use Spryker\Client\AvailabilityNotification\AvailabilityNotificationClientInterface;
@@ -16,7 +18,7 @@ class AvailabilityNotificationsRestApiToAvailabilityNotificationClientBridge imp
     /**
      * @param \Spryker\Client\AvailabilityNotification\AvailabilityNotificationClientInterface $availabilityNotificationClient
      */
-    public function __construct(AvailabilityNotificationClientInterface $availabilityNotificationClient)
+    public function __construct($availabilityNotificationClient)
     {
         $this->availabilityNotificationClient = $availabilityNotificationClient;
     }
@@ -43,5 +45,17 @@ class AvailabilityNotificationsRestApiToAvailabilityNotificationClientBridge imp
     ): AvailabilityNotificationSubscriptionResponseTransfer
     {
         return $this->availabilityNotificationClient->unsubscribeBySubscriptionKey($availabilityNotificationSubscriptionTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AvailabilityNotificationCriteriaTransfer $availabilityNotificationCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionCollectionTransfer
+     */
+    public function getByCustomerAction(
+        AvailabilityNotificationCriteriaTransfer $availabilityNotificationCriteriaTransfer
+    ): AvailabilityNotificationSubscriptionCollectionTransfer
+    {
+        return $this->availabilityNotificationClient->getByCustomerAction($availabilityNotificationCriteriaTransfer);
     }
 }

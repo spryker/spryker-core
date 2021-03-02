@@ -22,7 +22,8 @@ class AvailabilityNotificationsRestApiFactory extends AbstractFactory
     public function createAvailabilityNotificationReader(): AvailabilityNotificationReader
     {
         return new AvailabilityNotificationReader(
-            $this->getAvailabilityNotificationClient()
+            $this->getAvailabilityNotificationClient(),
+            $this->createRestResponseBuilder()
         );
     }
 

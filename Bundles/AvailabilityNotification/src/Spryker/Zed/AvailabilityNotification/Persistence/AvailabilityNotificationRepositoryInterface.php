@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\AvailabilityNotification\Persistence;
 
+use Generated\Shared\Transfer\AvailabilityNotificationCriteriaTransfer;
 use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionCollectionTransfer;
 use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer;
 
@@ -46,10 +47,10 @@ interface AvailabilityNotificationRepositoryInterface
     public function findBySkuAndStore(string $sku, int $fkStore): array;
 
     /**
-     * @param string $customerReference
+     * @param \Generated\Shared\Transfer\AvailabilityNotificationCriteriaTransfer $availabilityNotificationCriteriaTransfer
      * @param int $fkStore
      *
      * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionCollectionTransfer
      */
-    public function findByCustomerReference(string $customerReference, int $fkStore): AvailabilityNotificationSubscriptionCollectionTransfer;
+    public function findByCustomerReference(AvailabilityNotificationCriteriaTransfer $availabilityNotificationCriteriaTransfer, int $fkStore): AvailabilityNotificationSubscriptionCollectionTransfer;
 }

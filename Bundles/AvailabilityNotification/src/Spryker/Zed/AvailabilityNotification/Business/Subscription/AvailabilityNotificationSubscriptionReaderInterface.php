@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\AvailabilityNotification\Business\Subscription;
 
+use Generated\Shared\Transfer\AvailabilityNotificationCriteriaTransfer;
 use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionCollectionTransfer;
 use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer;
 
@@ -39,9 +40,9 @@ interface AvailabilityNotificationSubscriptionReaderInterface
     ): ?AvailabilityNotificationSubscriptionTransfer;
 
     /**
-     * @param string $customerReference
+     * @param \Generated\Shared\Transfer\AvailabilityNotificationCriteriaTransfer $availabilityNotificationCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionCollectionTransfer
      */
-    public function findByCustomerReference(string $customerReference): AvailabilityNotificationSubscriptionCollectionTransfer;
+    public function findByCustomerReference(AvailabilityNotificationCriteriaTransfer $availabilityNotificationCriteriaTransfer): AvailabilityNotificationSubscriptionCollectionTransfer;
 }

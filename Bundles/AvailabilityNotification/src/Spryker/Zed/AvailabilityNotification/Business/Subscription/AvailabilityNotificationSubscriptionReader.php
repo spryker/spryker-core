@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\AvailabilityNotification\Business\Subscription;
 
+use Generated\Shared\Transfer\AvailabilityNotificationCriteriaTransfer;
 use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionCollectionTransfer;
 use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer;
+use InvalidArgumentException;
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToStoreFacadeInterface;
 use Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationRepositoryInterface;
 
@@ -74,14 +76,22 @@ class AvailabilityNotificationSubscriptionReader implements AvailabilityNotifica
     }
 
     /**
-     * @param string $customerReference
+     * @param \Generated\Shared\Transfer\AvailabilityNotificationCriteriaTransfer $availabilityNotificationCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionCollectionTransfer
      */
-    public function findByCustomerReference(string $customerReference): AvailabilityNotificationSubscriptionCollectionTransfer // todo criteria as param
+    public function findByCustomerReference(AvailabilityNotificationCriteriaTransfer $availabilityNotificationCriteriaTransfer): AvailabilityNotificationSubscriptionCollectionTransfer
     {
-        return $this->availabilityNotificationRepository
-            ->findByCustomerReference($customerReference, $this->storeFacade->getCurrentStore()->getIdStore());
-    }
+        if (empty($availabilityNotificationCriteriaTransfer->getCustomerReferences())) {
+            throw new InvalidArgumentException("'customerReferences' param is empty.");
+        }
 
+        return $this
+            ->availabilityNotificationRepository
+            ->findByCustomerReference(
+                $availabilityNotificationCriteriaTransfer,
+                $this->storeFacade->getCurrentStore()->getIdStore()
+            )
+        ;
+    }
 }
