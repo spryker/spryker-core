@@ -9,8 +9,6 @@
     </transfer>
 
     <transfer name="RestAvailabilityNotificationsAttributes">
-        <property name="idAvailabilityNotificationSubscription" type="int"/>
-        <property name="subscriptionKey" type="string"/>
         <property name="locale" type="string" />
         <property name="email" type="string" />
         <property name="sku" type="string" />

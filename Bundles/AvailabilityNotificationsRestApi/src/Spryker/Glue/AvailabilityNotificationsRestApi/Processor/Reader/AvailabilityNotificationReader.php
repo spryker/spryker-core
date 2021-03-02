@@ -54,6 +54,6 @@ class AvailabilityNotificationReader implements AvailabilityNotificationReaderIn
 
         $availabilityNotificationSubscriptionCollectionTransfer = $this->availabilityNotificationClient->getByCustomerAction($availabilityNotificationCriteriaTransfer);
 
-        dd($availabilityNotificationSubscriptionCollectionTransfer);
+        return $this->restResponseBuilder->createAvailabilityNotificationCollectionResponse($availabilityNotificationSubscriptionCollectionTransfer);
     }
 }

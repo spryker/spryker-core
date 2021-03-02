@@ -3,12 +3,14 @@
 namespace Spryker\Glue\AvailabilityNotificationsRestApi\Processor\Subscriber;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Spryker\Glue\AvailabilityNotificationsRestApi\AvailabilityNotificationsRestApiConfig;
 use Spryker\Glue\AvailabilityNotificationsRestApi\Dependency\Client\AvailabilityNotificationsRestApiToAvailabilityNotificationClientInterface;
 use Spryker\Glue\AvailabilityNotificationsRestApi\Dependency\Client\AvailabilityNotificationsRestApiToStoreClientInterface;
 use Spryker\Glue\AvailabilityNotificationsRestApi\Processor\RestResponseBuilder\AvailabilityNotificationsRestResponseBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer;
+use Symfony\Component\HttpFoundation\Response;
 
 class AvailabilityNotificationSubscriber implements AvailabilityNotificationSubscriberInterface
 {
@@ -77,7 +79,25 @@ class AvailabilityNotificationSubscriber implements AvailabilityNotificationSubs
 
         $availabilityNotificationSubscriptionResponseTransfer = $this->availabilityNotificationClient->subscribe($availabilityNotificationSubscriptionTransfer);
 
-        dd($availabilityNotificationSubscriptionResponseTransfer);
+        if (
+            !$availabilityNotificationSubscriptionResponseTransfer->getIsSuccess() &&
+            $availabilityNotificationSubscriptionResponseTransfer->getErrorMessage() === AvailabilityNotificationsRestApiConfig::RESPONSE_DETAIL_SUBSCRIPTION_ALREADY_EXISTS
+        ) {
+            return $this->restResponseBuilder->createSubscriptionAlreadyExistsErrorResponse();
+        }
+
+        if (
+            !$availabilityNotificationSubscriptionResponseTransfer->getIsSuccess() &&
+            $availabilityNotificationSubscriptionResponseTransfer->getErrorMessage() === AvailabilityNotificationsRestApiConfig::RESPONSE_DETAIL_PRODUCT_NOT_FOUND
+        ) {
+            return $this->restResponseBuilder->createProductNotFoundErrorResponse();
+        }
+
+        if (!$availabilityNotificationSubscriptionResponseTransfer->getIsSuccess()) {
+            return $this->restResponseBuilder->createSomethingWentWrongErrorResponse();
+        }
+
+        return $this->restResponseBuilder->createSubscribeResponse($availabilityNotificationSubscriptionResponseTransfer);
     }
 
     /**
@@ -89,6 +109,17 @@ class AvailabilityNotificationSubscriber implements AvailabilityNotificationSubs
     {
         $availabilityNotificationSubscriptionResponseTransfer = $this->availabilityNotificationClient->unsubscribeBySubscriptionKey((new AvailabilityNotificationSubscriptionTransfer)->setSubscriptionKey($restRequest->getResource()->getId()));
 
-        dd($availabilityNotificationSubscriptionResponseTransfer);
+        if (
+            !$availabilityNotificationSubscriptionResponseTransfer->getIsSuccess() &&
+            $availabilityNotificationSubscriptionResponseTransfer->getErrorMessage() === AvailabilityNotificationsRestApiConfig::RESPONSE_DETAIL_SUBSCRIPTION_NOT_EXISTS
+        ) {
+            return $this->restResponseBuilder->createSubscriptionNotExistsErrorResponse();
+        }
+
+        if (!$availabilityNotificationSubscriptionResponseTransfer->getIsSuccess()) {
+            return $this->restResponseBuilder->createSomethingWentWrongErrorResponse();
+        }
+
+        return $this->restResponseBuilder->createUnsubscribeResponse();
     }
 }

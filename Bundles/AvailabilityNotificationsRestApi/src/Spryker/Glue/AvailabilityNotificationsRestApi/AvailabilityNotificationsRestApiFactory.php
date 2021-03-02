@@ -4,6 +4,7 @@ namespace Spryker\Glue\AvailabilityNotificationsRestApi;
 
 use Spryker\Glue\AvailabilityNotificationsRestApi\Dependency\Client\AvailabilityNotificationsRestApiToAvailabilityNotificationClientInterface;
 use Spryker\Glue\AvailabilityNotificationsRestApi\Dependency\Client\AvailabilityNotificationsRestApiToStoreClientInterface;
+use Spryker\Glue\AvailabilityNotificationsRestApi\Processor\Mapper\AvailabilityNotificationMapper;
 use Spryker\Glue\AvailabilityNotificationsRestApi\Processor\Reader\AvailabilityNotificationReader;
 use Spryker\Glue\AvailabilityNotificationsRestApi\Processor\RestResponseBuilder\AvailabilityNotificationsRestResponseBuilder;
 use Spryker\Glue\AvailabilityNotificationsRestApi\Processor\RestResponseBuilder\AvailabilityNotificationsRestResponseBuilderInterface;
@@ -56,6 +57,9 @@ class AvailabilityNotificationsRestApiFactory extends AbstractFactory
 
     protected function createRestResponseBuilder(): AvailabilityNotificationsRestResponseBuilderInterface
     {
-        return new AvailabilityNotificationsRestResponseBuilder($this->getResourceBuilder());
+        return new AvailabilityNotificationsRestResponseBuilder(
+            $this->getResourceBuilder(),
+            new AvailabilityNotificationMapper()
+        );
     }
 }
