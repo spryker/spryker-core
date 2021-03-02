@@ -28,8 +28,6 @@
         <property name="cancellationPolicyGlossaryKey" type="string"/>
         <property name="imprintGlossaryKey" type="string"/>
         <property name="dataPrivacyGlossaryKey" type="string"/>
-        <property name="latitude" type="string"/>
-        <property name="longitude" type="string"/>
         <property name="faxNumber" type="string"/>
         <property name="addressCollection" type="MerchantStorageProfileAddress[]" singular="address"/>
     </transfer>
@@ -42,6 +40,8 @@
         <property name="city" type="string"/>
         <property name="zipCode" type="string"/>
         <property name="email" type="string"/>
+        <property name="latitude" type="string"/>
+        <property name="longitude" type="string"/>
     </transfer>
 
     <transfer name="UrlStorage">

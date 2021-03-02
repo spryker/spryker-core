@@ -27,8 +27,6 @@
         <property name="dataPrivacyGlossaryKey" type="string"/>
         <property name="fkMerchant" type="int"/>
         <property name="merchantName" type="string"/>
-        <property name="latitude" type="string"/>
-        <property name="longitude" type="string"/>
         <property name="faxNumber" type="string"/>
         <property name="merchantReference" type="string"/>
         <property name="merchantProfileLocalizedGlossaryAttributes" type="MerchantProfileLocalizedGlossaryAttributes[]" singular="merchantProfileLocalizedGlossaryAttribute"/>
@@ -83,6 +81,8 @@
         <property name="city" type="string"/>
         <property name="zipCode" type="string"/>
         <property name="email" type="string"/>
+        <property name="latitude" type="string"/>
+        <property name="longitude" type="string"/>
         <property name="fkMerchantProfile" type="int"/>
     </transfer>
 
