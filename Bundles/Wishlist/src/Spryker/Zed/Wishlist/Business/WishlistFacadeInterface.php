@@ -244,28 +244,27 @@ interface WishlistFacadeInterface
      * Specification:
      *  - Removes item from wishlist
      *  - Required values of WishlistItem transfer object: fkCustomer, idWishlistItem. Optional: wishlistName
-     *    In case wishlist name is not provided the default value will be used
-     *  - Returns WishlistItemTransfer
+     *    In case wishlist name is not provided the default value will be used.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
      *
-     * @return \Generated\Shared\Transfer\WishlistItemTransfer
+     * @return void
      */
-    public function deleteItem(WishlistItemTransfer $wishlistItemTransfer): WishlistItemTransfer;
+    public function deleteItem(WishlistItemTransfer $wishlistItemTransfer): void;
 
     /**
      * Specification:
      *  - Removes item from wishlist
      *  - Required values of WishlistItem transfer object: fkCustomer, idWishlistItem. Optional: wishlistName
-     *    In case wishlist name is not provided the default value will be used
+     *    In case wishlist name is not provided the default value will be used.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\WishlistItemCollectionTransfer $wishlistItemTransferCollection
      *
-     * @return \Generated\Shared\Transfer\WishlistItemCollectionTransfer
+     * @return void
      */
-    public function deleteItemCollection(WishlistItemCollectionTransfer $wishlistItemTransferCollection): WishlistItemCollectionTransfer;
+    public function deleteItemCollection(WishlistItemCollectionTransfer $wishlistItemTransferCollection): void;
 }

@@ -102,14 +102,14 @@ interface WriterInterface
     /**
      * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
      *
-     * @return \Generated\Shared\Transfer\WishlistItemTransfer
+     * @return void
      */
-    public function deleteItem(WishlistItemTransfer $wishlistItemTransfer): WishlistItemTransfer;
+    public function deleteItem(WishlistItemTransfer $wishlistItemTransfer): void;
 
     /**
      * @param \Generated\Shared\Transfer\WishlistItemCollectionTransfer $wishlistItemTransferCollection
      *
-     * @return \Generated\Shared\Transfer\WishlistItemCollectionTransfer
+     * @return void
      */
-    public function deleteItemCollection(WishlistItemCollectionTransfer $wishlistItemTransferCollection): WishlistItemCollectionTransfer;
+    public function deleteItemCollection(WishlistItemCollectionTransfer $wishlistItemTransferCollection): void;
 }

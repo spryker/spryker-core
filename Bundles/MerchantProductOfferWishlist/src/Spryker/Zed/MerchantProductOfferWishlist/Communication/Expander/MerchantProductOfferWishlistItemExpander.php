@@ -8,16 +8,17 @@
 namespace Spryker\Zed\MerchantProductOfferWishlist\Communication\Expander;
 
 use Generated\Shared\Transfer\MerchantCriteriaTransfer;
+use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Spryker\Zed\MerchantProductOfferWishlist\Dependency\Facade\MerchantProductOfferWishlistToMerchantFacadeInterface;
-use Spryker\Zed\MerchantProductOfferWishlist\Persistence\MerchantProductOfferWishlistRepositoryInterface;
+use Spryker\Zed\MerchantProductOfferWishlist\Dependency\Facade\MerchantProductOfferWishlistToProductOfferFacadeInterface;
 
 class MerchantProductOfferWishlistItemExpander implements MerchantProductOfferWishlistItemExpanderInterface
 {
     /**
-     * @var \Spryker\Zed\MerchantProductOfferWishlist\Persistence\MerchantProductOfferWishlistRepositoryInterface
+     * @var \Spryker\Zed\MerchantProductOfferWishlist\Dependency\Facade\MerchantProductOfferWishlistToProductOfferFacadeInterface
      */
-    protected $merchantProductOfferWishlistRepository;
+    protected $productOfferFacade;
 
     /**
      * @var \Spryker\Zed\MerchantProductOfferWishlist\Dependency\Facade\MerchantProductOfferWishlistToMerchantFacadeInterface
@@ -25,14 +26,14 @@ class MerchantProductOfferWishlistItemExpander implements MerchantProductOfferWi
     protected $merchantFacade;
 
     /**
-     * @param \Spryker\Zed\MerchantProductOfferWishlist\Persistence\MerchantProductOfferWishlistRepositoryInterface $merchantProductOfferWishlistRepository
+     * @param \Spryker\Zed\MerchantProductOfferWishlist\Dependency\Facade\MerchantProductOfferWishlistToProductOfferFacadeInterface $productOfferFacade
      * @param \Spryker\Zed\MerchantProductOfferWishlist\Dependency\Facade\MerchantProductOfferWishlistToMerchantFacadeInterface $merchantFacade
      */
     public function __construct(
-        MerchantProductOfferWishlistRepositoryInterface $merchantProductOfferWishlistRepository,
+        MerchantProductOfferWishlistToProductOfferFacadeInterface $productOfferFacade,
         MerchantProductOfferWishlistToMerchantFacadeInterface $merchantFacade
     ) {
-        $this->merchantProductOfferWishlistRepository = $merchantProductOfferWishlistRepository;
+        $this->productOfferFacade = $productOfferFacade;
         $this->merchantFacade = $merchantFacade;
     }
 
@@ -49,10 +50,15 @@ class MerchantProductOfferWishlistItemExpander implements MerchantProductOfferWi
 
         /** @var string $productOfferReference */
         $productOfferReference = $wishlistItemTransfer->getProductOfferReference();
+        $productOfferCriterialFilterTransfer = (new ProductOfferCriteriaFilterTransfer())
+            ->setProductOfferReference($productOfferReference);
+        $productOfferTransfer = $this->productOfferFacade->findOne($productOfferCriterialFilterTransfer);
 
-        /** @var int $idMerchant */
-        $idMerchant = $this->merchantProductOfferWishlistRepository
-            ->findMerchantIdByProductOfferReference($productOfferReference);
+        if (!$productOfferTransfer) {
+            return $wishlistItemTransfer;
+        }
+
+        $idMerchant = $productOfferTransfer->getFkMerchant();
 
         if (!$idMerchant) {
             return $wishlistItemTransfer;

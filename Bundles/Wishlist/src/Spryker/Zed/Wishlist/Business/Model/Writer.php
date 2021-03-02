@@ -384,9 +384,9 @@ class Writer implements WriterInterface
     /**
      * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
      *
-     * @return \Generated\Shared\Transfer\WishlistItemTransfer
+     * @return void
      */
-    public function deleteItem(WishlistItemTransfer $wishlistItemTransfer): WishlistItemTransfer
+    public function deleteItem(WishlistItemTransfer $wishlistItemTransfer): void
     {
         $this->assertWishlistItemUpdateRequest($wishlistItemTransfer);
 
@@ -396,34 +396,30 @@ class Writer implements WriterInterface
         );
 
         $this->wishlistEntityManager->deleteItem($wishlistItemTransfer);
-
-        return $wishlistItemTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\WishlistItemCollectionTransfer $wishlistItemTransferCollection
      *
-     * @return \Generated\Shared\Transfer\WishlistItemCollectionTransfer
+     * @return void
      */
-    public function deleteItemCollection(WishlistItemCollectionTransfer $wishlistItemTransferCollection): WishlistItemCollectionTransfer
+    public function deleteItemCollection(WishlistItemCollectionTransfer $wishlistItemTransferCollection): void
     {
-        return $this->handleDatabaseTransaction(function () use ($wishlistItemTransferCollection) {
-            return $this->executeDeleteItemCollectionTransaction($wishlistItemTransferCollection);
+        $this->handleDatabaseTransaction(function () use ($wishlistItemTransferCollection) {
+            $this->executeDeleteItemCollectionTransaction($wishlistItemTransferCollection);
         });
     }
 
     /**
      * @param \Generated\Shared\Transfer\WishlistItemCollectionTransfer $wishlistItemTransferCollection
      *
-     * @return \Generated\Shared\Transfer\WishlistItemCollectionTransfer
+     * @return void
      */
-    protected function executeDeleteItemCollectionTransaction(WishlistItemCollectionTransfer $wishlistItemTransferCollection): WishlistItemCollectionTransfer
+    protected function executeDeleteItemCollectionTransaction(WishlistItemCollectionTransfer $wishlistItemTransferCollection): void
     {
         foreach ($wishlistItemTransferCollection->getItems() as $wishlistItemTransfer) {
             $this->deleteItem($wishlistItemTransfer);
         }
-
-        return $wishlistItemTransferCollection;
     }
 
     /**

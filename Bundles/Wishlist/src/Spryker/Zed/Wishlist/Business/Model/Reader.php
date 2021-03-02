@@ -536,8 +536,13 @@ class Reader implements ReaderInterface
             }
 
             $validationResponseTransfer = $wishlistItemsValidatorPlugin->validateItems($wishlistTransfer);
-            foreach ($validationResponseTransfer->getMessages() as $errorTransfer) {
-                $wishlistOverviewResponseTransfer->addError($errorTransfer);
+
+            if ($validationResponseTransfer->getIsSuccess()) {
+                continue;
+            }
+
+            foreach ($validationResponseTransfer->getMessages() as $messageTransfer) {
+                $wishlistOverviewResponseTransfer->addError($messageTransfer);
             }
         }
     }

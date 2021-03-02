@@ -57,16 +57,9 @@ class MerchantProductWishlistExpander implements MerchantProductWishlistExpander
         WishlistMoveToCartRequestCollectionTransfer $wishlistMoveToCartRequestCollectionDiffTransfer
     ): WishlistMoveToCartRequestCollectionTransfer {
         $merchantReferenceIndex = [];
+        $itemTransfers = array_merge($quoteTransfer->getItems()->getArrayCopy(), $quoteTransfer->getBundleItems()->getArrayCopy());
 
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if (!$itemTransfer->getMerchantReference()) {
-                continue;
-            }
-
-            $merchantReferenceIndex[$itemTransfer->getMerchantReference()] = true;
-        }
-
-        foreach ($quoteTransfer->getBundleItems() as $itemTransfer) {
+        foreach ($itemTransfers as $itemTransfer) {
             if (!$itemTransfer->getMerchantReference()) {
                 continue;
             }

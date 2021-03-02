@@ -58,17 +58,9 @@ class MerchantProductOfferWishlistExpander implements MerchantProductOfferWishli
     ): WishlistMoveToCartRequestCollectionTransfer {
         $productOfferReferenceIndex = [];
         $merchantReferenceIndex = [];
+        $itemTransfers = array_merge($quoteTransfer->getItems()->getArrayCopy(), $quoteTransfer->getBundleItems()->getArrayCopy());
 
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if (!$itemTransfer->getMerchantReference() && !$itemTransfer->getProductOfferReference()) {
-                continue;
-            }
-
-            $productOfferReferenceIndex[$itemTransfer->getProductOfferReference()] = true;
-            $merchantReferenceIndex[$itemTransfer->getMerchantReference()] = true;
-        }
-
-        foreach ($quoteTransfer->getBundleItems() as $itemTransfer) {
+        foreach ($itemTransfers as $itemTransfer) {
             if (!$itemTransfer->getMerchantReference() && !$itemTransfer->getProductOfferReference()) {
                 continue;
             }

@@ -131,7 +131,7 @@ class WishlistDependencyProvider extends AbstractDependencyProvider
     /**
      * @return \Spryker\Client\WishlistExtension\Dependency\Plugin\WishlistPostMoveToCartCollectionExpanderPluginInterface[]
      */
-    public function getWishlistPostMoveToCartCollectionExpanderPlugins(): array
+    protected function getWishlistPostMoveToCartCollectionExpanderPlugins(): array
     {
         return [];
     }
@@ -153,7 +153,7 @@ class WishlistDependencyProvider extends AbstractDependencyProvider
     /**
      * @return \Spryker\Client\WishlistExtension\Dependency\Plugin\WishlistCollectionToRemoveExpanderPluginInterface[]
      */
-    public function getWishlistCollectionToRemoveExpanderPlugins(): array
+    protected function getWishlistCollectionToRemoveExpanderPlugins(): array
     {
         return [];
     }

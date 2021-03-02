@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\MerchantProductOfferWishlist\Communication\Expander\MerchantProductOfferWishlistItemExpander;
 use Spryker\Zed\MerchantProductOfferWishlist\Communication\Expander\MerchantProductOfferWishlistItemExpanderInterface;
 use Spryker\Zed\MerchantProductOfferWishlist\Dependency\Facade\MerchantProductOfferWishlistToMerchantFacadeInterface;
+use Spryker\Zed\MerchantProductOfferWishlist\Dependency\Facade\MerchantProductOfferWishlistToProductOfferFacadeInterface;
 use Spryker\Zed\MerchantProductOfferWishlist\MerchantProductOfferWishlistDependencyProvider;
 
 /**
@@ -25,7 +26,7 @@ class MerchantProductOfferWishlistCommunicationFactory extends AbstractCommunica
     public function createMerchantProductOfferWishlistItemExpander(): MerchantProductOfferWishlistItemExpanderInterface
     {
         return new MerchantProductOfferWishlistItemExpander(
-            $this->getRepository(),
+            $this->getProductOfferFacade(),
             $this->getMerchantFacade()
         );
     }
@@ -36,5 +37,13 @@ class MerchantProductOfferWishlistCommunicationFactory extends AbstractCommunica
     public function getMerchantFacade(): MerchantProductOfferWishlistToMerchantFacadeInterface
     {
         return $this->getProvidedDependency(MerchantProductOfferWishlistDependencyProvider::FACADE_MERCHANT);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantProductOfferWishlist\Dependency\Facade\MerchantProductOfferWishlistToProductOfferFacadeInterface
+     */
+    public function getProductOfferFacade(): MerchantProductOfferWishlistToProductOfferFacadeInterface
+    {
+        return $this->getProvidedDependency(MerchantProductOfferWishlistDependencyProvider::FACADE_PRODUCT_OFFER);
     }
 }

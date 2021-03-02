@@ -51,7 +51,7 @@ class WishlistMerchantSwitcher implements WishlistMerchantSwitcherInterface
             ->getProductOffers();
 
         foreach ($wishlistTransfer->getWishlistItems() as $wishlistItemTransfer) {
-            $productOfferTransfer = $this->getProductOfferBySku(
+            $productOfferTransfer = $this->findProductOfferBySku(
                 $productOfferTransfers,
                 $wishlistItemTransfer->getSku()
             );
@@ -75,7 +75,7 @@ class WishlistMerchantSwitcher implements WishlistMerchantSwitcherInterface
      *
      * @return \Generated\Shared\Transfer\ProductOfferTransfer|null
      */
-    protected function getProductOfferBySku(ArrayObject $productOfferTransfers, string $sku): ?ProductOfferTransfer
+    protected function findProductOfferBySku(ArrayObject $productOfferTransfers, string $sku): ?ProductOfferTransfer
     {
         foreach ($productOfferTransfers as $productOfferTransfer) {
             if ($productOfferTransfer->getConcreteSku() === $sku) {
@@ -92,7 +92,7 @@ class WishlistMerchantSwitcher implements WishlistMerchantSwitcherInterface
      *
      * @return \Generated\Shared\Transfer\ProductOfferCollectionTransfer
      */
-    public function getProductOffersForWishlistItems(
+    protected function getProductOffersForWishlistItems(
         string $merchantReference,
         WishlistTransfer $wishlistTransfer
     ): ProductOfferCollectionTransfer {

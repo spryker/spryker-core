@@ -209,9 +209,9 @@ class WishlistStub implements WishlistStubInterface
     /**
      * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
      *
-     * @return \Generated\Shared\Transfer\WishlistItemTransfer
+     * @return \Spryker\Client\ZedRequest\Client\Response
      */
-    public function deleteItem(WishlistItemTransfer $wishlistItemTransfer): WishlistItemTransfer
+    public function deleteItem(WishlistItemTransfer $wishlistItemTransfer): Response
     {
         /** @var \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer */
         $wishlistItemTransfer = $this->zedStub->call('/wishlist/gateway/delete-item', $wishlistItemTransfer);
@@ -222,9 +222,9 @@ class WishlistStub implements WishlistStubInterface
     /**
      * @param \Generated\Shared\Transfer\WishlistItemCollectionTransfer $wishlistItemTransferCollection
      *
-     * @return \Generated\Shared\Transfer\WishlistItemCollectionTransfer
+     * @return \Spryker\Client\ZedRequest\Client\Response
      */
-    public function deleteItemCollection(WishlistItemCollectionTransfer $wishlistItemTransferCollection): WishlistItemCollectionTransfer
+    public function deleteItemCollection(WishlistItemCollectionTransfer $wishlistItemTransferCollection): Response
     {
         /** @var \Generated\Shared\Transfer\WishlistItemCollectionTransfer $wishlistItemCollectionTransfer */
         $wishlistItemCollectionTransfer = $this->zedStub->call('/wishlist/gateway/delete-item-collection', $wishlistItemTransferCollection);

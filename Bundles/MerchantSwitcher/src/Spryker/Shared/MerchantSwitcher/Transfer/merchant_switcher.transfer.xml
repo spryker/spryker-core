@@ -86,6 +86,18 @@
         <property name="errors" type="Message[]" singular="error"/>
     </transfer>
 
+    <transfer name="ValidationResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="validationErrors" type="ValidationError[]" singular="validationError"/>
+    </transfer>
+
+    <transfer name="ValidationError">
+        <property name="message" type="string"/>
+        <property name="root" type="object"/>
+        <property name="propertyPath" type="string"/>
+        <property name="invalidValue" type="string"/>
+    </transfer>
+
     <transfer name="SingleMerchantWishlistItemsValidationResponse">
         <property name="isSuccessful" type="bool"/>
         <property name="errors" type="Message[]" singular="error"/>
