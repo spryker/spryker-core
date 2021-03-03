@@ -6,6 +6,10 @@ import { ButtonComponent, ButtonModule } from '@spryker/button';
 import { FormItemComponent, FormItemModule } from '@spryker/form-item';
 import { InputComponent, InputModule } from '@spryker/input';
 import { InputPasswordComponent, InputPasswordModule } from '@spryker/input.password';
+import { TextareaComponent, TextareaModule } from '@spryker/textarea';
+import { SelectModule, SelectComponent } from '@spryker/select';
+import { ToggleModule, ToggleComponent } from '@spryker/toggle';
+import { CheckboxModule, CheckboxComponent } from '@spryker/checkbox';
 
 import { HeaderComponent } from './header/header.component';
 import { HeaderModule } from './header/header.module';
@@ -34,6 +38,10 @@ import { FormModule } from './form/form.module';
         InputModule,
         InputPasswordModule,
         ButtonModule,
+        TextareaModule,
+        SelectModule,
+        ToggleModule,
+        CheckboxModule,
     ],
     providers: [],
 })
@@ -63,5 +71,9 @@ export class ComponentsModule extends CustomElementModule {
         InputComponent,
         InputPasswordComponent,
         ButtonComponent,
+        TextareaComponent,
+        SelectComponent,
+        ToggleComponent,
+        CheckboxComponent,
     ];
 }

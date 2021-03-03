@@ -26,9 +26,9 @@
             <span title>{{ title }}</span>
         {% endif %}
 
-        {% form_theme form '@ZedUi/Form/form-webcomponent-layout.twig' %}
-
         {% block form %}
+            {% form_theme form '@ZedUi/Form/form-webcomponent-layout.twig' %}
+            
             {{ form_errors(form) }}
             {{ form_start(form, {attr: {novalidate: ''}}) }}
                 {% block formContent %}
