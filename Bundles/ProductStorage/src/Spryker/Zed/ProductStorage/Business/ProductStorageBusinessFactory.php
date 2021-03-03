@@ -9,12 +9,8 @@ namespace Spryker\Zed\ProductStorage\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductStorage\Business\Attribute\AttributeMap;
-use Spryker\Zed\ProductStorage\Business\Expander\ProductAbstractStorageExpander;
-use Spryker\Zed\ProductStorage\Business\Expander\ProductAbstractStorageExpanderInterface;
 use Spryker\Zed\ProductStorage\Business\Filter\SingleValueSuperAttributeFilter;
 use Spryker\Zed\ProductStorage\Business\Filter\SingleValueSuperAttributeFilterInterface;
-use Spryker\Zed\ProductStorage\Business\Generator\AttributeVariantMapGenerator;
-use Spryker\Zed\ProductStorage\Business\Generator\AttributeVariantMapGeneratorInterface;
 use Spryker\Zed\ProductStorage\Business\Storage\ProductAbstractStorageWriter;
 use Spryker\Zed\ProductStorage\Business\Storage\ProductConcreteStorageWriter;
 use Spryker\Zed\ProductStorage\Dependency\Facade\ProductStorageToStoreFacadeInterface;
@@ -23,7 +19,6 @@ use Spryker\Zed\ProductStorage\ProductStorageDependencyProvider;
 /**
  * @method \Spryker\Zed\ProductStorage\ProductStorageConfig getConfig()
  * @method \Spryker\Zed\ProductStorage\Persistence\ProductStorageQueryContainerInterface getQueryContainer()
- * @method \Spryker\Zed\ProductStorage\Persistence\ProductStorageRepositoryInterface getRepository()
  */
 class ProductStorageBusinessFactory extends AbstractBusinessFactory
 {
@@ -72,28 +67,6 @@ class ProductStorageBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->getConfig(),
             $this->createSingleValueSuperAttributeFilter()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductStorage\Business\Expander\ProductAbstractStorageExpanderInterface
-     */
-    public function createProductAbstractStorageExpander(): ProductAbstractStorageExpanderInterface
-    {
-        return new ProductAbstractStorageExpander(
-            $this->getRepository(),
-            $this->createAttributeVariantMapGenerator()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductStorage\Business\Generator\AttributeVariantMapGeneratorInterface
-     */
-    public function createAttributeVariantMapGenerator(): AttributeVariantMapGeneratorInterface
-    {
-        return new AttributeVariantMapGenerator(
-            $this->getRepository(),
-            $this->getProductFacade()
         );
     }
 

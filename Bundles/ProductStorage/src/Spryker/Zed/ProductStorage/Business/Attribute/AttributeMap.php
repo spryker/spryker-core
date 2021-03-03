@@ -141,15 +141,21 @@ class AttributeMap implements AttributeMapInterface
         }
 
         $attributeVariants = [];
-
         if ($this->productStorageConfig->isAttributeVariantsMapEnabled()) {
             $attributeVariants = $this->buildProductVariants($productConcreteSuperAttributes);
+
+            return $this->createAttributeMapStorageTransfer(
+                $concreteProductIds,
+                $superAttributeVariations,
+                $attributeVariants
+            );
         }
 
         return $this->createAttributeMapStorageTransfer(
             $concreteProductIds,
             $superAttributeVariations,
-            $attributeVariants
+            $attributeVariants,
+            $productConcreteSuperAttributes
         );
     }
 
@@ -205,18 +211,21 @@ class AttributeMap implements AttributeMapInterface
      * @param array $concreteProductIds
      * @param array $superAttributes
      * @param array $attributeVariants
+     * @param array $attributeVariantMap
      *
      * @return \Generated\Shared\Transfer\AttributeMapStorageTransfer
      */
     protected function createAttributeMapStorageTransfer(
         array $concreteProductIds,
         array $superAttributes = [],
-        array $attributeVariants = []
+        array $attributeVariants = [],
+        array $attributeVariantMap = []
     ) {
         return (new AttributeMapStorageTransfer())
             ->setProductConcreteIds($concreteProductIds)
             ->setSuperAttributes($superAttributes)
-            ->setAttributeVariants($attributeVariants);
+            ->setAttributeVariants($attributeVariants)
+            ->setAttributeVariantMap($attributeVariantMap);
     }
 
     /**
@@ -334,7 +343,7 @@ class AttributeMap implements AttributeMapInterface
     }
 
     /**
-     * @deprecated Exists for Backward Compatibility reasons only. Use {@link \Spryker\Zed\ProductStorage\Communication\Plugin\ProductStorage\AttributeVariantMapProductAbstractStorageExpanderPlugin} instead.
+     * @deprecated Exists for Backward Compatibility reasons only.
      *
      * @param array $productSuperAttributes
      *

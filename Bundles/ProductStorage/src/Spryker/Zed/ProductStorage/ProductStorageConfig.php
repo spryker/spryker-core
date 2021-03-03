@@ -82,6 +82,8 @@ class ProductStorageConfig extends AbstractBundleConfig
      *
      * @api
      *
+     * @deprecated Exists for Backward Compatibility reasons only.
+     *
      * @return bool
      */
     public function isAttributeVariantsMapEnabled(): bool
