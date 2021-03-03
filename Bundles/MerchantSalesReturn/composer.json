@@ -7,7 +7,6 @@
     "php": ">=7.3",
     "spryker/kernel": "^3.33.0",
     "spryker/merchant-sales-order": "^0.5.2",
-    "spryker/sales": "^11.18.0",
     "spryker/sales-return-extension": "^0.1.0"
   },
   "require-dev": {
@@ -15,6 +14,7 @@
     "spryker/merchant": "^2.0.0 || ^3.0.0",
     "spryker/oms": "^11.0.0",
     "spryker/propel": "*",
+    "spryker/sales": "^11.18.0",
     "spryker/testify": "*"
   },
   "autoload": {
@@ -30,8 +30,8 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "scripts": {
-    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
-    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/"
   },
   "extra": {
     "branch-alias": {
