@@ -13,12 +13,16 @@ use Spryker\Shared\GuiTable\DataProvider\GuiTableDataProviderInterface;
 use Spryker\Shared\GuiTable\GuiTableFactoryInterface;
 use Spryker\Shared\GuiTable\Http\GuiTableDataRequestExecutorInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\ProductMerchantPortalGui\Communication\Builder\ProductAbstractNameBuilder;
-use Spryker\Zed\ProductMerchantPortalGui\Communication\Builder\ProductAbstractNameBuilderInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Extractor\LocalizedAttributesNameExtractor;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Extractor\LocalizedAttributesNameExtractorInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Constraint\ProductConcreteOwnedByMerchantConstraint;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\DataProvider\ProductAbstractFormDataProvider;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\DataProvider\ProductAbstractFormDataProviderInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\DataProvider\ProductConcreteEditFormDataProvider;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\DataProvider\ProductConcreteEditFormDataProviderInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductAbstractForm;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductConcreteBulkForm;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductConcreteEditForm;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Transformer\PriceProductTransformer;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\CategoryFilterOptionsProvider;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\CategoryFilterOptionsProviderInterface;
@@ -57,6 +61,7 @@ use Spryker\Zed\ProductMerchantPortalGui\Dependency\Service\ProductMerchantPorta
 use Spryker\Zed\ProductMerchantPortalGui\ProductMerchantPortalGuiDependencyProvider;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Validator\Constraint;
 
 /**
  * @method \Spryker\Zed\ProductMerchantPortalGui\Persistence\ProductMerchantPortalGuiRepositoryInterface getRepository()
@@ -88,14 +93,6 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
             $this->getMerchantUserFacade(),
             $this->getTranslatorFacade()
         );
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\Builder\ProductAbstractNameBuilderInterface
-     */
-    public function createProductAbstractNameBuilder(): ProductAbstractNameBuilderInterface
-    {
-        return new ProductAbstractNameBuilder();
     }
 
     /**
@@ -272,6 +269,49 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
     public function createProductConcreteBulkForm(?ProductConcreteTransfer $data = null, array $options = []): FormInterface
     {
         return $this->getFormFactory()->create(ProductConcreteBulkForm::class, $data, $options);
+    }
+
+    /**
+     * @phpstan-return \Symfony\Component\Form\FormInterface<mixed>
+     *
+     * @param mixed[]|null $data
+     * @param mixed[] $options
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createProductConcreteEditForm(?array $data = null, array $options = []): FormInterface
+    {
+        return $this->getFormFactory()->create(ProductConcreteEditForm::class, $data, $options);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\DataProvider\ProductConcreteEditFormDataProviderInterface
+     */
+    public function createProductConcreteEditFormDataProvider(): ProductConcreteEditFormDataProviderInterface
+    {
+        return new ProductConcreteEditFormDataProvider(
+            $this->getMerchantUserFacade(),
+            $this->getMerchantProductFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\Extractor\LocalizedAttributesNameExtractorInterface
+     */
+    public function createLocalizedAttributesNameExtractor(): LocalizedAttributesNameExtractorInterface
+    {
+        return new LocalizedAttributesNameExtractor();
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraint
+     */
+    public function createProductConcreteOwnedByMerchantConstraint(): Constraint
+    {
+        return new ProductConcreteOwnedByMerchantConstraint(
+            $this->getMerchantUserFacade(),
+            $this->getMerchantProductFacade()
+        );
     }
 
     /**

@@ -15,7 +15,6 @@ use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ValidationResponseTransfer;
 use Laminas\Filter\StringToUpper;
-use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -23,7 +22,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @method \Spryker\Zed\ProductMerchantPortalGui\Communication\ProductMerchantPortalGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductMerchantPortalGui\Persistence\ProductMerchantPortalGuiRepositoryInterface getRepository()
  */
-class SavePriceProductAbstractController extends AbstractController
+class SavePriceProductAbstractController extends ProductMerchantPortalAbstractController
 {
     /**
      * @uses \Spryker\Shared\PriceProduct\PriceProductConfig::PRICE_DIMENSION_DEFAULT
@@ -31,15 +30,6 @@ class SavePriceProductAbstractController extends AbstractController
     protected const PRICE_DIMENSION_TYPE_DEFAULT = 'PRICE_DIMENSION_DEFAULT';
 
     protected const RESPONSE_MESSAGE_SUCCESS = 'Product prices saved successfully.';
-
-    protected const RESPONSE_KEY_POST_ACTIONS = 'postActions';
-    protected const RESPONSE_KEY_NOTIFICATIONS = 'notifications';
-    protected const RESPONSE_KEY_TYPE = 'type';
-    protected const RESPONSE_KEY_MESSAGE = 'message';
-
-    protected const RESPONSE_TYPE_REFRESH_TABLE = 'refresh_table';
-    protected const RESPONSE_TYPE_SUCCESS = 'success';
-    protected const RESPONSE_TYPE_ERROR = 'error';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

@@ -10,7 +10,6 @@ namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Controller;
 use Generated\Shared\Transfer\MerchantProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductAbstractTableViewTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
-use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -18,19 +17,10 @@ use Symfony\Component\HttpFoundation\Request;
  * @method \Spryker\Zed\ProductMerchantPortalGui\Communication\ProductMerchantPortalGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductMerchantPortalGui\Persistence\ProductMerchantPortalGuiRepositoryInterface getRepository()
  */
-class DeletePriceProductAbstractController extends AbstractController
+class DeletePriceProductAbstractController extends ProductMerchantPortalAbstractController
 {
     protected const RESPONSE_MESSAGE_SUCCESS = 'Success! The Price is deleted.';
     protected const RESPONSE_MESSAGE_ERROR = 'Something went wrong, please try again.';
-
-    protected const RESPONSE_KEY_POST_ACTIONS = 'postActions';
-    protected const RESPONSE_KEY_NOTIFICATIONS = 'notifications';
-    protected const RESPONSE_KEY_TYPE = 'type';
-    protected const RESPONSE_KEY_MESSAGE = 'message';
-
-    protected const RESPONSE_TYPE_REFRESH_TABLE = 'refresh_table';
-    protected const RESPONSE_TYPE_SUCCESS = 'success';
-    protected const RESPONSE_TYPE_ERROR = 'error';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

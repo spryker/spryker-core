@@ -5,25 +5,23 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Builder;
+namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Extractor;
 
+use ArrayObject;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\ProductAbstractTransfer;
 
-class ProductAbstractNameBuilder implements ProductAbstractNameBuilderInterface
+class LocalizedAttributesNameExtractor implements LocalizedAttributesNameExtractorInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param \ArrayObject|\Generated\Shared\Transfer\LocalizedAttributesTransfer[] $localizedAttributeTransfers
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return string|null
      */
-    public function buildProductAbstractName(
-        ProductAbstractTransfer $productAbstractTransfer,
+    public function extractLocalizedAttributesName(
+        ArrayObject $localizedAttributeTransfers,
         LocaleTransfer $localeTransfer
     ): ?string {
-        $localizedAttributeTransfers = $productAbstractTransfer->getLocalizedAttributes();
-
         foreach ($localizedAttributeTransfers as $localizedAttributesTransfer) {
             $localeFromLocalizedAttributes = $localizedAttributesTransfer->getLocale();
             if (!$localeFromLocalizedAttributes) {
@@ -35,6 +33,6 @@ class ProductAbstractNameBuilder implements ProductAbstractNameBuilderInterface
             }
         }
 
-        return $productAbstractTransfer->getName();
+        return null;
     }
 }

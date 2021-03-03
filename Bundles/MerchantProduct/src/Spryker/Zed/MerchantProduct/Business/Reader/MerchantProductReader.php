@@ -10,6 +10,7 @@ namespace Spryker\Zed\MerchantProduct\Business\Reader;
 use ArrayObject;
 use Generated\Shared\Transfer\MerchantProductCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantProductTransfer;
+use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\MerchantProduct\Dependency\Facade\MerchantProductToProductFacadeInterface;
@@ -84,5 +85,42 @@ class MerchantProductReader implements MerchantProductReaderInterface
         $productConcreteTransfers = $this->productFacade->getProductConcreteTransfersByProductIds($productConcreteIds);
 
         return (new ProductConcreteCollectionTransfer())->setProducts(new ArrayObject($productConcreteTransfers));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
+     */
+    public function findProductConcrete(
+        MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer
+    ): ?ProductConcreteTransfer {
+        $merchantProductTransfer = $this->merchantProductRepository->findMerchantProduct($merchantProductCriteriaTransfer);
+
+        if (!$merchantProductTransfer->getProducts()->count()) {
+            return null;
+        }
+
+        $productConcreteTransfer = $merchantProductTransfer->getProducts()->offsetGet(0);
+
+        return $this->productFacade->findProductConcreteById($productConcreteTransfer->getIdProductConcreteOrFail());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     *
+     * @return bool
+     */
+    public function isProductConcreteOwnedByMerchant(
+        ProductConcreteTransfer $productConcreteTransfer,
+        MerchantTransfer $merchantTransfer
+    ): bool {
+        $merchantProductCriteriaTransfer = (new MerchantProductCriteriaTransfer())
+            ->addIdMerchant($merchantTransfer->getIdMerchant())
+            ->addIdProductConcrete($productConcreteTransfer->getIdProductConcrete());
+        $merchantTransfer = $this->merchantProductRepository->findMerchant($merchantProductCriteriaTransfer);
+
+        return $merchantTransfer !== null;
     }
 }

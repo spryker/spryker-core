@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\MerchantProductTransfer;
 use Generated\Shared\Transfer\PriceProductAbstractTableViewTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ValidationResponseTransfer;
-use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Exception\MerchantProductNotFoundException;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -23,22 +22,9 @@ use Symfony\Component\HttpFoundation\Response;
  * @method \Spryker\Zed\ProductMerchantPortalGui\Communication\ProductMerchantPortalGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductMerchantPortalGui\Persistence\ProductMerchantPortalGuiRepositoryInterface getRepository()
  */
-class UpdateProductAbstractController extends AbstractController
+class UpdateProductAbstractController extends ProductMerchantPortalAbstractController
 {
     protected const PARAM_ID_PRODUCT_ABSTRACT = 'product-abstract-id';
-
-    protected const RESPONSE_MESSAGE_SUCCESS = 'The Product is saved.';
-    protected const RESPONSE_MESSAGE_ERROR = 'Please resolve all errors.';
-
-    protected const RESPONSE_KEY_POST_ACTIONS = 'postActions';
-    protected const RESPONSE_KEY_NOTIFICATIONS = 'notifications';
-    protected const RESPONSE_KEY_TYPE = 'type';
-    protected const RESPONSE_KEY_MESSAGE = 'message';
-
-    protected const RESPONSE_TYPE_REFRESH_TABLE = 'refresh_table';
-    protected const RESPONSE_TYPE_CLOSE_OVERLAY = 'close_overlay';
-    protected const RESPONSE_TYPE_SUCCESS = 'success';
-    protected const RESPONSE_TYPE_ERROR = 'error';
 
     protected const DEFAULT_INITIAL_DATA = [
         GuiTableEditableInitialDataTransfer::DATA => [],
@@ -150,8 +136,11 @@ class UpdateProductAbstractController extends AbstractController
     ): JsonResponse {
         $localeTransfer = $this->getFactory()->getLocaleFacade()->getCurrentLocale();
         $productAbstractName = $this->getFactory()
-            ->createProductAbstractNameBuilder()
-            ->buildProductAbstractName($productAbstractTransfer, $localeTransfer);
+            ->createLocalizedAttributesNameExtractor()
+            ->extractLocalizedAttributesName(
+                $productAbstractTransfer->getLocalizedAttributes(),
+                $localeTransfer
+            ) ?: $productAbstractTransfer->getName();
 
         $responseData = [
             'form' => $this->renderView('@ProductMerchantPortalGui/Partials/product_abstract_form.twig', [
@@ -190,44 +179,6 @@ class UpdateProductAbstractController extends AbstractController
         }
 
         return new JsonResponse($responseData);
-    }
-
-    /**
-     * @param mixed[] $responseData
-     *
-     * @return mixed[]
-     */
-    protected function addSuccessResponseDataToResponse(array $responseData): array
-    {
-        $responseData[static::RESPONSE_KEY_POST_ACTIONS] = [
-            [
-                static::RESPONSE_KEY_TYPE => static::RESPONSE_TYPE_CLOSE_OVERLAY,
-            ],
-            [
-                static::RESPONSE_KEY_TYPE => static::RESPONSE_TYPE_REFRESH_TABLE,
-            ],
-        ];
-        $responseData[static::RESPONSE_KEY_NOTIFICATIONS] = [[
-            static::RESPONSE_KEY_TYPE => static::RESPONSE_TYPE_SUCCESS,
-            static::RESPONSE_KEY_MESSAGE => static::RESPONSE_MESSAGE_SUCCESS,
-        ]];
-
-        return $responseData;
-    }
-
-    /**
-     * @param mixed[] $responseData
-     *
-     * @return mixed[]
-     */
-    protected function addErrorResponseDataToResponse(array $responseData): array
-    {
-        $responseData[static::RESPONSE_KEY_NOTIFICATIONS][] = [
-            static::RESPONSE_KEY_TYPE => static::RESPONSE_TYPE_ERROR,
-            static::RESPONSE_KEY_MESSAGE => static::RESPONSE_MESSAGE_ERROR,
-        ];
-
-        return $responseData;
     }
 
     /**
