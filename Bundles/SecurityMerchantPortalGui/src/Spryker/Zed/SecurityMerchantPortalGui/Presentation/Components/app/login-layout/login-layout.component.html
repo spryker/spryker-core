@@ -1,0 +1,16 @@
+<div class="login">
+    <div class="login__logo">
+        <spy-logo class="login__logo-image"></spy-logo>
+        <span class="login__logo-text">
+            <ng-content select="[sub-title]"></ng-content>
+        </span>
+    </div>
+    <spy-card [spyTitle]="title" titlePosition="center">
+        <ng-content></ng-content>
+    </spy-card>
+</div>
+
+<ng-template #title>
+    <ng-content select="[title]"></ng-content>
+</ng-template>
+
