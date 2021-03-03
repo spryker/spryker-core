@@ -8,6 +8,7 @@
 namespace Spryker\Zed\MerchantSalesReturn\Business\Model;
 
 use ArrayObject;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ReturnCreateRequestTransfer;
 use Generated\Shared\Transfer\ReturnResponseTransfer;
@@ -27,22 +28,48 @@ class MerchantReturnValidator implements MerchantReturnValidatorInterface
         $returnResponseTransfer = (new ReturnResponseTransfer())
             ->setIsSuccessful(true);
 
-        $currentMerchantReference = null;
+        $previousIdSalesOrder = null;
+        $previousMerchantReference = null;
         foreach ($itemTransfers as $itemTransfer) {
-            if (
-                $currentMerchantReference
-                && $itemTransfer->getMerchantReference() !== $currentMerchantReference
-            ) {
-                return $this->addErrorMessageToResponse(
-                    'merchant_sales_return.message.items_from_different_merchant_detected',
-                    $returnResponseTransfer
-                );
+            if ($previousMerchantReference && $previousIdSalesOrder) {
+                if (
+                    $this->areMerchantReferencesDifferent($itemTransfer, $previousMerchantReference)
+                    || $this->areSalesOrderIdsDifferent($itemTransfer, $previousIdSalesOrder)
+                ) {
+                    return $this->addErrorMessageToResponse(
+                        'merchant_sales_return.message.items_from_different_merchant_detected',
+                        $returnResponseTransfer
+                    );
+                }
             }
 
-            $currentMerchantReference = $itemTransfer->getMerchantReferenceOrFail();
+            $previousIdSalesOrder = $itemTransfer->getFkSalesOrderOrFail();
+            $previousMerchantReference = $itemTransfer->getMerchantReferenceOrFail();
         }
 
         return $returnResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param string $merchantReference
+     *
+     * @return bool
+     */
+    protected function areMerchantReferencesDifferent(ItemTransfer $itemTransfer, string $merchantReference): bool
+    {
+        return $itemTransfer->getMerchantReference() !== $merchantReference;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param int $idSalesOrder
+     *
+     * @return bool
+     */
+    protected function areSalesOrderIdsDifferent(ItemTransfer $itemTransfer, int $idSalesOrder): bool
+    {
+        return $itemTransfer->getFkSalesOrder() !== $idSalesOrder;
     }
 
     /**

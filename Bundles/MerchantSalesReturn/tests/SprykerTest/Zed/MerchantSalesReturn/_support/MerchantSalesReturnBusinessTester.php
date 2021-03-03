@@ -54,19 +54,20 @@ class MerchantSalesReturnBusinessTester extends Actor
     }
 
     /**
-     * @param string|null $merchantReference
-     * @param int|null $idSalesOrderItem
+     * @param string $merchantReference
+     * @param int $idSalesOrder
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    public function createItemTransfer(?string $merchantReference = null, ?int $idSalesOrderItem = null): ItemTransfer
+    public function createItemTransfer(string $merchantReference, int $idSalesOrder): ItemTransfer
     {
         $itemTransfer = new ItemTransfer();
         if ($merchantReference) {
             $itemTransfer->setMerchantReference($merchantReference);
         }
-        if ($idSalesOrderItem) {
-            $itemTransfer->setIdSalesOrderItem($idSalesOrderItem);
+
+        if ($idSalesOrder) {
+            $itemTransfer->setFkSalesOrder($idSalesOrder);
         }
 
         return $itemTransfer;

@@ -60,10 +60,10 @@ class MerchantReturnPreCreator implements MerchantReturnPreCreatorInterface
         /** @var \Generated\Shared\Transfer\ReturnItemTransfer $firstReturnItem */
         $firstReturnItem = $returnItemTransfers->offsetGet(0);
 
-        $merchantOrderItemCriteriaTransfer = (new MerchantOrderCriteriaTransfer())
+        $merchantOrderCriteriaTransfer = (new MerchantOrderCriteriaTransfer())
             ->setIdOrderItem($firstReturnItem->getOrderItemOrFail()->getIdSalesOrderItemOrFail());
 
         return $this->merchantSalesOrderFacade
-            ->findMerchantOrder($merchantOrderItemCriteriaTransfer);
+            ->findMerchantOrder($merchantOrderCriteriaTransfer);
     }
 }

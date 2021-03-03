@@ -1,52 +1,52 @@
 {
-    "name": "spryker/sales-return",
-    "type": "library",
-    "description": "SalesReturn module",
-    "license": "proprietary",
-    "require": {
-        "php": ">=7.3",
-        "spryker/customer": "^7.0.0",
-        "spryker/glossary": "^3.0.0",
-        "spryker/kernel": "^3.33.0",
-        "spryker/locale": "^3.0.0",
-        "spryker/oms": "^11.0.0",
-        "spryker/propel-orm": "^1.0.0",
-        "spryker/sales": "^11.7.0",
-        "spryker/sales-extension": "^1.6.0",
-        "spryker/sales-return-extension": "^0.1.0",
-        "spryker/store": "^1.11.0",
-        "spryker/util-date-time": "^1.0.0",
-        "spryker/uuid-behavior": "^1.0.0",
-        "spryker/zed-request": "^3.4.0"
-    },
-    "require-dev": {
-        "spryker/code-sniffer": "*",
-        "spryker/propel": "*",
-        "spryker/testify": "*"
-    },
-    "autoload": {
-        "psr-4": {
-            "Spryker\\": "src/Spryker/",
-            "SprykerTest\\Shared\\SalesReturn\\Helper\\": "tests/SprykerTest/Shared/SalesReturn/_support/Helper/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "SprykerTest\\": "tests/SprykerTest/"
-        }
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
-    "scripts": {
-        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
-        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "1.0.x-dev"
-        }
-    },
-    "config": {
-        "sort-packages": true
+  "name": "spryker/sales-return",
+  "type": "library",
+  "description": "SalesReturn module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.3",
+    "spryker/customer": "^7.0.0",
+    "spryker/glossary": "^3.0.0",
+    "spryker/kernel": "^3.33.0",
+    "spryker/locale": "^3.0.0",
+    "spryker/oms": "^11.0.0",
+    "spryker/propel-orm": "^1.0.0",
+    "spryker/sales": "^11.7.0",
+    "spryker/sales-extension": "^1.6.0",
+    "spryker/sales-return-extension": "^0.1.0",
+    "spryker/store": "^1.11.0",
+    "spryker/util-date-time": "^1.0.0",
+    "spryker/uuid-behavior": "^1.0.0",
+    "spryker/zed-request": "^3.4.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/propel": "*",
+    "spryker/testify": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Shared\\SalesReturn\\Helper\\": "tests/SprykerTest/Shared/SalesReturn/_support/Helper/"
     }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerTest\\": "tests/SprykerTest/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
 }

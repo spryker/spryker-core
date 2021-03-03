@@ -109,9 +109,9 @@ class MerchantSalesReturnFacadeTest extends Unit
         $returnCreateRequestTransfer = new ReturnCreateRequestTransfer();
 
         $itemTransfers = new ArrayObject();
-        $itemTransfers->append($this->tester->createItemTransfer(self::TEST_MERCHANT_REFERENCE_1));
-        $itemTransfers->append($this->tester->createItemTransfer(self::TEST_MERCHANT_REFERENCE_1));
-        $itemTransfers->append($this->tester->createItemTransfer(self::TEST_MERCHANT_REFERENCE_1));
+        $itemTransfers->append($this->tester->createItemTransfer(self::TEST_MERCHANT_REFERENCE_1, 1));
+        $itemTransfers->append($this->tester->createItemTransfer(self::TEST_MERCHANT_REFERENCE_1, 1));
+        $itemTransfers->append($this->tester->createItemTransfer(self::TEST_MERCHANT_REFERENCE_1, 1));
 
         // Act
         $returnResponseTransfer = $this->tester
@@ -128,15 +128,40 @@ class MerchantSalesReturnFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testValidateReturnFailed(): void
+    public function testValidateReturnFailedWithDifferentMerchantReference(): void
     {
         // Arrange
         $returnCreateRequestTransfer = new ReturnCreateRequestTransfer();
 
         $itemTransfers = new ArrayObject();
-        $itemTransfers->append($this->tester->createItemTransfer(self::TEST_MERCHANT_REFERENCE_1));
-        $itemTransfers->append($this->tester->createItemTransfer(self::TEST_MERCHANT_REFERENCE_1));
-        $itemTransfers->append($this->tester->createItemTransfer(self::TEST_MERCHANT_REFERENCE_2));
+        $itemTransfers->append($this->tester->createItemTransfer(self::TEST_MERCHANT_REFERENCE_1, 1));
+        $itemTransfers->append($this->tester->createItemTransfer(self::TEST_MERCHANT_REFERENCE_1, 1));
+        $itemTransfers->append($this->tester->createItemTransfer(self::TEST_MERCHANT_REFERENCE_2, 1));
+
+        // Act
+        $returnResponseTransfer = $this->tester
+            ->getFacade()
+            ->validateReturn($returnCreateRequestTransfer, $itemTransfers);
+
+        $messageTransfers = $returnResponseTransfer->getMessages();
+
+        // Assert
+        $this->assertFalse($returnResponseTransfer->getIsSuccessful());
+        $this->assertSame(1, $messageTransfers->count());
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateReturnFailedWithDifferentIdSalesOrder(): void
+    {
+        // Arrange
+        $returnCreateRequestTransfer = new ReturnCreateRequestTransfer();
+
+        $itemTransfers = new ArrayObject();
+        $itemTransfers->append($this->tester->createItemTransfer(self::TEST_MERCHANT_REFERENCE_1, 1));
+        $itemTransfers->append($this->tester->createItemTransfer(self::TEST_MERCHANT_REFERENCE_1, 2));
+        $itemTransfers->append($this->tester->createItemTransfer(self::TEST_MERCHANT_REFERENCE_1, 1));
 
         // Act
         $returnResponseTransfer = $this->tester
