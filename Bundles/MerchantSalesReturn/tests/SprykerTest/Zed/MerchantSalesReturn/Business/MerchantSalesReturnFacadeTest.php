@@ -103,7 +103,7 @@ class MerchantSalesReturnFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testValidateReturnSuccessfully(): void
+    public function testValidateReturnsSuccessfulReturnResponse(): void
     {
         // Arrange
         $returnCreateRequestTransfer = new ReturnCreateRequestTransfer();
