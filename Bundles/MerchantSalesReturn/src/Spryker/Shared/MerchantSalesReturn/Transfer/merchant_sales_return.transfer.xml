@@ -11,6 +11,7 @@
     <transfer name="Item">
         <property name="idSalesOrderItem" type="int"/>
         <property name="merchantReference" type="string"/>
+        <property name="fkSalesOrder" type="int"/>
     </transfer>
 
     <transfer name="OrderItemFilter">
