@@ -1,0 +1,51 @@
+{
+  "name": "spryker/product-configurations-rest-api",
+  "type": "library",
+  "description": "ProductConfigurationsRestApi module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.3",
+    "spryker/carts-rest-api-extension": "^1.5.0",
+    "spryker/glue-application": "^1.6.0",
+    "spryker/glue-application-extension": "^1.1.0",
+    "spryker/kernel": "^3.56.0",
+    "spryker/orders-rest-api-extension": "^1.0.0",
+    "spryker/product-configuration-storage": "^0.1.2",
+    "spryker/product-configurations-rest-api-extension": "^0.1.0",
+    "spryker/products-rest-api-extension": "^1.0.0",
+    "spryker/symfony": "^3.0.0",
+    "spryker/transfer": "^3.25.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/carts-rest-api": "If you want to use plugins with CartsRestApi module.",
+    "spryker/products-rest-api": "If you want to use plugins with ProductsRestApi module."
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerTest\\": "tests/SprykerTest/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/"
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

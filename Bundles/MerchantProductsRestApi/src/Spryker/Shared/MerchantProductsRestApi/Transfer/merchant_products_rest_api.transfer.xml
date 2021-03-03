@@ -9,7 +9,7 @@
 
     <transfer name="RestCartItemsAttributes">
         <property name="sku" type="string" restRequestParameter="required"/>
-        <property name="merchantReference" type="string"/>
+        <property name="merchantReference" type="string" restRequestParameter="yes"/>
     </transfer>
 
     <transfer name="CartItemRequest">
