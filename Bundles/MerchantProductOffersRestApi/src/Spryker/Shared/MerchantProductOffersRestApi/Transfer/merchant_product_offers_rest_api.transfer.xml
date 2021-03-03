@@ -21,8 +21,8 @@
     </transfer>
 
     <transfer name="RestCartItemsAttributes">
-        <property name="productOfferReference" type="string"/>
-        <property name="merchantReference" type="string"/>
+        <property name="productOfferReference" type="string" restRequestParameter="yes"/>
+        <property name="merchantReference" type="string" restRequestParameter="yes"/>
     </transfer>
 
     <transfer name="Item">
