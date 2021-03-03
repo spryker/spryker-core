@@ -9,11 +9,11 @@
         "@angular/core": "^9.1.12",
         "@angular/elements": "^9.1.12",
         "@angular/platform-browser": "^9.1.12",
-        "@spryker/button": "^0.2.0-next.8",
+        "@spryker/button": "^0.2.0-next.9",
         "@spryker/card": "^0.2.0-next.2",
         "@spryker/logo": "^0.2.0-next.1",
         "@spryker/styles": "^0.2.0-next.30",
-        "@spryker/web-components": "^0.2.1-next.4",
+        "@spryker/web-components": "^0.2.1-next.5",
         "rxjs": "^6.5.4",
         "tslib": "^1.10.0",
         "zone.js": "^0.10.2"
