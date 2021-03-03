@@ -28,23 +28,19 @@ class MerchantReturnValidator implements MerchantReturnValidatorInterface
         $returnResponseTransfer = (new ReturnResponseTransfer())
             ->setIsSuccessful(true);
 
-        $previousIdSalesOrder = null;
-        $previousMerchantReference = null;
+        $previousItemTransfer = null;
         foreach ($itemTransfers as $itemTransfer) {
-            if ($previousMerchantReference && $previousIdSalesOrder) {
-                if (
-                    $this->areMerchantReferencesDifferent($itemTransfer, $previousMerchantReference)
-                    || $this->areSalesOrderIdsDifferent($itemTransfer, $previousIdSalesOrder)
-                ) {
-                    return $this->addErrorMessageToResponse(
-                        'merchant_sales_return.message.items_from_different_merchant_detected',
-                        $returnResponseTransfer
-                    );
-                }
+            if (
+                $previousItemTransfer
+                && !$this->isItemFromTheSameMerchantOrder($itemTransfer, $previousItemTransfer)
+            ) {
+                return $this->addErrorMessageToResponse(
+                    'merchant_sales_return.message.items_from_different_merchant_detected',
+                    $returnResponseTransfer
+                );
             }
 
-            $previousIdSalesOrder = $itemTransfer->getFkSalesOrderOrFail();
-            $previousMerchantReference = $itemTransfer->getMerchantReferenceOrFail();
+            $previousItemTransfer = $itemTransfer;
         }
 
         return $returnResponseTransfer;
@@ -52,24 +48,16 @@ class MerchantReturnValidator implements MerchantReturnValidatorInterface
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param string $merchantReference
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransferToCompare
      *
      * @return bool
      */
-    protected function areMerchantReferencesDifferent(ItemTransfer $itemTransfer, string $merchantReference): bool
-    {
-        return $itemTransfer->getMerchantReference() !== $merchantReference;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param int $idSalesOrder
-     *
-     * @return bool
-     */
-    protected function areSalesOrderIdsDifferent(ItemTransfer $itemTransfer, int $idSalesOrder): bool
-    {
-        return $itemTransfer->getFkSalesOrder() !== $idSalesOrder;
+    protected function isItemFromTheSameMerchantOrder(
+        ItemTransfer $itemTransfer,
+        ItemTransfer $itemTransferToCompare
+    ): bool {
+        return $itemTransfer->getMerchantReference() === $itemTransferToCompare->getMerchantReference()
+            && $itemTransfer->getFkSalesOrder() === $itemTransferToCompare->getFkSalesOrder();
     }
 
     /**
