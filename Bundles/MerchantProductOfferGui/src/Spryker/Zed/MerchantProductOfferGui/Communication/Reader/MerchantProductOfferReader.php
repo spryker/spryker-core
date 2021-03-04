@@ -35,16 +35,16 @@ class MerchantProductOfferReader implements MerchantProductOfferReaderInterface
      */
     public function getMerchantData(ProductOfferTransfer $productOfferTransfer): array
     {
-        $productOfferTransfer->requireFkMerchant();
+        $productOfferTransfer->requireMerchantReference();
 
         $merchantCriteriaTransfer = (new MerchantCriteriaTransfer())
-            ->setIdMerchant($productOfferTransfer->getFkMerchant());
+            ->setMerchantReference($productOfferTransfer->getMerchantReference());
 
         $merchantTransfer = $this->merchantFacade->findOne($merchantCriteriaTransfer);
 
         return [
-            'idMerchant' => $productOfferTransfer->getFkMerchant(),
-            'merchantName' => $merchantTransfer->getName(),
+            'idMerchant' => $productOfferTransfer->getMerchantReference(),
+            'merchantName' => null === $merchantTransfer ? '' : $merchantTransfer->getName(),
             'merchantSku' => $productOfferTransfer->getMerchantSku(),
         ];
     }

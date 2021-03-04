@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\QueryCriteriaTransfer;
 use Generated\Shared\Transfer\QueryJoinTransfer;
 use Orm\Zed\Merchant\Persistence\Map\SpyMerchantTableMap;
+use Orm\Zed\Merchant\Persistence\SpyMerchant;
 use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -32,12 +33,9 @@ class MerchantProductOfferGuiRepository extends AbstractRepository implements Me
         MerchantProductOfferCriteriaTransfer $merchantProductOfferCriteriaTransfer
     ): QueryCriteriaTransfer {
         $queryJoinTransfer = (new QueryJoinTransfer())
-            ->setJoinType(Criteria::INNER_JOIN)
-            ->setRelation('SpyMerchant');
-
-        if ($merchantProductOfferCriteriaTransfer->getIdMerchant()) {
-            $queryJoinTransfer->setCondition(sprintf('%s = %d', SpyProductOfferTableMap::COL_FK_MERCHANT, $merchantProductOfferCriteriaTransfer->getIdMerchant()));
-        }
+            ->setJoinType(Criteria::LEFT_JOIN)
+            ->setLeft([SpyProductOfferTableMap::COL_MERCHANT_REFERENCE])
+            ->setRight([SpyMerchantTableMap::COL_MERCHANT_REFERENCE]);
 
         $queryCriteriaTransfer->addJoin($queryJoinTransfer)
             ->setWithColumns([
