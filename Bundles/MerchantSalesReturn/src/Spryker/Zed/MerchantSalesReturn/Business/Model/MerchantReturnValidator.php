@@ -71,7 +71,7 @@ class MerchantReturnValidator implements MerchantReturnValidatorInterface
         ReturnResponseTransfer $returnResponseTransfer
     ): ReturnResponseTransfer {
         $messageTransfer = (new MessageTransfer())
-            ->setMessage($message);
+            ->setValue($message);
 
         $returnResponseTransfer
             ->setIsSuccessful(false)
