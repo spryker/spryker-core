@@ -83,7 +83,7 @@ class AvailabilityStorageDependencyProvider extends AbstractDependencyProvider
     /**
      * @return \Spryker\Client\AvailabilityStorageExtension\Dependency\Plugin\AvailabilityStorageStrategyPluginInterface[]
      */
-    public function getAvailabilityStorageStrategyPlugins(): array
+    protected function getAvailabilityStorageStrategyPlugins(): array
     {
         return [];
     }
