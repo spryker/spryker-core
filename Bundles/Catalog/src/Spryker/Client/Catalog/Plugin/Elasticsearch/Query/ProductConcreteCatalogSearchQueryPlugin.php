@@ -10,8 +10,8 @@ namespace Spryker\Client\Catalog\Plugin\Elasticsearch\Query;
 use Elastica\Query;
 use Elastica\Query\AbstractQuery;
 use Elastica\Query\BoolQuery;
-use Elastica\Query\Match;
 use Elastica\Query\MatchAll;
+use Elastica\Query\MatchQuery;
 use Elastica\Query\MultiMatch;
 use Generated\Shared\Search\PageIndexMap;
 use Generated\Shared\Transfer\SearchContextTransfer;
@@ -193,7 +193,7 @@ class ProductConcreteCatalogSearchQueryPlugin extends AbstractPlugin implements 
      */
     protected function setTypeFilter(BoolQuery $boolQuery): BoolQuery
     {
-        $typeFilter = new Match();
+        $typeFilter = $this->getMatchQuery();
         $typeFilter->setField(PageIndexMap::TYPE, static::PRODUCT_CONCRETE_RESOURCE_NAME);
         $boolQuery->addMust($typeFilter);
 
@@ -224,5 +224,19 @@ class ProductConcreteCatalogSearchQueryPlugin extends AbstractPlugin implements 
     protected function hasSearchContext(): bool
     {
         return (bool)$this->searchContextTransfer;
+    }
+
+    /**
+     * For compatibility with PHP 8.
+     *
+     * @return \Elastica\Query\MatchQuery|\Elastica\Query\Match
+     */
+    protected function getMatchQuery()
+    {
+        $matchQueryClassName = class_exists(MatchQuery::class)
+            ? MatchQuery::class
+            : '\Elastica\Query\Match';
+
+        return new $matchQueryClassName();
     }
 }
