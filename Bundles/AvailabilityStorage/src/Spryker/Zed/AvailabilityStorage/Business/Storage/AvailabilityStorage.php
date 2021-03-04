@@ -10,6 +10,7 @@ namespace Spryker\Zed\AvailabilityStorage\Business\Storage;
 use Orm\Zed\AvailabilityStorage\Persistence\SpyAvailabilityStorage;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\AvailabilityStorage\Persistence\AvailabilityStorageQueryContainerInterface;
+use Spryker\Zed\AvailabilityStorage\Persistence\AvailabilityStorageRepositoryInterface;
 
 class AvailabilityStorage implements AvailabilityStorageInterface
 {
@@ -37,15 +38,26 @@ class AvailabilityStorage implements AvailabilityStorageInterface
     protected $isSendingToQueue = true;
 
     /**
+     * @var \Spryker\Zed\AvailabilityStorage\Persistence\AvailabilityStorageRepositoryInterface $availabilityStorageRepository
+     */
+    protected $availabilityStorageRepository;
+
+    /**
      * @param \Spryker\Shared\Kernel\Store $store
      * @param \Spryker\Zed\AvailabilityStorage\Persistence\AvailabilityStorageQueryContainerInterface $queryContainer
      * @param bool $isSendingToQueue
+     * @param \Spryker\Zed\AvailabilityStorage\Persistence\AvailabilityStorageRepositoryInterface $availabilityStorageRepository
      */
-    public function __construct(Store $store, AvailabilityStorageQueryContainerInterface $queryContainer, $isSendingToQueue)
-    {
+    public function __construct(
+        Store $store,
+        AvailabilityStorageQueryContainerInterface $queryContainer,
+        $isSendingToQueue,
+        AvailabilityStorageRepositoryInterface $availabilityStorageRepository
+    ) {
         $this->store = $store;
         $this->queryContainer = $queryContainer;
         $this->isSendingToQueue = $isSendingToQueue;
+        $this->availabilityStorageRepository = $availabilityStorageRepository;
     }
 
     /**
@@ -72,6 +84,28 @@ class AvailabilityStorage implements AvailabilityStorageInterface
         foreach ($availabilityStorageEntityCollection as $availabilityStorageEntity) {
             $availabilityStorageEntity->delete();
         }
+    }
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return void
+     */
+    public function publishByProductAbstractIds(array $productAbstractIds): void
+    {
+        $availabilityAbstractIds = $this->availabilityStorageRepository->getAvailabilityAbstractIdsByProductAbstractIds($productAbstractIds);
+        $this->publish($availabilityAbstractIds);
+    }
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return void
+     */
+    public function unpublishByProductAbstractIds(array $productAbstractIds): void
+    {
+        $availabilityAbstractIds = $this->availabilityStorageRepository->getAvailabilityAbstractIdsByProductAbstractIds($productAbstractIds);
+        $this->unpublish($availabilityAbstractIds);
     }
 
     /**
