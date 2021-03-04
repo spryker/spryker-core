@@ -1,2 +1,7 @@
 parameters:
+    reportUnmatchedIgnoredErrors: false
+    excludePaths:
+        - %rootDir%/../../../vendor/spryker/spryker/Bundles/Catalog/src/Spryker/Client/Catalog/Plugin/Elasticsearch/Query/ProductCatalogSearchQueryPlugin.php
+        - %rootDir%/../../../vendor/spryker/spryker/Bundles/Catalog/src/Spryker/Client/Catalog/Plugin/Elasticsearch/Query/ProductConcreteCatalogSearchQueryPlugin.php
+        - %rootDir%/../../../vendor/spryker/spryker/Bundles/Catalog/src/Spryker/Client/Catalog/Plugin/Elasticsearch/QueryExpander/PaginatedProductConcreteCatalogSearchQueryExpanderPlugin.php
     checkMissingIterableValueType: false
