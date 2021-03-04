@@ -41,6 +41,7 @@
 
     <transfer name="MerchantUser">
         <property name="idMerchant" type="int"/>
+        <property name="merchant" type="Merchant"/>
     </transfer>
 
     <transfer name="Locale">
@@ -283,6 +284,22 @@
         <property name="validFrom" type="string"/>
         <property name="fkProductAbstract" type="int"/>
         <property name="idProductConcrete" type="int"/>
+    </transfer>
+
+    <transfer name="ProductManagementAttributeCollection">
+        <property name="productManagementAttributes" type="ProductManagementAttribute[]" singular="productManagementAttribute"/>
+    </transfer>
+
+    <transfer name="ProductManagementAttribute">
+        <property name="isSuper" type="bool"/>
+        <property name="key" type="string"/>
+    </transfer>
+
+    <transfer name="ProductManagementAttributeFilter">
+        <property name="keys" type="string[]" singular="key"/>
+    </transfer>
+
+    <transfer name="Merchant">
     </transfer>
 
 </transfers>

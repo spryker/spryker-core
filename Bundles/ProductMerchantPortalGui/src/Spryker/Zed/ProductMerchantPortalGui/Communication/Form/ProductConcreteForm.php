@@ -7,10 +7,15 @@
 
 namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Form;
 
+use DateTime;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Constraint\ValidFromRangeConstraint;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Constraint\ValidToRangeConstraint;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -22,6 +27,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class ProductConcreteForm extends AbstractType
 {
     protected const BLOCK_PREFIX = 'productConcrete';
+
+    protected const LABEL_VALID_FROM = 'From';
+    protected const LABEL_VALID_TO = 'To';
+
+    protected const DATE_TIME_FORMAT = 'Y-m-d H:i:s';
 
     /**
      * @return string
@@ -55,7 +65,9 @@ class ProductConcreteForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addLocalizedAttributesSubform($builder)
-            ->addIsActiveField($builder);
+            ->addIsActiveField($builder)
+            ->addValidFromField($builder)
+            ->addValidToField($builder);
     }
 
     /**
@@ -95,5 +107,74 @@ class ProductConcreteForm extends AbstractType
         );
 
         return $this;
+    }
+
+    /**
+     * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
+     *
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addValidFromField(FormBuilderInterface $builder)
+    {
+        $builder->add(ProductConcreteTransfer::VALID_FROM, DateTimeType::class, [
+            'required' => false,
+            'label' => static::LABEL_VALID_FROM,
+            'constraints' => [
+                new ValidFromRangeConstraint(),
+            ],
+            'widget' => 'single_text',
+        ]);
+
+        $builder->get(ProductConcreteTransfer::VALID_FROM)
+            ->addModelTransformer($this->createDateTimeModelTransformer());
+
+        return $this;
+    }
+
+    /**
+     * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
+     *
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addValidToField(FormBuilderInterface $builder)
+    {
+        $builder->add(ProductConcreteTransfer::VALID_TO, DateTimeType::class, [
+            'required' => false,
+            'label' => static::LABEL_VALID_TO,
+            'constraints' => [
+                new ValidToRangeConstraint(),
+            ],
+            'widget' => 'single_text',
+        ]);
+
+        $builder->get(ProductConcreteTransfer::VALID_TO)
+            ->addModelTransformer($this->createDateTimeModelTransformer());
+
+        return $this;
+    }
+
+    /**
+     * @return \Symfony\Component\Form\CallbackTransformer
+     */
+    protected function createDateTimeModelTransformer(): CallbackTransformer
+    {
+        return new CallbackTransformer(
+            function ($value) {
+                if ($value !== null) {
+                    return new DateTime($value);
+                }
+            },
+            function ($value) {
+                if ($value instanceof DateTime) {
+                    $value = $value->format(static::DATE_TIME_FORMAT);
+                }
+
+                return $value;
+            }
+        );
     }
 }

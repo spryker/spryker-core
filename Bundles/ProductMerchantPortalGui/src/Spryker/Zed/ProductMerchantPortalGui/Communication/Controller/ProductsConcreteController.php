@@ -132,18 +132,25 @@ class ProductsConcreteController extends ProductMerchantPortalAbstractController
         ProductConcreteTransfer $productConcreteTransfer
     ): JsonResponse {
         $localeTransfer = $this->getFactory()->getLocaleFacade()->getCurrentLocale();
-        $productConcreteName = $this->getFactory()
-            ->createLocalizedAttributesNameExtractor()
-            ->extractLocalizedAttributesName(
-                $productConcreteTransfer->getLocalizedAttributes(),
-                $localeTransfer
-            ) ?: $productConcreteTransfer->getName();
+        $localizedAttributesTransfer = $this->getFactory()->createLocalizedAttributesExtractor()->extractLocalizedAttributes(
+            $productConcreteTransfer->getLocalizedAttributes(),
+            $localeTransfer
+        );
+        $superAttributeNames = $this->getFactory()->createLocalizedAttributesExtractor()->extractCombinedSuperAttributeNames(
+            $productConcreteTransfer->getAttributes(),
+            $productConcreteTransfer->getLocalizedAttributes(),
+            $localeTransfer
+        );
 
         $responseData = [
             'form' => $this->renderView('@ProductMerchantPortalGui/Partials/product_concrete_form.twig', [
                 'form' => $productConcreteEditForm->createView(),
                 'productConcrete' => $productConcreteTransfer,
-                'productConcreteName' => $productConcreteName,
+                'productConcreteName' => $localizedAttributesTransfer ? $localizedAttributesTransfer->getName() : $productConcreteTransfer->getName(),
+                'productAttributeTableConfiguration' => $this->getFactory()
+                    ->createProductConcreteAttributeGuiTableConfigurationProvider()
+                    ->getConfiguration($productConcreteTransfer->getAttributes(), array_keys($superAttributeNames), $productConcreteTransfer->getLocalizedAttributes()),
+                'superAttributeNames' => $superAttributeNames,
             ])->getContent(),
         ];
 

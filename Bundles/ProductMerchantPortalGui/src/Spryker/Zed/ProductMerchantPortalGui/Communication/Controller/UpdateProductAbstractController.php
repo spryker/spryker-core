@@ -135,17 +135,15 @@ class UpdateProductAbstractController extends ProductMerchantPortalAbstractContr
         array $initialData
     ): JsonResponse {
         $localeTransfer = $this->getFactory()->getLocaleFacade()->getCurrentLocale();
-        $productAbstractName = $this->getFactory()
-            ->createLocalizedAttributesNameExtractor()
-            ->extractLocalizedAttributesName(
-                $productAbstractTransfer->getLocalizedAttributes(),
-                $localeTransfer
-            ) ?: $productAbstractTransfer->getName();
+        $localizedAttributesTransfer = $this->getFactory()->createLocalizedAttributesExtractor()->extractLocalizedAttributes(
+            $productAbstractTransfer->getLocalizedAttributes(),
+            $localeTransfer
+        );
 
         $responseData = [
             'form' => $this->renderView('@ProductMerchantPortalGui/Partials/product_abstract_form.twig', [
                 'productAbstract' => $productAbstractTransfer,
-                'productAbstractName' => $productAbstractName,
+                'productAbstractName' => $localizedAttributesTransfer ? $localizedAttributesTransfer->getName() : $productAbstractTransfer->getName(),
                 'form' => $productAbstractForm->createView(),
                 'priceProductAbstractTableConfiguration' => $this->getFactory()
                     ->createPriceProductAbstractGuiTableConfigurationProvider()
