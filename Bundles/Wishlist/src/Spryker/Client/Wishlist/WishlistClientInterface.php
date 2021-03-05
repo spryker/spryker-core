@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\WishlistCollectionTransfer;
 use Generated\Shared\Transfer\WishlistFilterTransfer;
 use Generated\Shared\Transfer\WishlistItemCollectionTransfer;
+use Generated\Shared\Transfer\WishlistItemResponseTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
@@ -230,9 +231,9 @@ interface WishlistClientInterface
      *
      * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
      *
-     * @return \Generated\Shared\Transfer\WishlistItemTransfer
+     * @return \Generated\Shared\Transfer\WishlistItemResponseTransfer
      */
-    public function deleteItem(WishlistItemTransfer $wishlistItemTransfer): WishlistItemTransfer;
+    public function deleteItem(WishlistItemTransfer $wishlistItemTransfer): WishlistItemResponseTransfer;
 
     /**
      * Specification:
@@ -242,7 +243,7 @@ interface WishlistClientInterface
      *
      * @param \Generated\Shared\Transfer\WishlistItemCollectionTransfer $wishlistItemTransferCollection
      *
-     * @return \Generated\Shared\Transfer\WishlistItemCollectionTransfer
+     * @return \Generated\Shared\Transfer\WishlistResponseTransfer
      */
-    public function deleteItemCollection(WishlistItemCollectionTransfer $wishlistItemTransferCollection): WishlistItemCollectionTransfer;
+    public function deleteItemCollection(WishlistItemCollectionTransfer $wishlistItemTransferCollection): WishlistResponseTransfer;
 }

@@ -40,9 +40,9 @@ class WishlistEntityManager extends AbstractEntityManager implements WishlistEnt
     /**
      * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
      *
-     * @return \Generated\Shared\Transfer\WishlistItemTransfer
+     * @return void
      */
-    public function deleteItem(WishlistItemTransfer $wishlistItemTransfer): WishlistItemTransfer
+    public function deleteItem(WishlistItemTransfer $wishlistItemTransfer): void
     {
         $wishlistItemTransfer->requireIdWishlistItem();
 
@@ -50,7 +50,5 @@ class WishlistEntityManager extends AbstractEntityManager implements WishlistEnt
             ->createWishlistItemQuery()
             ->filterByIdWishlistItem($wishlistItemTransfer->getIdWishlistItemOrFail())
             ->delete();
-
-        return $wishlistItemTransfer;
     }
 }

@@ -10,6 +10,7 @@ namespace Spryker\Zed\Wishlist\Communication\Controller;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\WishlistFilterTransfer;
 use Generated\Shared\Transfer\WishlistItemCollectionTransfer;
+use Generated\Shared\Transfer\WishlistItemResponseTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
 use Generated\Shared\Transfer\WishlistResponseTransfer;
@@ -158,20 +159,24 @@ class GatewayController extends AbstractGatewayController
     /**
      * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
      *
-     * @return \Generated\Shared\Transfer\WishlistItemTransfer
+     * @return \Generated\Shared\Transfer\WishlistItemResponseTransfer
      */
-    public function deleteItemAction(WishlistItemTransfer $wishlistItemTransfer): WishlistItemTransfer
+    public function deleteItemAction(WishlistItemTransfer $wishlistItemTransfer): WishlistItemResponseTransfer
     {
-        return $this->getFacade()->deleteItem($wishlistItemTransfer);
+        $this->getFacade()->deleteItem($wishlistItemTransfer);
+
+        return (new WishlistItemResponseTransfer())->setIsSuccess(true);
     }
 
     /**
      * @param \Generated\Shared\Transfer\WishlistItemCollectionTransfer $wishlistItemTransferCollection
      *
-     * @return \Generated\Shared\Transfer\WishlistItemCollectionTransfer
+     * @return \Generated\Shared\Transfer\WishlistResponseTransfer
      */
-    public function deleteItemCollectionAction(WishlistItemCollectionTransfer $wishlistItemTransferCollection): WishlistItemCollectionTransfer
+    public function deleteItemCollectionAction(WishlistItemCollectionTransfer $wishlistItemTransferCollection): WishlistResponseTransfer
     {
-        return $this->getFacade()->deleteItemCollection($wishlistItemTransferCollection);
+        $this->getFacade()->deleteItemCollection($wishlistItemTransferCollection);
+
+        return (new WishlistResponseTransfer())->setIsSuccess(true);
     }
 }
