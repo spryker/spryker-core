@@ -57,6 +57,6 @@ class UserPasswordResetBusinessFactory extends AbstractBusinessFactory
      */
     public function getUserPasswordResetRequestStrategyPlugins(): array
     {
-        return $this->getProvidedDependency(UserPasswordResetDependencyProvider::PLUGINS_USER_PASSWORD_RESET_REQUEST_HANDLER);
+        return $this->getProvidedDependency(UserPasswordResetDependencyProvider::PLUGINS_USER_PASSWORD_RESET_REQUEST_STRATEGY);
     }
 }

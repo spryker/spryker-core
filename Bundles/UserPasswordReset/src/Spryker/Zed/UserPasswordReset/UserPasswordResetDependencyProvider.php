@@ -19,7 +19,7 @@ class UserPasswordResetDependencyProvider extends AbstractBundleDependencyProvid
 {
     public const FACADE_USER = 'FACADE_USER';
     public const SERVICE_UTIL_TEXT = 'SERVICE_UTIL_TEXT';
-    public const PLUGINS_USER_PASSWORD_RESET_REQUEST_HANDLER = 'PLUGINS_USER_PASSWORD_RESET_REQUEST_HANDLER';
+    public const PLUGINS_USER_PASSWORD_RESET_REQUEST_STRATEGY = 'PLUGINS_USER_PASSWORD_RESET_REQUEST_STRATEGY';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -76,7 +76,7 @@ class UserPasswordResetDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addUserPasswordResetRequestStrategyPlugins(Container $container): Container
     {
-        $container->set(static::PLUGINS_USER_PASSWORD_RESET_REQUEST_HANDLER, function () {
+        $container->set(static::PLUGINS_USER_PASSWORD_RESET_REQUEST_STRATEGY, function () {
             return $this->getUserPasswordResetRequestStrategyPlugins();
         });
 

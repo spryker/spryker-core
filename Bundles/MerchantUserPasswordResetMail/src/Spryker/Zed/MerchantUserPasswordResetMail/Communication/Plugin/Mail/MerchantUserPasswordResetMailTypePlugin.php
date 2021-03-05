@@ -17,7 +17,7 @@ use Spryker\Zed\Mail\Dependency\Plugin\MailTypePluginInterface;
  */
 class MerchantUserPasswordResetMailTypePlugin extends AbstractPlugin implements MailTypePluginInterface
 {
-    public const MAIL_TYPE = 'merchant user password restore';
+    public const MAIL_TYPE = 'merchant user password reset';
 
     /**
      * {@inheritDoc}
@@ -69,7 +69,7 @@ class MerchantUserPasswordResetMailTypePlugin extends AbstractPlugin implements 
      */
     protected function setHtmlTemplate(MailBuilderInterface $mailBuilder)
     {
-        $mailBuilder->setHtmlTemplate('merchantUserPasswordResetMail/mail/restore_password.html.twig');
+        $mailBuilder->setHtmlTemplate('merchantUserPasswordResetMail/mail/merchant_restore_password.html.twig');
 
         return $this;
     }
@@ -81,7 +81,7 @@ class MerchantUserPasswordResetMailTypePlugin extends AbstractPlugin implements 
      */
     protected function setTextTemplate(MailBuilderInterface $mailBuilder)
     {
-        $mailBuilder->setTextTemplate('merchantUserPasswordResetMail/mail/restore_password.text.twig');
+        $mailBuilder->setTextTemplate('merchantUserPasswordResetMail/mail/merchant_restore_password.text.twig');
 
         return $this;
     }
@@ -113,7 +113,7 @@ class MerchantUserPasswordResetMailTypePlugin extends AbstractPlugin implements 
         /** @var string $recipientEmail */
         $recipientEmail = $userTransfer->getUsername();
 
-        $mailBuilder->addRecipient($recipientEmail, '');
+        $mailBuilder->addRecipient($recipientEmail, $userTransfer->getFirstName() . ' ' . $userTransfer->getLastName());
 
         return $this;
     }
