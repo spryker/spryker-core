@@ -52,7 +52,7 @@ interface QueryBuilderInterface
     public function createBoolQuery();
 
     /**
-     * @return \Elastica\Query\Match
+     * @return \Elastica\Query\MatchQuery|\Elastica\Query\Match
      */
     public function createMatchQuery();
 

@@ -1,2 +1,5 @@
 parameters:
     checkMissingIterableValueType: false
+    excludePaths:
+        - %rootDir%/../../../vendor/spryker/spryker/Bundles/CatalogPriceProductConnector/src/Spryker/Client/Catalog/Plugin/Elasticsearch/QueryExpander/PaginatedProductConcreteCatalogSearchQueryExpanderPlugin.php
+        - %rootDir%/../../../vendor/spryker/spryker/Bundles/CatalogPriceProductConnector/src/Spryker/Client/CatalogPriceProductConnector/Plugin/ProductPriceQueryExpanderPlugin.php

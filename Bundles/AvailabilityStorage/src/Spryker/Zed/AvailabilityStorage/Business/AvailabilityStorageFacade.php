@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\AvailabilityStorage\Business\AvailabilityStorageBusinessFactory getFactory()
+ * @method \Spryker\Zed\AvailabilityStorage\Persistence\AvailabilityStorageRepositoryInterface getRepository()
  */
 class AvailabilityStorageFacade extends AbstractFacade implements AvailabilityStorageFacadeInterface
 {
@@ -40,5 +41,33 @@ class AvailabilityStorageFacade extends AbstractFacade implements AvailabilitySt
     public function unpublish(array $availabilityIds)
     {
         $this->getFactory()->createAvailabilityStorage()->unpublish($availabilityIds);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int[] $productAbstractIds
+     *
+     * @return void
+     */
+    public function publishByProductAbstractIds(array $productAbstractIds): void
+    {
+        $this->getFactory()->createAvailabilityStorage()->publishByProductAbstractIds($productAbstractIds);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int[] $productAbstractIds
+     *
+     * @return void
+     */
+    public function unpublishByProductAbstractIds(array $productAbstractIds): void
+    {
+        $this->getFactory()->createAvailabilityStorage()->unpublishByProductAbstractIds($productAbstractIds);
     }
 }

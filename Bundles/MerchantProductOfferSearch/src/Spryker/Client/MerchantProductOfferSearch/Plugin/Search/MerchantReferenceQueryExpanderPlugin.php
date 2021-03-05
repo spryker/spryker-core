@@ -9,7 +9,7 @@ namespace Spryker\Client\MerchantProductOfferSearch\Plugin\Search;
 
 use Elastica\Query;
 use Elastica\Query\BoolQuery;
-use Elastica\Query\Match;
+use Elastica\Query\MatchQuery;
 use Generated\Shared\Search\PageIndexMap;
 use InvalidArgumentException;
 use Spryker\Client\Kernel\AbstractPlugin;
@@ -51,7 +51,7 @@ class MerchantReferenceQueryExpanderPlugin extends AbstractPlugin implements Que
         $merchantReference = $requestParameters[static::MERCHANT_REFERENCE] ?? null;
 
         if ($merchantReference) {
-            $matchQuery = (new Match())->setField(PageIndexMap::MERCHANT_REFERENCES, $merchantReference);
+            $matchQuery = $this->getMatchQuery()->setField(PageIndexMap::MERCHANT_REFERENCES, $merchantReference);
 
             $boolQuery->addMust($matchQuery);
         }
@@ -76,5 +76,19 @@ class MerchantReferenceQueryExpanderPlugin extends AbstractPlugin implements Que
         }
 
         return $boolQuery;
+    }
+
+    /**
+     * For compatibility with PHP 8.
+     *
+     * @return \Elastica\Query\MatchQuery|\Elastica\Query\Match
+     */
+    protected function getMatchQuery()
+    {
+        $matchQueryClassName = class_exists(MatchQuery::class)
+            ? MatchQuery::class
+            : '\Elastica\Query\Match';
+
+        return new $matchQueryClassName();
     }
 }

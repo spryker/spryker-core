@@ -64,7 +64,8 @@ class MySqlDatabaseCreatorTest extends Unit
             ->willReturn($pdoMock);
 
         $mySqlDatabaseCreatorMock->expects($this->once())
-            ->method('getQuery');
+            ->method('getQuery')
+            ->willReturn('');
 
         $pdoMock->expects($this->once())
             ->method('exec');

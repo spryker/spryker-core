@@ -57,7 +57,7 @@
             "type": "PossiblyUndefinedMethod",
             "message": "Method Spryker\\Zed\\DataImport\\Business\\Model\\DataSet\\DataSetStepBrokerInterface::addStep does not exist",
             "file_name": "vendor/spryker/spryker/Bundles/MerchantOpeningHoursDataImport/src/Spryker/Zed/MerchantOpeningHoursDataImport/Business/MerchantOpeningHoursDataImportBusinessFactory.php",
-            "snippet": "            ->addStep($this->createMerchantKeyToIdMerchantStep())",
+            "snippet": "            ->addStep($this->createMerchantReferenceToIdMerchantStep())",
             "selected_text": "addStep",
             "error_level": 3,
             "shortcode": 108
@@ -93,7 +93,7 @@
             "type": "PossiblyUndefinedMethod",
             "message": "Method Spryker\\Zed\\DataImport\\Business\\Model\\DataSet\\DataSetStepBrokerInterface::addStep does not exist",
             "file_name": "vendor/spryker/spryker/Bundles/MerchantOpeningHoursDataImport/src/Spryker/Zed/MerchantOpeningHoursDataImport/Business/MerchantOpeningHoursDataImportBusinessFactory.php",
-            "snippet": "            ->addStep($this->createMerchantKeyToIdMerchantStep())",
+            "snippet": "            ->addStep($this->createMerchantReferenceToIdMerchantStep())",
             "selected_text": "addStep",
             "error_level": 3,
             "shortcode": 108
