@@ -46,7 +46,11 @@ class AvailabilityNotificationReader implements AvailabilityNotificationReaderIn
     public function getAvailabilityNotifications(RestRequestInterface $restRequest): RestResponseInterface
     {
         $availabilityNotificationCriteriaTransfer = new AvailabilityNotificationCriteriaTransfer();
-        $availabilityNotificationCriteriaTransfer->addCustomerReference($restRequest->getRestUser()->getNaturalIdentifier());
+        /**
+         * @var \Generated\Shared\Transfer\RestUserTransfer $restUser
+         */
+        $restUser = $restRequest->getRestUser();
+        $availabilityNotificationCriteriaTransfer->addCustomerReference($restUser->getNaturalIdentifierOrFail());
 
         if ($restRequest->getPage() !== null) {
             $availabilityNotificationCriteriaTransfer->setPagination(

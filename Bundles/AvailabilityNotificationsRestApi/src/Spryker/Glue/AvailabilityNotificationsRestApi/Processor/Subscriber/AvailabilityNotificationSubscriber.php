@@ -9,7 +9,6 @@ namespace Spryker\Glue\AvailabilityNotificationsRestApi\Processor\Subscriber;
 
 use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Glue\AvailabilityNotificationsRestApi\AvailabilityNotificationsRestApiConfig;
 use Spryker\Glue\AvailabilityNotificationsRestApi\Dependency\Client\AvailabilityNotificationsRestApiToAvailabilityNotificationClientInterface;
 use Spryker\Glue\AvailabilityNotificationsRestApi\Dependency\Client\AvailabilityNotificationsRestApiToStoreClientInterface;
 use Spryker\Glue\AvailabilityNotificationsRestApi\Processor\RestResponseBuilder\AvailabilityNotificationsRestResponseBuilderInterface;
@@ -60,8 +59,9 @@ class AvailabilityNotificationSubscriber implements AvailabilityNotificationSubs
         $locale = $restRequest->getMetadata()->getLocale();
         $localeTransfer = (new LocaleTransfer())->setLocaleName($locale);
         $storeTransfer = $this->storeClient->getCurrentStore();
-        $customerReference = $restRequest->getRestUser()
-                    ? $restRequest->getRestUser()->getNaturalIdentifier()
+        $restUser = $restRequest->getRestUser();
+        $customerReference = $restUser
+                    ? $restUser->getNaturalIdentifier()
                     : null;
 
         /**
@@ -77,22 +77,8 @@ class AvailabilityNotificationSubscriber implements AvailabilityNotificationSubs
 
         $availabilityNotificationSubscriptionResponseTransfer = $this->availabilityNotificationClient->subscribe($availabilityNotificationSubscriptionTransfer);
 
-        if (
-            !$availabilityNotificationSubscriptionResponseTransfer->getIsSuccess() &&
-            $availabilityNotificationSubscriptionResponseTransfer->getErrorMessage() === AvailabilityNotificationsRestApiConfig::RESPONSE_DETAIL_SUBSCRIPTION_ALREADY_EXISTS
-        ) {
-            return $this->availabilityNotificationsRestResponseBuilder->createSubscriptionAlreadyExistsErrorResponse();
-        }
-
-        if (
-            !$availabilityNotificationSubscriptionResponseTransfer->getIsSuccess() &&
-            $availabilityNotificationSubscriptionResponseTransfer->getErrorMessage() === AvailabilityNotificationsRestApiConfig::RESPONSE_DETAIL_PRODUCT_NOT_FOUND
-        ) {
-            return $this->availabilityNotificationsRestResponseBuilder->createProductNotFoundErrorResponse();
-        }
-
         if (!$availabilityNotificationSubscriptionResponseTransfer->getIsSuccess()) {
-            return $this->availabilityNotificationsRestResponseBuilder->createSomethingWentWrongErrorResponse();
+            return $this->availabilityNotificationsRestResponseBuilder->createSubscribeErrorResponse($availabilityNotificationSubscriptionResponseTransfer);
         }
 
         return $this->availabilityNotificationsRestResponseBuilder->createAvailabilityNotificationResponse($availabilityNotificationSubscriptionResponseTransfer->getAvailabilityNotificationSubscriptionOrFail());
@@ -107,15 +93,8 @@ class AvailabilityNotificationSubscriber implements AvailabilityNotificationSubs
     {
         $availabilityNotificationSubscriptionResponseTransfer = $this->availabilityNotificationClient->unsubscribeBySubscriptionKey((new AvailabilityNotificationSubscriptionTransfer())->setSubscriptionKey($restRequest->getResource()->getId()));
 
-        if (
-            !$availabilityNotificationSubscriptionResponseTransfer->getIsSuccess() &&
-            $availabilityNotificationSubscriptionResponseTransfer->getErrorMessage() === AvailabilityNotificationsRestApiConfig::RESPONSE_DETAIL_SUBSCRIPTION_DOES_NOT_EXIST
-        ) {
-            return $this->availabilityNotificationsRestResponseBuilder->createSubscriptionNotExistsErrorResponse();
-        }
-
         if (!$availabilityNotificationSubscriptionResponseTransfer->getIsSuccess()) {
-            return $this->availabilityNotificationsRestResponseBuilder->createSomethingWentWrongErrorResponse();
+            return $this->availabilityNotificationsRestResponseBuilder->createUnsubscribeErrorResponse($availabilityNotificationSubscriptionResponseTransfer);
         }
 
         return $this->availabilityNotificationsRestResponseBuilder->createEmptyResponse();

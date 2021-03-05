@@ -8,7 +8,9 @@
 namespace Spryker\Glue\AvailabilityNotificationsRestApi\Processor\RestResponseBuilder;
 
 use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionCollectionTransfer;
+use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer;
 use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer;
+use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 
 interface AvailabilityNotificationsRestResponseBuilderInterface
@@ -37,22 +39,27 @@ interface AvailabilityNotificationsRestResponseBuilderInterface
     ): RestResponseInterface;
 
     /**
+     * @param \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer $availabilityNotificationSubscriptionResponseTransfer
+     *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createProductNotFoundErrorResponse(): RestResponseInterface;
+    public function createSubscribeErrorResponse(
+        AvailabilityNotificationSubscriptionResponseTransfer $availabilityNotificationSubscriptionResponseTransfer
+    ): RestResponseInterface;
 
     /**
+     * @param \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer $availabilityNotificationSubscriptionResponseTransfer
+     *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createSubscriptionAlreadyExistsErrorResponse(): RestResponseInterface;
+    public function createUnsubscribeErrorResponse(
+        AvailabilityNotificationSubscriptionResponseTransfer $availabilityNotificationSubscriptionResponseTransfer
+    ): RestResponseInterface;
 
     /**
+     * @param \Generated\Shared\Transfer\RestErrorMessageTransfer $restErrorMessageTransfer
+     *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createSubscriptionNotExistsErrorResponse(): RestResponseInterface;
-
-    /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function createSomethingWentWrongErrorResponse(): RestResponseInterface;
+    public function createErrorResponse(RestErrorMessageTransfer $restErrorMessageTransfer): RestResponseInterface;
 }

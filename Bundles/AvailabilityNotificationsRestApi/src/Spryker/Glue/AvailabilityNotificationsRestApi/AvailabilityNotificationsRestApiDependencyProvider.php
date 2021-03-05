@@ -43,6 +43,7 @@ class AvailabilityNotificationsRestApiDependencyProvider extends AbstractBundleD
     {
         $container->set(static::CLIENT_AVAILABILITY_NOTIFICATION, function (Container $container) {
             return new AvailabilityNotificationsRestApiToAvailabilityNotificationClientBridge(
+                /** @phpstan-ignore-next-line */
                 $container->getLocator()->availabilityNotification()->client()
             );
         });
@@ -59,6 +60,7 @@ class AvailabilityNotificationsRestApiDependencyProvider extends AbstractBundleD
     {
         $container->set(static::CLIENT_STORE, function (Container $container) {
             return new AvailabilityNotificationsRestApiToStoreClientBridge(
+                /** @phpstan-ignore-next-line */
                 $container->getLocator()->store()->client()
             );
         });

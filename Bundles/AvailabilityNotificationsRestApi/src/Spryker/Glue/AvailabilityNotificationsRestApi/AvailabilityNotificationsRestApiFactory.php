@@ -69,7 +69,8 @@ class AvailabilityNotificationsRestApiFactory extends AbstractFactory
     {
         return new AvailabilityNotificationsRestResponseBuilder(
             $this->getResourceBuilder(),
-            $this->createAvailabilityNotificationMapper()
+            $this->createAvailabilityNotificationMapper(),
+            $this->getConfig()
         );
     }
 

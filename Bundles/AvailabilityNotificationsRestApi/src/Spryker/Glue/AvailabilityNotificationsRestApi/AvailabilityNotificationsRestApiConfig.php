@@ -7,7 +7,9 @@
 
 namespace Spryker\Glue\AvailabilityNotificationsRestApi;
 
+use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\Kernel\AbstractBundleConfig;
+use Symfony\Component\HttpFoundation\Response;
 
 class AvailabilityNotificationsRestApiConfig extends AbstractBundleConfig
 {
@@ -16,7 +18,8 @@ class AvailabilityNotificationsRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_CODE_PRODUCT_NOT_FOUND = '4601';
     public const RESPONSE_CODE_SUBSCRIPTION_ALREADY_EXISTS = '4602';
     public const RESPONSE_CODE_SUBSCRIPTION_DOES_NOT_EXIST = '4603';
-    public const RESPONSE_CODE_SOMETHING_WENT_WRONG = '4604'; // todo make 2 separate errors: failed to subscribe and failed to unsubscribe
+    public const RESPONSE_CODE_FAILED_TO_SUBSCRIBE = '4604';
+    public const RESPONSE_CODE_FAILED_TO_UNSUBSCRIBE = '4605';
 
     /**
      * @uses \Spryker\Shared\AvailabilityNotification\AvailabilityNotificationConfig::MESSAGE_PRODUCT_NOT_FOUND
@@ -29,6 +32,63 @@ class AvailabilityNotificationsRestApiConfig extends AbstractBundleConfig
     /**
      * @uses \Spryker\Shared\AvailabilityNotification\AvailabilityNotificationConfig::MESSAGE_SUBSCRIPTION_DOES_NOT_EXIST
      */
-    public const RESPONSE_DETAIL_SUBSCRIPTION_DOES_NOT_EXIST = "Subscription doesn't exist.";
-    public const RESPONSE_DETAIL_SOMETHING_WENT_WRONG = 'Something went wrong.';
+    public const RESPONSE_DETAIL_SUBSCRIPTION_DOES_NOT_EXIST = 'Subscription doesn\'t exist.';
+    public const RESPONSE_DETAIL_FAILED_TO_SUBSCRIBE = 'Failed to subscribe.';
+    public const RESPONSE_DETAIL_FAILED_TO_UNSUBSCRIBE = 'Failed to unsubscribe.';
+
+    /**
+     * @api
+     *
+     * @return mixed[][]
+     */
+    public function getErrorIdentifierToRestErrorMapping(): array
+    {
+        return [
+            static::RESPONSE_DETAIL_PRODUCT_NOT_FOUND => [
+                RestErrorMessageTransfer::CODE => static::RESPONSE_CODE_PRODUCT_NOT_FOUND,
+                RestErrorMessageTransfer::DETAIL => static::RESPONSE_DETAIL_PRODUCT_NOT_FOUND,
+                RestErrorMessageTransfer::STATUS => Response::HTTP_NOT_FOUND,
+            ],
+            static::RESPONSE_DETAIL_SUBSCRIPTION_ALREADY_EXISTS => [
+                RestErrorMessageTransfer::CODE => static::RESPONSE_CODE_SUBSCRIPTION_ALREADY_EXISTS,
+                RestErrorMessageTransfer::DETAIL => static::RESPONSE_DETAIL_SUBSCRIPTION_ALREADY_EXISTS,
+                RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
+            ],
+            static::RESPONSE_DETAIL_SUBSCRIPTION_DOES_NOT_EXIST => [
+                RestErrorMessageTransfer::CODE => static::RESPONSE_CODE_SUBSCRIPTION_DOES_NOT_EXIST,
+                RestErrorMessageTransfer::DETAIL => static::RESPONSE_DETAIL_SUBSCRIPTION_DOES_NOT_EXIST,
+                RestErrorMessageTransfer::STATUS => Response::HTTP_NOT_FOUND,
+            ],
+            static::RESPONSE_DETAIL_FAILED_TO_SUBSCRIBE => [
+                RestErrorMessageTransfer::CODE => static::RESPONSE_CODE_FAILED_TO_SUBSCRIBE,
+                RestErrorMessageTransfer::DETAIL => static::RESPONSE_DETAIL_FAILED_TO_SUBSCRIBE,
+                RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
+            ],
+            static::RESPONSE_DETAIL_FAILED_TO_UNSUBSCRIBE => [
+                RestErrorMessageTransfer::CODE => static::RESPONSE_CODE_FAILED_TO_UNSUBSCRIBE,
+                RestErrorMessageTransfer::DETAIL => static::RESPONSE_DETAIL_FAILED_TO_UNSUBSCRIBE,
+                RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
+            ],
+        ];
+    }
+
+    /**
+     * @api
+     *
+     * @return mixed[]
+     */
+    public function getDefaultSubscribeRestError(): array
+    {
+        return $this->getErrorIdentifierToRestErrorMapping()[static::RESPONSE_DETAIL_FAILED_TO_SUBSCRIBE];
+    }
+
+    /**
+     * @api
+     *
+     * @return mixed[]
+     */
+    public function getDefaultUnsubscribeRestError(): array
+    {
+        return $this->getErrorIdentifierToRestErrorMapping()[static::RESPONSE_DETAIL_FAILED_TO_UNSUBSCRIBE];
+    }
 }

@@ -8,6 +8,7 @@
 namespace Spryker\Glue\AvailabilityNotificationsRestApi\Processor\RestResponseBuilder;
 
 use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionCollectionTransfer;
+use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer;
 use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer;
 use Generated\Shared\Transfer\RestAvailabilityNotificationsAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
@@ -16,7 +17,6 @@ use Spryker\Glue\AvailabilityNotificationsRestApi\Processor\Mapper\AvailabilityN
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
-use Symfony\Component\HttpFoundation\Response;
 
 class AvailabilityNotificationsRestResponseBuilder implements AvailabilityNotificationsRestResponseBuilderInterface
 {
@@ -31,13 +31,23 @@ class AvailabilityNotificationsRestResponseBuilder implements AvailabilityNotifi
     protected $availabilityNotificationMapper;
 
     /**
+     * @var \Spryker\Glue\AvailabilityNotificationsRestApi\AvailabilityNotificationsRestApiConfig
+     */
+    protected $availabilityNotificationsRestApiConfig;
+
+    /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\AvailabilityNotificationsRestApi\Processor\Mapper\AvailabilityNotificationMapperInterface $availabilityNotificationMapper
+     * @param \Spryker\Glue\AvailabilityNotificationsRestApi\AvailabilityNotificationsRestApiConfig $availabilityNotificationsRestApiConfig
      */
-    public function __construct(RestResourceBuilderInterface $restResourceBuilder, AvailabilityNotificationMapperInterface $availabilityNotificationMapper)
-    {
+    public function __construct(
+        RestResourceBuilderInterface $restResourceBuilder,
+        AvailabilityNotificationMapperInterface $availabilityNotificationMapper,
+        AvailabilityNotificationsRestApiConfig $availabilityNotificationsRestApiConfig
+    ) {
         $this->restResourceBuilder = $restResourceBuilder;
         $this->availabilityNotificationMapper = $availabilityNotificationMapper;
+        $this->availabilityNotificationsRestApiConfig = $availabilityNotificationsRestApiConfig;
     }
 
     /**
@@ -72,9 +82,10 @@ class AvailabilityNotificationsRestResponseBuilder implements AvailabilityNotifi
     public function createAvailabilityNotificationCollectionResponse(
         AvailabilityNotificationSubscriptionCollectionTransfer $availabilityNotificationSubscriptionCollectionTransfer
     ): RestResponseInterface {
-        if ($availabilityNotificationSubscriptionCollectionTransfer->getPagination()) {
-            $totalItems = $availabilityNotificationSubscriptionCollectionTransfer->getPagination()->getNbResults() ?? 0;
-            $limit = $availabilityNotificationSubscriptionCollectionTransfer->getPagination()->getMaxPerPage() ?? 0;
+
+        if ($pagination = $availabilityNotificationSubscriptionCollectionTransfer->getPagination()) {
+            $totalItems = $pagination->getNbResults() ?? 0;
+            $limit = $pagination->getMaxPerPage() ?? 0;
         }
 
         $restResponse = $this->restResourceBuilder->createRestResponse($totalItems ?? 0, $limit ?? 0);
@@ -88,50 +99,48 @@ class AvailabilityNotificationsRestResponseBuilder implements AvailabilityNotifi
     }
 
     /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function createProductNotFoundErrorResponse(): RestResponseInterface
-    {
-        return $this->createErrorResponse(AvailabilityNotificationsRestApiConfig::RESPONSE_CODE_PRODUCT_NOT_FOUND, AvailabilityNotificationsRestApiConfig::RESPONSE_DETAIL_PRODUCT_NOT_FOUND);
-    }
-
-    /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function createSubscriptionAlreadyExistsErrorResponse(): RestResponseInterface
-    {
-        return $this->createErrorResponse(AvailabilityNotificationsRestApiConfig::RESPONSE_CODE_SUBSCRIPTION_ALREADY_EXISTS, AvailabilityNotificationsRestApiConfig::RESPONSE_DETAIL_SUBSCRIPTION_ALREADY_EXISTS);
-    }
-
-    /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function createSubscriptionNotExistsErrorResponse(): RestResponseInterface
-    {
-        return $this->createErrorResponse(AvailabilityNotificationsRestApiConfig::RESPONSE_CODE_SUBSCRIPTION_DOES_NOT_EXIST, AvailabilityNotificationsRestApiConfig::RESPONSE_DETAIL_SUBSCRIPTION_DOES_NOT_EXIST);
-    }
-
-    /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function createSomethingWentWrongErrorResponse(): RestResponseInterface
-    {
-        return $this->createErrorResponse(AvailabilityNotificationsRestApiConfig::RESPONSE_CODE_SOMETHING_WENT_WRONG, AvailabilityNotificationsRestApiConfig::RESPONSE_DETAIL_SOMETHING_WENT_WRONG);
-    }
-
-    /**
-     * @param string $code
-     * @param string $detail
+     * @param \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer $availabilityNotificationSubscriptionResponseTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function createErrorResponse(string $code, string $detail): RestResponseInterface
-    {
-        $restErrorMessageTransfer = (new RestErrorMessageTransfer())
-            ->setCode($code)
-            ->setDetail($detail)
-            ->setStatus(Response::HTTP_BAD_REQUEST);
+    public function createSubscribeErrorResponse(
+        AvailabilityNotificationSubscriptionResponseTransfer $availabilityNotificationSubscriptionResponseTransfer
+    ): RestResponseInterface {
+        $restErrorPayload = $this->availabilityNotificationsRestApiConfig->getErrorIdentifierToRestErrorMapping()[$availabilityNotificationSubscriptionResponseTransfer->getErrorMessage()] ?? $this->availabilityNotificationsRestApiConfig->getDefaultSubscribeRestError();
 
+        return $this->createErrorResponse(
+            (new RestErrorMessageTransfer())
+                ->setCode($restErrorPayload[RestErrorMessageTransfer::CODE])
+                ->setStatus($restErrorPayload[RestErrorMessageTransfer::STATUS])
+                ->setDetail($restErrorPayload[RestErrorMessageTransfer::DETAIL])
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer $availabilityNotificationSubscriptionResponseTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createUnsubscribeErrorResponse(
+        AvailabilityNotificationSubscriptionResponseTransfer $availabilityNotificationSubscriptionResponseTransfer
+    ): RestResponseInterface {
+        $restErrorPayload = $this->availabilityNotificationsRestApiConfig->getErrorIdentifierToRestErrorMapping()[$availabilityNotificationSubscriptionResponseTransfer->getErrorMessage()] ?? $this->availabilityNotificationsRestApiConfig->getDefaultUnsubscribeRestError();
+
+        return $this->createErrorResponse(
+            (new RestErrorMessageTransfer())
+                ->setCode($restErrorPayload[RestErrorMessageTransfer::CODE])
+                ->setStatus($restErrorPayload[RestErrorMessageTransfer::STATUS])
+                ->setDetail($restErrorPayload[RestErrorMessageTransfer::DETAIL])
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestErrorMessageTransfer $restErrorMessageTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createErrorResponse(RestErrorMessageTransfer $restErrorMessageTransfer): RestResponseInterface
+    {
         return $this->restResourceBuilder->createRestResponse()->addError($restErrorMessageTransfer);
     }
 

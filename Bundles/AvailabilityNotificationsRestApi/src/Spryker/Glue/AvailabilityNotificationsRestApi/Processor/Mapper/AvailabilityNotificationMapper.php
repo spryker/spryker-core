@@ -22,12 +22,13 @@ class AvailabilityNotificationMapper implements AvailabilityNotificationMapperIn
         AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer,
         RestAvailabilityNotificationsAttributesTransfer $restAvailabilityNotificationsAttributesTransfer
     ): RestAvailabilityNotificationsAttributesTransfer {
-        $localeName = $availabilityNotificationSubscriptionTransfer->getLocale()
-                    ? $availabilityNotificationSubscriptionTransfer->getLocale()->getLocaleName()
-                    : null;
+        $locale = $availabilityNotificationSubscriptionTransfer->getLocale();
+        if ($locale !== null) {
+            $localeName = $locale->getLocaleName();
+        }
 
         return $restAvailabilityNotificationsAttributesTransfer
                 ->fromArray($availabilityNotificationSubscriptionTransfer->toArray(), true)
-                ->setLocaleName($localeName);
+                ->setLocaleName($localeName ?? null);
     }
 }
