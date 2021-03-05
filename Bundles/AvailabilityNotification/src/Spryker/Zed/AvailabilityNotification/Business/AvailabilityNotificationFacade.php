@@ -132,16 +132,16 @@ class AvailabilityNotificationFacade extends AbstractFacade implements Availabil
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\AvailabilityNotificationCriteriaTransfer $availabilityNotificationCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionCollectionTransfer
      */
-    public function getAvailabilityNotificationsByCustomer(AvailabilityNotificationCriteriaTransfer $availabilityNotificationCriteriaTransfer): AvailabilityNotificationSubscriptionCollectionTransfer
-    {
+    public function getAvailabilityNotifications(
+        AvailabilityNotificationCriteriaTransfer $availabilityNotificationCriteriaTransfer
+    ): AvailabilityNotificationSubscriptionCollectionTransfer {
         return $this
             ->getFactory()
             ->createAvailabilityNotificationReader()
-            ->findByCustomerReference($availabilityNotificationCriteriaTransfer)
-        ;
+            ->getAvailabilityNotifications($availabilityNotificationCriteriaTransfer);
     }
 }

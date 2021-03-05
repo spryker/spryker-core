@@ -73,10 +73,11 @@ class ProductBecomeAvailableNotificationSender implements ProductBecomeAvailable
     public function send(AvailabilityNotificationDataTransfer $availabilityNotificationDataTransfer): void
     {
         $availabilityNotificationSubscriptions = $this->availabilityNotificationRepository
-            ->findBySkuAndStore(
+            ->getBySkuAndStore(
                 $availabilityNotificationDataTransfer->getSku(),
                 $availabilityNotificationDataTransfer->getStore()->getIdStore()
-            );
+            )
+            ->getAvailabilityNotificationSubscriptions();
 
         foreach ($availabilityNotificationSubscriptions as $availabilityNotificationSubscription) {
             $productConcreteTransfer = $this->productFacade->getProductConcrete($availabilityNotificationSubscription->getSku());

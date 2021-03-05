@@ -78,20 +78,20 @@ class AvailabilityNotificationSubscriptionReader implements AvailabilityNotifica
     /**
      * @param \Generated\Shared\Transfer\AvailabilityNotificationCriteriaTransfer $availabilityNotificationCriteriaTransfer
      *
+     * @throws \InvalidArgumentException
+     *
      * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionCollectionTransfer
      */
-    public function findByCustomerReference(AvailabilityNotificationCriteriaTransfer $availabilityNotificationCriteriaTransfer): AvailabilityNotificationSubscriptionCollectionTransfer
-    {
-        if (empty($availabilityNotificationCriteriaTransfer->getCustomerReferences())) {
-            throw new InvalidArgumentException("'customerReferences' param is empty.");
-        }
+    public function getAvailabilityNotifications(
+        AvailabilityNotificationCriteriaTransfer $availabilityNotificationCriteriaTransfer
+    ): AvailabilityNotificationSubscriptionCollectionTransfer {
+        $availabilityNotificationCriteriaTransfer->requireCustomerReferences();
 
         return $this
             ->availabilityNotificationRepository
-            ->findByCustomerReference(
+            ->getAvailabilityNotifications(
                 $availabilityNotificationCriteriaTransfer,
                 $this->storeFacade->getCurrentStore()->getIdStore()
-            )
-        ;
+            );
     }
 }

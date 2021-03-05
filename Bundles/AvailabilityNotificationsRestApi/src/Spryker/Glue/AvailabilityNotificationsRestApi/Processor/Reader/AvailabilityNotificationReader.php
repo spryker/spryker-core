@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Glue\AvailabilityNotificationsRestApi\Processor\Reader;
 
 use Generated\Shared\Transfer\AvailabilityNotificationCriteriaTransfer;
@@ -19,19 +24,18 @@ class AvailabilityNotificationReader implements AvailabilityNotificationReaderIn
     /**
      * @var \Spryker\Glue\AvailabilityNotificationsRestApi\Processor\RestResponseBuilder\AvailabilityNotificationsRestResponseBuilderInterface
      */
-    protected $restResponseBuilder;
+    protected $availabilityNotificationsRestResponseBuilder;
 
     /**
      * @param \Spryker\Glue\AvailabilityNotificationsRestApi\Dependency\Client\AvailabilityNotificationsRestApiToAvailabilityNotificationClientInterface $availabilityNotificationClient
-     * @param \Spryker\Glue\AvailabilityNotificationsRestApi\Processor\RestResponseBuilder\AvailabilityNotificationsRestResponseBuilderInterface $restResponseBuilder
+     * @param \Spryker\Glue\AvailabilityNotificationsRestApi\Processor\RestResponseBuilder\AvailabilityNotificationsRestResponseBuilderInterface $availabilityNotificationsRestResponseBuilder
      */
     public function __construct(
         AvailabilityNotificationsRestApiToAvailabilityNotificationClientInterface $availabilityNotificationClient,
-        AvailabilityNotificationsRestResponseBuilderInterface $restResponseBuilder
-    )
-    {
+        AvailabilityNotificationsRestResponseBuilderInterface $availabilityNotificationsRestResponseBuilder
+    ) {
         $this->availabilityNotificationClient = $availabilityNotificationClient;
-        $this->restResponseBuilder = $restResponseBuilder;
+        $this->availabilityNotificationsRestResponseBuilder = $availabilityNotificationsRestResponseBuilder;
     }
 
     /**
@@ -42,7 +46,7 @@ class AvailabilityNotificationReader implements AvailabilityNotificationReaderIn
     public function getAvailabilityNotifications(RestRequestInterface $restRequest): RestResponseInterface
     {
         $availabilityNotificationCriteriaTransfer = new AvailabilityNotificationCriteriaTransfer();
-        $availabilityNotificationCriteriaTransfer->setCustomerReferences([$restRequest->getRestUser()->getNaturalIdentifier()]);
+        $availabilityNotificationCriteriaTransfer->addCustomerReference($restRequest->getRestUser()->getNaturalIdentifier());
 
         if ($restRequest->getPage() !== null) {
             $availabilityNotificationCriteriaTransfer->setPagination(
@@ -52,8 +56,8 @@ class AvailabilityNotificationReader implements AvailabilityNotificationReaderIn
             );
         }
 
-        $availabilityNotificationSubscriptionCollectionTransfer = $this->availabilityNotificationClient->getByCustomerAction($availabilityNotificationCriteriaTransfer);
+        $availabilityNotificationSubscriptionCollectionTransfer = $this->availabilityNotificationClient->getAvailabilityNotifications($availabilityNotificationCriteriaTransfer);
 
-        return $this->restResponseBuilder->createAvailabilityNotificationCollectionResponse($availabilityNotificationSubscriptionCollectionTransfer);
+        return $this->availabilityNotificationsRestResponseBuilder->createAvailabilityNotificationCollectionResponse($availabilityNotificationSubscriptionCollectionTransfer);
     }
 }

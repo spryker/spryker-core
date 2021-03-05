@@ -67,7 +67,7 @@ interface AvailabilityNotificationFacadeInterface
     /**
      * Specification:
      * - Anonymizes personal information of the provided subscription.
-     * - Removes all user's subscriptions
+     * - Removes all user's subscriptions.
      *
      * @api
      *
@@ -112,5 +112,7 @@ interface AvailabilityNotificationFacadeInterface
      *
      * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionCollectionTransfer
      */
-    public function getAvailabilityNotificationsByCustomer(AvailabilityNotificationCriteriaTransfer $availabilityNotificationCriteriaTransfer): AvailabilityNotificationSubscriptionCollectionTransfer;
+    public function getAvailabilityNotifications(
+        AvailabilityNotificationCriteriaTransfer $availabilityNotificationCriteriaTransfer
+    ): AvailabilityNotificationSubscriptionCollectionTransfer;
 }

@@ -1,12 +1,16 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Glue\AvailabilityNotificationsRestApi\Dependency\Client;
 
 use Generated\Shared\Transfer\AvailabilityNotificationCriteriaTransfer;
 use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionCollectionTransfer;
 use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer;
 use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer;
-use Spryker\Client\AvailabilityNotification\AvailabilityNotificationClientInterface;
 
 class AvailabilityNotificationsRestApiToAvailabilityNotificationClientBridge implements AvailabilityNotificationsRestApiToAvailabilityNotificationClientInterface
 {
@@ -30,8 +34,7 @@ class AvailabilityNotificationsRestApiToAvailabilityNotificationClientBridge imp
      */
     public function subscribe(
         AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
-    ): AvailabilityNotificationSubscriptionResponseTransfer
-    {
+    ): AvailabilityNotificationSubscriptionResponseTransfer {
         return $this->availabilityNotificationClient->subscribe($availabilityNotificationSubscriptionTransfer);
     }
 
@@ -42,8 +45,7 @@ class AvailabilityNotificationsRestApiToAvailabilityNotificationClientBridge imp
      */
     public function unsubscribeBySubscriptionKey(
         AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
-    ): AvailabilityNotificationSubscriptionResponseTransfer
-    {
+    ): AvailabilityNotificationSubscriptionResponseTransfer {
         return $this->availabilityNotificationClient->unsubscribeBySubscriptionKey($availabilityNotificationSubscriptionTransfer);
     }
 
@@ -52,10 +54,9 @@ class AvailabilityNotificationsRestApiToAvailabilityNotificationClientBridge imp
      *
      * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionCollectionTransfer
      */
-    public function getByCustomerAction(
+    public function getAvailabilityNotifications(
         AvailabilityNotificationCriteriaTransfer $availabilityNotificationCriteriaTransfer
-    ): AvailabilityNotificationSubscriptionCollectionTransfer
-    {
-        return $this->availabilityNotificationClient->getByCustomerAction($availabilityNotificationCriteriaTransfer);
+    ): AvailabilityNotificationSubscriptionCollectionTransfer {
+        return $this->availabilityNotificationClient->getAvailabilityNotifications($availabilityNotificationCriteriaTransfer);
     }
 }

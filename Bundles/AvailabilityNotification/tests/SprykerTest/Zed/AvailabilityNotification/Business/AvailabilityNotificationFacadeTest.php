@@ -33,7 +33,7 @@ class AvailabilityNotificationFacadeTest extends Unit
     public const TESTER_INCORRECT_SUBSCRIPTION_KEY = '992233445566778899';
 
     /**
-     * @var \SprykerTest\Zed\AvailabilityNotification\AvailabilityNotificationBusinessTester
+     * @var \SprykerTest\Zed\AvailabilityNotification\AvailabilityNotificationBusinessTester|\SprykerTest\Zed\AvailabilityNotification\Helper\AvailabilityNotificationDataHelper|\SprykerTest\Shared\Product\Helper\ProductDataHelper|\SprykerTest\Shared\Customer\Helper\CustomerDataHelper
      */
     protected $tester;
 

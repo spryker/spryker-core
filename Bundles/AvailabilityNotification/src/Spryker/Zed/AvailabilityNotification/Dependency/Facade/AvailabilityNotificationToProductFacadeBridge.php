@@ -29,7 +29,7 @@ class AvailabilityNotificationToProductFacadeBridge implements AvailabilityNotif
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer|null
      */
-    public function findProductAbstractById($idProductAbstract)
+    public function findProductAbstractById(int $idProductAbstract)
     {
         return $this->productFacade->findProductAbstractById($idProductAbstract);
     }
@@ -49,7 +49,7 @@ class AvailabilityNotificationToProductFacadeBridge implements AvailabilityNotif
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function getProductConcrete($concreteSku)
+    public function getProductConcrete(string $concreteSku)
     {
         return $this->productFacade->getProductConcrete($concreteSku);
     }

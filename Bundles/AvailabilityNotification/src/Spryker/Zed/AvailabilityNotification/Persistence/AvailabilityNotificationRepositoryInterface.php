@@ -42,9 +42,9 @@ interface AvailabilityNotificationRepositoryInterface
      * @param string $sku
      * @param int $fkStore
      *
-     * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer[]
+     * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionCollectionTransfer
      */
-    public function findBySkuAndStore(string $sku, int $fkStore): array;
+    public function getBySkuAndStore(string $sku, int $fkStore): AvailabilityNotificationSubscriptionCollectionTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\AvailabilityNotificationCriteriaTransfer $availabilityNotificationCriteriaTransfer
@@ -52,5 +52,8 @@ interface AvailabilityNotificationRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionCollectionTransfer
      */
-    public function findByCustomerReference(AvailabilityNotificationCriteriaTransfer $availabilityNotificationCriteriaTransfer, int $fkStore): AvailabilityNotificationSubscriptionCollectionTransfer;
+    public function getAvailabilityNotifications(
+        AvailabilityNotificationCriteriaTransfer $availabilityNotificationCriteriaTransfer,
+        int $fkStore
+    ): AvailabilityNotificationSubscriptionCollectionTransfer;
 }

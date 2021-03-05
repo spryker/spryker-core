@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Glue\AvailabilityNotificationsRestApi\Controller;
 
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
@@ -22,6 +27,8 @@ class AvailabilityNotificationsResourceController extends AbstractController
      *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
+     *              "401": "Invalid access token.",
+     *              "403": "Missing access token."
      *          }
      *     }
      * })
@@ -35,8 +42,7 @@ class AvailabilityNotificationsResourceController extends AbstractController
         return $this
             ->getFactory()
             ->createAvailabilityNotificationReader()
-            ->getAvailabilityNotifications($restRequest)
-        ;
+            ->getAvailabilityNotifications($restRequest);
     }
 
     /**
@@ -49,16 +55,15 @@ class AvailabilityNotificationsResourceController extends AbstractController
      *          "parameters": [{
      *              "ref": "acceptLanguage"
      *          }],
-     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestAvailabilityNotificationsAttributesTransfer",
+     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestAvailabilityNotificationRequestAttributesTransfer",
      *          "responses": {
-     *              "400": "Email is not valid.",
      *              "404": "Product not found."
+     *              "422": "Unprocessable entity."
      *          }
      *     }
      * })
      *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
@@ -67,8 +72,7 @@ class AvailabilityNotificationsResourceController extends AbstractController
         return $this
             ->getFactory()
             ->createAvailabilityNotificationSubscriber()
-            ->subscribe($restRequest)
-        ;
+            ->subscribe($restRequest);
     }
 
     /**
@@ -82,7 +86,8 @@ class AvailabilityNotificationsResourceController extends AbstractController
      *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
-     *              "404": "Availability notification not found."
+     *              "400": "Resource id has not been specified.",
+     *              "404": "Subscription doesn't exist."
      *          }
      *     }
      * })
@@ -96,7 +101,6 @@ class AvailabilityNotificationsResourceController extends AbstractController
         return $this
             ->getFactory()
             ->createAvailabilityNotificationSubscriber()
-            ->unsubscribeBySubscriptionKey($restRequest)
-        ;
+            ->unsubscribeBySubscriptionKey($restRequest);
     }
 }

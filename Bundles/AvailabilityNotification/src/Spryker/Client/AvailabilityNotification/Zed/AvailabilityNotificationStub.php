@@ -29,6 +29,8 @@ class AvailabilityNotificationStub implements AvailabilityNotificationStubInterf
     }
 
     /**
+     * @uses \Spryker\Zed\AvailabilityNotification\Communication\Controller\GatewayController::subscribeAction()
+     *
      * @param \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
      *
      * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer
@@ -43,6 +45,8 @@ class AvailabilityNotificationStub implements AvailabilityNotificationStubInterf
     }
 
     /**
+     * @uses \Spryker\Zed\AvailabilityNotification\Communication\Controller\GatewayController::unsubscribeBySubscriptionKeyAction()
+     *
      * @param \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
      *
      * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer
@@ -57,6 +61,8 @@ class AvailabilityNotificationStub implements AvailabilityNotificationStubInterf
     }
 
     /**
+     * @uses \Spryker\Zed\AvailabilityNotification\Communication\Controller\GatewayController::unsubscribeByCustomerReferenceAndSkuAction()
+     *
      * @param \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
      *
      * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer
@@ -71,18 +77,19 @@ class AvailabilityNotificationStub implements AvailabilityNotificationStubInterf
     }
 
     /**
+     * @uses \Spryker\Zed\AvailabilityNotification\Communication\Controller\GatewayController::getAvailabilityNotificationsAction()
+     *
      * @param \Generated\Shared\Transfer\AvailabilityNotificationCriteriaTransfer $availabilityNotificationCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionCollectionTransfer
      */
-    public function getByCustomerAction(
+    public function getAvailabilityNotifications(
         AvailabilityNotificationCriteriaTransfer $availabilityNotificationCriteriaTransfer
-    ): AvailabilityNotificationSubscriptionCollectionTransfer
-    {
+    ): AvailabilityNotificationSubscriptionCollectionTransfer {
         /**
          * @var \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionCollectionTransfer $availabilityNotificationSubscriptionCollectionTransfer
          */
-        $availabilityNotificationSubscriptionCollectionTransfer = $this->zedRequestClient->call("/availability-notification/gateway/get-by-customer", $availabilityNotificationCriteriaTransfer);
+        $availabilityNotificationSubscriptionCollectionTransfer = $this->zedRequestClient->call('/availability-notification/gateway/get-availability-notifications', $availabilityNotificationCriteriaTransfer);
 
         return $availabilityNotificationSubscriptionCollectionTransfer;
     }

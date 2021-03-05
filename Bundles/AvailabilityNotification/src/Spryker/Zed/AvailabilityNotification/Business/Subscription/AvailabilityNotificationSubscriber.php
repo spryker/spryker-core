@@ -9,6 +9,7 @@ namespace Spryker\Zed\AvailabilityNotification\Business\Subscription;
 
 use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer;
 use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer;
+use Spryker\Shared\AvailabilityNotification\AvailabilityNotificationConfig;
 use Spryker\Shared\Customer\Code\Messages;
 use Spryker\Zed\AvailabilityNotification\Business\Notification\AvailabilityNotificationSubscriptionSenderInterface;
 use Spryker\Zed\AvailabilityNotification\Dependency\Service\AvailabilityNotificationToUtilValidateServiceInterface;
@@ -100,7 +101,7 @@ class AvailabilityNotificationSubscriber implements AvailabilityNotificationSubs
     protected function createSubscriptionAlreadyExistsResponse(): AvailabilityNotificationSubscriptionResponseTransfer
     {
         return $this->createSubscriptionResponseTransfer(false)
-            ->setErrorMessage('Subscription already exists');
+            ->setErrorMessage(AvailabilityNotificationConfig::MESSAGE_SUBSCRIPTION_ALREADY_EXISTS);
     }
 
     /**

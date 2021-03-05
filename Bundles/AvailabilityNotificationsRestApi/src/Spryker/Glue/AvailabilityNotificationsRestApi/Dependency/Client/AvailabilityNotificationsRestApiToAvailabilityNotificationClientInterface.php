@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Glue\AvailabilityNotificationsRestApi\Dependency\Client;
 
 use Generated\Shared\Transfer\AvailabilityNotificationCriteriaTransfer;
@@ -32,7 +37,7 @@ interface AvailabilityNotificationsRestApiToAvailabilityNotificationClientInterf
      *
      * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionCollectionTransfer
      */
-    public function getByCustomerAction(
+    public function getAvailabilityNotifications(
         AvailabilityNotificationCriteriaTransfer $availabilityNotificationCriteriaTransfer
     ): AvailabilityNotificationSubscriptionCollectionTransfer;
 }

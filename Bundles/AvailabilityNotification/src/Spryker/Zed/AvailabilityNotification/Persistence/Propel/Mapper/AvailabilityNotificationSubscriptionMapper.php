@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\AvailabilityNotification\Persistence\Propel\Mapper;
 
+use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionCollectionTransfer;
 use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
@@ -40,18 +41,22 @@ class AvailabilityNotificationSubscriptionMapper implements AvailabilityNotifica
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $availabilityNotificationSubscriptionEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\AvailabilityNotification\Persistence\SpyAvailabilityNotificationSubscription[] $availabilityNotificationSubscriptionEntities
+     * @param \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionCollectionTransfer $availabilityNotificationSubscriptionCollectionTransfer
      *
-     * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer[]
+     * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionCollectionTransfer
      */
-    public function mapAvailabilityNotificationSubscriptionTransferCollection(ObjectCollection $availabilityNotificationSubscriptionEntities): array
+    public function mapAvailabilityNotificationSubscriptionEntitiesToAvailabilityNotificationCollectionTransfer(
+        ObjectCollection $availabilityNotificationSubscriptionEntities,
+        AvailabilityNotificationSubscriptionCollectionTransfer $availabilityNotificationSubscriptionCollectionTransfer
+    ): AvailabilityNotificationSubscriptionCollectionTransfer
     {
-        $availabilityNotificationSubscriptions = [];
-
         foreach ($availabilityNotificationSubscriptionEntities as $availabilityNotificationSubscriptionEntity) {
-            $availabilityNotificationSubscriptions[] = $this->mapAvailabilityNotificationSubscriptionTransfer($availabilityNotificationSubscriptionEntity);
+            $availabilityNotificationSubscriptionCollectionTransfer->addAvailabilityNotificationSubscription(
+                $this->mapAvailabilityNotificationSubscriptionTransfer($availabilityNotificationSubscriptionEntity)
+            );
         }
 
-        return $availabilityNotificationSubscriptions;
+        return $availabilityNotificationSubscriptionCollectionTransfer;
     }
 }

@@ -1,9 +1,11 @@
 <?php
 
-namespace Spryker\Glue\AvailabilityNotificationsRestApi\Dependency\Client;
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
-use Generated\Shared\Transfer\StoreTransfer;
-use Spryker\Client\Store\StoreClientInterface;
+namespace Spryker\Glue\AvailabilityNotificationsRestApi\Dependency\Client;
 
 class AvailabilityNotificationsRestApiToStoreClientBridge implements AvailabilityNotificationsRestApiToStoreClientInterface
 {
@@ -23,7 +25,7 @@ class AvailabilityNotificationsRestApiToStoreClientBridge implements Availabilit
     /**
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getCurrentStore(): StoreTransfer
+    public function getCurrentStore()
     {
         return $this->storeClient->getCurrentStore();
     }

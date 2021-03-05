@@ -16,9 +16,9 @@ interface AvailabilityNotificationClientInterface
 {
     /**
      * Specification:
-     * - Send Zed request
+     * - Send Zed request.
      * - Subscribe a user for product availability.
-     * - Send successful email
+     * - Send successful email.
      *
      * @api
      *
@@ -32,9 +32,9 @@ interface AvailabilityNotificationClientInterface
 
     /**
      * Specification:
-     * - Send Zed request
+     * - Send Zed request.
      * - Unsubscribe a user for product availability.
-     * - Send successful email
+     * - Send successful email.
      *
      * @api
      *
@@ -48,9 +48,9 @@ interface AvailabilityNotificationClientInterface
 
     /**
      * Specification:
-     * - Send Zed request
+     * - Send Zed request.
      * - Unsubscribe a user for product availability.
-     * - Send successful email
+     * - Send successful email.
      *
      * @api
      *
@@ -64,7 +64,7 @@ interface AvailabilityNotificationClientInterface
 
     /**
      * Specification:
-     * - Send Zed request
+     * - Send Zed request.
      * - Finds availability subscription lists.
      *
      * @api
@@ -73,7 +73,7 @@ interface AvailabilityNotificationClientInterface
      *
      * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionCollectionTransfer
      */
-    public function getByCustomerAction(
+    public function getAvailabilityNotifications(
         AvailabilityNotificationCriteriaTransfer $availabilityNotificationCriteriaTransfer
     ): AvailabilityNotificationSubscriptionCollectionTransfer;
 }

@@ -70,9 +70,9 @@ class AvailabilityNotificationRepository extends AbstractRepository implements A
      * @param string $sku
      * @param int $fkStore
      *
-     * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer[]
+     * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionCollectionTransfer
      */
-    public function findBySkuAndStore(string $sku, int $fkStore): array
+    public function getBySkuAndStore(string $sku, int $fkStore): AvailabilityNotificationSubscriptionCollectionTransfer
     {
         $availabilityNotificationSubscriptionEntities = $this->querySubscription()
             ->filterBySku($sku)
@@ -81,7 +81,10 @@ class AvailabilityNotificationRepository extends AbstractRepository implements A
 
         return $this->getFactory()
             ->createAvailabilityNotificationSubscriptionMapper()
-            ->mapAvailabilityNotificationSubscriptionTransferCollection($availabilityNotificationSubscriptionEntities);
+            ->mapAvailabilityNotificationSubscriptionEntitiesToAvailabilityNotificationCollectionTransfer(
+                $availabilityNotificationSubscriptionEntities,
+                new AvailabilityNotificationSubscriptionCollectionTransfer()
+            );
     }
 
     /**
@@ -115,31 +118,30 @@ class AvailabilityNotificationRepository extends AbstractRepository implements A
      *
      * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionCollectionTransfer
      */
-    public function findByCustomerReference(AvailabilityNotificationCriteriaTransfer $availabilityNotificationCriteriaTransfer, int $fkStore): AvailabilityNotificationSubscriptionCollectionTransfer
-    {
-        $querySubscription = $this->querySubscription()
-                            ->filterByCustomerReference($availabilityNotificationCriteriaTransfer->getCustomerReferences(), Criteria::IN)
-                            ->filterByFkStore($fkStore)
-        ;
+    public function getAvailabilityNotifications(
+        AvailabilityNotificationCriteriaTransfer $availabilityNotificationCriteriaTransfer,
+        int $fkStore
+    ): AvailabilityNotificationSubscriptionCollectionTransfer {
+        $querySubscription = $this->querySubscription();
+        if (!empty($availabilityNotificationCriteriaTransfer->getCustomerReferences())) {
+            $querySubscription->filterByCustomerReference_In($availabilityNotificationCriteriaTransfer->getCustomerReferences());
+        }
+        $querySubscription->filterByFkStore($fkStore);
+
         if ($availabilityNotificationCriteriaTransfer->getPagination()) {
             $querySubscription = $this->preparePagination($querySubscription, $availabilityNotificationCriteriaTransfer->getPagination());
         }
 
         $availabilityNotificationSubscriptionEntities = $querySubscription->find();
 
-        $availabilityNotificationSubscriptionCollectionTransfer = new AvailabilityNotificationSubscriptionCollectionTransfer();
-
-        foreach ($availabilityNotificationSubscriptionEntities as $availabilityNotificationSubscriptionEntity) {
-            $availabilityNotificationSubscriptionCollectionTransfer->addAvailabilityNotificationSubscription(
-                $this->getFactory()
-                    ->createAvailabilityNotificationSubscriptionMapper()
-                    ->mapAvailabilityNotificationSubscriptionTransfer($availabilityNotificationSubscriptionEntity)
-            );
-        }
-
-        if ($availabilityNotificationCriteriaTransfer->getPagination()) {
-            $availabilityNotificationSubscriptionCollectionTransfer->setPagination($availabilityNotificationCriteriaTransfer->getPagination());
-        }
+        $availabilityNotificationSubscriptionCollectionTransfer = $this
+                        ->getFactory()
+                        ->createAvailabilityNotificationSubscriptionMapper()
+                        ->mapAvailabilityNotificationSubscriptionEntitiesToAvailabilityNotificationCollectionTransfer(
+                            $availabilityNotificationSubscriptionEntities,
+                            new AvailabilityNotificationSubscriptionCollectionTransfer()
+                        );
+        $availabilityNotificationSubscriptionCollectionTransfer->setPagination($availabilityNotificationCriteriaTransfer->getPagination());
 
         return $availabilityNotificationSubscriptionCollectionTransfer;
     }

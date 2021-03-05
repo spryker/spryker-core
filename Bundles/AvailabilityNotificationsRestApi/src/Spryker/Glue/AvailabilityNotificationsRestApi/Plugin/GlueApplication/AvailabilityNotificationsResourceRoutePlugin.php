@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Glue\AvailabilityNotificationsRestApi\Plugin\GlueApplication;
 
 use Generated\Shared\Transfer\RestAvailabilityNotificationRequestAttributesTransfer;
@@ -27,8 +32,7 @@ class AvailabilityNotificationsResourceRoutePlugin extends AbstractPlugin implem
         $resourceRouteCollection
             ->addGet('get', true)
             ->addPost('post', false)
-            ->addDelete('delete', false)
-        ;
+            ->addDelete('delete', false);
 
         return $resourceRouteCollection;
     }
@@ -48,13 +52,15 @@ class AvailabilityNotificationsResourceRoutePlugin extends AbstractPlugin implem
     /**
      * {@inheritDoc}
      *
+     * @uses \Spryker\Glue\AvailabilityNotificationsRestApi\Controller\AvailabilityNotificationsResourceController
+     *
      * @api
      *
      * @return string
      */
     public function getController(): string
     {
-        return AvailabilityNotificationsRestApiConfig::CONTROLLER_AVAILABILITY_NOTIFICATIONS;
+        return 'availability-notifications-resource';
     }
 
     /**

@@ -1,10 +1,16 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Glue\AvailabilityNotificationsRestApi;
 
 use Spryker\Glue\AvailabilityNotificationsRestApi\Dependency\Client\AvailabilityNotificationsRestApiToAvailabilityNotificationClientInterface;
 use Spryker\Glue\AvailabilityNotificationsRestApi\Dependency\Client\AvailabilityNotificationsRestApiToStoreClientInterface;
 use Spryker\Glue\AvailabilityNotificationsRestApi\Processor\Mapper\AvailabilityNotificationMapper;
+use Spryker\Glue\AvailabilityNotificationsRestApi\Processor\Mapper\AvailabilityNotificationMapperInterface;
 use Spryker\Glue\AvailabilityNotificationsRestApi\Processor\Reader\AvailabilityNotificationReader;
 use Spryker\Glue\AvailabilityNotificationsRestApi\Processor\RestResponseBuilder\AvailabilityNotificationsRestResponseBuilder;
 use Spryker\Glue\AvailabilityNotificationsRestApi\Processor\RestResponseBuilder\AvailabilityNotificationsRestResponseBuilderInterface;
@@ -24,7 +30,7 @@ class AvailabilityNotificationsRestApiFactory extends AbstractFactory
     {
         return new AvailabilityNotificationReader(
             $this->getAvailabilityNotificationClient(),
-            $this->createRestResponseBuilder()
+            $this->createAvailabilityNotificationsRestResponseBuilder()
         );
     }
 
@@ -36,30 +42,42 @@ class AvailabilityNotificationsRestApiFactory extends AbstractFactory
         return new AvailabilityNotificationSubscriber(
             $this->getAvailabilityNotificationClient(),
             $this->getStoreClient(),
-            $this->createRestResponseBuilder()
+            $this->createAvailabilityNotificationsRestResponseBuilder()
         );
     }
 
     /**
      * @return \Spryker\Glue\AvailabilityNotificationsRestApi\Dependency\Client\AvailabilityNotificationsRestApiToAvailabilityNotificationClientInterface
-     *
-     * @throws \Spryker\Glue\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
-    protected function getAvailabilityNotificationClient(): AvailabilityNotificationsRestApiToAvailabilityNotificationClientInterface
+    public function getAvailabilityNotificationClient(): AvailabilityNotificationsRestApiToAvailabilityNotificationClientInterface
     {
-        return $this->getProvidedDependency(AvailabilityNotificationsRestApiDependencyProvider::AVAILABILITY_NOTIFICATION_CLIENT);
+        return $this->getProvidedDependency(AvailabilityNotificationsRestApiDependencyProvider::CLIENT_AVAILABILITY_NOTIFICATION);
     }
 
-    protected function getStoreClient(): AvailabilityNotificationsRestApiToStoreClientInterface
+    /**
+     * @return \Spryker\Glue\AvailabilityNotificationsRestApi\Dependency\Client\AvailabilityNotificationsRestApiToStoreClientInterface
+     */
+    public function getStoreClient(): AvailabilityNotificationsRestApiToStoreClientInterface
     {
-        return $this->getProvidedDependency(AvailabilityNotificationsRestApiDependencyProvider::STORE_CLIENT);
+        return $this->getProvidedDependency(AvailabilityNotificationsRestApiDependencyProvider::CLIENT_STORE);
     }
 
-    protected function createRestResponseBuilder(): AvailabilityNotificationsRestResponseBuilderInterface
+    /**
+     * @return \Spryker\Glue\AvailabilityNotificationsRestApi\Processor\RestResponseBuilder\AvailabilityNotificationsRestResponseBuilderInterface
+     */
+    public function createAvailabilityNotificationsRestResponseBuilder(): AvailabilityNotificationsRestResponseBuilderInterface
     {
         return new AvailabilityNotificationsRestResponseBuilder(
             $this->getResourceBuilder(),
-            new AvailabilityNotificationMapper()
+            $this->createAvailabilityNotificationMapper()
         );
+    }
+
+    /**
+     * @return \Spryker\Glue\AvailabilityNotificationsRestApi\Processor\Mapper\AvailabilityNotificationMapperInterface
+     */
+    public function createAvailabilityNotificationMapper(): AvailabilityNotificationMapperInterface
+    {
+        return new AvailabilityNotificationMapper();
     }
 }

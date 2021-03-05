@@ -27,7 +27,7 @@ class AvailabilityNotificationToUtilTextServiceBridge implements AvailabilityNot
      *
      * @return string
      */
-    public function generateRandomString($length)
+    public function generateRandomString(int $length)
     {
         return $this->utilTextService->generateRandomString($length);
     }

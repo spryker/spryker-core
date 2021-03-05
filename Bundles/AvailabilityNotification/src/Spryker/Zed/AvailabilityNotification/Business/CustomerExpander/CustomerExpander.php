@@ -31,16 +31,17 @@ class CustomerExpander implements CustomerExpanderInterface
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    public function expandCustomerTransferWithAvailabilityNotificationSubscriptionList(CustomerTransfer $customerTransfer): CustomerTransfer // TODO cover with test
+    public function expandCustomerTransferWithAvailabilityNotificationSubscriptionList(CustomerTransfer $customerTransfer): CustomerTransfer
     {
+        $customerTransfer->requireCustomerReference();
+
         $availabilityNotificationSubscriptions = $this
                             ->availabilityNotificationSubscriptionReader
-                            ->findByCustomerReference(
+                            ->getAvailabilityNotifications(
                                 (new AvailabilityNotificationCriteriaTransfer())
-                                    ->setCustomerReferences([$customerTransfer->getCustomerReference()])
+                                    ->addCustomerReference($customerTransfer->getCustomerReference())
                             )
-                            ->getAvailabilityNotificationSubscriptions()
-        ;
+                            ->getAvailabilityNotificationSubscriptions();
         $skus = [];
 
         foreach ($availabilityNotificationSubscriptions as $availabilityNotificationSubscription) {

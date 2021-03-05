@@ -57,10 +57,9 @@ class GatewayController extends AbstractGatewayController
      *
      * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionCollectionTransfer
      */
-    public function getByCustomerAction(
+    public function getAvailabilityNotificationsAction(
         AvailabilityNotificationCriteriaTransfer $availabilityNotificationCriteriaTransfer
-    ): AvailabilityNotificationSubscriptionCollectionTransfer
-    {
-        return $this->getFacade()->getAvailabilityNotificationsByCustomer($availabilityNotificationCriteriaTransfer);
+    ): AvailabilityNotificationSubscriptionCollectionTransfer {
+        return $this->getFacade()->getAvailabilityNotifications($availabilityNotificationCriteriaTransfer);
     }
 }

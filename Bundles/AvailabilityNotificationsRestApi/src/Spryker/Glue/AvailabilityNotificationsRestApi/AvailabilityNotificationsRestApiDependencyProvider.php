@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Glue\AvailabilityNotificationsRestApi;
 
 use Spryker\Glue\AvailabilityNotificationsRestApi\Dependency\Client\AvailabilityNotificationsRestApiToAvailabilityNotificationClientBridge;
@@ -12,15 +17,13 @@ use Spryker\Glue\Kernel\Container;
  */
 class AvailabilityNotificationsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const AVAILABILITY_NOTIFICATION_CLIENT = "AVAILABILITY_NOTIFICATION_CLIENT";
-    public const STORE_CLIENT = "STORE_CLIENT";
+    public const CLIENT_AVAILABILITY_NOTIFICATION = 'CLIENT_AVAILABILITY_NOTIFICATION';
+    public const CLIENT_STORE = 'CLIENT_STORE';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
      *
      * @return \Spryker\Glue\Kernel\Container
-     *
-     * @throws \Spryker\Service\Container\Exception\FrozenServiceException
      */
     public function provideDependencies(Container $container): Container
     {
@@ -35,12 +38,10 @@ class AvailabilityNotificationsRestApiDependencyProvider extends AbstractBundleD
      * @param \Spryker\Glue\Kernel\Container $container
      *
      * @return \Spryker\Glue\Kernel\Container
-     *
-     * @throws \Spryker\Service\Container\Exception\FrozenServiceException
      */
     protected function addAvailabilityNotificationClient(Container $container): Container
     {
-        $container->set(static::AVAILABILITY_NOTIFICATION_CLIENT, function(Container $container) {
+        $container->set(static::CLIENT_AVAILABILITY_NOTIFICATION, function (Container $container) {
             return new AvailabilityNotificationsRestApiToAvailabilityNotificationClientBridge(
                 $container->getLocator()->availabilityNotification()->client()
             );
@@ -53,12 +54,10 @@ class AvailabilityNotificationsRestApiDependencyProvider extends AbstractBundleD
      * @param \Spryker\Glue\Kernel\Container $container
      *
      * @return \Spryker\Glue\Kernel\Container
-     *
-     * @throws \Spryker\Service\Container\Exception\FrozenServiceException
      */
     protected function addStoreClient(Container $container): Container
     {
-        $container->set(static::STORE_CLIENT, function(Container $container) {
+        $container->set(static::CLIENT_STORE, function (Container $container) {
             return new AvailabilityNotificationsRestApiToStoreClientBridge(
                 $container->getLocator()->store()->client()
             );

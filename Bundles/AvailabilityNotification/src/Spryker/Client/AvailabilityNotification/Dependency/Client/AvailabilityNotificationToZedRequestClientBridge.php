@@ -31,7 +31,7 @@ class AvailabilityNotificationToZedRequestClientBridge implements AvailabilityNo
      *
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
-    public function call($url, TransferInterface $object, $requestOptions = null)
+    public function call(string $url, TransferInterface $object, ?array $requestOptions = null)
     {
         return $this->zedRequestClient->call($url, $object, $requestOptions);
     }
