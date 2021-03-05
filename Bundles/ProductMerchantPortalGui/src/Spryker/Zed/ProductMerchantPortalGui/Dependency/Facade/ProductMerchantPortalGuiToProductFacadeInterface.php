@@ -17,4 +17,18 @@ interface ProductMerchantPortalGuiToProductFacadeInterface
      * @return int
      */
     public function saveProductAbstract(ProductAbstractTransfer $productAbstractTransfer);
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return void
+     */
+    public function activateProductConcrete($idProductConcrete);
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return void
+     */
+    public function deactivateProductConcrete($idProductConcrete);
 }
