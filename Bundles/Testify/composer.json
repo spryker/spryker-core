@@ -39,6 +39,7 @@
       "SprykerTest\\Glue\\Testify\\Tester\\": "tests/SprykerTest/Glue/Testify/_support/Tester/",
       "SprykerTest\\Yves\\Testify\\Helper\\": "tests/SprykerTest/Yves/Testify/_support/Helper/",
       "SprykerTest\\Zed\\Testify\\Helper\\": "tests/SprykerTest/Zed/Testify/_support/Helper/",
+      "SprykerTest\\Service\\Testify\\Helper\\": "tests/SprykerTest/Service/Testify/_support/Helper/",
       "SprykerTest\\Shared\\Testify\\Fixtures\\": "tests/SprykerTest/Shared/Testify/_support/Fixtures/",
       "SprykerTest\\Shared\\Testify\\Tester\\": "tests/SprykerTest/Shared/Testify/_support/Tester/",
       "SprykerTest\\Shared\\Testify\\StepOverride\\": "tests/SprykerTest/Shared/Testify/_support/StepOverride/",
