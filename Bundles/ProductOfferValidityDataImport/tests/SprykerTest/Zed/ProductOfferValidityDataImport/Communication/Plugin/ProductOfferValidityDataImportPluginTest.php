@@ -27,7 +27,7 @@ use Spryker\Zed\ProductOfferValidityDataImport\ProductOfferValidityDataImportCon
  */
 class ProductOfferValidityDataImportPluginTest extends Unit
 {
-    protected const PRODUCT_OFFER_REFERENCE_VALUE = 'offer10';
+    protected const PRODUCT_OFFER_REFERENCE_VALUE = 'offer1111';
 
     /**
      * @var \SprykerTest\Zed\ProductOfferValidityDataImport\ProductOfferValidityDataImportCommunicationTester
