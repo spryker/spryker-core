@@ -27,6 +27,7 @@ class MerchantProductOfferWriterStep implements DataImportStepInterface, DataImp
     protected const MERCHANT_SKU = MerchantProductOfferDataSetInterface::MERCHANT_SKU;
     protected const IS_ACTIVE = MerchantProductOfferDataSetInterface::IS_ACTIVE;
     protected const APPROVAL_STATUS = MerchantProductOfferDataSetInterface::APPROVAL_STATUS;
+    protected const DEFAULT_APPROVAL_STATUS = MerchantProductOfferDataSetInterface::DEFAULT_APPROVAL_STATUS;
 
     /**
      * @var \Generated\Shared\Transfer\EventEntityTransfer[]
@@ -62,11 +63,12 @@ class MerchantProductOfferWriterStep implements DataImportStepInterface, DataImp
         $productOfferEntity = SpyProductOfferQuery::create()
             ->filterByProductOfferReference($dataSet[static::PRODUCT_OFFER_REFERENCE])
             ->findOneOrCreate();
+
         $productOfferEntity->setFkMerchant($dataSet[static::ID_MERCHANT]);
         $productOfferEntity->setConcreteSku($dataSet[static::CONCRETE_SKU]);
         $productOfferEntity->setMerchantSku($dataSet[static::MERCHANT_SKU] ?: null);
         $productOfferEntity->setIsActive($dataSet[static::IS_ACTIVE]);
-        $productOfferEntity->setApprovalStatus($dataSet[static::APPROVAL_STATUS]);
+        $productOfferEntity->setApprovalStatus($dataSet[static::APPROVAL_STATUS] ?? static::DEFAULT_APPROVAL_STATUS);
         $productOfferEntity->save();
 
         $this->addPublishEvent($productOfferEntity);

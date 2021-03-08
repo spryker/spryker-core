@@ -46,8 +46,8 @@ class MerchantProfileFormType extends AbstractType
     protected const FIELD_CANCELLATION_POLICY_GLOSSARY_KEY = 'cancellation_policy_glossary_key';
     protected const FIELD_IMPRINT_GLOSSARY_KEY = 'imprint_glossary_key';
     protected const FIELD_DATA_PRIVACY_GLOSSARY_KEY = 'data_privacy_glossary_key';
-    protected const FIELD_LATITUDE = 'latitude';
-    protected const FIELD_LONGITUDE = 'longitude';
+//    protected const FIELD_LATITUDE = 'latitude';
+//    protected const FIELD_LONGITUDE = 'longitude';
     protected const FIELD_FAX_NUMBER = 'fax_number';
 
     protected const LABEL_CONTACT_PERSON_ROLE = 'Role';
@@ -58,8 +58,8 @@ class MerchantProfileFormType extends AbstractType
     protected const LABEL_LOGO_URL = 'Logo URL';
     protected const LABEL_PUBLIC_EMAIL = 'Public Email';
     protected const LABEL_PUBLIC_PHONE = 'Public Phone';
-    protected const LABEL_LATITUDE = 'Latitude';
-    protected const LABEL_LONGITUDE = 'Longitude';
+//    protected const LABEL_LATITUDE = 'Latitude';
+//    protected const LABEL_LONGITUDE = 'Longitude';
     protected const LABEL_FAX_NUMBER = 'Fax number';
 
     protected const URL_PATH_PATTERN = '#^([^\s\\\\]+)$#i';
@@ -106,8 +106,8 @@ class MerchantProfileFormType extends AbstractType
             ->addDataPrivacyGlossaryKeyField($builder)
             ->addMerchantProfileLocalizedGlossaryAttributesSubform($builder)
             ->addFaxNumber($builder)
-            ->addLatitudeField($builder)
-            ->addLongitudeField($builder)
+//            ->addLatitudeField($builder)
+//            ->addLongitudeField($builder)
             ->addAddressCollectionSubform($builder);
     }
 
@@ -410,52 +410,52 @@ class MerchantProfileFormType extends AbstractType
             ]),
         ];
     }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addLongitudeField(FormBuilderInterface $builder)
-    {
-        $builder->add(static::FIELD_LONGITUDE, TextType::class, [
-            'label' => static::LABEL_LONGITUDE,
-            'required' => false,
-            'constraints' => [
-                new Length([
-                    'max' => 255,
-                ]),
-                new Regex([
-                    'pattern' => '/^(\\+|-)?(?:180(?:(?:\\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\\.[0-9]{1,6})?))$/',
-                ]),
-            ],
-        ]);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addLatitudeField(FormBuilderInterface $builder)
-    {
-        $builder->add(static::FIELD_LATITUDE, TextType::class, [
-            'label' => static::LABEL_LATITUDE,
-            'required' => false,
-            'constraints' => [
-                new Length([
-                    'max' => 255,
-                ]),
-                new Regex([
-                    'pattern' => '/^(\\+|-)?(?:90(?:(?:\\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\\.[0-9]{1,6})?))$/',
-                ]),
-            ],
-        ]);
-
-        return $this;
-    }
+//
+//    /**
+//     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+//     *
+//     * @return $this
+//     */
+//    protected function addLongitudeField(FormBuilderInterface $builder)
+//    {
+//        $builder->add(static::FIELD_LONGITUDE, TextType::class, [
+//            'label' => static::LABEL_LONGITUDE,
+//            'required' => false,
+//            'constraints' => [
+//                new Length([
+//                    'max' => 255,
+//                ]),
+//                new Regex([
+//                    'pattern' => '/^(\\+|-)?(?:180(?:(?:\\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\\.[0-9]{1,6})?))$/',
+//                ]),
+//            ],
+//        ]);
+//
+//        return $this;
+//    }
+//
+//    /**
+//     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+//     *
+//     * @return $this
+//     */
+//    protected function addLatitudeField(FormBuilderInterface $builder)
+//    {
+//        $builder->add(static::FIELD_LATITUDE, TextType::class, [
+//            'label' => static::LABEL_LATITUDE,
+//            'required' => false,
+//            'constraints' => [
+//                new Length([
+//                    'max' => 255,
+//                ]),
+//                new Regex([
+//                    'pattern' => '/^(\\+|-)?(?:90(?:(?:\\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\\.[0-9]{1,6})?))$/',
+//                ]),
+//            ],
+//        ]);
+//
+//        return $this;
+//    }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

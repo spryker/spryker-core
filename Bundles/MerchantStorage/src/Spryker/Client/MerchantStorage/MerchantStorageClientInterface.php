@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\MerchantStorage;
 
+use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantStorageTransfer;
 
 interface MerchantStorageClientInterface
@@ -25,27 +26,27 @@ interface MerchantStorageClientInterface
 
     /**
      * Specification:
-     * - Finds merchant storage data by idMerchant.
+     * - Finds one merchant storage data by a merchant criteria.
      *
      * @api
      *
-     * @param int $idMerchant
+     * @param \Generated\Shared\Transfer\MerchantCriteriaTransfer $merchantCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantStorageTransfer|null
      */
-    public function findOne(int $idMerchant): ?MerchantStorageTransfer;
+    public function findOne(MerchantCriteriaTransfer $merchantCriteriaTransfer): ?MerchantStorageTransfer;
 
     /**
      * Specification:
-     * - Finds merchant storage data by merchantIds.
+     * - Finds merchant storage data by a merchant criteria.
      *
      * @api
      *
-     * @param int[] $merchantIds
+     * @param \Generated\Shared\Transfer\MerchantCriteriaTransfer $merchantCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantStorageTransfer[]
      */
-    public function get(array $merchantIds): array;
+    public function get(MerchantCriteriaTransfer $merchantCriteriaTransfer): array;
 
     /**
      * Specification:

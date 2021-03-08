@@ -46,6 +46,8 @@ class MerchantProfileAddressWriterStep extends PublishAwareStep implements DataI
             ->setZipCode($dataSet[MerchantProfileAddressDataSetInterface::ZIP_CODE])
             ->setFkMerchantProfile($dataSet[MerchantProfileAddressDataSetInterface::ID_MERCHANT_PROFILE])
             ->setFkCountry($dataSet[MerchantProfileAddressDataSetInterface::ID_COUNTRY])
+            ->setLatitude($dataSet[MerchantProfileAddressDataSetInterface::LATITUDE])
+            ->setLongitude($dataSet[MerchantProfileAddressDataSetInterface::LONGITUDE])
             ->save();
 
         $this->addPublishEvents(MerchantEvents::MERCHANT_PUBLISH, $merchantProfileAddressEntity->getSpyMerchantProfile()->getFkMerchant());

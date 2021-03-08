@@ -19,4 +19,6 @@ interface MerchantProfileAddressDataSetInterface
     public const ZIP_CODE = 'zip_code';
     public const ID_MERCHANT_PROFILE = 'id_merchant_profile';
     public const ID_COUNTRY = 'id_country';
+    public const LATITUDE = 'latitude';
+    public const LONGITUDE = 'longitude';
 }

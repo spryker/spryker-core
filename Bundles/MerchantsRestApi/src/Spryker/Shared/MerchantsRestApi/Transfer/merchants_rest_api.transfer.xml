@@ -15,8 +15,6 @@
         <property name="description" type="string"/>
         <property name="bannerUrl" type="string"/>
         <property name="deliveryTime" type="string"/>
-        <property name="latitude" type="string"/>
-        <property name="longitude" type="string"/>
         <property name="faxNumber" type="string"/>
         <property name="legalInformation" type="RestLegalInformation"/>
     </transfer>
@@ -32,6 +30,8 @@
         <property name="address3" type="string"/>
         <property name="city" type="string"/>
         <property name="zipCode" type="string"/>
+        <property name="latitude" type="string"/>
+        <property name="longitude" type="string"/>
     </transfer>
 
     <transfer name="RestLegalInformation">
@@ -84,8 +84,6 @@
         <property name="cancellationPolicy" type="string"/>
         <property name="imprint" type="string"/>
         <property name="dataPrivacy" type="string"/>
-        <property name="latitude" type="string"/>
-        <property name="longitude" type="string"/>
         <property name="faxNumber" type="string"/>
         <property name="addressCollection" type="MerchantStorageProfileAddress[]" singular="address"/>
     </transfer>
@@ -98,6 +96,8 @@
         <property name="city" type="string"/>
         <property name="zipCode" type="string"/>
         <property name="email" type="string"/>
+        <property name="latitude" type="string"/>
+        <property name="longitude" type="string"/>
     </transfer>
 
     <transfer name="RestErrorMessage">
