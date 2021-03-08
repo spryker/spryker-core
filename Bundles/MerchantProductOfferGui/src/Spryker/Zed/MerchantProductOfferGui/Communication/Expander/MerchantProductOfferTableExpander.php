@@ -20,6 +20,7 @@ class MerchantProductOfferTableExpander implements MerchantProductOfferTableExpa
 {
     protected const URL_PARAM_ID_MERCHANT = 'id-merchant';
     protected const COL_MERCHANT_NAME = 'Merchant';
+    protected const COL_MERCHANT_REFERENCE_NAME = 'MerchantReference';
 
     /**
      * @var \Spryker\Zed\MerchantProductOfferGui\Persistence\MerchantProductOfferGuiRepositoryInterface
@@ -50,11 +51,11 @@ class MerchantProductOfferTableExpander implements MerchantProductOfferTableExpa
      */
     public function expandQueryCriteria(QueryCriteriaTransfer $queryCriteriaTransfer): QueryCriteriaTransfer
     {
-        $idMerchant = $this->request->get(static::URL_PARAM_ID_MERCHANT);
+        $merchantReference = $this->request->get(static::COL_MERCHANT_REFERENCE_NAME);
 
         return $this->merchantProductOfferGuiRepository->expandQueryCriteriaTransfer(
             $queryCriteriaTransfer,
-            (new MerchantProductOfferCriteriaTransfer())->setIdMerchant($idMerchant)
+            (new MerchantProductOfferCriteriaTransfer())->setMerchantReference($merchantReference)
         );
     }
 

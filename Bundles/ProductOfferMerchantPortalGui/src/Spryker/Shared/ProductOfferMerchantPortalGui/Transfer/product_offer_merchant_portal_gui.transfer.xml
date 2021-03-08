@@ -159,7 +159,6 @@
         <property name="merchantSku" type="string"/>
         <property name="stores" type="Store[]" singular="store"/>
         <property name="isActive" type="bool"/>
-        <property name="fkMerchant" type="int"/>
         <property name="idProductOffer" type="int"/>
         <property name="idProductConcrete" type="int"/>
         <property name="prices" type="PriceProduct[]" singular="price"/>

@@ -110,14 +110,14 @@ class MerchantProductOfferDataImportPluginTest extends Unit
 
         $productOfferTransfer = $this->tester->haveProductOffer([
             ProductOfferTransfer::MERCHANT_SKU => $merchantSku,
-            ProductOfferTransfer::FK_MERCHANT => $merchantTransfer->getIdMerchant(),
+            ProductOfferTransfer::MERCHANT_REFERENCE => $merchantTransfer->getMerchantReference(),
         ]);
 
         $merchantSkuValidationStep = new MerchantSkuValidationStep();
 
         $dataSet = new DataSet([
             MerchantProductOfferDataSetInterface::MERCHANT_SKU => $merchantSku,
-            MerchantProductOfferDataSetInterface::ID_MERCHANT => $productOfferTransfer->getFkMerchant(),
+            MerchantProductOfferDataSetInterface::MERCHANT_REFERENCE => $productOfferTransfer->getMerchantReference(),
             MerchantProductOfferDataSetInterface::PRODUCT_OFFER_REFERENCE => uniqid(),
         ]);
 
