@@ -68,109 +68,109 @@ class ProductOfferStoragePublishListenerTest extends AbstractStoragePublishListe
 
         $this->productOfferStoragePublishListener = new ProductOfferStoragePublishListener();
     }
-//
-//    /**
-//     * @return void
-//     */
-//    public function testProductOfferStoragePublishListener(): void
-//    {
-//        //Arrange
-//        $expectedCount = 1;
-//        $productOfferTransfer = $this->tester->createProductOffer($this->tester->getLocator()->store()->facade()->getCurrentStore());
-//
-//        $eventTransfers = [
-//            (new EventEntityTransfer())->setAdditionalValues([SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE => $productOfferTransfer->getProductOfferReference()]),
-//        ];
-//
-//        //Act
-//        $this->productOfferStoragePublishListener->handleBulk(
-//            $eventTransfers,
-//            MerchantProductOfferEvents::MERCHANT_PRODUCT_OFFER_PUBLISH
-//        );
-//        $merchantProductOfferStorageEntities = $this->tester->getProductOfferEntities($productOfferTransfer->getProductOfferReference());
-//
-//        //Assert
-//        $this->assertCount($expectedCount, $merchantProductOfferStorageEntities);
-//    }
-//
-//    /**
-//     * @return void
-//     */
-//    public function testProductOfferStoragePublishListenerNotStoreDataIfProductOfferIsNotActive(): void
-//    {
-//        //Arrange
-//        $expectedCount = 0;
-//        $productOfferTransfer = $this->tester->createProductOffer(
-//            $this->tester->getLocator()->store()->facade()->getCurrentStore(),
-//            [ProductOfferTransfer::IS_ACTIVE => false]
-//        );
-//        $eventTransfers = [
-//            (new EventEntityTransfer())->setAdditionalValues([SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE => $productOfferTransfer->getProductOfferReference()]),
-//        ];
-//
-//        //Act
-//        $this->productOfferStoragePublishListener->handleBulk(
-//            $eventTransfers,
-//            MerchantProductOfferEvents::MERCHANT_PRODUCT_OFFER_PUBLISH
-//        );
-//        $merchantProductOfferStorageEntities = $this->tester->getProductOfferEntities($productOfferTransfer->getProductOfferReference());
-//
-//        //Assert
-//        $this->assertCount($expectedCount, $merchantProductOfferStorageEntities);
-//    }
-//
-//    /**
-//     * @return void
-//     */
-//    public function testProductOfferStoragePublishListenerNotStoreDataIfProductOfferIsNotApproved(): void
-//    {
-//        //Arrange
-//        $expectedCount = 0;
-//        $productOfferTransfer = $this->tester->createProductOffer(
-//            $this->tester->getLocator()->store()->facade()->getCurrentStore(),
-//            [ProductOfferTransfer::APPROVAL_STATUS => static::STATUS_DENIED]
-//        );
-//        $eventTransfers = [
-//            (new EventEntityTransfer())->setAdditionalValues([SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE => $productOfferTransfer->getProductOfferReference()]),
-//        ];
-//
-//        //Act
-//        $this->productOfferStoragePublishListener->handleBulk(
-//            $eventTransfers,
-//            MerchantProductOfferEvents::MERCHANT_PRODUCT_OFFER_PUBLISH
-//        );
-//        $merchantProductOfferStorageEntities = $this->tester->getProductOfferEntities($productOfferTransfer->getProductOfferReference());
-//
-//        //Assert
-//        $this->assertCount($expectedCount, $merchantProductOfferStorageEntities);
-//    }
-//
-//    /**
-//     * @return void
-//     */
-//    public function testProductOfferStoragePublishListenerNotStoreDataIfProductConcreteIsNotActive(): void
-//    {
-//        //Arrange
-//        $expectedCount = 0;
-//        $productOfferTransfer = $this->tester->createProductOffer(
-//            $this->tester->getLocator()->store()->facade()->getCurrentStore(),
-//            [],
-//            [ProductConcreteTransfer::IS_ACTIVE => false]
-//        );
-//        $eventTransfers = [
-//            (new EventEntityTransfer())->setAdditionalValues([SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE => $productOfferTransfer->getProductOfferReference()]),
-//        ];
-//
-//        //Act
-//        $this->productOfferStoragePublishListener->handleBulk(
-//            $eventTransfers,
-//            MerchantProductOfferEvents::MERCHANT_PRODUCT_OFFER_PUBLISH
-//        );
-//        $merchantProductOfferStorageEntities = $this->tester->getProductOfferEntities($productOfferTransfer->getProductOfferReference());
-//
-//        //Assert
-//        $this->assertCount($expectedCount, $merchantProductOfferStorageEntities);
-//    }
+
+    /**
+     * @return void
+     */
+    public function testProductOfferStoragePublishListener(): void
+    {
+        //Arrange
+        $expectedCount = 1;
+        $productOfferTransfer = $this->tester->createProductOffer($this->tester->getLocator()->store()->facade()->getCurrentStore());
+
+        $eventTransfers = [
+            (new EventEntityTransfer())->setAdditionalValues([SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE => $productOfferTransfer->getProductOfferReference()]),
+        ];
+
+        //Act
+        $this->productOfferStoragePublishListener->handleBulk(
+            $eventTransfers,
+            MerchantProductOfferEvents::MERCHANT_PRODUCT_OFFER_PUBLISH
+        );
+        $merchantProductOfferStorageEntities = $this->tester->getProductOfferEntities($productOfferTransfer->getProductOfferReference());
+
+        //Assert
+        $this->assertCount($expectedCount, $merchantProductOfferStorageEntities);
+    }
+
+    /**
+     * @return void
+     */
+    public function testProductOfferStoragePublishListenerNotStoreDataIfProductOfferIsNotActive(): void
+    {
+        //Arrange
+        $expectedCount = 0;
+        $productOfferTransfer = $this->tester->createProductOffer(
+            $this->tester->getLocator()->store()->facade()->getCurrentStore(),
+            [ProductOfferTransfer::IS_ACTIVE => false]
+        );
+        $eventTransfers = [
+            (new EventEntityTransfer())->setAdditionalValues([SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE => $productOfferTransfer->getProductOfferReference()]),
+        ];
+
+        //Act
+        $this->productOfferStoragePublishListener->handleBulk(
+            $eventTransfers,
+            MerchantProductOfferEvents::MERCHANT_PRODUCT_OFFER_PUBLISH
+        );
+        $merchantProductOfferStorageEntities = $this->tester->getProductOfferEntities($productOfferTransfer->getProductOfferReference());
+
+        //Assert
+        $this->assertCount($expectedCount, $merchantProductOfferStorageEntities);
+    }
+
+    /**
+     * @return void
+     */
+    public function testProductOfferStoragePublishListenerNotStoreDataIfProductOfferIsNotApproved(): void
+    {
+        //Arrange
+        $expectedCount = 0;
+        $productOfferTransfer = $this->tester->createProductOffer(
+            $this->tester->getLocator()->store()->facade()->getCurrentStore(),
+            [ProductOfferTransfer::APPROVAL_STATUS => static::STATUS_DENIED]
+        );
+        $eventTransfers = [
+            (new EventEntityTransfer())->setAdditionalValues([SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE => $productOfferTransfer->getProductOfferReference()]),
+        ];
+
+        //Act
+        $this->productOfferStoragePublishListener->handleBulk(
+            $eventTransfers,
+            MerchantProductOfferEvents::MERCHANT_PRODUCT_OFFER_PUBLISH
+        );
+        $merchantProductOfferStorageEntities = $this->tester->getProductOfferEntities($productOfferTransfer->getProductOfferReference());
+
+        //Assert
+        $this->assertCount($expectedCount, $merchantProductOfferStorageEntities);
+    }
+
+    /**
+     * @return void
+     */
+    public function testProductOfferStoragePublishListenerNotStoreDataIfProductConcreteIsNotActive(): void
+    {
+        //Arrange
+        $expectedCount = 0;
+        $productOfferTransfer = $this->tester->createProductOffer(
+            $this->tester->getLocator()->store()->facade()->getCurrentStore(),
+            [],
+            [ProductConcreteTransfer::IS_ACTIVE => false]
+        );
+        $eventTransfers = [
+            (new EventEntityTransfer())->setAdditionalValues([SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE => $productOfferTransfer->getProductOfferReference()]),
+        ];
+
+        //Act
+        $this->productOfferStoragePublishListener->handleBulk(
+            $eventTransfers,
+            MerchantProductOfferEvents::MERCHANT_PRODUCT_OFFER_PUBLISH
+        );
+        $merchantProductOfferStorageEntities = $this->tester->getProductOfferEntities($productOfferTransfer->getProductOfferReference());
+
+        //Assert
+        $this->assertCount($expectedCount, $merchantProductOfferStorageEntities);
+    }
 
     /**
      * @return void
