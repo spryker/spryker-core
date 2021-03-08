@@ -38,7 +38,7 @@ class MerchantProductOfferFacadeTest extends Unit
         $merchantTransfer = $this->tester->haveMerchant();
 
         $productOfferTransfer = $this->tester->haveProductOffer([
-            ProductOfferTransfer::FK_MERCHANT => $merchantTransfer->getIdMerchant(),
+            ProductOfferTransfer::MERCHANT_REFERENCE => $merchantTransfer->getMerchantReference(),
         ]);
 
         $merchantProductOfferCriteriaFilterTransfer = (new MerchantProductOfferCriteriaFilterTransfer())

@@ -55,7 +55,7 @@ class MerchantSearchEventListenerTest extends Unit
         $productConcreteTransfer = $this->tester->haveProduct();
         $merchantTransfer = $this->tester->haveMerchant([MerchantTransfer::IS_ACTIVE => true]);
         $this->tester->haveProductOffer([
-            ProductOfferTransfer::FK_MERCHANT => $merchantTransfer->getIdMerchant(),
+            ProductOfferTransfer::MERCHANT_REFERENCE => $merchantTransfer->getMerchantReference(),
             ProductOfferTransfer::CONCRETE_SKU => $productConcreteTransfer->getSku(),
         ]);
         $this->tester->addProductRelatedData($productConcreteTransfer);

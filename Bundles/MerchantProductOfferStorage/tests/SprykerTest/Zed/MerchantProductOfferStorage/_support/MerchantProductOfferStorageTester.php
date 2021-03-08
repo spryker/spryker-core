@@ -83,7 +83,7 @@ class MerchantProductOfferStorageTester extends Actor
      */
     public function createProductOffer(StoreTransfer $storeTransfer, array $productOfferData = [], array $productData = []): ProductOfferTransfer
     {
-        $productOfferData[ProductOfferTransfer::FK_MERCHANT] = $this->haveMerchant([MerchantTransfer::IS_ACTIVE => true])->getIdMerchant();
+        $productOfferData[ProductOfferTransfer::MERCHANT_REFERENCE] = $this->haveMerchant([MerchantTransfer::IS_ACTIVE => true])->getMerchantReference();
         $productOfferData[ProductOfferTransfer::CONCRETE_SKU] = $this->haveProduct($productData)->getSku();
 
         $productOfferTransfer = $this->haveProductOffer($productOfferData)->addStore($storeTransfer);

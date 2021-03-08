@@ -67,14 +67,14 @@ class MerchantProductOfferSearchFacadeTest extends Unit
         $merchant = $this->tester->haveMerchant([MerchantTransfer::IS_ACTIVE => true, MerchantTransfer::STORE_RELATION => $storeRelationTransfer->toArray()]);
 
         $this->tester->haveProductOffer([
-            ProductOfferTransfer::FK_MERCHANT => $merchant->getIdMerchant(),
+            ProductOfferTransfer::MERCHANT_REFERENCE => $merchant->getMerchantReference(),
             ProductOfferTransfer::CONCRETE_SKU => $productConcrete1->getSku(),
             ProductOfferTransfer::IS_ACTIVE => true,
             ProductOfferTransfer::STORES => new ArrayObject([$storeTransfer]),
         ]);
 
         $this->tester->haveProductOffer([
-            ProductOfferTransfer::FK_MERCHANT => $merchant->getIdMerchant(),
+            ProductOfferTransfer::MERCHANT_REFERENCE => $merchant->getMerchantReference(),
             ProductOfferTransfer::CONCRETE_SKU => $productConcrete2->getSku(),
             ProductOfferTransfer::IS_ACTIVE => true,
             ProductOfferTransfer::STORES => new ArrayObject([$storeTransfer]),

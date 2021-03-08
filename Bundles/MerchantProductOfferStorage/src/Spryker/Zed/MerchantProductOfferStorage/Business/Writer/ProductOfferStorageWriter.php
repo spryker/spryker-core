@@ -57,24 +57,32 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
     protected $storeTransfers;
 
     /**
+     * @var \Spryker\Zed\MerchantProductOfferStorage\Business\Writer\ProductOfferCriteriaFilterTransferFactory
+     */
+    protected $productOfferCriteriaFilterTransferFactory;
+
+    /**
      * @param \Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToEventBehaviorFacadeInterface $eventBehaviorFacade
      * @param \Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStorageEntityManagerInterface $merchantProductOfferStorageEntityManager
      * @param \Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStorageRepositoryInterface $merchantProductOfferStorageRepository
      * @param \Spryker\Zed\MerchantProductOfferStorage\Business\Deleter\ProductOfferStorageDeleterInterface $productOfferStorageDeleter
      * @param \Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToStoreFacadeInterface $storeFacade
+     * @param \Spryker\Zed\MerchantProductOfferStorage\Business\Writer\ProductOfferCriteriaFilterTransferFactory $productOfferCriteriaFilterTransferFactory
      */
     public function __construct(
         MerchantProductOfferStorageToEventBehaviorFacadeInterface $eventBehaviorFacade,
         MerchantProductOfferStorageEntityManagerInterface $merchantProductOfferStorageEntityManager,
         MerchantProductOfferStorageRepositoryInterface $merchantProductOfferStorageRepository,
         ProductOfferStorageDeleterInterface $productOfferStorageDeleter,
-        MerchantProductOfferStorageToStoreFacadeInterface $storeFacade
+        MerchantProductOfferStorageToStoreFacadeInterface $storeFacade,
+        ProductOfferCriteriaFilterTransferFactory $productOfferCriteriaFilterTransferFactory
     ) {
         $this->eventBehaviorFacade = $eventBehaviorFacade;
         $this->merchantProductOfferStorageEntityManager = $merchantProductOfferStorageEntityManager;
         $this->merchantProductOfferStorageRepository = $merchantProductOfferStorageRepository;
         $this->productOfferStorageDeleter = $productOfferStorageDeleter;
         $this->storeFacade = $storeFacade;
+        $this->productOfferCriteriaFilterTransferFactory = $productOfferCriteriaFilterTransferFactory;
     }
 
     /**
@@ -102,7 +110,9 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
     {
         $this->deleteIncorrectProductOfferStorages($productOfferReferences);
 
-        $productOfferCriteriaFilterTransfer = $this->getFactory()->createProductOfferCriteriaFilterTransfer($productOfferReferences);
+        $productOfferCriteriaFilterTransfer = $this->productOfferCriteriaFilterTransferFactory->createProductOfferCriteriaFilterTransfer();
+        $productOfferCriteriaFilterTransfer->setProductOfferReferences($productOfferReferences);
+
         $productOfferCollectionTransfer = $this->merchantProductOfferStorageRepository
             ->getProductOffersByFilterCriteria($productOfferCriteriaFilterTransfer);
 
@@ -169,9 +179,8 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
      */
     protected function deleteIncorrectProductOfferStorages(array $productOfferReferences): void
     {
-        $productIncorrectOfferCriteriaFilterTransfer = $this->getFactory()->createIncorrectProductOfferCriteriaFilterTransfer(
-            $productOfferReferences
-        );
+        $productIncorrectOfferCriteriaFilterTransfer = $this->productOfferCriteriaFilterTransferFactory->createIncorrectProductOfferCriteriaFilterTransfer();
+        $productIncorrectOfferCriteriaFilterTransfer->setProductOfferReferences($productOfferReferences);
 
         $incorrectProductOfferCollectionTransfer = $this->merchantProductOfferStorageRepository
             ->getProductOffersByFilterCriteria($productIncorrectOfferCriteriaFilterTransfer);
