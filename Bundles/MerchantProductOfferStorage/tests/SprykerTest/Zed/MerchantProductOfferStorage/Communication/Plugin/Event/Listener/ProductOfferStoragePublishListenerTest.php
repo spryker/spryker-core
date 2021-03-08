@@ -78,7 +78,10 @@ class ProductOfferStoragePublishListenerTest extends AbstractStoragePublishListe
         $productOfferTransfer = $this->tester->createProductOffer($this->tester->getLocator()->store()->facade()->getCurrentStore());
 
         $eventTransfers = [
-            (new EventEntityTransfer())->setAdditionalValues([SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE => $productOfferTransfer->getProductOfferReference()]),
+            (new EventEntityTransfer())->setAdditionalValues([
+                SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE => $productOfferTransfer->getProductOfferReference(),
+                SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER => $productOfferTransfer->getIdProductOffer(),
+            ]),
         ];
 
         //Act
@@ -181,6 +184,8 @@ class ProductOfferStoragePublishListenerTest extends AbstractStoragePublishListe
 
         /** @var \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer */
         $productOfferTransfer = $productOfferCollectionTransfer->getProductOffers()[0];
+        $incorrectProductOfferTransfer = clone $productOfferTransfer;
+        $incorrectProductOfferTransfer->setIdProductOffer(123);
 
         /** @var \Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStorageEntityManagerInterface|\PHPUnit\Framework\MockObject\MockObject $merchantProductOfferStorageEntityManager */
         $merchantProductOfferStorageEntityManager = $this->getMockBuilder(MerchantProductOfferStorageEntityManagerInterface::class)->getMock();
@@ -193,15 +198,20 @@ class ProductOfferStoragePublishListenerTest extends AbstractStoragePublishListe
             ->setIsActive(true)
             ->setIsActiveConcreteProduct(true)
             ->addApprovalStatus(static::STATUS_APPROVED);
+        $incorrectProductOfferCriteriaFilterTransfer = (new ProductOfferCriteriaFilterTransfer())
+            ->setProductOfferReferences([$productOfferTransfer->getProductOfferReference()])
+            ->setIsActive(false)
+            ->setIsActiveMerchant(false);
 
         $productOfferCollectionTransfer = (new ProductOfferCollectionTransfer())->addProductOffer($productOfferTransfer);
+        $incorrectProductOfferCollectionTransfer = (new ProductOfferCollectionTransfer())->addProductOffer($incorrectProductOfferTransfer);
 
         /** @var \Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStorageRepositoryInterface|\PHPUnit\Framework\MockObject\MockObject $merchantProductOfferStorageRepository */
         $merchantProductOfferStorageRepository = $this->getMockBuilder(MerchantProductOfferStorageRepositoryInterface::class)->getMock();
-        $merchantProductOfferStorageRepository->expects($this->once())
+        $merchantProductOfferStorageRepository->expects($this->exactly(2))
             ->method('getProductOffersByFilterCriteria')
-            ->with($productOfferCriteriaFilterTransfer)
-            ->willReturn($productOfferCollectionTransfer);
+            ->withConsecutive([$incorrectProductOfferCriteriaFilterTransfer], [$productOfferCriteriaFilterTransfer])
+            ->willReturnOnConsecutiveCalls($incorrectProductOfferCollectionTransfer, $productOfferCollectionTransfer);
 
         /** @var \Spryker\Zed\MerchantProductOfferStorage\Business\Deleter\ProductOfferStorageDeleterInterface|\PHPUnit\Framework\MockObject\MockObject $productOfferStorageDeleter */
         $productOfferStorageDeleter = $this->getMockBuilder(ProductOfferStorageDeleterInterface::class)->getMock();
@@ -211,6 +221,10 @@ class ProductOfferStoragePublishListenerTest extends AbstractStoragePublishListe
                 [[$productOfferTransfer->getProductOfferReference()], 'AT'],
                 [[$productOfferTransfer->getProductOfferReference()], 'US']
             );
+
+        $productOfferStorageDeleter->expects($this->exactly(1))
+            ->method('deleteProductOfferStorageByIds')
+            ->with([123]);
 
         $productOfferStorageWriter = new ProductOfferStorageWriter(
             $this->getMerchantProductOfferStorageToEventBehaviorFacadeInterfaceMock($productOfferTransfer),

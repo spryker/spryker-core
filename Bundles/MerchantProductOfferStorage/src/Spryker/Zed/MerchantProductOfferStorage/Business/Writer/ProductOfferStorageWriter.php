@@ -16,6 +16,9 @@ use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOff
 use Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStorageEntityManagerInterface;
 use Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStorageRepositoryInterface;
 
+/**
+ * @method \Spryker\Zed\MerchantProductOfferStorage\Business\MerchantProductOfferStorageBusinessFactory getFactory()
+ */
 class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
 {
     /**
@@ -97,7 +100,9 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
      */
     protected function writeByProductOfferReferences(array $productOfferReferences): void
     {
-        $productOfferCriteriaFilterTransfer = $this->createProductOfferCriteriaFilterTransfer($productOfferReferences);
+        $this->deleteIncorrectProductOfferStorages($productOfferReferences);
+
+        $productOfferCriteriaFilterTransfer = $this->getFactory()->createProductOfferCriteriaFilterTransfer($productOfferReferences);
         $productOfferCollectionTransfer = $this->merchantProductOfferStorageRepository
             ->getProductOffersByFilterCriteria($productOfferCriteriaFilterTransfer);
 
@@ -105,20 +110,6 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
             $this->merchantProductOfferStorageEntityManager->saveProductOfferStorage($productOfferTransfer);
             $this->deleteProductOfferReferenceByStore($productOfferTransfer);
         }
-    }
-
-    /**
-     * @param string[] $productOfferReferences
-     *
-     * @return \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer
-     */
-    protected function createProductOfferCriteriaFilterTransfer(array $productOfferReferences): ProductOfferCriteriaFilterTransfer
-    {
-        return (new ProductOfferCriteriaFilterTransfer())
-            ->setProductOfferReferences($productOfferReferences)
-            ->setIsActive(true)
-            ->setIsActiveConcreteProduct(true)
-            ->addApprovalStatus(static::STATUS_APPROVED);
     }
 
     /**
@@ -169,5 +160,29 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
         }
 
         return $this->storeTransfers;
+    }
+
+    /**
+     * @param array $productOfferReferences
+     *
+     * @return void
+     */
+    protected function deleteIncorrectProductOfferStorages(array $productOfferReferences): void
+    {
+        $productIncorrectOfferCriteriaFilterTransfer = $this->getFactory()->createIncorrectProductOfferCriteriaFilterTransfer(
+            $productOfferReferences
+        );
+
+        $incorrectProductOfferCollectionTransfer = $this->merchantProductOfferStorageRepository
+            ->getProductOffersByFilterCriteria($productIncorrectOfferCriteriaFilterTransfer);
+
+        $incorrectProductOfferReferences = [];
+        foreach ($incorrectProductOfferCollectionTransfer->getProductOffers() as $incorrectProductOfferTransfer) {
+            $incorrectProductOfferReferences[] = $incorrectProductOfferTransfer->getProductOfferReference();
+        }
+
+        if (empty($incorrectProductOfferReferences) === false) {
+            $this->productOfferStorageDeleter->deleteCollectionByProductOfferReferences($incorrectProductOfferReferences);
+        }
     }
 }

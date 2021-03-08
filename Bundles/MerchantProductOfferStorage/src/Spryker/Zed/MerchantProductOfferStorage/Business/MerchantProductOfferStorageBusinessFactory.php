@@ -19,6 +19,7 @@ use Spryker\Zed\MerchantProductOfferStorage\Business\Writer\ProductOfferStorageW
 use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToEventBehaviorFacadeInterface;
 use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToStoreFacadeInterface;
 use Spryker\Zed\MerchantProductOfferStorage\MerchantProductOfferStorageDependencyProvider;
+use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
 
 /**
  * @method \Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStorageEntityManagerInterface getEntityManager()
@@ -91,5 +92,33 @@ class MerchantProductOfferStorageBusinessFactory extends AbstractBusinessFactory
     public function getStoreFacade(): MerchantProductOfferStorageToStoreFacadeInterface
     {
         return $this->getProvidedDependency(MerchantProductOfferStorageDependencyProvider::FACADE_STORE);
+    }
+
+    /**
+     * @param string[] $productConcreteSkus
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer
+     */
+    public function createProductOfferCriteriaFilterTransfer(array $productConcreteSkus): ProductOfferCriteriaFilterTransfer
+    {
+        return (new ProductOfferCriteriaFilterTransfer())
+            ->setConcreteSkus($productConcreteSkus)
+            ->setIsActive(true)
+            ->setIsActiveMerchant(true)
+            ->setIsActiveConcreteProduct(true)
+            ->addApprovalStatus(static::STATUS_APPROVED);
+    }
+
+    /**
+     * @param string[] $productOfferReferences
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer
+     */
+    public function createIncorrectProductOfferCriteriaFilterTransfer(array $productOfferReferences): ProductOfferCriteriaFilterTransfer
+    {
+        return (new ProductOfferCriteriaFilterTransfer())
+            ->setProductOfferReferences($productOfferReferences)
+            ->setIsActive(false)
+            ->setIsActiveMerchant(false);
     }
 }

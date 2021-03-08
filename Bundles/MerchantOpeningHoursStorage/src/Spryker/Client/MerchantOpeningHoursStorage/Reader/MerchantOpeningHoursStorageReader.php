@@ -13,6 +13,7 @@ use Spryker\Client\MerchantOpeningHoursStorage\Dependency\Client\MerchantOpening
 use Spryker\Client\MerchantOpeningHoursStorage\Dependency\Service\MerchantOpeningHoursStorageToSynchronizationServiceInterface;
 use Spryker\Client\MerchantOpeningHoursStorage\Dependency\Service\MerchantOpeningHoursStorageToUtilEncodingServiceInterface;
 use Spryker\Client\MerchantOpeningHoursStorage\Mapper\MerchantOpeningHoursMapperInterface;
+use Spryker\Client\MerchantOpeningHoursStorage\Reader\Filter\MerchantOpeningHoursStorageReaderFilterInterface;
 use Spryker\Shared\MerchantOpeningHoursStorage\MerchantOpeningHoursStorageConfig;
 
 class MerchantOpeningHoursStorageReader implements MerchantOpeningHoursStorageReaderInterface
@@ -38,21 +39,29 @@ class MerchantOpeningHoursStorageReader implements MerchantOpeningHoursStorageRe
     protected $utilEncodingService;
 
     /**
+     * @var \Spryker\Client\MerchantOpeningHoursStorage\Reader\Filter\MerchantOpeningHoursStorageReaderFilterInterface;
+     */
+    protected $readerFilter;
+
+    /**
      * @param \Spryker\Client\MerchantOpeningHoursStorage\Dependency\Client\MerchantOpeningHoursStorageToStorageClientInterface $storageClient
      * @param \Spryker\Client\MerchantOpeningHoursStorage\Dependency\Service\MerchantOpeningHoursStorageToSynchronizationServiceInterface $synchronizationService
      * @param \Spryker\Client\MerchantOpeningHoursStorage\Mapper\MerchantOpeningHoursMapperInterface $merchantOpeningHoursMapper
      * @param \Spryker\Client\MerchantOpeningHoursStorage\Dependency\Service\MerchantOpeningHoursStorageToUtilEncodingServiceInterface $utilEncodingService
+     * @param \Spryker\Client\MerchantOpeningHoursStorage\Reader\Filter\MerchantOpeningHoursStorageReaderFilterInterface $readerFilter
      */
     public function __construct(
         MerchantOpeningHoursStorageToStorageClientInterface $storageClient,
         MerchantOpeningHoursStorageToSynchronizationServiceInterface $synchronizationService,
         MerchantOpeningHoursMapperInterface $merchantOpeningHoursMapper,
-        MerchantOpeningHoursStorageToUtilEncodingServiceInterface $utilEncodingService
+        MerchantOpeningHoursStorageToUtilEncodingServiceInterface $utilEncodingService,
+        MerchantOpeningHoursStorageReaderFilterInterface $readerFilter
     ) {
         $this->storageClient = $storageClient;
         $this->synchronizationService = $synchronizationService;
         $this->merchantOpeningHoursMapper = $merchantOpeningHoursMapper;
         $this->utilEncodingService = $utilEncodingService;
+        $this->readerFilter = $readerFilter;
     }
 
     /**
@@ -65,6 +74,8 @@ class MerchantOpeningHoursStorageReader implements MerchantOpeningHoursStorageRe
         $merchantOpeningHoursStorageData = $this->storageClient->get(
             $this->generateKey($idMerchant)
         );
+
+        $filteredMerchantOpeningHoursStorageData = $this->readerFilter->filter($merchantOpeningHoursStorageData);
 
         if (!$merchantOpeningHoursStorageData) {
             return null;
