@@ -1,12 +1,58 @@
+Attributes,Attribute
 Categories,Kategorien
+Currencies,Währungen
+Currency,Währung
+Default,Standard
+Description,Beschreibung
 Image,Bild
+"Image Set",Bildersets
+Images,Bilder
+"Manage Product","Artikel verwalten"
 Name,Name
+"Name & Description","Name & Beschreibung"
 Offline,Offline
 Online,Online
+"Please resolve all errors.","Bitte alle Fehler beheben."
+Price,Preis
 Products,Produkte
+"Product Details",Produktdetails
+"Provide a name","Bitte einen Namen eingeben"
+"Provide description","Bitte eine Beschreibung eingeben"
+Save,Speichern
+Select,Auswählen
+"Select Stores","Wählen Sie Stores"
+"Select Tax Set","Wählen Sie Steuersatz"
+"Select Categories","Wählen Sie Kategorien"
 SKU,SKU
 "Search by SKU, Name","Suche nach SKU, Name"
+Store,Store
 Stores,Stores
 "Super Attributes",Superattribute
+"Tax Set",Steuersatz
+"The Product is saved.","Artikel ist gespeichert."
+"The value cannot be empty. Please fill in this input.","Dies ist ein Pflichtfeld."
 Variants,Varianten
 Visibility,Sichtbarkeit
+"Success! The Price is deleted.","Der Preis wurde gelöscht."
+"Something went wrong, please try again.","Etwas ist schief gelaufen, bitte versuchen Sie es noch einmal."
+"Product prices saved successfully.","Product prices saved successfully."
+Net,Net
+Gross,Gross
+Delete,Löschen
+Add,Hinzufügen
+Active,Aktiv
+Inactive,Inaktiv
+Search,Suche
+Status,Status
+"Valid From","Gültig von"
+"Valid To","Gültig bis"
+Validity,Gültigkeit
+"Validity Dates & Time",Gültigkeitsdatum
+"Enabling an option below will overwrite the existing input.","Die Auswahl einer der folgenden Optionen wird die vorhandene Eingabe überschreiben."
+"Bulk edit %number% variants","Massenbearbeitung von %Anzahl% Varianten"
+"The first date cannot be later than the second one.","Das erste Datum darf nicht nach dem zweiten liegen."
+"The first date is the same as the second one.","Das erste Datum ist identisch mit dem ersten."
+"The second date cannot be earlier than the first one.","Das zweite Datum darf nicht vor dem ersten liegen."
+From,Von
+To,Bis
+"Bulk edit",Massenbearbeitung

@@ -76,7 +76,7 @@ class DataExportLocalWriter implements DataExportWriterInterface
 
         $filePath = $this->dataExportPathResolver->resolvePath(
             $dataExportConfigurationTransfer,
-            $dataExportConfigurationTransfer->getConnection()->getParams()[static::LOCAL_CONNECTION_PARAM_EXPORT_ROOT_DIR]
+            $dataExportConfigurationTransfer->getConnectionOrFail()->getParams()[static::LOCAL_CONNECTION_PARAM_EXPORT_ROOT_DIR]
         );
 
         if (!$this->createDirectory($filePath)) {
@@ -92,7 +92,7 @@ class DataExportLocalWriter implements DataExportWriterInterface
                 ->addMessage($this->createWriteFailErrorMessage($filePath));
         }
 
-        $result = fwrite($file, $dataFormatResponseTransfer->getDataFormatted());
+        $result = fwrite($file, $dataFormatResponseTransfer->getDataFormattedOrFail());
         if ($result === false) {
             return $dataExportWriteResponseTransfer
                 ->setIsSuccessful(false)
@@ -114,7 +114,7 @@ class DataExportLocalWriter implements DataExportWriterInterface
         $result = (new DataExportWriteResponseTransfer())
             ->setIsSuccessful(true);
 
-        $params = $dataExportConfigurationTransfer->getConnection()->getParams();
+        $params = $dataExportConfigurationTransfer->getConnectionOrFail()->getParams();
         if (isset($params[static::LOCAL_CONNECTION_PARAM_EXPORT_ROOT_DIR])) {
             return $result;
         }

@@ -24,6 +24,7 @@ use Spryker\Zed\Scheduler\Business\PhpScheduleReader\Mapper\PhpScheduleMapper;
 use Spryker\Zed\Scheduler\Business\PhpScheduleReader\Mapper\PhpScheduleMapperInterface;
 use Spryker\Zed\Scheduler\Business\PhpScheduleReader\PhpScheduleReader;
 use Spryker\Zed\Scheduler\Business\PhpScheduleReader\PhpScheduleReaderInterface;
+use Spryker\Zed\Scheduler\Dependency\Facade\SchedulerToGracefulRunnerFacadeInterface;
 use Spryker\Zed\Scheduler\SchedulerDependencyProvider;
 
 /**
@@ -38,7 +39,8 @@ class SchedulerBusinessFactory extends AbstractBusinessFactory
     {
         return new SchedulerSetupCommand(
             $this->getScheduleReaderPlugins(),
-            $this->createSchedulerFilter()
+            $this->createSchedulerFilter(),
+            $this->getGracefulRunnerFacade()
         );
     }
 
@@ -49,7 +51,8 @@ class SchedulerBusinessFactory extends AbstractBusinessFactory
     {
         return new SchedulerCleanCommand(
             $this->getScheduleReaderPlugins(),
-            $this->createSchedulerFilter()
+            $this->createSchedulerFilter(),
+            $this->getGracefulRunnerFacade()
         );
     }
 
@@ -60,7 +63,8 @@ class SchedulerBusinessFactory extends AbstractBusinessFactory
     {
         return new SchedulerSuspendCommand(
             $this->getScheduleReaderPlugins(),
-            $this->createSchedulerFilter()
+            $this->createSchedulerFilter(),
+            $this->getGracefulRunnerFacade()
         );
     }
 
@@ -71,7 +75,8 @@ class SchedulerBusinessFactory extends AbstractBusinessFactory
     {
         return new SchedulerResumeCommand(
             $this->getScheduleReaderPlugins(),
-            $this->createSchedulerFilter()
+            $this->createSchedulerFilter(),
+            $this->getGracefulRunnerFacade()
         );
     }
 
@@ -163,5 +168,13 @@ class SchedulerBusinessFactory extends AbstractBusinessFactory
     public function getSchedulerAdapterPlugins(): array
     {
         return $this->getProvidedDependency(SchedulerDependencyProvider::PLUGINS_SCHEDULER_ADAPTER);
+    }
+
+    /**
+     * @return \Spryker\Zed\Scheduler\Dependency\Facade\SchedulerToGracefulRunnerFacadeInterface
+     */
+    public function getGracefulRunnerFacade(): SchedulerToGracefulRunnerFacadeInterface
+    {
+        return $this->getProvidedDependency(SchedulerDependencyProvider::FACADE_GRACEFUL_RUNNER);
     }
 }

@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Availability\Persistence;
 
 use Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer;
+use Generated\Shared\Transfer\ProductAvailabilityCriteriaTransfer;
+use Generated\Shared\Transfer\ProductConcreteAvailabilityCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 
@@ -95,4 +97,13 @@ interface AvailabilityRepositoryInterface
      * @return \Generated\Shared\Transfer\StoreTransfer[]
      */
     public function getStoresWhereProductAvailabilityIsDefined(string $concreteSku): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAvailabilityCriteriaTransfer $productAvailabilityCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityCollectionTransfer
+     */
+    public function getProductConcreteAvailabilityCollection(
+        ProductAvailabilityCriteriaTransfer $productAvailabilityCriteriaTransfer
+    ): ProductConcreteAvailabilityCollectionTransfer;
 }

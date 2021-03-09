@@ -1,2 +1,5 @@
 parameters:
     checkMissingIterableValueType: false
+    reportUnmatchedIgnoredErrors: false
+    excludePaths:
+        - %rootDir%/../../../vendor/spryker/spryker/Bundles/MerchantProductOfferSearch/src/Spryker/Client/MerchantProductOfferSearch/Plugin/MerchantReferenceQueryExpanderPlugin.php
