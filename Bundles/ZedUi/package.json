@@ -46,7 +46,7 @@
         "@spryker/sidebar": "^0.2.0-next.2",
         "@spryker/styles": "^0.2.0-next.26",
         "@spryker/table": "^0.2.0-next.32",
-        "@spryker/table.action-handler.form-overlay": "^0.0.2-next.1",
+        "@spryker/table.action-handler.form-overlay": "^0.0.2-next.3",
         "@spryker/table.action-handler.html-overlay": "^0.0.2-next.0",
         "@spryker/table.action-handler.url": "^0.0.2-next.0",
         "@spryker/table.column.chip": "^0.0.2-next.1",

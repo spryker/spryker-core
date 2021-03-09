@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\MerchantProductCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantProductTransfer;
+use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
 use Generated\Shared\Transfer\ValidationResponseTransfer;
 
 interface ProductMerchantPortalGuiToMerchantProductFacadeInterface
@@ -28,4 +29,13 @@ interface ProductMerchantPortalGuiToMerchantProductFacadeInterface
      * @return \Generated\Shared\Transfer\ValidationResponseTransfer
      */
     public function validateMerchantProduct(MerchantProductTransfer $merchantProductTransfer): ValidationResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteCollectionTransfer
+     */
+    public function getProductConcreteCollection(
+        MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer
+    ): ProductConcreteCollectionTransfer;
 }

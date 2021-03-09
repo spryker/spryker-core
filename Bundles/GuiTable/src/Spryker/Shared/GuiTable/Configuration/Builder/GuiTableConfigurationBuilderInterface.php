@@ -219,17 +219,18 @@ interface GuiTableConfigurationBuilderInterface
     );
 
     /**
-     * Adds a new batch action with type url for rows.
+     * Adds a new batch action for rows. If $type is not set url type is used as default.
      *
      * @api
      *
      * @param string $id
      * @param string $title
      * @param string $url
+     * @param string|null $type
      *
      * @return $this
      */
-    public function addBatchActionUrl(string $id, string $title, string $url);
+    public function addBatchActionUrl(string $id, string $title, string $url, ?string $type = null);
 
     /**
      * Sets an action ID which will be triggered when clicking on a row.
