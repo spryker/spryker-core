@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantProductOfferGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\MerchantCollectionTransfer;
 use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 
