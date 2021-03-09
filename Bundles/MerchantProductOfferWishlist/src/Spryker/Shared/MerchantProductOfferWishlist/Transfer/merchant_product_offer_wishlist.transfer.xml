@@ -45,7 +45,7 @@
     </transfer>
 
     <transfer name="ProductOffer">
-        <property name="fkMerchant" type="int"></property>
+        <property name="fkMerchant" type="int"/>
     </transfer>
 
 </transfers>
