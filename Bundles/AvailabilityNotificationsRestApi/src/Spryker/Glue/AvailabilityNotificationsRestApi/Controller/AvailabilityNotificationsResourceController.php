@@ -19,7 +19,6 @@ class AvailabilityNotificationsResourceController extends AbstractController
     /**
      * @Glue({
      *     "getCollection": {
-     *          "path": "/availability-notifications",
      *          "summary": [
      *              "Retrieves a collection of notification subscriptions about products availability."
      *          ],
@@ -48,7 +47,6 @@ class AvailabilityNotificationsResourceController extends AbstractController
     /**
      * @Glue({
      *     "post": {
-     *          "path": "/availability-notifications",
      *          "summary": [
      *              "Subscribe to receive a notification by email when product is back in stock."
      *          ],
@@ -57,7 +55,7 @@ class AvailabilityNotificationsResourceController extends AbstractController
      *          }],
      *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestAvailabilityNotificationRequestAttributesTransfer",
      *          "responses": {
-     *              "404": "Product not found."
+     *              "404": "Product not found.",
      *              "422": "Unprocessable entity."
      *          }
      *     }
@@ -78,7 +76,6 @@ class AvailabilityNotificationsResourceController extends AbstractController
     /**
      * @Glue({
      *     "delete": {
-     *          "path": "/availability-notifications/{subscriptionKey}",
      *          "summary": [
      *              "Unsubscribe from receiving notifications."
      *          ],

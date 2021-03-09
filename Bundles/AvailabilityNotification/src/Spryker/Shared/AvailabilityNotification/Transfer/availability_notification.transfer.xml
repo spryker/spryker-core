@@ -49,7 +49,7 @@
     </transfer>
 
     <transfer name="AvailabilityNotificationSubscriptionCollection">
-        <property name="availabilityNotificationSubscriptions" type="AvailabilityNotificationSubscription[]" singular="availabilityNotificationSubscription" />
+        <property name="availabilityNotificationSubscriptions" type="AvailabilityNotificationSubscription[]" singular="availabilityNotificationSubscription"/>
         <property name="pagination" type="Pagination"/>
     </transfer>
 

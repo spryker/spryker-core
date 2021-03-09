@@ -82,8 +82,8 @@ class AvailabilityNotificationsRestResponseBuilder implements AvailabilityNotifi
     public function createAvailabilityNotificationCollectionResponse(
         AvailabilityNotificationSubscriptionCollectionTransfer $availabilityNotificationSubscriptionCollectionTransfer
     ): RestResponseInterface {
-
-        if ($pagination = $availabilityNotificationSubscriptionCollectionTransfer->getPagination()) {
+        $pagination = $availabilityNotificationSubscriptionCollectionTransfer->getPagination();
+        if ($pagination) {
             $totalItems = $pagination->getNbResults() ?? 0;
             $limit = $pagination->getMaxPerPage() ?? 0;
         }
