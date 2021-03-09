@@ -16,5 +16,5 @@ interface ProductOfferGuiToProductFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function getProductConcrete($concreteSku);
+    public function getProductConcrete(string $concreteSku);
 }

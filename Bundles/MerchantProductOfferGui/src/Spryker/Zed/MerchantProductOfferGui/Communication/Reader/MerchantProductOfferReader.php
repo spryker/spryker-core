@@ -44,7 +44,7 @@ class MerchantProductOfferReader implements MerchantProductOfferReaderInterface
 
             $merchantTransfer = $this->merchantFacade->findOne($merchantCriteriaTransfer);
 
-            if (null !== $merchantTransfer) {
+            if ($merchantTransfer !== null) {
                 $merchantName = $merchantTransfer->getName();
                 $merchantId = $merchantTransfer->getIdMerchant();
             }

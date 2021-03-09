@@ -54,6 +54,11 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
     protected $storeFacade;
 
     /**
+     * @var \Spryker\Zed\MerchantProductOfferStorage\Business\Writer\ProductOfferCriteriaFilterTransferFactory
+     */
+    protected $productOfferCriteriaFilterTransferFactory;
+
+    /**
      * @var string[]
      */
     protected $storeNamesList;
@@ -64,19 +69,22 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
      * @param \Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStorageRepositoryInterface $merchantProductOfferStorageRepository
      * @param \Spryker\Zed\MerchantProductOfferStorage\Business\Deleter\ProductConcreteOffersStorageDeleterInterface $productConcreteOffersStorageDeleter
      * @param \Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToStoreFacadeInterface $storeFacade
+     * @param \Spryker\Zed\MerchantProductOfferStorage\Business\Writer\ProductOfferCriteriaFilterTransferFactory $productOfferCriteriaFilterTransferFactory
      */
     public function __construct(
         MerchantProductOfferStorageToEventBehaviorFacadeInterface $eventBehaviorFacade,
         MerchantProductOfferStorageEntityManagerInterface $merchantProductOfferStorageEntityManager,
         MerchantProductOfferStorageRepositoryInterface $merchantProductOfferStorageRepository,
         ProductConcreteOffersStorageDeleterInterface $productConcreteOffersStorageDeleter,
-        MerchantProductOfferStorageToStoreFacadeInterface $storeFacade
+        MerchantProductOfferStorageToStoreFacadeInterface $storeFacade,
+        ProductOfferCriteriaFilterTransferFactory $productOfferCriteriaFilterTransferFactory
     ) {
         $this->eventBehaviorFacade = $eventBehaviorFacade;
         $this->merchantProductOfferStorageEntityManager = $merchantProductOfferStorageEntityManager;
         $this->merchantProductOfferStorageRepository = $merchantProductOfferStorageRepository;
         $this->productConcreteOffersStorageDeleter = $productConcreteOffersStorageDeleter;
         $this->storeFacade = $storeFacade;
+        $this->productOfferCriteriaFilterTransferFactory = $productOfferCriteriaFilterTransferFactory;
     }
 
     /**
@@ -124,7 +132,8 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
     {
         $productConcreteSkus = array_unique($productConcreteSkus);
 
-        $productOfferCriteriaFilterTransfer = $this->createProductOfferCriteriaFilterTransfer($productConcreteSkus);
+        $productOfferCriteriaFilterTransfer = $this->productOfferCriteriaFilterTransferFactory->createProductOfferCriteriaFilterTransfer()
+            ->setConcreteSkus($productConcreteSkus);
         $productOfferCollectionTransfer = $this->merchantProductOfferStorageRepository->getProductOffersByFilterCriteria($productOfferCriteriaFilterTransfer);
 
         $productOfferReferencesGroupedByConcreteSku = $this->groupProductOfferReferencesByConcreteSku($productConcreteSkus, $productOfferCollectionTransfer);

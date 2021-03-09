@@ -20,7 +20,6 @@ use Spryker\Zed\MerchantProductOfferStorage\Business\Writer\ProductOfferStorageW
 use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToEventBehaviorFacadeInterface;
 use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToStoreFacadeInterface;
 use Spryker\Zed\MerchantProductOfferStorage\MerchantProductOfferStorageDependencyProvider;
-use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
 
 /**
  * @method \Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStorageEntityManagerInterface getEntityManager()
@@ -40,7 +39,7 @@ class MerchantProductOfferStorageBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->createProductConcreteProductOffersStorageDeleter(),
             $this->getStoreFacade(),
-            new ProductOfferCriteriaFilterTransferFactory()
+            $this->getProductOfferCriteriaFilterTransferFactory()
         );
     }
 
@@ -55,7 +54,7 @@ class MerchantProductOfferStorageBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->createProductOfferStorageDeleter(),
             $this->getStoreFacade(),
-            new ProductOfferCriteriaFilterTransferFactory()
+            $this->getProductOfferCriteriaFilterTransferFactory()
         );
     }
 
@@ -95,5 +94,13 @@ class MerchantProductOfferStorageBusinessFactory extends AbstractBusinessFactory
     public function getStoreFacade(): MerchantProductOfferStorageToStoreFacadeInterface
     {
         return $this->getProvidedDependency(MerchantProductOfferStorageDependencyProvider::FACADE_STORE);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantProductOfferStorage\Business\Writer\ProductOfferCriteriaFilterTransferFactory
+     */
+    protected function getProductOfferCriteriaFilterTransferFactory(): ProductOfferCriteriaFilterTransferFactory
+    {
+        return new ProductOfferCriteriaFilterTransferFactory();
     }
 }

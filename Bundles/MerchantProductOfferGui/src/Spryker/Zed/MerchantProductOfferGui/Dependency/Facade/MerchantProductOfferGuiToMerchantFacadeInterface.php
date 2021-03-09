@@ -19,7 +19,6 @@ interface MerchantProductOfferGuiToMerchantFacadeInterface
      */
     public function findOne(MerchantCriteriaTransfer $merchantCriteriaTransfer): ?MerchantTransfer;
 
-
     /**
      * @param \Generated\Shared\Transfer\MerchantCriteriaTransfer $merchantCriteriaTransfer
      *

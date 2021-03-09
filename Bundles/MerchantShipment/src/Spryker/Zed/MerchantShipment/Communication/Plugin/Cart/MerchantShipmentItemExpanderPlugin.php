@@ -23,12 +23,11 @@ class MerchantShipmentItemExpanderPlugin extends AbstractPlugin implements ItemE
      * - Expects `cartChange.items.shipment` to be set.
      * - Sets `cartChange.items.shipment.merchantReference` from `cartChange.items.merchantReference`.
      *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
-     *
-     * @api
-     *
      */
     public function expandItems(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {

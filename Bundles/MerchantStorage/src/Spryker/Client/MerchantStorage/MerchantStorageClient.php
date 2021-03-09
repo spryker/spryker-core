@@ -36,6 +36,10 @@ class MerchantStorageClient extends AbstractClient implements MerchantStorageCli
      * {@inheritDoc}
      *
      * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantCriteriaTransfer $merchantCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantStorageTransfer|null
      */
     public function findOne(MerchantCriteriaTransfer $merchantCriteriaTransfer): ?MerchantStorageTransfer
     {

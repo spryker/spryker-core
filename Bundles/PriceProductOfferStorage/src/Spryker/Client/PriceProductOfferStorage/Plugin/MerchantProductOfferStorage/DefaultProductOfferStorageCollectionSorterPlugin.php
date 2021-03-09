@@ -20,8 +20,8 @@ class DefaultProductOfferStorageCollectionSorterPlugin implements ProductOfferSt
      *
      * @inheritDoc
      */
-    public function sort(ProductOfferStorageCollectionTransfer $productOfferStorageCollectionTransfer
-    ): ProductOfferStorageCollectionTransfer{
+    public function sort(ProductOfferStorageCollectionTransfer $productOfferStorageCollectionTransfer): ProductOfferStorageCollectionTransfer
+    {
         return $productOfferStorageCollectionTransfer;
     }
 }

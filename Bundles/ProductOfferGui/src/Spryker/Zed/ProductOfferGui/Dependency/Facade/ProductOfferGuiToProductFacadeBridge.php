@@ -27,7 +27,7 @@ class ProductOfferGuiToProductFacadeBridge implements ProductOfferGuiToProductFa
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function getProductConcrete($concreteSku)
+    public function getProductConcrete(string $concreteSku)
     {
         return $this->productFacade->getProductConcrete($concreteSku);
     }

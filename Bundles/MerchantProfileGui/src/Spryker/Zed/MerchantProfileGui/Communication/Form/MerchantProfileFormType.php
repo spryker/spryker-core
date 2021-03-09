@@ -410,7 +410,7 @@ class MerchantProfileFormType extends AbstractType
             ]),
         ];
     }
-//
+
 //    /**
 //     * @param \Symfony\Component\Form\FormBuilderInterface $builder
 //     *

@@ -9,9 +9,9 @@ declare(strict_types = 1);
 
 namespace Spryker\Zed\MerchantProductOfferGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\MerchantCollectionTransfer;
 use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
-use Generated\Shared\Transfer\MerchantCollectionTransfer;
 
 class MerchantProductOfferGuiToMerchantFacadeBridge implements MerchantProductOfferGuiToMerchantFacadeInterface
 {
