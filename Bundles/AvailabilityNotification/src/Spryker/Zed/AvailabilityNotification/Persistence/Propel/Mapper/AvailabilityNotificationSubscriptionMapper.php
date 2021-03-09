@@ -49,8 +49,7 @@ class AvailabilityNotificationSubscriptionMapper implements AvailabilityNotifica
     public function mapAvailabilityNotificationSubscriptionEntitiesToAvailabilityNotificationCollectionTransfer(
         ObjectCollection $availabilityNotificationSubscriptionEntities,
         AvailabilityNotificationSubscriptionCollectionTransfer $availabilityNotificationSubscriptionCollectionTransfer
-    ): AvailabilityNotificationSubscriptionCollectionTransfer
-    {
+    ): AvailabilityNotificationSubscriptionCollectionTransfer {
         foreach ($availabilityNotificationSubscriptionEntities as $availabilityNotificationSubscriptionEntity) {
             $availabilityNotificationSubscriptionCollectionTransfer->addAvailabilityNotificationSubscription(
                 $this->mapAvailabilityNotificationSubscriptionTransfer($availabilityNotificationSubscriptionEntity)
