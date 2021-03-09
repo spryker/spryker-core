@@ -409,7 +409,7 @@ class MerchantSwitcherFacadeTest extends Unit
 
         // Assert
         $this->assertTrue($validationResponseTransfer->getIsSuccess());
-        $this->assertEquals(0, $validationResponseTransfer->getErrors()->count());
+        $this->assertEquals(0, $validationResponseTransfer->getErrorMessages()->count());
     }
 
     /**
@@ -446,6 +446,6 @@ class MerchantSwitcherFacadeTest extends Unit
 
         // Assert
         $this->assertFalse($validationResponseTransfer->getIsSuccess());
-        $this->assertEquals(2, $validationResponseTransfer->getErrors()->count());
+        $this->assertEquals(2, $validationResponseTransfer->getErrorMessages()->count());
     }
 }
