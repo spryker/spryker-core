@@ -40,4 +40,12 @@
         <property name="merchantReference" type="string"/>
     </transfer>
 
+    <transfer name="ProductOfferCriteriaFilter">
+        <property name="productOfferReference" type="string"/>
+    </transfer>
+
+    <transfer name="ProductOffer">
+        <property name="fkMerchant" type="int"></property>
+    </transfer>
+
 </transfers>
