@@ -1,4 +1,6 @@
 parameters:
     checkMissingIterableValueType: false
+    reportUnmatchedIgnoredErrors: false
     ignoreErrors:
         - '#Call to an undefined method Generated\\Glue\\Ide\\AutoCompletion\|Spryker\\Shared\\Kernel\\LocatorLocatorInterface::[a-zA-Z]*\(\)#'
+        - '#Parameter \#1 \$configurableBundleTemplateStorageTransfer of method .+ConfigurableBundleTemplateRestResourceBuilderInterface::buildConfigurableBundleTemplateRestResource\(\) expects .+ConfigurableBundleTemplateStorageTransfer, .+ConfigurableBundleTemplateStorageTransfer|false given.#'

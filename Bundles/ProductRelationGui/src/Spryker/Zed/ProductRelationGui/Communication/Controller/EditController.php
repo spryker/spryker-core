@@ -14,6 +14,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @method \Spryker\Zed\ProductRelationGui\Communication\ProductRelationGuiCommunicationFactory getFactory()
+ */
 class EditController extends BaseProductRelationController
 {
     public const URL_PARAM_ID_PRODUCT_RELATION = 'id-product-relation';

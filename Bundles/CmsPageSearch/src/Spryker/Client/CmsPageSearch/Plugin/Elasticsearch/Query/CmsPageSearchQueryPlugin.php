@@ -10,8 +10,8 @@ namespace Spryker\Client\CmsPageSearch\Plugin\Elasticsearch\Query;
 use Elastica\Query;
 use Elastica\Query\AbstractQuery;
 use Elastica\Query\BoolQuery;
-use Elastica\Query\Match;
 use Elastica\Query\MatchAll;
+use Elastica\Query\MatchQuery;
 use Elastica\Query\MultiMatch;
 use Elastica\Suggest;
 use Generated\Shared\Search\PageIndexMap;
@@ -185,8 +185,7 @@ class CmsPageSearchQueryPlugin extends AbstractPlugin implements QueryInterface,
      */
     protected function setTypeFilter(BoolQuery $boolQuery): void
     {
-        $typeFilter = (new Match())
-            ->setField(PageIndexMap::TYPE, static::TYPE);
+        $typeFilter = $this->getMatchQuery()->setField(PageIndexMap::TYPE, static::TYPE);
 
         $boolQuery->addMust($typeFilter);
     }
@@ -229,5 +228,19 @@ class CmsPageSearchQueryPlugin extends AbstractPlugin implements QueryInterface,
     protected function getFullTextBoostedBoostingValue(): int
     {
         return $this->getFactory()->getConfig()->getFullTextBoostedBoostingValue();
+    }
+
+    /**
+     * For compatibility with PHP 8.
+     *
+     * @return \Elastica\Query\MatchQuery|\Elastica\Query\Match
+     */
+    protected function getMatchQuery()
+    {
+        $matchQueryClassName = class_exists(MatchQuery::class)
+            ? MatchQuery::class
+            : '\Elastica\Query\Match';
+
+        return new $matchQueryClassName();
     }
 }

@@ -20,7 +20,7 @@ class TestStateMachineHandler implements StateMachineHandlerInterface
     /**
      * @var \Generated\Shared\Transfer\StateMachineItemTransfer[]
      */
-    protected $stateMachineItemsByStateIds;
+    protected $stateMachineItems;
 
     /**
      * List of command plugins for this state machine for all processes.
@@ -67,6 +67,7 @@ class TestStateMachineHandler implements StateMachineHandlerInterface
     {
         return [
           'TestProcess',
+          'TestProcessWithoutEvent',
         ];
     }
 
@@ -105,7 +106,7 @@ class TestStateMachineHandler implements StateMachineHandlerInterface
     public function getStateMachineItemsByStateIds(array $stateIds = []): array
     {
         $result = [];
-        foreach ($this->stateMachineItemsByStateIds as $stateMachineItemTransfer) {
+        foreach ($this->stateMachineItems as $stateMachineItemTransfer) {
             if (in_array($stateMachineItemTransfer->getIdItemState(), $stateIds)) {
                 $result[] = $stateMachineItemTransfer;
             }
@@ -123,12 +124,12 @@ class TestStateMachineHandler implements StateMachineHandlerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItemsByStateIds
+     * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
      *
      * @return void
      */
-    public function setStateMachineItemsByStateIds(array $stateMachineItemsByStateIds): void
+    public function setStateMachineItems(array $stateMachineItems): void
     {
-        $this->stateMachineItemsByStateIds = $stateMachineItemsByStateIds;
+        $this->stateMachineItems = $stateMachineItems;
     }
 }

@@ -9,7 +9,7 @@ namespace Spryker\Client\ProductSetPageSearch\Plugin\Elasticsearch\Query;
 
 use Elastica\Query;
 use Elastica\Query\BoolQuery;
-use Elastica\Query\Match;
+use Elastica\Query\MatchQuery;
 use Generated\Shared\Search\PageIndexMap;
 use Generated\Shared\Transfer\ProductSetDataStorageTransfer;
 use Generated\Shared\Transfer\SearchContextTransfer;
@@ -137,8 +137,7 @@ class ProductSetPageSearchListQueryPlugin extends AbstractPlugin implements Quer
      */
     protected function setTypeFilter(BoolQuery $boolQuery)
     {
-        $typeFilter = new Match();
-        $typeFilter->setField(PageIndexMap::TYPE, ProductSetPageSearchConstants::PRODUCT_SET_RESOURCE_NAME);
+        $typeFilter = $this->getMatchQuery()->setField(PageIndexMap::TYPE, ProductSetPageSearchConstants::PRODUCT_SET_RESOURCE_NAME);
 
         $boolQuery->addMust($typeFilter);
     }
@@ -220,5 +219,19 @@ class ProductSetPageSearchListQueryPlugin extends AbstractPlugin implements Quer
     protected function hasSearchContext(): bool
     {
         return (bool)$this->searchContextTransfer;
+    }
+
+    /**
+     * For compatibility with PHP 8.
+     *
+     * @return \Elastica\Query\MatchQuery|\Elastica\Query\Match
+     */
+    protected function getMatchQuery()
+    {
+        $matchQueryClassName = class_exists(MatchQuery::class)
+            ? MatchQuery::class
+            : '\Elastica\Query\Match';
+
+        return new $matchQueryClassName();
     }
 }

@@ -1,0 +1,114 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 29,
+            "line_to": 29,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\PriceProductTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductConfigurationsPriceProductVolumesRestApi/src/Spryker/Glue/ProductConfigurationsPriceProductVolumesRestApi/Processor/Mapper/ProductConfigurationPriceProductVolumeMapper.php",
+            "snippet": "        if ($productConfigurationInstanceTransfer->getPrices()->count() === 0) {",
+            "selected_text": "count",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 89,
+            "line_to": 89,
+            "type": "MismatchingDocblockParamType",
+            "message": "Parameter $priceProductTransfers has wrong type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\PriceProductTransfer>', should be 'ArrayObject'",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductConfigurationsPriceProductVolumesRestApi/src/Spryker/Glue/ProductConfigurationsPriceProductVolumesRestApi/Processor/Mapper/ProductConfigurationPriceProductVolumeMapper.php",
+            "snippet": "     * @param \\Generated\\Shared\\Transfer\\PriceProductTransfer[]|\\ArrayObject $priceProductTransfers",
+            "selected_text": "\\Generated\\Shared\\Transfer\\PriceProductTransfer[]|\\ArrayObject",
+            "error_level": 4,
+            "shortcode": 141
+        },
+        {
+            "severity": "info",
+            "line_from": 95,
+            "line_to": 95,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\PriceProductTransfer> variable $priceProductTransfers",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductConfigurationsPriceProductVolumesRestApi/src/Spryker/Glue/ProductConfigurationsPriceProductVolumesRestApi/Processor/Mapper/ProductConfigurationPriceProductVolumeMapper.php",
+            "snippet": "        return array_filter($priceProductTransfers->getArrayCopy(), function (PriceProductTransfer $priceProductTransfer) {",
+            "selected_text": "getArrayCopy",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 140,
+            "line_to": 140,
+            "type": "MismatchingDocblockParamType",
+            "message": "Parameter $restProductConfigurationPriceAttributesTransfers has wrong type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\RestProductConfigurationPriceAttributesTransfer>', should be 'ArrayObject'",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductConfigurationsPriceProductVolumesRestApi/src/Spryker/Glue/ProductConfigurationsPriceProductVolumesRestApi/Processor/Mapper/ProductConfigurationPriceProductVolumeMapper.php",
+            "snippet": "     * @param \\Generated\\Shared\\Transfer\\RestProductConfigurationPriceAttributesTransfer[]|\\ArrayObject $restProductConfigurationPriceAttributesTransfers",
+            "selected_text": "\\Generated\\Shared\\Transfer\\RestProductConfigurationPriceAttributesTransfer[]|\\ArrayObject",
+            "error_level": 4,
+            "shortcode": 141
+        },
+        {
+            "severity": "info",
+            "line_from": 58,
+            "line_to": 58,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\RestProductPriceVolumesAttributesTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductConfigurationsPriceProductVolumesRestApi/src/Spryker/Glue/ProductConfigurationsPriceProductVolumesRestApi/Processor/Mapper/RestCartItemProductConfigurationPriceProductVolumeMapper.php",
+            "snippet": "            if ($restProductConfigurationPriceAttributesTransfer->getVolumePrices()->count() === 0) {",
+            "selected_text": "count",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 144,
+            "line_to": 144,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductConfigurationsPriceProductVolumesRestApi/src/Spryker/Glue/ProductConfigurationsPriceProductVolumesRestApi/Processor/Mapper/RestCartItemProductConfigurationPriceProductVolumeMapper.php",
+            "snippet": "        $groupKey = sprintf('%s-%s', $priceProductTransfer->getGroupKey(), $restProductPriceVolumesAttributesTransfer->getQuantity());",
+            "selected_text": "$priceProductTransfer->getGroupKey()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 144,
+            "line_to": 144,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 3 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductConfigurationsPriceProductVolumesRestApi/src/Spryker/Glue/ProductConfigurationsPriceProductVolumesRestApi/Processor/Mapper/RestCartItemProductConfigurationPriceProductVolumeMapper.php",
+            "snippet": "        $groupKey = sprintf('%s-%s', $priceProductTransfer->getGroupKey(), $restProductPriceVolumesAttributesTransfer->getQuantity());",
+            "selected_text": "$restProductPriceVolumesAttributesTransfer->getQuantity()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 159,
+            "line_to": 159,
+            "type": "MismatchingDocblockParamType",
+            "message": "Parameter $priceProductTransfers has wrong type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\PriceProductTransfer>', should be 'ArrayObject'",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductConfigurationsPriceProductVolumesRestApi/src/Spryker/Glue/ProductConfigurationsPriceProductVolumesRestApi/Processor/Mapper/RestCartItemProductConfigurationPriceProductVolumeMapper.php",
+            "snippet": "     * @param \\Generated\\Shared\\Transfer\\PriceProductTransfer[]|\\ArrayObject $priceProductTransfers",
+            "selected_text": "\\Generated\\Shared\\Transfer\\PriceProductTransfer[]|\\ArrayObject",
+            "error_level": 4,
+            "shortcode": 141
+        },
+        {
+            "severity": "info",
+            "line_from": 162,
+            "line_to": 162,
+            "type": "MismatchingDocblockReturnType",
+            "message": "Docblock has incorrect return type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\PriceProductTransfer>', should be 'ArrayObject'",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductConfigurationsPriceProductVolumesRestApi/src/Spryker/Glue/ProductConfigurationsPriceProductVolumesRestApi/Processor/Mapper/RestCartItemProductConfigurationPriceProductVolumeMapper.php",
+            "snippet": "     * @return \\Generated\\Shared\\Transfer\\PriceProductTransfer[]|\\ArrayObject",
+            "selected_text": "\\Generated\\Shared\\Transfer\\PriceProductTransfer[]|\\ArrayObject",
+            "error_level": 4,
+            "shortcode": 142
+        }
+    ],
+    "deprecation": []
+}
