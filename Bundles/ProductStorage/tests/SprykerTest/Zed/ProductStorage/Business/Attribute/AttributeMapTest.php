@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\AttributeMapStorageTransfer;
 use Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Propel\Runtime\Collection\ObjectCollection;
+use ReflectionProperty;
 use Spryker\Zed\ProductStorage\Business\Attribute\AttributeMap;
 use Spryker\Zed\ProductStorage\Business\Filter\SingleValueSuperAttributeFilter;
 use Spryker\Zed\ProductStorage\Dependency\Facade\ProductStorageToProductInterface;
@@ -56,11 +57,6 @@ class AttributeMapTest extends Unit
     protected const KEY_LOCALIZED_ATTRIBUTES = 'localized_attributes';
 
     /**
-     * @var \SprykerTest\Zed\ProductStorage\ProductStorageBusinessTester
-     */
-    protected $tester;
-
-    /**
      * @return void
      */
     public function testGenerateAttributeMapBulkWillGenerateAttributeVariantMap(): void
@@ -74,6 +70,7 @@ class AttributeMapTest extends Unit
             static::KEY_LOCALIZED_ATTRIBUTES => '{}',
             static::KEY_FK_LOCALE => 64,
         ];
+
         $productConcreteData2 = [
             static::KEY_ID_PRODUCT => 2,
             static::KEY_ATTRIBUTES => json_encode(static::FAKE_PRODUCT_ATTRIBUTES_2),
@@ -88,12 +85,19 @@ class AttributeMapTest extends Unit
             '2' => static::FAKE_PRODUCT_ATTRIBUTES_2,
         ];
 
+        $productConcreteDataList = [$productConcreteData1, $productConcreteData2];
+        $productStorageQueryContainerMock = $this->createProductStorageQueryContainerMock(
+            $productConcreteDataList,
+            static::FAKE_SUPER_ATTRIBUTES
+        );
+
+        $reflection = new ReflectionProperty(AttributeMap::class, 'superAttributesCache');
+        $reflection->setAccessible(true);
+        $reflection->setValue(null, null);
+
         $attributeMap = new AttributeMap(
             $this->createProductFacadeMock([static::FAKE_PRODUCT_ATTRIBUTES_1, static::FAKE_PRODUCT_ATTRIBUTES_2]),
-            $this->createProductStorageQueryContainerMock(
-                [$productConcreteData1, $productConcreteData2],
-                static::FAKE_SUPER_ATTRIBUTES
-            ),
+            $productStorageQueryContainerMock,
             $this->createProductStorageConfigMock(false),
             new SingleValueSuperAttributeFilter()
         );
@@ -107,6 +111,7 @@ class AttributeMapTest extends Unit
         /** @var \Generated\Shared\Transfer\AttributeMapStorageTransfer $attributeMapStorageTransfer */
         $attributeMapStorageTransfer = $attributeMapBulk['1_64'];
         $this->assertInstanceOf(AttributeMapStorageTransfer::class, $attributeMapStorageTransfer);
+
         $this->assertCount(2, $attributeMapStorageTransfer->getAttributeVariantMap());
         $this->assertEqualsCanonicalizing($expectedAttributeVariantMap, $attributeMapStorageTransfer->getAttributeVariantMap());
     }
