@@ -66,8 +66,6 @@ class OnlineProfileMerchantProfileForm extends AbstractType
             ->addUrlCollectionField($builder)
             ->addMerchantProfileLocalizedGlossaryAttributesSubform($builder)
             ->addFaxNumberField($builder)
-//            ->addLatitudeField($builder)
-//            ->addLongitudeField($builder)
             ->addAddressCollectionSubform($builder);
     }
 

@@ -5,20 +5,19 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantOpeningHoursStorage\Communication\Plugin\Event\Listener;
+namespace Spryker\Zed\MerchantOpeningHoursStorage\Communication\Plugin\Publisher;
 
 use Orm\Zed\MerchantOpeningHours\Persistence\Map\SpyMerchantOpeningHoursWeekdayScheduleTableMap;
-use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\MerchantOpeningHours\Dependency\MerchantOpeningHoursEvents;
+use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface;
 
 /**
- * @deprecated Use {@link \MerchantOpeningHoursStoragePublisherPlugin} instead
- *
  * @method \Spryker\Zed\MerchantOpeningHoursStorage\Business\MerchantOpeningHoursStorageFacadeInterface getFacade()
- * @method \Spryker\Zed\MerchantOpeningHoursStorage\Communication\MerchantOpeningHoursStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\MerchantOpeningHoursStorage\MerchantOpeningHoursStorageConfig getConfig()
+ * @method \Spryker\Zed\MerchantOpeningHoursStorage\Communication\MerchantOpeningHoursStorageCommunicationFactory getFactory()
  */
-class MerchantOpeningHoursWeekdayScheduleStoragePublishListener extends AbstractPlugin implements EventBulkHandlerInterface
+class MerchantOpeningHoursStorageWeekdayScheduleCreatePublisherPlugin extends AbstractPlugin implements PublisherPluginInterface
 {
     /**
      * {@inheritDoc}
@@ -39,6 +38,22 @@ class MerchantOpeningHoursWeekdayScheduleStoragePublishListener extends Abstract
                 SpyMerchantOpeningHoursWeekdayScheduleTableMap::COL_FK_MERCHANT
             );
 
-        $this->getFacade()->publish($merchantIds);
+        if (empty($merchantIds) === false) {
+            $this->getFacade()->publish($merchantIds);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return string[]
+     */
+    public function getSubscribedEvents(): array
+    {
+        return [
+            MerchantOpeningHoursEvents::ENTITY_SPY_MERCHANT_OPENING_HOURS_WEEKDAY_SCHEDULE_CREATE,
+        ];
     }
 }

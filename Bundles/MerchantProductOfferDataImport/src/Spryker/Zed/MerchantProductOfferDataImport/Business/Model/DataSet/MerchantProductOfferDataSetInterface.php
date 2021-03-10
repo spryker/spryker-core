@@ -19,6 +19,4 @@ interface MerchantProductOfferDataSetInterface
     public const ID_MERCHANT = 'id_merchant';
     public const ID_PRODUCT_OFFER = 'id_product_offer';
     public const ID_STORE = 'id_store';
-
-    public const DEFAULT_APPROVAL_STATUS = 'denied';
 }

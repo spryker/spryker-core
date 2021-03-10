@@ -36,7 +36,7 @@ class MerchantProductOfferReader implements MerchantProductOfferReaderInterface
     public function getMerchantData(ProductOfferTransfer $productOfferTransfer): array
     {
         $merchantName = '';
-        $merchantId = '';
+        $merchantId = 0;
 
         if ($productOfferTransfer->getMerchantReference()) {
             $merchantCriteriaTransfer = (new MerchantCriteriaTransfer())

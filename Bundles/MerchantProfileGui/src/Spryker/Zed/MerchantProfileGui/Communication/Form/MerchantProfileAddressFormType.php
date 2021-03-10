@@ -210,12 +210,8 @@ class MerchantProfileAddressFormType extends AbstractType
             'label' => static::LABEL_LONGITUDE,
             'required' => false,
             'constraints' => [
-                new Length([
-                               'max' => 255,
-                           ]),
-                new Regex([
-                              'pattern' => '/^(\\+|-)?(?:180(?:(?:\\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\\.[0-9]{1,6})?))$/',
-                          ]),
+                new Length(['max' => 255,]),
+                new Regex(['pattern' => '/^(\\+|-)?(?:180(?:(?:\\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\\.[0-9]{1,6})?))$/',]),
             ],
         ]);
 
@@ -233,12 +229,8 @@ class MerchantProfileAddressFormType extends AbstractType
             'label' => static::LABEL_LATITUDE,
             'required' => false,
             'constraints' => [
-                new Length([
-                    'max' => 255,
-                ]),
-                new Regex([
-                    'pattern' => '/^(\\+|-)?(?:90(?:(?:\\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\\.[0-9]{1,6})?))$/',
-                ]),
+                new Length(['max' => 255,]),
+                new Regex(['pattern' => '/^(\\+|-)?(?:90(?:(?:\\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\\.[0-9]{1,6})?))$/',]),
             ],
         ]);
 

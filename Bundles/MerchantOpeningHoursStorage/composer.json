@@ -10,6 +10,7 @@
     "spryker/merchant": "^3.0.0",
     "spryker/merchant-opening-hours": "^0.2.0",
     "spryker/propel-orm": "^1.5.0",
+    "spryker/publisher-extension": "^1.0.0",
     "spryker/storage": "^3.0.0",
     "spryker/synchronization": "^1.0.0",
     "spryker/synchronization-behavior": "^1.0.0",

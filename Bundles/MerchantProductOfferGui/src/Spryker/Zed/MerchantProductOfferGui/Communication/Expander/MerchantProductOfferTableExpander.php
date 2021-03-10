@@ -19,8 +19,8 @@ use Symfony\Component\HttpFoundation\Request;
 class MerchantProductOfferTableExpander implements MerchantProductOfferTableExpanderInterface
 {
     protected const URL_PARAM_ID_MERCHANT = 'id-merchant';
+    protected const URL_PARAM_MERCHANT_REFERENCE = 'MerchantReference';
     protected const COL_MERCHANT_NAME = 'Merchant';
-    protected const COL_MERCHANT_REFERENCE_NAME = 'MerchantReference';
 
     /**
      * @var \Spryker\Zed\MerchantProductOfferGui\Persistence\MerchantProductOfferGuiRepositoryInterface
@@ -51,7 +51,7 @@ class MerchantProductOfferTableExpander implements MerchantProductOfferTableExpa
      */
     public function expandQueryCriteria(QueryCriteriaTransfer $queryCriteriaTransfer): QueryCriteriaTransfer
     {
-        $merchantReference = $this->request->get(static::COL_MERCHANT_REFERENCE_NAME);
+        $merchantReference = $this->request->get(static::URL_PARAM_MERCHANT_REFERENCE);
 
         return $this->merchantProductOfferGuiRepository->expandQueryCriteriaTransfer(
             $queryCriteriaTransfer,

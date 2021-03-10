@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\MerchantOpeningHoursStorage\Communication\Plugin\Publisher;
 
-use Orm\Zed\MerchantOpeningHours\Persistence\Map\SpyMerchantOpeningHoursDateScheduleTableMap;
-use Orm\Zed\MerchantOpeningHours\Persistence\Map\SpyMerchantOpeningHoursWeekdayScheduleTableMap;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\MerchantOpeningHours\Dependency\MerchantOpeningHoursEvents;
 use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface;
@@ -21,45 +19,20 @@ use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface;
 class MerchantOpeningHoursStoragePublisherPlugin extends AbstractPlugin implements PublisherPluginInterface
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      *
      * @api
      *
-     * @param array $eventEntityTransfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
      * @param string $eventName
+     *
+     * @return void
      */
     public function handleBulk(array $eventEntityTransfers, $eventName): void
     {
-        switch ($eventName) {
-            case MerchantOpeningHoursEvents::MERCHANT_OPENING_HOURS_PUBLISH:
-                $merchantIds = $this->getFactory()
-                    ->getEventBehaviorFacade()
-                    ->getEventTransferIds($eventEntityTransfers);
-
-                break;
-            case MerchantOpeningHoursEvents::ENTITY_SPY_MERCHANT_OPENING_HOURS_WEEKDAY_SCHEDULE_CREATE:
-                $merchantIds = $this->getFactory()
-                    ->getEventBehaviorFacade()
-                    ->getEventTransferForeignKeys(
-                        $eventEntityTransfers,
-                        SpyMerchantOpeningHoursWeekdayScheduleTableMap::COL_FK_MERCHANT
-                    );
-
-                break;
-            case MerchantOpeningHoursEvents::ENTITY_SPY_MERCHANT_OPENING_HOURS_DATE_SCHEDULE_CREATE:
-                $merchantIds = $this->getFactory()
-                    ->getEventBehaviorFacade()
-                    ->getEventTransferForeignKeys(
-                        $eventEntityTransfers,
-                        SpyMerchantOpeningHoursDateScheduleTableMap::COL_FK_MERCHANT
-                    );
-
-                break;
-            default:
-                $merchantIds = [];
-
-                break;
-        }
+        $merchantIds = $this->getFactory()
+            ->getEventBehaviorFacade()
+            ->getEventTransferIds($eventEntityTransfers);
 
         if (empty($merchantIds) === false) {
             $this->getFacade()->publish($merchantIds);
@@ -77,8 +50,6 @@ class MerchantOpeningHoursStoragePublisherPlugin extends AbstractPlugin implemen
     {
         return [
             MerchantOpeningHoursEvents::MERCHANT_OPENING_HOURS_PUBLISH,
-            MerchantOpeningHoursEvents::ENTITY_SPY_MERCHANT_OPENING_HOURS_WEEKDAY_SCHEDULE_CREATE,
-            MerchantOpeningHoursEvents::ENTITY_SPY_MERCHANT_OPENING_HOURS_DATE_SCHEDULE_CREATE,
         ];
     }
 }

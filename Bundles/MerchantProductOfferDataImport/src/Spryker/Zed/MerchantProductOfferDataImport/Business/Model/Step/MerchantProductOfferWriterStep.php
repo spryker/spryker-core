@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\EventEntityTransfer;
 use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
 use Orm\Zed\ProductOffer\Persistence\SpyProductOffer;
 use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
+use Spryker\Shared\ProductOffer\ProductOfferConfig;
 use Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepAfterExecuteInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
@@ -28,7 +29,8 @@ class MerchantProductOfferWriterStep implements DataImportStepInterface, DataImp
     protected const MERCHANT_SKU = MerchantProductOfferDataSetInterface::MERCHANT_SKU;
     protected const IS_ACTIVE = MerchantProductOfferDataSetInterface::IS_ACTIVE;
     protected const APPROVAL_STATUS = MerchantProductOfferDataSetInterface::APPROVAL_STATUS;
-    protected const DEFAULT_APPROVAL_STATUS = MerchantProductOfferDataSetInterface::DEFAULT_APPROVAL_STATUS;
+
+    protected const DEFAULT_APPROVAL_STATUS = ProductOfferConfig::STATUS_DENIED;
 
     /**
      * @var \Generated\Shared\Transfer\EventEntityTransfer[]

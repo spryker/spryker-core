@@ -16,7 +16,7 @@ class DefaultProductOfferStorageCollectionSorterPlugin implements ProductOfferSt
      * Specification:
      * - Default plugin to sort ProductOfferStorageCollection. No sorting actually occurs
      *
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function sort(ProductOfferStorageCollectionTransfer $productOfferStorageCollectionTransfer): ProductOfferStorageCollectionTransfer
     {

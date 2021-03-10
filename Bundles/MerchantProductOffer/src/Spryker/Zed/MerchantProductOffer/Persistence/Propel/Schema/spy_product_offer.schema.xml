@@ -12,7 +12,7 @@
             <index-column name="merchant_sku"/>
         </index>
 
-        <foreign-key name="spy_product_offer-merchant_reference" foreignTable="spy_merchant" onDelete="setnull">
+        <foreign-key name="spy_product_offer-merchant_reference" foreignTable="spy_merchant">
             <reference local="merchant_reference" foreign="merchant_reference"/>
         </foreign-key>
     </table>
