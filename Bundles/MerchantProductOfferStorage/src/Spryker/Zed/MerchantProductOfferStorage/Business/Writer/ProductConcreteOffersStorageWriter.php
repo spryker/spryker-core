@@ -54,7 +54,7 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
     protected $storeFacade;
 
     /**
-     * @var \Spryker\Zed\MerchantProductOfferStorage\Business\Writer\ProductOfferCriteriaFilterTransferFactory
+     * @var \Spryker\Zed\MerchantProductOfferStorage\Business\Writer\ProductOfferCriteriaFilterTransferProviderInterface
      */
     protected $productOfferCriteriaFilterTransferFactory;
 
@@ -69,7 +69,7 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
      * @param \Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStorageRepositoryInterface $merchantProductOfferStorageRepository
      * @param \Spryker\Zed\MerchantProductOfferStorage\Business\Deleter\ProductConcreteOffersStorageDeleterInterface $productConcreteOffersStorageDeleter
      * @param \Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToStoreFacadeInterface $storeFacade
-     * @param \Spryker\Zed\MerchantProductOfferStorage\Business\Writer\ProductOfferCriteriaFilterTransferFactory $productOfferCriteriaFilterTransferFactory
+     * @param \Spryker\Zed\MerchantProductOfferStorage\Business\Writer\ProductOfferCriteriaFilterTransferProviderInterface $productOfferCriteriaFilterTransferFactory
      */
     public function __construct(
         MerchantProductOfferStorageToEventBehaviorFacadeInterface $eventBehaviorFacade,
@@ -77,7 +77,7 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
         MerchantProductOfferStorageRepositoryInterface $merchantProductOfferStorageRepository,
         ProductConcreteOffersStorageDeleterInterface $productConcreteOffersStorageDeleter,
         MerchantProductOfferStorageToStoreFacadeInterface $storeFacade,
-        ProductOfferCriteriaFilterTransferFactory $productOfferCriteriaFilterTransferFactory
+        ProductOfferCriteriaFilterTransferProviderInterface $productOfferCriteriaFilterTransferFactory
     ) {
         $this->eventBehaviorFacade = $eventBehaviorFacade;
         $this->merchantProductOfferStorageEntityManager = $merchantProductOfferStorageEntityManager;

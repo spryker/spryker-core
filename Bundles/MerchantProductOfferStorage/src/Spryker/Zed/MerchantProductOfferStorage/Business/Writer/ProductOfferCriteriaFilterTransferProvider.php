@@ -9,7 +9,7 @@ namespace Spryker\Zed\MerchantProductOfferStorage\Business\Writer;
 
 use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
 
-class ProductOfferCriteriaFilterTransferFactory
+class ProductOfferCriteriaFilterTransferProvider implements ProductOfferCriteriaFilterTransferProviderInterface
 {
     protected const STATUS_APPROVED = 'approved';
 

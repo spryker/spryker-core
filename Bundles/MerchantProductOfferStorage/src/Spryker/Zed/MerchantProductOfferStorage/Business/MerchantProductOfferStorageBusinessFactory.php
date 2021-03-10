@@ -14,7 +14,8 @@ use Spryker\Zed\MerchantProductOfferStorage\Business\Deleter\ProductOfferStorage
 use Spryker\Zed\MerchantProductOfferStorage\Business\Deleter\ProductOfferStorageDeleterInterface;
 use Spryker\Zed\MerchantProductOfferStorage\Business\Writer\ProductConcreteOffersStorageWriter;
 use Spryker\Zed\MerchantProductOfferStorage\Business\Writer\ProductConcreteOffersStorageWriterInterface;
-use Spryker\Zed\MerchantProductOfferStorage\Business\Writer\ProductOfferCriteriaFilterTransferFactory;
+use Spryker\Zed\MerchantProductOfferStorage\Business\Writer\ProductOfferCriteriaFilterTransferProvider;
+use Spryker\Zed\MerchantProductOfferStorage\Business\Writer\ProductOfferCriteriaFilterTransferProviderInterface;
 use Spryker\Zed\MerchantProductOfferStorage\Business\Writer\ProductOfferStorageWriter;
 use Spryker\Zed\MerchantProductOfferStorage\Business\Writer\ProductOfferStorageWriterInterface;
 use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToEventBehaviorFacadeInterface;
@@ -39,7 +40,7 @@ class MerchantProductOfferStorageBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->createProductConcreteProductOffersStorageDeleter(),
             $this->getStoreFacade(),
-            $this->getProductOfferCriteriaFilterTransferFactory()
+            $this->getProductOfferCriteriaFilterTransferProvider()
         );
     }
 
@@ -54,7 +55,7 @@ class MerchantProductOfferStorageBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->createProductOfferStorageDeleter(),
             $this->getStoreFacade(),
-            $this->getProductOfferCriteriaFilterTransferFactory()
+            $this->getProductOfferCriteriaFilterTransferProvider()
         );
     }
 
@@ -97,10 +98,10 @@ class MerchantProductOfferStorageBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\MerchantProductOfferStorage\Business\Writer\ProductOfferCriteriaFilterTransferFactory
+     * @return \Spryker\Zed\MerchantProductOfferStorage\Business\Writer\ProductOfferCriteriaFilterTransferProviderInterface
      */
-    protected function getProductOfferCriteriaFilterTransferFactory(): ProductOfferCriteriaFilterTransferFactory
+    protected function getProductOfferCriteriaFilterTransferProvider(): ProductOfferCriteriaFilterTransferProviderInterface
     {
-        return new ProductOfferCriteriaFilterTransferFactory();
+        return new ProductOfferCriteriaFilterTransferProvider();
     }
 }

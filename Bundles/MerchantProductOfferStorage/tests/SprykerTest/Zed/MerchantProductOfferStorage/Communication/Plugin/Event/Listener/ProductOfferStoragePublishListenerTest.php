@@ -17,7 +17,7 @@ use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Zed\MerchantProductOffer\Dependency\MerchantProductOfferEvents;
 use Spryker\Zed\MerchantProductOfferStorage\Business\Deleter\ProductOfferStorageDeleterInterface;
-use Spryker\Zed\MerchantProductOfferStorage\Business\Writer\ProductOfferCriteriaFilterTransferFactory;
+use Spryker\Zed\MerchantProductOfferStorage\Business\Writer\ProductOfferCriteriaFilterTransferProvider;
 use Spryker\Zed\MerchantProductOfferStorage\Business\Writer\ProductOfferStorageWriter;
 use Spryker\Zed\MerchantProductOfferStorage\Communication\Plugin\Event\Listener\ProductOfferStoragePublishListener;
 use Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStorageEntityManagerInterface;
@@ -228,7 +228,7 @@ class ProductOfferStoragePublishListenerTest extends AbstractStoragePublishListe
             $merchantProductOfferStorageRepository,
             $productOfferStorageDeleter,
             $this->getMerchantProductOfferStorageToStoreFacadeInterfaceMock(),
-            new ProductOfferCriteriaFilterTransferFactory()
+            new ProductOfferCriteriaFilterTransferProvider()
         );
 
         //Act
