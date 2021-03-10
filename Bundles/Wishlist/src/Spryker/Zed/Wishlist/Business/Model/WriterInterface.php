@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Wishlist\Business\Model;
 
-use Generated\Shared\Transfer\WishlistItemCollectionTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 
@@ -80,22 +79,4 @@ interface WriterInterface
      * @return \Generated\Shared\Transfer\WishlistItemTransfer
      */
     public function addItem(WishlistItemTransfer $wishlistItemTransfer);
-
-    /**
-     * @deprecated Use {@link \Spryker\Zed\Wishlist\Persistence\WishlistEntityManager::deleteItem()} instead.
-     *
-     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
-     *
-     * @return \Generated\Shared\Transfer\WishlistItemTransfer
-     */
-    public function removeItem(WishlistItemTransfer $wishlistItemTransfer);
-
-    /**
-     * @deprecated Use {@link \Spryker\Zed\Wishlist\Business\Deleter\WishlistDeleterInterface::deleteItemCollection()} instead.
-     *
-     * @param \Generated\Shared\Transfer\WishlistItemCollectionTransfer $wishlistItemTransferCollection
-     *
-     * @return \Generated\Shared\Transfer\WishlistItemCollectionTransfer
-     */
-    public function removeItemCollection(WishlistItemCollectionTransfer $wishlistItemTransferCollection);
 }
