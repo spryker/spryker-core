@@ -20,7 +20,6 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/event": "*",
     "spryker/propel": "*",
     "spryker/queue": "*",
     "spryker/testify": "*"
