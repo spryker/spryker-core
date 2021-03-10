@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\Availability\Business;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ProductAvailabilityCriteriaTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -605,6 +606,115 @@ class AvailabilityFacadeTest extends Unit
 
         // Assert
         $this->assertCount(1, $productConcreteTransfers);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductConcreteAvailabilityCollectionReturnsAllAvailabilitiesWithNoCriteria(): void
+    {
+        // Arrange
+        $this->tester->ensureAvailabilityTableIsEmpty();
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
+        $productTransfer1 = $this->tester->haveProduct(['sku' => static::CONCRETE_SKU]);
+        $productTransfer2 = $this->tester->haveProduct(['sku' => static::CONCRETE_SKU . 1]);
+        $productTransfer3 = $this->tester->haveProduct(['sku' => static::CONCRETE_SKU . 2]);
+        $this->tester->haveAvailabilityConcrete($productTransfer1->getSku(), $storeTransfer, new Decimal(1));
+        $this->tester->haveAvailabilityConcrete($productTransfer2->getSku(), $storeTransfer, new Decimal(2));
+        $this->tester->haveAvailabilityConcrete($productTransfer3->getSku(), $storeTransfer, new Decimal(3));
+
+        // Act
+        $productConcreteAvailabilityCollectionTransfer = $this->getAvailabilityFacade()->getProductConcreteAvailabilityCollection(
+            new ProductAvailabilityCriteriaTransfer()
+        );
+
+        // Assert
+        $this->assertCount(3, $productConcreteAvailabilityCollectionTransfer->getProductConcreteAvailabilities());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductConcreteAvailabilityCollectionReturnsAvailabilitiesFilteredBySkus(): void
+    {
+        // Arrange
+        $this->tester->ensureAvailabilityTableIsEmpty();
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
+        $productTransfer1 = $this->tester->haveProduct(['sku' => static::CONCRETE_SKU]);
+        $productTransfer2 = $this->tester->haveProduct(['sku' => static::CONCRETE_SKU . 1]);
+        $this->tester->haveAvailabilityConcrete($productTransfer1->getSku(), $storeTransfer, new Decimal(1));
+        $this->tester->haveAvailabilityConcrete($productTransfer2->getSku(), $storeTransfer, new Decimal(2));
+
+        // Act
+        $productConcreteAvailabilityCollectionTransfer = $this->getAvailabilityFacade()->getProductConcreteAvailabilityCollection(
+            (new ProductAvailabilityCriteriaTransfer())->addProductConcreteSku($productTransfer2->getSku())
+        );
+
+        // Assert
+        $this->assertCount(1, $productConcreteAvailabilityCollectionTransfer->getProductConcreteAvailabilities());
+        $this->assertSame(
+            $productConcreteAvailabilityCollectionTransfer->getProductConcreteAvailabilities()[0]->getSku(),
+            $productTransfer2->getSku()
+        );
+        $this->assertSame(
+            $productConcreteAvailabilityCollectionTransfer->getProductConcreteAvailabilities()[0]->getAvailability()->toInt(),
+            2
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductConcreteAvailabilityCollectionReturnsAvailabilitiesFilteredByStoreIds(): void
+    {
+        // Arrange
+        $this->tester->ensureAvailabilityTableIsEmpty();
+        $storeTransfer1 = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
+        $storeTransfer2 = $this->tester->haveStore([StoreTransfer::NAME => 'US']);
+        $productTransfer1 = $this->tester->haveProduct(['sku' => static::CONCRETE_SKU]);
+        $productTransfer2 = $this->tester->haveProduct(['sku' => static::CONCRETE_SKU . 1]);
+        $this->tester->haveAvailabilityConcrete($productTransfer1->getSku(), $storeTransfer1, new Decimal(1));
+        $this->tester->haveAvailabilityConcrete($productTransfer2->getSku(), $storeTransfer2, new Decimal(2));
+
+        // Act
+        $productConcreteAvailabilityCollectionTransfer = $this->getAvailabilityFacade()->getProductConcreteAvailabilityCollection(
+            (new ProductAvailabilityCriteriaTransfer())->addIdStore($storeTransfer1->getIdStore())
+        );
+
+        // Assert
+        $this->assertCount(1, $productConcreteAvailabilityCollectionTransfer->getProductConcreteAvailabilities());
+        $this->assertSame(
+            $productConcreteAvailabilityCollectionTransfer->getProductConcreteAvailabilities()[0]->getSku(),
+            $productTransfer1->getSku()
+        );
+        $this->assertSame(
+            $productConcreteAvailabilityCollectionTransfer->getProductConcreteAvailabilities()[0]->getAvailability()->toInt(),
+            1
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductConcreteAvailabilityCollectionReturnsNoAvailabilitiesIfNoAvailabilitiesMeetCriteria(): void
+    {
+        // Arrange
+        $this->tester->ensureAvailabilityTableIsEmpty();
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
+        $productTransfer1 = $this->tester->haveProduct(['sku' => static::CONCRETE_SKU]);
+        $productTransfer2 = $this->tester->haveProduct(['sku' => static::CONCRETE_SKU . 1]);
+        $this->tester->haveAvailabilityConcrete($productTransfer1->getSku(), $storeTransfer, new Decimal(1));
+        $this->tester->haveAvailabilityConcrete($productTransfer2->getSku(), $storeTransfer, new Decimal(2));
+
+        // Act
+        $productConcreteAvailabilityCollectionTransfer = $this->getAvailabilityFacade()->getProductConcreteAvailabilityCollection(
+            (new ProductAvailabilityCriteriaTransfer())
+                ->addIdStore($storeTransfer->getIdStore() + 1)
+                ->addProductConcreteSku(static::CONCRETE_SKU . 2)
+        );
+
+        // Assert
+        $this->assertCount(0, $productConcreteAvailabilityCollectionTransfer->getProductConcreteAvailabilities());
     }
 
     /**

@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="ProductAvailabilityCriteria">
+        <property name="productConcreteSkus" type="string[]" singular="productConcreteSku"/>
+        <property name="storeIds" type="int[]" singular="idStore"/>
+    </transfer>
+
+    <transfer name="ProductConcreteAvailabilityCollection">
+        <property name="productConcreteAvailabilities" type="ProductConcreteAvailability[]" singular="productConcreteAvailability"/>
+    </transfer>
+
+    <transfer name="ProductConcreteAvailability">
+        <property name="sku" type="string"/>
+        <property name="availability" type="decimal"/>
+    </transfer>
+
+    <transfer name="GuiTableConfiguration">
+        <property name="columns" type="GuiTableColumnConfiguration[]" singular="column"/>
+    </transfer>
+
+    <transfer name="GuiTableDataResponse">
+        <property name="rows" type="GuiTableRowDataResponse[]" singular="row"/>
+    </transfer>
+
+    <transfer name="GuiTableRowDataResponse">
+        <property name="responseData" type="array" singular="responseData"/>
+    </transfer>
+
+    <transfer name="GuiTableColumnConfiguration">
+        <property name="id" type="string"/>
+        <property name="title" type="string"/>
+        <property name="sortable" type="bool"/>
+        <property name="hideable" type="bool"/>
+        <property name="type" type="string"/>
+    </transfer>
+
+    <transfer name="MerchantStockCriteria">
+        <property name="idMerchant" type="int"/>
+        <property name="isDefault" type="bool"/>
+    </transfer>
+
+    <transfer name="StockCollection">
+        <property name="stocks" type="Stock[]" singular="stock"/>
+    </transfer>
+
+    <transfer name="Stock">
+        <property name="storeRelation" type="StoreRelation"/>
+    </transfer>
+
+    <transfer name="StoreRelation">
+        <property name="idStores" type="int[]" singular="idStores"/>
+    </transfer>
+
+    <transfer name="MerchantUser">
+        <property name="idMerchant" type="int"/>
+    </transfer>
+
+</transfers>

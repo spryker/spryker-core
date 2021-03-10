@@ -9,10 +9,11 @@ namespace Spryker\Zed\MerchantProductOfferDataImport\Business;
 
 use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
+use Spryker\Zed\MerchantProductOfferDataImport\Business\Model\Step\ApprovalStatusValidationStep;
 use Spryker\Zed\MerchantProductOfferDataImport\Business\Model\Step\ConcreteSkuValidationStep;
-use Spryker\Zed\MerchantProductOfferDataImport\Business\Model\Step\MerchantKeyToIdMerchantStep;
 use Spryker\Zed\MerchantProductOfferDataImport\Business\Model\Step\MerchantProductOfferStoreWriterStep;
 use Spryker\Zed\MerchantProductOfferDataImport\Business\Model\Step\MerchantProductOfferWriterStep;
+use Spryker\Zed\MerchantProductOfferDataImport\Business\Model\Step\MerchantReferenceToIdMerchantStep;
 use Spryker\Zed\MerchantProductOfferDataImport\Business\Model\Step\MerchantSkuValidationStep;
 use Spryker\Zed\MerchantProductOfferDataImport\Business\Model\Step\ProductOfferReferenceToIdProductOfferStep;
 use Spryker\Zed\MerchantProductOfferDataImport\Business\Model\Step\StoreNameToIdStoreStep;
@@ -33,9 +34,10 @@ class MerchantProductOfferDataImportBusinessFactory extends DataImportBusinessFa
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
 
-        $dataSetStepBroker->addStep($this->createMerchantKeyToIdMerchantStep());
+        $dataSetStepBroker->addStep($this->createMerchantReferenceToIdMerchantStep());
         $dataSetStepBroker->addStep($this->createConcreteSkuValidationStep());
         $dataSetStepBroker->addStep($this->createMerchantSkuValidationStep());
+        $dataSetStepBroker->addStep($this->createApprovalStatusValidationStep());
         $dataSetStepBroker->addStep($this->createMerchantProductOfferWriterStep());
 
         $dataImporter->addDataSetStepBroker($dataSetStepBroker);
@@ -66,9 +68,9 @@ class MerchantProductOfferDataImportBusinessFactory extends DataImportBusinessFa
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
      */
-    public function createMerchantKeyToIdMerchantStep(): DataImportStepInterface
+    public function createMerchantReferenceToIdMerchantStep(): DataImportStepInterface
     {
-        return new MerchantKeyToIdMerchantStep();
+        return new MerchantReferenceToIdMerchantStep();
     }
 
     /**
@@ -85,6 +87,14 @@ class MerchantProductOfferDataImportBusinessFactory extends DataImportBusinessFa
     public function createMerchantSkuValidationStep(): DataImportStepInterface
     {
         return new MerchantSkuValidationStep();
+    }
+
+    /**
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
+     */
+    public function createApprovalStatusValidationStep(): DataImportStepInterface
+    {
+        return new ApprovalStatusValidationStep();
     }
 
     /**

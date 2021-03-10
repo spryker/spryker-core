@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\MerchantProductCollectionTransfer;
 use Generated\Shared\Transfer\MerchantProductCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantProductTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
+use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
 use Generated\Shared\Transfer\ValidationResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -93,5 +94,20 @@ class MerchantProductFacade extends AbstractFacade implements MerchantProductFac
     public function validateMerchantProduct(MerchantProductTransfer $merchantProductTransfer): ValidationResponseTransfer
     {
         return $this->getFactory()->createMerchantProductValidator()->validateMerchantProduct($merchantProductTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteCollectionTransfer
+     */
+    public function getProductConcreteCollection(
+        MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer
+    ): ProductConcreteCollectionTransfer {
+        return $this->getFactory()->createMerchantProductReader()->getProductConcreteCollection($merchantProductCriteriaTransfer);
     }
 }

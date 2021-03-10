@@ -72,6 +72,8 @@
     </transfer>
 
     <transfer name="ProductAvailabilityCriteria">
+        <property name="productConcreteSkus" type="string[]" singular="productConcreteSku"/>
+        <property name="storeIds" type="int[]" singular="idStore"/>
     </transfer>
 
     <transfer name="ReservationRequest">
@@ -84,6 +86,10 @@
 
     <transfer name="CartItemQuantity">
         <property name="quantity" type="int"/>
+    </transfer>
+
+    <transfer name="ProductConcreteAvailabilityCollection">
+        <property name="productConcreteAvailabilities" type="ProductConcreteAvailability[]" singular="productConcreteAvailability"/>
     </transfer>
 
 </transfers>

@@ -48,7 +48,8 @@ class CreateMySqlDatabaseTest extends Unit
             ->method('getConnection')
             ->willReturn($pdoMock);
         $createMySqlDatabaseMock->expects($this->once())
-            ->method('getQuery');
+            ->method('getQuery')
+            ->willReturn('');
         $pdoMock->expects($this->once())
             ->method('exec');
 

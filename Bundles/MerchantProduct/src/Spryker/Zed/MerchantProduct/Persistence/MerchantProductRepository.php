@@ -51,7 +51,13 @@ class MerchantProductRepository extends AbstractRepository implements MerchantPr
      */
     public function get(MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer): MerchantProductCollectionTransfer
     {
-        $merchantProductAbstractQuery = $this->getFactory()->getMerchantProductAbstractPropelQuery();
+        /** @var \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery $merchantProductAbstractQuery */
+        $merchantProductAbstractQuery = $this->getFactory()
+            ->getMerchantProductAbstractPropelQuery()
+            ->leftJoinWithProductAbstract()
+            ->useProductAbstractQuery()
+                ->leftJoinWithSpyProduct()
+            ->endUse();
 
         $merchantProductAbstractQuery = $this->applyFilters($merchantProductAbstractQuery, $merchantProductCriteriaTransfer);
 
@@ -137,6 +143,15 @@ class MerchantProductRepository extends AbstractRepository implements MerchantPr
 
         if ($merchantProductCriteriaTransfer->getMerchantIds()) {
             $merchantProductAbstractQuery->filterByFkMerchant_In($merchantProductCriteriaTransfer->getMerchantIds());
+        }
+
+        if ($merchantProductCriteriaTransfer->getProductConcreteIds()) {
+            $merchantProductAbstractQuery
+                ->useProductAbstractQuery()
+                    ->useSpyProductQuery()
+                        ->filterByIdProduct_In($merchantProductCriteriaTransfer->getProductConcreteIds())
+                    ->endUse()
+                ->endUse();
         }
 
         return $merchantProductAbstractQuery;

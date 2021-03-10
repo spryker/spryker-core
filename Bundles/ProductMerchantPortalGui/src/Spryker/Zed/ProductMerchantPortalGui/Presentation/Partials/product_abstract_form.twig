@@ -173,7 +173,16 @@
                     {% endblock %}
 
                     {% block variantsTab %}
-                        <web-spy-tab spy-title="{{ 'Variants' | trans }}"></web-spy-tab>
+                        <web-spy-tab spy-title="{{ 'Variants' | trans }}">
+                            {% block variantsTable %}
+                                <web-mp-edit-abstract-product-variants
+                                    cloak
+                                    config='{{ guiTableConfiguration(productConcreteTableConfiguration) }}'
+                                    table-id="web-mp-edit-abstract-product-variants"
+                                >
+                                </web-mp-edit-abstract-product-variants>
+                            {% endblock %}
+                        </web-spy-tab>
                     {% endblock %}
                 </web-spy-tabs>
             {% endblock %}

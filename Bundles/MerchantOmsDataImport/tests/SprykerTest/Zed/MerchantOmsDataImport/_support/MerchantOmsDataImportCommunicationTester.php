@@ -42,13 +42,13 @@ class MerchantOmsDataImportCommunicationTester extends Actor
     }
 
     /**
-     * @param string $key
+     * @param string $reference
      *
      * @return \Orm\Zed\Merchant\Persistence\SpyMerchant|null
      */
-    public function findMerchantByKey(string $key): ?SpyMerchant
+    public function findMerchantByReference(string $reference): ?SpyMerchant
     {
-        return $this->getMerchantPropelQuery()->filterByMerchantKey($key)->findOne();
+        return $this->getMerchantPropelQuery()->filterByMerchantReference($reference)->findOne();
     }
 
     /**
