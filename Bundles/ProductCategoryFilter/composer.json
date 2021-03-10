@@ -5,7 +5,7 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.3",
-    "spryker/category": "^4.0.0",
+    "spryker/category": "^4.0.0 || ^5.0.0",
     "spryker/kernel": "^3.30.0",
     "spryker/key-builder": "^1.0.0",
     "spryker/propel-orm": "^1.0.0",

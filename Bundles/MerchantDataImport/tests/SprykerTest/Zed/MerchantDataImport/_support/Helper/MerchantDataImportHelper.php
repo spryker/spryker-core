@@ -56,14 +56,14 @@ class MerchantDataImportHelper extends Module
     }
 
     /**
-     * @param string $key
+     * @param string $reference
      *
      * @return \Orm\Zed\Merchant\Persistence\SpyMerchant|null
      */
-    public function findMerchantByKey(string $key): ?SpyMerchant
+    public function findMerchantByReference(string $reference): ?SpyMerchant
     {
         return $this->getMerchantQuery()
-            ->filterByMerchantKey($key)
+            ->filterByMerchantReference($reference)
             ->findOne();
     }
 }

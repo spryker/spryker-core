@@ -32,20 +32,6 @@ interface CategoryToUrlInterface
     /**
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
-     * @return void
-     */
-    public function activateUrl(UrlTransfer $urlTransfer);
-
-    /**
-     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
-     *
-     * @return void
-     */
-    public function deactivateUrl(UrlTransfer $urlTransfer);
-
-    /**
-     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
-     *
      * @return bool
      */
     public function hasUrlCaseInsensitive(UrlTransfer $urlTransfer): bool;

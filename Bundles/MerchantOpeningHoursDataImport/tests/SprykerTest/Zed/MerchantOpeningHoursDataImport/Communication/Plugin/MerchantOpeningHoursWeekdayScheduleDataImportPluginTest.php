@@ -27,7 +27,7 @@ use Spryker\Zed\MerchantOpeningHoursDataImport\MerchantOpeningHoursDataImportCon
  */
 class MerchantOpeningHoursWeekdayScheduleDataImportPluginTest extends Unit
 {
-    public const MERCHANT_KEY = 'merchant-profile-data-import-test-key';
+    public const MERCHANT_REFERENCE = 'merchant-opening-hours-data-import-test-reference';
 
     /**
      * @var \SprykerTest\Zed\MerchantOpeningHoursDataImport\MerchantOpeningHoursDataImportCommunicationTester
@@ -50,12 +50,13 @@ class MerchantOpeningHoursWeekdayScheduleDataImportPluginTest extends Unit
     public function testImportImportsData(): void
     {
         // Arrange
-        $merchantEntity = $this->tester->findMerchantByKey(static::MERCHANT_KEY);
+        $merchantEntity = $this->tester->findMerchantByReference(static::MERCHANT_REFERENCE);
         if ($merchantEntity === null) {
             $this->tester->haveMerchant([
-                'merchant_key' => static::MERCHANT_KEY,
+                'merchant_reference' => static::MERCHANT_REFERENCE,
             ]);
         }
+
         $dataImporterReaderConfigurationTransfer = (new DataImporterReaderConfigurationTransfer())
             ->setFileName(codecept_data_dir() . 'import/merchant_open_hours_week_day_schedule.csv');
 

@@ -40,9 +40,11 @@ class SearchElasticsearchConfig extends AbstractSharedConfig
         $config['port'] = $this->get(SearchElasticsearchConstants::PORT);
         $config['host'] = $this->get(SearchElasticsearchConstants::HOST);
 
-        if ($this->getConfig()->hasValue(SearchElasticsearchConstants::AUTH_HEADER)) {
+        $authHeader = (string)$this->get(SearchElasticsearchConstants::AUTH_HEADER, '');
+
+        if ($authHeader !== '') {
             $config['headers'] = [
-                'Authorization' => sprintf('Basic %s', $this->get(SearchElasticsearchConstants::AUTH_HEADER)),
+                'Authorization' => sprintf('Basic %s', $authHeader),
             ];
         }
 
@@ -57,5 +59,15 @@ class SearchElasticsearchConfig extends AbstractSharedConfig
     public function getSupportedSourceIdentifiers(): array
     {
         return static::SUPPORTED_SOURCE_IDENTIFIERS;
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getIndexPrefix(): string
+    {
+        return $this->get(SearchElasticsearchConstants::INDEX_PREFIX, '');
     }
 }

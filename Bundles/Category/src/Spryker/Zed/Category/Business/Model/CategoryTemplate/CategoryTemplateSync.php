@@ -38,7 +38,7 @@ class CategoryTemplateSync implements CategoryTemplateSyncInterface
     /**
      * @return void
      */
-    public function syncFromConfig()
+    public function syncFromConfig(): void
     {
         $templateList = $this->categoryConfig->getTemplateList();
 

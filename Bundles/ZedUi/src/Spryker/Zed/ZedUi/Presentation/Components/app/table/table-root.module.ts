@@ -16,6 +16,14 @@ import { TableColumnTextComponent, TableColumnTextModule } from '@spryker/table.
 import { TableColumnInputComponent, TableColumnInputModule } from '@spryker/table.column.input';
 import { TableColumnSelectComponent, TableColumnSelectModule } from '@spryker/table.column.select';
 import { TableDatasourceHttpService } from '@spryker/table.datasource.http';
+import {
+    TableDatasourceInlineService,
+    TableDatasourceInlineModule,
+    TableDatasourceEqualsFilter,
+    TableDatasourceRangeFilter,
+    TableDatasourceTextFilter,
+    TableDatasourceDateProcessor,
+} from '@spryker/table.datasource.inline';
 import { TableFiltersFeatureModule } from '@spryker/table.feature.filters';
 import { TableFilterDateRangeComponent, TableFilterDateRangeModule } from '@spryker/table.filter.date-range';
 import { TableFilterSelectComponent, TableFilterSelectModule } from '@spryker/table.filter.select';
@@ -64,11 +72,20 @@ class TableDefaultConfigData implements Partial<TableConfig> {
         } as any),
         TableModule.withDatasourceTypes({
             http: TableDatasourceHttpService,
+            inline: TableDatasourceInlineService,
         }),
         TableModule.withActions({
             'form-overlay': TableFormOverlayActionHandlerService,
             'html-overlay': TableHtmlOverlayActionHandlerService,
             url: TableUrlActionHandlerService,
+        }),
+        TableDatasourceInlineModule.withFilters({
+            equals: TableDatasourceEqualsFilter,
+            text: TableDatasourceTextFilter,
+            range: TableDatasourceRangeFilter,
+        }),
+        TableDatasourceInlineModule.withProcessors({
+            date: TableDatasourceDateProcessor,
         }),
 
         // Table Column Type Modules

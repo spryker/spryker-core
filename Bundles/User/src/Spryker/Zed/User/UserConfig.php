@@ -14,6 +14,9 @@ class UserConfig extends AbstractBundleConfig
 {
     public const KEY_INSTALLER_DATA = 'installer_data';
 
+    protected const MIN_LENGTH_USER_PASSWORD = 8;
+    protected const MAX_LENGTH_USER_PASSWORD = 72;
+
     /**
      * @api
      *
@@ -46,6 +49,26 @@ class UserConfig extends AbstractBundleConfig
                 'password' => 'change123',
             ],
         ];
+    }
+
+    /**
+     * @api
+     *
+     * @return int
+     */
+    public function getUserPasswordMinLength(): int
+    {
+        return static::MIN_LENGTH_USER_PASSWORD;
+    }
+
+    /**
+     * @api
+     *
+     * @return int
+     */
+    public function getUserPasswordMaxLength(): int
+    {
+        return static::MAX_LENGTH_USER_PASSWORD;
     }
 
     /**

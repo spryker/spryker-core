@@ -8,7 +8,11 @@
 namespace Spryker\Zed\ProductMerchantPortalGui\Persistence;
 
 use Generated\Shared\Transfer\MerchantProductTableCriteriaTransfer;
+use Generated\Shared\Transfer\PriceProductAbstractTableCriteriaTransfer;
+use Generated\Shared\Transfer\PriceProductAbstractTableViewCollectionTransfer;
 use Generated\Shared\Transfer\ProductAbstractCollectionTransfer;
+use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
+use Generated\Shared\Transfer\ProductTableCriteriaTransfer;
 
 interface ProductMerchantPortalGuiRepositoryInterface
 {
@@ -20,4 +24,20 @@ interface ProductMerchantPortalGuiRepositoryInterface
     public function getProductAbstractTableData(
         MerchantProductTableCriteriaTransfer $merchantProductTableCriteriaTransfer
     ): ProductAbstractCollectionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductAbstractTableCriteriaTransfer $priceProductAbstractTableCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductAbstractTableViewCollectionTransfer
+     */
+    public function getPriceProductAbstractTableData(
+        PriceProductAbstractTableCriteriaTransfer $priceProductAbstractTableCriteriaTransfer
+    ): PriceProductAbstractTableViewCollectionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductTableCriteriaTransfer $productTableCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteCollectionTransfer
+     */
+    public function getProductTableData(ProductTableCriteriaTransfer $productTableCriteriaTransfer): ProductConcreteCollectionTransfer;
 }

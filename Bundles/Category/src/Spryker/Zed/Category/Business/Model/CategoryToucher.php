@@ -144,7 +144,7 @@ class CategoryToucher implements CategoryToucherInterface
      *
      * @return void
      */
-    public function touchCategoryActive($idCategory)
+    public function touchCategoryActive(int $idCategory): void
     {
         $categoryNodeCollection = $this
             ->queryContainer

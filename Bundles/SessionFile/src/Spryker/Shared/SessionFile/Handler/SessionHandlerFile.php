@@ -138,13 +138,31 @@ class SessionHandlerFile implements SessionHandlerInterface
      */
     public function gc($maxLifetime): bool
     {
-        foreach (glob($this->savePath . DIRECTORY_SEPARATOR . $this->keyPrefix . '*') as $file) {
-            if (filemtime($file) + $maxLifetime < time() && file_exists($file)) {
+        $time = time();
+        $files = glob($this->buildSessionFilePattern(), GLOB_NOSORT);
+        foreach ($files as $file) {
+            $fileTime = filemtime($file);
+            $fileExpired = $fileTime + $maxLifetime < $time;
+            $fileExist = (bool)$fileTime;
+            if ($fileExist && $fileExpired) {
                 unlink($file);
             }
         }
 
         return true;
+    }
+
+    /**
+     * @return string
+     */
+    protected function buildSessionFilePattern(): string
+    {
+        return sprintf(
+            '%s%s%s*',
+            $this->savePath,
+            DIRECTORY_SEPARATOR,
+            $this->keyPrefix
+        );
     }
 
     /**

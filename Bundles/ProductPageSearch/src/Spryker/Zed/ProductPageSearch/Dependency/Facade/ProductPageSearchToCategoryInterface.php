@@ -14,5 +14,5 @@ interface ProductPageSearchToCategoryInterface
      *
      * @return \Generated\Shared\Transfer\NodeTransfer[]
      */
-    public function getAllNodesByIdCategory($idCategory);
+    public function getAllNodesByIdCategory(int $idCategory): array;
 }
