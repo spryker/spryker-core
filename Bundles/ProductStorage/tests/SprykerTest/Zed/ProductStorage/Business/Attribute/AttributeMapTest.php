@@ -57,11 +57,54 @@ class AttributeMapTest extends Unit
     protected const KEY_LOCALIZED_ATTRIBUTES = 'localized_attributes';
 
     /**
+     * @dataProvider attributeMapDataProvider
+     *
+     * @param array $productConcreteData1
+     * @param array $productConcreteData2
+     * @param array $expectedAttributeVariantMap
+     *
      * @return void
      */
-    public function testGenerateAttributeMapBulkWillGenerateAttributeVariantMap(): void
+    public function testGenerateAttributeMapBulkWillGenerateAttributeVariantMap(
+        array $productConcreteData1,
+        array $productConcreteData2,
+        bool $isProductAttributesWithSingleValueIncluded,
+        array $expectedAttributeVariantMap
+    ): void {
+        $productConcreteDataList = [$productConcreteData1, $productConcreteData2];
+        $productStorageQueryContainerMock = $this->createProductStorageQueryContainerMock(
+            $productConcreteDataList,
+            static::FAKE_SUPER_ATTRIBUTES
+        );
+
+        $this->resetSuperAttributesCache();
+
+        $attributeMap = new AttributeMap(
+            $this->createProductFacadeMock([static::FAKE_PRODUCT_ATTRIBUTES_1, static::FAKE_PRODUCT_ATTRIBUTES_2]),
+            $productStorageQueryContainerMock,
+            $this->createProductStorageConfigMock($isProductAttributesWithSingleValueIncluded),
+            new SingleValueSuperAttributeFilter()
+        );
+
+        // Act
+        $attributeMapBulk = $attributeMap->generateAttributeMapBulk([1], [64]);
+
+        // Assert
+        $this->assertCount(1, $attributeMapBulk);
+        $this->assertArrayHasKey('1_64', $attributeMapBulk);
+        /** @var \Generated\Shared\Transfer\AttributeMapStorageTransfer $attributeMapStorageTransfer */
+        $attributeMapStorageTransfer = $attributeMapBulk['1_64'];
+        $this->assertInstanceOf(AttributeMapStorageTransfer::class, $attributeMapStorageTransfer);
+
+        $this->assertCount(2, $attributeMapStorageTransfer->getAttributeVariantMap());
+        $this->assertEqualsCanonicalizing($expectedAttributeVariantMap, $attributeMapStorageTransfer->getAttributeVariantMap());
+    }
+
+    /**
+     * @return array[]
+     */
+    public function attributeMapDataProvider(): array
     {
-        // Arrange
         $productConcreteData1 = [
             static::KEY_ID_PRODUCT => 1,
             static::KEY_ATTRIBUTES => json_encode(static::FAKE_PRODUCT_ATTRIBUTES_1),
@@ -80,40 +123,26 @@ class AttributeMapTest extends Unit
             static::KEY_FK_LOCALE => 64,
         ];
 
-        $expectedAttributeVariantMap = [
-            '1' => static::FAKE_PRODUCT_ATTRIBUTES_1,
-            '2' => static::FAKE_PRODUCT_ATTRIBUTES_2,
+        return [
+            [
+                $productConcreteData1,
+                $productConcreteData2,
+                false,
+                [
+                    '1' => static::FAKE_PRODUCT_ATTRIBUTES_1,
+                    '2' => static::FAKE_PRODUCT_ATTRIBUTES_2,
+                ],
+            ],
+            [
+                $productConcreteData1,
+                $productConcreteData2,
+                true,
+                [ // TODO: fix expected result
+                    '1' => static::FAKE_PRODUCT_ATTRIBUTES_1,
+                    '2' => static::FAKE_PRODUCT_ATTRIBUTES_2,
+                ]
+            ],
         ];
-
-        $productConcreteDataList = [$productConcreteData1, $productConcreteData2];
-        $productStorageQueryContainerMock = $this->createProductStorageQueryContainerMock(
-            $productConcreteDataList,
-            static::FAKE_SUPER_ATTRIBUTES
-        );
-
-        $reflection = new ReflectionProperty(AttributeMap::class, 'superAttributesCache');
-        $reflection->setAccessible(true);
-        $reflection->setValue(null, null);
-
-        $attributeMap = new AttributeMap(
-            $this->createProductFacadeMock([static::FAKE_PRODUCT_ATTRIBUTES_1, static::FAKE_PRODUCT_ATTRIBUTES_2]),
-            $productStorageQueryContainerMock,
-            $this->createProductStorageConfigMock(false),
-            new SingleValueSuperAttributeFilter()
-        );
-
-        // Act
-        $attributeMapBulk = $attributeMap->generateAttributeMapBulk([1], [64]);
-
-        // Assert
-        $this->assertCount(1, $attributeMapBulk);
-        $this->assertArrayHasKey('1_64', $attributeMapBulk);
-        /** @var \Generated\Shared\Transfer\AttributeMapStorageTransfer $attributeMapStorageTransfer */
-        $attributeMapStorageTransfer = $attributeMapBulk['1_64'];
-        $this->assertInstanceOf(AttributeMapStorageTransfer::class, $attributeMapStorageTransfer);
-
-        $this->assertCount(2, $attributeMapStorageTransfer->getAttributeVariantMap());
-        $this->assertEqualsCanonicalizing($expectedAttributeVariantMap, $attributeMapStorageTransfer->getAttributeVariantMap());
     }
 
     /**
@@ -196,13 +225,13 @@ class AttributeMapTest extends Unit
     }
 
     /**
-     * @param bool $isAttributeVariantsMapEnabled
+     * @param bool $isOptimizedAttributeVariantsMapEnabled
      * @param bool $isProductAttributesWithSingleValueIncluded
      *
      * @return \Spryker\Zed\ProductStorage\ProductStorageConfig|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function createProductStorageConfigMock(
-        bool $isAttributeVariantsMapEnabled,
+        bool $isOptimizedAttributeVariantsMapEnabled,
         bool $isProductAttributesWithSingleValueIncluded = true
     ): ProductStorageConfig {
         $productStorageConfigMock = $this->getMockBuilder(ProductStorageConfig::class)->getMock();
@@ -210,9 +239,19 @@ class AttributeMapTest extends Unit
             ->method('isProductAttributesWithSingleValueIncluded')
             ->willReturn($isProductAttributesWithSingleValueIncluded);
         $productStorageConfigMock
-            ->method('isAttributeVariantsMapEnabled')
-            ->willReturn($isAttributeVariantsMapEnabled);
+            ->method('isOptimizedAttributeVariantsMapEnabled')
+            ->willReturn($isOptimizedAttributeVariantsMapEnabled);
 
         return $productStorageConfigMock;
+    }
+
+    /**
+     * @return void
+     */
+    protected function resetSuperAttributesCache(): void
+    {
+        $reflection = new ReflectionProperty(AttributeMap::class, 'superAttributesCache');
+        $reflection->setAccessible(true);
+        $reflection->setValue(null, null);
     }
 }
