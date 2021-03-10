@@ -79,10 +79,6 @@
         <property name="idStore" type="int"/>
     </transfer>
 
-    <transfer name="MerchantStorage">
-        <property name="idMerchant" type="int"/>
-    </transfer>
-
     <transfer name="MerchantCriteria">
         <property name="idMerchant" type="int"/>
     </transfer>

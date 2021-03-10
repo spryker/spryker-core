@@ -10,10 +10,12 @@
 
     <transfer name="MerchantCriteria">
         <property name="idMerchant" type="int"/>
+        <property name="merchantReference" type="string"/>
     </transfer>
 
     <transfer name="Merchant">
         <property name="name" type="string"/>
+        <property name="idMerchant" type="int"/>
     </transfer>
 
     <transfer name="MerchantProductOfferCriteria">
