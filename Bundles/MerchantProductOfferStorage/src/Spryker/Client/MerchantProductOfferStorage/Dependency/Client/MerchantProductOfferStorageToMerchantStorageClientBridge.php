@@ -36,12 +36,12 @@ class MerchantProductOfferStorageToMerchantStorageClientBridge implements Mercha
     }
 
     /**
-     * @param int[] $merchantIds
+     * @param \Generated\Shared\Transfer\MerchantCriteriaTransfer $merchantCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantStorageTransfer[]
      */
-    public function get(array $merchantIds): array
+    public function get(MerchantCriteriaTransfer $merchantCriteriaTransfer): array
     {
-        return $this->merchantStorageClient->get($merchantIds);
+        return $this->merchantStorageClient->get($merchantCriteriaTransfer);
     }
 }

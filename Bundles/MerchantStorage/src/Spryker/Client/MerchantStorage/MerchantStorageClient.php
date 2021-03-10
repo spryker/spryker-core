@@ -45,7 +45,7 @@ class MerchantStorageClient extends AbstractClient implements MerchantStorageCli
     {
         return $this->getFactory()
             ->createMerchantStorageReader()
-            ->findOne($merchantCriteriaTransfer->getIdMerchant());
+            ->findOne($merchantCriteriaTransfer);
     }
 
     /**
@@ -61,7 +61,7 @@ class MerchantStorageClient extends AbstractClient implements MerchantStorageCli
     {
         return $this->getFactory()
             ->createMerchantStorageReader()
-            ->get($merchantCriteriaTransfer->getMerchantIds());
+            ->get($merchantCriteriaTransfer);
     }
 
     /**

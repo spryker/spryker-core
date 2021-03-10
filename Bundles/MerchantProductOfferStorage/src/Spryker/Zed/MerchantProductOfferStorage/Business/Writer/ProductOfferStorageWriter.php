@@ -178,19 +178,19 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
      */
     protected function deleteIncorrectProductOfferStorages(array $productOfferReferences): void
     {
-        $productIncorrectOfferCriteriaFilterTransfer = $this->productOfferCriteriaFilterTransferFactory->createIncorrectProductOfferCriteriaFilterTransfer();
-        $productIncorrectOfferCriteriaFilterTransfer->setProductOfferReferences($productOfferReferences);
+        $productOfferCriteriaFilterTransfer = $this->productOfferCriteriaFilterTransferFactory->createIncorrectProductOfferCriteriaFilterTransfer();
+        $productOfferCriteriaFilterTransfer->setProductOfferReferences($productOfferReferences);
 
-        $incorrectProductOfferCollectionTransfer = $this->merchantProductOfferStorageRepository
-            ->getProductOffersByFilterCriteria($productIncorrectOfferCriteriaFilterTransfer);
+        $productOfferCollectionTransfer = $this->merchantProductOfferStorageRepository
+            ->getProductOffersByFilterCriteria($productOfferCriteriaFilterTransfer);
 
-        $incorrectProductOfferReferences = [];
-        foreach ($incorrectProductOfferCollectionTransfer->getProductOffers() as $incorrectProductOfferTransfer) {
-            $incorrectProductOfferReferences[] = $incorrectProductOfferTransfer->getProductOfferReference();
+        $productOfferReferences = [];
+        foreach ($productOfferCollectionTransfer->getProductOffers() as $incorrectProductOfferTransfer) {
+            $productOfferReferences[] = $incorrectProductOfferTransfer->getProductOfferReference();
         }
 
-        if (empty($incorrectProductOfferReferences) === false) {
-            $this->productOfferStorageDeleter->deleteCollectionByProductOfferReferences($incorrectProductOfferReferences);
+        if ($productOfferReferences) {
+            $this->productOfferStorageDeleter->deleteCollectionByProductOfferReferences($productOfferReferences);
         }
     }
 }

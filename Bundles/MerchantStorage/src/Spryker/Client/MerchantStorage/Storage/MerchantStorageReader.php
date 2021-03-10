@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\MerchantStorage\Storage;
 
+use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\MerchantStorage\Dependency\Client\MerchantStorageToStorageClientInterface;
@@ -68,13 +69,13 @@ class MerchantStorageReader implements MerchantStorageReaderInterface
     }
 
     /**
-     * @param int $idMerchant
+     * @param \Generated\Shared\Transfer\MerchantCriteriaTransfer $merchantCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantStorageTransfer|null
      */
-    public function findOne(int $idMerchant): ?MerchantStorageTransfer
+    public function findOne(MerchantCriteriaTransfer $merchantCriteriaTransfer): ?MerchantStorageTransfer
     {
-        $merchantKey = $this->generateKey((string)$idMerchant);
+        $merchantKey = $this->generateKey((string)$merchantCriteriaTransfer->getIdMerchant());
         $merchantData = $this->storageClient->get($merchantKey);
         if (!$merchantData) {
             return null;
@@ -84,17 +85,17 @@ class MerchantStorageReader implements MerchantStorageReaderInterface
     }
 
     /**
-     * @param int[] $merchantIds
+     * @param \Generated\Shared\Transfer\MerchantCriteriaTransfer $merchantCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantStorageTransfer[]
      */
-    public function get(array $merchantIds): array
+    public function get(MerchantCriteriaTransfer $merchantCriteriaTransfer): array
     {
         $merchantStorageTransfers = [];
 
         $merchantKeys = array_map(function ($idMerchant) {
             return $this->generateKey((string)$idMerchant);
-        }, $merchantIds);
+        }, $merchantCriteriaTransfer->getMerchantIds());
 
         $merchantDataList = $this->storageClient->getMulti($merchantKeys);
 
@@ -124,7 +125,11 @@ class MerchantStorageReader implements MerchantStorageReaderInterface
             return null;
         }
 
-        return $this->findOne($merchantDataMapId[static::KEY_ID_MERCHANT]);
+        $merchantCriteriaTransfer = new MerchantCriteriaTransfer();
+
+        $merchantCriteriaTransfer->setIdMerchant($merchantDataMapId[static::KEY_ID_MERCHANT]);
+
+        return $this->findOne($merchantCriteriaTransfer);
     }
 
     /**

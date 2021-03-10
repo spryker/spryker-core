@@ -251,7 +251,6 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
     public function getProductConcretePricesByConcreteSkusAndCriteria(array $skus, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): array
     {
         $priceProductTransfers = $this->priceProductRepository->getProductConcretePricesByConcreteSkusAndCriteria($skus, $priceProductCriteriaTransfer);
-        $priceProductTransfers = $this->executePriceProductExternalProviderPlugins($priceProductTransfers, $skus, $priceProductCriteriaTransfer);
         $priceProductTransfers = $this->priceProductExpander->expandPriceProductTransfers($priceProductTransfers);
         $priceProductTransfers = $this->pluginExecutor->executePriceExtractorPluginsForProductConcrete($priceProductTransfers);
 
@@ -295,33 +294,5 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
         }
 
         return $indexedPriceProductTransfers;
-    }
-
-    /**
-     * @deprecated Will be removed in the next major.
-     *
-     * Use ProductTableQueryCriteriaExpanderPluginInterface instead
-     *
-     * @see \Spryker\Zed\ProductManagement\ProductManagementDependencyProvider::addProductTableQueryCriteriaExpanderPluginInterfaces()
-     *
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
-     * @param string[] $skus
-     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
-     */
-    protected function executePriceProductExternalProviderPlugins(
-        array $priceProductTransfers,
-        array $skus,
-        PriceProductCriteriaTransfer $priceProductCriteriaTransfer
-    ): array {
-        foreach ($this->priceProductExternalProviderPlugins as $priceProductExternalProviderPlugin) {
-            $priceProductTransfers = array_merge($priceProductTransfers, $priceProductExternalProviderPlugin->providePriceProductTransfers(
-                $skus,
-                $priceProductCriteriaTransfer
-            ));
-        }
-
-        return $priceProductTransfers;
     }
 }

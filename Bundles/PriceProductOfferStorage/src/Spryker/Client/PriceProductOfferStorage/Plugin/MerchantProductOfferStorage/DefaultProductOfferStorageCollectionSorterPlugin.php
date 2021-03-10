@@ -16,7 +16,7 @@ class DefaultProductOfferStorageCollectionSorterPlugin implements ProductOfferSt
      * Specification:
      * - Default plugin to sort ProductOfferStorageCollection. No sorting actually occurs
      *
-     * {@inheritDoc}
+     * @api
      *
      * @param \Generated\Shared\Transfer\ProductOfferStorageCollectionTransfer $productOfferStorageCollectionTransfer
      *
