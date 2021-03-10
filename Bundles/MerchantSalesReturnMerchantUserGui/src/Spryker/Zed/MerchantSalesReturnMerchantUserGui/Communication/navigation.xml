@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <sales>
+        <pages>
+            <merchant-sales-return>
+                <label>My Returns</label>
+                <title>My Returns</title>
+                <bundle>merchant-sales-return-merchant-user-gui</bundle>
+                <controller>index</controller>
+                <action>index</action>
+                <visible>1</visible>
+            </merchant-sales-return>
+        </pages>
+    </sales>
+</config>
