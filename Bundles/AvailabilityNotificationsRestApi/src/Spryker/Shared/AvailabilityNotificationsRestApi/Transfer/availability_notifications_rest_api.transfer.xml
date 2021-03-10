@@ -23,8 +23,10 @@
         <property name="idAvailabilityNotificationSubscription" type="int"/>
         <property name="subscriptionKey" type="string"/>
         <property name="locale" type="Locale"/>
+        <property name="store" type="Store"/>
         <property name="email" type="string"/>
         <property name="sku" type="string"/>
+        <property name="customerReference" type="string"/>
     </transfer>
 
     <transfer name="AvailabilityNotificationCriteria">
