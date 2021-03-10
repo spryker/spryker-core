@@ -11,13 +11,13 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer;
 
 /**
- * Executes after add wishlist items to quote.
+ * Executed after adding wishlist items to quote.
  */
 interface WishlistPostMoveToCartCollectionExpanderPluginInterface
 {
     /**
      * Specification:
-     * - Expands WishlistMoveToCartRequestCollection transfer object with not valid wishlist items as request items.
+     * - Expands `WishlistMoveToCartRequestCollection` transfer object with not valid wishlist items as request items.
      *
      * @api
      *

@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\WishlistCollectionTransfer;
 use Generated\Shared\Transfer\WishlistFilterTransfer;
 use Generated\Shared\Transfer\WishlistItemCollectionTransfer;
-use Generated\Shared\Transfer\WishlistItemResponseTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
@@ -127,8 +126,6 @@ interface WishlistClientInterface
      *
      * @api
      *
-     * @deprecated Use {@link \Spryker\Client\Wishlist\WishlistClientInterface::deleteItemCollection()} instead.
-     *
      * @param \Generated\Shared\Transfer\WishlistItemCollectionTransfer $wishlistItemTransferCollection
      *
      * @return \Generated\Shared\Transfer\WishlistItemCollectionTransfer
@@ -222,28 +219,4 @@ interface WishlistClientInterface
      * @return \Generated\Shared\Transfer\WishlistResponseTransfer
      */
     public function getWishlistByFilter(WishlistFilterTransfer $wishlistFilterTransfer): WishlistResponseTransfer;
-
-    /**
-     * Specification:
-     * - Deletes wishlist item from wishlist.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
-     *
-     * @return \Generated\Shared\Transfer\WishlistItemResponseTransfer
-     */
-    public function deleteItem(WishlistItemTransfer $wishlistItemTransfer): WishlistItemResponseTransfer;
-
-    /**
-     * Specification:
-     * - Deletes wishlist items collection from wishlist.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\WishlistItemCollectionTransfer $wishlistItemTransferCollection
-     *
-     * @return \Generated\Shared\Transfer\WishlistResponseTransfer
-     */
-    public function deleteItemCollection(WishlistItemCollectionTransfer $wishlistItemTransferCollection): WishlistResponseTransfer;
 }

@@ -10,7 +10,6 @@ namespace Spryker\Zed\Wishlist\Communication\Controller;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\WishlistFilterTransfer;
 use Generated\Shared\Transfer\WishlistItemCollectionTransfer;
-use Generated\Shared\Transfer\WishlistItemResponseTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
 use Generated\Shared\Transfer\WishlistResponseTransfer;
@@ -93,8 +92,6 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @deprecated Use {@link \Spryker\Zed\Wishlist\Communication\Controller\GatewayController::deleteItemAction()} instead.
-     *
      * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemUpdateRequestTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistItemTransfer
@@ -105,8 +102,6 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @deprecated Use {@link \Spryker\Zed\Wishlist\Communication\Controller\GatewayController::deleteItemCollectionAction()} instead.
-     *
      * @param \Generated\Shared\Transfer\WishlistItemCollectionTransfer $wishlistItemTransferCollection
      *
      * @return \Generated\Shared\Transfer\WishlistItemCollectionTransfer
@@ -154,29 +149,5 @@ class GatewayController extends AbstractGatewayController
     public function getWishlistByFilterAction(WishlistFilterTransfer $wishlistFilterTransfer): WishlistResponseTransfer
     {
         return $this->getFacade()->getWishlistByFilter($wishlistFilterTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
-     *
-     * @return \Generated\Shared\Transfer\WishlistItemResponseTransfer
-     */
-    public function deleteItemAction(WishlistItemTransfer $wishlistItemTransfer): WishlistItemResponseTransfer
-    {
-        $this->getFacade()->deleteItem($wishlistItemTransfer);
-
-        return (new WishlistItemResponseTransfer())->setIsSuccess(true);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\WishlistItemCollectionTransfer $wishlistItemTransferCollection
-     *
-     * @return \Generated\Shared\Transfer\WishlistResponseTransfer
-     */
-    public function deleteItemCollectionAction(WishlistItemCollectionTransfer $wishlistItemTransferCollection): WishlistResponseTransfer
-    {
-        $this->getFacade()->deleteItemCollection($wishlistItemTransferCollection);
-
-        return (new WishlistResponseTransfer())->setIsSuccess(true);
     }
 }

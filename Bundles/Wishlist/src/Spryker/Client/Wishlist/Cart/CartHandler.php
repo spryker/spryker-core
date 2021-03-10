@@ -148,7 +148,7 @@ class CartHandler implements CartHandlerInterface
             $failedToMoveRequestCollectionTransfer
         );
 
-        $this->wishlistClient->deleteItemCollection($wishlistItemCollectionTransfer);
+        $this->wishlistClient->removeItemCollection($wishlistItemCollectionTransfer);
 
         return $failedToMoveRequestCollectionTransfer;
     }

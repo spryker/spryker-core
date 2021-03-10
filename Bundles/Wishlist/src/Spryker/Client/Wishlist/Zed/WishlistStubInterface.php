@@ -10,7 +10,6 @@ namespace Spryker\Client\Wishlist\Zed;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\WishlistFilterTransfer;
 use Generated\Shared\Transfer\WishlistItemCollectionTransfer;
-use Generated\Shared\Transfer\WishlistItemResponseTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
 use Generated\Shared\Transfer\WishlistResponseTransfer;
@@ -68,8 +67,6 @@ interface WishlistStubInterface
     public function addItem(WishlistItemTransfer $wishlistItemTransfer);
 
     /**
-     * @deprecated Use {@link \Spryker\Client\Wishlist\Zed\WishlistStub::deleteItem()} instead.
-     *
      * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistItemTransfer
@@ -77,8 +74,6 @@ interface WishlistStubInterface
     public function removeItem(WishlistItemTransfer $wishlistItemTransfer);
 
     /**
-     * @deprecated Use {@link \Spryker\Client\Wishlist\Zed\WishlistStub::deleteItemCollection()} instead.
-     *
      * @param \Generated\Shared\Transfer\WishlistItemCollectionTransfer $wishlistItemTransferCollection
      *
      * @return \Generated\Shared\Transfer\WishlistItemCollectionTransfer
@@ -112,18 +107,4 @@ interface WishlistStubInterface
      * @return \Generated\Shared\Transfer\WishlistResponseTransfer
      */
     public function getWishlistByFilter(WishlistFilterTransfer $wishlistFilterTransfer): WishlistResponseTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
-     *
-     * @return \Generated\Shared\Transfer\WishlistItemResponseTransfer
-     */
-    public function deleteItem(WishlistItemTransfer $wishlistItemTransfer): WishlistItemResponseTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\WishlistItemCollectionTransfer $wishlistItemTransferCollection
-     *
-     * @return \Generated\Shared\Transfer\WishlistResponseTransfer
-     */
-    public function deleteItemCollection(WishlistItemCollectionTransfer $wishlistItemTransferCollection): WishlistResponseTransfer;
 }

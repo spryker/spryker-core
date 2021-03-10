@@ -11,14 +11,14 @@ use Generated\Shared\Transfer\WishlistItemCollectionTransfer;
 use Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer;
 
 /**
- * Executes to prepare wishlist items to remove from wishlist
+ * Executed to prepare wishlist items to remove from wishlist.
  */
 interface WishlistCollectionToRemoveExpanderPluginInterface
 {
     /**
      * Specification:
-     * - Expands WishlistItemCollection transfer object with items from WishlistMoveToCartRequestCollection transfer object.
-     * - Compares WishlistMoveToCartRequestCollection transfer object with all requested wishlist items and WishlistMoveToCartRequestCollection with failed wishlist items.
+     * - Expands `WishlistItemCollection` transfer object with items from `WishlistMoveToCartRequestCollection` transfer object.
+     * - Compares `WishlistMoveToCartRequestCollection` transfer object with all requested wishlist items and `WishlistMoveToCartRequestCollection` with failed wishlist items.
      *
      * @api
      *

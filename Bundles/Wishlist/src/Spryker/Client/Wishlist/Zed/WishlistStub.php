@@ -10,7 +10,6 @@ namespace Spryker\Client\Wishlist\Zed;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\WishlistFilterTransfer;
 use Generated\Shared\Transfer\WishlistItemCollectionTransfer;
-use Generated\Shared\Transfer\WishlistItemResponseTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
 use Generated\Shared\Transfer\WishlistResponseTransfer;
@@ -124,8 +123,6 @@ class WishlistStub implements WishlistStubInterface
     }
 
     /**
-     * @deprecated Use {@link \Spryker\Client\Wishlist\Zed\WishlistStub::deleteItem()} instead.
-     *
      * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistItemTransfer
@@ -139,8 +136,6 @@ class WishlistStub implements WishlistStubInterface
     }
 
     /**
-     * @deprecated Use {@link \Spryker\Client\Wishlist\Zed\WishlistStub::deleteItemCollection()} instead.
-     *
      * @param \Generated\Shared\Transfer\WishlistItemCollectionTransfer $wishlistItemTransferCollection
      *
      * @return \Generated\Shared\Transfer\WishlistItemCollectionTransfer
@@ -203,32 +198,6 @@ class WishlistStub implements WishlistStubInterface
     {
         /** @var \Generated\Shared\Transfer\WishlistResponseTransfer $wishlistResponseTransfer */
         $wishlistResponseTransfer = $this->zedStub->call('/wishlist/gateway/get-wishlist-by-filter', $wishlistFilterTransfer);
-
-        return $wishlistResponseTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
-     *
-     * @return \Generated\Shared\Transfer\WishlistItemResponseTransfer
-     */
-    public function deleteItem(WishlistItemTransfer $wishlistItemTransfer): WishlistItemResponseTransfer
-    {
-        /** @var \Generated\Shared\Transfer\WishlistItemResponseTransfer $wishlistItemResponseTransfer */
-        $wishlistItemResponseTransfer = $this->zedStub->call('/wishlist/gateway/delete-item', $wishlistItemTransfer);
-
-        return $wishlistItemResponseTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\WishlistItemCollectionTransfer $wishlistItemTransferCollection
-     *
-     * @return \Generated\Shared\Transfer\WishlistResponseTransfer
-     */
-    public function deleteItemCollection(WishlistItemCollectionTransfer $wishlistItemTransferCollection): WishlistResponseTransfer
-    {
-        /** @var \Generated\Shared\Transfer\WishlistResponseTransfer $wishlistResponseTransfer */
-        $wishlistResponseTransfer = $this->zedStub->call('/wishlist/gateway/delete-item-collection', $wishlistItemTransferCollection);
 
         return $wishlistResponseTransfer;
     }

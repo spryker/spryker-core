@@ -150,13 +150,10 @@ interface WishlistFacadeInterface
     /**
      * Specification:
      *  - Removes item from wishlist
-     *  - Required values of WishlistItemTransfer: fkCustomer, sku. Optional: wishlistName
-     *    In case wishlist name is not provided the default value will be used
+     *  - Required values of WishlistItemTransfer: idWishlistItem
      *  - Returns WishlistItemTransfer
      *
      * @api
-     *
-     * @deprecated Use {@link \Spryker\Zed\Wishlist\Business\WishlistFacadeInterface::deleteItem()} instead.
      *
      * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
      *
@@ -166,13 +163,10 @@ interface WishlistFacadeInterface
 
     /**
      * Specification:
-     *  - Removes item from wishlist
-     *  - Required values of WishlistItemTransfer: fkCustomer, sku. Optional: wishlistName
-     *    In case wishlist name is not provided the default value will be used
+     *  - Removes items from wishlist
+     *  - Required values of WishlistItemTransfer: idWishlistItem
      *
      * @api
-     *
-     * @deprecated Use {@link \Spryker\Zed\Wishlist\Business\WishlistFacadeInterface::deleteItemCollection()} instead.
      *
      * @param \Generated\Shared\Transfer\WishlistItemCollectionTransfer $wishlistItemTransferCollection
      *
@@ -239,32 +233,4 @@ interface WishlistFacadeInterface
      * @return \Generated\Shared\Transfer\WishlistResponseTransfer
      */
     public function getWishlistByFilter(WishlistFilterTransfer $wishlistFilterTransfer): WishlistResponseTransfer;
-
-    /**
-     * Specification:
-     *  - Removes item from wishlist
-     *  - Required values of WishlistItem transfer object: fkCustomer, idWishlistItem. Optional: wishlistName
-     *    In case wishlist name is not provided the default value will be used.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
-     *
-     * @return void
-     */
-    public function deleteItem(WishlistItemTransfer $wishlistItemTransfer): void;
-
-    /**
-     * Specification:
-     *  - Removes item from wishlist
-     *  - Required values of WishlistItem transfer object: fkCustomer, idWishlistItem. Optional: wishlistName
-     *    In case wishlist name is not provided the default value will be used.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\WishlistItemCollectionTransfer $wishlistItemTransferCollection
-     *
-     * @return void
-     */
-    public function deleteItemCollection(WishlistItemCollectionTransfer $wishlistItemTransferCollection): void;
 }

@@ -12,9 +12,9 @@ use Generated\Shared\Transfer\WishlistItemCollectionTransfer;
 interface WishlistDeleterInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\WishlistItemCollectionTransfer $wishlistItemTransferCollection
+     * @param \Generated\Shared\Transfer\WishlistItemCollectionTransfer $wishlistItemTransferCollectionTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\WishlistItemCollectionTransfer
      */
-    public function deleteItemCollection(WishlistItemCollectionTransfer $wishlistItemTransferCollection): void;
+    public function deleteItemCollection(WishlistItemCollectionTransfer $wishlistItemTransferCollectionTransfer): WishlistItemCollectionTransfer;
 }

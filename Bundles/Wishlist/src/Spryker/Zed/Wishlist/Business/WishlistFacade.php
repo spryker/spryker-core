@@ -173,8 +173,6 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
      *
      * @api
      *
-     * @deprecated Use {@link \Spryker\Zed\Wishlist\Business\WishlistFacade::deleteItem()} instead.
-     *
      * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistItemTransfer
@@ -182,16 +180,14 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
     public function removeItem(WishlistItemTransfer $wishlistItemTransfer)
     {
         return $this->getFactory()
-            ->createWriter()
-            ->removeItem($wishlistItemTransfer);
+            ->getEntityManager()
+            ->deleteItem($wishlistItemTransfer);
     }
 
     /**
      * {@inheritDoc}
      *
      * @api
-     *
-     * @deprecated Use {@link \Spryker\Zed\Wishlist\Business\WishlistFacade::deleteItemCollection()} instead.
      *
      * @param \Generated\Shared\Transfer\WishlistItemCollectionTransfer $wishlistItemTransferCollection
      *
@@ -200,8 +196,8 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
     public function removeItemCollection(WishlistItemCollectionTransfer $wishlistItemTransferCollection)
     {
         return $this->getFactory()
-            ->createWriter()
-            ->removeItemCollection($wishlistItemTransferCollection);
+            ->createDeleter()
+            ->deleteItemCollection($wishlistItemTransferCollection);
     }
 
     /**
@@ -268,35 +264,5 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
         return $this->getFactory()
             ->createReader()
             ->getWishlistByFilter($wishlistFilterTransfer);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
-     *
-     * @return void
-     */
-    public function deleteItem(WishlistItemTransfer $wishlistItemTransfer): void
-    {
-        $this->getEntityManager()->deleteItem($wishlistItemTransfer);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\WishlistItemCollectionTransfer $wishlistItemTransferCollection
-     *
-     * @return void
-     */
-    public function deleteItemCollection(WishlistItemCollectionTransfer $wishlistItemTransferCollection): void
-    {
-        $this->getFactory()
-            ->createDeleter()
-            ->deleteItemCollection($wishlistItemTransferCollection);
     }
 }

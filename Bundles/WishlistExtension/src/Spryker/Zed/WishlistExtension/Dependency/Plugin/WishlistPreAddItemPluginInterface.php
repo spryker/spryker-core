@@ -10,14 +10,14 @@ namespace Spryker\Zed\WishlistExtension\Dependency\Plugin;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 
 /**
- * Executes before add item to wishlist.
+ * Executed before adding a `WishlistItem` transfer object to a `Wishlist`.
  */
 interface WishlistPreAddItemPluginInterface
 {
     /**
      * Specification:
-     * - Runs before add WishlistItem to wishlist.
-     * - Expands WishlistItem.
+     * - Executed before adding a `WishlistItem` transfer object to a `Wishlist`.
+     * - Expands `WishlistItem` transfer object.
      *
      * @api
      *
