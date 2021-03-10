@@ -136,7 +136,4 @@
     <transfer name="Message">
     </transfer>
 
-    <transfer name="WishlistItemResponse">
-    </transfer>
-
 </transfers>
