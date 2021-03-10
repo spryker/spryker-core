@@ -10,7 +10,7 @@ namespace Spryker\Zed\MerchantGuiExtension\Dependency\Plugin;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
- * Provides extension capabilities for the "MerchantCreateForm" expanding after the build stage
+ * Provides extension capabilities for the MerchantCreateForm expanding after the build stage.
  */
 interface MerchantFormExpanderPluginInterface
 {
