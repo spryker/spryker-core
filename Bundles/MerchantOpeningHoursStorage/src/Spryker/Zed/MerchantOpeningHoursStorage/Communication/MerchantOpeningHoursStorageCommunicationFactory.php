@@ -8,7 +8,6 @@
 namespace Spryker\Zed\MerchantOpeningHoursStorage\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\MerchantOpeningHoursStorage\Dependency\Facade\MerchantOpeningHoursStorageToEventBehaviorFacadeInterface;
 use Spryker\Zed\MerchantOpeningHoursStorage\Dependency\Facade\MerchantOpeningHoursStorageToMerchantFacadeInterface;
 use Spryker\Zed\MerchantOpeningHoursStorage\MerchantOpeningHoursStorageDependencyProvider;
 
@@ -20,14 +19,6 @@ use Spryker\Zed\MerchantOpeningHoursStorage\MerchantOpeningHoursStorageDependenc
  */
 class MerchantOpeningHoursStorageCommunicationFactory extends AbstractCommunicationFactory
 {
-    /**
-     * @return \Spryker\Zed\MerchantOpeningHoursStorage\Dependency\Facade\MerchantOpeningHoursStorageToEventBehaviorFacadeInterface
-     */
-    public function getEventBehaviorFacade(): MerchantOpeningHoursStorageToEventBehaviorFacadeInterface
-    {
-        return $this->getProvidedDependency(MerchantOpeningHoursStorageDependencyProvider::FACADE_EVENT_BEHAVIOR);
-    }
-
     /**
      * @return \Spryker\Zed\MerchantOpeningHoursStorage\Dependency\Facade\MerchantOpeningHoursStorageToMerchantFacadeInterface
      */

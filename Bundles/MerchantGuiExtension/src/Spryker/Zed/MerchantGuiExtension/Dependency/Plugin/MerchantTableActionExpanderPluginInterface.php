@@ -8,7 +8,7 @@
 namespace Spryker\Zed\MerchantGuiExtension\Dependency\Plugin;
 
 /**
- * Provides extension capabilities for the "ButtonTransfer[]" expanding
+ * Provides extension capabilities for the "ButtonTransfer[]" expanding.
  */
 interface MerchantTableActionExpanderPluginInterface
 {

@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\MerchantResponseTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 
 /**
- * Provides extension capabilities for executing business logic code aftera merchant is updated
+ * Provides extension capabilities for executing business logic code after a merchant is updated.
  */
 interface MerchantPostUpdatePluginInterface
 {

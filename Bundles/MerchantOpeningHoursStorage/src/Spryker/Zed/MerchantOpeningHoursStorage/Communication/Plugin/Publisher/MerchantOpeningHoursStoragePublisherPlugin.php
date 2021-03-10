@@ -30,13 +30,8 @@ class MerchantOpeningHoursStoragePublisherPlugin extends AbstractPlugin implemen
      */
     public function handleBulk(array $eventEntityTransfers, $eventName): void
     {
-        $merchantIds = $this->getFactory()
-            ->getEventBehaviorFacade()
-            ->getEventTransferIds($eventEntityTransfers);
-
-        if (empty($merchantIds) === false) {
-            $this->getFacade()->publish($merchantIds);
-        }
+        $this->getFacade()
+            ->publishMerchantOpeningHours($eventEntityTransfers);
     }
 
     /**

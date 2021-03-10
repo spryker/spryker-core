@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\MerchantOpeningHoursStorage\Communication\Plugin\Publisher;
 
-use Orm\Zed\MerchantOpeningHours\Persistence\Map\SpyMerchantOpeningHoursWeekdayScheduleTableMap;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\MerchantOpeningHours\Dependency\MerchantOpeningHoursEvents;
 use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface;
@@ -31,16 +30,8 @@ class MerchantOpeningHoursStorageWeekdayScheduleCreatePublisherPlugin extends Ab
      */
     public function handleBulk(array $eventEntityTransfers, $eventName): void
     {
-        $merchantIds = $this->getFactory()
-            ->getEventBehaviorFacade()
-            ->getEventTransferForeignKeys(
-                $eventEntityTransfers,
-                SpyMerchantOpeningHoursWeekdayScheduleTableMap::COL_FK_MERCHANT
-            );
-
-        if (empty($merchantIds) === false) {
-            $this->getFacade()->publish($merchantIds);
-        }
+        $this->getFacade()
+            ->publishWeekdayScheduleCreate($eventEntityTransfers);
     }
 
     /**

@@ -13,6 +13,9 @@ use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Zed\MerchantOpeningHours\Dependency\MerchantOpeningHoursEvents;
 use Spryker\Zed\MerchantOpeningHoursStorage\Communication\Plugin\Publisher\MerchantOpeningHoursStoragePublisherPlugin;
+use Spryker\Zed\MerchantOpeningHoursStorage\Dependency\Facade\MerchantOpeningHoursStorageToEventBehaviorFacadeBridge;
+use Spryker\Zed\MerchantOpeningHoursStorage\MerchantOpeningHoursStorageDependencyProvider;
+use Spryker\Zed\Testify\Locator\Business\Container as SprykerContainer;
 
 /**
  * Auto-generated group annotations
@@ -48,6 +51,15 @@ class MerchantOpeningHoursStoragePublisherPluginTest extends Unit
                 $container->getLocator()->rabbitMq()->client()->createQueueAdapter(),
             ];
         });
+
+        $this->tester->setDependency(
+            MerchantOpeningHoursStorageDependencyProvider::FACADE_EVENT_BEHAVIOR,
+            function (SprykerContainer $container) {
+                return new MerchantOpeningHoursStorageToEventBehaviorFacadeBridge(
+                    $container->getLocator()->eventBehavior()->facade()
+                );
+            }
+        );
     }
 
     /**
