@@ -10,6 +10,7 @@ namespace Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication;
 use Orm\Zed\SalesReturn\Persistence\SpySalesReturnQuery;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Table\MerchantReturnTable;
+use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Dependency\Facade\MerchantSalesReturnMerchantUserGuiToMerchantSalesOrderFacadeInterface;
 use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Dependency\Facade\MerchantSalesReturnMerchantUserGuiToMerchantUserFacadeInterface;
 use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Dependency\Facade\MerchantSalesReturnMerchantUserGuiToSalesReturnFacadeInterface;
 use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Dependency\Service\MerchantSalesReturnMerchantUserGuiToUtilDateTimeServiceInterface;
@@ -63,5 +64,13 @@ class MerchantSalesReturnMerchantUserGuiCommunicationFactory extends AbstractCom
     public function getSalesReturnFacade(): MerchantSalesReturnMerchantUserGuiToSalesReturnFacadeInterface
     {
         return $this->getProvidedDependency(MerchantSalesReturnMerchantUserGuiDependencyProvider::FACADE_SALES_RETURN);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantSalesReturnMerchantUserGui\Dependency\Facade\MerchantSalesReturnMerchantUserGuiToMerchantSalesOrderFacadeInterface
+     */
+    public function getMerchantSalesOrderFacade(): MerchantSalesReturnMerchantUserGuiToMerchantSalesOrderFacadeInterface
+    {
+        return $this->getProvidedDependency(MerchantSalesReturnMerchantUserGuiDependencyProvider::FACADE_MERCHANT_SALES_ORDER);
     }
 }

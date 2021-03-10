@@ -7,27 +7,13 @@
 
 namespace Spryker\Zed\MerchantSalesReturnMerchantUserGui;
 
-use Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery;
 use Orm\Zed\SalesReturn\Persistence\SpySalesReturnQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
-use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Exception\MissingItemFormTypePluginException;
-use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Exception\MissingShipmentFormTypePluginException;
-use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Facade\MerchantSalesOrderMerchantUserGuiToCustomerFacadeBridge;
-use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Facade\MerchantSalesOrderMerchantUserGuiToMerchantOmsFacadeBridge;
-use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Facade\MerchantSalesOrderMerchantUserGuiToMerchantSalesOrderFacadeBridge;
-use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Facade\MerchantSalesOrderMerchantUserGuiToMerchantShipmentFacadeBridge;
-use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Facade\MerchantSalesOrderMerchantUserGuiToMerchantUserFacadeBridge;
-use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Facade\MerchantSalesOrderMerchantUserGuiToMoneyFacadeBridge;
-use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Facade\MerchantSalesOrderMerchantUserGuiToShipmentFacadeBridge;
-use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Service\MerchantSalesOrderMerchantUserGuiToShipmentServiceBridge;
-use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Service\MerchantSalesOrderMerchantUserGuiToUtilDateTimeServiceBridge;
-use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Service\MerchantSalesOrderMerchantUserGuiToUtilSanitizeBridge;
+use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Dependency\Facade\MerchantSalesReturnMerchantUserGuiToMerchantSalesOrderFacadeBridge;
 use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Dependency\Facade\MerchantSalesReturnMerchantUserGuiToMerchantUserFacadeBridge;
 use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Dependency\Facade\MerchantSalesReturnMerchantUserGuiToSalesReturnFacadeBridge;
 use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Dependency\Service\MerchantSalesReturnMerchantUserGuiToUtilDateTimeServiceBridge;
-use Spryker\Zed\SalesReturnGui\Dependency\Facade\SalesReturnGuiToSalesReturnFacadeBridge;
 
 /**
  * @method \Spryker\Zed\MerchantSalesOrderMerchantUserGui\MerchantSalesOrderMerchantUserGuiConfig getConfig()
@@ -66,11 +52,11 @@ class MerchantSalesReturnMerchantUserGuiDependencyProvider extends AbstractBundl
 //        $container = $this->addMoneyFacade($container);
 //        $container = $this->addCustomerFacade($container);
 //        $container = $this->addUtilSanitizeService($container);
+        $container = $this->addMerchantSalesOrderFacade($container);
         $container = $this->addDateTimeService($container);
         $container = $this->addSalesReturnPropelQuery($container);
         $container = $this->addMerchantUserFacade($container);
         $container = $this->addSalesReturnFacade($container);
-//        $container = $this->addMerchantSalesOrderFacade($container);
 //        $container = $this->addMerchantOmsFacade($container);
 //        $container = $this->addShipmentService($container);
 //        $container = $this->addShipmentFacade($container);
@@ -81,20 +67,20 @@ class MerchantSalesReturnMerchantUserGuiDependencyProvider extends AbstractBundl
         return $container;
     }
 
-//    /**
-//     * @param \Spryker\Zed\Kernel\Container $container
-//     *
-//     * @return \Spryker\Zed\Kernel\Container
-//     */
-//    protected function addMerchantSalesOrderFacade(Container $container): Container
-//    {
-//        $container->set(static::FACADE_MERCHANT_SALES_ORDER, function (Container $container) {
-//            return new MerchantSalesOrderMerchantUserGuiToMerchantSalesOrderFacadeBridge($container->getLocator()->merchantSalesOrder()->facade());
-//        });
-//
-//        return $container;
-//    }
-//
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMerchantSalesOrderFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_MERCHANT_SALES_ORDER, function (Container $container) {
+            return new MerchantSalesReturnMerchantUserGuiToMerchantSalesOrderFacadeBridge($container->getLocator()->merchantSalesOrder()->facade());
+        });
+
+        return $container;
+    }
+
 //    /**
 //     * @param \Spryker\Zed\Kernel\Container $container
 //     *
