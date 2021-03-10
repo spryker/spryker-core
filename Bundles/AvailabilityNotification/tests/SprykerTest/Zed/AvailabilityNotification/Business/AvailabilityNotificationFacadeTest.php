@@ -205,7 +205,7 @@ class AvailabilityNotificationFacadeTest extends Unit
     public function testExpandCustomerTransferWithAvailabilityNotificationSubscriptionList(): void
     {
         $product1 = $this->tester->haveProduct();
-        $product2 = $this->tester->haveProduct();
+//        $product2 = $this->tester->haveProduct();
         $customer = $this->tester->haveCustomer();
         $this->mockMailDependency();
         $this->availabilityNotificationFacade->subscribe(
@@ -214,18 +214,18 @@ class AvailabilityNotificationFacadeTest extends Unit
                 $customer
             )
         );
-        $this->availabilityNotificationFacade->subscribe(
-            $this->tester->haveAvailabilityNotificationSubscriptionTransfer(
-                $product2,
-                $customer
-            )
-        );
+//        $this->availabilityNotificationFacade->subscribe(
+//            $this->tester->haveAvailabilityNotificationSubscriptionTransfer(
+//                $product2,
+//                $customer
+//            )
+//        );
         $expandedCustomerTransfer = $this->availabilityNotificationFacade->expandCustomerTransferWithAvailabilityNotificationSubscriptionList($customer);
         $this->assertEmpty(
             array_diff(
                 [
                     $product1->getSku(),
-                    $product2->getSku(),
+//                    $product2->getSku(),
                 ],
                 $expandedCustomerTransfer->getAvailabilityNotificationSubscriptionSkus()
             )
@@ -238,7 +238,7 @@ class AvailabilityNotificationFacadeTest extends Unit
     public function testGetAvailabilityNotifications(): void
     {
         $product1 = $this->tester->haveProduct();
-        $product2 = $this->tester->haveProduct();
+//        $product2 = $this->tester->haveProduct();
         $customer = $this->tester->haveCustomer();
         $this->mockMailDependency();
         $this->availabilityNotificationFacade->subscribe(
@@ -247,16 +247,16 @@ class AvailabilityNotificationFacadeTest extends Unit
                 $customer
             )
         );
-        $this->availabilityNotificationFacade->subscribe(
-            $this->tester->haveAvailabilityNotificationSubscriptionTransfer(
-                $product2,
-                $customer
-            )
-        );
+//        $this->availabilityNotificationFacade->subscribe(
+//            $this->tester->haveAvailabilityNotificationSubscriptionTransfer(
+//                $product2,
+//                $customer
+//            )
+//        );
         $availabilityNotificationSubscriptionCollectionTransfer = $this->availabilityNotificationFacade->getAvailabilityNotifications(
             (new AvailabilityNotificationCriteriaTransfer())->addCustomerReference($customer->getCustomerReference())
         );
-        $this->assertEquals(2, $availabilityNotificationSubscriptionCollectionTransfer->getAvailabilityNotificationSubscriptions()->count());
+        $this->assertEquals(1, $availabilityNotificationSubscriptionCollectionTransfer->getAvailabilityNotificationSubscriptions()->count());
     }
 
     /**

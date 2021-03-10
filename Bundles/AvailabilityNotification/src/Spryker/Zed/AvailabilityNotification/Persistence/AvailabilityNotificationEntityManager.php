@@ -25,7 +25,7 @@ class AvailabilityNotificationEntityManager extends AbstractEntityManager implem
     {
         $availabilityNotificationSubscriptionTransfer->requireLocale();
         $availabilityNotificationSubscriptionTransfer->requireStore();
-dump($availabilityNotificationSubscriptionTransfer->toArray());
+
         $subscriptionEntity = new SpyAvailabilityNotificationSubscription();
         $subscriptionEntity->fromArray($availabilityNotificationSubscriptionTransfer->toArray());
         $subscriptionEntity->setFkStore($availabilityNotificationSubscriptionTransfer->getStore()->getIdStore());
