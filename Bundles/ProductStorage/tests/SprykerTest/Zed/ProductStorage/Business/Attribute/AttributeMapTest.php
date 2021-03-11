@@ -57,19 +57,27 @@ class AttributeMapTest extends Unit
     protected const KEY_LOCALIZED_ATTRIBUTES = 'localized_attributes';
 
     /**
-     * @dataProvider attributeMapDataProvider
+     * @var \SprykerTest\Zed\ProductStorage\ProductStorageBusinessTester
+     */
+    protected $tester;
+
+    /**
+     * @dataProvider generateAttributeMapBulkDataProvider
      *
      * @param array $productConcreteData1
      * @param array $productConcreteData2
+     * @param bool $isProductAttributesWithSingleValueIncluded
      * @param array $expectedAttributeVariantMap
+     * @param array $expectedAttributeVariants
      *
      * @return void
      */
-    public function testGenerateAttributeMapBulkWillGenerateAttributeVariantMap(
+    public function testGenerateAttributeMapBulk(
         array $productConcreteData1,
         array $productConcreteData2,
         bool $isProductAttributesWithSingleValueIncluded,
-        array $expectedAttributeVariantMap
+        array $expectedAttributeVariantMap,
+        array $expectedAttributeVariants
     ): void {
         $productConcreteDataList = [$productConcreteData1, $productConcreteData2];
         $productStorageQueryContainerMock = $this->createProductStorageQueryContainerMock(
@@ -79,8 +87,21 @@ class AttributeMapTest extends Unit
 
         $this->resetSuperAttributesCache();
 
+        $productConcrete1AttributePermutations = $this->generateProductAttributePermutations(
+            json_decode($productConcreteData1[static::KEY_ATTRIBUTES], true),
+            $productConcreteData1[static::KEY_ID_PRODUCT]
+        );
+
+        $productConcrete2AttributePermutations = $this->generateProductAttributePermutations(
+            json_decode($productConcreteData2[static::KEY_ATTRIBUTES], true),
+            $productConcreteData2[static::KEY_ID_PRODUCT]
+        );
+
         $attributeMap = new AttributeMap(
-            $this->createProductFacadeMock([static::FAKE_PRODUCT_ATTRIBUTES_1, static::FAKE_PRODUCT_ATTRIBUTES_2]),
+            $this->createProductFacadeMock(
+                [static::FAKE_PRODUCT_ATTRIBUTES_1, static::FAKE_PRODUCT_ATTRIBUTES_2],
+                [$productConcrete1AttributePermutations, $productConcrete2AttributePermutations]
+            ),
             $productStorageQueryContainerMock,
             $this->createProductStorageConfigMock($isProductAttributesWithSingleValueIncluded),
             new SingleValueSuperAttributeFilter()
@@ -96,14 +117,14 @@ class AttributeMapTest extends Unit
         $attributeMapStorageTransfer = $attributeMapBulk['1_64'];
         $this->assertInstanceOf(AttributeMapStorageTransfer::class, $attributeMapStorageTransfer);
 
-        $this->assertCount(2, $attributeMapStorageTransfer->getAttributeVariantMap());
         $this->assertEqualsCanonicalizing($expectedAttributeVariantMap, $attributeMapStorageTransfer->getAttributeVariantMap());
+        $this->assertEqualsCanonicalizing($expectedAttributeVariants, $attributeMapStorageTransfer->getAttributeVariants());
     }
 
     /**
      * @return array[]
      */
-    public function attributeMapDataProvider(): array
+    public function generateAttributeMapBulkDataProvider(): array
     {
         $productConcreteData1 = [
             static::KEY_ID_PRODUCT => 1,
@@ -132,29 +153,53 @@ class AttributeMapTest extends Unit
                     '1' => static::FAKE_PRODUCT_ATTRIBUTES_1,
                     '2' => static::FAKE_PRODUCT_ATTRIBUTES_2,
                 ],
+                [],
             ],
             [
                 $productConcreteData1,
                 $productConcreteData2,
                 true,
-                [ // TODO: fix expected result
-                    '1' => static::FAKE_PRODUCT_ATTRIBUTES_1,
-                    '2' => static::FAKE_PRODUCT_ATTRIBUTES_2,
-                ]
+                [],
+                [
+                    'attribute_1:value_1_1' => [
+                        'attribute_2:value_1_2' => [
+                            'id_product_concrete' => 1,
+                        ],
+                    ],
+                    'attribute_2:value_1_2' => [
+                        'attribute_1:value_1_1' => [
+                            'id_product_concrete' => 1,
+                        ],
+                    ],
+                    'attribute_1:value_2_1' => [
+                        'attribute_2:value_2_2' => [
+                            'id_product_concrete' => 2,
+                        ],
+                    ],
+                    'attribute_2:value_2_2' => [
+                        'attribute_1:value_2_1' => [
+                            'id_product_concrete' => 2,
+                        ],
+                    ],
+                ],
             ],
         ];
     }
 
     /**
      * @param array $productAttributesCombined
+     * @param array $productAttributePermutationsCombined
      *
      * @return \Spryker\Zed\ProductStorage\Dependency\Facade\ProductStorageToProductInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createProductFacadeMock(array $productAttributesCombined = []): ProductStorageToProductInterface
-    {
+    protected function createProductFacadeMock(
+        array $productAttributesCombined = [],
+        array $productAttributePermutationsCombined = []
+    ): ProductStorageToProductInterface {
         $productFacadeMock = $this->getMockBuilder(ProductStorageToProductInterface::class)->getMock();
         $productFacadeMock->method('decodeProductAttributes')->willReturn([]);
         $productFacadeMock->method('combineRawProductAttributes')->willReturnOnConsecutiveCalls(...$productAttributesCombined);
+        $productFacadeMock->method('generateAttributePermutations')->willReturnOnConsecutiveCalls(...$productAttributePermutationsCombined);
 
         return $productFacadeMock;
     }
@@ -243,6 +288,17 @@ class AttributeMapTest extends Unit
             ->willReturn($isOptimizedAttributeVariantsMapEnabled);
 
         return $productStorageConfigMock;
+    }
+
+    /**
+     * @param array<string, string> $productAttributes
+     * @param int $idProduct
+     *
+     * @return array
+     */
+    protected function generateProductAttributePermutations(array $productAttributes, int $idProduct): array
+    {
+        return $this->tester->getLocator()->product()->facade()->generateAttributePermutations($productAttributes, $idProduct);
     }
 
     /**
