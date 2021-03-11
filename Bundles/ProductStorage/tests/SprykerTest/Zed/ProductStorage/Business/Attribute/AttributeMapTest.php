@@ -88,7 +88,6 @@ class AttributeMapTest extends Unit
             static::FAKE_SUPER_ATTRIBUTES
         );
 
-
         $productConcrete1AttributePermutations = $this->generateProductAttributePermutations(
             json_decode($productConcreteData1[static::KEY_ATTRIBUTES], true),
             $productConcreteData1[static::KEY_ID_PRODUCT]
