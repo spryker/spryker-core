@@ -1,4 +1,4 @@
-merchant_key,date,time_from,time_to,note_glossary_key
+merchant_reference,date,time_from,time_to,note_glossary_key
 merchant-profile-data-import-test-key,2020-01-01,,,merchant_weekday_schedule.new_year
 merchant-profile-data-import-test-key,2020-04-10,,,merchant_weekday_schedule.good_friday
 merchant-profile-data-import-test-key,2020-04-12,,,merchant_weekday_schedule.easter_sunday

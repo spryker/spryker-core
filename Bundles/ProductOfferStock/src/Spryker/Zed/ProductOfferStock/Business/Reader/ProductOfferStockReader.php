@@ -56,7 +56,7 @@ class ProductOfferStockReader implements ProductOfferStockReaderInterface
 
         $productOfferStockTransfers = $this->productOfferStockRepository->find($productOfferStockRequestTransfer);
 
-        if (!$productOfferStockTransfers->getArrayCopy()) {
+        if (!$productOfferStockTransfers->count()) {
             throw new ProductOfferNotFoundException(
                 sprintf(
                     'Product offer stock with product reference: %s, not found',
@@ -65,7 +65,7 @@ class ProductOfferStockReader implements ProductOfferStockReaderInterface
             );
         }
          $productOfferStockResultTransfer = $this->productOfferStockResultMapper
-            ->mapProductOfferStockTransfersToProductOfferStockResultTransfer(
+            ->convertProductOfferStockTransfersToProductOfferStockResultTransfer(
                 $productOfferStockTransfers
             );
 
@@ -90,7 +90,7 @@ class ProductOfferStockReader implements ProductOfferStockReaderInterface
 
         $productOfferStockTransfers = $this->productOfferStockRepository->find($productOfferStockRequestTransfer);
 
-        if (!$productOfferStockTransfers->getArrayCopy()) {
+        if (!$productOfferStockTransfers->count()) {
             throw new ProductOfferNotFoundException(
                 sprintf(
                     'Product offer stock with product reference: %s, not found',

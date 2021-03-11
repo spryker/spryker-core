@@ -99,7 +99,7 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
     {
         $productOfferCriteriaTransfer = $this->createProductOfferCriteriaTransfer($productOfferReferences);
         $productOfferCollectionTransfer = $this->merchantProductOfferStorageRepository
-            ->getProductOffersByFilterCriteria($productOfferCriteriaTransfer);
+            ->getProductOffers($productOfferCriteriaTransfer);
 
         foreach ($productOfferCollectionTransfer->getProductOffers() as $productOfferTransfer) {
             $this->merchantProductOfferStorageEntityManager->saveProductOfferStorage($productOfferTransfer);

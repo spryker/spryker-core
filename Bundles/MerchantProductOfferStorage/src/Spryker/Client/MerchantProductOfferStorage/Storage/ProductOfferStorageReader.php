@@ -279,17 +279,17 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
     protected function expandProductOffersWithDefaultProductOffer(
         ProductOfferStorageCollectionTransfer $productOfferStorageCollectionTransfer
     ): ProductOfferStorageCollectionTransfer {
-        if ($productOfferStorageCollectionTransfer->getProductOffers()->count() < 1) {
+        if (!$productOfferStorageCollectionTransfer->getProductOffers()->count()) {
             return $productOfferStorageCollectionTransfer;
         }
 
-        $productOfferStorageTransfers = $productOfferStorageCollectionTransfer->getProductOffers()->getArrayCopy();
+        $productOffers = $productOfferStorageCollectionTransfer->getProductOffers()->getArrayCopy();
 
-        foreach ($productOfferStorageTransfers as $key => $productOfferStorageTransfer) {
-            $productOfferStorageTransfers[$key] = $productOfferStorageTransfer->setIsDefault($key < 1);
+        foreach ($productOffers as $key => $productOffer) {
+            $productOffers[$key] = $productOffer->setIsDefault($key < 1);
         }
 
-        return $productOfferStorageCollectionTransfer->setProductOffers(new ArrayObject($productOfferStorageTransfers));
+        return $productOfferStorageCollectionTransfer->setProductOffers(new ArrayObject($productOffers));
     }
 
     /**

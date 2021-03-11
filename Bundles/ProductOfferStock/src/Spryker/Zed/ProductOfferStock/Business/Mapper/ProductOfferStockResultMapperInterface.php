@@ -17,7 +17,7 @@ interface ProductOfferStockResultMapperInterface
      *
      * @return \Generated\Shared\Transfer\ProductOfferStockResultTransfer
      */
-    public function mapProductOfferStockTransfersToProductOfferStockResultTransfer(
+    public function convertProductOfferStockTransfersToProductOfferStockResultTransfer(
         ArrayObject $productOfferStockTransfers
     ): ProductOfferStockResultTransfer;
 }

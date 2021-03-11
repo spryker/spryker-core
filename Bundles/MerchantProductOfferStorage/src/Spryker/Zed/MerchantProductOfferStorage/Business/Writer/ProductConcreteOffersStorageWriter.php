@@ -125,9 +125,12 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
         $productConcreteSkus = array_unique($productConcreteSkus);
 
         $productOfferCriteriaTransfer = $this->createProductOfferCriteriaTransfer($productConcreteSkus);
-        $productOfferCollectionTransfer = $this->merchantProductOfferStorageRepository->getProductOffersByFilterCriteria($productOfferCriteriaTransfer);
+        $productOfferCollectionTransfer = $this->merchantProductOfferStorageRepository->getProductOffers($productOfferCriteriaTransfer);
 
-        $productOfferReferencesGroupedByConcreteSku = $this->groupProductOfferReferencesByConcreteSku($productConcreteSkus, $productOfferCollectionTransfer);
+        $productOfferReferencesGroupedByConcreteSku = $this->getProductOfferReferencesGroupedByConcreteSku(
+            $productConcreteSkus,
+            $productOfferCollectionTransfer
+        );
 
         foreach ($productOfferReferencesGroupedByConcreteSku as $concreteSku => $productOfferReferencesGroupedByStore) {
             $storeNamesToRemove = [];
@@ -153,7 +156,7 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
      *
      * @return array
      */
-    protected function groupProductOfferReferencesByConcreteSku(
+    protected function getProductOfferReferencesGroupedByConcreteSku(
         array $productConcreteSkus,
         ProductOfferCollectionTransfer $productOfferCollectionTransfer
     ): array {

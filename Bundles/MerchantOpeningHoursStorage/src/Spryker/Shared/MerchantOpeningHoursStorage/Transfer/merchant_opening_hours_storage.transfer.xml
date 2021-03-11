@@ -48,7 +48,7 @@
     </transfer>
 
     <transfer name="MerchantCriteria">
-        <property name="merchantIds" type="array" singular="merchantId"/>
+        <property name="merchantIds" type="int[]" singular="idMerchant"/>
         <property name="filter" type="Filter"/>
     </transfer>
 

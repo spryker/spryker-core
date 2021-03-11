@@ -48,8 +48,11 @@ class MerchantProfileExpanderPlugin extends AbstractPlugin implements MerchantEx
      */
     protected function createMerchantProfileCriteriaTransfer(MerchantTransfer $merchantTransfer): MerchantProfileCriteriaTransfer
     {
+        /** @var int $merchantId */
+        $merchantId = $merchantTransfer->getIdMerchant();
+
         $merchantProfileCriteriaTransfer = new MerchantProfileCriteriaTransfer();
-        $merchantProfileCriteriaTransfer->setFkMerchant($merchantTransfer->getIdMerchant());
+        $merchantProfileCriteriaTransfer->setMerchantIds([$merchantId]);
 
         return $merchantProfileCriteriaTransfer;
     }

@@ -50,7 +50,7 @@ class MerchantProductOfferStorageRepository extends AbstractRepository implement
      *
      * @return \Generated\Shared\Transfer\ProductOfferCollectionTransfer
      */
-    public function getProductOffersByFilterCriteria(ProductOfferCriteriaTransfer $productOfferCriteriaTransfer): ProductOfferCollectionTransfer
+    public function getProductOffers(ProductOfferCriteriaTransfer $productOfferCriteriaTransfer): ProductOfferCollectionTransfer
     {
         $productOfferCollectionTransfer = new ProductOfferCollectionTransfer();
         $productOfferPropelQuery = $this->getFactory()

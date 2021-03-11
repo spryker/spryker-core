@@ -140,7 +140,7 @@ class MerchantProfileFacadeTest extends Unit
 
         // Act
         $merchantProfileCriteriaTransfer = new MerchantProfileCriteriaTransfer();
-        $merchantProfileCriteriaTransfer->setFkMerchant($expectedMerchantProfileTransfer->getFkMerchant());
+        $merchantProfileCriteriaTransfer->setMerchantIds([$expectedMerchantProfileTransfer->getFkMerchant()]);
         $merchantProfileTransfer = $this->tester->getFacade()->findOne($merchantProfileCriteriaTransfer);
 
         // Assert

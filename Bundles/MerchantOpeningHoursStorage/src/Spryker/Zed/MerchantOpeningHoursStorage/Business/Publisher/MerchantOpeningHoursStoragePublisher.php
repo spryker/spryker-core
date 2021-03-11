@@ -55,19 +55,22 @@ class MerchantOpeningHoursStoragePublisher implements MerchantOpeningHoursStorag
     public function publish(array $merchantIds): void
     {
         $merchantCollectionTransfer = $this->getMerchants($merchantIds);
-        foreach ($merchantIds as $idMerchant) {
-            $weekdayScheduleTransfers = $this->merchantOpeningHoursStorageRepository->getMerchantOpeningHoursWeekdayScheduleByFkMerchant($idMerchant);
-            $dateScheduleTransfers = $this->merchantOpeningHoursStorageRepository->getMerchantOpeningHoursDateScheduleByFkMerchant($idMerchant);
+
+        foreach ($merchantCollectionTransfer->getMerchants() as $merchantTransfer) {
+            $weekdayScheduleTransfers = $this->merchantOpeningHoursStorageRepository
+                ->getMerchantOpeningHoursWeekdayScheduleByFkMerchant($merchantTransfer->getIdMerchant());
+            $dateScheduleTransfers = $this->merchantOpeningHoursStorageRepository
+                ->getMerchantOpeningHoursDateScheduleByFkMerchant($merchantTransfer->getIdMerchant());
 
             if ($weekdayScheduleTransfers->count() > 0 || $dateScheduleTransfers->count() > 0) {
-                $merchantReference = $this->findMerchantReferenceByIdMerchant($merchantCollectionTransfer, $idMerchant);
-
-                if (!$merchantReference) {
-                    continue;
-                }
-
-                $merchantOpenHoursStorageTransfer = $this->createMerchantOpeningHoursStorageTransfer($weekdayScheduleTransfers, $dateScheduleTransfers);
-                $this->merchantOpeningHoursStorageEntityManager->saveMerchantOpenHoursStorage($merchantOpenHoursStorageTransfer, $merchantReference);
+                $merchantOpenHoursStorageTransfer = $this->createMerchantOpeningHoursStorageTransfer(
+                    $weekdayScheduleTransfers,
+                    $dateScheduleTransfers
+                );
+                $this->merchantOpeningHoursStorageEntityManager->saveMerchantOpenHoursStorage(
+                    $merchantOpenHoursStorageTransfer,
+                    $merchantTransfer->getMerchantReference()
+                );
             }
         }
     }
@@ -97,22 +100,5 @@ class MerchantOpeningHoursStoragePublisher implements MerchantOpeningHoursStorag
         return $this->merchantFacade->get(
             (new MerchantCriteriaTransfer())->setMerchantIds($merchantIds)
         );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantCollectionTransfer $merchantCollectionTransfer
-     * @param int $idMerchant
-     *
-     * @return string|null
-     */
-    protected function findMerchantReferenceByIdMerchant(MerchantCollectionTransfer $merchantCollectionTransfer, int $idMerchant): ?string
-    {
-        foreach ($merchantCollectionTransfer->getMerchants() as $merchantTransfer) {
-            if ($merchantTransfer->getIdMerchant() === $idMerchant) {
-                return $merchantTransfer->getMerchantReference();
-            }
-        }
-
-        return null;
     }
 }

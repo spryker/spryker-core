@@ -330,11 +330,7 @@
 
     <transfer name="PriceProductOfferCriteria">
         <property name="priceProductOfferIds" type="int[]" singular="idPriceProductOffer"/>
-        <property name="productOfferCriteriaFilter" type="ProductOfferCriteriaFilter"/>
-    </transfer>
-
-    <transfer name="ProductOfferCriteriaFilter">
-        <property name="merchantIds" type="int[]" singular="idMerchant"/>
+        <property name="productOfferCriteria" type="ProductOfferCriteria"/>
     </transfer>
 
     <transfer name="ValidationResponse">

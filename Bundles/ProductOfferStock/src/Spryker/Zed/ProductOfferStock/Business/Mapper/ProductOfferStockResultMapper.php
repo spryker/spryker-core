@@ -20,7 +20,7 @@ class ProductOfferStockResultMapper implements ProductOfferStockResultMapperInte
      *
      * @return \Generated\Shared\Transfer\ProductOfferStockResultTransfer
      */
-    public function mapProductOfferStockTransfersToProductOfferStockResultTransfer(
+    public function convertProductOfferStockTransfersToProductOfferStockResultTransfer(
         ArrayObject $productOfferStockTransfers
     ): ProductOfferStockResultTransfer {
         $productOfferStockResultTransfer = new ProductOfferStockResultTransfer();
@@ -33,7 +33,7 @@ class ProductOfferStockResultMapper implements ProductOfferStockResultMapperInte
             $quantity = $productOfferStockTransfer->getQuantity();
 
             $totalQuantity = $totalQuantity->add($quantity);
-            if ($productOfferStockTransfer->getIsNeverOutOfStock() && $productOfferStockTransfer->getIsNeverOutOfStock() !== null) {
+            if ($productOfferStockTransfer->getIsNeverOutOfStock()) {
                 $productOfferStockResultTransfer->setIsNeverOutOfStock(true);
             }
         }
