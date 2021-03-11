@@ -88,4 +88,8 @@
     <transfer name="SalesOrderConfiguredBundleItem">
     </transfer>
 
+    <transfer name="ConfigurableBundleTemplatePageSearch">
+        <property name="fkConfigurableBundleTemplate" type="int"/>
+    </transfer>
+
 </transfers>
