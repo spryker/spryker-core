@@ -24,7 +24,7 @@ class QuoteItemReplacer implements QuoteItemReplacerInterface
     protected const MESSAGE_TYPE_ERROR = 'error';
 
     protected const TRANSLATION_PARAMETER_SKU = '%sku%';
-    protected const TRANSLATION_PARAMETER_STOCK = '%stock%';
+    protected const TRANSLATION_PARAMETER_AVAILABILITY = '%availability%';
 
     /**
      * @var \Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToCartClientInterface
@@ -190,17 +190,17 @@ class QuoteItemReplacer implements QuoteItemReplacerInterface
     }
 
     /**
-     * @param int $quantity
+     * @param int $availability
      *
      * @return \Generated\Shared\Transfer\MessageTransfer
      */
-    protected function createConfigurationOnlyHasAvailabilityMessage(int $quantity): MessageTransfer
+    protected function createConfigurationOnlyHasAvailabilityMessage(int $availability): MessageTransfer
     {
         return (new MessageTransfer())
             ->setType(static::MESSAGE_TYPE_ERROR)
             ->setValue(static::GLOSSARY_KEY_PRODUCT_CONFIGURATION_AVAILABILITY_FAILED)
             ->setParameters([
-                static::TRANSLATION_PARAMETER_STOCK => $quantity,
+                static::TRANSLATION_PARAMETER_AVAILABILITY => $availability,
             ]);
     }
 }
