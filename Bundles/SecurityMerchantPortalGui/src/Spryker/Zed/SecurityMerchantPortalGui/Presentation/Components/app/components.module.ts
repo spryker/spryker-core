@@ -10,8 +10,5 @@ import { LoginLayoutModule } from './login-layout/login-layout.module';
     providers: [],
 })
 export class ComponentsModule extends CustomElementModule {
-    protected components: WebComponentDefs = [
-        ButtonLinkComponent,
-        LoginLayoutComponent,
-    ];
+    protected components: WebComponentDefs = [ButtonLinkComponent, LoginLayoutComponent];
 }
