@@ -62,6 +62,7 @@ class MerchantSalesReturnBusinessTester extends Actor
     public function createItemTransfer(string $merchantReference, int $idSalesOrder): ItemTransfer
     {
         $itemTransfer = new ItemTransfer();
+
         if ($merchantReference) {
             $itemTransfer->setMerchantReference($merchantReference);
         }

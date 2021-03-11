@@ -9,7 +9,7 @@
     </transfer>
 
     <transfer name="Item">
-        <property name="idSalesOrderItem" type="int"/>
+        <property name="uuid" type="string"/>
         <property name="merchantReference" type="string"/>
         <property name="fkSalesOrder" type="int"/>
     </transfer>
@@ -43,7 +43,7 @@
     </transfer>
 
     <transfer name="MerchantOrderCriteria">
-        <property name="idOrderItem" type="int"/>
+        <property name="orderItemUuid" type="string"/>
     </transfer>
 
 </transfers>

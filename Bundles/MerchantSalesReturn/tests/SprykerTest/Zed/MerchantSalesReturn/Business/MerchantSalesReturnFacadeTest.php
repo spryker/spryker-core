@@ -31,6 +31,7 @@ class MerchantSalesReturnFacadeTest extends Unit
     protected const TEST_MERCHANT_SALES_ORDER_REFERENCE_1 = 'test-merchant-sales-order-reference-1';
     protected const TEST_MERCHANT_REFERENCE_1 = 'test-merchant-reference-1';
     protected const TEST_MERCHANT_REFERENCE_2 = 'test-merchant-reference-2';
+    protected const TEST_UUID = '3b6743a7-ad62-3779-8648-e0156e51a628';
 
     /**
      * @var \SprykerTest\Zed\MerchantSalesReturn\MerchantSalesReturnBusinessTester
@@ -84,7 +85,7 @@ class MerchantSalesReturnFacadeTest extends Unit
 
         foreach ($saveOrderTransfer->getOrderItems() as $orderItem) {
             $orderItemTransfer = (new ItemTransfer())
-                ->setIdSalesOrderItem(324)
+                ->setUuid(self::TEST_UUID)
                 ->setMerchantReference(static::TEST_MERCHANT_SALES_ORDER_REFERENCE_1);
             $returnItemTransfer = new ReturnItemTransfer();
             $returnItemTransfer->setOrderItem($orderItemTransfer);

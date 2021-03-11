@@ -253,15 +253,19 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
             );
         }
 
-        if ($merchantOrderCriteriaTransfer->getIdOrderItem() !== null) {
+        if ($merchantOrderCriteriaTransfer->getOrderItemUuid() !== null) {
             $merchantSalesOrderQuery->addJoin(
                 SpyMerchantSalesOrderTableMap::COL_ID_MERCHANT_SALES_ORDER,
                 SpyMerchantSalesOrderItemTableMap::COL_FK_MERCHANT_SALES_ORDER,
                 Criteria::INNER_JOIN
             );
-            $merchantSalesOrderQuery->addAnd(
+            $merchantSalesOrderQuery->addJoin(
                 SpyMerchantSalesOrderItemTableMap::COL_FK_SALES_ORDER_ITEM,
-                $merchantOrderCriteriaTransfer->getIdOrderItem()
+                SpySalesOrderItemTableMap::COL_ID_SALES_ORDER_ITEM
+            );
+            $merchantSalesOrderQuery->addAnd(
+                SpySalesOrderItemTableMap::COL_UUID,
+                $merchantOrderCriteriaTransfer->getOrderItemUuid()
             );
         }
 
