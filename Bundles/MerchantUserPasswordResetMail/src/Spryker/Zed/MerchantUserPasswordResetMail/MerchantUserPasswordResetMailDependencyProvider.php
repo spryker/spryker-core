@@ -18,7 +18,6 @@ use Spryker\Zed\MerchantUserPasswordResetMail\Dependency\Facade\MerchantUserPass
 class MerchantUserPasswordResetMailDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_MAIL = 'FACADE_MAIL';
-
     public const FACADE_MERCHANT_USER = 'FACADE_MERCHANT_USER';
 
     /**

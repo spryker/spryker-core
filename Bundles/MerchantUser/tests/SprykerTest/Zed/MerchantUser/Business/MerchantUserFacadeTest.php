@@ -38,9 +38,7 @@ class MerchantUserFacadeTest extends Unit
      * @see \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_STATUS_BLOCKED
      */
     protected const USER_STATUS_BLOCKED = 'blocked';
-
     protected const USER_AUTHENTICATION_TOKEN = 'token';
-
     protected const USER_PASSWORD = 'password';
 
     /**
