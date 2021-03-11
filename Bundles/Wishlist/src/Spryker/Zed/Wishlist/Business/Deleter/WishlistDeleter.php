@@ -39,17 +39,17 @@ class WishlistDeleter implements WishlistDeleterInterface
             $this->executeDeleteItemCollectionTransaction($wishlistItemTransferCollectionTransfer);
         });
 
-        return $wishlistItemTransferCollection;
+        return $wishlistItemTransferCollectionTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\WishlistItemCollectionTransfer $wishlistItemTransferCollection
+     * @param \Generated\Shared\Transfer\WishlistItemCollectionTransfer $wishlistItemTransferCollectionTransfer
      *
      * @return void
      */
-    protected function executeDeleteItemCollectionTransaction(WishlistItemCollectionTransfer $wishlistItemTransferCollection): void
+    protected function executeDeleteItemCollectionTransaction(WishlistItemCollectionTransfer $wishlistItemTransferCollectionTransfer): void
     {
-        foreach ($wishlistItemTransferCollection->getItems() as $wishlistItemTransfer) {
+        foreach ($wishlistItemTransferCollectionTransfer->getItems() as $wishlistItemTransfer) {
             $this->wishlistEntityManager->deleteItem($wishlistItemTransfer);
         }
     }
