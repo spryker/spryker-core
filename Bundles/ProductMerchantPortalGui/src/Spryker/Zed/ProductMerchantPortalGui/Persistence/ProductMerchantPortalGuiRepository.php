@@ -579,7 +579,6 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
         PriceProductAbstractTableCriteriaTransfer $priceProductAbstractTableCriteriaTransfer
     ): SpyPriceProductDefaultQuery {
         $idMerchant = $priceProductAbstractTableCriteriaTransfer->getIdMerchantOrFail();
-        $idProductAbstract = $priceProductAbstractTableCriteriaTransfer->getIdProductAbstractOrFail();
         $priceProductDefaultQuery = $this->getFactory()->getPriceProductDefaultPropelQuery();
 
         $priceProductDefaultQuery->joinPriceProductStore()
@@ -594,7 +593,6 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
                         ->endUse()
                     ->endUse()
                     ->innerJoinPriceType()
-                    ->filterByFkProductAbstract($idProductAbstract)
                 ->endUse()
                 ->joinCurrency()
                 ->joinStore()
@@ -605,6 +603,8 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
             ->addAsColumn(PriceProductAbstractTableViewTransfer::CURRENCY, SpyCurrencyTableMap::COL_CODE)
             ->addAsColumn(PriceProductAbstractTableViewTransfer::ID_PRODUCT_ABSTRACT, SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT)
             ->select([SpyStoreTableMap::COL_NAME, SpyCurrencyTableMap::COL_CODE]);
+
+        $priceProductDefaultQuery = $this->filterPriceProductDefaultQueryByProductId($priceProductDefaultQuery, $priceProductAbstractTableCriteriaTransfer);
 
         $priceTypeTransfers = $this->getFactory()->getPriceProductFacade()->getPriceTypeValues();
 
@@ -635,6 +635,37 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
                 $orderDirection
             );
         }
+
+        return $priceProductDefaultQuery;
+    }
+
+    /**
+     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductDefaultQuery $priceProductDefaultQuery
+     * @param \Generated\Shared\Transfer\PriceProductAbstractTableCriteriaTransfer $priceProductAbstractTableCriteriaTransfer
+     *
+     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductDefaultQuery
+     */
+    protected function filterPriceProductDefaultQueryByProductId(
+        SpyPriceProductDefaultQuery $priceProductDefaultQuery,
+        PriceProductAbstractTableCriteriaTransfer $priceProductAbstractTableCriteriaTransfer
+    ): SpyPriceProductDefaultQuery {
+        $idProduct = $priceProductAbstractTableCriteriaTransfer->getIdProductAbstract() ?: $priceProductAbstractTableCriteriaTransfer->getIdProductConcreteOrFail();
+
+        if ($priceProductAbstractTableCriteriaTransfer->getIdProductAbstract()) {
+            $priceProductDefaultQuery->usePriceProductStoreQuery()
+                ->usePriceProductQuery()
+                    ->filterByFkProductAbstract($idProduct)
+                ->endUse()
+            ->endUse();
+
+            return $priceProductDefaultQuery;
+        }
+
+        $priceProductDefaultQuery->usePriceProductStoreQuery()
+            ->usePriceProductQuery()
+                ->filterByFkProduct($idProduct)
+            ->endUse()
+        ->endUse();
 
         return $priceProductDefaultQuery;
     }

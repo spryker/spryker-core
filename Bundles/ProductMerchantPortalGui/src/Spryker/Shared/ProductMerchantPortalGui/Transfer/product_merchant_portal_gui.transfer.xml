@@ -164,6 +164,7 @@
         <property name="filterInCurrencies" type="string[]" singular="inCurrency"/>
         <property name="idMerchant" type="int"/>
         <property name="idProductAbstract" type="int"/>
+        <property name="idProductConcrete" type="int"/>
         <property name="page" type="int"/>
         <property name="pageSize" type="int"/>
         <property name="orderBy" type="string"/>
