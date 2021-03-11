@@ -100,10 +100,8 @@ class MerchantOpeningHoursStorageRepository extends AbstractRepository implement
                 Criteria::INNER_JOIN
             );
             $merchantOpeningHoursStoragePropelQuery->where(
-                SpyMerchantTableMap::COL_ID_MERCHANT . ' IN (' . implode(
-                    ',',
-                    $merchantOpeningHoursStorageCriteriaTransfer->getMerchantIds()
-                ) . ')'
+                SpyMerchantTableMap::COL_ID_MERCHANT . ' IN ?',
+                $merchantOpeningHoursStorageCriteriaTransfer->getMerchantIds()
             );
         }
 
