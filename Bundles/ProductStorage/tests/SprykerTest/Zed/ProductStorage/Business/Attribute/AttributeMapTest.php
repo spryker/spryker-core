@@ -152,7 +152,7 @@ class AttributeMapTest extends Unit
             [
                 $productConcreteData1,
                 $productConcreteData2,
-                false,
+                true,
                 [
                     '1' => static::FAKE_PRODUCT_ATTRIBUTES_1,
                     '2' => static::FAKE_PRODUCT_ATTRIBUTES_2,
@@ -162,7 +162,7 @@ class AttributeMapTest extends Unit
             [
                 $productConcreteData1,
                 $productConcreteData2,
-                true,
+                false,
                 [],
                 [
                     'attribute_1:value_1_1' => [
