@@ -1,0 +1,6 @@
+{
+    "include": {
+        "spryker/transfer": "Provides transfer objects definition with `::get*OrFail()` functionality.",
+        "spryker/decimal-object": "Provides Spryker `Decimal` functionality."
+    }
+}
