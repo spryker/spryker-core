@@ -155,7 +155,8 @@ class MerchantStorageReader implements MerchantStorageReaderInterface
         }
 
         if ($merchantIds) {
-            return $this->get($merchantIds);
+            $merchantCriteriaTransfer = (new MerchantCriteriaTransfer())->setMerchantIds($merchantIds);
+            return $this->get($merchantCriteriaTransfer);
         }
 
         return [];
