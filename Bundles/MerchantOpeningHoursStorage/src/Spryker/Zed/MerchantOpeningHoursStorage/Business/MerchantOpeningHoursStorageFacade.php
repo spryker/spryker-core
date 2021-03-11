@@ -32,4 +32,52 @@ class MerchantOpeningHoursStorageFacade extends AbstractFacade implements Mercha
             ->createMerchantOpeningHoursStoragePublisher()
             ->publish($merchantIds);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function publishWeekdayScheduleCreate(array $eventEntityTransfers): void
+    {
+        $this->getFactory()
+            ->createMerchantOpeningHoursStoragePublisher()
+            ->publishWeekdayScheduleCreate($eventEntityTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function publishDateScheduleCreate(array $eventEntityTransfers): void
+    {
+        $this->getFactory()
+            ->createMerchantOpeningHoursStoragePublisher()
+            ->publishDateScheduleCreate($eventEntityTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function publishMerchantOpeningHours(array $eventEntityTransfers): void
+    {
+        $this->getFactory()
+            ->createMerchantOpeningHoursStoragePublisher()
+            ->publishMerchantOpeningHours($eventEntityTransfers);
+    }
 }

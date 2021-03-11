@@ -50,4 +50,7 @@
         <property name="filter" type="Filter"/>
     </transfer>
 
+    <transfer name="EventEntity">
+    </transfer>
+
 </transfers>

@@ -8,6 +8,7 @@
 namespace Spryker\Client\MerchantProductOfferStorage\Storage;
 
 use ArrayObject;
+use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferStorageCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferStorageCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferStorageTransfer;
@@ -237,7 +238,11 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
     protected function expandProductOffersWithMerchants(array $productOfferStorageTransfers): array
     {
         $merchantIds = $this->getMerchantIds($productOfferStorageTransfers);
-        $merchantStorageTransfers = $this->merchantStorageClient->get(array_unique($merchantIds));
+
+        $merchantCriteriaTransfer = new MerchantCriteriaTransfer();
+        $merchantCriteriaTransfer->setMerchantIds(array_unique($merchantIds));
+
+        $merchantStorageTransfers = $this->merchantStorageClient->get($merchantCriteriaTransfer);
         $merchantStorageTransfers = $this->indexMerchantStorageTransfersByIdMerchant($merchantStorageTransfers);
 
         foreach ($productOfferStorageTransfers as $key => $productOfferStorageTransfer) {

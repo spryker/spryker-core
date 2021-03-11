@@ -10,7 +10,7 @@ namespace Spryker\Zed\MerchantGuiExtension\Dependency\Plugin;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 /**
- * Provides extension capabilities for the "TableConfiguration" expanding during configuration of the MerchantTable
+ * Provides extension capabilities for the TableConfiguration expanding during configuration of the MerchantTable.
  */
 interface MerchantTableConfigExpanderPluginInterface
 {

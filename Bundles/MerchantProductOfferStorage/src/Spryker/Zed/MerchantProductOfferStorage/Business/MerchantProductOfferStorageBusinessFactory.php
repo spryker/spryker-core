@@ -14,13 +14,13 @@ use Spryker\Zed\MerchantProductOfferStorage\Business\Deleter\ProductOfferStorage
 use Spryker\Zed\MerchantProductOfferStorage\Business\Deleter\ProductOfferStorageDeleterInterface;
 use Spryker\Zed\MerchantProductOfferStorage\Business\Writer\ProductConcreteOffersStorageWriter;
 use Spryker\Zed\MerchantProductOfferStorage\Business\Writer\ProductConcreteOffersStorageWriterInterface;
-use Spryker\Zed\MerchantProductOfferStorage\Business\Writer\ProductOfferCriteriaFilterTransferFactory;
+use Spryker\Zed\MerchantProductOfferStorage\Business\Writer\ProductOfferCriteriaFilterTransferProvider;
+use Spryker\Zed\MerchantProductOfferStorage\Business\Writer\ProductOfferCriteriaFilterTransferProviderInterface;
 use Spryker\Zed\MerchantProductOfferStorage\Business\Writer\ProductOfferStorageWriter;
 use Spryker\Zed\MerchantProductOfferStorage\Business\Writer\ProductOfferStorageWriterInterface;
 use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToEventBehaviorFacadeInterface;
 use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToStoreFacadeInterface;
 use Spryker\Zed\MerchantProductOfferStorage\MerchantProductOfferStorageDependencyProvider;
-use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
 
 /**
  * @method \Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStorageEntityManagerInterface getEntityManager()
@@ -40,7 +40,7 @@ class MerchantProductOfferStorageBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->createProductConcreteProductOffersStorageDeleter(),
             $this->getStoreFacade(),
-            new ProductOfferCriteriaFilterTransferFactory()
+            $this->getProductOfferCriteriaFilterTransferProvider()
         );
     }
 
@@ -55,7 +55,7 @@ class MerchantProductOfferStorageBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->createProductOfferStorageDeleter(),
             $this->getStoreFacade(),
-            new ProductOfferCriteriaFilterTransferFactory()
+            $this->getProductOfferCriteriaFilterTransferProvider()
         );
     }
 
@@ -95,5 +95,13 @@ class MerchantProductOfferStorageBusinessFactory extends AbstractBusinessFactory
     public function getStoreFacade(): MerchantProductOfferStorageToStoreFacadeInterface
     {
         return $this->getProvidedDependency(MerchantProductOfferStorageDependencyProvider::FACADE_STORE);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantProductOfferStorage\Business\Writer\ProductOfferCriteriaFilterTransferProviderInterface
+     */
+    protected function getProductOfferCriteriaFilterTransferProvider(): ProductOfferCriteriaFilterTransferProviderInterface
+    {
+        return new ProductOfferCriteriaFilterTransferProvider();
     }
 }

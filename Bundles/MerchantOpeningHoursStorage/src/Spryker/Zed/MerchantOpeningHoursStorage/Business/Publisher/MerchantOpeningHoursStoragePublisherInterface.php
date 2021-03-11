@@ -15,4 +15,25 @@ interface MerchantOpeningHoursStoragePublisherInterface
      * @return void
      */
     public function publish(array $merchantIds): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function publishWeekdayScheduleCreate(array $eventEntityTransfers): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function publishDateScheduleCreate(array $eventEntityTransfers): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function publishMerchantOpeningHours(array $eventEntityTransfers): void;
 }

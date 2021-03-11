@@ -10,10 +10,12 @@
 
     <transfer name="MerchantCriteria">
         <property name="idMerchant" type="int"/>
+        <property name="merchantReference" type="string"/>
     </transfer>
 
     <transfer name="Merchant">
         <property name="name" type="string"/>
+        <property name="idMerchant" type="int"/>
     </transfer>
 
     <transfer name="MerchantProductOfferCriteria">
@@ -29,6 +31,10 @@
     <transfer name="QueryCriteria">
         <property name="joins" type="QueryJoin[]" singular="join"/>
         <property name="withColumns" type="array" singular="withColumn"/>
+    </transfer>
+
+    <transfer name="MerchantCollection">
+        <property name="merchants" type="Merchant[]" singular="merchants"/>
     </transfer>
 
 </transfers>

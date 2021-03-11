@@ -16,7 +16,7 @@ use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface;
  * @method \Spryker\Zed\MerchantOpeningHoursStorage\MerchantOpeningHoursStorageConfig getConfig()
  * @method \Spryker\Zed\MerchantOpeningHoursStorage\Communication\MerchantOpeningHoursStorageCommunicationFactory getFactory()
  */
-class MerchantOpeningHoursStoragePublisherPlugin extends AbstractPlugin implements PublisherPluginInterface
+class MerchantOpeningHoursStorageDateScheduleCreatePublisherPlugin extends AbstractPlugin implements PublisherPluginInterface
 {
     /**
      * {@inheritDoc}
@@ -31,7 +31,7 @@ class MerchantOpeningHoursStoragePublisherPlugin extends AbstractPlugin implemen
     public function handleBulk(array $eventEntityTransfers, $eventName): void
     {
         $this->getFacade()
-            ->publishMerchantOpeningHours($eventEntityTransfers);
+            ->publishDateScheduleCreate($eventEntityTransfers);
     }
 
     /**
@@ -44,7 +44,7 @@ class MerchantOpeningHoursStoragePublisherPlugin extends AbstractPlugin implemen
     public function getSubscribedEvents(): array
     {
         return [
-            MerchantOpeningHoursEvents::MERCHANT_OPENING_HOURS_PUBLISH,
+            MerchantOpeningHoursEvents::ENTITY_SPY_MERCHANT_OPENING_HOURS_DATE_SCHEDULE_CREATE,
         ];
     }
 }

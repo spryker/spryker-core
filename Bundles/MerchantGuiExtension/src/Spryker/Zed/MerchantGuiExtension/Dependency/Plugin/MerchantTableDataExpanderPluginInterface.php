@@ -8,7 +8,7 @@
 namespace Spryker\Zed\MerchantGuiExtension\Dependency\Plugin;
 
 /**
- * Provides extension capabilities for the raw data expanding during preparation of the MerchantTable
+ * Provides extension capabilities for the raw data expanding during preparation of the MerchantTable.
  */
 interface MerchantTableDataExpanderPluginInterface
 {

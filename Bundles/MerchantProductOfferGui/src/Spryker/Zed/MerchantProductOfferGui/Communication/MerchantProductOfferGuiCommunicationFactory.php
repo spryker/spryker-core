@@ -9,13 +9,13 @@ namespace Spryker\Zed\MerchantProductOfferGui\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\MerchantProductOfferGui\Communication\Expander\MerchantListDataExpander;
+use Spryker\Zed\MerchantProductOfferGui\Communication\Expander\MerchantListDataExpanderInterface;
 use Spryker\Zed\MerchantProductOfferGui\Communication\Expander\MerchantProductOfferTableExpander;
 use Spryker\Zed\MerchantProductOfferGui\Communication\Expander\MerchantProductOfferTableExpanderInterface;
 use Spryker\Zed\MerchantProductOfferGui\Communication\Reader\MerchantProductOfferReader;
 use Spryker\Zed\MerchantProductOfferGui\Communication\Reader\MerchantProductOfferReaderInterface;
 use Spryker\Zed\MerchantProductOfferGui\Dependency\Facade\MerchantProductOfferGuiToMerchantFacadeInterface;
 use Spryker\Zed\MerchantProductOfferGui\MerchantProductOfferGuiDependencyProvider;
-use Spryker\Zed\MerchantProductOfferGui\Communication\Expander\MerchantListDataExpanderInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 

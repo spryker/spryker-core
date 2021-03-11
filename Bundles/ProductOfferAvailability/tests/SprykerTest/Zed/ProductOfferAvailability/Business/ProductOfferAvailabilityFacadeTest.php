@@ -35,7 +35,7 @@ class ProductOfferAvailabilityFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindProductConcreteAvailabilityForRequestReturnsProductOfferAvailabilityAssumingOmsProductReservations(): void
+    public function testFindProductConcreteAvailabilityReturnsProductOfferAvailabilityAssumingOmsProductReservations(): void
     {
         // Arrange=
         $stockQuantity = 5;

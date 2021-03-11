@@ -1,10 +1,10 @@
 {% if merchants is defined and merchants is not empty %}
     <span class="m-r-sm">
         <label>{{ 'Merchants' | trans }}</label>
-        <select name="id-merchant" onchange="this.form.submit()" onblur="this.form.submit()">
+        <select name="merchant-reference" onchange="this.form.submit()" onblur="this.form.submit()">
             <option value="">{{ 'All' | trans }}</option>
             {% for merchant in merchants %}
-                <option value="{{ merchant.idMerchant }}" {{ (merchant.idMerchant == app.request.get('id-merchant')) ? 'selected' : ''}}>{{ merchant.name }}</option>
+                <option value="{{ merchant.merchantReference }}" {{ (merchant.merchantReference == app.request.get('merchant-reference')) ? 'selected' : ''}}>{{ merchant.name }}</option>
             {% endfor %}
         </select>
     </span>

@@ -13,7 +13,10 @@ use Orm\Zed\MerchantOpeningHours\Persistence\Map\SpyMerchantOpeningHoursWeekdayS
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Zed\MerchantOpeningHours\Dependency\MerchantOpeningHoursEvents;
-use Spryker\Zed\MerchantOpeningHoursStorage\Communication\Plugin\Event\Listener\MerchantOpeningHoursWeekdayScheduleStoragePublishListener;
+use Spryker\Zed\MerchantOpeningHoursStorage\Communication\Plugin\Publisher\MerchantOpeningHoursStorageWeekdayScheduleCreatePublisherPlugin;
+use Spryker\Zed\MerchantOpeningHoursStorage\Dependency\Facade\MerchantOpeningHoursStorageToEventBehaviorFacadeBridge;
+use Spryker\Zed\MerchantOpeningHoursStorage\MerchantOpeningHoursStorageDependencyProvider;
+use Spryker\Zed\Testify\Locator\Business\Container as SprykerContainer;
 
 /**
  * Auto-generated group annotations
@@ -25,10 +28,10 @@ use Spryker\Zed\MerchantOpeningHoursStorage\Communication\Plugin\Event\Listener\
  * @group Plugin
  * @group Event
  * @group Listener
- * @group MerchantOpeningHoursWeekdayScheduleStoragePublishListenerTest
+ * @group MerchantOpeningHoursStorageWeekdayScheduleCreatePublisherPluginTest
  * Add your own group annotations below this line
  */
-class MerchantOpeningHoursWeekdayScheduleStoragePublishListenerTest extends Unit
+class MerchantOpeningHoursStorageWeekdayScheduleCreatePublisherPluginTest extends Unit
 {
     /**
      * @var \SprykerTest\Zed\MerchantOpeningHoursStorage\MerchantOpeningHoursStorageCommunicationTester
@@ -49,18 +52,27 @@ class MerchantOpeningHoursWeekdayScheduleStoragePublishListenerTest extends Unit
                 $container->getLocator()->rabbitMq()->client()->createQueueAdapter(),
             ];
         });
+
+        $this->tester->setDependency(
+            MerchantOpeningHoursStorageDependencyProvider::FACADE_EVENT_BEHAVIOR,
+            function (SprykerContainer $container) {
+                return new MerchantOpeningHoursStorageToEventBehaviorFacadeBridge(
+                    $container->getLocator()->eventBehavior()->facade()
+                );
+            }
+        );
     }
 
     /**
      * @return void
      */
-    public function testMerchantOpeningHoursWeekdayScheduleStoragePublishListenerStoresData(): void
+    public function testMerchantOpeningHoursStorageDateScheduleCreatePublisherPluginStoresData(): void
     {
         // Arrange
         $merchantTransfer = $this->tester->haveMerchant();
         $merchantOpeningHoursWeekdayScheduleEntity = $this->tester->createMerchantOpeningHoursWeekdaySchedule($merchantTransfer);
-        $merchantOpeningHoursWeekdayScheduleStoragePublishListener = new MerchantOpeningHoursWeekdayScheduleStoragePublishListener();
-        $merchantOpeningHoursWeekdayScheduleStoragePublishListener->setFacade($this->tester->getFacade());
+        $merchantOpeningHoursStorageWeekdayScheduleCreatePublisherPlugin = new MerchantOpeningHoursStorageWeekdayScheduleCreatePublisherPlugin();
+        $merchantOpeningHoursStorageWeekdayScheduleCreatePublisherPlugin->setFacade($this->tester->getFacade());
         $eventTransfers = [
             (new EventEntityBuilder())
                 ->build()
@@ -68,7 +80,7 @@ class MerchantOpeningHoursWeekdayScheduleStoragePublishListenerTest extends Unit
         ];
 
         // Act
-        $merchantOpeningHoursWeekdayScheduleStoragePublishListener->handleBulk($eventTransfers, MerchantOpeningHoursEvents::ENTITY_SPY_MERCHANT_OPENING_HOURS_WEEKDAY_SCHEDULE_CREATE);
+        $merchantOpeningHoursStorageWeekdayScheduleCreatePublisherPlugin->handleBulk($eventTransfers, MerchantOpeningHoursEvents::ENTITY_SPY_MERCHANT_OPENING_HOURS_WEEKDAY_SCHEDULE_CREATE);
 
         // Assert
         $this->assertNotNull(

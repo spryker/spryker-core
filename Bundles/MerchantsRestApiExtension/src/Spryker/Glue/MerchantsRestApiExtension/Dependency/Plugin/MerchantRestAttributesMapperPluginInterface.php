@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\MerchantStorageTransfer;
 use Generated\Shared\Transfer\RestMerchantsAttributesTransfer;
 
 /**
- * Provides extension capabilities for expanding RestMerchantsAttributesTransfer from MerchantStorageTransfer
+ * Provides extension capabilities for mapping RestMerchantsAttributesTransfer from MerchantStorageTransfer
  */
 interface MerchantRestAttributesMapperPluginInterface
 {

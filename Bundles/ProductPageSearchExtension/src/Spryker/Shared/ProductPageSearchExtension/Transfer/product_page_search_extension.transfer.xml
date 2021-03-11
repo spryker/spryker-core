@@ -18,4 +18,7 @@
     <transfer name="PageMap">
     </transfer>
 
+    <transfer name="ProductPageSearch">
+    </transfer>
+
 </transfers>

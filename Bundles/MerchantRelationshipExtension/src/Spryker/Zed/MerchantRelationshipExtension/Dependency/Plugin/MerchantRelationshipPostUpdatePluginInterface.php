@@ -10,8 +10,7 @@ namespace Spryker\Zed\MerchantRelationshipExtension\Dependency\Plugin;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 
 /**
- * Provides extension capabilities for the "MerchantRelationshipTransfer" expanding
- * during update of MerchantRelationshipTransfer
+ * Provides extension capabilities for the MerchantRelationshipTransfer processing after a merchant relation is updated
  */
 interface MerchantRelationshipPostUpdatePluginInterface
 {

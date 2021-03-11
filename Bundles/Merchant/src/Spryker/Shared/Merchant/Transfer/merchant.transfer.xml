@@ -21,7 +21,7 @@
         <property name="email" type="string"/>
         <property name="merchantReference" type="string"/>
         <property name="merchantReferences" type="string[]" singular="merchantReference"/>
-        <property name="merchantIds" type="array" singular="merchantId"/>
+        <property name="merchantIds" type="int[]" singular="idMerchant"/>
         <property name="filter" type="Filter"/>
         <property name="isActive" type="bool"/>
         <property name="status" type="string"/>

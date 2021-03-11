@@ -22,7 +22,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DetailController extends AbstractController
 {
-    protected const PARAM_ID_MERCHANT_SALES_ORDER = 'id-merchant-sales-order';
+    public const REQUEST_PARAM_ID_MERCHANT_SALES_ORDER = 'id-merchant-sales-order';
 
     protected const ROUTE_REDIRECT = '/merchant-sales-order-merchant-user-gui/detail';
 
@@ -44,7 +44,7 @@ class DetailController extends AbstractController
     public function indexAction(Request $request)
     {
         $idMerchantSalesOrder = $this->castId(
-            $request->query->getInt(static::PARAM_ID_MERCHANT_SALES_ORDER)
+            $request->query->getInt(static::REQUEST_PARAM_ID_MERCHANT_SALES_ORDER)
         );
 
         $idMerchant = $this->getFactory()->getMerchantUserFacade()->getCurrentMerchantUser()->getIdMerchant();
@@ -223,7 +223,7 @@ class DetailController extends AbstractController
     protected function createRedirectLink(int $idMerchantSalesOrder): string
     {
         $redirectUrlParams = [
-            static::PARAM_ID_MERCHANT_SALES_ORDER => $idMerchantSalesOrder,
+            static::REQUEST_PARAM_ID_MERCHANT_SALES_ORDER => $idMerchantSalesOrder,
         ];
 
         return Url::generate(static::ROUTE_REDIRECT, $redirectUrlParams);

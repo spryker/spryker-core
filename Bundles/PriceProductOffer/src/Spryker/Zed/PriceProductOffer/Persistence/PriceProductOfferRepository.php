@@ -106,13 +106,14 @@ class PriceProductOfferRepository extends AbstractRepository implements PricePro
         if ($priceProductOfferCriteriaTransfer->getPriceProductOfferIds()) {
             $priceProductOfferQuery->filterByIdPriceProductOffer_In($priceProductOfferCriteriaTransfer->getPriceProductOfferIds());
         }
+
         if (
             $priceProductOfferCriteriaTransfer->getProductOfferCriteriaFilter()
-            && $priceProductOfferCriteriaTransfer->getProductOfferCriteriaFilter()->getMerchantIds()
+            && $priceProductOfferCriteriaTransfer->getProductOfferCriteriaFilter()->getProductOfferReferences()
         ) {
             $priceProductOfferQuery->filterBy(
-                SpyProductOfferTableMap::COL_FK_MERCHANT,
-                $priceProductOfferCriteriaTransfer->getProductOfferCriteriaFilter()->getMerchantIds(),
+                SpyProductOfferTableMap::COL_MERCHANT_REFERENCE,
+                $priceProductOfferCriteriaTransfer->getProductOfferCriteriaFilter()->getProductOfferReferences(),
                 Criteria::IN
             );
         }
