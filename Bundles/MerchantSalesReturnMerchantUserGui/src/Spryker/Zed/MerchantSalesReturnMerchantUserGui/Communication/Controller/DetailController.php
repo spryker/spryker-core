@@ -7,12 +7,10 @@
 
 namespace Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Controller;
 
-use Generated\Shared\Transfer\MerchantOrderItemCriteriaTransfer;
 use Generated\Shared\Transfer\ReturnFilterTransfer;
 use Generated\Shared\Transfer\ReturnTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -29,6 +27,7 @@ class DetailController extends AbstractController
 
     protected const MESSAGE_RETURN_NOT_FOUND = 'Requested return with ID "%id%" was not found.';
     protected const MESSAGE_PARAM_ID = '%id%';
+    protected const DEFAULT_LABEL_CLASS = 'label-default';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -40,10 +39,6 @@ class DetailController extends AbstractController
         $idSalesReturn = $this->castId($request->get(static::PARAM_ID_RETURN));
         $returnTransfer = $this->findReturn($request);
 
-        $merchantOrderItemTransfers = $this->findMerchantOrderItems($returnTransfer);
-
-
-
         if (!$returnTransfer) {
             $this->addErrorMessage(static::MESSAGE_RETURN_NOT_FOUND, [
                 static::MESSAGE_PARAM_ID => $idSalesReturn,
@@ -54,7 +49,21 @@ class DetailController extends AbstractController
             );
         }
 
-        return [];
+        $salesOrderItemIds = $this->extractSalesOrderItemIdsFromReturn($returnTransfer);
+        $merchantOrderItemTransfers = $this
+            ->getFactory()
+            ->createMerchantOrderItemReader()
+            ->findMerchantOrderItems($salesOrderItemIds);
+
+        return [
+            'return' => $returnTransfer,
+            'customer' => $this->getFactory()->createCustomerReader()->getCustomerFromReturn($returnTransfer),
+            'uniqueOrderReferences' => $this->extractUniqueOrderReferencesFromReturn($returnTransfer),
+            'uniqueItemStateLabels' => $this->extractUniqueItemStateLabelsFromReturn($returnTransfer),
+            'uniqueOrderItemManualEvents' => $this->extractUniqueOrderItemManualEvents($merchantOrderItemTransfers),
+            'merchantOrderItems' => $merchantOrderItemTransfers,
+            'salesOrderItemIds' => $salesOrderItemIds,
+        ];
     }
 
     /**
@@ -95,21 +104,56 @@ class DetailController extends AbstractController
     /**
      * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantOrderItemTransfer[]
+     * @return string[]
      */
-    protected function findMerchantOrderItems(ReturnTransfer $returnTransfer): array
+    protected function extractUniqueOrderReferencesFromReturn(ReturnTransfer $returnTransfer): array
     {
-        $merchantOrderItemCriteriaTransfer = new MerchantOrderItemCriteriaTransfer();
+        $uniqueOrderReferences = [];
 
         foreach ($returnTransfer->getReturnItems() as $returnItemTransfer) {
-            $merchantOrderItemCriteriaTransfer->addOrderItemId(
-                $returnItemTransfer->getOrderItem()->getIdSalesOrderItem()
-            );
+            $idSalesOrder = $returnItemTransfer->getOrderItem()->getFkSalesOrder();
+            $orderReference = $returnItemTransfer->getOrderItem()->getOrderReference();
+
+            $uniqueOrderReferences[$idSalesOrder] = $orderReference;
         }
 
-        return $this->getFactory()
-            ->getMerchantSalesOrderFacade()
-            ->getMerchantOrderItemCollection($merchantOrderItemCriteriaTransfer)
-            ->toArray();
+        return $uniqueOrderReferences;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
+     *
+     * @return string[]
+     */
+    protected function extractUniqueItemStateLabelsFromReturn(ReturnTransfer $returnTransfer): array
+    {
+        $uniqueItemStates = [];
+
+        foreach ($returnTransfer->getReturnItems() as $returnItemTransfer) {
+            $state = $returnItemTransfer->getOrderItem()->getState()->getName();
+
+            $uniqueItemStates[$state] = $this
+                    ->getFactory()
+                    ->getConfig()
+                    ->getItemStateToLabelClassMapping()[$state] ?? static::DEFAULT_LABEL_CLASS;
+        }
+
+        return $uniqueItemStates;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantOrderItemTransfer[] $merchantOrderItemTransfers
+     *
+     * @return string[]
+     */
+    protected function extractUniqueOrderItemManualEvents(array $merchantOrderItemTransfers): array
+    {
+        $allOrderItemManualEvents = [];
+
+        foreach ($merchantOrderItemTransfers as $merchantOrderItem) {
+            $allOrderItemManualEvents = array_merge($allOrderItemManualEvents, $merchantOrderItem->getManualEvents());
+        }
+
+        return array_unique($allOrderItemManualEvents);
     }
 }

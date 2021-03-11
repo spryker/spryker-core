@@ -1,4 +1,4 @@
-{% include '@SalesReturnGui/Detail/_partials/return-detail-item.twig' with {
+{% include '@MerchantSalesReturnMerchantUserGui/Detail/_partials/return-detail-item.twig' with {
     returnItem: returnBundleItems[0],
     orderItem: bundleProduct,
     order: order,
@@ -7,6 +7,7 @@
 
 {% for returnBundleItem in returnBundleItems %}
     {% set orderItem = returnBundleItem.orderItem %}
+    {% set merchantOrderItem = merchantOrderItems[returnBundleItem.orderItem.idSalesOrderItem] %}
 
     <tr class="addition-row">
         <td></td>
@@ -37,9 +38,9 @@
             <div>
                 <a href="{{ url('/oms/index/draw', {'process': orderItem.process, 'state': orderItem.state.name}) }}" target="_blank">{{ (orderItem.stateHistory | first).name }}</a> ({{ orderItem.process }})
             </div>
-            {% if orderItem.stateHistory | length > 1 %}
+            {% if merchantOrderItem.stateHistory is not empty %}
                 <div id="history_details_{{ orderItem.idSalesOrderItem }}" class="hidden">
-                    {% for stateHistory in orderItem.stateHistory | slice(1) %}
+                    {% for stateHistory in merchantOrderItem.stateHistory | slice(1) %}
                         <div>{{ stateHistory.name }} ({{ stateHistory.createdAt | formatDateTime }})</div>
                     {% endfor %}
                 </div>
@@ -51,11 +52,11 @@
             {% endif %}
         </td>
         <td>
-            {% if eventsGroupedByItem[orderItem.idSalesOrderItem] is defined %}
+            {% if merchantOrderItem.manualEvents is not empty %}
                 {% include '@Oms/RenderForm/_partial/order-item-actions.twig' with {
                     redirectUrl: changeStatusRedirectUrl,
                     idSalesOrderItem: orderItem.idSalesOrderItem,
-                    eventsGroupedByItem: eventsGroupedByItem[orderItem.idSalesOrderItem],
+                    eventsGroupedByItem: merchantOrderItem.manualEvents,
                 } %}
             {% endif %}
         </td>

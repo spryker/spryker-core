@@ -1,4 +1,4 @@
-{% embed '@SalesReturnGui/_partials/column.twig' with {
+{% embed '@MerchantSalesReturnMerchantUserGui/_partials/column.twig' with {
     title: 'General information'
 } %}
     {% block content %}
@@ -13,6 +13,15 @@
                     </a>
                     {% if not loop.last %},&nbsp;{% endif %}
                 {% endfor %}
+            </div>
+        </div>
+
+        <div class="row m-b-sm">
+            <div class="col-sm-6 font-bold">
+                {{ 'Merchant Order Reference' | trans }}
+            </div>
+            <div class="col-sm-6">
+                {{ return.merchantOrderReference }}
             </div>
         </div>
 

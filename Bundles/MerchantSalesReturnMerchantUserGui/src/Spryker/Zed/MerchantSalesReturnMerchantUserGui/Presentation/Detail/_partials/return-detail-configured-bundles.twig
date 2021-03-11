@@ -41,12 +41,13 @@
     </tr>
 
     {% for returnItem in mappedReturnItems['_' ~ bundle.idSalesOrderConfiguredBundle] %}
-        {% include '@SalesReturnGui/Detail/_partials/return-detail-item.twig' with {
+        {% set merchantOrderItem = merchantOrderItems[returnItem.orderItem.idSalesOrderItem] %}
+        {% include '@MerchantSalesReturnMerchantUserGui/Detail/_partials/return-detail-item.twig' with {
             returnItem: returnItem,
             orderItem: returnItem.orderItem,
             order: order,
-            eventsGroupedByItem: eventsGroupedByItem,
             changeStatusRedirectUrl: changeStatusRedirectUrl,
+            merchantOrderItem: merchantOrderItem,
             isBundleProduct: false,
         } only %}
     {% endfor %}

@@ -1,4 +1,4 @@
-{% embed '@SalesReturnGui/_partials/column.twig' with {
+{% embed '@MerchantSalesReturnMerchantUserGui/_partials/column.twig' with {
     title: 'Returned Items'
 } %}
     {% block content %}
@@ -40,22 +40,22 @@
                         currencyIsoCode: (return.returnItems | first).orderItem.currencyIsoCode ?? null
                     } %}
 
-                    {% include '@SalesReturnGui/Detail/_partials/return-detail-items.twig' with {
+                    {% include '@MerchantSalesReturnMerchantUserGui/Detail/_partials/return-detail-items.twig' with {
                         return: return,
                         order: order,
-                        eventsGroupedByItem: orderItemManualEvents,
+                        merchantOrderItems: merchantOrderItems,
                     } only %}
 
-                    {% include '@SalesReturnGui/Detail/_partials/return-detail-configured-bundles.twig' with {
+                    {% include '@MerchantSalesReturnMerchantUserGui/Detail/_partials/return-detail-configured-bundles.twig' with {
                         return: return,
                         order: order,
-                        eventsGroupedByItem: orderItemManualEvents,
+                        merchantOrderItems: merchantOrderItems,
                     } only %}
 
-                    {% include '@SalesReturnGui/Detail/_partials/return-detail-product-bundles.twig' with {
+                    {% include '@MerchantSalesReturnMerchantUserGui/Detail/_partials/return-detail-product-bundles.twig' with {
                         return: return,
                         order: order,
-                        eventsGroupedByItem: orderItemManualEvents,
+                        merchantOrderItems: merchantOrderItems,
                     } only %}
                 </tbody>
             </table>

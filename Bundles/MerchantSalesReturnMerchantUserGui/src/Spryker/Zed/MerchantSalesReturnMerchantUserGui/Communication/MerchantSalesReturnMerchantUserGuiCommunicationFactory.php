@@ -9,9 +9,16 @@ namespace Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication;
 
 use Orm\Zed\SalesReturn\Persistence\SpySalesReturnQuery;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Reader\CustomerReader;
+use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Reader\CustomerReaderInterface;
+use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Reader\MerchantOrderItemReader;
+use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Reader\MerchantOrderItemReaderInterface;
 use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Table\MerchantReturnTable;
+use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Dependency\Facade\MerchantSalesReturnMerchantUserGuiToCustomerFacadeInterface;
+use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Dependency\Facade\MerchantSalesReturnMerchantUserGuiToMerchantOmsFacadeInterface;
 use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Dependency\Facade\MerchantSalesReturnMerchantUserGuiToMerchantSalesOrderFacadeInterface;
 use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Dependency\Facade\MerchantSalesReturnMerchantUserGuiToMerchantUserFacadeInterface;
+use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Dependency\Facade\MerchantSalesReturnMerchantUserGuiToSalesFacadeInterface;
 use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Dependency\Facade\MerchantSalesReturnMerchantUserGuiToSalesReturnFacadeInterface;
 use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Dependency\Service\MerchantSalesReturnMerchantUserGuiToUtilDateTimeServiceInterface;
 use Spryker\Zed\MerchantSalesReturnMerchantUserGui\MerchantSalesReturnMerchantUserGuiDependencyProvider;
@@ -31,6 +38,28 @@ class MerchantSalesReturnMerchantUserGuiCommunicationFactory extends AbstractCom
             $this->getConfig(),
             $this->getSalesReturnPropelQuery(),
             $this->getMerchantUserFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Reader\CustomerReaderInterface
+     */
+    public function createCustomerReader(): CustomerReaderInterface
+    {
+        return new CustomerReader(
+            $this->getSalesFacade(),
+            $this->getCustomerFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Reader\MerchantOrderItemReaderInterface
+     */
+    public function createMerchantOrderItemReader(): MerchantOrderItemReaderInterface
+    {
+        return new MerchantOrderItemReader(
+            $this->getMerchantSalesOrderFacade(),
+            $this->getMerchantOmsFacade()
         );
     }
 
@@ -72,5 +101,29 @@ class MerchantSalesReturnMerchantUserGuiCommunicationFactory extends AbstractCom
     public function getMerchantSalesOrderFacade(): MerchantSalesReturnMerchantUserGuiToMerchantSalesOrderFacadeInterface
     {
         return $this->getProvidedDependency(MerchantSalesReturnMerchantUserGuiDependencyProvider::FACADE_MERCHANT_SALES_ORDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantSalesReturnMerchantUserGui\Dependency\Facade\MerchantSalesReturnMerchantUserGuiToSalesFacadeInterface
+     */
+    public function getSalesFacade(): MerchantSalesReturnMerchantUserGuiToSalesFacadeInterface
+    {
+        return $this->getProvidedDependency(MerchantSalesReturnMerchantUserGuiDependencyProvider::FACADE_SALES);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantSalesReturnMerchantUserGui\Dependency\Facade\MerchantSalesReturnMerchantUserGuiToCustomerFacadeInterface
+     */
+    public function getCustomerFacade(): MerchantSalesReturnMerchantUserGuiToCustomerFacadeInterface
+    {
+        return $this->getProvidedDependency(MerchantSalesReturnMerchantUserGuiDependencyProvider::FACADE_CUSTOMER);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantSalesReturnMerchantUserGui\Dependency\Facade\MerchantSalesReturnMerchantUserGuiToMerchantOmsFacadeInterface
+     */
+    public function getMerchantOmsFacade(): MerchantSalesReturnMerchantUserGuiToMerchantOmsFacadeInterface
+    {
+        return $this->getProvidedDependency(MerchantSalesReturnMerchantUserGuiDependencyProvider::FACADE_MERCHANT_OMS);
     }
 }
