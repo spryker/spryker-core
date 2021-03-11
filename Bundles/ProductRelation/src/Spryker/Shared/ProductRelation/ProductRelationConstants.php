@@ -13,4 +13,20 @@ namespace Spryker\Shared\ProductRelation;
 interface ProductRelationConstants
 {
     public const RESOURCE_TYPE_PRODUCT_RELATION = 'product_relation';
+
+    /**
+     * Specification:
+     * - Defines the number of products in the chunk to read.
+     *
+     * @api
+     */
+    public const PRODUCT_RELATION_READ_CHUNK = 'PRODUCT_RELATION_READ_CHUNK';
+
+    /**
+     * Specification:
+     * - Defines the number of products in the chunk to update.
+     *
+     * @api
+     */
+    public const PRODUCT_RELATION_UPDATE_CHUNK = 'PRODUCT_RELATION_UPDATE_CHUNK';
 }
