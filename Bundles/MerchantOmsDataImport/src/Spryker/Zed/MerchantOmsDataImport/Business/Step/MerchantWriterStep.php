@@ -18,7 +18,7 @@ use Spryker\Zed\MerchantOmsDataImport\Business\DataSet\MerchantOmsProcessDataSet
 class MerchantWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
     protected const REQUIRED_DATA_SET_KEYS = [
-        MerchantOmsProcessDataSetInterface::MERCHANT_KEY,
+        MerchantOmsProcessDataSetInterface::MERCHANT_REFERENCE,
         MerchantOmsProcessDataSetInterface::FK_STATE_MACHINE_PROCESS,
     ];
 
@@ -35,13 +35,13 @@ class MerchantWriterStep extends PublishAwareStep implements DataImportStepInter
     {
         $this->validateDataSet($dataSet);
 
-        $merchantKey = $dataSet[MerchantOmsProcessDataSetInterface::MERCHANT_KEY];
+        $merchantReference = $dataSet[MerchantOmsProcessDataSetInterface::MERCHANT_REFERENCE];
         $merchantEntity = $this->createMerchantPropelQuery()
-            ->filterByMerchantKey($merchantKey)
+            ->filterByMerchantReference($merchantReference)
             ->findOne();
 
         if (!$merchantEntity) {
-            throw new EntityNotFoundException(sprintf('Could not find merchant by key "%s"', $merchantKey));
+            throw new EntityNotFoundException(sprintf('Could not find merchant by reference "%s"', $merchantReference));
         }
 
         $merchantEntity->setFkStateMachineProcess($dataSet[MerchantOmsProcessDataSetInterface::FK_STATE_MACHINE_PROCESS]);

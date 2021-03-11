@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\ProductCategoryStorage;
 
+use Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -20,20 +21,19 @@ class ProductCategoryStorageClient extends AbstractClient implements ProductCate
      * @api
      *
      * @param int $idProductAbstract
-     * @param string $locale
-     * @param string|null $storeName
+     * @param string $localeName
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer|null
      */
-    public function findProductAbstractCategory($idProductAbstract, $locale, ?string $storeName = null)
-    {
-        if ($storeName === null) {
-            trigger_error('Pass the $storeName parameter for the forward compatibility with next major version.', E_USER_DEPRECATED);
-        }
-
+    public function findProductAbstractCategory(
+        int $idProductAbstract,
+        string $localeName,
+        string $storeName
+    ): ?ProductAbstractCategoryStorageTransfer {
         return $this->getFactory()
             ->createProductCategoryStorageReader()
-            ->findProductAbstractCategory($idProductAbstract, $locale);
+            ->findProductAbstractCategory($idProductAbstract, $localeName, $storeName);
     }
 
     /**
@@ -43,18 +43,14 @@ class ProductCategoryStorageClient extends AbstractClient implements ProductCate
      *
      * @param int[] $productAbstractIds
      * @param string $localeName
-     * @param string|null $storeName
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer[]
      */
-    public function findBulkProductAbstractCategory(array $productAbstractIds, string $localeName, ?string $storeName = null): array
+    public function findBulkProductAbstractCategory(array $productAbstractIds, string $localeName, string $storeName): array
     {
-        if ($storeName === null) {
-            trigger_error('Pass the $storeName parameter for the forward compatibility with next major version.', E_USER_DEPRECATED);
-        }
-
         return $this->getFactory()
             ->createProductCategoryStorageReader()
-            ->findBulkProductAbstractCategory($productAbstractIds, $localeName);
+            ->findBulkProductAbstractCategory($productAbstractIds, $localeName, $storeName);
     }
 }

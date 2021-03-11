@@ -1,0 +1,64 @@
+items:
+  post:
+    productConfigurationInstance:
+      - Optional:
+          constraints:
+            - Collection:
+                fields:
+                  displayData:
+                    - NotBlank
+                  configuration:
+                    - NotBlank
+                  configuratorKey:
+                    - NotBlank
+                  isComplete:
+                    - NotNull
+                    - Type:
+                        type: boolean
+                  availableQuantity:
+                    - NotBlank
+                    - Type:
+                        type: numeric
+                  prices:
+                    - Optional:
+                        constraints:
+                          - All:
+                              constraints:
+                                - Collection:
+                                    fields:
+                                      priceTypeName:
+                                        - NotBlank
+                                      netAmount:
+                                        - NotBlank
+                                        - Type:
+                                            type: numeric
+                                      grossAmount:
+                                        - NotBlank
+                                        - Type:
+                                            type: numeric
+                                      currency:
+                                        - Collection:
+                                            fields:
+                                              code:
+                                                - NotBlank
+                                              name:
+                                                - NotBlank
+                                              symbol:
+                                                - NotBlank
+                                      volumePrices:
+                                        - Optional:
+                                            constraints:
+                                              - All:
+                                                  constraints:
+                                                    - Collection:
+                                                        fields:
+                                                          netAmount:
+                                                            - Type:
+                                                                type: numeric
+                                                          grossAmount:
+                                                            - Type:
+                                                                type: numeric
+                                                          quantity:
+                                                            - NotBlank
+                                                            - Type:
+                                                                type: numeric

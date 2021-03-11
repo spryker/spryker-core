@@ -1,2 +1,5 @@
 parameters:
     checkMissingIterableValueType: false
+    reportUnmatchedIgnoredErrors: false
+    excludePaths:
+            - %rootDir%/../../../vendor/spryker/spryker/Bundles/ErrorHandler/src/Spryker/Shared/ErrorHandler/ErrorHandlerEnvironment.php

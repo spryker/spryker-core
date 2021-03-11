@@ -42,7 +42,7 @@ class DataExportConfigurationResolver implements DataExportConfigurationResolver
         );
 
         $additionalDataExportActionConfigurationTransfer = $this->findDataExportActionConfigurationByDataEntity(
-            $dataExportActionConfigurationTransfer->getDataEntity(),
+            $dataExportActionConfigurationTransfer->getDataEntityOrFail(),
             $additionalDataExportConfigurationsTransfer
         );
 

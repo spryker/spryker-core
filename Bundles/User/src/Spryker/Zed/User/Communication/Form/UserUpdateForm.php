@@ -12,6 +12,8 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotCompromisedPassword;
 
 class UserUpdateForm extends UserForm
 {
@@ -69,6 +71,13 @@ class UserUpdateForm extends UserForm
                 'second_options' => ['label' => 'Repeat Password', 'attr' => ['autocomplete' => 'off']],
                 'required' => false,
                 'type' => PasswordType::class,
+                'constraints' => [
+                    new Length([
+                        'min' => $this->getConfig()->getUserPasswordMinLength(),
+                        'max' => $this->getConfig()->getUserPasswordMaxLength(),
+                    ]),
+                    new NotCompromisedPassword(),
+                ],
             ]);
 
         return $this;

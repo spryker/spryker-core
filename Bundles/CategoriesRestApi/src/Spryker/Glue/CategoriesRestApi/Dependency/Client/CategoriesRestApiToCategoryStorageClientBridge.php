@@ -7,6 +7,9 @@
 
 namespace Spryker\Glue\CategoriesRestApi\Dependency\Client;
 
+use ArrayObject;
+use Generated\Shared\Transfer\CategoryNodeStorageTransfer;
+
 class CategoriesRestApiToCategoryStorageClientBridge implements CategoriesRestApiToCategoryStorageClientInterface
 {
     /**
@@ -23,24 +26,24 @@ class CategoriesRestApiToCategoryStorageClientBridge implements CategoriesRestAp
     }
 
     /**
-     * @param string $locale
-     * @param string|null $storeName
+     * @param string $localeName
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[]|\ArrayObject
      */
-    public function getCategories($locale, ?string $storeName = null)
+    public function getCategories(string $localeName, string $storeName): ArrayObject
     {
-        return $this->categoryStorageClient->getCategories($locale, $storeName);
+        return $this->categoryStorageClient->getCategories($localeName, $storeName);
     }
 
     /**
      * @param int $idCategoryNode
      * @param string $localeName
-     * @param string|null $storeName
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer
      */
-    public function getCategoryNodeById($idCategoryNode, $localeName, ?string $storeName = null)
+    public function getCategoryNodeById(int $idCategoryNode, string $localeName, string $storeName): CategoryNodeStorageTransfer
     {
         return $this->categoryStorageClient->getCategoryNodeById($idCategoryNode, $localeName, $storeName);
     }
@@ -48,11 +51,11 @@ class CategoriesRestApiToCategoryStorageClientBridge implements CategoriesRestAp
     /**
      * @param int[] $categoryNodeIds
      * @param string $localeName
-     * @param string|null $storeName
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[]
      */
-    public function getCategoryNodeByIds(array $categoryNodeIds, string $localeName, ?string $storeName = null): array
+    public function getCategoryNodeByIds(array $categoryNodeIds, string $localeName, string $storeName): array
     {
         return $this->categoryStorageClient->getCategoryNodeByIds($categoryNodeIds, $localeName, $storeName);
     }

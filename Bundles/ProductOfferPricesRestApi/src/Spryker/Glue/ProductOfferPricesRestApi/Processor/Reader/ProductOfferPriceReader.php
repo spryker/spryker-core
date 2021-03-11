@@ -79,11 +79,14 @@ class ProductOfferPriceReader implements ProductOfferPriceReaderInterface
     {
         $productOfferRestResource = $restRequest->findParentResourceByType(ProductOfferPricesRestApiConfig::RESOURCE_PRODUCT_OFFERS);
 
-        if (!$productOfferRestResource || !$productOfferRestResource->getId()) {
+        if (!$productOfferRestResource || $productOfferRestResource->getId() === null) {
             return $this->productOfferPriceRestResponseBuilder->createProductOfferIdNotSpecifierErrorResponse();
         }
 
-        $productOfferPriceRestResources = $this->getProductOfferPriceRestResources([$productOfferRestResource->getId()], $restRequest->getMetadata()->getLocale());
+        $productOfferPriceRestResources = $this->getProductOfferPriceRestResources(
+            [$productOfferRestResource->getId()],
+            $restRequest->getMetadata()->getLocale()
+        );
 
         $productOfferPriceRestResource = $productOfferPriceRestResources[$productOfferRestResource->getId()] ?? null;
         if (!isset($productOfferPriceRestResource)) {
@@ -152,7 +155,7 @@ class ProductOfferPriceReader implements ProductOfferPriceReaderInterface
     {
         $productConcreteSkus = [];
         foreach ($productOfferStorageTransfers as $productOfferStorageTransfer) {
-            $productConcreteSkus[$productOfferStorageTransfer->getProductOfferReference()] = $productOfferStorageTransfer->getProductConcreteSku();
+            $productConcreteSkus[$productOfferStorageTransfer->getProductOfferReferenceOrFail()] = $productOfferStorageTransfer->getProductConcreteSkuOrFail();
         }
 
         return $productConcreteSkus;

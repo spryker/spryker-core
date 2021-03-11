@@ -55,14 +55,6 @@ class ProductsCategoriesResourceRelationshipFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\ProductsCategoriesResourceRelationship\Dependency\Client\ProductsCategoriesResourceRelationshipToStoreClientInterface
-     */
-    public function getStoreClient(): ProductsCategoriesResourceRelationshipToStoreClientInterface
-    {
-        return $this->getProvidedDependency(ProductsCategoriesResourceRelationshipDependencyProvider::CLIENT_STORE);
-    }
-
-    /**
      * @return \Spryker\Glue\ProductsCategoriesResourceRelationship\Processor\Reader\AbstractProductsCategoriesReaderInterface
      */
     public function createAbstractProductsCategoriesReader(): AbstractProductsCategoriesReaderInterface
@@ -72,5 +64,13 @@ class ProductsCategoriesResourceRelationshipFactory extends AbstractFactory
             $this->getProductCategoryStorageClient(),
             $this->getStoreClient()
         );
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductsCategoriesResourceRelationship\Dependency\Client\ProductsCategoriesResourceRelationshipToStoreClientInterface
+     */
+    public function getStoreClient(): ProductsCategoriesResourceRelationshipToStoreClientInterface
+    {
+        return $this->getProvidedDependency(ProductsCategoriesResourceRelationshipDependencyProvider::CLIENT_STORE);
     }
 }
