@@ -1,47 +1,47 @@
 {
-    "name": "spryker/wishlist",
-    "type": "library",
-    "description": "Wishlist module",
-    "license": "proprietary",
-    "require": {
-        "php": ">=7.3",
-        "spryker/cart": "^5.0.0 || ^7.0.0",
-        "spryker/customer": "^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0",
-        "spryker/kernel": "^3.30.0",
-        "spryker/price-product": "^1.0.0 || ^2.0.0 || ^4.0.0",
-        "spryker/product": "^5.0.0 || ^6.0.0",
-        "spryker/propel-orm": "^1.1.0",
-        "spryker/wishlist-extension": "^1.1.0",
-        "spryker/zed-request": "^3.0.0"
-    },
-    "require-dev": {
-        "spryker/code-sniffer": "*",
-        "spryker/propel": "*",
-        "spryker/testify": "*"
-    },
-    "autoload": {
-        "psr-4": {
-            "Spryker\\": "src/Spryker/",
-            "SprykerTest\\Shared\\Wishlist\\Helper\\": "tests/SprykerTest/Shared/Wishlist/_support/Helper/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "SprykerTest\\": "tests/SprykerTest/"
-        }
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
-    "scripts": {
-        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
-        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "8.0.x-dev"
-        }
-    },
-    "config": {
-        "sort-packages": true
+  "name": "spryker/wishlist",
+  "type": "library",
+  "description": "Wishlist module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.3",
+    "spryker/cart": "^5.0.0 || ^7.0.0",
+    "spryker/customer": "^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0",
+    "spryker/kernel": "^3.30.0",
+    "spryker/price-product": "^1.0.0 || ^2.0.0 || ^4.0.0",
+    "spryker/product": "^5.0.0 || ^6.0.0",
+    "spryker/propel-orm": "^1.1.0",
+    "spryker/wishlist-extension": "^1.1.0",
+    "spryker/zed-request": "^3.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/propel": "*",
+    "spryker/testify": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Shared\\Wishlist\\Helper\\": "tests/SprykerTest/Shared/Wishlist/_support/Helper/"
     }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerTest\\": "tests/SprykerTest/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "8.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
 }
