@@ -149,9 +149,8 @@ interface WishlistFacadeInterface
 
     /**
      * Specification:
-     *  - Removes item from wishlist
-     *  - Required values of WishlistItemTransfer: idWishlistItem
-     *  - Returns WishlistItemTransfer
+     *  - Removes item by provided `WishlistItem` transfer object from wishlist.
+     *  - Returns `WishlistItem` transfer object.
      *
      * @api
      *
@@ -163,8 +162,7 @@ interface WishlistFacadeInterface
 
     /**
      * Specification:
-     *  - Removes items from wishlist
-     *  - Required values of WishlistItemTransfer: idWishlistItem
+     *  - Removes items from wishlist.
      *
      * @api
      *

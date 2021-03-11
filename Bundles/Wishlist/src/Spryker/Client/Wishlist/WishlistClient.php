@@ -126,8 +126,6 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
      *
      * @api
      *
-     * @deprecated Use {@link \Spryker\Client\Wishlist\WishlistClient::deleteItem()} instead.
-     *
      * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistItemTransfer

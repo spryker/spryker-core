@@ -9,7 +9,9 @@ namespace Spryker\Zed\Wishlist\Persistence;
 
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Orm\Zed\Wishlist\Persistence\SpyWishlistItem;
+use Orm\Zed\Wishlist\Persistence\SpyWishlistItemQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
+use Spryker\Zed\Wishlist\Business\Exception\MissingWishlistItemException;
 
 /**
  * @method \Spryker\Zed\Wishlist\Persistence\WishlistPersistenceFactory getFactory()
@@ -44,13 +46,43 @@ class WishlistEntityManager extends AbstractEntityManager implements WishlistEnt
      */
     public function deleteItem(WishlistItemTransfer $wishlistItemTransfer): WishlistItemTransfer
     {
-        $wishlistItemTransfer->requireIdWishlistItem();
+        $wishlistItemQuery = $this->getFactory()
+            ->createWishlistItemQuery();
 
-        $this->getFactory()
-            ->createWishlistItemQuery()
-            ->filterByIdWishlistItem($wishlistItemTransfer->getIdWishlistItemOrFail())
-            ->delete();
+        $wishlistItemQuery = $this->applyRemoveFilters($wishlistItemQuery, $wishlistItemTransfer);
+        $wishlistItemQuery->delete();
 
         return $wishlistItemTransfer;
+    }
+
+    /**
+     * @phpstan-param \Orm\Zed\Wishlist\Persistence\SpyWishlistItemQuery<mixed> $wishlistItemQuery
+     *
+     * @phpstan-return \Orm\Zed\Wishlist\Persistence\SpyWishlistItemQuery<mixed>
+     *
+     * @param \Orm\Zed\Wishlist\Persistence\SpyWishlistItemQuery $wishlistItemQuery
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
+     *
+     * @throws \Spryker\Zed\Wishlist\Business\Exception\MissingWishlistItemException
+     *
+     * @return \Orm\Zed\Wishlist\Persistence\SpyWishlistItemQuery
+     */
+    protected function applyRemoveFilters(
+        SpyWishlistItemQuery $wishlistItemQuery,
+        WishlistItemTransfer $wishlistItemTransfer
+    ): SpyWishlistItemQuery {
+        if (!$wishlistItemTransfer->getIdWishlistItem() && !$wishlistItemTransfer->getSku()) {
+            throw new MissingWishlistItemException('Missing property idWishlistItem or sku in provided WishlistItemTransfer');
+        }
+
+        if ($wishlistItemTransfer->getIdWishlistItem()) {
+            $wishlistItemQuery->filterByIdWishlistItem($wishlistItemTransfer->getIdWishlistItem());
+        }
+
+        if ($wishlistItemTransfer->getSku()) {
+            $wishlistItemQuery->filterBySku($wishlistItemTransfer->getSku());
+        }
+
+        return $wishlistItemQuery;
     }
 }

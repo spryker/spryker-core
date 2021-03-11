@@ -112,8 +112,6 @@ interface WishlistClientInterface
      *
      * @api
      *
-     * @deprecated Use {@link \Spryker\Client\Wishlist\WishlistClientInterface::deleteItem()} instead.
-     *
      * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistItemTransfer
