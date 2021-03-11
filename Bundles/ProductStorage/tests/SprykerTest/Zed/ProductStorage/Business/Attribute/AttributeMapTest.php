@@ -79,31 +79,36 @@ class AttributeMapTest extends Unit
         array $expectedAttributeVariantMap,
         array $expectedAttributeVariants
     ): void {
+        // Arrange
+        $this->resetSuperAttributesCache();
+
         $productConcreteDataList = [$productConcreteData1, $productConcreteData2];
         $productStorageQueryContainerMock = $this->createProductStorageQueryContainerMock(
             $productConcreteDataList,
             static::FAKE_SUPER_ATTRIBUTES
         );
 
-        $this->resetSuperAttributesCache();
 
         $productConcrete1AttributePermutations = $this->generateProductAttributePermutations(
             json_decode($productConcreteData1[static::KEY_ATTRIBUTES], true),
             $productConcreteData1[static::KEY_ID_PRODUCT]
         );
-
         $productConcrete2AttributePermutations = $this->generateProductAttributePermutations(
             json_decode($productConcreteData2[static::KEY_ATTRIBUTES], true),
             $productConcreteData2[static::KEY_ID_PRODUCT]
         );
 
+        $productFacadeMock = $this->createProductFacadeMock(
+            [static::FAKE_PRODUCT_ATTRIBUTES_1, static::FAKE_PRODUCT_ATTRIBUTES_2],
+            [$productConcrete1AttributePermutations, $productConcrete2AttributePermutations]
+        );
+
+        $productStorageConfigMock = $this->createProductStorageConfigMock($isProductAttributesWithSingleValueIncluded);
+
         $attributeMap = new AttributeMap(
-            $this->createProductFacadeMock(
-                [static::FAKE_PRODUCT_ATTRIBUTES_1, static::FAKE_PRODUCT_ATTRIBUTES_2],
-                [$productConcrete1AttributePermutations, $productConcrete2AttributePermutations]
-            ),
+            $productFacadeMock,
             $productStorageQueryContainerMock,
-            $this->createProductStorageConfigMock($isProductAttributesWithSingleValueIncluded),
+            $productStorageConfigMock,
             new SingleValueSuperAttributeFilter()
         );
 

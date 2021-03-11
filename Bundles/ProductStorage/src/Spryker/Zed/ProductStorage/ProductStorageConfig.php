@@ -78,8 +78,8 @@ class ProductStorageConfig extends AbstractBundleConfig
 
     /**
      * Specification:
-     * - Determines if an attribute map of the abstract product will be generated using an optimized approach by filling up ProductAbstractStorage.attributeMap.attributeVariantMap.
-     * - Otherwise will be used an old approach by filling up ProductAbstractStorage.attributeMap.attributeVariants.
+     * - Determines if an attribute map of the abstract product will be generated using an optimized approach by filling up `ProductAbstractStorage.attributeMap.attributeVariantMap`.
+     * - Otherwise will be used an old approach by filling up `ProductAbstractStorage.attributeMap.attributeVariants`.
      *
      * @api
      *
@@ -89,6 +89,6 @@ class ProductStorageConfig extends AbstractBundleConfig
      */
     public function isOptimizedAttributeVariantsMapEnabled(): bool
     {
-        return true;
+        return false;
     }
 }
