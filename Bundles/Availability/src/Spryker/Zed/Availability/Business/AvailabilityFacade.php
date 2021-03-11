@@ -10,6 +10,7 @@ namespace Spryker\Zed\Availability\Business;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer;
 use Generated\Shared\Transfer\ProductAvailabilityCriteriaTransfer;
+use Generated\Shared\Transfer\ProductConcreteAvailabilityCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -291,5 +292,20 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
         return $this->getFactory()
             ->createAvailabilityReader()
             ->filterAvailableProducts($productConcreteTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductAvailabilityCriteriaTransfer $productAvailabilityCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityCollectionTransfer
+     */
+    public function getProductConcreteAvailabilityCollection(
+        ProductAvailabilityCriteriaTransfer $productAvailabilityCriteriaTransfer
+    ): ProductConcreteAvailabilityCollectionTransfer {
+        return $this->getRepository()->getProductConcreteAvailabilityCollection($productAvailabilityCriteriaTransfer);
     }
 }

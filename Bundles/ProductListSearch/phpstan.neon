@@ -1,2 +1,4 @@
 parameters:
     checkMissingIterableValueType: false
+    excludePaths:
+        - %rootDir%/../../../vendor/spryker/spryker/Bundles/ProductListSearch/src/Spryker/Client/ProductListSearch/Plugin/Search/ProductListQueryExpanderPlugin.php

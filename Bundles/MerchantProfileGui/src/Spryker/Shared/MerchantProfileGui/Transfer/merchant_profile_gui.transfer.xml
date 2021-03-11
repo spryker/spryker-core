@@ -27,7 +27,6 @@
         <property name="contactPersonFirstName" type="string"/>
         <property name="contactPersonTitle" type="string"/>
         <property name="contactPersonRole" type="string"/>
-        <property name="merchantKey" type="string"/>
         <property name="addressCollection" type="MerchantProfileAddress[]" singular="address"/>
     </transfer>
 
