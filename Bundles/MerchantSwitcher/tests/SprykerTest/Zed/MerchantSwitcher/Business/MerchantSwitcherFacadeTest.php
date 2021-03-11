@@ -43,12 +43,11 @@ class MerchantSwitcherFacadeTest extends Unit
         $merchantTransfer2 = $this->tester->haveMerchant();
 
         $productOfferTransfer1 = $this->tester->haveProductOffer([
-            ProductOfferTransfer::FK_MERCHANT => $merchantTransfer1->getIdMerchant(),
-
+            ProductOfferTransfer::MERCHANT_REFERENCE => $merchantTransfer1->getMerchantReference(),
         ]);
 
         $productOfferTransfer2 = $this->tester->haveProductOffer([
-            ProductOfferTransfer::FK_MERCHANT => $merchantTransfer2->getIdMerchant(),
+            ProductOfferTransfer::MERCHANT_REFERENCE => $merchantTransfer2->getMerchantReference(),
             ProductOfferTransfer::CONCRETE_SKU => $productOfferTransfer1->getConcreteSku(),
         ]);
 
