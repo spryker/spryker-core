@@ -15,8 +15,6 @@
     {% endif %}
 {% endfor %}
 
-{% set changeStatusRedirectUrl = url('/sales-return-gui/detail', {'id-return': return.idSalesReturn}) %}
-
 {% for productBundle in productBundles %}
     {% include '@MerchantSalesReturnMerchantUserGui/Detail/_partials/return-detail-product-bundle.twig' with {
         bundleProduct: productBundle,

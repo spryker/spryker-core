@@ -9,6 +9,10 @@ namespace Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication;
 
 use Orm\Zed\SalesReturn\Persistence\SpySalesReturnQuery;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Form\DataProvider\EventItemTriggerFormDataProvider;
+use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Form\DataProvider\EventTriggerFormDataProvider;
+use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Form\EventItemTriggerForm;
+use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Form\EventTriggerForm;
 use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Reader\CustomerReader;
 use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Reader\CustomerReaderInterface;
 use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Reader\MerchantOrderItemReader;
@@ -22,6 +26,7 @@ use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Dependency\Facade\MerchantSal
 use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Dependency\Facade\MerchantSalesReturnMerchantUserGuiToSalesReturnFacadeInterface;
 use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Dependency\Service\MerchantSalesReturnMerchantUserGuiToUtilDateTimeServiceInterface;
 use Spryker\Zed\MerchantSalesReturnMerchantUserGui\MerchantSalesReturnMerchantUserGuiDependencyProvider;
+use Symfony\Component\Form\FormInterface;
 
 /**
  * @method \Spryker\Zed\MerchantSalesReturnMerchantUserGui\MerchantSalesReturnMerchantUserGuiConfig getConfig()
@@ -61,6 +66,50 @@ class MerchantSalesReturnMerchantUserGuiCommunicationFactory extends AbstractCom
             $this->getMerchantSalesOrderFacade(),
             $this->getMerchantOmsFacade()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Form\DataProvider\EventTriggerFormDataProvider
+     */
+    public function createEventTriggerFormDataProvider(): EventTriggerFormDataProvider
+    {
+        return new EventTriggerFormDataProvider();
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Form\DataProvider\EventItemTriggerFormDataProvider
+     */
+    public function createEventItemTriggerFormDataProvider(): EventItemTriggerFormDataProvider
+    {
+        return new EventItemTriggerFormDataProvider();
+    }
+
+    /**
+     * @phpstan-param array<string, mixed> $options
+     *
+     * @phpstan-return \Symfony\Component\Form\FormInterface<mixed>
+     *
+     * @param array $options
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createEventTriggerForm(array $options = []): FormInterface
+    {
+        return $this->getFormFactory()->create(EventTriggerForm::class, null, $options);
+    }
+
+    /**
+     * @phpstan-param array<string, mixed> $options
+     *
+     * @phpstan-return \Symfony\Component\Form\FormInterface<mixed>
+     *
+     * @param array $options
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createEventItemTriggerForm(array $options = []): FormInterface
+    {
+        return $this->getFormFactory()->create(EventItemTriggerForm::class, null, $options);
     }
 
     /**

@@ -53,9 +53,9 @@
         </td>
         <td>
             {% if merchantOrderItem.manualEvents is not empty %}
-                {% include '@Oms/RenderForm/_partial/order-item-actions.twig' with {
+                {% include '@MerchantSalesReturnMerchantUserGui/_partial/order-item-actions.twig' with {
                     redirectUrl: changeStatusRedirectUrl,
-                    idSalesOrderItem: orderItem.idSalesOrderItem,
+                    merchantSalesOrderItemReference: merchantOrderItem.merchantOrderItemReference,
                     eventsGroupedByItem: merchantOrderItem.manualEvents,
                 } %}
             {% endif %}

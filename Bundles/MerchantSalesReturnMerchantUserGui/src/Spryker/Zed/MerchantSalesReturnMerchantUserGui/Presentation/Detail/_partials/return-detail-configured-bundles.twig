@@ -14,8 +14,6 @@
     {% endif %}
 {% endfor %}
 
-{% set changeStatusRedirectUrl = url('/sales-return-gui/detail', {'id-return': return.idSalesReturn}) %}
-
 {% for bundle in configuredBundles %}
     <tr>
         <td colspan="5">

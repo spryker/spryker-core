@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantSalesReturnMerchantUserGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\MerchantOrderCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemCollectionTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemCriteriaTransfer;
 
@@ -25,17 +26,15 @@ class MerchantSalesReturnMerchantUserGuiToMerchantSalesOrderFacadeBridge impleme
         $this->merchantSalesOrderFacade = $merchantSalesOrderFacade;
     }
 
-//    /**
-//     * @param \Generated\Shared\Transfer\MerchantOrderCriteriaTransfer $merchantCriteriaTransfer
-//     *
-//     * @return \Generated\Shared\Transfer\MerchantOrderTransfer|null
-//     */
-//    public function findMerchantOrder(MerchantOrderCriteriaTransfer $merchantCriteriaTransfer): ?MerchantOrderTransfer
-//    {
-//        $merchantOrderTransfer = $this->merchantSalesOrderFacade->findMerchantOrder($merchantCriteriaTransfer);
-//
-//        return $merchantOrderTransfer;
-//    }
+    /**
+     * @param \Generated\Shared\Transfer\MerchantOrderCriteriaTransfer $merchantCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantOrderTransfer|null
+     */
+    public function findMerchantOrder(MerchantOrderCriteriaTransfer $merchantCriteriaTransfer): ?MerchantOrderTransfer
+    {
+        return $this->merchantSalesOrderFacade->findMerchantOrder($merchantCriteriaTransfer);
+    }
 
 //    /**
 //     * @param \Generated\Shared\Transfer\MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer

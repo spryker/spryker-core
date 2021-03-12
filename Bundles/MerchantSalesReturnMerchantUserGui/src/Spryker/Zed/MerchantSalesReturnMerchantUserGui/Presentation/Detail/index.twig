@@ -6,7 +6,7 @@
 {% block section_title title | trans %}
 
 {% block action %}
-    {{ backActionButton(url('/sales-return-gui'), 'Back to Returns' | trans) }}
+    {{ backActionButton(url('/merchant-sales-return-merchant-user-gui'), 'Back to Returns' | trans) }}
     {{ createActionButton(url('/sales-return-gui/return-slip', {'id-return': return.idSalesReturn}), 'Print Return Slip' | trans) }}
 {% endblock %}
 

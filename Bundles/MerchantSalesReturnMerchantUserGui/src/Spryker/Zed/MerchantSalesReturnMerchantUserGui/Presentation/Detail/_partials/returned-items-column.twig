@@ -2,6 +2,8 @@
     title: 'Returned Items'
 } %}
     {% block content %}
+        {% set changeStatusRedirectUrl = url('/merchant-sales-return-merchant-user-gui/detail', {'id-return': return.idSalesReturn}) %}
+
         <div class="row">
             <div class="col-md-6">
                 {{ 'Trigger all matching states' | trans }}
@@ -11,11 +13,11 @@
                 </span>
             </div>
             <div class="header-actions js-return-bulk-trigger-buttons col-md-6">
-                {% include '@Oms/RenderForm/_partial/order-items-actions.twig' with {
-                    redirectUrl: url('/sales-return-gui/detail', {'id-return': return.idSalesReturn}),
-                    salesOrderItemIds: salesOrderItemIds,
+                {% include '@MerchantSalesReturnMerchantUserGui/_partials/merchant-order-actions.twig' with {
+                    redirectUrl: changeStatusRedirectUrl,
+                    idMerchantSalesOrder: return.merchantOrderReference,
                     events: uniqueOrderItemManualEvents,
-                } %}
+                } only %}
             </div>
         </div>
 
@@ -44,18 +46,21 @@
                         return: return,
                         order: order,
                         merchantOrderItems: merchantOrderItems,
+                        changeStatusRedirectUrl: changeStatusRedirectUrl,
                     } only %}
 
                     {% include '@MerchantSalesReturnMerchantUserGui/Detail/_partials/return-detail-configured-bundles.twig' with {
                         return: return,
                         order: order,
                         merchantOrderItems: merchantOrderItems,
+                        changeStatusRedirectUrl: changeStatusRedirectUrl,
                     } only %}
 
                     {% include '@MerchantSalesReturnMerchantUserGui/Detail/_partials/return-detail-product-bundles.twig' with {
                         return: return,
                         order: order,
                         merchantOrderItems: merchantOrderItems,
+                        changeStatusRedirectUrl: changeStatusRedirectUrl,
                     } only %}
                 </tbody>
             </table>
