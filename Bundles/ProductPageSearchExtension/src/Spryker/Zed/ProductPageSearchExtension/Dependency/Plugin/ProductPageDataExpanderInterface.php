@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin;
 use Generated\Shared\Transfer\ProductPageSearchTransfer;
 
 /**
- * Provides extension capabilities for "ProductPageSearchTransfer" during storing
+ * Provides extension capabilities for "ProductPageSearchTransfer" during storing.
  */
 interface ProductPageDataExpanderInterface
 {

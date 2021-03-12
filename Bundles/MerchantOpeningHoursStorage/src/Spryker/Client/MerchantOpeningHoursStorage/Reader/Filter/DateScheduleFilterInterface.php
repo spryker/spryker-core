@@ -9,9 +9,6 @@ namespace Spryker\Client\MerchantOpeningHoursStorage\Reader\Filter;
 
 use Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer;
 
-/**
- * Provides ability to process MerchantOpeningHoursStorageReader results
- */
 interface DateScheduleFilterInterface
 {
     /**
