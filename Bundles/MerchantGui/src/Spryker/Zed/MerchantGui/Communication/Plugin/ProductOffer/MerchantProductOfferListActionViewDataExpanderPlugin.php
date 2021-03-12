@@ -5,13 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantGui\Communication\Plugin\ProductOfferGui;
+namespace Spryker\Zed\MerchantGui\Communication\Plugin\ProductOffer;
 
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductOfferGuiExtension\Dependency\Plugin\ProductOfferListActionViewDataExpanderPluginInterface;
 
 /**
- * @deprecated Use {@link \Spryker\Zed\MerchantProductOfferGui\Communication\Plugin\ProductOfferGui\MerchantProductOfferListActionViewDataExpanderPlugin} instead
+ * @deprecated Use {@link \Spryker\Zed\MerchantProductOfferGui\Communication\Plugin\ProductOfferGui\MerchantProductOfferListActionViewDataExpanderPlugin} instead.
  *
  * @method \Spryker\Zed\MerchantGui\Communication\MerchantGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\MerchantGui\MerchantGuiConfig getConfig()

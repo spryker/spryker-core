@@ -31,7 +31,7 @@ class MerchantOpeningHoursStorageWeekdayScheduleCreatePublisherPlugin extends Ab
     public function handleBulk(array $eventEntityTransfers, $eventName): void
     {
         $this->getFacade()
-            ->publishWeekdayScheduleCreate($eventEntityTransfers);
+            ->writeMerchantOpenHoursStorageByMerchantOpeningHoursWeekdayScheduleCreateEvents($eventEntityTransfers);
     }
 
     /**

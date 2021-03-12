@@ -42,11 +42,11 @@ class MerchantOpeningHoursStorageFacade extends AbstractFacade implements Mercha
      *
      * @return void
      */
-    public function publishWeekdayScheduleCreate(array $eventEntityTransfers): void
+    public function writeMerchantOpenHoursStorageByMerchantOpeningHoursWeekdayScheduleCreateEvents(array $eventEntityTransfers): void
     {
         $this->getFactory()
             ->createMerchantOpeningHoursStoragePublisher()
-            ->publishWeekdayScheduleCreate($eventEntityTransfers);
+            ->writeMerchantOpenHoursStorageByMerchantOpeningHoursWeekdayScheduleCreateEvents($eventEntityTransfers);
     }
 
     /**
@@ -58,11 +58,11 @@ class MerchantOpeningHoursStorageFacade extends AbstractFacade implements Mercha
      *
      * @return void
      */
-    public function publishDateScheduleCreate(array $eventEntityTransfers): void
+    public function writeMerchantOpenHoursStorageByMerchantOpeningHoursDateScheduleCreateEvents(array $eventEntityTransfers): void
     {
         $this->getFactory()
             ->createMerchantOpeningHoursStoragePublisher()
-            ->publishDateScheduleCreate($eventEntityTransfers);
+            ->writeMerchantOpenHoursStorageByMerchantOpeningHoursDateScheduleCreateEvents($eventEntityTransfers);
     }
 
     /**
@@ -74,10 +74,10 @@ class MerchantOpeningHoursStorageFacade extends AbstractFacade implements Mercha
      *
      * @return void
      */
-    public function publishMerchantOpeningHours(array $eventEntityTransfers): void
+    public function writeMerchantOpenHoursStorageByMerchantOpeningHoursPublishEvents(array $eventEntityTransfers): void
     {
         $this->getFactory()
             ->createMerchantOpeningHoursStoragePublisher()
-            ->publishMerchantOpeningHours($eventEntityTransfers);
+            ->writeMerchantOpenHoursStorageByMerchantOpeningHoursPublishEvents($eventEntityTransfers);
     }
 }

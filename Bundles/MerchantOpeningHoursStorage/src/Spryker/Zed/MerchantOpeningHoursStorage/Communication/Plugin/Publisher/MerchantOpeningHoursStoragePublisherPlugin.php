@@ -31,7 +31,7 @@ class MerchantOpeningHoursStoragePublisherPlugin extends AbstractPlugin implemen
     public function handleBulk(array $eventEntityTransfers, $eventName): void
     {
         $this->getFacade()
-            ->publishMerchantOpeningHours($eventEntityTransfers);
+            ->writeMerchantOpenHoursStorageByMerchantOpeningHoursPublishEvents($eventEntityTransfers);
     }
 
     /**

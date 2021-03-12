@@ -40,7 +40,7 @@ class MerchantProductOfferStorageBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->createProductConcreteProductOffersStorageDeleter(),
             $this->getStoreFacade(),
-            $this->getProductOfferCriteriaFilterTransferProvider()
+            $this->createProductOfferCriteriaFilterTransferProvider()
         );
     }
 
@@ -55,7 +55,7 @@ class MerchantProductOfferStorageBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->createProductOfferStorageDeleter(),
             $this->getStoreFacade(),
-            $this->getProductOfferCriteriaFilterTransferProvider()
+            $this->createProductOfferCriteriaFilterTransferProvider()
         );
     }
 
@@ -100,7 +100,7 @@ class MerchantProductOfferStorageBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\MerchantProductOfferStorage\Business\Writer\ProductOfferCriteriaFilterTransferProviderInterface
      */
-    protected function getProductOfferCriteriaFilterTransferProvider(): ProductOfferCriteriaFilterTransferProviderInterface
+    public function createProductOfferCriteriaFilterTransferProvider(): ProductOfferCriteriaFilterTransferProviderInterface
     {
         return new ProductOfferCriteriaFilterTransferProvider();
     }
