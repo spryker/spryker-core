@@ -14,12 +14,15 @@ use Symfony\Component\HttpFoundation\Response;
 class AvailabilityNotificationsRestApiConfig extends AbstractBundleConfig
 {
     public const RESOURCE_AVAILABILITY_NOTIFICATIONS = 'availability-notifications';
+    public const RESOURCE_MY_AVAILABILITY_NOTIFICATIONS = 'my-availability-notifications';
+    public const RESOURCE_CUSTOMERS = 'customers';
 
     public const RESPONSE_CODE_PRODUCT_NOT_FOUND = '4601';
     public const RESPONSE_CODE_SUBSCRIPTION_ALREADY_EXISTS = '4602';
     public const RESPONSE_CODE_SUBSCRIPTION_DOES_NOT_EXIST = '4603';
     public const RESPONSE_CODE_FAILED_TO_SUBSCRIBE = '4604';
     public const RESPONSE_CODE_FAILED_TO_UNSUBSCRIBE = '4605';
+    public const RESPONSE_CODE_CUSTOMER_UNAUTHORIZED = '4606';
 
     /**
      * @uses \Spryker\Shared\AvailabilityNotification\AvailabilityNotificationConfig::MESSAGE_PRODUCT_NOT_FOUND
@@ -35,6 +38,7 @@ class AvailabilityNotificationsRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_DETAIL_SUBSCRIPTION_DOES_NOT_EXIST = 'Subscription doesn\'t exist.';
     public const RESPONSE_DETAIL_FAILED_TO_SUBSCRIBE = 'Failed to subscribe.';
     public const RESPONSE_DETAIL_FAILED_TO_UNSUBSCRIBE = 'Failed to unsubscribe.';
+    public const RESPONSE_DETAILS_CUSTOMER_UNAUTHORIZED = 'Unauthorized request.';
 
     /**
      * @api
@@ -69,6 +73,11 @@ class AvailabilityNotificationsRestApiConfig extends AbstractBundleConfig
                 RestErrorMessageTransfer::DETAIL => static::RESPONSE_DETAIL_FAILED_TO_UNSUBSCRIBE,
                 RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
             ],
+            static::RESPONSE_DETAILS_CUSTOMER_UNAUTHORIZED => [
+                RestErrorMessageTransfer::CODE => static::RESPONSE_CODE_CUSTOMER_UNAUTHORIZED,
+                RestErrorMessageTransfer::DETAIL => static::RESPONSE_DETAILS_CUSTOMER_UNAUTHORIZED,
+                RestErrorMessageTransfer::STATUS => Response::HTTP_FORBIDDEN,
+            ],
         ];
     }
 
@@ -90,5 +99,15 @@ class AvailabilityNotificationsRestApiConfig extends AbstractBundleConfig
     public function getDefaultUnsubscribeRestError(): array
     {
         return $this->getErrorIdentifierToRestErrorMapping()[static::RESPONSE_DETAIL_FAILED_TO_UNSUBSCRIBE];
+    }
+
+    /**
+     * @api
+     *
+     * @return mixed[]
+     */
+    public function getCustomerUnauthorizedRestError(): array
+    {
+        return $this->getErrorIdentifierToRestErrorMapping()[static::RESPONSE_DETAILS_CUSTOMER_UNAUTHORIZED];
     }
 }

@@ -18,34 +18,6 @@ class AvailabilityNotificationsResourceController extends AbstractController
 {
     /**
      * @Glue({
-     *     "getCollection": {
-     *          "summary": [
-     *              "Retrieves a collection of notification subscriptions about products availability."
-     *          ],
-     *          "parameters": [{
-     *              "ref": "acceptLanguage"
-     *          }],
-     *          "responses": {
-     *              "401": "Invalid access token.",
-     *              "403": "Missing access token."
-     *          }
-     *     }
-     * })
-     *
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function getAction(RestRequestInterface $restRequest): RestResponseInterface
-    {
-        return $this
-            ->getFactory()
-            ->createAvailabilityNotificationReader()
-            ->getAvailabilityNotifications($restRequest);
-    }
-
-    /**
-     * @Glue({
      *     "post": {
      *          "summary": [
      *              "Subscribe to receive a notification by email when product is back in stock."

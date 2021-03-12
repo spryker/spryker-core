@@ -57,6 +57,11 @@ interface AvailabilityNotificationsRestResponseBuilderInterface
     ): RestResponseInterface;
 
     /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createCustomerUnauthorizedErrorResponse(): RestResponseInterface;
+
+    /**
      * @param \Generated\Shared\Transfer\RestErrorMessageTransfer $restErrorMessageTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface

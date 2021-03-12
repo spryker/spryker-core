@@ -86,9 +86,6 @@ class AvailabilityNotificationSubscriptionReader implements AvailabilityNotifica
 
         return $this
             ->availabilityNotificationRepository
-            ->getAvailabilityNotifications(
-                $availabilityNotificationCriteriaTransfer,
-                $this->storeFacade->getCurrentStore()->getIdStore()
-            );
+            ->getAvailabilityNotifications($availabilityNotificationCriteriaTransfer);
     }
 }

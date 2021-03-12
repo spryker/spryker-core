@@ -66,27 +66,6 @@ class AvailabilityNotificationRepository extends AbstractRepository implements A
     }
 
     /**
-     * @param string $sku
-     * @param int $fkStore
-     *
-     * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionCollectionTransfer
-     */
-    public function getBySkuAndStore(string $sku, int $fkStore): AvailabilityNotificationSubscriptionCollectionTransfer
-    {
-        $availabilityNotificationSubscriptionEntities = $this->querySubscription()
-            ->filterBySku($sku)
-            ->filterByFkStore($fkStore)
-            ->find();
-
-        return $this->getFactory()
-            ->createAvailabilityNotificationSubscriptionMapper()
-            ->mapAvailabilityNotificationSubscriptionEntitiesToAvailabilityNotificationCollectionTransfer(
-                $availabilityNotificationSubscriptionEntities,
-                new AvailabilityNotificationSubscriptionCollectionTransfer()
-            );
-    }
-
-    /**
      * @param string $customerReference
      * @param string $sku
      * @param int $fkStore
@@ -113,19 +92,25 @@ class AvailabilityNotificationRepository extends AbstractRepository implements A
 
     /**
      * @param \Generated\Shared\Transfer\AvailabilityNotificationCriteriaTransfer $availabilityNotificationCriteriaTransfer
-     * @param int $fkStore
      *
      * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionCollectionTransfer
      */
     public function getAvailabilityNotifications(
-        AvailabilityNotificationCriteriaTransfer $availabilityNotificationCriteriaTransfer,
-        int $fkStore
+        AvailabilityNotificationCriteriaTransfer $availabilityNotificationCriteriaTransfer
     ): AvailabilityNotificationSubscriptionCollectionTransfer {
         $querySubscription = $this->querySubscription();
         if (!empty($availabilityNotificationCriteriaTransfer->getCustomerReferences())) {
             $querySubscription->filterByCustomerReference_In($availabilityNotificationCriteriaTransfer->getCustomerReferences());
         }
-        $querySubscription->filterByFkStore($fkStore);
+        if (!empty($availabilityNotificationCriteriaTransfer->getStoreNames())) {
+            $querySubscription
+                ->innerJoinSpyStore()
+                ->useSpyStoreQuery()
+                ->filterByName_In($availabilityNotificationCriteriaTransfer->getStoreNames());
+        }
+        if (!empty($availabilityNotificationCriteriaTransfer->getSkus())) {
+            $querySubscription->filterBySku_In($availabilityNotificationCriteriaTransfer->getSkus());
+        }
 
         if ($availabilityNotificationCriteriaTransfer->getPagination()) {
             $querySubscription = $this->preparePagination($querySubscription, $availabilityNotificationCriteriaTransfer->getPagination());

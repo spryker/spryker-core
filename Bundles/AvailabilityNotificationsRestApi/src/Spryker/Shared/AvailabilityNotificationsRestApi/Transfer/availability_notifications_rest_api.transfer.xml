@@ -31,6 +31,8 @@
 
     <transfer name="AvailabilityNotificationCriteria">
         <property name="customerReferences" type="string[]" singular="customerReference"/>
+        <property name="storeNames" type="string[]" singular="storeName"/>
+        <property name="skus" type="string[]" singular="sku"/>
         <property name="pagination" type="Pagination"/>
     </transfer>
 

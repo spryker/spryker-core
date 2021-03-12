@@ -11,12 +11,13 @@ use Generated\Shared\Transfer\RestAvailabilityNotificationRequestAttributesTrans
 use Spryker\Glue\AvailabilityNotificationsRestApi\AvailabilityNotificationsRestApiConfig;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceWithParentPluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
 
 /**
  * @method \Spryker\Glue\WishlistsRestApi\WishlistsRestApiFactory getFactory()
  */
-class AvailabilityNotificationsResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface
+class CustomerAvailabilityNotificationsResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface, ResourceWithParentPluginInterface
 {
     /**
      * {@inheritDoc}
@@ -30,8 +31,7 @@ class AvailabilityNotificationsResourceRoutePlugin extends AbstractPlugin implem
     public function configure(ResourceRouteCollectionInterface $resourceRouteCollection): ResourceRouteCollectionInterface
     {
         $resourceRouteCollection
-            ->addPost('post', false)
-            ->addDelete('delete', false);
+            ->addGet('get', true);
 
         return $resourceRouteCollection;
     }
@@ -59,7 +59,7 @@ class AvailabilityNotificationsResourceRoutePlugin extends AbstractPlugin implem
      */
     public function getController(): string
     {
-        return 'availability-notifications-resource';
+        return 'customer-availability-notifications-resource';
     }
 
     /**
@@ -72,5 +72,17 @@ class AvailabilityNotificationsResourceRoutePlugin extends AbstractPlugin implem
     public function getResourceAttributesClassName(): string
     {
         return RestAvailabilityNotificationRequestAttributesTransfer::class;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getParentResourceType(): string
+    {
+        return AvailabilityNotificationsRestApiConfig::RESOURCE_CUSTOMERS;
     }
 }

@@ -10,7 +10,9 @@ namespace Spryker\Glue\AvailabilityNotificationsRestApi\Processor\Reader;
 use Generated\Shared\Transfer\AvailabilityNotificationCriteriaTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Spryker\Glue\AvailabilityNotificationsRestApi\Dependency\Client\AvailabilityNotificationsRestApiToAvailabilityNotificationClientInterface;
+use Spryker\Glue\AvailabilityNotificationsRestApi\Dependency\Client\AvailabilityNotificationsRestApiToStoreClientInterface;
 use Spryker\Glue\AvailabilityNotificationsRestApi\Processor\RestResponseBuilder\AvailabilityNotificationsRestResponseBuilderInterface;
+use Spryker\Glue\AvailabilityNotificationsRestApi\Processor\Validator\RestApiValidatorInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
@@ -27,15 +29,31 @@ class AvailabilityNotificationReader implements AvailabilityNotificationReaderIn
     protected $availabilityNotificationsRestResponseBuilder;
 
     /**
+     * @var \Spryker\Glue\AvailabilityNotificationsRestApi\Dependency\Client\AvailabilityNotificationsRestApiToStoreClientInterface
+     */
+    protected $storeClient;
+
+    /**
+     * @var \Spryker\Glue\AvailabilityNotificationsRestApi\Processor\Validator\RestApiValidatorInterface
+     */
+    protected $restApiValidator;
+
+    /**
      * @param \Spryker\Glue\AvailabilityNotificationsRestApi\Dependency\Client\AvailabilityNotificationsRestApiToAvailabilityNotificationClientInterface $availabilityNotificationClient
      * @param \Spryker\Glue\AvailabilityNotificationsRestApi\Processor\RestResponseBuilder\AvailabilityNotificationsRestResponseBuilderInterface $availabilityNotificationsRestResponseBuilder
+     * @param \Spryker\Glue\AvailabilityNotificationsRestApi\Dependency\Client\AvailabilityNotificationsRestApiToStoreClientInterface $storeClient
+     * @param \Spryker\Glue\AvailabilityNotificationsRestApi\Processor\Validator\RestApiValidatorInterface $restApiValidator
      */
     public function __construct(
         AvailabilityNotificationsRestApiToAvailabilityNotificationClientInterface $availabilityNotificationClient,
-        AvailabilityNotificationsRestResponseBuilderInterface $availabilityNotificationsRestResponseBuilder
+        AvailabilityNotificationsRestResponseBuilderInterface $availabilityNotificationsRestResponseBuilder,
+        AvailabilityNotificationsRestApiToStoreClientInterface $storeClient,
+        RestApiValidatorInterface $restApiValidator
     ) {
         $this->availabilityNotificationClient = $availabilityNotificationClient;
         $this->availabilityNotificationsRestResponseBuilder = $availabilityNotificationsRestResponseBuilder;
+        $this->storeClient = $storeClient;
+        $this->restApiValidator = $restApiValidator;
     }
 
     /**
@@ -43,7 +61,7 @@ class AvailabilityNotificationReader implements AvailabilityNotificationReaderIn
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function getAvailabilityNotifications(RestRequestInterface $restRequest): RestResponseInterface
+    public function getMyAvailabilityNotifications(RestRequestInterface $restRequest): RestResponseInterface
     {
         $availabilityNotificationCriteriaTransfer = new AvailabilityNotificationCriteriaTransfer();
         /**
@@ -51,6 +69,10 @@ class AvailabilityNotificationReader implements AvailabilityNotificationReaderIn
          */
         $restUser = $restRequest->getRestUser();
         $availabilityNotificationCriteriaTransfer->addCustomerReference($restUser->getNaturalIdentifierOrFail());
+        $storeName = $this->storeClient->getCurrentStore()->getName();
+        if ($storeName) {
+            $availabilityNotificationCriteriaTransfer->addStoreName($storeName);
+        }
 
         if ($restRequest->getPage() !== null) {
             $availabilityNotificationCriteriaTransfer->setPagination(
@@ -63,5 +85,19 @@ class AvailabilityNotificationReader implements AvailabilityNotificationReaderIn
         $availabilityNotificationSubscriptionCollectionTransfer = $this->availabilityNotificationClient->getAvailabilityNotifications($availabilityNotificationCriteriaTransfer);
 
         return $this->availabilityNotificationsRestResponseBuilder->createAvailabilityNotificationCollectionResponse($availabilityNotificationSubscriptionCollectionTransfer);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function getCustomerAvailabilityNotifications(RestRequestInterface $restRequest): RestResponseInterface
+    {
+        if (!$this->restApiValidator->isSameCustomerReference($restRequest)) {
+            return $this->availabilityNotificationsRestResponseBuilder->createCustomerUnauthorizedErrorResponse();
+        }
+
+        return $this->getMyAvailabilityNotifications($restRequest);
     }
 }

@@ -135,6 +135,21 @@ class AvailabilityNotificationsRestResponseBuilder implements AvailabilityNotifi
     }
 
     /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createCustomerUnauthorizedErrorResponse(): RestResponseInterface
+    {
+        $restErrorPayload = $this->availabilityNotificationsRestApiConfig->getCustomerUnauthorizedRestError();
+
+        return $this->createErrorResponse(
+            (new RestErrorMessageTransfer())
+                ->setCode($restErrorPayload[RestErrorMessageTransfer::CODE])
+                ->setStatus($restErrorPayload[RestErrorMessageTransfer::STATUS])
+                ->setDetail($restErrorPayload[RestErrorMessageTransfer::DETAIL])
+        );
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\RestErrorMessageTransfer $restErrorMessageTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface

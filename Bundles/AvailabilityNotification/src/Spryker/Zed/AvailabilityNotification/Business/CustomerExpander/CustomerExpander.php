@@ -10,6 +10,7 @@ namespace Spryker\Zed\AvailabilityNotification\Business\CustomerExpander;
 use Generated\Shared\Transfer\AvailabilityNotificationCriteriaTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilityNotificationSubscriptionReaderInterface;
+use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToStoreFacadeInterface;
 
 class CustomerExpander implements CustomerExpanderInterface
 {
@@ -19,11 +20,20 @@ class CustomerExpander implements CustomerExpanderInterface
     protected $availabilityNotificationSubscriptionReader;
 
     /**
-     * @param \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilityNotificationSubscriptionReaderInterface $availabilityNotificationSubscriptionReader
+     * @var \Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToStoreFacadeInterface
      */
-    public function __construct(AvailabilityNotificationSubscriptionReaderInterface $availabilityNotificationSubscriptionReader)
-    {
+    protected $storeFacade;
+
+    /**
+     * @param \Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilityNotificationSubscriptionReaderInterface $availabilityNotificationSubscriptionReader
+     * @param \Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToStoreFacadeInterface $storeFacade
+     */
+    public function __construct(
+        AvailabilityNotificationSubscriptionReaderInterface $availabilityNotificationSubscriptionReader,
+        AvailabilityNotificationToStoreFacadeInterface $storeFacade
+    ) {
         $this->availabilityNotificationSubscriptionReader = $availabilityNotificationSubscriptionReader;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -40,6 +50,7 @@ class CustomerExpander implements CustomerExpanderInterface
                             ->getAvailabilityNotifications(
                                 (new AvailabilityNotificationCriteriaTransfer())
                                     ->addCustomerReference($customerTransfer->getCustomerReference())
+                                    ->addStoreName($this->storeFacade->getCurrentStore()->getName())
                             )
                             ->getAvailabilityNotificationSubscriptions();
         $skus = [];

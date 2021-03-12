@@ -16,7 +16,7 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 /**
  * @method \Spryker\Glue\WishlistsRestApi\WishlistsRestApiFactory getFactory()
  */
-class AvailabilityNotificationsResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface
+class MyAvailabilityNotificationsResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface
 {
     /**
      * {@inheritDoc}
@@ -30,8 +30,7 @@ class AvailabilityNotificationsResourceRoutePlugin extends AbstractPlugin implem
     public function configure(ResourceRouteCollectionInterface $resourceRouteCollection): ResourceRouteCollectionInterface
     {
         $resourceRouteCollection
-            ->addPost('post', false)
-            ->addDelete('delete', false);
+            ->addGet('get', true);
 
         return $resourceRouteCollection;
     }
@@ -45,7 +44,7 @@ class AvailabilityNotificationsResourceRoutePlugin extends AbstractPlugin implem
      */
     public function getResourceType(): string
     {
-        return AvailabilityNotificationsRestApiConfig::RESOURCE_AVAILABILITY_NOTIFICATIONS;
+        return AvailabilityNotificationsRestApiConfig::RESOURCE_MY_AVAILABILITY_NOTIFICATIONS;
     }
 
     /**
@@ -59,7 +58,7 @@ class AvailabilityNotificationsResourceRoutePlugin extends AbstractPlugin implem
      */
     public function getController(): string
     {
-        return 'availability-notifications-resource';
+        return 'my-availability-notifications-resource';
     }
 
     /**

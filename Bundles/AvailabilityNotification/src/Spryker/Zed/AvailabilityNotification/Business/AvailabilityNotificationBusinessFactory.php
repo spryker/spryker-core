@@ -226,6 +226,6 @@ class AvailabilityNotificationBusinessFactory extends AbstractBusinessFactory
      */
     public function createCustomerExpander(): CustomerExpanderInterface
     {
-        return new CustomerExpander($this->createAvailabilityNotificationReader());
+        return new CustomerExpander($this->createAvailabilityNotificationReader(), $this->getStoreFacade());
     }
 }

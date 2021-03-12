@@ -39,21 +39,11 @@ interface AvailabilityNotificationRepositoryInterface
     public function findOneByCustomerReferenceAndSku(string $customerReference, string $sku, int $fkStore): ?AvailabilityNotificationSubscriptionTransfer;
 
     /**
-     * @param string $sku
-     * @param int $fkStore
-     *
-     * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionCollectionTransfer
-     */
-    public function getBySkuAndStore(string $sku, int $fkStore): AvailabilityNotificationSubscriptionCollectionTransfer;
-
-    /**
      * @param \Generated\Shared\Transfer\AvailabilityNotificationCriteriaTransfer $availabilityNotificationCriteriaTransfer
-     * @param int $fkStore
      *
      * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionCollectionTransfer
      */
     public function getAvailabilityNotifications(
-        AvailabilityNotificationCriteriaTransfer $availabilityNotificationCriteriaTransfer,
-        int $fkStore
+        AvailabilityNotificationCriteriaTransfer $availabilityNotificationCriteriaTransfer
     ): AvailabilityNotificationSubscriptionCollectionTransfer;
 }
