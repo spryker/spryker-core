@@ -35,12 +35,12 @@
     </transfer>
 
     <transfer name="RestCartItemsAttributes">
-        <property name="salesUnit" type="RestCartItemsSalesUnitAttributes"/>
+        <property name="salesUnit" type="RestCartItemsSalesUnitAttributes" restRequestParameter="yes"/>
     </transfer>
 
     <transfer name="RestCartItemsSalesUnitAttributes">
-        <property name="id" type="int"/>
-        <property name="amount" type="decimal"/>
+        <property name="id" type="int" restRequestParameter="yes"/>
+        <property name="amount" type="decimal" restRequestParameter="yes"/>
     </transfer>
 
     <transfer name="RestOrdersProductMeasurementUnitsAttributes">

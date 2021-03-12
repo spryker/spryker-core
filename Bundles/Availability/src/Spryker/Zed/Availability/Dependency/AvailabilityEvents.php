@@ -62,4 +62,20 @@ interface AvailabilityEvents
      * - This event will be used for notifying subscribers if product is available again.
      */
     public const AVAILABILITY_NOTIFICATION = 'availability_notification';
+
+    /**
+     * Specification:
+     * - This event will be used for Availability publishing by ProductAbstractId.
+     *
+     * @api
+     */
+    public const AVAILABILITY_PRODUCT_ABSTRACT_PUBLISH = 'Availability.product_abstract.publish';
+
+    /**
+     * Specification:
+     * - This event will be used for Availability unpublishing by ProductAbstractId.
+     *
+     * @api
+     */
+    public const AVAILABILITY_PRODUCT_ABSTRACT_UNPUBLISH = 'Availability.product_abstract.unpublish';
 }

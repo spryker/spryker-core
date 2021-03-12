@@ -1,5 +1,8 @@
 parameters:
     checkGenericClassInNonGenericObjectType: false
     checkMissingIterableValueType: false
+    reportUnmatchedIgnoredErrors: false
+    excludePaths:
+        - %rootDir%/../../../vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/DataProvider/AbstractProductFormDataProvider.php
     ignoreErrors:
         - '#Strict comparison using !== between null and null will always evaluate to false.#'
