@@ -32,8 +32,20 @@ class MerchantOpeningHoursStorageDependencyProvider extends AbstractBundleDepend
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
         $container = parent::provideCommunicationLayerDependencies($container);
-        $container = $this->addEventBehaviorFacade($container);
         $container = $this->addMerchantFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function provideBusinessLayerDependencies(Container $container): Container
+    {
+        $container = parent::provideBusinessLayerDependencies($container);
+        $container = $this->addEventBehaviorFacade($container);
 
         return $container;
     }

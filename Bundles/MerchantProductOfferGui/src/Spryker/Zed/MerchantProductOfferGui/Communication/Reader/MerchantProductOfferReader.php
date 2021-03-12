@@ -35,8 +35,8 @@ class MerchantProductOfferReader implements MerchantProductOfferReaderInterface
      */
     public function getMerchantData(ProductOfferTransfer $productOfferTransfer): array
     {
-        $merchantName = '';
-        $merchantId = 0;
+        $merchantName = null;
+        $merchantId = null;
 
         if ($productOfferTransfer->getMerchantReference()) {
             $merchantCriteriaTransfer = (new MerchantCriteriaTransfer())
@@ -51,8 +51,8 @@ class MerchantProductOfferReader implements MerchantProductOfferReaderInterface
         }
 
         return [
-            'idMerchant' => $merchantId,
-            'merchantName' => $merchantName,
+            'idMerchant' => (string)$merchantId,
+            'merchantName' => (string)$merchantName,
             'merchantSku' => $productOfferTransfer->getMerchantSku(),
         ];
     }
