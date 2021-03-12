@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Controller;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ReturnFilterTransfer;
 use Generated\Shared\Transfer\ReturnTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
@@ -28,6 +29,8 @@ class DetailController extends AbstractController
     protected const MESSAGE_RETURN_NOT_FOUND = 'Requested return with ID "%id%" was not found.';
     protected const MESSAGE_PARAM_ID = '%id%';
     protected const DEFAULT_LABEL_CLASS = 'label-default';
+    protected const MESSAGE_MERCHANT_NOT_FOUND_ERROR = 'Merchant for current user not found.';
+    protected const MESSAGE_MERCHANT_ORDER_NOT_FOUND_ERROR = 'Merchant sales order #%d not found.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -36,6 +39,15 @@ class DetailController extends AbstractController
      */
     public function indexAction(Request $request)
     {
+        $idMerchant = $this->getFactory()->getMerchantUserFacade()->getCurrentMerchantUser()->getIdMerchant();
+
+        if (!$idMerchant) {
+            $this->addErrorMessage(static::MESSAGE_MERCHANT_NOT_FOUND_ERROR);
+            $redirectUrl = Url::generate(static::ROUTE_RETURN_LIST)->build();
+
+            return $this->redirectResponse($redirectUrl);
+        }
+
         $idSalesReturn = $this->castId($request->get(static::PARAM_ID_RETURN));
         $returnTransfer = $this->findReturn($request);
 
@@ -49,11 +61,27 @@ class DetailController extends AbstractController
             );
         }
 
-        $salesOrderItemIds = $this->extractSalesOrderItemIdsFromReturn($returnTransfer);
+        $merchantOrderTransfer = $this
+            ->getFactory()
+            ->createMerchantOrderReader()
+            ->findMerchantSalesOrder($returnTransfer);
+
+        if (!$merchantOrderTransfer) {
+            $this->addErrorMessage(
+                static::MESSAGE_MERCHANT_ORDER_NOT_FOUND_ERROR,
+                ['%d' => $returnTransfer->getMerchantSalesOrderReference()]
+            );
+            $redirectUrl = Url::generate(static::ROUTE_RETURN_LIST)->build();
+
+            return $this->redirectResponse($redirectUrl);
+        }
+
         $merchantOrderItemTransfers = $this
             ->getFactory()
-            ->createMerchantOrderItemReader()
-            ->findMerchantOrderItems($salesOrderItemIds);
+            ->createMerchantOrderReader()
+            ->findMerchantOrderItems($returnTransfer);
+
+        $merchantOrderTransfer->setMerchantOrderItems(new ArrayObject($merchantOrderItemTransfers));
 
         return [
             'return' => $returnTransfer,
@@ -61,25 +89,8 @@ class DetailController extends AbstractController
             'uniqueOrderReferences' => $this->extractUniqueOrderReferencesFromReturn($returnTransfer),
             'uniqueItemStateLabels' => $this->extractUniqueItemStateLabelsFromReturn($returnTransfer),
             'uniqueOrderItemManualEvents' => $this->extractUniqueOrderItemManualEvents($merchantOrderItemTransfers),
-            'merchantOrderItems' => $merchantOrderItemTransfers,
-            'salesOrderItemIds' => $salesOrderItemIds,
+            'merchantOrder' => $merchantOrderTransfer,
         ];
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
-     *
-     * @return int[]
-     */
-    protected function extractSalesOrderItemIdsFromReturn(ReturnTransfer $returnTransfer): array
-    {
-        $salesOrderItemIds = [];
-
-        foreach ($returnTransfer->getReturnItems() as $returnItemTransfer) {
-            $salesOrderItemIds[] = $returnItemTransfer->getOrderItem()->getIdSalesOrderItem();
-        }
-
-        return $salesOrderItemIds;
     }
 
     /**

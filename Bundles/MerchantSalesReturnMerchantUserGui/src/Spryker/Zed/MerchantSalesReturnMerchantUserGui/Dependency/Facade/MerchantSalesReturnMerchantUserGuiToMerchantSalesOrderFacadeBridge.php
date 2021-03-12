@@ -10,6 +10,7 @@ namespace Spryker\Zed\MerchantSalesReturnMerchantUserGui\Dependency\Facade;
 use Generated\Shared\Transfer\MerchantOrderCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemCollectionTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemCriteriaTransfer;
+use Generated\Shared\Transfer\MerchantOrderTransfer;
 
 class MerchantSalesReturnMerchantUserGuiToMerchantSalesOrderFacadeBridge implements MerchantSalesReturnMerchantUserGuiToMerchantSalesOrderFacadeInterface
 {

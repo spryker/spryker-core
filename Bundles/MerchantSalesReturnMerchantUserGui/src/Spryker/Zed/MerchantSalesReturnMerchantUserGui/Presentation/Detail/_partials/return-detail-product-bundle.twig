@@ -7,7 +7,7 @@
 
 {% for returnBundleItem in returnBundleItems %}
     {% set orderItem = returnBundleItem.orderItem %}
-    {% set merchantOrderItem = merchantOrderItems[returnBundleItem.orderItem.idSalesOrderItem] %}
+    {% set merchantOrderItem = merchantOrder.merchantOrderItems[returnBundleItem.orderItem.idSalesOrderItem] %}
 
     <tr class="addition-row">
         <td></td>
@@ -36,12 +36,12 @@
         <td></td>
         <td class="state-history">
             <div>
-                <a href="{{ url('/oms/index/draw', {'process': orderItem.process, 'state': orderItem.state.name}) }}" target="_blank">{{ (orderItem.stateHistory | first).name }}</a> ({{ orderItem.process }})
+                <a href="{{ url('/oms/index/draw', {'process': merchantOrder.process, 'state': merchantOrderItem.state.stateName}) }}" target="_blank">{{ (merchantOrderItem.stateHistory | first).stateName }}</a> ({{ merchantOrder.process }})
             </div>
             {% if merchantOrderItem.stateHistory is not empty %}
-                <div id="history_details_{{ orderItem.idSalesOrderItem }}" class="hidden">
+                <div id="history_details_{{ merchantOrderItem.idMerchantOrderItem }}" class="hidden">
                     {% for stateHistory in merchantOrderItem.stateHistory | slice(1) %}
-                        <div>{{ stateHistory.name }} ({{ stateHistory.createdAt | formatDateTime }})</div>
+                        <div>{{ stateHistory.stateName }} ({{ stateHistory.createdAt | formatDateTime }})</div>
                     {% endfor %}
                 </div>
 

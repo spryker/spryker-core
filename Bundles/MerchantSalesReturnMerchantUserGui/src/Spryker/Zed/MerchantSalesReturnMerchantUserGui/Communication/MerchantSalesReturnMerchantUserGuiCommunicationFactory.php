@@ -15,8 +15,8 @@ use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Form\EventItemT
 use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Form\EventTriggerForm;
 use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Reader\CustomerReader;
 use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Reader\CustomerReaderInterface;
-use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Reader\MerchantOrderItemReader;
-use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Reader\MerchantOrderItemReaderInterface;
+use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Reader\MerchantOrderReader;
+use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Reader\MerchantOrderReaderInterface;
 use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Table\MerchantReturnTable;
 use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Dependency\Facade\MerchantSalesReturnMerchantUserGuiToCustomerFacadeInterface;
 use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Dependency\Facade\MerchantSalesReturnMerchantUserGuiToMerchantOmsFacadeInterface;
@@ -58,11 +58,11 @@ class MerchantSalesReturnMerchantUserGuiCommunicationFactory extends AbstractCom
     }
 
     /**
-     * @return \Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Reader\MerchantOrderItemReaderInterface
+     * @return \Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Reader\MerchantOrderReaderInterface
      */
-    public function createMerchantOrderItemReader(): MerchantOrderItemReaderInterface
+    public function createMerchantOrderReader(): MerchantOrderReaderInterface
     {
-        return new MerchantOrderItemReader(
+        return new MerchantOrderReader(
             $this->getMerchantSalesOrderFacade(),
             $this->getMerchantOmsFacade()
         );

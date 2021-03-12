@@ -7,12 +7,16 @@
 
 namespace Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Reader;
 
+use ArrayObject;
+use Generated\Shared\Transfer\MerchantOrderCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemCollectionTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemCriteriaTransfer;
+use Generated\Shared\Transfer\MerchantOrderTransfer;
+use Generated\Shared\Transfer\ReturnTransfer;
 use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Dependency\Facade\MerchantSalesReturnMerchantUserGuiToMerchantOmsFacadeInterface;
 use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Dependency\Facade\MerchantSalesReturnMerchantUserGuiToMerchantSalesOrderFacadeInterface;
 
-class MerchantOrderItemReader implements MerchantOrderItemReaderInterface
+class MerchantOrderReader implements MerchantOrderReaderInterface
 {
     /**
      * @var \Spryker\Zed\MerchantSalesReturnMerchantUserGui\Dependency\Facade\MerchantSalesReturnMerchantUserGuiToMerchantSalesOrderFacadeInterface
@@ -37,14 +41,38 @@ class MerchantOrderItemReader implements MerchantOrderItemReaderInterface
     }
 
     /**
-     * @param int[] $salesOrderItemIds
+     * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantOrderTransfer|null
+     */
+    public function findMerchantSalesOrder(ReturnTransfer $returnTransfer): ?MerchantOrderTransfer
+    {
+        $merchantOrderCriteriaTransfer = (new MerchantOrderCriteriaTransfer())
+            ->setMerchantOrderReference($returnTransfer->getMerchantSalesOrderReference())
+            ->setWithItems(true);
+
+        $merchantOrderTransfer = $this
+            ->merchantSalesOrderFacade
+            ->findMerchantOrder($merchantOrderCriteriaTransfer);
+
+        if (!$merchantOrderTransfer) {
+            return null;
+        }
+
+        return $merchantOrderTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantOrderItemTransfer[]
      */
-    public function findMerchantOrderItems(array $salesOrderItemIds): array
+    public function findMerchantOrderItems(ReturnTransfer $returnTransfer): array
     {
-        $merchantOrderItemCriteriaTransfer = new MerchantOrderItemCriteriaTransfer();
-        $merchantOrderItemCriteriaTransfer->setOrderItemIds($salesOrderItemIds);
+        $salesOrderItemIds = $this->extractSalesOrderItemIdsFromReturn($returnTransfer);
+
+        $merchantOrderItemCriteriaTransfer = (new MerchantOrderItemCriteriaTransfer())
+            ->setOrderItemIds($salesOrderItemIds);
 
         $merchantOrderItemTransfers = $this->merchantSalesOrderFacade
             ->getMerchantOrderItemCollection($merchantOrderItemCriteriaTransfer);
@@ -54,6 +82,22 @@ class MerchantOrderItemReader implements MerchantOrderItemReaderInterface
         $merchantOrderItemTransfers = $this->createMerchantOrderItemsIndexMapping($merchantOrderItemTransfers);
 
         return $merchantOrderItemTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
+     *
+     * @return int[]
+     */
+    protected function extractSalesOrderItemIdsFromReturn(ReturnTransfer $returnTransfer): array
+    {
+        $salesOrderItemIds = [];
+
+        foreach ($returnTransfer->getReturnItems() as $returnItemTransfer) {
+            $salesOrderItemIds[] = $returnItemTransfer->getOrderItem()->getIdSalesOrderItem();
+        }
+
+        return $salesOrderItemIds;
     }
 
     /**
@@ -79,7 +123,7 @@ class MerchantOrderItemReader implements MerchantOrderItemReaderInterface
         $merchantOrderItemIds = [];
 
         foreach ($merchantOrderItemTransfers->getMerchantOrderItems() as $merchantOrderItemTransfer) {
-            $merchantOderItemIds[] = $merchantOrderItemTransfer->getIdMerchantOrderItem();
+            $merchantOrderItemIds[] = $merchantOrderItemTransfer->getIdMerchantOrderItem();
         }
 
         $stateMachineItemTransfers = $this->merchantOmsFacade
@@ -88,7 +132,8 @@ class MerchantOrderItemReader implements MerchantOrderItemReaderInterface
         foreach ($merchantOrderItemTransfers->getMerchantOrderItems() as $merchantOrderItemTransfer) {
             if (isset($stateMachineItemTransfers[$merchantOrderItemTransfer->getIdMerchantOrder()])) {
                 $stateHistory = $stateMachineItemTransfers[$merchantOrderItemTransfer->getIdMerchantOrder()];
-                $merchantOrderItemTransfer->setStateHistory($stateHistory);
+                $merchantOrderItemTransfer->setStateHistory(new ArrayObject($stateHistory));
+                $merchantOrderItemTransfer->setState(reset($stateHistory));
             }
         }
 

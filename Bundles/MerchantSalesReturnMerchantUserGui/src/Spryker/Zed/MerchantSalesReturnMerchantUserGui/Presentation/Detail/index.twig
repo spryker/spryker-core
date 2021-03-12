@@ -15,9 +15,8 @@
         <div class="col-lg-8">
             {% include '@MerchantSalesReturnMerchantUserGui/Detail/_partials/returned-items-column.twig' with {
                 return: return,
-                merchantOrderItems: merchantOrderItems,
+                merchantOrder: merchantOrder,
                 uniqueOrderItemManualEvents: uniqueOrderItemManualEvents,
-                salesOrderItemIds: salesOrderItemIds,
             } only %}
         </div>
         <div class="col-lg-4">

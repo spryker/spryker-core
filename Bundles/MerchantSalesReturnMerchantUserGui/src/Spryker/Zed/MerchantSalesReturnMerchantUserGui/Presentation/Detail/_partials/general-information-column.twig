@@ -1,4 +1,4 @@
-{% embed '@MerchantSalesReturnMerchantUserGui/_partials/column.twig' with {
+{% embed '@SalesReturnGui/_partials/column.twig' with {
     title: 'General information'
 } %}
     {% block content %}
@@ -21,7 +21,7 @@
                 {{ 'Merchant Order Reference' | trans }}
             </div>
             <div class="col-sm-6">
-                {{ return.merchantOrderReference }}
+                {{ return.merchantSalesOrderReference }}
             </div>
         </div>
 

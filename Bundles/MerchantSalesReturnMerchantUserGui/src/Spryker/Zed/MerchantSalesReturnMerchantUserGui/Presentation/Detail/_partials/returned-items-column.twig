@@ -1,4 +1,4 @@
-{% embed '@MerchantSalesReturnMerchantUserGui/_partials/column.twig' with {
+{% embed '@SalesReturnGui/_partials/column.twig' with {
     title: 'Returned Items'
 } %}
     {% block content %}
@@ -15,7 +15,7 @@
             <div class="header-actions js-return-bulk-trigger-buttons col-md-6">
                 {% include '@MerchantSalesReturnMerchantUserGui/_partials/merchant-order-actions.twig' with {
                     redirectUrl: changeStatusRedirectUrl,
-                    idMerchantSalesOrder: return.merchantOrderReference,
+                    merchantSalesOrderReference: merchantOrder.merchantOrderReference,
                     events: uniqueOrderItemManualEvents,
                 } only %}
             </div>
@@ -45,21 +45,21 @@
                     {% include '@MerchantSalesReturnMerchantUserGui/Detail/_partials/return-detail-items.twig' with {
                         return: return,
                         order: order,
-                        merchantOrderItems: merchantOrderItems,
+                        merchantOrder: merchantOrder,
                         changeStatusRedirectUrl: changeStatusRedirectUrl,
                     } only %}
 
                     {% include '@MerchantSalesReturnMerchantUserGui/Detail/_partials/return-detail-configured-bundles.twig' with {
                         return: return,
                         order: order,
-                        merchantOrderItems: merchantOrderItems,
+                        merchantOrder: merchantOrder,
                         changeStatusRedirectUrl: changeStatusRedirectUrl,
                     } only %}
 
                     {% include '@MerchantSalesReturnMerchantUserGui/Detail/_partials/return-detail-product-bundles.twig' with {
                         return: return,
                         order: order,
-                        merchantOrderItems: merchantOrderItems,
+                        merchantOrder: merchantOrder,
                         changeStatusRedirectUrl: changeStatusRedirectUrl,
                     } only %}
                 </tbody>

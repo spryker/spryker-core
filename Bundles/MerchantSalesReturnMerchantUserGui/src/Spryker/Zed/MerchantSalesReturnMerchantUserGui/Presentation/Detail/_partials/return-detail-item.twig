@@ -49,14 +49,14 @@
     </td>
     <td rowspan="{{ numberOfItemAdditions }}" class="state-history">
         {% if not isBundleProduct %}
-            <a href="{{ url('/oms/index/draw', {'process': orderItem.process, 'state': orderItem.state.name}) }}" target="_blank">{{ (orderItem.stateHistory | first).name }}</a> ({{ orderItem.process }})
+            <a href="{{ url('/state-machine/graph/draw', {'process': merchantOrder.process, 'highlight-state': (merchantOrderItem.stateHistory | first).stateName, 'state-machine': 'Merchant'}) }}" target="_blank">{{ (merchantOrderItem.stateHistory | first).stateName }}</a> ({{ merchantOrder.process }})
 
             <br>
 
             {% if merchantOrderItem.stateHistory is not empty %}
-                <div id="history_details_{{ orderItem.idSalesOrderItem }}" class="hidden">
+                <div id="history_details_{{ merchantOrderItem.idMerchantOrderItem }}" class="hidden">
                     {% for stateHistory in merchantOrderItem.stateHistory | slice(1) %}
-                        <div>{{ stateHistory.name }} ({{ stateHistory.createdAt | formatDateTime }})</div>
+                        <div>{{ stateHistory.stateName }} ({{ stateHistory.createdAt | formatDateTime }})</div>
                     {% endfor %}
                 </div>
 
@@ -69,10 +69,10 @@
     </td>
     <td rowspan="{{ numberOfItemAdditions }}">
         {% if merchantOrderItem.manualEvents is not empty %}
-            {% include '@MerchantSalesReturnMerchantUserGui/_partial/order-item-actions.twig' with {
+            {% include '@MerchantSalesReturnMerchantUserGui/_partials/merchant-order-item-actions.twig' with {
                 redirectUrl: changeStatusRedirectUrl,
                 merchantSalesOrderItemReference: merchantOrderItem.merchantOrderItemReference,
-                eventsGroupedByItem: merchantOrderItem.manualEvents,
+                events: merchantOrderItem.manualEvents,
             } %}
         {% endif %}
     </td>

@@ -17,7 +17,7 @@ class OmsRenderFormController extends AbstractController
 {
     protected const DEFAULT_REDIRECT_URL = 'redirectUrl';
     protected const URL_PARAM_EVENTS = 'events';
-    protected const URL_PARAM_MERCHANT_SALES_ORDER_REFERENCE = 'MerchantSalesOrderReference';
+    protected const URL_PARAM_MERCHANT_SALES_ORDER_REFERENCE = 'merchantSalesOrderReference';
     protected const URL_PARAM_MERCHANT_SALES_ORDER_ITEM_REFERENCE = 'merchantSalesOrderItemReference';
 
     /**
