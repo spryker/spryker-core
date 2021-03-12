@@ -167,7 +167,7 @@ class QuoteItemReplacer implements QuoteItemReplacerInterface
         if ($itemReplaceTransfer->getItemToBeReplaced()->getQuantity() != $itemReplaceTransfer->getNewItem()->getQuantity()) {
             $productConfiguratorResponseProcessorResponseTransfer
                 ->addMessage(
-                    $this->createConfigurationOnlyHasAvailabilityMessage(
+                    $this->createConfigurationItemAvailabilityMessage(
                         $itemReplaceTransfer->getNewItem()->getQuantity()
                     )
                 );
@@ -194,7 +194,7 @@ class QuoteItemReplacer implements QuoteItemReplacerInterface
      *
      * @return \Generated\Shared\Transfer\MessageTransfer
      */
-    protected function createConfigurationOnlyHasAvailabilityMessage(int $availability): MessageTransfer
+    protected function createConfigurationItemAvailabilityMessage(int $availability): MessageTransfer
     {
         return (new MessageTransfer())
             ->setType(static::MESSAGE_TYPE_ERROR)
