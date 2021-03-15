@@ -5,13 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\ProductStorage;
+namespace SprykerTest\Client\ProductDiscontinuedStorage;
 
 use Codeception\Actor;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -22,11 +20,10 @@ use Codeception\Actor;
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method void pause()
- * @method \Spryker\Zed\ProductStorage\Business\ProductStorageFacadeInterface getFacade()
  *
  * @SuppressWarnings(PHPMD)
  */
-class ProductStorageBusinessTester extends Actor
+class ProductDiscontinuedStorageClientTester extends Actor
 {
-    use _generated\ProductStorageBusinessTesterActions;
+    use _generated\ProductDiscontinuedStorageClientTesterActions;
 }
