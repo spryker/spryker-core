@@ -57,7 +57,7 @@ class MerchantReturnValidator implements MerchantReturnValidatorInterface
         ItemTransfer $itemTransferToCompare
     ): bool {
         return $itemTransfer->getMerchantReference() === $itemTransferToCompare->getMerchantReference()
-            && $itemTransfer->getFkSalesOrder() === $itemTransferToCompare->getFkSalesOrder();
+            && $itemTransfer->getFkSalesOrderOrFail() === $itemTransferToCompare->getFkSalesOrderOrFail();
     }
 
     /**

@@ -33,4 +33,24 @@ class ProductMerchantPortalGuiToProductFacadeBridge implements ProductMerchantPo
     {
         return $this->productFacade->saveProductAbstract($productAbstractTransfer);
     }
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return void
+     */
+    public function activateProductConcrete($idProductConcrete)
+    {
+        $this->productFacade->activateProductConcrete($idProductConcrete);
+    }
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return void
+     */
+    public function deactivateProductConcrete($idProductConcrete)
+    {
+        $this->productFacade->deactivateProductConcrete($idProductConcrete);
+    }
 }
