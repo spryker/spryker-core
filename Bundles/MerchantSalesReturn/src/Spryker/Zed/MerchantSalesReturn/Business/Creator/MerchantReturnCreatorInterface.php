@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantSalesReturn\Business\Model;
+namespace Spryker\Zed\MerchantSalesReturn\Business\Creator;
 
 use Generated\Shared\Transfer\ReturnTransfer;
 
-interface MerchantReturnPreCreatorInterface
+interface MerchantReturnCreatorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer

@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantSalesReturn\Business\Model;
+namespace Spryker\Zed\MerchantSalesReturn\Business\Creator;
 
 use ArrayObject;
 use Generated\Shared\Transfer\MerchantOrderCriteriaTransfer;
@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Generated\Shared\Transfer\ReturnTransfer;
 use Spryker\Zed\MerchantSalesReturn\Dependency\Facade\MerchantSalesReturnToMerchantSalesOrderFacadeInterface;
 
-class MerchantReturnPreCreator implements MerchantReturnPreCreatorInterface
+class MerchantReturnCreator implements MerchantReturnCreatorInterface
 {
     /**
      * @var \Spryker\Zed\MerchantSalesReturn\Dependency\Facade\MerchantSalesReturnToMerchantSalesOrderFacadeInterface
@@ -39,15 +39,15 @@ class MerchantReturnPreCreator implements MerchantReturnPreCreatorInterface
             ->requireReturnItems()
             ->getReturnItems();
 
-        $merchantOrderTransfer = $this->getMerchantOrder($returnItemTransfers);
+        $merchantOrderTransfer = $this->findMerchantOrder($returnItemTransfers);
 
-        if ($merchantOrderTransfer !== null) {
-            $merchantOrderReference = $merchantOrderTransfer->getMerchantOrderReference();
-
-            $returnTransfer->setMerchantSalesOrderReference($merchantOrderReference);
+        if ($merchantOrderTransfer === null) {
+            return $returnTransfer;
         }
 
-        return $returnTransfer;
+        return $returnTransfer->setMerchantSalesOrderReference(
+            $merchantOrderTransfer->getMerchantOrderReference()
+        );
     }
 
     /**
@@ -55,7 +55,7 @@ class MerchantReturnPreCreator implements MerchantReturnPreCreatorInterface
      *
      * @return \Generated\Shared\Transfer\MerchantOrderTransfer|null
      */
-    protected function getMerchantOrder(ArrayObject $returnItemTransfers): ?MerchantOrderTransfer
+    protected function findMerchantOrder(ArrayObject $returnItemTransfers): ?MerchantOrderTransfer
     {
         /** @var \Generated\Shared\Transfer\ReturnItemTransfer $firstReturnItem */
         $firstReturnItem = $returnItemTransfers->offsetGet(0);

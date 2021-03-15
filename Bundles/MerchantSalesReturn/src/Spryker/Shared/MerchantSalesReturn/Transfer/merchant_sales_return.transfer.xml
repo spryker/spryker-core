@@ -14,16 +14,8 @@
         <property name="fkSalesOrder" type="int"/>
     </transfer>
 
-    <transfer name="OrderItemFilter">
-        <property name="salesOrderItemIds" type="int[]" singular="salesOrderItemId"/>
-    </transfer>
-
     <transfer name="ReturnItem">
         <property name="orderItem" type="Item"/>
-    </transfer>
-
-    <transfer name="ItemCollection">
-        <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
     <transfer name="ReturnResponse">

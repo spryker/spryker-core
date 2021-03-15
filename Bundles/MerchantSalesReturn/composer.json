@@ -6,15 +6,15 @@
   "require": {
     "php": ">=7.3",
     "spryker/kernel": "^3.33.0",
-    "spryker/merchant-sales-order": "^0.5.2",
+    "spryker/merchant-sales-order": "^0.8.0",
     "spryker/sales-return-extension": "^0.1.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/merchant": "^2.0.0 || ^3.0.0",
-    "spryker/oms": "^11.0.0",
+    "spryker/merchant": "*",
+    "spryker/oms": "*",
     "spryker/propel": "*",
-    "spryker/sales": "^11.18.0",
+    "spryker/sales": "*",
     "spryker/testify": "*"
   },
   "autoload": {

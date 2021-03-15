@@ -6,8 +6,6 @@
   "require": {
     "php": ">=7.3",
     "spryker/kernel": "^3.30.0",
-    "spryker/refund": "^2.0.0",
-    "spryker/sales": "^11.18.0",
     "spryker/step-engine": "^3.1.0",
     "spryker/symfony": "^3.0.0"
   },
@@ -16,12 +14,13 @@
     "spryker/oms": "*",
     "spryker/payment": "*",
     "spryker/propel": "*",
-    "spryker/propel-orm": "*",
+    "spryker/sales": "*",
     "spryker/testify": "*"
   },
   "suggest": {
     "spryker/oms": "If you want to use OMS constants.",
-    "spryker/payment": "If you want to use Payment command plugins."
+    "spryker/payment": "If you want to use Payment command plugins.",
+    "spryker/sales": "If you want to use Sales constants."
   },
   "autoload": {
     "psr-4": {

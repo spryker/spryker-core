@@ -13,10 +13,7 @@ use Generated\Shared\Transfer\PaymentMethodsTransfer;
 use Generated\Shared\Transfer\PaymentMethodTransfer;
 use Generated\Shared\Transfer\PaymentProviderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\RefundTransfer;
 use Spryker\Shared\DummyMarketplacePayment\DummyMarketplacePaymentConfig;
-use Spryker\Zed\DummyMarketplacePayment\Business\DummyMarketplacePaymentBusinessFactory;
-use Spryker\Zed\DummyMarketplacePayment\Dependency\Facade\DummyMarketplacePaymentToRefundInterface;
 
 /**
  * Auto-generated group annotations
@@ -33,7 +30,6 @@ use Spryker\Zed\DummyMarketplacePayment\Dependency\Facade\DummyMarketplacePaymen
 class DummyMarketplacePaymentFacadeTest extends Unit
 {
     protected const TEST_PRODUCT_MERCHANT = 'TEST_PRODUCT_MERCHANT';
-    protected const TEST_STATE_MACHINE_NAME = 'Test01';
 
     /**
      * @var \SprykerTest\Zed\DummyMarketplacePayment\DummyMarketplacePaymentBusinessTester
@@ -84,67 +80,5 @@ class DummyMarketplacePaymentFacadeTest extends Unit
 
         // Assert
         $this->assertEmpty($filteredPaymentMethodsTransfer->getMethods()->getArrayCopy());
-    }
-
-    /**
-     * @return void
-     */
-    public function testRefundCallsRefundFacadeToCalculateAndSaveTheRefund(): void
-    {
-        // Arrange
-        $this->tester->configureTestStateMachine([static::TEST_STATE_MACHINE_NAME]);
-
-        $salesOrderTransfer = $this->tester->haveOrder([], static::TEST_STATE_MACHINE_NAME);
-        $salesOrderEntity = $this->tester->haveSalesOrderWithItems($salesOrderTransfer);
-        $refundFacadeMock = $this->getRefundFacadeMock();
-
-        $dummyMarketplacePaymentBusinessFactoryMock = $this->getDummyMarketplacePaymentBusinessFactoryMock($refundFacadeMock);
-
-        /** @var \Spryker\Zed\DummyMarketplacePayment\Business\DummyMarketplacePaymentFacade $dummyMarketplacePaymentFacade */
-        $dummyMarketplacePaymentFacade = $this->tester->getFacade();
-
-        $dummyMarketplacePaymentFacade->setFactory($dummyMarketplacePaymentBusinessFactoryMock);
-
-        // Assert
-        $refundFacadeMock->expects($this->once())->method('calculateRefund');
-        $refundFacadeMock->expects($this->once())->method('saveRefund');
-
-        // Act
-        $dummyMarketplacePaymentFacade->refund($salesOrderEntity->getItems()->getArrayCopy(), $salesOrderEntity);
-    }
-
-    /**
-     * @param \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\DummyMarketplacePayment\Dependency\FacadeDummyMarketplacePaymentToRefundInterface $refundFacadeMock
-     *
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\DummyMarketplacePayment\Business\DummyMarketplacePaymentBusinessFactory
-     */
-    protected function getDummyMarketplacePaymentBusinessFactoryMock(
-        DummyMarketplacePaymentToRefundInterface $refundFacadeMock
-    ): DummyMarketplacePaymentBusinessFactory {
-        $businessFactoryMock = $this->createPartialMock(
-            DummyMarketplacePaymentBusinessFactory::class,
-            ['getRefundFacade']
-        );
-
-        $businessFactoryMock
-            ->method('getRefundFacade')
-            ->willReturn($refundFacadeMock);
-
-        return $businessFactoryMock;
-    }
-
-    /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\DummyMarketplacePayment\Dependency\Facade\DummyMarketplacePaymentToRefundInterface
-     */
-    protected function getRefundFacadeMock(): DummyMarketplacePaymentToRefundInterface
-    {
-        $refundFacadeMock = $this->getMockBuilder(DummyMarketplacePaymentToRefundInterface::class)
-            ->setMethods(['calculateRefund', 'saveRefund'])
-            ->getMock();
-        $refundFacadeMock
-            ->method('calculateRefund')
-            ->willReturn((new RefundTransfer())->setAmount(1));
-
-        return $refundFacadeMock;
     }
 }

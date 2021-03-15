@@ -16,7 +16,7 @@ interface MerchantSalesReturnFacadeInterface
 {
     /**
      * Specification:
-     * - Requires `ReturnTransfer.returnItems.item.idSalesOrderItem`.
+     * - Requires `Return.returnItems.item.idSalesOrderItem` transfer field to be set.
      * - Takes the first `ReturnItemTransfer` of the `ReturnTransfer` and finds the related `ItemTransfer` in the database.
      * - Sets `ReturnTransfer.merchantReference` by using the data from the first `ItemTransfer`.
      * - Returns `ReturnTransfer` object.
@@ -32,7 +32,6 @@ interface MerchantSalesReturnFacadeInterface
     /**
      * Specification:
      * - Iterates through the order items ensuring all have set the same merchant reference.
-     * - Requires `ItemTransfer.merchantReference` for all items.
      * - Returns `ReturnResponseTransfer` containing a message in case of a failed validation.
      *
      * @api

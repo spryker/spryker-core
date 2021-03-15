@@ -21,5 +21,3 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\ConfigHelper
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
-                - \SprykerTest\Shared\Sales\Helper\SalesDataHelper
-                - \SprykerTest\Zed\Oms\Helper\OmsHelper

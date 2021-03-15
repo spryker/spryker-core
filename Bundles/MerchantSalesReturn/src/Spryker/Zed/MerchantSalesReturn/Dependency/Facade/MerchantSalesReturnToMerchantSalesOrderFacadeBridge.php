@@ -10,8 +10,7 @@ namespace Spryker\Zed\MerchantSalesReturn\Dependency\Facade;
 use Generated\Shared\Transfer\MerchantOrderCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
 
-class MerchantSalesReturnToMerchantSalesOrderFacadeBridge implements
-    MerchantSalesReturnToMerchantSalesOrderFacadeInterface
+class MerchantSalesReturnToMerchantSalesOrderFacadeBridge implements MerchantSalesReturnToMerchantSalesOrderFacadeInterface
 {
     /**
      * @var \Spryker\Zed\MerchantSalesOrder\Business\MerchantSalesOrderFacadeInterface

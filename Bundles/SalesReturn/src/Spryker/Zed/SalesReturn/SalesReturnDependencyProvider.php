@@ -27,6 +27,7 @@ class SalesReturnDependencyProvider extends AbstractBundleDependencyProvider
     public const SERVICE_UTIL_DATE_TIME = 'SERVICE_UTIL_DATE_TIME';
 
     public const PROPEL_QUERY_SALES_ORDER_ITEM = 'PROPEL_QUERY_SALES_ORDER_ITEM';
+
     public const PLUGINS_RETURN_PRE_CREATE = 'PLUGINS_RETURN_PRE_CREATE';
     public const PLUGINS_RETURN_REQUEST_VALIDATOR = 'PLUGINS_RETURN_REQUEST_VALIDATOR';
 
