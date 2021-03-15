@@ -12,7 +12,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnPreCreatePluginInterface;
 
 /**
- * @method \Spryker\Zed\MerchantSalesReturn\Persistence\MerchantSalesReturnQueryContainer getQueryContainer()
  * @method \Spryker\Zed\MerchantSalesReturn\MerchantSalesReturnConfig getConfig()
  * @method \Spryker\Zed\MerchantSalesReturn\Business\MerchantSalesReturnFacade getFacade()
  * @method \Spryker\Zed\MerchantSalesReturn\Communication\MerchantSalesReturnCommunicationFactory getFactory()
@@ -21,6 +20,7 @@ class MerchantReturnPreCreatePlugin extends AbstractPlugin implements ReturnPreC
 {
     /**
      * {@inheritDoc}
+     * - Sets merchant order reference in return transfer.
      *
      * @api
      *

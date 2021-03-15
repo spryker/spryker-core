@@ -85,7 +85,7 @@ class MerchantSalesReturnFacadeTest extends Unit
 
         foreach ($saveOrderTransfer->getOrderItems() as $orderItem) {
             $orderItemTransfer = (new ItemTransfer())
-                ->setUuid(self::TEST_UUID)
+                ->setUuid(static::TEST_UUID)
                 ->setMerchantReference(static::TEST_MERCHANT_SALES_ORDER_REFERENCE_1);
             $returnItemTransfer = new ReturnItemTransfer();
             $returnItemTransfer->setOrderItem($orderItemTransfer);
@@ -110,9 +110,9 @@ class MerchantSalesReturnFacadeTest extends Unit
         $returnCreateRequestTransfer = new ReturnCreateRequestTransfer();
 
         $itemTransfers = new ArrayObject();
-        $itemTransfers->append($this->tester->createItemTransfer(self::TEST_MERCHANT_REFERENCE_1, 1));
-        $itemTransfers->append($this->tester->createItemTransfer(self::TEST_MERCHANT_REFERENCE_1, 1));
-        $itemTransfers->append($this->tester->createItemTransfer(self::TEST_MERCHANT_REFERENCE_1, 1));
+        $itemTransfers->append($this->tester->createItemTransfer(static::TEST_MERCHANT_REFERENCE_1, 1));
+        $itemTransfers->append($this->tester->createItemTransfer(static::TEST_MERCHANT_REFERENCE_1, 1));
+        $itemTransfers->append($this->tester->createItemTransfer(static::TEST_MERCHANT_REFERENCE_1, 1));
 
         // Act
         $returnResponseTransfer = $this->tester
@@ -129,15 +129,15 @@ class MerchantSalesReturnFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testValidateReturnFailedWithDifferentMerchantReference(): void
+    public function testValidateReturnFailedWithDifferentMerchantReferences(): void
     {
         // Arrange
         $returnCreateRequestTransfer = new ReturnCreateRequestTransfer();
 
         $itemTransfers = new ArrayObject();
-        $itemTransfers->append($this->tester->createItemTransfer(self::TEST_MERCHANT_REFERENCE_1, 1));
-        $itemTransfers->append($this->tester->createItemTransfer(self::TEST_MERCHANT_REFERENCE_1, 1));
-        $itemTransfers->append($this->tester->createItemTransfer(self::TEST_MERCHANT_REFERENCE_2, 1));
+        $itemTransfers->append($this->tester->createItemTransfer(static::TEST_MERCHANT_REFERENCE_1, 1));
+        $itemTransfers->append($this->tester->createItemTransfer(static::TEST_MERCHANT_REFERENCE_1, 1));
+        $itemTransfers->append($this->tester->createItemTransfer(static::TEST_MERCHANT_REFERENCE_2, 1));
 
         // Act
         $returnResponseTransfer = $this->tester
@@ -160,9 +160,9 @@ class MerchantSalesReturnFacadeTest extends Unit
         $returnCreateRequestTransfer = new ReturnCreateRequestTransfer();
 
         $itemTransfers = new ArrayObject();
-        $itemTransfers->append($this->tester->createItemTransfer(self::TEST_MERCHANT_REFERENCE_1, 1));
-        $itemTransfers->append($this->tester->createItemTransfer(self::TEST_MERCHANT_REFERENCE_1, 2));
-        $itemTransfers->append($this->tester->createItemTransfer(self::TEST_MERCHANT_REFERENCE_1, 1));
+        $itemTransfers->append($this->tester->createItemTransfer(static::TEST_MERCHANT_REFERENCE_1, 1));
+        $itemTransfers->append($this->tester->createItemTransfer(static::TEST_MERCHANT_REFERENCE_1, 2));
+        $itemTransfers->append($this->tester->createItemTransfer(static::TEST_MERCHANT_REFERENCE_1, 1));
 
         // Act
         $returnResponseTransfer = $this->tester

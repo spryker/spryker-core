@@ -261,7 +261,8 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
             );
             $merchantSalesOrderQuery->addJoin(
                 SpyMerchantSalesOrderItemTableMap::COL_FK_SALES_ORDER_ITEM,
-                SpySalesOrderItemTableMap::COL_ID_SALES_ORDER_ITEM
+                SpySalesOrderItemTableMap::COL_ID_SALES_ORDER_ITEM,
+                Criteria::INNER_JOIN
             );
             $merchantSalesOrderQuery->addAnd(
                 SpySalesOrderItemTableMap::COL_UUID,

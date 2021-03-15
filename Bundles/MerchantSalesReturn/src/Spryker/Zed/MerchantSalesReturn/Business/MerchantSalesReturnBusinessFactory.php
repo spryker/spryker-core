@@ -8,10 +8,10 @@
 namespace Spryker\Zed\MerchantSalesReturn\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\MerchantSalesReturn\Business\Model\MerchantReturnPreCreator;
-use Spryker\Zed\MerchantSalesReturn\Business\Model\MerchantReturnPreCreatorInterface;
-use Spryker\Zed\MerchantSalesReturn\Business\Model\MerchantReturnValidator;
-use Spryker\Zed\MerchantSalesReturn\Business\Model\MerchantReturnValidatorInterface;
+use Spryker\Zed\MerchantSalesReturn\Business\Creator\MerchantReturnCreator;
+use Spryker\Zed\MerchantSalesReturn\Business\Creator\MerchantReturnCreatorInterface;
+use Spryker\Zed\MerchantSalesReturn\Business\Validator\MerchantReturnValidator;
+use Spryker\Zed\MerchantSalesReturn\Business\Validator\MerchantReturnValidatorInterface;
 use Spryker\Zed\MerchantSalesReturn\Dependency\Facade\MerchantSalesReturnToMerchantSalesOrderFacadeInterface;
 use Spryker\Zed\MerchantSalesReturn\MerchantSalesReturnDependencyProvider;
 
@@ -22,15 +22,15 @@ use Spryker\Zed\MerchantSalesReturn\MerchantSalesReturnDependencyProvider;
 class MerchantSalesReturnBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\MerchantSalesReturn\Business\Model\MerchantReturnPreCreatorInterface
+     * @return \Spryker\Zed\MerchantSalesReturn\Business\Creator\MerchantReturnCreatorInterface
      */
-    public function createMerchantReturnPreCreator(): MerchantReturnPreCreatorInterface
+    public function createMerchantReturnPreCreator(): MerchantReturnCreatorInterface
     {
-        return new MerchantReturnPreCreator($this->getMerchantSalesOrderFacade());
+        return new MerchantReturnCreator($this->getMerchantSalesOrderFacade());
     }
 
     /**
-     * @return \Spryker\Zed\MerchantSalesReturn\Business\Model\MerchantReturnValidatorInterface
+     * @return \Spryker\Zed\MerchantSalesReturn\Business\Validator\MerchantReturnValidatorInterface
      */
     public function createMerchantReturnValidator(): MerchantReturnValidatorInterface
     {

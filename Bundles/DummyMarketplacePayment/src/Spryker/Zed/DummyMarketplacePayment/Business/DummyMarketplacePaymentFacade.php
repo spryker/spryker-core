@@ -9,7 +9,6 @@ namespace Spryker\Zed\DummyMarketplacePayment\Business;
 
 use Generated\Shared\Transfer\PaymentMethodsTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -34,20 +33,5 @@ class DummyMarketplacePaymentFacade extends AbstractFacade implements DummyMarke
         return $this->getFactory()
             ->createPaymentMethodFilter()
             ->filterPaymentMethods($paymentMethodsTransfer, $quoteTransfer);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $salesOrderItems
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
-     *
-     * @return void
-     */
-    public function refund(array $salesOrderItems, SpySalesOrder $salesOrderEntity): void
-    {
-        $this->getFactory()->createMarketplaceRefund()->refund($salesOrderItems, $salesOrderEntity);
     }
 }

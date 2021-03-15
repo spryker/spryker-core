@@ -9,7 +9,6 @@ namespace Spryker\Zed\DummyMarketplacePayment\Business;
 
 use Generated\Shared\Transfer\PaymentMethodsTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Orm\Zed\Sales\Persistence\SpySalesOrder;
 
 interface DummyMarketplacePaymentFacadeInterface
 {
@@ -28,17 +27,4 @@ interface DummyMarketplacePaymentFacadeInterface
         PaymentMethodsTransfer $paymentMethodsTransfer,
         QuoteTransfer $quoteTransfer
     ): PaymentMethodsTransfer;
-
-    /**
-     * Specification:
-     * - Calculate marketplace refund amount for given order items and order entity.
-     *
-     * @api
-     *
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $salesOrderItems
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
-     *
-     * @return void
-     */
-    public function refund(array $salesOrderItems, SpySalesOrder $salesOrderEntity): void;
 }
