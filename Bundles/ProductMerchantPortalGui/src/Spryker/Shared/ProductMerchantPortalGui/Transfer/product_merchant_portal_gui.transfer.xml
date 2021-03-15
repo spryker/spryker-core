@@ -286,6 +286,7 @@
         <property name="validFrom" type="string"/>
         <property name="fkProductAbstract" type="int"/>
         <property name="idProductConcrete" type="int"/>
+        <property name="stocks" type="StockProduct[]" singular="stock"/>
     </transfer>
 
     <transfer name="ProductManagementAttributeCollection">
@@ -302,6 +303,20 @@
     </transfer>
 
     <transfer name="Merchant">
+    </transfer>
+
+    <transfer name="StockProduct">
+        <property name="quantity" type="decimal"/>
+        <property name="isNeverOutOfStock" type="string"/>
+    </transfer>
+
+    <transfer name="ReservationRequest">
+        <property name="sku" type="string"/>
+        <property name="store" type="Store"/>
+    </transfer>
+
+    <transfer name="ReservationResponse">
+        <property name="reservationQuantity" type="decimal"/>
     </transfer>
 
 </transfers>

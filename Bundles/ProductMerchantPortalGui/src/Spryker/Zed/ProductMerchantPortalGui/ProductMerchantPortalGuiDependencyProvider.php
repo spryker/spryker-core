@@ -21,6 +21,7 @@ use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortal
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantProductFacadeBridge;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantUserFacadeBridge;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMoneyFacadeBridge;
+use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToOmsFacadeBridge;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToPriceProductFacadeBridge;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductAttributeFacadeBridge;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductCategoryFacadeBridge;
@@ -48,6 +49,7 @@ class ProductMerchantPortalGuiDependencyProvider extends AbstractBundleDependenc
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
     public const FACADE_PRODUCT_VALIDITY = 'FACADE_PRODUCT_VALIDITY';
     public const FACADE_PRODUCT_ATTRIBUTE = 'FACADE_PRODUCT_ATTRIBUTE';
+    public const FACADE_OMS = 'FACADE_OMS';
 
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
@@ -94,6 +96,7 @@ class ProductMerchantPortalGuiDependencyProvider extends AbstractBundleDependenc
         $container = $this->addProductFacade($container);
         $container = $this->addProductValidityFacade($container);
         $container = $this->addProductAttributeFacade($container);
+        $container = $this->addOmsFacade($container);
 
         $container = $this->addProductAbstractFormExpanderPlugins($container);
         $container = $this->addProductConcreteTableExpanderPlugins($container);
@@ -331,6 +334,20 @@ class ProductMerchantPortalGuiDependencyProvider extends AbstractBundleDependenc
             return new ProductMerchantPortalGuiToProductAttributeFacadeBridge(
                 $container->getLocator()->productAttribute()->facade()
             );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addOmsFacade(Container $container)
+    {
+        $container->set(static::FACADE_OMS, function (Container $container) {
+            return new ProductMerchantPortalGuiToOmsFacadeBridge($container->getLocator()->oms()->facade());
         });
 
         return $container;

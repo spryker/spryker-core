@@ -1,5 +1,7 @@
 {#{% form_theme form '@ZedUi/Form/form-webcomponent-layout.twig' %}#}
 
+{% set productConcreteFormFields = form.productConcrete.children %}
+
 {% macro imagesJson(imageSet) -%}
     {% set images = [] %}
     {% for productImage in imageSet.productImages  %}
@@ -35,7 +37,7 @@
 
             <web-spy-card spy-title="{{ 'Name & Description' | trans }}" class="{{ mainClass }}__card">
                 {% block descriptionCardInner %}
-                    {% for localizedAttributeForm in form.productConcrete.children.localizedAttributes.children %}
+                    {% for localizedAttributeForm in productConcreteFormFields.localizedAttributes.children %}
                         <web-spy-collapsible
                             cloak
                             class="{{ mainClass }}__collapsible"
@@ -51,7 +53,16 @@
             </web-spy-card>
 
             <web-spy-card spy-title="{{ "Status" | trans }}" class="{{ mainClass }}__card">
-                {{ form_row(form.productConcrete.children.isActive, {label: false, row_attr: {'no-spaces': 'true'}}) }}
+                {{ form_row(productConcreteFormFields.isActive, {label: false, row_attr: {'no-spaces': 'true'}}) }}
+            </web-spy-card>
+
+            <web-spy-card spy-title="{{ 'Stock' | trans }}">
+
+                {{ 'Reserved Stock' | trans }}: {{ reservedStock }}
+
+                {{ form_row(productConcreteFormFields.stocks.quantity, {row_attr: {'no-spaces': 'true'}}) }}
+                {{ form_row(productConcreteFormFields.stocks.isNeverOutOfStock, {row_attr: {'no-spaces': 'true', 'no-label': 'true'}}) }}
+
             </web-spy-card>
 
             <web-spy-card spy-title="{{ "Super Attributes" | trans }}" class="{{ mainClass }}__card">
@@ -61,8 +72,8 @@
             </web-spy-card>
 
             <web-spy-card spy-title="{{ 'Validity Dates & Time' | trans }}" class="{{ mainClass }}__card">
-                {{ form_row(form.productConcrete.children.validFrom) }}
-                {{ form_row(form.productConcrete.children.validTo) }}
+                {{ form_row(productConcreteFormFields.validFrom) }}
+                {{ form_row(productConcreteFormFields.validTo) }}
             </web-spy-card>
 
             {% block priceCard %}
@@ -74,7 +85,7 @@
                                 table-id="web-mp-edit-abstract-product-prices"
                                 config='{{ guiTableConfiguration(priceProductConcreteTableConfiguration) }}'>
                         </web-mp-edit-abstract-product-prices>
-                        {% do form.productConcrete.children.prices.setRendered %}
+                        {% do productConcreteFormFields.prices.setRendered %}
                     {% endblock %}
                 </web-spy-card>
             {% endblock %}

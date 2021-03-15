@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\MerchantProductTransfer;
 use Generated\Shared\Transfer\PriceProductTableViewTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ReservationRequestTransfer;
 use Generated\Shared\Transfer\ValidationResponseTransfer;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Exception\ProductConcreteNotFoundException;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductConcreteEditForm;
@@ -151,6 +152,11 @@ class UpdateProductConcreteController extends UpdateProductController
             $productConcreteTransfer->getLocalizedAttributes(),
             $localeTransfer
         );
+        $reservationResponseTransfer = $this->getFactory()->getOmsFacade()->getOmsReservedProductQuantity(
+            (new ReservationRequestTransfer())
+                ->setSku($productConcreteTransfer->getSku())
+                ->setStore($this->getFactory()->getStoreFacade()->getCurrentStore())
+        );
 
         $responseData = [
             'form' => $this->renderView('@ProductMerchantPortalGui/Partials/product_concrete_form.twig', [
@@ -164,6 +170,7 @@ class UpdateProductConcreteController extends UpdateProductController
                 'priceProductConcreteTableConfiguration' => $this->getFactory()
                     ->createPriceProductConcreteGuiTableConfigurationProvider()
                     ->getConfiguration($productConcreteTransfer->getIdProductConcreteOrFail(), $initialData),
+                'reservedStock' => $reservationResponseTransfer->getReservationQuantity()->toFloat(),
             ])->getContent(),
         ];
 

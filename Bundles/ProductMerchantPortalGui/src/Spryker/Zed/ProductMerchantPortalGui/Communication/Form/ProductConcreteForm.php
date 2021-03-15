@@ -31,6 +31,7 @@ class ProductConcreteForm extends AbstractType
 
     protected const LABEL_VALID_FROM = 'From';
     protected const LABEL_VALID_TO = 'To';
+    protected const LABEL_STOCK = 'Stock';
 
     protected const DATE_TIME_FORMAT = 'Y-m-d H:i:s';
 
@@ -67,6 +68,7 @@ class ProductConcreteForm extends AbstractType
     {
         $this->addLocalizedAttributesSubform($builder)
             ->addIsActiveField($builder)
+            ->addStockSubform($builder)
             ->addValidFromField($builder)
             ->addValidToField($builder)
             ->addPricesField($builder);
@@ -194,6 +196,25 @@ class ProductConcreteForm extends AbstractType
             'required' => false,
             'label' => false,
         ]);
+
+        return $this;
+    }
+
+    /**
+     * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
+     *
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addStockSubform(FormBuilderInterface $builder)
+    {
+        $builder->add(ProductConcreteTransfer::STOCKS, StockProductForm::class, [
+            'label' => static::LABEL_STOCK,
+        ]);
+
+        $builder->get(ProductConcreteTransfer::STOCKS)
+            ->addModelTransformer($this->getFactory()->createStockTransformer());
 
         return $this;
     }

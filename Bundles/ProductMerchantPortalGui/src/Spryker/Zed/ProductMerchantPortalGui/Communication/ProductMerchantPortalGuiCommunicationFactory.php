@@ -24,6 +24,8 @@ use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductAbstractForm;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductConcreteBulkForm;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductConcreteEditForm;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Transformer\PriceProductTransformer;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Transformer\QuantityTransformer;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Transformer\StockTransformer;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\CategoryFilterOptionsProvider;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\CategoryFilterOptionsProviderInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ConfigurationBuilderProvider\PriceProductGuiTableConfigurationBuilderProvider;
@@ -58,6 +60,7 @@ use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortal
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantProductFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantUserFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMoneyFacadeInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToOmsFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToPriceProductFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductAttributeFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductCategoryFacadeInterface;
@@ -219,6 +222,22 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
             $idProductAbstract,
             $idProductConcrete
         );
+    }
+
+    /**
+     * @return \Symfony\Component\Form\DataTransformerInterface
+     */
+    public function createStockTransformer(): DataTransformerInterface
+    {
+        return new StockTransformer();
+    }
+
+    /**
+     * @return \Symfony\Component\Form\DataTransformerInterface
+     */
+    public function createQuantityTransformer(): DataTransformerInterface
+    {
+        return new QuantityTransformer();
     }
 
     /**
@@ -489,6 +508,14 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
     public function getProductAttributeFacade(): ProductMerchantPortalGuiToProductAttributeFacadeInterface
     {
         return $this->getProvidedDependency(ProductMerchantPortalGuiDependencyProvider::FACADE_PRODUCT_ATTRIBUTE);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToOmsFacadeInterface
+     */
+    public function getOmsFacade(): ProductMerchantPortalGuiToOmsFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductMerchantPortalGuiDependencyProvider::FACADE_OMS);
     }
 
     /**
