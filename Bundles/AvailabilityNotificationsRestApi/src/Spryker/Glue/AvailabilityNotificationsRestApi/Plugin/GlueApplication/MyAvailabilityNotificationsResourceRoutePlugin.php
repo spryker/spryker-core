@@ -7,7 +7,7 @@
 
 namespace Spryker\Glue\AvailabilityNotificationsRestApi\Plugin\GlueApplication;
 
-use Generated\Shared\Transfer\RestAvailabilityNotificationRequestAttributesTransfer;
+use Generated\Shared\Transfer\RestAvailabilityNotificationsAttributesTransfer;
 use Spryker\Glue\AvailabilityNotificationsRestApi\AvailabilityNotificationsRestApiConfig;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
@@ -70,6 +70,6 @@ class MyAvailabilityNotificationsResourceRoutePlugin extends AbstractPlugin impl
      */
     public function getResourceAttributesClassName(): string
     {
-        return RestAvailabilityNotificationRequestAttributesTransfer::class;
+        return RestAvailabilityNotificationsAttributesTransfer::class;
     }
 }

@@ -10,7 +10,7 @@ namespace Spryker\Glue\AvailabilityNotificationsRestApi\Processor\Validator;
 use Spryker\Glue\AvailabilityNotificationsRestApi\AvailabilityNotificationsRestApiConfig;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-class RestApiValidator implements RestApiValidatorInterface
+class AvailabilityNotificationsRestApiValidator implements RestApiValidatorInterface
 {
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest

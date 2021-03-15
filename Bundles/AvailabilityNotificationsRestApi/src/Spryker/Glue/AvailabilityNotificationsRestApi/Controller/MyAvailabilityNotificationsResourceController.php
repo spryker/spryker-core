@@ -20,7 +20,7 @@ class MyAvailabilityNotificationsResourceController extends AbstractController
      * @Glue({
      *     "getCollection": {
      *          "summary": [
-     *              "Retrieves a collection of notification subscriptions about products availability."
+     *              "Retrieves a collection of notification subscriptions about products availability filtered by the current logged in customer."
      *          ],
      *          "parameters": [{
      *              "ref": "acceptLanguage"

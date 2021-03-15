@@ -17,7 +17,7 @@ use Spryker\Glue\AvailabilityNotificationsRestApi\Processor\RestResponseBuilder\
 use Spryker\Glue\AvailabilityNotificationsRestApi\Processor\RestResponseBuilder\AvailabilityNotificationsRestResponseBuilderInterface;
 use Spryker\Glue\AvailabilityNotificationsRestApi\Processor\Subscriber\AvailabilityNotificationSubscriber;
 use Spryker\Glue\AvailabilityNotificationsRestApi\Processor\Subscriber\AvailabilityNotificationSubscriberInterface;
-use Spryker\Glue\AvailabilityNotificationsRestApi\Processor\Validator\RestApiValidator;
+use Spryker\Glue\AvailabilityNotificationsRestApi\Processor\Validator\AvailabilityNotificationsRestApiValidator;
 use Spryker\Glue\AvailabilityNotificationsRestApi\Processor\Validator\RestApiValidatorInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
 
@@ -92,6 +92,6 @@ class AvailabilityNotificationsRestApiFactory extends AbstractFactory
      */
     public function createRestApiValidator(): RestApiValidatorInterface
     {
-        return new RestApiValidator();
+        return new AvailabilityNotificationsRestApiValidator();
     }
 }
