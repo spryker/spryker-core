@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @method \Spryker\Zed\ProductMerchantPortalGui\Communication\ProductMerchantPortalGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductMerchantPortalGui\Persistence\ProductMerchantPortalGuiRepositoryInterface getRepository()
  */
-class SavePriceProductAbstractController extends SavePriceProductController
+class SavePriceProductConcreteController extends SavePriceProductController
 {
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
@@ -27,8 +27,8 @@ class SavePriceProductAbstractController extends SavePriceProductController
     protected function expandPriceProductTransfersWithProductId(ArrayObject $priceProductTransfers, $request): ArrayObject
     {
         foreach ($priceProductTransfers as $priceProductTransfer) {
-            $priceProductTransfer->setIdProductAbstract(
-                $request->get(PriceProductTableViewTransfer::ID_PRODUCT_ABSTRACT)
+            $priceProductTransfer->setIdProduct(
+                $request->get(PriceProductTableViewTransfer::ID_PRODUCT_CONCRETE)
             );
         }
 
@@ -43,13 +43,15 @@ class SavePriceProductAbstractController extends SavePriceProductController
      */
     protected function findPriceProductTransfers(array $priceProductStoreIds, Request $request): array
     {
+        $idProductConcrete = $request->get(PriceProductTableViewTransfer::ID_PRODUCT_CONCRETE);
         $priceProductCriteriaTransfer = (new PriceProductCriteriaTransfer())->setPriceProductStoreIds($priceProductStoreIds);
 
-        return $this->getFactory()
+        return array_values($this->getFactory()
             ->getPriceProductFacade()
-            ->findProductAbstractPricesWithoutPriceExtraction(
-                $request->get(PriceProductTableViewTransfer::ID_PRODUCT_ABSTRACT),
+            ->findProductConcretePricesWithoutPriceExtraction(
+                $idProductConcrete,
+                $this->getFactory()->getProductFacade()->findProductAbstractIdByConcreteId($idProductConcrete),
                 $priceProductCriteriaTransfer
-            );
+            ));
     }
 }

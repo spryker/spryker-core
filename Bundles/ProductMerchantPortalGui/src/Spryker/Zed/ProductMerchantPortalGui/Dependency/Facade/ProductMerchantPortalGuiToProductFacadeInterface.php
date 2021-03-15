@@ -39,4 +39,11 @@ interface ProductMerchantPortalGuiToProductFacadeInterface
      * @return void
      */
     public function deactivateProductConcrete($idProductConcrete);
+
+    /**
+     * @param int $idConcrete
+     *
+     * @return int|null
+     */
+    public function findProductAbstractIdByConcreteId(int $idConcrete): ?int;
 }

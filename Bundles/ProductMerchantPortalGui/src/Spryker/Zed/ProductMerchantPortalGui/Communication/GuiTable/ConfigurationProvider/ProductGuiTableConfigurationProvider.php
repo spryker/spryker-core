@@ -43,7 +43,7 @@ class ProductGuiTableConfigurationProvider implements ProductGuiTableConfigurati
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\UpdateProductConcreteController::indexAction()
      */
-    protected const ROW_EDIT_URL = '/product-merchant-portal-gui/products-concrete/update-product-concrete?product-id=${row.%s}';
+    protected const ROW_EDIT_URL = '/product-merchant-portal-gui/update-product-concrete?product-id=${row.%s}';
 
     protected const ROW_EDIT_ID = 'update-product';
 

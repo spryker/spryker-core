@@ -8,13 +8,13 @@
 namespace Spryker\Zed\ProductMerchantPortalGui\Persistence\Propel;
 
 use Generated\Shared\Transfer\MoneyValueTransfer;
-use Generated\Shared\Transfer\PriceProductAbstractTableViewCollectionTransfer;
-use Generated\Shared\Transfer\PriceProductAbstractTableViewTransfer;
+use Generated\Shared\Transfer\PriceProductTableViewCollectionTransfer;
+use Generated\Shared\Transfer\PriceProductTableViewTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Laminas\Filter\StringToLower;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToPriceProductFacadeInterface;
 
-class PriceProductAbstractTableDataMapper
+class PriceProductTableDataMapper
 {
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Persistence\ProductMerchantPortalGuiRepository::SUFFIX_PRICE_TYPE_NET
@@ -40,43 +40,43 @@ class PriceProductAbstractTableDataMapper
     }
 
     /**
-     * @param mixed[] $priceProductAbstractTableDataArray
-     * @param \Generated\Shared\Transfer\PriceProductAbstractTableViewCollectionTransfer $priceProductAbstractTableViewCollectionTransfer
+     * @param mixed[] $priceProductTableDataArray
+     * @param \Generated\Shared\Transfer\PriceProductTableViewCollectionTransfer $priceProductTableViewCollectionTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductAbstractTableViewCollectionTransfer
+     * @return \Generated\Shared\Transfer\PriceProductTableViewCollectionTransfer
      */
-    public function mapPriceProductAbstractTableDataArrayToPriceProductAbstractTableViewCollectionTransfer(
-        array $priceProductAbstractTableDataArray,
-        PriceProductAbstractTableViewCollectionTransfer $priceProductAbstractTableViewCollectionTransfer
-    ): PriceProductAbstractTableViewCollectionTransfer {
+    public function mapPriceProductTableDataArrayToPriceProductTableViewCollectionTransfer(
+        array $priceProductTableDataArray,
+        PriceProductTableViewCollectionTransfer $priceProductTableViewCollectionTransfer
+    ): PriceProductTableViewCollectionTransfer {
         $priceTypeTransfers = $this->priceProductFacade->getPriceTypeValues();
 
-        foreach ($priceProductAbstractTableDataArray as $priceProductAbstractTableRowDataArray) {
-            $priceProductAbstractTableRowDataArray[PriceProductAbstractTableViewTransfer::PRICE_PRODUCT_DEFAULT_IDS] = explode(
+        foreach ($priceProductTableDataArray as $priceProductTableRowDataArray) {
+            $priceProductTableRowDataArray[PriceProductTableViewTransfer::PRICE_PRODUCT_DEFAULT_IDS] = explode(
                 ',',
-                $priceProductAbstractTableRowDataArray[PriceProductAbstractTableViewTransfer::PRICE_PRODUCT_DEFAULT_IDS]
+                $priceProductTableRowDataArray[PriceProductTableViewTransfer::PRICE_PRODUCT_DEFAULT_IDS]
             );
 
-            $priceProductAbstractTableViewTransfer = (new PriceProductAbstractTableViewTransfer())
-                ->fromArray($priceProductAbstractTableRowDataArray, true)
-                ->setPrices($this->preparePrices($priceProductAbstractTableRowDataArray, $priceTypeTransfers));
+            $priceProductTableViewTransfer = (new PriceProductTableViewTransfer())
+                ->fromArray($priceProductTableRowDataArray, true)
+                ->setPrices($this->preparePrices($priceProductTableRowDataArray, $priceTypeTransfers));
 
-            $priceProductAbstractTableViewCollectionTransfer->addPriceProductAbstractTableView($priceProductAbstractTableViewTransfer);
+            $priceProductTableViewCollectionTransfer->addPriceProductTableView($priceProductTableViewTransfer);
         }
 
-        return $priceProductAbstractTableViewCollectionTransfer;
+        return $priceProductTableViewCollectionTransfer;
     }
 
     /**
-     * @phpstan-param array<mixed> $priceProductAbstractTableRowDataArray
+     * @phpstan-param array<mixed> $priceProductTableRowDataArray
      * @phpstan-param array<\Generated\Shared\Transfer\PriceTypeTransfer> $priceTypeTransfers
      *
-     * @param array $priceProductAbstractTableRowDataArray
+     * @param array $priceProductTableRowDataArray
      * @param \Generated\Shared\Transfer\PriceTypeTransfer[] $priceTypeTransfers
      *
      * @return mixed[]
      */
-    protected function preparePrices(array $priceProductAbstractTableRowDataArray, array $priceTypeTransfers): array
+    protected function preparePrices(array $priceProductTableRowDataArray, array $priceTypeTransfers): array
     {
         $prices = [];
 
@@ -85,12 +85,12 @@ class PriceProductAbstractTableDataMapper
             $keyNetPrice = $priceTypeName . static::SUFFIX_PRICE_TYPE_NET;
             $keyGrossPrice = $priceTypeName . static::SUFFIX_PRICE_TYPE_GROSS;
 
-            if (array_key_exists($keyGrossPrice, $priceProductAbstractTableRowDataArray)) {
-                $prices[$this->createGrossKey($priceTypeName)] = $priceProductAbstractTableRowDataArray[$keyGrossPrice];
+            if (array_key_exists($keyGrossPrice, $priceProductTableRowDataArray)) {
+                $prices[$this->createGrossKey($priceTypeName)] = $priceProductTableRowDataArray[$keyGrossPrice];
             }
 
-            if (array_key_exists($keyNetPrice, $priceProductAbstractTableRowDataArray)) {
-                $prices[$this->createNetKey($priceTypeName)] = $priceProductAbstractTableRowDataArray[$keyNetPrice];
+            if (array_key_exists($keyNetPrice, $priceProductTableRowDataArray)) {
+                $prices[$this->createNetKey($priceTypeName)] = $priceProductTableRowDataArray[$keyNetPrice];
             }
         }
 

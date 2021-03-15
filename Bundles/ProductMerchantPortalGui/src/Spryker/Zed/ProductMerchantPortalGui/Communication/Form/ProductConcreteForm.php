@@ -16,6 +16,7 @@ use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -26,7 +27,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ProductConcreteForm extends AbstractType
 {
-    protected const BLOCK_PREFIX = 'productConcrete';
+    public const BLOCK_PREFIX = 'productConcrete';
 
     protected const LABEL_VALID_FROM = 'From';
     protected const LABEL_VALID_TO = 'To';
@@ -67,7 +68,8 @@ class ProductConcreteForm extends AbstractType
         $this->addLocalizedAttributesSubform($builder)
             ->addIsActiveField($builder)
             ->addValidFromField($builder)
-            ->addValidToField($builder);
+            ->addValidToField($builder)
+            ->addPricesField($builder);
     }
 
     /**
@@ -176,5 +178,23 @@ class ProductConcreteForm extends AbstractType
                 return $value;
             }
         );
+    }
+
+    /**
+     * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
+     *
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
+    protected function addPricesField(FormBuilderInterface $builder)
+    {
+        $builder->add(ProductConcreteTransfer::PRICES, HiddenType::class, [
+            'required' => false,
+            'label' => false,
+        ]);
+
+        return $this;
     }
 }

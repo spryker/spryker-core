@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Controller;
 
+use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -14,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
  * @method \Spryker\Zed\ProductMerchantPortalGui\Communication\ProductMerchantPortalGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductMerchantPortalGui\Persistence\ProductMerchantPortalGuiRepositoryInterface getRepository()
  */
-class ProductsController extends ProductMerchantPortalAbstractController
+class ProductsController extends AbstractController
 {
     /**
      * @return mixed[]

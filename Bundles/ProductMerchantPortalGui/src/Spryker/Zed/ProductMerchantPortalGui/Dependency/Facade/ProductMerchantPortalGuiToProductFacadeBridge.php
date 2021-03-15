@@ -64,4 +64,14 @@ class ProductMerchantPortalGuiToProductFacadeBridge implements ProductMerchantPo
     {
         $this->productFacade->deactivateProductConcrete($idProductConcrete);
     }
+
+    /**
+     * @param int $idConcrete
+     *
+     * @return int|null
+     */
+    public function findProductAbstractIdByConcreteId(int $idConcrete): ?int
+    {
+        return $this->productFacade->findProductAbstractIdByConcreteId($idConcrete);
+    }
 }

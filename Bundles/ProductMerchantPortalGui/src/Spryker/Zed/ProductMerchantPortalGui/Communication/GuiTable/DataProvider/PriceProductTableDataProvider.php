@@ -1,18 +1,17 @@
 <?php
 
 /**
- * This file is part of the Spryker Suite.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\DataProvider;
-
 
 use Generated\Shared\Transfer\GuiTableDataRequestTransfer;
 use Generated\Shared\Transfer\GuiTableDataResponseTransfer;
 use Generated\Shared\Transfer\GuiTableRowDataResponseTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
-use Generated\Shared\Transfer\PriceProductAbstractTableCriteriaTransfer;
+use Generated\Shared\Transfer\PriceProductTableCriteriaTransfer;
 use Spryker\Shared\GuiTable\DataProvider\AbstractGuiTableDataProvider;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantUserFacadeInterface;
@@ -61,12 +60,12 @@ abstract class PriceProductTableDataProvider extends AbstractGuiTableDataProvide
      */
     protected function createCriteria(GuiTableDataRequestTransfer $guiTableDataRequestTransfer): AbstractTransfer
     {
-        return (new PriceProductAbstractTableCriteriaTransfer())
+        return (new PriceProductTableCriteriaTransfer())
             ->setIdMerchant($this->merchantUserFacade->getCurrentMerchantUser()->getIdMerchant());
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductAbstractTableCriteriaTransfer $criteriaTransfer
+     * @param \Generated\Shared\Transfer\PriceProductTableCriteriaTransfer $criteriaTransfer
      *
      * @return \Generated\Shared\Transfer\GuiTableDataResponseTransfer
      */
@@ -74,21 +73,21 @@ abstract class PriceProductTableDataProvider extends AbstractGuiTableDataProvide
     {
         $criteriaTransfer = $this->replacePriceSortingFields($criteriaTransfer);
 
-        $priceProductAbstractTableViewCollectionTransfer = $this->productMerchantPortalGuiRepository
-            ->getPriceProductAbstractTableData($criteriaTransfer);
+        $priceProductTableViewCollectionTransfer = $this->productMerchantPortalGuiRepository
+            ->getPriceProductTableData($criteriaTransfer);
         $guiTableDataResponseTransfer = new GuiTableDataResponseTransfer();
 
-        foreach ($priceProductAbstractTableViewCollectionTransfer->getPriceProductAbstractTableViews() as $priceProductAbstractTableViewTransfer) {
-            $responseData = $priceProductAbstractTableViewTransfer->toArray(true, true);
+        foreach ($priceProductTableViewCollectionTransfer->getPriceProductTableViews() as $priceProductTableViewTransfer) {
+            $responseData = $priceProductTableViewTransfer->toArray(true, true);
 
-            foreach ($priceProductAbstractTableViewTransfer->getPrices() as $priceType => $priceValue) {
+            foreach ($priceProductTableViewTransfer->getPrices() as $priceType => $priceValue) {
                 $responseData[$priceType] = $this->convertIntegerToDecimal($priceValue);
             }
 
             $guiTableDataResponseTransfer->addRow((new GuiTableRowDataResponseTransfer())->setResponseData($responseData));
         }
 
-        $paginationTransfer = $priceProductAbstractTableViewCollectionTransfer->getPaginationOrFail();
+        $paginationTransfer = $priceProductTableViewCollectionTransfer->getPaginationOrFail();
 
         return $guiTableDataResponseTransfer
             ->setPage($paginationTransfer->getPage())
@@ -97,22 +96,22 @@ abstract class PriceProductTableDataProvider extends AbstractGuiTableDataProvide
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductAbstractTableCriteriaTransfer $priceProductAbstractTableCriteriaTransfer
+     * @param \Generated\Shared\Transfer\PriceProductTableCriteriaTransfer $priceProductTableCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductAbstractTableCriteriaTransfer
+     * @return \Generated\Shared\Transfer\PriceProductTableCriteriaTransfer
      */
     protected function replacePriceSortingFields(
-        PriceProductAbstractTableCriteriaTransfer $priceProductAbstractTableCriteriaTransfer
-    ): PriceProductAbstractTableCriteriaTransfer {
+        PriceProductTableCriteriaTransfer $priceProductTableCriteriaTransfer
+    ): PriceProductTableCriteriaTransfer {
         /** @var string $orderByField */
-        $orderByField = $priceProductAbstractTableCriteriaTransfer->getOrderBy();
+        $orderByField = $priceProductTableCriteriaTransfer->getOrderBy();
 
         if (!$orderByField) {
-            return $priceProductAbstractTableCriteriaTransfer;
+            return $priceProductTableCriteriaTransfer;
         }
 
         if (strpos($orderByField, '[') === false) {
-            return $priceProductAbstractTableCriteriaTransfer;
+            return $priceProductTableCriteriaTransfer;
         }
 
         /** @var string $orderByField */
@@ -120,14 +119,14 @@ abstract class PriceProductTableDataProvider extends AbstractGuiTableDataProvide
         $orderByField = explode('[', $orderByField);
 
         if ($orderByField[static::INDEX_AMOUNT_TYPE] === MoneyValueTransfer::NET_AMOUNT) {
-            return $priceProductAbstractTableCriteriaTransfer->setOrderBy($orderByField[static::INDEX_PRICE_TYPE] . '_net');
+            return $priceProductTableCriteriaTransfer->setOrderBy($orderByField[static::INDEX_PRICE_TYPE] . '_net');
         }
 
         if ($orderByField[static::INDEX_AMOUNT_TYPE] === MoneyValueTransfer::GROSS_AMOUNT) {
-            return $priceProductAbstractTableCriteriaTransfer->setOrderBy($orderByField[static::INDEX_PRICE_TYPE] . '_gross');
+            return $priceProductTableCriteriaTransfer->setOrderBy($orderByField[static::INDEX_PRICE_TYPE] . '_gross');
         }
 
-        return $priceProductAbstractTableCriteriaTransfer;
+        return $priceProductTableCriteriaTransfer;
     }
 
     /**

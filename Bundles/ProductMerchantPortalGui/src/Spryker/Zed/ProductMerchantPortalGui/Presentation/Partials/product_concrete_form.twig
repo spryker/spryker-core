@@ -65,6 +65,20 @@
                 {{ form_row(form.productConcrete.children.validTo) }}
             </web-spy-card>
 
+            {% block priceCard %}
+                <web-spy-card spy-title="{{ 'Price' | trans }}" class="{{ mainClass }}__card">
+                    {% block priceCardInner %}
+                        {{ form_row(form.useAbstractProductPrices, {row_attr: {'no-spaces': 'true'}}) }}
+
+                        <web-mp-edit-abstract-product-prices
+                                table-id="web-mp-edit-abstract-product-prices"
+                                config='{{ guiTableConfiguration(priceProductConcreteTableConfiguration) }}'>
+                        </web-mp-edit-abstract-product-prices>
+                        {% do form.productConcrete.children.prices.setRendered %}
+                    {% endblock %}
+                </web-spy-card>
+            {% endblock %}
+
             {% if productConcrete.imageSets is not null %}
                 {% block imagesCard %}
                     <web-spy-card spy-title="{{ 'Images' | trans }}" class="{{ mainClass }}__card">
@@ -120,8 +134,6 @@
                     {% endblock %}
                 </web-spy-card>
             {% endblock %}
-
-            {% do form.useAbstractProductPrices.setRendered %}
 
             {{ form_end(form) }}
         </web-mp-edit-abstract-product>

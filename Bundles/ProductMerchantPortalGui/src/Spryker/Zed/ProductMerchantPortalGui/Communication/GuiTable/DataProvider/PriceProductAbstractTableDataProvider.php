@@ -44,10 +44,10 @@ class PriceProductAbstractTableDataProvider extends PriceProductTableDataProvide
      */
     protected function createCriteria(GuiTableDataRequestTransfer $guiTableDataRequestTransfer): AbstractTransfer
     {
-        /** @var \Generated\Shared\Transfer\PriceProductAbstractTableCriteriaTransfer $priceProductAbstractTableCriteriaTransfer */
-        $priceProductAbstractTableCriteriaTransfer = parent::createCriteria($guiTableDataRequestTransfer);
-        $priceProductAbstractTableCriteriaTransfer->setIdProductAbstract($this->idProductAbstract);
+        /** @var \Generated\Shared\Transfer\PriceProductTableCriteriaTransfer $priceProductTableCriteriaTransfer */
+        $priceProductTableCriteriaTransfer = parent::createCriteria($guiTableDataRequestTransfer);
+        $priceProductTableCriteriaTransfer->setIdProductAbstract($this->idProductAbstract);
 
-        return $priceProductAbstractTableCriteriaTransfer;
+        return $priceProductTableCriteriaTransfer;
     }
 }

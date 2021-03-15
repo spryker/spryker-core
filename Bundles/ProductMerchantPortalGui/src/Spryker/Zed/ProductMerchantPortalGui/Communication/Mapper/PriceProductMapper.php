@@ -11,7 +11,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\GuiTableEditableDataErrorTransfer;
 use Generated\Shared\Transfer\GuiTableEditableInitialDataTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
-use Generated\Shared\Transfer\PriceProductAbstractTableViewTransfer;
+use Generated\Shared\Transfer\PriceProductTableViewTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\ValidationErrorTransfer;
@@ -24,8 +24,8 @@ class PriceProductMapper implements PriceProductMapperInterface
     protected const ROW_ERROR_PROPERTY_PATH_NESTING = 3;
 
     protected const MAP_FIELD_NAMES = [
-        MoneyValueTransfer::FK_STORE => PriceProductAbstractTableViewTransfer::STORE,
-        MoneyValueTransfer::FK_CURRENCY => PriceProductAbstractTableViewTransfer::CURRENCY,
+        MoneyValueTransfer::FK_STORE => PriceProductTableViewTransfer::STORE,
+        MoneyValueTransfer::FK_CURRENCY => PriceProductTableViewTransfer::CURRENCY,
     ];
 
     /**
@@ -100,8 +100,8 @@ class PriceProductMapper implements PriceProductMapperInterface
 
         if ($isRowError) {
             $initialDataErrors[GuiTableEditableInitialDataTransfer::ERRORS][$rowNumber][GuiTableEditableDataErrorTransfer::ROW_ERROR] = $errorMessage;
-            $initialDataErrors[GuiTableEditableInitialDataTransfer::ERRORS][$rowNumber][GuiTableEditableDataErrorTransfer::COLUMN_ERRORS][PriceProductAbstractTableViewTransfer::STORE] = true;
-            $initialDataErrors[GuiTableEditableInitialDataTransfer::ERRORS][$rowNumber][GuiTableEditableDataErrorTransfer::COLUMN_ERRORS][PriceProductAbstractTableViewTransfer::CURRENCY] = true;
+            $initialDataErrors[GuiTableEditableInitialDataTransfer::ERRORS][$rowNumber][GuiTableEditableDataErrorTransfer::COLUMN_ERRORS][PriceProductTableViewTransfer::STORE] = true;
+            $initialDataErrors[GuiTableEditableInitialDataTransfer::ERRORS][$rowNumber][GuiTableEditableDataErrorTransfer::COLUMN_ERRORS][PriceProductTableViewTransfer::CURRENCY] = true;
 
             return $initialDataErrors;
         }

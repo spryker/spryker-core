@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Form;
 
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -21,7 +22,9 @@ class ProductConcreteEditForm extends AbstractType
     public const FIELD_PRODUCT_CONCRETE = 'productConcrete';
     public const FIELD_USE_ABSTRACT_PRODUCT_PRICES = 'useAbstractProductPrices';
 
-    protected const BLOCK_PREFIX = 'productConcreteEdit';
+    public const BLOCK_PREFIX = 'productConcreteEdit';
+
+    protected const LABEL_USE_ABSTRACT_PRODUCT_PRICES = 'Use Abstract Product prices';
 
     /**
      * @return string
@@ -59,6 +62,16 @@ class ProductConcreteEditForm extends AbstractType
             ],
         ]);
 
+        /** @var \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer */
+        $productConcreteTransfer = $builder->getData()[ProductConcreteForm::BLOCK_PREFIX];
+        $priceProductTransformer = $this->getFactory()->createPriceProductTransformer(
+            null,
+            $productConcreteTransfer->getIdProductConcrete()
+        );
+        $builder->get(static::FIELD_PRODUCT_CONCRETE)->get(ProductConcreteTransfer::PRICES)->addModelTransformer(
+            $priceProductTransformer
+        );
+
         return $this;
     }
 
@@ -69,7 +82,10 @@ class ProductConcreteEditForm extends AbstractType
      */
     protected function addUseAbstractProductPricesField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_USE_ABSTRACT_PRODUCT_PRICES, CheckboxType::class);
+        $builder->add(static::FIELD_USE_ABSTRACT_PRODUCT_PRICES, CheckboxType::class, [
+            'required' => false,
+            'label' => static::LABEL_USE_ABSTRACT_PRODUCT_PRICES,
+        ]);
 
         return $this;
     }

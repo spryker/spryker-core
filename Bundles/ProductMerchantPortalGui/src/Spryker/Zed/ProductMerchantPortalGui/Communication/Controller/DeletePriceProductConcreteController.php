@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @method \Spryker\Zed\ProductMerchantPortalGui\Communication\ProductMerchantPortalGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductMerchantPortalGui\Persistence\ProductMerchantPortalGuiRepositoryInterface getRepository()
  */
-class DeletePriceProductAbstractController extends DeletePriceProductController
+class DeletePriceProductConcreteController extends DeletePriceProductController
 {
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -32,23 +32,23 @@ class DeletePriceProductAbstractController extends DeletePriceProductController
                 true
             )
         );
-        $idProductAbstract = (int)$request->get(PriceProductTableViewTransfer::ID_PRODUCT_ABSTRACT);
+        $idProductConcrete = (int)$request->get(PriceProductTableViewTransfer::ID_PRODUCT_CONCRETE);
 
-        if (!$idProductAbstract) {
+        if (!$idProductConcrete) {
             return $this->getErrorResponse();
         }
 
         $idMerchant = $this->getFactory()->getMerchantUserFacade()->getCurrentMerchantUser()->getIdMerchantOrFail();
-        $merchantProductTransfer = $this->getFactory()->getMerchantProductFacade()->findMerchantProduct(
-            (new MerchantProductCriteriaTransfer())->addIdMerchant($idMerchant)->setIdProductAbstract($idProductAbstract)
+        $productConcreteTransfer = $this->getFactory()->getMerchantProductFacade()->findProductConcrete(
+            (new MerchantProductCriteriaTransfer())->addIdMerchant($idMerchant)->addIdProductConcrete($idProductConcrete)
         );
 
-        if (!$merchantProductTransfer || !$merchantProductTransfer->getProductAbstract()) {
+        if (!$productConcreteTransfer) {
             return $this->getErrorResponse();
         }
 
         $priceProductTransfersToRemove = $this->getPriceProductTransfersToRemove(
-            $merchantProductTransfer->getProductAbstractOrFail()->getPrices(),
+            $productConcreteTransfer->getPrices(),
             $priceProductDefaultIds
         );
 

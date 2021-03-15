@@ -1,22 +1,22 @@
 <?php
 
 /**
- * This file is part of the Spryker Suite.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider;
+namespace Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ConfigurationBuilderProvider;
 
-
-use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
-use Generated\Shared\Transfer\PriceProductAbstractTableViewTransfer;
+use Generated\Shared\Transfer\PriceProductTableViewTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface;
 use Spryker\Shared\GuiTable\GuiTableFactoryInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\CurrencyFilterConfigurationProviderInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\StoreFilterOptionsProviderInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToPriceProductFacadeInterface;
 
-abstract class PriceProductGuiTableConfigurationProvider
+class PriceProductGuiTableConfigurationBuilderProvider implements PriceProductGuiTableConfigurationBuilderProviderInterface
 {
     protected const TITLE_COLUMN_STORE = 'Store';
     protected const TITLE_COLUMN_CURRENCY = 'Currency';
@@ -26,27 +26,7 @@ abstract class PriceProductGuiTableConfigurationProvider
     protected const TITLE_FILTER_IN_STORES = 'Stores';
     protected const TITLE_FILTER_IN_CURRENCIES = 'Currencies';
 
-    protected const TITLE_ROW_ACTION_DELETE = 'Delete';
-    protected const TITLE_EDITABLE_BUTTON = 'Add';
-
     protected const FORMAT_STRING_PRICE_KEY = '%s[%s][%s]';
-    protected const FORMAT_STRING_DATA_URL = '%s?%s=%s';
-    protected const FORMAT_STRING_PRICES_URL = '%s?%s=${row.%s}&%s=${row.%s}';
-
-    /**
-     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\UpdateProductAbstractController::tableDataAction()
-     */
-    protected const DATA_URL = '/product-merchant-portal-gui/update-product-abstract/table-data';
-
-    /**
-     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\SavePriceProductAbstractController::indexAction()
-     */
-    protected const URL_SAVE_PRICES = '/product-merchant-portal-gui/save-price-product-abstract';
-
-    /**
-     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\DeletePriceProductAbstractController::indexAction()
-     */
-    protected const URL_DELETE_PRICE = '/product-merchant-portal-gui/delete-price-product-abstract';
 
     /**
      * @var \Spryker\Shared\GuiTable\GuiTableFactoryInterface
@@ -87,36 +67,23 @@ abstract class PriceProductGuiTableConfigurationProvider
     }
 
     /**
-     * @phpstan-param array<mixed> $initialData
-     *
-     * @param int $idProductAbstract
-     * @param array $initialData
-     *
-     * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
+     * @return \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface
      */
-    public function getConfiguration(int $idProductAbstract, array $initialData = []): GuiTableConfigurationTransfer
+    public function getPriceProductGuiTableConfigurationBuilder(): GuiTableConfigurationBuilderInterface
     {
         $guiTableConfigurationBuilder = $this->guiTableFactory->createConfigurationBuilder();
 
         $guiTableConfigurationBuilder = $this->addColumns($guiTableConfigurationBuilder);
         $guiTableConfigurationBuilder = $this->addFilters($guiTableConfigurationBuilder);
-
+        $guiTableConfigurationBuilder = $this->addEditableColumns($guiTableConfigurationBuilder);
 
         $guiTableConfigurationBuilder
-
             ->setDefaultPageSize(10)
             ->isSearchEnabled(false)
             ->isColumnConfiguratorEnabled(false);
 
-        $guiTableConfigurationBuilder = $this->setEditableConfiguration(
-            $guiTableConfigurationBuilder,
-            $initialData
-        );
-
-        return $guiTableConfigurationBuilder->createConfiguration();
+        return $guiTableConfigurationBuilder;
     }
-
-
 
     /**
      * @param \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder
@@ -127,13 +94,13 @@ abstract class PriceProductGuiTableConfigurationProvider
         GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder
     ): GuiTableConfigurationBuilderInterface {
         $guiTableConfigurationBuilder->addColumnChip(
-            PriceProductAbstractTableViewTransfer::STORE,
+            PriceProductTableViewTransfer::STORE,
             static::TITLE_COLUMN_STORE,
             true,
             false,
             'grey'
         )->addColumnChip(
-            PriceProductAbstractTableViewTransfer::CURRENCY,
+            PriceProductTableViewTransfer::CURRENCY,
             static::TITLE_COLUMN_CURRENCY,
             true,
             false,
@@ -181,12 +148,12 @@ abstract class PriceProductGuiTableConfigurationProvider
     protected function addEditableColumns(GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder): GuiTableConfigurationBuilderInterface
     {
         $guiTableConfigurationBuilder->addEditableColumnSelect(
-            PriceProductAbstractTableViewTransfer::STORE,
+            PriceProductTableViewTransfer::STORE,
             static::TITLE_COLUMN_STORE,
             false,
             $this->storeFilterOptionsProvider->getStoreOptions()
         )->addEditableColumnSelect(
-            PriceProductAbstractTableViewTransfer::CURRENCY,
+            PriceProductTableViewTransfer::CURRENCY,
             static::TITLE_COLUMN_CURRENCY,
             false,
             $this->currencyFilterConfigurationProvider->getCurrencyOptions()

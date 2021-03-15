@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Controller;
 use Generated\Shared\Transfer\MerchantProductCriteriaTransfer;
 use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,7 +20,7 @@ use Symfony\Component\HttpFoundation\Response;
  * @method \Spryker\Zed\ProductMerchantPortalGui\Communication\ProductMerchantPortalGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductMerchantPortalGui\Persistence\ProductMerchantPortalGuiRepositoryInterface getRepository()
  */
-class ProductsConcreteController extends ProductMerchantPortalAbstractController
+class ProductsConcreteController extends AbstractController
 {
     protected const PARAM_ACTIVATION_NAME_STATUS = 'activationNameStatus';
     protected const PARAM_ACTIVATION_NAME_VALIDITY = 'activationNameValidity';

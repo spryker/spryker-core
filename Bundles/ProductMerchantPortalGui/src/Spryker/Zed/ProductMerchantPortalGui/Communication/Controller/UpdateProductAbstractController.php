@@ -7,9 +7,8 @@
 
 namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Controller;
 
-use Generated\Shared\Transfer\GuiTableEditableInitialDataTransfer;
 use Generated\Shared\Transfer\MerchantProductTransfer;
-use Generated\Shared\Transfer\PriceProductAbstractTableViewTransfer;
+use Generated\Shared\Transfer\PriceProductTableViewTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ValidationResponseTransfer;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Exception\MerchantProductNotFoundException;
@@ -22,14 +21,9 @@ use Symfony\Component\HttpFoundation\Response;
  * @method \Spryker\Zed\ProductMerchantPortalGui\Communication\ProductMerchantPortalGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductMerchantPortalGui\Persistence\ProductMerchantPortalGuiRepositoryInterface getRepository()
  */
-class UpdateProductAbstractController extends ProductMerchantPortalAbstractController
+class UpdateProductAbstractController extends UpdateProductController
 {
     protected const PARAM_ID_PRODUCT_ABSTRACT = 'product-abstract-id';
-
-    protected const DEFAULT_INITIAL_DATA = [
-        GuiTableEditableInitialDataTransfer::DATA => [],
-        GuiTableEditableInitialDataTransfer::ERRORS => [],
-    ];
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -57,7 +51,7 @@ class UpdateProductAbstractController extends ProductMerchantPortalAbstractContr
             $this->getFactory()->createProductAbstractFormDataProvider()->getOptions()
         );
         $productAbstractForm->handleRequest($request);
-        $initialData = $this->getDefaultInitialData($request, $productAbstractForm->getName());
+        $initialData = $this->getDefaultInitialData($request->get($productAbstractForm->getName()));
 
         if ($productAbstractForm->isSubmitted()) {
             return $this->executeProductAbstractFormSubmission(
@@ -180,68 +174,19 @@ class UpdateProductAbstractController extends ProductMerchantPortalAbstractContr
     }
 
     /**
-     * @param mixed[] $responseData
-     * @param \Generated\Shared\Transfer\ValidationResponseTransfer $validationResponseTransfer
-     *
-     * @return mixed[]
-     */
-    protected function addValidationResponseMessagesToResponse(
-        array $responseData,
-        ValidationResponseTransfer $validationResponseTransfer
-    ): array {
-        foreach ($validationResponseTransfer->getValidationErrors() as $validationErrorTransfer) {
-            $responseData[static::RESPONSE_KEY_NOTIFICATIONS][] = [
-                static::RESPONSE_KEY_TYPE => static::RESPONSE_TYPE_ERROR,
-                static::RESPONSE_KEY_MESSAGE => $validationErrorTransfer->getMessage(),
-            ];
-        }
-
-        return $responseData;
-    }
-
-    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function tableDataAction(Request $request): Response
     {
-        $idProductAbstract = $this->castId($request->get(PriceProductAbstractTableViewTransfer::ID_PRODUCT_ABSTRACT));
+        $idProductAbstract = $this->castId($request->get(PriceProductTableViewTransfer::ID_PRODUCT_ABSTRACT));
 
         return $this->getFactory()->getGuiTableHttpDataRequestExecutor()->execute(
             $request,
             $this->getFactory()->createPriceProductAbstractTableDataProvider($idProductAbstract),
             $this->getFactory()->createPriceProductAbstractGuiTableConfigurationProvider()->getConfiguration($idProductAbstract)
         );
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param string $formName
-     *
-     * @return mixed[]
-     */
-    protected function getDefaultInitialData(Request $request, string $formName): array
-    {
-        $requestTableData = $request->get($formName);
-
-        if (!$requestTableData) {
-            return static::DEFAULT_INITIAL_DATA;
-        }
-
-        $requestTableData = $this->getFactory()->getUtilEncodingService()->decodeJson(
-            $requestTableData[PriceProductAbstractTableViewTransfer::PRICES],
-            true
-        );
-
-        if (!$requestTableData) {
-            return static::DEFAULT_INITIAL_DATA;
-        }
-
-        $defaultInitialData = static::DEFAULT_INITIAL_DATA;
-        $defaultInitialData[GuiTableEditableInitialDataTransfer::DATA] = $requestTableData;
-
-        return $defaultInitialData;
     }
 
     /**

@@ -21,13 +21,19 @@ use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\DataProvider\Product
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\DataProvider\ProductConcreteEditFormDataProvider;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\DataProvider\ProductConcreteEditFormDataProviderInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductAbstractForm;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductConcreteBulkForm;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductConcreteEditForm;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Transformer\PriceProductTransformer;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\CategoryFilterOptionsProvider;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\CategoryFilterOptionsProviderInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ConfigurationBuilderProvider\PriceProductGuiTableConfigurationBuilderProvider;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ConfigurationBuilderProvider\PriceProductGuiTableConfigurationBuilderProviderInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\CurrencyFilterConfigurationProvider;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\CurrencyFilterConfigurationProviderInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\PriceProductAbstractGuiTableConfigurationProvider;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\PriceProductAbstractGuiTableConfigurationProviderInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\PriceProductConcreteGuiTableConfigurationProvider;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\PriceProductConcreteGuiTableConfigurationProviderInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductAbstractGuiTableConfigurationProvider;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductAbstractGuiTableConfigurationProviderInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductAttributeGuiTableConfigurationProvider;
@@ -39,6 +45,7 @@ use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationPro
 use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\StoreFilterOptionsProvider;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\StoreFilterOptionsProviderInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\DataProvider\PriceProductAbstractTableDataProvider;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\DataProvider\PriceProductConcreteTableDataProvider;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\DataProvider\ProductAbstractTableDataProvider;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\DataProvider\ProductAttributeTableDataProvider;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\DataProvider\ProductAttributeTableDataProviderInterface;
@@ -144,10 +151,7 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
     public function createPriceProductAbstractGuiTableConfigurationProvider(): PriceProductAbstractGuiTableConfigurationProviderInterface
     {
         return new PriceProductAbstractGuiTableConfigurationProvider(
-            $this->getGuiTableFactory(),
-            $this->getPriceProductFacade(),
-            $this->createStoreFilterOptionsProvider(),
-            $this->createCurrencyFilterConfigurationProvider()
+            $this->createPriceProductGuiTableConfigurationBuilderProvider()
         );
     }
 
@@ -160,6 +164,21 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
     {
         return new PriceProductAbstractTableDataProvider(
             $idProductAbstract,
+            $this->getRepository(),
+            $this->getMerchantUserFacade(),
+            $this->getMoneyFacade()
+        );
+    }
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return \Spryker\Shared\GuiTable\DataProvider\GuiTableDataProviderInterface
+     */
+    public function createPriceProductConcreteTableDataProvider(int $idProductConcrete): GuiTableDataProviderInterface
+    {
+        return new PriceProductConcreteTableDataProvider(
+            $idProductConcrete,
             $this->getRepository(),
             $this->getMerchantUserFacade(),
             $this->getMoneyFacade()
@@ -183,18 +202,22 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
     }
 
     /**
-     * @param int $idProductAbstract
+     * @param int|null $idProductAbstract
+     * @param int|null $idProductConcrete
      *
      * @return \Symfony\Component\Form\DataTransformerInterface
      */
-    public function createPriceProductTransformer(int $idProductAbstract): DataTransformerInterface
-    {
+    public function createPriceProductTransformer(
+        ?int $idProductAbstract = null,
+        ?int $idProductConcrete = null
+    ): DataTransformerInterface {
         return new PriceProductTransformer(
-            $idProductAbstract,
             $this->getPriceProductFacade(),
             $this->getCurrencyFacade(),
             $this->getMoneyFacade(),
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
+            $idProductAbstract,
+            $idProductConcrete
         );
     }
 
@@ -217,6 +240,29 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
         return new ProductAttributeGuiTableConfigurationProvider(
             $this->getGuiTableFactory(),
             $this->createProductAttributeTableDataProvider()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\PriceProductConcreteGuiTableConfigurationProviderInterface
+     */
+    public function createPriceProductConcreteGuiTableConfigurationProvider(): PriceProductConcreteGuiTableConfigurationProviderInterface
+    {
+        return new PriceProductConcreteGuiTableConfigurationProvider(
+            $this->createPriceProductGuiTableConfigurationBuilderProvider()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ConfigurationBuilderProvider\PriceProductGuiTableConfigurationBuilderProviderInterface
+     */
+    public function createPriceProductGuiTableConfigurationBuilderProvider(): PriceProductGuiTableConfigurationBuilderProviderInterface
+    {
+        return new PriceProductGuiTableConfigurationBuilderProvider(
+            $this->getGuiTableFactory(),
+            $this->getPriceProductFacade(),
+            $this->createStoreFilterOptionsProvider(),
+            $this->createCurrencyFilterConfigurationProvider()
         );
     }
 

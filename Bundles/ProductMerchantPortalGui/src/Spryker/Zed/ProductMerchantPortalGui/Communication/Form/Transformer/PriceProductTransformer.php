@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Transformer;
 
 use ArrayObject;
 use Generated\Shared\Transfer\MoneyValueTransfer;
-use Generated\Shared\Transfer\PriceProductAbstractTableViewTransfer;
+use Generated\Shared\Transfer\PriceProductTableViewTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Laminas\Filter\StringToLower;
@@ -24,9 +24,14 @@ class PriceProductTransformer implements DataTransformerInterface
     protected const PRICE_KEY = '%s[%s][%s]';
 
     /**
-     * @var int
+     * @var int|null
      */
     protected $idProductAbstract;
+
+    /**
+     * @var int|null
+     */
+    protected $idProductConcrete;
 
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToPriceProductFacadeInterface
@@ -49,24 +54,27 @@ class PriceProductTransformer implements DataTransformerInterface
     protected $utilEncodingService;
 
     /**
-     * @param int $idProductAbstract
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToPriceProductFacadeInterface $priceProductFacade
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToCurrencyFacadeInterface $currencyFacade
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMoneyFacadeInterface $moneyFacade
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Service\ProductMerchantPortalGuiToUtilEncodingServiceInterface $utilEncodingService
+     * @param int|null $idProductAbstract
+     * @param int|null $idProductConcrete
      */
     public function __construct(
-        int $idProductAbstract,
         ProductMerchantPortalGuiToPriceProductFacadeInterface $priceProductFacade,
         ProductMerchantPortalGuiToCurrencyFacadeInterface $currencyFacade,
         ProductMerchantPortalGuiToMoneyFacadeInterface $moneyFacade,
-        ProductMerchantPortalGuiToUtilEncodingServiceInterface $utilEncodingService
+        ProductMerchantPortalGuiToUtilEncodingServiceInterface $utilEncodingService,
+        ?int $idProductAbstract = null,
+        ?int $idProductConcrete = null
     ) {
-        $this->idProductAbstract = $idProductAbstract;
         $this->priceProductFacade = $priceProductFacade;
         $this->currencyFacade = $currencyFacade;
         $this->moneyFacade = $moneyFacade;
         $this->utilEncodingService = $utilEncodingService;
+        $this->idProductAbstract = $idProductAbstract;
+        $this->idProductConcrete = $idProductConcrete;
     }
 
     /**
@@ -91,8 +99,8 @@ class PriceProductTransformer implements DataTransformerInterface
                 $priceProductTransfer->getMoneyValue()->getFkCurrency()
             );
 
-            $prices[$key][PriceProductAbstractTableViewTransfer::STORE] = $priceProductTransfer->getMoneyValue()->getFkStore();
-            $prices[$key][PriceProductAbstractTableViewTransfer::CURRENCY] = $priceProductTransfer->getMoneyValue()->getFkCurrency();
+            $prices[$key][PriceProductTableViewTransfer::STORE] = $priceProductTransfer->getMoneyValue()->getFkStore();
+            $prices[$key][PriceProductTableViewTransfer::CURRENCY] = $priceProductTransfer->getMoneyValue()->getFkCurrency();
 
             $prices = $this->addPrices($priceProductTransfer, $priceTypeTransfers, $prices[$key]);
         }
@@ -144,18 +152,18 @@ class PriceProductTransformer implements DataTransformerInterface
         array $priceTypeTransfers,
         ArrayObject $priceProductTransfers
     ): ArrayObject {
-        $currency = $newPriceProduct[PriceProductAbstractTableViewTransfer::CURRENCY];
+        $currency = $newPriceProduct[PriceProductTableViewTransfer::CURRENCY];
         $currencyTransfer = $currency ? $this->currencyFacade->getByIdCurrency($currency) : null;
 
         foreach ($priceTypeTransfers as $priceTypeTransfer) {
             $storeTransfer = (new StoreTransfer())
-                ->setIdStore($newPriceProduct[PriceProductAbstractTableViewTransfer::STORE]);
+                ->setIdStore($newPriceProduct[PriceProductTableViewTransfer::STORE]);
 
             $moneyValueTransfer = (new MoneyValueTransfer())
                 ->setCurrency($currencyTransfer)
                 ->setStore($storeTransfer)
-                ->setFkStore($newPriceProduct[PriceProductAbstractTableViewTransfer::STORE])
-                ->setFkCurrency($newPriceProduct[PriceProductAbstractTableViewTransfer::CURRENCY]);
+                ->setFkStore($newPriceProduct[PriceProductTableViewTransfer::STORE])
+                ->setFkCurrency($newPriceProduct[PriceProductTableViewTransfer::CURRENCY]);
 
             $priceTypeName = (new StringToLower())->filter($priceTypeTransfer->getNameOrFail());
             $netAmountKey = $this->createNetKey($priceTypeName);
@@ -172,6 +180,7 @@ class PriceProductTransformer implements DataTransformerInterface
             $priceProductTransfers->append(
                 (new PriceProductTransfer())
                     ->setIdProductAbstract($this->idProductAbstract)
+                    ->setIdProduct($this->idProductConcrete)
                     ->setFkPriceType($priceTypeTransfer->getIdPriceType())
                     ->setPriceType($priceTypeTransfer)
                     ->setMoneyValue($moneyValueTransfer)
