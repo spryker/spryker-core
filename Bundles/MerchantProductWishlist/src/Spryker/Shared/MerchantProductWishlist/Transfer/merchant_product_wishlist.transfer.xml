@@ -38,4 +38,8 @@
         <property name="wishlistItem" type="WishlistItem"/>
     </transfer>
 
+    <transfer name="WishlistItemCriteria">
+        <property name="merchantReference" type="string"/>
+    </transfer>
+
 </transfers>

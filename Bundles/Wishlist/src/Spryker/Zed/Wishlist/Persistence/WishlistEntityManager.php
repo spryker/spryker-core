@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Wishlist\Persistence;
 
+use Generated\Shared\Transfer\WishlistItemCriteriaTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Orm\Zed\Wishlist\Persistence\SpyWishlistItem;
 use Orm\Zed\Wishlist\Persistence\SpyWishlistItemQuery;
@@ -31,6 +32,22 @@ class WishlistEntityManager extends AbstractEntityManager implements WishlistEnt
         $wishlistItemEntity = $this->getFactory()
             ->createWishlistMapper()
             ->mapWishlistItemTransferToWishlistItemEntity($wishlistItemTransfer, new SpyWishlistItem());
+
+        $wishlistItemQuery = $this->getFactory()->createWishlistItemQuery();
+        $WishlistItemCriteriaTransfer = (new WishlistItemCriteriaTransfer())
+            ->fromArray($wishlistItemTransfer->modifiedToArray(), true);
+
+        $wishlistItemQuery->filterByArray(
+            $WishlistItemCriteriaTransfer->modifiedToArrayNotRecursiveCamelCased()
+        );
+
+        $existedWishlistItemEntity = $wishlistItemQuery->findOne();
+
+        if ($existedWishlistItemEntity) {
+            return $this->getFactory()
+                ->createWishlistMapper()
+                ->mapWishlistItemEntityToWishlistItemTransfer($existedWishlistItemEntity, $wishlistItemTransfer);
+        }
 
         $wishlistItemEntity->save();
 

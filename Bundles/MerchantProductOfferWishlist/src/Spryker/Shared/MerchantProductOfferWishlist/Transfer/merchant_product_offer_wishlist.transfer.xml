@@ -48,4 +48,9 @@
         <property name="fkMerchant" type="int"/>
     </transfer>
 
+    <transfer name="WishlistItemCriteria">
+        <property name="merchantReference" type="string"/>
+        <property name="productOfferReference" type="string"/>
+    </transfer>
+
 </transfers>
