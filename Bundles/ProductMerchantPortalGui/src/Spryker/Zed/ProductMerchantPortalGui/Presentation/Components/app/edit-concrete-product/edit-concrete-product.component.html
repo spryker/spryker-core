@@ -1,0 +1,19 @@
+<div class="mp-edit-concrete-product__information">
+    <div class="mp-edit-concrete-product__heading">
+        <div class="mp-edit-concrete-product__heading-col">
+            <h3 class="mp-edit-concrete-product__title">
+                <ng-content select="[title]"></ng-content>
+            </h3>
+            <span class="mp-edit-concrete-product__sub-title">
+                <ng-content select="[sub-title]"></ng-content>
+            </span>
+        </div>
+        <div class="mp-edit-concrete-product__heading-col">
+            <ng-content select="[action]"></ng-content>
+        </div>
+    </div>
+</div>
+
+<div class="mp-edit-concrete-product__content">
+    <ng-content></ng-content>
+</div>

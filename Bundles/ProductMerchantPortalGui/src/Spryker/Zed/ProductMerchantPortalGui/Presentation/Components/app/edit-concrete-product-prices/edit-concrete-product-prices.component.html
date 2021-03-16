@@ -1,0 +1,4 @@
+<spy-checkbox [(checked)]="isChecked">
+    <ng-content select="[toggleText]"></ng-content>
+</spy-checkbox>
+<spy-table [hidden]="isChecked" [tableId]="tableId" [config]="tableConfig"></spy-table>
