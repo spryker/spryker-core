@@ -188,7 +188,7 @@ class WishlistFacadeTest extends Test
         $wishlistItemUpdateRequestTransfer = $this->wishlistFacade->addItem($wishlistItemUpdateRequestTransfer);
 
         $this->assertInstanceOf(WishlistItemTransfer::class, $wishlistItemUpdateRequestTransfer);
-        $this->assertWishlistItemCount(3);
+        $this->assertWishlistItemCount(2);
     }
 
     /**
