@@ -18,6 +18,7 @@ class CategorySlotBlockDataProvider implements CategorySlotBlockDataProviderInte
 {
     protected const KEY_OPTION_ALL_CATEGORIES = 'All Category Pages';
     protected const KEY_OPTION_SPECIFIC_CATEGORY = 'Specific Category Pages';
+    protected const FORMATTED_CATEGORY_NAME = '%s [%s]';
 
     /**
      * @var \Spryker\Zed\CmsSlotBlockCategoryGui\Dependency\Facade\CmsSlotBlockCategoryGuiToCategoryFacadeInterface
@@ -104,6 +105,6 @@ class CategorySlotBlockDataProvider implements CategorySlotBlockDataProviderInte
      */
     protected function getFormattedCategoryName(CategoryTransfer $categoryTransfer): string
     {
-        return sprintf('%s [%s]', $categoryTransfer->getName(), $categoryTransfer->getCategoryKey());
+        return sprintf(self::FORMATTED_CATEGORY_NAME, $categoryTransfer->getName(), $categoryTransfer->getCategoryKey());
     }
 }

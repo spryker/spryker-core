@@ -17,6 +17,8 @@ use Spryker\Zed\CmsBlockCategoryConnector\Persistence\CmsBlockCategoryConnectorQ
 
 class CmsBlockDataProvider
 {
+    protected const FORMATTED_CATEGORY_NAME = '%s [%s][%s]';
+
     /**
      * @var \Spryker\Zed\CmsBlockCategoryConnector\Persistence\CmsBlockCategoryConnectorQueryContainerInterface
      */
@@ -132,47 +134,36 @@ class CmsBlockDataProvider
      */
     protected function getCategoryList()
     {
+        $idLocale = $this->localeFacade->getCurrentLocale()->getIdLocale();
+
         /** @var \Orm\Zed\Category\Persistence\SpyCategory[] $categoryCollection */
         $categoryCollection = $this->categoryQueryContainer
-            ->queryCategory($this->getCurrentIdLocale())
+            ->queryCategory($idLocale)
             ->find();
 
         $categoryList = [];
         foreach ($categoryCollection as $categoryEntity) {
-            $categoryList[$categoryEntity->getIdCategory()] = $this->getFormattedCategoryName($categoryEntity);
+            $categoryList[$categoryEntity->getIdCategory()] = $this->getFormattedCategoryNameForLocale($categoryEntity, $idLocale);
         }
 
         return $categoryList;
     }
 
     /**
-     * @return int|null
-     */
-    protected function getCurrentIdLocale(): ?int
-    {
-        if (!isset($this->currentIdLocale)) {
-            $this->currentIdLocale = $this->localeFacade->getCurrentLocale()->getIdLocale();
-        }
-
-        return $this->currentIdLocale;
-    }
-
-    /**
      * @param \Orm\Zed\Category\Persistence\SpyCategory $categoryEntity
+     * @param int|null $idLocale
      *
      * @return string
      */
-    protected function getFormattedCategoryName(SpyCategory $categoryEntity): string
+    protected function getFormattedCategoryNameForLocale(SpyCategory $categoryEntity, ?int $idLocale): string
     {
         $categoryName = $categoryEntity
-            ->getLocalisedAttributes($this->getCurrentIdLocale())
+            ->getLocalisedAttributes($idLocale)
             ->getFirst()
             ->getName();
-        $categoryTemplateName = $this->getCategoryTemplateName($categoryEntity);
-        $categoryTemplateName = $categoryTemplateName ? sprintf(' [%s]', $categoryTemplateName) : ' ';
-        $categoryId = sprintf('[%s]', $categoryEntity->getCategoryKey());
+        $categoryTemplateName = $this->getCategoryTemplateName($categoryEntity) ?: '';
 
-        return $categoryName . $categoryTemplateName . $categoryId;
+        return sprintf(self::FORMATTED_CATEGORY_NAME, $categoryName, $categoryTemplateName, $categoryEntity->getCategoryKey());
     }
 
     /**
