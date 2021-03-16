@@ -132,23 +132,47 @@ class CmsBlockDataProvider
      */
     protected function getCategoryList()
     {
-        $idLocale = $this->localeFacade->getCurrentLocale()->getIdLocale();
         /** @var \Orm\Zed\Category\Persistence\SpyCategory[] $categoryCollection */
         $categoryCollection = $this->categoryQueryContainer
-            ->queryCategory($idLocale)
+            ->queryCategory($this->getCurrentIdLocale())
             ->find();
 
         $categoryList = [];
-
         foreach ($categoryCollection as $categoryEntity) {
-            $categoryName = $categoryEntity->getLocalisedAttributes($idLocale)->getFirst()->getName();
-            $categoryTemplateName = $this->getCategoryTemplateName($categoryEntity);
-            $categoryTemplateName = $categoryTemplateName ? ' [' . $categoryTemplateName . ']' : '';
-
-            $categoryList[$categoryEntity->getIdCategory()] = $categoryName . $categoryTemplateName;
+            $categoryList[$categoryEntity->getIdCategory()] = $this->getFormattedCategoryName($categoryEntity);
         }
 
         return $categoryList;
+    }
+
+    /**
+     * @return int|null
+     */
+    protected function getCurrentIdLocale(): ?int
+    {
+        if (!isset($this->currentIdLocale)) {
+            $this->currentIdLocale = $this->localeFacade->getCurrentLocale()->getIdLocale();
+        }
+
+        return $this->currentIdLocale;
+    }
+
+    /**
+     * @param \Orm\Zed\Category\Persistence\SpyCategory $categoryEntity
+     *
+     * @return string
+     */
+    protected function getFormattedCategoryName(SpyCategory $categoryEntity): string
+    {
+        $categoryName = $categoryEntity
+            ->getLocalisedAttributes($this->getCurrentIdLocale())
+            ->getFirst()
+            ->getName();
+        $categoryTemplateName = $this->getCategoryTemplateName($categoryEntity);
+        $categoryTemplateName = $categoryTemplateName ? sprintf(' [%s]', $categoryTemplateName) : ' ';
+        $categoryId = sprintf('[%s]', $categoryEntity->getCategoryKey());
+
+        return $categoryName . $categoryTemplateName . $categoryId;
     }
 
     /**
@@ -158,15 +182,10 @@ class CmsBlockDataProvider
      */
     protected function getCategoryTemplateName(SpyCategory $categoryEntity)
     {
-        $categoryTemplateName = '';
         /** @var \Orm\Zed\Category\Persistence\SpyCategoryTemplate|null $categoryTemplateEntity */
         $categoryTemplateEntity = $categoryEntity->getCategoryTemplate();
 
-        if ($categoryTemplateEntity) {
-            $categoryTemplateName = $categoryEntity->getCategoryTemplate()->getName();
-        }
-
-        return $categoryTemplateName;
+        return $categoryTemplateEntity ? $categoryTemplateEntity->getName() : '';
     }
 
     /**
