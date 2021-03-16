@@ -136,4 +136,8 @@
     <transfer name="Message">
     </transfer>
 
+    <transfer name="WishlistItemCriteria">
+        <property name="sku" type="string"/>
+    </transfer>
+
 </transfers>
