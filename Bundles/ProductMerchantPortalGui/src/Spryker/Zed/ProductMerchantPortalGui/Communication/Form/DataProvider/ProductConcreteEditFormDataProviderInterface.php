@@ -15,4 +15,9 @@ interface ProductConcreteEditFormDataProviderInterface
      * @return mixed[]
      */
     public function getData(int $idProductConcrete): array;
+
+    /**
+     * @return int[][]
+     */
+    public function getOptions(): array;
 }

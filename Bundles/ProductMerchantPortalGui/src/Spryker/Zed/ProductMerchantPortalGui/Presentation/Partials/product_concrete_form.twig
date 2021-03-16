@@ -1,4 +1,4 @@
-{#{% form_theme form '@ZedUi/Form/form-webcomponent-layout.twig' %}#}
+{% form_theme form '@ZedUi/Form/form-webcomponent-layout.twig' %}
 
 {% set productConcreteFormFields = form.productConcrete.children %}
 
@@ -142,6 +142,14 @@
                                 table-id="web-mp-edit-abstract-product-attributes"
                                 config='{{ guiTableConfiguration(productAttributeTableConfiguration) }}'>
                         </web-mp-edit-abstract-product-attributes>
+                    {% endblock %}
+                </web-spy-card>
+            {% endblock %}
+
+            {% block searchabilityCard %}
+                <web-spy-card spy-title="{{ form.children.searchability.vars.label | trans }}" class="{{ mainClass }}__card">
+                    {% block earchabilityCardInner %}
+                        {{ form_row(form.children.searchability, {label: false, row_attr: {'no-spaces': 'true'}}) }}
                     {% endblock %}
                 </web-spy-card>
             {% endblock %}

@@ -41,13 +41,15 @@ class UpdateProductConcreteController extends UpdateProductController
     {
         $idProduct = $this->castId($request->get(static::PARAM_PRODUCT_ID));
         $formData = $this->getFactory()->createProductConcreteEditFormDataProvider()->getData($idProduct);
-        $productConcreteTransfer = $formData[ProductConcreteEditForm::FIELD_PRODUCT_CONCRETE];
 
         if (!$formData[ProductConcreteEditForm::FIELD_PRODUCT_CONCRETE]) {
             throw new ProductConcreteNotFoundException($idProduct);
         }
 
-        $productConcreteEditForm = $this->getFactory()->createProductConcreteEditForm($formData);
+        $formOptions = $this->getFactory()->createProductConcreteEditFormDataProvider()->getOptions();
+        $productConcreteTransfer = $formData[ProductConcreteEditForm::FIELD_PRODUCT_CONCRETE];
+
+        $productConcreteEditForm = $this->getFactory()->createProductConcreteEditForm($formData, $formOptions);
         $productConcreteEditForm->handleRequest($request);
         $initialData = $this->getDefaultInitialData($request->get($productConcreteEditForm->getName())[ProductConcreteEditForm::FIELD_PRODUCT_CONCRETE]);
 

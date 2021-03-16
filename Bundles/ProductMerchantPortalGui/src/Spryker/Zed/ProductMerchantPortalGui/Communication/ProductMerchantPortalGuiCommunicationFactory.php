@@ -24,6 +24,7 @@ use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductAbstractForm;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductConcreteBulkForm;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductConcreteEditForm;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Transformer\PriceProductTransformer;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Transformer\ProductConcreteEditFormDataTransformer;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Transformer\QuantityTransformer;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Transformer\StockTransformer;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\CategoryFilterOptionsProvider;
@@ -241,6 +242,14 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
     }
 
     /**
+     * @return \Symfony\Component\Form\DataTransformerInterface
+     */
+    public function createProductConcreteEditFormDataTransformer(): DataTransformerInterface
+    {
+        return new ProductConcreteEditFormDataTransformer();
+    }
+
+    /**
      * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\PriceProductMapperInterface
      */
     public function createPriceProductMapper(): PriceProductMapperInterface
@@ -367,7 +376,8 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
     {
         return new ProductConcreteEditFormDataProvider(
             $this->getMerchantUserFacade(),
-            $this->getMerchantProductFacade()
+            $this->getMerchantProductFacade(),
+            $this->getLocaleFacade()
         );
     }
 
