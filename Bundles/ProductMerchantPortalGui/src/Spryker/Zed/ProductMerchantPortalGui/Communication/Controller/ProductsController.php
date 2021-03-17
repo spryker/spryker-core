@@ -18,6 +18,11 @@ use Symfony\Component\HttpFoundation\Response;
 class ProductsController extends AbstractController
 {
     /**
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\CreateProductAbstractController::indexAction()
+     */
+    protected const URL_CREATE_PRODUCT_ABSTRACT = '/product-merchant-portal-gui/create-product-abstract';
+
+    /**
      * @return mixed[]
      */
     public function indexAction(): array
@@ -26,6 +31,7 @@ class ProductsController extends AbstractController
             'productAbstractTableConfiguration' => $this->getFactory()
                 ->createProductAbstractGuiTableConfigurationProvider()
                 ->getConfiguration(),
+            'urlCreateProductAbstract' => static::URL_CREATE_PRODUCT_ABSTRACT,
         ]);
     }
 

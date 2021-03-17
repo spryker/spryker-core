@@ -25,6 +25,7 @@ import {
 
 import { _getNgModules, ComponentsNgModule } from './registry';
 import { TableRootModule } from './table/table-root.module';
+import { ActionsRootModule } from './actions/actions-root.module';
 
 @NgModule({
     imports: [
@@ -50,6 +51,7 @@ import { TableRootModule } from './table/table-root.module';
         UnsavedChangesGuardNavigationModule.forRoot(),
         UnsavedChangesBrowserGuardModule.forRoot(),
         ModalModule.forRoot(),
+        ActionsRootModule,
     ],
     // FIXME: UnsavedChangesNavigationGuard should work without explicit providing
     // See https://spryker.atlassian.net/browse/BO-2055

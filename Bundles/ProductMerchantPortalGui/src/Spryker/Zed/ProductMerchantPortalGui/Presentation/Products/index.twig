@@ -9,6 +9,20 @@
 {% endblock %}
 
 {% block content %}
+    {% set actionConfig = '{
+        "type": "drawer",
+        "component": "ajax-form",
+        "options": {
+            "inputs": {
+                "action": "' ~ url(urlCreateProductAbstract) ~ '"
+            }
+        }
+    }' %}
+
+    <web-spy-button-action type="button" variant="secondary" size="md" action="{{ actionConfig }}">
+        {{ 'Create Product' | trans }}
+    </web-spy-button-action>
+
     <web-mp-product-list
         cloak
         table-id="web-mp-product-list"

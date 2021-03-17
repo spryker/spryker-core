@@ -12,6 +12,7 @@ import { SelectModule, SelectComponent } from '@spryker/select';
 import { InputModule, InputComponent } from '@spryker/input';
 import { CollapsibleModule, CollapsibleComponent } from '@spryker/collapsible';
 import { FormItemModule, FormItemComponent } from '@spryker/form-item';
+import { ButtonActionComponent, ButtonActionModule } from '@spryker/button.action';
 import { EditAbstractProductComponent } from './edit-abstract-product/edit-abstract-product.component';
 import { EditAbstractProductModule } from './edit-abstract-product/edit-abstract-product.module';
 import { EditAbstractProductPricesComponent } from './edit-abstract-product-prices/edit-abstract-product-prices.component';
@@ -45,6 +46,7 @@ import { BulkEditProductVariantsModule } from './bulk-edit-product-variants/bulk
         ImageSetsModule,
         BulkEditProductVariantsModule,
         EditAbstractProductVariantsModule,
+        ButtonActionModule,
     ],
 })
 export class ComponentsModule extends CustomElementModule {
@@ -66,5 +68,6 @@ export class ComponentsModule extends CustomElementModule {
         ImageSetsComponent,
         BulkEditProductVariantsComponent,
         EditAbstractProductVariantsComponent,
+        ButtonActionComponent,
     ];
 }
