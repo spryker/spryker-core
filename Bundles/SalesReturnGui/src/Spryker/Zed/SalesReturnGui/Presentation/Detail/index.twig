@@ -27,6 +27,10 @@
                 uniqueItemStateLabels: uniqueItemStateLabels,
             } only %}
 
+            {% include '@MerchantSalesReturnGui/SalesReturn/_partials/merchant-order-column.twig' ignore missing with {
+                merchantOrder: return.merchantOrder,
+            } only %}
+
             {% if customer is not null %}
                 {% include '@SalesReturnGui/Detail/_partials/customer-column.twig' with {
                     customer: customer,

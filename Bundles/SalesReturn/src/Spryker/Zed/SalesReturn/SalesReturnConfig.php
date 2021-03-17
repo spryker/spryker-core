@@ -68,4 +68,14 @@ class SalesReturnConfig extends AbstractBundleConfig
     {
         return static::EVENT_START_RETURN;
     }
+
+    /**
+     * @api
+     *
+     * @return \Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnExpanderPluginInterface[]
+     */
+    public function getReturnExpanderPlugins(): array
+    {
+        return [];
+    }
 }

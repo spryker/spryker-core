@@ -52,4 +52,20 @@ class MerchantSalesReturnFacade extends AbstractFacade implements MerchantSalesR
             ->createMerchantReturnValidator()
             ->validate($returnCreateRequestTransfer, $itemTransfers);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
+     *
+     * @return \Generated\Shared\Transfer\ReturnTransfer
+     */
+    public function expand(ReturnTransfer $returnTransfer): ReturnTransfer
+    {
+        return $this->getFactory()
+            ->createMerchantReturnExpander()
+            ->expand($returnTransfer);
+    }
 }

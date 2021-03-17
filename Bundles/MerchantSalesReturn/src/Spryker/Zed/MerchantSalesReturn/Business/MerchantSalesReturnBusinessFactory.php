@@ -10,6 +10,8 @@ namespace Spryker\Zed\MerchantSalesReturn\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\MerchantSalesReturn\Business\Creator\MerchantReturnCreator;
 use Spryker\Zed\MerchantSalesReturn\Business\Creator\MerchantReturnCreatorInterface;
+use Spryker\Zed\MerchantSalesReturn\Business\Expander\MerchantReturnExpander;
+use Spryker\Zed\MerchantSalesReturn\Business\Expander\MerchantReturnExpanderInterface;
 use Spryker\Zed\MerchantSalesReturn\Business\Validator\MerchantReturnValidator;
 use Spryker\Zed\MerchantSalesReturn\Business\Validator\MerchantReturnValidatorInterface;
 use Spryker\Zed\MerchantSalesReturn\Dependency\Facade\MerchantSalesReturnToMerchantSalesOrderFacadeInterface;
@@ -35,6 +37,14 @@ class MerchantSalesReturnBusinessFactory extends AbstractBusinessFactory
     public function createMerchantReturnValidator(): MerchantReturnValidatorInterface
     {
         return new MerchantReturnValidator();
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantSalesReturn\Business\Expander\MerchantReturnExpanderInterface
+     */
+    public function createMerchantReturnExpander(): MerchantReturnExpanderInterface
+    {
+        return new MerchantReturnExpander($this->getMerchantSalesOrderFacade());
     }
 
     /**

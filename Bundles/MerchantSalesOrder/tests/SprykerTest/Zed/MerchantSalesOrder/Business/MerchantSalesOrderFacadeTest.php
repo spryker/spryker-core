@@ -186,13 +186,15 @@ class MerchantSalesOrderFacadeTest extends Unit
      * @param array $merchantOrderCriteriaDataKeys
      * @param int $merchantOrderItemsCount
      * @param bool $withOrder
+     * @param bool $withMerchant
      *
      * @return void
      */
     public function testFindMerchantOrderReturnsTransferWithCorrectCriteria(
         array $merchantOrderCriteriaDataKeys,
         int $merchantOrderItemsCount,
-        bool $withOrder = false
+        bool $withOrder = false,
+        bool $withMerchant = false
     ): void {
         //Arrange
         $merchantTransfer = $this->tester->haveMerchant();
@@ -225,7 +227,8 @@ class MerchantSalesOrderFacadeTest extends Unit
             MerchantOrderCriteriaTransfer::MERCHANT_REFERENCE => $merchantTransfer->getMerchantReference(),
             MerchantOrderCriteriaTransfer::ID_MERCHANT => $merchantTransfer->getIdMerchant(),
             MerchantOrderCriteriaTransfer::WITH_ITEMS => true,
-            MerchantOrderCriteriaTransfer::WITH_ORDER => true,
+            MerchantOrderCriteriaTransfer::WITH_ORDER => $withOrder,
+            MerchantOrderCriteriaTransfer::WITH_MERCHANT => $withMerchant,
             MerchantOrderCriteriaTransfer::WITH_UNIQUE_PRODUCTS_COUNT => true,
         ];
         $merchantOrderCriteriaData = array_intersect_key(
@@ -251,6 +254,13 @@ class MerchantSalesOrderFacadeTest extends Unit
             $this->assertSame(
                 $merchantOrderTransfer->getOrder()->getIdSalesOrder(),
                 $foundMerchantOrderTransfer->getOrder()->getIdSalesOrder()
+            );
+        }
+
+        if ($withMerchant) {
+            $this->assertSame(
+                $merchantTransfer->getMerchantReference(),
+                $foundMerchantOrderTransfer->getMerchantOrFail()->getMerchantReference()
             );
         }
 
@@ -657,6 +667,15 @@ class MerchantSalesOrderFacadeTest extends Unit
                 ],
                 'merchantOrderItemsCount' => 0,
                 'withOrder' => true,
+            ],
+            'with merchant' => [
+                'merchantOrderCriteriaDataKeys' => [
+                    MerchantOrderCriteriaTransfer::ID_MERCHANT_ORDER,
+                    MerchantOrderCriteriaTransfer::WITH_MERCHANT,
+                ],
+                'merchantOrderItemsCount' => 0,
+                'withOrder' => false,
+                'withMerchant' => true,
             ],
             'with unique products count' => [
                 'merchantOrderCriteriaDataKeys' => [

@@ -175,4 +175,34 @@ class MerchantSalesReturnFacadeTest extends Unit
         $this->assertFalse($returnResponseTransfer->getIsSuccessful());
         $this->assertSame(1, $messageTransfers->count());
     }
+
+    /**
+     * @return void
+     */
+    public function testExpandSetsMerchantSuccessfully(): void
+    {
+        // Arrange
+        $merchantTransfer = $this->tester->haveMerchant();
+        $saveOrderTransfer = $this->tester
+            ->getSaveOrderTransfer($merchantTransfer, static::TEST_STATE_MACHINE);
+
+        $merchantOrderTransfer = $this->tester->createMerchantOrderWithRelatedData(
+            $saveOrderTransfer,
+            $merchantTransfer
+        );
+
+        $returnTransfer = (new ReturnTransfer())
+            ->setMerchantSalesOrderReference($merchantOrderTransfer->getMerchantOrderReference());
+
+        // Act
+        $actualReturnTransfer = $this->tester
+            ->getFacade()
+            ->expand($returnTransfer);
+
+        // Assert
+        $this->assertSame(
+            $merchantTransfer->getMerchantReference(),
+            $actualReturnTransfer->getMerchantOrderOrFail()->getMerchantReference()
+        );
+    }
 }

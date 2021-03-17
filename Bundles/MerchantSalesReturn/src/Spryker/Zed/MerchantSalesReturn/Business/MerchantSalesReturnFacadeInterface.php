@@ -45,4 +45,16 @@ interface MerchantSalesReturnFacadeInterface
         ReturnCreateRequestTransfer $returnCreateRequestTransfer,
         ArrayObject $itemTransfers
     ): ReturnResponseTransfer;
+
+    /**
+     * Specification:
+     * - Expands a return transfer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
+     *
+     * @return \Generated\Shared\Transfer\ReturnTransfer
+     */
+    public function expand(ReturnTransfer $returnTransfer): ReturnTransfer;
 }

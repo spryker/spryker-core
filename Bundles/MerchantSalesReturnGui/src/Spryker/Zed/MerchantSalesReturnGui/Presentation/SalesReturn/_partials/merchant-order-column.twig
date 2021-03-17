@@ -1,0 +1,27 @@
+{% embed '@SalesReturnGui/_partials/column.twig' with {
+    title: 'Marketplace'
+} %}
+    {% block content %}
+
+        <div class="row m-b-sm">
+            <div class="col-sm-6 font-bold">
+                {{ 'Merchant Order Reference' | trans }}
+            </div>
+            <div class="col-sm-6">
+                {{ merchantOrder.merchantOrderReference }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-6 font-bold">
+                {{ 'Merchant' | trans }}
+            </div>
+            <div class="col-sm-6 word-break-all">
+                <a href="{{ url('/merchant-gui/edit-merchant', {'id-merchant': merchantOrder.merchant.idMerchant}) }}">
+                    {{ merchantOrder.merchant.name }}
+                </a>
+            </div>
+        </div>
+
+    {% endblock %}
+{% endembed %}

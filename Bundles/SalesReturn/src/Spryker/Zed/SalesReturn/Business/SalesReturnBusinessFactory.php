@@ -85,7 +85,8 @@ class SalesReturnBusinessFactory extends AbstractBusinessFactory
         return new ReturnReader(
             $this->getRepository(),
             $this->getSalesFacade(),
-            $this->createReturnTotalCalculator()
+            $this->createReturnTotalCalculator(),
+            $this->getConfig()->getReturnExpanderPlugins(),
         );
     }
 

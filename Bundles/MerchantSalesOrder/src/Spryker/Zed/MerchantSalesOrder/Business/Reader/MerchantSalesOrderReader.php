@@ -8,9 +8,11 @@
 namespace Spryker\Zed\MerchantSalesOrder\Business\Reader;
 
 use ArrayObject;
+use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantOrderCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Spryker\Zed\MerchantSalesOrder\Dependency\Facade\MerchantSalesOrderToMerchantFacadeInterface;
 use Spryker\Zed\MerchantSalesOrder\Dependency\Facade\MerchantSalesOrderToSalesFacadeInterface;
 use Spryker\Zed\MerchantSalesOrder\Persistence\MerchantSalesOrderRepositoryInterface;
 
@@ -37,21 +39,29 @@ class MerchantSalesOrderReader implements MerchantSalesOrderReaderInterface
     protected $merchantOrderFilterPlugins;
 
     /**
+     * @var \Spryker\Zed\MerchantSalesOrder\Dependency\Facade\MerchantSalesOrderToMerchantFacadeInterface
+     */
+    protected $merchantFacade;
+
+    /**
      * @param \Spryker\Zed\MerchantSalesOrder\Dependency\Facade\MerchantSalesOrderToSalesFacadeInterface $salesFacade
      * @param \Spryker\Zed\MerchantSalesOrder\Persistence\MerchantSalesOrderRepositoryInterface $merchantSalesOrderRepository
      * @param \Spryker\Zed\MerchantSalesOrderExtension\Dependency\Plugin\MerchantOrderFilterPluginInterface[] $merchantOrderFilterPlugins
      * @param \Spryker\Zed\MerchantSalesOrderExtension\Dependency\Plugin\MerchantOrderExpanderPluginInterface[] $merchantOrderExpanderPlugins
+     * @param \Spryker\Zed\MerchantSalesOrder\Dependency\Facade\MerchantSalesOrderToMerchantFacadeInterface $merchantFacade
      */
     public function __construct(
         MerchantSalesOrderToSalesFacadeInterface $salesFacade,
         MerchantSalesOrderRepositoryInterface $merchantSalesOrderRepository,
         array $merchantOrderFilterPlugins,
-        array $merchantOrderExpanderPlugins
+        array $merchantOrderExpanderPlugins,
+        MerchantSalesOrderToMerchantFacadeInterface $merchantFacade
     ) {
         $this->salesFacade = $salesFacade;
         $this->merchantSalesOrderRepository = $merchantSalesOrderRepository;
         $this->merchantOrderFilterPlugins = $merchantOrderFilterPlugins;
         $this->merchantOrderExpanderPlugins = $merchantOrderExpanderPlugins;
+        $this->merchantFacade = $merchantFacade;
     }
 
     /**
@@ -65,6 +75,10 @@ class MerchantSalesOrderReader implements MerchantSalesOrderReaderInterface
 
         if (!$merchantOrderTransfer) {
             return null;
+        }
+
+        if ($merchantOrderCriteriaTransfer->getWithMerchant()) {
+            $merchantOrderTransfer = $this->addMerchant($merchantOrderTransfer);
         }
 
         if ($merchantOrderCriteriaTransfer->getWithOrder()) {
@@ -129,6 +143,23 @@ class MerchantSalesOrderReader implements MerchantSalesOrderReaderInterface
         foreach ($this->merchantOrderFilterPlugins as $merchantOrderFilterPlugin) {
             $merchantOrderTransfer = $merchantOrderFilterPlugin->filter($merchantOrderTransfer);
         }
+
+        return $merchantOrderTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantOrderTransfer
+     */
+    protected function addMerchant(MerchantOrderTransfer $merchantOrderTransfer): MerchantOrderTransfer
+    {
+        $merchantCriteriaTransfer = (new MerchantCriteriaTransfer())
+            ->setMerchantReference($merchantOrderTransfer->getMerchantReferenceOrFail());
+
+        $merchantTransfer = $this->merchantFacade->findOne($merchantCriteriaTransfer);
+
+        $merchantOrderTransfer->setMerchant($merchantTransfer);
 
         return $merchantOrderTransfer;
     }

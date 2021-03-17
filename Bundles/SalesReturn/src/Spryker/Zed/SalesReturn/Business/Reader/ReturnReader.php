@@ -45,18 +45,26 @@ class ReturnReader implements ReturnReaderInterface
     protected $returnTotalCalculator;
 
     /**
+     * @var \Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnExpanderPluginInterface[]
+     */
+    protected $returnExpanderPlugins;
+
+    /**
      * @param \Spryker\Zed\SalesReturn\Persistence\SalesReturnRepositoryInterface $salesReturnRepository
      * @param \Spryker\Zed\SalesReturn\Dependency\Facade\SalesReturnToSalesFacadeInterface $salesFacade
      * @param \Spryker\Zed\SalesReturn\Business\Calculator\ReturnTotalCalculatorInterface $returnTotalCalculator
+     * @param \Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnExpanderPluginInterface[] $returnExpanderPlugins
      */
     public function __construct(
         SalesReturnRepositoryInterface $salesReturnRepository,
         SalesReturnToSalesFacadeInterface $salesFacade,
-        ReturnTotalCalculatorInterface $returnTotalCalculator
+        ReturnTotalCalculatorInterface $returnTotalCalculator,
+        array $returnExpanderPlugins
     ) {
         $this->salesReturnRepository = $salesReturnRepository;
         $this->salesFacade = $salesFacade;
         $this->returnTotalCalculator = $returnTotalCalculator;
+        $this->returnExpanderPlugins = $returnExpanderPlugins;
     }
 
     /**
@@ -96,6 +104,7 @@ class ReturnReader implements ReturnReaderInterface
 
         $returnCollectionTransfer = $this->expandReturnCollectionWithReturnItems($returnCollectionTransfer);
         $returnCollectionTransfer = $this->expandReturnCollectionWithReturnTotals($returnCollectionTransfer);
+        $returnCollectionTransfer = $this->executeReturnExpanderPlugins($returnCollectionTransfer);
 
         return $returnCollectionTransfer;
     }
@@ -233,6 +242,22 @@ class ReturnReader implements ReturnReaderInterface
             $returnTransfer->setReturnTotals(
                 $this->returnTotalCalculator->calculateReturnTotals($returnTransfer)
             );
+        }
+
+        return $returnCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ReturnCollectionTransfer $returnCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ReturnCollectionTransfer
+     */
+    protected function executeReturnExpanderPlugins(ReturnCollectionTransfer $returnCollectionTransfer): ReturnCollectionTransfer
+    {
+        foreach ($returnCollectionTransfer->getReturns() as $returnTransfer) {
+            foreach ($this->returnExpanderPlugins as $plugin) {
+                $returnTransfer = $plugin->expand($returnTransfer);
+            }
         }
 
         return $returnCollectionTransfer;
