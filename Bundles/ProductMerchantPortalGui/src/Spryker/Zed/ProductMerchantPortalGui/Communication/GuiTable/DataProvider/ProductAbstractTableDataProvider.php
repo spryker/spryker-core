@@ -10,10 +10,12 @@ namespace Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\DataProvid
 use Generated\Shared\Transfer\GuiTableDataRequestTransfer;
 use Generated\Shared\Transfer\GuiTableDataResponseTransfer;
 use Generated\Shared\Transfer\GuiTableRowDataResponseTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\MerchantProductTableCriteriaTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Spryker\Shared\GuiTable\DataProvider\AbstractGuiTableDataProvider;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Extractor\LocalizedAttributesExtractorInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductAbstractGuiTableConfigurationProvider;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToLocaleFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantUserFacadeInterface;
@@ -43,21 +45,29 @@ class ProductAbstractTableDataProvider extends AbstractGuiTableDataProvider
     protected $translatorFacade;
 
     /**
+     * @var \Spryker\Zed\ProductMerchantPortalGui\Communication\Extractor\LocalizedAttributesExtractorInterface
+     */
+    protected $localizedAttributesExtractor;
+
+    /**
      * @param \Spryker\Zed\ProductMerchantPortalGui\Persistence\ProductMerchantPortalGuiRepositoryInterface $productMerchantPortalGuiRepository
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToLocaleFacadeInterface $localeFacade
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToTranslatorFacadeInterface $translatorFacade
+     * @param \Spryker\Zed\ProductMerchantPortalGui\Communication\Extractor\LocalizedAttributesExtractorInterface $localizedAttributesExtractor
      */
     public function __construct(
         ProductMerchantPortalGuiRepositoryInterface $productMerchantPortalGuiRepository,
         ProductMerchantPortalGuiToLocaleFacadeInterface $localeFacade,
         ProductMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade,
-        ProductMerchantPortalGuiToTranslatorFacadeInterface $translatorFacade
+        ProductMerchantPortalGuiToTranslatorFacadeInterface $translatorFacade,
+        LocalizedAttributesExtractorInterface $localizedAttributesExtractor
     ) {
         $this->productMerchantPortalGuiRepository = $productMerchantPortalGuiRepository;
         $this->localeFacade = $localeFacade;
         $this->merchantUserFacade = $merchantUserFacade;
         $this->translatorFacade = $translatorFacade;
+        $this->localizedAttributesExtractor = $localizedAttributesExtractor;
     }
 
     /**
@@ -82,6 +92,7 @@ class ProductAbstractTableDataProvider extends AbstractGuiTableDataProvider
         $productAbstractCollectionTransfer = $this->productMerchantPortalGuiRepository
             ->getProductAbstractTableData($criteriaTransfer);
         $guiTableDataResponseTransfer = new GuiTableDataResponseTransfer();
+        $localeTransfer = $criteriaTransfer->getLocaleOrFail();
 
         foreach ($productAbstractCollectionTransfer->getProductAbstracts() as $productAbstractTransfer) {
             $responseData = [
@@ -89,7 +100,7 @@ class ProductAbstractTableDataProvider extends AbstractGuiTableDataProvider
                 ProductAbstractGuiTableConfigurationProvider::COL_KEY_SKU => $productAbstractTransfer->getSku(),
                 ProductAbstractGuiTableConfigurationProvider::COL_KEY_IMAGE => $this->getImageUrl($productAbstractTransfer),
                 ProductAbstractGuiTableConfigurationProvider::COL_KEY_NAME => $productAbstractTransfer->getName(),
-                ProductAbstractGuiTableConfigurationProvider::COL_KEY_SUPER_ATTRIBUTES => $this->getSuperAttributesColumnData($productAbstractTransfer),
+                ProductAbstractGuiTableConfigurationProvider::COL_KEY_SUPER_ATTRIBUTES => $this->getSuperAttributesColumnData($productAbstractTransfer, $localeTransfer),
                 ProductAbstractGuiTableConfigurationProvider::COL_KEY_VARIANTS => $productAbstractTransfer->getConcreteProductCount(),
                 ProductAbstractGuiTableConfigurationProvider::COL_KEY_CATEGORIES => $productAbstractTransfer->getCategoryNames(),
                 ProductAbstractGuiTableConfigurationProvider::COL_KEY_STORES => $productAbstractTransfer->getStoreNames(),
@@ -145,13 +156,22 @@ class ProductAbstractTableDataProvider extends AbstractGuiTableDataProvider
 
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return string[]
      */
-    protected function getSuperAttributesColumnData(ProductAbstractTransfer $productAbstractTransfer): array
-    {
+    protected function getSuperAttributesColumnData(
+        ProductAbstractTransfer $productAbstractTransfer,
+        LocaleTransfer $localeTransfer
+    ): array {
+        $superAttributes = $this->localizedAttributesExtractor->extractSuperAttributes(
+            $productAbstractTransfer->getAttributes(),
+            $productAbstractTransfer->getLocalizedAttributes(),
+            $localeTransfer
+        );
+
         return array_map(function (string $attributeKey): string {
             return ucwords(str_replace('_', ' ', $attributeKey));
-        }, array_keys($productAbstractTransfer->getAttributes()));
+        }, array_keys($superAttributes));
     }
 }

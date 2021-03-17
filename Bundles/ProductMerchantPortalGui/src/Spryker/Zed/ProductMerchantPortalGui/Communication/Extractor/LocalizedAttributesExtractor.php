@@ -69,12 +69,8 @@ class LocalizedAttributesExtractor implements LocalizedAttributesExtractorInterf
         LocaleTransfer $localeTransfer
     ): array {
         $localizedAttributesTransfer = $this->extractLocalizedAttributes($localizedAttributeTransfers, $localeTransfer);
-
-        if (!$localizedAttributesTransfer) {
-            return [];
-        }
-
-        $attributes = array_merge($attributes, $localizedAttributesTransfer->getAttributes());
+        $localizedAttributes = $localizedAttributesTransfer ? $localizedAttributesTransfer->getAttributes() : [];
+        $attributes = array_merge($attributes, $localizedAttributes);
         $productManagementAttributeTransfers = $this->productAttributeFacade->getProductManagementAttributes(
             (new ProductManagementAttributeFilterTransfer())->setKeys(array_keys($attributes))
         )->getProductManagementAttributes();
