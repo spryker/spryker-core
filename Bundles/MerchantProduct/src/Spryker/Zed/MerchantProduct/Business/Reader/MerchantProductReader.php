@@ -97,7 +97,7 @@ class MerchantProductReader implements MerchantProductReaderInterface
     ): ?ProductConcreteTransfer {
         $merchantProductTransfer = $this->merchantProductRepository->findMerchantProduct($merchantProductCriteriaTransfer);
 
-        if (!$merchantProductTransfer->getProducts()->count()) {
+        if (!$merchantProductTransfer || !$merchantProductTransfer->getProducts()->count()) {
             return null;
         }
 
@@ -117,8 +117,8 @@ class MerchantProductReader implements MerchantProductReaderInterface
         MerchantTransfer $merchantTransfer
     ): bool {
         $merchantProductCriteriaTransfer = (new MerchantProductCriteriaTransfer())
-            ->addIdMerchant($merchantTransfer->getIdMerchant())
-            ->addIdProductConcrete($productConcreteTransfer->getIdProductConcrete());
+            ->addIdMerchant($merchantTransfer->getIdMerchantOrFail())
+            ->addIdProductConcrete($productConcreteTransfer->getIdProductConcreteOrFail());
         $merchantTransfer = $this->merchantProductRepository->findMerchant($merchantProductCriteriaTransfer);
 
         return $merchantTransfer !== null;
