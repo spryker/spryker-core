@@ -7,22 +7,23 @@
 
 namespace Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Reader;
 
+use Generated\Shared\Transfer\MerchantOrderCriteriaTransfer;
+use Generated\Shared\Transfer\MerchantOrderItemCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
-use Generated\Shared\Transfer\ReturnTransfer;
 
 interface MerchantOrderReaderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
+     * @param \Generated\Shared\Transfer\MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantOrderTransfer|null
      */
-    public function findMerchantSalesOrder(ReturnTransfer $returnTransfer): ?MerchantOrderTransfer;
+    public function findMerchantSalesOrder(MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer): ?MerchantOrderTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
+     * @param \Generated\Shared\Transfer\MerchantOrderItemCriteriaTransfer $merchantOrderItemCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantOrderItemTransfer[]
      */
-    public function findMerchantOrderItems(ReturnTransfer $returnTransfer): array;
+    public function findMerchantOrderItems(MerchantOrderItemCriteriaTransfer $merchantOrderItemCriteriaTransfer): array;
 }

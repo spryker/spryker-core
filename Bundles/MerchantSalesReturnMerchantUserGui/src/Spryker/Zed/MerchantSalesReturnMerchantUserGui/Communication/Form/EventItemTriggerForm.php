@@ -26,7 +26,7 @@ class EventItemTriggerForm extends AbstractType
     protected const BUTTON_SUBMIT = 'submit';
 
     /**
-     * @uses \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Controller\OmsTriggerController::submitTriggerEventItemAction()
+     * @uses \Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Controller\OmsTriggerController::submitTriggerEventItemAction()
      */
     protected const ACTION_ROUTE = '/merchant-sales-return-merchant-user-gui/oms-trigger/submit-trigger-event-item';
 

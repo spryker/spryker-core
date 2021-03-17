@@ -1,0 +1,10 @@
+{% set returnItems = form.returnItems | filter(returnItem => returnItem.vars.value.orderItem.salesOrderConfiguredBundle is empty) %}
+
+{% for returnItem in returnItems %}
+    {% include '@MerchantSalesReturnMerchantUserGui/Create/_partials/return-create-item.twig' with {
+        returnItem: returnItem,
+        orderItem: returnItem.vars.value.orderItem,
+        merchantOrder: merchantOrder,
+        isBundleProduct: false,
+    } only %}
+{% endfor %}

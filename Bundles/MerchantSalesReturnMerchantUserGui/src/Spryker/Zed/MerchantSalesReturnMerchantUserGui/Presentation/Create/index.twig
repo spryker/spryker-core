@@ -1,0 +1,84 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set myOrderDetailsPage = url('/merchant-sales-return-merchant-user-gui/detail', {'id-merchant-sales-order': merchantOrder.idMerchantOrder}) %}
+
+{% block section_title %}
+    {{ 'Create Return' | trans }}
+{% endblock %}
+
+{% block action %}
+    {{ backActionButton(myOrderDetailsPage, 'Back to Order' | trans) }}
+{% endblock %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'General information' } %}
+        {% block widget_content %}
+            <div class="row">
+                <div class="col-lg-2 font-bold">
+                    {{ 'Order reference' | trans }}
+                </div>
+                <div class="col-lg-10">
+                    <a target="_blank" href="{{ myOrderDetailsPage }}">
+                        {{ merchantOrder.order.orderReference }}
+                    </a>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-2 font-bold">
+                    {{ 'Merchant Order reference' | trans }}
+                </div>
+                <div class="col-lg-10">
+                    <a target="_blank" href="{{ myOrderDetailsPage }}">
+                        {{ merchantOrder.merchantOrderReference }}
+                    </a>
+                </div>
+            </div>
+        {% endblock %}
+    {% endembed %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Select Items to Return' } %}
+        {% block widget_content %}
+            {{ form_start(returnCreateForm) }}
+            {{ form_errors(returnCreateForm) }}
+
+            <div class="table-responsive">
+                <table class="table js-return-items-table" data-qa="order-item-list">
+                    <thead>
+                        <tr class="text-left">
+                            <th><input type="checkbox" class="js-check-all-items"></th>
+                            <th colspan="2">{{ 'Product' | trans }}</th>
+                            <th>{{ 'Quantity' | trans }}</th>
+                            <th>{{ 'Price' | trans }}</th>
+                            <th>{{ 'Total' | trans }}</th>
+                            <th>{{ 'Return policy' | trans }}</th>
+                            <th>{{ 'State' | trans }}</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% include '@MerchantSalesReturnMerchantUserGui/Create/_partials/return-create-items.twig' with {
+                            form: returnCreateForm,
+                            merchantOrder: merchantOrder,
+                        } only %}
+                    </tbody>
+                </table>
+            </div>
+
+            <button class="btn btn-primary safe-submit js-create-return-submit" disabled>{{ 'Create return' | trans }}</button>
+
+            {{ form_end(returnCreateForm) }}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
+{% block head_css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ assetsPath('css/spryker-zed-sales-return-gui-main.css') }}">
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script src="{{ assetsPath('js/spryker-zed-sales-return-gui-main.js') }}"></script>
+{% endblock %}

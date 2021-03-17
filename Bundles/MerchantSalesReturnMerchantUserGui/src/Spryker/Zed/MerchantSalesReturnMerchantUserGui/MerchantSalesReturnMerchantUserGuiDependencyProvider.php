@@ -11,6 +11,7 @@ use Orm\Zed\SalesReturn\Persistence\SpySalesReturnQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Dependency\Facade\MerchantSalesReturnMerchantUserGuiToCustomerFacadeBridge;
+use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Dependency\Facade\MerchantSalesReturnMerchantUserGuiToGlossaryFacadeBridge;
 use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Dependency\Facade\MerchantSalesReturnMerchantUserGuiToMerchantOmsFacadeBridge;
 use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Dependency\Facade\MerchantSalesReturnMerchantUserGuiToMerchantSalesOrderFacadeBridge;
 use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Dependency\Facade\MerchantSalesReturnMerchantUserGuiToMerchantUserFacadeBridge;
@@ -42,6 +43,7 @@ class MerchantSalesReturnMerchantUserGuiDependencyProvider extends AbstractBundl
     public const PLUGIN_SHIPMENT_FORM_TYPE = 'PLUGIN_SHIPMENT_FORM_TYPE';
     public const PLUGIN_ITEM_FORM_TYPE = 'PLUGIN_ITEM_FORM_TYPE';
     public const FACADE_SALES_RETURN = 'FACADE_SALES_RETURN';
+    public const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -63,6 +65,7 @@ class MerchantSalesReturnMerchantUserGuiDependencyProvider extends AbstractBundl
         $container = $this->addMerchantUserFacade($container);
         $container = $this->addSalesReturnFacade($container);
         $container = $this->addMerchantOmsFacade($container);
+        $container = $this->addGlossaryFacade($container);
 //        $container = $this->addShipmentService($container);
 //        $container = $this->addShipmentFacade($container);
 //        $container = $this->addShipmentFormTypePlugin($container);
@@ -335,4 +338,20 @@ class MerchantSalesReturnMerchantUserGuiDependencyProvider extends AbstractBundl
 //
 //        return $container;
 //    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addGlossaryFacade(Container $container)
+    {
+        $container->set(static::FACADE_GLOSSARY, function (Container $container) {
+            return new MerchantSalesReturnMerchantUserGuiToGlossaryFacadeBridge(
+                $container->getLocator()->glossary()->facade()
+            );
+        });
+
+        return $container;
+    }
 }

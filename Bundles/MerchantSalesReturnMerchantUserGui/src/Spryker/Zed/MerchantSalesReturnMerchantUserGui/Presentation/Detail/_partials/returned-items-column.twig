@@ -48,20 +48,6 @@
                         merchantOrder: merchantOrder,
                         changeStatusRedirectUrl: changeStatusRedirectUrl,
                     } only %}
-
-                    {% include '@MerchantSalesReturnMerchantUserGui/Detail/_partials/return-detail-configured-bundles.twig' with {
-                        return: return,
-                        order: order,
-                        merchantOrder: merchantOrder,
-                        changeStatusRedirectUrl: changeStatusRedirectUrl,
-                    } only %}
-
-                    {% include '@MerchantSalesReturnMerchantUserGui/Detail/_partials/return-detail-product-bundles.twig' with {
-                        return: return,
-                        order: order,
-                        merchantOrder: merchantOrder,
-                        changeStatusRedirectUrl: changeStatusRedirectUrl,
-                    } only %}
                 </tbody>
             </table>
         </div>

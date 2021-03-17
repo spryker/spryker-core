@@ -7,18 +7,24 @@
 
 namespace Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication;
 
+use Generated\Shared\Transfer\OrderTransfer;
 use Orm\Zed\SalesReturn\Persistence\SpySalesReturnQuery;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Form\DataProvider\EventItemTriggerFormDataProvider;
 use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Form\DataProvider\EventTriggerFormDataProvider;
+use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Form\DataProvider\ReturnCreateFormDataProvider;
 use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Form\EventItemTriggerForm;
 use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Form\EventTriggerForm;
+use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Form\Handler\ReturnHandler;
+use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Form\Handler\ReturnHandlerInterface;
+use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Form\ReturnCreateForm;
 use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Reader\CustomerReader;
 use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Reader\CustomerReaderInterface;
 use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Reader\MerchantOrderReader;
 use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Reader\MerchantOrderReaderInterface;
 use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Table\MerchantReturnTable;
 use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Dependency\Facade\MerchantSalesReturnMerchantUserGuiToCustomerFacadeInterface;
+use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Dependency\Facade\MerchantSalesReturnMerchantUserGuiToGlossaryFacadeInterface;
 use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Dependency\Facade\MerchantSalesReturnMerchantUserGuiToMerchantOmsFacadeInterface;
 use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Dependency\Facade\MerchantSalesReturnMerchantUserGuiToMerchantSalesOrderFacadeInterface;
 use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Dependency\Facade\MerchantSalesReturnMerchantUserGuiToMerchantUserFacadeInterface;
@@ -68,6 +74,13 @@ class MerchantSalesReturnMerchantUserGuiCommunicationFactory extends AbstractCom
         );
     }
 
+    public function createReturnHandler(): ReturnHandlerInterface
+    {
+        return new ReturnHandler(
+            $this->getSalesReturnFacade()
+        );
+    }
+
     /**
      * @return \Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Form\DataProvider\EventTriggerFormDataProvider
      */
@@ -110,6 +123,33 @@ class MerchantSalesReturnMerchantUserGuiCommunicationFactory extends AbstractCom
     public function createEventItemTriggerForm(array $options = []): FormInterface
     {
         return $this->getFormFactory()->create(EventItemTriggerForm::class, null, $options);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createReturnCreateForm(OrderTransfer $orderTransfer): FormInterface
+    {
+        $returnCreateFormDataProvider = $this->createReturnCreateFormDataProvider();
+
+        return $this->getFormFactory()->create(
+            ReturnCreateForm::class,
+            $returnCreateFormDataProvider->getData($orderTransfer),
+            $returnCreateFormDataProvider->getOptions()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Form\DataProvider\ReturnCreateFormDataProvider
+     */
+    public function createReturnCreateFormDataProvider(): ReturnCreateFormDataProvider
+    {
+        return new ReturnCreateFormDataProvider(
+            $this->getSalesReturnFacade(),
+            $this->getGlossaryFacade()
+        );
     }
 
     /**
@@ -174,5 +214,13 @@ class MerchantSalesReturnMerchantUserGuiCommunicationFactory extends AbstractCom
     public function getMerchantOmsFacade(): MerchantSalesReturnMerchantUserGuiToMerchantOmsFacadeInterface
     {
         return $this->getProvidedDependency(MerchantSalesReturnMerchantUserGuiDependencyProvider::FACADE_MERCHANT_OMS);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantSalesReturnMerchantUserGui\Dependency\Facade\MerchantSalesReturnMerchantUserGuiToGlossaryFacadeInterface
+     */
+    public function getGlossaryFacade(): MerchantSalesReturnMerchantUserGuiToGlossaryFacadeInterface
+    {
+        return $this->getProvidedDependency(MerchantSalesReturnMerchantUserGuiDependencyProvider::FACADE_GLOSSARY);
     }
 }

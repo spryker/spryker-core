@@ -41,16 +41,12 @@ class MerchantOrderReader implements MerchantOrderReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
+     * @param \Generated\Shared\Transfer\MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantOrderTransfer|null
      */
-    public function findMerchantSalesOrder(ReturnTransfer $returnTransfer): ?MerchantOrderTransfer
+    public function findMerchantSalesOrder(MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer): ?MerchantOrderTransfer
     {
-        $merchantOrderCriteriaTransfer = (new MerchantOrderCriteriaTransfer())
-            ->setMerchantOrderReference($returnTransfer->getMerchantSalesOrderReference())
-            ->setWithItems(true);
-
         $merchantOrderTransfer = $this
             ->merchantSalesOrderFacade
             ->findMerchantOrder($merchantOrderCriteriaTransfer);
@@ -63,17 +59,12 @@ class MerchantOrderReader implements MerchantOrderReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
+     * @param \Generated\Shared\Transfer\MerchantOrderItemCriteriaTransfer $merchantOrderItemCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantOrderItemTransfer[]
      */
-    public function findMerchantOrderItems(ReturnTransfer $returnTransfer): array
+    public function findMerchantOrderItems(MerchantOrderItemCriteriaTransfer $merchantOrderItemCriteriaTransfer): array
     {
-        $salesOrderItemIds = $this->extractSalesOrderItemIdsFromReturn($returnTransfer);
-
-        $merchantOrderItemCriteriaTransfer = (new MerchantOrderItemCriteriaTransfer())
-            ->setOrderItemIds($salesOrderItemIds);
-
         $merchantOrderItemTransfers = $this->merchantSalesOrderFacade
             ->getMerchantOrderItemCollection($merchantOrderItemCriteriaTransfer);
 
@@ -82,22 +73,6 @@ class MerchantOrderReader implements MerchantOrderReaderInterface
         $merchantOrderItemTransfers = $this->createMerchantOrderItemsIndexMapping($merchantOrderItemTransfers);
 
         return $merchantOrderItemTransfers;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
-     *
-     * @return int[]
-     */
-    protected function extractSalesOrderItemIdsFromReturn(ReturnTransfer $returnTransfer): array
-    {
-        $salesOrderItemIds = [];
-
-        foreach ($returnTransfer->getReturnItems() as $returnItemTransfer) {
-            $salesOrderItemIds[] = $returnItemTransfer->getOrderItem()->getIdSalesOrderItem();
-        }
-
-        return $salesOrderItemIds;
     }
 
     /**

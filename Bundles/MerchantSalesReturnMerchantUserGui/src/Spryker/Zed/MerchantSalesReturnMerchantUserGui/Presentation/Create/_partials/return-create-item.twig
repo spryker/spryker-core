@@ -1,10 +1,18 @@
+{% set productUniqueKey = orderItem.idSalesOrderItem %}
 {% set numberOfItemAdditions = not isBundleProduct ? orderItem.productOptions | length + 1 %}
+{% set merchantOrderItem = merchantOrder.merchantOrderItems[orderItem.idSalesOrderItem] %}
+
+{% if isBundleProduct %}
+    {% set productUniqueKey = orderItem.bundleItemIdentifier ~ '-bundle' %}
+{% endif %}
 
 <tr>
     <td>
-        {% if not isBundleProduct %}
-            <input type="checkbox" name="order-item" value="{{ orderItem.idSalesOrderItem }}" class="js-check-item">
-        {% endif %}
+        {{ form_row(returnItem.isReturnable, {
+            attr: {
+                class: 'js-check-item',
+            },
+        }) }}
     </td>
     <td>
         <div class="image-wrap">
@@ -35,7 +43,7 @@
         {% include '@Sales/Detail/boxes/discounted-price.twig' with {
             subtotal: orderItem.sumPrice,
             priceToPay: orderItem.sumPrice - orderItem.sumDiscountAmountFullAggregation | default(0),
-            order: order,
+            order: merchantOrder.order,
         } %}
 
         <div class="tax-info">{{ 'incl. %tax_amount% % tax' | trans({'%tax_amount%': orderItem.taxRate | default(0)}) }}</div>
@@ -44,16 +52,23 @@
         {% include '@Sales/Detail/boxes/discounted-price.twig' with {
             subtotal: orderItem.sumSubtotalAggregation,
             priceToPay: orderItem.sumPriceToPayAggregation,
-            order: order,
+            order: merchantOrder.order,
         } %}
+    </td>
+    <td>
+        {% for returnPolicyMessage in orderItem.returnPolicyMessages %}
+            {% if returnPolicyMessage.message is not null %}
+                <div>{{ returnPolicyMessage.message | trans }}</div>
+            {% endif %}
+        {% endfor %}
     </td>
     <td rowspan="{{ numberOfItemAdditions }}" class="state-history">
         {% if not isBundleProduct %}
-
             <a href="{{ url('/state-machine/graph/draw', {'process': merchantOrder.process, 'highlight-state': (merchantOrderItem.stateHistory | first).stateName, 'state-machine': 'Merchant'}) }}" target="_blank">{{ (merchantOrderItem.stateHistory | first).stateName }}</a> ({{ merchantOrder.process }})
-            {% if merchantOrderItem.stateHistory is not empty %}
 
-                <br>
+            <br>
+
+            {% if merchantOrderItem.stateHistory | length > 1 %}
                 <div id="history_details_{{ merchantOrderItem.idMerchantOrderItem }}" class="hidden">
                     {% for stateHistory in merchantOrderItem.stateHistory | slice(1) %}
                         <div>{{ stateHistory.stateName }} ({{ stateHistory.createdAt | formatDateTime }})</div>
@@ -67,28 +82,30 @@
             {% endif %}
         {% endif %}
     </td>
-    <td rowspan="{{ numberOfItemAdditions }}">
-        {% if merchantOrderItem.manualEvents is not empty %}
-            {% include '@MerchantSalesReturnMerchantUserGui/_partials/merchant-order-item-actions.twig' with {
-                redirectUrl: changeStatusRedirectUrl,
-                merchantSalesOrderItemReference: merchantOrderItem.merchantOrderItemReference,
-                events: merchantOrderItem.manualEvents,
-            } %}
-        {% endif %}
-    </td>
 </tr>
 
 {% if not isBundleProduct %}
     {% include '@Sales/Detail/boxes/order-item-option.twig' with {
         orderItem: orderItem,
-        order: order,
+        order: merchantOrder.order,
     } %}
 {% endif %}
 
 <tr class="addition-row">
     <td colspan="2"></td>
     <td>
-        {{ 'Reason' | trans }}: {{ returnItem.reason ? returnItem.reason | trans : '--' }}
+        {{ form_row(returnItem.reason, {
+            attr: {
+                class: 'select-reason js-select-reason',
+                'data-target': 'js-custom-reason-' ~ productUniqueKey,
+            },
+        }) }}
+
+        {{ form_row(returnItem.customReason, {
+            attr: {
+                class: 'js-custom-reason-' ~ productUniqueKey ~ ' hidden',
+            },
+        }) }}
     </td>
     <td colspan="5"></td>
 </tr>
