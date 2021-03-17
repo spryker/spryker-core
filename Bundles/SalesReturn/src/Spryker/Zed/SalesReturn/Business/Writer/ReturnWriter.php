@@ -348,12 +348,12 @@ class ReturnWriter implements ReturnWriterInterface
         $indexedItemsByUuid = $this->indexOrderItemsByUuid($itemTransfers);
 
         foreach ($returnCreateRequestTransfer->getReturnItems() as $returnItemTransfer) {
-            $idOrderItem = $returnItemTransfer->getOrderItem()->getIdOrderItem();
+            $idSalesOrderItem = $returnItemTransfer->getOrderItem()->getIdSalesOrderItem();
             $orderItemUuid = $returnItemTransfer->getOrderItem()->getUuid();
 
-            if (isset($indexedItemsById[$idOrderItem]) || isset($indexedItemsByUuid[$orderItemUuid])) {
+            if (isset($indexedItemsById[$idSalesOrderItem]) || isset($indexedItemsByUuid[$orderItemUuid])) {
                 $returnItemTransfer->setOrderItem(
-                    $indexedItemsById[$idOrderItem] ?? $indexedItemsByUuid[$orderItemUuid]
+                    $indexedItemsById[$idSalesOrderItem] ?? $indexedItemsByUuid[$orderItemUuid]
                 );
             }
         }
