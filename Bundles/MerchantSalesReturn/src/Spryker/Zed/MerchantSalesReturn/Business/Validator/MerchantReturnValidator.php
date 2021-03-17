@@ -26,7 +26,7 @@ class MerchantReturnValidator implements MerchantReturnValidatorInterface
 
         $previousItemTransfer = null;
         foreach ($returnCreateRequestTransfer->getReturnItems() as $returnItemTransfer) {
-            $itemTransfer = $returnItemTransfer->getOrderItem();
+            $itemTransfer = $returnItemTransfer->getOrderItemOrFail();
 
             if (
                 $previousItemTransfer
