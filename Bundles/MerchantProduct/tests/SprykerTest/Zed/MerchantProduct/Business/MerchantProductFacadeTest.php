@@ -459,7 +459,7 @@ class MerchantProductFacadeTest extends Unit
 
         // Act
         $merchantProductConcreteTransfer = $this->tester->getFacade()->findProductConcrete(
-            (new MerchantProductCriteriaTransfer)->addIdProductConcrete($productConcreteTransfer->getIdProductConcreteOrFail())
+            (new MerchantProductCriteriaTransfer())->addIdProductConcrete($productConcreteTransfer->getIdProductConcreteOrFail())
         );
 
         // Assert
@@ -485,7 +485,7 @@ class MerchantProductFacadeTest extends Unit
 
         // Act
         $merchantProductConcreteTransfer = $this->tester->getFacade()->findProductConcrete(
-            (new MerchantProductCriteriaTransfer)->addMerchantProductAbstractId($merchantProductTransfer->getIdMerchantProductAbstractOrFail())
+            (new MerchantProductCriteriaTransfer())->addMerchantProductAbstractId($merchantProductTransfer->getIdMerchantProductAbstractOrFail())
         );
 
         // Assert
@@ -511,7 +511,7 @@ class MerchantProductFacadeTest extends Unit
 
         // Act
         $merchantProductConcreteTransfer = $this->tester->getFacade()->findProductConcrete(
-            (new MerchantProductCriteriaTransfer)->setIdProductAbstract($productConcreteTransfer->getFkProductAbstractOrFail())
+            (new MerchantProductCriteriaTransfer())->setIdProductAbstract($productConcreteTransfer->getFkProductAbstractOrFail())
         );
 
         // Assert
@@ -538,7 +538,7 @@ class MerchantProductFacadeTest extends Unit
 
         // Act
         $merchantProductConcreteTransfer = $this->tester->getFacade()->findProductConcrete(
-            (new MerchantProductCriteriaTransfer)->addIdMerchant($merchantTransfer->getIdMerchantOrFail())
+            (new MerchantProductCriteriaTransfer())->addIdMerchant($merchantTransfer->getIdMerchantOrFail())
         );
 
         // Assert
@@ -560,7 +560,7 @@ class MerchantProductFacadeTest extends Unit
 
         // Act
         $merchantProductConcreteTransfer = $this->tester->getFacade()->findProductConcrete(
-            (new MerchantProductCriteriaTransfer)->addIdProductConcrete($productConcreteTransfer->getIdProductConcreteOrFail())
+            (new MerchantProductCriteriaTransfer())->addIdProductConcrete($productConcreteTransfer->getIdProductConcreteOrFail())
         );
 
         // Assert
