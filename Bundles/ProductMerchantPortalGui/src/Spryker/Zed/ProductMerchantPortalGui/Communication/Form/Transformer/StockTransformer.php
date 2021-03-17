@@ -14,15 +14,15 @@ use Symfony\Component\Form\DataTransformerInterface;
 class StockTransformer implements DataTransformerInterface
 {
     /**
-     * @phpstan-param array<\Generated\Shared\Transfer\StockProductTransfer> $stockProductTransfers
+     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\StockProductTransfer> $stockProductTransfers
      *
-     * @param \Generated\Shared\Transfer\StockProductTransfer[]|\ArrayObject $stockProductTransfers
+     * @param \ArrayObject|\Generated\Shared\Transfer\StockProductTransfer[] $stockProductTransfers
      *
      * @return \Generated\Shared\Transfer\StockProductTransfer
      */
     public function transform($stockProductTransfers): StockProductTransfer
     {
-        return $stockProductTransfers->offsetGet(0);
+        return $stockProductTransfers->offsetGet(0) ?: new StockProductTransfer();
     }
 
     /**
@@ -30,7 +30,7 @@ class StockTransformer implements DataTransformerInterface
      *
      * @param \Generated\Shared\Transfer\StockProductTransfer $stockProductTransfer
      *
-     * @return \Generated\Shared\Transfer\StockProductTransfer[]|\ArrayObject
+     * @return \ArrayObject|\Generated\Shared\Transfer\StockProductTransfer[]
      */
     public function reverseTransform($stockProductTransfer): ArrayObject
     {

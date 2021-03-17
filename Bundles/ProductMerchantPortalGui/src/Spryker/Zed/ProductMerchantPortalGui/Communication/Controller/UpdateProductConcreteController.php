@@ -172,7 +172,7 @@ class UpdateProductConcreteController extends UpdateProductController
                 'priceProductConcreteTableConfiguration' => $this->getFactory()
                     ->createPriceProductConcreteGuiTableConfigurationProvider()
                     ->getConfiguration($productConcreteTransfer->getIdProductConcreteOrFail(), $initialData),
-                'reservedStock' => $reservationResponseTransfer->getReservationQuantity()->toFloat(),
+                'reservedStock' => $reservationResponseTransfer->getReservationQuantityOrFail()->toFloat(),
             ])->getContent(),
         ];
 
