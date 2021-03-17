@@ -61,8 +61,8 @@ class AvailabilityNotificationSubscriber implements AvailabilityNotificationSubs
         $storeTransfer = $this->storeClient->getCurrentStore();
         $restUser = $restRequest->getRestUser();
         $customerReference = $restUser
-                    ? $restUser->getNaturalIdentifier()
-                    : null;
+            ? $restUser->getNaturalIdentifier()
+            : null;
 
         /**
          * @var \Generated\Shared\Transfer\RestAvailabilityNotificationRequestAttributesTransfer $restAvailabilityNotificationRequestAttributesTransfer

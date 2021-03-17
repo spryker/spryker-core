@@ -18,7 +18,7 @@ use Spryker\Glue\AvailabilityNotificationsRestApi\Processor\RestResponseBuilder\
 use Spryker\Glue\AvailabilityNotificationsRestApi\Processor\Subscriber\AvailabilityNotificationSubscriber;
 use Spryker\Glue\AvailabilityNotificationsRestApi\Processor\Subscriber\AvailabilityNotificationSubscriberInterface;
 use Spryker\Glue\AvailabilityNotificationsRestApi\Processor\Validator\AvailabilityNotificationsRestApiValidator;
-use Spryker\Glue\AvailabilityNotificationsRestApi\Processor\Validator\RestApiValidatorInterface;
+use Spryker\Glue\AvailabilityNotificationsRestApi\Processor\Validator\AvailabilityNotificationsRestApiValidatorInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
 
 /**
@@ -35,7 +35,7 @@ class AvailabilityNotificationsRestApiFactory extends AbstractFactory
             $this->getAvailabilityNotificationClient(),
             $this->createAvailabilityNotificationsRestResponseBuilder(),
             $this->getStoreClient(),
-            $this->createRestApiValidator()
+            $this->createAvailabilityNotificationsRestApiValidator()
         );
     }
 
@@ -88,9 +88,9 @@ class AvailabilityNotificationsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\AvailabilityNotificationsRestApi\Processor\Validator\RestApiValidatorInterface
+     * @return \Spryker\Glue\AvailabilityNotificationsRestApi\Processor\Validator\AvailabilityNotificationsRestApiValidatorInterface
      */
-    public function createRestApiValidator(): RestApiValidatorInterface
+    public function createAvailabilityNotificationsRestApiValidator(): AvailabilityNotificationsRestApiValidatorInterface
     {
         return new AvailabilityNotificationsRestApiValidator();
     }

@@ -25,7 +25,7 @@ class AvailabilityNotificationsResourceController extends AbstractController
      *          "parameters": [{
      *              "ref": "acceptLanguage"
      *          }],
-     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestAvailabilityNotificationRequestAttributesTransfer",
+     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestAvailabilityNotificationsAttributesTransfer",
      *          "responses": {
      *              "404": "Product not found.",
      *              "422": "Unprocessable entity."

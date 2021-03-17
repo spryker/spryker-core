@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\PaginationTransfer;
 use Spryker\Glue\AvailabilityNotificationsRestApi\Dependency\Client\AvailabilityNotificationsRestApiToAvailabilityNotificationClientInterface;
 use Spryker\Glue\AvailabilityNotificationsRestApi\Dependency\Client\AvailabilityNotificationsRestApiToStoreClientInterface;
 use Spryker\Glue\AvailabilityNotificationsRestApi\Processor\RestResponseBuilder\AvailabilityNotificationsRestResponseBuilderInterface;
-use Spryker\Glue\AvailabilityNotificationsRestApi\Processor\Validator\RestApiValidatorInterface;
+use Spryker\Glue\AvailabilityNotificationsRestApi\Processor\Validator\AvailabilityNotificationsRestApiValidatorInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
@@ -34,7 +34,7 @@ class AvailabilityNotificationReader implements AvailabilityNotificationReaderIn
     protected $storeClient;
 
     /**
-     * @var \Spryker\Glue\AvailabilityNotificationsRestApi\Processor\Validator\RestApiValidatorInterface
+     * @var \Spryker\Glue\AvailabilityNotificationsRestApi\Processor\Validator\AvailabilityNotificationsRestApiValidatorInterface
      */
     protected $restApiValidator;
 
@@ -42,13 +42,13 @@ class AvailabilityNotificationReader implements AvailabilityNotificationReaderIn
      * @param \Spryker\Glue\AvailabilityNotificationsRestApi\Dependency\Client\AvailabilityNotificationsRestApiToAvailabilityNotificationClientInterface $availabilityNotificationClient
      * @param \Spryker\Glue\AvailabilityNotificationsRestApi\Processor\RestResponseBuilder\AvailabilityNotificationsRestResponseBuilderInterface $availabilityNotificationsRestResponseBuilder
      * @param \Spryker\Glue\AvailabilityNotificationsRestApi\Dependency\Client\AvailabilityNotificationsRestApiToStoreClientInterface $storeClient
-     * @param \Spryker\Glue\AvailabilityNotificationsRestApi\Processor\Validator\RestApiValidatorInterface $restApiValidator
+     * @param \Spryker\Glue\AvailabilityNotificationsRestApi\Processor\Validator\AvailabilityNotificationsRestApiValidatorInterface $restApiValidator
      */
     public function __construct(
         AvailabilityNotificationsRestApiToAvailabilityNotificationClientInterface $availabilityNotificationClient,
         AvailabilityNotificationsRestResponseBuilderInterface $availabilityNotificationsRestResponseBuilder,
         AvailabilityNotificationsRestApiToStoreClientInterface $storeClient,
-        RestApiValidatorInterface $restApiValidator
+        AvailabilityNotificationsRestApiValidatorInterface $restApiValidator
     ) {
         $this->availabilityNotificationClient = $availabilityNotificationClient;
         $this->availabilityNotificationsRestResponseBuilder = $availabilityNotificationsRestResponseBuilder;

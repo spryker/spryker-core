@@ -110,9 +110,7 @@ class AvailabilityNotificationsRestResponseBuilder implements AvailabilityNotifi
 
         return $this->createErrorResponse(
             (new RestErrorMessageTransfer())
-                ->setCode($restErrorPayload[RestErrorMessageTransfer::CODE])
-                ->setStatus($restErrorPayload[RestErrorMessageTransfer::STATUS])
-                ->setDetail($restErrorPayload[RestErrorMessageTransfer::DETAIL])
+                ->fromArray($restErrorPayload)
         );
     }
 
@@ -128,9 +126,7 @@ class AvailabilityNotificationsRestResponseBuilder implements AvailabilityNotifi
 
         return $this->createErrorResponse(
             (new RestErrorMessageTransfer())
-                ->setCode($restErrorPayload[RestErrorMessageTransfer::CODE])
-                ->setStatus($restErrorPayload[RestErrorMessageTransfer::STATUS])
-                ->setDetail($restErrorPayload[RestErrorMessageTransfer::DETAIL])
+                ->fromArray($restErrorPayload)
         );
     }
 
@@ -143,9 +139,7 @@ class AvailabilityNotificationsRestResponseBuilder implements AvailabilityNotifi
 
         return $this->createErrorResponse(
             (new RestErrorMessageTransfer())
-                ->setCode($restErrorPayload[RestErrorMessageTransfer::CODE])
-                ->setStatus($restErrorPayload[RestErrorMessageTransfer::STATUS])
-                ->setDetail($restErrorPayload[RestErrorMessageTransfer::DETAIL])
+                ->fromArray($restErrorPayload)
         );
     }
 

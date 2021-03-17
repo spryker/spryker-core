@@ -14,5 +14,5 @@ interface AvailabilityNotificationToUtilTextServiceInterface
      *
      * @return string
      */
-    public function generateRandomString(int $length);
+    public function generateRandomString($length);
 }

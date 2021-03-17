@@ -7,7 +7,9 @@
 
 namespace Spryker\Shared\AvailabilityNotification;
 
-class AvailabilityNotificationConfig
+use Spryker\Shared\Kernel\AbstractBundleConfig;
+
+class AvailabilityNotificationConfig extends AbstractBundleConfig
 {
     public const MESSAGE_PRODUCT_NOT_FOUND = 'Product not found.';
 

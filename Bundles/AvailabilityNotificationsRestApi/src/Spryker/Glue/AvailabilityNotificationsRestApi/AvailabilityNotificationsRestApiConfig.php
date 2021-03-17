@@ -63,21 +63,9 @@ class AvailabilityNotificationsRestApiConfig extends AbstractBundleConfig
                 RestErrorMessageTransfer::DETAIL => static::RESPONSE_DETAIL_SUBSCRIPTION_DOES_NOT_EXIST,
                 RestErrorMessageTransfer::STATUS => Response::HTTP_NOT_FOUND,
             ],
-            static::RESPONSE_DETAIL_FAILED_TO_SUBSCRIBE => [
-                RestErrorMessageTransfer::CODE => static::RESPONSE_CODE_FAILED_TO_SUBSCRIBE,
-                RestErrorMessageTransfer::DETAIL => static::RESPONSE_DETAIL_FAILED_TO_SUBSCRIBE,
-                RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
-            ],
-            static::RESPONSE_DETAIL_FAILED_TO_UNSUBSCRIBE => [
-                RestErrorMessageTransfer::CODE => static::RESPONSE_CODE_FAILED_TO_UNSUBSCRIBE,
-                RestErrorMessageTransfer::DETAIL => static::RESPONSE_DETAIL_FAILED_TO_UNSUBSCRIBE,
-                RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
-            ],
-            static::RESPONSE_DETAILS_CUSTOMER_UNAUTHORIZED => [
-                RestErrorMessageTransfer::CODE => static::RESPONSE_CODE_CUSTOMER_UNAUTHORIZED,
-                RestErrorMessageTransfer::DETAIL => static::RESPONSE_DETAILS_CUSTOMER_UNAUTHORIZED,
-                RestErrorMessageTransfer::STATUS => Response::HTTP_FORBIDDEN,
-            ],
+            static::RESPONSE_DETAIL_FAILED_TO_SUBSCRIBE => $this->getDefaultSubscribeRestError(),
+            static::RESPONSE_DETAIL_FAILED_TO_UNSUBSCRIBE => $this->getDefaultUnsubscribeRestError(),
+            static::RESPONSE_DETAILS_CUSTOMER_UNAUTHORIZED => $this->getCustomerUnauthorizedRestError(),
         ];
     }
 
@@ -88,7 +76,11 @@ class AvailabilityNotificationsRestApiConfig extends AbstractBundleConfig
      */
     public function getDefaultSubscribeRestError(): array
     {
-        return $this->getErrorIdentifierToRestErrorMapping()[static::RESPONSE_DETAIL_FAILED_TO_SUBSCRIBE];
+        return [
+            RestErrorMessageTransfer::CODE => static::RESPONSE_CODE_FAILED_TO_SUBSCRIBE,
+            RestErrorMessageTransfer::DETAIL => static::RESPONSE_DETAIL_FAILED_TO_SUBSCRIBE,
+            RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
+        ];
     }
 
     /**
@@ -98,7 +90,11 @@ class AvailabilityNotificationsRestApiConfig extends AbstractBundleConfig
      */
     public function getDefaultUnsubscribeRestError(): array
     {
-        return $this->getErrorIdentifierToRestErrorMapping()[static::RESPONSE_DETAIL_FAILED_TO_UNSUBSCRIBE];
+        return [
+            RestErrorMessageTransfer::CODE => static::RESPONSE_CODE_FAILED_TO_UNSUBSCRIBE,
+            RestErrorMessageTransfer::DETAIL => static::RESPONSE_DETAIL_FAILED_TO_UNSUBSCRIBE,
+            RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
+        ];
     }
 
     /**
@@ -108,6 +104,10 @@ class AvailabilityNotificationsRestApiConfig extends AbstractBundleConfig
      */
     public function getCustomerUnauthorizedRestError(): array
     {
-        return $this->getErrorIdentifierToRestErrorMapping()[static::RESPONSE_DETAILS_CUSTOMER_UNAUTHORIZED];
+        return [
+            RestErrorMessageTransfer::CODE => static::RESPONSE_CODE_CUSTOMER_UNAUTHORIZED,
+            RestErrorMessageTransfer::DETAIL => static::RESPONSE_DETAILS_CUSTOMER_UNAUTHORIZED,
+            RestErrorMessageTransfer::STATUS => Response::HTTP_FORBIDDEN,
+        ];
     }
 }
