@@ -3,11 +3,11 @@ import { CommonModule } from '@angular/common';
 import { CardModule } from '@spryker/card';
 import { LogoModule } from '@spryker/logo';
 
-import { LoginComponent } from './login.component';
+import { LoginLayoutComponent } from './login-layout.component';
 
 @NgModule({
     imports: [CommonModule, LogoModule, CardModule],
-    declarations: [LoginComponent],
-    exports: [LoginComponent],
+    declarations: [LoginLayoutComponent],
+    exports: [LoginLayoutComponent],
 })
-export class LoginModule {}
+export class LoginLayoutModule {}
