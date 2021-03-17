@@ -1,0 +1,30 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 61,
+            "line_to": 61,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ItemTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProductOfferWishlist/src/Spryker/Client/MerchantProductOfferWishlist/Expander/MerchantProductOfferWishlistExpander.php",
+            "snippet": "        $itemTransfers = array_merge($quoteTransfer->getItems()->getArrayCopy(), $quoteTransfer->getBundleItems()->getArrayCopy());",
+            "selected_text": "getArrayCopy",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 61,
+            "line_to": 61,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ItemTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProductOfferWishlist/src/Spryker/Client/MerchantProductOfferWishlist/Expander/MerchantProductOfferWishlistExpander.php",
+            "snippet": "        $itemTransfers = array_merge($quoteTransfer->getItems()->getArrayCopy(), $quoteTransfer->getBundleItems()->getArrayCopy());",
+            "selected_text": "getArrayCopy",
+            "error_level": 3,
+            "shortcode": 113
+        }
+    ],
+    "deprecation": []
+}

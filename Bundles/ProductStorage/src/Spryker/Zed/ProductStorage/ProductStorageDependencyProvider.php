@@ -23,9 +23,11 @@ use Spryker\Zed\ProductStorage\Dependency\QueryContainer\ProductStorageToProduct
 class ProductStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
+
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
     public const FACADE_STORE = 'FACADE_STORE';
+
     public const PLUGINS_PRODUCT_ABSTRACT_STORAGE_EXPANDER = 'PLUGINS_PRODUCT_ABSTRACT_STORAGE_EXPANDER';
 
     /**
