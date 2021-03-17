@@ -108,16 +108,16 @@ class MerchantSalesReturnFacadeTest extends Unit
     {
         // Arrange
         $returnCreateRequestTransfer = new ReturnCreateRequestTransfer();
-
-        $itemTransfers = new ArrayObject();
-        $itemTransfers->append($this->tester->createItemTransfer(static::TEST_MERCHANT_REFERENCE_1, 1));
-        $itemTransfers->append($this->tester->createItemTransfer(static::TEST_MERCHANT_REFERENCE_1, 1));
-        $itemTransfers->append($this->tester->createItemTransfer(static::TEST_MERCHANT_REFERENCE_1, 1));
+        $returnCreateRequestTransfer->setReturnItems(new ArrayObject([
+            $this->tester->createReturnItem(static::TEST_MERCHANT_REFERENCE_1, 1),
+            $this->tester->createReturnItem(static::TEST_MERCHANT_REFERENCE_1, 1),
+            $this->tester->createReturnItem(static::TEST_MERCHANT_REFERENCE_1, 1),
+        ]));
 
         // Act
         $returnResponseTransfer = $this->tester
             ->getFacade()
-            ->validateReturn($returnCreateRequestTransfer, $itemTransfers);
+            ->validateReturn($returnCreateRequestTransfer);
 
         $messageTransfers = $returnResponseTransfer->getMessages();
 
@@ -133,16 +133,16 @@ class MerchantSalesReturnFacadeTest extends Unit
     {
         // Arrange
         $returnCreateRequestTransfer = new ReturnCreateRequestTransfer();
-
-        $itemTransfers = new ArrayObject();
-        $itemTransfers->append($this->tester->createItemTransfer(static::TEST_MERCHANT_REFERENCE_1, 1));
-        $itemTransfers->append($this->tester->createItemTransfer(static::TEST_MERCHANT_REFERENCE_1, 1));
-        $itemTransfers->append($this->tester->createItemTransfer(static::TEST_MERCHANT_REFERENCE_2, 1));
+        $returnCreateRequestTransfer->setReturnItems(new ArrayObject([
+            $this->tester->createReturnItem(static::TEST_MERCHANT_REFERENCE_1, 1),
+            $this->tester->createReturnItem(static::TEST_MERCHANT_REFERENCE_2, 1),
+            $this->tester->createReturnItem(static::TEST_MERCHANT_REFERENCE_1, 1),
+        ]));
 
         // Act
         $returnResponseTransfer = $this->tester
             ->getFacade()
-            ->validateReturn($returnCreateRequestTransfer, $itemTransfers);
+            ->validateReturn($returnCreateRequestTransfer);
 
         $messageTransfers = $returnResponseTransfer->getMessages();
 
@@ -158,16 +158,16 @@ class MerchantSalesReturnFacadeTest extends Unit
     {
         // Arrange
         $returnCreateRequestTransfer = new ReturnCreateRequestTransfer();
-
-        $itemTransfers = new ArrayObject();
-        $itemTransfers->append($this->tester->createItemTransfer(static::TEST_MERCHANT_REFERENCE_1, 1));
-        $itemTransfers->append($this->tester->createItemTransfer(static::TEST_MERCHANT_REFERENCE_1, 2));
-        $itemTransfers->append($this->tester->createItemTransfer(static::TEST_MERCHANT_REFERENCE_1, 1));
+        $returnCreateRequestTransfer->setReturnItems(new ArrayObject([
+            $this->tester->createReturnItem(static::TEST_MERCHANT_REFERENCE_1, 1),
+            $this->tester->createReturnItem(static::TEST_MERCHANT_REFERENCE_1, 2),
+            $this->tester->createReturnItem(static::TEST_MERCHANT_REFERENCE_1, 1),
+        ]));
 
         // Act
         $returnResponseTransfer = $this->tester
             ->getFacade()
-            ->validateReturn($returnCreateRequestTransfer, $itemTransfers);
+            ->validateReturn($returnCreateRequestTransfer);
 
         $messageTransfers = $returnResponseTransfer->getMessages();
 

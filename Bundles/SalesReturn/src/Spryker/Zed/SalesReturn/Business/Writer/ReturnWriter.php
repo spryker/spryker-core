@@ -95,6 +95,8 @@ class ReturnWriter implements ReturnWriterInterface
         }
 
         $itemTransfers = $this->getOrderItems($returnCreateRequestTransfer);
+
+        $returnCreateRequestTransfer = $this->mapReturnItemsWithOrderItems($returnCreateRequestTransfer, $itemTransfers);
         $returnResponseTransfer = $this->returnValidator->validateReturnRequest($returnCreateRequestTransfer, $itemTransfers);
 
         if (!$returnResponseTransfer->getIsSuccessful()) {
@@ -219,16 +221,8 @@ class ReturnWriter implements ReturnWriterInterface
     {
         $returnTransfer->requireIdSalesReturn();
 
-        $indexedItemsById = $this->indexOrderItemsById($itemTransfers);
-        $indexedItemsByUuid = $this->indexOrderItemsByUuid($itemTransfers);
-
         foreach ($returnTransfer->getReturnItems() as $returnItemTransfer) {
-            $itemTransfer = $returnItemTransfer->getOrderItem();
-
             $returnItemTransfer->setIdSalesReturn($returnTransfer->getIdSalesReturn());
-            $returnItemTransfer->setOrderItem(
-                $indexedItemsById[$itemTransfer->getIdSalesOrderItem()] ?? $indexedItemsByUuid[$itemTransfer->getUuid()]
-            );
         }
 
         return $returnTransfer;
@@ -338,5 +332,32 @@ class ReturnWriter implements ReturnWriterInterface
         }
 
         return $returnTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ReturnCreateRequestTransfer $returnCreateRequestTransfer
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ReturnCreateRequestTransfer
+     */
+    protected function mapReturnItemsWithOrderItems(
+        ReturnCreateRequestTransfer $returnCreateRequestTransfer,
+        ArrayObject $itemTransfers
+    ): ReturnCreateRequestTransfer {
+        $indexedItemsById = $this->indexOrderItemsById($itemTransfers);
+        $indexedItemsByUuid = $this->indexOrderItemsByUuid($itemTransfers);
+
+        foreach ($returnCreateRequestTransfer->getReturnItems() as $returnItemTransfer) {
+            $idOrderItem = $returnItemTransfer->getOrderItem()->getIdOrderItem();
+            $orderItemUuid = $returnItemTransfer->getOrderItem()->getUuid();
+
+            if (isset($indexedItemsById[$idOrderItem]) || isset($indexedItemsByUuid[$orderItemUuid])) {
+                $returnItemTransfer->setOrderItem(
+                    $indexedItemsById[$idOrderItem] ?? $indexedItemsByUuid[$orderItemUuid]
+                );
+            }
+        }
+
+        return $returnCreateRequestTransfer;
     }
 }

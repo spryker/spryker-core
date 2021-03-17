@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\MerchantSalesReturn\Business\Validator;
 
-use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ReturnCreateRequestTransfer;
@@ -17,19 +16,18 @@ class MerchantReturnValidator implements MerchantReturnValidatorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ReturnCreateRequestTransfer $returnCreateRequestTransfer
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
      * @return \Generated\Shared\Transfer\ReturnResponseTransfer
      */
-    public function validate(
-        ReturnCreateRequestTransfer $returnCreateRequestTransfer,
-        ArrayObject $itemTransfers
-    ): ReturnResponseTransfer {
+    public function validate(ReturnCreateRequestTransfer $returnCreateRequestTransfer): ReturnResponseTransfer
+    {
         $returnResponseTransfer = (new ReturnResponseTransfer())
             ->setIsSuccessful(true);
 
         $previousItemTransfer = null;
-        foreach ($itemTransfers as $itemTransfer) {
+        foreach ($returnCreateRequestTransfer->getReturnItems() as $returnItemTransfer) {
+            $itemTransfer = $returnItemTransfer->getOrderItem();
+
             if (
                 $previousItemTransfer
                 && !$this->isItemFromTheSameMerchantOrder($itemTransfer, $previousItemTransfer)

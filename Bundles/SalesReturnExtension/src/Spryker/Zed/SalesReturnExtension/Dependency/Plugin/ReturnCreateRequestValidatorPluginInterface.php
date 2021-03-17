@@ -7,14 +7,13 @@
 
 namespace Spryker\Zed\SalesReturnExtension\Dependency\Plugin;
 
-use ArrayObject;
 use Generated\Shared\Transfer\ReturnCreateRequestTransfer;
 use Generated\Shared\Transfer\ReturnResponseTransfer;
 
 /**
  * Allows to validate create return request.
  */
-interface ReturnRequestValidatorPluginInterface
+interface ReturnCreateRequestValidatorPluginInterface
 {
     /**
      * Specification:
@@ -23,12 +22,8 @@ interface ReturnRequestValidatorPluginInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\ReturnCreateRequestTransfer $returnCreateRequestTransfer
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
      * @return \Generated\Shared\Transfer\ReturnResponseTransfer
      */
-    public function validate(
-        ReturnCreateRequestTransfer $returnCreateRequestTransfer,
-        ArrayObject $itemTransfers
-    ): ReturnResponseTransfer;
+    public function validate(ReturnCreateRequestTransfer $returnCreateRequestTransfer): ReturnResponseTransfer;
 }

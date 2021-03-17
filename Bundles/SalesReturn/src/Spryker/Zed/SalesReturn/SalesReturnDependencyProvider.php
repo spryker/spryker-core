@@ -29,7 +29,7 @@ class SalesReturnDependencyProvider extends AbstractBundleDependencyProvider
     public const PROPEL_QUERY_SALES_ORDER_ITEM = 'PROPEL_QUERY_SALES_ORDER_ITEM';
 
     public const PLUGINS_RETURN_PRE_CREATE = 'PLUGINS_RETURN_PRE_CREATE';
-    public const PLUGINS_RETURN_REQUEST_VALIDATOR = 'PLUGINS_RETURN_REQUEST_VALIDATOR';
+    public const PLUGINS_RETURN_CREATE_REQUEST_VALIDATOR = 'PLUGINS_RETURN_CREATE_REQUEST_VALIDATOR';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -159,8 +159,8 @@ class SalesReturnDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addReturnRequestValidatorPlugins(Container $container): Container
     {
-        $container->set(static::PLUGINS_RETURN_REQUEST_VALIDATOR, function () {
-            return $this->getReturnRequestValidatorPlugins();
+        $container->set(static::PLUGINS_RETURN_CREATE_REQUEST_VALIDATOR, function () {
+            return $this->getReturnCreateRequestValidatorPlugins();
         });
 
         return $container;
@@ -175,9 +175,9 @@ class SalesReturnDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnRequestValidatorPluginInterface[]
+     * @return \Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnCreateRequestValidatorPluginInterface[]
      */
-    protected function getReturnRequestValidatorPlugins(): array
+    protected function getReturnCreateRequestValidatorPlugins(): array
     {
         return [];
     }
