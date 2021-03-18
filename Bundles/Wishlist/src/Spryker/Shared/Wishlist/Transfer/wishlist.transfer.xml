@@ -53,6 +53,7 @@
         <property name="items" type="WishlistItem[]" singular="item"/>
         <property name="pagination" type="WishlistPagination"/>
         <property name="meta" type="WishlistOverviewMeta"/>
+        <property name="errors" type="Message[]" singular="error"/>
     </transfer>
 
     <transfer name="StorageProduct">
@@ -104,6 +105,7 @@
     <transfer name="WishlistItemMeta">
         <property name="idProductAbstract" type="int"/>
         <property name="idProduct" type="int"/>
+        <property name="idWishlistItem" type="int"/>
         <property name="sku" type="string"/>
     </transfer>
 
@@ -116,6 +118,11 @@
         <property name="isSuccess" type="bool"/>
     </transfer>
 
+    <transfer name="ValidationResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="errorMessages" type="Message[]" singular="errorMessage"/>
+    </transfer>
+
     <transfer name="Item">
         <property name="sku" type="string"/>
         <property name="quantity" type="int"/>
@@ -124,6 +131,13 @@
     <transfer name="CurrentProductPrice">
         <property name="price" type="int"/>
         <property name="prices" type="array" singular="price"/>
+    </transfer>
+
+    <transfer name="Message">
+    </transfer>
+
+    <transfer name="WishlistItemCriteria">
+        <property name="sku" type="string"/>
     </transfer>
 
 </transfers>

@@ -32,14 +32,14 @@ class ReturnValidator implements ReturnValidatorInterface
     protected $salesReturnConfig;
 
     /**
-     * @var \Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnRequestValidatorPluginInterface[]
+     * @var \Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnCreateRequestValidatorPluginInterface[]
      */
     protected $returnRequestValidatorPlugins;
 
     /**
      * @param \Spryker\Zed\SalesReturn\Dependency\Facade\SalesReturnToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\SalesReturn\SalesReturnConfig $salesReturnConfig
-     * @param \Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnRequestValidatorPluginInterface[] $returnRequestValidatorPlugins
+     * @param \Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnCreateRequestValidatorPluginInterface[] $returnRequestValidatorPlugins
      */
     public function __construct(
         SalesReturnToStoreFacadeInterface $storeFacade,
@@ -77,7 +77,7 @@ class ReturnValidator implements ReturnValidatorInterface
             return $this->createErrorReturnResponse(static::GLOSSARY_KEY_CREATE_RETURN_STORE_ERROR);
         }
 
-        $returnResponseTransfer = $this->executeReturnRequestValidatorPlugins($returnCreateRequestTransfer, $itemTransfers);
+        $returnResponseTransfer = $this->executeReturnRequestValidatorPlugins($returnCreateRequestTransfer);
 
         if (!$returnResponseTransfer->getIsSuccessful()) {
             return $returnResponseTransfer;
@@ -138,16 +138,14 @@ class ReturnValidator implements ReturnValidatorInterface
 
     /**
      * @param \Generated\Shared\Transfer\ReturnCreateRequestTransfer $returnCreateRequestTransfer
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
      * @return \Generated\Shared\Transfer\ReturnResponseTransfer
      */
     protected function executeReturnRequestValidatorPlugins(
-        ReturnCreateRequestTransfer $returnCreateRequestTransfer,
-        ArrayObject $itemTransfers
+        ReturnCreateRequestTransfer $returnCreateRequestTransfer
     ): ReturnResponseTransfer {
         foreach ($this->returnRequestValidatorPlugins as $requestValidatorPlugin) {
-            $returnResponseTransfer = $requestValidatorPlugin->validate($returnCreateRequestTransfer, $itemTransfers);
+            $returnResponseTransfer = $requestValidatorPlugin->validate($returnCreateRequestTransfer);
 
             if (!$returnResponseTransfer->getIsSuccessful()) {
                 return $returnResponseTransfer;
