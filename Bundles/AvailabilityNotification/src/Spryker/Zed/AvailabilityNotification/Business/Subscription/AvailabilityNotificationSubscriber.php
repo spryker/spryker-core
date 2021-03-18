@@ -15,7 +15,6 @@ use Spryker\Zed\AvailabilityNotification\AvailabilityNotificationConfig;
 use Spryker\Zed\AvailabilityNotification\Business\Notification\AvailabilityNotificationSubscriptionSenderInterface;
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToProductFacadeInterface;
 use Spryker\Zed\AvailabilityNotification\Dependency\Service\AvailabilityNotificationToUtilValidateServiceInterface;
-use Spryker\Zed\Product\Business\Exception\MissingProductException;
 
 class AvailabilityNotificationSubscriber implements AvailabilityNotificationSubscriberInterface
 {
@@ -97,12 +96,8 @@ class AvailabilityNotificationSubscriber implements AvailabilityNotificationSubs
             return $this->createSubscriptionAlreadyExistsResponse();
         }
 
-        if ($this->availabilityNotificationConfig->availabilityNotificationCheckProductExists()) {
-            try {
-                $this->productFacade->getProductConcrete($availabilityNotificationSubscriptionTransfer->getSku());
-            } catch (MissingProductException $missingProductException) {
-                return $this->createProductNotFoundResponse();
-            }
+        if ($this->availabilityNotificationConfig->availabilityNotificationCheckProductExists() && !$this->productFacade->hasProductConcrete($availabilityNotificationSubscriptionTransfer->getSku())) {
+            return $this->createProductNotFoundResponse();
         }
 
         $availabilityNotificationSubscriptionTransfer = $this->availabilityNotificationSubscriptionSaver->save($availabilityNotificationSubscriptionTransfer);

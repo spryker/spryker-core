@@ -33,4 +33,11 @@ interface AvailabilityNotificationToProductFacadeInterface
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function getProductConcrete($concreteSku);
+
+    /**
+     * @param string $sku
+     *
+     * @return bool
+     */
+    public function hasProductConcrete($sku);
 }
