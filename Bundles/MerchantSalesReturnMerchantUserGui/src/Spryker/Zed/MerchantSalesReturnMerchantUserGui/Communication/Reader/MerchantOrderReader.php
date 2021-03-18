@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\MerchantOrderCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemCollectionTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
-use Generated\Shared\Transfer\ReturnTransfer;
 use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Dependency\Facade\MerchantSalesReturnMerchantUserGuiToMerchantOmsFacadeInterface;
 use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Dependency\Facade\MerchantSalesReturnMerchantUserGuiToMerchantSalesOrderFacadeInterface;
 
@@ -105,8 +104,8 @@ class MerchantOrderReader implements MerchantOrderReaderInterface
             ->getMerchantOrderItemsStateHistory($merchantOrderItemIds);
 
         foreach ($merchantOrderItemTransfers->getMerchantOrderItems() as $merchantOrderItemTransfer) {
-            if (isset($stateMachineItemTransfers[$merchantOrderItemTransfer->getIdMerchantOrder()])) {
-                $stateHistory = $stateMachineItemTransfers[$merchantOrderItemTransfer->getIdMerchantOrder()];
+            if (isset($stateMachineItemTransfers[$merchantOrderItemTransfer->getIdMerchantOrderItem()])) {
+                $stateHistory = $stateMachineItemTransfers[$merchantOrderItemTransfer->getIdMerchantOrderItem()];
                 $merchantOrderItemTransfer->setStateHistory(new ArrayObject($stateHistory));
                 $merchantOrderItemTransfer->setState(reset($stateHistory));
             }
