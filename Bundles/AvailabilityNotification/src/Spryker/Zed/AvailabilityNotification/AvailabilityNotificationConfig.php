@@ -14,7 +14,7 @@ class AvailabilityNotificationConfig extends AbstractBundleConfig
 {
     protected const AVAILABILITY_NOTIFICATION_UNSUBSCRIBE_BY_KEY_URI = '/%s/availability-notification/unsubscribe-by-key/%s';
 
-    protected const SHOULD_SUBSCRIBE_CHECK_PRODUCT_EXISTS = false;
+    protected const AVAILABILITY_NOTIFICATION_CHECK_PRODUCT_EXISTS = false;
 
     /**
      * @api
@@ -52,8 +52,8 @@ class AvailabilityNotificationConfig extends AbstractBundleConfig
      *
      * @return bool
      */
-    public function shouldSubscribeCheckProductExists(): bool
+    public function availabilityNotificationCheckProductExists(): bool
     {
-        return static::SHOULD_SUBSCRIBE_CHECK_PRODUCT_EXISTS;
+        return static::AVAILABILITY_NOTIFICATION_CHECK_PRODUCT_EXISTS;
     }
 }

@@ -97,7 +97,7 @@ class AvailabilityNotificationSubscriber implements AvailabilityNotificationSubs
             return $this->createSubscriptionAlreadyExistsResponse();
         }
 
-        if ($this->availabilityNotificationConfig->shouldSubscribeCheckProductExists()) {
+        if ($this->availabilityNotificationConfig->availabilityNotificationCheckProductExists()) {
             try {
                 $this->productFacade->getProductConcrete($availabilityNotificationSubscriptionTransfer->getSku());
             } catch (MissingProductException $missingProductException) {
@@ -131,6 +131,9 @@ class AvailabilityNotificationSubscriber implements AvailabilityNotificationSubs
             ->setErrorMessage(SharedAvailabilityNotificationConfig::MESSAGE_SUBSCRIPTION_ALREADY_EXISTS);
     }
 
+    /**
+     * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer
+     */
     protected function createProductNotFoundResponse(): AvailabilityNotificationSubscriptionResponseTransfer
     {
         return $this->createSubscriptionResponseTransfer(false)
