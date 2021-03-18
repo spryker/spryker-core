@@ -40,6 +40,7 @@
         <property name="searchTerm" type="string"/>
         <property name="locale" type="Locale"/>
         <property name="idMerchant" type="int"/>
+        <property name="merchantReference" type="string"/>
         <property name="page" type="int"/>
         <property name="pageSize" type="int"/>
         <property name="orderBy" type="string"/>
@@ -60,7 +61,7 @@
         <property name="filterUpdatedAt" type="CriteriaRangeFilter"/>
         <property name="searchTerm" type="string"/>
         <property name="locale" type="Locale"/>
-        <property name="idMerchant" type="int"/>
+        <property name="merchantReference" type="string"/>
         <property name="page" type="int"/>
         <property name="pageSize" type="int"/>
         <property name="orderBy" type="string"/>

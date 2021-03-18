@@ -120,8 +120,8 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
         $localeTransfer = $productTableCriteriaTransfer->requireLocale()->getLocale();
         /** @var int $idLocale */
         $idLocale = $localeTransfer->requireIdLocale()->getIdLocale();
-        /** @var int $idMerchant */
-        $idMerchant = $productTableCriteriaTransfer->requireIdMerchant()->getIdMerchant();
+        /** @var string $merchantReference */
+        $merchantReference = $productTableCriteriaTransfer->requireMerchantReference()->getMerchantReference();
 
         $productConcreteQuery = $this->addLocalizedAttributesToProductTableQuery($productConcreteQuery, $idLocale);
         $productConcreteQuery->leftJoinSpyProductValidity()
@@ -133,7 +133,7 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
             ->addAsColumn(LocalizedAttributesTransfer::NAME, SpyProductLocalizedAttributesTableMap::COL_NAME)
             ->addAsColumn(ProductConcreteTransfer::STORES, sprintf('(%s)', $this->createProductStoresSubquery()))
             ->addAsColumn(ProductImageTransfer::EXTERNAL_URL_SMALL, sprintf('(%s)', $this->createProductImagesSubquery($idLocale)))
-            ->addAsColumn(ProductConcreteTransfer::NUMBER_OF_OFFERS, sprintf('(%s)', $this->createProductOffersCountSubquery($idMerchant)))
+            ->addAsColumn(ProductConcreteTransfer::NUMBER_OF_OFFERS, sprintf('(%s)', $this->createProductOffersCountSubquery($merchantReference)))
             ->addAsColumn(ProductConcreteTransfer::VALID_FROM, SpyProductValidityTableMap::COL_VALID_FROM)
             ->addAsColumn(ProductConcreteTransfer::VALID_TO, SpyProductValidityTableMap::COL_VALID_TO)
             ->where(sprintf('(%s) IS NOT NULL', $this->createProductStoresSubquery()))
@@ -205,22 +205,22 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
     }
 
     /**
-     * @param int $idMerchant
+     * @param string $merchantReference
      *
      * @return string
      */
-    protected function createProductOffersCountSubquery(int $idMerchant): string
+    protected function createProductOffersCountSubquery(string $merchantReference): string
     {
         $productOffersSubquery = $this->getFactory()->getProductOfferPropelQuery()
-            ->joinWithSpyMerchant()
             ->addAsColumn('offers_count', 'COUNT(*)')
             ->where(sprintf(
-                '%s = %s AND %s = %s',
+                '%s = %s AND %s = \'%s\'',
                 SpyProductOfferTableMap::COL_CONCRETE_SKU,
                 SpyProductTableMap::COL_SKU,
                 SpyProductOfferTableMap::COL_MERCHANT_REFERENCE,
-                $idMerchant
+                $merchantReference
             ));
+
         $params = [];
 
         return $productOffersSubquery->createSelectSql($params);
@@ -382,13 +382,13 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
             return $productConcreteQuery;
         }
 
-        /** @var int $merchantUserId */
-        $merchantUserId = $productTableCriteriaTransfer->requireIdMerchant()->getIdMerchant();
+        /** @var string $merchantReference */
+        $merchantReference = $productTableCriteriaTransfer->requireMerchantReference()->getMerchantReference();
 
         $productConcreteQuery->where(
             sprintf(
                 '(%s) %s 0',
-                $this->createProductOffersCountSubquery($merchantUserId),
+                $this->createProductOffersCountSubquery($merchantReference),
                 $productConcreteHasOffers ? '>' : '='
             )
         );
@@ -443,7 +443,7 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
     ): SpyProductOfferQuery {
         $productOfferQuery = $this->getFactory()->getProductOfferPropelQuery();
         /** @var int $idMerchant */
-        $idMerchant = $productOfferTableCriteriaTransfer->requireIdMerchant()->getIdMerchant();
+        $merchantReference = $productOfferTableCriteriaTransfer->requireMerchantReference()->getMerchantReference();
         /** @var \Generated\Shared\Transfer\LocaleTransfer $localeTransfer */
         $localeTransfer = $productOfferTableCriteriaTransfer->requireLocale()->getLocale();
         /** @var int $idLocale */
@@ -451,7 +451,7 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
 
         $productOfferQuery = $this->joinProductLocalizedAttributesToProductOfferQuery($productOfferQuery, $idLocale);
         $productOfferQuery->joinWithSpyMerchant()
-            ->filterByMerchantReference()
+            ->filterByMerchantReference($merchantReference)
             ->leftJoinSpyProductOfferValidity()
             ->leftJoinProductOfferStock()
             ->useProductOfferStockQuery(null, Criteria::LEFT_JOIN)
