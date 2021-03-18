@@ -172,7 +172,7 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
     }
 
     /**
-     * @param array $productOfferReferences
+     * @param string[] $productOfferReferences
      *
      * @return void
      */

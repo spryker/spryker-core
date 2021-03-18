@@ -34,7 +34,7 @@ class MerchantOpeningHoursStorageClient extends AbstractClient implements Mercha
     /**
      * {@inheritDoc}
      *
-     * @apiMerchantSearchDeleter
+     * @api
      *
      * @param int[] $merchantIds
      *

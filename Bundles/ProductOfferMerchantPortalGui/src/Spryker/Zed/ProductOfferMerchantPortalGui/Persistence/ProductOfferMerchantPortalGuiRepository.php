@@ -10,7 +10,6 @@ namespace Spryker\Zed\ProductOfferMerchantPortalGui\Persistence;
 use DateTime;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\MerchantProductOfferCountsTransfer;
-use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\PriceProductOfferTableCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductOfferTableViewCollectionTransfer;
@@ -857,14 +856,12 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
      * @module ProductOfferStock
      * @module ProductOfferValidity
      *
-     * @param \Generated\Shared\Transfer\MerchantTransfer|null $merchant
+     * @param int $idMerchant
      *
      * @return \Generated\Shared\Transfer\MerchantProductOfferCountsTransfer
      */
-    public function getOffersDashboardCardCounts(?MerchantTransfer $merchant): MerchantProductOfferCountsTransfer
+    public function getOffersDashboardCardCounts(int $idMerchant): MerchantProductOfferCountsTransfer
     {
-        $merchantReference = $merchant ? $merchant->getMerchantReference(): null;
-
         $productOfferMerchantPortalGuiConfig = $this->getFactory()->getConfig();
         $dashboardExpiringOffersLimit = $productOfferMerchantPortalGuiConfig->getDashboardExpiringOffersDaysThreshold();
         $dashboardLowStockThreshold = $productOfferMerchantPortalGuiConfig->getDashboardLowStockThreshold();
@@ -875,7 +872,9 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
         $merchantProductOfferCounts = $this->getFactory()->getProductOfferPropelQuery()
             ->leftJoinSpyProductOfferValidity()
             ->leftJoinProductOfferStock()
-            ->filterByMerchantReference($merchantReference)
+            ->useSpyMerchantQuery()
+                ->filterByIdMerchant($idMerchant)
+                ->endUse()
             ->addAsColumn(MerchantProductOfferCountsTransfer::TOTAL, 'COUNT(*)')
             ->addAsColumn(
                 MerchantProductOfferCountsTransfer::ACTIVE,
@@ -1045,7 +1044,8 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
                 ->useSpyProductOfferQuery()
                     ->filterByIdProductOffer($productOfferPriceTableCriteriaTransfer->getIdProductOffer())
                     ->useSpyMerchantQuery()
-                    ->filterByMerchantReference()
+                        ->filterByIdMerchant($productOfferPriceTableCriteriaTransfer->getIdMerchant())
+                        ->endUse()
                 ->endUse()
             ->endUse();
 

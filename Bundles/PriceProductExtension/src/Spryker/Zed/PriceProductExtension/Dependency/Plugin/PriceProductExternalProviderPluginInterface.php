@@ -12,9 +12,9 @@ use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 /**
  * @deprecated Will be removed in the next major.
  *
- * Use ProductTableQueryCriteriaExpanderPluginInterface instead
+ * Use ProductTableQueryCriteriaExpanderPluginInterface instead.
  *
- * @see \Spryker\Zed\ProductManagement\ProductManagementDependencyProvider::addProductTableQueryCriteriaExpanderPluginInterfaces()
+ * @see \Spryker\Zed\ProductManagement\ProductManagementDependencyProvider::addProductTableQueryCriteriaExpanderPluginInterfaces().
  */
 interface PriceProductExternalProviderPluginInterface
 {

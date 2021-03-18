@@ -71,20 +71,18 @@ class MerchantOpeningHoursStorageReader implements MerchantOpeningHoursStorageRe
      */
     public function findMerchantOpeningHoursByIdMerchant(int $idMerchant): ?MerchantOpeningHoursStorageTransfer
     {
-        $merchantOpeningHoursStorageTransfer = null;
-
         $merchantOpeningHoursStorageData = $this->storageClient->get(
             $this->generateKey($idMerchant)
         );
 
-        if ($merchantOpeningHoursStorageData) {
-            $merchantOpeningHoursStorageTransfer = $this->merchantOpeningHoursMapper
-                ->mapMerchantOpeningHoursStorageDataToMerchantOpeningHoursStorageTransfer($merchantOpeningHoursStorageData, (new MerchantOpeningHoursStorageTransfer()));
-
-            $merchantOpeningHoursStorageTransfer = $this->dateScheduleFilter->filter($merchantOpeningHoursStorageTransfer);
+        if (!$merchantOpeningHoursStorageData) {
+            return null;
         }
 
-        return $merchantOpeningHoursStorageTransfer;
+        $merchantOpeningHoursStorageTransfer = $this->merchantOpeningHoursMapper
+            ->mapMerchantOpeningHoursStorageDataToMerchantOpeningHoursStorageTransfer($merchantOpeningHoursStorageData, (new MerchantOpeningHoursStorageTransfer()));
+
+        return $this->dateScheduleFilter->filter($merchantOpeningHoursStorageTransfer);
     }
 
     /**

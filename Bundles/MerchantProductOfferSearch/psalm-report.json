@@ -7,7 +7,7 @@
             "line_to": 74,
             "type": "PossiblyInvalidArgument",
             "message": "Argument 1 of get_class expects object, possibly different type Elastica\\Query\\AbstractQuery|array<array-key, mixed> provided",
-            "file_name": "vendor/spryker/spryker/Bundles/MerchantProductOfferSearch/src/Spryker/Client/MerchantProductOfferSearch/Plugin/MerchantReferenceQueryExpanderPlugin.php",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProductOfferSearch/src/Spryker/Client/MerchantProductOfferSearch/Plugin/Search/MerchantReferenceQueryExpanderPlugin.php",
             "snippet": "                get_class($boolQuery)",
             "selected_text": "$boolQuery",
             "error_level": 3,

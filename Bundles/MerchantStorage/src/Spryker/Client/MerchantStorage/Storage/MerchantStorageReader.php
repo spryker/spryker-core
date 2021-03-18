@@ -75,8 +75,9 @@ class MerchantStorageReader implements MerchantStorageReaderInterface
      */
     public function findOne(MerchantCriteriaTransfer $merchantCriteriaTransfer): ?MerchantStorageTransfer
     {
-        $merchantKey = $this->generateKey((string)$merchantCriteriaTransfer->getIdMerchant());
+        $merchantKey = $this->generateKey((string)$merchantCriteriaTransfer->getIdMerchantOrFail());
         $merchantData = $this->storageClient->get($merchantKey);
+
         if (!$merchantData) {
             return null;
         }
@@ -156,6 +157,7 @@ class MerchantStorageReader implements MerchantStorageReaderInterface
 
         if ($merchantIds) {
             $merchantCriteriaTransfer = (new MerchantCriteriaTransfer())->setMerchantIds($merchantIds);
+
             return $this->get($merchantCriteriaTransfer);
         }
 

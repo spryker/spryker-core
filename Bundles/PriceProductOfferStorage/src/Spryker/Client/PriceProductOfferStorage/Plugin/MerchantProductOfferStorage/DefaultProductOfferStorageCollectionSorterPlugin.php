@@ -14,7 +14,7 @@ class DefaultProductOfferStorageCollectionSorterPlugin implements ProductOfferSt
 {
     /**
      * Specification:
-     * - Default plugin to sort ProductOfferStorageCollection. No sorting actually occurs
+     * - Default plugin to sort ProductOfferStorageCollection. No sorting actually occurs.
      *
      * @api
      *

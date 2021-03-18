@@ -15,8 +15,6 @@ use Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer;
 class DateScheduleFilter implements DateScheduleFilterInterface
 {
     /**
-     * Removes all DateSchedule rows with dates in the past
-     *
      * @param \Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer $merchantOpeningHoursStorageTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer
