@@ -14,5 +14,5 @@ export class EditConcreteProductPricesComponent {
     @Input() tableId?: string;
     @Input() checkboxName?: string;
 
-    isChecked: boolean = false;
+    isChecked = false;
 }

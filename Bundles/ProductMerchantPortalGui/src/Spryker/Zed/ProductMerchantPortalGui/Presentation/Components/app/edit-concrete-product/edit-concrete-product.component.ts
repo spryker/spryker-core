@@ -6,6 +6,6 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/
     styleUrls: ['./edit-concrete-product.component.less'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
-    host: { class: 'mp-edit-concrete-product' }
+    host: { class: 'mp-edit-concrete-product' },
 })
 export class EditConcreteProductComponent {}
