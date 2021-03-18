@@ -103,7 +103,8 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
             $this->getRepository(),
             $this->getLocaleFacade(),
             $this->getMerchantUserFacade(),
-            $this->getTranslatorFacade()
+            $this->getTranslatorFacade(),
+            $this->createLocalizedAttributesExtractor()
         );
     }
 
@@ -337,6 +338,7 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
             $this->getLocaleFacade(),
             $this->getMerchantUserFacade(),
             $this->getTranslatorFacade(),
+            $this->createLocalizedAttributesExtractor(),
             $this->getProductConcreteTableExpanderPlugins()
         );
     }

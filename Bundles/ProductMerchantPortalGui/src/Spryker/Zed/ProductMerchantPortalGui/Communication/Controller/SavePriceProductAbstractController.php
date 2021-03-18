@@ -19,6 +19,10 @@ use Symfony\Component\HttpFoundation\Request;
 class SavePriceProductAbstractController extends SavePriceProductController
 {
     /**
+     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
+     *
+     * @phpstan-return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
+     *
      * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -48,7 +52,7 @@ class SavePriceProductAbstractController extends SavePriceProductController
         return $this->getFactory()
             ->getPriceProductFacade()
             ->findProductAbstractPricesWithoutPriceExtraction(
-                $request->get(PriceProductTableViewTransfer::ID_PRODUCT_ABSTRACT),
+                $this->castId($request->get(PriceProductTableViewTransfer::ID_PRODUCT_ABSTRACT)),
                 $priceProductCriteriaTransfer
             );
     }

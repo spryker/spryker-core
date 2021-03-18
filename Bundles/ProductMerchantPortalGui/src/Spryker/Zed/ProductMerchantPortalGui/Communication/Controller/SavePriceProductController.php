@@ -41,6 +41,10 @@ abstract class SavePriceProductController extends AbstractController
     protected const RESPONSE_TYPE_ERROR = 'error';
 
     /**
+     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
+     *
+     * @phpstan-return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
+     *
      * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      * @param \Symfony\Component\HttpFoundation\Request $request
      *

@@ -29,6 +29,8 @@ class LocalizedAttributesExtractor implements LocalizedAttributesExtractorInterf
     }
 
     /**
+     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributeTransfers
+     *
      * @param \ArrayObject|\Generated\Shared\Transfer\LocalizedAttributesTransfer[] $localizedAttributeTransfers
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
@@ -53,6 +55,8 @@ class LocalizedAttributesExtractor implements LocalizedAttributesExtractorInterf
     }
 
     /**
+     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributeTransfers
+     *
      * @param string[] $attributes
      * @param \ArrayObject|\Generated\Shared\Transfer\LocalizedAttributesTransfer[] $localizedAttributeTransfers
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
@@ -64,10 +68,9 @@ class LocalizedAttributesExtractor implements LocalizedAttributesExtractorInterf
         ArrayObject $localizedAttributeTransfers,
         LocaleTransfer $localeTransfer
     ): array {
-        $attributes = array_merge(
-            $attributes,
-            $this->extractLocalizedAttributes($localizedAttributeTransfers, $localeTransfer)->getAttributes()
-        );
+        $localizedAttributesTransfer = $this->extractLocalizedAttributes($localizedAttributeTransfers, $localeTransfer);
+        $localizedAttributes = $localizedAttributesTransfer ? $localizedAttributesTransfer->getAttributes() : [];
+        $attributes = array_merge($attributes, $localizedAttributes);
         $productManagementAttributeTransfers = $this->productAttributeFacade->getProductManagementAttributes(
             (new ProductManagementAttributeFilterTransfer())->setKeys(array_keys($attributes))
         )->getProductManagementAttributes();
@@ -83,6 +86,8 @@ class LocalizedAttributesExtractor implements LocalizedAttributesExtractorInterf
     }
 
     /**
+     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributeTransfers
+     *
      * @param string[] $attributes
      * @param \ArrayObject|\Generated\Shared\Transfer\LocalizedAttributesTransfer[] $localizedAttributeTransfers
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer

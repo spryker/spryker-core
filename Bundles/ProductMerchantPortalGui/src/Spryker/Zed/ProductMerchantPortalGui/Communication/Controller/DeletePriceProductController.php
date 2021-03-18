@@ -26,6 +26,8 @@ abstract class DeletePriceProductController extends AbstractController
     protected const RESPONSE_TYPE_ERROR = 'error';
 
     /**
+     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
+     *
      * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      * @param int[] $priceProductDefaultIds
      *

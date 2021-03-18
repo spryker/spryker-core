@@ -14,6 +14,8 @@ use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 interface LocalizedAttributesExtractorInterface
 {
     /**
+     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributeTransfers
+     *
      * @param \ArrayObject|\Generated\Shared\Transfer\LocalizedAttributesTransfer[] $localizedAttributeTransfers
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
@@ -25,6 +27,8 @@ interface LocalizedAttributesExtractorInterface
     ): ?LocalizedAttributesTransfer;
 
     /**
+     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributeTransfers
+     *
      * @param string[] $attributes
      * @param \ArrayObject|\Generated\Shared\Transfer\LocalizedAttributesTransfer[] $localizedAttributeTransfers
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
@@ -38,6 +42,8 @@ interface LocalizedAttributesExtractorInterface
     ): array;
 
     /**
+     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributeTransfers
+     *
      * @param string[] $attributes
      * @param \ArrayObject|\Generated\Shared\Transfer\LocalizedAttributesTransfer[] $localizedAttributeTransfers
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer

@@ -35,8 +35,12 @@ class ValidFromRangeConstraintValidator extends AbstractConstraintValidator
             throw new UnexpectedTypeException($constraint, ValidFromRangeConstraint::class);
         }
 
+        /** @var \Symfony\Component\Form\FormInterface $form */
+        $form = $this->context->getObject();
+        /** @var \Symfony\Component\Form\FormInterface $parentForm */
+        $parentForm = $form->getParent();
         /** @var \Generated\Shared\Transfer\ProductConcreteTransfer|array $formData */
-        $formData = $this->context->getObject()->getParent()->getData();
+        $formData = $parentForm->getData();
         $validTo = is_array($formData) ? $formData[ProductConcreteTransfer::VALID_TO] : $formData->getValidTo();
 
         if (!$validTo) {

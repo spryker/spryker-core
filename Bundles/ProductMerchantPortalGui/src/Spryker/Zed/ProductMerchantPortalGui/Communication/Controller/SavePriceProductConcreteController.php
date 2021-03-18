@@ -19,6 +19,10 @@ use Symfony\Component\HttpFoundation\Request;
 class SavePriceProductConcreteController extends SavePriceProductController
 {
     /**
+     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
+     *
+     * @phpstan-return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
+     *
      * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -43,14 +47,17 @@ class SavePriceProductConcreteController extends SavePriceProductController
      */
     protected function findPriceProductTransfers(array $priceProductStoreIds, Request $request): array
     {
-        $idProductConcrete = $request->get(PriceProductTableViewTransfer::ID_PRODUCT_CONCRETE);
+        $idProductConcrete = $this->castId($request->get(PriceProductTableViewTransfer::ID_PRODUCT_CONCRETE));
+        $idProductAbstract = $this->castId(
+            $this->getFactory()->getProductFacade()->findProductAbstractIdByConcreteId($idProductConcrete)
+        );
         $priceProductCriteriaTransfer = (new PriceProductCriteriaTransfer())->setPriceProductStoreIds($priceProductStoreIds);
 
         return array_values($this->getFactory()
             ->getPriceProductFacade()
             ->findProductConcretePricesWithoutPriceExtraction(
                 $idProductConcrete,
-                $this->getFactory()->getProductFacade()->findProductAbstractIdByConcreteId($idProductConcrete),
+                $idProductAbstract,
                 $priceProductCriteriaTransfer
             ));
     }
