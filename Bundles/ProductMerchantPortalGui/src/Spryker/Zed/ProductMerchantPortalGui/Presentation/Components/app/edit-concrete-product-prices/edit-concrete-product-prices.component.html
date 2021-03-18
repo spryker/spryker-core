@@ -1,4 +1,6 @@
-<spy-checkbox [(checked)]="isChecked">
-    <ng-content select="[toggleText]"></ng-content>
-</spy-checkbox>
+<spy-card class="mp-edit-concrete-product-prices__card">
+    <spy-checkbox [(checked)]="isChecked" [name]="checkboxName">
+        <ng-content select="[toggle-text]"></ng-content>
+    </spy-checkbox>
+</spy-card>
 <spy-table [hidden]="isChecked" [tableId]="tableId" [config]="tableConfig"></spy-table>

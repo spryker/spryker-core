@@ -8,6 +8,4 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/
     encapsulation: ViewEncapsulation.None,
     host: { class: 'mp-edit-concrete-product' }
 })
-export class EditConcreteProductComponent {
-
-}
+export class EditConcreteProductComponent {}

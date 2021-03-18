@@ -1,18 +1,23 @@
 @import '~@spryker/styles/src/lib/themes/default/variables/index.less';
 
-@edit-abstract-product-padding: 30px;
-@edit-abstract-product-common-blocks-indent: 7px;
-@edit-abstract-product-common-padding-bottom: 30px;
-@edit-abstract-product-title-padding-bottom: 15px;
-@edit-abstract-product-default-spacing-top: 20px;
-@edit-abstract-information-margin: -@edit-abstract-product-padding -@edit-abstract-product-padding 0;
-@edit-abstract-heading-margin: 0 -@edit-abstract-product-common-blocks-indent;
-@edit-abstract-heading-padding: 0 @edit-abstract-product-common-blocks-indent;
-@edit-abstract-card-padding-bottom: 20px;
-@edit-abstract-table-padding-inside-card: 3px 5px;
-@edit-abstract-collapsible-padding-bottom: 10px;
-@edit-abstract-stores-field-max-width: 420px;
-@edit-abstract-form-item-width: 130px;
+@edit-concrete-product-padding: 30px;
+@edit-concrete-product-common-blocks-indent: 7px;
+@edit-concrete-product-title-padding-bottom: 15px;
+@edit-concrete-product-default-spacing-top: 20px;
+@edit-concrete-product-information-margin: -@edit-concrete-product-padding -@edit-concrete-product-padding 0;
+@edit-concrete-product-heading-margin: 0 -@edit-concrete-product-common-blocks-indent;
+@edit-concrete-product-heading-padding: 0 @edit-concrete-product-common-blocks-indent;
+@edit-concrete-product-card-padding-bottom: 20px;
+@edit-concrete-product-table-padding-inside-card: 3px 5px;
+@edit-concrete-product-collapsible-padding-bottom: 10px;
+@edit-concrete-product-reserved-stock-margin-bottom: 17px;
+@edit-concrete-product-stock-margin: 0 -17px;
+@edit-concrete-product-stock-row-padding: 0 17px;
+@edit-concrete-product-stock-row-base-width: 275px;
+@edit-concrete-product-form-item-width: 130px;
+@edit-concrete-product-calendar-width: 200px;
+@edit-concrete-product-status-margin: -@edit-concrete-product-common-blocks-indent 0;
+@edit-concrete-product-status-row-padding: @edit-concrete-product-common-blocks-indent 0;
 
 .@{ajax-form-prefix-cls}-container {
     overflow-y: auto;
@@ -25,7 +30,7 @@
 .mp-edit-concrete-product {
     display: block;
     height: 100%;
-    padding: @edit-abstract-product-padding;
+    padding: @edit-concrete-product-padding;
     background-color: @gray-lighter;
     font: @font-default;
     letter-spacing: @letter-spacing-base;
@@ -33,25 +38,25 @@
     overflow-y: auto;
 
     &__information {
-        margin: @edit-abstract-information-margin;
-        padding: @edit-abstract-product-padding;
+        margin: @edit-concrete-product-information-margin;
+        padding: @edit-concrete-product-padding;
         background-color: @white;
     }
 
     &__heading {
         display: flex;
         justify-content: space-between;
-        margin: @edit-abstract-heading-margin;
+        margin: @edit-concrete-product-heading-margin;
 
         &-col {
-            padding: @edit-abstract-heading-padding;
+            padding: @edit-concrete-product-heading-padding;
         }
     }
 
     &__title {
         font-size: @heading-3-font-size;
         font-weight: @font-weight-semi-bold;
-        padding-bottom: @edit-abstract-product-title-padding-bottom;
+        padding-bottom: @edit-concrete-product-title-padding-bottom;
     }
 
     &__sub-title {
@@ -63,12 +68,12 @@
 
     &__content {
         display: block;
-        padding-top: @edit-abstract-product-default-spacing-top;
+        padding-top: @edit-concrete-product-default-spacing-top;
     }
 
     &__card {
         display: block;
-        padding-bottom: @edit-abstract-card-padding-bottom;
+        padding-bottom: @edit-concrete-product-card-padding-bottom;
 
         &:last-child {
             padding-bottom: 0;
@@ -80,25 +85,69 @@
         }
 
         .@{table-prefix-cls} {
-            padding: @edit-abstract-table-padding-inside-card;
+            padding: @edit-concrete-product-table-padding-inside-card;
+        }
+
+        .@{range-calendar-prefix-cls}-col {
+            width: @edit-concrete-product-calendar-width;
+        }
+
+        .@{table-prefix-cls} {
+            margin-bottom: 0;
         }
     }
 
     &__collapsible {
         display: block;
-        padding-bottom: @edit-abstract-collapsible-padding-bottom;
+        padding-bottom: @edit-concrete-product-collapsible-padding-bottom;
 
         &:last-child {
             padding-bottom: 0;
         }
     }
 
-    &__md-field {
-        display: block;
-        max-width: @edit-abstract-stores-field-max-width;
+    &__status {
+        color: @gray-dark;
+        margin: @edit-concrete-product-status-margin;
+
+        &-row {
+            display: flex;
+            align-items: center;
+            padding: @edit-concrete-product-status-row-padding;
+        }
+    }
+
+    &__reserved-stock {
+        margin-bottom: @edit-concrete-product-reserved-stock-margin-bottom;
+    }
+
+    &__stock {
+        &-inner {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-end;
+            margin: @edit-concrete-product-stock-margin;
+
+            &-row {
+                flex-basis: @edit-concrete-product-stock-row-base-width;
+                padding: @edit-concrete-product-stock-row-padding;
+            }
+        }
+
+        > .@{card-prefix-cls} {
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+    }
+
+    &__super-attributes {
+        .@{card-prefix-cls} {
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+        }
     }
 
     .@{table-editable-feature-prefix-cls}__cell .@{form-prefix-cls}-item {
-        width: @edit-abstract-form-item-width;
+        width: @edit-concrete-product-form-item-width;
     }
 }

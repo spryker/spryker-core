@@ -81,6 +81,7 @@ class ProductConcreteEditForm extends AbstractType
             'constraints' => [
                 $this->getFactory()->createProductConcreteOwnedByMerchantConstraint(),
             ],
+            'label' => false,
         ]);
 
         /** @var \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer */

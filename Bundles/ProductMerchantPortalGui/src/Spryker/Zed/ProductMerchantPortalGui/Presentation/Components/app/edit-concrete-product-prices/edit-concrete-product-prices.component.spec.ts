@@ -19,10 +19,26 @@ describe('EditConcreteProductPricesComponent', () => {
         component = fixture.componentInstance;
     });
 
+    it('should render <spy-card> component', () => {
+        const cardComponent = fixture.debugElement.query(By.css('spy-card'));
+
+        expect(cardComponent).toBeTruthy();
+    });
+
     it('should render <spy-checkbox> component', () => {
         const checkboxComponent = fixture.debugElement.query(By.css('spy-checkbox'));
 
         expect(checkboxComponent).toBeTruthy();
+    });
+
+    it('should bind @Input(checkboxName) to `name` of <spy-checkbox> component', () => {
+        const mockName = 'mockName';
+        const checkboxComponent = fixture.debugElement.query(By.css('spy-checkbox'));
+
+        component.checkboxName = mockName;
+        fixture.detectChanges();
+
+        expect(checkboxComponent.properties.name).toEqual(mockName);
     });
 
     it('should render <spy-table> component', () => {

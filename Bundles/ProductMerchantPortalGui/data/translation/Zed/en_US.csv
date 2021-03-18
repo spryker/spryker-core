@@ -56,3 +56,6 @@ Validity,Validity
 From,From
 To,To
 "Bulk edit","Bulk edit"
+"Variant is offline","Variant is offline"
+"Variant is online","Variant is online"
+"This means that the product does not appear online and noone can see it.","This means that the product does not appear online and noone can see it."

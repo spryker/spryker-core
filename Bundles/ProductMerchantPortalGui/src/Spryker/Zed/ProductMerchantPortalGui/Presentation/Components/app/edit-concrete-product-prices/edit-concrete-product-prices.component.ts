@@ -7,10 +7,12 @@ import { TableConfig } from '@spryker/table';
     styleUrls: ['./edit-concrete-product-prices.component.less'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
+    host: { class: 'mp-edit-concrete-product-prices' },
 })
 export class EditConcreteProductPricesComponent {
     @Input() tableConfig: TableConfig;
     @Input() tableId?: string;
+    @Input() checkboxName?: string;
 
     isChecked: boolean = false;
 }

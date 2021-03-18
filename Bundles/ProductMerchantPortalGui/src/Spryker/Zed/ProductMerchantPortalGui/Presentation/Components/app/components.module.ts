@@ -9,6 +9,10 @@ import { SelectModule, SelectComponent } from '@spryker/select';
 import { InputModule, InputComponent } from '@spryker/input';
 import { CollapsibleModule, CollapsibleComponent } from '@spryker/collapsible';
 import { FormItemModule, FormItemComponent } from '@spryker/form-item';
+import { CheckboxComponent, CheckboxModule } from '@spryker/checkbox';
+import { ToggleModule, ToggleComponent } from '@spryker/toggle';
+import { ChipsModule, ChipsComponent } from '@spryker/chips';
+import { DateRangePickerModule, DateRangePickerComponent } from '@spryker/date-picker';
 
 import { IconGermanyModule, IconUnitedStatesModule } from '../icons';
 import { ProductListComponent } from './product-list/product-list.component';
@@ -34,9 +38,7 @@ import { EditConcreteProductModule } from './edit-concrete-product/edit-concrete
 
 @NgModule({
     imports: [
-        ProductListModule,
         ButtonModule,
-        EditAbstractProductModule,
         TabsModule,
         CardModule,
         InputModule,
@@ -44,12 +46,18 @@ import { EditConcreteProductModule } from './edit-concrete-product/edit-concrete
         SelectModule,
         TreeSelectModule,
         CollapsibleModule,
-        EditAbstractProductAttributesModule,
-        EditAbstractProductPricesModule,
+        TextareaModule,
+        CheckboxModule,
+        ToggleModule,
+        ChipsModule,
+        DateRangePickerModule,
         IconGermanyModule,
         IconUnitedStatesModule,
-        TextareaModule,
+        ProductListModule,
         ImageSetsModule,
+        EditAbstractProductAttributesModule,
+        EditAbstractProductPricesModule,
+        EditAbstractProductModule,
         BulkEditProductVariantsModule,
         EditAbstractProductVariantsModule,
         EditConcreteProductPricesModule,
@@ -59,9 +67,7 @@ import { EditConcreteProductModule } from './edit-concrete-product/edit-concrete
 })
 export class ComponentsModule extends CustomElementModule {
     protected components: WebComponentDefs = [
-        ProductListComponent,
         ButtonComponent,
-        EditAbstractProductComponent,
         TabComponent,
         TabsComponent,
         CardComponent,
@@ -70,10 +76,16 @@ export class ComponentsModule extends CustomElementModule {
         SelectComponent,
         TreeSelectComponent,
         CollapsibleComponent,
+        TextareaComponent,
+        CheckboxComponent,
+        ToggleComponent,
+        ChipsComponent,
+        DateRangePickerComponent,
+        ProductListComponent,
+        ImageSetsComponent,
         EditAbstractProductAttributesComponent,
         EditAbstractProductPricesComponent,
-        TextareaComponent,
-        ImageSetsComponent,
+        EditAbstractProductComponent,
         BulkEditProductVariantsComponent,
         EditAbstractProductVariantsComponent,
         EditConcreteProductPricesComponent,
