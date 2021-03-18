@@ -56,7 +56,9 @@ class AvailabilityNotificationBusinessFactory extends AbstractBusinessFactory
             $this->createAvailabilityNotificationSubscriptionSaver(),
             $this->createAvailabilityNotificationSubscriptionSender(),
             $this->getUtilValidateService(),
-            $this->createAvailabilityNotificationReader()
+            $this->createAvailabilityNotificationReader(),
+            $this->getConfig(),
+            $this->getProductFacade()
         );
     }
 
