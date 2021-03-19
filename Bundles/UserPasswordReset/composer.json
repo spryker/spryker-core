@@ -1,42 +1,42 @@
 {
-    "name": "spryker/user-password-reset",
-    "type": "library",
-    "description": "UserPasswordReset module",
-    "license": "proprietary",
-    "require": {
-        "php": ">=7.3",
-        "spryker/kernel": "^3.30.0",
-        "spryker/user": "^3.9.0",
-        "spryker/user-password-reset-extension": "^0.2.0",
-        "spryker/util-text": "^1.2.2"
-    },
-    "require-dev": {
-        "spryker/code-sniffer": "*",
-        "spryker/propel": "*",
-        "spryker/testify": "*"
-    },
-    "autoload": {
-        "psr-4": {
-            "Spryker\\": "src/Spryker/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "SprykerTest\\": "tests/SprykerTest/"
-        }
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
-    "scripts": {
-        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/",
-        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/"
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "1.0.x-dev"
-        }
-    },
-    "config": {
-        "sort-packages": true
+  "name": "spryker/user-password-reset",
+  "type": "library",
+  "description": "UserPasswordReset module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.3",
+    "spryker/kernel": "^3.30.0",
+    "spryker/user": "^3.9.0",
+    "spryker/user-password-reset-extension": "^0.2.0",
+    "spryker/util-text": "^1.2.2"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/propel": "*",
+    "spryker/testify": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
     }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerTest\\": "tests/SprykerTest/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/"
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
 }
