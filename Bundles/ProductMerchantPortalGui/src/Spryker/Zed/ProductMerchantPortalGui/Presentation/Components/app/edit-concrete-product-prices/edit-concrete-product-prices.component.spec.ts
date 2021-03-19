@@ -70,4 +70,14 @@ describe('EditConcreteProductPricesComponent', () => {
 
         expect(tableComponent.properties.tableId).toEqual(mockTableId);
     });
+
+    it('should change `hidden` property of <spy-table> by <spy-checkbox> change', () => {
+        const tableComponent = fixture.debugElement.query(By.css('spy-table'));
+        const checkboxComponent = fixture.debugElement.query(By.css('spy-checkbox'));
+
+        checkboxComponent.triggerEventHandler('checkedChange', true);
+        fixture.detectChanges();
+
+        expect(tableComponent.properties.hidden).toBe(true);
+    });
 });

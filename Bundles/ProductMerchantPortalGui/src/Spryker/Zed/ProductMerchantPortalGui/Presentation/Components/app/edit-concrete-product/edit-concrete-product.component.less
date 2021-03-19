@@ -1,12 +1,8 @@
 @import '~@spryker/styles/src/lib/themes/default/variables/index.less';
 
 @edit-concrete-product-padding: 30px;
+@edit-concrete-product-title-margin-bottom: 26px;
 @edit-concrete-product-common-blocks-indent: 7px;
-@edit-concrete-product-title-padding-bottom: 15px;
-@edit-concrete-product-default-spacing-top: 20px;
-@edit-concrete-product-information-margin: -@edit-concrete-product-padding -@edit-concrete-product-padding 0;
-@edit-concrete-product-heading-margin: 0 -@edit-concrete-product-common-blocks-indent;
-@edit-concrete-product-heading-padding: 0 @edit-concrete-product-common-blocks-indent;
 @edit-concrete-product-card-padding-bottom: 20px;
 @edit-concrete-product-table-padding-inside-card: 3px 5px;
 @edit-concrete-product-collapsible-padding-bottom: 10px;
@@ -30,37 +26,32 @@
 .mp-edit-concrete-product {
     display: block;
     height: 100%;
-    padding: @edit-concrete-product-padding;
     background-color: @gray-lighter;
     font: @font-default;
     letter-spacing: @letter-spacing-base;
     color: @ink;
     overflow-y: auto;
 
-    &__information {
-        margin: @edit-concrete-product-information-margin;
-        padding: @edit-concrete-product-padding;
+    &__header {
         background-color: @white;
-    }
+        padding: @edit-concrete-product-padding;
 
-    &__heading {
-        display: flex;
-        justify-content: space-between;
-        margin: @edit-concrete-product-heading-margin;
+        .@{headline-prefix-cls} {
+            padding-bottom: 0;
+        }
 
-        &-col {
-            padding: @edit-concrete-product-heading-padding;
+        .@{headline-prefix-cls}__row {
+            align-items: unset;
         }
     }
 
     &__title {
         font-size: @heading-3-font-size;
         font-weight: @font-weight-semi-bold;
-        padding-bottom: @edit-concrete-product-title-padding-bottom;
+        margin-bottom: @edit-concrete-product-title-margin-bottom;
     }
 
     &__sub-title {
-        display: block;
         color: @gray-dark;
         font-size: @font-size-lg;
         font-weight: @font-weight-semi-bold;
@@ -68,7 +59,7 @@
 
     &__content {
         display: block;
-        padding-top: @edit-concrete-product-default-spacing-top;
+        padding: @edit-concrete-product-padding;
     }
 
     &__card {
