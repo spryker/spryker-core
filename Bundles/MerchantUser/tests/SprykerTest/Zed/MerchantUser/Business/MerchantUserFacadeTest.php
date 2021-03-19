@@ -409,7 +409,7 @@ class MerchantUserFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindUserCallUserFacade(): void
+    public function testFindUserForwardsToUserFacade(): void
     {
         // Arrange
         $this->initializeFacadeMocks();
@@ -425,7 +425,7 @@ class MerchantUserFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testRequestPasswordResetCallRequestPasswordResetFacade(): void
+    public function testRequestPasswordResetForwardsToUserPasswordResetFacade(): void
     {
         // Arrange
         $this->initializeFacadeMocks();
@@ -444,7 +444,7 @@ class MerchantUserFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testIsValidPasswordResetTokenCallRequestPasswordResetFacade(): void
+    public function testIsValidPasswordResetTokenForwardsToUserPasswordResetFacade(): void
     {
         /// Arrange
         $this->initializeFacadeMocks();
@@ -459,7 +459,7 @@ class MerchantUserFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testSetNewPasswordCallRequestPasswordResetFacade(): void
+    public function testSetNewPasswordForwardsToUserPasswordResetFacade(): void
     {
         /// Arrange
         $this->initializeFacadeMocks();
