@@ -75,6 +75,8 @@ describe('EditConcreteProductPricesComponent', () => {
         const tableComponent = fixture.debugElement.query(By.css('spy-table'));
         const checkboxComponent = fixture.debugElement.query(By.css('spy-checkbox'));
 
+        fixture.detectChanges();
+        tableComponent.properties.hidden = false;
         checkboxComponent.triggerEventHandler('checkedChange', true);
         fixture.detectChanges();
 
