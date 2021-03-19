@@ -129,7 +129,7 @@ interface MerchantUserFacadeInterface
      * - Retrieves user by given email.
      * - Generates reset password token.
      * - Persists the reset password to DB.
-     * - Executes plugins that handles user password reset request.
+     * - Executes plugins that handle user password reset request.
      * - Returns true on success.
      * - Returns false if user was not found or password reset was not saved.
      *
@@ -145,7 +145,7 @@ interface MerchantUserFacadeInterface
      * Specification:
      * - Validates reset password token.
      * - Returns true if token is valid.
-     * - Returns false if token not valid or was expired.
+     * - Returns false if token is not valid or expired.
      * - Updates reset password status if expired.
      *
      * @api
@@ -159,8 +159,8 @@ interface MerchantUserFacadeInterface
     /**
      * Specification:
      * - Sets a new user password.
-     * - Updates reset password status as `used`.
-     * - Returns false if reset password entity not exists.
+     * - Changes reset password status to `used`.
+     * - Returns false if reset password entity does not exist.
      * - Returns true on success.
      *
      * @api
