@@ -20,4 +20,4 @@ use Orm\Zed\StockAddress\Persistence\Base\SpyStockAddressQuery as BaseSpyStockAd
  */
 abstract class AbstractSpyStockAddressQuery extends BaseSpyStockAddressQuery
 {
-} // StockAddressQuery
+}
