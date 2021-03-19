@@ -27,6 +27,18 @@ class OrdersRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_DETAILS_CUSTOMER_UNAUTHORIZED = 'Unauthorized request.';
 
     /**
+     * @uses \Spryker\Glue\GlueApplication\Rest\RequestConstantsInterface::HEADER_DEPRECATION
+     */
+    public const HEADER_DEPRECATION = "Deprecation";
+
+    /**
+     * @uses \Spryker\Glue\GlueApplication\Rest\RequestConstantsInterface::HEADER_LINK
+     */
+    public const HEADER_LINK = "Link";
+
+    protected const CONVENTION_LINK = 'https://spryker.atlassian.net/wiki/spaces/RFC/pages/2160820295/RFC+Glue+endpoint+conventions';
+
+    /**
      * @api
      *
      * @return mixed[]
@@ -52,5 +64,25 @@ class OrdersRestApiConfig extends AbstractBundleConfig
             RestErrorMessageTransfer::DETAIL => static::RESPONSE_DETAILS_CUSTOMER_UNAUTHORIZED,
             RestErrorMessageTransfer::STATUS => Response::HTTP_FORBIDDEN,
         ];
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getDeprecationHeaderValue(): string
+    {
+        return 'version="4.6.0"';
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getLinkHeaderValue(): string
+    {
+        return '<' . static::CONVENTION_LINK . '>; rel="deprecation" type="text/html"';
     }
 }
