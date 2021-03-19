@@ -1,12 +1,17 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Glue\OrdersRestApi\Plugin;
 
 use Generated\Shared\Transfer\RestOrdersAttributesTransfer;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface;
-use Spryker\Glue\Kernel\AbstractPlugin;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceWithParentPluginInterface;
+use Spryker\Glue\Kernel\AbstractPlugin;
 use Spryker\Glue\OrdersRestApi\OrdersRestApiConfig;
 
 class CustomerOrdersResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface, ResourceWithParentPluginInterface

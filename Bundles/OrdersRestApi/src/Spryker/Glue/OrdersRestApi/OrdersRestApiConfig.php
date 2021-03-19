@@ -7,8 +7,8 @@
 
 namespace Spryker\Glue\OrdersRestApi;
 
-use Spryker\Glue\Kernel\AbstractBundleConfig;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
+use Spryker\Glue\Kernel\AbstractBundleConfig;
 use Symfony\Component\HttpFoundation\Response;
 
 class OrdersRestApiConfig extends AbstractBundleConfig
@@ -29,12 +29,12 @@ class OrdersRestApiConfig extends AbstractBundleConfig
     /**
      * @uses \Spryker\Glue\GlueApplication\Rest\RequestConstantsInterface::HEADER_DEPRECATION
      */
-    public const HEADER_DEPRECATION = "Deprecation";
+    public const HEADER_DEPRECATION = 'Deprecation';
 
     /**
      * @uses \Spryker\Glue\GlueApplication\Rest\RequestConstantsInterface::HEADER_LINK
      */
-    public const HEADER_LINK = "Link";
+    public const HEADER_LINK = 'Link';
 
     protected const CONVENTION_LINK = 'https://spryker.atlassian.net/wiki/spaces/RFC/pages/2160820295/RFC+Glue+endpoint+conventions';
 

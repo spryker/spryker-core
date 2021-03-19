@@ -18,7 +18,6 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\OrdersRestApi\OrdersRestApiConfig;
 use Spryker\Glue\OrdersRestApi\Processor\Mapper\OrderMapperInterface;
-use Symfony\Component\HttpFoundation\Response;
 
 class OrderRestResponseBuilder implements OrderRestResponseBuilderInterface
 {
