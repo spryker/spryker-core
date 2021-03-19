@@ -72,7 +72,7 @@ class OrderReader implements OrderReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function getOrdersAttributes(RestRequestInterface $restRequest): RestResponseInterface
+    public function getMyOrders(RestRequestInterface $restRequest): RestResponseInterface
     {
         return $this->getOrderListAttributes($restRequest);
     }
@@ -82,7 +82,7 @@ class OrderReader implements OrderReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function getCustomerOrdersAttributes(RestRequestInterface $restRequest): RestResponseInterface
+    public function getCustomerOrders(RestRequestInterface $restRequest): RestResponseInterface
     {
         if (!$this->restApiValidator->isSameCustomerReference($restRequest)) {
             return $this->orderRestResponseBuilder->createCustomerUnauthorizedErrorResponse();
@@ -148,7 +148,7 @@ class OrderReader implements OrderReaderInterface
 
         $totalItems = $orderListTransfer->getPagination() ? $orderListTransfer->getPagination()->getNbResults() : 0;
 
-        return $this->orderRestResponseBuilder->createOrderListRestResponse( // TODO find out why response with one item when add id of order in the end of url
+        return $this->orderRestResponseBuilder->createOrderListRestResponse(
             $orderListTransfer->getOrders(),
             $totalItems,
             $limit

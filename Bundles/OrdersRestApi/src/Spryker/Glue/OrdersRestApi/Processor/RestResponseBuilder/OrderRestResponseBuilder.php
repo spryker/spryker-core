@@ -102,13 +102,12 @@ class OrderRestResponseBuilder implements OrderRestResponseBuilderInterface
             $restOrdersAttributesTransfer = $this->orderResourceMapper
                 ->mapOrderTransferToRestOrdersAttributesTransfer($orderTransfer);
 
-            $restResponse = $restResponse->addResource(
-                $this->restResourceBuilder->createRestResource(
-                    OrdersRestApiConfig::RESOURCE_ORDERS,
-                    $orderTransfer->getOrderReference(),
-                    $restOrdersAttributesTransfer
-                )
+            $restResource = $this->restResourceBuilder->createRestResource(
+                OrdersRestApiConfig::RESOURCE_ORDERS,
+                $orderTransfer->getOrderReference(),
+                $restOrdersAttributesTransfer
             );
+            $restResponse = $restResponse->addResource($restResource);
         }
 
         return $restResponse;

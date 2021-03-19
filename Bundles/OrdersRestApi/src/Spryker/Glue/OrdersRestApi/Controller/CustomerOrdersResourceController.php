@@ -32,6 +32,6 @@ class CustomerOrdersResourceController extends AbstractController
      */
     public function getAction(RestRequestInterface $restRequest): RestResponseInterface
     {
-        return $this->getFactory()->createOrderReader()->getCustomerOrdersAttributes($restRequest);
+        return $this->getFactory()->createOrderReader()->getCustomerOrders($restRequest);
     }
 }
