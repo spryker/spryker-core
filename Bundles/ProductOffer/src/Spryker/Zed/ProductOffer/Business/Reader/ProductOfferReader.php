@@ -43,6 +43,11 @@ class ProductOfferReader implements ProductOfferReaderInterface
     public function findOne(ProductOfferCriteriaTransfer $productOfferCriteria): ?ProductOfferTransfer
     {
         $productOfferTransfer = $this->productOfferRepository->findOne($productOfferCriteria);
+
+        if (!$productOfferTransfer) {
+            return null;
+        }
+
         $productOfferTransfer = $this->executeProductOfferExpanderPlugins($productOfferTransfer);
 
         return $productOfferTransfer;

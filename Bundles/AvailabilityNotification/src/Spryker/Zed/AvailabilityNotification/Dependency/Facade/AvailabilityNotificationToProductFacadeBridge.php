@@ -53,4 +53,14 @@ class AvailabilityNotificationToProductFacadeBridge implements AvailabilityNotif
     {
         return $this->productFacade->getProductConcrete($concreteSku);
     }
+
+    /**
+     * @param string $sku
+     *
+     * @return bool
+     */
+    public function hasProductConcrete($sku)
+    {
+        return $this->productFacade->hasProductConcrete($sku);
+    }
 }

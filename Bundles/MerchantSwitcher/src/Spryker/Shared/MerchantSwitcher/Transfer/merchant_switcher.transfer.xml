@@ -9,11 +9,13 @@
 
     <transfer name="MerchantSwitchRequest">
         <property name="quote" type="Quote"/>
+        <property name="wishlist" type="Wishlist"/>
         <property name="merchantReference" type="string"/>
     </transfer>
 
     <transfer name="MerchantSwitchResponse">
         <property name="quote" type="Quote"/>
+        <property name="wishlist" type="Wishlist"/>
     </transfer>
 
     <transfer name="Quote">
@@ -43,6 +45,7 @@
     </transfer>
 
     <transfer name="Message">
+        <property name="message" type="string"/>
         <property name="value" type="string"/>
         <property name="parameters" type="array" singular="parameters"/>
     </transfer>
@@ -82,4 +85,30 @@
         <property name="isSuccessful" type="bool"/>
         <property name="errors" type="Message[]" singular="error"/>
     </transfer>
+
+    <transfer name="ValidationResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="validationErrors" type="ValidationError[]" singular="validationError"/>
+        <property name="errorMessages" type="Message[]" singular="errorMessage"/>
+    </transfer>
+
+    <transfer name="ValidationError">
+        <property name="message" type="string"/>
+        <property name="root" type="object"/>
+        <property name="propertyPath" type="string"/>
+        <property name="invalidValue" type="string"/>
+    </transfer>
+
+    <transfer name="Wishlist">
+        <property name="merchantReference" type="string"/>
+        <property name="wishlistItems" type="WishlistItem[]" singular="wishlistItem"/>
+    </transfer>
+
+    <transfer name="WishlistItem">
+        <property name="wishlistName" type="string"/>
+        <property name="sku" type="string"/>
+        <property name="productOfferReference" type="string"/>
+        <property name="merchantReference" type="string"/>
+    </transfer>
+
 </transfers>
