@@ -87,5 +87,6 @@
     <transfer name="MerchantStorage">
         <property name="idMerchant" type="int"/>
         <property name="merchantIds" type="int[]" singular="idMerchant"/>
+        <property name="merchantReference" type="string"/>
     </transfer>
 </transfers>
