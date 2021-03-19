@@ -20,8 +20,12 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 class MerchantResetPasswordForm extends AbstractType
 {
     public const FIELD_PASSWORD = 'password';
-    public const LABEL_NEW_PASSWORD = 'New password';
-    public const LABEL_RE_ENTER_PASSWORD = 'Re-enter password';
+    protected const LABEL_NEW_PASSWORD = 'New password';
+    protected const LABEL_RE_ENTER_PASSWORD = 'Re-enter password';
+    protected const MESSAGE_PASSWORD_FIELDS_ERROR = 'The password fields must match.';
+    protected const PLACEHOLDER_NEW_PASSWORD_FIELD = 'Enter a new password';
+    protected const PLACEHOLDER_RE_ENTER_PASSWORD_FIELD = 'Re-enter the new password';
+    protected const BLOCK_PREFIX = 'reset_password';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -39,7 +43,7 @@ class MerchantResetPasswordForm extends AbstractType
      */
     public function getBlockPrefix(): string
     {
-        return 'reset_password';
+        return static::BLOCK_PREFIX;
     }
 
     /**
@@ -53,17 +57,17 @@ class MerchantResetPasswordForm extends AbstractType
             'constraints' => [
                 new NotBlank(),
             ],
-            'invalid_message' => 'The password fields must match.',
+            'invalid_message' => static::MESSAGE_PASSWORD_FIELDS_ERROR,
             'first_options' => [
                 'label' => static::LABEL_NEW_PASSWORD,
                 'attr' => [
-                    'placeholder' => 'Enter a new password',
+                    'placeholder' => static::PLACEHOLDER_NEW_PASSWORD_FIELD,
                 ],
             ],
             'second_options' => [
                 'label' => static::LABEL_RE_ENTER_PASSWORD,
                 'attr' => [
-                    'placeholder' => 'Re-enter the new password',
+                    'placeholder' => static::PLACEHOLDER_RE_ENTER_PASSWORD_FIELD,
                 ],
             ],
             'required' => true,

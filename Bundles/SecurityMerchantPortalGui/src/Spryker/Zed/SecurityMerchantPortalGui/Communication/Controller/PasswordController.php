@@ -19,7 +19,13 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class PasswordController extends AbstractController
 {
-    public const PARAM_TOKEN = 'token';
+    protected const PARAM_TOKEN = 'token';
+    protected const MESSAGE_USER_REQUEST_PASSWORD_SUCCESS = 'If there is an account associated with this email, you will receive an Email with further instructions.';
+    protected const RESET_RASSWORD_PATH = '/security-merchant-portal-gui/password/reset';
+    protected const MESSAGE_USER_PASSWORD_UPDATE_SUCCESS = 'Success! The password is updated.';
+    protected const MESSAGE_USER_PASSWORD_UPDATE_ERROR = 'Could not update password.';
+    protected const MESSAGE_MISSING_TOKEN_ERROR = 'Request token is missing!';
+    protected const MESSAGE_INVALID_TOKEN_ERROR = 'Invalid request token!';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -47,12 +53,12 @@ class PasswordController extends AbstractController
                     ->requestPasswordReset(
                         (new UserPasswordResetRequestTransfer())
                             ->setEmail($formData[MerchantResetPasswordRequestForm::FIELD_EMAIL])
-                            ->setResetPasswordPath('/security-merchant-portal-gui/password/reset')
+                            ->setResetPasswordPath(static::RESET_RASSWORD_PATH)
                     );
             }
 
             $this->addSuccessMessage(
-                'If there is an account associated with this email, you will receive an Email with further instructions.'
+                static::MESSAGE_USER_REQUEST_PASSWORD_SUCCESS
             );
 
             return $this->viewResponse([]);
@@ -93,9 +99,9 @@ class PasswordController extends AbstractController
                 );
 
             if ($isPasswordReset) {
-                $this->addSuccessMessage('Success! The password is updated.');
+                $this->addSuccessMessage(static::MESSAGE_USER_PASSWORD_UPDATE_SUCCESS);
             } else {
-                $this->addErrorMessage('Could not update password.');
+                $this->addErrorMessage(static::MESSAGE_USER_PASSWORD_UPDATE_ERROR);
             }
 
             return $this->redirectResponse(
@@ -116,7 +122,7 @@ class PasswordController extends AbstractController
     protected function isValidToken(?string $token): bool
     {
         if (!$token) {
-            $this->addErrorMessage('Request token is missing!');
+            $this->addErrorMessage(static::MESSAGE_MISSING_TOKEN_ERROR);
 
             return false;
         }
@@ -125,7 +131,7 @@ class PasswordController extends AbstractController
             ->isValidPasswordResetToken($token);
 
         if (!$isValidToken) {
-            $this->addErrorMessage('Invalid request token!');
+            $this->addErrorMessage(static::MESSAGE_INVALID_TOKEN_ERROR);
 
             return false;
         }

@@ -21,11 +21,13 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 class MerchantResetPasswordRequestForm extends AbstractType
 {
     public const FIELD_EMAIL = 'email';
-    public const LABEL_EMAIL = 'email';
     public const FIELD_SUBMIT = 'submit';
-    public const LABEL_SEND_EMAIL = 'Send email';
-    public const VALIDATION_NOT_BLANK_MESSAGE = 'The value cannot be blank. Please fill in this input';
-    public const VALIDATION_EMAIL_FORMAT_MESSAGE = 'Please fill in a valid email address for this input';
+    protected const LABEL_EMAIL = 'email';
+    protected const LABEL_SEND_EMAIL = 'Send email';
+    protected const MESSAGE_VALIDATION_NOT_BLANK_ERROR = 'The value cannot be blank. Please fill in this input';
+    protected const MESSAGE_VALIDATION_EMAIL_FORMAT_ERROR = 'Please fill in a valid email address for this input';
+    protected const PLACEHOLDER_EMAIL_FIELD = 'example@spryker.com';
+    protected const BLOCK_PREFIX = 'reset_password';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -44,7 +46,7 @@ class MerchantResetPasswordRequestForm extends AbstractType
      */
     public function getBlockPrefix(): string
     {
-        return 'reset_password';
+        return static::BLOCK_PREFIX;
     }
 
     /**
@@ -58,11 +60,11 @@ class MerchantResetPasswordRequestForm extends AbstractType
             ->add(self::FIELD_EMAIL, TextType::class, [
                 'label' => static::LABEL_EMAIL,
                 'constraints' => [
-                    new NotBlank(['message' => static::VALIDATION_NOT_BLANK_MESSAGE]),
-                    new Email(['message' => static::VALIDATION_EMAIL_FORMAT_MESSAGE]),
+                    new NotBlank(['message' => static::MESSAGE_VALIDATION_NOT_BLANK_ERROR]),
+                    new Email(['message' => static::MESSAGE_VALIDATION_EMAIL_FORMAT_ERROR]),
                 ],
                 'attr' => [
-                    'placeholder' => 'example@spryker.com',
+                    'placeholder' => static::PLACEHOLDER_EMAIL_FIELD,
                 ],
             ]);
 
