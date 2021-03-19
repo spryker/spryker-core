@@ -16,6 +16,7 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\PageInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\OrdersRestApi\Dependency\Client\OrdersRestApiToSalesClientInterface;
 use Spryker\Glue\OrdersRestApi\Processor\RestResponseBuilder\OrderRestResponseBuilderInterface;
+use Spryker\Glue\OrdersRestApi\Processor\Validator\OrdersRestApiValidatorInterface;
 
 class OrderReader implements OrderReaderInterface
 {
@@ -30,15 +31,23 @@ class OrderReader implements OrderReaderInterface
     protected $orderRestResponseBuilder;
 
     /**
+     * @var \Spryker\Glue\OrdersRestApi\Processor\Validator\OrdersRestApiValidatorInterface
+     */
+    protected $restApiValidator;
+
+    /**
      * @param \Spryker\Glue\OrdersRestApi\Dependency\Client\OrdersRestApiToSalesClientInterface $salesClient
      * @param \Spryker\Glue\OrdersRestApi\Processor\RestResponseBuilder\OrderRestResponseBuilderInterface $orderRestResponseBuilder
+     * @param \Spryker\Glue\OrdersRestApi\Processor\Validator\OrdersRestApiValidatorInterface $restApiValidator
      */
     public function __construct(
         OrdersRestApiToSalesClientInterface $salesClient,
-        OrderRestResponseBuilderInterface $orderRestResponseBuilder
+        OrderRestResponseBuilderInterface $orderRestResponseBuilder,
+        OrdersRestApiValidatorInterface $restApiValidator
     ) {
         $this->salesClient = $salesClient;
         $this->orderRestResponseBuilder = $orderRestResponseBuilder;
+        $this->restApiValidator = $restApiValidator;
     }
 
     /**
@@ -53,6 +62,30 @@ class OrderReader implements OrderReaderInterface
                 $restRequest->getResource()->getId(),
                 $restRequest->getRestUser()->getNaturalIdentifier()
             );
+        }
+
+        return $this->getOrderListAttributes($restRequest);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function getOrdersAttributes(RestRequestInterface $restRequest): RestResponseInterface
+    {
+        return $this->getOrderListAttributes($restRequest);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function getCustomerOrdersAttributes(RestRequestInterface $restRequest): RestResponseInterface
+    {
+        if (!$this->restApiValidator->isSameCustomerReference($restRequest)) {
+            return $this->orderRestResponseBuilder->createCustomerUnauthorizedErrorResponse();
         }
 
         return $this->getOrderListAttributes($restRequest);
@@ -115,7 +148,7 @@ class OrderReader implements OrderReaderInterface
 
         $totalItems = $orderListTransfer->getPagination() ? $orderListTransfer->getPagination()->getNbResults() : 0;
 
-        return $this->orderRestResponseBuilder->createOrderListRestResponse(
+        return $this->orderRestResponseBuilder->createOrderListRestResponse( // TODO find out why response with one item when add id of order in the end of url
             $orderListTransfer->getOrders(),
             $totalItems,
             $limit

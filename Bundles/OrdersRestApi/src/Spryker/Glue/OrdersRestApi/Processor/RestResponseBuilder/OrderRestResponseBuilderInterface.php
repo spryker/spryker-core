@@ -9,6 +9,7 @@ namespace Spryker\Glue\OrdersRestApi\Processor\RestResponseBuilder;
 
 use ArrayObject;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 
@@ -48,4 +49,16 @@ interface OrderRestResponseBuilderInterface
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
     public function createMappedOrderItemRestResourcesFromOrderItemTransfers(ArrayObject $itemTransfers): array;
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createCustomerUnauthorizedErrorResponse(): RestResponseInterface;
+
+    /**
+     * @param \Generated\Shared\Transfer\RestErrorMessageTransfer $restErrorMessageTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createErrorResponse(RestErrorMessageTransfer $restErrorMessageTransfer): RestResponseInterface;
 }
