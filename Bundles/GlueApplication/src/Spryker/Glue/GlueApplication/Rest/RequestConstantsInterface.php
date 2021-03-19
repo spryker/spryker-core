@@ -34,7 +34,7 @@ interface RequestConstantsInterface
     public const HEADER_E_TAG = 'ETag';
     public const HEADER_IF_MATCH = 'If-Match';
     public const HEADER_DEPRECATION = 'Deprecation';
-    public const HEADER_LINK = "Link";
+    public const HEADER_LINK = 'Link';
 
     public const QUERY_INCLUDE = 'include';
     public const QUERY_FIELDS = 'fields';
