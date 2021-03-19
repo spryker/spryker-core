@@ -6,14 +6,14 @@
 
     <table name="spy_stock_address" idMethod="native">
         <column name="id_stock_address" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="fk_stock" type="INTEGER"/>
+        <column name="fk_stock" type="INTEGER" required="true"/>
         <column name="fk_country" type="INTEGER" required="true"/>
         <column name="fk_region" type="INTEGER"/>
-        <column name="address1" size="255" type="VARCHAR"/>
+        <column name="address1" size="255" type="VARCHAR" required="true"/>
         <column name="address2" size="255" type="VARCHAR"/>
         <column name="address3" size="255" type="VARCHAR"/>
-        <column name="city" size="255" type="VARCHAR"/>
-        <column name="zip_code" size="15" type="VARCHAR"/>
+        <column name="city" size="255" type="VARCHAR" required="true"/>
+        <column name="zip_code" size="15" type="VARCHAR" required="true"/>
         <column name="phone" size="255" type="VARCHAR"/>
         <column name="comment" size="255" type="VARCHAR"/>
 
