@@ -12,6 +12,10 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @method \Spryker\Zed\ProductMerchantPortalGui\Communication\ProductMerchantPortalGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductMerchantPortalGui\Persistence\ProductMerchantPortalGuiRepositoryInterface getRepository()
+ */
 class CreateProductAbstractController extends AbstractController
 {
     /**
@@ -21,6 +25,14 @@ class CreateProductAbstractController extends AbstractController
      */
     public function indexAction(Request $request): JsonResponse
     {
-        return new JsonResponse([]);
+        $createProductAbstractForm  = $this->getFactory()->createCreateProductAbstractForm();
+
+        $responseData = [
+            'form' => $this->renderView('@ProductMerchantPortalGui/Partials/create_product_abstract_form.twig', [
+                'form' => $createProductAbstractForm->createView(),
+            ])->getContent(),
+        ];
+
+        return new JsonResponse($responseData);
     }
 }

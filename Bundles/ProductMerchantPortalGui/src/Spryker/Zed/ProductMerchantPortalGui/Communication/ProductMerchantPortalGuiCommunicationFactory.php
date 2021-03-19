@@ -15,6 +15,7 @@ use Spryker\Shared\GuiTable\Http\GuiTableDataRequestExecutorInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Builder\ProductAbstractNameBuilder;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Builder\ProductAbstractNameBuilderInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\CreateProductAbstractForm;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\DataProvider\ProductAbstractFormDataProvider;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\DataProvider\ProductAbstractFormDataProviderInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductAbstractForm;
@@ -123,6 +124,21 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
     public function createProductAbstractForm(?ProductAbstractTransfer $data = null, array $options = []): FormInterface
     {
         return $this->getFormFactory()->create(ProductAbstractForm::class, $data, $options);
+    }
+
+    /**
+     * @phpstan-param array<mixed> $options
+     *
+     * @phpstan-return \Symfony\Component\Form\FormInterface<mixed>
+     *
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer|null $data
+     * @param array $options
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createCreateProductAbstractForm(?ProductAbstractTransfer $data = null, array $options = []): FormInterface
+    {
+        return $this->getFormFactory()->create(CreateProductAbstractForm::class, $data, $options);
     }
 
     /**
