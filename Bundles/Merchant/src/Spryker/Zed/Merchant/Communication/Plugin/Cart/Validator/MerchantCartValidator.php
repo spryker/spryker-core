@@ -93,12 +93,16 @@ class MerchantCartValidator implements MerchantCartValidatorInterface
         if (!$merchantReferences) {
             return $merchantTransfers;
         }
-
+        /** @var string[] $merchantReferences */
         $merchantReferences = array_unique($merchantReferences);
+
+        /** @var \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer */
+        $quoteTransfer = $cartChangeTransfer->getQuote();
+
         $merchantCollectionTransfer = $this->merchantFacade->get(
             (new MerchantCriteriaTransfer())
                 ->setMerchantReferences($merchantReferences)
-                ->setStore($cartChangeTransfer->getQuote()->getStore())
+                ->setStore($quoteTransfer->getStore())
         );
         foreach ($merchantCollectionTransfer->getMerchants() as $merchantTransfer) {
             $merchantTransfers[$merchantTransfer->getMerchantReference()] = $merchantTransfer;

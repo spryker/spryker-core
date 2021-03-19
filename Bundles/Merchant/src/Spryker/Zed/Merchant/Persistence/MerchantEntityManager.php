@@ -50,9 +50,12 @@ class MerchantEntityManager extends AbstractEntityManager implements MerchantEnt
      */
     public function createMerchantStore(MerchantTransfer $merchantTransfer, int $idStore): StoreTransfer
     {
+        /** @var int $idMerchant */
+        $idMerchant = $merchantTransfer->getIdMerchant();
+
         $merchantStoreEntity = (new SpyMerchantStore())
             ->setFkStore($idStore)
-            ->setFkMerchant($merchantTransfer->getIdMerchant());
+            ->setFkMerchant($idMerchant);
 
         $merchantStoreEntity->save();
 
@@ -75,6 +78,8 @@ class MerchantEntityManager extends AbstractEntityManager implements MerchantEnt
             ->filterByFkStore($idStore)
             ->findOne();
 
-        $merchantStoreEntity->delete();
+        if ($merchantStoreEntity) {
+            $merchantStoreEntity->delete();
+        }
     }
 }

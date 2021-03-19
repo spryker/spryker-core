@@ -111,8 +111,11 @@ class MerchantMapper implements MerchantMapperInterface
         foreach ($merchantStoreEntities as $merchantStoreEntity) {
             $storeTransfer = $this->mapStoreEntityToStoreTransfer($merchantStoreEntity->getSpyStore(), new StoreTransfer());
 
+            /** @var int $idStore */
+            $idStore = $storeTransfer->getIdStore();
+
             $storeRelationTransfer->addStores($storeTransfer)
-                ->addIdStores($storeTransfer->getIdStore());
+                ->addIdStores($idStore);
         }
 
         return $storeRelationTransfer;
