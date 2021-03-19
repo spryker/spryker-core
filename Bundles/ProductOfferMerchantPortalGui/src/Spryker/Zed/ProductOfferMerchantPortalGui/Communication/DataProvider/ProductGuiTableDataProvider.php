@@ -78,7 +78,7 @@ class ProductGuiTableDataProvider extends AbstractGuiTableDataProvider
     {
         return (new ProductTableCriteriaTransfer())
             ->setLocale($this->localeFacade->getCurrentLocale())
-            ->setMerchantReference($this->merchantUserFacade->getCurrentMerchantUser()->getMerchant()->getMerchantReference());
+            ->setMerchantReference($this->merchantUserFacade->getCurrentMerchantUser()->getMerchantOrFail()->getMerchantReference());
     }
 
     /**
