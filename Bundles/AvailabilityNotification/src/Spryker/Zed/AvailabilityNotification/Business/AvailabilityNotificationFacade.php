@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\AvailabilityNotification\Business;
 
+use Generated\Shared\Transfer\AvailabilityNotificationCriteriaTransfer;
 use Generated\Shared\Transfer\AvailabilityNotificationDataTransfer;
+use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionCollectionTransfer;
 use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer;
 use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
@@ -123,5 +125,23 @@ class AvailabilityNotificationFacade extends AbstractFacade implements Availabil
         return $this->getFactory()
             ->createCustomerExpander()
             ->expandCustomerTransferWithAvailabilityNotificationSubscriptionList($customerTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AvailabilityNotificationCriteriaTransfer $availabilityNotificationCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionCollectionTransfer
+     */
+    public function getAvailabilityNotifications(
+        AvailabilityNotificationCriteriaTransfer $availabilityNotificationCriteriaTransfer
+    ): AvailabilityNotificationSubscriptionCollectionTransfer {
+        return $this
+            ->getFactory()
+            ->createAvailabilityNotificationReader()
+            ->getAvailabilityNotifications($availabilityNotificationCriteriaTransfer);
     }
 }
