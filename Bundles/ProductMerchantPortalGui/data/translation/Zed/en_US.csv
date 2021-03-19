@@ -64,3 +64,6 @@ Quantity,Quantity
 "Always in stock","Always in stock"
 "Enter quantity","Enter quantity"
 "Reserved Stock","Reserved Stock"
+"Variant is offline","Variant is offline"
+"Variant is online","Variant is online"
+"This means that the product does not appear online and noone can see it.","This means that the product does not appear online and noone can see it."
