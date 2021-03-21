@@ -31,4 +31,11 @@ interface ProductMerchantPortalGuiToProductFacadeInterface
      * @return void
      */
     public function deactivateProductConcrete($idProductConcrete);
+
+    /**
+     * @param string $sku
+     *
+     * @return bool
+     */
+    public function hasProductAbstract($sku);
 }

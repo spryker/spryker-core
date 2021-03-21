@@ -53,4 +53,14 @@ class ProductMerchantPortalGuiToProductFacadeBridge implements ProductMerchantPo
     {
         $this->productFacade->deactivateProductConcrete($idProductConcrete);
     }
+
+    /**
+     * @param string $sku
+     *
+     * @return bool
+     */
+    public function hasProductAbstract($sku)
+    {
+        return $this->productFacade->hasProductAbstract($sku);
+    }
 }

@@ -131,12 +131,12 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
      *
      * @phpstan-return \Symfony\Component\Form\FormInterface<mixed>
      *
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer|null $data
+     * @param mixed[]|null $data
      * @param array $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createCreateProductAbstractForm(?ProductAbstractTransfer $data = null, array $options = []): FormInterface
+    public function createCreateProductAbstractForm(?array $data = null, array $options = []): FormInterface
     {
         return $this->getFormFactory()->create(CreateProductAbstractForm::class, $data, $options);
     }
