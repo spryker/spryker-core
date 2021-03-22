@@ -95,6 +95,11 @@ class UpdateProductConcreteController extends UpdateProductController
             ->validatePrices($productConcreteTransfer->getPrices());
         $merchantProductValidationResponseTransfer = new ValidationResponseTransfer();
 
+        $initialData = $this->getFactory()->createPriceProductMapper()->mapValidationResponseTransferToInitialDataErrors(
+            $pricesValidationResponseTransfer,
+            $initialData
+        );
+
         if ($productConcreteEditForm->isValid() && $pricesValidationResponseTransfer->getIsSuccess()) {
             $idMerchant = $this->getFactory()->getMerchantUserFacade()->getCurrentMerchantUser()->getIdMerchantOrFail();
             $merchantProductValidationResponseTransfer = $this->getFactory()
@@ -103,6 +108,10 @@ class UpdateProductConcreteController extends UpdateProductController
                         (new ProductAbstractTransfer())->setIdProductAbstract($productConcreteTransfer->getFkProductAbstractOrFail())
                     )
                 );
+
+            if (!$merchantProductValidationResponseTransfer->getIsSuccess()) {
+                return $this->getResponse($productConcreteEditForm, $productConcreteTransfer, $merchantProductValidationResponseTransfer, $initialData);
+            }
 
             if ($productConcreteEditForm->getData()[ProductConcreteEditForm::FIELD_USE_ABSTRACT_PRODUCT_PRICES]) {
                 $priceProductTransfers = $this->getFactory()->getPriceProductFacade()->findProductConcretePricesWithoutPriceExtraction(
@@ -115,15 +124,8 @@ class UpdateProductConcreteController extends UpdateProductController
                 $productConcreteTransfer->setPrices(new ArrayObject());
             }
 
-            if ($merchantProductValidationResponseTransfer->getIsSuccess()) {
-                $this->getFactory()->getProductFacade()->saveProductConcrete($productConcreteTransfer);
-            }
+            $this->getFactory()->getProductFacade()->saveProductConcrete($productConcreteTransfer);
         }
-
-        $initialData = $this->getFactory()->createPriceProductMapper()->mapValidationResponseTransferToInitialDataErrors(
-            $pricesValidationResponseTransfer,
-            $initialData
-        );
 
         return $this->getResponse($productConcreteEditForm, $productConcreteTransfer, $merchantProductValidationResponseTransfer, $initialData);
     }

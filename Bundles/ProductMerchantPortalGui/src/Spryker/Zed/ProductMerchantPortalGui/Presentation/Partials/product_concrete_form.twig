@@ -143,6 +143,7 @@
                         </web-mp-edit-concrete-product-prices>
                     </web-spy-card>
 
+                    {% do productConcreteFormFields.prices.setRendered %}
                     {% do form.useAbstractProductPrices.setRendered %}
                 {% endblock %}
 
