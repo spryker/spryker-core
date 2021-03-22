@@ -8,7 +8,6 @@
 namespace Spryker\Client\MerchantProductOfferStorage\Storage;
 
 use ArrayObject;
-use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferStorageCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferStorageCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferStorageTransfer;

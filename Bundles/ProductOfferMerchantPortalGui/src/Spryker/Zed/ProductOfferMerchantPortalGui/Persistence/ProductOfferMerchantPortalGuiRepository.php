@@ -441,7 +441,7 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
         ProductOfferTableCriteriaTransfer $productOfferTableCriteriaTransfer
     ): SpyProductOfferQuery {
         $productOfferQuery = $this->getFactory()->getProductOfferPropelQuery();
-        /** @var int $idMerchant */
+        /** @var string $merchantReference */
         $merchantReference = $productOfferTableCriteriaTransfer->requireMerchantReference()->getMerchantReference();
         /** @var \Generated\Shared\Transfer\LocaleTransfer $localeTransfer */
         $localeTransfer = $productOfferTableCriteriaTransfer->requireLocale()->getLocale();
