@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="RestAvailabilityNotificationRequestAttributes">
+        <property name="email" type="string"/>
+        <property name="sku" type="string"/>
+    </transfer>
+
+    <transfer name="RestAvailabilityNotificationsAttributes">
+        <property name="localeName" type="string"/>
+        <property name="email" type="string"/>
+        <property name="sku" type="string"/>
+    </transfer>
+
+    <transfer name="AvailabilityNotificationSubscriptionCollection">
+        <property name="availabilityNotificationSubscriptions" type="AvailabilityNotificationSubscription[]" singular="availabilityNotificationSubscription"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="AvailabilityNotificationSubscription">
+        <property name="idAvailabilityNotificationSubscription" type="int"/>
+        <property name="subscriptionKey" type="string"/>
+        <property name="locale" type="Locale"/>
+        <property name="store" type="Store"/>
+        <property name="email" type="string"/>
+        <property name="sku" type="string"/>
+        <property name="customerReference" type="string"/>
+    </transfer>
+
+    <transfer name="AvailabilityNotificationCriteria">
+        <property name="customerReferences" type="string[]" singular="customerReference"/>
+        <property name="storeNames" type="string[]" singular="storeName"/>
+        <property name="skus" type="string[]" singular="sku"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="localeName" type="string"/>
+    </transfer>
+
+    <transfer name="RestUser">
+        <property name="naturalIdentifier" type="string"/>
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="maxPerPage" type="int"/>
+        <property name="nbResults" type="int"/>
+        <property name="page" type="int"/>
+    </transfer>
+
+    <transfer name="AvailabilityNotificationSubscriptionResponse">
+        <property name="availabilityNotificationSubscription" type="AvailabilityNotificationSubscription"/>
+        <property name="isSuccess" type="bool"/>
+        <property name="errorMessage" type="string"/>
+    </transfer>
+
+    <transfer name="RestErrorMessage">
+        <property name="code" type="string"/>
+        <property name="detail" type="string"/>
+        <property name="status" type="int"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="name" type="string"/>
+    </transfer>
+
+</transfers>
