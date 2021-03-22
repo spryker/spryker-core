@@ -12,6 +12,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\CategoryStorage\Persistence\CategoryStorageEntityManagerInterface getEntityManager()
  * @method \Spryker\Zed\CategoryStorage\Business\CategoryStorageBusinessFactory getFactory()
+ * @method \Spryker\Zed\CategoryStorage\Persistence\CategoryStorageRepositoryInterface getRepository()
  */
 class CategoryStorageFacade extends AbstractFacade implements CategoryStorageFacadeInterface
 {
@@ -125,5 +126,183 @@ class CategoryStorageFacade extends AbstractFacade implements CategoryStorageFac
     public function deleteCategoryTreeStorageCollection(): void
     {
         $this->getEntityManager()->deleteCategoryTreeStorageCollection();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int $offset
+     * @param int $limit
+     * @param int[] $ids
+     *
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     */
+    public function findCategoryNodeStorageDataTransferByIds(int $offset, int $limit, array $ids): array
+    {
+        return $this->getRepository()
+            ->findCategoryNodeStorageDataTransferByIds($offset, $limit, $ids);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int $offset
+     * @param int $limit
+     * @param int[] $ids
+     *
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     */
+    public function findCategoryTreeStorageDataTransferByIds(int $offset, int $limit, array $ids): array
+    {
+        return $this->getRepository()
+            ->findCategoryTreeStorageDataTransferByIds($offset, $limit, $ids);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeCategoryNodeStorageCollectionByCategoryAttributeEvents(array $eventEntityTransfers): void
+    {
+        $this->getFactory()
+            ->createCategoryNodeStorageWriter()
+            ->writeCategoryNodeStorageCollectionByCategoryAttributeEvents($eventEntityTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeCategoryNodeStorageCollectionByCategoryEvents(array $eventEntityTransfers): void
+    {
+        $this->getFactory()
+            ->createCategoryNodeStorageWriter()
+            ->writeCategoryNodeStorageCollectionByCategoryEvents($eventEntityTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeCategoryNodeStorageCollectionByCategoryTemplateEvents(array $eventEntityTransfers): void
+    {
+        $this->getFactory()
+            ->createCategoryNodeStorageWriter()
+            ->writeCategoryNodeStorageCollectionByCategoryTemplateEvents($eventEntityTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeCategoryNodeStorageCollectionByPerentCategoryEvents(array $eventEntityTransfers): void
+    {
+        $this->getFactory()
+            ->createCategoryNodeStorageWriter()
+            ->writeCategoryNodeStorageCollectionByPerentCategoryEvents($eventEntityTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeCategoryNodeStorageCollectionByCategoryNodeEvents(array $eventEntityTransfers): void
+    {
+        $this->getFactory()
+            ->createCategoryNodeStorageWriter()
+            ->writeCategoryNodeStorageCollectionByCategoryNodeEvents($eventEntityTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function deleteCategoryNodeStorageCollectionByCategoryAttributeEvents(array $eventEntityTransfers): void
+    {
+        $this->getFactory()
+            ->createCategoryNodeStorageDeleter()
+            ->deleteCategoryNodeStorageCollectionByCategoryAttributeEvents($eventEntityTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function deleteCategoryNodeStorageCollectionByCategoryTemplateEvents(array $eventEntityTransfers): void
+    {
+        $this->getFactory()
+            ->createCategoryNodeStorageDeleter()
+            ->deleteCategoryNodeStorageCollectionByCategoryTemplateEvents($eventEntityTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function deleteCategoryNodeStorageCollectionByCategoryEvents(array $eventEntityTransfers): void
+    {
+        $this->getFactory()
+            ->createCategoryNodeStorageDeleter()
+            ->deleteCategoryNodeStorageCollectionByCategoryEvents($eventEntityTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function deleteCategoryNodeStorageCollectionByCategoryNodeEvents(array $eventEntityTransfers): void
+    {
+        $this->getFactory()
+            ->createCategoryNodeStorageDeleter()
+            ->deleteCategoryNodeStorageCollectionByCategoryNodeEvents($eventEntityTransfers);
     }
 }

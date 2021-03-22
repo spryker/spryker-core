@@ -5,26 +5,23 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener;
+namespace Spryker\Zed\CategoryStorage\Communication\Plugin\Publisher\CategoryTree;
 
-use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
+use Spryker\Shared\CategoryStorage\CategoryStorageConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
+use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface;
 
 /**
- * @deprecated Use {@link \Spryker\Zed\CategoryStorage\Communication\Plugin\Publisher\CategoryTree\CategoryTreeDeletePublisherPlugin} instead.
- *
+ * @method \Spryker\Zed\CategoryStorage\Business\CategoryStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\CategoryStorage\Persistence\CategoryStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\CategoryStorage\Communication\CategoryStorageCommunicationFactory getFactory()
- * @method \Spryker\Zed\CategoryStorage\Business\CategoryStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\CategoryStorage\CategoryStorageConfig getConfig()
  */
-class CategoryTreeStorageUnpublishListener extends AbstractPlugin implements EventBulkHandlerInterface
+class CategoryTreeDeletePublisherPlugin extends AbstractPlugin implements PublisherPluginInterface
 {
-    use DatabaseTransactionHandlerTrait;
-
     /**
      * {@inheritDoc}
+     * - Unpublishes category tree data by `CategoryTree` publish event.
      *
      * @api
      *
@@ -33,10 +30,22 @@ class CategoryTreeStorageUnpublishListener extends AbstractPlugin implements Eve
      *
      * @return void
      */
-    public function handleBulk(array $eventEntityTransfers, $eventName)
+    public function handleBulk(array $eventEntityTransfers, $eventName): void
     {
-        $this->preventTransaction();
-
         $this->getFacade()->deleteCategoryTreeStorageCollection();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return string[]
+     */
+    public function getSubscribedEvents(): array
+    {
+        return [
+            CategoryStorageConstants::CATEGORY_TREE_UNPUBLISH,
+        ];
     }
 }

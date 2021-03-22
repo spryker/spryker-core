@@ -515,6 +515,14 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
                 ->endUse();
         }
 
+        $categoryTemplateIds = $categoryNodeCriteriaTransfer->getCategoryTemplateIds();
+        if (count($categoryTemplateIds) !== 0) {
+            $categoryNodeQuery
+                ->useCategoryQuery()
+                    ->filterByFkCategoryTemplate_In($categoryTemplateIds)
+                ->endUse();
+        }
+
         if ($categoryNodeCriteriaTransfer->getIsRoot() !== null) {
             $categoryNodeQuery->filterByIsRoot($categoryNodeCriteriaTransfer->getIsRoot());
         }

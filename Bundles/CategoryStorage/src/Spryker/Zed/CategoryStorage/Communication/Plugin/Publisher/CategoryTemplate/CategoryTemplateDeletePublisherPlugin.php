@@ -5,26 +5,23 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener;
+namespace Spryker\Zed\CategoryStorage\Communication\Plugin\Publisher\CategoryTemplate;
 
-use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
+use Spryker\Shared\CategoryStorage\CategoryStorageConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
+use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface;
 
 /**
- * @deprecated Use {@link \Spryker\Zed\CategoryStorage\Communication\Plugin\Publisher\CategoryTree\CategoryTreeWritePublisherPlugin} instead.
- *
+ * @method \Spryker\Zed\CategoryStorage\Business\CategoryStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\CategoryStorage\Persistence\CategoryStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\CategoryStorage\Communication\CategoryStorageCommunicationFactory getFactory()
- * @method \Spryker\Zed\CategoryStorage\Business\CategoryStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\CategoryStorage\CategoryStorageConfig getConfig()
  */
-class CategoryTreeStoragePublishListener extends AbstractPlugin implements EventBulkHandlerInterface
+class CategoryTemplateDeletePublisherPlugin extends AbstractPlugin implements PublisherPluginInterface
 {
-    use DatabaseTransactionHandlerTrait;
-
     /**
      * {@inheritDoc}
+     * - Unpublishes category node data by `SpyCategoryTemplate` entity events.
      *
      * @api
      *
@@ -35,8 +32,18 @@ class CategoryTreeStoragePublishListener extends AbstractPlugin implements Event
      */
     public function handleBulk(array $eventEntityTransfers, $eventName)
     {
-        $this->preventTransaction();
+        $this->getFacade()->deleteCategoryNodeStorageCollectionByCategoryTemplateEvents($eventEntityTransfers);
+    }
 
-        $this->getFacade()->writeCategoryTreeStorageCollection();
+    /**
+     * @api
+     *
+     * @inheritDoc
+     */
+    public function getSubscribedEvents(): array
+    {
+        return [
+            CategoryStorageConstants::ENTITY_SPY_CATEGORY_TEMPLATE_DELETE,
+        ];
     }
 }

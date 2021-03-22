@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\CategoryStorage\Business\Deleter;
 
-use Generated\Shared\Transfer\NodeTransfer;
+use Generated\Shared\Transfer\CategoryNodeCriteriaTransfer;
+use Generated\Shared\Transfer\NodeCollectionTransfer;
+use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Spryker\Zed\CategoryStorage\Persistence\CategoryStorageEntityManagerInterface;
 
 class CategoryNodeStorageDeleter implements CategoryNodeStorageDeleterInterface
@@ -16,6 +18,16 @@ class CategoryNodeStorageDeleter implements CategoryNodeStorageDeleterInterface
      * @var \Spryker\Zed\CategoryStorage\Persistence\CategoryStorageEntityManagerInterface
      */
     protected $categoryStorageEntityManager;
+
+    /**
+     * @var \Spryker\Zed\CategoryStorage\Dependency\Facade\CategoryStorageToCategoryFacadeInterface
+     */
+    protected $categoryFacade;
+
+    /**
+     * @var \Spryker\Zed\CategoryStorage\Dependency\Facade\CategoryStorageToEventBehaviorFacadeInterface
+     */
+    protected $eventBehaviorFacade;
 
     /**
      * @param \Spryker\Zed\CategoryStorage\Persistence\CategoryStorageEntityManagerInterface $categoryStorageEntityManager
@@ -41,6 +53,59 @@ class CategoryNodeStorageDeleter implements CategoryNodeStorageDeleterInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function deleteCategoryNodeStorageCollectionByCategoryAttributeEvents(array $eventEntityTransfers): void
+    {
+        $this->deleteCategoryNodeStorageCollectionByForeignKeyContainingEvents(
+            $eventEntityTransfers,
+            SpyCategoryAttributeTableMap::COL_FK_CATEGORY
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function deleteCategoryNodeStorageCollectionByCategoryEvents(array $eventEntityTransfers): void
+    {
+        $categoryIds = $this->eventBehaviorFacade->getEventTransferIds($eventEntityTransfers);
+
+        $this->deleteCategoryNodeStorageCollectionByCategoryNodeCriteria(
+            (new CategoryNodeCriteriaTransfer())->setCategoryIds($categoryIds)
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function deleteCategoryNodeStorageCollectionByCategoryTemplateEvents(array $eventEntityTransfers): void
+    {
+        $categoryTemplateIds = $this->eventBehaviorFacade->getEventTransferIds($eventEntityTransfers);
+
+        $this->deleteCategoryNodeStorageCollectionByCategoryNodeCriteria(
+            (new CategoryNodeCriteriaTransfer())->setCategoryTemplateIds($categoryTemplateIds)
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function deleteCategoryNodeStorageCollectionByCategoryNodeEvents(array $eventEntityTransfers): void
+    {
+        $categoryNodeIds = $this->eventBehaviorFacade->getEventTransferIds($eventEntityTransfers);
+
+        $this->deleteCategoryNodeStorageCollection($categoryNodeIds);
+    }
+
+    /**
      * @param int[] $categoryNodeIds
      *
      * @return void
@@ -51,15 +116,18 @@ class CategoryNodeStorageDeleter implements CategoryNodeStorageDeleterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\NodeTransfer[] $nodeTransfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param string $foreignKeyName
      *
-     * @return int[]
+     * @return void
      */
-    protected function getCategoryNodeIdsFromNodeTransfers(array $nodeTransfers): array
+    protected function deleteCategoryNodeStorageCollectionByForeignKeyContainingEvents(array $eventEntityTransfers, string $foreignKeyName): void
     {
-        return array_map(function (NodeTransfer $nodeTransfer): int {
-            return $nodeTransfer->getIdCategoryNodeOrFail();
-        }, $nodeTransfers);
+        $categoryIds = $this->eventBehaviorFacade->getEventTransferForeignKeys($eventEntityTransfers, $foreignKeyName);
+
+        $this->deleteCategoryNodeStorageCollectionByCategoryNodeCriteria(
+            (new CategoryNodeCriteriaTransfer())->setCategoryIds($categoryIds)
+        );
     }
 
     /**
@@ -82,5 +150,34 @@ class CategoryNodeStorageDeleter implements CategoryNodeStorageDeleterInterface
         }
 
         $this->categoryStorageEntityManager->deleteCategoryNodeStoragesForStoreAndLocale($categoryNodeIdsToDelete, $localeName, $storeName);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
+     *
+     * @return void
+     */
+    protected function deleteCategoryNodeStorageCollectionByCategoryNodeCriteria(CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer): void
+    {
+        $nodeCollectionTransfer = $this->categoryFacade->getCategoryNodes($categoryNodeCriteriaTransfer);
+        $categoryNodeIds = $this->extractCategoryNodeIdsFromNodeCollection($nodeCollectionTransfer);
+
+        $this->deleteCategoryNodeStorageCollection($categoryNodeIds);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\NodeCollectionTransfer $nodeCollectionTransfer
+     *
+     * @return int[]
+     */
+    protected function extractCategoryNodeIdsFromNodeCollection(NodeCollectionTransfer $nodeCollectionTransfer): array
+    {
+        $categoryNodeIds = [];
+
+        foreach ($nodeCollectionTransfer->getNodes() as $nodeTransfer) {
+            $categoryNodeIds[] = $nodeTransfer->getIdCategoryNodeOrFail();
+        }
+
+        return $categoryNodeIds;
     }
 }

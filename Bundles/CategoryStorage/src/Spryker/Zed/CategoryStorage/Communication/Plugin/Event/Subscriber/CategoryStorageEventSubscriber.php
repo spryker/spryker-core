@@ -24,6 +24,9 @@ use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
+ * @deprecated This will be deleted in the next major without replacement, the plugin registering now happened in
+ *  project by implementing `\Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherRegistryPluginInterface`
+ *
  * @method \Spryker\Zed\CategoryStorage\Communication\CategoryStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\CategoryStorage\Business\CategoryStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\CategoryStorage\CategoryStorageConfig getConfig()

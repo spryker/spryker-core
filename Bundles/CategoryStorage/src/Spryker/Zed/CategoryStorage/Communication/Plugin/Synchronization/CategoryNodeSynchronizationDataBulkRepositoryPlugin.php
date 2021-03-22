@@ -7,21 +7,35 @@
 
 namespace Spryker\Zed\CategoryStorage\Communication\Plugin\Synchronization;
 
-use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Shared\CategoryStorage\CategoryStorageConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface;
+use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBulkRepositoryPluginInterface;
 
 /**
- * @deprecated Use {@link \Spryker\Zed\CategoryStorage\Communication\Plugin\Synchronization\CategoryTreeSynchronizationDataBulkRepositoryPlugin} instead.
- *
  * @method \Spryker\Zed\CategoryStorage\Persistence\CategoryStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\CategoryStorage\Business\CategoryStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\CategoryStorage\Communication\CategoryStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\CategoryStorage\CategoryStorageConfig getConfig()
  */
-class CategoryTreeSynchronizationDataPlugin extends AbstractPlugin implements SynchronizationDataQueryContainerPluginInterface
+class CategoryNodeSynchronizationDataBulkRepositoryPlugin extends AbstractPlugin implements SynchronizationDataBulkRepositoryPluginInterface
 {
+    /**
+     * {@inheritDoc}
+     * - Retrieves a collection of category node storage collection according to provided offset, limit and ids.
+     *
+     * @api
+     *
+     * @param int $offset
+     * @param int $limit
+     * @param int[] $ids
+     *
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     */
+    public function getData(int $offset, int $limit, array $ids = []): array
+    {
+        return $this->getFacade()->findCategoryNodeStorageDataTransferByIds($offset, $limit, $ids);
+    }
+
     /**
      * {@inheritDoc}
      *
@@ -31,7 +45,7 @@ class CategoryTreeSynchronizationDataPlugin extends AbstractPlugin implements Sy
      */
     public function getResourceName(): string
     {
-        return CategoryStorageConstants::CATEGORY_TREE_RESOURCE_NAME;
+        return CategoryStorageConstants::CATEGORY_NODE_RESOURCE_NAME;
     }
 
     /**
@@ -44,20 +58,6 @@ class CategoryTreeSynchronizationDataPlugin extends AbstractPlugin implements Sy
     public function hasStore(): bool
     {
         return true;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param int[] $ids
-     *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria|null
-     */
-    public function queryData($ids = []): ?ModelCriteria
-    {
-        return $this->getQueryContainer()->queryCategoryStorage();
     }
 
     /**
@@ -93,6 +93,6 @@ class CategoryTreeSynchronizationDataPlugin extends AbstractPlugin implements Sy
      */
     public function getSynchronizationQueuePoolName(): ?string
     {
-        return $this->getFactory()->getConfig()->getCategoryTreeSynchronizationPoolName();
+        return $this->getConfig()->getCategoryNodeSynchronizationPoolName();
     }
 }
