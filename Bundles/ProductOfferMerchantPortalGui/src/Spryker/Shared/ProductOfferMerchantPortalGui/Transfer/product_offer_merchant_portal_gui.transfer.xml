@@ -262,6 +262,7 @@
 
     <transfer name="MerchantStockCriteria">
         <property name="idMerchant" type="int"/>
+        <property name="merchantReference" type="string"/>
         <property name="isDefault" type="bool"/>
     </transfer>
 
