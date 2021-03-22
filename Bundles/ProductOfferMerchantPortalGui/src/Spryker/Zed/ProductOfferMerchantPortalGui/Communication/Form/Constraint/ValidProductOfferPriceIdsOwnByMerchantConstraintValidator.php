@@ -43,10 +43,10 @@ class ValidProductOfferPriceIdsOwnByMerchantConstraintValidator extends Abstract
             $productOfferTransfer = $priceProductOfferTransfer->getProductOfferOrFail();
             /** @var int $idPriceProductOffer */
             $idPriceProductOffer = $priceProductOfferTransfer->getIdPriceProductOffer();
-            $normalizedDataCollection[$productOfferTransfer->getFkMerchantOrFail()][] = $idPriceProductOffer;
+            $normalizedDataCollection[$productOfferTransfer->getMerchantReferenceOrFail()][] = $idPriceProductOffer;
         }
 
-        foreach ($normalizedDataCollection as $idMerchant => $priceProductOfferIds) {
+        foreach ($normalizedDataCollection as $merchantReference => $priceProductOfferIds) {
             $priceProductOfferCriteriaTransfer = new PriceProductOfferCriteriaTransfer();
             $priceProductOfferCriteriaTransfer->setPriceProductOfferIds($priceProductOfferIds)
                 ->setProductOfferCriteriaFilter((new ProductOfferCriteriaFilterTransfer())->setMerchantIds());

@@ -104,7 +104,7 @@ class DeletePriceProductOfferController extends AbstractController
         foreach ($priceProductOfferIds as $idPriceProductOffer) {
             $priceProductOfferTransfer = (new PriceProductOfferTransfer())->setIdPriceProductOffer($idPriceProductOffer)
                 ->setProductOffer(
-                    (new ProductOfferTransfer())->setFkMerchant($currentMerchantUser->getIdMerchant())
+                    (new ProductOfferTransfer())->setMerchantReference($currentMerchantUser->getMerchantOrFail()->getMerchantReference())
                 );
             $priceProductOfferCollectionTransfer->addPriceProductOffer($priceProductOfferTransfer);
         }
