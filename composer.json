@@ -734,6 +734,8 @@
     "spryker/step-engine": "*",
     "spryker/step-engine-extension": "*",
     "spryker/stock": "*",
+    "spryker/stock-address": "*",
+    "spryker/stock-address-data-import": "*",
     "spryker/stock-data-import": "*",
     "spryker/stock-extension": "*",
     "spryker/stock-gui": "*",
