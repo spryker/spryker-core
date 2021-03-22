@@ -8,7 +8,7 @@
 namespace Spryker\Zed\MerchantProductOfferWishlist\Communication\Expander;
 
 use Generated\Shared\Transfer\MerchantCriteriaTransfer;
-use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Spryker\Zed\MerchantProductOfferWishlist\Dependency\Facade\MerchantProductOfferWishlistToMerchantFacadeInterface;
 use Spryker\Zed\MerchantProductOfferWishlist\Dependency\Facade\MerchantProductOfferWishlistToProductOfferFacadeInterface;
@@ -50,9 +50,9 @@ class MerchantProductOfferWishlistItemExpander implements MerchantProductOfferWi
 
         /** @var string $productOfferReference */
         $productOfferReference = $wishlistItemTransfer->getProductOfferReference();
-        $productOfferCriterialFilterTransfer = (new ProductOfferCriteriaFilterTransfer())
+        $productOfferCriteriaTransfer = (new ProductOfferCriteriaTransfer())
             ->setProductOfferReference($productOfferReference);
-        $productOfferTransfer = $this->productOfferFacade->findOne($productOfferCriterialFilterTransfer);
+        $productOfferTransfer = $this->productOfferFacade->findOne($productOfferCriteriaTransfer);
 
         if (!$productOfferTransfer) {
             return $wishlistItemTransfer;

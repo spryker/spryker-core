@@ -40,7 +40,7 @@
         <property name="merchantReference" type="string"/>
     </transfer>
 
-    <transfer name="ProductOfferCriteriaFilter">
+    <transfer name="ProductOfferCriteria">
         <property name="productOfferReference" type="string"/>
     </transfer>
 
