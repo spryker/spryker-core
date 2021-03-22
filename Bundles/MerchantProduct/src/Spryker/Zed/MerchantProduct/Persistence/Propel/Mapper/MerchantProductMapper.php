@@ -38,6 +38,21 @@ class MerchantProductMapper
 
     /**
      * @param \Generated\Shared\Transfer\MerchantProductTransfer $merchantProductTransfer
+     * @param \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstract $merchantProductEntity
+     *
+     * @return \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstract
+     */
+    public function mapMerchantProductTransferToMerchantProductEntity(
+        MerchantProductTransfer $merchantProductTransfer,
+        SpyMerchantProductAbstract $merchantProductEntity
+    ): SpyMerchantProductAbstract {
+        $merchantProductEntity->fromArray($merchantProductTransfer->toArray());
+
+        return $merchantProductEntity;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantProductTransfer $merchantProductTransfer
      * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Product\Persistence\SpyProduct[] $productEntities
      *
      * @return \Generated\Shared\Transfer\MerchantProductTransfer

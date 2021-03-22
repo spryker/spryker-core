@@ -23,7 +23,7 @@ class ProductAbstractBelongsToMerchantConstraintValidator extends AbstractConstr
      *
      * @return void
      */
-    public function validate($value, Constraint $constraint): void
+    public function validate(MerchantProductTransfer $value, Constraint $constraint): void
     {
         if (!$value instanceof MerchantProductTransfer) {
             throw new UnexpectedTypeException($value, MerchantProductTransfer::class);

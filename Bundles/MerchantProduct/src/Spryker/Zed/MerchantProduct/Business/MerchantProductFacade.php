@@ -19,6 +19,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\MerchantProduct\Persistence\MerchantProductRepositoryInterface getRepository()
+ * @method \Spryker\Zed\MerchantProduct\Persistence\MerchantProductEntityManagerInterface getEntityManager()
  * @method \Spryker\Zed\MerchantProduct\Business\MerchantProductBusinessFactory getFactory()
  */
 class MerchantProductFacade extends AbstractFacade implements MerchantProductFacadeInterface
@@ -109,5 +110,19 @@ class MerchantProductFacade extends AbstractFacade implements MerchantProductFac
         MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer
     ): ProductConcreteCollectionTransfer {
         return $this->getFactory()->createMerchantProductReader()->getProductConcreteCollection($merchantProductCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantProductTransfer $merchantProductTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantProductTransfer
+     */
+    public function create(MerchantProductTransfer $merchantProductTransfer): MerchantProductTransfer
+    {
+        return $this->getEntityManager()->create($merchantProductTransfer);
     }
 }

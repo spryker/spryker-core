@@ -49,6 +49,7 @@
 
     <transfer name="ProductAbstract">
         <property name="idProductAbstract" type="int"/>
+        <property name="idMerchant" type="int"/>
     </transfer>
 
     <transfer name="ProductAbstractResponse">
