@@ -9,6 +9,7 @@ namespace Spryker\Zed\MerchantSalesReturnGui\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\MerchantSalesReturnGui\Dependency\Facade\MerchantSalesReturnGuiToMerchantFacadeInterface;
+use Spryker\Zed\MerchantSalesReturnGui\Dependency\Facade\MerchantSalesReturnGuiToMerchantSalesOrderFacadeInterface;
 use Spryker\Zed\MerchantSalesReturnGui\MerchantSalesReturnGuiDependencyProvider;
 
 /**
@@ -22,5 +23,13 @@ class MerchantSalesReturnGuiCommunicationFactory extends AbstractCommunicationFa
     public function getMerchantFacade(): MerchantSalesReturnGuiToMerchantFacadeInterface
     {
         return $this->getProvidedDependency(MerchantSalesReturnGuiDependencyProvider::FACADE_MERCHANT);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantSalesReturnGui\Dependency\Facade\MerchantSalesReturnGuiToMerchantSalesOrderFacadeInterface
+     */
+    public function getMerchantSalesOrderFacade(): MerchantSalesReturnGuiToMerchantSalesOrderFacadeInterface
+    {
+        return $this->getProvidedDependency(MerchantSalesReturnGuiDependencyProvider::FACADE_MERCHANT_SALES_ORDER);
     }
 }

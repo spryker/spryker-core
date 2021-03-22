@@ -9,6 +9,7 @@ namespace Spryker\Zed\MerchantSalesReturnGui\Communication\Plugin;
 
 use Generated\Shared\Transfer\MerchantCollectionTransfer;
 use Generated\Shared\Transfer\MerchantCriteriaTransfer;
+use Generated\Shared\Transfer\MerchantOrderCriteriaTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SalesReturnGuiExtension\Dependency\Plugin\ReturnCreateTemplatePluginInterface;
@@ -34,12 +35,10 @@ class MerchantReturnCreateTemplatePlugin extends AbstractPlugin implements Retur
      */
     public function getTemplateData(OrderTransfer $orderTransfer): array
     {
-        $merchantCollection = $this->getMerchantCollection($orderTransfer);
-
         return [
             'order' => $orderTransfer,
-            'merchants' => $merchantCollection,
-            'indexedMerchantOrderReferences' => $this->getMerchantOrderReferences($orderTransfer),
+            'merchants' => $this->getMerchants($orderTransfer),
+            'indexedMerchantOrders' => $this->getMerchantOrders($orderTransfer),
         ];
     }
 
@@ -48,7 +47,7 @@ class MerchantReturnCreateTemplatePlugin extends AbstractPlugin implements Retur
      *
      * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
      */
-    protected function getMerchantCollection(OrderTransfer $orderTransfer): MerchantCollectionTransfer
+    protected function getMerchants(OrderTransfer $orderTransfer): MerchantCollectionTransfer
     {
         $merchantCriteriaTransfer = new MerchantCriteriaTransfer();
         foreach ($orderTransfer->getItems() as $itemTransfer) {
@@ -57,7 +56,10 @@ class MerchantReturnCreateTemplatePlugin extends AbstractPlugin implements Retur
             }
         }
 
-        return $this->getFactory()->getMerchantFacade()->get($merchantCriteriaTransfer);
+        return $this
+            ->getFactory()
+            ->getMerchantFacade()
+            ->get($merchantCriteriaTransfer);
     }
 
     /**
@@ -65,11 +67,22 @@ class MerchantReturnCreateTemplatePlugin extends AbstractPlugin implements Retur
      *
      * @return array
      */
-    protected function getMerchantOrderReferences(OrderTransfer $orderTransfer): array
+    protected function getMerchantOrders(OrderTransfer $orderTransfer): array
     {
-        $indexMerchantOrderReferences = [];
-        // @TODO Fetch MerchantOrders by Order and index them by MerchantReference.
+        $merchantOrderCriteriaTransfer = (new MerchantOrderCriteriaTransfer())
+            ->setIdOrder($orderTransfer->getIdSalesOrder());
 
-        return $indexMerchantOrderReferences;
+        $merchantOrderCollection = $this
+            ->getFactory()
+            ->getMerchantSalesOrderFacade()
+            ->getMerchantOrderCollection($merchantOrderCriteriaTransfer);
+
+        $indexedMerchantOrders = [];
+
+        foreach ($merchantOrderCollection->getMerchantOrders() as $merchantOrderTransfer) {
+            $indexedMerchantOrders[$merchantOrderTransfer->getMerchantReference()] = $merchantOrderTransfer;
+        }
+
+        return $indexedMerchantOrders;
     }
 }

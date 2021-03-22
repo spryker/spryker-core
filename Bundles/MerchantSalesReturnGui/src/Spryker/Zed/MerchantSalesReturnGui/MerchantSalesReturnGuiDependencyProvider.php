@@ -10,6 +10,7 @@ namespace Spryker\Zed\MerchantSalesReturnGui;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\MerchantSalesReturnGui\Dependency\Facade\MerchantSalesReturnGuiToMerchantFacadeBridge;
+use Spryker\Zed\MerchantSalesReturnGui\Dependency\Facade\MerchantSalesReturnGuiToMerchantSalesOrderFacadeBridge;
 
 /**
  * @method \Spryker\Zed\MerchantSalesReturnGui\MerchantSalesReturnGuiConfig getConfig()
@@ -17,6 +18,7 @@ use Spryker\Zed\MerchantSalesReturnGui\Dependency\Facade\MerchantSalesReturnGuiT
 class MerchantSalesReturnGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_MERCHANT = 'FACADE_MERCHANT';
+    public const FACADE_MERCHANT_SALES_ORDER = 'FACADE_MERCHANT_SALES_ORDER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -28,6 +30,7 @@ class MerchantSalesReturnGuiDependencyProvider extends AbstractBundleDependencyP
         $container = parent::provideCommunicationLayerDependencies($container);
 
         $container = $this->addMerchantFacade($container);
+        $container = $this->addMerchantSalesOrderFacade($container);
 
         return $container;
     }
@@ -44,5 +47,17 @@ class MerchantSalesReturnGuiDependencyProvider extends AbstractBundleDependencyP
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMerchantSalesOrderFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_MERCHANT_SALES_ORDER, function (Container $container) {
+            return new MerchantSalesReturnGuiToMerchantSalesOrderFacadeBridge($container->getLocator()->merchantSalesOrder()->facade());
+        });
     }
 }

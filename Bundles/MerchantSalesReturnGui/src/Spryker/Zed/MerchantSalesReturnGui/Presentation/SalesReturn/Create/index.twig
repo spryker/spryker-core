@@ -30,12 +30,14 @@
             {{ form_errors(returnCreateForm) }}
 
             {% for merchant in merchants %}
+                {% set merchantOrder = indexedMerchantOrder[merchant.merchantReference] %}
+
                 {% if merchants.length > 1 %}
-                    <div class="row">
-                        {# @TODO Add styling for infobox! #}
-                        <div class="col-lg-2 font-bold">
+                    <div class="alert alert-info">
+                        <p>
+                            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
                             {{ 'You can only return products from one merchant at a time.' | trans }}
-                        </div>
+                        </p>
                     </div>
                 {% endif %}
 
@@ -63,7 +65,7 @@
                     </div>
                     <div class="col-lg-10">
                         <a target="_blank" href="{{ url('/sales/detail', {'id-sales-order' : order.idSalesOrder}) }}">
-                            {{ indexedMerchantOrderReferences[merchant.merchantReference] }}
+                            {{ merchantOrder.merchantSalesOrderReference }}
                         </a>
                     </div>
                 </div>
