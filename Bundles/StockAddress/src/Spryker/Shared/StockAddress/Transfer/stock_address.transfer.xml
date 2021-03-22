@@ -17,4 +17,10 @@
         <property name="comment" type="string"/>
     </transfer>
 
+    <transfer name="Country">
+    </transfer>
+
+    <transfer name="Region">
+    </transfer>
+
 </transfers>
