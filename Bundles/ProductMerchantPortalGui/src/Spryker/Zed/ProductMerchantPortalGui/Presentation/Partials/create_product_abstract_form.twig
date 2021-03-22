@@ -14,6 +14,7 @@
         </web-spy-card>
 
         <web-spy-card spy-title="{{ form.name.vars.label | trans }} {{ form.name.vars.required ? '*' }}" class="{{ mainClass }}__card">
+            {{ defaultLocaleCode | default }}
             {{ form_row(form.name, {label: false, row_attr: {'no-spaces': 'true'}}) }}
         </web-spy-card>
 

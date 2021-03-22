@@ -9,9 +9,9 @@ namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Constraint;
 
 use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
-class UniqueSkuConstraint extends SymfonyConstraint
+class UniqueConcreteSkuConstraint extends SymfonyConstraint
 {
-    protected const MESSAGE = 'SKU should be unique. Another product with sku "{{ sku }}" already exists';
+    protected const MESSAGE = 'Concrete Product SKU already exists';
 
     /**
      * @return string

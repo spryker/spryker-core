@@ -50,6 +50,7 @@ class CreateProductAbstractController extends AbstractController
         $responseData = [
             'form' => $this->renderView('@ProductMerchantPortalGui/Partials/create_product_abstract_form.twig', [
                 'form' => $createProductAbstractForm->createView(),
+                'defaultLocaleCode' => $this->findDefaultStoreDefaultLocale(),
             ])->getContent(),
         ];
 
@@ -76,7 +77,29 @@ class CreateProductAbstractController extends AbstractController
      */
     public function createWithSingleConcreteAction(Request $request): JsonResponse
     {
-        return new JsonResponse(1);
+        $createProductAbstractWithSingleConcreteFormForm = $this->getFactory()
+            ->createCreateProductAbstractWithSingleConcreteForm();
+        $createProductAbstractWithSingleConcreteFormForm->handleRequest($request);
+
+        $responseData = [
+            'form' => $this->renderView('@ProductMerchantPortalGui/Partials/create_product_abstract_with_single_concrete_form.twig', [
+                'form' => $createProductAbstractWithSingleConcreteFormForm->createView(),
+            ])->getContent(),
+        ];
+
+        if (!$createProductAbstractWithSingleConcreteFormForm->isSubmitted()) {
+            return new JsonResponse($responseData);
+        }
+
+        if ($createProductAbstractWithSingleConcreteFormForm->isValid()) {
+        }
+
+        $responseData[static::RESPONSE_KEY_NOTIFICATIONS] = [[
+            static::RESPONSE_KEY_TYPE => static::RESPONSE_TYPE_ERROR,
+            static::RESPONSE_KEY_MESSAGE => static::RESPONSE_MESSAGE_ERROR,
+        ]];
+
+        return new JsonResponse($responseData);
     }
 
     /**
@@ -114,5 +137,20 @@ class CreateProductAbstractController extends AbstractController
         );
 
         return new RedirectResponse($redirectUrl);
+    }
+
+    /**
+     * @return string|null
+     */
+    protected function findDefaultStoreDefaultLocale(): ?string
+    {
+        $defaultStore = $this->getFactory()->getStore()::getDefaultStore();
+        foreach ($this->getFactory()->getStoreFacade()->getAllStores() as $storeTransfer) {
+            if ($storeTransfer->getName() === $defaultStore) {
+                return array_values($storeTransfer->getAvailableLocaleIsoCodes())[0] ?? null;
+            }
+        }
+
+        return null;
     }
 }

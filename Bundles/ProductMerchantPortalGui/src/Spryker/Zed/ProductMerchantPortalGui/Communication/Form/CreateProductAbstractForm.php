@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Form;
 
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Constraint\SkuRegexConstraint;
-use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Constraint\UniqueSkuConstraint;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Constraint\UniqueAbstractSkuConstraint;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -67,7 +67,7 @@ class CreateProductAbstractForm extends AbstractType
             'constraints' => [
                 new NotBlank(),
                 new SkuRegexConstraint(),
-                new UniqueSkuConstraint(),
+                new UniqueAbstractSkuConstraint(),
             ],
             'attr' => [
                 'placeholder' => static::PLACEHOLDER_SKU,

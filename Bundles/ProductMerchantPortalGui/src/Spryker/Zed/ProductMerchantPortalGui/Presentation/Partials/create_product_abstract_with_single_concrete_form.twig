@@ -1,0 +1,25 @@
+{#{% form_theme form '@ZedUi/Form/form-webcomponent-layout.twig' %}#}
+
+{% block body %}
+    {% set mainClass = 'mp-edit-abstract-product' %}
+
+    {{ form_start(form, {attr: {excludeFormTag: true}}) }}
+
+        {% block action %}
+            <web-spy-button size="lg" type="submit" name="back" action>{{ 'Back' | trans }}</web-spy-button>
+            <web-spy-button size="lg" type="submit" action>{{ 'Create' | trans }}</web-spy-button>
+        {% endblock %}
+
+        <web-spy-card spy-title="{{ form.concreteSku.vars.label | trans }} {{ form.concreteSku.vars.required ? '*' }}" class="{{ mainClass }}__card">
+            {{ form_row(form.concreteSku, {label: false, row_attr: {'no-spaces': 'true'}}) }}
+            {{ form_row(form.autogenerateSku, {row_attr: {'no-spaces': 'true'}}) }}
+        </web-spy-card>
+
+        <web-spy-card spy-title="{{ form.concreteName.vars.label | trans }} {{ form.concreteName.vars.required ? '*' }}" class="{{ mainClass }}__card">
+            {{ form_row(form.concreteName, {label: false, row_attr: {'no-spaces': 'true'}}) }}
+            {{ form_row(form.useAbstractProductName, {row_attr: {'no-spaces': 'true'}}) }}
+        </web-spy-card>
+
+    {{ form_end(form) }}
+
+{% endblock %}

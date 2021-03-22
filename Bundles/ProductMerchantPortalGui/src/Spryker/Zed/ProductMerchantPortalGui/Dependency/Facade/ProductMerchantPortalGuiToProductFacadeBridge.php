@@ -63,4 +63,14 @@ class ProductMerchantPortalGuiToProductFacadeBridge implements ProductMerchantPo
     {
         return $this->productFacade->hasProductAbstract($sku);
     }
+
+    /**
+     * @param string $sku
+     *
+     * @return bool
+     */
+    public function hasProductConcrete($sku)
+    {
+        return $this->productFacade->hasProductConcrete($sku);
+    }
 }

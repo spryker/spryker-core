@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 /**
  * @method \Spryker\Zed\ProductMerchantPortalGui\Communication\ProductMerchantPortalGuiCommunicationFactory getFactory()
  */
-class UniqueSkuConstraintValidator extends AbstractConstraintValidator
+class UniqueAbstractSkuConstraintValidator extends AbstractConstraintValidator
 {
     /**
      * @param string $sku
@@ -30,14 +30,12 @@ class UniqueSkuConstraintValidator extends AbstractConstraintValidator
             return;
         }
 
-        if (!$constraint instanceof UniqueSkuConstraint) {
-            throw new UnexpectedTypeException($constraint, UniqueSkuConstraint::class);
+        if (!$constraint instanceof UniqueAbstractSkuConstraint) {
+            throw new UnexpectedTypeException($constraint, UniqueAbstractSkuConstraint::class);
         }
 
         if ($this->getFactory()->getProductFacade()->hasProductAbstract($sku)) {
-            $this->context->buildViolation($constraint->getMessage())
-                ->setParameter('{{ sku }}', $sku)
-                ->addViolation();
+            $this->context->buildViolation($constraint->getMessage())->addViolation();
         }
     }
 }

@@ -12,10 +12,12 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Shared\GuiTable\DataProvider\GuiTableDataProviderInterface;
 use Spryker\Shared\GuiTable\GuiTableFactoryInterface;
 use Spryker\Shared\GuiTable\Http\GuiTableDataRequestExecutorInterface;
+use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Builder\ProductAbstractNameBuilder;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Builder\ProductAbstractNameBuilderInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\CreateProductAbstractForm;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\CreateProductAbstractWithSingleConcreteForm;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\DataProvider\ProductAbstractFormDataProvider;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\DataProvider\ProductAbstractFormDataProviderInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductAbstractForm;
@@ -112,12 +114,10 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
     }
 
     /**
-     * @phpstan-param array<mixed> $options
-     *
      * @phpstan-return \Symfony\Component\Form\FormInterface<mixed>
      *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer|null $data
-     * @param array $options
+     * @param mixed[] $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -127,18 +127,29 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
     }
 
     /**
-     * @phpstan-param array<mixed> $options
-     *
      * @phpstan-return \Symfony\Component\Form\FormInterface<mixed>
      *
      * @param mixed[]|null $data
-     * @param array $options
+     * @param mixed[] $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
     public function createCreateProductAbstractForm(?array $data = null, array $options = []): FormInterface
     {
         return $this->getFormFactory()->create(CreateProductAbstractForm::class, $data, $options);
+    }
+
+    /**
+     * @phpstan-return \Symfony\Component\Form\FormInterface<mixed>
+     *
+     * @param mixed[]|null $data
+     * @param mixed[] $options
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createCreateProductAbstractWithSingleConcreteForm(?array $data = null, array $options = []): FormInterface
+    {
+        return $this->getFormFactory()->create(CreateProductAbstractWithSingleConcreteForm::class, $data, $options);
     }
 
     /**
@@ -276,12 +287,10 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
     }
 
     /**
-     * @phpstan-param array<mixed> $options
-     *
      * @phpstan-return \Symfony\Component\Form\FormInterface<mixed>
      *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer|null $data
-     * @param array $options
+     * @param mixed[] $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -424,5 +433,13 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
     public function getProductConcreteTableExpanderPlugins(): array
     {
         return $this->getProvidedDependency(ProductMerchantPortalGuiDependencyProvider::PLUGINS_PRODUCT_CONCRETE_TABLE_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\Store
+     */
+    public function getStore(): Store
+    {
+        return $this->getProvidedDependency(ProductMerchantPortalGuiDependencyProvider::STORE);
     }
 }
