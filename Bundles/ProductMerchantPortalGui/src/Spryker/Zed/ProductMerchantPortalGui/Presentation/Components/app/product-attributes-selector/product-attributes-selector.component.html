@@ -1,0 +1,31 @@
+<div class="mp-product-attributes-selector__header">
+    <div class="mp-product-attributes-selector__header-name">
+        <ng-content select="[col-attr-name]"></ng-content>
+    </div>
+    <div class="mp-product-attributes-selector__header-values-name">
+        <ng-content select="[col-attr-values-name]"></ng-content>
+    </div>
+</div>
+
+<div class="mp-product-attributes-selector__content">
+    <div class="mp-product-attributes-selector__content-row"
+         *ngFor="let attribute of selectedAttributes">
+        <div class="mp-product-attributes-selector__content-row-name">
+            <spy-select (valueChange)="selectedAttributesChange.emit($event)"></spy-select>
+        </div>
+        <div class="mp-product-attributes-selector__content-row-values-name">
+            <spy-select [multiple] (valueChange)="selectedAttributesChange.emit($event)"></spy-select>
+        </div>
+        <div class="mp-product-attributes-selector__content-row-button">
+            <spy-button>
+                <spy-icon [name]="deleteIcon"></spy-icon>
+            </spy-button>
+        </div>
+    </div>
+
+    <spy-button>
+        <ng-content select="[btn-attr-add-name]"></ng-content>
+    </spy-button>
+
+    <spy-input *ngIf="name" [type]="'hidden'" [value]="selectedAttributes"></spy-input>
+</div>

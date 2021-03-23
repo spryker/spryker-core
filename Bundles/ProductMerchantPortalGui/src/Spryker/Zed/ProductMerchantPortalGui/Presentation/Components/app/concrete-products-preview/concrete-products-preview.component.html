@@ -1,0 +1,35 @@
+<div class="mp-concrete-products-preview__header">
+    <spy-chips *ngIf="generatedProducts" color="grey">
+        {{ generatedProducts }}
+        <ng-content select="[total-text]"></ng-content>
+    </spy-chips>
+    <spy-checkbox>
+        <ng-content select="[auto-sku-text]"></ng-content>
+    </spy-checkbox>
+    <spy-checkbox>
+        <ng-content select="[auto-name-text]"></ng-content>
+    </spy-checkbox>
+</div>
+
+<div class="mp-concrete-products-preview__table">
+    <div class="mp-concrete-products-preview__table-header">
+        <ng-content select="[col-attr-name]"></ng-content>
+        <ng-content select="[col-sku-name]"></ng-content>
+        <ng-content select="[col-name-name]"></ng-content>
+    </div>
+    <div class="mp-concrete-products-preview__table-content">
+        <cdk-virtual-scroll-viewport itemSize="50">
+            <div *cdkVirtualFor="let attribute of attributes">
+                <div *ngFor="let product of generatedProducts">
+                    <div *ngFor="let superAttribute of product.superAttributes">
+                        {{ superAttribute.name }}
+                    </div>
+                    <spy-input [value]="product.sku"></spy-input>
+                    <spy-input [value]="product.name"></spy-input>
+                </div>
+            </div>
+        </cdk-virtual-scroll-viewport>
+
+        <spy-input *ngIf="name" [type]="'hidden'" [value]="generatedProducts"></spy-input>
+    </div>
+</div>

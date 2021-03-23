@@ -1,0 +1,31 @@
+<div class="mp-create-multi-concrete-product__header">
+    <spy-headline>
+        <h3 class="mp-create-multi-concrete-product__title">
+            <ng-content select="[title]"></ng-content>
+        </h3>
+        <ng-content actions select="[action]"></ng-content>
+    </spy-headline>
+</div>
+
+<div class="mp-create-multi-concrete-product__content">
+    <mp-product-attributes-selector
+        [attributes]="attributes"
+        [(selectedAttributes)]="selectedAttributes">
+        <ng-content col-attr-name select="[selector-col-attr-name]"></ng-content>
+        <ng-content col-attr-values-name select="[selector-col-attr-values-name]"></ng-content>
+        <ng-content btn-attr-add-name select="[selector-btn-attr-add-name]"></ng-content>
+    </mp-product-attributes-selector>
+
+    <ng-content select="[preview-text]"></ng-content>
+
+    <mp-concrete-products-preview
+        [name]="productsName"
+        [attributes]="selectedAttributes">
+        <ng-content total-text select="[preview-total-text]"></ng-content>
+        <ng-content auto-sku-text select="[preview-auto-sku-text]"></ng-content>
+        <ng-content auto-name-text select="[preview-auto-name-text]"></ng-content>
+        <ng-content col-attr-name select="[preview-col-attr-name]"></ng-content>
+        <ng-content col-sku-name select="[preview-col-sku-name]"></ng-content>
+        <ng-content col-name-name select="[preview-col-name-name]"></ng-content>
+    </mp-concrete-products-preview>
+</div>

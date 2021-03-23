@@ -4,13 +4,14 @@ import { ButtonModule, ButtonComponent } from '@spryker/button';
 import { TabComponent, TabsComponent, TabsModule } from '@spryker/tabs';
 import { TextareaComponent, TextareaModule } from '@spryker/textarea';
 import { TreeSelectComponent, TreeSelectModule } from '@spryker/tree-select';
-import { IconGermanyModule, IconUnitedStatesModule } from '../icons';
+import { IconGermanyModule, IconUnitedStatesModule, IconDeleteModule } from '../icons';
 import { ProductListComponent } from './product-list/product-list.component';
 import { ProductListModule } from './product-list/product-list.module';
 import { CardModule, CardComponent } from '@spryker/card';
 import { SelectModule, SelectComponent } from '@spryker/select';
 import { InputModule, InputComponent } from '@spryker/input';
 import { CollapsibleModule, CollapsibleComponent } from '@spryker/collapsible';
+import { ChipsComponent, ChipsModule } from '@spryker/chips';
 import { FormItemModule, FormItemComponent } from '@spryker/form-item';
 import { ButtonActionComponent, ButtonActionModule } from '@spryker/button.action';
 import { EditAbstractProductComponent } from './edit-abstract-product/edit-abstract-product.component';
@@ -31,6 +32,12 @@ import { CreateSingleConcreteProductModule } from './create-single-concrete-prod
 import { CreateSingleConcreteProductComponent } from './create-single-concrete-product/create-single-concrete-product.component';
 import { AutogenerateInputModule } from './autogenerate-input/autogenerate-input.module';
 import { AutogenerateInputComponent } from './autogenerate-input/autogenerate-input.component';
+import { ConcreteProductsPreviewModule } from './concrete-products-preview/concrete-products-preview.module';
+import { ConcreteProductsPreviewComponent } from './concrete-products-preview/concrete-products-preview.component';
+import { ProductAttributesSelectorModule } from './product-attributes-selector/product-attributes-selector.module';
+import { ProductAttributesSelectorComponent } from './product-attributes-selector/product-attributes-selector.component';
+import { CreateMultiConcreteProductModule } from './create-multi-concrete-product/create-multi-concrete-product.module';
+import { CreateMultiConcreteProductComponent } from './create-multi-concrete-product/create-multi-concrete-product.component';
 
 @NgModule({
     imports: [
@@ -44,10 +51,12 @@ import { AutogenerateInputComponent } from './autogenerate-input/autogenerate-in
         SelectModule,
         TreeSelectModule,
         CollapsibleModule,
+        ChipsModule,
         EditAbstractProductAttributesModule,
         EditAbstractProductPricesModule,
         IconGermanyModule,
         IconUnitedStatesModule,
+        IconDeleteModule,
         TextareaModule,
         ImageSetsModule,
         BulkEditProductVariantsModule,
@@ -56,6 +65,9 @@ import { AutogenerateInputComponent } from './autogenerate-input/autogenerate-in
         CreateAbstractProductModule,
         CreateSingleConcreteProductModule,
         AutogenerateInputModule,
+        ConcreteProductsPreviewModule,
+        ProductAttributesSelectorModule,
+        CreateMultiConcreteProductModule,
     ],
 })
 export class ComponentsModule extends CustomElementModule {
@@ -71,6 +83,7 @@ export class ComponentsModule extends CustomElementModule {
         SelectComponent,
         TreeSelectComponent,
         CollapsibleComponent,
+        ChipsComponent,
         EditAbstractProductAttributesComponent,
         EditAbstractProductPricesComponent,
         TextareaComponent,
@@ -81,5 +94,8 @@ export class ComponentsModule extends CustomElementModule {
         CreateAbstractProductComponent,
         CreateSingleConcreteProductComponent,
         AutogenerateInputComponent,
+        ConcreteProductsPreviewComponent,
+        ProductAttributesSelectorComponent,
+        CreateMultiConcreteProductComponent,
     ];
 }
