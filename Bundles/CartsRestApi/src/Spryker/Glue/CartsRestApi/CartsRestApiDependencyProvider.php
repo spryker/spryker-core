@@ -40,7 +40,6 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addRestCartItemsAttributesMapperPlugins($container);
         $container = $this->addCartItemExpanderPlugins($container);
         $container = $this->addCartItemFilterPlugins($container);
-
         $container = $this->addCustomerClient($container);
 
         return $container;
