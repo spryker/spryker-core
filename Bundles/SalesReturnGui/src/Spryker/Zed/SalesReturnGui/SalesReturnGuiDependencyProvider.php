@@ -31,6 +31,7 @@ class SalesReturnGuiDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_OMS = 'FACADE_OMS';
 
     public const PLUGINS_RETURN_CREATE_FORM_HANDLER = 'PLUGINS_RETURN_CREATE_FORM_HANDLER';
+    public const PLUGINS_RETURN_CREATE_TEMPLATE = 'PLUGINS_RETURN_CREATE_TEMPLATE';
 
     public const SERVICE_UTIL_DATE_TIME = 'SERVICE_UTIL_DATE_TIME';
 
@@ -55,6 +56,7 @@ class SalesReturnGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addSalesReturnPropelQuery($container);
 
         $container = $this->addReturnCreateFormHandlerPlugins($container);
+        $container = $this->addReturnCreateTemplatePlugins($container);
 
         return $container;
     }
@@ -192,9 +194,31 @@ class SalesReturnGuiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addReturnCreateTemplatePlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_RETURN_CREATE_TEMPLATE, function () {
+            return $this->getReturnCreateTemplatePlugins();
+        });
+
+        return $container;
+    }
+
+    /**
      * @return \Spryker\Zed\SalesReturnGuiExtension\Dependency\Plugin\ReturnCreateFormHandlerPluginInterface[]
      */
     protected function getReturnCreateFormHandlerPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesReturnGuiExtension\Dependency\Plugin\ReturnCreateTemplatePluginInterface[]
+     */
+    protected function getReturnCreateTemplatePlugins(): array
     {
         return [];
     }

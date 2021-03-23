@@ -10,7 +10,7 @@ namespace Spryker\Zed\SalesReturnGui\Communication\Provider;
 use Generated\Shared\Transfer\OrderTransfer;
 use Symfony\Component\Form\FormInterface;
 
-interface CreateReturnTemplateProviderInterface
+interface ReturnCreateTemplateProviderInterface
 {
     /**
      * @phpstan-return array<string, mixed>

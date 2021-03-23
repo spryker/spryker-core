@@ -59,5 +59,7 @@ class MerchantSalesReturnGuiDependencyProvider extends AbstractBundleDependencyP
         $container->set(static::FACADE_MERCHANT_SALES_ORDER, function (Container $container) {
             return new MerchantSalesReturnGuiToMerchantSalesOrderFacadeBridge($container->getLocator()->merchantSalesOrder()->facade());
         });
+
+        return $container;
     }
 }

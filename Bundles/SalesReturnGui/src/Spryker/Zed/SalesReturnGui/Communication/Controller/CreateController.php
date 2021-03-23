@@ -80,10 +80,7 @@ class CreateController extends AbstractController
             return $this->processReturnCreateForm($returnCreateForm, $orderTransfer);
         }
 
-        return [
-            'returnCreateForm' => $returnCreateForm->createView(),
-            'order' => $orderTransfer,
-        ];
+        return $this->provideTemplateData($returnCreateForm, $orderTransfer);
     }
 
     /**
@@ -110,9 +107,24 @@ class CreateController extends AbstractController
 
         $this->addErrorMessage(static::MESSAGE_RETURN_CREATE_FAIL);
 
+        return $this->provideTemplateData($returnCreateForm, $orderTransfer);
+    }
+
+    /**
+     * @phpstan-return array<string, mixed>
+     *
+     * @param \Symfony\Component\Form\FormInterface $returnCreateForm
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return array
+     */
+    protected function provideTemplateData(FormInterface $returnCreateForm, OrderTransfer $orderTransfer): array
+    {
         return [
-            'returnCreateForm' => $returnCreateForm->createView(),
             'order' => $orderTransfer,
+            'templates' => $this->getFactory()
+                ->createReturnCreateTemplateProvider()
+                ->provide($returnCreateForm, $orderTransfer),
         ];
     }
 }

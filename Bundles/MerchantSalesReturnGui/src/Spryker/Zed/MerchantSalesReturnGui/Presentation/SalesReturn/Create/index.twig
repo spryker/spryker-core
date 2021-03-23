@@ -1,113 +1,93 @@
-{% extends '@Gui/Layout/layout.twig' %}
+{% embed '@Gui/Partials/widget.twig' with { widget_title: 'General information' } %}
+    {% block widget_content %}
+        <div class="row">
+            <div class="col-lg-2 font-bold">
+                {{ 'Order reference' | trans }}
+            </div>
+            <div class="col-lg-10">
+                <a target="_blank" href="{{ url('/sales/detail', {'id-sales-order': order.idSalesOrder}) }}">
+                    {{ order.orderReference }}
+                </a>
+            </div>
+        </div>
+    {% endblock %}
+{% endembed %}
 
-{% block section_title %}
-    {{ 'Create Return' | trans }}
-{% endblock %}
+{% embed '@Gui/Partials/widget.twig' with { widget_title: 'Select Items to Return' } %}
+    {% block widget_content %}
+        {{ form_start(returnCreateForm) }}
+        {{ form_errors(returnCreateForm) }}
 
-{% block action %}
-    {{ backActionButton(url('/sales/detail', {'id-sales-order' : order.idSalesOrder}), 'Back to Order' | trans) }}
-{% endblock %}
+        {% for merchant in merchants %}
+            {% set merchantOrder = indexedMerchantOrders[merchant.merchantReference] %}
 
-{% block content %}
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'General information' } %}
-        {% block widget_content %}
+            {% if merchants.count > 1 %}
+                <div class="alert alert-info">
+                    <p>
+                        <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                        {{ 'You can only return products from one merchant at a time.' | trans }}
+                    </p>
+                </div>
+            {% endif %}
+
+
             <div class="row">
                 <div class="col-lg-2 font-bold">
-                    {{ 'Order reference' | trans }}
+                    {{ 'Merchant Order %row% of %length%' | trans({'%row%': loop.index, '%length%': loop.length}) }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-2 font-bold">
+                    {{ 'Fullfilled by merchant' | trans }}
                 </div>
                 <div class="col-lg-10">
-                    <a target="_blank" href="{{ url('/sales/detail', {'id-sales-order': order.idSalesOrder}) }}">
-                        {{ order.orderReference }}
+                    <a target="_blank" href="{{ url('/merchant-gui/edit-merchant', {'id-merchant': merchant.idMerchant}) }}">
+                        {{ merchant.name }}
                     </a>
                 </div>
             </div>
-        {% endblock %}
-    {% endembed %}
 
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Select Items to Return' } %}
-        {% block widget_content %}
-            {{ form_start(returnCreateForm) }}
-            {{ form_errors(returnCreateForm) }}
-
-            {% for merchant in merchants %}
-                {% set merchantOrder = indexedMerchantOrder[merchant.merchantReference] %}
-
-                {% if merchants.length > 1 %}
-                    <div class="alert alert-info">
-                        <p>
-                            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-                            {{ 'You can only return products from one merchant at a time.' | trans }}
-                        </p>
-                    </div>
-                {% endif %}
-
-
-                <div class="row">
-                    <div class="col-lg-2 font-bold">
-                        {{ 'Merchant Order %row% of %length%' | trans({'%row%': loop.index, '%total%': loop.length}) }}
-                    </div>
+            <div class="row">
+                <div class="col-lg-2 font-bold">
+                    {{ 'Merchant Order Reference' | trans }}
                 </div>
-
-                <div class="row">
-                    <div class="col-lg-2 font-bold">
-                        {{ 'Fullfilled by merchant' | trans }}
-                    </div>
-                    <div class="col-lg-10">
-                        <a target="_blank" href="{{ url('/merchant-gui/edit-merchant', {'id-merchant': merchant.idMerchant}) }}">
-                            {{ merchant.name }}
-                        </a>
-                    </div>
+                <div class="col-lg-10">
+                    <a target="_blank" href="{{ url('/sales/detail', {'id-sales-order' : order.idSalesOrder}) }}">
+                        {{ merchantOrder.merchantOrderReference }}
+                    </a>
                 </div>
+            </div>
 
-                <div class="row">
-                    <div class="col-lg-2 font-bold">
-                        {{ 'Merchant Order Reference' | trans }}
-                    </div>
-                    <div class="col-lg-10">
-                        <a target="_blank" href="{{ url('/sales/detail', {'id-sales-order' : order.idSalesOrder}) }}">
-                            {{ merchantOrder.merchantSalesOrderReference }}
-                        </a>
-                    </div>
-                </div>
+            <br>
 
-                <div class="table-responsive">
-                    <table class="table js-return-items-table" data-qa="order-item-list">
-                        <thead>
-                            <tr class="text-left">
-                                <th><input type="checkbox" class="js-check-all-items"></th>
-                                <th colspan="2">{{ 'Product' | trans }}</th>
-                                <th>{{ 'Quantity' | trans }}</th>
-                                <th>{{ 'Price' | trans }}</th>
-                                <th>{{ 'Total' | trans }}</th>
-                                <th>{{ 'Return policy' | trans }}</th>
-                                <th>{{ 'State' | trans }}</th>
-                            </tr>
-                        </thead>
+            <div class="table-responsive">
+                <table class="table js-return-items-table" data-qa="order-item-list">
+                    <thead>
+                    <tr class="text-left">
+                        <th><input type="checkbox" class="js-check-all-items"></th>
+                        <th colspan="2">{{ 'Product' | trans }}</th>
+                        <th>{{ 'Quantity' | trans }}</th>
+                        <th>{{ 'Price' | trans }}</th>
+                        <th>{{ 'Total' | trans }}</th>
+                        <th>{{ 'Return policy' | trans }}</th>
+                        <th>{{ 'State' | trans }}</th>
+                    </tr>
+                    </thead>
 
-                        <tbody>
-                            {% include '@MerchantSalesReturnGui/Create/_partials/return-create-items.twig' with {
-                                form: returnCreateForm,
-                                order: order,
-                                merchant: merchant,
-                            } only %}
-                        </tbody>
-                    </table>
-                </div>
-            {% endfor %}
+                    <tbody>
+                    {% include '@MerchantSalesReturnGui/SalesReturn/Create/_partials/return-create-items.twig' with {
+                        form: returnCreateForm,
+                        order: order,
+                        merchant: merchant,
+                    } only %}
+                    </tbody>
+                </table>
+            </div>
+        {% endfor %}
 
-            <button class="btn btn-primary safe-submit js-create-return-submit" disabled>{{ 'Create return' | trans }}</button>
+        <button class="btn btn-primary safe-submit js-create-return-submit" disabled>{{ 'Create return' | trans }}</button>
 
-            {{ form_end(returnCreateForm) }}
-        {% endblock %}
-    {% endembed %}
-{% endblock %}
-
-{% block head_css %}
-    {{ parent() }}
-    <link rel="stylesheet" href="{{ assetsPath('css/spryker-zed-sales-return-gui-main.css') }}">
-{% endblock %}
-
-{% block footer_js %}
-    {{ parent() }}
-    <script src="{{ assetsPath('js/spryker-zed-sales-return-gui-main.js') }}"></script>
-{% endblock %}
+        {{ form_end(returnCreateForm) }}
+    {% endblock %}
+{% endembed %}

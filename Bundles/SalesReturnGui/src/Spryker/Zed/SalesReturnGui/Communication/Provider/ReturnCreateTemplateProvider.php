@@ -10,7 +10,7 @@ namespace Spryker\Zed\SalesReturnGui\Communication\Provider;
 use Generated\Shared\Transfer\OrderTransfer;
 use Symfony\Component\Form\FormInterface;
 
-class CreateReturnTemplateProvider implements CreateReturnTemplateProviderInterface
+class ReturnCreateTemplateProvider implements ReturnCreateTemplateProviderInterface
 {
     /**
      * @var \Spryker\Zed\SalesReturnGuiExtension\Dependency\Plugin\ReturnCreateTemplatePluginInterface[]
@@ -35,20 +35,22 @@ class CreateReturnTemplateProvider implements CreateReturnTemplateProviderInterf
      */
     public function provide(FormInterface $returnCreateForm, OrderTransfer $orderTransfer): array
     {
-        $templateData = [
-            'returnCreateForm' => $returnCreateForm,
+        $templateDefaultData = [
+            'returnCreateForm' => $returnCreateForm->createView(),
             'order' => $orderTransfer,
         ];
 
         if (empty($this->returnCreateTemplatePlugins)) {
             return [
-                '@SalesReturnGui/SalesReturn/Create/default.twig' => $templateData,
+                '@SalesReturnGui/Create/default.twig' => $templateDefaultData,
             ];
         }
 
+        $templateData = [];
+
         foreach ($this->returnCreateTemplatePlugins as $returnCreateTemplatePlugin) {
             $templateData[$returnCreateTemplatePlugin->getTemplatePath()] = array_merge(
-                $templateData,
+                $templateDefaultData,
                 $returnCreateTemplatePlugin->getTemplateData($orderTransfer)
             );
         }

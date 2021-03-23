@@ -31,7 +31,7 @@ class MerchantReturnCreateTemplatePlugin extends AbstractPlugin implements Retur
      */
     public function getTemplatePath(): string
     {
-        return '@MerchantSalesReturnGui/SalesReturn/Create/default.twig';
+        return '@MerchantSalesReturnGui/SalesReturn/Create/index.twig';
     }
 
     /**
@@ -48,7 +48,7 @@ class MerchantReturnCreateTemplatePlugin extends AbstractPlugin implements Retur
     public function getTemplateData(OrderTransfer $orderTransfer): array
     {
         return [
-            'merchants' => $this->getMerchants($orderTransfer),
+            'merchants' => $this->getMerchants($orderTransfer)->getMerchants(),
             'indexedMerchantOrders' => $this->getMerchantOrders($orderTransfer),
         ];
     }
