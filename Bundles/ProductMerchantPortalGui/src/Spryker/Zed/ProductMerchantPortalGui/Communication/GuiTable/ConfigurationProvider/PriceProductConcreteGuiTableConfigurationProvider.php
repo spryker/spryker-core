@@ -38,6 +38,8 @@ class PriceProductConcreteGuiTableConfigurationProvider implements PriceProductC
      */
     protected const URL_DELETE_PRICE = '/product-merchant-portal-gui/delete-price-product-concrete';
 
+    protected const ID_ROW_ACTION_URL_DELETE_PRICE = 'delete-price';
+
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ConfigurationBuilderProvider\PriceProductGuiTableConfigurationBuilderProviderInterface
      */
@@ -52,10 +54,8 @@ class PriceProductConcreteGuiTableConfigurationProvider implements PriceProductC
     }
 
     /**
-     * @phpstan-param array<mixed> $initialData
-     *
      * @param int $idProductConcrete
-     * @param array $initialData
+     * @param mixed[] $initialData
      *
      * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
      */
@@ -88,7 +88,7 @@ class PriceProductConcreteGuiTableConfigurationProvider implements PriceProductC
         $formInputName = sprintf('%s[%s][%s]', ProductConcreteEditForm::BLOCK_PREFIX, ProductConcreteForm::BLOCK_PREFIX, ProductConcreteTransfer::PRICES);
 
         $guiTableConfigurationBuilder->setDataSourceUrl($dataSourceUrl)
-            ->addRowActionUrl('delete-price', static::TITLE_ROW_ACTION_DELETE, $deletePriceUrl)
+            ->addRowActionUrl(static::ID_ROW_ACTION_URL_DELETE_PRICE, static::TITLE_ROW_ACTION_DELETE, $deletePriceUrl)
             ->enableInlineDataEditing($savePricesUrl, 'POST')
             ->enableAddingNewRows($formInputName, $initialData, [
                 GuiTableEditableButtonTransfer::TITLE => static::TITLE_EDITABLE_BUTTON,

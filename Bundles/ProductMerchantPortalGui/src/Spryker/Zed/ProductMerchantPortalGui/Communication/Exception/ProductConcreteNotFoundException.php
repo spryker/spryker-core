@@ -14,7 +14,7 @@ class ProductConcreteNotFoundException extends NotFoundHttpException
     /**
      * @param int $idProductConcrete
      */
-    public function __construct($idProductConcrete)
+    public function __construct(int $idProductConcrete)
     {
         parent::__construct($this->buildMessage($idProductConcrete));
     }

@@ -237,10 +237,10 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
                 ->endUse();
         }
 
-        if ($priceProductCriteriaTransfer->getIdProduct()) {
+        if ($priceProductCriteriaTransfer->getIdProductConcrete()) {
             $priceProductStoreQuery
                 ->usePriceProductQuery()
-                    ->filterByFkProduct($priceProductCriteriaTransfer->getIdProduct())
+                    ->filterByFkProduct($priceProductCriteriaTransfer->getIdProductConcrete())
                 ->endUse();
         }
 

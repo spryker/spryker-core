@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
 class ProductConcreteOwnedByMerchantConstraint extends SymfonyConstraint
 {
-    protected const MESSAGE = 'Product concrete is now owned by merchant.';
+    protected const MESSAGE = 'Product concrete is not owned by merchant.';
 
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantUserFacadeInterface

@@ -78,7 +78,7 @@
         <property name="idStore" type="int"/>
         <property name="idCurrency" type="int"/>
         <property name="idProductAbstract" type="int"/>
-        <property name="idProduct" type="int"/>
+        <property name="idProductConcrete" type="int"/>
         <property name="priceMode" type="string"/>
         <property name="priceType" type="string"/>
         <property name="priceDimension" type="PriceProductDimension"/>

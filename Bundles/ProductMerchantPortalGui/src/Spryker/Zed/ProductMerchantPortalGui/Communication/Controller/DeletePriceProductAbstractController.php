@@ -30,12 +30,12 @@ class DeletePriceProductAbstractController extends DeletePriceProductController
             $this->getFactory()->getUtilEncodingService()->decodeJson(
                 $request->get(PriceProductTableViewTransfer::PRICE_PRODUCT_DEFAULT_IDS),
                 true
-            )
+            ) ?: []
         );
         $idProductAbstract = (int)$request->get(PriceProductTableViewTransfer::ID_PRODUCT_ABSTRACT);
 
         if (!$idProductAbstract) {
-            return $this->getErrorResponse();
+            return $this->createErrorResponse();
         }
 
         $idMerchant = $this->getFactory()->getMerchantUserFacade()->getCurrentMerchantUser()->getIdMerchantOrFail();
@@ -44,10 +44,10 @@ class DeletePriceProductAbstractController extends DeletePriceProductController
         );
 
         if (!$merchantProductTransfer || !$merchantProductTransfer->getProductAbstract()) {
-            return $this->getErrorResponse();
+            return $this->createErrorResponse();
         }
 
-        $priceProductTransfersToRemove = $this->getPriceProductTransfersToRemove(
+        $priceProductTransfersToRemove = $this->filterPriceProductTransfersByPriceProductDefaultIds(
             $merchantProductTransfer->getProductAbstractOrFail()->getPrices(),
             $priceProductDefaultIds
         );
@@ -56,6 +56,6 @@ class DeletePriceProductAbstractController extends DeletePriceProductController
             $this->getFactory()->getPriceProductFacade()->removePriceProductDefaultForPriceProduct($priceProductTransfer);
         }
 
-        return $this->getSuccessResponse();
+        return $this->createSuccessResponse();
     }
 }

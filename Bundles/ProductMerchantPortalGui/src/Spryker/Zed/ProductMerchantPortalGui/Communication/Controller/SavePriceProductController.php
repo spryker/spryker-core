@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ValidationResponseTransfer;
 use Laminas\Filter\StringToUpper;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Exception\WrongRequestBodyContentException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -40,6 +41,8 @@ abstract class SavePriceProductController extends AbstractController
     protected const RESPONSE_TYPE_SUCCESS = 'success';
     protected const RESPONSE_TYPE_ERROR = 'error';
 
+    protected const REQUEST_BODY_CONTENT_KEY_DATA = 'data';
+
     /**
      * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
@@ -63,27 +66,35 @@ abstract class SavePriceProductController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
+     * @throws \Spryker\Zed\ProductMerchantPortalGui\Communication\Exception\WrongRequestBodyContentException
+     *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function indexAction(Request $request): JsonResponse
     {
         $typePriceProductStoreIds = $this->parseTypePriceProductStoreIds($request->get(PriceProductTableViewTransfer::TYPE_PRICE_PRODUCT_STORE_IDS));
 
-        $data = $this->getFactory()->getUtilEncodingService()->decodeJson((string)$request->getContent(), true)['data'];
+        $requestBodyContent = $this->getFactory()->getUtilEncodingService()->decodeJson((string)$request->getContent(), true);
+
+        if (!isset($requestBodyContent[static::REQUEST_BODY_CONTENT_KEY_DATA])) {
+            throw new WrongRequestBodyContentException(static::REQUEST_BODY_CONTENT_KEY_DATA);
+        }
+
+        $data = $requestBodyContent[static::REQUEST_BODY_CONTENT_KEY_DATA];
 
         $priceProductTransfers = $this->getPriceProductTransfers($request, $typePriceProductStoreIds, $data);
         $priceProductTransfers = $this->expandPriceProductTransfersWithProductId($priceProductTransfers, $request);
 
         $validationResponseTransfer = $this->getFactory()->getPriceProductFacade()->validatePrices($priceProductTransfers);
         if (!$validationResponseTransfer->getIsSuccess()) {
-            return $this->getErrorJsonResponse($validationResponseTransfer);
+            return $this->createErrorJsonResponse($validationResponseTransfer);
         }
 
         foreach ($priceProductTransfers as $priceProductTransfer) {
             $this->getFactory()->getPriceProductFacade()->persistPriceProductStore($priceProductTransfer);
         }
 
-        return $this->getSuccessJsonResponse();
+        return $this->createSuccessJsonResponse();
     }
 
     /**
@@ -139,25 +150,20 @@ abstract class SavePriceProductController extends AbstractController
             $priceTypeIds[] = $priceProductTransfer->getFkPriceType();
         }
 
+        $moneyValueTransfer = $priceProductTransfers[0]->getMoneyValueOrFail();
+
         foreach ($this->getFactory()->getPriceProductFacade()->getPriceTypeValues() as $priceTypeTransfer) {
             if (in_array($priceTypeTransfer->getIdPriceType(), $priceTypeIds)) {
                 continue;
             }
 
-            $moneyValueTransfer = $priceProductTransfers[0]->getMoneyValueOrFail();
             $priceProductTransfers[] = (new PriceProductTransfer())
                 ->setFkPriceType($priceTypeTransfer->getIdPriceType())
                 ->setPriceType($priceTypeTransfer)
                 ->setPriceDimension(
                     (new PriceProductDimensionTransfer())->setType(static::PRICE_DIMENSION_TYPE_DEFAULT)
                 )
-                ->setMoneyValue(
-                    (new MoneyValueTransfer())
-                        ->setCurrency($moneyValueTransfer->getCurrency())
-                        ->setFkStore($moneyValueTransfer->getFkStore())
-                        ->setStore($moneyValueTransfer->getStore())
-                        ->setFkCurrency($moneyValueTransfer->getFkCurrency())
-                );
+                ->setMoneyValue($this->recreateMoneyValueTransfer($moneyValueTransfer));
         }
 
         return $priceProductTransfers;
@@ -166,7 +172,7 @@ abstract class SavePriceProductController extends AbstractController
     /**
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    protected function getSuccessJsonResponse(): JsonResponse
+    protected function createSuccessJsonResponse(): JsonResponse
     {
         $response = [
             static::RESPONSE_KEY_NOTIFICATIONS => [
@@ -190,7 +196,7 @@ abstract class SavePriceProductController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    protected function getErrorJsonResponse(ValidationResponseTransfer $validationResponseTransfer): JsonResponse
+    protected function createErrorJsonResponse(ValidationResponseTransfer $validationResponseTransfer): JsonResponse
     {
         $notifications = [];
         /** @var \Generated\Shared\Transfer\ValidationErrorTransfer $validationErrorTransfer */
@@ -216,7 +222,7 @@ abstract class SavePriceProductController extends AbstractController
         $requestedTypePriceProductStoreIds = explode(',', $requestedTypePriceProductStoreIds);
         $typePriceProductStoreIds = [];
 
-        foreach ($requestedTypePriceProductStoreIds as $key => $requestedTypePriceProductStoreId) {
+        foreach ($requestedTypePriceProductStoreIds as $requestedTypePriceProductStoreId) {
             $typePriceProductStoreId = explode(':', $requestedTypePriceProductStoreId);
             $typePriceProductStoreIds[$typePriceProductStoreId[0]] = (int)$typePriceProductStoreId[1];
         }
@@ -259,19 +265,11 @@ abstract class SavePriceProductController extends AbstractController
     ): PriceProductTransfer {
         $priceProductTransfers = $this->findPriceProductTransfers($typePriceProductStoreIds, $request);
 
-        /** @var \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer */
         $priceProductTransfer = $priceProductTransfers[0];
-        /** @var \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer */
-        $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
+        $moneyValueTransfer = $priceProductTransfer->getMoneyValueOrFail();
 
         $priceProductTransfer = (new PriceProductTransfer())
-            ->setMoneyValue(
-                (new MoneyValueTransfer())
-                    ->setCurrency($moneyValueTransfer->getCurrency())
-                    ->setFkStore($moneyValueTransfer->getFkStore())
-                    ->setStore($moneyValueTransfer->getStore())
-                    ->setFkCurrency($moneyValueTransfer->getFkCurrency())
-            );
+            ->setMoneyValue($this->recreateMoneyValueTransfer($moneyValueTransfer));
 
         return $this->setPriceTypeToPriceProduct($priceTypeName, $priceProductTransfer);
     }
@@ -298,5 +296,19 @@ abstract class SavePriceProductController extends AbstractController
         }
 
         return $priceProductTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer
+     *
+     * @return \Generated\Shared\Transfer\MoneyValueTransfer
+     */
+    protected function recreateMoneyValueTransfer(MoneyValueTransfer $moneyValueTransfer): MoneyValueTransfer
+    {
+        return (new MoneyValueTransfer())
+            ->setCurrency($moneyValueTransfer->getCurrency())
+            ->setFkStore($moneyValueTransfer->getFkStore())
+            ->setStore($moneyValueTransfer->getStore())
+            ->setFkCurrency($moneyValueTransfer->getFkCurrency());
     }
 }

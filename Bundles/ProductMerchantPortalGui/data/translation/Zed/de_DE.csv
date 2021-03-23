@@ -56,14 +56,14 @@ Validity,Gültigkeit
 From,Von
 To,Bis
 "Bulk edit",Massenbearbeitung
-Searchability,Searchability
-"Use Abstract Product prices","Use Abstract Product prices"
-"Select Locales","Select Locales"
+Searchability,Suchbar
+"Use Abstract Product prices","Preise vom abstrakten Produkt übernehmen"
+"Select Locales","Locales auswählen"
 Stock,Bestand
 Quantity,Menge
 "Always in stock","Immer auf lager"
-"Enter quantity","Enter quantity"
-"Reserved Stock","Reserved Stock"
+"Enter quantity","Anzahl eingeben"
+"Reserved Stock","Reservierter Bestand"
 "Variant is offline","Variante ist offline"
 "Variant is online","Variante ist online"
 "This means that the product does not appear online and noone can see it.","Dies bedeutet, dass das Produkt nicht online angezeigt wird und es niemand sehen kann."

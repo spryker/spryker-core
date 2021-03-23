@@ -452,10 +452,10 @@ class MerchantProductFacadeTest extends Unit
         // Arrange
         $this->tester->ensureMerchantProductAbstractTableIsEmpty();
         $productConcreteTransfer = $this->tester->haveFullProduct();
-        $this->tester->haveMerchantProduct([
-            MerchantProductTransfer::ID_MERCHANT => $this->tester->haveMerchant()->getIdMerchantOrFail(),
-            MerchantProductTransfer::ID_PRODUCT_ABSTRACT => $productConcreteTransfer->getFkProductAbstractOrFail(),
-        ]);
+        $this->createMerchantProduct(
+            $this->tester->haveMerchant()->getIdMerchantOrFail(),
+            $productConcreteTransfer->getFkProductAbstractOrFail()
+        );
 
         // Act
         $merchantProductConcreteTransfer = $this->tester->getFacade()->findProductConcrete(
@@ -478,10 +478,10 @@ class MerchantProductFacadeTest extends Unit
         // Arrange
         $this->tester->ensureMerchantProductAbstractTableIsEmpty();
         $productConcreteTransfer = $this->tester->haveFullProduct();
-        $merchantProductTransfer = $this->tester->haveMerchantProduct([
-            MerchantProductTransfer::ID_MERCHANT => $this->tester->haveMerchant()->getIdMerchantOrFail(),
-            MerchantProductTransfer::ID_PRODUCT_ABSTRACT => $productConcreteTransfer->getFkProductAbstractOrFail(),
-        ]);
+        $this->createMerchantProduct(
+            $this->tester->haveMerchant()->getIdMerchantOrFail(),
+            $productConcreteTransfer->getFkProductAbstractOrFail()
+        );
 
         // Act
         $merchantProductConcreteTransfer = $this->tester->getFacade()->findProductConcrete(
@@ -504,10 +504,10 @@ class MerchantProductFacadeTest extends Unit
         // Arrange
         $this->tester->ensureMerchantProductAbstractTableIsEmpty();
         $productConcreteTransfer = $this->tester->haveFullProduct();
-        $this->tester->haveMerchantProduct([
-            MerchantProductTransfer::ID_MERCHANT => $this->tester->haveMerchant()->getIdMerchantOrFail(),
-            MerchantProductTransfer::ID_PRODUCT_ABSTRACT => $productConcreteTransfer->getFkProductAbstractOrFail(),
-        ]);
+        $this->createMerchantProduct(
+            $this->tester->haveMerchant()->getIdMerchantOrFail(),
+            $productConcreteTransfer->getFkProductAbstractOrFail()
+        );
 
         // Act
         $merchantProductConcreteTransfer = $this->tester->getFacade()->findProductConcrete(
@@ -531,10 +531,7 @@ class MerchantProductFacadeTest extends Unit
         $this->tester->ensureMerchantProductAbstractTableIsEmpty();
         $merchantTransfer = $this->tester->haveMerchant();
         $productConcreteTransfer = $this->tester->haveFullProduct();
-        $this->tester->haveMerchantProduct([
-            MerchantProductTransfer::ID_MERCHANT => $merchantTransfer->getIdMerchantOrFail(),
-            MerchantProductTransfer::ID_PRODUCT_ABSTRACT => $productConcreteTransfer->getFkProductAbstractOrFail(),
-        ]);
+        $this->createMerchantProduct($merchantTransfer->getIdMerchantOrFail(), $productConcreteTransfer->getFkProductAbstractOrFail());
 
         // Act
         $merchantProductConcreteTransfer = $this->tester->getFacade()->findProductConcrete(
@@ -574,17 +571,14 @@ class MerchantProductFacadeTest extends Unit
     {
         // Arrange
         $this->tester->ensureMerchantProductAbstractTableIsEmpty();
-        $merchantTransfer1 = $this->tester->haveMerchant();
-        $productConcreteTransfer1 = $this->tester->haveFullProduct();
-        $this->tester->haveMerchantProduct([
-            MerchantProductTransfer::ID_MERCHANT => $merchantTransfer1->getIdMerchantOrFail(),
-            MerchantProductTransfer::ID_PRODUCT_ABSTRACT => $productConcreteTransfer1->getFkProductAbstractOrFail(),
-        ]);
+        $merchantTransfer = $this->tester->haveMerchant();
+        $productConcreteTransfer = $this->tester->haveFullProduct();
+        $this->createMerchantProduct($merchantTransfer->getIdMerchantOrFail(), $productConcreteTransfer->getFkProductAbstractOrFail());
 
         // Act
         $isProductConcreteOwnedByMerchant = $this->tester->getFacade()->isProductConcreteOwnedByMerchant(
-            $productConcreteTransfer1,
-            $merchantTransfer1
+            $productConcreteTransfer,
+            $merchantTransfer
         );
 
         // Assert
@@ -602,14 +596,8 @@ class MerchantProductFacadeTest extends Unit
         $merchantTransfer2 = $this->tester->haveMerchant();
         $productConcreteTransfer1 = $this->tester->haveFullProduct();
         $productConcreteTransfer2 = $this->tester->haveFullProduct();
-        $this->tester->haveMerchantProduct([
-            MerchantProductTransfer::ID_MERCHANT => $merchantTransfer1->getIdMerchantOrFail(),
-            MerchantProductTransfer::ID_PRODUCT_ABSTRACT => $productConcreteTransfer1->getFkProductAbstractOrFail(),
-        ]);
-        $this->tester->haveMerchantProduct([
-            MerchantProductTransfer::ID_MERCHANT => $merchantTransfer2->getIdMerchantOrFail(),
-            MerchantProductTransfer::ID_PRODUCT_ABSTRACT => $productConcreteTransfer2->getFkProductAbstractOrFail(),
-        ]);
+        $this->createMerchantProduct($merchantTransfer1->getIdMerchantOrFail(), $productConcreteTransfer1->getFkProductAbstractOrFail());
+        $this->createMerchantProduct($merchantTransfer2->getIdMerchantOrFail(), $productConcreteTransfer2->getFkProductAbstractOrFail());
 
         // Act
         $isProductConcreteOwnedByMerchant = $this->tester->getFacade()->isProductConcreteOwnedByMerchant(
@@ -619,5 +607,19 @@ class MerchantProductFacadeTest extends Unit
 
         // Assert
         $this->assertFalse($isProductConcreteOwnedByMerchant);
+    }
+
+    /**
+     * @param int $idMerchant
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\MerchantProductTransfer
+     */
+    protected function createMerchantProduct(int $idMerchant, int $idProductAbstract):MerchantProductTransfer
+    {
+        return $this->tester->haveMerchantProduct([
+            MerchantProductTransfer::ID_MERCHANT => $idMerchant,
+            MerchantProductTransfer::ID_PRODUCT_ABSTRACT => $idProductAbstract,
+        ]);
     }
 }

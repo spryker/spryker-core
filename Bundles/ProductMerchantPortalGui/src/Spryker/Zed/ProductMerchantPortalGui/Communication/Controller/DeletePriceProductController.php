@@ -33,7 +33,7 @@ abstract class DeletePriceProductController extends AbstractController
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    protected function getPriceProductTransfersToRemove(
+    protected function filterPriceProductTransfersByPriceProductDefaultIds(
         ArrayObject $priceProductTransfers,
         array $priceProductDefaultIds
     ): array {
@@ -51,7 +51,7 @@ abstract class DeletePriceProductController extends AbstractController
     /**
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    protected function getSuccessResponse(): JsonResponse
+    protected function createSuccessResponse(): JsonResponse
     {
         $responseData = [
             static::RESPONSE_KEY_POST_ACTIONS => [
@@ -73,7 +73,7 @@ abstract class DeletePriceProductController extends AbstractController
     /**
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    protected function getErrorResponse(): JsonResponse
+    protected function createErrorResponse(): JsonResponse
     {
         $responseData[static::RESPONSE_KEY_NOTIFICATIONS][] = [
             static::RESPONSE_KEY_TYPE => static::RESPONSE_TYPE_ERROR,

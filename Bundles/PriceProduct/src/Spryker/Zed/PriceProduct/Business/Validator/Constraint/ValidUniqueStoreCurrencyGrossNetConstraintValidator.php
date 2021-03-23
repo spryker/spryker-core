@@ -35,7 +35,7 @@ class ValidUniqueStoreCurrencyGrossNetConstraintValidator extends AbstractConstr
 
         $moneyValueTransfer = $value->getMoneyValueOrFail();
 
-        if (!($value->getIdProductAbstract() || $value->getIdProduct())) {
+        if (!$value->getIdProductAbstract() && !$value->getIdProduct()) {
             return;
         }
 
@@ -45,7 +45,7 @@ class ValidUniqueStoreCurrencyGrossNetConstraintValidator extends AbstractConstr
 
         $priceProductCriteriaTransfer = (new PriceProductCriteriaTransfer())
             ->setIdProductAbstract($value->getIdProductAbstract())
-            ->setIdProduct($value->getIdProduct())
+            ->setIdProductConcrete($value->getIdProduct())
             ->setIdCurrency($moneyValueTransfer->getFkCurrency())
             ->setIdStore($moneyValueTransfer->getFkStore())
             ->setPriceType($value->getPriceType()->getNameOrFail());

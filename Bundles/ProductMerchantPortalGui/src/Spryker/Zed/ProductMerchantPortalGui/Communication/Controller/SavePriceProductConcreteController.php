@@ -28,11 +28,11 @@ class SavePriceProductConcreteController extends SavePriceProductController
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    protected function expandPriceProductTransfersWithProductId(ArrayObject $priceProductTransfers, $request): ArrayObject
+    protected function expandPriceProductTransfersWithProductId(ArrayObject $priceProductTransfers, Request $request): ArrayObject
     {
         foreach ($priceProductTransfers as $priceProductTransfer) {
             $priceProductTransfer->setIdProduct(
-                $request->get(PriceProductTableViewTransfer::ID_PRODUCT_CONCRETE)
+                $this->castId($request->get(PriceProductTableViewTransfer::ID_PRODUCT_CONCRETE))
             );
         }
 
