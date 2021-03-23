@@ -19,20 +19,24 @@
         }
     }' %}
 
-    <web-spy-button-action type="button" variant="secondary" size="md" action="{{ actionConfig }}">
-        {{ 'Create Product' | trans }}
-    </web-spy-button-action>
-
     <web-mp-product-list
         cloak
         table-id="web-mp-product-list"
         table-config='{{ guiTableConfiguration(productAbstractTableConfiguration) }}'>
         <span title>{{ 'Products' | trans }}</span>
+        <web-spy-button-action
+            button-action
+            type="button"
+            size="lg"
+            variant="primary"
+            action="{{ actionConfig }}">
+            {{ 'Create Product' | trans }}
+        </web-spy-button-action>
     </web-mp-product-list>
 {% endblock %}
 
 {% block footerJs %}
-    <script src="{{ assetsPath('js/mp/spy/product-merchant-portal-gui-es2015.js') }}" type="module"></script>
+    <script src="{{ assetsPath('js/mp/spy/product-merchant-portal-gui.js') }}" type="module"></script>
     <script src="{{ assetsPath('js/mp/spy/product-merchant-portal-gui-es5.js') }}" nomodule defer></script>
     {{ parent() }}
 {% endblock %}

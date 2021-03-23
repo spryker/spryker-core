@@ -25,6 +25,12 @@ import { EditAbstractProductVariantsComponent } from './edit-abstract-product-va
 import { EditAbstractProductVariantsModule } from './edit-abstract-product-variants/edit-abstract-product-variants.module';
 import { BulkEditProductVariantsComponent } from './bulk-edit-product-variants/bulk-edit-product-variants.component';
 import { BulkEditProductVariantsModule } from './bulk-edit-product-variants/bulk-edit-product-variants.module';
+import { CreateAbstractProductModule } from './create-abstract-product/create-abstract-product.module';
+import { CreateAbstractProductComponent } from './create-abstract-product/create-abstract-product.component';
+import { CreateSingleConcreteProductModule } from './create-single-concrete-product/create-single-concrete-product.module';
+import { CreateSingleConcreteProductComponent } from './create-single-concrete-product/create-single-concrete-product.component';
+import { AutogenerateInputModule } from './autogenerate-input/autogenerate-input.module';
+import { AutogenerateInputComponent } from './autogenerate-input/autogenerate-input.component';
 
 @NgModule({
     imports: [
@@ -47,6 +53,9 @@ import { BulkEditProductVariantsModule } from './bulk-edit-product-variants/bulk
         BulkEditProductVariantsModule,
         EditAbstractProductVariantsModule,
         ButtonActionModule,
+        CreateAbstractProductModule,
+        CreateSingleConcreteProductModule,
+        AutogenerateInputModule,
     ],
 })
 export class ComponentsModule extends CustomElementModule {
@@ -69,5 +78,8 @@ export class ComponentsModule extends CustomElementModule {
         BulkEditProductVariantsComponent,
         EditAbstractProductVariantsComponent,
         ButtonActionComponent,
+        CreateAbstractProductComponent,
+        CreateSingleConcreteProductComponent,
+        AutogenerateInputComponent,
     ];
 }
