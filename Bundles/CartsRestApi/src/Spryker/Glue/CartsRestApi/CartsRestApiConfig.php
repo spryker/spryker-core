@@ -16,7 +16,6 @@ class CartsRestApiConfig extends AbstractBundleConfig
 {
     public const RESOURCE_CARTS = 'carts';
     public const RESOURCE_CART_ITEMS = 'items';
-    public const RESOURCE_CUSTOMER_CARTS = 'carts';
     public const RESOURCE_CUSTOMERS = 'customers';
     public const RESOURCE_GUEST_CARTS = 'guest-carts';
     public const RESOURCE_GUEST_CARTS_ITEMS = 'guest-cart-items';
