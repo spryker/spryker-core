@@ -5,24 +5,37 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CategoryStorage\Communication\Plugin\Event;
+namespace Spryker\Zed\CategoryStorage\Communication\Plugin\Publisher;
 
-use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Shared\CategoryStorage\CategoryStorageConstants;
 use Spryker\Zed\Category\Dependency\CategoryEvents;
-use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceQueryContainerPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherTriggerPluginInterface;
 
 /**
- * @deprecated Use {@link \Spryker\Zed\CategoryStorage\Communication\Plugin\Publisher\CategoryTreePublisherTriggerPlugin} instead.
- *
  * @method \Spryker\Zed\CategoryStorage\Business\CategoryStorageFacadeInterface getFacade()
+ * @method \Spryker\Zed\CategoryStorage\Persistence\CategoryStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\CategoryStorage\Communication\CategoryStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\CategoryStorage\CategoryStorageConfig getConfig()
- * @method \Spryker\Zed\CategoryStorage\Persistence\CategoryStorageQueryContainerInterface getQueryContainer()
  */
-class CategoryTreeEventResourceQueryContainerPlugin extends AbstractPlugin implements EventResourceQueryContainerPluginInterface
+class CategoryTreePublisherTriggerPlugin extends AbstractPlugin implements PublisherTriggerPluginInterface
 {
+    /**
+     * {@inheritDoc}
+     * - Retrieves category trees by provided limit and offset.
+     *
+     * @api
+     *
+     * @param int $offset
+     * @param int $limit
+     *
+     * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[]
+     */
+    public function getData(int $offset, int $limit): array
+    {
+        return [];
+    }
+
     /**
      * {@inheritDoc}
      *
@@ -33,20 +46,6 @@ class CategoryTreeEventResourceQueryContainerPlugin extends AbstractPlugin imple
     public function getResourceName(): string
     {
         return CategoryStorageConstants::CATEGORY_TREE_RESOURCE_NAME;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param int[] $ids
-     *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria|null
-     */
-    public function queryData(array $ids = []): ?ModelCriteria
-    {
-        return null;
     }
 
     /**

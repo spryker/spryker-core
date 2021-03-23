@@ -153,6 +153,19 @@ interface CategoryStorageFacadeInterface
 
     /**
      * Specification:
+     * - Retrieves a collection of category nodes according to provided offset and limit.
+     *
+     * @api
+     *
+     * @param int $offset
+     * @param int $limit
+     *
+     * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[]
+     */
+    public function findFilteredCategoryNodeEnteties(int $offset, int $limit): array;
+
+    /**
+     * Specification:
      * - Extracts category IDs from the $eventTransfers created by category attribute entity events.
      * - Finds all category node IDs related to category IDs.
      * - Queries all category nodes with category node IDs.

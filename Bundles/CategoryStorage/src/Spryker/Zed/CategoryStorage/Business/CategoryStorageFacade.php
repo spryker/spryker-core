@@ -167,6 +167,22 @@ class CategoryStorageFacade extends AbstractFacade implements CategoryStorageFac
      *
      * @api
      *
+     * @param int $offset
+     * @param int $limit
+     *
+     * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[]
+     */
+    public function findFilteredCategoryNodeEnteties(int $offset, int $limit): array
+    {
+        return $this->getRepository()
+            ->findFilteredCategoryNodeEnteties($offset, $limit);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
      *
      * @return void

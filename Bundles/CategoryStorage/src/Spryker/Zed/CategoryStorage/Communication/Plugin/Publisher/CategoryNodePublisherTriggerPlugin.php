@@ -5,25 +5,38 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CategoryStorage\Communication\Plugin\Event;
+namespace Spryker\Zed\CategoryStorage\Communication\Plugin\Publisher;
 
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
-use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Shared\CategoryStorage\CategoryStorageConstants;
 use Spryker\Zed\Category\Dependency\CategoryEvents;
-use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceQueryContainerPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherTriggerPluginInterface;
 
 /**
- * @deprecated Use {@link \Spryker\Zed\CategoryStorage\Communication\Plugin\Publisher\CategoryNodePublisherTriggerPlugin} instead.
- *
  * @method \Spryker\Zed\CategoryStorage\Business\CategoryStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\CategoryStorage\Persistence\CategoryStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\CategoryStorage\Communication\CategoryStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\CategoryStorage\CategoryStorageConfig getConfig()
  */
-class CategoryNodeEventResourceQueryContainerPlugin extends AbstractPlugin implements EventResourceQueryContainerPluginInterface
+class CategoryNodePublisherTriggerPlugin extends AbstractPlugin implements PublisherTriggerPluginInterface
 {
+    /**
+     * {@inheritDoc}
+     * - Retrieves category nodes by provided limit and offset.
+     *
+     * @api
+     *
+     * @param int $offset
+     * @param int $limit
+     *
+     * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[]
+     */
+    public function getData(int $offset, int $limit): array
+    {
+        return $this->getFacade()->findFilteredCategoryNodeEnteties($offset, $limit);
+    }
+
     /**
      * {@inheritDoc}
      *
@@ -34,31 +47,6 @@ class CategoryNodeEventResourceQueryContainerPlugin extends AbstractPlugin imple
     public function getResourceName(): string
     {
         return CategoryStorageConstants::CATEGORY_NODE_RESOURCE_NAME;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param int[] $ids
-     *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria|null
-     */
-    public function queryData(array $ids = []): ?ModelCriteria
-    {
-        $query = $this->getQueryContainer()->queryCategoryNodeByIds($ids);
-
-        if ($ids === []) {
-            $query->clear();
-        }
-
-        $idColumnName = $this->getIdColumnName();
-        if (!$idColumnName) {
-            return $query;
-        }
-
-        return $query->orderBy($idColumnName);
     }
 
     /**
