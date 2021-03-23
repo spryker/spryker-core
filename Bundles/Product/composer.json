@@ -9,6 +9,7 @@
     "spryker/kernel": "^3.34.0",
     "spryker/key-builder": "^1.0.0",
     "spryker/locale": "^3.0.0",
+    "spryker/product-extension": "^1.0.0",
     "spryker/propel-orm": "^1.0.0",
     "spryker/storage": "^3.0.0",
     "spryker/store": "^1.1.0",

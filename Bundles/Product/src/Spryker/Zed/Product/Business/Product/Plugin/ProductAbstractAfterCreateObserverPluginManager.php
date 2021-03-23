@@ -18,11 +18,20 @@ class ProductAbstractAfterCreateObserverPluginManager implements ProductAbstract
     protected $afterCreateCollection;
 
     /**
-     * @param \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginCreateInterface[] $afterCreateCollection
+     * @var array|\Spryker\Zed\ProductExtension\Dependency\Plugin\ProductAbstractPostCreatePluginInterface[]
      */
-    public function __construct(array $afterCreateCollection)
-    {
+    protected $productAbstractPostCreatePlugins;
+
+    /**
+     * @param \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginCreateInterface[] $afterCreateCollection
+     * @param \Spryker\Zed\ProductExtension\Dependency\Plugin\ProductAbstractPostCreatePluginInterface[] $productAbstractPostCreatePlugins
+     */
+    public function __construct(
+        array $afterCreateCollection,
+        array $productAbstractPostCreatePlugins
+    ) {
         $this->afterCreateCollection = $afterCreateCollection;
+        $this->productAbstractPostCreatePlugins = $productAbstractPostCreatePlugins;
     }
 
     /**
@@ -34,8 +43,39 @@ class ProductAbstractAfterCreateObserverPluginManager implements ProductAbstract
      */
     public function create(ProductAbstractTransfer $productAbstractTransfer)
     {
+        $productAbstractTransfer = $this->executeProductAbstractCreatePlugins($productAbstractTransfer);
+        $productAbstractTransfer = $this->executeProductAbstractPostCreatePlugins($productAbstractTransfer);
+
+        return $productAbstractTransfer;
+    }
+
+    /**
+     * @deprecated Use {@link \Spryker\Zed\Product\Business\Product\Plugin\ProductAbstractAfterCreateObserverPluginManager::executeProductAbstractPostCreatePlugins()} instead.
+     *
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    protected function executeProductAbstractCreatePlugins(
+        ProductAbstractTransfer $productAbstractTransfer
+    ): ProductAbstractTransfer {
         foreach ($this->afterCreateCollection as $productAbstractPluginCreate) {
             $productAbstractTransfer = $productAbstractPluginCreate->create($productAbstractTransfer);
+        }
+
+        return $productAbstractTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    protected function executeProductAbstractPostCreatePlugins(
+        ProductAbstractTransfer $productAbstractTransfer
+    ): ProductAbstractTransfer {
+        foreach ($this->productAbstractPostCreatePlugins as $productAbstractPostCreatePlugin) {
+            $productAbstractTransfer = $productAbstractPostCreatePlugin->create($productAbstractTransfer);
         }
 
         return $productAbstractTransfer;

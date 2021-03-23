@@ -10,13 +10,13 @@ namespace Spryker\Zed\MerchantProduct\Communication\Plugin\Product;
 use Generated\Shared\Transfer\MerchantProductTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginCreateInterface;
+use Spryker\Zed\ProductExtension\Dependency\Plugin\ProductAbstractPostCreatePluginInterface;
 
 /**
  * @method \Spryker\Zed\MerchantProduct\Business\MerchantProductFacadeInterface getFacade()
  * @method \Spryker\Zed\MerchantProduct\MerchantProductConfig getConfig()
  */
-class MerchantProductProductAbstractPostCreatePlugin extends AbstractPlugin implements ProductAbstractPluginCreateInterface
+class MerchantProductProductAbstractPostCreatePlugin extends AbstractPlugin implements ProductAbstractPostCreatePluginInterface
 {
     /**
      * {@inheritDoc}
@@ -28,7 +28,7 @@ class MerchantProductProductAbstractPostCreatePlugin extends AbstractPlugin impl
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
-    public function create(ProductAbstractTransfer $productAbstractTransfer)
+    public function create(ProductAbstractTransfer $productAbstractTransfer): ProductAbstractTransfer
     {
         if ($productAbstractTransfer->getIdMerchant()) {
             $this->getFacade()->create(

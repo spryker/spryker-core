@@ -5,24 +5,23 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PriceProduct\Communication\Plugin\ProductAbstract;
+namespace Spryker\Zed\PriceProduct\Communication\Plugin\Product;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginCreateInterface;
+use Spryker\Zed\ProductExtension\Dependency\Plugin\ProductAbstractPostCreatePluginInterface;
 
 /**
- * @deprecated Use {@link \Spryker\Zed\PriceProduct\Communication\Plugin\Product\PriceProductAbstractPostCreatePlugin} instead.
- *
  * @method \Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface getFacade()
  * @method \Spryker\Zed\PriceProduct\Communication\PriceProductCommunicationFactory getFactory()
  * @method \Spryker\Zed\PriceProduct\PriceProductConfig getConfig()
  * @method \Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface getQueryContainer()
  */
-class PriceProductAbstractAfterCreatePlugin extends AbstractPlugin implements ProductAbstractPluginCreateInterface
+class PriceProductAbstractPostCreatePlugin extends AbstractPlugin implements ProductAbstractPostCreatePluginInterface
 {
     /**
      * {@inheritDoc}
+     * - Create new product price entities if they doesn't exists by abstract product id and price type.
      *
      * @api
      *
@@ -30,7 +29,7 @@ class PriceProductAbstractAfterCreatePlugin extends AbstractPlugin implements Pr
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
-    public function create(ProductAbstractTransfer $productAbstractTransfer)
+    public function create(ProductAbstractTransfer $productAbstractTransfer): ProductAbstractTransfer
     {
         return $this->getFacade()->persistProductAbstractPriceCollection($productAbstractTransfer);
     }

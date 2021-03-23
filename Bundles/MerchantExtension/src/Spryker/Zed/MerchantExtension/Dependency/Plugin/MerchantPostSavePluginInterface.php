@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\MerchantTransfer;
 
 /**
  * @deprecated Use {@link \Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostCreatePluginInterface}
- *   or {@link \Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostUpdatePluginInterface} instead.
+ * or {@link \Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostUpdatePluginInterface} instead.
  */
 interface MerchantPostSavePluginInterface
 {

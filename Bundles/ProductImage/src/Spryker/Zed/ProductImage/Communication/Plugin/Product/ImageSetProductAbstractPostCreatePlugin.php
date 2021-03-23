@@ -5,24 +5,23 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductImage\Communication\Plugin;
+namespace Spryker\Zed\ProductImage\Communication\Plugin\Product;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginCreateInterface;
+use Spryker\Zed\ProductExtension\Dependency\Plugin\ProductAbstractPostCreatePluginInterface;
 
 /**
- * @deprecated Use {@link \Spryker\Zed\ProductImage\Communication\Plugin\Product\ImageSetProductAbstractPostCreatePlugin} instead.
- *
  * @method \Spryker\Zed\ProductImage\Business\ProductImageFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductImage\Communication\ProductImageCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductImage\ProductImageConfig getConfig()
  * @method \Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainerInterface getQueryContainer()
  */
-class ProductAbstractAfterCreatePlugin extends AbstractPlugin implements ProductAbstractPluginCreateInterface
+class ImageSetProductAbstractPostCreatePlugin extends AbstractPlugin implements ProductAbstractPostCreatePluginInterface
 {
     /**
      * {@inheritDoc}
+     * - Persists all provided image sets to database for the given abstract product.
      *
      * @api
      *
@@ -30,7 +29,7 @@ class ProductAbstractAfterCreatePlugin extends AbstractPlugin implements Product
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
-    public function create(ProductAbstractTransfer $productAbstractTransfer)
+    public function create(ProductAbstractTransfer $productAbstractTransfer): ProductAbstractTransfer
     {
         return $this->getFacade()->createProductAbstractImageSetCollection($productAbstractTransfer);
     }

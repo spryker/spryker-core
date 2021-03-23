@@ -380,6 +380,8 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Product\Business\ProductBusinessFactory::getProductAbstractPreCreatePlugins()} instead.
+     *
      * @return \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginCreateInterface[]
      */
     protected function getProductAbstractBeforeCreatePlugins()
@@ -388,11 +390,29 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\ProductExtension\Dependency\Plugin\ProductAbstractPreCreatePluginInterface[]
+     */
+    protected function getProductAbstractPreCreatePlugins(): array
+    {
+        return $this->getProvidedDependency(ProductDependencyProvider::PLUGINS_PRODUCT_ABSTRACT_PRE_CREATE);
+    }
+
+    /**
+     * @deprecated Use {@link \Spryker\Zed\Product\Business\ProductBusinessFactory::getProductAbstractPostCreatePlugins()} instead.
+     *
      * @return \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginCreateInterface[]
      */
     protected function getProductAbstractAfterCreatePlugins()
     {
         return $this->getProvidedDependency(ProductDependencyProvider::PRODUCT_ABSTRACT_PLUGINS_AFTER_CREATE);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductExtension\Dependency\Plugin\ProductAbstractPostCreatePluginInterface[]
+     */
+    protected function getProductAbstractPostCreatePlugins(): array
+    {
+        return $this->getProvidedDependency(ProductDependencyProvider::PLUGINS_PRODUCT_ABSTRACT_POST_CREATE);
     }
 
     /**
@@ -464,7 +484,10 @@ class ProductBusinessFactory extends AbstractBusinessFactory
      */
     protected function createProductAbstractBeforeCreateObserverPluginManager()
     {
-        return new ProductAbstractBeforeCreateObserverPluginManager($this->getProductAbstractBeforeCreatePlugins());
+        return new ProductAbstractBeforeCreateObserverPluginManager(
+            $this->getProductAbstractBeforeCreatePlugins(),
+            $this->getProductAbstractPreCreatePlugins()
+        );
     }
 
     /**
@@ -472,7 +495,10 @@ class ProductBusinessFactory extends AbstractBusinessFactory
      */
     protected function createProductAbstractAfterCreateObserverPluginManager()
     {
-        return new ProductAbstractAfterCreateObserverPluginManager($this->getProductAbstractAfterCreatePlugins());
+        return new ProductAbstractAfterCreateObserverPluginManager(
+            $this->getProductAbstractAfterCreatePlugins(),
+            $this->getProductAbstractPostCreatePlugins()
+        );
     }
 
     /**

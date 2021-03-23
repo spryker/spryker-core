@@ -5,23 +5,22 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\TaxProductConnector\Communication\Plugin;
+namespace Spryker\Zed\TaxProductConnector\Communication\Plugin\Product;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginCreateInterface;
+use Spryker\Zed\ProductExtension\Dependency\Plugin\ProductAbstractPostCreatePluginInterface;
 
 /**
- * @deprecated Use {@link \Spryker\Zed\TaxProductConnector\Communication\Plugin\Product\TaxSetProductAbstractPostCreatePlugin} instead.
- *
  * @method \Spryker\Zed\TaxProductConnector\Business\TaxProductConnectorFacadeInterface getFacade()
  * @method \Spryker\Zed\TaxProductConnector\TaxProductConnectorConfig getConfig()
  * @method \Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainerInterface getQueryContainer()
  */
-class TaxSetProductAbstractAfterCreatePlugin extends AbstractPlugin implements ProductAbstractPluginCreateInterface
+class TaxSetProductAbstractPostCreatePlugin extends AbstractPlugin implements ProductAbstractPostCreatePluginInterface
 {
     /**
      * {@inheritDoc}
+     * - Saves tax set id to product abstract table.
      *
      * @api
      *
@@ -29,7 +28,7 @@ class TaxSetProductAbstractAfterCreatePlugin extends AbstractPlugin implements P
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
-    public function create(ProductAbstractTransfer $productAbstractTransfer)
+    public function create(ProductAbstractTransfer $productAbstractTransfer): ProductAbstractTransfer
     {
         return $this->getFacade()->saveTaxSetToProductAbstract($productAbstractTransfer);
     }
