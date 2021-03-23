@@ -14,6 +14,9 @@ use Twig\Error\LoaderError;
 
 abstract class BaseTwigFilesystemLoader implements FilesystemLoaderInterface
 {
+    protected const MODULE_PART_INDEX_IN_COMPONENT_DEFINITION = 1;
+    protected const THEME_PART_INDEX_IN_COMPONENT_DEFINITION = 2;
+
     /**
      * @var string[]
      */
@@ -81,7 +84,7 @@ abstract class BaseTwigFilesystemLoader implements FilesystemLoaderInterface
 
         $organization = $this->extractOrganization($moduleOrganization);
         $module = $this->extractModule($moduleOrganization);
-        $theme = $this->extracTheme($moduleOrganization);
+        $theme = $this->extractTheme($moduleOrganization);
 
         foreach ($this->paths as $path) {
             $package = $module;
@@ -117,7 +120,7 @@ abstract class BaseTwigFilesystemLoader implements FilesystemLoaderInterface
      *
      * @return string
      */
-    private function changeThemeInPath(string $path, string $theme): string
+    protected function changeThemeInPath(string $path, string $theme): string
     {
         $themePart = '/Theme/';
         $parts = explode($themePart, $path);
@@ -155,7 +158,7 @@ abstract class BaseTwigFilesystemLoader implements FilesystemLoaderInterface
 
         $organizationModule = explode(':', $organizationModule);
 
-        return $organizationModule[1] ?? null;
+        return $organizationModule[static::MODULE_PART_INDEX_IN_COMPONENT_DEFINITION] ?? null;
     }
 
     /**
@@ -163,7 +166,7 @@ abstract class BaseTwigFilesystemLoader implements FilesystemLoaderInterface
      *
      * @return string|null
      */
-    protected function extracTheme(string $organizationModule): ?string
+    protected function extractTheme(string $organizationModule): ?string
     {
         if (strpos($organizationModule, ':') === false) {
             return null;
@@ -171,7 +174,7 @@ abstract class BaseTwigFilesystemLoader implements FilesystemLoaderInterface
 
         $organizationModule = explode(':', $organizationModule);
 
-        return $organizationModule[2] ?? null;
+        return $organizationModule[static::THEME_PART_INDEX_IN_COMPONENT_DEFINITION] ?? null;
     }
 
     /**
