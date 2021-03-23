@@ -21,14 +21,26 @@ use Spryker\Zed\SalesReturnGuiExtension\Dependency\Plugin\ReturnCreateTemplatePl
 class MerchantReturnCreateTemplatePlugin extends AbstractPlugin implements ReturnCreateTemplatePluginInterface
 {
     /**
+     * {@inheritDoc}
+     * Specification:
+     *  - Returns template path.
+     *
+     * @api
+     *
      * @return string
      */
     public function getTemplatePath(): string
     {
-        return '@MerchantSalesReturnGui/SalesReturn/Create/index.twig';
+        return '@MerchantSalesReturnGui/SalesReturn/Create/default.twig';
     }
 
     /**
+     * {@inheritDoc}
+     * Specification:
+     *  - Returns merchant data for return template.
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return mixed[]
@@ -36,7 +48,6 @@ class MerchantReturnCreateTemplatePlugin extends AbstractPlugin implements Retur
     public function getTemplateData(OrderTransfer $orderTransfer): array
     {
         return [
-            'order' => $orderTransfer,
             'merchants' => $this->getMerchants($orderTransfer),
             'indexedMerchantOrders' => $this->getMerchantOrders($orderTransfer),
         ];
@@ -56,8 +67,7 @@ class MerchantReturnCreateTemplatePlugin extends AbstractPlugin implements Retur
             }
         }
 
-        return $this
-            ->getFactory()
+        return $this->getFactory()
             ->getMerchantFacade()
             ->get($merchantCriteriaTransfer);
     }
@@ -72,8 +82,7 @@ class MerchantReturnCreateTemplatePlugin extends AbstractPlugin implements Retur
         $merchantOrderCriteriaTransfer = (new MerchantOrderCriteriaTransfer())
             ->setIdOrder($orderTransfer->getIdSalesOrder());
 
-        $merchantOrderCollection = $this
-            ->getFactory()
+        $merchantOrderCollection = $this->getFactory()
             ->getMerchantSalesOrderFacade()
             ->getMerchantOrderCollection($merchantOrderCriteriaTransfer);
 
