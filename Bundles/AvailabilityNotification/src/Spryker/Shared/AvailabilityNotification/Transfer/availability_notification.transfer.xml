@@ -22,6 +22,7 @@
 
     <transfer name="Store">
         <property name="idStore" type="int"/>
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="Locale">
@@ -39,13 +40,18 @@
     </transfer>
 
     <transfer name="AvailabilityNotificationSubscription">
-        <property name="store" type="Store"/>
-        <property name="locale" type="Locale"/>
+        <property name="idAvailabilityNotificationSubscription" type="int"/>
         <property name="subscriptionKey" type="string"/>
-        <property name="customerReference" type="string"/>
         <property name="email" type="string"/>
         <property name="sku" type="string"/>
-        <property name="idAvailabilityNotificationSubscription" type="int"/>
+        <property name="customerReference" type="string"/>
+        <property name="store" type="Store"/>
+        <property name="locale" type="Locale"/>
+    </transfer>
+
+    <transfer name="AvailabilityNotificationSubscriptionCollection">
+        <property name="availabilityNotificationSubscriptions" type="AvailabilityNotificationSubscription[]" singular="availabilityNotificationSubscription"/>
+        <property name="pagination" type="Pagination"/>
     </transfer>
 
     <transfer name="AvailabilityNotificationSubscriptionResponse">
@@ -92,6 +98,25 @@
 
     <transfer name="ProductImage">
         <property name="externalUrlLarge" type="string"/>
+    </transfer>
+
+    <transfer name="AvailabilityNotificationCriteria">
+        <property name="customerReferences" type="string[]" singular="customerReference"/>
+        <property name="storeNames" type="string[]" singular="storeName"/>
+        <property name="skus" type="string[]" singular="sku"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="page" type="int"/>
+        <property name="maxPerPage" type="int"/>
+        <property name="nbResults" type="int"/>
+        <property name="firstIndex" type="int"/>
+        <property name="lastIndex" type="int"/>
+        <property name="firstPage" type="int"/>
+        <property name="lastPage" type="int"/>
+        <property name="nextPage" type="int"/>
+        <property name="previousPage" type="int"/>
     </transfer>
 
 </transfers>
