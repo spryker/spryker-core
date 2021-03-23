@@ -14,11 +14,12 @@ use Spryker\Glue\Kernel\Controller\AbstractController;
 /**
  * @method \Spryker\Glue\CartsRestApi\CartsRestApiFactory getFactory()
  */
-class MyCartsResourceController extends AbstractController
+class CustomerCartsResourceController extends AbstractController
 {
     /**
      * @Glue({
      *     "getCollection": {
+     *          "path": "/customers/{customerId}/carts",
      *          "summary": [
      *              "Retrieves list of carts."
      *          ],
@@ -37,6 +38,6 @@ class MyCartsResourceController extends AbstractController
      */
     public function getAction(RestRequestInterface $restRequest): RestResponseInterface
     {
-        return $this->getFactory()->createCartReader()->readCurrentCustomerCarts($restRequest);
+        return $this->getFactory()->createCartReader()->readCustomerCarts($restRequest);
     }
 }

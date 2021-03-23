@@ -11,12 +11,13 @@ use Generated\Shared\Transfer\RestCartsAttributesTransfer;
 use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceWithParentPluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
 
 /**
  * @method \Spryker\Glue\CartsRestApi\CartsRestApiFactory getFactory()
  */
-class MyCartsResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface
+class CustomerCartsResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface, ResourceWithParentPluginInterface
 {
     /**
      * {@inheritDoc}
@@ -44,7 +45,7 @@ class MyCartsResourceRoutePlugin extends AbstractPlugin implements ResourceRoute
      */
     public function getResourceType(): string
     {
-        return CartsRestApiConfig::RESOURCE_MY_CARTS;
+        return CartsRestApiConfig::RESOURCE_CUSTOMER_CARTS;
     }
 
     /**
@@ -56,7 +57,7 @@ class MyCartsResourceRoutePlugin extends AbstractPlugin implements ResourceRoute
      */
     public function getController(): string
     {
-        return CartsRestApiConfig::CONTROLLER_MY_CARTS;
+        return CartsRestApiConfig::CONTROLLER_CUSTOMER_CARTS;
     }
 
     /**
@@ -69,5 +70,17 @@ class MyCartsResourceRoutePlugin extends AbstractPlugin implements ResourceRoute
     public function getResourceAttributesClassName(): string
     {
         return RestCartsAttributesTransfer::class;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getParentResourceType(): string
+    {
+        return CartsRestApiConfig::RESOURCE_CUSTOMERS;
     }
 }
