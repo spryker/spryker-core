@@ -33,6 +33,7 @@ class MerchantSalesOrderFacadeTest extends Unit
     protected const TEST_MERCHANT_ORDER_ITEM_ID = 1;
     protected const TEST_INVALID_MERCHANT_ORDER_ITEM_ID = -1;
     protected const TEST_MERCHANT_REFERENCE = 'test-merchant-reference';
+    protected const TEST_NON_EXISTENT_MERCHANT_ORDER_ITEM_ID = 123;
 
     /**
      * @var \SprykerTest\Zed\MerchantSalesOrder\MerchantSalesOrderBusinessTester
@@ -80,6 +81,7 @@ class MerchantSalesOrderFacadeTest extends Unit
      *
      * @param array $merchantOrderCriteriaKeys
      * @param int $merchantOrderItemsCount
+     * @param bool $withMerchant
      *
      * @return void
      */
@@ -115,6 +117,7 @@ class MerchantSalesOrderFacadeTest extends Unit
             MerchantOrderCriteriaTransfer::WITH_ITEMS => true,
             MerchantOrderCriteriaTransfer::CUSTOMER_REFERENCE => $orderTransfer->getCustomerReference(),
             MerchantOrderCriteriaTransfer::WITH_UNIQUE_PRODUCTS_COUNT => true,
+            MerchantOrderCriteriaTransfer::WITH_MERCHANT => true,
         ];
         $merchantOrderCriteriaData = array_intersect_key(
             $merchantOrderCriteriaData,
@@ -138,6 +141,13 @@ class MerchantSalesOrderFacadeTest extends Unit
         );
         $this->assertCount($merchantOrderItemsCount, $foundMerchantOrderTransfer->getMerchantOrderItems());
         $this->assertInstanceOf(TotalsTransfer::class, $foundMerchantOrderTransfer->getTotals());
+
+        if ($merchantOrderCriteriaTransfer->getWithMerchant()) {
+            $this->assertSame(
+                $merchantTransfer->getMerchantReference(),
+                $foundMerchantOrderTransfer->getMerchantOrFail()->getMerchantReference()
+            );
+        }
     }
 
     /**
@@ -475,7 +485,7 @@ class MerchantSalesOrderFacadeTest extends Unit
     {
         //Arrange
         $merchantOrderItemTransfer = (new MerchantOrderItemTransfer())
-            ->setIdMerchantOrderItem(static::TEST_MERCHANT_ORDER_ITEM_ID);
+            ->setIdMerchantOrderItem(self::TEST_NON_EXISTENT_MERCHANT_ORDER_ITEM_ID);
 
         //Act
         $merchantOrderItemTransferResponseTransfer = $this->tester->getFacade()->updateMerchantOrderItem($merchantOrderItemTransfer);
