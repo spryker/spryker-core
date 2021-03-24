@@ -1,5 +1,5 @@
 {
-  "name": "spryker/merchant-sales-order-merchant-user-gui",
+  "name": "spryker/merchant-sales-return-merchant-user-gui",
   "type": "library",
   "description": "MerchantSalesReturnMerchantUserGui module",
   "license": "proprietary",
