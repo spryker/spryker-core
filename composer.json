@@ -46,6 +46,7 @@
     "spryker/availability-gui-extension": "*",
     "spryker/availability-merchant-portal-gui": "*",
     "spryker/availability-notification": "*",
+    "spryker/availability-notifications-rest-api": "*",
     "spryker/availability-offer-connector": "*",
     "spryker/availability-storage": "*",
     "spryker/availability-storage-extension": "*",
