@@ -5,6 +5,10 @@
 {% block section_title page_title %}
 
 {% block action %}
+    {{ backActionButton('/merchant-sales-order-merchant-user-gui', 'Back to Orders' | trans) }}
+    <a class="btn btn-sm safe-submit btn-primary" href="{{ url('/merchant-sales-return-merchant-user-gui/create', {'id-merchant-order': merchantOrder.idMerchantOrder}) }}">
+        {{ 'Return' | trans }}
+    </a>
 {% endblock %}
 
 {% block content %}

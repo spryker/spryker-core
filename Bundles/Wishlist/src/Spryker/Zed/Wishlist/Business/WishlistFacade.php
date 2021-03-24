@@ -19,6 +19,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\Wishlist\Business\WishlistBusinessFactory getFactory()
  * @method \Spryker\Zed\Wishlist\Persistence\WishlistRepositoryInterface getRepository()
+ * @method \Spryker\Zed\Wishlist\Persistence\WishlistEntityManagerInterface getEntityManager()
  */
 class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
 {
@@ -178,9 +179,8 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
      */
     public function removeItem(WishlistItemTransfer $wishlistItemTransfer)
     {
-        return $this->getFactory()
-            ->createWriter()
-            ->removeItem($wishlistItemTransfer);
+        return $this->getEntityManager()
+            ->deleteItem($wishlistItemTransfer);
     }
 
     /**
@@ -195,8 +195,8 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
     public function removeItemCollection(WishlistItemCollectionTransfer $wishlistItemTransferCollection)
     {
         return $this->getFactory()
-            ->createWriter()
-            ->removeItemCollection($wishlistItemTransferCollection);
+            ->createDeleter()
+            ->deleteItemCollection($wishlistItemTransferCollection);
     }
 
     /**

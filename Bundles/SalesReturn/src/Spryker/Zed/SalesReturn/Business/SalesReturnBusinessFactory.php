@@ -73,7 +73,7 @@ class SalesReturnBusinessFactory extends AbstractBusinessFactory
         return new ReturnValidator(
             $this->getStoreFacade(),
             $this->getConfig(),
-            $this->getReturnRequestValidatorPlugins()
+            $this->getReturnCreateRequestValidatorPlugins()
         );
     }
 
@@ -180,10 +180,10 @@ class SalesReturnBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnRequestValidatorPluginInterface[]
+     * @return \Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnCreateRequestValidatorPluginInterface[]
      */
-    public function getReturnRequestValidatorPlugins(): array
+    public function getReturnCreateRequestValidatorPlugins(): array
     {
-        return $this->getProvidedDependency(SalesReturnDependencyProvider::PLUGINS_RETURN_REQUEST_VALIDATOR);
+        return $this->getProvidedDependency(SalesReturnDependencyProvider::PLUGINS_RETURN_CREATE_REQUEST_VALIDATOR);
     }
 }

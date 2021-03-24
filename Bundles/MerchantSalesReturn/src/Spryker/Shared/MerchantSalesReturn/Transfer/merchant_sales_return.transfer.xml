@@ -29,6 +29,7 @@
     </transfer>
 
     <transfer name="ReturnCreateRequest">
+        <property name="returnItems" type="ReturnItem[]" singular="returnItem"/>
     </transfer>
 
     <transfer name="MerchantOrder">

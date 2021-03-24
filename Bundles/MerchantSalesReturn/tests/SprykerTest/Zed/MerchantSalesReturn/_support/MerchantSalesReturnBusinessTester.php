@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
+use Generated\Shared\Transfer\ReturnItemTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 
 /**
@@ -121,5 +122,17 @@ class MerchantSalesReturnBusinessTester extends Actor
             $saveOrderTransfer->getOrderReference(),
             $merchantTransfer->getMerchantReference()
         );
+    }
+
+    /**
+     * @param string $merchantReference
+     * @param int $idSalesOrder
+     *
+     * @return \Generated\Shared\Transfer\ReturnItemTransfer
+     */
+    public function createReturnItem(string $merchantReference, int $idSalesOrder): ReturnItemTransfer
+    {
+        return (new ReturnItemTransfer())
+            ->setOrderItem($this->createItemTransfer($merchantReference, $idSalesOrder));
     }
 }

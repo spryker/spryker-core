@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\MerchantSalesReturn\Business;
 
-use ArrayObject;
 use Generated\Shared\Transfer\ReturnCreateRequestTransfer;
 use Generated\Shared\Transfer\ReturnResponseTransfer;
 use Generated\Shared\Transfer\ReturnTransfer;
@@ -37,14 +36,10 @@ interface MerchantSalesReturnFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\ReturnCreateRequestTransfer $returnCreateRequestTransfer
-     * @param \ArrayObject $itemTransfers
      *
      * @return \Generated\Shared\Transfer\ReturnResponseTransfer
      */
-    public function validateReturn(
-        ReturnCreateRequestTransfer $returnCreateRequestTransfer,
-        ArrayObject $itemTransfers
-    ): ReturnResponseTransfer;
+    public function validateReturn(ReturnCreateRequestTransfer $returnCreateRequestTransfer): ReturnResponseTransfer;
 
     /**
      * Specification:
