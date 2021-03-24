@@ -81,7 +81,6 @@ class MerchantSalesOrderFacadeTest extends Unit
      *
      * @param array $merchantOrderCriteriaKeys
      * @param int $merchantOrderItemsCount
-     * @param bool $withMerchant
      *
      * @return void
      */
