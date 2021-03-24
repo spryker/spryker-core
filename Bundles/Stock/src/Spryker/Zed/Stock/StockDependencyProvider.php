@@ -26,6 +26,9 @@ class StockDependencyProvider extends AbstractBundleDependencyProvider
     public const PROPEL_QUERY_STORE = 'PROPEL_QUERY_STORE';
 
     public const PLUGINS_STOCK_UPDATE = 'PLUGINS_STOCK_UPDATE';
+    public const PLUGINS_STOCK_COLLECTION_EXPANDER = 'PLUGINS_STOCK_COLLECTION_EXPANDER';
+    public const PLUGINS_STOCK_POST_CREATE = 'PLUGINS_STOCK_POST_CREATE';
+    public const PLUGINS_STOCK_POST_UPDATE = 'PLUGINS_STOCK_POST_UPDATE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -38,6 +41,9 @@ class StockDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addProductFacade($container);
         $container = $this->addStockUpdatePlugins($container);
         $container = $this->addStoreFacade($container);
+        $container = $this->addStockCollectionExpanderPlugins($container);
+        $container = $this->addStockPostCreatePlugins($container);
+        $container = $this->addStockPostUpdatePlugins($container);
 
         return $container;
     }
@@ -127,9 +133,75 @@ class StockDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStockCollectionExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_STOCK_COLLECTION_EXPANDER, function () {
+            return $this->getStockCollectionExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStockPostCreatePlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_STOCK_POST_CREATE, function () {
+            return $this->getStockPostCreatePlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStockPostUpdatePlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_STOCK_POST_UPDATE, function () {
+            return $this->getStockPostUpdatePlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
      * @return \Spryker\Zed\StockExtension\Dependency\Plugin\StockUpdateHandlerPluginInterface[]
      */
     protected function getStockUpdateHandlerPlugins(Container $container)
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\StockExtension\Dependency\Plugin\StockCollectionExpanderPluginInterface[]
+     */
+    protected function getStockCollectionExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\StockExtension\Dependency\Plugin\StockPostCreatePluginInterface[]
+     */
+    protected function getStockPostCreatePlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\StockExtension\Dependency\Plugin\StockPostUpdatePluginInterface[]
+     */
+    protected function getStockPostUpdatePlugins(): array
     {
         return [];
     }

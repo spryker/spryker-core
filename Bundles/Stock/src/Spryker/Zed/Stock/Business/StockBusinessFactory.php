@@ -178,4 +178,28 @@ class StockBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(StockDependencyProvider::FACADE_STORE);
     }
+
+    /**
+     * @return \Spryker\Zed\StockExtension\Dependency\Plugin\StockCollectionExpanderPluginInterface[]
+     */
+    public function getStockCollectionExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(StockDependencyProvider::PLUGINS_STOCK_COLLECTION_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\StockExtension\Dependency\Plugin\StockPostCreatePluginInterface[]
+     */
+    public function getStockPostCreatePlugins(): array
+    {
+        return $this->getProvidedDependency(StockDependencyProvider::PLUGINS_STOCK_POST_CREATE);
+    }
+
+    /**
+     * @return \Spryker\Zed\StockExtension\Dependency\Plugin\StockPostUpdatePluginInterface[]
+     */
+    public function getStockPostUpdadtePlugins(): array
+    {
+        return $this->getProvidedDependency(StockDependencyProvider::PLUGINS_STOCK_POST_CREATE);
+    }
 }

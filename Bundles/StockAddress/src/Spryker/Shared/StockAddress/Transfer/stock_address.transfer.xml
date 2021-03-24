@@ -17,10 +17,26 @@
         <property name="comment" type="string"/>
     </transfer>
 
+    <transfer name="Stock">
+        <property name="idStock" type="int"/>
+        <property name="address" type="StockAddress"/>
+    </transfer>
+
+    <transfer name="StockCollection">
+        <property name="stocks" type="Stock[]" singular="stock"/>
+    </transfer>
+
     <transfer name="Country">
+        <property name="idCountry" type="int"/>
     </transfer>
 
     <transfer name="Region">
+        <property name="idRegion" type="int"/>
+    </transfer>
+
+    <transfer name="StockResponse">
+        <property name="stock" type="Stock"/>
+        <property name="isSuccessful" type="bool"/>
     </transfer>
 
 </transfers>

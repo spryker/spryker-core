@@ -360,6 +360,8 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
      *
      * @param \Generated\Shared\Transfer\StockTransfer $stockTransfer
      *
+     * @throws \Spryker\Zed\Stock\Business\Exception\StockNotSavedException
+     *
      * @return \Generated\Shared\Transfer\StockResponseTransfer
      */
     public function createStock(StockTransfer $stockTransfer): StockResponseTransfer

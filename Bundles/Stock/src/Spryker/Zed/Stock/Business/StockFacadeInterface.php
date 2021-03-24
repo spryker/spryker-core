@@ -322,10 +322,13 @@ interface StockFacadeInterface
      * Specification:
      *  - Persists a new stock entity to database.
      *  - Touches the newly created stock.
+     *  - Executes {@link \Spryker\Zed\StockExtension\Dependency\Plugin\StockPostCreatePluginInterface} plugin stack.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\StockTransfer $stockTransfer
+     *
+     * @throws \Spryker\Zed\Stock\Business\Exception\StockNotSavedException
      *
      * @return \Generated\Shared\Transfer\StockResponseTransfer
      */
@@ -363,6 +366,7 @@ interface StockFacadeInterface
      *  - Returns all available stock types for given store.
      *  - Filters out stocks that are inactive.
      *  - StoreTransfer.name is required.
+     *  - Executes {@link \Spryker\Zed\StockExtension\Dependency\Plugin\StockCollectionExpanderPluginInterface} plugin stack.
      *
      * @api
      *
