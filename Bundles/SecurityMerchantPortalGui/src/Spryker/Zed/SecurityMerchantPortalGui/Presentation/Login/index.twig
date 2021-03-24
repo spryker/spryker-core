@@ -1,26 +1,14 @@
-{% extends '@ZedUi/Layout/merchant-layout-centered.twig' %}
-
-{% block headTitle %}
-    {{ 'Merchant Portal' | trans }}
-{% endblock %}
+{% extends '@SecurityMerchantPortalGui/Layout/layout.twig' %}
 
 {% block content %}
-    <web-mp-login cloak>
-        {%- include '@ZedUi/Partials/FlashMessages/flash-messages.twig' -%}
+    {% set linkUrl = '/security-merchant-portal-gui/password/reset-request' %}
+    {% set linkText = 'Forgot password?' | trans %}
 
-        {% form_theme form '@ZedUi/Form/form-webcomponent-layout.twig' %}
-
-        {{ form_errors(form) }}
-        {{ form_start(form, {attr: {novalidate: ''}}) }}
-            {{ form_row(form.username) }}
-            {{ form_row(form.password) }}
-            {{ form_row(form.login, {attr: {class: 'login__submit'}}) }}
-        {{ form_end(form) }}
-    </web-mp-login>
+    {{ parent() }}
 {% endblock %}
 
-{% block footerJs %}
-    <script src="{{ assetsPath('js/mp/spy/security-merchant-portal-gui-es2015.js') }}" type="module"></script>
-    <script src="{{ assetsPath('js/mp/spy/security-merchant-portal-gui-es5.js') }}" nomodule defer></script>
-    {{ parent() }}
+{% block formContent %}
+    {{ form_row(form.username) }}
+    {{ form_row(form.password) }}
+    {{ form_row(form.login, {attr: {class: submitButtonClass}}) }}
 {% endblock %}

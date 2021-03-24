@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\MerchantUserCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantUserResponseTransfer;
 use Generated\Shared\Transfer\MerchantUserTransfer;
 use Generated\Shared\Transfer\UserCriteriaTransfer;
+use Generated\Shared\Transfer\UserPasswordResetRequestTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -145,5 +146,54 @@ class MerchantUserFacade extends AbstractFacade implements MerchantUserFacadeInt
         $this->getFactory()
             ->createMerchantUserAuthenticator()
             ->authenticateMerchantUser($merchantUserTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\UserPasswordResetRequestTransfer $userPasswordResetRequestTransfer
+     *
+     * @return bool
+     */
+    public function requestPasswordReset(UserPasswordResetRequestTransfer $userPasswordResetRequestTransfer): bool
+    {
+        return $this->getFactory()
+            ->getUserPasswordResetFacade()
+            ->requestPasswordReset($userPasswordResetRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string $token
+     *
+     * @return bool
+     */
+    public function isValidPasswordResetToken(string $token): bool
+    {
+        return $this->getFactory()
+            ->getUserPasswordResetFacade()
+            ->isValidPasswordResetToken($token);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string $token
+     * @param string $password
+     *
+     * @return bool
+     */
+    public function setNewPassword(string $token, string $password): bool
+    {
+        return $this->getFactory()
+            ->getUserPasswordResetFacade()
+            ->setNewPassword($token, $password);
     }
 }
