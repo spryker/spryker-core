@@ -6,7 +6,7 @@
   "require": {
     "php": ">=7.3",
     "spryker/sales-order-threshold-gui": "^1.6.0",
-    "spryker/sales-return-gui-extension": "*"
+    "spryker/sales-return-gui-extension": "^1.1.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*"

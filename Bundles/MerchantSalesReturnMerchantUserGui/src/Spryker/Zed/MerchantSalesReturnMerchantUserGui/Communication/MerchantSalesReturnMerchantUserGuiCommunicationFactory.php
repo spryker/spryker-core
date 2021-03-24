@@ -74,6 +74,9 @@ class MerchantSalesReturnMerchantUserGuiCommunicationFactory extends AbstractCom
         );
     }
 
+    /**
+     * @return \Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Form\Handler\ReturnHandlerInterface
+     */
     public function createReturnHandler(): ReturnHandlerInterface
     {
         return new ReturnHandler(

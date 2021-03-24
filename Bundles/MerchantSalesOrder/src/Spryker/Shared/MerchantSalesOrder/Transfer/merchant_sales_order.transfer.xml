@@ -141,7 +141,4 @@
         <property name="merchantOrderItems" type="MerchantOrderItem[]" singular="merchantOrderItem"/>
     </transfer>
 
-    <transfer name="MerchantCriteria">
-    </transfer>
-
 </transfers>
