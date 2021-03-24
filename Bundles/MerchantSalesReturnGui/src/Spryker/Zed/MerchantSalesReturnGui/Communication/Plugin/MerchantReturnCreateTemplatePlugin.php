@@ -7,8 +7,7 @@
 
 namespace Spryker\Zed\MerchantSalesReturnGui\Communication\Plugin;
 
-use Generated\Shared\Transfer\MerchantCollectionTransfer;
-use Generated\Shared\Transfer\MerchantCriteriaTransfer;
+use ArrayObject;
 use Generated\Shared\Transfer\MerchantOrderCriteriaTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -37,7 +36,7 @@ class MerchantReturnCreateTemplatePlugin extends AbstractPlugin implements Retur
     /**
      * {@inheritDoc}
      * Specification:
-     *  - Returns merchant data for return template.
+     *  - Returns merchant order data for return template.
      *
      * @api
      *
@@ -48,28 +47,8 @@ class MerchantReturnCreateTemplatePlugin extends AbstractPlugin implements Retur
     public function getTemplateData(OrderTransfer $orderTransfer): array
     {
         return [
-            'merchants' => $this->getMerchants($orderTransfer)->getMerchants(),
-            'indexedMerchantOrders' => $this->getMerchantOrders($orderTransfer),
+            'merchantOrders' => $this->getMerchantOrders($orderTransfer),
         ];
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
-     */
-    protected function getMerchants(OrderTransfer $orderTransfer): MerchantCollectionTransfer
-    {
-        $merchantCriteriaTransfer = new MerchantCriteriaTransfer();
-        foreach ($orderTransfer->getItems() as $itemTransfer) {
-            if ($itemTransfer->getMerchantReference()) {
-                $merchantCriteriaTransfer->addMerchantReference($itemTransfer->getMerchantReference());
-            }
-        }
-
-        return $this->getFactory()
-            ->getMerchantFacade()
-            ->get($merchantCriteriaTransfer);
     }
 
     /**
@@ -77,21 +56,16 @@ class MerchantReturnCreateTemplatePlugin extends AbstractPlugin implements Retur
      *
      * @return array
      */
-    protected function getMerchantOrders(OrderTransfer $orderTransfer): array
+    protected function getMerchantOrders(OrderTransfer $orderTransfer): ArrayObject
     {
         $merchantOrderCriteriaTransfer = (new MerchantOrderCriteriaTransfer())
-            ->setIdOrder($orderTransfer->getIdSalesOrder());
+            ->setIdOrder($orderTransfer->getIdSalesOrder())
+            ->setWithMerchant(true);
 
         $merchantOrderCollection = $this->getFactory()
             ->getMerchantSalesOrderFacade()
             ->getMerchantOrderCollection($merchantOrderCriteriaTransfer);
 
-        $indexedMerchantOrders = [];
-
-        foreach ($merchantOrderCollection->getMerchantOrders() as $merchantOrderTransfer) {
-            $indexedMerchantOrders[$merchantOrderTransfer->getMerchantReference()] = $merchantOrderTransfer;
-        }
-
-        return $indexedMerchantOrders;
+        return $merchantOrderCollection->getMerchantOrders();
     }
 }

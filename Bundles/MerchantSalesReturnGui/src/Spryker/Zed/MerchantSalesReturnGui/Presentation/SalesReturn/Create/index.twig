@@ -13,23 +13,24 @@
     {% endblock %}
 {% endembed %}
 
+
 {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Select Items to Return' } %}
     {% block widget_content %}
+
+        {% if merchantOrders | length > 1 %}
+            <div class="alert alert-info">
+                <p>
+                    <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                    {{ 'You can only return products from one merchant at a time.' | trans }}
+                </p>
+            </div>
+        {% endif %}
+
         {{ form_start(returnCreateForm) }}
         {{ form_errors(returnCreateForm) }}
 
-        {% for merchant in merchants %}
-            {% set merchantOrder = indexedMerchantOrders[merchant.merchantReference] %}
-
-            {% if merchants.count > 1 %}
-                <div class="alert alert-info">
-                    <p>
-                        <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-                        {{ 'You can only return products from one merchant at a time.' | trans }}
-                    </p>
-                </div>
-            {% endif %}
-
+        {% for merchantOrder in merchantOrders %}
+            {% set merchant = merchantOrder.merchant %}
 
             <div class="row">
                 <div class="col-lg-2 font-bold">
@@ -38,10 +39,8 @@
             </div>
 
             <div class="row">
-                <div class="col-lg-2 font-bold">
-                    {{ 'Fullfilled by merchant' | trans }}
-                </div>
-                <div class="col-lg-10">
+                <div class="col-lg-4 font-bold">
+                    {{ 'Fullfilled by merchant: ' | trans }}
                     <a target="_blank" href="{{ url('/merchant-gui/edit-merchant', {'id-merchant': merchant.idMerchant}) }}">
                         {{ merchant.name }}
                     </a>
@@ -49,10 +48,8 @@
             </div>
 
             <div class="row">
-                <div class="col-lg-2 font-bold">
-                    {{ 'Merchant Order Reference' | trans }}
-                </div>
-                <div class="col-lg-10">
+                <div class="col-lg-4 font-bold">
+                    {{ 'Merchant Order Reference: ' | trans }}
                     <a target="_blank" href="{{ url('/sales/detail', {'id-sales-order' : order.idSalesOrder}) }}">
                         {{ merchantOrder.merchantOrderReference }}
                     </a>
@@ -84,6 +81,9 @@
                     </tbody>
                 </table>
             </div>
+
+            <hr>
+
         {% endfor %}
 
         <button class="btn btn-primary safe-submit js-create-return-submit" disabled>{{ 'Create return' | trans }}</button>

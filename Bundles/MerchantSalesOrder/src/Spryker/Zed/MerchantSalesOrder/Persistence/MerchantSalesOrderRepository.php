@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\MerchantOrderItemCollectionTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
+use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\Merchant\Persistence\Map\SpyMerchantTableMap;
@@ -77,6 +78,10 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
 
         if ($merchantOrderCriteriaTransfer->getWithItems()) {
             $merchantOrderTransfers = $this->addMerchantOrderItemsToMerchantOrders($merchantOrderTransfers);
+        }
+
+        if ($merchantOrderCriteriaTransfer->getWithMerchant()) {
+            $merchantOrderTransfers = $this->addMerchantToMerchantOrders($merchantOrderTransfers);
         }
 
         return (new MerchantOrderCollectionTransfer())->setMerchantOrders(
@@ -418,5 +423,50 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
         }
 
         return $merchantSalesOrderItemQuery;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantOrderTransfer[] $merchantOrderTransfers
+     *
+     * @return \Generated\Shared\Transfer\MerchantOrderTransfer[]
+     */
+    protected function addMerchantToMerchantOrders(array $merchantOrderTransfers): array
+    {
+        $merchantReferences = [];
+
+        foreach ($merchantOrderTransfers as $merchantOrderTransfer) {
+            $merchantReferences[] = $merchantOrderTransfer->getMerchantReference();
+        }
+
+        $merchantCollection = $this->getMerchantsByMerchantReferences($merchantReferences);
+
+        $merchantTransfers = [];
+        foreach ($merchantCollection as $merchant) {
+            $merchantTransfers[$merchant->getMerchantReference()] = $this->getFactory()
+                ->createMerchantMapper()
+                ->mapMerchantEntityToMerchantTransfer($merchant, new MerchantTransfer());
+        }
+
+        foreach ($merchantOrderTransfers as $merchantOrderTransfer) {
+            if (isset($merchantTransfers[$merchantOrderTransfer->getMerchantReference()])) {
+                $merchantOrderTransfer->setMerchant($merchantTransfers[$merchantOrderTransfer->getMerchantReference()]);
+            }
+        }
+
+        return $merchantOrderTransfers;
+    }
+
+    /**
+     * @param string[] $merchantReferences
+     *
+     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Merchant\Persistence\SpyMerchant[]
+     */
+    protected function getMerchantsByMerchantReferences(array $merchantReferences): ObjectCollection
+    {
+        $merchantSalesOrderItemQuery = $this->getFactory()->getMerchantQuery();
+
+        return $merchantSalesOrderItemQuery
+            ->filterByMerchantReference_In($merchantReferences)
+            ->find();
     }
 }

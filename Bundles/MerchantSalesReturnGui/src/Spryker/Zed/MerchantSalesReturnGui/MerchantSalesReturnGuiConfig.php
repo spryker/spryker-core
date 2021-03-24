@@ -1,10 +1,14 @@
 <?php
 
-declare(strict_types=1);
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
+ */
 
 namespace Spryker\Zed\MerchantSalesReturnGui;
 
-class MerchantSalesReturnGuiConfig
-{
+use Spryker\Zed\Kernel\AbstractBundleConfig;
 
+class MerchantSalesReturnGuiConfig extends AbstractBundleConfig
+{
 }
