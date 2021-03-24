@@ -1,3 +1,7 @@
 parameters:
     checkGenericClassInNonGenericObjectType: false
     checkMissingIterableValueType: false
+    reportUnmatchedIgnoredErrors: false
+    ignoreErrors:
+        - '#Parameter \#1 \$pagesTotal of method Generated\\Shared\\Transfer\\WishlistPaginationTransfer::setPagesTotal\(\) expects int|null, float given.#'
+        - '#Parameter \#1 \$pagesTotal of method Generated\\Shared\\Transfer\\WishlistPaginationTransfer::setPage\(\) expects int|null, float given.#'
