@@ -16,6 +16,8 @@ use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Builder\ProductAbstractNameBuilder;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Builder\ProductAbstractNameBuilderInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\LocaleDataProvider;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\LocaleDataProviderInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\CreateProductAbstractForm;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\CreateProductAbstractWithSingleConcreteForm;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\DataProvider\ProductAbstractFormDataProvider;
@@ -44,6 +46,8 @@ use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\DataProvider\Pro
 use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\DataProvider\ProductTableDataProvider;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\PriceProductMapper;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\PriceProductMapperInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Submitter\CreateProductAbstractWithSingleConcreteFormSubmitter;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Submitter\CreateProductAbstractWithSingleConcreteFormSubmitterInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToCategoryFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToCurrencyFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToLocaleFacadeInterface;
@@ -297,6 +301,30 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
     public function createProductConcreteBulkForm(?ProductConcreteTransfer $data = null, array $options = []): FormInterface
     {
         return $this->getFormFactory()->create(ProductConcreteBulkForm::class, $data, $options);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\LocaleDataProviderInterface
+     */
+    public function createLocaleDataProvider(): LocaleDataProviderInterface
+    {
+        return new LocaleDataProvider(
+            $this->getStoreFacade(),
+            $this->getStore()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\Submitter\CreateProductAbstractWithSingleConcreteFormSubmitterInterface
+     */
+    public function createCreateProductAbstractWithSingleConcreteFormSubmitter(): CreateProductAbstractWithSingleConcreteFormSubmitterInterface
+    {
+        return new CreateProductAbstractWithSingleConcreteFormSubmitter(
+            $this->getMerchantUserFacade(),
+            $this->getLocaleFacade(),
+            $this->getProductFacade(),
+            $this->createLocaleDataProvider()
+        );
     }
 
     /**
