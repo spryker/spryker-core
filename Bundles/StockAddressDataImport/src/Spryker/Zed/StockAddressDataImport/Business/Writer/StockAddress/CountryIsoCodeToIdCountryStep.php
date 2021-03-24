@@ -18,7 +18,7 @@ use Spryker\Zed\StockAddressDataImport\Business\Writer\StockAddress\DataSet\Stoc
 class CountryIsoCodeToIdCountryStep implements DataImportStepInterface
 {
     /**
-     * @var array int>
+     * @var array<string, int>
      */
     protected static $idCountryCache = [];
 
@@ -53,7 +53,7 @@ class CountryIsoCodeToIdCountryStep implements DataImportStepInterface
      */
     protected function findIdCountryByIso2Code(string $iso2Code): ?int
     {
-        if (isset(static::$idCountryCache[$iso2Code])) {
+        if (array_key_exists($iso2Code, static::$idCountryCache)) {
             return static::$idCountryCache[$iso2Code];
         }
 

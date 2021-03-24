@@ -18,7 +18,7 @@ use Spryker\Zed\StockAddressDataImport\Business\Writer\StockAddress\DataSet\Stoc
 class RegionNameToIdRegionStep implements DataImportStepInterface
 {
     /**
-     * @var array int>
+     * @var array<string, int>
      */
     protected static $idRegionCache = [];
 
@@ -64,7 +64,7 @@ class RegionNameToIdRegionStep implements DataImportStepInterface
      */
     protected function findIdRegionByRegionNameAndIsoCode(string $regionName, string $iso2Code): ?int
     {
-        if (isset(static::$idRegionCache[$regionName])) {
+        if (array_key_exists($regionName, static::$idRegionCache)) {
             return static::$idRegionCache[$regionName];
         }
 
