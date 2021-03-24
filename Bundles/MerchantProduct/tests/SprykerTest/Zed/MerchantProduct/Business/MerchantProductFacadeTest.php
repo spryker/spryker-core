@@ -615,7 +615,7 @@ class MerchantProductFacadeTest extends Unit
      *
      * @return \Generated\Shared\Transfer\MerchantProductTransfer
      */
-    protected function createMerchantProduct(int $idMerchant, int $idProductAbstract):MerchantProductTransfer
+    protected function createMerchantProduct(int $idMerchant, int $idProductAbstract): MerchantProductTransfer
     {
         return $this->tester->haveMerchantProduct([
             MerchantProductTransfer::ID_MERCHANT => $idMerchant,
