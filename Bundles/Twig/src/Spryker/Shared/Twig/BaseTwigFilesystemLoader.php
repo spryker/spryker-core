@@ -14,8 +14,8 @@ use Twig\Error\LoaderError;
 
 abstract class BaseTwigFilesystemLoader implements FilesystemLoaderInterface
 {
-    protected const MODULE_PART_INDEX_IN_COMPONENT_DEFINITION = 1;
-    protected const THEME_PART_INDEX_IN_COMPONENT_DEFINITION = 2;
+    protected const COMPONENT_DEFINITION_INDEX_MODULE = 1;
+    protected const COMPONENT_DEFINITION_INDEX_THEME = 2;
 
     /**
      * @var string[]
@@ -158,7 +158,7 @@ abstract class BaseTwigFilesystemLoader implements FilesystemLoaderInterface
 
         $organizationModule = explode(':', $organizationModule);
 
-        return $organizationModule[static::MODULE_PART_INDEX_IN_COMPONENT_DEFINITION] ?? null;
+        return $organizationModule[static::COMPONENT_DEFINITION_INDEX_MODULE] ?? null;
     }
 
     /**
@@ -174,7 +174,7 @@ abstract class BaseTwigFilesystemLoader implements FilesystemLoaderInterface
 
         $organizationModule = explode(':', $organizationModule);
 
-        return $organizationModule[static::THEME_PART_INDEX_IN_COMPONENT_DEFINITION] ?? null;
+        return $organizationModule[static::COMPONENT_DEFINITION_INDEX_THEME] ?? null;
     }
 
     /**
