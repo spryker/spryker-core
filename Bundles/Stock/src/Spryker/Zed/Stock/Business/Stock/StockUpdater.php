@@ -96,10 +96,8 @@ class StockUpdater implements StockUpdaterInterface
 
         $this->insertActiveTouchRecordStockType($stockTransfer);
         $this->stockProductUpdater->updateStockProductsRelatedToStock($stockTransfer);
-        $stockResponseTransfer->setStock($stockTransfer)
-            ->setIsSuccessful(true);
 
-        return $stockResponseTransfer;
+        return $this->executeStockPostUpdatePlugins($stockTransfer);
     }
 
     /**

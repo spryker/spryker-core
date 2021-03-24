@@ -55,19 +55,19 @@ class StockAddressUpdater implements StockAddressUpdaterInterface
      */
     public function updateStockAddressForStock(StockTransfer $stockTransfer): StockResponseTransfer
     {
-        if (!$stockTransfer->getAddress()) {
-            if (!$this->stockAddressRepository->isStockAddressExistsForStock($stockTransfer->getIdStockOrFail())) {
-                return (new StockResponseTransfer())
-                    ->setStock($stockTransfer)
-                    ->setIsSuccessful(true);
-            }
+        if ($stockTransfer->getAddress()) {
+            return $this->getTransactionHandler()->handleTransaction(function () use ($stockTransfer) {
+                return $this->executeUpdateStockAddressForStockTransaction($stockTransfer);
+            });
+        }
 
+        if ($this->stockAddressRepository->isStockAddressExistsForStock($stockTransfer->getIdStockOrFail())) {
             return $this->stockAddressDeleter->deleteStockAddressForStock($stockTransfer);
         }
 
-        return $this->getTransactionHandler()->handleTransaction(function () use ($stockTransfer) {
-            return $this->executeUpdateStockAddressForStockTransaction($stockTransfer);
-        });
+        return (new StockResponseTransfer())
+            ->setStock($stockTransfer)
+            ->setIsSuccessful(true);
     }
 
     /**

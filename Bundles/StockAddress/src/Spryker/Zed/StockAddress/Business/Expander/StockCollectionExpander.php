@@ -66,7 +66,7 @@ class StockCollectionExpander implements StockCollectionExpanderInterface
     /**
      * @param \Generated\Shared\Transfer\StockAddressTransfer[] $stockAddressTransfers
      *
-     * @return array<int, \Generated\Shared\Transfer\StockAddressTransfer>
+     * @return \Generated\Shared\Transfer\StockAddressTransfer[]
      */
     protected function getStockAddressTransfersIndexedByIdStock(array $stockAddressTransfers): array
     {
