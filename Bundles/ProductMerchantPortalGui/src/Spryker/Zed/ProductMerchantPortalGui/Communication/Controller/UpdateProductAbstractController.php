@@ -169,6 +169,7 @@ class UpdateProductAbstractController extends AbstractController
                     ->getConfiguration($productAbstractTransfer->getIdProductAbstractOrFail()),
                 'productCategoryTree' => $this->getFactory()->createProductAbstractFormDataProvider()->getProductCategoryTree(),
             ])->getContent(),
+            'action' => sprintf('/product-merchant-portal-gui/update-product-abstract?product-abstract-id=%s', $productAbstractTransfer->getIdProductAbstractOrFail()),
         ];
 
         if (!$productAbstractForm->isSubmitted()) {

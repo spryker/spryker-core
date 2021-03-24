@@ -24,8 +24,8 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class CreateProductAbstractWithSingleConcreteForm extends AbstractType
 {
-    protected const FIELD_NAME = 'abstractName';
-    protected const FIELD_SKU = 'abstractSku';
+    protected const FIELD_NAME = 'name';
+    protected const FIELD_SKU = 'sku';
     protected const FIELD_CONCRETE_NAME = 'concreteName';
     protected const FIELD_CONCRETE_SKU = 'concreteSku';
     protected const FIELD_AUTOGENERATE_SKU = 'autogenerateSku';

@@ -7,6 +7,10 @@
 
 namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Controller;
 
+use Generated\Shared\Transfer\LocalizedAttributesTransfer;
+use Generated\Shared\Transfer\ProductAbstractLocalizedAttributesTransfer;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\CreateProductAbstractForm;
 use Symfony\Component\Form\FormInterface;
@@ -59,7 +63,11 @@ class CreateProductAbstractController extends AbstractController
         }
 
         if ($createProductAbstractForm->isValid()) {
-            return $this->executeCreateProductAbstractFormSubmission($createProductAbstractForm);
+            $formData = $createProductAbstractForm->getData();
+
+            return new RedirectResponse(
+                $this->getCreateUrl($formData, (bool)$formData[CreateProductAbstractForm::FIELD_IS_SINGLE_CONCRETE])
+            );
         }
 
         $responseData[static::RESPONSE_KEY_NOTIFICATIONS] = [[
@@ -75,16 +83,18 @@ class CreateProductAbstractController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function createWithSingleConcreteAction(Request $request): JsonResponse
+    public function createWithSingleConcreteAction(Request $request)
     {
         $createProductAbstractWithSingleConcreteFormForm = $this->getFactory()
-            ->createCreateProductAbstractWithSingleConcreteForm();
+            ->createCreateProductAbstractWithSingleConcreteForm($request->query->all());
         $createProductAbstractWithSingleConcreteFormForm->handleRequest($request);
 
+        $formData = $createProductAbstractWithSingleConcreteFormForm->getData();
         $responseData = [
             'form' => $this->renderView('@ProductMerchantPortalGui/Partials/create_product_abstract_with_single_concrete_form.twig', [
                 'form' => $createProductAbstractWithSingleConcreteFormForm->createView(),
             ])->getContent(),
+            'action' => $this->getCreateUrl($formData, true),
         ];
 
         if (!$createProductAbstractWithSingleConcreteFormForm->isSubmitted()) {
@@ -92,6 +102,39 @@ class CreateProductAbstractController extends AbstractController
         }
 
         if ($createProductAbstractWithSingleConcreteFormForm->isValid()) {
+            //todo move to mapper
+            $merchantUserTransfer = $this->getFactory()->getMerchantUserFacade()->getCurrentMerchantUser();
+            $localeTransfers = $this->getFactory()->getLocaleFacade()->getLocaleCollection();
+
+            $productAbstractTransfer = (new ProductAbstractTransfer())
+                ->setSku($formData['sku'])
+                ->setName($formData['name'])
+                ->setIdMerchant($merchantUserTransfer->getIdMerchantOrFail())
+            ->setIdTaxSet(2);
+            $productConcreteTransfer = (new ProductConcreteTransfer())
+                ->setName($formData['concreteName'])
+                ->setSku($formData['concreteSku'])
+                ->setIsActive(false);
+
+            $defaultStoreDefaultLocale = $this->findDefaultStoreDefaultLocale();
+            foreach ($localeTransfers as $localeTransfer) {
+                $productAbstractTransfer->addLocalizedAttributes(
+                    (new LocalizedAttributesTransfer())
+                        ->setLocale($localeTransfer)
+                        ->setName($localeTransfer->getLocaleNameOrFail() === $defaultStoreDefaultLocale ? $formData['name'] : '')
+                );
+                $productConcreteTransfer->addLocalizedAttributes(
+                    (new LocalizedAttributesTransfer())
+                        ->setLocale($localeTransfer)
+                        ->setName($localeTransfer->getLocaleNameOrFail() === $defaultStoreDefaultLocale ? $formData['name'] : '')
+                );
+            }
+
+            $idProductAbstract = $this->getFactory()->getProductFacade()->addProduct($productAbstractTransfer, [$productConcreteTransfer]);
+
+            return new RedirectResponse(
+                sprintf('/product-merchant-portal-gui/update-product-abstract?product-abstract-id=%s', $idProductAbstract)
+            );
         }
 
         $responseData[static::RESPONSE_KEY_NOTIFICATIONS] = [[
@@ -113,30 +156,26 @@ class CreateProductAbstractController extends AbstractController
     }
 
     /**
-     * @phpstan-param \Symfony\Component\Form\FormInterface<mixed> $createProductAbstractForm
+     * @param mixed[] $formData
+     * @param bool $isSingleConcrete
      *
-     * @param \Symfony\Component\Form\FormInterface $createProductAbstractForm
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return string
      */
-    protected function executeCreateProductAbstractFormSubmission(FormInterface $createProductAbstractForm): RedirectResponse
+    protected function getCreateUrl(array $formData, bool $isSingleConcrete): string
     {
-        $formData = $createProductAbstractForm->getData();
-
         $getParams = sprintf(
             '?%s=%s&%s=%s',
             CreateProductAbstractForm::FIELD_SKU,
             $formData[CreateProductAbstractForm::FIELD_SKU],
             CreateProductAbstractForm::FIELD_NAME,
-            $formData[CreateProductAbstractForm::FIELD_NAME],
-        );
-        $redirectUrl = sprintf(
-            '%s%s',
-            $formData[CreateProductAbstractForm::FIELD_IS_SINGLE_CONCRETE] ? static::URL_WITH_SINGLE_CONCRETE_ACTION : static::URL_WITH_MULTI_CONCRETE_ACTION,
-            $getParams
+            $formData[CreateProductAbstractForm::FIELD_NAME]
         );
 
-        return new RedirectResponse($redirectUrl);
+        return sprintf(
+            '%s%s',
+            $isSingleConcrete ? static::URL_WITH_SINGLE_CONCRETE_ACTION : static::URL_WITH_MULTI_CONCRETE_ACTION,
+            $getParams
+        );
     }
 
     /**

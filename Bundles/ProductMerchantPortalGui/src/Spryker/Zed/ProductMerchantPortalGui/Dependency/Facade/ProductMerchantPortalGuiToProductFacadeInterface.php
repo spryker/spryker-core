@@ -45,4 +45,12 @@ interface ProductMerchantPortalGuiToProductFacadeInterface
      * @return bool
      */
     public function hasProductConcrete($sku);
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteCollection
+     *
+     * @return int
+     */
+    public function addProduct(ProductAbstractTransfer $productAbstractTransfer, array $productConcreteCollection);
 }
