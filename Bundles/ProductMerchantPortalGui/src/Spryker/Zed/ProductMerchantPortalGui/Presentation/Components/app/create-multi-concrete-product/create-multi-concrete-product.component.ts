@@ -12,4 +12,6 @@ import { ProductAttribute } from '../product-attributes-selector/types';
 export class CreateMultiConcreteProductComponent {
     @Input() attributes: ProductAttribute[];
     @Input() productsName: string;
+
+    selectedAttributes: ProductAttribute[] = [];
 }

@@ -38,6 +38,8 @@ import { ProductAttributesSelectorModule } from './product-attributes-selector/p
 import { ProductAttributesSelectorComponent } from './product-attributes-selector/product-attributes-selector.component';
 import { CreateMultiConcreteProductModule } from './create-multi-concrete-product/create-multi-concrete-product.module';
 import { CreateMultiConcreteProductComponent } from './create-multi-concrete-product/create-multi-concrete-product.component';
+import { ConcreteProductGeneratorDataModule } from './concrete-product-generator-data/concrete-product-generator-data.module';
+import { ConcreteProductGeneratorDataComponent } from './concrete-product-generator-data/concrete-product-generator-data.component';
 
 @NgModule({
     imports: [
@@ -68,6 +70,7 @@ import { CreateMultiConcreteProductComponent } from './create-multi-concrete-pro
         ConcreteProductsPreviewModule,
         ProductAttributesSelectorModule,
         CreateMultiConcreteProductModule,
+        ConcreteProductGeneratorDataModule,
     ],
 })
 export class ComponentsModule extends CustomElementModule {
@@ -97,5 +100,6 @@ export class ComponentsModule extends CustomElementModule {
         ConcreteProductsPreviewComponent,
         ProductAttributesSelectorComponent,
         CreateMultiConcreteProductComponent,
+        ConcreteProductGeneratorDataComponent,
     ];
 }
