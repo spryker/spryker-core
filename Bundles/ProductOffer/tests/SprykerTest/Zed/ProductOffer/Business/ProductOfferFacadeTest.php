@@ -53,7 +53,7 @@ class ProductOfferFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFind(): void
+    public function testGet(): void
     {
         // Arrange
         $productOfferTransfer = $this->tester->haveProductOffer([
@@ -64,6 +64,7 @@ class ProductOfferFacadeTest extends Unit
 
         // Act
         $productOfferCollectionTransfer = $this->tester->getFacade()->get($productOfferCriteriaTransfer);
+
         // Assert
         $this->assertNotEmpty($productOfferCollectionTransfer);
     }
@@ -71,7 +72,7 @@ class ProductOfferFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindAddsStoresToProductOffer(): void
+    public function testGetAddsStoresToProductOffer(): void
     {
         // Arrange
         $productOfferTransfer = $this->tester->haveProductOffer();
@@ -253,10 +254,10 @@ class ProductOfferFacadeTest extends Unit
         );
 
         $productOfferRepositoryMock = $this->getMockBuilder(ProductOfferRepositoryInterface::class)
-            ->onlyMethods(['find', 'findOne', 'getProductOfferStores', 'getMaxIdProductOffer', 'isProductOfferReferenceUsed'])
+            ->onlyMethods(['get', 'findOne', 'getProductOfferStores', 'getMaxIdProductOffer', 'isProductOfferReferenceUsed'])
             ->getMock();
         $productOfferRepositoryMock
-            ->method('find')
+            ->method('get')
             ->willReturn($productOfferCollectionTransfer);
 
         $productOfferBusinessFactoryMock = $this->getMockBuilder(ProductOfferBusinessFactory::class)
