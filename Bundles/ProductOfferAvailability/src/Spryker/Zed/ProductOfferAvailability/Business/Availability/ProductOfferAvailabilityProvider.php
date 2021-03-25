@@ -86,9 +86,9 @@ class ProductOfferAvailabilityProvider implements ProductOfferAvailabilityProvid
         $reservationQuantity = $reservationResponseTransfer->getReservationQuantity();
 
         /** @var \Spryker\DecimalObject\Decimal $quantity */
-        $quantity = $quantity->subtract($reservationQuantity);
+        $availableQuantity = $quantity->subtract($reservationQuantity);
 
-        return $quantity;
+        return $availableQuantity;
     }
 
     /**
