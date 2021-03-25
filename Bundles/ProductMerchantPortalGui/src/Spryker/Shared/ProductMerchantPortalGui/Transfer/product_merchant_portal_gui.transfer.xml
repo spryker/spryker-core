@@ -55,6 +55,7 @@
 
     <transfer name="ProductAbstract">
         <property name="idProductAbstract" type="int"/>
+        <property name="idMerchant" type="int"/>
         <property name="sku" type="string"/>
         <property name="name" type="string"/>
         <property name="concreteProductCount" type="int"/>

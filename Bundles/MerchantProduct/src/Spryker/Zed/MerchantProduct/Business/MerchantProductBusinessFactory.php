@@ -23,6 +23,7 @@ use Symfony\Component\Validator\Constraint;
 /**
  * @method \Spryker\Zed\MerchantProduct\Persistence\MerchantProductRepositoryInterface getRepository()
  * @method \Spryker\Zed\MerchantProduct\MerchantProductConfig getConfig()
+ * @method \Spryker\Zed\MerchantProduct\Persistence\MerchantProductEntityManagerInterface getEntityManager()
  */
 class MerchantProductBusinessFactory extends AbstractBusinessFactory
 {

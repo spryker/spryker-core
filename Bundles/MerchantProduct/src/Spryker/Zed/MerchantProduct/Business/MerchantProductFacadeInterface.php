@@ -99,4 +99,17 @@ interface MerchantProductFacadeInterface
     public function getProductConcreteCollection(
         MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer
     ): ProductConcreteCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Creates a new merchant product abstract entity.
+     * - Requires MerchantProductTransfer.idMerchant and MerchantProductTransfer.idProductAbstract.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantProductTransfer $merchantProductTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantProductTransfer
+     */
+    public function create(MerchantProductTransfer $merchantProductTransfer): MerchantProductTransfer;
 }

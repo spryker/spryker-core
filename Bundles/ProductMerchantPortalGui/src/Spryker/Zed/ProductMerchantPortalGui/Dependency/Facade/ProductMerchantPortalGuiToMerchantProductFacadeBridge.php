@@ -58,4 +58,14 @@ class ProductMerchantPortalGuiToMerchantProductFacadeBridge implements ProductMe
     ): ProductConcreteCollectionTransfer {
         return $this->merchantProductFacade->getProductConcreteCollection($merchantProductCriteriaTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantProductTransfer $merchantProductTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantProductTransfer
+     */
+    public function create(MerchantProductTransfer $merchantProductTransfer): MerchantProductTransfer
+    {
+        return $this->merchantProductFacade->create($merchantProductTransfer);
+    }
 }
