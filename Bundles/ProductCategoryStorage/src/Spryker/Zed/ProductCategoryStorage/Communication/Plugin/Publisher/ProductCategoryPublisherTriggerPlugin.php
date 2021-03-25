@@ -5,25 +5,41 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductCategoryStorage\Communication\Plugin\Event;
+namespace Spryker\Zed\ProductCategoryStorage\Communication\Plugin\Publisher;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Orm\Zed\ProductCategory\Persistence\Map\SpyProductCategoryTableMap;
-use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Shared\ProductCategoryStorage\ProductCategoryStorageConfig;
-use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceQueryContainerPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductCategory\Dependency\ProductCategoryEvents;
+use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherTriggerPluginInterface;
 
 /**
- * @deprecated Use {@link \Spryker\Zed\ProductCategoryStorage\Communication\Plugin\Publisher\ProductCategoryPublisherTriggerPlugin} instead.
- *
- * @method \Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductCategoryStorage\Business\ProductCategoryStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductCategoryStorage\Communication\ProductCategoryStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductCategoryStorage\ProductCategoryStorageConfig getConfig()
+ * @method \Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStorageQueryContainerInterface getQueryContainer()
  */
-class ProductCategoryEventResourceQueryContainerPlugin extends AbstractPlugin implements EventResourceQueryContainerPluginInterface
+class ProductCategoryPublisherTriggerPlugin extends AbstractPlugin implements PublisherTriggerPluginInterface
 {
+    /**
+     * {@inheritDoc}
+     * - Retrieves product categories by provided limit and offset.
+     *
+     * @api
+     *
+     * @param int $offset
+     * @param int $limit
+     *
+     * @return \Generated\Shared\Transfer\ProductCategoryTransfer[]
+     */
+    public function getData(int $offset, int $limit): array
+    {
+        $filterTransfer = $this->createFilterTransfer($offset, $limit);
+
+        return $this->getFacade()->findProductCategoryEntetiesByFilter($filterTransfer);
+    }
+
     /**
      * {@inheritDoc}
      *
@@ -34,26 +50,6 @@ class ProductCategoryEventResourceQueryContainerPlugin extends AbstractPlugin im
     public function getResourceName(): string
     {
         return ProductCategoryStorageConfig::PRODUCT_ABSTRACT_CATEGORY_RESOURCE_NAME;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param int[] $ids
-     *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria|null
-     */
-    public function queryData(array $ids = []): ?ModelCriteria
-    {
-        $query = $this->getQueryContainer()->queryProductCategoryByProductCategoryIds($ids);
-
-        if ($ids === []) {
-            $query->clear();
-        }
-
-        return $query;
     }
 
     /**
@@ -78,5 +74,18 @@ class ProductCategoryEventResourceQueryContainerPlugin extends AbstractPlugin im
     public function getIdColumnName(): ?string
     {
         return SpyProductCategoryTableMap::COL_FK_PRODUCT_ABSTRACT;
+    }
+
+    /**
+     * @param int $offset
+     * @param int $limit
+     *
+     * @return \Generated\Shared\Transfer\FilterTransfer
+     */
+    protected function createFilterTransfer(int $offset, int $limit): FilterTransfer
+    {
+        return (new FilterTransfer())
+            ->setOffset($offset)
+            ->setLimit($limit);
     }
 }

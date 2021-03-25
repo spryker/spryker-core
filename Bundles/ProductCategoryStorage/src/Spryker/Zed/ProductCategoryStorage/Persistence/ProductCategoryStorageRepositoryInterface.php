@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductCategoryStorage\Persistence;
 
+use Generated\Shared\Transfer\FilterTransfer;
+
 interface ProductCategoryStorageRepositoryInterface
 {
     /**
@@ -53,4 +55,27 @@ interface ProductCategoryStorageRepositoryInterface
      * @return int[]
      */
     public function getProductAbstractIdsByCategoryIds(array $categoryIds): array;
+
+    /**
+     * @param int[] $categoryNodeIds
+     *
+     * @return int[]
+     */
+    public function getCategoryIdsByNodeIds(array $categoryNodeIds): array;
+
+    /**
+     * @param int $offset
+     * @param int $limit
+     * @param int[] $ids
+     *
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     */
+    public function findProductAbstractCategoryStorageDataTransferByIds(int $offset, int $limit, array $ids): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductCategoryTransfer[]
+     */
+    public function findProductCategoryEntetiesByFilter(FilterTransfer $filterTransfer): array;
 }

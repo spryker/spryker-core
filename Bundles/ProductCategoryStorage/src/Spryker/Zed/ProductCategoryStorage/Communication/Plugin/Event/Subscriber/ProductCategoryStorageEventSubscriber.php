@@ -21,6 +21,8 @@ use Spryker\Zed\ProductCategoryStorage\Communication\Plugin\Event\Listener\Produ
 use Spryker\Zed\Url\Dependency\UrlEvents;
 
 /**
+ * @deprecated This will be deleted in the next major without replacement.
+ *
  * @method \Spryker\Zed\ProductCategoryStorage\Communication\ProductCategoryStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductCategoryStorage\Business\ProductCategoryStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductCategoryStorage\ProductCategoryStorageConfig getConfig()
@@ -59,6 +61,8 @@ class ProductCategoryStorageEventSubscriber extends AbstractPlugin implements Ev
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\ProductCategoryStorage\Communication\Plugin\Publisher\ProductCategory\ProductCategoryWriteForPublishingPublisherPlugin} instead.
+     *
      * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
@@ -69,6 +73,8 @@ class ProductCategoryStorageEventSubscriber extends AbstractPlugin implements Ev
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\ProductCategoryStorage\Communication\Plugin\Publisher\ProductCategory\ProductCategoryWriteForPublishingPublisherPlugin} instead.
+     *
      * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
@@ -79,6 +85,8 @@ class ProductCategoryStorageEventSubscriber extends AbstractPlugin implements Ev
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\ProductCategoryStorage\Communication\Plugin\Publisher\ProductCategory\ProductCategoryWritePublisherPlugin} instead.
+     *
      * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
@@ -89,6 +97,8 @@ class ProductCategoryStorageEventSubscriber extends AbstractPlugin implements Ev
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\ProductCategoryStorage\Communication\Plugin\Publisher\ProductCategory\ProductCategoryWritePublisherPlugin} instead.
+     *
      * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
@@ -99,6 +109,8 @@ class ProductCategoryStorageEventSubscriber extends AbstractPlugin implements Ev
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\ProductCategoryStorage\Communication\Plugin\Publisher\ProductCategory\ProductCategoryWritePublisherPlugin} instead.
+     *
      * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
@@ -109,6 +121,8 @@ class ProductCategoryStorageEventSubscriber extends AbstractPlugin implements Ev
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\ProductCategoryStorage\Communication\Plugin\Publisher\Category\CategoryIsActiveAndCategoryKeyWritePublisherPlugin} instead.
+     *
      * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
@@ -119,6 +133,8 @@ class ProductCategoryStorageEventSubscriber extends AbstractPlugin implements Ev
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\ProductCategoryStorage\Communication\Plugin\Publisher\Category\CategoryIsActiveAndCategoryKeyWritePublisherPlugin} instead.
+     *
      * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
@@ -129,6 +145,8 @@ class ProductCategoryStorageEventSubscriber extends AbstractPlugin implements Ev
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\ProductCategoryStorage\Communication\Plugin\Publisher\Category\CategoryWritePublisherPlugin} instead.
+     *
      * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
@@ -139,6 +157,8 @@ class ProductCategoryStorageEventSubscriber extends AbstractPlugin implements Ev
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\ProductCategoryStorage\Communication\Plugin\Publisher\CategoryAttribute\CategoryAttributeNameWritePublisherPlugin} instead.
+     *
      * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
@@ -149,6 +169,8 @@ class ProductCategoryStorageEventSubscriber extends AbstractPlugin implements Ev
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\ProductCategoryStorage\Communication\Plugin\Publisher\CategoryAttribute\CategoryAttributeNameWritePublisherPlugin} instead.
+     *
      * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
@@ -159,6 +181,8 @@ class ProductCategoryStorageEventSubscriber extends AbstractPlugin implements Ev
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\ProductCategoryStorage\Communication\Plugin\Publisher\CategoryAttribute\CategoryAttributeWritePublisherPlugin} instead.
+     *
      * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
@@ -169,6 +193,8 @@ class ProductCategoryStorageEventSubscriber extends AbstractPlugin implements Ev
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\ProductCategoryStorage\Communication\Plugin\Publisher\CategoryNode\CategoryNodeWritePublisherPlugin} instead.
+     *
      * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
@@ -179,6 +205,8 @@ class ProductCategoryStorageEventSubscriber extends AbstractPlugin implements Ev
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\ProductCategoryStorage\Communication\Plugin\Publisher\CategoryNode\CategoryNodeWritePublisherPlugin} instead.
+     *
      * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
@@ -189,6 +217,8 @@ class ProductCategoryStorageEventSubscriber extends AbstractPlugin implements Ev
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\ProductCategoryStorage\Communication\Plugin\Publisher\CategoryNode\CategoryNodeWritePublisherPlugin} instead.
+     *
      * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
@@ -199,6 +229,8 @@ class ProductCategoryStorageEventSubscriber extends AbstractPlugin implements Ev
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\ProductCategoryStorage\Communication\Plugin\Publisher\CategoryUrl\CategoryUrlAndResourceCategorynodeWritePublisherPlugin} instead.
+     *
      * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
@@ -209,6 +241,8 @@ class ProductCategoryStorageEventSubscriber extends AbstractPlugin implements Ev
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\ProductCategoryStorage\Communication\Plugin\Publisher\CategoryUrl\CategoryUrlAndResourceCategorynodeWritePublisherPlugin} instead.
+     *
      * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
@@ -219,6 +253,8 @@ class ProductCategoryStorageEventSubscriber extends AbstractPlugin implements Ev
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\ProductCategoryStorage\Communication\Plugin\Publisher\CategoryUrl\CategoryUrlWritePublisherPlugin} instead.
+     *
      * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
