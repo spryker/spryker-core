@@ -78,18 +78,7 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
             return $checkoutResponseTransfer;
         }
 
-        if ($quoteTransfer->getOrderReference() === null) {
-            $quoteTransfer = $this->doPreSave($quoteTransfer, $checkoutResponseTransfer);
-            $quoteTransfer = $this->doSaveOrder($quoteTransfer, $checkoutResponseTransfer);
-
-            $this->runStateMachine($checkoutResponseTransfer->getSaveOrder());
-        } else {
-            $checkoutResponseTransfer->getSaveOrder()->setOrderReference(
-                $quoteTransfer->getOrderReference()
-            );
-        }
-
-        $this->doPostSave($quoteTransfer, $checkoutResponseTransfer);
+        $checkoutResponseTransfer = $this->saveOrderWithQuoteUpdate($quoteTransfer, $checkoutResponseTransfer);
 
         return $checkoutResponseTransfer;
     }
@@ -139,6 +128,29 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
         }
 
         return (bool)$isPassed;
+    }
+
+    protected function saveOrderWithQuoteUpdate(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
+    {
+        if ($quoteTransfer->getOrderReference() !== null) {
+            $checkoutResponseTransfer->getSaveOrder()->setOrderReference(
+                $quoteTransfer->getOrderReference()
+            );
+
+            return $checkoutResponseTransfer;
+        }
+
+        $this->handleDatabaseTransaction(function () use ($quoteTransfer, $checkoutResponseTransfer) {
+            $quoteTransfer = $this->doPreSave($quoteTransfer, $checkoutResponseTransfer);
+            $quoteTransfer = $this->doSaveOrderTransaction($quoteTransfer, $checkoutResponseTransfer);
+
+            $this->runStateMachine($checkoutResponseTransfer->getSaveOrder());
+            $this->doPostSave($quoteTransfer, $checkoutResponseTransfer);
+
+            // todo update quote
+        });
+
+        return $checkoutResponseTransfer;
     }
 
     /**
