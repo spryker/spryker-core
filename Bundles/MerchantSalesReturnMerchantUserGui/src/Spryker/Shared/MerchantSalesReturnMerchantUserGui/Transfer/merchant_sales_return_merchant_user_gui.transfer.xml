@@ -17,6 +17,7 @@
         <property name="merchantReference" type="string"/>
         <property name="withItems" type="bool"/>
         <property name="withOrder" type="bool"/>
+        <property name="merchantOrderReference" type="string"/>
     </transfer>
 
     <transfer name="MerchantOrder">
@@ -27,6 +28,10 @@
     </transfer>
 
     <transfer name="Order">
+        <property name="store" type="string"/>
+        <property name="email" type="string"/>
+        <property name="firstName" type="string"/>
+        <property name="lastName" type="string"/>
         <property name="fkCustomer" type="int"/>
         <property name="items" type="Item[]" singular="item"/>
         <property name="customer" type="Customer"/>
@@ -34,6 +39,9 @@
 
     <transfer name="Customer">
         <property name="idCustomer" type="int"/>
+        <property name="email" type="string"/>
+        <property name="firstName" type="string"/>
+        <property name="lastName" type="string"/>
     </transfer>
 
     <transfer name="Merchant">
@@ -50,10 +58,11 @@
     </transfer>
 
     <transfer name="MerchantOrderItem">
+        <property name="idMerchantOrderItem" type="int"/>
         <property name="manualEvents" type="string[]" singular="manualEvent"/>
         <property name="orderItem" type="Item"/>
         <property name="stateHistory" type="StateMachineItem[]" singular="stateHistory"/>
-        <property name="idMerchantOrderItem" type="int"/>
+        <property name="idOrderItem" type="int"/>
     </transfer>
 
     <transfer name="ShipmentGroupResponse">
@@ -94,7 +103,12 @@
 
     <transfer name="Item">
         <property name="idSalesOrderItem" type="int"/>
+        <property name="fkSalesOrder" type="int"/>
         <property name="shipment" type="Shipment"/>
+        <property name="returnPolicyMessages" type="Message[]" singular="returnPolicyMessage"/>
+        <property name="isReturnable" type="bool"/>
+        <property name="orderReference" type="string"/>
+        <property name="state" type="string"/>
     </transfer>
 
     <transfer name="ShipmentMethod">
@@ -113,35 +127,63 @@
     </transfer>
 
     <transfer name="MerchantOrderItemCriteria">
+        <property name="merchantOrderItemIds" type="int[]" singular="merchantOrderItemId"/>
+        <property name="orderItemIds" type="int[]" singular="orderItemId"/>
     </transfer>
 
     <transfer name="CustomerResponse">
+        <property name="customerTransfer" type="Customer"/>
     </transfer>
 
     <transfer name="Locale">
     </transfer>
 
     <transfer name="ReturnCollection">
+        <property name="returns" type="Return[]" singular="return"/>
     </transfer>
 
     <transfer name="ReturnCreateRequest">
+        <property name="idSalesReturn" type="int"/>
+        <property name="store" type="string"/>
+        <property name="returnItems" type="ReturnItem[]" singular="returnItem"/>
+        <property name="customer" type="Customer"/>
     </transfer>
 
     <transfer name="ReturnFilter">
+        <property name="idReturns" type="string[]" singular="idReturn"/>
     </transfer>
 
     <transfer name="ReturnReasonCollection">
+        <property name="returnReasons" type="ReturnReason[]" singular="returnReason"/>
     </transfer>
 
     <transfer name="ReturnReasonFilter">
     </transfer>
 
     <transfer name="ReturnResponse">
+        <property name="return" type="Return"/>
+        <property name="isSuccessful" type="bool"/>
     </transfer>
 
     <transfer name="Return">
+        <property name="idSalesReturn" type="int"/>
+        <property name="returnItems" type="ReturnItem[]" singular="returnItem"/>
+        <property name="customerReference" type="string"/>
+        <property name="merchantSalesOrderReference" type="string"/>
     </transfer>
 
     <transfer name="ReturnItem">
+        <property name="reason" type="string"/>
+        <property name="orderItem" type="Item"/>
+    </transfer>
+
+    <transfer name="ReturnReason">
+        <property name="glossaryKeyReason" type="string"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="parameters" type="array" singular="parameters"/>
+        <property name="message" type="string"/>
+        <property name="value" type="string"/>
     </transfer>
 </transfers>

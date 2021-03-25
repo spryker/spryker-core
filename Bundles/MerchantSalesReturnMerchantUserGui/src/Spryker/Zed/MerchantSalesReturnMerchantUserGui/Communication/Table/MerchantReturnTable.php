@@ -12,7 +12,6 @@ use Orm\Zed\SalesReturn\Persistence\Map\SpySalesReturnItemTableMap;
 use Orm\Zed\SalesReturn\Persistence\SpySalesReturn;
 use Orm\Zed\SalesReturn\Persistence\SpySalesReturnQuery;
 use Orm\Zed\StateMachine\Persistence\Map\SpyStateMachineItemStateTableMap;
-use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
