@@ -104,10 +104,16 @@ class MerchantOrderReader implements MerchantOrderReaderInterface
             ->getMerchantOrderItemsStateHistory($merchantOrderItemIds);
 
         foreach ($merchantOrderItemTransfers->getMerchantOrderItems() as $merchantOrderItemTransfer) {
-            if (isset($stateMachineItemTransfers[$merchantOrderItemTransfer->getIdMerchantOrderItem()])) {
-                $stateHistory = $stateMachineItemTransfers[$merchantOrderItemTransfer->getIdMerchantOrderItem()];
-                $merchantOrderItemTransfer->setStateHistory(new ArrayObject($stateHistory));
+            if (!isset($stateMachineItemTransfers[$merchantOrderItemTransfer->getIdMerchantOrderItem()])) {
+                continue;
             }
+
+            $stateHistory = $stateMachineItemTransfers[$merchantOrderItemTransfer->getIdMerchantOrderItem()];
+            $merchantOrderItemTransfer->setStateHistory(new ArrayObject($stateHistory));
+
+            /** @var \Generated\Shared\Transfer\StateMachineItemTransfer $currentState */
+            $currentState = reset($stateHistory);
+            $merchantOrderItemTransfer->setState($currentState->getStateName());
         }
 
         return $merchantOrderItemTransfers;

@@ -33,13 +33,13 @@
             {% set merchant = merchantOrder.merchant %}
 
             <div class="row">
-                <div class="col-lg-2 font-bold">
+                <div class="col-lg-12 font-bold">
                     {{ 'Merchant Order %row% of %length%' | trans({'%row%': loop.index, '%length%': loop.length}) }}
                 </div>
             </div>
 
             <div class="row">
-                <div class="col-lg-4 font-bold">
+                <div class="col-lg-12 font-bold">
                     {{ 'Fullfilled by merchant: ' | trans }}
                     <a target="_blank" href="{{ url('/merchant-gui/edit-merchant', {'id-merchant': merchant.idMerchant}) }}">
                         {{ merchant.name }}
@@ -48,7 +48,7 @@
             </div>
 
             <div class="row">
-                <div class="col-lg-4 font-bold">
+                <div class="col-lg-12 font-bold">
                     {{ 'Merchant Order Reference: ' | trans }}
                     <a target="_blank" href="{{ url('/sales/detail', {'id-sales-order' : order.idSalesOrder}) }}">
                         {{ merchantOrder.merchantOrderReference }}

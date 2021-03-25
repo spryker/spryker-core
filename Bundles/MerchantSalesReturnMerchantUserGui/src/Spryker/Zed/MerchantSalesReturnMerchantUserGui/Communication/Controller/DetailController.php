@@ -76,7 +76,7 @@ class DetailController extends AbstractController
             'return' => $returnTransfer,
             'customer' => $this->getFactory()->createCustomerReader()->getCustomerFromReturn($returnTransfer),
             'uniqueOrderReferences' => $this->extractUniqueOrderReferencesFromReturn($returnTransfer),
-            'uniqueItemStateLabels' => $this->extractUniqueItemStateLabelsFromReturn($returnTransfer),
+            'uniqueItemStateLabels' => $this->extractUniqueItemStateLabelsFromReturn($merchantOrderItemTransfers),
             'uniqueOrderItemManualEvents' => $this->extractUniqueOrderItemManualEvents($merchantOrderItemTransfers),
             'merchantOrder' => $merchantOrderTransfer,
         ];
@@ -159,16 +159,16 @@ class DetailController extends AbstractController
     /**
      * @phpstan-return array<string, string>
      *
-     * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
+     * @param \Generated\Shared\Transfer\MerchantOrderItemTransfer[] $merchantOrderItemTransfers
      *
      * @return string[]
      */
-    protected function extractUniqueItemStateLabelsFromReturn(ReturnTransfer $returnTransfer): array
+    protected function extractUniqueItemStateLabelsFromReturn(array $merchantOrderItemTransfers): array
     {
         $uniqueItemStates = [];
 
-        foreach ($returnTransfer->getReturnItems() as $returnItemTransfer) {
-            $state = $returnItemTransfer->getOrderItemOrFail()->getStateOrFail()->getName();
+        foreach ($merchantOrderItemTransfers as $merchantOrderItemTransfer) {
+            $state = $merchantOrderItemTransfer->getState();
 
             $uniqueItemStates[$state] = $this
                     ->getFactory()

@@ -59,10 +59,12 @@
 
     <transfer name="MerchantOrderItem">
         <property name="idMerchantOrderItem" type="int"/>
+        <property name="idOrderItem" type="int"/>
         <property name="manualEvents" type="string[]" singular="manualEvent"/>
         <property name="orderItem" type="Item"/>
+        <property name="state" type="string"/>
         <property name="stateHistory" type="StateMachineItem[]" singular="stateHistory"/>
-        <property name="idOrderItem" type="int"/>
+
     </transfer>
 
     <transfer name="ShipmentGroupResponse">
@@ -124,6 +126,7 @@
 
     <transfer name="StateMachineItem">
         <property name="idMerchantOrderItem" type="int"/>
+        <property name="stateName" type="string"/>
     </transfer>
 
     <transfer name="MerchantOrderItemCriteria">
