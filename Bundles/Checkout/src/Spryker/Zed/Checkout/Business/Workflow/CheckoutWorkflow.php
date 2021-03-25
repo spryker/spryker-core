@@ -78,7 +78,29 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
             return $checkoutResponseTransfer;
         }
 
-        $checkoutResponseTransfer = $this->saveOrderWithQuoteUpdate($quoteTransfer, $checkoutResponseTransfer);
+        if ($quoteTransfer->getOrderReference() !== null) {
+            $checkoutResponseTransfer->getSaveOrder()->setOrderReference(
+                $quoteTransfer->getOrderReference()
+            );
+
+            return $checkoutResponseTransfer;
+        }
+
+        $this->handleDatabaseTransaction(function () use ($quoteTransfer, $checkoutResponseTransfer) {
+            $quoteTransfer = $this->doPreSave($quoteTransfer, $checkoutResponseTransfer);
+            $quoteTransfer = $this->doSaveOrder($quoteTransfer, $checkoutResponseTransfer);
+
+            $this->runStateMachine($checkoutResponseTransfer->getSaveOrder());
+            $this->doPostSave($quoteTransfer, $checkoutResponseTransfer);
+
+            if ($checkoutResponseTransfer->getIsSuccess()) {
+                // todo: maybe not needed
+                $quoteTransfer->setOrderReference(
+                    $checkoutResponseTransfer->getSaveOrder()->getOrderReference()
+                );
+                // todo: update quote
+            }
+        });
 
         return $checkoutResponseTransfer;
     }
@@ -130,29 +152,6 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
         return (bool)$isPassed;
     }
 
-    protected function saveOrderWithQuoteUpdate(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
-    {
-        if ($quoteTransfer->getOrderReference() !== null) {
-            $checkoutResponseTransfer->getSaveOrder()->setOrderReference(
-                $quoteTransfer->getOrderReference()
-            );
-
-            return $checkoutResponseTransfer;
-        }
-
-        $this->handleDatabaseTransaction(function () use ($quoteTransfer, $checkoutResponseTransfer) {
-            $quoteTransfer = $this->doPreSave($quoteTransfer, $checkoutResponseTransfer);
-            $quoteTransfer = $this->doSaveOrderTransaction($quoteTransfer, $checkoutResponseTransfer);
-
-            $this->runStateMachine($checkoutResponseTransfer->getSaveOrder());
-            $this->doPostSave($quoteTransfer, $checkoutResponseTransfer);
-
-            // todo update quote
-        });
-
-        return $checkoutResponseTransfer;
-    }
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse Deprecated: SavedOrderTransfer should be used directly
@@ -160,21 +159,6 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     protected function doSaveOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
-    {
-        $this->handleDatabaseTransaction(function () use ($quoteTransfer, $checkoutResponse) {
-            $this->doSaveOrderTransaction($quoteTransfer, $checkoutResponse);
-        });
-
-        return $quoteTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse Deprecated: SavedOrderTransfer should be used directly
-     *
-     * @return void
-     */
-    protected function doSaveOrderTransaction(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
         foreach ($this->saveOrderStack as $orderSaver) {
             if ($orderSaver instanceof ObsoleteCheckoutSaveOrderInterface) {
@@ -185,6 +169,8 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
 
             $orderSaver->saveOrder($quoteTransfer, $checkoutResponse->getSaveOrder());
         }
+
+        return $quoteTransfer;
     }
 
     /**
