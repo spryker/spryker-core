@@ -199,7 +199,7 @@ class ProductOfferStoragePublishListenerTest extends AbstractStoragePublishListe
         /** @var \Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStorageRepositoryInterface|\PHPUnit\Framework\MockObject\MockObject $merchantProductOfferStorageRepository */
         $merchantProductOfferStorageRepository = $this->getMockBuilder(MerchantProductOfferStorageRepositoryInterface::class)->getMock();
         $merchantProductOfferStorageRepository->expects($this->once())
-            ->method('getProductOffersByFilterCriteria')
+            ->method('getProductOffers')
             ->with($productOfferCriteriaTransfer)
             ->willReturn($productOfferCollectionTransfer);
 

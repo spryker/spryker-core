@@ -83,7 +83,7 @@ class ProductOfferFacadeTest extends Unit
             ->setProductOfferReference($productOfferTransfer->getProductOfferReference());
 
         // Act
-        $productOfferTransfer = $this->tester->getFacade()->find($productOfferCriteriaTransfer)->getProductOffers()[0];
+        $productOfferTransfer = $this->tester->getFacade()->get($productOfferCriteriaTransfer)->getProductOffers()[0];
 
         // Assert
         $this->assertCount(2, $productOfferTransfer->getStores());

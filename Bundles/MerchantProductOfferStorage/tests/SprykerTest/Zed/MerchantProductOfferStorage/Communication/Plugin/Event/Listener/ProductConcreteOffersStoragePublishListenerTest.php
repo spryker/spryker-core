@@ -182,7 +182,7 @@ class ProductConcreteOffersStoragePublishListenerTest extends AbstractStoragePub
         /** @var \Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStorageEntityManagerInterface|\PHPUnit\Framework\MockObject\MockObject $merchantProductOfferStorageEntityManager */
         $merchantProductOfferStorageEntityManager = $this->getMockBuilder(MerchantProductOfferStorageEntityManagerInterface::class)->getMock();
         $merchantProductOfferStorageEntityManager->expects($this->once())
-            ->method('saveProductConcreteProductOffersStorage')
+            ->method('saveProductConcreteProductOffers')
             ->with($productOfferTransfer->getConcreteSku(), [mb_strtolower($productOfferTransfer->getProductOfferReference())], 'DE');
 
         /** @var \Spryker\Zed\MerchantProductOfferStorage\Business\Deleter\ProductConcreteOffersStorageDeleterInterface|\PHPUnit\Framework\MockObject\MockObject $productOfferStorageDeleter */
