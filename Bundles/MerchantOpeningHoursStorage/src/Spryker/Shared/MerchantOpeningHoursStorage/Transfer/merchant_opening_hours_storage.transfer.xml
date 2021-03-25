@@ -39,7 +39,7 @@
     </transfer>
 
     <transfer name="MerchantCollection">
-        <property name="merchants" type="Merchant[]" singular="merchant"/>
+        <property name="merchants" type="Merchant[]" singular="merchants"/>
     </transfer>
 
     <transfer name="MerchantOpeningHoursStorageCriteria">
@@ -48,7 +48,7 @@
     </transfer>
 
     <transfer name="MerchantCriteria">
-        <property name="merchantIds" type="int[]" singular="idMerchant"/>
+        <property name="merchantIds" type="array" singular="merchantId"/>
         <property name="filter" type="Filter"/>
     </transfer>
 
