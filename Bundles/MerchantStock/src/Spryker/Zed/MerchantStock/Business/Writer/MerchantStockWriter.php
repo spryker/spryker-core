@@ -49,6 +49,7 @@ class MerchantStockWriter implements MerchantStockWriterInterface
     {
         $stockTransfer = (new StockTransfer())
             ->setName($this->generateStockNameByMerchant($merchantTransfer))
+            ->setStoreRelation($merchantTransfer->getStoreRelation())
             ->setIsActive(true);
 
         $stockTransfer = $this->stockFacade->createStock($stockTransfer)->getStock();
