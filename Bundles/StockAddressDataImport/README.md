@@ -1,7 +1,7 @@
 # StockAddressDataImport Module
 [![Build Status](https://travis-ci.org/spryker/stock-address-data-import.svg)](https://travis-ci.org/spryker/stock-address-data-import)
 
-{{ADD DESCRIPTION HERE}}
+Data importer for StockAddress.
 
 ## Installation
 
