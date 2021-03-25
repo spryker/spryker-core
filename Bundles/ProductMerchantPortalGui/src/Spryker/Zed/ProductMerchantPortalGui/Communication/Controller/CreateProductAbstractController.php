@@ -139,7 +139,29 @@ class CreateProductAbstractController extends AbstractController
      */
     public function createWithMultiConcreteAction(Request $request): JsonResponse
     {
-        return new JsonResponse(0);
+        $createProductAbstractWithMultiConcreteForm = $this->getFactory()
+            ->createCreateProductAbstractWithMultiConcreteForm($request->query->all());
+        $createProductAbstractWithMultiConcreteForm->handleRequest($request);
+        $productManagementAttributeTransfers = $this->getFactory()
+            ->getProductAttributeFacade()
+            ->getProductAttributeCollection();
+        $filteredProductManagementAttributeTransfers = [];
+        foreach ($productManagementAttributeTransfers as $productManagementAttributeTransfer) {
+            if ($productManagementAttributeTransfer->getIsSuper()) {
+                $filteredProductManagementAttributeTransfers[] = $productManagementAttributeTransfer;
+            }
+        }
+
+        $formData = $createProductAbstractWithMultiConcreteForm->getData();
+        $responseData = [
+            'form' => $this->renderView('@ProductMerchantPortalGui/Partials/create_product_abstract_with_multi_concrete_form.twig', [
+                'form' => $createProductAbstractWithMultiConcreteForm->createView(),
+                'productManagementAttributes' => $filteredProductManagementAttributeTransfers,
+            ])->getContent(),
+            'action' => $this->getCreateUrl($formData, false),
+        ];
+
+        return new JsonResponse($responseData);
     }
 
     /**
