@@ -30,9 +30,9 @@ class OmsTriggerController extends AbstractController
     protected const ERROR_INVALID_REQUEST = 'Request is invalid';
 
     /**
-     * @uses \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Controller\DetailController::ROUTE_REDIRECT
+     * @uses \Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Controller\DetailController::ROUTE_REDIRECT
      */
-    protected const REDIRECT_URL_DEFAULT = '/merchant-sales-order-merchant-user-gui/detail';
+    protected const REDIRECT_URL_DEFAULT = '/merchant-sales-return-merchant-user-gui/detail';
 
     protected const MESSAGE_ORDER_NOT_FOUND_ERROR = 'Merchant sales order #%d not found.';
     protected const MESSAGE_REDIRECT_NOT_FOUND_ERROR = 'Parameter redirect not found.';
@@ -64,7 +64,7 @@ class OmsTriggerController extends AbstractController
         }
 
         $event = $request->query->get(static::URL_PARAM_EVENT);
-        $merchantOrderReference = $request->query->getInt(static::URL_PARAM_MERCHANT_SALES_ORDER_REFERENCE);
+        $merchantOrderReference = $request->get(static::URL_PARAM_MERCHANT_SALES_ORDER_REFERENCE);
 
         $merchantOrderTransfer = $this->findMerchantOrder($merchantOrderReference);
 

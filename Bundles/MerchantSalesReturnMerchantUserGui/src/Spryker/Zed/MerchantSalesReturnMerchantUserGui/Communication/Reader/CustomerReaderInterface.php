@@ -15,7 +15,7 @@ interface CustomerReaderInterface
     /**
      * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
      *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
-    public function getCustomerFromReturn(ReturnTransfer $returnTransfer): CustomerTransfer;
+    public function getCustomerFromReturn(ReturnTransfer $returnTransfer): ?CustomerTransfer;
 }

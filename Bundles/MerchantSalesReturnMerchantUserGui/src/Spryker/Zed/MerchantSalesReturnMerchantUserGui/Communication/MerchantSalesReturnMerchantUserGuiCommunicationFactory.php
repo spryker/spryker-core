@@ -129,6 +129,8 @@ class MerchantSalesReturnMerchantUserGuiCommunicationFactory extends AbstractCom
     }
 
     /**
+     * @phpstan-return \Symfony\Component\Form\FormInterface<mixed>
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
@@ -164,7 +166,7 @@ class MerchantSalesReturnMerchantUserGuiCommunicationFactory extends AbstractCom
     }
 
     /**
-     * @return \Orm\Zed\SalesReturn\Persistence\SpySalesReturnQuery
+     * @return \Orm\Zed\SalesReturn\Persistence\SpySalesReturnQuery|mixed[]
      */
     public function getSalesReturnPropelQuery(): SpySalesReturnQuery
     {
@@ -180,7 +182,7 @@ class MerchantSalesReturnMerchantUserGuiCommunicationFactory extends AbstractCom
     }
 
     /**
-     * @return \Spryker\Zed\SalesReturnGui\Dependency\Facade\SalesReturnGuiToSalesReturnFacadeInterface
+     * @return \Spryker\Zed\MerchantSalesReturnMerchantUserGui\Dependency\Facade\MerchantSalesReturnMerchantUserGuiToSalesReturnFacadeInterface
      */
     public function getSalesReturnFacade(): MerchantSalesReturnMerchantUserGuiToSalesReturnFacadeInterface
     {

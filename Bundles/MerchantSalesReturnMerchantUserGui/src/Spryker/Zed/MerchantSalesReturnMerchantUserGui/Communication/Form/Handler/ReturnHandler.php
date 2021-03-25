@@ -21,7 +21,7 @@ use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Dependency\Facade\MerchantSal
 class ReturnHandler implements ReturnHandlerInterface
 {
     /**
-     * @var \Spryker\Zed\SalesReturnGui\Dependency\Facade\SalesReturnGuiToSalesReturnFacadeInterface
+     * @var \Spryker\Zed\MerchantSalesReturnMerchantUserGui\Dependency\Facade\MerchantSalesReturnMerchantUserGuiToSalesReturnFacadeInterface
      */
     protected $salesReturnFacade;
 
@@ -35,6 +35,8 @@ class ReturnHandler implements ReturnHandlerInterface
     }
 
     /**
+     * @phpstan-param array<string, mixed> $returnCreateFormData
+     *
      * @param array $returnCreateFormData
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
@@ -48,11 +50,15 @@ class ReturnHandler implements ReturnHandlerInterface
             return $this->salesReturnFacade->createReturn($returnCreateRequestTransfer);
         }
 
-        return (new ReturnResponseTransfer())
+        $returnResponseTransfer = (new ReturnResponseTransfer())
             ->setIsSuccessful(false);
+
+        return $returnResponseTransfer;
     }
 
     /**
+     * @phpstan-param array<string, mixed> $returnCreateFormData
+     *
      * @param array $returnCreateFormData
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
@@ -83,6 +89,8 @@ class ReturnHandler implements ReturnHandlerInterface
     }
 
     /**
+     * @phpstan-param array<string, mixed> $returnItemFormData
+     *
      * @param array $returnItemFormData
      *
      * @return string|null
@@ -97,6 +105,8 @@ class ReturnHandler implements ReturnHandlerInterface
     }
 
     /**
+     * @phpstan-param array<string, mixed> $returnItemFormData
+     *
      * @param array $returnItemFormData
      *
      * @return bool

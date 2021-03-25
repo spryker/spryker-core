@@ -97,7 +97,7 @@ class MerchantOrderReader implements MerchantOrderReaderInterface
         $merchantOrderItemIds = [];
 
         foreach ($merchantOrderItemTransfers->getMerchantOrderItems() as $merchantOrderItemTransfer) {
-            $merchantOrderItemIds[] = $merchantOrderItemTransfer->getIdMerchantOrderItem();
+            $merchantOrderItemIds[] = $merchantOrderItemTransfer->getIdMerchantOrderItemOrFail();
         }
 
         $stateMachineItemTransfers = $this->merchantOmsFacade
@@ -107,7 +107,6 @@ class MerchantOrderReader implements MerchantOrderReaderInterface
             if (isset($stateMachineItemTransfers[$merchantOrderItemTransfer->getIdMerchantOrderItem()])) {
                 $stateHistory = $stateMachineItemTransfers[$merchantOrderItemTransfer->getIdMerchantOrderItem()];
                 $merchantOrderItemTransfer->setStateHistory(new ArrayObject($stateHistory));
-                $merchantOrderItemTransfer->setState(reset($stateHistory));
             }
         }
 
@@ -115,6 +114,8 @@ class MerchantOrderReader implements MerchantOrderReaderInterface
     }
 
     /**
+     * @phpstan-return array <int,\Generated\Shared\Transfer\MerchantOrderItemTransfer>
+     *
      * @param \Generated\Shared\Transfer\MerchantOrderItemCollectionTransfer $merchantOrderItemTransfers
      *
      * @return \Generated\Shared\Transfer\MerchantOrderItemTransfer[]
@@ -124,7 +125,7 @@ class MerchantOrderReader implements MerchantOrderReaderInterface
     ): array {
         $indexedMerchantOrderItemTransfers = [];
         foreach ($merchantOrderItemTransfers->getMerchantOrderItems() as $merchantOrderItemTransfer) {
-            $indexedMerchantOrderItemTransfers[$merchantOrderItemTransfer->getIdOrderItem()] = $merchantOrderItemTransfer;
+            $indexedMerchantOrderItemTransfers[$merchantOrderItemTransfer->getIdOrderItemOrFail()] = $merchantOrderItemTransfer;
         }
 
         return $indexedMerchantOrderItemTransfers;

@@ -461,6 +461,8 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
     }
 
     /**
+     * @phpstan-param array<int, string|null> $merchantReferences
+     *
      * @param string[] $merchantReferences
      *
      * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Merchant\Persistence\SpyMerchant[]

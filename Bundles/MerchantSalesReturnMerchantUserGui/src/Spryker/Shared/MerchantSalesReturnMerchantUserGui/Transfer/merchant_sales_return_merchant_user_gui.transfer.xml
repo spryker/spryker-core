@@ -111,4 +111,37 @@
     <transfer name="StateMachineItem">
         <property name="idMerchantOrderItem" type="int"/>
     </transfer>
+
+    <transfer name="MerchantOrderItemCriteria">
+    </transfer>
+
+    <transfer name="CustomerResponse">
+    </transfer>
+
+    <transfer name="Locale">
+    </transfer>
+
+    <transfer name="ReturnCollection">
+    </transfer>
+
+    <transfer name="ReturnCreateRequest">
+    </transfer>
+
+    <transfer name="ReturnFilter">
+    </transfer>
+
+    <transfer name="ReturnReasonCollection">
+    </transfer>
+
+    <transfer name="ReturnReasonFilter">
+    </transfer>
+
+    <transfer name="ReturnResponse">
+    </transfer>
+
+    <transfer name="Return">
+    </transfer>
+
+    <transfer name="ReturnItem">
+    </transfer>
 </transfers>

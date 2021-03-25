@@ -37,6 +37,8 @@ class DetailController extends AbstractController
     protected const MESSAGE_MERCHANT_ORDER_NOT_FOUND_ERROR = 'Merchant sales order #%d not found.';
 
     /**
+     * @phpstan-return array<mixed>|\Symfony\Component\HttpFoundation\RedirectResponse
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
@@ -117,7 +119,7 @@ class DetailController extends AbstractController
     }
 
     /**
-     * @param string[] $salesOrderItemIds
+     * @param int[] $salesOrderItemIds
      *
      * @return \Generated\Shared\Transfer\MerchantOrderItemTransfer[]
      */
@@ -133,6 +135,8 @@ class DetailController extends AbstractController
     }
 
     /**
+     * @phpstan-return array<int, string>
+     *
      * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
      *
      * @return string[]
@@ -142,8 +146,9 @@ class DetailController extends AbstractController
         $uniqueOrderReferences = [];
 
         foreach ($returnTransfer->getReturnItems() as $returnItemTransfer) {
-            $idSalesOrder = $returnItemTransfer->getOrderItem()->getFkSalesOrder();
-            $orderReference = $returnItemTransfer->getOrderItem()->getOrderReference();
+            $orderItemTransfer = $returnItemTransfer->getOrderItemOrFail();
+            $idSalesOrder = $orderItemTransfer->getFkSalesOrderOrFail();
+            $orderReference = $orderItemTransfer->getOrderReferenceOrFail();
 
             $uniqueOrderReferences[$idSalesOrder] = $orderReference;
         }
@@ -152,6 +157,8 @@ class DetailController extends AbstractController
     }
 
     /**
+     * @phpstan-return array<string, string>
+     *
      * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
      *
      * @return string[]
@@ -161,7 +168,7 @@ class DetailController extends AbstractController
         $uniqueItemStates = [];
 
         foreach ($returnTransfer->getReturnItems() as $returnItemTransfer) {
-            $state = $returnItemTransfer->getOrderItem()->getState()->getName();
+            $state = $returnItemTransfer->getOrderItemOrFail()->getStateOrFail()->getName();
 
             $uniqueItemStates[$state] = $this
                     ->getFactory()
@@ -173,6 +180,8 @@ class DetailController extends AbstractController
     }
 
     /**
+     * @phpstan-return array<int, string>
+     *
      * @param \Generated\Shared\Transfer\MerchantOrderItemTransfer[] $merchantOrderItemTransfers
      *
      * @return string[]
@@ -189,6 +198,8 @@ class DetailController extends AbstractController
     }
 
     /**
+     * @phpstan-return array<int, int>
+     *
      * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
      *
      * @return int[]
@@ -198,7 +209,7 @@ class DetailController extends AbstractController
         $salesOrderItemIds = [];
 
         foreach ($returnTransfer->getReturnItems() as $returnItemTransfer) {
-            $salesOrderItemIds[] = $returnItemTransfer->getOrderItem()->getIdSalesOrderItem();
+            $salesOrderItemIds[] = $returnItemTransfer->getOrderItemOrFail()->getIdSalesOrderItemOrFail();
         }
 
         return $salesOrderItemIds;
@@ -206,7 +217,7 @@ class DetailController extends AbstractController
 
     /**
      * @param string $message
-     * @param array $data
+     * @param mixed[] $data
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */

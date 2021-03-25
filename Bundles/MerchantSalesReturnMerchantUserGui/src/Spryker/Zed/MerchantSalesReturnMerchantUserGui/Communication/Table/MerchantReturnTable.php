@@ -7,11 +7,12 @@
 
 namespace Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Table;
 
-use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderItemStateTableMap;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap;
 use Orm\Zed\SalesReturn\Persistence\Map\SpySalesReturnItemTableMap;
 use Orm\Zed\SalesReturn\Persistence\SpySalesReturn;
 use Orm\Zed\SalesReturn\Persistence\SpySalesReturnQuery;
+use Orm\Zed\StateMachine\Persistence\Map\SpyStateMachineItemStateTableMap;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
@@ -32,7 +33,7 @@ class MerchantReturnTable extends AbstractTable
     protected const COL_ACTIONS = 'actions';
 
     /**
-     * @uses \Spryker\Zed\SalesReturnGui\Communication\Controller\DetailController::indexAction()
+     * @uses \Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Controller\DetailController::indexAction()
      */
     protected const ROUTE_DETAIL = '/merchant-sales-return-merchant-user-gui/detail';
 
@@ -42,7 +43,7 @@ class MerchantReturnTable extends AbstractTable
     protected const ROUTE_RETURN_SLIP = '/sales-return-gui/return-slip';
 
     /**
-     * @uses \Spryker\Zed\SalesReturnGui\Communication\Controller\AbstractReturnController::PARAM_ID_RETURN
+     * @uses \Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Controller\DetailController::PARAM_ID_RETURN
      */
     protected const PARAM_ID_RETURN = 'id-return';
 
@@ -57,7 +58,7 @@ class MerchantReturnTable extends AbstractTable
     protected $merchantSalesReturnMerchantUserGuiConfig;
 
     /**
-     * @var \Orm\Zed\SalesReturn\Persistence\SpySalesReturnQuery
+     * @var \Orm\Zed\SalesReturn\Persistence\SpySalesReturnQuery|mixed[]
      */
     protected $salesReturnQuery;
 
@@ -69,7 +70,7 @@ class MerchantReturnTable extends AbstractTable
     /**
      * @param \Spryker\Zed\MerchantSalesReturnMerchantUserGui\Dependency\Service\MerchantSalesReturnMerchantUserGuiToUtilDateTimeServiceInterface $utilDateTimeService
      * @param \Spryker\Zed\MerchantSalesReturnMerchantUserGui\MerchantSalesReturnMerchantUserGuiConfig $merchantSalesReturnMerchantUserGuiConfig
-     * @param \Orm\Zed\SalesReturn\Persistence\SpySalesReturnQuery $salesReturnQuery
+     * @param \Orm\Zed\SalesReturn\Persistence\SpySalesReturnQuery|mixed[] $salesReturnQuery
      * @param \Spryker\Zed\MerchantSalesReturnMerchantUserGui\Dependency\Facade\MerchantSalesReturnMerchantUserGuiToMerchantUserFacadeInterface $merchantUserFacade
      */
     public function __construct(
@@ -129,7 +130,7 @@ class MerchantReturnTable extends AbstractTable
     /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
-     * @return array
+     * @return string[]
      */
     protected function prepareData(TableConfiguration $config): array
     {
@@ -152,24 +153,20 @@ class MerchantReturnTable extends AbstractTable
     /**
      * @module Sales
      *
-     * @return \Orm\Zed\SalesReturn\Persistence\SpySalesReturnQuery|null
+     * @return \Orm\Zed\SalesReturn\Persistence\SpySalesReturnQuery|mixed[]
      */
-    protected function prepareQuery(): ?SpySalesReturnQuery
+    protected function prepareQuery(): SpySalesReturnQuery
     {
         $merchantTransfer = $this->merchantUserFacade
             ->getCurrentMerchantUser()
             ->requireMerchant()
-            ->getMerchant();
-
-        if (!$merchantTransfer) {
-            return null;
-        }
+            ->getMerchantOrFail();
 
         $merchantReference = $merchantTransfer
             ->requireMerchantReference()
             ->getMerchantReference();
 
-        /** @var \Orm\Zed\SalesReturn\Persistence\SpySalesReturnQuery $salesReturnQuery */
+        /** @var \Orm\Zed\SalesReturn\Persistence\SpySalesReturnQuery|mixed[] $salesReturnQuery */
         $salesReturnQuery = $this->salesReturnQuery
             ->groupByIdSalesReturn()
             ->useSpySalesReturnItemQuery()
@@ -191,9 +188,11 @@ class MerchantReturnTable extends AbstractTable
     }
 
     /**
+     * @phpstan-return array<int, mixed>
+     *
      * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\SalesReturn\Persistence\SpySalesReturn[] $salesReturnEntityCollection
      *
-     * @return array
+     * @return mixed[]
      */
     protected function mapReturns(ObjectCollection $salesReturnEntityCollection): array
     {
@@ -201,7 +200,7 @@ class MerchantReturnTable extends AbstractTable
 
         foreach ($salesReturnEntityCollection as $salesReturnEntity) {
             $returnData = $salesReturnEntity->toArray();
-            $returnData[static::COL_RETURN_DATE] = $this->utilDateTimeService->formatDateTime($salesReturnEntity->getCreatedAt());
+            $returnData[static::COL_RETURN_DATE] = $this->utilDateTimeService->formatDateTime($salesReturnEntity->getCreatedAt() ?? '');
             $returnData[static::COL_ACTIONS] = $this->buildLinks($salesReturnEntity);
 
             $returns[] = $returnData;
@@ -211,9 +210,11 @@ class MerchantReturnTable extends AbstractTable
     }
 
     /**
-     * @param array $returns
+     * @phpstan-return array<string, string>
      *
-     * @return array
+     * @param mixed[] $returns
+     *
+     * @return string[]
      */
     protected function expandReturnsWithItemStates(array $returns): array
     {
@@ -241,11 +242,13 @@ class MerchantReturnTable extends AbstractTable
             ->filterByIdSalesReturn($idSalesReturn)
             ->useSpySalesReturnItemQuery()
                 ->useSpySalesOrderItemQuery()
-                    ->joinState()
-                    ->withColumn(
-                        sprintf('DISTINCT %s', SpyOmsOrderItemStateTableMap::COL_NAME),
-                        static::COL_STATE
-                    )
+                    ->useMerchantSalesOrderItemQuery()
+                        ->joinWithStateMachineItemState()
+                        ->withColumn(
+                            sprintf('GROUP_CONCAT(DISTINCT %s)', SpyStateMachineItemStateTableMap::COL_NAME),
+                            static::COL_STATE
+                        )
+                    ->endUse()
                 ->endUse()
             ->endUse()
             ->select(static::COL_STATE)

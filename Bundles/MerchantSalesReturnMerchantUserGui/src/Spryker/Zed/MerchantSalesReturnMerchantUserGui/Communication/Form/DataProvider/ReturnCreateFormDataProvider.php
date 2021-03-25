@@ -11,9 +11,9 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ReturnItemTransfer;
 use Generated\Shared\Transfer\ReturnReasonFilterTransfer;
+use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Form\ReturnCreateForm;
 use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Dependency\Facade\MerchantSalesReturnMerchantUserGuiToGlossaryFacadeInterface;
 use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Dependency\Facade\MerchantSalesReturnMerchantUserGuiToSalesReturnFacadeInterface;
-use Spryker\Zed\SalesReturnGui\Communication\Form\ReturnCreateForm;
 
 class ReturnCreateFormDataProvider
 {
@@ -43,6 +43,8 @@ class ReturnCreateFormDataProvider
     }
 
     /**
+     * @phpstan-return array<string, mixed>
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return array
@@ -57,6 +59,8 @@ class ReturnCreateFormDataProvider
     }
 
     /**
+     * @phpstan-return array<string, mixed>
+     *
      * @return array
      */
     public function getOptions(): array
@@ -67,6 +71,8 @@ class ReturnCreateFormDataProvider
     }
 
     /**
+     * @phpstan-return array<int, array<string, \Generated\Shared\Transfer\ItemTransfer>>
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return array
@@ -83,6 +89,8 @@ class ReturnCreateFormDataProvider
     }
 
     /**
+     * @phpstan-return array<int|string, mixed>
+     *
      * @return string[]
      */
     protected function prepareReturnReasonChoices(): array
@@ -93,7 +101,7 @@ class ReturnCreateFormDataProvider
             ->getReturnReasons();
 
         foreach ($returnReasonTransfers as $returnReasonTransfer) {
-            $returnReason = $this->glossaryFacade->translate($returnReasonTransfer->getGlossaryKeyReason());
+            $returnReason = $this->glossaryFacade->translate($returnReasonTransfer->getGlossaryKeyReasonOrFail());
 
             $returnReasonChoices[$returnReason] = $returnReason;
         }
@@ -134,7 +142,7 @@ class ReturnCreateFormDataProvider
             }
 
             $translatedMessage = $this->glossaryFacade->translate(
-                $returnPolicyMessage->getValue(),
+                $returnPolicyMessage->getValueOrFail(),
                 $returnPolicyMessage->getParameters()
             );
 

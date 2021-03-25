@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Form\DataProvider;
 
-use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Form\EventItemTriggerForm;
-use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Form\EventTriggerForm;
+use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Form\EventItemTriggerForm;
+use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Form\EventTriggerForm;
 
 class EventItemTriggerFormDataProvider
 {

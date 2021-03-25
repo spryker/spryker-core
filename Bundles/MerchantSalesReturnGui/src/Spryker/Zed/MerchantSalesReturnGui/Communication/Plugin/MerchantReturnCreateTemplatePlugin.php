@@ -52,9 +52,11 @@ class MerchantReturnCreateTemplatePlugin extends AbstractPlugin implements Retur
     }
 
     /**
+     * @phpstan-return \ArrayObject<int,\Generated\Shared\Transfer\MerchantOrderTransfer>
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return array
+     * @return \ArrayObject|\Generated\Shared\Transfer\MerchantOrderTransfer[]
      */
     protected function getMerchantOrders(OrderTransfer $orderTransfer): ArrayObject
     {

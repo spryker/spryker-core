@@ -13,6 +13,8 @@ use Generated\Shared\Transfer\ReturnResponseTransfer;
 interface ReturnHandlerInterface
 {
     /**
+     * @phpstan-param array<string, mixed> $returnCreateFormData
+     *
      * @param array $returnCreateFormData
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *

@@ -20,8 +20,8 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * @method \Spryker\Zed\SalesReturnGui\Communication\SalesReturnGuiCommunicationFactory getFactory()
- * @method \Spryker\Zed\SalesReturnGui\SalesReturnGuiConfig getConfig()
+ * @method \Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\MerchantSalesReturnMerchantUserGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\MerchantSalesReturnMerchantUserGui\MerchantSalesReturnMerchantUserGuiConfig getConfig()
  */
 class ReturnCreateItemsSubForm extends AbstractType
 {
@@ -42,6 +42,9 @@ class ReturnCreateItemsSubForm extends AbstractType
     }
 
     /**
+     * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
+     * @phpstan-param array<string, mixed> $options
+     *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
@@ -57,6 +60,8 @@ class ReturnCreateItemsSubForm extends AbstractType
     }
 
     /**
+     * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
+     *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
      * @return $this
@@ -78,6 +83,9 @@ class ReturnCreateItemsSubForm extends AbstractType
     }
 
     /**
+     * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
+     * @phpstan-param array<string, mixed> $options
+     *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
@@ -102,6 +110,8 @@ class ReturnCreateItemsSubForm extends AbstractType
     }
 
     /**
+     * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
+     *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
      * @return $this

@@ -42,6 +42,8 @@ class CreateController extends AbstractController
     protected const MESSAGE_RETURN_CREATE_FAIL = 'Return has not been created.';
 
     /**
+     * @phpstan-return array<mixed>|\Symfony\Component\HttpFoundation\RedirectResponse
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
@@ -74,12 +76,14 @@ class CreateController extends AbstractController
             new ArrayObject($this->findMerchantOrderItems($merchantOrderTransfer))
         );
 
+        $orderTransfer = $merchantOrderTransfer->getOrderOrFail();
+
         $returnCreateForm = $this->getFactory()
-            ->createReturnCreateForm($merchantOrderTransfer->getOrder())
+            ->createReturnCreateForm($orderTransfer)
             ->handleRequest($request);
 
         if ($returnCreateForm->isSubmitted() && $returnCreateForm->isValid()) {
-            return $this->processReturnCreateForm($returnCreateForm, $merchantOrderTransfer->getOrder());
+            return $this->processReturnCreateForm($returnCreateForm, $orderTransfer);
         }
 
         return [
@@ -89,6 +93,10 @@ class CreateController extends AbstractController
     }
 
     /**
+     * @phpstan-param \Symfony\Component\Form\FormInterface<mixed> $returnCreateForm
+     *
+     * @phpstan-return array<mixed>|\Symfony\Component\HttpFoundation\RedirectResponse
+     *
      * @param \Symfony\Component\Form\FormInterface $returnCreateForm
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
@@ -104,7 +112,7 @@ class CreateController extends AbstractController
             $this->addSuccessMessage(static::MESSAGE_RETURN_CREATED);
 
             $redirectUrl = Url::generate(static::ROUTE_RETURN_DETAIL, [
-                static::PARAM_ID_RETURN => $returnResponseTransfer->getReturn()->getIdSalesReturn(),
+                static::PARAM_ID_RETURN => $returnResponseTransfer->getReturnOrFail()->getIdSalesReturn(),
             ]);
 
             return $this->redirectResponse($redirectUrl);
@@ -148,7 +156,9 @@ class CreateController extends AbstractController
         $merchantOrderItemCriteriaTransfer = new MerchantOrderItemCriteriaTransfer();
 
         foreach ($merchantOrderTransfer->getMerchantOrderItems() as $merchantOrderItem) {
-            $merchantOrderItemCriteriaTransfer->addMerchantOrderItemId($merchantOrderItem->getIdMerchantOrderItem());
+            $merchantOrderItemCriteriaTransfer->addMerchantOrderItemId(
+                $merchantOrderItem->getIdMerchantOrderItemOrFail()
+            );
         }
 
         return $this
