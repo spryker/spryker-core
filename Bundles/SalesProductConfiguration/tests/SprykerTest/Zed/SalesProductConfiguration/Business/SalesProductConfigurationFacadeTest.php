@@ -7,11 +7,14 @@
 
 namespace SprykerTest\Zed\SalesProductConfiguration\Business;
 
+use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SalesOrderItemConfigurationTransfer;
 use Orm\Zed\SalesProductConfiguration\Persistence\SpySalesOrderItemConfiguration;
 use Orm\Zed\SalesProductConfiguration\Persistence\SpySalesOrderItemConfigurationQuery;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
@@ -35,6 +38,8 @@ class SalesProductConfigurationFacadeTest extends Unit
     protected $tester;
 
     protected const PRODUCT_CONFIGURATION_TEST_KEY = 'product_configuration_test_key';
+    protected const GROUP_TEST_KEY = 'test_group_key';
+    protected const SALES_ORDER_ITEM_CONFIGURATION_TEST_ARRAY = ['test_group_key'];
 
     /**
      * @return void
@@ -167,6 +172,50 @@ class SalesProductConfigurationFacadeTest extends Unit
             static::PRODUCT_CONFIGURATION_TEST_KEY,
             $salesProductConfigurationKey,
             'Expects that order items will be successfully expanded with product configuration.'
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandItemsWithProductConfigurationFromPreviousOrderCheckExpanderSuccess(): void
+    {
+        //Arrange
+        $orderId = $this->tester->createOrder();
+        $salesOrderItem = $this->tester->createSalesOrderItemForOrder($orderId);
+
+        $salesOrderItemConfigurationInstanceMock = $this->getMockBuilder(SalesOrderItemConfigurationTransfer::class)
+            ->onlyMethods(['toArray'])
+            ->getMock();
+
+        $salesOrderItemConfigurationInstanceMock->method('toArray')->willReturn(static::SALES_ORDER_ITEM_CONFIGURATION_TEST_ARRAY);
+
+        $itemTransfer = (new ItemBuilder([
+            ItemTransfer::ID_SALES_ORDER_ITEM => $salesOrderItem->getIdSalesOrderItem(),
+            ItemTransfer::GROUP_KEY => static::GROUP_TEST_KEY,
+            ItemTransfer::SALES_ORDER_ITEM_CONFIGURATION => $salesOrderItemConfigurationInstanceMock,
+        ]))->build();
+
+        $salesOrderItems = new ArrayObject();
+        $salesOrderItems->append($salesOrderItem);
+        $orderTransfer = (new OrderTransfer())->setItems($salesOrderItems);
+
+        (new SpySalesOrderItemConfiguration())
+            ->setConfiguratorKey(static::PRODUCT_CONFIGURATION_TEST_KEY)
+            ->setFkSalesOrderItem($salesOrderItem->getIdSalesOrderItem())
+            ->save();
+
+        //Act
+        $itemTransferExpandedCollection = $this->tester->getFacade()->expandItemsWithProductConfiguration([$itemTransfer], $orderTransfer);
+        $isProductConfigurationInstanceComplete = array_shift($itemTransferExpandedCollection)
+            ->getProductConfigurationInstance()
+            ->getIsComplete();
+
+        //Assert
+        $this->assertSame(
+            true,
+            $isProductConfigurationInstanceComplete,
+            'Expects that order items will be successfully expanded with product configuration from a previous order.'
         );
     }
 }

@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\SalesProductConfiguration\Business;
 
+use Spryker\Client\SalesProductConfiguration\Expander\ItemExpander;
+use Spryker\Client\SalesProductConfiguration\Expander\ItemExpanderInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\SalesProductConfiguration\Business\Expander\OrderItemExpander;
 use Spryker\Zed\SalesProductConfiguration\Business\Expander\OrderItemExpanderInterface;
@@ -38,5 +40,13 @@ class SalesProductConfigurationBusinessFactory extends AbstractBusinessFactory
         return new OrderItemExpander(
             $this->getRepository()
         );
+    }
+
+    /**
+     * @return \Spryker\Client\SalesProductConfiguration\Expander\ItemExpanderInterface
+     */
+    public function createItemExpander(): ItemExpanderInterface
+    {
+        return new ItemExpander();
     }
 }
