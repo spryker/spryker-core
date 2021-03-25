@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\SalesProductConfiguration\Expander;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
 
@@ -21,14 +22,26 @@ class ItemExpander implements ItemExpanderInterface
     public function expandItemsWithProductConfiguration(array $itemTransfers, OrderTransfer $orderTransfer): array
     {
         foreach ($itemTransfers as &$item) {
-            if ($item->getSalesOrderItemConfiguration()) {
-                $productConfigurationInstanceTransfer = new ProductConfigurationInstanceTransfer();
-                $productConfigurationInstanceTransfer->fromArray($item->getSalesOrderItemConfiguration()->toArray(), true);
-                $productConfigurationInstanceTransfer->setIsComplete(true);
-                $item->setProductConfigurationInstance($productConfigurationInstanceTransfer);
+            if (!$item->getSalesOrderItemConfiguration()) {
+                continue;
             }
+            $item->setProductConfigurationInstance(
+                $this->createProductConfigurationInstanceTransfer($item)
+            );
         }
 
         return $itemTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer
+     */
+    public function createProductConfigurationInstanceTransfer(ItemTransfer $itemTransfer): ProductConfigurationInstanceTransfer
+    {
+        return (new ProductConfigurationInstanceTransfer())
+            ->fromArray($itemTransfer->getSalesOrderItemConfiguration()->toArray(), true)
+            ->setIsComplete(true);
     }
 }

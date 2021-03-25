@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\SalesProductConfiguration\Business;
 
-use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface SalesProductConfigurationFacadeInterface
@@ -37,17 +36,4 @@ interface SalesProductConfigurationFacadeInterface
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
     public function expandOrderItemsWithProductConfiguration(array $itemTransfers): array;
-
-    /**
-     * Specification:
-     * - Expands items with product configuration based on data from order items.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
-     */
-    public function expandItemsWithProductConfiguration(array $itemTransfers, OrderTransfer $orderTransfer): array;
 }

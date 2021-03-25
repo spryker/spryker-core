@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\SalesProductConfiguration\Business;
 
-use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -48,22 +47,5 @@ class SalesProductConfigurationFacade extends AbstractFacade implements SalesPro
         return $this->getFactory()
             ->createOrderItemExpander()
             ->expandOrderItemsWithProductConfiguration($itemTransfers);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
-     */
-    public function expandItemsWithProductConfiguration(array $itemTransfers, OrderTransfer $orderTransfer): array
-    {
-        return $this->getFactory()
-            ->createItemExpander()
-            ->expandItemsWithProductConfiguration($itemTransfers, $orderTransfer);
     }
 }
