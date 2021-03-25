@@ -43,4 +43,7 @@
     <transfer name="MerchantCriteria">
     </transfer>
 
+    <transfer name="MerchantCriteriaFilter" deprecated="Not in use anymore, will be removed with next major">
+    </transfer>
+
 </transfers>
