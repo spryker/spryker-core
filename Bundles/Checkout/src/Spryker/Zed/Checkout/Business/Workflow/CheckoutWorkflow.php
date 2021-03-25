@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Spryker\Zed\Checkout\Dependency\Facade\CheckoutToOmsFacadeInterface;
+use Spryker\Zed\Checkout\Dependency\Facade\CheckoutToQuoteFacadeInterface;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreSaveHookInterface;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface as ObsoleteCheckoutSaveOrderInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
@@ -23,6 +24,11 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
      * @var \Spryker\Zed\Checkout\Dependency\Facade\CheckoutToOmsFacadeInterface
      */
     protected $omsFacade;
+
+    /**
+     * @var \Spryker\Zed\Checkout\Dependency\Facade\CheckoutToQuoteFacadeInterface
+     */
+    protected $quoteFacade;
 
     /**
      * @var \Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutPreConditionPluginInterface[]
@@ -46,6 +52,7 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
 
     /**
      * @param \Spryker\Zed\Checkout\Dependency\Facade\CheckoutToOmsFacadeInterface $omsFacade
+     * @param \Spryker\Zed\Checkout\Dependency\Facade\CheckoutToQuoteFacadeInterface $quoteFacade
      * @param \Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutPreConditionPluginInterface[] $preConditionStack
      * @param \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface[]|\Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutDoSaveOrderInterface[] $saveOrderStack
      * @param \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPostSaveHookInterface[] $postSaveHookStack
@@ -53,12 +60,14 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
      */
     public function __construct(
         CheckoutToOmsFacadeInterface $omsFacade,
+        CheckoutToQuoteFacadeInterface $quoteFacade,
         array $preConditionStack,
         array $saveOrderStack,
         array $postSaveHookStack,
         array $preSave = []
     ) {
         $this->omsFacade = $omsFacade;
+        $this->quoteFacade = $quoteFacade;
         $this->preConditionStack = $preConditionStack;
         $this->postSaveHookStack = $postSaveHookStack;
         $this->saveOrderStack = $saveOrderStack;
@@ -98,7 +107,9 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
                 $quoteTransfer->setOrderReference(
                     $checkoutResponseTransfer->getSaveOrder()->getOrderReference()
                 );
-                // todo: update quote
+
+                // todo: fix quote validation error
+                $this->quoteFacade->updateQuote($quoteTransfer);
             }
         });
 

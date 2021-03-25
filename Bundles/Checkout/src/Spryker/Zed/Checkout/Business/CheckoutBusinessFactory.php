@@ -23,6 +23,7 @@ class CheckoutBusinessFactory extends AbstractBusinessFactory
     {
         return new CheckoutWorkflow(
             $this->getOmsFacade(),
+            $this->getQuoteFacade(),
             $this->getProvidedDependency(CheckoutDependencyProvider::CHECKOUT_PRE_CONDITIONS),
             $this->getProvidedDependency(CheckoutDependencyProvider::CHECKOUT_ORDER_SAVERS),
             $this->getProvidedDependency(CheckoutDependencyProvider::CHECKOUT_POST_HOOKS),
@@ -36,5 +37,13 @@ class CheckoutBusinessFactory extends AbstractBusinessFactory
     protected function getOmsFacade()
     {
         return $this->getProvidedDependency(CheckoutDependencyProvider::FACADE_OMS);
+    }
+
+    /**
+     * @return \Spryker\Zed\Checkout\Dependency\Facade\CheckoutToQuoteFacadeInterface
+     */
+    protected function getQuoteFacade()
+    {
+        return $this->getProvidedDependency(CheckoutDependencyProvider::FACADE_QUOTE);
     }
 }
