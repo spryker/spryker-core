@@ -110,7 +110,6 @@
         <property name="returnPolicyMessages" type="Message[]" singular="returnPolicyMessage"/>
         <property name="isReturnable" type="bool"/>
         <property name="orderReference" type="string"/>
-        <property name="state" type="string"/>
     </transfer>
 
     <transfer name="ShipmentMethod">
