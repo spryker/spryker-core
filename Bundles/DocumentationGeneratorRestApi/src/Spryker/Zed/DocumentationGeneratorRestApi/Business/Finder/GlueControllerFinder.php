@@ -110,7 +110,7 @@ class GlueControllerFinder implements GlueControllerFinderInterface
     protected function getExistingSourceDirectories(array $dirs): array
     {
         return array_filter($dirs, function ($directory) {
-            return is_dir($directory);
+            return (bool)glob($directory, GLOB_ONLYDIR | GLOB_NOSORT);
         });
     }
 }
