@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * MIT License
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace Spryker\Zed\StockAddressDataImport\Business\Writer\StockAddress;
@@ -42,9 +42,11 @@ class StockAddressWriterStep implements DataImportStepInterface
     }
 
     /**
+     * @rerturn void
+     *
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
-     * @rerturn void
+     * @return void
      */
     protected function validateDataSet(DataSetInterface $dataSet): void
     {
@@ -56,6 +58,8 @@ class StockAddressWriterStep implements DataImportStepInterface
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      * @param string $requiredDataSetKey
+     *
+     * @throws \Spryker\Zed\DataImport\Business\Exception\InvalidDataException
      *
      * @return void
      */
