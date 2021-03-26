@@ -13,12 +13,14 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Spryker\Zed\Checkout\Business\Workflow\CheckoutWorkflow;
 use Spryker\Zed\Checkout\Dependency\Facade\CheckoutToOmsFacadeBridge;
+use Spryker\Zed\Checkout\Dependency\Facade\CheckoutToQuoteFacadeBridge;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutDoSaveOrderInterface;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPostSaveHookInterface;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface;
 use Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutPreConditionPluginInterface;
 use Spryker\Zed\Oms\Business\OmsFacade;
+use Spryker\Zed\Quote\Business\QuoteFacade;
 use SprykerTest\Zed\Checkout\Business\Fixture\MockPostHook;
 use SprykerTest\Zed\Checkout\Business\Fixture\ResponseManipulatorPreCondition;
 
@@ -44,6 +46,7 @@ class CheckoutWorkflowTest extends Unit
         $checkoutResponse = $this->createBaseCheckoutResponse();
         $checkoutWorkflow = new CheckoutWorkflow(
             new CheckoutToOmsFacadeBridge(new OmsFacade()),
+            new CheckoutToQuoteFacadeBridge(new QuoteFacade()),
             [],
             [],
             [new MockPostHook($checkoutResponse)]
@@ -73,6 +76,7 @@ class CheckoutWorkflowTest extends Unit
         $checkoutResponse = $this->createBaseCheckoutResponse();
         $checkoutWorkflow = new CheckoutWorkflow(
             new CheckoutToOmsFacadeBridge(new OmsFacade()),
+            new CheckoutToQuoteFacadeBridge(new QuoteFacade()),
             [$mockBuilder],
             [],
             [new MockPostHook($checkoutResponse)]
@@ -106,6 +110,7 @@ class CheckoutWorkflowTest extends Unit
 
         $checkoutWorkflow = new CheckoutWorkflow(
             new CheckoutToOmsFacadeBridge(new OmsFacade()),
+            new CheckoutToQuoteFacadeBridge(new QuoteFacade()),
             [$mock1, $mock2],
             [],
             []
@@ -138,6 +143,7 @@ class CheckoutWorkflowTest extends Unit
 
         $checkoutWorkflow = new CheckoutWorkflow(
             new CheckoutToOmsFacadeBridge(new OmsFacade()),
+            new CheckoutToQuoteFacadeBridge(new QuoteFacade()),
             [],
             [$mock1, $mock2],
             [],
@@ -174,6 +180,7 @@ class CheckoutWorkflowTest extends Unit
 
         $checkoutWorkflow = new CheckoutWorkflow(
             new CheckoutToOmsFacadeBridge(new OmsFacade()),
+            new CheckoutToQuoteFacadeBridge(new QuoteFacade()),
             [],
             [$mock1, $mock2, $mock3],
             [],
@@ -205,6 +212,7 @@ class CheckoutWorkflowTest extends Unit
 
         $checkoutWorkflow = new CheckoutWorkflow(
             new CheckoutToOmsFacadeBridge(new OmsFacade()),
+            new CheckoutToQuoteFacadeBridge(new QuoteFacade()),
             [],
             [],
             [$mock1, $mock2]
@@ -229,6 +237,7 @@ class CheckoutWorkflowTest extends Unit
 
         $checkoutWorkflow = new CheckoutWorkflow(
             new CheckoutToOmsFacadeBridge(new OmsFacade()),
+            new CheckoutToQuoteFacadeBridge(new QuoteFacade()),
             [$mock1],
             [$mock2],
             []
@@ -256,6 +265,7 @@ class CheckoutWorkflowTest extends Unit
 
         $checkoutWorkflow = new CheckoutWorkflow(
             new CheckoutToOmsFacadeBridge(new OmsFacade()),
+            new CheckoutToQuoteFacadeBridge(new QuoteFacade()),
             [],
             [],
             [$mock]
