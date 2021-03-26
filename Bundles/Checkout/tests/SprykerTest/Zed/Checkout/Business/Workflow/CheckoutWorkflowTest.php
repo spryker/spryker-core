@@ -37,6 +37,8 @@ use SprykerTest\Zed\Checkout\Business\Fixture\ResponseManipulatorPreCondition;
  */
 class CheckoutWorkflowTest extends Unit
 {
+    protected const TEST_ORDER_REFERENCE = 'TEST';
+
     /**
      * @return void
      */
@@ -275,6 +277,29 @@ class CheckoutWorkflowTest extends Unit
         $result = $checkoutWorkflow->placeOrder($quoteTransfer);
 
         $this->assertTrue($result->getIsSuccess());
+    }
+
+    /**
+     * @return void
+     */
+    public function testOrderIsNotDuplicatedIfOrderReferenceIsInQuote(): void
+    {
+        // Arange
+        $quoteTransfer = new QuoteTransfer();
+        $quoteTransfer->setOrderReference(static::TEST_ORDER_REFERENCE);
+        $checkoutWorkflow = new CheckoutWorkflow(
+            new CheckoutToOmsFacadeBridge(new OmsFacade()),
+            new CheckoutToQuoteFacadeBridge(new QuoteFacade()),
+            [],
+            [],
+            []
+        );
+
+        // Act
+        $checkoutResponseTransfer = $checkoutWorkflow->placeOrder($quoteTransfer);
+
+        // Assert
+        $this->assertEquals(static::TEST_ORDER_REFERENCE, $checkoutResponseTransfer->getSaveOrder()->getOrderReference());
     }
 
     /**
