@@ -7,7 +7,7 @@
     "php": ">=7.3",
     "spryker/kernel": "^3.33.0",
     "spryker/mail": "^4.6.0",
-    "spryker/user-password-reset-extension": "^0.1.0"
+    "spryker/user-password-reset-extension": "^0.2.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

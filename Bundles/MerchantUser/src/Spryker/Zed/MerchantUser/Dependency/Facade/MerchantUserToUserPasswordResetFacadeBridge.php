@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\MerchantUser\Dependency\Facade;
 
+use Generated\Shared\Transfer\UserPasswordResetRequestTransfer;
+
 class MerchantUserToUserPasswordResetFacadeBridge implements MerchantUserToUserPasswordResetFacadeInterface
 {
     /**
@@ -23,12 +25,33 @@ class MerchantUserToUserPasswordResetFacadeBridge implements MerchantUserToUserP
     }
 
     /**
-     * @param string $email
+     * @param \Generated\Shared\Transfer\UserPasswordResetRequestTransfer $userPasswordResetRequestTransfer
      *
      * @return bool
      */
-    public function requestPasswordReset(string $email): bool
+    public function requestPasswordReset(UserPasswordResetRequestTransfer $userPasswordResetRequestTransfer): bool
     {
-        return $this->userPasswordResetFacade->requestPasswordReset($email);
+        return $this->userPasswordResetFacade->requestPasswordReset($userPasswordResetRequestTransfer);
+    }
+
+    /**
+     * @param string $token
+     *
+     * @return bool
+     */
+    public function isValidPasswordResetToken(string $token): bool
+    {
+        return $this->userPasswordResetFacade->isValidPasswordResetToken($token);
+    }
+
+    /**
+     * @param string $token
+     * @param string $password
+     *
+     * @return bool
+     */
+    public function setNewPassword(string $token, string $password): bool
+    {
+        return $this->userPasswordResetFacade->setNewPassword($token, $password);
     }
 }

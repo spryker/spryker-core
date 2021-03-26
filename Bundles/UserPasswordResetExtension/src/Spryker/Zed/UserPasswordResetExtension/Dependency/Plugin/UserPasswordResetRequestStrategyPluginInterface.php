@@ -12,8 +12,20 @@ use Generated\Shared\Transfer\UserPasswordResetRequestTransfer;
 /**
  * Provides functionality to handle user password reset request.
  */
-interface UserPasswordResetRequestHandlerPluginInterface
+interface UserPasswordResetRequestStrategyPluginInterface
 {
+    /**
+     * Specification:
+     * - Checks if strategy is applicable for a password reset request.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\UserPasswordResetRequestTransfer $userPasswordResetRequestTransfer
+     *
+     * @return bool
+     */
+    public function isApplicable(UserPasswordResetRequestTransfer $userPasswordResetRequestTransfer): bool;
+
     /**
      * Specification:
      *  - Handles user password reset request.
