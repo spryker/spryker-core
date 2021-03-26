@@ -79,7 +79,7 @@ class StockCreator implements StockCreatorInterface
 
         $this->insertActiveTouchRecordStockType($stockTransfer);
 
-        return $this->executeCreateStockTransaction($stockTransfer);
+        return $this->executeStockPostCreatePlugins($stockTransfer);
     }
 
     /**

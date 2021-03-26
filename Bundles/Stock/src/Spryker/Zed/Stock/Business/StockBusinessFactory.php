@@ -53,7 +53,8 @@ class StockBusinessFactory extends AbstractBusinessFactory
         return new StockReader(
             $this->getRepository(),
             $this->createStockMapper(),
-            $this->getStoreFacade()
+            $this->getStoreFacade(),
+            $this->getStockCollectionExpanderPlugins()
         );
     }
 
@@ -92,7 +93,8 @@ class StockBusinessFactory extends AbstractBusinessFactory
     {
         return new StockCreator(
             $this->getEntityManager(),
-            $this->getTouchFacade()
+            $this->getTouchFacade(),
+            $this->getStockPostCreatePlugins()
         );
     }
 
@@ -105,7 +107,8 @@ class StockBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->getTouchFacade(),
             $this->createStockStoreRelationshipUpdater(),
-            $this->createStockProductUpdater()
+            $this->createStockProductUpdater(),
+            $this->getStockPostUpdatePlugins()
         );
     }
 
@@ -198,8 +201,8 @@ class StockBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\StockExtension\Dependency\Plugin\StockPostUpdatePluginInterface[]
      */
-    public function getStockPostUpdadtePlugins(): array
+    public function getStockPostUpdatePlugins(): array
     {
-        return $this->getProvidedDependency(StockDependencyProvider::PLUGINS_STOCK_POST_CREATE);
+        return $this->getProvidedDependency(StockDependencyProvider::PLUGINS_STOCK_POST_UPDATE);
     }
 }

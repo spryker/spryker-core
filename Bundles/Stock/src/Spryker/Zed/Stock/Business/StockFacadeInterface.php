@@ -340,6 +340,7 @@ interface StockFacadeInterface
      *  - Updates stock store relationships.
      *  - Persists stock entity to database.
      *  - Touches the newly created stock.
+     *  - Executes {@link \Spryker\Zed\StockExtension\Dependency\Plugin\StockPostUpdatePluginInterface} plugin stack.
      *
      * @api
      *

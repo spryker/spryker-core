@@ -9,10 +9,20 @@ namespace SprykerTest\Zed\StockAddress\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\StockAddressBuilder;
+use Generated\Shared\DataBuilder\StockBuilder;
 use Generated\Shared\Transfer\StockAddressTransfer;
 use Generated\Shared\Transfer\StockCollectionTransfer;
+use Generated\Shared\Transfer\StockResponseTransfer;
+use Orm\Zed\Stock\Persistence\SpyStockQuery;
 use Orm\Zed\StockAddress\Persistence\SpyStockAddressQuery;
+use Spryker\Zed\Stock\Business\Exception\StockNotSavedException;
+use Spryker\Zed\Stock\Business\StockFacadeInterface;
+use Spryker\Zed\Stock\StockDependencyProvider;
 use Spryker\Zed\StockAddress\Business\StockAddressFacadeInterface;
+use Spryker\Zed\StockAddress\Communication\Plugin\Stock\StockAddressStockPostCreatePlugin;
+use Spryker\Zed\StockAddress\Communication\Plugin\Stock\StockAddressStockPostUpdatePlugin;
+use Spryker\Zed\StockExtension\Dependency\Plugin\StockPostCreatePluginInterface;
+use Spryker\Zed\StockExtension\Dependency\Plugin\StockPostUpdatePluginInterface;
 
 /**
  * Auto-generated group annotations
@@ -198,10 +208,147 @@ class StockAddressFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testCreateStockWillCreateStockAndStockAddress(): void
+    {
+        // Arrange
+        $this->tester->setDependency(StockDependencyProvider::PLUGINS_STOCK_POST_CREATE, [
+            new StockAddressStockPostCreatePlugin(),
+        ]);
+        $countryTransfer = $this->tester->haveCountry();
+        $stockTransfer = (new StockBuilder())
+            ->withAddress([StockAddressTransfer::COUNTRY => $countryTransfer->toArray()])
+            ->build();
+
+        // Act
+        $stockResponseTransfer = $this->getStockFacade()->createStock($stockTransfer);
+
+        // Assert
+        $this->assertTrue($stockResponseTransfer->getIsSuccessful());
+
+        $stockEntity = SpyStockQuery::create()
+            ->filterByName($stockTransfer->getNameOrFail())
+            ->findOne();
+        $this->assertNotNull($stockEntity);
+
+        $stockAddressEntity = SpyStockAddressQuery::create()
+            ->filterByFkStock($stockEntity->getIdStock())
+            ->findOne();
+        $this->assertNotNull($stockAddressEntity);
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateStockWillCreateStockAddress(): void
+    {
+        // Arrange
+        $this->tester->setDependency(StockDependencyProvider::PLUGINS_STOCK_POST_UPDATE, [
+            new StockAddressStockPostUpdatePlugin(),
+        ]);
+        $countryTransfer = $this->tester->haveCountry();
+        $stockTransfer = $this->tester->haveStock();
+        $stockAddressTransfer = (new StockAddressBuilder([
+            StockAddressTransfer::COUNTRY => $countryTransfer->toArray(),
+        ]))->build();
+
+        $stockTransfer->setAddress($stockAddressTransfer);
+
+        // Act
+        $stockResponseTransfer = $this->getStockFacade()->updateStock($stockTransfer);
+
+        // Assert
+        $this->assertTrue($stockResponseTransfer->getIsSuccessful());
+
+        $stockAddressEntity = SpyStockAddressQuery::create()
+            ->filterByFkStock($stockTransfer->getIdStock())
+            ->findOne();
+        $this->assertNotNull($stockAddressEntity);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateStockWillThrowAnExceptionIfStockAddressWasNotCreated(): void
+    {
+        // Arrange
+        $this->tester->setDependency(StockDependencyProvider::PLUGINS_STOCK_POST_CREATE, [
+            $this->createStockPostCreatePluginMock(),
+        ]);
+        $countryTransfer = $this->tester->haveCountry();
+        $stockTransfer = (new StockBuilder())
+            ->withAddress([StockAddressTransfer::COUNTRY => $countryTransfer->toArray()])
+            ->build();
+
+        $this->expectException(StockNotSavedException::class);
+
+        // Act
+        $this->getStockFacade()->createStock($stockTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateStockWillThrowAnExceptionIfStockAddressWasNotCreated(): void
+    {
+        // Arrange
+        $this->tester->setDependency(StockDependencyProvider::PLUGINS_STOCK_POST_UPDATE, [
+            $this->createStockPostUpdatePluginMock(),
+        ]);
+        $countryTransfer = $this->tester->haveCountry();
+        $stockTransfer = $this->tester->haveStock();
+        $stockAddressTransfer = (new StockAddressBuilder([
+            StockAddressTransfer::COUNTRY => $countryTransfer->toArray(),
+        ]))->build();
+
+        $stockTransfer->setAddress($stockAddressTransfer);
+
+        $this->expectException(StockNotSavedException::class);
+
+        // Act
+        $this->getStockFacade()->updateStock($stockTransfer);
+    }
+
+    /**
      * @return \Spryker\Zed\StockAddress\Business\StockAddressFacadeInterface
      */
     protected function getStockAddressFacade(): StockAddressFacadeInterface
     {
         return $this->tester->getLocator()->stockAddress()->facade();
+    }
+
+    /**
+     * @return \Spryker\Zed\Stock\Business\StockFacadeInterface
+     */
+    protected function getStockFacade(): StockFacadeInterface
+    {
+        return $this->tester->getLocator()->stock()->facade();
+    }
+
+    /**
+     * @return \Spryker\Zed\StockExtension\Dependency\Plugin\StockPostCreatePluginInterface|\PHPUnit\Framework\MockObject\MockObject
+     */
+    protected function createStockPostCreatePluginMock(): StockPostCreatePluginInterface
+    {
+        $stockPostCreatePluginMock = $this->getMockBuilder(StockPostCreatePluginInterface::class)->getMock();
+        $stockPostCreatePluginMock
+            ->method('postCreate')
+            ->willReturn((new StockResponseTransfer())->setIsSuccessful(false));
+
+        return $stockPostCreatePluginMock;
+    }
+
+    /**
+     * @return \Spryker\Zed\StockExtension\Dependency\Plugin\StockPostUpdatePluginInterface|\PHPUnit\Framework\MockObject\MockObject
+     */
+    protected function createStockPostUpdatePluginMock(): StockPostUpdatePluginInterface
+    {
+        $stockPostUpdatePluginMock = $this->getMockBuilder(StockPostUpdatePluginInterface::class)->getMock();
+        $stockPostUpdatePluginMock
+            ->method('postUpdate')
+            ->willReturn((new StockResponseTransfer())->setIsSuccessful(false));
+
+        return $stockPostUpdatePluginMock;
     }
 }

@@ -19,7 +19,8 @@ class StockAddressStockCollectionExpanderPlugin extends AbstractPlugin implement
 {
     /**
      * {@inheritDoc}
-     * - Expands StockCollection with StockAddress data.
+     * - Expands `StockCollectionTransfer.stocks` with `StockAddressTransfer`.
+     * - Requires `StockCollectionTransfer.stocks.idStock` to be set.
      *
      * @api
      *

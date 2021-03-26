@@ -20,7 +20,8 @@ class StockAddressStockPostCreatePlugin extends AbstractPlugin implements StockP
 {
     /**
      * {@inheritDoc}
-     * - Creates Stock Address if `StockTransfer.Address` is provided.
+     * - Creates stock address if `StockTransfer.address` is provided.
+     * - Requires `StockAddress.country.idCountry` to be set if `StockTransfer.address` is provided.
      *
      * @api
      *

@@ -77,7 +77,10 @@ class StockAddressUpdater implements StockAddressUpdaterInterface
      */
     protected function executeUpdateStockAddressForStockTransaction(StockTransfer $stockTransfer): StockResponseTransfer
     {
-        $stockAddressTransfer = $this->stockAddressEntityManager->saveStockAddress($stockTransfer->getAddressOrFail());
+        $stockAddressTransfer = $stockTransfer->getAddressOrFail();
+        $stockAddressTransfer->setIdStock($stockTransfer->getIdStockOrFail());
+        $stockAddressTransfer = $this->stockAddressEntityManager->saveStockAddress($stockAddressTransfer);
+
         $stockTransfer->setAddress($stockAddressTransfer);
 
         return (new StockResponseTransfer())
