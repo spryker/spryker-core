@@ -2,4 +2,4 @@ parameters:
     checkGenericClassInNonGenericObjectType: false
     checkMissingIterableValueType: false
     ignoreErrors:
-        - '#Cannot call method [a-zA-Z]\(\) on Generated\Shared\Transfer\StoreTransfer|null#'
+        - '#Cannot call method [a-zA-Z]*\(\) on Generated\Shared\Transfer\StoreTransfer|null.#'
