@@ -11,7 +11,12 @@ describe('LayoutCentralComponent', () => {
 
     @Component({
         selector: 'test',
-        template: ` <mp-layout-centered>Content</mp-layout-centered> `,
+        template: `
+            <mp-layout-centered>
+                <div class="default-content"></div>
+                <div footer class="footer-content"></div>
+            </mp-layout-centered>
+        `,
     })
     class TestComponent {}
 
@@ -33,11 +38,21 @@ describe('LayoutCentralComponent', () => {
 
     it('component must render `mp-layout-footer` component', () => {
         const footerElem = fixture.debugElement.query(By.css('mp-layout-footer'));
+
         expect(footerElem).toBeTruthy();
     });
 
-    it('is ng-content renderer inside `mp-layout-centered` component', () => {
-        const footerContentElem = fixture.debugElement.query(By.css('.mp-layout-centered__content'));
-        expect(footerContentElem.nativeElement.textContent).toMatch('Content');
+    it('should render default content in the `.mp-layout-centered__content` element', () => {
+        const defaultContentElement = fixture.debugElement.query(
+            By.css('.mp-layout-centered__content .default-content'),
+        );
+
+        expect(defaultContentElement).toBeTruthy();
+    });
+
+    it('should render footer content in the `mp-layout-footer` component', () => {
+        const footerContentElem = fixture.debugElement.query(By.css('mp-layout-footer .footer-content'));
+
+        expect(footerContentElem).toBeTruthy();
     });
 });

@@ -3,5 +3,9 @@
 {% block body %}
     <web-mp-merchant-layout-centered cloak>
         {% block content %}{% endblock %}
+
+        {% block footer %}
+            <span footer>Copyright Spryker Systems GmbH © {{ 'now' | date('Y') }}</span>
+        {% endblock %}
     </web-mp-merchant-layout-centered>
 {% endblock %}
