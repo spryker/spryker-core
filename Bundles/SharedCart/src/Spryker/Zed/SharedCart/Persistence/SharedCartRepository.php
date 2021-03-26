@@ -24,6 +24,7 @@ use Orm\Zed\SharedCart\Persistence\Map\SpyQuoteCompanyUserTableMap;
 use Orm\Zed\SharedCart\Persistence\SpyQuoteCompanyUserQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\Join;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Shared\SharedCart\SharedCartConfig;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -49,19 +50,47 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
             ->groupByIdPermission()
             ->find();
 
+        $quoteCompanyUserCollection = $this->getCompanyUserQuotesWithPermissions($idCompanyUser, $permissionEntities);
+        $quoteIdsGroupedByIdPermission = $this->groupQuoteIdsByIdPermission($quoteCompanyUserCollection);
+
         foreach ($permissionEntities as $permissionEntity) {
-            $sharedQuoteIdCollection = $this->getSharedQuoteIds($idCompanyUser, $permissionEntity->getIdPermission());
+            $sharedQuoteIdCollection = $quoteIdsGroupedByIdPermission[$permissionEntity->getIdPermission()] ?? [];
 
             $permissionTransfer = new PermissionTransfer();
             $permissionTransfer->fromArray($permissionEntity->toArray(), true);
             $permissionTransfer->setConfiguration([
-                SharedCartConfig::PERMISSION_CONFIG_ID_QUOTE_COLLECTION => array_merge($ownQuoteIdCollection, $sharedQuoteIdCollection),
+                SharedCartConfig::PERMISSION_CONFIG_ID_QUOTE_COLLECTION => array_unique(array_merge($ownQuoteIdCollection, $sharedQuoteIdCollection)),
             ]);
 
             $permissionCollectionTransfer->addPermission($permissionTransfer);
         }
 
         return $permissionCollectionTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\SharedCart\Persistence\SpyQuoteCompanyUser[] $quoteCompanyUserEntityCollection
+     *
+     * @return int[][]
+     */
+    protected function groupQuoteIdsByIdPermission(ObjectCollection $quoteCompanyUserEntityCollection): array
+    {
+        $groupedQuoteIds = [];
+        foreach ($quoteCompanyUserEntityCollection as $quoteCompanyUserEntity) {
+            /** @var \Orm\Zed\SharedCart\Persistence\SpyQuotePermissionGroup $quotePermissionGroupEntity */
+            if (!$quoteCompanyUserEntity->getSpyQuotePermissionGroup()) {
+                continue;
+            }
+
+            foreach ($quoteCompanyUserEntity->getSpyQuotePermissionGroup()->getSpyQuotePermissionGroupToPermissions() as $quotePermissionGroupToPermissionEntity) {
+                if (!isset($groupedQuoteIds[$quotePermissionGroupToPermissionEntity->getFkPermission()])) {
+                    $groupedQuoteIds[$quotePermissionGroupToPermissionEntity->getFkPermission()] = [];
+                }
+                $groupedQuoteIds[$quotePermissionGroupToPermissionEntity->getFkPermission()][] = $quoteCompanyUserEntity->getFkQuote();
+            }
+        }
+
+        return $groupedQuoteIds;
     }
 
     /**
@@ -230,13 +259,13 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
     /**
      * @param int $idCompanyUser
      *
-     * @return array
+     * @return int[]
      */
     protected function findOwnQuotes(int $idCompanyUser): array
     {
         $join = new Join(SpyCustomerTableMap::COL_ID_CUSTOMER, SpyCompanyUserTableMap::COL_FK_CUSTOMER);
 
-        return $this->getFactory()
+        $ownQuoteIdCollection = $this->getFactory()
             ->createQuoteQuery()
             ->addJoin(SpyQuoteTableMap::COL_CUSTOMER_REFERENCE, SpyCustomerTableMap::COL_CUSTOMER_REFERENCE)
             ->addJoinObject($join, 'customerJoin')
@@ -244,6 +273,33 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
             ->select([SpyQuoteTableMap::COL_ID_QUOTE])
             ->find()
             ->toArray();
+
+        $ownQuoteIdCollection = array_map(function ($value) {
+            return (int)$value;
+        }, $ownQuoteIdCollection);
+
+        return $ownQuoteIdCollection;
+    }
+
+    /**
+     * @param int $idCompanyUser
+     * @param \Propel\Runtime\Collection\ObjectCollection $permissionEntityCollection
+     *
+     * @return \Orm\Zed\SharedCart\Persistence\SpyQuoteCompanyUser[]
+     */
+    protected function getCompanyUserQuotesWithPermissions(int $idCompanyUser, ObjectCollection $permissionEntityCollection): ObjectCollection
+    {
+        return $this->getFactory()
+            ->createQuoteCompanyUserQuery()
+            ->filterByFkCompanyUser($idCompanyUser)
+            ->joinWithSpyQuotePermissionGroup()
+            ->useSpyQuotePermissionGroupQuery()
+                ->joinWithSpyQuotePermissionGroupToPermission()
+                ->useSpyQuotePermissionGroupToPermissionQuery()
+                    ->filterByPermission($permissionEntityCollection)
+                ->endUse()
+            ->endUse()
+            ->find();
     }
 
     /**
