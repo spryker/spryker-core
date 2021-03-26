@@ -150,8 +150,6 @@ class MerchantReturnTable extends AbstractTable
     }
 
     /**
-     * @module Sales
-     *
      * @return \Orm\Zed\SalesReturn\Persistence\SpySalesReturnQuery|mixed[]
      */
     protected function prepareQuery(): SpySalesReturnQuery
@@ -225,9 +223,6 @@ class MerchantReturnTable extends AbstractTable
     }
 
     /**
-     * @module Sales
-     * @module Oms
-     *
      * @param int $idSalesReturn
      *
      * @return string[]

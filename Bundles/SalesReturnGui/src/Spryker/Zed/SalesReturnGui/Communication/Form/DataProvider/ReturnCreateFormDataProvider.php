@@ -103,7 +103,7 @@ class ReturnCreateFormDataProvider
             ->getReturnReasons();
 
         foreach ($returnReasonTransfers as $returnReasonTransfer) {
-            $returnReason = $this->glossaryFacade->translate($returnReasonTransfer->getGlossaryKeyReason());
+            $returnReason = $this->glossaryFacade->translate($returnReasonTransfer->getGlossaryKeyReasonOrFail());
 
             $returnReasonChoices[$returnReason] = $returnReason;
         }
@@ -159,7 +159,7 @@ class ReturnCreateFormDataProvider
             }
 
             $translatedMessage = $this->glossaryFacade->translate(
-                $returnPolicyMessage->getValue(),
+                $returnPolicyMessage->getValueOrFail(),
                 $returnPolicyMessage->getParameters()
             );
 

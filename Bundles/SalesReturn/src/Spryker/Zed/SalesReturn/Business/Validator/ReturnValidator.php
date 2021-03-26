@@ -73,7 +73,7 @@ class ReturnValidator implements ReturnValidatorInterface
             return $this->createErrorReturnResponse(static::GLOSSARY_KEY_CREATE_RETURN_RETURNABLE_ITEM_ERROR);
         }
 
-        if (!$this->storeFacade->findStoreByName($returnCreateRequestTransfer->getStore())) {
+        if (!$this->storeFacade->findStoreByName($returnCreateRequestTransfer->getStoreOrFail())) {
             return $this->createErrorReturnResponse(static::GLOSSARY_KEY_CREATE_RETURN_STORE_ERROR);
         }
 

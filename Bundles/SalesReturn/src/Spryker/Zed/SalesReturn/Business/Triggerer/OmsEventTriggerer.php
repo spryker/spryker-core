@@ -60,7 +60,7 @@ class OmsEventTriggerer implements OmsEventTriggererInterface
         foreach ($returnTransfer->getReturnItems() as $returnItemTransfer) {
             $this->assertReturnItemRequirements($returnItemTransfer);
 
-            $salesOrderItemIds[] = $returnItemTransfer->getOrderItem()->getIdSalesOrderItem();
+            $salesOrderItemIds[] = $returnItemTransfer->getOrderItemOrFail()->getIdSalesOrderItemOrFail();
         }
 
         return $salesOrderItemIds;
@@ -75,7 +75,7 @@ class OmsEventTriggerer implements OmsEventTriggererInterface
     {
         $returnItemTransfer
             ->requireOrderItem()
-            ->getOrderItem()
+            ->getOrderItemOrFail()
                 ->requireIdSalesOrderItem();
     }
 }

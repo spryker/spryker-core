@@ -34,7 +34,7 @@ class ReturnTotalCalculator implements ReturnTotalCalculatorInterface
         $remunerationTotal = 0;
 
         foreach ($returnTransfer->getReturnItems() as $returnItemTransfer) {
-            $remunerationTotal += $returnItemTransfer->getOrderItem()->getRemunerationAmount();
+            $remunerationTotal += $returnItemTransfer->getOrderItemOrFail()->getRemunerationAmount();
         }
 
         return $remunerationTotal;
@@ -50,7 +50,7 @@ class ReturnTotalCalculator implements ReturnTotalCalculatorInterface
         $canceledTotal = 0;
 
         foreach ($returnTransfer->getReturnItems() as $returnItemTransfer) {
-            $canceledTotal += $returnItemTransfer->getOrderItem()->getCanceledAmount();
+            $canceledTotal += $returnItemTransfer->getOrderItemOrFail()->getCanceledAmount();
         }
 
         return $canceledTotal;

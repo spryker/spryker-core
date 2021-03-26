@@ -28,6 +28,8 @@ class ReturnExtractor implements ReturnExtractorInterface
     }
 
     /**
+     * @phpstan-return array<int, string>
+     *
      * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
      *
      * @return string[]
@@ -37,8 +39,8 @@ class ReturnExtractor implements ReturnExtractorInterface
         $uniqueOrderReferences = [];
 
         foreach ($returnTransfer->getReturnItems() as $returnItemTransfer) {
-            $idSalesOrder = $returnItemTransfer->getOrderItem()->getFkSalesOrder();
-            $orderReference = $returnItemTransfer->getOrderItem()->getOrderReference();
+            $idSalesOrder = $returnItemTransfer->getOrderItemOrFail()->getFkSalesOrderOrFail();
+            $orderReference = $returnItemTransfer->getOrderItemOrFail()->getOrderReferenceOrFail();
 
             $uniqueOrderReferences[$idSalesOrder] = $orderReference;
         }
@@ -47,6 +49,8 @@ class ReturnExtractor implements ReturnExtractorInterface
     }
 
     /**
+     * @phpstan-return array<string, string>
+     *
      * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
      *
      * @return string[]
@@ -56,7 +60,7 @@ class ReturnExtractor implements ReturnExtractorInterface
         $uniqueItemStates = [];
 
         foreach ($returnTransfer->getReturnItems() as $returnItemTransfer) {
-            $state = $returnItemTransfer->getOrderItem()->getState()->getName();
+            $state = $returnItemTransfer->getOrderItemOrFail()->getStateOrFail()->getNameOrFail();
 
             $uniqueItemStates[$state] = $this->salesReturnGuiConfig->getItemStateToLabelClassMapping()[$state] ?? static::DEFAULT_LABEL_CLASS;
         }
@@ -65,6 +69,8 @@ class ReturnExtractor implements ReturnExtractorInterface
     }
 
     /**
+     * @phpstan-return array<int, int>
+     *
      * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
      *
      * @return int[]
@@ -74,7 +80,7 @@ class ReturnExtractor implements ReturnExtractorInterface
         $salesOrderItemIds = [];
 
         foreach ($returnTransfer->getReturnItems() as $returnItemTransfer) {
-            $salesOrderItemIds[] = $returnItemTransfer->getOrderItem()->getIdSalesOrderItem();
+            $salesOrderItemIds[] = $returnItemTransfer->getOrderItemOrFail()->getIdSalesOrderItemOrFail();
         }
 
         return $salesOrderItemIds;
