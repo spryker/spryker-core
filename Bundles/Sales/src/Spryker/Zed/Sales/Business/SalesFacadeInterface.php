@@ -420,20 +420,4 @@ interface SalesFacadeInterface
      * @return \Generated\Shared\Transfer\OrderCancelResponseTransfer
      */
     public function cancelOrder(OrderCancelRequestTransfer $orderCancelRequestTransfer): OrderCancelResponseTransfer;
-
-    /**
-     * Specification:
-     * - Checks `CheckoutResponseTransfer.isSuccess`.
-     * - Checks `CheckoutResponseTransfer.saveOrder`.
-     * - Sets `QuoteTransfer::orderReference`.
-     * - Updates `QuoteTransfer` data in quote session storage.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
-     *
-     * @return void
-     */
-    public function updateQuoteOrderReference(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): void;
 }

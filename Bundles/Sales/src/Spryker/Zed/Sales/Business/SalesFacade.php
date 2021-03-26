@@ -475,21 +475,4 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
             ->createOrderWriter()
             ->cancelOrder($orderCancelRequestTransfer);
     }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
-     *
-     * @return void
-     */
-    public function updateQuoteOrderReference(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): void
-    {
-        $this->getFactory()
-            ->createOrderReferenceManager()
-            ->updateQuoteOrderReference($quoteTransfer, $checkoutResponseTransfer);
-    }
 }

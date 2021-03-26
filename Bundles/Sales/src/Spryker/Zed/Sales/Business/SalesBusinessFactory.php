@@ -45,8 +45,6 @@ use Spryker\Zed\Sales\Business\Order\OrderHydrator as OrderHydratorWithMultiShip
 use Spryker\Zed\Sales\Business\Order\OrderHydratorInterface;
 use Spryker\Zed\Sales\Business\Order\OrderReader as OrderReaderWithMultiShippingAddress;
 use Spryker\Zed\Sales\Business\Order\OrderReaderInterface;
-use Spryker\Zed\Sales\Business\Order\OrderReferenceManager;
-use Spryker\Zed\Sales\Business\Order\OrderReferenceManagerInterface;
 use Spryker\Zed\Sales\Business\OrderItem\SalesOrderItemGrouper;
 use Spryker\Zed\Sales\Business\OrderItem\SalesOrderItemGrouperInterface;
 use Spryker\Zed\Sales\Business\Reader\OrderItemReader;
@@ -59,7 +57,6 @@ use Spryker\Zed\Sales\Business\Triggerer\OmsEventTriggerer;
 use Spryker\Zed\Sales\Business\Triggerer\OmsEventTriggererInterface;
 use Spryker\Zed\Sales\Business\Writer\OrderWriter;
 use Spryker\Zed\Sales\Business\Writer\OrderWriterInterface;
-use Spryker\Zed\Sales\Dependency\Client\SalesToQuoteClientInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCustomerInterface;
 use Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesOrderItemMapper;
 use Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesOrderItemMapperInterface;
@@ -401,14 +398,6 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Sales\Business\Order\OrderReferenceManagerInterface
-     */
-    public function createOrderReferenceManager(): OrderReferenceManagerInterface
-    {
-        return new OrderReferenceManager($this->getQuoteClient());
-    }
-
-    /**
      * @return \Spryker\Zed\Sales\Dependency\Facade\SalesToCalculationInterface
      */
     protected function getCalculationFacade()
@@ -600,13 +589,5 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     public function getCustomerOrderAccessCheckPlugins(): array
     {
         return $this->getProvidedDependency(SalesDependencyProvider::PLUGINS_CUSTOMER_ORDER_ACCESS_CHECK);
-    }
-
-    /**
-     * @return \Spryker\Zed\Sales\Dependency\Client\SalesToQuoteClientBridge
-     */
-    public function getQuoteClient(): SalesToQuoteClientInterface
-    {
-        return $this->getProvidedDependency(SalesDependencyProvider::CLIENT_QUOTE);
     }
 }
