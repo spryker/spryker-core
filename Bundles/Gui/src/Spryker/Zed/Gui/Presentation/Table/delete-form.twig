@@ -3,6 +3,7 @@
         {% if field.vars.name != '_token' %}
             {% if not field.isRendered %}
                 <input type="hidden" name="{{ field.vars.name }}" value="{{ field.vars.data }}" />
+                {% do field.setRendered %}
             {% endif %}
         {% endif %}
     {% endfor %}

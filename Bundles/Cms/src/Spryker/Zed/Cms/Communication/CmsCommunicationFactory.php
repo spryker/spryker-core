@@ -102,7 +102,6 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getFormFactory()->create(DeleteCmsRedirectForm::class, [], [
             'fields' => [],
-            'allow_extra_fields' => true,
         ]);
     }
 
