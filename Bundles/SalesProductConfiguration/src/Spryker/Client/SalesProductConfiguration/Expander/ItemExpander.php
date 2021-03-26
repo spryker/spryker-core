@@ -38,7 +38,7 @@ class ItemExpander implements ItemExpanderInterface
      *
      * @return \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer
      */
-    public function createProductConfigurationInstanceTransfer(ItemTransfer $itemTransfer): ProductConfigurationInstanceTransfer
+    protected function createProductConfigurationInstanceTransfer(ItemTransfer $itemTransfer): ProductConfigurationInstanceTransfer
     {
         return (new ProductConfigurationInstanceTransfer())
             ->fromArray($itemTransfer->getSalesOrderItemConfiguration()->toArray(), true)
