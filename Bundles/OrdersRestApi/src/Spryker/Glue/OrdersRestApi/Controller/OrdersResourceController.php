@@ -32,6 +32,7 @@ class OrdersResourceController extends AbstractController
      *          }
      *     },
      *     "getCollection": {
+     *          "deprecated": true,
      *          "summary": [
      *              "Retrieves list of orders."
      *          ],
