@@ -31,12 +31,18 @@ class CacheClearerTest extends Unit
      */
     public function testClearCacheEmptiesDirectories(): void
     {
+        /**
+         * @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Cache\CacheConfig $configMock
+         */
         $configMock = $this->getConfigMock(['DE']);
         $configMock
             ->expects($this->once())
             ->method('getCachePath')
             ->will($this->returnValue('/path/to/cache'));
 
+        /**
+         * @var \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\Filesystem\Filesystem $fileSystemMock
+         */
         $fileSystemMock = $this->getFileSystemMock();
         $fileSystemMock
             ->expects($this->once())
@@ -47,11 +53,19 @@ class CacheClearerTest extends Unit
             ->expects($this->once())
             ->method('remove');
 
+        /**
+         * @var \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\Finder\Finder $finderMock
+         */
         $finderMock = $this->getFinderMock();
         $finderMock
             ->expects($this->once())
             ->method('in')
             ->with($this->equalTo('/path/to/cache'))
+            ->will($this->returnSelf());
+
+        $finderMock
+            ->expects($this->once())
+            ->method('depth')
             ->will($this->returnSelf());
 
         $cacheClearer = new CacheClearer($configMock, $fileSystemMock, $finderMock);
@@ -63,12 +77,18 @@ class CacheClearerTest extends Unit
      */
     public function testClearAutoLoadCacheEmptiesDirectories(): void
     {
+        /**
+         * @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Cache\CacheConfig $configMock
+         */
         $configMock = $this->getConfigMock(['DE']);
         $configMock
             ->expects($this->once())
             ->method('getAutoloaderCachePath')
             ->will($this->returnValue('/path/to/auto-load-cache'));
 
+        /**
+         * @var \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\Filesystem\Filesystem $fileSystemMock
+         */
         $fileSystemMock = $this->getFileSystemMock();
         $fileSystemMock
             ->expects($this->once())
@@ -79,11 +99,19 @@ class CacheClearerTest extends Unit
             ->expects($this->once())
             ->method('remove');
 
+        /**
+         * @var \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\Finder\Finder $finderMock
+         */
         $finderMock = $this->getFinderMock();
         $finderMock
             ->expects($this->once())
             ->method('in')
             ->with($this->equalTo('/path/to/auto-load-cache'))
+            ->will($this->returnSelf());
+
+        $finderMock
+            ->expects($this->once())
+            ->method('depth')
             ->will($this->returnSelf());
 
         $cacheClearer = new CacheClearer($configMock, $fileSystemMock, $finderMock);
@@ -95,12 +123,18 @@ class CacheClearerTest extends Unit
      */
     public function testClearingOfFilesForAllStores(): void
     {
+        /**
+         * @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Cache\CacheConfig $configMock
+         */
         $configMock = $this->getConfigMock(['DE', 'EN']);
         $configMock
             ->expects($this->once())
             ->method('getCachePath')
             ->will($this->returnValue('/path/to/{STORE}/cache'));
 
+        /**
+         * @var \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\Filesystem\Filesystem $fileSystemMock
+         */
         $fileSystemMock = $this->getFileSystemMock();
         $fileSystemMock
             ->expects($this->exactly(2))
@@ -114,6 +148,9 @@ class CacheClearerTest extends Unit
             ->expects($this->exactly(2))
             ->method('remove');
 
+        /**
+         * @var \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\Finder\Finder $finderMock
+         */
         $finderMock = $this->getFinderMock();
         $finderMock
             ->expects($this->exactly(2))
@@ -124,6 +161,11 @@ class CacheClearerTest extends Unit
             )
             ->will($this->returnSelf());
 
+        $finderMock
+            ->expects($this->exactly(2))
+            ->method('depth')
+            ->will($this->returnSelf());
+
         $cacheClearer = new CacheClearer($configMock, $fileSystemMock, $finderMock);
         $cacheClearer->clearCache();
     }
@@ -131,7 +173,7 @@ class CacheClearerTest extends Unit
     /**
      * @param string[] $stores
      *
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Cache\CacheConfig
+     * @return \Spryker\Zed\Cache\CacheConfig
      */
     protected function getConfigMock(array $stores): CacheConfig
     {
@@ -154,7 +196,7 @@ class CacheClearerTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\Filesystem\Filesystem
+     * @return \Symfony\Component\Filesystem\Filesystem
      */
     protected function getFileSystemMock(): Filesystem
     {
@@ -166,7 +208,7 @@ class CacheClearerTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\Finder\Finder
+     * @return \Symfony\Component\Finder\Finder
      */
     protected function getFinderMock(): Finder
     {
