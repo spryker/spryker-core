@@ -232,6 +232,9 @@ class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRep
         if ($companyRoleCriteriaFilterTransfer->getIdCompanyUser() !== null) {
             $query->useSpyCompanyRoleToCompanyUserQuery()
                 ->filterByFkCompanyUser($companyRoleCriteriaFilterTransfer->getIdCompanyUser())
+                ->useCompanyUserQuery()
+                    ->joinWithCustomer()
+                ->endUse()
                 ->endUse();
         }
 
