@@ -101,13 +101,7 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
         $this->runStateMachine($checkoutResponseTransfer->getSaveOrder());
         $this->doPostSave($quoteTransfer, $checkoutResponseTransfer);
 
-        if ($checkoutResponseTransfer->getIsSuccess()) {
-            $quoteTransfer->setOrderReference(
-                $checkoutResponseTransfer->getSaveOrder()->getOrderReference()
-            );
-
-            $this->quoteFacade->updateQuote($quoteTransfer);
-        }
+        $this->updateQuoteAfterOrderIsSuccessfullyPlaced($quoteTransfer, $checkoutResponseTransfer);
 
         return $checkoutResponseTransfer;
     }
@@ -248,5 +242,22 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
         }
 
         return $preSavePlugin->preSave($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return void
+     */
+    protected function updateQuoteAfterOrderIsSuccessfullyPlaced(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
+    {
+        if ($checkoutResponseTransfer->getIsSuccess()) {
+            $quoteTransfer->setOrderReference(
+                $checkoutResponseTransfer->getSaveOrder()->getOrderReference()
+            );
+
+            $this->quoteFacade->updateQuote($quoteTransfer);
+        }
     }
 }
