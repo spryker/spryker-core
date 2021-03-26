@@ -151,19 +151,19 @@ class CmsBlockDataProvider
 
     /**
      * @param \Orm\Zed\Category\Persistence\SpyCategory $categoryEntity
-     * @param int|null $idLocale
+     * @param int $idLocale
      *
      * @return string
      */
-    protected function getFormattedCategoryNameForLocale(SpyCategory $categoryEntity, ?int $idLocale): string
+    protected function getFormattedCategoryNameForLocale(SpyCategory $categoryEntity, int $idLocale): string
     {
         $categoryName = $categoryEntity
             ->getLocalisedAttributes($idLocale)
             ->getFirst()
             ->getName();
-        $categoryTemplateName = $this->getCategoryTemplateName($categoryEntity) ?: '';
+        $categoryTemplateName = $this->getCategoryTemplateName($categoryEntity);
 
-        return sprintf(self::FORMATTED_CATEGORY_NAME, $categoryName, $categoryTemplateName, $categoryEntity->getCategoryKey());
+        return sprintf(static::FORMATTED_CATEGORY_NAME, $categoryName, $categoryTemplateName, $categoryEntity->getCategoryKey());
     }
 
     /**
