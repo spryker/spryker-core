@@ -20,7 +20,7 @@ class CheckoutToQuoteFacadeBridge implements CheckoutToQuoteFacadeInterface
     /**
      * @param \Spryker\Zed\Quote\Business\QuoteFacadeInterface $quoteFacade
      */
-    public function __construct(QuoteFacadeInterface $quoteFacade)
+    public function __construct($quoteFacade)
     {
         $this->quoteFacade = $quoteFacade;
     }
