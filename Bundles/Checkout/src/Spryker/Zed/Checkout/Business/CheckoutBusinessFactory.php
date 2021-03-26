@@ -9,6 +9,7 @@ namespace Spryker\Zed\Checkout\Business;
 
 use Spryker\Zed\Checkout\Business\Workflow\CheckoutWorkflow;
 use Spryker\Zed\Checkout\CheckoutDependencyProvider;
+use Spryker\Zed\Checkout\Dependency\Facade\CheckoutToQuoteFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -42,7 +43,7 @@ class CheckoutBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Checkout\Dependency\Facade\CheckoutToQuoteFacadeInterface
      */
-    protected function getQuoteFacade()
+    protected function getQuoteFacade(): CheckoutToQuoteFacadeInterface
     {
         return $this->getProvidedDependency(CheckoutDependencyProvider::FACADE_QUOTE);
     }

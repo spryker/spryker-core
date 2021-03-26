@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Checkout\Dependency\Facade;
 
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Quote\Business\QuoteFacadeInterface;
 
 class CheckoutToQuoteFacadeBridge implements CheckoutToQuoteFacadeInterface
 {
@@ -20,7 +20,7 @@ class CheckoutToQuoteFacadeBridge implements CheckoutToQuoteFacadeInterface
     /**
      * @param \Spryker\Zed\Quote\Business\QuoteFacadeInterface $quoteFacade
      */
-    public function __construct(QuoteFacadeInterface $quoteFacade)
+    public function __construct($quoteFacade)
     {
         $this->quoteFacade = $quoteFacade;
     }
@@ -28,10 +28,10 @@ class CheckoutToQuoteFacadeBridge implements CheckoutToQuoteFacadeInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function updateQuote(QuoteTransfer $quoteTransfer)
+    public function updateQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        $this->quoteFacade->updateQuote($quoteTransfer);
+        return $this->quoteFacade->updateQuote($quoteTransfer);
     }
 }

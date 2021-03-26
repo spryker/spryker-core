@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Checkout\Dependency\Facade;
 
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface CheckoutToQuoteFacadeInterface
@@ -14,7 +15,7 @@ interface CheckoutToQuoteFacadeInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function updateQuote(QuoteTransfer $quoteTransfer);
+    public function updateQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
 }

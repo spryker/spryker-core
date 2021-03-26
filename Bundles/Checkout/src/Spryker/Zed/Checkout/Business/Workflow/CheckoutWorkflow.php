@@ -250,7 +250,7 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
      *
      * @return void
      */
-    protected function updateQuoteAfterOrderIsSuccessfullyPlaced(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
+    protected function updateQuoteAfterOrderIsSuccessfullyPlaced(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): void
     {
         if ($checkoutResponseTransfer->getIsSuccess()) {
             $quoteTransfer->setOrderReference(
