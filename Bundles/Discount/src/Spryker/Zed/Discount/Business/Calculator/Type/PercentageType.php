@@ -13,6 +13,11 @@ use Spryker\Zed\Discount\Business\Exception\CalculatorException;
 
 class PercentageType implements CalculatorTypeInterface
 {
+    public function __construct()
+    {
+        static::$roundingError = 0;
+    }
+
     /**
      * @var float
      */
