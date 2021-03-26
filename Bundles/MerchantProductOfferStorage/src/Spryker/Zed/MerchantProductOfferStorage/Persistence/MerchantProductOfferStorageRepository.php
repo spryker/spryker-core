@@ -45,6 +45,7 @@ class MerchantProductOfferStorageRepository extends AbstractRepository implement
 
     /**
      * @module Merchant
+     * @module MerchantProductOffer
      *
      * @param \Generated\Shared\Transfer\ProductOfferCriteriaTransfer $productOfferCriteriaTransfer
      *
