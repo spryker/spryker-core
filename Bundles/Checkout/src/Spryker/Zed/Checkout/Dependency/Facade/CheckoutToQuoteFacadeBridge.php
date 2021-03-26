@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Checkout\Dependency\Facade;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Quote\Business\QuoteFacadeInterface;
 
 class CheckoutToQuoteFacadeBridge implements CheckoutToQuoteFacadeInterface
 {
