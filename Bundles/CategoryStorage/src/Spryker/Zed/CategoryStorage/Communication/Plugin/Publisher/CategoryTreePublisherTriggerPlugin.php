@@ -8,7 +8,6 @@
 namespace Spryker\Zed\CategoryStorage\Communication\Plugin\Publisher;
 
 use Spryker\Shared\CategoryStorage\CategoryStorageConstants;
-use Spryker\Zed\Category\Dependency\CategoryEvents;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherTriggerPluginInterface;
 
@@ -57,7 +56,7 @@ class CategoryTreePublisherTriggerPlugin extends AbstractPlugin implements Publi
      */
     public function getEventName(): string
     {
-        return CategoryEvents::CATEGORY_TREE_PUBLISH;
+        return CategoryStorageConstants::CATEGORY_TREE_PUBLISH;
     }
 
     /**

@@ -157,4 +157,7 @@
         <property name="currentStoreAssignment" type="StoreRelation"/>
     </transfer>
 
+    <transfer name="Filter">
+    </transfer>
+
 </transfers>

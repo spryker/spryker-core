@@ -10,7 +10,6 @@ namespace Spryker\Zed\CategoryStorage\Persistence;
 use Generated\Shared\Transfer\FilterTransfer;
 use Orm\Zed\CategoryStorage\Persistence\Map\SpyCategoryNodeStorageTableMap;
 use Orm\Zed\CategoryStorage\Persistence\Map\SpyCategoryTreeStorageTableMap;
-use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\Synchronization\Persistence\Propel\Formatter\SynchronizationDataTransferObjectFormatter;
 
@@ -59,27 +58,6 @@ class CategoryStorageRepository extends AbstractRepository implements CategorySt
         return $this->buildQueryFromCriteria($query, $filterTransfer)
             ->setFormatter(SynchronizationDataTransferObjectFormatter::class)
             ->find();
-    }
-
-    /**
-     * @param int $offset
-     * @param int $limit
-     *
-     * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[]
-     */
-    public function findFilteredCategoryNodeEnteties(int $offset, int $limit): array
-    {
-        $query = $this->getFactory()
-            ->createSpyCategoryNodeStorageQuery()
-            ->setLimit($limit)
-            ->setOffset($offset);
-
-        $categoryNodeEnteties = $this->buildQueryFromCriteria($query)
-            ->setFormatter(ModelCriteria::FORMAT_OBJECT)
-            ->find();
-
-        return $this->getFactory()->createCategoryNodeStorageMapper()
-            ->mapCategoryNodeStorageEntitiesToCategoryNodeStorageTransfers($categoryNodeEnteties, []);
     }
 
     /**

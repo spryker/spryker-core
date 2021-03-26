@@ -7,21 +7,35 @@
 
 namespace Spryker\Zed\CategoryPageSearch\Communication\Plugin\Synchronization;
 
-use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Shared\CategoryPageSearch\CategoryPageSearchConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface;
+use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBulkRepositoryPluginInterface;
 
 /**
- * @deprecated Use {@link \Spryker\Zed\CategoryPageSearch\Communication\Plugin\Synchronization\CategoryPageSynchronizationDataBulkRepositoryPlugin} instead.
- *
  * @method \Spryker\Zed\CategoryPageSearch\Persistence\CategoryPageSearchQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\CategoryPageSearch\Business\CategoryPageSearchFacadeInterface getFacade()
  * @method \Spryker\Zed\CategoryPageSearch\Communication\CategoryPageSearchCommunicationFactory getFactory()
  * @method \Spryker\Zed\CategoryPageSearch\CategoryPageSearchConfig getConfig()
  */
-class CategoryPageSynchronizationDataPlugin extends AbstractPlugin implements SynchronizationDataQueryContainerPluginInterface
+class CategoryPageSynchronizationDataBulkRepositoryPlugin extends AbstractPlugin implements SynchronizationDataBulkRepositoryPluginInterface
 {
+    /**
+     * {@inheritDoc}
+     * - Retrieves a collection of synchronization data according to provided offset, limit and ids.
+     *
+     * @api
+     *
+     * @param int $offset
+     * @param int $limit
+     * @param int[] $ids
+     *
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     */
+    public function getData(int $offset, int $limit, array $ids = []): array
+    {
+        return $this->getFacade()->findSynchronizationDataTransfersByIds($offset, $limit, $ids);
+    }
+
     /**
      * {@inheritDoc}
      *
@@ -51,31 +65,13 @@ class CategoryPageSynchronizationDataPlugin extends AbstractPlugin implements Sy
      *
      * @api
      *
-     * @param int[] $ids
-     *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria|null
-     */
-    public function queryData($ids = []): ?ModelCriteria
-    {
-        $query = $this->getQueryContainer()->queryCategoryNodePageSearchByIds($ids);
-
-        if ($ids === []) {
-            $query->clear();
-        }
-
-        return $query->orderByIdCategoryNodePageSearch();
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @return array
+     * @return string[]
      */
     public function getParams(): array
     {
-        return ['type' => 'page'];
+        return [
+            'type' => 'page',
+        ];
     }
 
     /**
@@ -99,6 +95,6 @@ class CategoryPageSynchronizationDataPlugin extends AbstractPlugin implements Sy
      */
     public function getSynchronizationQueuePoolName(): ?string
     {
-        return $this->getFactory()->getConfig()->getCategoryPageSynchronizationPoolName();
+        return $this->getConfig()->getCategoryPageSynchronizationPoolName();
     }
 }

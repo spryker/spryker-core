@@ -9,6 +9,8 @@ namespace Spryker\Zed\CategoryPageSearch\Business;
 
 use Spryker\Zed\CategoryPageSearch\Business\Deleter\CategoryNodePageSearchDeleter;
 use Spryker\Zed\CategoryPageSearch\Business\Deleter\CategoryNodePageSearchDeleterInterface;
+use Spryker\Zed\CategoryPageSearch\Business\Extractor\CategoryNodePageSearchExtractor;
+use Spryker\Zed\CategoryPageSearch\Business\Extractor\CategoryNodePageSearchExtractorInterface;
 use Spryker\Zed\CategoryPageSearch\Business\Mapper\CategoryNodePageSearchMapper;
 use Spryker\Zed\CategoryPageSearch\Business\Mapper\CategoryNodePageSearchMapperInterface;
 use Spryker\Zed\CategoryPageSearch\Business\Search\DataMapper\CategoryNodePageSearchDataMapper;
@@ -25,6 +27,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  * @method \Spryker\Zed\CategoryPageSearch\CategoryPageSearchConfig getConfig()
  * @method \Spryker\Zed\CategoryPageSearch\Persistence\CategoryPageSearchEntityManagerInterface getEntityManager()
  * @method \Spryker\Zed\CategoryPageSearch\Persistence\CategoryPageSearchQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\CategoryPageSearch\Persistence\CategoryPageSearchRepositoryInterface getRepository()
  */
 class CategoryPageSearchBusinessFactory extends AbstractBusinessFactory
 {
@@ -39,7 +42,8 @@ class CategoryPageSearchBusinessFactory extends AbstractBusinessFactory
             $this->getCategoryFacade(),
             $this->getStoreFacade(),
             $this->getEventBehaviorFacade(),
-            $this->createCategoryNodePageSearchDeleter()
+            $this->createCategoryNodePageSearchDeleter(),
+            $this->createCategoryNodePageSearchExtractor()
         );
     }
 
@@ -65,7 +69,10 @@ class CategoryPageSearchBusinessFactory extends AbstractBusinessFactory
     public function createCategoryNodePageSearchDeleter(): CategoryNodePageSearchDeleterInterface
     {
         return new CategoryNodePageSearchDeleter(
-            $this->getEntityManager()
+            $this->getEntityManager(),
+            $this->getCategoryFacade(),
+            $this->getEventBehaviorFacade(),
+            $this->createCategoryNodePageSearchExtractor()
         );
     }
 
@@ -91,5 +98,13 @@ class CategoryPageSearchBusinessFactory extends AbstractBusinessFactory
     public function getEventBehaviorFacade(): CategoryPageSearchToEventBehaviorFacadeInterface
     {
         return $this->getProvidedDependency(CategoryPageSearchDependencyProvider::FACADE_EVENT_BEHAVIOR);
+    }
+
+    /**
+     * @return \Spryker\Zed\CategoryPageSearch\Business\Extractor\CategoryNodePageSearchExtractorInterface
+     */
+    protected function createCategoryNodePageSearchExtractor(): CategoryNodePageSearchExtractorInterface
+    {
+        return new CategoryNodePageSearchExtractor();
     }
 }

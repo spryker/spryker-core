@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\FilterTransfer;
 use Orm\Zed\ProductCategory\Persistence\Map\SpyProductCategoryTableMap;
 use Spryker\Shared\ProductCategoryStorage\ProductCategoryStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\ProductCategory\Dependency\ProductCategoryEvents;
 use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherTriggerPluginInterface;
 
 /**
@@ -61,7 +60,7 @@ class ProductCategoryPublisherTriggerPlugin extends AbstractPlugin implements Pu
      */
     public function getEventName(): string
     {
-        return ProductCategoryEvents::PRODUCT_CATEGORY_PUBLISH;
+        return ProductCategoryStorageConfig::PRODUCT_CATEGORY_PUBLISH;
     }
 
     /**

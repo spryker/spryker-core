@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CategoryStorage\Dependency\Facade;
 
 use Generated\Shared\Transfer\CategoryNodeCriteriaTransfer;
+use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\NodeCollectionTransfer;
 
 class CategoryStorageToCategoryFacadeBridge implements CategoryStorageToCategoryFacadeInterface
@@ -44,5 +45,15 @@ class CategoryStorageToCategoryFacadeBridge implements CategoryStorageToCategory
     public function getCategoryNodes(CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer): NodeCollectionTransfer
     {
         return $this->categoryFacade->getCategoryNodes($categoryNodeCriteriaTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\NodeCollectionTransfer
+     */
+    public function findCategoryNodesByFilter(FilterTransfer $filterTransfer): NodeCollectionTransfer
+    {
+        return $this->categoryFacade->findCategoryNodesByFilter($filterTransfer);
     }
 }

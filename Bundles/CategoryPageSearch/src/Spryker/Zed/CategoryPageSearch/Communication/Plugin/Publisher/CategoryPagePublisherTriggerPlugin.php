@@ -5,21 +5,21 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CategoryStorage\Communication\Plugin\Publisher;
+namespace Spryker\Zed\CategoryPageSearch\Communication\Plugin\Publisher;
 
 use Generated\Shared\Transfer\FilterTransfer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
-use Spryker\Shared\CategoryStorage\CategoryStorageConstants;
+use Spryker\Shared\CategoryPageSearch\CategoryPageSearchConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherTriggerPluginInterface;
 
 /**
- * @method \Spryker\Zed\CategoryStorage\Business\CategoryStorageFacadeInterface getFacade()
- * @method \Spryker\Zed\CategoryStorage\Persistence\CategoryStorageQueryContainerInterface getQueryContainer()
- * @method \Spryker\Zed\CategoryStorage\Communication\CategoryStorageCommunicationFactory getFactory()
- * @method \Spryker\Zed\CategoryStorage\CategoryStorageConfig getConfig()
+ * @method \Spryker\Zed\CategoryPageSearch\Business\CategoryPageSearchFacadeInterface getFacade()
+ * @method \Spryker\Zed\CategoryPageSearch\Persistence\CategoryPageSearchQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\CategoryPageSearch\Communication\CategoryPageSearchCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CategoryPageSearch\CategoryPageSearchConfig getConfig()
  */
-class CategoryNodePublisherTriggerPlugin extends AbstractPlugin implements PublisherTriggerPluginInterface
+class CategoryPagePublisherTriggerPlugin extends AbstractPlugin implements PublisherTriggerPluginInterface
 {
     /**
      * {@inheritDoc}
@@ -52,7 +52,7 @@ class CategoryNodePublisherTriggerPlugin extends AbstractPlugin implements Publi
      */
     public function getResourceName(): string
     {
-        return CategoryStorageConstants::CATEGORY_NODE_RESOURCE_NAME;
+        return CategoryPageSearchConstants::CATEGORY_NODE_RESOURCE_NAME;
     }
 
     /**
@@ -64,7 +64,7 @@ class CategoryNodePublisherTriggerPlugin extends AbstractPlugin implements Publi
      */
     public function getEventName(): string
     {
-        return CategoryStorageConstants::CATEGORY_NODE_PUBLISH;
+        return CategoryPageSearchConstants::CATEGORY_NODE_PUBLISH;
     }
 
     /**
