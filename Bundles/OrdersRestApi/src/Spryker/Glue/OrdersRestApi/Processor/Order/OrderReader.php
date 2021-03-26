@@ -73,12 +73,7 @@ class OrderReader implements OrderReaderInterface
             );
         }
 
-        $restResponse = $this->getOrderListAttributes($restRequest);
-
-        $restResponse->addHeader(OrdersRestApiConfig::HEADER_DEPRECATION, $this->ordersRestApiConfig->getDeprecationHeaderValue());
-        $restResponse->addHeader(OrdersRestApiConfig::HEADER_LINK, $this->ordersRestApiConfig->getLinkHeaderValue());
-
-        return $restResponse;
+        return $this->getOrderListAttributes($restRequest);
     }
 
     /**
