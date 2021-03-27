@@ -2,6 +2,14 @@ import { NgModule } from '@angular/core';
 import { LocaleModule, LocaleSwitcherComponent } from '@spryker/locale';
 import { NotificationComponent, NotificationModule } from '@spryker/notification';
 import { CustomElementModule, WebComponentDefs } from '@spryker/web-components';
+import { ButtonComponent, ButtonModule } from '@spryker/button';
+import { FormItemComponent, FormItemModule } from '@spryker/form-item';
+import { InputComponent, InputModule } from '@spryker/input';
+import { InputPasswordComponent, InputPasswordModule } from '@spryker/input.password';
+import { TextareaComponent, TextareaModule } from '@spryker/textarea';
+import { SelectModule, SelectComponent } from '@spryker/select';
+import { ToggleModule, ToggleComponent } from '@spryker/toggle';
+import { CheckboxModule, CheckboxComponent } from '@spryker/checkbox';
 
 import { HeaderComponent } from './header/header.component';
 import { HeaderModule } from './header/header.module';
@@ -26,6 +34,14 @@ import { FormModule } from './form/form.module';
         NotificationModule,
         LocaleModule,
         FormModule,
+        FormItemModule,
+        InputModule,
+        InputPasswordModule,
+        ButtonModule,
+        TextareaModule,
+        SelectModule,
+        ToggleModule,
+        CheckboxModule,
     ],
     providers: [],
 })
@@ -51,5 +67,13 @@ export class ComponentsModule extends CustomElementModule {
         NotificationComponent,
         LocaleSwitcherComponent,
         FormComponent,
+        FormItemComponent,
+        InputComponent,
+        InputPasswordComponent,
+        ButtonComponent,
+        TextareaComponent,
+        SelectComponent,
+        ToggleComponent,
+        CheckboxComponent,
     ];
 }

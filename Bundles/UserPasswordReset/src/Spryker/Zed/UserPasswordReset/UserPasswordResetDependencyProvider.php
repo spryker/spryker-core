@@ -19,7 +19,7 @@ class UserPasswordResetDependencyProvider extends AbstractBundleDependencyProvid
 {
     public const FACADE_USER = 'FACADE_USER';
     public const SERVICE_UTIL_TEXT = 'SERVICE_UTIL_TEXT';
-    public const PLUGINS_USER_PASSWORD_RESET_REQUEST_HANDLER = 'PLUGINS_USER_PASSWORD_RESET_REQUEST_HANDLER';
+    public const PLUGINS_USER_PASSWORD_RESET_REQUEST_STRATEGY = 'PLUGINS_USER_PASSWORD_RESET_REQUEST_STRATEGY';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -32,7 +32,7 @@ class UserPasswordResetDependencyProvider extends AbstractBundleDependencyProvid
 
         $container = $this->addUserFacade($container);
         $container = $this->addUtilTextService($container);
-        $container = $this->addUserPasswordResetRequestHandlerPlugins($container);
+        $container = $this->addUserPasswordResetRequestStrategyPlugins($container);
 
         return $container;
     }
@@ -74,19 +74,19 @@ class UserPasswordResetDependencyProvider extends AbstractBundleDependencyProvid
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addUserPasswordResetRequestHandlerPlugins(Container $container): Container
+    protected function addUserPasswordResetRequestStrategyPlugins(Container $container): Container
     {
-        $container->set(static::PLUGINS_USER_PASSWORD_RESET_REQUEST_HANDLER, function () {
-            return $this->getUserPasswordResetRequestHandlerPlugins();
+        $container->set(static::PLUGINS_USER_PASSWORD_RESET_REQUEST_STRATEGY, function () {
+            return $this->getUserPasswordResetRequestStrategyPlugins();
         });
 
         return $container;
     }
 
     /**
-     * @return \Spryker\Zed\UserPasswordResetExtension\Dependency\Plugin\UserPasswordResetRequestHandlerPluginInterface[]
+     * @return \Spryker\Zed\UserPasswordResetExtension\Dependency\Plugin\UserPasswordResetRequestStrategyPluginInterface[]
      */
-    public function getUserPasswordResetRequestHandlerPlugins(): array
+    public function getUserPasswordResetRequestStrategyPlugins(): array
     {
         return [];
     }
