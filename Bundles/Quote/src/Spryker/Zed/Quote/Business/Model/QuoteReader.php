@@ -68,9 +68,7 @@ class QuoteReader implements QuoteReaderInterface
         $quoteTransfer = $this->executeExpandQuotePlugins($quoteTransfer);
 
         $quoteResponseTransfer = $this->setQuoteResponseTransfer($quoteResponseTransfer, $quoteTransfer);
-        if ($quoteTransfer) {
-            $quoteResponseTransfer->setCustomer($customerTransfer);
-        }
+        $quoteResponseTransfer->setCustomer($customerTransfer);
 
         return $quoteResponseTransfer;
     }
@@ -96,9 +94,7 @@ class QuoteReader implements QuoteReaderInterface
         $quoteTransfer = $this->executeExpandQuotePlugins($quoteTransfer);
 
         $quoteResponseTransfer = $this->setQuoteResponseTransfer($quoteResponseTransfer, $quoteTransfer);
-        if ($quoteTransfer) {
-            $quoteResponseTransfer->setCustomer($customerTransfer);
-        }
+        $quoteResponseTransfer->setCustomer($customerTransfer);
 
         return $quoteResponseTransfer;
     }
@@ -187,25 +183,53 @@ class QuoteReader implements QuoteReaderInterface
         $expandedQuotesCollection = new QuoteCollectionTransfer();
 
         foreach ($quoteCollectionTransfer->getQuotes() as $quoteTransfer) {
+            $this->executePreExpandQuotePlugins($quoteTransfer);
+
             $expandedQuotesCollection->addQuote(
                 $this->executeExpandQuotePlugins($quoteTransfer)
             );
+
+            $this->executePostExpandQuotePlugins($quoteTransfer);
         }
 
         return $expandedQuotesCollection;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer|null $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer|null
+     * @return void
      */
-    protected function executeExpandQuotePlugins(?QuoteTransfer $quoteTransfer): ?QuoteTransfer
+    protected function executePreExpandQuotePlugins(QuoteTransfer $quoteTransfer): void
     {
-        if (!$quoteTransfer) {
-            return null;
+        foreach ($this->quoteExpanderPlugins as $quoteExpanderPlugin) {
+            if (method_exists($quoteExpanderPlugin, 'preExpand')) {
+                $quoteExpanderPlugin->preExpand($quoteTransfer);
+            }
         }
+    }
 
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    protected function executePostExpandQuotePlugins(QuoteTransfer $quoteTransfer): void
+    {
+        foreach ($this->quoteExpanderPlugins as $quoteExpanderPlugin) {
+            if (method_exists($quoteExpanderPlugin, 'postExpand')) {
+                $quoteExpanderPlugin->postExpand($quoteTransfer);
+            }
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function executeExpandQuotePlugins(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
         foreach ($this->quoteExpanderPlugins as $quoteExpanderPlugin) {
             $quoteTransfer = $quoteExpanderPlugin->expand($quoteTransfer);
         }

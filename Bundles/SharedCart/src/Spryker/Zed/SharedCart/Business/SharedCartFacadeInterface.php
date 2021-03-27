@@ -160,6 +160,18 @@ interface SharedCartFacadeInterface
 
     /**
      * Specification:
+     *  - Returns shares details collection of quote by quote ids.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareDetailsRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShareDetailCollectionTransfer[]
+     */
+    public function getSharedCartDetails(ShareCartRequestTransfer $shareDetailsRequestTransfer): array;
+
+    /**
+     * Specification:
      *  - Un-shares quotes for company user.
      *
      * @api

@@ -9,6 +9,7 @@ namespace Spryker\Zed\Comment\Persistence;
 
 use Generated\Shared\Transfer\CommentFilterTransfer;
 use Generated\Shared\Transfer\CommentRequestTransfer;
+use Generated\Shared\Transfer\CommentsRequestTransfer;
 use Generated\Shared\Transfer\CommentThreadTransfer;
 use Generated\Shared\Transfer\CommentTransfer;
 
@@ -20,6 +21,13 @@ interface CommentRepositoryInterface
      * @return \Generated\Shared\Transfer\CommentThreadTransfer|null
      */
     public function findCommentThread(CommentRequestTransfer $commentRequestTransfer): ?CommentThreadTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CommentsRequestTransfer $commentsRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CommentThreadTransfer[]
+     */
+    public function getCommentThreads(CommentsRequestTransfer $commentsRequestTransfer): array;
 
     /**
      * @param \Generated\Shared\Transfer\CommentThreadTransfer $commentThreadTransfer
@@ -34,6 +42,13 @@ interface CommentRepositoryInterface
      * @return \Generated\Shared\Transfer\CommentTransfer[]
      */
     public function findCommentsByCommentThread(CommentThreadTransfer $commentThreadTransfer): array;
+
+    /**
+     * @param int[] $threadIds
+     *
+     * @return \Generated\Shared\Transfer\CommentTransfer[]
+     */
+    public function findCommentsByCommentThreadIds(array $threadIds): array;
 
     /**
      * @param \Generated\Shared\Transfer\CommentTransfer $commentTransfer

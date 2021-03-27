@@ -84,6 +84,20 @@ class QuoteApprovalFacade extends AbstractFacade implements QuoteApprovalFacadeI
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\QuoteApprovalRequestTransfer $quoteApprovalsRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteApprovalTransfer[]
+     */
+    public function getQuoteApprovals(QuoteApprovalRequestTransfer $quoteApprovalsRequestTransfer): array
+    {
+        return $this->getFactory()->getQuoteApprovalRepository()->getQuoteApprovals($quoteApprovalsRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer

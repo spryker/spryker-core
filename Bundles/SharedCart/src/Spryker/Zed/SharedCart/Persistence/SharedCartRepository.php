@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\PermissionTransfer;
 use Generated\Shared\Transfer\QuoteCompanyUserTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupTransfer;
+use Generated\Shared\Transfer\ShareCartRequestTransfer;
 use Generated\Shared\Transfer\ShareDetailCollectionTransfer;
 use Generated\Shared\Transfer\ShareDetailCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ShareDetailTransfer;
@@ -374,25 +375,52 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
     }
 
     /**
+     * @param int[] $quoteIds
+     *
+     * @return Propel\Runtime\Collection\ObjectCollection
+     */
+    protected function getQuoteCompanyUserEntities(array $quoteIds): ObjectCollection
+    {
+        $quoteCompanyUserQuery = $this->getFactory()
+            ->createQuoteCompanyUserQuery();
+
+        return $quoteCompanyUserQuery
+            ->filterByFkQuote_In($quoteIds)
+            ->joinWithSpyCompanyUser()
+            ->useSpyCompanyUserQuery(null, Criteria::LEFT_JOIN)
+                ->joinWithCustomer()
+            ->endUse()
+            ->find();
+    }
+
+    /**
      * @param int $idQuote
      *
      * @return \Generated\Shared\Transfer\ShareDetailCollectionTransfer
      */
     public function findShareDetailsByQuoteId(int $idQuote): ShareDetailCollectionTransfer
     {
-        $quoteCompanyUserQuery = $this->getFactory()
-            ->createQuoteCompanyUserQuery();
-        $quoteCompanyUserQuery->filterByFkQuote($idQuote)
-            ->joinWithSpyCompanyUser()
-            ->useSpyCompanyUserQuery(null, Criteria::LEFT_JOIN)
-                ->joinWithCustomer()
-            ->endUse();
-        $quoteCompanyUserEntities = $quoteCompanyUserQuery
-            ->find();
+        $quoteCompanyUserEntities = $this->getQuoteCompanyUserEntities([$idQuote]);
 
         return $this->getFactory()
             ->createQuoteShareDetailMapper()
             ->mapShareDetailCollection($quoteCompanyUserEntities, $this->findQuotePermissionGroupList(new QuotePermissionGroupCriteriaFilterTransfer()));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareDetailsRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShareDetailCollectionTransfer[]
+     */
+    public function getSharedCartDetails(ShareCartRequestTransfer $shareDetailsRequestTransfer): array
+    {
+        $quoteIds = $shareDetailsRequestTransfer->getQuoteIds();
+        $quoteCompanyUserEntities = $this->getQuoteCompanyUserEntities($quoteIds);
+        $permissionGroupList = $this->findQuotePermissionGroupList(new QuotePermissionGroupCriteriaFilterTransfer());
+
+        return $this->getFactory()
+            ->createQuoteShareDetailMapper()
+            ->mapShareDetailCollectionByQuoteId($quoteCompanyUserEntities, $permissionGroupList);
     }
 
     /**
