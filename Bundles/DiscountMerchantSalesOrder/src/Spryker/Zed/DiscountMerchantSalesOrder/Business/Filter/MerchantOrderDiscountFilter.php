@@ -97,7 +97,7 @@ class MerchantOrderDiscountFilter implements MerchantOrderDiscountFilterInterfac
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer                 $itemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\CalculatedDiscountTransfer[] $groupedCalculatedDiscounts
      *
      * @return \Generated\Shared\Transfer\CalculatedDiscountTransfer[]
