@@ -397,6 +397,7 @@
     "spryker/merchant-switcher": "*",
     "spryker/merchant-user": "*",
     "spryker/merchant-user-gui": "*",
+    "spryker/merchant-user-password-reset-mail": "*",
     "spryker/merchants-rest-api": "*",
     "spryker/merchants-rest-api-extension": "*",
     "spryker/messenger": "*",

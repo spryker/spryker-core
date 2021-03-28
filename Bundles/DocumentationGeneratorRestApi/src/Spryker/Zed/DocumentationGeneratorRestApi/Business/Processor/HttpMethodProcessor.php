@@ -218,6 +218,7 @@ class HttpMethodProcessor implements HttpMethodProcessorInterface
                 $this->getDefaultMethodSummary(static::PATTERN_SUMMARY_POST_RESOURCE, $plugin->getResourceType())
             );
         }
+
         $this->tagGenerator->addTag($pathDataTransfer);
         $this->pathGenerator->addPostPath($pathDataTransfer, $requestSchema, $errorSchema, $responseSchema);
     }
@@ -379,6 +380,7 @@ class HttpMethodProcessor implements HttpMethodProcessorInterface
         $pathDataTransfer->setOperationId($operationId);
 
         if ($annotationTransfer) {
+            $pathDataTransfer->setDeprecated($annotationTransfer->getDeprecated());
             $pathDataTransfer->fromArray($annotationTransfer->modifiedToArray(), true);
             $this->addResponsesToPathData($pathDataTransfer, $errorSchema, $annotationTransfer->getResponses());
         }
