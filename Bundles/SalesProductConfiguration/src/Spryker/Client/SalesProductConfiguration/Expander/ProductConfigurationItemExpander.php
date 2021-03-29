@@ -7,9 +7,9 @@
 
 namespace Spryker\Client\SalesProductConfiguration\Expander;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
-use Generated\Shared\Transfer\SalesOrderItemConfigurationTransfer;
 
 class ProductConfigurationItemExpander implements ProductConfigurationItemExpanderInterface
 {
@@ -22,47 +22,47 @@ class ProductConfigurationItemExpander implements ProductConfigurationItemExpand
     public function expandItemsWithProductConfiguration(array $itemTransfers, OrderTransfer $orderTransfer): array
     {
         $productConfigurationSalesOrderItemsGroupedByGroupKey = $this->getProductConfigurationSalesOrderItemsGroupedByGroupKey($orderTransfer);
-        foreach ($itemTransfers as $item) {
-            if (!array_key_exists($item->getGroupKey(), $productConfigurationSalesOrderItemsGroupedByGroupKey)) {
+        foreach ($itemTransfers as $itemTransfer) {
+            if (!array_key_exists($itemTransfer->getGroupKeyOrFail(), $productConfigurationSalesOrderItemsGroupedByGroupKey)) {
                 continue;
             }
-            $item->setProductConfigurationInstance(
-                $this->createProductConfigurationInstanceTransfer(
-                    $productConfigurationSalesOrderItemsGroupedByGroupKey[$item->getGroupKey()]
-                )
+
+            $productConfigurationInstanceTransfer  = $this->createProductConfigurationInstanceTransfer(
+                $productConfigurationSalesOrderItemsGroupedByGroupKey[$itemTransfer->getGroupKey()]
             );
+            $itemTransfer->setProductConfigurationInstance($productConfigurationInstanceTransfer);
         }
 
         return $itemTransfers;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SalesOrderItemConfigurationTransfer $salesOrderItemConfigurationTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer
      */
     protected function createProductConfigurationInstanceTransfer(
-        SalesOrderItemConfigurationTransfer $salesOrderItemConfigurationTransfer
+        ItemTransfer $itemTransfer
     ): ProductConfigurationInstanceTransfer {
         return (new ProductConfigurationInstanceTransfer())
-            ->fromArray($salesOrderItemConfigurationTransfer->toArray(), true)
+            ->fromArray($itemTransfer->getSalesOrderItemConfiguration()->toArray(), true)
             ->setIsComplete(true);
     }
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \Generated\Shared\Transfer\SalesOrderItemConfigurationTransfer[]
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
     protected function getProductConfigurationSalesOrderItemsGroupedByGroupKey(OrderTransfer $orderTransfer): array
     {
         $productConfigurationSalesOrderItemsGroupedByGroupKey = [];
-        foreach ($orderTransfer->getItems() as $item) {
-            if (!$item->getSalesOrderItemConfiguration()) {
+        foreach ($orderTransfer->getItems() as $itemTransfer) {
+            if (!$itemTransfer->getSalesOrderItemConfiguration()) {
                 continue;
             }
 
-            $productConfigurationSalesOrderItemsGroupedByGroupKey[$item->getGroupKey()] = $item->getSalesOrderItemConfiguration();
+            $productConfigurationSalesOrderItemsGroupedByGroupKey[$itemTransfer->getGroupKeyOrFail()] = $itemTransfer;
         }
 
         return $productConfigurationSalesOrderItemsGroupedByGroupKey;

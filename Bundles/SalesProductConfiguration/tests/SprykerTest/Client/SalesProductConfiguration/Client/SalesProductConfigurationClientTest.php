@@ -35,7 +35,6 @@ class SalesProductConfigurationClientTest extends Unit
     protected const TEST_DISPLAY_DATA = 'TEST_DISPLAY_DATA';
     protected const TEST_ID_SALES_ORDER_ITEM = 1;
     protected const TEST_ORDER_REFERENCE = 'TEST_ORDER_REFERENCE';
-    protected const TEST_SALES_ORDER_ITEM_CONFIGURATION_ARRAY = ['TEST_GROUP_KEY'];
 
     /**
      * @var \Spryker\Client\SalesProductConfiguration\SalesProductConfigurationClientInterface $salesProductConfigurationClient
@@ -100,25 +99,25 @@ class SalesProductConfigurationClientTest extends Unit
         $this->assertSame(
             static::TEST_DISPLAY_DATA,
             $productConfigurationInstance->getDisplayData(),
-            'Expects that order items will be complete after expanded with product configuration from a previous order.'
+            'Expects product configuration displayData property expanded with order item value.'
         );
 
         $this->assertSame(
             static::TEST_CONFIGURATION,
             $productConfigurationInstance->getConfiguration(),
-            'Expects that order items will be complete after expanded with product configuration from a previous order.'
+            'Expects product configuration property of configuration expanded with order item value.'
         );
 
         $this->assertSame(
             static::TEST_CONFIGURATOR_KEY,
             $productConfigurationInstance->getConfiguratorKey(),
-            'Expects that order items will be complete after expanded with product configuration from a previous order.'
+            'Expects product configuration configuratorKey property expanded with order item value.'
         );
 
         $this->assertSame(
             true,
             $productConfigurationInstance->getIsComplete(),
-            'Expects that order items will be complete after expanded with product configuration from a previous order.'
+            'Expects product configuration isComplete property expanded with order item value.'
         );
     }
 }
