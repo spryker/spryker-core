@@ -89,6 +89,12 @@
     <td colspan="2"></td>
     <td>
         {{ 'Reason' | trans }}: {{ returnItem.reason ? returnItem.reason | trans : '--' }}
+
+        <div>
+            {% include '@SalesProductConfigurationGui/Sales/Partials/order-item-product-configuration.twig' ignore missing with {
+                orderItem: orderItem,
+            } %}
+        </div>
     </td>
     <td colspan="5"></td>
 </tr>

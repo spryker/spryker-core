@@ -10,15 +10,29 @@ namespace Spryker\Zed\UserPasswordResetMail\Communication\Plugin\UserPasswordRes
 use Generated\Shared\Transfer\MailTransfer;
 use Generated\Shared\Transfer\UserPasswordResetRequestTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\UserPasswordResetExtension\Dependency\Plugin\UserPasswordResetRequestHandlerPluginInterface;
+use Spryker\Zed\UserPasswordResetExtension\Dependency\Plugin\UserPasswordResetRequestStrategyPluginInterface;
 use Spryker\Zed\UserPasswordResetMail\Communication\Plugin\Mail\UserPasswordResetMailTypePlugin;
 
 /**
  * @method \Spryker\Zed\UserPasswordResetMail\UserPasswordResetMailConfig getConfig()
  * @method \Spryker\Zed\UserPasswordResetMail\Communication\UserPasswordResetMailCommunicationFactory getFactory()
  */
-class MailUserPasswordResetRequestHandlerPlugin extends AbstractPlugin implements UserPasswordResetRequestHandlerPluginInterface
+class MailUserPasswordResetRequestStrategyPlugin extends AbstractPlugin implements UserPasswordResetRequestStrategyPluginInterface
 {
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\UserPasswordResetRequestTransfer $userPasswordResetRequestTransfer
+     *
+     * @return bool
+     */
+    public function isApplicable(UserPasswordResetRequestTransfer $userPasswordResetRequestTransfer): bool
+    {
+        return true;
+    }
+
     /**
      * {@inheritDoc}
      * - Sends user reset password email.
