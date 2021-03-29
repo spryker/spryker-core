@@ -21,14 +21,14 @@ class ProductConfigurationItemExpander implements ProductConfigurationItemExpand
      */
     public function expandItemsWithProductConfiguration(array $itemTransfers, OrderTransfer $orderTransfer): array
     {
-        $productConfigurationSalesOrderItemGroupedByGroupKey = $this->getProductConfigurationSalesOrderItemGroupedByGroupKey($orderTransfer);
+        $productConfigurationSalesOrderItemsGroupedByGroupKey = $this->getProductConfigurationSalesOrderItemsGroupedByGroupKey($orderTransfer);
         foreach ($itemTransfers as $item) {
-            if (!array_key_exists($item->getGroupKey(), $productConfigurationSalesOrderItemGroupedByGroupKey)) {
+            if (!array_key_exists($item->getGroupKey(), $productConfigurationSalesOrderItemsGroupedByGroupKey)) {
                 continue;
             }
             $item->setProductConfigurationInstance(
                 $this->createProductConfigurationInstanceTransfer(
-                    $productConfigurationSalesOrderItemGroupedByGroupKey[$item->getGroupKey()]
+                    $productConfigurationSalesOrderItemsGroupedByGroupKey[$item->getGroupKey()]
                 )
             );
         }
@@ -54,17 +54,17 @@ class ProductConfigurationItemExpander implements ProductConfigurationItemExpand
      *
      * @return \Generated\Shared\Transfer\SalesOrderItemConfigurationTransfer[]
      */
-    protected function getProductConfigurationSalesOrderItemGroupedByGroupKey(OrderTransfer $orderTransfer): array
+    protected function getProductConfigurationSalesOrderItemsGroupedByGroupKey(OrderTransfer $orderTransfer): array
     {
-        $productConfigurationSalesOrderItemGroupedByGroupKey = [];
+        $productConfigurationSalesOrderItemsGroupedByGroupKey = [];
         foreach ($orderTransfer->getItems() as $item) {
             if (!$item->getSalesOrderItemConfiguration()) {
                 continue;
             }
 
-            $productConfigurationSalesOrderItemGroupedByGroupKey[$item->getGroupKey()] = $item->getSalesOrderItemConfiguration();
+            $productConfigurationSalesOrderItemsGroupedByGroupKey[$item->getGroupKey()] = $item->getSalesOrderItemConfiguration();
         }
 
-        return $productConfigurationSalesOrderItemGroupedByGroupKey;
+        return $productConfigurationSalesOrderItemsGroupedByGroupKey;
     }
 }
