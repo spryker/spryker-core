@@ -99,25 +99,25 @@ class SalesProductConfigurationClientTest extends Unit
         $this->assertSame(
             static::TEST_DISPLAY_DATA,
             $productConfigurationInstance->getDisplayData(),
-            'Expects product configuration displayData property expanded with order item value.'
+            'Expects product configuration `displayData` property expanded with order item value.'
         );
 
         $this->assertSame(
             static::TEST_CONFIGURATION,
             $productConfigurationInstance->getConfiguration(),
-            'Expects product configuration property of configuration expanded with order item value.'
+            'Expects product configuration `configuration` property expanded with order item value.'
         );
 
         $this->assertSame(
             static::TEST_CONFIGURATOR_KEY,
             $productConfigurationInstance->getConfiguratorKey(),
-            'Expects product configuration configuratorKey property expanded with order item value.'
+            'Expects product configuration `configuratorKey` property expanded with order item value.'
         );
 
         $this->assertSame(
             true,
             $productConfigurationInstance->getIsComplete(),
-            'Expects product configuration isComplete property expanded with order item value.'
+            'Expects product configuration `isComplete` property expanded with order item value.'
         );
     }
 }

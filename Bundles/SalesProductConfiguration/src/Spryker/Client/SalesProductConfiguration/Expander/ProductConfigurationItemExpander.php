@@ -27,7 +27,7 @@ class ProductConfigurationItemExpander implements ProductConfigurationItemExpand
                 continue;
             }
 
-            $productConfigurationInstanceTransfer  = $this->createProductConfigurationInstanceTransfer(
+            $productConfigurationInstanceTransfer = $this->createProductConfigurationInstanceTransfer(
                 $productConfigurationSalesOrderItemsGroupedByGroupKey[$itemTransfer->getGroupKey()]
             );
             $itemTransfer->setProductConfigurationInstance($productConfigurationInstanceTransfer);

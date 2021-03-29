@@ -14,6 +14,7 @@ interface SalesProductConfigurationClientInterface
     /**
      * Specification:
      * - Expands items with product configuration based on data from order items.
+     * - Requires `Item::groupKey` and `Order::items::groupKey` to be set.
      *
      * @api
      *
