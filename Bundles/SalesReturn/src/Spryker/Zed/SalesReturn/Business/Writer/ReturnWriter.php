@@ -186,7 +186,7 @@ class ReturnWriter implements ReturnWriterInterface
     {
         foreach ($returnCreateRequestTransfer->getReturnItems() as $returnItemTransfer) {
             $returnItemTransfer->requireOrderItem();
-            $itemTransfer = $returnItemTransfer->getOrderItem();
+            $itemTransfer = $returnItemTransfer->getOrderItemOrFail();
 
             if (!$itemTransfer->getIdSalesOrderItem() && !$itemTransfer->getUuid()) {
                 return false;
@@ -292,15 +292,15 @@ class ReturnWriter implements ReturnWriterInterface
         }
 
         foreach ($returnCreateRequestTransfer->getReturnItems() as $returnItemTransfer) {
-            $itemTransfer = $returnItemTransfer->getOrderItem();
+            $itemTransfer = $returnItemTransfer->getOrderItemOrFail();
 
             if ($itemTransfer->getUuid()) {
-                $orderItemFilterTransfer->addSalesOrderItemUuid($itemTransfer->getUuid());
+                $orderItemFilterTransfer->addSalesOrderItemUuid($itemTransfer->getUuidOrFail());
 
                 continue;
             }
 
-            $orderItemFilterTransfer->addSalesOrderItemId($itemTransfer->getIdSalesOrderItem());
+            $orderItemFilterTransfer->addSalesOrderItemId($itemTransfer->getIdSalesOrderItemOrFail());
         }
 
         return $orderItemFilterTransfer;
@@ -317,7 +317,7 @@ class ReturnWriter implements ReturnWriterInterface
             return null;
         }
 
-        return $returnCreateRequestTransfer->getCustomer()->getCustomerReference();
+        return $returnCreateRequestTransfer->getCustomerOrFail()->getCustomerReference();
     }
 
     /**
@@ -348,8 +348,9 @@ class ReturnWriter implements ReturnWriterInterface
         $indexedItemsByUuid = $this->indexOrderItemsByUuid($itemTransfers);
 
         foreach ($returnCreateRequestTransfer->getReturnItems() as $returnItemTransfer) {
-            $idSalesOrderItem = $returnItemTransfer->getOrderItem()->getIdSalesOrderItem();
-            $orderItemUuid = $returnItemTransfer->getOrderItem()->getUuid();
+            $orderItemTransfer = $returnItemTransfer->getOrderItemOrFail();
+            $idSalesOrderItem = $orderItemTransfer->getIdSalesOrderItem();
+            $orderItemUuid = $orderItemTransfer->getUuid();
 
             if (isset($indexedItemsById[$idSalesOrderItem]) || isset($indexedItemsByUuid[$orderItemUuid])) {
                 $returnItemTransfer->setOrderItem(

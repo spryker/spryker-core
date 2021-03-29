@@ -42,8 +42,8 @@ class ReturnMapper
     ): SpySalesReturnItem {
         $salesReturnItemEntity->fromArray($returnItemTransfer->modifiedToArray());
         $salesReturnItemEntity
-            ->setFkSalesReturn($returnItemTransfer->getIdSalesReturn())
-            ->setFkSalesOrderItem($returnItemTransfer->getOrderItem()->getIdSalesOrderItem());
+            ->setFkSalesReturn($returnItemTransfer->getIdSalesReturnOrFail())
+            ->setFkSalesOrderItem($returnItemTransfer->getOrderItemOrFail()->getIdSalesOrderItemOrFail());
 
         return $salesReturnItemEntity;
     }
