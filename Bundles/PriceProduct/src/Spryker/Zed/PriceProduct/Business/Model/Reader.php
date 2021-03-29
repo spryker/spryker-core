@@ -548,7 +548,7 @@ class Reader implements ReaderInterface
             $this->resolvedPrices[$resolvedPriceProductTransfer->getSkuProduct()] = $resolvedPriceProductTransfer;
         }
 
-        return $this->resolvedPrices;
+        return array_values($this->resolvedPrices);
     }
 
     /**
