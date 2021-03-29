@@ -117,7 +117,7 @@ class ShoppingListMapper implements ShoppingListMapperInterface
                 $numberOfItems[$shoppingListItem->getSku()] = 0;
             }
 
-            $numberOfItems[$shoppingListItem->getSku()] += $shoppingListItem->getQuantity();
+            $numberOfItems[$shoppingListItem->getSku()] += (int)$shoppingListItem->getQuantity();
         }
 
         $shoppingListTransfer->setNumberOfItems(array_sum($numberOfItems));
@@ -138,7 +138,7 @@ class ShoppingListMapper implements ShoppingListMapperInterface
         $virtualPropertiesCollection = $shoppingListEntityTransfer->virtualProperties();
 
         if (isset($virtualPropertiesCollection[static::FIELD_NUMBER_OF_ITEMS])) {
-            $shoppingListTransfer->setNumberOfItems($virtualPropertiesCollection[static::FIELD_NUMBER_OF_ITEMS]);
+            $shoppingListTransfer->setNumberOfItems((int)$virtualPropertiesCollection[static::FIELD_NUMBER_OF_ITEMS]);
         }
 
         return $shoppingListTransfer;

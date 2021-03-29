@@ -552,7 +552,7 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
             ->addSelfSelectColumns(true)
             ->withColumn(SpyCustomerTableMap::COL_FIRST_NAME, ShoppingListMapper::FIELD_FIRST_NAME)
             ->withColumn(SpyCustomerTableMap::COL_LAST_NAME, ShoppingListMapper::FIELD_LAST_NAME)
-            ->withColumn(sprintf('COUNT(%s)', SpyShoppingListItemTableMap::COL_ID_SHOPPING_LIST_ITEM), ShoppingListMapper::FIELD_NUMBER_OF_ITEMS)
+            ->withColumn(sprintf('SUM(%s)', SpyShoppingListItemTableMap::COL_QUANTITY), ShoppingListMapper::FIELD_NUMBER_OF_ITEMS)
             ->groupByCreatedAt()
             ->groupByCustomerReference()
             ->groupByDescription()

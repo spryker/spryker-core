@@ -27,9 +27,9 @@ class QuoteApprovalExpanderPlugin extends AbstractPlugin implements QuoteExpande
     protected $quoteIds = [];
 
     /**
-     * @var \Generated\Shared\Transfer\QuoteApprovalTransfer[]
+     * @var \Generated\Shared\Transfer\QuoteApprovalTransfer[]|null
      */
-    protected $quoteApprovalsByIdQuote = [];
+    protected $quoteApprovalsByIdQuote;
 
     /**
      * {@inheritDoc}
@@ -76,7 +76,7 @@ class QuoteApprovalExpanderPlugin extends AbstractPlugin implements QuoteExpande
     public function postExpand(): void
     {
         $this->quoteIds = [];
-        $this->quoteApprovalsByIdQuote = [];
+        $this->quoteApprovalsByIdQuote = null;
     }
 
     /**

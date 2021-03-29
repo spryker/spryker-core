@@ -65,10 +65,12 @@ class QuoteReader implements QuoteReaderInterface
             $this->storeFacade->getCurrentStore()->getIdStore()
         );
 
-        $quoteTransfer = $this->executeExpandQuotePlugins($quoteTransfer);
-
-        $quoteResponseTransfer = $this->setQuoteResponseTransfer($quoteResponseTransfer, $quoteTransfer);
-        $quoteResponseTransfer->setCustomer($customerTransfer);
+        if ($quoteTransfer) {
+            $quoteTransfer = $this->executeExpandQuotePlugins($quoteTransfer);
+            $this->executePostExpandQuotePlugins($quoteTransfer);
+            $quoteResponseTransfer = $this->setQuoteResponseTransfer($quoteResponseTransfer, $quoteTransfer);
+            $quoteResponseTransfer->setCustomer($customerTransfer);
+        }
 
         return $quoteResponseTransfer;
     }
@@ -91,10 +93,12 @@ class QuoteReader implements QuoteReaderInterface
                 $storeTransfer->getIdStore()
             );
 
-        $quoteTransfer = $this->executeExpandQuotePlugins($quoteTransfer);
-
-        $quoteResponseTransfer = $this->setQuoteResponseTransfer($quoteResponseTransfer, $quoteTransfer);
-        $quoteResponseTransfer->setCustomer($customerTransfer);
+        if ($quoteTransfer) {
+            $quoteTransfer = $this->executeExpandQuotePlugins($quoteTransfer);
+            $this->executePostExpandQuotePlugins($quoteTransfer);
+            $quoteResponseTransfer = $this->setQuoteResponseTransfer($quoteResponseTransfer, $quoteTransfer);
+            $quoteResponseTransfer->setCustomer($customerTransfer);
+        }
 
         return $quoteResponseTransfer;
     }
@@ -111,7 +115,10 @@ class QuoteReader implements QuoteReaderInterface
         $quoteTransfer = $this->quoteRepository
             ->findQuoteById($idQuote);
 
-        $quoteTransfer = $this->executeExpandQuotePlugins($quoteTransfer);
+        if ($quoteTransfer) {
+            $quoteTransfer = $this->executeExpandQuotePlugins($quoteTransfer);
+            $this->executePostExpandQuotePlugins($quoteTransfer);
+        }
 
         return $this->setQuoteResponseTransfer($quoteResponseTransfer, $quoteTransfer);
     }
@@ -154,6 +161,7 @@ class QuoteReader implements QuoteReaderInterface
         }
 
         $quoteTransfer = $this->executeExpandQuotePlugins($quoteTransfer);
+        $this->executePostExpandQuotePlugins($quoteTransfer);
 
         return $quoteResponseTransfer
             ->setQuoteTransfer($quoteTransfer)
@@ -184,11 +192,15 @@ class QuoteReader implements QuoteReaderInterface
 
         foreach ($quoteCollectionTransfer->getQuotes() as $quoteTransfer) {
             $this->executePreExpandQuotePlugins($quoteTransfer);
+        }
 
+        foreach ($quoteCollectionTransfer->getQuotes() as $quoteTransfer) {
             $expandedQuotesCollection->addQuote(
                 $this->executeExpandQuotePlugins($quoteTransfer)
             );
+        }
 
+        foreach ($quoteCollectionTransfer->getQuotes() as $quoteTransfer) {
             $this->executePostExpandQuotePlugins($quoteTransfer);
         }
 
@@ -212,20 +224,6 @@ class QuoteReader implements QuoteReaderInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return void
-     */
-    protected function executePostExpandQuotePlugins(QuoteTransfer $quoteTransfer): void
-    {
-        foreach ($this->quoteExpanderPlugins as $quoteExpanderPlugin) {
-            if (method_exists($quoteExpanderPlugin, 'postExpand')) {
-                $quoteExpanderPlugin->postExpand($quoteTransfer);
-            }
-        }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     protected function executeExpandQuotePlugins(QuoteTransfer $quoteTransfer): QuoteTransfer
@@ -235,5 +233,19 @@ class QuoteReader implements QuoteReaderInterface
         }
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    protected function executePostExpandQuotePlugins(QuoteTransfer $quoteTransfer): void
+    {
+        foreach ($this->quoteExpanderPlugins as $quoteExpanderPlugin) {
+            if (method_exists($quoteExpanderPlugin, 'postExpand')) {
+                $quoteExpanderPlugin->postExpand($quoteTransfer);
+            }
+        }
     }
 }
