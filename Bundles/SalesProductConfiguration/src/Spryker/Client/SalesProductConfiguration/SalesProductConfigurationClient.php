@@ -28,7 +28,7 @@ class SalesProductConfigurationClient extends AbstractClient implements SalesPro
     public function expandItemsWithProductConfiguration(array $itemTransfers, OrderTransfer $orderTransfer): array
     {
         return $this->getFactory()
-            ->createItemExpander()
+            ->createProductConfigurationItemExpander()
             ->expandItemsWithProductConfiguration($itemTransfers, $orderTransfer);
     }
 }

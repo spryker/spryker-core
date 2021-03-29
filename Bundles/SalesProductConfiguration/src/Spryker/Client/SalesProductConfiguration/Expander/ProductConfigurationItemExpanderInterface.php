@@ -9,7 +9,7 @@ namespace Spryker\Client\SalesProductConfiguration\Expander;
 
 use Generated\Shared\Transfer\OrderTransfer;
 
-interface ItemExpanderInterface
+interface ProductConfigurationItemExpanderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers

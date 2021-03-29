@@ -11,11 +11,10 @@ use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\DataBuilder\OrderBuilder;
+use Generated\Shared\DataBuilder\SalesOrderItemConfigurationBuilder;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\SalesOrderItemConfigurationTransfer;
-use Spryker\Client\SalesProductConfiguration\Expander\ItemExpander;
-use Spryker\Client\SalesProductConfiguration\SalesProductConfigurationFactory;
 
 /**
  * Auto-generated group annotations
@@ -29,8 +28,11 @@ use Spryker\Client\SalesProductConfiguration\SalesProductConfigurationFactory;
  */
 class SalesProductConfigurationClientTest extends Unit
 {
+    protected const TEST_CONFIGURATION = 'TEST_CONFIGURATION';
+    protected const TEST_CONFIGURATOR_KEY = 'TEST_CONFIGURATOR_KEY';
     protected const TEST_CUSTOMER_REFERENCE = 'TEST_CUSTOMER_REFERENCE';
     protected const TEST_GROUP_KEY = 'TEST_GROUP_KEY';
+    protected const TEST_DISPLAY_DATA = 'TEST_DISPLAY_DATA';
     protected const TEST_ID_SALES_ORDER_ITEM = 1;
     protected const TEST_ORDER_REFERENCE = 'TEST_ORDER_REFERENCE';
     protected const TEST_SALES_ORDER_ITEM_CONFIGURATION_ARRAY = ['TEST_GROUP_KEY'];
@@ -57,8 +59,7 @@ class SalesProductConfigurationClientTest extends Unit
     {
         parent::setUp();
 
-        $this->salesProductConfigurationFactoryMock = $this->createSalesProductConfigurationFactoryMock();
-        $this->salesProductConfigurationClient = $this->tester->getClient()->setFactory($this->salesProductConfigurationFactoryMock);
+        $this->salesProductConfigurationClient = $this->tester->getClient();
     }
 
     /**
@@ -67,49 +68,57 @@ class SalesProductConfigurationClientTest extends Unit
     public function testExpandItemsWithProductConfigurationFromPreviousOrderCheckExpanderSuccess(): void
     {
         //Arrange
-        $orderTransfer = (new OrderBuilder())->build()->fromArray([
-            OrderTransfer::ORDER_REFERENCE => static::TEST_ORDER_REFERENCE,
-            OrderTransfer::CUSTOMER_REFERENCE => static::TEST_CUSTOMER_REFERENCE,
+        $salesOrderItemConfiguration = (new SalesOrderItemConfigurationBuilder())->build()->fromArray([
+            SalesOrderItemConfigurationTransfer::DISPLAY_DATA => static::TEST_DISPLAY_DATA,
+            SalesOrderItemConfigurationTransfer::CONFIGURATION => static::TEST_CONFIGURATION,
+            SalesOrderItemConfigurationTransfer::CONFIGURATOR_KEY => static::TEST_CONFIGURATOR_KEY,
         ]);
-
-        $salesOrderItemConfigurationInstanceMock = $this->getMockBuilder(SalesOrderItemConfigurationTransfer::class)
-            ->onlyMethods(['toArray'])
-            ->getMock();
-
-        $salesOrderItemConfigurationInstanceMock->method('toArray')->willReturn(static::TEST_SALES_ORDER_ITEM_CONFIGURATION_ARRAY);
 
         $itemTransfer = (new ItemBuilder([
             ItemTransfer::ID_SALES_ORDER_ITEM => static::TEST_ID_SALES_ORDER_ITEM,
             ItemTransfer::GROUP_KEY => static::TEST_GROUP_KEY,
-            ItemTransfer::SALES_ORDER_ITEM_CONFIGURATION => $salesOrderItemConfigurationInstanceMock,
+            ItemTransfer::SALES_ORDER_ITEM_CONFIGURATION => $salesOrderItemConfiguration,
         ]))->build();
+
+        $orderTransfer = (new OrderBuilder())->build()->fromArray([
+            OrderTransfer::ORDER_REFERENCE => static::TEST_ORDER_REFERENCE,
+            OrderTransfer::CUSTOMER_REFERENCE => static::TEST_CUSTOMER_REFERENCE,
+        ]);
 
         $salesOrderItems = new ArrayObject();
         $salesOrderItems->append($itemTransfer);
         $orderTransfer->setItems($salesOrderItems);
 
         //Act
+        /** @var \Generated\Shared\Transfer\ItemTransfer[] $itemTransferExpandedCollection */
         $itemTransferExpandedCollection = $this->tester->getClient()->expandItemsWithProductConfiguration([$itemTransfer], $orderTransfer);
-        $isProductConfigurationInstanceComplete = array_shift($itemTransferExpandedCollection)
-            ->getProductConfigurationInstance()
-            ->getIsComplete();
+
+        $productConfigurationInstance = array_shift($itemTransferExpandedCollection)
+            ->getProductConfigurationInstance();
 
         //Assert
         $this->assertSame(
-            true,
-            $isProductConfigurationInstanceComplete,
-            'Expects that order items will be successfully expanded with product configuration from a previous order.'
+            static::TEST_DISPLAY_DATA,
+            $productConfigurationInstance->getDisplayData(),
+            'Expects that order items will be complete after expanded with product configuration from a previous order.'
         );
-    }
 
-    /**
-     * @return \Spryker\Client\SalesProductConfiguration\SalesProductConfigurationFactory
-     */
-    protected function createSalesProductConfigurationFactoryMock(): SalesProductConfigurationFactory
-    {
-        $salesProductConfigurationFactoryMock = $this->createMock(SalesProductConfigurationFactory::class);
-        $salesProductConfigurationFactoryMock->method('createItemExpander')->willReturn(new ItemExpander());
+        $this->assertSame(
+            static::TEST_CONFIGURATION,
+            $productConfigurationInstance->getConfiguration(),
+            'Expects that order items will be complete after expanded with product configuration from a previous order.'
+        );
 
-        return $salesProductConfigurationFactoryMock;
+        $this->assertSame(
+            static::TEST_CONFIGURATOR_KEY,
+            $productConfigurationInstance->getConfiguratorKey(),
+            'Expects that order items will be complete after expanded with product configuration from a previous order.'
+        );
+
+        $this->assertSame(
+            true,
+            $productConfigurationInstance->getIsComplete(),
+            'Expects that order items will be complete after expanded with product configuration from a previous order.'
+        );
     }
 }
