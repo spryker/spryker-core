@@ -25,7 +25,7 @@ class OmsTriggerController extends AbstractController
     protected const URL_PARAM_REDIRECT = 'redirect';
     protected const URL_PARAM_EVENT = 'event';
 
-    protected const MESSAGE_STATUS_CHANGED_SUCCESSFULLY = 'Status change triggered successfully.';
+    protected const MESSAGE_STATUS_CHANGED_SUCCESS = 'Status change triggered successfully.';
 
     protected const ERROR_INVALID_REQUEST = 'Request is invalid';
 
@@ -89,7 +89,7 @@ class OmsTriggerController extends AbstractController
             return $this->redirectResponse($redirect);
         }
 
-        $this->addInfoMessage(static::MESSAGE_STATUS_CHANGED_SUCCESSFULLY);
+        $this->addInfoMessage(static::MESSAGE_STATUS_CHANGED_SUCCESS);
 
         return $this->redirectResponse($redirect);
     }
@@ -140,7 +140,7 @@ class OmsTriggerController extends AbstractController
             return $this->redirectResponse($redirect);
         }
 
-        $this->addInfoMessage(static::MESSAGE_STATUS_CHANGED_SUCCESSFULLY);
+        $this->addInfoMessage(static::MESSAGE_STATUS_CHANGED_SUCCESS);
 
         return $this->redirectResponse($redirect);
     }

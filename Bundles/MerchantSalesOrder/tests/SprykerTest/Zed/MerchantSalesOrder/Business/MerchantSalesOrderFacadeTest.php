@@ -628,7 +628,7 @@ class MerchantSalesOrderFacadeTest extends Unit
      */
     public function testGetMerchantOrderItemCollectionByOrderItemIdsReturnsCorrectData(): void
     {
-        //Arrange
+        // Arrange
         $merchantTransfer = $this->tester->haveMerchant();
         $saveOrderTransfer = $this->tester->getSaveOrderTransfer($merchantTransfer, static::TEST_STATE_MACHINE);
         /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
@@ -654,15 +654,16 @@ class MerchantSalesOrderFacadeTest extends Unit
             ->setOrderItemIds([$itemTransfer->getIdSalesOrderItem()]);
         $expectedMerchantOrderItemsCount = 1;
 
-        //Act
+        // Act
         $merchantOrderItemCollectionTransfer = $this->tester
             ->getFacade()
             ->getMerchantOrderItemCollection($merchantOrderItemCriteriaTransfer);
 
-        //Assert
+        // Assert
         $this->assertCount($expectedMerchantOrderItemsCount, $merchantOrderItemCollectionTransfer->getMerchantOrderItems());
         /** @var \Generated\Shared\Transfer\MerchantOrderItemTransfer $merchantOrderItemTransfer */
         $merchantOrderItemTransfer = $merchantOrderItemCollectionTransfer->getMerchantOrderItems()->offsetGet(0);
+
         $this->assertSame($expectedMerchantOrderItemTransfer->getIdMerchantOrderItem(), $merchantOrderItemTransfer->getIdMerchantOrderItem());
     }
 

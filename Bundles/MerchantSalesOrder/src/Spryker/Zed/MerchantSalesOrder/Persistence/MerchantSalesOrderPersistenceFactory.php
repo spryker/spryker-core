@@ -12,7 +12,6 @@ use Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItemQuery;
 use Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\MerchantSalesOrder\MerchantSalesOrderDependencyProvider;
-use Spryker\Zed\MerchantSalesOrder\Persistence\Propel\Mapper\MerchantMapper;
 use Spryker\Zed\MerchantSalesOrder\Persistence\Propel\Mapper\MerchantSalesOrderMapper;
 
 /**
@@ -48,14 +47,6 @@ class MerchantSalesOrderPersistenceFactory extends AbstractPersistenceFactory
     public function createMerchantSalesOrderMapper(): MerchantSalesOrderMapper
     {
         return new MerchantSalesOrderMapper();
-    }
-
-    /**
-     * @return \Spryker\Zed\MerchantSalesOrder\Persistence\Propel\Mapper\MerchantMapper
-     */
-    public function createMerchantMapper(): MerchantMapper
-    {
-        return new MerchantMapper();
     }
 
     /**

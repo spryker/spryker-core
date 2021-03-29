@@ -38,7 +38,7 @@ class CreateController extends AbstractController
     protected const MESSAGE_MERCHANT_NOT_FOUND_ERROR = 'Merchant for current user not found.';
     protected const MESSAGE_MERCHANT_ORDER_NOT_FOUND_ERROR = 'Merchant sales order #%d not found.';
     protected const MESSAGE_PARAM_ID = '%id%';
-    protected const MESSAGE_RETURN_CREATED = 'Return was successfully created.';
+    protected const MESSAGE_RETURN_CREATED_SUCCESS = 'Return was successfully created.';
     protected const MESSAGE_RETURN_CREATE_FAIL = 'Return has not been created.';
 
     /**
@@ -109,7 +109,7 @@ class CreateController extends AbstractController
             ->createReturn($returnCreateForm->getData(), $orderTransfer);
 
         if ($returnResponseTransfer->getIsSuccessful()) {
-            $this->addSuccessMessage(static::MESSAGE_RETURN_CREATED);
+            $this->addSuccessMessage(static::MESSAGE_RETURN_CREATED_SUCCESS);
 
             $redirectUrl = Url::generate(static::ROUTE_RETURN_DETAIL, [
                 static::PARAM_ID_RETURN => $returnResponseTransfer->getReturnOrFail()->getIdSalesReturn(),
@@ -143,7 +143,7 @@ class CreateController extends AbstractController
         return $this
             ->getFactory()
             ->createMerchantOrderReader()
-            ->findMerchantSalesOrder($merchantOrderCriteriaTransfer);
+            ->findMerchantOrder($merchantOrderCriteriaTransfer);
     }
 
     /**

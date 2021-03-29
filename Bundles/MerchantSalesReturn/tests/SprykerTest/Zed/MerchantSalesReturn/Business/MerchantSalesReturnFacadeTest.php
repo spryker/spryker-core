@@ -32,6 +32,7 @@ class MerchantSalesReturnFacadeTest extends Unit
     protected const TEST_MERCHANT_REFERENCE_1 = 'test-merchant-reference-1';
     protected const TEST_MERCHANT_REFERENCE_2 = 'test-merchant-reference-2';
     protected const TEST_UUID = '3b6743a7-ad62-3779-8648-e0156e51a628';
+    const WRONG_MERCHANT_ORDER_REFERENCE = 'non-existing-merchant';
 
     /**
      * @var \SprykerTest\Zed\MerchantSalesReturn\MerchantSalesReturnBusinessTester
@@ -204,5 +205,23 @@ class MerchantSalesReturnFacadeTest extends Unit
             $merchantTransfer->getMerchantReference(),
             $actualReturnTransfer->getMerchantOrderOrFail()->getMerchantReference()
         );
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandSetsMerchantFailedWrongMerchantOrderReference(): void
+    {
+        // Arrange
+        $returnTransfer = (new ReturnTransfer())
+            ->setMerchantSalesOrderReference(self::WRONG_MERCHANT_ORDER_REFERENCE);
+
+        // Act
+        $actualReturnTransfer = $this->tester
+            ->getFacade()
+            ->expand($returnTransfer);
+
+        // Assert
+        $this->assertNull($actualReturnTransfer->getMerchantOrder());
     }
 }

@@ -10,8 +10,10 @@ namespace Spryker\Zed\MerchantSalesOrder\Persistence\Propel\Mapper;
 use Generated\Shared\Transfer\MerchantOrderItemCollectionTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
+use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\TaxTotalTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
+use Orm\Zed\Merchant\Persistence\SpyMerchant;
 use Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrder;
 use Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItem;
 use Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderTotals;
@@ -213,5 +215,33 @@ class MerchantSalesOrderMapper
         }
 
         return $merchantOrderItemCollectionTransfer;
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection $merchantCollection
+     * @param \Generated\Shared\Transfer\MerchantOrderTransfer[] $merchantOrderTransfers
+     *
+     * @return \Generated\Shared\Transfer\MerchantOrderTransfer[]
+     */
+    public function mapMerchantCollectionToMerchantOrderTransfers(
+        ObjectCollection $merchantCollection,
+        array $merchantOrderTransfers
+    ): array {
+        $merchantTransfers = [];
+        foreach ($merchantCollection as $merchant) {
+            $merchantTransfers[$merchant->getMerchantReference()] = (new MerchantTransfer())
+                ->fromArray(
+                    $merchant->toArray(),
+                    true
+                );
+        }
+
+        foreach ($merchantOrderTransfers as $merchantOrderTransfer) {
+            if (isset($merchantTransfers[$merchantOrderTransfer->getMerchantReference()])) {
+                $merchantOrderTransfer->setMerchant($merchantTransfers[$merchantOrderTransfer->getMerchantReference()]);
+            }
+        }
+
+        return $merchantOrderTransfers;
     }
 }

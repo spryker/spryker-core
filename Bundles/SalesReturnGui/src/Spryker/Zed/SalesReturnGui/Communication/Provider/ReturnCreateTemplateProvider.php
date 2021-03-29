@@ -12,6 +12,9 @@ use Symfony\Component\Form\FormInterface;
 
 class ReturnCreateTemplateProvider implements ReturnCreateTemplateProviderInterface
 {
+    protected const FIELD_RETURN_CREATE_FORM = 'returnCreateForm';
+    protected const FIELD_ORDER = 'order';
+
     /**
      * @var \Spryker\Zed\SalesReturnGuiExtension\Dependency\Plugin\ReturnCreateTemplatePluginInterface[]
      */
@@ -36,8 +39,8 @@ class ReturnCreateTemplateProvider implements ReturnCreateTemplateProviderInterf
     public function provide(FormInterface $returnCreateForm, OrderTransfer $orderTransfer): array
     {
         $templateDefaultData = [
-            'returnCreateForm' => $returnCreateForm->createView(),
-            'order' => $orderTransfer,
+            self::FIELD_RETURN_CREATE_FORM => $returnCreateForm->createView(),
+            self::FIELD_ORDER => $orderTransfer,
         ];
 
         if (empty($this->returnCreateTemplatePlugins)) {

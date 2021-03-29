@@ -43,7 +43,7 @@ interface MerchantSalesReturnFacadeInterface
 
     /**
      * Specification:
-     * - Expands a return transfer.
+     * - Expands a `Return` transfer object.
      *
      * @api
      *

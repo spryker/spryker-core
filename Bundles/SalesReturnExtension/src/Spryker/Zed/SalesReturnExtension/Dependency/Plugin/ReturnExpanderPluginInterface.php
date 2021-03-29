@@ -10,13 +10,13 @@ namespace Spryker\Zed\SalesReturnExtension\Dependency\Plugin;
 use Generated\Shared\Transfer\ReturnTransfer;
 
 /**
- * Allows to expand return transfer with additional data.
+ * Allows to expand `Return` transfer object with additional data.
  */
 interface ReturnExpanderPluginInterface
 {
     /**
      * Specification:
-     * - Expands a return transfer.
+     * - Expands a `Return` transfer object.
      *
      * @api
      *

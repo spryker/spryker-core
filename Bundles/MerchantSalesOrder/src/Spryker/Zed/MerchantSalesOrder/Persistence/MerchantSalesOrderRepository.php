@@ -444,20 +444,9 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
 
         $merchantCollection = $this->getMerchantsByMerchantReferences($merchantReferences);
 
-        $merchantTransfers = [];
-        foreach ($merchantCollection as $merchant) {
-            $merchantTransfers[$merchant->getMerchantReference()] = $this->getFactory()
-                ->createMerchantMapper()
-                ->mapMerchantEntityToMerchantTransfer($merchant, new MerchantTransfer());
-        }
-
-        foreach ($merchantOrderTransfers as $merchantOrderTransfer) {
-            if (isset($merchantTransfers[$merchantOrderTransfer->getMerchantReference()])) {
-                $merchantOrderTransfer->setMerchant($merchantTransfers[$merchantOrderTransfer->getMerchantReference()]);
-            }
-        }
-
-        return $merchantOrderTransfers;
+        return $this->getFactory()
+            ->createMerchantSalesOrderMapper()
+            ->mapMerchantCollectionToMerchantOrderTransfers($merchantCollection, $merchantOrderTransfers);
     }
 
     /**

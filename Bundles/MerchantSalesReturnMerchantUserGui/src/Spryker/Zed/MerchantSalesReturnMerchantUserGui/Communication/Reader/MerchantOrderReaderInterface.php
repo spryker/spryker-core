@@ -18,7 +18,7 @@ interface MerchantOrderReaderInterface
      *
      * @return \Generated\Shared\Transfer\MerchantOrderTransfer|null
      */
-    public function findMerchantSalesOrder(MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer): ?MerchantOrderTransfer;
+    public function findMerchantOrder(MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer): ?MerchantOrderTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\MerchantOrderItemCriteriaTransfer $merchantOrderItemCriteriaTransfer

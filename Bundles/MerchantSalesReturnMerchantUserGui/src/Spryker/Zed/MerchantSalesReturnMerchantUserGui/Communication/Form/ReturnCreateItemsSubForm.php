@@ -136,6 +136,7 @@ class ReturnCreateItemsSubForm extends AbstractType
 
             /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
             $itemTransfer = $form->getData()[ReturnItemTransfer::ORDER_ITEM];
+
             $isChecked = $formEvent->getData()[ItemTransfer::IS_RETURNABLE] ?? false;
 
             if ($isChecked && !$itemTransfer->getIsReturnable()) {

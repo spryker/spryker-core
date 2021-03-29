@@ -44,7 +44,7 @@ class MerchantOrderReader implements MerchantOrderReaderInterface
      *
      * @return \Generated\Shared\Transfer\MerchantOrderTransfer|null
      */
-    public function findMerchantSalesOrder(MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer): ?MerchantOrderTransfer
+    public function findMerchantOrder(MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer): ?MerchantOrderTransfer
     {
         $merchantOrderTransfer = $this
             ->merchantSalesOrderFacade
@@ -69,7 +69,7 @@ class MerchantOrderReader implements MerchantOrderReaderInterface
 
         $merchantOrderItemTransfers = $this->expandMerchantOrderItemsWithManualEvents($merchantOrderItemTransfers);
         $merchantOrderItemTransfers = $this->expandMerchantOrderItemsStateHistory($merchantOrderItemTransfers);
-        $merchantOrderItemTransfers = $this->createMerchantOrderItemsIndexMapping($merchantOrderItemTransfers);
+        $merchantOrderItemTransfers = $this->indexMerchantOrderItemsByIdOrderItem($merchantOrderItemTransfers);
 
         return $merchantOrderItemTransfers;
     }
@@ -113,6 +113,7 @@ class MerchantOrderReader implements MerchantOrderReaderInterface
 
             /** @var \Generated\Shared\Transfer\StateMachineItemTransfer $currentState */
             $currentState = reset($stateHistory);
+
             $merchantOrderItemTransfer->setState($currentState->getStateName());
         }
 
@@ -126,7 +127,7 @@ class MerchantOrderReader implements MerchantOrderReaderInterface
      *
      * @return \Generated\Shared\Transfer\MerchantOrderItemTransfer[]
      */
-    protected function createMerchantOrderItemsIndexMapping(
+    protected function indexMerchantOrderItemsByIdOrderItem(
         MerchantOrderItemCollectionTransfer $merchantOrderItemTransfers
     ): array {
         $indexedMerchantOrderItemTransfers = [];
