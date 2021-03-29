@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\TaxTotalTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
-use Orm\Zed\Merchant\Persistence\SpyMerchant;
 use Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrder;
 use Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItem;
 use Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderTotals;
