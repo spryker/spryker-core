@@ -100,6 +100,12 @@
             },
         }) }}
 
+        <div>
+            {% include '@SalesProductConfigurationGui/Sales/Partials/order-item-product-configuration.twig' ignore missing with {
+                orderItem: orderItem,
+            } %}
+        </div>
+
         {{ form_row(returnItem.customReason, {
             attr: {
                 class: 'js-custom-reason-' ~ productUniqueKey ~ ' hidden',
