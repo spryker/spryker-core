@@ -160,7 +160,7 @@ interface SharedCartFacadeInterface
 
     /**
      * Specification:
-     *  - Returns shares details collection of quote by quote ids.
+     *  - Returns share details collection of quote by quote ids.
      *
      * @api
      *
