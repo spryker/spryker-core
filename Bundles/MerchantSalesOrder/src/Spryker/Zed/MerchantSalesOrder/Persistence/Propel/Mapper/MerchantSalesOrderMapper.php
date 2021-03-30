@@ -229,10 +229,7 @@ class MerchantSalesOrderMapper
         $merchantTransfers = [];
         foreach ($merchantCollection as $merchant) {
             $merchantTransfers[$merchant->getMerchantReference()] = (new MerchantTransfer())
-                ->fromArray(
-                    $merchant->toArray(),
-                    true
-                );
+                ->fromArray($merchant->toArray(), true);
         }
 
         foreach ($merchantOrderTransfers as $merchantOrderTransfer) {

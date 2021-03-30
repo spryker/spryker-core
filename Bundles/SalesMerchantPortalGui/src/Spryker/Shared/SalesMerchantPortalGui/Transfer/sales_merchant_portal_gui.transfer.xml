@@ -248,7 +248,7 @@
     </transfer>
 
     <transfer name="MerchantOrderItemCriteria">
-        <property name="merchantOrderItemIds" type="int[]" singular="merchantOrderItemId"/>
+        <property name="merchantOrderItemIds" type="int[]" singular="idMerchantOrderItem"/>
     </transfer>
 
 </transfers>

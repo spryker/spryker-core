@@ -27,6 +27,8 @@ class ReturnCreateItemsSubForm extends AbstractType
 {
     protected const MESSAGE_RETURN_ITEM_IS_NOT_ELIGIBLE_FOR_RETURN = 'Item selected for return is not eligible for return anymore.';
 
+    protected const PLACEHOLDER_SELECT_REASON = 'Select reason';
+
     public const FIELD_CUSTOM_REASON = 'customReason';
 
     /**
@@ -99,7 +101,7 @@ class ReturnCreateItemsSubForm extends AbstractType
 
             $event->getForm()->add(ReturnItemTransfer::REASON, ChoiceType::class, [
                 'label' => false,
-                'placeholder' => 'Select reason',
+                'placeholder' => static::PLACEHOLDER_SELECT_REASON,
                 'choices' => $options[ReturnCreateForm::OPTION_RETURN_REASONS],
                 'required' => false,
                 'disabled' => !$itemTransfer->getIsReturnable(),

@@ -156,7 +156,7 @@ class CreateController extends AbstractController
         $merchantOrderItemCriteriaTransfer = new MerchantOrderItemCriteriaTransfer();
 
         foreach ($merchantOrderTransfer->getMerchantOrderItems() as $merchantOrderItem) {
-            $merchantOrderItemCriteriaTransfer->addMerchantOrderItemId(
+            $merchantOrderItemCriteriaTransfer->addIdMerchantOrderItem(
                 $merchantOrderItem->getIdMerchantOrderItemOrFail()
             );
         }

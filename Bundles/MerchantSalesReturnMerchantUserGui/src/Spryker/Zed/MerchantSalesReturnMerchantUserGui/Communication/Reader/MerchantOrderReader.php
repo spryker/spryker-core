@@ -69,7 +69,7 @@ class MerchantOrderReader implements MerchantOrderReaderInterface
 
         $merchantOrderItemTransfers = $this->expandMerchantOrderItemsWithManualEvents($merchantOrderItemTransfers);
         $merchantOrderItemTransfers = $this->expandMerchantOrderItemsStateHistory($merchantOrderItemTransfers);
-        $merchantOrderItemTransfers = $this->indexMerchantOrderItemsByIdOrderItem($merchantOrderItemTransfers);
+        $merchantOrderItemTransfers = $this->getMerchantOrderItemsIndexedByIdOrderItem($merchantOrderItemTransfers);
 
         return $merchantOrderItemTransfers;
     }
@@ -127,7 +127,7 @@ class MerchantOrderReader implements MerchantOrderReaderInterface
      *
      * @return \Generated\Shared\Transfer\MerchantOrderItemTransfer[]
      */
-    protected function indexMerchantOrderItemsByIdOrderItem(
+    protected function getMerchantOrderItemsIndexedByIdOrderItem(
         MerchantOrderItemCollectionTransfer $merchantOrderItemTransfers
     ): array {
         $indexedMerchantOrderItemTransfers = [];
