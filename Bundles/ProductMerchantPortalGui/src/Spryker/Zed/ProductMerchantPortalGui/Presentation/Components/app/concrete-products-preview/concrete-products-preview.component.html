@@ -18,11 +18,12 @@
         <ng-content select="[col-name-name]"></ng-content>
     </div>
     <div class="mp-concrete-products-preview__table-content">
+        <p>{{attributes | json}}</p>
         <cdk-virtual-scroll-viewport itemSize="50">
             <div *cdkVirtualFor="let attribute of attributes">
                 <div *ngFor="let product of generatedProducts">
                     <div *ngFor="let superAttribute of product.superAttributes">
-                        {{ superAttribute.name }}
+                        {{ superAttribute.title }}
                     </div>
                     <spy-input [value]="product.sku"></spy-input>
                     <spy-input [value]="product.name"></spy-input>

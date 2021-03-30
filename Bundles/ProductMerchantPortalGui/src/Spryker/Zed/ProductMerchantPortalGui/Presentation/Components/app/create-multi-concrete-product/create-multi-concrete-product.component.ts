@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
+import { ToJson } from '@spryker/utils';
 import { ProductAttribute } from '../product-attributes-selector/types';
 
 @Component({
@@ -10,7 +11,7 @@ import { ProductAttribute } from '../product-attributes-selector/types';
     host: { class: 'mp-create-multi-concrete-product' },
 })
 export class CreateMultiConcreteProductComponent {
-    @Input() attributes: ProductAttribute[];
+    @Input() @ToJson() attributes: ProductAttribute[];
     @Input() productsName: string;
 
     selectedAttributes: ProductAttribute[] = [];

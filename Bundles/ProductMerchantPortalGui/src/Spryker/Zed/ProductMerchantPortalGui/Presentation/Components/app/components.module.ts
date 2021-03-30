@@ -4,7 +4,8 @@ import { ButtonModule, ButtonComponent } from '@spryker/button';
 import { TabComponent, TabsComponent, TabsModule } from '@spryker/tabs';
 import { TextareaComponent, TextareaModule } from '@spryker/textarea';
 import { TreeSelectComponent, TreeSelectModule } from '@spryker/tree-select';
-import { IconGermanyModule, IconUnitedStatesModule, IconDeleteModule } from '../icons';
+import { IconPlusModule } from '@spryker/icon/icons';
+import { IconGermanyModule, IconUnitedStatesModule, IconDeleteModule, IconNoDataModule } from '../icons';
 import { ProductListComponent } from './product-list/product-list.component';
 import { ProductListModule } from './product-list/product-list.module';
 import { CardModule, CardComponent } from '@spryker/card';
@@ -62,6 +63,8 @@ import { ConcreteProductGeneratorDataComponent } from './concrete-product-genera
         IconGermanyModule,
         IconUnitedStatesModule,
         IconDeleteModule,
+        IconNoDataModule,
+        IconPlusModule,
         TextareaModule,
         RadioModule,
         ImageSetsModule,

@@ -1,26 +1,95 @@
-{#{% form_theme form '@ZedUi/Form/form-webcomponent-layout.twig' %}#}
+{% form_theme form '@ZedUi/Form/form-webcomponent-layout.twig' %}
 
 {% block body %}
-    {% set mainClass = 'mp-edit-abstract-product' %}
+    {% set mainClass = 'mp-create-multi-concrete-product' %}
 
-    {{ form_start(form, {attr: {excludeFormTag: true}}) }}
+    {# TODO: replace with real data #}
+    {% set mockedSku = 'sku' %}
+    {% set mockedName = 'name' %}
+    {% set mockedProductsName = 'name' %}
+    {% set mockedData = '[
+        {
+            "title": "name1",
+            "value": "value1",
+            "values": [
+                {
+                    "title": "name11",
+                    "value": "value11"
+                },
+                {
+                    "title": "name12",
+                    "value": "value12"
+                },
+                {
+                    "title": "name13",
+                    "value": "value13"
+                }
+            ]
+        },
+        {
+            "title": "name2",
+            "value": "value2",
+            "values": [
+                {
+                    "title": "name21",
+                    "value": "value21"
+                }
+            ]
+        }
+    ]' %}
 
-    {% block action %}
-        <web-spy-button size="lg" type="submit" name="back" action>{{ 'Back' | trans }}</web-spy-button>
-        <web-spy-button size="lg" type="submit" action>{{ 'Create' | trans }}</web-spy-button>
+    {% block createMultiConcreteProduct %}
+        <web-mp-concrete-product-generator-data
+            cloak
+            abstract-sku="{{ mockedSku }}"
+            abstract-name="{{ mockedName }}">
+            <web-mp-create-multi-concrete-product
+                attributes="{{ mockedData }}"
+                products-name="{{ mockedProductsName }}">
+                {{ form_start(form, { attr: { excludeFormTag: true } }) }}
+                    {% block title %}
+                        <span title>{{ 'Create an Abstract Product with multiple Concrete Products' | trans }}</span>
+                    {% endblock %}
+
+                    {% block actions %}
+                        <div action class="{{ mainClass }}__actions-row">
+                            <web-spy-button cloak size="lg" type="submit" variant="secondary" name="back" class="{{ mainClass }}__action">
+                                {{ 'Back' | trans }}
+                            </web-spy-button>
+                            <web-spy-button cloak size="lg" type="submit" class="{{ mainClass }}__action">
+                                {{ 'Create' | trans }}
+                            </web-spy-button>
+                        </div>
+                    {% endblock %}
+
+                    <span selector-col-attr-name>{{ 'Super Attribute' | trans }} *</span>
+                    <span selector-col-attr-values-name>{{ 'Values' | trans }} *</span>
+                    <span selector-btn-attr-add-name>
+                        <web-spy-icon name="plus"></web-spy-icon>
+                        {{ 'Add' | trans }}
+                    </span>
+
+                    <h3 preview-text>{{ 'Concrete Products’ Preview' | trans }}</h3>
+
+                    <span preview-total-text>{{ 'to be created' | trans }}</span>
+                    <span preview-auto-sku-text>{{ 'Autogenerate SKUs' | trans }}</span>
+                    <span preview-auto-name-text>{{ 'Same Name as Abstract Product' | trans }}</span>
+                    <span preview-col-attr-name>{{ 'Super attribute value' | trans }}</span>
+                    <span preview-col-sku-name>{{ 'SKU' | trans }}</span>
+                    <span preview-col-name-name>{{ 'Name default' | trans }}</span>
+                    <span preview-no-data-text>{{ 'No concretes created yet' | trans }}</span>
+
+{#                    {% for productManagementAttribute in productManagementAttributes %}#}
+{#                        <p>{{ productManagementAttribute.key }}:</p>#}
+{#                        <p>#}
+{#                            {% for productManagementAttributeValue in productManagementAttribute.values %}#}
+{#                                {{ productManagementAttributeValue.value }},#}
+{#                            {% endfor %}#}
+{#                        </p>#}
+{#                    {% endfor %}#}
+
+                {{ form_end(form) }}
+            </web-mp-create-multi-concrete-product>
+        </web-mp-concrete-product-generator-data>
     {% endblock %}
-
-    {% for productManagementAttribute in productManagementAttributes %}
-        <p>{{ productManagementAttribute.key }}:</p>
-
-        <p>
-            {% for productManagementAttributeValue in productManagementAttribute.values %}
-                {{ productManagementAttributeValue.value }},
-            {% endfor %}
-        </p>
-
-    {% endfor %}
-
-    {{ form_end(form) }}
-
 {% endblock %}

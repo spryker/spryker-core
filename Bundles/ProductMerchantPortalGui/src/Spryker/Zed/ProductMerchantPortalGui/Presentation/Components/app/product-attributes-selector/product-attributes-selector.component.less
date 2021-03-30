@@ -1,0 +1,53 @@
+@import '~@spryker/styles/src/lib/themes/default/variables/index.less';
+
+@product-attributes-selector-col-padding: 0 8px;
+@product-attributes-selector-row-margin: 0 -8px;
+@product-attributes-selector-name-max-width: 220px;
+@product-attributes-selector-value-max-width: 600px;
+
+.mp-product-attributes-selector {
+    &__header {
+        display: flex;
+        margin: @product-attributes-selector-row-margin;
+
+        &-name {
+            max-width: @product-attributes-selector-name-max-width;
+            width: 100%;
+        }
+
+        &-values-name {
+            max-width: @product-attributes-selector-value-max-width;
+            width: 100%;
+        }
+    }
+
+    &__label {
+        color: @ink;
+        font-size: @font-size-sm;
+        font-weight: @font-weight-medium;
+        text-transform: uppercase;
+        padding: @product-attributes-selector-col-padding;
+    }
+
+    &__content-row {
+        display: flex;
+        align-items: center;
+        margin: @product-attributes-selector-row-margin;
+
+        &-name {
+            max-width: @product-attributes-selector-name-max-width;
+            padding: @product-attributes-selector-col-padding;
+            width: 100%;
+        }
+
+        &-values-name {
+            max-width: @product-attributes-selector-value-max-width;
+            padding: @product-attributes-selector-col-padding;
+            width: 100%;
+        }
+
+        &-button {
+            padding: @product-attributes-selector-col-padding;
+        }
+    }
+}

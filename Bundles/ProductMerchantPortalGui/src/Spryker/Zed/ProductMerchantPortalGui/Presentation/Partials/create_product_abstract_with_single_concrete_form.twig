@@ -21,7 +21,8 @@
                     </div>
                 {% endblock %}
 
-                <web-spy-card spy-title="{{ form.concreteSku.vars.label | trans }} {{ form.concreteSku.vars.required ? '*' }}"
+                <web-spy-card cloak
+                              spy-title="{{ form.concreteSku.vars.label | trans }} {{ form.concreteSku.vars.required ? '*' }}"
                               class="{{ mainClass }}__card">
                     <web-mp-autogenerate-input
                         name="{{ form.concreteSku.vars.full_name }}"
@@ -36,7 +37,8 @@
                     {% do form.autogenerateSku.setRendered %}
                 </web-spy-card>
 
-                <web-spy-card spy-title="{{ form.concreteName.vars.label | trans }} {{ form.concreteName.vars.required ? '*' }}"
+                <web-spy-card cloak
+                              spy-title="{{ form.concreteName.vars.label | trans }} {{ form.concreteName.vars.required ? '*' }}"
                               class="{{ mainClass }}__card">
                     <web-mp-autogenerate-input
                         name="{{ form.concreteName.vars.full_name }}"
