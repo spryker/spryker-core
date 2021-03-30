@@ -74,7 +74,7 @@ class QuoteApprovalRepository extends AbstractRepository implements QuoteApprova
      *
      * @return \Generated\Shared\Transfer\QuoteApprovalTransfer[]
      */
-    public function getQuoteApprovals(QuoteApprovalRequestTransfer $quoteApprovalsRequestTransfer): array
+    public function getQuoteApprovalsIdexedByQuoteId(QuoteApprovalRequestTransfer $quoteApprovalsRequestTransfer): array
     {
         $quoteIds = $quoteApprovalsRequestTransfer->getQuoteIds();
         $quoteApprovalEntities = $this->getQuoteApprovalsEntitiesByQuoteIds($quoteIds);

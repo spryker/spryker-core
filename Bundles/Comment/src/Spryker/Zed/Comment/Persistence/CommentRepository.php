@@ -39,7 +39,7 @@ class CommentRepository extends AbstractRepository implements CommentRepositoryI
             ->find()
             ->getFirst();
 
-        if (!$commentThreadEntity) {
+        if ($commentThreadEntity === null) {
             return null;
         }
 
@@ -74,14 +74,12 @@ class CommentRepository extends AbstractRepository implements CommentRepositoryI
      */
     public function findCommentThreadById(CommentThreadTransfer $commentThreadTransfer): ?CommentThreadTransfer
     {
-        $commentThreadTransfer->requireIdCommentThread();
-
         $commentThreadEntity = $this->getFactory()
             ->getCommentThreadPropelQuery()
-            ->filterByIdCommentThread($commentThreadTransfer->getIdCommentThread())
+            ->filterByIdCommentThread($commentThreadTransfer->getIdCommentThreadOrFail())
             ->findOne();
 
-        if (!$commentThreadEntity) {
+        if ($commentThreadEntity === null) {
             return null;
         }
 
@@ -214,8 +212,7 @@ class CommentRepository extends AbstractRepository implements CommentRepositoryI
             ->createCommentMapper();
 
         foreach ($commentThreadEntities as $commentThreadEntity) {
-            $ownerId = $commentThreadEntity->getOwnerId();
-            $commentThreadTransfers[$ownerId] = $mapper
+            $commentThreadTransfers[] = $mapper
                 ->mapCommentThreadEntityToCommentThreadTransfer($commentThreadEntity, new CommentThreadTransfer());
         }
 
