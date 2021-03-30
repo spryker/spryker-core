@@ -78,11 +78,6 @@ use Symfony\Component\Validator\Constraint;
 class PriceProductBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @var \Spryker\Zed\PriceProduct\Business\Model\ReaderInterface
-     */
-    private $reader;
-
-    /**
      * @return \Spryker\Zed\PriceProduct\Business\Model\ReaderInterface
      */
     public function createReaderModel(): ReaderInterface

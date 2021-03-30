@@ -14,7 +14,7 @@ interface QuotePreExpanderPluginInterface
     /**
      * Specification:
      * - Collects needed information for executing a single select on the database in the first call of the
-     *   `\Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteExpanderPluginInterface::expand()` method.
+     *   {@link \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteExpanderPluginInterface::expand() } method.
      *
      * @api
      *

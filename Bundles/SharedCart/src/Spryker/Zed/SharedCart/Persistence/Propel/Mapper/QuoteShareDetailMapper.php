@@ -60,13 +60,13 @@ class QuoteShareDetailMapper implements QuoteShareDetailMapperInterface
         $shareDetailCollectionByQuoteId = [];
         $indexedQuotePermissionGroupTransfers = $this->indexQuotePermissionGroupById($quotePermissionGroupTransfers);
         foreach ($quoteCompanyUserEntities as $quoteCompanyUserEntity) {
-            $quoteId = $quoteCompanyUserEntity->getFkQuote();
-            if ($shareDetailCollectionByQuoteId[$quoteId] === null) {
-                $shareDetailCollectionByQuoteId[$quoteId] = new ShareDetailCollectionTransfer();
+            $idQuote = $quoteCompanyUserEntity->getFkQuote();
+            if ($shareDetailCollectionByQuoteId[$idQuote] === null) {
+                $shareDetailCollectionByQuoteId[$idQuote] = new ShareDetailCollectionTransfer();
             }
 
             $shareDetailTransfer = $this->mapShareDetailTransfer($quoteCompanyUserEntity, $indexedQuotePermissionGroupTransfers);
-            $shareDetailCollectionByQuoteId[$quoteId]->addShareDetail($shareDetailTransfer);
+            $shareDetailCollectionByQuoteId[$idQuote]->addShareDetail($shareDetailTransfer);
         }
 
         return $shareDetailCollectionByQuoteId;
