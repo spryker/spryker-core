@@ -8,6 +8,7 @@
 namespace Spryker\Client\ProductStorage\Mapper;
 
 use Generated\Shared\Transfer\ProductViewTransfer;
+use Spryker\Client\ProductStorage\Filter\ProductAttributeFilterInterface;
 use Spryker\Client\ProductStorage\Storage\ProductConcreteStorageReaderInterface;
 use Spryker\Shared\Product\ProductConfig;
 
@@ -19,11 +20,20 @@ class ProductVariantExpander implements ProductVariantExpanderInterface
     protected $productConcreteStorageReader;
 
     /**
-     * @param \Spryker\Client\ProductStorage\Storage\ProductConcreteStorageReaderInterface $productConcreteStorageReader
+     * @var \Spryker\Client\ProductStorage\Filter\ProductAttributeFilterInterface
      */
-    public function __construct(ProductConcreteStorageReaderInterface $productConcreteStorageReader)
-    {
+    protected $productAttributeFilter;
+
+    /**
+     * @param \Spryker\Client\ProductStorage\Storage\ProductConcreteStorageReaderInterface $productConcreteStorageReader
+     * @param \Spryker\Client\ProductStorage\Filter\ProductAttributeFilterInterface $productAttributeFilter
+     */
+    public function __construct(
+        ProductConcreteStorageReaderInterface $productConcreteStorageReader,
+        ProductAttributeFilterInterface $productAttributeFilter
+    ) {
         $this->productConcreteStorageReader = $productConcreteStorageReader;
+        $this->productAttributeFilter = $productAttributeFilter;
     }
 
     /**
@@ -107,6 +117,13 @@ class ProductVariantExpander implements ProductVariantExpanderInterface
             return [];
         }
 
+        if ($productViewTransfer->getAttributeMap()->getAttributeVariantMap()) {
+            return $this->getVariantNodeByAttributeVariantMap(
+                $productViewTransfer->getSelectedAttributes(),
+                $productViewTransfer->getAttributeMap()->getAttributeVariantMap()
+            );
+        }
+
         return $this->buildAttributeMapFromSelected(
             $productViewTransfer->getSelectedAttributes(),
             $productViewTransfer->getAttributeMap()->getAttributeVariants()
@@ -119,14 +136,17 @@ class ProductVariantExpander implements ProductVariantExpanderInterface
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
-    protected function setAvailableAttributes(array $selectedVariantNode, ProductViewTransfer $storageProductTransfer)
+    protected function setAvailableAttributes(array $selectedVariantNode, ProductViewTransfer $storageProductTransfer): ProductViewTransfer
     {
-        $storageProductTransfer->setAvailableAttributes($this->findAvailableAttributes($selectedVariantNode));
+        $availableAttributes = $this->productAttributeFilter
+            ->filterAvailableProductAttributes($selectedVariantNode, $storageProductTransfer);
 
-        return $storageProductTransfer;
+        return $storageProductTransfer->setAvailableAttributes($availableAttributes);
     }
 
     /**
+     * @deprecated Exists for Backward Compatibility reasons only. Use {@link getVariantNodeByAttributeVariantMap()} instead.
+     *
      * @param array $selectedAttributes
      * @param array $attributeVariants
      *
@@ -139,22 +159,6 @@ class ProductVariantExpander implements ProductVariantExpanderInterface
         $attributePath = $this->buildAttributePath($selectedAttributes);
 
         return $this->findSelectedNode($attributeVariants, $attributePath);
-    }
-
-    /**
-     * @param array $selectedNode
-     * @param array $filteredAttributes
-     *
-     * @return array
-     */
-    protected function findAvailableAttributes(array $selectedNode, array $filteredAttributes = [])
-    {
-        foreach (array_keys($selectedNode) as $attributePath) {
-            [$key, $value] = explode(ProductConfig::ATTRIBUTE_MAP_PATH_DELIMITER, $attributePath);
-            $filteredAttributes[$key][] = $value;
-        }
-
-        return $filteredAttributes;
     }
 
     /**
@@ -316,5 +320,24 @@ class ProductVariantExpander implements ProductVariantExpanderInterface
         $productViewTransfer->setSelectedAttributes($autoSelectedSingleValueSuperAttributes + $originalSelectedAttributes);
 
         return $productViewTransfer;
+    }
+
+    /**
+     * @param array $selectedAttributes
+     * @param array $attributeVariantMap
+     *
+     * @return array
+     */
+    protected function getVariantNodeByAttributeVariantMap(array $selectedAttributes, array $attributeVariantMap): array
+    {
+        foreach ($attributeVariantMap as $idProductConcrete => $productSuperAttributes) {
+            if ($selectedAttributes != $productSuperAttributes) {
+                continue;
+            }
+
+            return [ProductConfig::VARIANT_LEAF_NODE_ID => $idProductConcrete];
+        }
+
+        return [];
     }
 }

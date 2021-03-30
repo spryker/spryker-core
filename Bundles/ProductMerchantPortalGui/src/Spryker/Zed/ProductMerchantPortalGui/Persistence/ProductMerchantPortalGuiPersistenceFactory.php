@@ -8,13 +8,18 @@
 namespace Spryker\Zed\ProductMerchantPortalGui\Persistence;
 
 use Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery;
+use Orm\Zed\PriceProduct\Persistence\SpyPriceProductDefaultQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery;
 use Orm\Zed\ProductImage\Persistence\SpyProductImageQuery;
 use Orm\Zed\Store\Persistence\SpyStoreQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToPriceProductFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Service\ProductMerchantPortalGuiToUtilEncodingServiceInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Persistence\Propel\PriceProductAbstractTableDataMapper;
 use Spryker\Zed\ProductMerchantPortalGui\Persistence\Propel\ProductAbstractTableDataMapper;
+use Spryker\Zed\ProductMerchantPortalGui\Persistence\Propel\ProductTableDataMapper;
+use Spryker\Zed\ProductMerchantPortalGui\Persistence\Propel\PropelModelPagerMapper;
 use Spryker\Zed\ProductMerchantPortalGui\ProductMerchantPortalGuiDependencyProvider;
 
 /**
@@ -29,6 +34,30 @@ class ProductMerchantPortalGuiPersistenceFactory extends AbstractPersistenceFact
     public function createProductAbstractTableDataMapper(): ProductAbstractTableDataMapper
     {
         return new ProductAbstractTableDataMapper($this->getUtilEncodingService());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Persistence\Propel\PriceProductAbstractTableDataMapper
+     */
+    public function createPriceProductAbstractTableDataMapper(): PriceProductAbstractTableDataMapper
+    {
+        return new PriceProductAbstractTableDataMapper($this->getPriceProductFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Persistence\Propel\PropelModelPagerMapper
+     */
+    public function createPropelModelPagerMapper(): PropelModelPagerMapper
+    {
+        return new PropelModelPagerMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Persistence\Propel\ProductTableDataMapper
+     */
+    public function createProductTableDataMapper(): ProductTableDataMapper
+    {
+        return new ProductTableDataMapper($this->getUtilEncodingService());
     }
 
     /**
@@ -82,10 +111,28 @@ class ProductMerchantPortalGuiPersistenceFactory extends AbstractPersistenceFact
     }
 
     /**
+     * @phpstan-return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductDefaultQuery<\Orm\Zed\PriceProduct\Persistence\SpyPriceProductDefaultQuery>
+     *
+     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductDefaultQuery
+     */
+    public function getPriceProductDefaultPropelQuery(): SpyPriceProductDefaultQuery
+    {
+        return $this->getProvidedDependency(ProductMerchantPortalGuiDependencyProvider::PROPEL_QUERY_PRICE_PRODUCT_DEFAULT);
+    }
+
+    /**
      * @return \Spryker\Zed\ProductMerchantPortalGui\Dependency\Service\ProductMerchantPortalGuiToUtilEncodingServiceInterface
      */
     public function getUtilEncodingService(): ProductMerchantPortalGuiToUtilEncodingServiceInterface
     {
         return $this->getProvidedDependency(ProductMerchantPortalGuiDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToPriceProductFacadeInterface
+     */
+    public function getPriceProductFacade(): ProductMerchantPortalGuiToPriceProductFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductMerchantPortalGuiDependencyProvider::FACADE_PRICE_PRODUCT);
     }
 }

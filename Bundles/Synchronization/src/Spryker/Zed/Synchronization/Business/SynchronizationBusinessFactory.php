@@ -21,6 +21,7 @@ use Spryker\Zed\Synchronization\Business\Search\SynchronizationSearch;
 use Spryker\Zed\Synchronization\Business\Storage\SynchronizationStorage;
 use Spryker\Zed\Synchronization\Business\Validation\OutdatedValidator;
 use Spryker\Zed\Synchronization\SynchronizationDependencyProvider;
+use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryExpanderStrategyPluginInterface;
 
 /**
  * @method \Spryker\Zed\Synchronization\SynchronizationConfig getConfig()
@@ -71,8 +72,17 @@ class SynchronizationBusinessFactory extends AbstractBusinessFactory
         return new QueryContainerExporter(
             $this->getQueueClient(),
             $this->createQueueMessageCreator(),
+            $this->getSynchronizationDataQueryExpanderStrategyPlugin(),
             $this->getConfig()->getSyncExportChunkSize()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryExpanderStrategyPluginInterface
+     */
+    public function getSynchronizationDataQueryExpanderStrategyPlugin(): SynchronizationDataQueryExpanderStrategyPluginInterface
+    {
+        return $this->getProvidedDependency(SynchronizationDependencyProvider::PLUGIN_SYNCHRONIZATION_DATA_QUERY_EXPANDER_STRATEGY);
     }
 
     /**

@@ -11,7 +11,9 @@ use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\NotCompromisedPassword;
 
 /**
  * @method \Spryker\Zed\SecurityGui\Communication\SecurityGuiCommunicationFactory getFactory()
@@ -51,6 +53,11 @@ class ResetPasswordForm extends AbstractType
         $builder->add(self::FIELD_PASSWORD, RepeatedType::class, [
             'constraints' => [
                 new NotBlank(),
+                new Length([
+                    'min' => $this->getConfig()->getUserPasswordMinLength(),
+                    'max' => $this->getConfig()->getUserPasswordMaxLength(),
+                ]),
+                new NotCompromisedPassword(),
             ],
             'invalid_message' => 'The password fields must match.',
             'first_options' => [

@@ -1,42 +1,5 @@
 {
     "error": [],
-    "warning": [
-        {
-            "severity": "info",
-            "line_from": 41,
-            "line_to": 41,
-            "type": "InvalidNullableReturnType",
-            "message": "The declared return type 'string' for Spryker\\Zed\\MerchantOmsGui\\Communication\\Plugin\\Sales\\MerchantOmsStateOrderItemsTableExpanderPlugin::getColumnCellContent is not nullable, but 'null|string' contains null",
-            "file_name": "vendor/spryker/spryker/Bundles/MerchantOmsGui/src/Spryker/Zed/MerchantOmsGui/Communication/Plugin/Sales/MerchantOmsStateOrderItemsTableExpanderPlugin.php",
-            "snippet": "     * @return string",
-            "selected_text": "string",
-            "error_level": 5,
-            "shortcode": 144
-        },
-        {
-            "severity": "info",
-            "line_from": 50,
-            "line_to": 50,
-            "type": "PossiblyNullArgument",
-            "message": "Argument 1 of Spryker\\Zed\\MerchantOmsGui\\Dependency\\Facade\\MerchantOmsGuiToMerchantOmsFacadeInterface::findCurrentStateByIdSalesOrderItem cannot be null, possibly null value provided",
-            "file_name": "vendor/spryker/spryker/Bundles/MerchantOmsGui/src/Spryker/Zed/MerchantOmsGui/Communication/Plugin/Sales/MerchantOmsStateOrderItemsTableExpanderPlugin.php",
-            "snippet": "            ->findCurrentStateByIdSalesOrderItem($itemTransfer->getIdSalesOrderItem());",
-            "selected_text": "$itemTransfer->getIdSalesOrderItem()",
-            "error_level": 3,
-            "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 52,
-            "line_to": 52,
-            "type": "NullableReturnStatement",
-            "message": "The declared return type 'string' for Spryker\\Zed\\MerchantOmsGui\\Communication\\Plugin\\Sales\\MerchantOmsStateOrderItemsTableExpanderPlugin::getColumnCellContent is not nullable, but the function returns 'null|string'",
-            "file_name": "vendor/spryker/spryker/Bundles/MerchantOmsGui/src/Spryker/Zed/MerchantOmsGui/Communication/Plugin/Sales/MerchantOmsStateOrderItemsTableExpanderPlugin.php",
-            "snippet": "        return $stateMachineItemTransfer ? $stateMachineItemTransfer->getStateName() : '';",
-            "selected_text": "$stateMachineItemTransfer ? $stateMachineItemTransfer->getStateName() : ''",
-            "error_level": 5,
-            "shortcode": 139
-        }
-    ],
+    "warning": [],
     "deprecation": []
 }

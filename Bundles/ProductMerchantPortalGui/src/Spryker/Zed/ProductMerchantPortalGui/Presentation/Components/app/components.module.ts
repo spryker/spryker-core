@@ -1,48 +1,55 @@
 import { NgModule } from '@angular/core';
 import { CustomElementModule, WebComponentDefs } from '@spryker/web-components';
-import { ButtonModule, ButtonComponent, ButtonLinkModule, ButtonLinkComponent } from '@spryker/button';
-
+import { TabComponent, TabsComponent, TabsModule } from '@spryker/tabs';
+import { TreeSelectComponent, TreeSelectModule } from '@spryker/tree-select';
+import { IconGermanyModule, IconUnitedStatesModule } from '../icons';
 import { ProductListComponent } from './product-list/product-list.component';
 import { ProductListModule } from './product-list/product-list.module';
-import { ChipsModule, ChipsComponent } from '@spryker/chips';
-import { ToggleModule, ToggleComponent } from '@spryker/toggle';
 import { CardModule, CardComponent } from '@spryker/card';
-import { SelectModule, SelectComponent } from '@spryker/select';
-import { InputModule, InputComponent } from '@spryker/input';
-import { CheckboxModule, CheckboxComponent } from '@spryker/checkbox';
-import { DateRangePickerModule, DateRangePickerComponent } from '@spryker/date-picker';
 import { CollapsibleModule, CollapsibleComponent } from '@spryker/collapsible';
-import { FormItemModule, FormItemComponent } from '@spryker/form-item';
+import { EditAbstractProductComponent } from './edit-abstract-product/edit-abstract-product.component';
+import { EditAbstractProductModule } from './edit-abstract-product/edit-abstract-product.module';
+import { EditAbstractProductPricesComponent } from './edit-abstract-product-prices/edit-abstract-product-prices.component';
+import { EditAbstractProductPricesModule } from './edit-abstract-product-prices/edit-abstract-product-prices.module';
+import { EditAbstractProductAttributesComponent } from './edit-abstract-product-attributes/edit-abstract-product-attributes.component';
+import { EditAbstractProductAttributesModule } from './edit-abstract-product-attributes/edit-abstract-product-attributes.module';
+import { ImageSetsComponent } from './image-sets/image-sets.component';
+import { ImageSetsModule } from './image-sets/image-sets.module';
+import { EditAbstractProductVariantsComponent } from './edit-abstract-product-variants/edit-abstract-product-variants.component';
+import { EditAbstractProductVariantsModule } from './edit-abstract-product-variants/edit-abstract-product-variants.module';
+import { BulkEditProductVariantsComponent } from './bulk-edit-product-variants/bulk-edit-product-variants.component';
+import { BulkEditProductVariantsModule } from './bulk-edit-product-variants/bulk-edit-product-variants.module';
 
 @NgModule({
     imports: [
         ProductListModule,
-        ButtonModule,
-        ButtonLinkModule,
-        FormItemModule,
-        CollapsibleModule,
+        EditAbstractProductModule,
+        TabsModule,
         CardModule,
-        DateRangePickerModule,
-        CheckboxModule,
-        InputModule,
-        SelectModule,
-        ToggleModule,
-        ChipsModule,
+        TreeSelectModule,
+        CollapsibleModule,
+        EditAbstractProductAttributesModule,
+        EditAbstractProductPricesModule,
+        IconGermanyModule,
+        IconUnitedStatesModule,
+        ImageSetsModule,
+        BulkEditProductVariantsModule,
+        EditAbstractProductVariantsModule,
     ],
 })
 export class ComponentsModule extends CustomElementModule {
     protected components: WebComponentDefs = [
         ProductListComponent,
-        ButtonLinkComponent,
-        ButtonComponent,
-        ChipsComponent,
-        ToggleComponent,
-        InputComponent,
-        SelectComponent,
+        EditAbstractProductComponent,
+        TabComponent,
+        TabsComponent,
         CardComponent,
-        DateRangePickerComponent,
-        CheckboxComponent,
+        TreeSelectComponent,
         CollapsibleComponent,
-        FormItemComponent,
+        EditAbstractProductAttributesComponent,
+        EditAbstractProductPricesComponent,
+        ImageSetsComponent,
+        BulkEditProductVariantsComponent,
+        EditAbstractProductVariantsComponent,
     ];
 }

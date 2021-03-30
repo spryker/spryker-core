@@ -14,6 +14,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
  * @method \Spryker\Zed\AvailabilityStorage\Persistence\AvailabilityStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\AvailabilityStorage\AvailabilityStorageConfig getConfig()
  * @method \Spryker\Zed\AvailabilityStorage\Business\AvailabilityStorageFacadeInterface getFacade()
+ * @method \Spryker\Zed\AvailabilityStorage\Persistence\AvailabilityStorageRepositoryInterface getRepository()
  */
 class AvailabilityStorageCommunicationFactory extends AbstractCommunicationFactory
 {

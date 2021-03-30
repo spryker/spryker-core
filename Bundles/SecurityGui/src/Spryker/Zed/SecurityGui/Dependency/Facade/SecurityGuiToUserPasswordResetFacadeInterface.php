@@ -7,14 +7,16 @@
 
 namespace Spryker\Zed\SecurityGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\UserPasswordResetRequestTransfer;
+
 interface SecurityGuiToUserPasswordResetFacadeInterface
 {
     /**
-     * @param string $email
+     * @param \Generated\Shared\Transfer\UserPasswordResetRequestTransfer $userPasswordResetRequestTransfer
      *
      * @return bool
      */
-    public function requestPasswordReset(string $email): bool;
+    public function requestPasswordReset(UserPasswordResetRequestTransfer $userPasswordResetRequestTransfer): bool;
 
     /**
      * @param string $token

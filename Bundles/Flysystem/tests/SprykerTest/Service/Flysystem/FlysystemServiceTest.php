@@ -10,6 +10,8 @@ namespace SprykerTest\Service\Flysystem;
 use Codeception\Configuration;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\FlysystemResourceMetadataTransfer;
+use Generated\Shared\Transfer\FlysystemResourceTransfer;
+use PHPUnit\Framework\Assert;
 use Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException;
 use Spryker\Service\Flysystem\FlysystemDependencyProvider;
 use Spryker\Service\Flysystem\FlysystemService;
@@ -42,6 +44,11 @@ class FlysystemServiceTest extends Unit
     public const FILE_PRODUCT_IMAGE = 'image.png';
 
     public const FILE_CONTENT = 'Hello World';
+
+    /**
+     * @var \SprykerTest\Service\Flysystem\FlysystemServiceTester
+     */
+    protected $tester;
 
     /**
      * @var \Spryker\Service\Flysystem\FlysystemServiceInterface
@@ -408,7 +415,7 @@ class FlysystemServiceTest extends Unit
             'foo/bar'
         );
 
-        $this->assertDirectoryNotExists($dir);
+        $this->assertDirectoryDoesNotExist($dir);
     }
 
     /**
@@ -525,6 +532,43 @@ class FlysystemServiceTest extends Unit
         );
 
         $this->assertGreaterThan(0, count($content));
+    }
+
+    /**
+     * Tests that when a FilesystemReader returns data with properties that do not exists in the transfer object
+     * the `AbstractTransfer::fromArray()` method will not throw an exception.
+     *
+     * @return void
+     */
+    public function testListContentsIgnoresMissingProperties(): void
+    {
+        // Arrange
+        $this->tester->arrangeFilesystemProviderThatReturnsDataWithPropertiesThatAreNotPresentInTheFlysystemResourceTransfer();
+
+        // Act
+        $flysystemResourceTransferCollection = $this->tester->getService()->listContents('foo');
+
+        // Assert
+        $this->tester->assertAllInstanceOf(FlysystemResourceTransfer::class, $flysystemResourceTransferCollection);
+    }
+
+    /**
+     * @deprecated Will be removed once PHPUnit 8 support is dropped.
+     *
+     * @param string $directory
+     * @param string $message
+     *
+     * @return void
+     */
+    public static function assertDirectoryDoesNotExist(string $directory, string $message = ''): void
+    {
+        if (method_exists(Assert::class, 'assertDirectoryDoesNotExist')) {
+            parent::assertDirectoryDoesNotExist($directory, $message);
+
+            return;
+        }
+
+        static::assertDirectoryNotExists($directory, $message);
     }
 
     /**

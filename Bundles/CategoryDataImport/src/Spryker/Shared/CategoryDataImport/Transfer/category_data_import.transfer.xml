@@ -9,4 +9,14 @@
     <transfer name="DataImporterReport">
     </transfer>
 
+    <transfer name="StoreRelation">
+        <property name="idStores" type="int[]" singular="idStores"/>
+    </transfer>
+
+    <transfer name="UpdateCategoryStoreRelationRequest">
+        <property name="idCategory" type="int"/>
+        <property name="newStoreAssignment" type="StoreRelation"/>
+        <property name="currentStoreAssignment" type="StoreRelation"/>
+    </transfer>
+
 </transfers>

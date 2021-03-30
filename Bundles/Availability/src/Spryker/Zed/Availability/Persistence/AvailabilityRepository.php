@@ -8,10 +8,13 @@
 namespace Spryker\Zed\Availability\Persistence;
 
 use Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer;
+use Generated\Shared\Transfer\ProductAvailabilityCriteriaTransfer;
+use Generated\Shared\Transfer\ProductConcreteAvailabilityCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Availability\Persistence\Map\SpyAvailabilityAbstractTableMap;
 use Orm\Zed\Availability\Persistence\Map\SpyAvailabilityTableMap;
+use Orm\Zed\Availability\Persistence\SpyAvailabilityQuery;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Spryker\Zed\Availability\Persistence\Exception\AvailabilityAbstractNotFoundException;
@@ -263,5 +266,47 @@ class AvailabilityRepository extends AbstractRepository implements AvailabilityR
             ->select(SpyProductTableMap::COL_SKU)
             ->find()
             ->getData();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAvailabilityCriteriaTransfer $productAvailabilityCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityCollectionTransfer
+     */
+    public function getProductConcreteAvailabilityCollection(
+        ProductAvailabilityCriteriaTransfer $productAvailabilityCriteriaTransfer
+    ): ProductConcreteAvailabilityCollectionTransfer {
+        $availabilityQuery = $this->getFactory()->createSpyAvailabilityQuery();
+        $availabilityQuery = $this->applyFilters($availabilityQuery, $productAvailabilityCriteriaTransfer);
+
+        $availabilityEntities = $availabilityQuery->find();
+
+        return $this->getFactory()
+            ->createAvailabilityMapper()
+            ->mapAvailabilityEntitiesToProductConcreteAvailabilityCollectionTransfer(
+                $availabilityEntities,
+                new ProductConcreteAvailabilityCollectionTransfer()
+            );
+    }
+
+    /**
+     * @param \Orm\Zed\Availability\Persistence\SpyAvailabilityQuery $availabilityQuery
+     * @param \Generated\Shared\Transfer\ProductAvailabilityCriteriaTransfer $productAvailabilityCriteriaTransfer
+     *
+     * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityQuery
+     */
+    protected function applyFilters(
+        SpyAvailabilityQuery $availabilityQuery,
+        ProductAvailabilityCriteriaTransfer $productAvailabilityCriteriaTransfer
+    ): SpyAvailabilityQuery {
+        if ($productAvailabilityCriteriaTransfer->getProductConcreteSkus()) {
+            $availabilityQuery->filterBySku_In($productAvailabilityCriteriaTransfer->getProductConcreteSkus());
+        }
+
+        if ($productAvailabilityCriteriaTransfer->getStoreIds()) {
+            $availabilityQuery->filterByFkStore_In($productAvailabilityCriteriaTransfer->getStoreIds());
+        }
+
+        return $availabilityQuery;
     }
 }
