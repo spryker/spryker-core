@@ -10,6 +10,8 @@ namespace Spryker\Zed\SecurityMerchantPortalGui\Communication;
 use Generated\Shared\Transfer\MerchantUserTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\SecurityMerchantPortalGui\Communication\Form\MerchantLoginForm;
+use Spryker\Zed\SecurityMerchantPortalGui\Communication\Form\MerchantResetPasswordForm;
+use Spryker\Zed\SecurityMerchantPortalGui\Communication\Form\MerchantResetPasswordRequestForm;
 use Spryker\Zed\SecurityMerchantPortalGui\Communication\Plugin\Security\Handler\MerchantUserAuthenticationFailureHandler;
 use Spryker\Zed\SecurityMerchantPortalGui\Communication\Plugin\Security\Handler\MerchantUserAuthenticationSuccessHandler;
 use Spryker\Zed\SecurityMerchantPortalGui\Communication\Plugin\Security\Provider\MerchantUserProvider;
@@ -44,6 +46,22 @@ class SecurityMerchantPortalGuiCommunicationFactory extends AbstractCommunicatio
     public function createLoginForm(): FormInterface
     {
         return $this->getFormFactory()->create(MerchantLoginForm::class);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createResetPasswordRequestForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(MerchantResetPasswordRequestForm::class);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createResetPasswordForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(MerchantResetPasswordForm::class);
     }
 
     /**

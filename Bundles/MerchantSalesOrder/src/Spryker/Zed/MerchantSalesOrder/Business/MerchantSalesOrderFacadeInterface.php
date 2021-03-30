@@ -81,12 +81,12 @@ interface MerchantSalesOrderFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\MerchantOrderCriteriaTransfer $merchantCriteriaTransfer
+     * @param \Generated\Shared\Transfer\MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantOrderTransfer|null
      */
     public function findMerchantOrder(
-        MerchantOrderCriteriaTransfer $merchantCriteriaTransfer
+        MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer
     ): ?MerchantOrderTransfer;
 
     /**

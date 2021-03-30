@@ -382,6 +382,7 @@ class DevelopmentConfig extends AbstractBundleConfig
             'symfony/filesystem' => 'spryker/symfony',
             'symfony/finder' => 'spryker/symfony',
             'symfony/form' => 'spryker/symfony',
+            'symfony/http-client' => 'spryker/symfony',
             'symfony/http-foundation' => 'spryker/symfony',
             'symfony/http-kernel' => 'spryker/symfony',
             'symfony/intl' => 'spryker/symfony',

@@ -4,19 +4,18 @@ import { ButtonModule, ButtonComponent } from '@spryker/button';
 import { TabComponent, TabsComponent, TabsModule } from '@spryker/tabs';
 import { TextareaComponent, TextareaModule } from '@spryker/textarea';
 import { TreeSelectComponent, TreeSelectModule } from '@spryker/tree-select';
+import { IconGermanyModule, IconUnitedStatesModule } from '../icons';
+import { ProductListComponent } from './product-list/product-list.component';
+import { ProductListModule } from './product-list/product-list.module';
 import { CardModule, CardComponent } from '@spryker/card';
-import { SelectModule, SelectComponent } from '@spryker/select';
-import { InputModule, InputComponent } from '@spryker/input';
-import { CollapsibleModule, CollapsibleComponent } from '@spryker/collapsible';
-import { FormItemModule, FormItemComponent } from '@spryker/form-item';
 import { CheckboxComponent, CheckboxModule } from '@spryker/checkbox';
 import { ToggleModule, ToggleComponent } from '@spryker/toggle';
 import { ChipsModule, ChipsComponent } from '@spryker/chips';
 import { DateRangePickerModule, DateRangePickerComponent } from '@spryker/date-picker';
-
-import { IconGermanyModule, IconUnitedStatesModule } from '../icons';
-import { ProductListComponent } from './product-list/product-list.component';
-import { ProductListModule } from './product-list/product-list.module';
+import { SelectModule, SelectComponent } from '@spryker/select';
+import { InputModule, InputComponent } from '@spryker/input';
+import { CollapsibleModule, CollapsibleComponent } from '@spryker/collapsible';
+import { FormItemModule, FormItemComponent } from '@spryker/form-item';
 import { EditAbstractProductComponent } from './edit-abstract-product/edit-abstract-product.component';
 import { EditAbstractProductModule } from './edit-abstract-product/edit-abstract-product.module';
 import { EditAbstractProductPricesComponent } from './edit-abstract-product-prices/edit-abstract-product-prices.component';
@@ -41,9 +40,6 @@ import { EditConcreteProductModule } from './edit-concrete-product/edit-concrete
         ButtonModule,
         TabsModule,
         CardModule,
-        InputModule,
-        FormItemModule,
-        SelectModule,
         TreeSelectModule,
         CollapsibleModule,
         TextareaModule,
@@ -71,9 +67,6 @@ export class ComponentsModule extends CustomElementModule {
         TabComponent,
         TabsComponent,
         CardComponent,
-        FormItemComponent,
-        InputComponent,
-        SelectComponent,
         TreeSelectComponent,
         CollapsibleComponent,
         TextareaComponent,
