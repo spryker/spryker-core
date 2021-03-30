@@ -37,7 +37,6 @@ class ProductCategoryStorageRepository extends AbstractRepository implements Pro
     {
         $categoryNodeQuery = $this->getFactory()
             ->getCategoryNodePropelQuery()
-            ->orderBy(SpyCategoryNodeTableMap::COL_NODE_ORDER, Criteria::DESC)
             ->addJoin(
                 SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE,
                 SpyUrlTableMap::COL_FK_RESOURCE_CATEGORYNODE,
