@@ -10,7 +10,7 @@
     "spryker/gui": "^3.33.0",
     "spryker/kernel": "^3.33.0",
     "spryker/merchant-oms": "^0.4.0",
-    "spryker/merchant-sales-order": "^0.8.0",
+    "spryker/merchant-sales-order": "^0.8.2",
     "spryker/merchant-user": "^0.5.3 || ^0.6.0 || ^0.7.0",
     "spryker/propel-orm": "^1.13.0",
     "spryker/sales": "^10.0.0 || ^11.0.0",
