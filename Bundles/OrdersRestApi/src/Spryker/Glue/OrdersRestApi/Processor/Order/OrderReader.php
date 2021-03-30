@@ -15,7 +15,6 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\PageInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\OrdersRestApi\Dependency\Client\OrdersRestApiToSalesClientInterface;
-use Spryker\Glue\OrdersRestApi\OrdersRestApiConfig;
 use Spryker\Glue\OrdersRestApi\Processor\RestResponseBuilder\OrderRestResponseBuilderInterface;
 use Spryker\Glue\OrdersRestApi\Processor\Validator\OrdersRestApiValidatorInterface;
 
@@ -37,26 +36,18 @@ class OrderReader implements OrderReaderInterface
     protected $restApiValidator;
 
     /**
-     * @var \Spryker\Glue\OrdersRestApi\OrdersRestApiConfig
-     */
-    protected $ordersRestApiConfig;
-
-    /**
      * @param \Spryker\Glue\OrdersRestApi\Dependency\Client\OrdersRestApiToSalesClientInterface $salesClient
      * @param \Spryker\Glue\OrdersRestApi\Processor\RestResponseBuilder\OrderRestResponseBuilderInterface $orderRestResponseBuilder
      * @param \Spryker\Glue\OrdersRestApi\Processor\Validator\OrdersRestApiValidatorInterface $restApiValidator
-     * @param \Spryker\Glue\OrdersRestApi\OrdersRestApiConfig $ordersRestApiConfig
      */
     public function __construct(
         OrdersRestApiToSalesClientInterface $salesClient,
         OrderRestResponseBuilderInterface $orderRestResponseBuilder,
-        OrdersRestApiValidatorInterface $restApiValidator,
-        OrdersRestApiConfig $ordersRestApiConfig
+        OrdersRestApiValidatorInterface $restApiValidator
     ) {
         $this->salesClient = $salesClient;
         $this->orderRestResponseBuilder = $orderRestResponseBuilder;
         $this->restApiValidator = $restApiValidator;
-        $this->ordersRestApiConfig = $ordersRestApiConfig;
     }
 
     /**

@@ -37,8 +37,7 @@ class OrdersRestApiFactory extends AbstractFactory
         return new OrderReader(
             $this->getSalesClient(),
             $this->createOrderRestResponseBuilder(),
-            $this->createOrdersRestApiValidator(),
-            $this->getConfig()
+            $this->createOrdersRestApiValidator()
         );
     }
 
