@@ -1,0 +1,26 @@
+{#{% form_theme form '@ZedUi/Form/form-webcomponent-layout.twig' %}#}
+
+{% block body %}
+    {% set mainClass = 'mp-edit-abstract-product' %}
+
+    {{ form_start(form, {attr: {excludeFormTag: true}}) }}
+
+    {% block action %}
+        <web-spy-button size="lg" type="submit" name="back" action>{{ 'Back' | trans }}</web-spy-button>
+        <web-spy-button size="lg" type="submit" action>{{ 'Create' | trans }}</web-spy-button>
+    {% endblock %}
+
+    {% for productManagementAttribute in productManagementAttributes %}
+        <p>{{ productManagementAttribute.key }}:</p>
+
+        <p>
+            {% for productManagementAttributeValue in productManagementAttribute.values %}
+                {{ productManagementAttributeValue.value }},
+            {% endfor %}
+        </p>
+
+    {% endfor %}
+
+    {{ form_end(form) }}
+
+{% endblock %}

@@ -24,11 +24,14 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CreateProductAbstractController extends AbstractController
 {
+    protected const RESPONSE_KEY_POST_ACTIONS = 'postActions';
     protected const RESPONSE_KEY_NOTIFICATIONS = 'notifications';
     protected const RESPONSE_KEY_TYPE = 'type';
     protected const RESPONSE_KEY_MESSAGE = 'message';
 
     protected const RESPONSE_TYPE_ERROR = 'error';
+    protected const RESPONSE_TYPE_REFRESH_TABLE = 'refresh_table';
+    protected const RESPONSE_TYPE_CLOSE_OVERLAY = 'close_overlay';
     protected const RESPONSE_MESSAGE_ERROR = 'Please resolve all errors.';
 
     /**
@@ -48,13 +51,13 @@ class CreateProductAbstractController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $createProductAbstractForm = $this->getFactory()->createCreateProductAbstractForm();
+        $createProductAbstractForm = $this->getFactory()->createCreateProductAbstractForm($request->query->all());
         $createProductAbstractForm->handleRequest($request);
 
         $responseData = [
             'form' => $this->renderView('@ProductMerchantPortalGui/Partials/create_product_abstract_form.twig', [
                 'form' => $createProductAbstractForm->createView(),
-                'defaultLocaleCode' => $this->findDefaultStoreDefaultLocale(),
+                'defaultLocaleCode' => $this->getFactory()->createLocaleDataProvider()->findDefaultStoreDefaultLocale(),
             ])->getContent(),
         ];
 
@@ -83,58 +86,42 @@ class CreateProductAbstractController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function createWithSingleConcreteAction(Request $request)
+    public function createWithSingleConcreteAction(Request $request): JsonResponse
     {
-        $createProductAbstractWithSingleConcreteFormForm = $this->getFactory()
+        $createProductAbstractWithSingleConcreteForm = $this->getFactory()
             ->createCreateProductAbstractWithSingleConcreteForm($request->query->all());
-        $createProductAbstractWithSingleConcreteFormForm->handleRequest($request);
+        $createProductAbstractWithSingleConcreteForm->handleRequest($request);
 
-        $formData = $createProductAbstractWithSingleConcreteFormForm->getData();
+        $formData = $createProductAbstractWithSingleConcreteForm->getData();
         $responseData = [
             'form' => $this->renderView('@ProductMerchantPortalGui/Partials/create_product_abstract_with_single_concrete_form.twig', [
-                'form' => $createProductAbstractWithSingleConcreteFormForm->createView(),
+                'form' => $createProductAbstractWithSingleConcreteForm->createView(),
             ])->getContent(),
             'action' => $this->getCreateUrl($formData, true),
         ];
 
-        if (!$createProductAbstractWithSingleConcreteFormForm->isSubmitted()) {
+        if (!$createProductAbstractWithSingleConcreteForm->isSubmitted()) {
             return new JsonResponse($responseData);
         }
 
-        if ($createProductAbstractWithSingleConcreteFormForm->isValid()) {
-            //todo move to mapper
-            $merchantUserTransfer = $this->getFactory()->getMerchantUserFacade()->getCurrentMerchantUser();
-            $localeTransfers = $this->getFactory()->getLocaleFacade()->getLocaleCollection();
+        if ($createProductAbstractWithSingleConcreteForm->isValid()) {
+            $this->getFactory()
+                ->createCreateProductAbstractWithSingleConcreteFormSubmitter()
+                ->executeFormSubmission($createProductAbstractWithSingleConcreteForm);
 
-            $productAbstractTransfer = (new ProductAbstractTransfer())
-                ->setSku($formData['sku'])
-                ->setName($formData['name'])
-                ->setIdMerchant($merchantUserTransfer->getIdMerchantOrFail())
-            ->setIdTaxSet(2);
-            $productConcreteTransfer = (new ProductConcreteTransfer())
-                ->setName($formData['concreteName'])
-                ->setSku($formData['concreteSku'])
-                ->setIsActive(false);
+            $responseData = [
+                static::RESPONSE_KEY_POST_ACTIONS => [
+                    [
+                        static::RESPONSE_KEY_TYPE => static::RESPONSE_TYPE_CLOSE_OVERLAY,
+                    ],
+                    [
+                        static::RESPONSE_KEY_TYPE => static::RESPONSE_TYPE_REFRESH_TABLE,
+                    ],
+                ],
 
-            $defaultStoreDefaultLocale = $this->findDefaultStoreDefaultLocale();
-            foreach ($localeTransfers as $localeTransfer) {
-                $productAbstractTransfer->addLocalizedAttributes(
-                    (new LocalizedAttributesTransfer())
-                        ->setLocale($localeTransfer)
-                        ->setName($localeTransfer->getLocaleNameOrFail() === $defaultStoreDefaultLocale ? $formData['name'] : '')
-                );
-                $productConcreteTransfer->addLocalizedAttributes(
-                    (new LocalizedAttributesTransfer())
-                        ->setLocale($localeTransfer)
-                        ->setName($localeTransfer->getLocaleNameOrFail() === $defaultStoreDefaultLocale ? $formData['name'] : '')
-                );
-            }
+            ];
 
-            $idProductAbstract = $this->getFactory()->getProductFacade()->addProduct($productAbstractTransfer, [$productConcreteTransfer]);
-
-            return new RedirectResponse(
-                sprintf('/product-merchant-portal-gui/update-product-abstract?product-abstract-id=%s', $idProductAbstract)
-            );
+            return new JsonResponse($responseData);
         }
 
         $responseData[static::RESPONSE_KEY_NOTIFICATIONS] = [[
@@ -152,7 +139,29 @@ class CreateProductAbstractController extends AbstractController
      */
     public function createWithMultiConcreteAction(Request $request): JsonResponse
     {
-        return new JsonResponse(0);
+        $createProductAbstractWithMultiConcreteForm = $this->getFactory()
+            ->createCreateProductAbstractWithMultiConcreteForm($request->query->all());
+        $createProductAbstractWithMultiConcreteForm->handleRequest($request);
+        $productManagementAttributeTransfers = $this->getFactory()
+            ->getProductAttributeFacade()
+            ->getProductAttributeCollection();
+        $filteredProductManagementAttributeTransfers = [];
+        foreach ($productManagementAttributeTransfers as $productManagementAttributeTransfer) {
+            if ($productManagementAttributeTransfer->getIsSuper()) {
+                $filteredProductManagementAttributeTransfers[] = $productManagementAttributeTransfer;
+            }
+        }
+
+        $formData = $createProductAbstractWithMultiConcreteForm->getData();
+        $responseData = [
+            'form' => $this->renderView('@ProductMerchantPortalGui/Partials/create_product_abstract_with_multi_concrete_form.twig', [
+                'form' => $createProductAbstractWithMultiConcreteForm->createView(),
+                'productManagementAttributes' => $filteredProductManagementAttributeTransfers,
+            ])->getContent(),
+            'action' => $this->getCreateUrl($formData, false),
+        ];
+
+        return new JsonResponse($responseData);
     }
 
     /**
@@ -176,20 +185,5 @@ class CreateProductAbstractController extends AbstractController
             $isSingleConcrete ? static::URL_WITH_SINGLE_CONCRETE_ACTION : static::URL_WITH_MULTI_CONCRETE_ACTION,
             $getParams
         );
-    }
-
-    /**
-     * @return string|null
-     */
-    protected function findDefaultStoreDefaultLocale(): ?string
-    {
-        $defaultStore = $this->getFactory()->getStore()::getDefaultStore();
-        foreach ($this->getFactory()->getStoreFacade()->getAllStores() as $storeTransfer) {
-            if ($storeTransfer->getName() === $defaultStore) {
-                return array_values($storeTransfer->getAvailableLocaleIsoCodes())[0] ?? null;
-            }
-        }
-
-        return null;
     }
 }

@@ -7,11 +7,13 @@
 
 namespace SprykerTest\Zed\MerchantProduct\Business;
 
+use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MerchantProductCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantProductTransfer;
+use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 
 /**
  * Auto-generated group annotations
@@ -442,5 +444,62 @@ class MerchantProductFacadeTest extends Unit
             $productConcreteCollectionTransfer->getProducts()[0]->getIdProductConcrete(),
             $productConcreteTransfer1->getIdProductConcrete()
         );
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateCreatesRelationBetweenProductAbstractAndMerchantProduct(): void
+    {
+        // Arrange
+        $this->tester->ensureMerchantProductAbstractTableIsEmpty();
+        $merchantTransfer = $this->tester->haveMerchant();
+        $productConcreteTransfer = $this->tester->haveFullProduct();
+        $merchantProductTransfer = (new MerchantProductTransfer())
+            ->setIdMerchant($merchantTransfer->getIdMerchantOrFail())
+            ->setIdProductAbstract($productConcreteTransfer->getFkProductAbstractOrFail());
+        $merchantProductCriteriaTransfer = new MerchantProductCriteriaTransfer();
+
+        // Act
+        $createdMerchantProductTransfer = $this->tester->getFacade()->create($merchantProductTransfer);
+        $merchantProductTransferFromDb = $this->tester->findMerchantProduct($merchantProductCriteriaTransfer->addMerchantProductAbstractId(
+            $createdMerchantProductTransfer->getIdMerchantProductAbstract()
+        ));
+
+        // Assert
+        $this->assertSame(
+            $createdMerchantProductTransfer->setProducts(new ArrayObject())->toArray(),
+            $merchantProductTransferFromDb->toArray()
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateThrowsExceptionWhenIdMerchantIsNotSet(): void
+    {
+        // Arrange
+        $merchantProductTransfer = (new MerchantProductTransfer()) ->setIdProductAbstract(1);
+
+        //Assert
+        $this->expectException(RequiredTransferPropertyException::class);
+
+        // Act
+        $this->tester->getFacade()->create($merchantProductTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateThrowsExceptionWhenIdProductAbstractIsNotSet(): void
+    {
+        // Arrange
+        $merchantProductTransfer = (new MerchantProductTransfer()) ->setIdMerchant(1);
+
+        //Assert
+        $this->expectException(RequiredTransferPropertyException::class);
+
+        // Act
+        $this->tester->getFacade()->create($merchantProductTransfer);
     }
 }
