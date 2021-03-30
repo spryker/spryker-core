@@ -11,7 +11,7 @@ interface QuotePostExpanderPluginInterface
 {
     /**
      * Specification:
-     * - Use this method to clean-up plugin state after execution.
+     * - Method is executed after {@link \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteExpanderPluginInterface::expand() }.
      *
      * @api
      *
