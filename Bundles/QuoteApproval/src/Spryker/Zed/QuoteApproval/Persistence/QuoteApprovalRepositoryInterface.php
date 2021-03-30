@@ -24,7 +24,7 @@ interface QuoteApprovalRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\QuoteApprovalTransfer[]
      */
-    public function getQuoteApprovals(QuoteApprovalRequestTransfer $quoteApprovalsRequestTransfer): array;
+    public function getQuoteApprovalsIdexedByQuoteId(QuoteApprovalRequestTransfer $quoteApprovalsRequestTransfer): array;
 
     /**
      * @param int $idQuoteApproval

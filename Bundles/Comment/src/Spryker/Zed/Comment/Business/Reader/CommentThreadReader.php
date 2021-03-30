@@ -37,7 +37,7 @@ class CommentThreadReader implements CommentThreadReaderInterface
     {
         $commentThreadTransfer = $this->commentRepository->findCommentThread($commentRequestTransfer);
 
-        if (!$commentThreadTransfer) {
+        if ($commentThreadTransfer === null) {
             return null;
         }
 
@@ -61,7 +61,7 @@ class CommentThreadReader implements CommentThreadReaderInterface
         }
 
         $threadIds = $this->collectThreadIds($commentThreadTransfers);
-        $commentTransfers = $this->commentRepository->findCommentsByCommentThreadIds($threadIds);
+        $commentTransfers = $this->commentRepository->getCommentsByCommentThreadIds($threadIds);
 
         return $this->mapCommentsToThreads($commentThreadTransfers, $commentTransfers);
     }

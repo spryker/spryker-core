@@ -48,7 +48,7 @@ interface CommentRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\CommentTransfer[]
      */
-    public function findCommentsByCommentThreadIds(array $threadIds): array;
+    public function getCommentsByCommentThreadIds(array $threadIds): array;
 
     /**
      * @param \Generated\Shared\Transfer\CommentTransfer $commentTransfer

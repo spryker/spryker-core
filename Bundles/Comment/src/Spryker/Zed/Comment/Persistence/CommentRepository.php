@@ -39,7 +39,7 @@ class CommentRepository extends AbstractRepository implements CommentRepositoryI
             ->find()
             ->getFirst();
 
-        if (!$commentThreadEntity) {
+        if ($commentThreadEntity === null) {
             return null;
         }
 
@@ -64,10 +64,6 @@ class CommentRepository extends AbstractRepository implements CommentRepositoryI
             ->filterByOwnerType($commentsRequestTransfer->getOwnerTypeOrFail())
             ->find();
 
-        if ($commentThreadEntities === null) {
-            return [];
-        }
-
         return $this->mapCommentThreadEntitiesToTransfers($commentThreadEntities);
     }
 
@@ -78,14 +74,12 @@ class CommentRepository extends AbstractRepository implements CommentRepositoryI
      */
     public function findCommentThreadById(CommentThreadTransfer $commentThreadTransfer): ?CommentThreadTransfer
     {
-        $commentThreadTransfer->requireIdCommentThread();
-
         $commentThreadEntity = $this->getFactory()
             ->getCommentThreadPropelQuery()
-            ->filterByIdCommentThread($commentThreadTransfer->getIdCommentThread())
+            ->filterByIdCommentThread($commentThreadTransfer->getIdCommentThreadOrFail())
             ->findOne();
 
-        if (!$commentThreadEntity) {
+        if ($commentThreadEntity === null) {
             return null;
         }
 
@@ -103,7 +97,7 @@ class CommentRepository extends AbstractRepository implements CommentRepositoryI
      */
     public function findCommentsByCommentThread(CommentThreadTransfer $commentThreadTransfer): array
     {
-        return $this->findCommentsByCommentThreadIds([
+        return $this->getCommentsByCommentThreadIds([
             $commentThreadTransfer->getIdCommentThreadOrFail(),
         ]);
     }
@@ -115,7 +109,7 @@ class CommentRepository extends AbstractRepository implements CommentRepositoryI
      *
      * @return \Generated\Shared\Transfer\CommentTransfer[]
      */
-    public function findCommentsByCommentThreadIds(array $threadIds): array
+    public function getCommentsByCommentThreadIds(array $threadIds): array
     {
         $commentEntityCollection = $this->getFactory()
             ->getCommentPropelQuery()
@@ -206,7 +200,7 @@ class CommentRepository extends AbstractRepository implements CommentRepositoryI
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $commentThreadEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Comment\Persistence\SpyCommentThread[] $commentThreadEntities
      *
      * @return \Generated\Shared\Transfer\CommentThreadTransfer[]
      */
@@ -218,8 +212,7 @@ class CommentRepository extends AbstractRepository implements CommentRepositoryI
             ->createCommentMapper();
 
         foreach ($commentThreadEntities as $commentThreadEntity) {
-            $ownerId = $commentThreadEntity->getOwnerId();
-            $commentThreadTransfers[$ownerId] = $mapper
+            $commentThreadTransfers[] = $mapper
                 ->mapCommentThreadEntityToCommentThreadTransfer($commentThreadEntity, new CommentThreadTransfer());
         }
 

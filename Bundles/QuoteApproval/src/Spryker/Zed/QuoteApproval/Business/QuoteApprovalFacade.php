@@ -90,7 +90,7 @@ class QuoteApprovalFacade extends AbstractFacade implements QuoteApprovalFacadeI
      */
     public function getQuoteApprovals(QuoteApprovalRequestTransfer $quoteApprovalsRequestTransfer): array
     {
-        return $this->getFactory()->getQuoteApprovalRepository()->getQuoteApprovals($quoteApprovalsRequestTransfer);
+        return $this->getFactory()->getQuoteApprovalRepository()->getQuoteApprovalsIdexedByQuoteId($quoteApprovalsRequestTransfer);
     }
 
     /**

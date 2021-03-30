@@ -69,7 +69,7 @@
     </transfer>
 
     <transfer name="ShareCartRequest">
-        <property name="quoteIds" type="array" singular="quoteId"/>
+        <property name="quoteIds" type="int[]" singular="quoteId"/>
         <property name="idQuote" type="int"/>
         <property name="idCompanyUser" type="int"/>
         <property name="idQuotePermissionGroup" type="int" deprecated="Use shareDetails param instead"/>

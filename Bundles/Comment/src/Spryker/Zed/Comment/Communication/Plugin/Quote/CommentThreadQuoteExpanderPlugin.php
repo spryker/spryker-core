@@ -63,7 +63,7 @@ class CommentThreadQuoteExpanderPlugin extends AbstractPlugin implements QuoteEx
     {
         $this->preloadComments();
 
-        $commentThread = $this->getCommentThreadByIdQuote($quoteTransfer->getIdQuote());
+        $commentThread = $this->findCommentThreadByIdQuote($quoteTransfer->getIdQuote());
 
         $quoteTransfer->setCommentThread($commentThread);
 
@@ -104,7 +104,7 @@ class CommentThreadQuoteExpanderPlugin extends AbstractPlugin implements QuoteEx
      *
      * @return \Generated\Shared\Transfer\CommentThreadTransfer|null
      */
-    protected function getCommentThreadByIdQuote(int $idQuote): ?CommentThreadTransfer
+    protected function findCommentThreadByIdQuote(int $idQuote): ?CommentThreadTransfer
     {
         if (!isset($this->commentsByIdQuote[$idQuote])) {
             $commentRequestTransfer = (new CommentRequestTransfer())

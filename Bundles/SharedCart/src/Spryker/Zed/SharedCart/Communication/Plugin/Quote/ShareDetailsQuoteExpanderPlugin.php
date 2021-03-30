@@ -27,7 +27,7 @@ class ShareDetailsQuoteExpanderPlugin extends AbstractPlugin implements QuoteExp
     protected $quoteIds = [];
 
     /**
-     * @var \Generated\Shared\Transfer\ShareDetailTransfer[]
+     * @var \ArrayObject[]
      */
     protected $quoteShareDetailsByIdQuote = [];
 
@@ -91,7 +91,9 @@ class ShareDetailsQuoteExpanderPlugin extends AbstractPlugin implements QuoteExp
         $shareDetailsRequestTransfer = new ShareCartRequestTransfer();
         $shareDetailsRequestTransfer->setQuoteIds($this->quoteIds);
 
-        $this->quoteShareDetailsByIdQuote = $this->getFacade()->getSharedCartDetails($shareDetailsRequestTransfer);
+        foreach ($this->getFacade()->getSharedCartDetails($shareDetailsRequestTransfer) as $idQuote => $shareDetailCollectionTransfer) {
+            $this->quoteShareDetailsByIdQuote[$idQuote] = $shareDetailCollectionTransfer->getShareDetails();
+        }
     }
 
     /**
@@ -102,6 +104,7 @@ class ShareDetailsQuoteExpanderPlugin extends AbstractPlugin implements QuoteExp
     protected function getShareDetailsByIdQuote(QuoteTransfer $quoteTransfer)
     {
         $idQuote = $quoteTransfer->getIdQuote();
+
         if (!isset($this->quoteShareDetailsByIdQuote[$idQuote])) {
             $this->quoteShareDetailsByIdQuote[$idQuote] = $this->getFacade()->getShareDetailsByIdQuote($quoteTransfer)->getShareDetails();
         }

@@ -78,29 +78,20 @@ use Symfony\Component\Validator\Constraint;
 class PriceProductBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @var \Spryker\Zed\PriceProduct\Business\Model\ReaderInterface
-     */
-    private $reader;
-
-    /**
      * @return \Spryker\Zed\PriceProduct\Business\Model\ReaderInterface
      */
     public function createReaderModel(): ReaderInterface
     {
-        if ($this->reader === null) {
-            $this->reader = new Reader(
-                $this->getProductFacade(),
-                $this->createPriceTypeReader(),
-                $this->createPriceProductConcreteReader(),
-                $this->createPriceProductAbstractReader(),
-                $this->createProductCriteriaBuilder(),
-                $this->createPriceProductMapper(),
-                $this->getConfig(),
-                $this->getPriceProductService()
-            );
-        }
-
-        return $this->reader;
+        return new Reader(
+            $this->getProductFacade(),
+            $this->createPriceTypeReader(),
+            $this->createPriceProductConcreteReader(),
+            $this->createPriceProductAbstractReader(),
+            $this->createProductCriteriaBuilder(),
+            $this->createPriceProductMapper(),
+            $this->getConfig(),
+            $this->getPriceProductService()
+        );
     }
 
     /**

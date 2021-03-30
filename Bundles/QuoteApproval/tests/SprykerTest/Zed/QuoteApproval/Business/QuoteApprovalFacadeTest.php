@@ -287,9 +287,9 @@ class QuoteApprovalFacadeTest extends Unit
     {
         // Arrange
         $quoteApprovalCreateRequestTransfer = $this->createValidQuoteApprovalCreateRequestTransfer();
-        $this->tester->getFacade()->createQuoteApproval($quoteApprovalCreateRequestTransfer); // First call, this is valid
+        $this->tester->getFacade()->createQuoteApproval($quoteApprovalCreateRequestTransfer);
 
-        // Act - Second call, this is not valid and should mark it as false.
+        // Act
         $quoteApprovalResponseTransfer = $this->tester->getFacade()->createQuoteApproval($quoteApprovalCreateRequestTransfer);
 
         // Assert
