@@ -25,7 +25,6 @@ class ModuleCreateConsole extends Console
     public const ARGUMENT_MODULE = 'module';
     public const ARGUMENT_FILE = 'file';
     public const OPTION_FORCE = 'force';
-    public const RESULT_SUCCESS = 1;
 
     /**
      * @return void
@@ -66,6 +65,6 @@ class ModuleCreateConsole extends Console
 
         $this->getFacade()->createModule($module, $options);
 
-        return static::RESULT_SUCCESS;
+        return static::CODE_SUCCESS;
     }
 }
