@@ -79,11 +79,6 @@ class Reader implements ReaderInterface
     protected static $resolvedPriceProductTransferCollection = [];
 
     /**
-     * @var \Generated\Shared\Transfer\PriceProductTransfer[]
-     */
-    protected $resolvedPrices = [];
-
-    /**
      * @param \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductFacadeInterface $productFacade
      * @param \Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceProductTypeReaderInterface $priceProductTypeReader
      * @param \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductConcreteReaderInterface $priceProductConcreteReader
@@ -524,31 +519,16 @@ class Reader implements ReaderInterface
             return [];
         }
 
-        $priceProductFilterTransferCollectionIndexedBySku = $this->getPriceProductFilterTransferCollectionIndexedBySku($priceProductFilterTransfers);
-        $resolvedPrices = array_intersect_key($this->resolvedPrices, $priceProductFilterTransferCollectionIndexedBySku);
-
-        $priceProductFilterTransfers = array_values(array_diff_key($priceProductFilterTransferCollectionIndexedBySku, $resolvedPrices));
-
-        if ($priceProductFilterTransfers === []) {
-            return $resolvedPrices;
-        }
-
         $concretePricesBySku = $this->findPricesForConcreteProducts($priceProductFilterTransfers);
         $abstractPricesBySku = $this->findPricesForAbstractProducts(
             $this->getProductConcreteSkus($priceProductFilterTransfers),
             $priceProductFilterTransfers
         );
 
-        $resolvedPriceProductTransferCollection = $this->resolveProductPrices(
+        return $this->resolveProductPrices(
             $this->mergeIndexedPriceProductTransfers($abstractPricesBySku, $concretePricesBySku),
             $priceProductFilterTransfers
         );
-
-        foreach ($resolvedPriceProductTransferCollection as $resolvedPriceProductTransfer) {
-            $this->resolvedPrices[$resolvedPriceProductTransfer->getSkuProduct()] = $resolvedPriceProductTransfer;
-        }
-
-        return array_values($this->resolvedPrices);
     }
 
     /**
@@ -609,7 +589,7 @@ class Reader implements ReaderInterface
 
     /**
      * @param string $priceProductCriteriaIdentifier
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[][] $priceProductTransfers
+     * @param array $priceProductTransfers
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer|null
@@ -690,12 +670,11 @@ class Reader implements ReaderInterface
     protected function groupPriceProductTransfersByFilter(array $priceProductFilterTransfers, array $priceProductTransfers): array
     {
         $priceProductTransfersGroupedByFilterIdentifier = [];
-        $priceProductTransfersGroupedBySku = $this->groupPriceProductTransfersBySku($priceProductTransfers);
 
         foreach ($priceProductFilterTransfers as $priceProductFilterTransfer) {
             $priceProductFilterIdentifier = $this->buildPriceProductFilterIdentifier($priceProductFilterTransfer);
             $priceProductTransfersGroupedByFilterIdentifier[$priceProductFilterIdentifier] = $this->priceProductService->resolveProductPricesByPriceProductFilter(
-                $priceProductTransfersGroupedBySku[$priceProductFilterTransfer->getSku()] ?? [],
+                $priceProductTransfers,
                 $priceProductFilterTransfer
             );
         }
@@ -778,36 +757,5 @@ class Reader implements ReaderInterface
         $priceProductFilterIdentifierTransfer->setQuantity((int)$priceProductFilterTransfer->getQuantity());
 
         return md5(serialize($priceProductFilterIdentifierTransfer->toArray()));
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer[] $priceProductFilterTransfers
-     *
-     * @return \Generated\Shared\Transfer\PriceProductFilterTransfer[]
-     */
-    protected function getPriceProductFilterTransferCollectionIndexedBySku(array $priceProductFilterTransfers): array
-    {
-        $skus = [];
-        foreach ($priceProductFilterTransfers as $priceProductFilterTransfer) {
-            $skus[$priceProductFilterTransfer->getSku()] = $priceProductFilterTransfer;
-        }
-
-        return $skus;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[][]
-     */
-    private function groupPriceProductTransfersBySku(array $priceProductTransfers): array
-    {
-        $priceProductTransfersGroupedBySku = [];
-
-        foreach ($priceProductTransfers as $priceProductTransfer) {
-            $priceProductTransfersGroupedBySku[$priceProductTransfer->getSkuProduct()][] = $priceProductTransfer;
-        }
-
-        return $priceProductTransfersGroupedBySku;
     }
 }

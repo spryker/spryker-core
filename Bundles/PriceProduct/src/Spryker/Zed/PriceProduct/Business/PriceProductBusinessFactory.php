@@ -87,20 +87,16 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
      */
     public function createReaderModel(): ReaderInterface
     {
-        if ($this->reader === null) {
-            $this->reader = new Reader(
-                $this->getProductFacade(),
-                $this->createPriceTypeReader(),
-                $this->createPriceProductConcreteReader(),
-                $this->createPriceProductAbstractReader(),
-                $this->createProductCriteriaBuilder(),
-                $this->createPriceProductMapper(),
-                $this->getConfig(),
-                $this->getPriceProductService()
-            );
-        }
-
-        return $this->reader;
+        return new Reader(
+            $this->getProductFacade(),
+            $this->createPriceTypeReader(),
+            $this->createPriceProductConcreteReader(),
+            $this->createPriceProductAbstractReader(),
+            $this->createProductCriteriaBuilder(),
+            $this->createPriceProductMapper(),
+            $this->getConfig(),
+            $this->getPriceProductService()
+        );
     }
 
     /**
