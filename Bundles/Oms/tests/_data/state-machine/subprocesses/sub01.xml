@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<statemachine
+        xmlns="spryker:oms-01"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="spryker:oms-01 http://static.spryker.com/oms-01.xsd">
+
+    <process name="sub01">
+        <states>
+            <state name="payment preparations" reserved="true"/>
+            <state name="awaiting approval"/>
+        </states>
+
+        <transitions>
+            <transition happy="true">
+                <source>new</source>
+                <target>awaiting approval</target>
+                <event>wait</event>
+            </transition>
+
+            <transition>
+                <source>awaiting approval</source>
+                <target>payment preparations</target>
+                <event>prepare payment</event>
+            </transition>
+
+            <transition happy="true">
+                <source>payment preparations</source>
+                <target>payment pending</target>
+                <event>authorize</event>
+            </transition>
+        </transitions>
+
+        <events>
+            <event name="prepare payment" manual="true"/>
+            <event name="wait" manual="true"/>
+        </events>
+    </process>
+
+</statemachine>

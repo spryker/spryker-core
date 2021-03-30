@@ -12,6 +12,7 @@ use Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\DropDatabaseInterfa
 use Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\DropDatabaseTablesInterface;
 use Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\ExportDatabaseInterface;
 use Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\ImportDatabaseInterface;
+use Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\TableExistenceInterface;
 
 class Adapter implements AdapterInterface
 {
@@ -46,12 +47,18 @@ class Adapter implements AdapterInterface
     protected $dropTablesCommand;
 
     /**
+     * @var \Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\TableExistenceInterface
+     */
+    protected $tableExistenceCommand;
+
+    /**
      * @param string $adapter
      * @param \Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\CreateDatabaseInterface $createCommand
      * @param \Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\DropDatabaseInterface $dropCommand
      * @param \Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\ExportDatabaseInterface $exportCommand
      * @param \Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\ImportDatabaseInterface $importCommand
      * @param \Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\DropDatabaseTablesInterface $dropTablesCommand
+     * @param \Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\TableExistenceInterface $tableExistenceCommand
      */
     public function __construct(
         $adapter,
@@ -59,7 +66,8 @@ class Adapter implements AdapterInterface
         DropDatabaseInterface $dropCommand,
         ExportDatabaseInterface $exportCommand,
         ImportDatabaseInterface $importCommand,
-        DropDatabaseTablesInterface $dropTablesCommand
+        DropDatabaseTablesInterface $dropTablesCommand,
+        TableExistenceInterface $tableExistenceCommand
     ) {
         $this->adapter = $adapter;
         $this->createCommand = $createCommand;
@@ -67,6 +75,7 @@ class Adapter implements AdapterInterface
         $this->exportCommand = $exportCommand;
         $this->importCommand = $importCommand;
         $this->dropTablesCommand = $dropTablesCommand;
+        $this->tableExistenceCommand = $tableExistenceCommand;
     }
 
     /**
@@ -119,5 +128,15 @@ class Adapter implements AdapterInterface
     public function dropTables(): void
     {
         $this->dropTablesCommand->dropTables();
+    }
+
+    /**
+     * @param string $tableName
+     *
+     * @return bool
+     */
+    public function tableExists(string $tableName): bool
+    {
+        return $this->tableExistenceCommand->tableExists($tableName);
     }
 }

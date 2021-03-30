@@ -315,7 +315,7 @@ class DataImportConsole extends Console
      */
     protected function getYamlConfigPath(InputInterface $input): ?string
     {
-        if ($input->hasParameterOption('--' . static::OPTION_CONFIG) || $input->hasParameterOption('--' . static::OPTION_CONFIG_SHORT)) {
+        if ($input->hasParameterOption('--' . static::OPTION_CONFIG) || $input->hasParameterOption('-' . static::OPTION_CONFIG_SHORT)) {
             return $input->getOption(static::OPTION_CONFIG);
         }
 

@@ -77,7 +77,7 @@ class SalesHelper extends Module
     {
         $salesOrderEntity->setOrderReference(random_int(0, 9999999));
         $salesOrderEntity->setCurrencyIsoCode('EUR');
-        $salesOrderEntity->setPriceMode(0);
+        $salesOrderEntity->setPriceMode(null);
         $salesOrderEntity->setIsTest(true);
         $salesOrderEntity->setSalutation(SpySalesOrderTableMap::COL_SALUTATION_MR);
         $salesOrderEntity->setFirstName('FirstName');

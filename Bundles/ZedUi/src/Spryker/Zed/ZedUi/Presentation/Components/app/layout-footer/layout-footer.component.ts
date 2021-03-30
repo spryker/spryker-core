@@ -7,6 +7,4 @@ import { Component, ChangeDetectionStrategy, ViewEncapsulation } from '@angular/
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
 })
-export class LayoutFooterComponent {
-    year = new Date().getFullYear();
-}
+export class LayoutFooterComponent {}

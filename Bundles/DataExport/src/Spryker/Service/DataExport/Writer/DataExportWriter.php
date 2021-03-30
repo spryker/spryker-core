@@ -82,7 +82,7 @@ class DataExportWriter implements DataExportWriterInterface
             );
         }
 
-        $connectionType = $dataExportConfigurationTransfer->getConnection()->getType();
+        $connectionType = $dataExportConfigurationTransfer->getConnectionOrFail()->getTypeOrFail();
         if ($connectionType === static::DEFAULT_CONNECTION_TYPE) {
             return $this->dataExportLocalWriter->write($dataExportBatchTransfer, $dataExportConfigurationTransfer);
         }

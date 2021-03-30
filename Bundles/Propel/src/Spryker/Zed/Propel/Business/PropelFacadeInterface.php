@@ -239,4 +239,17 @@ interface PropelFacadeInterface
      * @return \Generated\Shared\Transfer\HealthCheckServiceResponseTransfer
      */
     public function executeDatabaseHealthCheck(): HealthCheckServiceResponseTransfer;
+
+    /**
+     * Specification:
+     * - Checks if table with provided name exists.
+     * - Will return false value if can't connect to the database.
+     *
+     * @api
+     *
+     * @param string $tableName
+     *
+     * @return bool
+     */
+    public function tableExists(string $tableName): bool;
 }
