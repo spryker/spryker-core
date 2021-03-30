@@ -26,8 +26,6 @@ class OrdersRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_DETAIL_CANT_FIND_ORDER = 'Can\'t find order by the given order reference';
     public const RESPONSE_DETAILS_CUSTOMER_UNAUTHORIZED = 'Unauthorized request.';
 
-    protected const CONVENTION_LINK = 'https://spryker.atlassian.net/wiki/spaces/RFC/pages/2160820295/RFC+Glue+endpoint+conventions';
-
     /**
      * @api
      *
@@ -54,25 +52,5 @@ class OrdersRestApiConfig extends AbstractBundleConfig
             RestErrorMessageTransfer::DETAIL => static::RESPONSE_DETAILS_CUSTOMER_UNAUTHORIZED,
             RestErrorMessageTransfer::STATUS => Response::HTTP_FORBIDDEN,
         ];
-    }
-
-    /**
-     * @api
-     *
-     * @return string
-     */
-    public function getDeprecationHeaderValue(): string
-    {
-        return 'version="4.6.0"';
-    }
-
-    /**
-     * @api
-     *
-     * @return string
-     */
-    public function getLinkHeaderValue(): string
-    {
-        return '<' . static::CONVENTION_LINK . '>; rel="deprecation" type="text/html"';
     }
 }
