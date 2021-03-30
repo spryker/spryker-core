@@ -59,6 +59,8 @@ class StockCreator implements StockCreatorInterface
     /**
      * @param \Generated\Shared\Transfer\StockTransfer $stockTransfer
      *
+     * @throws \Throwable
+     *
      * @return \Generated\Shared\Transfer\StockResponseTransfer
      */
     public function createStock(StockTransfer $stockTransfer): StockResponseTransfer

@@ -76,6 +76,8 @@ class StockUpdater implements StockUpdaterInterface
     /**
      * @param \Generated\Shared\Transfer\StockTransfer $stockTransfer
      *
+     * @throws \Throwable
+     *
      * @return \Generated\Shared\Transfer\StockResponseTransfer
      */
     public function updateStock(StockTransfer $stockTransfer): StockResponseTransfer
