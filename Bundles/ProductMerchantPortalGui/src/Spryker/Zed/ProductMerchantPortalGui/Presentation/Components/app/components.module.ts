@@ -13,6 +13,8 @@ import { InputModule, InputComponent } from '@spryker/input';
 import { CollapsibleModule, CollapsibleComponent } from '@spryker/collapsible';
 import { ChipsComponent, ChipsModule } from '@spryker/chips';
 import { FormItemModule, FormItemComponent } from '@spryker/form-item';
+import { IconModule, IconComponent } from '@spryker/icon';
+import { RadioModule, RadioComponent, RadioGroupComponent } from '@spryker/radio';
 import { ButtonActionComponent, ButtonActionModule } from '@spryker/button.action';
 import { EditAbstractProductComponent } from './edit-abstract-product/edit-abstract-product.component';
 import { EditAbstractProductModule } from './edit-abstract-product/edit-abstract-product.module';
@@ -49,6 +51,7 @@ import { ConcreteProductGeneratorDataComponent } from './concrete-product-genera
         TabsModule,
         CardModule,
         InputModule,
+        IconModule,
         FormItemModule,
         SelectModule,
         TreeSelectModule,
@@ -60,6 +63,7 @@ import { ConcreteProductGeneratorDataComponent } from './concrete-product-genera
         IconUnitedStatesModule,
         IconDeleteModule,
         TextareaModule,
+        RadioModule,
         ImageSetsModule,
         BulkEditProductVariantsModule,
         EditAbstractProductVariantsModule,
@@ -83,6 +87,7 @@ export class ComponentsModule extends CustomElementModule {
         CardComponent,
         FormItemComponent,
         InputComponent,
+        IconComponent,
         SelectComponent,
         TreeSelectComponent,
         CollapsibleComponent,
@@ -90,6 +95,8 @@ export class ComponentsModule extends CustomElementModule {
         EditAbstractProductAttributesComponent,
         EditAbstractProductPricesComponent,
         TextareaComponent,
+        RadioComponent,
+        RadioGroupComponent,
         ImageSetsComponent,
         BulkEditProductVariantsComponent,
         EditAbstractProductVariantsComponent,

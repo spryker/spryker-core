@@ -1,6 +1,12 @@
 @import '~@spryker/styles/src/lib/themes/default/variables/index.less';
 
 @create-abstract-product-padding: 30px;
+@create-abstract-product-card-margin-bottom: 20px;
+@create-abstract-product-card-input-max-width: 420px;
+@create-abstract-product-card-input-half-width: @create-abstract-product-card-input-max-width / 2;
+@create-abstract-product-card-name-header-margin-bottom: 5px;
+@create-abstract-product-card-name-header-icon-margin-right: 3px;
+@create-abstract-product-card-name-header-icon-font-size: 15px;
 
 .@{ajax-form-prefix-cls}-container {
     overflow-y: auto;
@@ -36,5 +42,38 @@
     &__content {
         display: block;
         padding: @create-abstract-product-padding;
+    }
+
+    &__card {
+        display: block;
+        margin-bottom: @create-abstract-product-card-margin-bottom;
+
+        .@{input-prefix-cls} {
+            max-width: @create-abstract-product-card-input-max-width;
+        }
+
+        &--half-width {
+            .@{input-prefix-cls} {
+                max-width: @create-abstract-product-card-input-half-width;
+            }
+        }
+
+        &-name-input-header {
+            display: flex;
+            text-transform: uppercase;
+            color: @ink;
+            font-size: @font-size-sm;
+            font-weight: @font-weight-medium;
+            margin-bottom: @create-abstract-product-card-name-header-margin-bottom;
+
+            &-icon {
+                margin-right: @create-abstract-product-card-name-header-icon-margin-right;
+                font-size: @create-abstract-product-card-name-header-icon-font-size;
+            }
+        }
+
+        &-name-notification-message {
+            color: @gray-dark;
+        }
     }
 }

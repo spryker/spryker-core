@@ -56,3 +56,9 @@ Validity,Validity
 From,From
 To,To
 "Bulk edit","Bulk edit"
+"Create Abstract Product","Create Abstract Product"
+English,English
+"The rest of the locales will be defined once the product has been created.","The rest of the locales will be defined once the product has been created."
+"Create an Abstract Product with 1 Concrete Product","Create an Abstract Product with 1 Concrete Product"
+"Autogenerate SKU","Autogenerate SKU"
+"Same as Abstract Product","Same as Abstract Product"
