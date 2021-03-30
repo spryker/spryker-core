@@ -70,7 +70,7 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
     }
 
     /**
-     * @param \Orm\Zed\SharedCart\Persistence\SpyQuoteCompanyUser[] $quoteCompanyUserEntityCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\SharedCart\Persistence\SpyQuoteCompanyUser[] $quoteCompanyUserEntityCollection
      *
      * @return int[][]
      */
@@ -78,11 +78,6 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
     {
         $groupedQuoteIds = [];
         foreach ($quoteCompanyUserEntityCollection as $quoteCompanyUserEntity) {
-            /** @var \Orm\Zed\SharedCart\Persistence\SpyQuotePermissionGroup $quotePermissionGroupEntity */
-            if (!$quoteCompanyUserEntity->getSpyQuotePermissionGroup()) {
-                continue;
-            }
-
             foreach ($quoteCompanyUserEntity->getSpyQuotePermissionGroup()->getSpyQuotePermissionGroupToPermissions() as $quotePermissionGroupToPermissionEntity) {
                 if (!isset($groupedQuoteIds[$quotePermissionGroupToPermissionEntity->getFkPermission()])) {
                     $groupedQuoteIds[$quotePermissionGroupToPermissionEntity->getFkPermission()] = [];
@@ -286,11 +281,12 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
      * @param int $idCompanyUser
      * @param \Propel\Runtime\Collection\ObjectCollection $permissionEntityCollection
      *
-     * @return \Orm\Zed\SharedCart\Persistence\SpyQuoteCompanyUser[]
+     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\SharedCart\Persistence\SpyQuoteCompanyUser[]
      */
     protected function getCompanyUserQuotesWithPermissions(int $idCompanyUser, ObjectCollection $permissionEntityCollection): ObjectCollection
     {
-        return $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $objectCollection */
+        $objectCollection = $this->getFactory()
             ->createQuoteCompanyUserQuery()
             ->filterByFkCompanyUser($idCompanyUser)
             ->joinWithSpyQuotePermissionGroup()
@@ -301,6 +297,8 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
                 ->endUse()
             ->endUse()
             ->find();
+
+        return $objectCollection;
     }
 
     /**
@@ -377,7 +375,7 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
     /**
      * @param int[] $quoteIds
      *
-     * @return Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\Collection\ObjectCollection
      */
     protected function getQuoteCompanyUserEntities(array $quoteIds): ObjectCollection
     {
