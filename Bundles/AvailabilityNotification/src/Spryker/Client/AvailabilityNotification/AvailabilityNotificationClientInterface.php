@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\AvailabilityNotification;
 
+use Generated\Shared\Transfer\AvailabilityNotificationCriteriaTransfer;
+use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionCollectionTransfer;
 use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer;
 use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer;
 
@@ -14,9 +16,9 @@ interface AvailabilityNotificationClientInterface
 {
     /**
      * Specification:
-     * - Send Zed request
+     * - Send Zed request.
      * - Subscribe a user for product availability.
-     * - Send successful email
+     * - Send successful email.
      *
      * @api
      *
@@ -30,9 +32,9 @@ interface AvailabilityNotificationClientInterface
 
     /**
      * Specification:
-     * - Send Zed request
+     * - Send Zed request.
      * - Unsubscribe a user for product availability.
-     * - Send successful email
+     * - Send successful email.
      *
      * @api
      *
@@ -46,9 +48,9 @@ interface AvailabilityNotificationClientInterface
 
     /**
      * Specification:
-     * - Send Zed request
+     * - Send Zed request.
      * - Unsubscribe a user for product availability.
-     * - Send successful email
+     * - Send successful email.
      *
      * @api
      *
@@ -59,4 +61,19 @@ interface AvailabilityNotificationClientInterface
     public function unsubscribeByCustomerReferenceAndSku(
         AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
     ): AvailabilityNotificationSubscriptionResponseTransfer;
+
+    /**
+     * Specification:
+     * - Send Zed request.
+     * - Finds availability subscription lists.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AvailabilityNotificationCriteriaTransfer $availabilityNotificationCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionCollectionTransfer
+     */
+    public function getAvailabilityNotifications(
+        AvailabilityNotificationCriteriaTransfer $availabilityNotificationCriteriaTransfer
+    ): AvailabilityNotificationSubscriptionCollectionTransfer;
 }

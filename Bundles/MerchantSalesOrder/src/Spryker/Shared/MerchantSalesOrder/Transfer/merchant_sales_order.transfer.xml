@@ -69,6 +69,7 @@
         <property name="withOrder" type="bool"/>
         <property name="withUniqueProductsCount" type="bool"/>
         <property name="customerReference" type="string"/>
+        <property name="orderItemUuid" type="string"/>
     </transfer>
 
     <transfer name="MerchantOrderItemResponse">

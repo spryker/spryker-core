@@ -73,6 +73,16 @@ class WishlistFacadeTest extends Test
     protected $wishlist;
 
     /**
+     * @var \Generated\Shared\Transfer\WishlistItemTransfer
+     */
+    protected $wishlistItem_1;
+
+    /**
+     * @var \Generated\Shared\Transfer\WishlistItemTransfer
+     */
+    protected $wishlistItem_2;
+
+    /**
      * @return void
      */
     protected function setUp(): void
@@ -87,14 +97,14 @@ class WishlistFacadeTest extends Test
         $this->product_3 = $this->tester->haveProduct();
         $this->customer = $this->tester->haveCustomer();
         $this->wishlist = $this->tester->haveWishlist([WishlistTransfer::FK_CUSTOMER => $this->customer->getIdCustomer()]);
-        $this->tester->haveItemInWishlist([
+        $this->wishlistItem_1 = $this->tester->haveItemInWishlist([
             WishlistItemTransfer::FK_WISHLIST => $this->wishlist->getIdWishlist(),
             WishlistItemTransfer::FK_CUSTOMER => $this->customer->getIdCustomer(),
             WishlistItemTransfer::SKU => $this->product_1->getSku(),
             WishlistItemTransfer::WISHLIST_NAME => $this->wishlist->getName(),
         ]);
 
-        $this->tester->haveItemInWishlist([
+        $this->wishlistItem_2 = $this->tester->haveItemInWishlist([
             WishlistItemTransfer::FK_WISHLIST => $this->wishlist->getIdWishlist(),
             WishlistItemTransfer::FK_CUSTOMER => $this->customer->getIdCustomer(),
             WishlistItemTransfer::SKU => $this->product_2->getSku(),
@@ -194,7 +204,8 @@ class WishlistFacadeTest extends Test
         $wishlistItemUpdateRequestTransfer = (new WishlistItemTransfer())
             ->setWishlistName($this->wishlist->getName())
             ->setFkCustomer($this->customer->getIdCustomer())
-            ->setSku($this->product_1->getSku());
+            ->setSku($this->product_1->getSku())
+            ->setIdWishlistItem($this->wishlistItem_1->getIdWishlistItem());
 
         $wishlistItemUpdateRequestTransfer = $this->wishlistFacade->removeItem($wishlistItemUpdateRequestTransfer);
 
@@ -214,7 +225,8 @@ class WishlistFacadeTest extends Test
         $wishlistItemUpdateRequestTransfer = (new WishlistItemTransfer())
             ->setWishlistName($this->wishlist->getName())
             ->setFkCustomer($this->customer->getIdCustomer())
-            ->setSku($this->product_1->getSku());
+            ->setSku($this->product_1->getSku())
+            ->setIdWishlistItem($this->wishlistItem_1->getIdWishlistItem());
 
         $wishlistItemUpdateRequestTransfer = $this->wishlistFacade->removeItem($wishlistItemUpdateRequestTransfer);
 
@@ -230,7 +242,8 @@ class WishlistFacadeTest extends Test
         $wishlistItemUpdateRequestTransfer = (new WishlistItemTransfer())
             ->setWishlistName($this->wishlist->getName())
             ->setFkCustomer($this->customer->getIdCustomer())
-            ->setSku($this->product_1->getSku());
+            ->setSku($this->product_1->getSku())
+            ->setIdWishlistItem($this->wishlistItem_1->getIdWishlistItem());
 
         $wishlistItemUpdateRequestTransfer = $this->wishlistFacade->removeItem($wishlistItemUpdateRequestTransfer);
 
@@ -409,6 +422,7 @@ class WishlistFacadeTest extends Test
      */
     public function testAddItemCollectionShouldAddItemCollection(): void
     {
+        $this->removeItemsFromWishlist();
         $wishlistTransfer = (new WishlistTransfer())
             ->fromArray($this->wishlist->toArray(), true);
 
@@ -434,6 +448,7 @@ class WishlistFacadeTest extends Test
      */
     public function testRemoveItemCollectionShouldRemoveOnlySelectedItems(): void
     {
+        $this->removeItemsFromWishlist();
         $wishlistTransfer = (new WishlistTransfer())
             ->fromArray($this->wishlist->toArray(), true);
 
@@ -594,5 +609,16 @@ class WishlistFacadeTest extends Test
             ->count();
 
         $this->assertSame($expected, $count);
+    }
+
+    /**
+     * @return void
+     */
+    protected function removeItemsFromWishlist(): void
+    {
+        $this->wishlistQueryContainer
+            ->queryWishlistItem()
+            ->filterByFkWishlist($this->wishlist->getIdWishlist())
+            ->deleteAll();
     }
 }
