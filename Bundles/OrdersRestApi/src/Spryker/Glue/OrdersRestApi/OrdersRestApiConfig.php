@@ -26,16 +26,6 @@ class OrdersRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_DETAIL_CANT_FIND_ORDER = 'Can\'t find order by the given order reference';
     public const RESPONSE_DETAILS_CUSTOMER_UNAUTHORIZED = 'Unauthorized request.';
 
-    /**
-     * @uses \Spryker\Glue\GlueApplication\Rest\RequestConstantsInterface::HEADER_DEPRECATION
-     */
-    public const HEADER_DEPRECATION = 'Deprecation';
-
-    /**
-     * @uses \Spryker\Glue\GlueApplication\Rest\RequestConstantsInterface::HEADER_LINK
-     */
-    public const HEADER_LINK = 'Link';
-
     protected const CONVENTION_LINK = 'https://spryker.atlassian.net/wiki/spaces/RFC/pages/2160820295/RFC+Glue+endpoint+conventions';
 
     /**
