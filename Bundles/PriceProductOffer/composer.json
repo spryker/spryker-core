@@ -1,49 +1,49 @@
 {
-    "name": "spryker/price-product-offer",
-    "type": "library",
-    "description": "PriceProductOffer module",
-    "license": "proprietary",
-    "require": {
-        "php": ">=7.3",
-        "spryker/currency": "^3.0.0",
-        "spryker/kernel": "^3.33.0",
-        "spryker/price-product": "^4.16.0",
-        "spryker/price-product-extension": "^1.3.0",
-        "spryker/product-offer": "^0.6.0",
-        "spryker/product-offer-extension": "^0.1.0",
-        "spryker/propel-orm": "^1.0.0",
-        "spryker/store": "^1.0.0",
-        "spryker/symfony": "^3.0.0",
-        "spryker/transfer": "^3.25.0"
-    },
-    "require-dev": {
-        "spryker/code-sniffer": "*",
-        "spryker/propel": "*",
-        "spryker/testify": "*"
-    },
-    "autoload": {
-        "psr-4": {
-            "Spryker\\": "src/Spryker/",
-            "SprykerTest\\Shared\\PriceProductOffer\\Helper\\": "tests/SprykerTest/Shared/PriceProductOffer/_support/Helper/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "SprykerTest\\": "tests/SprykerTest/"
-        }
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
-    "scripts": {
-        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
-        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "1.0.x-dev"
-        }
-    },
-    "config": {
-        "sort-packages": true
+  "name": "spryker/price-product-offer",
+  "type": "library",
+  "description": "PriceProductOffer module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.3",
+    "spryker/currency": "^3.0.0",
+    "spryker/kernel": "^3.33.0",
+    "spryker/price-product": "^4.16.0",
+    "spryker/price-product-extension": "^1.3.0",
+    "spryker/product-offer": "^0.6.0",
+    "spryker/product-offer-extension": "^0.1.0",
+    "spryker/propel-orm": "^1.0.0",
+    "spryker/store": "^1.0.0",
+    "spryker/symfony": "^3.0.0",
+    "spryker/transfer": "^3.25.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/propel": "*",
+    "spryker/testify": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Shared\\PriceProductOffer\\Helper\\": "tests/SprykerTest/Shared/PriceProductOffer/_support/Helper/"
     }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerTest\\": "tests/SprykerTest/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
 }
