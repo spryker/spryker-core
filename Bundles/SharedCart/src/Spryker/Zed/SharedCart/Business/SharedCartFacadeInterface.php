@@ -164,11 +164,11 @@ interface SharedCartFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareDetailsRequestTransfer
+     * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ShareDetailCollectionTransfer[]
      */
-    public function getSharedCartDetails(ShareCartRequestTransfer $shareDetailsRequestTransfer): array;
+    public function getSharedCartDetails(ShareCartRequestTransfer $shareCartRequestTransfer): array;
 
     /**
      * Specification:
