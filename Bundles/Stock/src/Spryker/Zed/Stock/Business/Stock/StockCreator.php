@@ -9,15 +9,13 @@ namespace Spryker\Zed\Stock\Business\Stock;
 
 use Generated\Shared\Transfer\StockResponseTransfer;
 use Generated\Shared\Transfer\StockTransfer;
-use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
-use Spryker\Zed\Stock\Business\Exception\StockNotSavedException;
+use Spryker\Zed\Stock\Dependency\External\StockToConnectionInterface;
 use Spryker\Zed\Stock\Dependency\Facade\StockToTouchInterface;
 use Spryker\Zed\Stock\Persistence\StockEntityManagerInterface;
+use Throwable;
 
 class StockCreator implements StockCreatorInterface
 {
-    use TransactionTrait;
-
     protected const TOUCH_STOCK_TYPE = 'stock-type';
 
     /**
@@ -31,6 +29,11 @@ class StockCreator implements StockCreatorInterface
     protected $touchFacade;
 
     /**
+     * @var \Spryker\Zed\Stock\Dependency\External\StockToConnectionInterface
+     */
+    protected $connection;
+
+    /**
      * @var \Spryker\Zed\StockExtension\Dependency\Plugin\StockPostCreatePluginInterface[]
      */
     protected $stockPostCreatePlugins;
@@ -38,15 +41,18 @@ class StockCreator implements StockCreatorInterface
     /**
      * @param \Spryker\Zed\Stock\Persistence\StockEntityManagerInterface $stockEntityManager
      * @param \Spryker\Zed\Stock\Dependency\Facade\StockToTouchInterface $touchFacade
+     * @param \Spryker\Zed\Stock\Dependency\External\StockToConnectionInterface $connection
      * @param \Spryker\Zed\StockExtension\Dependency\Plugin\StockPostCreatePluginInterface[] $stockPostCreatePlugins
      */
     public function __construct(
         StockEntityManagerInterface $stockEntityManager,
         StockToTouchInterface $touchFacade,
+        StockToConnectionInterface $connection,
         array $stockPostCreatePlugins
     ) {
         $this->stockEntityManager = $stockEntityManager;
         $this->touchFacade = $touchFacade;
+        $this->connection = $connection;
         $this->stockPostCreatePlugins = $stockPostCreatePlugins;
     }
 
@@ -57,9 +63,24 @@ class StockCreator implements StockCreatorInterface
      */
     public function createStock(StockTransfer $stockTransfer): StockResponseTransfer
     {
-        return $this->getTransactionHandler()->handleTransaction(function () use ($stockTransfer): StockResponseTransfer {
-            return $this->executeCreateStockTransaction($stockTransfer);
-        });
+        $this->connection->beginTransaction();
+
+        try {
+            $stockResponseTransfer = $this->executeCreateStockTransaction($stockTransfer);
+            if (!$stockResponseTransfer->getIsSuccessful()) {
+                $this->connection->rollBack();
+
+                return $stockResponseTransfer;
+            }
+
+            $this->connection->commit();
+
+            return $stockResponseTransfer;
+        } catch (Throwable $exception) {
+            $this->connection->rollBack();
+
+            throw $exception;
+        }
     }
 
     /**
@@ -98,8 +119,6 @@ class StockCreator implements StockCreatorInterface
     /**
      * @param \Generated\Shared\Transfer\StockTransfer $stockTransfer
      *
-     * @throws \Spryker\Zed\Stock\Business\Exception\StockNotSavedException
-     *
      * @return \Generated\Shared\Transfer\StockResponseTransfer
      */
     protected function executeStockPostCreatePlugins(StockTransfer $stockTransfer): StockResponseTransfer
@@ -107,7 +126,7 @@ class StockCreator implements StockCreatorInterface
         foreach ($this->stockPostCreatePlugins as $stockPostCreatePlugin) {
             $stockResponseTransfer = $stockPostCreatePlugin->postCreate($stockTransfer);
             if (!$stockResponseTransfer->getIsSuccessful()) {
-                throw new StockNotSavedException($stockResponseTransfer->getMessages());
+                return $stockResponseTransfer;
             }
 
             $stockTransfer = $stockResponseTransfer->getStock();

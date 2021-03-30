@@ -20,10 +20,11 @@ class StockAddressStockPostUpdatePlugin extends AbstractPlugin implements StockP
 {
     /**
      * {@inheritDoc}
-     * - Updates Stock Address if `StockTransfer.address` is provided.
+     * - Updates stock address if `StockTransfer.address` is provided.
      * - If `StockTransfer.address` is not provided deletes stock address by `idStock`.
      * - Requires `StockTransfer.idStock` to be set.
-     * - Requires `StockAddressTransfer.country.idCountry` to be set if `StockTransfer.address` is provided.
+     * - Requires `StockAddressTransfer.country.idCountry`, `StockAddressTransfer.address1`, `StockAddressTransfer.city`
+     *   and `StockAddressTransfer.zipCode` to be set if `StockTransfer.address` is provided.
      *
      * @api
      *

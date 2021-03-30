@@ -25,6 +25,7 @@ use Spryker\Zed\Stock\Business\StockProduct\StockProductReaderInterface;
 use Spryker\Zed\Stock\Business\StockProduct\StockProductUpdater;
 use Spryker\Zed\Stock\Business\StockProduct\StockProductUpdaterInterface;
 use Spryker\Zed\Stock\Business\Transfer\StockProductTransferMapper;
+use Spryker\Zed\Stock\Dependency\External\StockToConnectionInterface;
 use Spryker\Zed\Stock\StockDependencyProvider;
 
 /**
@@ -94,6 +95,7 @@ class StockBusinessFactory extends AbstractBusinessFactory
         return new StockCreator(
             $this->getEntityManager(),
             $this->getTouchFacade(),
+            $this->getConnection(),
             $this->getStockPostCreatePlugins()
         );
     }
@@ -108,6 +110,7 @@ class StockBusinessFactory extends AbstractBusinessFactory
             $this->getTouchFacade(),
             $this->createStockStoreRelationshipUpdater(),
             $this->createStockProductUpdater(),
+            $this->getConnection(),
             $this->getStockPostUpdatePlugins()
         );
     }
@@ -180,6 +183,14 @@ class StockBusinessFactory extends AbstractBusinessFactory
     public function getStoreFacade()
     {
         return $this->getProvidedDependency(StockDependencyProvider::FACADE_STORE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Stock\Dependency\External\StockToConnectionInterface
+     */
+    public function getConnection(): StockToConnectionInterface
+    {
+        return $this->getProvidedDependency(StockDependencyProvider::CONNECTION);
     }
 
     /**

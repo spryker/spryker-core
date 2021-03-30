@@ -15,7 +15,6 @@ use Generated\Shared\Transfer\StockCollectionTransfer;
 use Generated\Shared\Transfer\StockResponseTransfer;
 use Orm\Zed\Stock\Persistence\SpyStockQuery;
 use Orm\Zed\StockAddress\Persistence\SpyStockAddressQuery;
-use Spryker\Zed\Stock\Business\Exception\StockNotSavedException;
 use Spryker\Zed\Stock\Business\StockFacadeInterface;
 use Spryker\Zed\Stock\StockDependencyProvider;
 use Spryker\Zed\StockAddress\Business\StockAddressFacadeInterface;
@@ -270,7 +269,7 @@ class StockAddressFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCreateStockWillThrowAnExceptionIfStockAddressWasNotCreated(): void
+    public function testCreateStockWillReturnStockResponseTransferWithUnsuccessfulResultIfStockAddressWasNotCreated(): void
     {
         // Arrange
         $this->tester->setDependency(StockDependencyProvider::PLUGINS_STOCK_POST_CREATE, [
@@ -281,16 +280,17 @@ class StockAddressFacadeTest extends Unit
             ->withAddress([StockAddressTransfer::COUNTRY => $countryTransfer->toArray()])
             ->build();
 
-        $this->expectException(StockNotSavedException::class);
-
         // Act
-        $this->getStockFacade()->createStock($stockTransfer);
+        $stockResponseTransfer = $this->getStockFacade()->createStock($stockTransfer);
+
+        // Assert
+        $this->assertFalse($stockResponseTransfer->getIsSuccessful());
     }
 
     /**
      * @return void
      */
-    public function testUpdateStockWillThrowAnExceptionIfStockAddressWasNotCreated(): void
+    public function testUpdateStockWillReturnStockResponseTransferWithUnsuccessfulResultIfStockAddressWasNotCreated(): void
     {
         // Arrange
         $this->tester->setDependency(StockDependencyProvider::PLUGINS_STOCK_POST_UPDATE, [
@@ -298,16 +298,18 @@ class StockAddressFacadeTest extends Unit
         ]);
         $countryTransfer = $this->tester->haveCountry();
         $stockTransfer = $this->tester->haveStock();
+
         $stockAddressTransfer = (new StockAddressBuilder([
             StockAddressTransfer::COUNTRY => $countryTransfer->toArray(),
         ]))->build();
 
         $stockTransfer->setAddress($stockAddressTransfer);
 
-        $this->expectException(StockNotSavedException::class);
-
         // Act
-        $this->getStockFacade()->updateStock($stockTransfer);
+        $stockResponseTransfer = $this->getStockFacade()->updateStock($stockTransfer);
+
+        // Assert
+        $this->assertFalse($stockResponseTransfer->getIsSuccessful());
     }
 
     /**

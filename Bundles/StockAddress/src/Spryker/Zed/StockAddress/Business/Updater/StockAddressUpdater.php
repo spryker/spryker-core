@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\StockAddress\Business\Updater;
 
+use Generated\Shared\Transfer\StockAddressTransfer;
 use Generated\Shared\Transfer\StockResponseTransfer;
 use Generated\Shared\Transfer\StockTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
@@ -78,6 +79,8 @@ class StockAddressUpdater implements StockAddressUpdaterInterface
     protected function executeUpdateStockAddressForStockTransaction(StockTransfer $stockTransfer): StockResponseTransfer
     {
         $stockAddressTransfer = $stockTransfer->getAddressOrFail();
+        $this->assertStockAddressTransfer($stockAddressTransfer);
+
         $stockAddressTransfer->setIdStock($stockTransfer->getIdStockOrFail());
         $stockAddressTransfer = $this->stockAddressEntityManager->saveStockAddress($stockAddressTransfer);
 
@@ -86,5 +89,20 @@ class StockAddressUpdater implements StockAddressUpdaterInterface
         return (new StockResponseTransfer())
             ->setStock($stockTransfer)
             ->setIsSuccessful(true);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StockAddressTransfer $stockAddressTransfer
+     *
+     * @return void
+     */
+    protected function assertStockAddressTransfer(StockAddressTransfer $stockAddressTransfer): void
+    {
+        $stockAddressTransfer
+            ->requireAddress1()
+            ->requireCity()
+            ->requireZipCode()
+            ->getCountryOrFail()
+            ->requireIdCountry();
     }
 }

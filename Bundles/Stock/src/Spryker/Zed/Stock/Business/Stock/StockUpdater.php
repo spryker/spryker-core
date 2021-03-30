@@ -9,16 +9,14 @@ namespace Spryker\Zed\Stock\Business\Stock;
 
 use Generated\Shared\Transfer\StockResponseTransfer;
 use Generated\Shared\Transfer\StockTransfer;
-use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
-use Spryker\Zed\Stock\Business\Exception\StockNotSavedException;
 use Spryker\Zed\Stock\Business\StockProduct\StockProductUpdaterInterface;
+use Spryker\Zed\Stock\Dependency\External\StockToConnectionInterface;
 use Spryker\Zed\Stock\Dependency\Facade\StockToTouchInterface;
 use Spryker\Zed\Stock\Persistence\StockEntityManagerInterface;
+use Throwable;
 
 class StockUpdater implements StockUpdaterInterface
 {
-    use TransactionTrait;
-
     protected const TOUCH_STOCK_TYPE = 'stock-type';
 
     /**
@@ -42,6 +40,11 @@ class StockUpdater implements StockUpdaterInterface
     protected $stockProductUpdater;
 
     /**
+     * @var \Spryker\Zed\Stock\Dependency\External\StockToConnectionInterface
+     */
+    protected $connection;
+
+    /**
      * @var \Spryker\Zed\StockExtension\Dependency\Plugin\StockPostUpdatePluginInterface[]
      */
     protected $stockPostUpdatePlugins;
@@ -51,6 +54,7 @@ class StockUpdater implements StockUpdaterInterface
      * @param \Spryker\Zed\Stock\Dependency\Facade\StockToTouchInterface $touchFacade
      * @param \Spryker\Zed\Stock\Business\Stock\StockStoreRelationshipUpdaterInterface $stockStoreRelationshipUpdater
      * @param \Spryker\Zed\Stock\Business\StockProduct\StockProductUpdaterInterface $stockProductUpdater
+     * @param \Spryker\Zed\Stock\Dependency\External\StockToConnectionInterface $connection
      * @param \Spryker\Zed\StockExtension\Dependency\Plugin\StockPostUpdatePluginInterface[] $stockPostUpdatePlugins
      */
     public function __construct(
@@ -58,11 +62,13 @@ class StockUpdater implements StockUpdaterInterface
         StockToTouchInterface $touchFacade,
         StockStoreRelationshipUpdaterInterface $stockStoreRelationshipUpdater,
         StockProductUpdaterInterface $stockProductUpdater,
+        StockToConnectionInterface $connection,
         array $stockPostUpdatePlugins
     ) {
         $this->stockEntityManager = $stockEntityManager;
         $this->touchFacade = $touchFacade;
         $this->stockStoreRelationshipUpdater = $stockStoreRelationshipUpdater;
+        $this->connection = $connection;
         $this->stockProductUpdater = $stockProductUpdater;
         $this->stockPostUpdatePlugins = $stockPostUpdatePlugins;
     }
@@ -74,9 +80,24 @@ class StockUpdater implements StockUpdaterInterface
      */
     public function updateStock(StockTransfer $stockTransfer): StockResponseTransfer
     {
-        return $this->getTransactionHandler()->handleTransaction(function () use ($stockTransfer): StockResponseTransfer {
-            return $this->executeUpdateStockTransaction($stockTransfer);
-        });
+        $this->connection->beginTransaction();
+
+        try {
+            $stockResponseTransfer = $this->executeUpdateStockTransaction($stockTransfer);
+            if (!$stockResponseTransfer->getIsSuccessful()) {
+                $this->connection->rollBack();
+
+                return $stockResponseTransfer;
+            }
+
+            $this->connection->commit();
+
+            return $stockResponseTransfer;
+        } catch (Throwable $exception) {
+            $this->connection->rollBack();
+
+            throw $exception;
+        }
     }
 
     /**
@@ -116,8 +137,6 @@ class StockUpdater implements StockUpdaterInterface
     /**
      * @param \Generated\Shared\Transfer\StockTransfer $stockTransfer
      *
-     * @throws \Spryker\Zed\Stock\Business\Exception\StockNotSavedException
-     *
      * @return \Generated\Shared\Transfer\StockResponseTransfer
      */
     protected function executeStockPostUpdatePlugins(StockTransfer $stockTransfer): StockResponseTransfer
@@ -125,7 +144,7 @@ class StockUpdater implements StockUpdaterInterface
         foreach ($this->stockPostUpdatePlugins as $stockPostUpdatePlugin) {
             $stockResponseTransfer = $stockPostUpdatePlugin->postUpdate($stockTransfer);
             if (!$stockResponseTransfer->getIsSuccessful()) {
-                throw new StockNotSavedException($stockResponseTransfer->getMessages());
+                return $stockResponseTransfer;
             }
 
             $stockTransfer = $stockResponseTransfer->getStock();
