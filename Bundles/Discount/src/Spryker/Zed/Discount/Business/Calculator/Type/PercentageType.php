@@ -13,11 +13,6 @@ use Spryker\Zed\Discount\Business\Exception\CalculatorException;
 
 class PercentageType implements CalculatorTypeInterface
 {
-    public function __construct()
-    {
-        static::$roundingError = 0;
-    }
-
     /**
      * @var float
      */
@@ -31,6 +26,8 @@ class PercentageType implements CalculatorTypeInterface
      */
     public function calculateDiscount(array $discountableItems, DiscountTransfer $discountTransfer)
     {
+        $this->resetDiscount();
+
         $value = $discountTransfer->requireAmount()->getAmount();
 
         $this->ensureIsValidNumber($value);
@@ -102,5 +99,13 @@ class PercentageType implements CalculatorTypeInterface
         }
 
         return $quantity;
+    }
+
+    /**
+     * @return void
+     */
+    protected function resetDiscount(): void
+    {
+        static::$roundingError = 0;
     }
 }
