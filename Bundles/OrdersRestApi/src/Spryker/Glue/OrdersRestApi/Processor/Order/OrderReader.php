@@ -33,21 +33,21 @@ class OrderReader implements OrderReaderInterface
     /**
      * @var \Spryker\Glue\OrdersRestApi\Processor\Validator\OrdersRestApiValidatorInterface
      */
-    protected $restApiValidator;
+    protected $ordersRestApiValidator;
 
     /**
      * @param \Spryker\Glue\OrdersRestApi\Dependency\Client\OrdersRestApiToSalesClientInterface $salesClient
      * @param \Spryker\Glue\OrdersRestApi\Processor\RestResponseBuilder\OrderRestResponseBuilderInterface $orderRestResponseBuilder
-     * @param \Spryker\Glue\OrdersRestApi\Processor\Validator\OrdersRestApiValidatorInterface $restApiValidator
+     * @param \Spryker\Glue\OrdersRestApi\Processor\Validator\OrdersRestApiValidatorInterface $ordersRestApiValidator
      */
     public function __construct(
         OrdersRestApiToSalesClientInterface $salesClient,
         OrderRestResponseBuilderInterface $orderRestResponseBuilder,
-        OrdersRestApiValidatorInterface $restApiValidator
+        OrdersRestApiValidatorInterface $ordersRestApiValidator
     ) {
         $this->salesClient = $salesClient;
         $this->orderRestResponseBuilder = $orderRestResponseBuilder;
-        $this->restApiValidator = $restApiValidator;
+        $this->ordersRestApiValidator = $ordersRestApiValidator;
     }
 
     /**
@@ -84,7 +84,7 @@ class OrderReader implements OrderReaderInterface
      */
     public function getCustomerOrders(RestRequestInterface $restRequest): RestResponseInterface
     {
-        if (!$this->restApiValidator->isSameCustomerReference($restRequest)) {
+        if (!$this->ordersRestApiValidator->isSameCustomerReference($restRequest)) {
             return $this->orderRestResponseBuilder->createCustomerUnauthorizedErrorResponse();
         }
 
