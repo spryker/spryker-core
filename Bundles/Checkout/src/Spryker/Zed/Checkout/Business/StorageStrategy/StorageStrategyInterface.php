@@ -13,6 +13,11 @@ use Generated\Shared\Transfer\QuoteTransfer;
 interface StorageStrategyInterface
 {
     /**
+     * @return string
+     */
+    public function getStorageStrategy(): string;
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *

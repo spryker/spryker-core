@@ -10,11 +10,21 @@ namespace Spryker\Zed\Checkout\Business\StorageStrategy;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Quote\QuoteConfig;
+use Spryker\Zed\Quote\Business\QuoteFacade;
 
 class DatabaseStorageStrategy implements StorageStrategyInterface
 {
-    public function __construct() {
-        // TODO
+    /**
+     * @var \Spryker\Zed\Quote\Business\QuoteFacade $quoteFacade
+     */
+    protected $quoteFacade;
+
+    /**
+     * @param \Spryker\Zed\Quote\Business\QuoteFacade $quoteFacade
+     */
+    public function __construct(QuoteFacade $quoteFacade)
+    {
+        $this->quoteFacade = $quoteFacade;
     }
 
     /**
@@ -27,6 +37,10 @@ class DatabaseStorageStrategy implements StorageStrategyInterface
 
     public function updateQuote(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): void
     {
-        // TODO: Implement updateQuote() method.
+        $quoteTransfer->setOrderReference(
+            $checkoutResponseTransfer->getSaveOrder()->getOrderReference()
+        );
+
+        $this->quoteFacade->updateQuote($quoteTransfer);
     }
 }

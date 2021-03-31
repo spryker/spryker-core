@@ -13,10 +13,6 @@ use Spryker\Shared\Quote\QuoteConfig;
 
 class SessionStorageStrategy implements StorageStrategyInterface
 {
-    public function __construct() {
-        // TODO
-    }
-
     /**
      * @return string
      */
@@ -27,6 +23,8 @@ class SessionStorageStrategy implements StorageStrategyInterface
 
     public function updateQuote(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): void
     {
-        // TODO: Implement updateQuote() method.
+        $quoteTransfer->setOrderReference(
+            $checkoutResponseTransfer->getSaveOrder()->getOrderReference()
+        );
     }
 }
