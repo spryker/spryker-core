@@ -18,7 +18,6 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\OrdersRestApi\OrdersRestApiConfig;
 use Spryker\Glue\OrdersRestApi\Processor\Mapper\OrderMapperInterface;
-use Symfony\Component\HttpFoundation\Response;
 
 class OrderRestResponseBuilder implements OrderRestResponseBuilderInterface
 {
@@ -35,15 +34,23 @@ class OrderRestResponseBuilder implements OrderRestResponseBuilderInterface
     protected $orderResourceMapper;
 
     /**
+     * @var \Spryker\Glue\OrdersRestApi\OrdersRestApiConfig
+     */
+    protected $ordersRestApiConfig;
+
+    /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\OrdersRestApi\Processor\Mapper\OrderMapperInterface $orderResourceMapper
+     * @param \Spryker\Glue\OrdersRestApi\OrdersRestApiConfig $ordersRestApiConfig
      */
     public function __construct(
         RestResourceBuilderInterface $restResourceBuilder,
-        OrderMapperInterface $orderResourceMapper
+        OrderMapperInterface $orderResourceMapper,
+        OrdersRestApiConfig $ordersRestApiConfig
     ) {
         $this->restResourceBuilder = $restResourceBuilder;
         $this->orderResourceMapper = $orderResourceMapper;
+        $this->ordersRestApiConfig = $ordersRestApiConfig;
     }
 
     /**
@@ -94,13 +101,12 @@ class OrderRestResponseBuilder implements OrderRestResponseBuilderInterface
             $restOrdersAttributesTransfer = $this->orderResourceMapper
                 ->mapOrderTransferToRestOrdersAttributesTransfer($orderTransfer);
 
-            $restResponse = $restResponse->addResource(
-                $this->restResourceBuilder->createRestResource(
-                    OrdersRestApiConfig::RESOURCE_ORDERS,
-                    $orderTransfer->getOrderReference(),
-                    $restOrdersAttributesTransfer
-                )
+            $restResource = $this->restResourceBuilder->createRestResource(
+                OrdersRestApiConfig::RESOURCE_ORDERS,
+                $orderTransfer->getOrderReference(),
+                $restOrdersAttributesTransfer
             );
+            $restResponse = $restResponse->addResource($restResource);
         }
 
         return $restResponse;
@@ -111,12 +117,12 @@ class OrderRestResponseBuilder implements OrderRestResponseBuilderInterface
      */
     public function createOrderNotFoundErrorResponse(): RestResponseInterface
     {
-        $restErrorTransfer = (new RestErrorMessageTransfer())
-            ->setCode(OrdersRestApiConfig::RESPONSE_CODE_CANT_FIND_ORDER)
-            ->setStatus(Response::HTTP_NOT_FOUND)
-            ->setDetail(OrdersRestApiConfig::RESPONSE_DETAIL_CANT_FIND_ORDER);
+        $restErrorPayload = $this->ordersRestApiConfig->getCantFindOrderRestError();
 
-        return $this->restResourceBuilder->createRestResponse()->addError($restErrorTransfer);
+        return $this->createErrorResponse(
+            (new RestErrorMessageTransfer())
+                ->fromArray($restErrorPayload)
+        );
     }
 
     /**
@@ -133,6 +139,29 @@ class OrderRestResponseBuilder implements OrderRestResponseBuilderInterface
         }
 
         return $restResources;
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createCustomerUnauthorizedErrorResponse(): RestResponseInterface
+    {
+        $restErrorPayload = $this->ordersRestApiConfig->getCustomerUnauthorizedRestError();
+
+        return $this->createErrorResponse(
+            (new RestErrorMessageTransfer())
+                ->fromArray($restErrorPayload)
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestErrorMessageTransfer $restErrorMessageTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createErrorResponse(RestErrorMessageTransfer $restErrorMessageTransfer): RestResponseInterface
+    {
+        return $this->restResourceBuilder->createRestResponse()->addError($restErrorMessageTransfer);
     }
 
     /**

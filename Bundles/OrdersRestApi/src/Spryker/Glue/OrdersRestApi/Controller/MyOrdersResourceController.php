@@ -14,25 +14,11 @@ use Spryker\Glue\Kernel\Controller\AbstractController;
 /**
  * @method \Spryker\Glue\OrdersRestApi\OrdersRestApiFactory getFactory()
  */
-class OrdersResourceController extends AbstractController
+class MyOrdersResourceController extends AbstractController
 {
     /**
      * @Glue({
-     *     "getResourceById": {
-     *          "summary": [
-     *              "Retrieves order by id."
-     *          ],
-     *          "parameters": [{
-     *              "ref": "acceptLanguage"
-     *          }],
-     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestOrderDetailsAttributesTransfer",
-     *          "responses": {
-     *              "403": "Unauthorized request.",
-     *              "404": "Order not found."
-     *          }
-     *     },
      *     "getCollection": {
-     *          "deprecated": true,
      *          "summary": [
      *              "Retrieves list of orders."
      *          ],
@@ -51,6 +37,6 @@ class OrdersResourceController extends AbstractController
      */
     public function getAction(RestRequestInterface $restRequest): RestResponseInterface
     {
-        return $this->getFactory()->createOrderReader()->getOrderAttributes($restRequest);
+        return $this->getFactory()->createOrderReader()->getMyOrders($restRequest);
     }
 }
