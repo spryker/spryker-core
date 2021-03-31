@@ -32,7 +32,6 @@ class PasswordOauthGrantTypeConfigurationProviderPlugin extends AbstractPlugin i
     {
         return (new OauthGrantTypeConfigurationTransfer())
             ->setIdentifier(OauthConfig::GRANT_TYPE_PASSWORD)
-            ->setFullyQualifiedClassName(PasswordGrantType::class)
             ->setBuilderFullyQualifiedClassName(PasswordGrantTypeBuilder::class);
     }
 }
