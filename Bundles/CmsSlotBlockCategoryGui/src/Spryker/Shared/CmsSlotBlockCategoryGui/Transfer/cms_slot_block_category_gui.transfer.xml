@@ -22,5 +22,6 @@
     <transfer name="Category">
         <property name="name" type="string"/>
         <property name="idCategory" type="int"/>
+        <property name="categoryKey" type="string"/>
     </transfer>
 </transfers>
