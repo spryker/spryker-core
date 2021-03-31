@@ -57,6 +57,9 @@ class PathMethodSpecificationComponent implements PathMethodSpecificationCompone
         if ($this->pathMethodComponentTransfer->getOperationId()) {
             $pathData[PathMethodComponentTransfer::OPERATION_ID] = $this->pathMethodComponentTransfer->getOperationId();
         }
+        if ($this->pathMethodComponentTransfer->getDeprecated()) {
+            $pathData[PathMethodComponentTransfer::DEPRECATED] = $this->pathMethodComponentTransfer->getDeprecated();
+        }
         $pathData[PathMethodComponentTransfer::RESPONSES] = [];
         foreach ($this->pathMethodComponentTransfer->getResponses() as $response) {
             $pathData[PathMethodComponentTransfer::RESPONSES] += $response;
