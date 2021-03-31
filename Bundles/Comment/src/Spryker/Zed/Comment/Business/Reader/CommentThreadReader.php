@@ -110,15 +110,11 @@ class CommentThreadReader implements CommentThreadReaderInterface
     {
         foreach ($commentTransfers as $commentTransfer) {
             $threadId = $commentTransfer->getIdCommentThread();
-
-            $existingCommentTransfers = $commentThreadTransfers[$threadId]->getComments();
-            if (count($existingCommentTransfers) === 0) {
-                $existingCommentTransfers = new ArrayObject($commentTransfers);
-            } else {
-                $existingCommentTransfers->append($commentTransfers);
+            if (!isset($commentThreadTransfers[$threadId])) {
+                continue;
             }
 
-            $commentThreadTransfers[$threadId]->setComments($existingCommentTransfers);
+            $commentThreadTransfers[$threadId]->addComment($commentTransfer);
         }
 
         return $commentThreadTransfers;
