@@ -19,6 +19,8 @@ interface ProductCategoryStorageFacadeInterface
      *
      * @api
      *
+     * @deprecated This will be deleted in the next major without replacement.
+     *
      * @param int[] $productAbstractIds
      *
      * @return void
@@ -31,6 +33,8 @@ interface ProductCategoryStorageFacadeInterface
      * - Sends delete message to queue based on module config
      *
      * @api
+     *
+     * @deprecated This will be deleted in the next major without replacement.
      *
      * @param int[] $productAbstractIds
      *

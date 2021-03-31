@@ -18,6 +18,8 @@ interface CategoryStorageFacadeInterface
      *
      * @api
      *
+     * @deprecated This will be deleted in the next major without replacement.
+     *
      * @param int[] $categoryNodeIds
      *
      * @return void
@@ -30,6 +32,8 @@ interface CategoryStorageFacadeInterface
      * - Sends a copy of data to the queue.
      *
      * @api
+     *
+     * @deprecated This will be deleted in the next major without replacement.
      *
      * @param int[] $categoryNodeIds
      *

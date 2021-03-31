@@ -21,6 +21,8 @@ class CategoryPageSearchFacade extends AbstractFacade implements CategoryPageSea
      *
      * @api
      *
+     * @deprecated This will be deleted in the next major without replacement.
+     *
      * @param array $categoryNodeIds
      *
      * @return void
@@ -34,6 +36,8 @@ class CategoryPageSearchFacade extends AbstractFacade implements CategoryPageSea
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated This will be deleted in the next major without replacement.
      *
      * @param array $categoryNodeIds
      *

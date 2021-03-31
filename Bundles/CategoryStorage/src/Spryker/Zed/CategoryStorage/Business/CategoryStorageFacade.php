@@ -21,6 +21,8 @@ class CategoryStorageFacade extends AbstractFacade implements CategoryStorageFac
      *
      * @api
      *
+     * @deprecated This will be deleted in the next major without replacement.
+     *
      * @param int[] $categoryNodeIds
      *
      * @return void
@@ -34,6 +36,8 @@ class CategoryStorageFacade extends AbstractFacade implements CategoryStorageFac
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated This will be deleted in the next major without replacement.
      *
      * @param int[] $categoryNodeIds
      *
