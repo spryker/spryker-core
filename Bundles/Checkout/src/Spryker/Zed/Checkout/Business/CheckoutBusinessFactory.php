@@ -26,7 +26,7 @@ class CheckoutBusinessFactory extends AbstractBusinessFactory
     {
         return new CheckoutWorkflow(
             $this->getOmsFacade(),
-            $this->getQuoteFacade(),
+            $this->createStorageStrategyProvider()->provideStorage(),
             $this->getProvidedDependency(CheckoutDependencyProvider::CHECKOUT_PRE_CONDITIONS),
             $this->getProvidedDependency(CheckoutDependencyProvider::CHECKOUT_ORDER_SAVERS),
             $this->getProvidedDependency(CheckoutDependencyProvider::CHECKOUT_POST_HOOKS),
