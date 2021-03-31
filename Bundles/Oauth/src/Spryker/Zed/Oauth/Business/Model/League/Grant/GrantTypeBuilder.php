@@ -48,7 +48,7 @@ class GrantTypeBuilder implements GrantBuilderInterface
     {
         $builderFullyQualifiedClassName = $oauthGrantTypeConfigurationTransfer->getBuilderFullyQualifiedClassName();
 
-        if (class_exists($builderFullyQualifiedClassName) || !is_subclass_of($builderFullyQualifiedClassName, GrantTypeBuilderInterface::class)) {
+        if ($builderFullyQualifiedClassName && (class_exists($builderFullyQualifiedClassName) || !is_subclass_of($builderFullyQualifiedClassName, GrantTypeBuilderInterface::class))) {
             /** @var \Spryker\Zed\Oauth\Business\Model\League\Grant\GrantTypeBuilderInterface $grantBuilder */
             $grantBuilder = new $builderFullyQualifiedClassName();
 
