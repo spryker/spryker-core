@@ -8,12 +8,12 @@
 namespace Spryker\Zed\Checkout\Business\StorageStrategy;
 
 use Spryker\Client\Quote\Exception\StorageStrategyNotFound;
-use Spryker\Zed\Quote\Business\QuoteFacade;
+use Spryker\Zed\Checkout\Dependency\Facade\CheckoutToQuoteFacadeInterface;
 
 class StorageStrategyProvider implements StorageStrategyProviderInterface
 {
     /**
-     * @var \Spryker\Zed\Quote\Business\QuoteFacade
+     * @var \Spryker\Zed\Checkout\Dependency\Facade\CheckoutToQuoteFacadeInterface
      */
     protected $quoteFacade;
 
@@ -23,10 +23,10 @@ class StorageStrategyProvider implements StorageStrategyProviderInterface
     protected $storageStrategyList;
 
     /**
-     * @param \Spryker\Zed\Quote\Business\QuoteFacade $quoteFacade
+     * @param \Spryker\Zed\Checkout\Dependency\Facade\CheckoutToQuoteFacadeInterface $quoteFacade
      * @param \Spryker\Zed\Checkout\Business\StorageStrategy\StorageStrategyInterface[] $storageStrategyList
      */
-    public function __construct(QuoteFacade $quoteFacade, array $storageStrategyList)
+    public function __construct(CheckoutToQuoteFacadeInterface $quoteFacade, array $storageStrategyList)
     {
         $this->quoteFacade = $quoteFacade;
         $this->storageStrategyList = $storageStrategyList;

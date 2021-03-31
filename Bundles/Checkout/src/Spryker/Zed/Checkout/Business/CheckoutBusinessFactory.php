@@ -7,7 +7,10 @@
 
 namespace Spryker\Zed\Checkout\Business;
 
+use Spryker\Zed\Checkout\Business\StorageStrategy\DatabaseStorageStrategy;
+use Spryker\Zed\Checkout\Business\StorageStrategy\SessionStorageStrategy;
 use Spryker\Zed\Checkout\Business\StorageStrategy\StorageStrategyInterface;
+use Spryker\Zed\Checkout\Business\StorageStrategy\StorageStrategyProvider;
 use Spryker\Zed\Checkout\Business\StorageStrategy\StorageStrategyProviderInterface;
 use Spryker\Zed\Checkout\Business\Workflow\CheckoutWorkflow;
 use Spryker\Zed\Checkout\CheckoutDependencyProvider;

@@ -16,11 +16,17 @@ class SessionStorageStrategy implements StorageStrategyInterface
     /**
      * @return string
      */
-    public function getStorageStrategy()
+    public function getStorageStrategy(): string
     {
         return QuoteConfig::STORAGE_STRATEGY_SESSION;
     }
 
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return void
+     */
     public function updateQuote(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): void
     {
         $quoteTransfer->setOrderReference(
