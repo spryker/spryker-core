@@ -11,6 +11,10 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
+use Spryker\Zed\Checkout\Business\StorageStrategy\DatabaseStorageStrategy;
+use Spryker\Zed\Checkout\Business\StorageStrategy\SessionStorageStrategy;
+use Spryker\Zed\Checkout\Business\StorageStrategy\StorageStrategyInterface;
+use Spryker\Zed\Checkout\Business\StorageStrategy\StorageStrategyProvider;
 use Spryker\Zed\Checkout\Business\Workflow\CheckoutWorkflow;
 use Spryker\Zed\Checkout\Dependency\Facade\CheckoutToOmsFacadeBridge;
 use Spryker\Zed\Checkout\Dependency\Facade\CheckoutToQuoteFacadeBridge;
@@ -48,7 +52,7 @@ class CheckoutWorkflowTest extends Unit
         $checkoutResponse = $this->createBaseCheckoutResponse();
         $checkoutWorkflow = new CheckoutWorkflow(
             new CheckoutToOmsFacadeBridge(new OmsFacade()),
-            new CheckoutToQuoteFacadeBridge(new QuoteFacade()),
+            $this->provideQuoteStorageStrategy(),
             [],
             [],
             [new MockPostHook($checkoutResponse)]
@@ -78,7 +82,7 @@ class CheckoutWorkflowTest extends Unit
         $checkoutResponse = $this->createBaseCheckoutResponse();
         $checkoutWorkflow = new CheckoutWorkflow(
             new CheckoutToOmsFacadeBridge(new OmsFacade()),
-            new CheckoutToQuoteFacadeBridge(new QuoteFacade()),
+            $this->provideQuoteStorageStrategy(),
             [$mockBuilder],
             [],
             [new MockPostHook($checkoutResponse)]
@@ -112,7 +116,7 @@ class CheckoutWorkflowTest extends Unit
 
         $checkoutWorkflow = new CheckoutWorkflow(
             new CheckoutToOmsFacadeBridge(new OmsFacade()),
-            new CheckoutToQuoteFacadeBridge(new QuoteFacade()),
+            $this->provideQuoteStorageStrategy(),
             [$mock1, $mock2],
             [],
             []
@@ -145,7 +149,7 @@ class CheckoutWorkflowTest extends Unit
 
         $checkoutWorkflow = new CheckoutWorkflow(
             new CheckoutToOmsFacadeBridge(new OmsFacade()),
-            new CheckoutToQuoteFacadeBridge(new QuoteFacade()),
+            $this->provideQuoteStorageStrategy(),
             [],
             [$mock1, $mock2],
             [],
@@ -182,7 +186,7 @@ class CheckoutWorkflowTest extends Unit
 
         $checkoutWorkflow = new CheckoutWorkflow(
             new CheckoutToOmsFacadeBridge(new OmsFacade()),
-            new CheckoutToQuoteFacadeBridge(new QuoteFacade()),
+            $this->provideQuoteStorageStrategy(),
             [],
             [$mock1, $mock2, $mock3],
             [],
@@ -214,7 +218,7 @@ class CheckoutWorkflowTest extends Unit
 
         $checkoutWorkflow = new CheckoutWorkflow(
             new CheckoutToOmsFacadeBridge(new OmsFacade()),
-            new CheckoutToQuoteFacadeBridge(new QuoteFacade()),
+            $this->provideQuoteStorageStrategy(),
             [],
             [],
             [$mock1, $mock2]
@@ -239,7 +243,7 @@ class CheckoutWorkflowTest extends Unit
 
         $checkoutWorkflow = new CheckoutWorkflow(
             new CheckoutToOmsFacadeBridge(new OmsFacade()),
-            new CheckoutToQuoteFacadeBridge(new QuoteFacade()),
+            $this->provideQuoteStorageStrategy(),
             [$mock1],
             [$mock2],
             []
@@ -267,7 +271,7 @@ class CheckoutWorkflowTest extends Unit
 
         $checkoutWorkflow = new CheckoutWorkflow(
             new CheckoutToOmsFacadeBridge(new OmsFacade()),
-            new CheckoutToQuoteFacadeBridge(new QuoteFacade()),
+            $this->provideQuoteStorageStrategy(),
             [],
             [],
             [$mock]
@@ -289,7 +293,7 @@ class CheckoutWorkflowTest extends Unit
         $quoteTransfer->setOrderReference(static::TEST_ORDER_REFERENCE);
         $checkoutWorkflow = new CheckoutWorkflow(
             new CheckoutToOmsFacadeBridge(new OmsFacade()),
-            new CheckoutToQuoteFacadeBridge(new QuoteFacade()),
+            $this->provideQuoteStorageStrategy(),
             [],
             [],
             []
@@ -312,5 +316,23 @@ class CheckoutWorkflowTest extends Unit
         $checkoutResponseTransfer->setSaveOrder(new SaveOrderTransfer());
 
         return $checkoutResponseTransfer;
+    }
+
+    /**
+     * @return \Spryker\Zed\Checkout\Business\StorageStrategy\StorageStrategyInterface
+     */
+    protected function provideQuoteStorageStrategy(): StorageStrategyInterface
+    {
+        return (new StorageStrategyProvider(
+            new CheckoutToQuoteFacadeBridge(
+                new CheckoutToQuoteFacadeBridge(new QuoteFacade())
+            ),
+            [
+                new SessionStorageStrategy(),
+                new DatabaseStorageStrategy(
+                    new CheckoutToQuoteFacadeBridge(new QuoteFacade())
+                ),
+            ]
+        ))->provideStorage();
     }
 }
