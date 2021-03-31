@@ -15,6 +15,8 @@ use Orm\Zed\ShoppingList\Persistence\SpyShoppingList;
 
 class ShoppingListMapper implements ShoppingListMapperInterface
 {
+    public const FIELD_NUMBER_OF_ITEMS = 'number_of_items';
+
     public const FIELD_FIRST_NAME = 'first_name';
     public const FIELD_LAST_NAME = 'last_name';
     public const FIELD_CREATED_AT = 'created_at';
@@ -43,20 +45,7 @@ class ShoppingListMapper implements ShoppingListMapperInterface
         SpyShoppingListEntityTransfer $shoppingListEntityTransfer,
         ShoppingListTransfer $shoppingListTransfer
     ): ShoppingListTransfer {
-        $shoppingListTransfer = $shoppingListTransfer->fromArray($shoppingListEntityTransfer->modifiedToArray(), true);
-
-        $virtualPropertiesCollection = $shoppingListEntityTransfer->virtualProperties();
-        if (isset($virtualPropertiesCollection[static::FIELD_FIRST_NAME]) || isset($virtualPropertiesCollection[static::FIELD_LAST_NAME])) {
-            $shoppingListTransfer->setOwner(
-                $virtualPropertiesCollection[static::FIELD_FIRST_NAME] . ' ' . $virtualPropertiesCollection[static::FIELD_LAST_NAME]
-            );
-        }
-        if (isset($virtualPropertiesCollection[static::FIELD_CREATED_AT])) {
-            $shoppingListTransfer->setCreatedAt($virtualPropertiesCollection[static::FIELD_CREATED_AT]);
-        }
-        if (isset($virtualPropertiesCollection[static::FIELD_UPDATED_AT])) {
-            $shoppingListTransfer->setUpdatedAt($virtualPropertiesCollection[static::FIELD_UPDATED_AT]);
-        }
+        $shoppingListTransfer = $this->mapShoppingListTransferBaseFields($shoppingListTransfer, $shoppingListEntityTransfer);
 
         $this->addItemsCount($shoppingListEntityTransfer, $shoppingListTransfer);
 
@@ -75,7 +64,7 @@ class ShoppingListMapper implements ShoppingListMapperInterface
     {
         $shoppingListItemCollectionTransfer = new ShoppingListCollectionTransfer();
         foreach ($shoppingListEntityTransferCollection as $itemEntityTransfer) {
-            $shoppingListItemTransfer = $this->mapShoppingListTransfer($itemEntityTransfer, new ShoppingListTransfer());
+            $shoppingListItemTransfer = $this->mapShoppingListTransferWithoutItems($itemEntityTransfer, new ShoppingListTransfer());
             $shoppingListItemCollectionTransfer->addShoppingList($shoppingListItemTransfer);
         }
 
@@ -128,9 +117,78 @@ class ShoppingListMapper implements ShoppingListMapperInterface
                 $numberOfItems[$shoppingListItem->getSku()] = 0;
             }
 
-            $numberOfItems[$shoppingListItem->getSku()] += $shoppingListItem->getQuantity();
+            $numberOfItems[$shoppingListItem->getSku()] += (int)$shoppingListItem->getQuantity();
         }
 
         $shoppingListTransfer->setNumberOfItems(array_sum($numberOfItems));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyShoppingListEntityTransfer $shoppingListEntityTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListTransfer
+     */
+    public function mapShoppingListTransferWithoutItems(
+        SpyShoppingListEntityTransfer $shoppingListEntityTransfer,
+        ShoppingListTransfer $shoppingListTransfer
+    ): ShoppingListTransfer {
+        $shoppingListTransfer = $this->mapShoppingListTransferBaseFields($shoppingListTransfer, $shoppingListEntityTransfer);
+
+        $virtualPropertiesCollection = $shoppingListEntityTransfer->virtualProperties();
+
+        if (isset($virtualPropertiesCollection[static::FIELD_NUMBER_OF_ITEMS])) {
+            $shoppingListTransfer->setNumberOfItems((int)$virtualPropertiesCollection[static::FIELD_NUMBER_OF_ITEMS]);
+        }
+
+        return $shoppingListTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     * @param \Generated\Shared\Transfer\SpyShoppingListEntityTransfer $shoppingListEntityTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListTransfer
+     */
+    protected function mapShoppingListTransferBaseFields(
+        ShoppingListTransfer $shoppingListTransfer,
+        SpyShoppingListEntityTransfer $shoppingListEntityTransfer
+    ): ShoppingListTransfer {
+        $shoppingListTransfer = $shoppingListTransfer->fromArray($shoppingListEntityTransfer->modifiedToArray(), true);
+
+        $virtualPropertiesCollection = $shoppingListEntityTransfer->virtualProperties();
+
+        $ownerTitle = $this->extractOwnerTitle($shoppingListEntityTransfer);
+        if ($ownerTitle !== null) {
+            $shoppingListTransfer->setOwner($ownerTitle);
+        }
+        if (isset($virtualPropertiesCollection[static::FIELD_CREATED_AT])) {
+            $shoppingListTransfer->setCreatedAt($virtualPropertiesCollection[static::FIELD_CREATED_AT]);
+        }
+        if (isset($virtualPropertiesCollection[static::FIELD_UPDATED_AT])) {
+            $shoppingListTransfer->setUpdatedAt($virtualPropertiesCollection[static::FIELD_UPDATED_AT]);
+        }
+
+        return $shoppingListTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyShoppingListEntityTransfer $shoppingListEntityTransfer
+     *
+     * @return string|null
+     */
+    protected function extractOwnerTitle(SpyShoppingListEntityTransfer $shoppingListEntityTransfer): ?string
+    {
+        $virtualPropertiesCollection = $shoppingListEntityTransfer->virtualProperties();
+
+        if (isset($virtualPropertiesCollection[static::FIELD_FIRST_NAME]) || isset($virtualPropertiesCollection[static::FIELD_LAST_NAME])) {
+            return trim(sprintf(
+                '%s %s',
+                $virtualPropertiesCollection[static::FIELD_FIRST_NAME] ?? '',
+                $virtualPropertiesCollection[static::FIELD_LAST_NAME] ?? ''
+            ));
+        }
+
+        return null;
     }
 }
