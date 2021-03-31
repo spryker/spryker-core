@@ -207,22 +207,6 @@ class ProductCategoryStorageRepository extends AbstractRepository implements Pro
     }
 
     /**
-     * @param int[] $categoryNodeIds
-     *
-     * @return int[]
-     */
-    public function getCategoryIdsByNodeIds(array $categoryNodeIds): array
-    {
-        return $this->getFactory()
-            ->getCategoryNodePropelQuery()
-            ->select(SpyCategoryNodeTableMap::COL_FK_CATEGORY)
-            ->filterByIdCategoryNode_In($categoryNodeIds)
-            ->orderBy(SpyCategoryNodeTableMap::COL_NODE_ORDER, Criteria::DESC)
-            ->find()
-            ->getData();
-    }
-
-    /**
      * @param int $offset
      * @param int $limit
      * @param int[] $ids

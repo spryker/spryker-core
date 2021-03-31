@@ -31,7 +31,7 @@ class CategoryStorageRepository extends AbstractRepository implements CategorySt
         $query = $this->getFactory()->createSpyCategoryNodeStorageQuery();
 
         if ($ids) {
-            $query->filterByIdCategoryNodeStorage_In($ids);
+            $query->filterByFkCategoryNode_In($ids);
         }
 
         return $this->buildQueryFromCriteria($query, $filterTransfer)

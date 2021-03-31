@@ -15,4 +15,11 @@ interface ProductCategoryStorageToCategoryInterface
      * @return \Generated\Shared\Transfer\NodeTransfer[]
      */
     public function getAllNodesByIdCategory(int $idCategory): array;
+
+    /**
+     * @param int[] $categoryNodeIds
+     *
+     * @return int[]
+     */
+    public function getCategoryIdsByNodeIds(array $categoryNodeIds): array;
 }

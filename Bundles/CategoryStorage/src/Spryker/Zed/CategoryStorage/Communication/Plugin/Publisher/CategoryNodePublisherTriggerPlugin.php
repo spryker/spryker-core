@@ -38,7 +38,7 @@ class CategoryNodePublisherTriggerPlugin extends AbstractPlugin implements Publi
 
         return $this->getFactory()
             ->getCategoryFacade()
-            ->findCategoryNodesByFilter($filterTransfer)
+            ->getCategoryNodesByFilter($filterTransfer)
             ->getNodes()
             ->getArrayCopy();
     }

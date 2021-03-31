@@ -291,9 +291,24 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @return \Generated\Shared\Transfer\NodeCollectionTransfer
      */
-    public function findCategoryNodesByFilter(FilterTransfer $filterTransfer): NodeCollectionTransfer
+    public function getCategoryNodesByFilter(FilterTransfer $filterTransfer): NodeCollectionTransfer
     {
         return $this->getRepository()
-            ->findCategoryNodesByFilter($filterTransfer);
+            ->getCategoryNodesByFilter($filterTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int[] $categoryNodeIds
+     *
+     * @return int[]
+     */
+    public function getCategoryIdsByNodeIds(array $categoryNodeIds): array
+    {
+        return $this->getRepository()
+            ->getCategoryIdsByNodeIds($categoryNodeIds);
     }
 }

@@ -10,11 +10,6 @@ namespace Spryker\Zed\CategoryPageSearch\Persistence;
 interface CategoryPageSearchRepositoryInterface
 {
     /**
-     * Specification:
-     * - Retrieves a collection of synchronization data according to provided offset, limit and ids.
-     *
-     * @api
-     *
      * @param int $offset
      * @param int $limit
      * @param int[] $categoryNodeIds

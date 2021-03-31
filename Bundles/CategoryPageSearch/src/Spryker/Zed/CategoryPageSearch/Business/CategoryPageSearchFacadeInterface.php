@@ -18,6 +18,8 @@ interface CategoryPageSearchFacadeInterface
      *
      * @api
      *
+     * @deprecated This will be deleted in the next major without replacement.
+     *
      * @param array $categoryNodeIds
      *
      * @return void
@@ -30,6 +32,8 @@ interface CategoryPageSearchFacadeInterface
      * - Sends a copy of data to the queue.
      *
      * @api
+     *
+     * @deprecated This will be deleted in the next major without replacement.
      *
      * @param array $categoryNodeIds
      *
@@ -195,7 +199,7 @@ interface CategoryPageSearchFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves a collection of synchronization data according to provided offset, limit and ids.
+     * - Retrieves a collection of synchronization data according to provided offset, limit and categoryNodeIds.
      *
      * @api
      *

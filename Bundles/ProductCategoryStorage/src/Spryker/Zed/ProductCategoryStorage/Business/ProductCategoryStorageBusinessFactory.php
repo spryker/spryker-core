@@ -42,7 +42,8 @@ class ProductCategoryStorageBusinessFactory extends AbstractBusinessFactory
             $this->getStoreFacade(),
             $this->getEventBehaviorFacade(),
             $this->createProductAbstractReader(),
-            $this->createProductCategoryStorageReader()
+            $this->createProductCategoryStorageReader(),
+            $this->getCategoryFacade()
         );
     }
 

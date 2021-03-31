@@ -10,6 +10,8 @@ namespace Spryker\Zed\CategoryStorage\Business\Deleter;
 use Generated\Shared\Transfer\CategoryNodeCriteriaTransfer;
 use Generated\Shared\Transfer\NodeCollectionTransfer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
+use Spryker\Zed\CategoryStorage\Dependency\Facade\CategoryStorageToCategoryFacadeInterface;
+use Spryker\Zed\CategoryStorage\Dependency\Facade\CategoryStorageToEventBehaviorFacadeInterface;
 use Spryker\Zed\CategoryStorage\Persistence\CategoryStorageEntityManagerInterface;
 
 class CategoryNodeStorageDeleter implements CategoryNodeStorageDeleterInterface
@@ -31,10 +33,17 @@ class CategoryNodeStorageDeleter implements CategoryNodeStorageDeleterInterface
 
     /**
      * @param \Spryker\Zed\CategoryStorage\Persistence\CategoryStorageEntityManagerInterface $categoryStorageEntityManager
+     * @param \Spryker\Zed\CategoryStorage\Dependency\Facade\CategoryStorageToCategoryFacadeInterface $categoryFacade
+     * @param \Spryker\Zed\CategoryStorage\Dependency\Facade\CategoryStorageToEventBehaviorFacadeInterface $eventBehaviorFacade
      */
-    public function __construct(CategoryStorageEntityManagerInterface $categoryStorageEntityManager)
-    {
+    public function __construct(
+        CategoryStorageEntityManagerInterface $categoryStorageEntityManager,
+        CategoryStorageToCategoryFacadeInterface $categoryFacade,
+        CategoryStorageToEventBehaviorFacadeInterface $eventBehaviorFacade
+    ) {
         $this->categoryStorageEntityManager = $categoryStorageEntityManager;
+        $this->categoryFacade = $categoryFacade;
+        $this->eventBehaviorFacade = $eventBehaviorFacade;
     }
 
     /**

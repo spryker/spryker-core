@@ -41,8 +41,8 @@ class CategoryPageSearchToCategoryFacadeBridge implements CategoryPageSearchToCa
      *
      * @return \Generated\Shared\Transfer\NodeCollectionTransfer
      */
-    public function findCategoryNodesByFilter(FilterTransfer $filterTransfer): NodeCollectionTransfer
+    public function getCategoryNodesByFilter(FilterTransfer $filterTransfer): NodeCollectionTransfer
     {
-        return $this->categoryFacade->findCategoryNodesByFilter($filterTransfer);
+        return $this->categoryFacade->getCategoryNodesByFilter($filterTransfer);
     }
 }

@@ -22,6 +22,8 @@ class ProductCategoryStorageFacade extends AbstractFacade implements ProductCate
      *
      * @api
      *
+     * @deprecated This will be deleted in the next major without replacement.
+     *
      * @param int[] $productAbstractIds
      *
      * @return void
@@ -35,6 +37,8 @@ class ProductCategoryStorageFacade extends AbstractFacade implements ProductCate
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated This will be deleted in the next major without replacement.
      *
      * @param int[] $productAbstractIds
      *
@@ -248,7 +252,7 @@ class ProductCategoryStorageFacade extends AbstractFacade implements ProductCate
     {
         $this->getFactory()
             ->createProductCategoryStorageWriter()
-            ->writeCollectionByProductCategoryPublishingEvents($eventEntityTransfers);
+            ->writeCollectionByProductCategoryEvents($eventEntityTransfers);
     }
 
     /**

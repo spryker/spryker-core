@@ -31,4 +31,14 @@ class ProductCategoryStorageToCategoryBridge implements ProductCategoryStorageTo
     {
         return $this->categoryFacade->getAllNodesByIdCategory($idCategory);
     }
+
+    /**
+     * @param int[] $categoryNodeIds
+     *
+     * @return int[]
+     */
+    public function getCategoryIdsByNodeIds(array $categoryNodeIds): array
+    {
+        return $this->categoryFacade->getCategoryIdsByNodeIds($categoryNodeIds);
+    }
 }

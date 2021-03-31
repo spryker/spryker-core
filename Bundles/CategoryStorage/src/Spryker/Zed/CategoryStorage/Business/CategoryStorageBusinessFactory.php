@@ -76,7 +76,9 @@ class CategoryStorageBusinessFactory extends AbstractBusinessFactory
     public function createCategoryNodeStorageDeleter(): CategoryNodeStorageDeleterInterface
     {
         return new CategoryNodeStorageDeleter(
-            $this->getEntityManager()
+            $this->getEntityManager(),
+            $this->getCategoryFacade(),
+            $this->getEventBehaviorFacade()
         );
     }
 

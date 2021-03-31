@@ -18,6 +18,7 @@ use Orm\Zed\ProductCategory\Persistence\Map\SpyProductCategoryTableMap;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 use Spryker\Zed\ProductCategoryStorage\Business\Reader\ProductAbstractReaderInterface;
 use Spryker\Zed\ProductCategoryStorage\Business\Reader\ProductCategoryStorageReaderInterface;
+use Spryker\Zed\ProductCategoryStorage\Dependency\Facade\ProductCategoryStorageToCategoryInterface;
 use Spryker\Zed\ProductCategoryStorage\Dependency\Facade\ProductCategoryStorageToEventBehaviorFacadeInterface;
 use Spryker\Zed\ProductCategoryStorage\Dependency\Facade\ProductCategoryStorageToStoreFacadeInterface;
 use Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStorageEntityManagerInterface;
@@ -56,12 +57,18 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
     protected $productCategoryStorageReader;
 
     /**
+     * @var \Spryker\Zed\ProductCategoryStorage\Dependency\Facade\ProductCategoryStorageToCategoryInterface
+     */
+    protected $categoryFacade;
+
+    /**
      * @param \Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStorageRepositoryInterface $productCategoryStorageRepository
      * @param \Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStorageEntityManagerInterface $productCategoryStorageEntityManager
      * @param \Spryker\Zed\ProductCategoryStorage\Dependency\Facade\ProductCategoryStorageToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\ProductCategoryStorage\Dependency\Facade\ProductCategoryStorageToEventBehaviorFacadeInterface $eventBehaviorFacade
      * @param \Spryker\Zed\ProductCategoryStorage\Business\Reader\ProductAbstractReaderInterface $productAbstractReader
      * @param \Spryker\Zed\ProductCategoryStorage\Business\Reader\ProductCategoryStorageReaderInterface $productCategoryStorageReader
+     * @param \Spryker\Zed\ProductCategoryStorage\Dependency\Facade\ProductCategoryStorageToCategoryInterface $categoryFacade
      */
     public function __construct(
         ProductCategoryStorageRepositoryInterface $productCategoryStorageRepository,
@@ -69,7 +76,8 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
         ProductCategoryStorageToStoreFacadeInterface $storeFacade,
         ProductCategoryStorageToEventBehaviorFacadeInterface $eventBehaviorFacade,
         ProductAbstractReaderInterface $productAbstractReader,
-        ProductCategoryStorageReaderInterface $productCategoryStorageReader
+        ProductCategoryStorageReaderInterface $productCategoryStorageReader,
+        ProductCategoryStorageToCategoryInterface $categoryFacade
     ) {
         $this->productCategoryStorageRepository = $productCategoryStorageRepository;
         $this->productCategoryStorageEntityManager = $productCategoryStorageEntityManager;
@@ -77,6 +85,7 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
         $this->eventBehaviorFacade = $eventBehaviorFacade;
         $this->productAbstractReader = $productAbstractReader;
         $this->productCategoryStorageReader = $productCategoryStorageReader;
+        $this->categoryFacade = $categoryFacade;
     }
 
     /**
@@ -201,7 +210,7 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
             return;
         }
 
-        $categoryIds = $this->productCategoryStorageRepository->getCategoryIdsByNodeIds($categoryNodeIds);
+        $categoryIds = $this->categoryFacade->getCategoryIdsByNodeIds($categoryNodeIds);
 
         $this->writeCollectionByRelatedCategories($categoryIds, true);
     }

@@ -293,5 +293,17 @@ interface CategoryFacadeInterface
      *
      * @return \Generated\Shared\Transfer\NodeCollectionTransfer
      */
-    public function findCategoryNodesByFilter(FilterTransfer $filterTransfer): NodeCollectionTransfer;
+    public function getCategoryNodesByFilter(FilterTransfer $filterTransfer): NodeCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves category ids by category nodes ids.
+     *
+     * @api
+     *
+     * @param int[] $categoryNodeIds
+     *
+     * @return int[]
+     */
+    public function getCategoryIdsByNodeIds(array $categoryNodeIds): array;
 }

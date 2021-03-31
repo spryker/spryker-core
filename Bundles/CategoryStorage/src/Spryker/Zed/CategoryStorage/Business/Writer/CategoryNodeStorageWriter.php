@@ -167,9 +167,9 @@ class CategoryNodeStorageWriter implements CategoryNodeStorageWriterInterface
                 SpyCategoryNodeTableMap::COL_FK_PARENT_CATEGORY_NODE
             );
 
-        $parentCategoryNodeIds = array_unique(array_merge($parentCategoryNodeIds, $originalParentCategoryNodeIds));
+        $categoryNodeIds = array_unique(array_merge($parentCategoryNodeIds, $originalParentCategoryNodeIds));
 
-        $this->writeCategoryNodeStorageCollection($parentCategoryNodeIds);
+        $this->writeCategoryNodeStorageCollection($categoryNodeIds);
     }
 
     /**

@@ -57,13 +57,6 @@ interface ProductCategoryStorageRepositoryInterface
     public function getProductAbstractIdsByCategoryIds(array $categoryIds): array;
 
     /**
-     * @param int[] $categoryNodeIds
-     *
-     * @return int[]
-     */
-    public function getCategoryIdsByNodeIds(array $categoryNodeIds): array;
-
-    /**
      * @param int $offset
      * @param int $limit
      * @param int[] $ids

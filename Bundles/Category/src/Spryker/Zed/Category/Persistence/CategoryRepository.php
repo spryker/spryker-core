@@ -599,7 +599,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
      *
      * @return \Generated\Shared\Transfer\NodeCollectionTransfer
      */
-    public function findCategoryNodesByFilter(FilterTransfer $filterTransfer): NodeCollectionTransfer
+    public function getCategoryNodesByFilter(FilterTransfer $filterTransfer): NodeCollectionTransfer
     {
         $query = $this->getFactory()->createCategoryNodeQuery();
         $categoryNodeEnteties = $this->buildQueryFromCriteria($query, $filterTransfer)
@@ -609,6 +609,24 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
         return $this->getFactory()
             ->createCategoryNodeMapper()
             ->mapNodeCollection($categoryNodeEnteties, (new NodeCollectionTransfer()));
+    }
+
+    /**
+     * @param int[] $categoryNodeIds
+     *
+     * @return int[]
+     */
+    public function getCategoryIdsByNodeIds(array $categoryNodeIds): array
+    {
+        $categoryIds = $this->getFactory()
+            ->createCategoryNodeQuery()
+            ->select(SpyCategoryNodeTableMap::COL_FK_CATEGORY)
+            ->filterByIdCategoryNode_In($categoryNodeIds)
+            ->orderBy(SpyCategoryNodeTableMap::COL_NODE_ORDER, Criteria::DESC)
+            ->find()
+            ->getData();
+
+        return array_map('intval', $categoryIds);
     }
 
     /**
