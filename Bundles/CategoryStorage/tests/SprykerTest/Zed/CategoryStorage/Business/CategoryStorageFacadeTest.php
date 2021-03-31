@@ -200,7 +200,7 @@ class CategoryStorageFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testWriteCategoryNodeStorageCollectionByPerentCategoryEventsWithoutParentWillWriteStorageData(): void
+    public function testWriteCategoryNodeStorageCollectionByParentCategoryEventsWithoutParentWillWriteStorageData(): void
     {
         // Arrange
         $categoryTransfer = $this->tester->haveLocalizedCategoryWithStoreRelation([], [StoreTransfer::NAME => static::STORE_NAME_DE]);
@@ -210,7 +210,7 @@ class CategoryStorageFacadeTest extends Unit
         ]);
 
         // Act
-        $this->tester->getFacade()->writeCategoryNodeStorageCollectionByPerentCategoryEvents([$eventEntityTransfer]);
+        $this->tester->getFacade()->writeCategoryNodeStorageCollectionByParentCategoryEvents([$eventEntityTransfer]);
 
         // Assert
         $this->executeCategoryNodePageSearchWriterAsserts($categoryTransfer);
@@ -219,7 +219,7 @@ class CategoryStorageFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testWriteCategoryNodeStorageCollectionByPerentCategoryEventsWithOriginalParentWillWriteStorageData(): void
+    public function testWriteCategoryNodeStorageCollectionByParentCategoryEventsWithOriginalParentWillWriteStorageData(): void
     {
         // Arrange
         $storeData = [StoreTransfer::NAME => static::STORE_NAME_DE];
@@ -235,7 +235,7 @@ class CategoryStorageFacadeTest extends Unit
             ]);
 
         // Act
-        $this->tester->getFacade()->writeCategoryNodeStorageCollectionByPerentCategoryEvents([$eventEntityTransfer]);
+        $this->tester->getFacade()->writeCategoryNodeStorageCollectionByParentCategoryEvents([$eventEntityTransfer]);
 
         // Assert
         $this->executeCategoryNodePageSearchWriterAsserts($categoryTransfer);
@@ -361,7 +361,7 @@ class CategoryStorageFacadeTest extends Unit
         }
 
         // Act
-        $synchronizationDataTransfers = $this->tester->getFacade()->findCategoryNodeStorageDataTransferByIds(0, 100, $expectedCategoryNodeIds);
+        $synchronizationDataTransfers = $this->tester->getFacade()->findCategoryNodeStorageDataTransferByNodeIds(0, 100, $expectedCategoryNodeIds);
 
         // Assert
         $categoryNodeIds = array_map(function (SynchronizationDataTransfer $synchronizationDataTransfer) {
@@ -383,7 +383,7 @@ class CategoryStorageFacadeTest extends Unit
         }
 
         // Act
-        $synchronizationDataTransfers = $this->tester->getFacade()->findCategoryNodeStorageDataTransferByIds(0, $expectedCount, []);
+        $synchronizationDataTransfers = $this->tester->getFacade()->findCategoryNodeStorageDataTransferByNodeIds(0, $expectedCount, []);
 
         // Assert
         $this->assertCount($expectedCount, $synchronizationDataTransfers, sprintf('Exactly %d category nodes should exist.', $expectedCount));

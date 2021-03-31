@@ -9,8 +9,7 @@ namespace Spryker\Zed\CategoryStorage\Business\Writer;
 
 use Generated\Shared\Transfer\CategoryNodeCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryTreeStorageTransfer;
-use Generated\Shared\Transfer\NodeCollectionTransfer;
-use Generated\Shared\Transfer\NodeTransfer;
+use Spryker\Zed\CategoryStorage\Business\Extractor\CategoryNodeStorageExtractorInterface;
 use Spryker\Zed\CategoryStorage\Business\TreeBuilder\CategoryStorageNodeTreeBuilderInterface;
 use Spryker\Zed\CategoryStorage\Dependency\Facade\CategoryStorageToCategoryFacadeInterface;
 use Spryker\Zed\CategoryStorage\Persistence\CategoryStorageEntityManagerInterface;
@@ -33,18 +32,26 @@ class CategoryTreeStorageWriter implements CategoryTreeStorageWriterInterface
     protected $categoryFacade;
 
     /**
+     * @var \Spryker\Zed\CategoryStorage\Business\Extractor\CategoryNodeStorageExtractorInterface
+     */
+    protected $categoryNodeStorageExtractor;
+
+    /**
      * @param \Spryker\Zed\CategoryStorage\Persistence\CategoryStorageEntityManagerInterface $categoryStorageEntityManager
      * @param \Spryker\Zed\CategoryStorage\Business\TreeBuilder\CategoryStorageNodeTreeBuilderInterface $categoryStorageNodeTreeBuilder
      * @param \Spryker\Zed\CategoryStorage\Dependency\Facade\CategoryStorageToCategoryFacadeInterface $categoryFacade
+     * @param \Spryker\Zed\CategoryStorage\Business\Extractor\CategoryNodeStorageExtractorInterface $categoryNodeStorageExtractor
      */
     public function __construct(
         CategoryStorageEntityManagerInterface $categoryStorageEntityManager,
         CategoryStorageNodeTreeBuilderInterface $categoryStorageNodeTreeBuilder,
-        CategoryStorageToCategoryFacadeInterface $categoryFacade
+        CategoryStorageToCategoryFacadeInterface $categoryFacade,
+        CategoryNodeStorageExtractorInterface $categoryNodeStorageExtractor
     ) {
         $this->categoryStorageEntityManager = $categoryStorageEntityManager;
         $this->categoryStorageNodeTreeBuilder = $categoryStorageNodeTreeBuilder;
         $this->categoryFacade = $categoryFacade;
+        $this->categoryNodeStorageExtractor = $categoryNodeStorageExtractor;
     }
 
     /**
@@ -112,7 +119,8 @@ class CategoryTreeStorageWriter implements CategoryTreeStorageWriterInterface
             return [];
         }
 
-        $categoryNodeIds = $this->getCategoryNodeIdsFromNodeCollectionTransfer($nodeCollectionTransfer);
+        $categoryNodeIds = $this->categoryNodeStorageExtractor
+            ->extractCategoryNodeIdsFromNodeCollection($nodeCollectionTransfer);
 
         $categoryNodeCriteriaTransfer = (new CategoryNodeCriteriaTransfer())
             ->setIsActive(true)
@@ -128,17 +136,5 @@ class CategoryTreeStorageWriter implements CategoryTreeStorageWriterInterface
             $categoryNodeIds,
             $categoryNodeTransfers
         );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\NodeCollectionTransfer $nodeCollectionTransfer
-     *
-     * @return int[]
-     */
-    protected function getCategoryNodeIdsFromNodeCollectionTransfer(NodeCollectionTransfer $nodeCollectionTransfer): array
-    {
-        return array_map(function (NodeTransfer $nodeTransfer): int {
-            return $nodeTransfer->getIdCategoryNodeOrFail();
-        }, $nodeCollectionTransfer->getNodes()->getArrayCopy());
     }
 }

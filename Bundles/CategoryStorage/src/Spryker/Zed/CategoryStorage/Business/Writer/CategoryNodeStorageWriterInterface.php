@@ -56,7 +56,7 @@ interface CategoryNodeStorageWriterInterface
      *
      * @return void
      */
-    public function writeCategoryNodeStorageCollectionByPerentCategoryEvents(array $eventEntityTransfers): void;
+    public function writeCategoryNodeStorageCollectionByParentCategoryEvents(array $eventEntityTransfers): void;
 
     /**
      * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers

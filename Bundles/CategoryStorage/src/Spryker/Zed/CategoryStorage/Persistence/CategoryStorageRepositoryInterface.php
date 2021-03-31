@@ -12,11 +12,11 @@ interface CategoryStorageRepositoryInterface
     /**
      * @param int $offset
      * @param int $limit
-     * @param int[] $ids
+     * @param int[] $categoryNodeIds
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function findCategoryNodeStorageDataTransferByIds(int $offset, int $limit, array $ids): array;
+    public function findCategoryNodeStorageDataTransferByNodeIds(int $offset, int $limit, array $categoryNodeIds): array;
 
     /**
      * @param int $offset

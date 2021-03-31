@@ -9,6 +9,8 @@ namespace Spryker\Zed\CategoryStorage\Business;
 
 use Spryker\Zed\CategoryStorage\Business\Deleter\CategoryNodeStorageDeleter;
 use Spryker\Zed\CategoryStorage\Business\Deleter\CategoryNodeStorageDeleterInterface;
+use Spryker\Zed\CategoryStorage\Business\Extractor\CategoryNodeStorageExtractor;
+use Spryker\Zed\CategoryStorage\Business\Extractor\CategoryNodeStorageExtractorInterface;
 use Spryker\Zed\CategoryStorage\Business\Mapper\CategoryLocalizedAttributesMapper;
 use Spryker\Zed\CategoryStorage\Business\Mapper\CategoryLocalizedAttributesMapperInterface;
 use Spryker\Zed\CategoryStorage\Business\Mapper\CategoryNodeStorageMapper;
@@ -43,7 +45,8 @@ class CategoryStorageBusinessFactory extends AbstractBusinessFactory
             $this->createCategoryStorageNodeTreeBuilder(),
             $this->getCategoryFacade(),
             $this->getEventBehaviorFacade(),
-            $this->createCategoryNodeStorageDeleter()
+            $this->createCategoryNodeStorageDeleter(),
+            $this->createCategoryNodeStorageExtractor()
         );
     }
 
@@ -55,7 +58,8 @@ class CategoryStorageBusinessFactory extends AbstractBusinessFactory
         return new CategoryTreeStorageWriter(
             $this->getEntityManager(),
             $this->createCategoryStorageNodeTreeBuilder(),
-            $this->getCategoryFacade()
+            $this->getCategoryFacade(),
+            $this->createCategoryNodeStorageExtractor()
         );
     }
 
@@ -78,7 +82,8 @@ class CategoryStorageBusinessFactory extends AbstractBusinessFactory
         return new CategoryNodeStorageDeleter(
             $this->getEntityManager(),
             $this->getCategoryFacade(),
-            $this->getEventBehaviorFacade()
+            $this->getEventBehaviorFacade(),
+            $this->createCategoryNodeStorageExtractor()
         );
     }
 
@@ -120,5 +125,13 @@ class CategoryStorageBusinessFactory extends AbstractBusinessFactory
     public function getEventBehaviorFacade(): CategoryStorageToEventBehaviorFacadeInterface
     {
         return $this->getProvidedDependency(CategoryStorageDependencyProvider::FACADE_EVENT_BEHAVIOR);
+    }
+
+    /**
+     * @return \Spryker\Zed\CategoryStorage\Business\Extractor\CategoryNodeStorageExtractorInterface
+     */
+    protected function createCategoryNodeStorageExtractor(): CategoryNodeStorageExtractorInterface
+    {
+        return new CategoryNodeStorageExtractor();
     }
 }

@@ -135,14 +135,14 @@ class CategoryStorageFacade extends AbstractFacade implements CategoryStorageFac
      *
      * @param int $offset
      * @param int $limit
-     * @param int[] $ids
+     * @param int[] $categoryNodeIds
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function findCategoryNodeStorageDataTransferByIds(int $offset, int $limit, array $ids): array
+    public function findCategoryNodeStorageDataTransferByNodeIds(int $offset, int $limit, array $categoryNodeIds): array
     {
         return $this->getRepository()
-            ->findCategoryNodeStorageDataTransferByIds($offset, $limit, $ids);
+            ->findCategoryNodeStorageDataTransferByNodeIds($offset, $limit, $categoryNodeIds);
     }
 
     /**
@@ -219,11 +219,11 @@ class CategoryStorageFacade extends AbstractFacade implements CategoryStorageFac
      *
      * @return void
      */
-    public function writeCategoryNodeStorageCollectionByPerentCategoryEvents(array $eventEntityTransfers): void
+    public function writeCategoryNodeStorageCollectionByParentCategoryEvents(array $eventEntityTransfers): void
     {
         $this->getFactory()
             ->createCategoryNodeStorageWriter()
-            ->writeCategoryNodeStorageCollectionByPerentCategoryEvents($eventEntityTransfers);
+            ->writeCategoryNodeStorageCollectionByParentCategoryEvents($eventEntityTransfers);
     }
 
     /**

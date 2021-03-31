@@ -32,7 +32,7 @@ class ParentWritePublisherPlugin extends AbstractPlugin implements PublisherPlug
      */
     public function handleBulk(array $eventEntityTransfers, $eventName)
     {
-        $this->getFacade()->writeCategoryNodeStorageCollectionByPerentCategoryEvents($eventEntityTransfers);
+        $this->getFacade()->writeCategoryNodeStorageCollectionByParentCategoryEvents($eventEntityTransfers);
     }
 
     /**

@@ -125,17 +125,17 @@ interface CategoryStorageFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves a collection of category node storage collection according to provided offset, limit and ids.
+     * - Retrieves a collection of category node storage collection according to provided offset, limit and categoryNodeIds.
      *
      * @api
      *
      * @param int $offset
      * @param int $limit
-     * @param int[] $ids
+     * @param int[] $categoryNodeIds
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function findCategoryNodeStorageDataTransferByIds(int $offset, int $limit, array $ids): array;
+    public function findCategoryNodeStorageDataTransferByNodeIds(int $offset, int $limit, array $categoryNodeIds): array;
 
     /**
      * Specification:
@@ -187,7 +187,7 @@ interface CategoryStorageFacadeInterface
 
     /**
      * Specification:
-     * - Extracts category template IDs from the $eventTransfers created by category entity events.
+     * - Extracts category template IDs from the $eventTransfers created by category template events.
      * - Finds all category node IDs related to category template IDs.
      * - Queries all category nodes with category node IDs.
      * - Creates a data structure tree.
@@ -204,9 +204,7 @@ interface CategoryStorageFacadeInterface
 
     /**
      * Specification:
-     * - Extracts category template IDs from the $eventTransfers created by category entity events.
-     * - Finds all category node IDs related to category template IDs.
-     * - Queries all category nodes with category node IDs.
+     * - Extracts category node IDs from the $eventTransfers created by parent category entity events.
      * - Creates a data structure tree.
      * - Stores data as json encoded to storage table.
      * - Sends a copy of data to the queue.
@@ -217,7 +215,7 @@ interface CategoryStorageFacadeInterface
      *
      * @return void
      */
-    public function writeCategoryNodeStorageCollectionByPerentCategoryEvents(array $eventEntityTransfers): void;
+    public function writeCategoryNodeStorageCollectionByParentCategoryEvents(array $eventEntityTransfers): void;
 
     /**
      * Specification:
@@ -266,8 +264,8 @@ interface CategoryStorageFacadeInterface
 
     /**
      * Specification:
-     * - Extracts category IDs from the $eventTransfers created by category attribute entity events.
-     * - Finds all category node IDs related to category IDs.
+     * - Extracts category template IDs from the $eventTransfers created by category template events.
+     * - Finds all category node IDs related to category template IDs.
      * - Deletes category node storage entities with category node IDs.
      * - Sends a copy of data to the queue.
      *
@@ -281,8 +279,7 @@ interface CategoryStorageFacadeInterface
 
     /**
      * Specification:
-     * - Extracts category IDs from the $eventTransfers created by category attribute entity events.
-     * - Finds all category node IDs related to category IDs.
+     * - Extracts category node IDs from the $eventTransfers created by category node entity events.
      * - Deletes category node storage entities with category node IDs.
      * - Sends a copy of data to the queue.
      *
