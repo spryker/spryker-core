@@ -209,4 +209,23 @@ class HttpMethodProcessorTest extends Unit
         $this->assertArrayHasKey(static::RESOURCE_PATH . '/' . static::RESOURCE_ID, $generatedPaths);
         $this->assertArraySubset($this->tester->getMethodProcessorGetResourceByIdPathExpectedData(), $generatedPaths);
     }
+
+    /**
+     * @return void
+     */
+    public function testAddDeprecatedFlagToMethod(): void
+    {
+        $this->methodProcessor->addGetResourceByIdPath(
+            new TestResourceRoutePlugin(),
+            static::RESOURCE_PATH,
+            false,
+            static::RESOURCE_ID,
+            (new AnnotationTransfer())
+                ->setDeprecated(true)
+        );
+
+        $generatedPaths = $this->methodProcessor->getGeneratedPaths();
+
+        $this->assertTrue($generatedPaths[static::RESOURCE_PATH . '/' . static::RESOURCE_ID]['get']['deprecated']);
+    }
 }

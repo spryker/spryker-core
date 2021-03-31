@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\AvailabilityNotification\Helper;
 
 use Codeception\Module;
 use Generated\Shared\DataBuilder\AvailabilityNotificationSubscriptionBuilder;
+use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
@@ -24,13 +25,13 @@ class AvailabilityNotificationDataHelper extends Module
      * @param \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer
      * @param array $seedData
      *
-     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
+     * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer
      */
     public function haveAvailabilityNotificationSubscriptionTransfer(
         ProductConcreteTransfer $productConcreteTransfer,
         ?CustomerTransfer $customerTransfer = null,
         array $seedData = []
-    ): AbstractTransfer {
+    ): AvailabilityNotificationSubscriptionTransfer {
         $availabilityNotificationSubscriptionTransfer = (new AvailabilityNotificationSubscriptionBuilder($seedData))
             ->build()
             ->setSku($productConcreteTransfer->getSKU());

@@ -9,7 +9,7 @@ paths:
 coverage:
     enabled: true
     remote: false
-    whitelist: { include: ['../../../../src/*'] }
+    whitelist: { include: ['../../../../src/*.php'] }
 
 suites:
     Service:
@@ -17,9 +17,11 @@ suites:
         class_name: FlysystemServiceTester
         modules:
             enabled:
-                - Asserts
+                - \SprykerTest\Shared\Testify\Helper\AssertHelper
                 - \SprykerTest\Shared\Testify\Helper\Environment
                 - \SprykerTest\Shared\Testify\Helper\ConfigHelper
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+                - \SprykerTest\Service\Testify\Helper\ServiceHelper
+                - \SprykerTest\Service\Testify\Helper\DependencyProviderHelper
