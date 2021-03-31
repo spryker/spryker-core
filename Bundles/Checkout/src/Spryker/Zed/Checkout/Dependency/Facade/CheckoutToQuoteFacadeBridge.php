@@ -34,4 +34,12 @@ class CheckoutToQuoteFacadeBridge implements CheckoutToQuoteFacadeInterface
     {
         return $this->quoteFacade->updateQuote($quoteTransfer);
     }
+
+    /**
+     * @return string
+     */
+    public function getStorageStrategy(): string
+    {
+        return $this->quoteFacade->getStorageStrategy();
+    }
 }

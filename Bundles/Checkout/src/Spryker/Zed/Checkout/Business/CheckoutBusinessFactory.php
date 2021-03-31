@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Checkout\Business;
 
+use Spryker\Zed\Checkout\Business\StorageStrategy\StorageStrategyInterface;
+use Spryker\Zed\Checkout\Business\StorageStrategy\StorageStrategyProviderInterface;
 use Spryker\Zed\Checkout\Business\Workflow\CheckoutWorkflow;
 use Spryker\Zed\Checkout\CheckoutDependencyProvider;
 use Spryker\Zed\Checkout\Dependency\Facade\CheckoutToQuoteFacadeInterface;
@@ -46,5 +48,45 @@ class CheckoutBusinessFactory extends AbstractBusinessFactory
     protected function getQuoteFacade(): CheckoutToQuoteFacadeInterface
     {
         return $this->getProvidedDependency(CheckoutDependencyProvider::FACADE_QUOTE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Checkout\Business\StorageStrategy\StorageStrategyProviderInterface
+     */
+    protected function createStorageStrategyProvider(): StorageStrategyProviderInterface
+    {
+        return new StorageStrategyProvider(
+            $this->getQuoteFacade(),
+            $this->getStorageStrategyList()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Checkout\Business\StorageStrategy\StorageStrategyInterface[]
+     */
+    protected function getStorageStrategyList(): array
+    {
+        return [
+            $this->createSessionStorageStrategy(),
+            $this->createDatabaseStorageStrategy(),
+        ];
+    }
+
+    /**
+     * @return \Spryker\Zed\Checkout\Business\StorageStrategy\StorageStrategyInterface
+     */
+    protected function createSessionStorageStrategy(): StorageStrategyInterface
+    {
+        return new SessionStorageStrategy();
+    }
+
+    /**
+     * @return \Spryker\Zed\Checkout\Business\StorageStrategy\StorageStrategyInterface
+     */
+    protected function createDatabaseStorageStrategy(): StorageStrategyInterface
+    {
+        return new DatabaseStorageStrategy(
+            $this->getQuoteFacade()
+        );
     }
 }
