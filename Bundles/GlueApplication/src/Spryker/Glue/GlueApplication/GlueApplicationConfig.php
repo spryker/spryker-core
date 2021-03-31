@@ -23,9 +23,9 @@ class GlueApplicationConfig extends AbstractBundleConfig
      *
      * @api
      *
-     * @return string
+     * @return bool
      */
-    public function getValidateRequestHeaders(): string
+    public function getValidateRequestHeaders(): bool
     {
         return static::VALIDATE_REQUEST_HEADERS;
     }
