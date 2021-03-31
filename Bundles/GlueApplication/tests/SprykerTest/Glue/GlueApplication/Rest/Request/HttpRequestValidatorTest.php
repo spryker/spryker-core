@@ -9,6 +9,7 @@ namespace SprykerTest\Glue\GlueApplication\Rest\Request;
 
 use Codeception\Test\Unit;
 use Spryker\Glue\GlueApplication\GlueApplicationConfig;
+use Spryker\Glue\GlueApplication\Plugin\GlueApplication\HeadersValidateHttpRequestPlugin;
 use Spryker\Glue\GlueApplication\Rest\Request\HttpRequestValidator;
 use Spryker\Glue\GlueApplication\Rest\Request\HttpRequestValidatorInterface;
 use Spryker\Glue\GlueApplication\Rest\ResourceRouteLoaderInterface;
@@ -85,6 +86,8 @@ class HttpRequestValidatorTest extends Unit
      */
     public function createHttpRequestValidator(array $validatorPlugins = []): HttpRequestValidatorInterface
     {
+        array_unshift($validatorPlugins, new HeadersValidateHttpRequestPlugin());
+
         return new HttpRequestValidator($validatorPlugins, $this->createResourceRouteLoaderMock(), new GlueApplicationConfig());
     }
 }
