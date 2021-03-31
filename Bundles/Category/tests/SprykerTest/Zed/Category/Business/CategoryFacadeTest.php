@@ -682,6 +682,7 @@ class CategoryFacadeTest extends Unit
         $expectedCount = 1;
 
         $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::TEST_STORE_DE]);
+
         $parentCategoryTransfer = $this->tester->haveCategory();
         $this->tester->haveCategoryStoreRelation($parentCategoryTransfer->getIdCategory(), $storeTransfer->getIdStore());
 
@@ -708,6 +709,7 @@ class CategoryFacadeTest extends Unit
     {
         // Arrange
         $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::TEST_STORE_DE]);
+
         $categoryTransfer = $this->tester->haveCategory();
         $this->tester->haveCategoryStoreRelation($categoryTransfer->getIdCategory(), $storeTransfer->getIdStore());
 

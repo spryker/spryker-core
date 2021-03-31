@@ -223,6 +223,7 @@ class CategoryStorageFacadeTest extends Unit
     {
         // Arrange
         $storeData = [StoreTransfer::NAME => static::STORE_NAME_DE];
+
         $categoryTransfer = $this->tester->haveLocalizedCategoryWithStoreRelation([], $storeData);
         $originalParentCategoryTransfer = $this->tester->haveLocalizedCategoryWithStoreRelation([], $storeData);
 
@@ -310,6 +311,7 @@ class CategoryStorageFacadeTest extends Unit
         $categorySeedData = [
             CategoryTransfer::CATEGORY_TEMPLATE => $categoryTemplateTranfer->toArray(),
         ];
+
         $categoryTransfer = $this->tester->haveLocalizedCategoryWithStoreRelation($categorySeedData, [StoreTransfer::NAME => static::STORE_NAME_DE]);
         $this->tester->haveCategoryNodeStorageByLocalizedCategory($categoryTransfer, static::STORE_NAME_DE);
 
@@ -351,6 +353,7 @@ class CategoryStorageFacadeTest extends Unit
             $categoryTransfer = $this->tester->haveLocalizedCategoryWithStoreRelation([], [StoreTransfer::NAME => static::STORE_NAME_DE]);
 
             $categoryNodeId = $categoryTransfer->getCategoryNode()->getIdCategoryNode();
+
             $this->tester->haveCategoryNodeStorageByLocalizedCategory(
                 $categoryTransfer,
                 static::STORE_NAME_DE,
@@ -438,11 +441,13 @@ class CategoryStorageFacadeTest extends Unit
     protected function executeCategoryNodePageSearchWriterAsserts(CategoryTransfer $categoryTransfer): void
     {
         $categoryNodeStorageEntity = $this->tester->findCategoryNodeStorageEntityByLocalizedCategoryAndStoreName($categoryTransfer, static::STORE_NAME_DE);
+
         $this->assertNotNull($categoryNodeStorageEntity, 'CategoryNodeStorageEntity should exist.');
 
         /** @var \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer $categoryLocalizedAttributesTransfer */
         $categoryLocalizedAttributesTransfer = $categoryTransfer->getLocalizedAttributes()->offsetGet(0);
         $data = $categoryNodeStorageEntity->getData();
+
         $this->assertSame(
             $categoryLocalizedAttributesTransfer->getName(),
             $data[static::KEY_NAME],
