@@ -51,16 +51,6 @@ class HttpRequestValidator implements HttpRequestValidatorInterface
      */
     public function validate(Request $request): ?RestErrorMessageTransfer
     {
-        return $restErrorMessageTransfer = $this->executeRequestValidationPlugins($request);
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer|null
-     */
-    protected function executeRequestValidationPlugins(Request $request): ?RestErrorMessageTransfer
-    {
         foreach ($this->requestValidatorPlugins as $requestValidatorPlugin) {
             $restErrorMessageTransfer = $requestValidatorPlugin->validate($request);
             if (!$restErrorMessageTransfer) {
