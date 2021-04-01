@@ -70,7 +70,7 @@ class StockAddressMapper
         StockAddressTransfer $stockAddressTransfer,
         SpyStockAddress $stockAddressEntity
     ): SpyStockAddress {
-        $stockAddressEntity->fromArray($stockAddressTransfer->toArray());
+        $stockAddressEntity->fromArray($stockAddressTransfer->modifiedToArray());
         $stockAddressEntity->setFkStock($stockAddressTransfer->getIdStockOrFail());
         $stockAddressEntity->setFkCountry($stockAddressTransfer->getCountryOrFail()->getIdCountryOrFail());
 
