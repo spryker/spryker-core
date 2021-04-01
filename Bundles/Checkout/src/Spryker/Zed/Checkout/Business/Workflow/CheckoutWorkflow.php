@@ -101,9 +101,7 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
         $this->runStateMachine($checkoutResponseTransfer->getSaveOrder());
         $this->doPostSave($quoteTransfer, $checkoutResponseTransfer);
 
-        if ($checkoutResponseTransfer->getIsSuccess()) {
-            $this->storageStrategy->updateQuote($quoteTransfer, $checkoutResponseTransfer);
-        }
+        $this->storageStrategy->updateQuote($quoteTransfer, $checkoutResponseTransfer);
 
         return $checkoutResponseTransfer;
     }

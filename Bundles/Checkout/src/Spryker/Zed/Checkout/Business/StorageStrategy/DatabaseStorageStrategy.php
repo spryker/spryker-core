@@ -43,6 +43,10 @@ class DatabaseStorageStrategy implements StorageStrategyInterface
      */
     public function updateQuote(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): void
     {
+        if (!$checkoutResponseTransfer->getIsSuccess()) {
+            return;
+        }
+
         $quoteTransfer->setOrderReference(
             $checkoutResponseTransfer->getSaveOrder()->getOrderReference()
         );
