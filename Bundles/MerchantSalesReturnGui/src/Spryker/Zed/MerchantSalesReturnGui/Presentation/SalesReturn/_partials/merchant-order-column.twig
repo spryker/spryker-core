@@ -17,7 +17,7 @@
                 {{ 'Merchant' | trans }}
             </div>
             <div class="col-sm-6 word-break-all">
-                <a href="{{ url('/merchant-gui/edit-merchant', {'id-merchant': merchantOrder.merchant.idMerchant}) }}">
+                <a target="_blank" href="{{ url('/merchant-gui/edit-merchant', {'id-merchant': merchantOrder.merchant.idMerchant}) }}">
                     {{ merchantOrder.merchant.name }}
                 </a>
             </div>
