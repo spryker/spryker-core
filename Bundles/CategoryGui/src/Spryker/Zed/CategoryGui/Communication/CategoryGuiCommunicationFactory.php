@@ -10,7 +10,6 @@ namespace Spryker\Zed\CategoryGui\Communication;
 use Spryker\Zed\CategoryGui\CategoryGuiDependencyProvider;
 use Spryker\Zed\CategoryGui\Communication\Table\CategoryTable;
 use Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToLocaleFacadeInterface;
-use Spryker\Zed\CategoryGui\Dependency\QueryContainer\CategoryGuiToCategoryQueryContainerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 class CategoryGuiCommunicationFactory extends AbstractCommunicationFactory
@@ -20,10 +19,7 @@ class CategoryGuiCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCategoryTable(): CategoryTable
     {
-        return new CategoryTable(
-            $this->getLocaleFacade(),
-            $this->getCategoryQueryContainer(),
-        );
+        return new CategoryTable($this->getLocaleFacade());
     }
 
     /**
@@ -32,13 +28,5 @@ class CategoryGuiCommunicationFactory extends AbstractCommunicationFactory
     protected function getLocaleFacade(): CategoryGuiToLocaleFacadeInterface
     {
         return $this->getProvidedDependency(CategoryGuiDependencyProvider::FACADE_LOCALE);
-    }
-
-    /**
-     * @return \Spryker\Zed\CategoryGui\Dependency\QueryContainer\CategoryGuiToCategoryQueryContainerInterface
-     */
-    protected function getCategoryQueryContainer(): CategoryGuiToCategoryQueryContainerInterface
-    {
-        return $this->getProvidedDependency(CategoryGuiDependencyProvider::QUERY_CONTAINER_CATEGORY);
     }
 }

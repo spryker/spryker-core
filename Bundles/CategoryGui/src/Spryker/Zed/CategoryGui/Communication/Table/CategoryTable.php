@@ -10,10 +10,9 @@ namespace Spryker\Zed\CategoryGui\Communication\Table;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryTableMap;
 use Orm\Zed\Category\Persistence\SpyCategory;
 use Orm\Zed\Category\Persistence\SpyCategoryQuery;
-use Orm\Zed\Category\Persistence\SpyCategoryStoreQuery;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToLocaleFacadeInterface;
-use Spryker\Zed\CategoryGui\Dependency\QueryContainer\CategoryGuiToCategoryQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
@@ -42,20 +41,11 @@ class CategoryTable extends AbstractTable
     protected $localeFacade;
 
     /**
-     * @var \Spryker\Zed\CategoryGui\Dependency\QueryContainer\CategoryGuiToCategoryQueryContainerInterface
-     */
-    protected $categoryQueryContainer;
-
-    /**
      * @param \Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToLocaleFacadeInterface $localeFacade
-     * @param \Spryker\Zed\CategoryGui\Dependency\QueryContainer\CategoryGuiToCategoryQueryContainerInterface $categoryQueryContainer
      */
-    public function __construct(
-        CategoryGuiToLocaleFacadeInterface $localeFacade,
-        CategoryGuiToCategoryQueryContainerInterface $categoryQueryContainer
-    ) {
+    public function __construct(CategoryGuiToLocaleFacadeInterface $localeFacade)
+    {
         $this->localeFacade = $localeFacade;
-        $this->categoryQueryContainer = $categoryQueryContainer;
     }
 
     /**
@@ -135,6 +125,9 @@ class CategoryTable extends AbstractTable
             ->useAttributeQuery('attr', Criteria::LEFT_JOIN)
                 ->filterByFkLocale($fkLocale)
             ->endUse()
+            ->useSpyCategoryStoreQuery('store', Criteria::LEFT_JOIN)
+                ->leftJoinSpyStore()
+            ->endUse()
             ->leftJoinCategoryTemplate('tpl')
             ->leftJoinNode('node')
             ->useNodeQuery('node', Criteria::LEFT_JOIN)
@@ -175,7 +168,7 @@ class CategoryTable extends AbstractTable
             static::COL_VISIBLE => $this->yesNoOutput($categoryEntity->getIsInMenu()),
             static::COL_SEARCHABLE => $this->yesNoOutput($categoryEntity->getIsSearchable()),
             static::COL_TEMPLATE => $categoryEntity->getVirtualColumn(static::COL_TEMPLATE),
-            static::COL_STORE_RELATION => $this->getStoreNames($categoryEntity->getIdCategory()),
+            static::COL_STORE_RELATION => $this->getStoreNames($categoryEntity->getSpyCategoryStoresJoinSpyStore()),
             static::COL_ACTIONS => $this->generateActionsButton($categoryEntity),
         ];
     }
@@ -296,33 +289,20 @@ class CategoryTable extends AbstractTable
     }
 
     /**
-     * @param int $idCategory
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Category\Persistence\SpyCategoryStore[] $spyCategoryStoreCollection
      *
      * @return string
      */
-    protected function getStoreNames(int $idCategory)
+    protected function getStoreNames(ObjectCollection $spyCategoryStoreCollection)
     {
-        /** @var \Orm\Zed\Category\Persistence\SpyCategoryStoreQuery $categoryStoreCollection */
-        $categoryStoreCollection = $this->getCategoryStoreWithStores($idCategory);
-
         $storeNames = [];
-        foreach ($categoryStoreCollection as $categoryStoreEntity) {
+        foreach ($spyCategoryStoreCollection as $spyCategoryStore) {
             $storeNames[] = sprintf(
                 '<span class="label label-info">%s</span>',
-                $categoryStoreEntity->getSpyStore()->getName()
+                $spyCategoryStore->getSpyStore()->getName()
             );
         }
 
         return implode(' ', $storeNames);
-    }
-
-    /**
-     * @param int $idCategory
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryStoreQuery
-     */
-    protected function getCategoryStoreWithStores(int $idCategory): SpyCategoryStoreQuery
-    {
-        return $this->categoryQueryContainer->queryCategoryStoreWithStoresByFkCategory($idCategory);
     }
 }

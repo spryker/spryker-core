@@ -247,17 +247,4 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Category\Persistence\SpyCategoryTemplateQuery
      */
     public function queryCategoryTemplateByName($nameCategoryTemplate);
-
-    /**
-     * Specification:
-     * - Creates category store query.
-     * - Filter query on the `fk_category` column.
-     *
-     * @api
-     *
-     * @param int $idCategory
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryStoreQuery
-     */
-    public function queryCategoryStoreWithStoresByFkCategory($idCategory);
 }
