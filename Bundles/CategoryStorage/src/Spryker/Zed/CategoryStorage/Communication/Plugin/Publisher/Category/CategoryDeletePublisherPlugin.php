@@ -21,7 +21,7 @@ class CategoryDeletePublisherPlugin extends AbstractPlugin implements PublisherP
 {
     /**
      * {@inheritDoc}
-     * - Unpublishes category node data by `SpyCategoryStore` entity events.
+     * - Unpublishes category node data by `SpyCategory` entity events.
      *
      * @api
      *

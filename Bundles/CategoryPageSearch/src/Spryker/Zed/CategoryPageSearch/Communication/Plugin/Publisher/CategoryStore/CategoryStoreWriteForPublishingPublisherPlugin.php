@@ -21,7 +21,7 @@ class CategoryStoreWriteForPublishingPublisherPlugin extends AbstractPlugin impl
 {
     /**
      * {@inheritDoc}
-     * - Publishes category node page search data by CategoryStore publish and unpublish events.
+     * - Publishes category node page search data by `CategoryStore` publish and unpublish events.
      *
      * @api
      *

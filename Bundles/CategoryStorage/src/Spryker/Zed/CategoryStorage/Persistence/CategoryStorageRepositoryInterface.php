@@ -16,14 +16,14 @@ interface CategoryStorageRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function findCategoryNodeStorageDataTransferByNodeIds(int $offset, int $limit, array $categoryNodeIds): array;
+    public function findCategoryNodeStorageSynchronizationDataTransfersByCategoryNodeIds(int $offset, int $limit, array $categoryNodeIds): array;
 
     /**
      * @param int $offset
      * @param int $limit
-     * @param int[] $ids
+     * @param int[] $categoryTreeStorageIds
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function findCategoryTreeStorageDataTransferByIds(int $offset, int $limit, array $ids): array;
+    public function findCategoryTreeStorageSynchronizationDataTransfersByCategoryTreeStorageIds(int $offset, int $limit, array $categoryTreeStorageIds): array;
 }

@@ -25,7 +25,7 @@ class CategoryStorageRepository extends AbstractRepository implements CategorySt
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function findCategoryNodeStorageDataTransferByNodeIds(int $offset, int $limit, array $categoryNodeIds): array
+    public function findCategoryNodeStorageSynchronizationDataTransfersByCategoryNodeIds(int $offset, int $limit, array $categoryNodeIds): array
     {
         $filterTransfer = $this->createFilterTransfer($offset, $limit, SpyCategoryNodeStorageTableMap::COL_ID_CATEGORY_NODE_STORAGE);
         $query = $this->getFactory()->createSpyCategoryNodeStorageQuery();
@@ -42,17 +42,17 @@ class CategoryStorageRepository extends AbstractRepository implements CategorySt
     /**
      * @param int $offset
      * @param int $limit
-     * @param int[] $ids
+     * @param int[] $categoryTreeStorageIds
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function findCategoryTreeStorageDataTransferByIds(int $offset, int $limit, array $ids): array
+    public function findCategoryTreeStorageSynchronizationDataTransfersByCategoryTreeStorageIds(int $offset, int $limit, array $categoryTreeStorageIds): array
     {
         $filterTransfer = $this->createFilterTransfer($offset, $limit, SpyCategoryTreeStorageTableMap::COL_ID_CATEGORY_TREE_STORAGE);
         $query = $this->getFactory()->createSpyCategoryTreeStorageQuery();
 
-        if ($ids) {
-            $query->filterByIdCategoryTreeStorage_In($ids);
+        if ($categoryTreeStorageIds) {
+            $query->filterByIdCategoryTreeStorage_In($categoryTreeStorageIds);
         }
 
         return $this->buildQueryFromCriteria($query, $filterTransfer)

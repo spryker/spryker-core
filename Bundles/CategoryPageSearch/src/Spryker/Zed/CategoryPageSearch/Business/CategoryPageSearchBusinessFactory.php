@@ -9,8 +9,6 @@ namespace Spryker\Zed\CategoryPageSearch\Business;
 
 use Spryker\Zed\CategoryPageSearch\Business\Deleter\CategoryNodePageSearchDeleter;
 use Spryker\Zed\CategoryPageSearch\Business\Deleter\CategoryNodePageSearchDeleterInterface;
-use Spryker\Zed\CategoryPageSearch\Business\Extractor\CategoryNodePageSearchExtractor;
-use Spryker\Zed\CategoryPageSearch\Business\Extractor\CategoryNodePageSearchExtractorInterface;
 use Spryker\Zed\CategoryPageSearch\Business\Mapper\CategoryNodePageSearchMapper;
 use Spryker\Zed\CategoryPageSearch\Business\Mapper\CategoryNodePageSearchMapperInterface;
 use Spryker\Zed\CategoryPageSearch\Business\Search\DataMapper\CategoryNodePageSearchDataMapper;
@@ -42,8 +40,7 @@ class CategoryPageSearchBusinessFactory extends AbstractBusinessFactory
             $this->getCategoryFacade(),
             $this->getStoreFacade(),
             $this->getEventBehaviorFacade(),
-            $this->createCategoryNodePageSearchDeleter(),
-            $this->createCategoryNodePageSearchExtractor()
+            $this->createCategoryNodePageSearchDeleter()
         );
     }
 
@@ -71,8 +68,7 @@ class CategoryPageSearchBusinessFactory extends AbstractBusinessFactory
         return new CategoryNodePageSearchDeleter(
             $this->getEntityManager(),
             $this->getCategoryFacade(),
-            $this->getEventBehaviorFacade(),
-            $this->createCategoryNodePageSearchExtractor()
+            $this->getEventBehaviorFacade()
         );
     }
 
@@ -98,13 +94,5 @@ class CategoryPageSearchBusinessFactory extends AbstractBusinessFactory
     public function getEventBehaviorFacade(): CategoryPageSearchToEventBehaviorFacadeInterface
     {
         return $this->getProvidedDependency(CategoryPageSearchDependencyProvider::FACADE_EVENT_BEHAVIOR);
-    }
-
-    /**
-     * @return \Spryker\Zed\CategoryPageSearch\Business\Extractor\CategoryNodePageSearchExtractorInterface
-     */
-    protected function createCategoryNodePageSearchExtractor(): CategoryNodePageSearchExtractorInterface
-    {
-        return new CategoryNodePageSearchExtractor();
     }
 }

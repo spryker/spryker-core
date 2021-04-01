@@ -59,16 +59,20 @@ interface ProductCategoryStorageRepositoryInterface
     /**
      * @param int $offset
      * @param int $limit
-     * @param int[] $ids
+     * @param int[] $productAbstractIds
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function findProductAbstractCategoryStorageDataTransferByIds(int $offset, int $limit, array $ids): array;
+    public function findProductAbstractCategoryStorageSynchronizationDataTransfersByProductAbstractIds(
+        int $offset,
+        int $limit,
+        array $productAbstractIds
+    ): array;
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
      * @return \Generated\Shared\Transfer\ProductCategoryTransfer[]
      */
-    public function findProductCategoryEntetiesByFilter(FilterTransfer $filterTransfer): array;
+    public function findProductCategoryTransfersByFilter(FilterTransfer $filterTransfer): array;
 }

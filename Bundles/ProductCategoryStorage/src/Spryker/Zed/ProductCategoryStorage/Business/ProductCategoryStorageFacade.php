@@ -262,14 +262,17 @@ class ProductCategoryStorageFacade extends AbstractFacade implements ProductCate
      *
      * @param int $offset
      * @param int $limit
-     * @param int[] $ids
+     * @param int[] $productAbstractIds
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function findProductAbstractCategoryStorageDataTransferByIds(int $offset, int $limit, array $ids): array
-    {
+    public function findProductAbstractCategoryStorageSynchronizationDataTransfersByProductAbstractIds(
+        int $offset,
+        int $limit,
+        array $productAbstractIds
+    ): array {
         return $this->getRepository()
-            ->findProductAbstractCategoryStorageDataTransferByIds($offset, $limit, $ids);
+            ->findProductAbstractCategoryStorageSynchronizationDataTransfersByProductAbstractIds($offset, $limit, $productAbstractIds);
     }
 
     /**
@@ -281,9 +284,9 @@ class ProductCategoryStorageFacade extends AbstractFacade implements ProductCate
      *
      * @return \Generated\Shared\Transfer\ProductCategoryTransfer[]
      */
-    public function findProductCategoryEntetiesByFilter(FilterTransfer $filterTransfer): array
+    public function findProductCategoryTransfersByFilter(FilterTransfer $filterTransfer): array
     {
         return $this->getRepository()
-            ->findProductCategoryEntetiesByFilter($filterTransfer);
+            ->findProductCategoryTransfersByFilter($filterTransfer);
     }
 }

@@ -209,5 +209,5 @@ interface CategoryPageSearchFacadeInterface
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function findSynchronizationDataTransfersByIds(int $offset, int $limit, array $categoryNodeIds): array;
+    public function findSynchronizationDataTransfersByCategoryNodeIds(int $offset, int $limit, array $categoryNodeIds): array;
 }

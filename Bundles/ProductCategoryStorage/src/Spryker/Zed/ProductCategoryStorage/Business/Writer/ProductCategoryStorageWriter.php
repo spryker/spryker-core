@@ -530,7 +530,7 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
      */
     protected function writeCollectionByRelatedCategories(array $categoryIds, bool $allowEmptyCategories): void
     {
-        if (!$allowEmptyCategories && count($categoryIds) === 0) {
+        if (!$allowEmptyCategories && $categoryIds === []) {
             return;
         }
 

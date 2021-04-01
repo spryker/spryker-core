@@ -21,7 +21,7 @@ class CategoryAttributeWritePublisherPlugin extends AbstractPlugin implements Pu
 {
     /**
      * {@inheritDoc}
-     * - Publishes category node page search data by SpyCategoryAttribute entity events.
+     * - Publishes category node page search data by `SpyCategoryAttribute` entity events.
      *
      * @api
      *

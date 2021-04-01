@@ -21,7 +21,7 @@ class CategoryAttributeDeletePublisherPlugin extends AbstractPlugin implements P
 {
     /**
      * {@inheritDoc}
-     * - Unpublishes category node page search data by SpyCategoryAttribute entity events.
+     * - Unpublishes category node page search data by `SpyCategoryAttribute` entity events.
      *
      * @api
      *

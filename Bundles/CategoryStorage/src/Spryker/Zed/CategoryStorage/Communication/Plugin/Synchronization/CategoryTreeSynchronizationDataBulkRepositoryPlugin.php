@@ -21,7 +21,7 @@ class CategoryTreeSynchronizationDataBulkRepositoryPlugin extends AbstractPlugin
 {
     /**
      * {@inheritDoc}
-     * - Retrieves a collection of category tree storage collection according to provided offset, limit and ids.
+     * - Retrieves a collection of category tree storage collection according to provided offset, limit and categoryTreeStorageIds.
      *
      * @api
      *
@@ -33,7 +33,7 @@ class CategoryTreeSynchronizationDataBulkRepositoryPlugin extends AbstractPlugin
      */
     public function getData(int $offset, int $limit, array $ids = []): array
     {
-        return $this->getFacade()->findCategoryTreeStorageDataTransferByIds($offset, $limit, $ids);
+        return $this->getFacade()->findCategoryTreeStorageSynchronizationDataTransfersByCategoryTreeStorageIds($offset, $limit, $ids);
     }
 
     /**

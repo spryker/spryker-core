@@ -24,7 +24,7 @@ class CategoryPageSearchRepository extends AbstractRepository implements Categor
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function findSynchronizationDataTransfersByIds(int $offset, int $limit, array $categoryNodeIds): array
+    public function findSynchronizationDataTransfersByCategoryNodeIds(int $offset, int $limit, array $categoryNodeIds): array
     {
         $filterTransfer = $this->createFilterTransfer($offset, $limit, SpyCategoryNodePageSearchTableMap::COL_ID_CATEGORY_NODE_PAGE_SEARCH);
         $query = $this->getFactory()->createSpyCategoryNodePageSearchQuery();

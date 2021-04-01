@@ -21,7 +21,7 @@ class CategoryIsActiveAndCategoryKeyWritePublisherPlugin extends AbstractPlugin 
 {
     /**
      * {@inheritDoc}
-     * - Filter eventEntityTransfers by modified isActive and categoryKey columns.
+     * - Filter `eventEntityTransfers` by modified `isActive` and `categoryKey` columns.
      * - Publishes product category data by `SpyCategory` entity events with modified columns.
      *
      * @api

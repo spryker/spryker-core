@@ -8,8 +8,8 @@
 namespace Spryker\Zed\CategoryPageSearch\Business\Deleter;
 
 use Generated\Shared\Transfer\CategoryNodeCriteriaTransfer;
+use Generated\Shared\Transfer\NodeCollectionTransfer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
-use Spryker\Zed\CategoryPageSearch\Business\Extractor\CategoryNodePageSearchExtractorInterface;
 use Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToCategoryFacadeInterface;
 use Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToEventBehaviorFacadeInterface;
 use Spryker\Zed\CategoryPageSearch\Persistence\CategoryPageSearchEntityManagerInterface;
@@ -32,26 +32,18 @@ class CategoryNodePageSearchDeleter implements CategoryNodePageSearchDeleterInte
     protected $eventBehaviorFacade;
 
     /**
-     * @var \Spryker\Zed\CategoryPageSearch\Business\Extractor\CategoryNodePageSearchExtractorInterface
-     */
-    protected $categoryNodePageSearchExtractor;
-
-    /**
      * @param \Spryker\Zed\CategoryPageSearch\Persistence\CategoryPageSearchEntityManagerInterface $categoryPageSearchEntityManager
      * @param \Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToCategoryFacadeInterface $categoryFacade
      * @param \Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToEventBehaviorFacadeInterface $eventBehaviorFacade
-     * @param \Spryker\Zed\CategoryPageSearch\Business\Extractor\CategoryNodePageSearchExtractorInterface $categoryNodePageSearchExtractor
      */
     public function __construct(
         CategoryPageSearchEntityManagerInterface $categoryPageSearchEntityManager,
         CategoryPageSearchToCategoryFacadeInterface $categoryFacade,
-        CategoryPageSearchToEventBehaviorFacadeInterface $eventBehaviorFacade,
-        CategoryNodePageSearchExtractorInterface $categoryNodePageSearchExtractor
+        CategoryPageSearchToEventBehaviorFacadeInterface $eventBehaviorFacade
     ) {
         $this->categoryPageSearchEntityManager = $categoryPageSearchEntityManager;
         $this->categoryFacade = $categoryFacade;
         $this->eventBehaviorFacade = $eventBehaviorFacade;
-        $this->categoryNodePageSearchExtractor = $categoryNodePageSearchExtractor;
     }
 
     /**
@@ -129,9 +121,24 @@ class CategoryNodePageSearchDeleter implements CategoryNodePageSearchDeleterInte
     protected function deleteCategoryNodeStorageCollectionByCategoryNodeCriteria(CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer): void
     {
         $nodeCollectionTransfer = $this->categoryFacade->getCategoryNodes($categoryNodeCriteriaTransfer);
-        $categoryNodeIds = $this->categoryNodePageSearchExtractor
-            ->extractCategoryNodeIdsFromNodeCollection($nodeCollectionTransfer);
+        $categoryNodeIds = $this->extractCategoryNodeIdsFromNodeCollection($nodeCollectionTransfer);
 
         $this->deleteCategoryNodePageSearchCollection($categoryNodeIds);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\NodeCollectionTransfer $nodeCollectionTransfer
+     *
+     * @return int[]
+     */
+    protected function extractCategoryNodeIdsFromNodeCollection(NodeCollectionTransfer $nodeCollectionTransfer): array
+    {
+        $categoryNodeIds = [];
+
+        foreach ($nodeCollectionTransfer->getNodes() as $nodeTransfer) {
+            $categoryNodeIds[] = $nodeTransfer->getIdCategoryNodeOrFail();
+        }
+
+        return $categoryNodeIds;
     }
 }

@@ -21,7 +21,7 @@ class CategoryUrlAndResourceCategorynodeWritePublisherPlugin extends AbstractPlu
 {
     /**
      * {@inheritDoc}
-     * - Filter eventEntityTransfers by modified url and resourceCategorynode columns.
+     * - Filter `eventEntityTransfers` by modified `url` and `resourceCategorynode` columns.
      * - Publishes product category data by `SpyUrl` entity events.
      *
      * @api

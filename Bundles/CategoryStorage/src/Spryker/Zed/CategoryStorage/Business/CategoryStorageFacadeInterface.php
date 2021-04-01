@@ -129,7 +129,7 @@ interface CategoryStorageFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves a collection of category node storage collection according to provided offset, limit and categoryNodeIds.
+     * - Retrieves a category node storage collection according to provided offset, limit and categoryNodeIds.
      *
      * @api
      *
@@ -139,21 +139,21 @@ interface CategoryStorageFacadeInterface
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function findCategoryNodeStorageDataTransferByNodeIds(int $offset, int $limit, array $categoryNodeIds): array;
+    public function findCategoryNodeStorageSynchronizationDataTransfersByCategoryNodeIds(int $offset, int $limit, array $categoryNodeIds): array;
 
     /**
      * Specification:
-     * - Retrieves a collection of category tree storage collection according to provided offset, limit and ids.
+     * - Retrieves a collection of category tree storage collection according to provided offset, limit and categoryTreeStorageIds.
      *
      * @api
      *
      * @param int $offset
      * @param int $limit
-     * @param int[] $ids
+     * @param int[] $categoryTreeStorageIds
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function findCategoryTreeStorageDataTransferByIds(int $offset, int $limit, array $ids): array;
+    public function findCategoryTreeStorageSynchronizationDataTransfersByCategoryTreeStorageIds(int $offset, int $limit, array $categoryTreeStorageIds): array;
 
     /**
      * Specification:

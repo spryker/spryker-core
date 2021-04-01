@@ -122,7 +122,7 @@ interface ProductCategoryStorageFacadeInterface
 
     /**
      * Specification:
-     * - Filter eventEntityTransfers by modified category attribute name column.
+     * - Filter `eventEntityTransfers` by modified `name` column.
      * - Extracts category IDs from the $eventTransfers.
      * - Finds all related category IDs.
      * - Queries all product abstract IDs related to categories.
@@ -171,7 +171,7 @@ interface ProductCategoryStorageFacadeInterface
 
     /**
      * Specification:
-     * - Filter eventEntityTransfers by modified isActive and categoryKey columns.
+     * - Filter `eventEntityTransfers` by modified `isActive` and `categoryKey` columns.
      * - Extracts category IDs from the $eventTransfers created by category events.
      * - Finds all related category IDs.
      * - Queries all product abstract IDs related to categories.
@@ -205,7 +205,7 @@ interface ProductCategoryStorageFacadeInterface
 
     /**
      * Specification:
-     * - Filter eventEntityTransfers by modified url and resourceCategorynode columns.
+     * - Filter `eventEntityTransfers` by modified `url` and `resourceCategorynode` columns.
      * - Extracts category IDs from the $eventTransfers created by category events.
      * - Finds all category IDs related to category IDs.
      * - Queries all product abstract IDs related to categories.
@@ -250,17 +250,21 @@ interface ProductCategoryStorageFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves a collection of product abstract category storage collection according to provided offset, limit and ids.
+     * - Retrieves a collection of product abstract category storage collection according to provided offset, limit and productAbstractIds.
      *
      * @api
      *
      * @param int $offset
      * @param int $limit
-     * @param int[] $ids
+     * @param int[] $productAbstractIds
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function findProductAbstractCategoryStorageDataTransferByIds(int $offset, int $limit, array $ids): array;
+    public function findProductAbstractCategoryStorageSynchronizationDataTransfersByProductAbstractIds(
+        int $offset,
+        int $limit,
+        array $productAbstractIds
+    ): array;
 
     /**
      * Specification:
@@ -272,5 +276,5 @@ interface ProductCategoryStorageFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductCategoryTransfer[]
      */
-    public function findProductCategoryEntetiesByFilter(FilterTransfer $filterTransfer): array;
+    public function findProductCategoryTransfersByFilter(FilterTransfer $filterTransfer): array;
 }

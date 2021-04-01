@@ -802,7 +802,7 @@ class ProductCategoryStorageFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindProductAbstractCategoryStorageDataTransferByIdsWillReturnDataFilteredByIds(): void
+    public function testFindProductAbstractCategoryStorageSynchronizationDataTransfersByProductAbstractIdsWillReturnDataFilteredByIds(): void
     {
         // Arrange
         $expectedProductAbstractIds = [];
@@ -829,7 +829,7 @@ class ProductCategoryStorageFacadeTest extends Unit
 
         // Act
         $synchronizationDataTransfers = $this->tester->getFacade()
-            ->findProductAbstractCategoryStorageDataTransferByIds(0, 100, $expectedProductAbstractIds);
+            ->findProductAbstractCategoryStorageSynchronizationDataTransfersByProductAbstractIds(0, 100, $expectedProductAbstractIds);
 
         // Assert
         $productAbstractIds = array_map(function (SynchronizationDataTransfer $synchronizationDataTransfer) {
@@ -842,7 +842,7 @@ class ProductCategoryStorageFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindProductAbstractCategoryStorageDataTransferByIdsWillReturnDataByLimit(): void
+    public function testFindProductAbstractCategoryStorageSynchronizationDataTransfersByProductAbstractIdsWillReturnDataByLimit(): void
     {
         // Arrange
         $expectedCount = 1;
@@ -862,7 +862,7 @@ class ProductCategoryStorageFacadeTest extends Unit
 
         // Act
         $synchronizationDataTransfers = $this->tester->getFacade()
-            ->findProductAbstractCategoryStorageDataTransferByIds(0, $expectedCount, []);
+            ->findProductAbstractCategoryStorageSynchronizationDataTransfersByProductAbstractIds(0, $expectedCount, []);
 
         // Assert
         $this->assertCount($expectedCount, $synchronizationDataTransfers, sprintf('Exactly %d product abstract categories should exist.', $expectedCount));
@@ -871,7 +871,7 @@ class ProductCategoryStorageFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindProductCategoryEntetiesByFilterWillReturnProductCategoryData(): void
+    public function testFindProductCategoryTransfersByFilterWillReturnProductCategoryData(): void
     {
         // Arrange
         $expectedCount = 1;
@@ -888,7 +888,7 @@ class ProductCategoryStorageFacadeTest extends Unit
             ->setLimit($expectedCount);
 
         // Act
-        $productCategoryTransfers = $this->tester->getFacade()->findProductCategoryEntetiesByFilter($filterTransfer);
+        $productCategoryTransfers = $this->tester->getFacade()->findProductCategoryTransfersByFilter($filterTransfer);
 
         // Assert
         $this->assertCount($expectedCount, $productCategoryTransfers, sprintf('Exactly %d product categories should exist.', $expectedCount));

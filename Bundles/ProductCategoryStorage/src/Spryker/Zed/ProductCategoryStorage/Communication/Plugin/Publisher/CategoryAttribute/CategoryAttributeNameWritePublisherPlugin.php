@@ -21,7 +21,7 @@ class CategoryAttributeNameWritePublisherPlugin extends AbstractPlugin implement
 {
     /**
      * {@inheritDoc}
-     * - Filter `eventEntityTransfers` by modified name column.
+     * - Filter `eventEntityTransfers` by modified `name` column.
      * - Publishes product category data by `SpyCategoryAttribute` entity events.
      *
      * @api

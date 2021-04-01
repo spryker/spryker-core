@@ -21,11 +21,11 @@ class CategoryTreeWritePublisherPlugin extends AbstractPlugin implements Publish
 {
     /**
      * {@inheritDoc}
-     * - Publishes category tree data by CategoryStore publish event.
-     * - Publishes category tree data by SpyCategoryStore entity events.
-     * - Publishes category tree data by CategoryTree entity events.
-     * - Publishes category tree data by SpyCategoryNode entity events.
-     * - Publishes category tree data by SpyCategoryAttribute entity events.
+     * - Publishes category tree data by `CategoryStore` publish event.
+     * - Publishes category tree data by `SpyCategoryStore` entity events.
+     * - Publishes category tree data by `CategoryTree` entity events.
+     * - Publishes category tree data by `SpyCategoryNode` entity events.
+     * - Publishes category tree data by `SpyCategoryAttribute` entity events.
      *
      * @api
      *

@@ -34,7 +34,7 @@ class ProductCategorySynchronizationDataBulkRepositoryPlugin extends AbstractPlu
     public function getData(int $offset, int $limit, array $ids = []): array
     {
         return $this->getFacade()
-            ->findProductAbstractCategoryStorageDataTransferByIds($offset, $limit, $ids);
+            ->findProductAbstractCategoryStorageSynchronizationDataTransfersByProductAbstractIds($offset, $limit, $ids);
     }
 
     /**

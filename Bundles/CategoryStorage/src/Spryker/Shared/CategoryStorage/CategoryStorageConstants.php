@@ -78,7 +78,7 @@ class CategoryStorageConstants
 
     /**
      * Specification:
-     * - This events will be used for spy_category_store entity deletion.
+     * - This events will be used for `spy_category_store` entity deletion.
      *
      * @api
      */
@@ -86,7 +86,7 @@ class CategoryStorageConstants
 
     /**
      * Specification:
-     * - This events will be used for spy_category_attribute entity creation
+     * - This events will be used for `spy_category_attribute` entity creation.
      *
      * @api
      */
@@ -94,7 +94,7 @@ class CategoryStorageConstants
 
     /**
      * Specification:
-     * - This events will be used for spy_category_attribute entity changes
+     * - This events will be used for `spy_category_attribute` entity changes.
      *
      * @api
      */
@@ -102,7 +102,7 @@ class CategoryStorageConstants
 
     /**
      * Specification:
-     * - This events will be used for spy_category_attribute entity deletion
+     * - This events will be used for `spy_category_attribute` entity deletion.
      *
      * @api
      */
@@ -110,7 +110,7 @@ class CategoryStorageConstants
 
     /**
      * Specification:
-     * - This events will be used for spy_category entity creation
+     * - This events will be used for `spy_category` entity creation.
      *
      * @api
      */
@@ -118,7 +118,7 @@ class CategoryStorageConstants
 
     /**
      * Specification:
-     * - This events will be used for spy_category entity changes
+     * - This events will be used for `spy_category` entity changes.
      *
      * @api
      */
@@ -126,7 +126,7 @@ class CategoryStorageConstants
 
     /**
      * Specification:
-     * - This events will be used for spy_category entity deletion
+     * - This events will be used for `spy_category` entity deletion.
      *
      * @api
      */
@@ -134,7 +134,7 @@ class CategoryStorageConstants
 
     /**
      * Specification:
-     * - This events will be used for spy_category_template entity creation
+     * - This events will be used for `spy_category_template` entity creation.
      *
      * @api
      */
@@ -142,7 +142,7 @@ class CategoryStorageConstants
 
     /**
      * Specification:
-     * - This events will be used for spy_category_template entity changes
+     * - This events will be used for `spy_category_template` entity changes.
      *
      * @api
      */
@@ -150,7 +150,7 @@ class CategoryStorageConstants
 
     /**
      * Specification:
-     * - This events will be used for spy_category_template entity deletion
+     * - This events will be used for `spy_category_template` entity deletion.
      *
      * @api
      */
@@ -158,7 +158,7 @@ class CategoryStorageConstants
 
     /**
      * Specification:
-     * - This events will be used for CategoryNode publish
+     * - This events will be used for `CategoryNode` publish.
      *
      * @api
      */
@@ -166,7 +166,7 @@ class CategoryStorageConstants
 
     /**
      * Specification:
-     * - This events will be used for CategoryNode publish
+     * - This events will be used for `CategoryNode` publish.
      *
      * @api
      */
@@ -174,7 +174,7 @@ class CategoryStorageConstants
 
     /**
      * Specification:
-     * - This events will be used for spy_category_node entity creation
+     * - This events will be used for `spy_category_node` entity creation.
      *
      * @api
      */
@@ -182,7 +182,7 @@ class CategoryStorageConstants
 
     /**
      * Specification:
-     * - This events will be used for spy_category_node entity changes
+     * - This events will be used for `spy_category_node` entity changes.
      *
      * @api
      */
@@ -190,7 +190,7 @@ class CategoryStorageConstants
 
     /**
      * Specification:
-     * - This events will be used for spy_category_node entity deletion
+     * - This events will be used for `spy_category_node` entity deletion.
      *
      * @api
      */
@@ -198,7 +198,7 @@ class CategoryStorageConstants
 
     /**
      * Specification:
-     * - This events will be used for CategoryTree publish
+     * - This events will be used for `CategoryTree` publish.
      *
      * @api
      */
@@ -206,7 +206,7 @@ class CategoryStorageConstants
 
     /**
      * Specification:
-     * - This events will be used for CategoryTree publish
+     * - This events will be used for `CategoryTree` publish.
      *
      * @api
      */

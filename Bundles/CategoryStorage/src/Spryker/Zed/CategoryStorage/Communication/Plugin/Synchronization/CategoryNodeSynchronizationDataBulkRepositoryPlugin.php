@@ -21,7 +21,7 @@ class CategoryNodeSynchronizationDataBulkRepositoryPlugin extends AbstractPlugin
 {
     /**
      * {@inheritDoc}
-     * - Retrieves a collection of category node storage collection according to provided offset, limit and ids.
+     * - Retrieves a category node storage collection according to provided offset, limit and ids.
      *
      * @api
      *
@@ -33,7 +33,7 @@ class CategoryNodeSynchronizationDataBulkRepositoryPlugin extends AbstractPlugin
      */
     public function getData(int $offset, int $limit, array $ids = []): array
     {
-        return $this->getFacade()->findCategoryNodeStorageDataTransferByNodeIds($offset, $limit, $ids);
+        return $this->getFacade()->findCategoryNodeStorageSynchronizationDataTransfersByCategoryNodeIds($offset, $limit, $ids);
     }
 
     /**

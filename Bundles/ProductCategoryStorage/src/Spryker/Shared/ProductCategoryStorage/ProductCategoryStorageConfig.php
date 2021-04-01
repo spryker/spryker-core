@@ -77,7 +77,7 @@ class ProductCategoryStorageConfig extends AbstractBundleConfig
 
     /**
      * Specification:
-     * - This events will be used for spy_category_attribute entity creation
+     * - This events will be used for `spy_category_attribute` entity creation.
      *
      * @api
      */
@@ -85,7 +85,7 @@ class ProductCategoryStorageConfig extends AbstractBundleConfig
 
     /**
      * Specification:
-     * - This events will be used for spy_category_attribute entity changes
+     * - This events will be used for `spy_category_attribute` entity changes.
      *
      * @api
      */
@@ -93,7 +93,7 @@ class ProductCategoryStorageConfig extends AbstractBundleConfig
 
     /**
      * Specification:
-     * - This events will be used for spy_category_attribute entity deletion
+     * - This events will be used for `spy_category_attribute` entity deletion.
      *
      * @api
      */
@@ -101,7 +101,7 @@ class ProductCategoryStorageConfig extends AbstractBundleConfig
 
     /**
      * Specification:
-     * - This events will be used for spy_category_node entity creation
+     * - This events will be used for `spy_category_node` entity creation.
      *
      * @api
      */
@@ -109,7 +109,7 @@ class ProductCategoryStorageConfig extends AbstractBundleConfig
 
     /**
      * Specification:
-     * - This events will be used for spy_category_node entity changes
+     * - This events will be used for `spy_category_node` entity changes.
      *
      * @api
      */
@@ -117,7 +117,7 @@ class ProductCategoryStorageConfig extends AbstractBundleConfig
 
     /**
      * Specification:
-     * - This events will be used for spy_category_node entity deletion
+     * - This events will be used for `spy_category_node` entity deletion.
      *
      * @api
      */
@@ -125,7 +125,7 @@ class ProductCategoryStorageConfig extends AbstractBundleConfig
 
     /**
      * Specification:
-     * - This events will be used for spy_category entity creation
+     * - This events will be used for `spy_category` entity creation.
      *
      * @api
      */
@@ -133,7 +133,7 @@ class ProductCategoryStorageConfig extends AbstractBundleConfig
 
     /**
      * Specification:
-     * - This events will be used for spy_category entity changes
+     * - This events will be used for `spy_category` entity changes.
      *
      * @api
      */
@@ -141,7 +141,7 @@ class ProductCategoryStorageConfig extends AbstractBundleConfig
 
     /**
      * Specification:
-     * - This events will be used for spy_category entity deletion
+     * - This events will be used for `spy_category` entity deletion.
      *
      * @api
      */
@@ -149,7 +149,7 @@ class ProductCategoryStorageConfig extends AbstractBundleConfig
 
     /**
      * Specification
-     * - This events will be used for spy_url entity creation
+     * - This events will be used for `spy_url` entity creation.
      *
      * @api
      */
@@ -157,7 +157,7 @@ class ProductCategoryStorageConfig extends AbstractBundleConfig
 
     /**
      * Specification
-     * - This events will be used for spy_url entity changes
+     * - This events will be used for `spy_url` entity changes.
      *
      * @api
      */
@@ -165,7 +165,7 @@ class ProductCategoryStorageConfig extends AbstractBundleConfig
 
     /**
      * Specification
-     * - This events will be used for spy_url entity deletion
+     * - This events will be used for `spy_url` entity deletion.
      *
      * @api
      */
@@ -173,7 +173,7 @@ class ProductCategoryStorageConfig extends AbstractBundleConfig
 
     /**
      * Specification
-     * - This events will be used for product_category publishing
+     * - This events will be used for `product_category` publishing.
      *
      * @api
      */
@@ -181,7 +181,7 @@ class ProductCategoryStorageConfig extends AbstractBundleConfig
 
     /**
      * Specification
-     * - This events will be used for product_category un-publishing
+     * - This events will be used for `product_category` un-publishing.
      *
      * @api
      */
@@ -189,7 +189,7 @@ class ProductCategoryStorageConfig extends AbstractBundleConfig
 
     /**
      * Specification
-     * - This events will be used for spy_product_category entity creation
+     * - This events will be used for `spy_product_category` entity creation.
      *
      * @api
      */
@@ -197,7 +197,7 @@ class ProductCategoryStorageConfig extends AbstractBundleConfig
 
     /**
      * Specification
-     * - This events will be used for spy_product_category entity changes
+     * - This events will be used for `spy_product_category` entity changes.
      *
      * @api
      */
@@ -205,7 +205,7 @@ class ProductCategoryStorageConfig extends AbstractBundleConfig
 
     /**
      * Specification
-     * - This events will be used for spy_product_category entity deletion
+     * - This events will be used for `spy_product_category` entity deletion.
      *
      * @api
      */

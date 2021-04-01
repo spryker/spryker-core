@@ -209,12 +209,15 @@ class ProductCategoryStorageRepository extends AbstractRepository implements Pro
     /**
      * @param int $offset
      * @param int $limit
-     * @param int[] $ids
+     * @param int[] $productAbstractIds
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function findProductAbstractCategoryStorageDataTransferByIds(int $offset, int $limit, array $ids): array
-    {
+    public function findProductAbstractCategoryStorageSynchronizationDataTransfersByProductAbstractIds(
+        int $offset,
+        int $limit,
+        array $productAbstractIds
+    ): array {
         $filterTransfer = $this->createFilterTransfer(
             $offset,
             $limit,
@@ -223,8 +226,8 @@ class ProductCategoryStorageRepository extends AbstractRepository implements Pro
 
         $query = $this->getFactory()->createProductAbstractCategoryStoragePropelQuery();
 
-        if ($ids) {
-            $query->filterByFkProductAbstract_In($ids);
+        if ($productAbstractIds) {
+            $query->filterByFkProductAbstract_In($productAbstractIds);
         }
 
         return $this->buildQueryFromCriteria($query, $filterTransfer)
@@ -237,7 +240,7 @@ class ProductCategoryStorageRepository extends AbstractRepository implements Pro
      *
      * @return \Generated\Shared\Transfer\ProductCategoryTransfer[]
      */
-    public function findProductCategoryEntetiesByFilter(FilterTransfer $filterTransfer): array
+    public function findProductCategoryTransfersByFilter(FilterTransfer $filterTransfer): array
     {
         $query = $this->getFactory()->getProductCategoryPropelQuery();
 

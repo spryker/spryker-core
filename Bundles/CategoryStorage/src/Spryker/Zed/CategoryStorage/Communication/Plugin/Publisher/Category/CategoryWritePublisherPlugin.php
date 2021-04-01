@@ -21,7 +21,7 @@ class CategoryWritePublisherPlugin extends AbstractPlugin implements PublisherPl
 {
     /**
      * {@inheritDoc}
-     * - Publishes category node data by `SpyCategoryStore` entity events.
+     * - Publishes category node data by `SpyCategory` entity events.
      *
      * @api
      *
