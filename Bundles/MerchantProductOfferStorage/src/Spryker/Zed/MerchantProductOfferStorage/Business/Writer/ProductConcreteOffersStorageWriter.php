@@ -19,7 +19,8 @@ use Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStor
 class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorageWriterInterface
 {
     /**
-     * @phpstan-var array<int, string>
+     * @phpstan-var array<mixed>
+     *
      * @var array
      */
     public static $storeNames = [];
