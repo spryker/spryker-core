@@ -33,7 +33,7 @@ class RegionNameToIdRegionStep implements DataImportStepInterface
     public function execute(DataSetInterface $dataSet)
     {
         $iso2Code = $dataSet[StockAddressDataSetInterface::COLUMN_COUNTRY_ISO2_CODE];
-        $regionName = $dataSet[StockAddressDataSetInterface::COLUMN_REGION_NAME];
+        $regionName = $dataSet[StockAddressDataSetInterface::COLUMN_REGION_NAME] ?? null;
 
         if (!$iso2Code) {
             throw new InvalidDataException(sprintf('ISO2 code is missing.'));
