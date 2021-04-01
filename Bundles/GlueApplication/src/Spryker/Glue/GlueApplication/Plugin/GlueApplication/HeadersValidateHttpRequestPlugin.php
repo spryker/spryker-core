@@ -13,12 +13,14 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
+ * @method \Spryker\Glue\GlueApplication\GlueApplicationConfig getConfig()
  * @method \Spryker\Glue\GlueApplication\GlueApplicationFactory getFactory()
  */
 class HeadersValidateHttpRequestPlugin extends AbstractPlugin implements ValidateHttpRequestPluginInterface
 {
     /**
      * {@inheritDoc}
+     *  - Validation can be disabled via GlueApplicationConfig.
      *  - Validates that the accept header is present.
      *  - Validates that the content-type header is present.
      *
@@ -30,6 +32,10 @@ class HeadersValidateHttpRequestPlugin extends AbstractPlugin implements Validat
      */
     public function validate(Request $request): ?RestErrorMessageTransfer
     {
+        if (!$this->getConfig()->getValidateRequestHeaders()) {
+            return null;
+        }
+
         return $this->getFactory()
             ->createHeadersHttpRequestValidator()
             ->validate($request);

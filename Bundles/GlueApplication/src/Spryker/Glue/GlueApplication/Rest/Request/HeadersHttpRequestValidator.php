@@ -8,12 +8,35 @@
 namespace Spryker\Glue\GlueApplication\Rest\Request;
 
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
+use Spryker\Glue\GlueApplication\GlueApplicationConfig;
 use Spryker\Glue\GlueApplication\Rest\RequestConstantsInterface;
+use Spryker\Glue\GlueApplication\Rest\ResourceRouteLoaderInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class HeadersHttpRequestValidator implements HeadersHttpRequestValidatorInterface
 {
+    /**
+     * @var \Spryker\Glue\GlueApplication\GlueApplicationConfig
+     */
+    protected $config;
+
+    /**
+     * @var \Spryker\Glue\GlueApplication\Rest\ResourceRouteLoaderInterface
+     */
+    protected $resourceRouteLoader;
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\GlueApplicationConfig
+     */
+    public function __construct(
+        GlueApplicationConfig $config,
+        ResourceRouteLoaderInterface $resourceRouteLoader
+    ) {
+        $this->config = $config;
+        $this->resourceRouteLoader = $resourceRouteLoader;
+    }
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -85,6 +108,7 @@ class HeadersHttpRequestValidator implements HeadersHttpRequestValidatorInterfac
     protected function validateAccessControlRequestMethod(Request $request): ?RestErrorMessageTransfer
     {
         $requestedMethod = strtoupper((string)$request->headers->get(RequestConstantsInterface::HEADER_ACCESS_CONTROL_REQUEST_METHOD));
+
         if (!$requestedMethod) {
             return null;
         }

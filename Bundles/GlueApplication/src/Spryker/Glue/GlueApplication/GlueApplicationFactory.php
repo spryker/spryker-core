@@ -376,7 +376,10 @@ class GlueApplicationFactory extends AbstractFactory
      */
     public function createHeadersHttpRequestValidator(): HeadersHttpRequestValidatorInterface
     {
-        return new HeadersHttpRequestValidator();
+        return new HeadersHttpRequestValidator(
+            $this->getConfig(),
+            $this->createRestResourceRouteLoader()
+        );
     }
 
     /**
