@@ -168,7 +168,9 @@ class CacheClearer implements CacheClearerInterface
     {
         try {
             $finder = clone $this->finder;
-            $iterator = $finder->directories()->depth(0)->in($directoryPattern);
+            $directory = $this->getDirectoryPath($directoryPattern);
+            $basename = $this->getBasename($directoryPattern);
+            $iterator = $finder->directories()->depth(0)->in($directory)->name($basename);
         } catch (DirectoryNotFoundException $e) {
             return '';
         }
@@ -181,5 +183,25 @@ class CacheClearer implements CacheClearerInterface
         }
 
         return implode(PHP_EOL, $directories);
+    }
+
+    /**
+     * @param string $directoryPattern
+     *
+     * @return string
+     */
+    protected function getDirectoryPath($directoryPattern)
+    {
+        return dirname($directoryPattern);
+    }
+
+    /**
+     * @param string $directoryPattern
+     *
+     * @return string
+     */
+    protected function getBasename($directoryPattern)
+    {
+        return basename($directoryPattern);
     }
 }
