@@ -175,7 +175,7 @@ class HttpRequestValidatorTest extends Unit
     /**
      * @return \Symfony\Component\HttpFoundation\Request;
      */
-    protected function createRequestWithMockedHeaders(array $headers = [])
+    protected function createRequestWithMockedHeaders(array $headers = []): Request
     {
         $request = Request::create(
             '/',

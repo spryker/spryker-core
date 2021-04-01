@@ -27,7 +27,8 @@ class HeadersHttpRequestValidator implements HeadersHttpRequestValidatorInterfac
     protected $resourceRouteLoader;
 
     /**
-     * @param \Spryker\Glue\GlueApplication\GlueApplicationConfig
+     * @param \Spryker\Glue\GlueApplication\GlueApplicationConfig $config
+     * @param \Spryker\Glue\GlueApplication\Rest\ResourceRouteLoaderInterface $resourceRouteLoader
      */
     public function __construct(
         GlueApplicationConfig $config,
