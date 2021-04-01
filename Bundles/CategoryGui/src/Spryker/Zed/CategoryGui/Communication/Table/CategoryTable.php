@@ -293,7 +293,7 @@ class CategoryTable extends AbstractTable
      *
      * @return string
      */
-    protected function getStoreNames(ObjectCollection $spyCategoryStoreCollection)
+    protected function getStoreNames(ObjectCollection $spyCategoryStoreCollection): string
     {
         $storeNames = [];
         foreach ($spyCategoryStoreCollection as $spyCategoryStore) {
