@@ -111,7 +111,7 @@ class MerchantSalesReturnFacadeTest extends Unit
         $returnCreateRequestTransfer->setReturnItems(new ArrayObject([
             $this->tester->createReturnItem(static::TEST_MERCHANT_REFERENCE_1, 1),
             $this->tester->createReturnItem(static::TEST_MERCHANT_REFERENCE_1, 1),
-            $this->tester->createReturnItem(static::TEST_MERCHANT_REFERENCE_1, 1),
+            $this->tester->createReturnItem(static::TEST_MERCHANT_REFERENCE_1, 2),
         ]));
 
         // Act
@@ -154,25 +154,25 @@ class MerchantSalesReturnFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testValidateReturnFailedWithDifferentIdSalesOrder(): void
+    public function testCollectionExpanderSetsMerchantReferenceToReturn(): void
     {
         // Arrange
-        $returnCreateRequestTransfer = new ReturnCreateRequestTransfer();
-        $returnCreateRequestTransfer->setReturnItems(new ArrayObject([
-            $this->tester->createReturnItem(static::TEST_MERCHANT_REFERENCE_1, 1),
-            $this->tester->createReturnItem(static::TEST_MERCHANT_REFERENCE_1, 2),
-            $this->tester->createReturnItem(static::TEST_MERCHANT_REFERENCE_1, 1),
-        ]));
+        $merchantTransfer = $this->tester->haveMerchant();
+
+        $returnCollectionTransfer = $this->tester
+            ->createMerchantReturnCollectionWithItem($merchantTransfer);
 
         // Act
-        $returnResponseTransfer = $this->tester
+        $returnCollectionTransfer = $this->tester
             ->getFacade()
-            ->validateReturn($returnCreateRequestTransfer);
-
-        $messageTransfers = $returnResponseTransfer->getMessages();
+            ->expandReturnCollection($returnCollectionTransfer);
 
         // Assert
-        $this->assertFalse($returnResponseTransfer->getIsSuccessful());
-        $this->assertSame(1, $messageTransfers->count());
+        foreach ($returnCollectionTransfer->getReturns() as $returnTransfer) {
+            $this->assertSame(
+                $merchantTransfer->getMerchantReference(),
+                $returnTransfer->getMerchantReference()
+            );
+        }
     }
 }

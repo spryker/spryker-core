@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\RestReturnsAttributesTransfer;
 use Generated\Shared\Transfer\ReturnCollectionTransfer;
 use Generated\Shared\Transfer\ReturnFilterTransfer;
 use Generated\Shared\Transfer\ReturnItemTransfer;
+use Generated\Shared\Transfer\ReturnResponseTransfer;
 use Generated\Shared\Transfer\ReturnTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
@@ -37,15 +38,23 @@ class RestReturnResponseBuilder implements RestReturnResponseBuilderInterface
     protected $returnResourceMapper;
 
     /**
+     * @var \Spryker\Glue\SalesReturnsRestApi\SalesReturnsRestApiConfig
+     */
+    protected $salesReturnsRestApiConfig;
+
+    /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\SalesReturnsRestApi\Processor\Mapper\ReturnResourceMapperInterface $returnResourceMapper
+     * @param \Spryker\Glue\SalesReturnsRestApi\SalesReturnsRestApiConfig $salesReturnsRestApiConfig
      */
     public function __construct(
         RestResourceBuilderInterface $restResourceBuilder,
-        ReturnResourceMapperInterface $returnResourceMapper
+        ReturnResourceMapperInterface $returnResourceMapper,
+        SalesReturnsRestApiConfig $salesReturnsRestApiConfig
     ) {
         $this->restResourceBuilder = $restResourceBuilder;
         $this->returnResourceMapper = $returnResourceMapper;
+        $this->salesReturnsRestApiConfig = $salesReturnsRestApiConfig;
     }
 
     /**
@@ -113,14 +122,49 @@ class RestReturnResponseBuilder implements RestReturnResponseBuilderInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
-        $restResponse->addError(
-            $this->returnResourceMapper->mapMessageTransferToRestErrorMessageTransfer(
-                (new MessageTransfer())->setValue($message),
-                new RestErrorMessageTransfer()
-            )
-        );
+        return $this->addRestResponseError($restResponse, $message);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ReturnResponseTransfer $returnResponseTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createErrorRestResponseFromReturnResponse(
+        ReturnResponseTransfer $returnResponseTransfer
+    ): RestResponseInterface {
+        $restResponse = $this->restResourceBuilder->createRestResponse();
+        $errorIdentifiers = $this->mapReturnResponseTransferToErrorIdentifiers($returnResponseTransfer);
+
+        foreach ($errorIdentifiers as $errorIdentifier) {
+            $restResponse = $this->addRestResponseError($restResponse, $errorIdentifier);
+        }
 
         return $restResponse;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ReturnResponseTransfer $returnResponseTransfer
+     *
+     * @return string[]
+     */
+    protected function mapReturnResponseTransferToErrorIdentifiers(ReturnResponseTransfer $returnResponseTransfer): array
+    {
+        $errorMessageToErrorIdentifierMapping = $this->salesReturnsRestApiConfig
+            ->getErrorMessageToErrorIdentifierMapping();
+
+        $errorIdentifiers = [];
+        foreach ($returnResponseTransfer->getMessages() as $messageTransfer) {
+            $errorMessage = $messageTransfer->getValue();
+            if (array_key_exists($errorMessage, $errorMessageToErrorIdentifierMapping)) {
+                $errorIdentifiers[] = $errorMessageToErrorIdentifierMapping[$errorMessage];
+
+                continue;
+            }
+            $errorIdentifiers[] = $this->salesReturnsRestApiConfig->getDefaultErrorMessageIdentifier();
+        }
+
+        return array_unique($errorIdentifiers);
     }
 
     /**
@@ -183,5 +227,23 @@ class RestReturnResponseBuilder implements RestReturnResponseBuilderInterface
             SalesReturnsRestApiConfig::RESOURCE_RETURN_ITEMS,
             $idReturnItem
         );
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
+     * @param string $message
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function addRestResponseError(RestResponseInterface $restResponse, string $message)
+    {
+        $restResponse->addError(
+            $this->returnResourceMapper->mapMessageTransferToRestErrorMessageTransfer(
+                (new MessageTransfer())->setValue($message),
+                new RestErrorMessageTransfer()
+            )
+        );
+
+        return $restResponse;
     }
 }
