@@ -87,6 +87,7 @@ class SalesReturnBusinessFactory extends AbstractBusinessFactory
             $this->getSalesFacade(),
             $this->createReturnTotalCalculator(),
             $this->getConfig()->getReturnExpanderPlugins(),
+            $this->getReturnCollectionExpanderPlugins()
         );
     }
 
@@ -185,5 +186,13 @@ class SalesReturnBusinessFactory extends AbstractBusinessFactory
     public function getReturnCreateRequestValidatorPlugins(): array
     {
         return $this->getProvidedDependency(SalesReturnDependencyProvider::PLUGINS_RETURN_CREATE_REQUEST_VALIDATOR);
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnCollectionExpanderPluginInterface[]
+     */
+    public function getReturnCollectionExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(SalesReturnDependencyProvider::PLUGINS_RETURN_COLLECTION_EXPANDER);
     }
 }

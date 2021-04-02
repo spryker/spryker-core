@@ -6,6 +6,7 @@
     <transfer name="Return">
         <property name="merchantOrder" type="MerchantOrder"/>
         <property name="merchantSalesOrderReference" type="string"/>
+        <property name="merchantReference" type="string"/>
         <property name="returnItems" type="ReturnItem[]" singular="returnItem"/>
     </transfer>
 
@@ -40,6 +41,10 @@
         <property name="orderItemUuid" type="string"/>
         <property name="merchantOrderReference" type="string"/>
         <property name="withMerchant" type="bool"/>
+    </transfer>
+
+    <transfer name="ReturnCollection">
+        <property name="returns" type="Return[]" singular="return"/>
     </transfer>
 
 </transfers>
