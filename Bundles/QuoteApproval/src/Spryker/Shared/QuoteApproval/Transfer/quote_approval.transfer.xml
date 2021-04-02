@@ -27,6 +27,7 @@
 
     <transfer name="QuoteApprovalRequest">
         <property name="idQuote" type="int" deprecated="Use quote property instead."/>
+        <property name="quoteIds" type="int[]" singular="quoteId"/>
         <property name="quote" type="Quote"/>
         <property name="approverCompanyUserId" type="int"/>
         <property name="requesterCompanyUserId" type="int"/>

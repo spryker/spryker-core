@@ -12,4 +12,7 @@
     <transfer name="Return">
     </transfer>
 
+    <transfer name="ReturnCollection">
+    </transfer>
+
 </transfers>
