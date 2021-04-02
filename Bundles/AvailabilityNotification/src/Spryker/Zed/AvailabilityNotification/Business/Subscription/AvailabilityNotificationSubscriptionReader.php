@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\AvailabilityNotification\Business\Subscription;
 
+use Generated\Shared\Transfer\AvailabilityNotificationCriteriaTransfer;
+use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionCollectionTransfer;
 use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer;
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToStoreFacadeInterface;
 use Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationRepositoryInterface;
@@ -73,13 +75,17 @@ class AvailabilityNotificationSubscriptionReader implements AvailabilityNotifica
     }
 
     /**
-     * @param string $customerReference
+     * @param \Generated\Shared\Transfer\AvailabilityNotificationCriteriaTransfer $availabilityNotificationCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer[]
+     * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionCollectionTransfer
      */
-    public function findByCustomerReference(string $customerReference): array
-    {
-        return $this->availabilityNotificationRepository
-            ->findByCustomerReference($customerReference, $this->storeFacade->getCurrentStore()->getIdStore());
+    public function getAvailabilityNotifications(
+        AvailabilityNotificationCriteriaTransfer $availabilityNotificationCriteriaTransfer
+    ): AvailabilityNotificationSubscriptionCollectionTransfer {
+        $availabilityNotificationCriteriaTransfer->requireCustomerReferences();
+
+        return $this
+            ->availabilityNotificationRepository
+            ->getAvailabilityNotifications($availabilityNotificationCriteriaTransfer);
     }
 }

@@ -60,7 +60,8 @@ class SalesReturnBusinessFactory extends AbstractBusinessFactory
             $this->createReturnValidator(),
             $this->createReturnReader(),
             $this->createReturnReferenceGenerator(),
-            $this->createOmsEventTriggerer()
+            $this->createOmsEventTriggerer(),
+            $this->getReturnPreCreatePlugins()
         );
     }
 
@@ -71,7 +72,8 @@ class SalesReturnBusinessFactory extends AbstractBusinessFactory
     {
         return new ReturnValidator(
             $this->getStoreFacade(),
-            $this->getConfig()
+            $this->getConfig(),
+            $this->getReturnCreateRequestValidatorPlugins()
         );
     }
 
@@ -83,7 +85,8 @@ class SalesReturnBusinessFactory extends AbstractBusinessFactory
         return new ReturnReader(
             $this->getRepository(),
             $this->getSalesFacade(),
-            $this->createReturnTotalCalculator()
+            $this->createReturnTotalCalculator(),
+            $this->getReturnCollectionExpanderPlugins()
         );
     }
 
@@ -163,8 +166,32 @@ class SalesReturnBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\SalesReturn\Dependency\Service\SalesReturnToUtilDateTimeServiceInterface
      */
-    protected function getUtilDateTimeService(): SalesReturnToUtilDateTimeServiceInterface
+    public function getUtilDateTimeService(): SalesReturnToUtilDateTimeServiceInterface
     {
         return $this->getProvidedDependency(SalesReturnDependencyProvider::SERVICE_UTIL_DATE_TIME);
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnPreCreatePluginInterface[]
+     */
+    public function getReturnPreCreatePlugins(): array
+    {
+        return $this->getProvidedDependency(SalesReturnDependencyProvider::PLUGINS_RETURN_PRE_CREATE);
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnCreateRequestValidatorPluginInterface[]
+     */
+    public function getReturnCreateRequestValidatorPlugins(): array
+    {
+        return $this->getProvidedDependency(SalesReturnDependencyProvider::PLUGINS_RETURN_CREATE_REQUEST_VALIDATOR);
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnCollectionExpanderPluginInterface[]
+     */
+    public function getReturnCollectionExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(SalesReturnDependencyProvider::PLUGINS_RETURN_COLLECTION_EXPANDER);
     }
 }

@@ -98,6 +98,10 @@ class PathMethodRenderer implements PathMethodRendererInterface
             $this->addPathParameterComponents($pathMethodComponentTransfer, $pathMethodDataTransfer);
         }
 
+        if ($pathMethodDataTransfer->getDeprecated()) {
+            $pathMethodComponentTransfer->setDeprecated($pathMethodDataTransfer->getDeprecated());
+        }
+
         $this->pathMethodSpecificationComponent->setPathMethodComponentTransfer($pathMethodComponentTransfer);
         $pathMethodSpecificationData = $this->pathMethodSpecificationComponent->getSpecificationComponentData();
 
