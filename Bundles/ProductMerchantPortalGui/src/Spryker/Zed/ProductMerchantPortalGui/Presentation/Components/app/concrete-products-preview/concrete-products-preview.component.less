@@ -1,0 +1,122 @@
+@import '~@spryker/styles/src/lib/themes/default/variables/index.less';
+
+@concrete-products-preview-main-border-radius: 10px;
+@concrete-products-preview-header-border-radius: 4px;
+@concrete-products-preview-header-padding: 12px 15px;
+@concrete-products-preview-header-margin-bottom: 5px;
+@concrete-products-preview-header-checkbox-padding: 3px 15px 3px 0;
+@concrete-products-preview-table-padding: 5px;
+@concrete-products-preview-table-min-width: 500px;
+@concrete-products-preview-table-list-height: 400px;
+@concrete-products-preview-table-row-padding: 15px 0 15px 10px;
+@concrete-products-preview-table-row-item-padding: 0 10px;
+@concrete-products-preview-table-row-margin-bottom: 5px;
+@concrete-products-preview-table-row-attr-width: 30%;
+@concrete-products-preview-table-row-sku-width: 25%;
+@concrete-products-preview-table-row-name-width: 45%;
+@concrete-products-preview-table-row-button-margin-left: 10px;
+@concrete-products-preview-table-row-delete-icon-font-size: 20px;
+@concrete-products-preview-no-data-icon-size: 110px;
+@concrete-products-preview-no-data-padding: 20px;
+
+.mp-concrete-products-preview {
+    &__header {
+        background-color: @gray-lighter;
+        border-radius: @concrete-products-preview-header-border-radius;
+        margin-bottom: @concrete-products-preview-header-margin-bottom;
+        padding: @concrete-products-preview-header-padding;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+
+        &-checkboxes {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        &-checkbox:first-child {
+            padding: @concrete-products-preview-header-checkbox-padding;
+        }
+    }
+
+    &__no-data {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: @gray-lighter;
+        padding: @concrete-products-preview-no-data-padding;
+        border-radius: @concrete-products-preview-main-border-radius;
+
+        &-icon {
+            display: block;
+            font-size: @concrete-products-preview-no-data-icon-size;
+        }
+
+        &-text {
+            color: @gray-darker;
+            font-size: @font-size-lg;
+            font-weight: @font-weight-semi-bold;
+        }
+    }
+
+    &__table {
+        background-color: @gray-lighter;
+        border-radius: @concrete-products-preview-main-border-radius;
+        padding: @concrete-products-preview-table-padding;
+        overflow: auto;
+
+        &-content {
+            min-width: @concrete-products-preview-table-min-width;
+        }
+
+        &-header {
+            font-size: @font-size-sm;
+            font-weight: @font-weight-medium;
+            text-transform: uppercase;
+        }
+
+        &-list {
+            height: @concrete-products-preview-table-list-height;
+        }
+
+        &-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: @concrete-products-preview-table-row-margin-bottom;
+            padding: @concrete-products-preview-table-row-padding;
+            border-radius: @concrete-products-preview-main-border-radius;
+            background-color: @white;
+
+            > div {
+                padding: @concrete-products-preview-table-row-item-padding;
+            }
+
+            &-attr {
+                flex-basis: @concrete-products-preview-table-row-attr-width;
+            }
+
+            &-sku {
+                flex-basis: @concrete-products-preview-table-row-sku-width;
+            }
+
+            &-name {
+                display: flex;
+                align-items: center;
+                flex-basis: @concrete-products-preview-table-row-name-width;
+
+                &-input {
+                    flex-grow: 1;
+                }
+            }
+
+            &-button {
+                margin-left: @concrete-products-preview-table-row-button-margin-left;
+            }
+
+            &-delete-icon {
+                font-size: @concrete-products-preview-table-row-delete-icon-font-size;
+            }
+        }
+    }
+}

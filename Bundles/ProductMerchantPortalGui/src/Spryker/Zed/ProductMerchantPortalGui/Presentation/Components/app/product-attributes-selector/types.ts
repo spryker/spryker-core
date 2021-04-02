@@ -1,6 +1,7 @@
 export interface ProductAttribute {
     value: string;
     title: string;
+    isDisabled?: boolean;
     values: ProductAttributeValue[];
 }
 

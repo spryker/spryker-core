@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    Component,
+    Input,
+    ViewEncapsulation
+} from '@angular/core';
 import { ToJson } from '@spryker/utils';
 import { ProductAttribute } from '../product-attributes-selector/types';
 

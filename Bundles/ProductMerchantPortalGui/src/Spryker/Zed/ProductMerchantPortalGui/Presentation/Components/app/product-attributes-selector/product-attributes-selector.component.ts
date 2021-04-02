@@ -3,7 +3,7 @@ import {
     Component,
     EventEmitter,
     Input,
-    OnChanges,
+    OnChanges, OnInit,
     Output, SimpleChanges,
     ViewEncapsulation
 } from '@angular/core';
@@ -18,7 +18,7 @@ import { IconDeleteModule } from '../../icons';
     encapsulation: ViewEncapsulation.None,
     host: { class: 'mp-product-attributes-selector' },
 })
-export class ProductAttributesSelectorComponent implements OnChanges {
+export class ProductAttributesSelectorComponent implements OnChanges, OnInit {
     @Input() attributes: ProductAttribute[];
     @Input() selectedAttributes: ProductAttribute[];
     @Input() name?: string;
@@ -28,15 +28,23 @@ export class ProductAttributesSelectorComponent implements OnChanges {
     attributesObject: Record<string, ProductAttribute> = {};
     attributeOptions: ProductAttributeValue[][] = [];
 
+    ngOnInit(): void {
+        this.create();
+    }
+
     ngOnChanges(changes: SimpleChanges): void {
         if ('attributes' in changes) {
-            this.attributesObject = this.attributes.reduce((accum, attribute) => {
-                return {
-                    ...accum,
-                    [attribute.value]: attribute,
-                }
-            }, {});
+            this.generateAttributesObject();
         }
+    }
+
+    generateAttributesObject(): void {
+        this.attributesObject = this.attributes.reduce((accum, attribute) => {
+            return {
+                ...accum,
+                [attribute.value]: attribute,
+            }
+        }, {});
     }
 
     getAttributes(index: number): ProductAttributeValue[] {
@@ -48,8 +56,9 @@ export class ProductAttributesSelectorComponent implements OnChanges {
 
         attribute.values = [];
         this.selectedAttributes = [...this.selectedAttributes];
-        this.attributeOptions[index] = this.attributesObject[value].values;
+        this.attributeOptions[index] = this.attributesObject[value]?.values;
         this.selectedAttributes[index] = attribute;
+        this.disableSelectedAttributes();
         this.selectedAttributesChange.emit(this.selectedAttributes);
     }
 
@@ -60,9 +69,19 @@ export class ProductAttributesSelectorComponent implements OnChanges {
         this.selectedAttributesChange.emit(this.selectedAttributes);
     }
 
-    create(): void {
-        this.selectedAttributes = [...this.selectedAttributes, null];
+    disableSelectedAttributes(): void {
+        this.attributes = this.attributes.map(attr => ({ ...attr, isDisabled: this.selectedAttributes.some(selectedAttr => selectedAttr?.value === attr?.value) }));
     }
 
-    delete(): void {}
+    create(): void {
+        const emptyAttribute = {} as ProductAttribute;
+        this.selectedAttributes = [...this.selectedAttributes, emptyAttribute];
+    }
+
+    delete(index: number): void {
+        this.selectedAttributes = [...this.selectedAttributes.filter((item, itemIndex) => itemIndex !== index)];
+        this.attributeOptions = [...this.attributeOptions.filter((item, itemIndex) => itemIndex !== index)];
+        this.disableSelectedAttributes();
+        this.selectedAttributesChange.emit(this.selectedAttributes);
+    }
 }

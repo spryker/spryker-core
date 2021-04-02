@@ -6,7 +6,6 @@
 @create-multi-concrete-product-card-padding: 20px;
 @create-multi-concrete-product-content-border-radius: 10px;
 @create-multi-concrete-product-preview-title-margin: 30px 0 15px;
-@create-multi-concrete-product-preview-no-data-icon-size: 110px;
 
 .@{ajax-form-prefix-cls}-container {
     overflow-y: auto;
@@ -59,30 +58,7 @@
 
     }
 
-    &__card {
-        background-color: @gray-lighter;
-        padding: @create-multi-concrete-product-card-padding;
-        border-radius: @create-multi-concrete-product-content-border-radius;
-    }
-
     &__preview-title {
         margin: @create-multi-concrete-product-preview-title-margin;
-    }
-
-    &__no-data {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-
-        &-icon {
-            display: block;
-            font-size: @create-multi-concrete-product-preview-no-data-icon-size;
-        }
-
-        &-text {
-            color: @gray-darker;
-            font-size: @font-size-lg;
-            font-weight: @font-weight-semi-bold;
-        }
     }
 }

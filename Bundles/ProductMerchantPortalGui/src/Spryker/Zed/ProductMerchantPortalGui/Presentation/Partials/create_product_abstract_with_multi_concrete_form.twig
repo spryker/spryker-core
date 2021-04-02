@@ -35,6 +35,20 @@
                     "value": "value21"
                 }
             ]
+        },
+        {
+            "title": "name3",
+            "value": "value3",
+            "values": [
+                {
+                    "title": "name31",
+                    "value": "value31"
+                },
+                {
+                    "title": "name32",
+                    "value": "value32"
+                }
+            ]
         }
     ]' %}
 
@@ -44,6 +58,7 @@
             abstract-sku="{{ mockedSku }}"
             abstract-name="{{ mockedName }}">
             <web-mp-create-multi-concrete-product
+                cloak
                 attributes="{{ mockedData }}"
                 products-name="{{ mockedProductsName }}">
                 {{ form_start(form, { attr: { excludeFormTag: true } }) }}
@@ -62,23 +77,28 @@
                         </div>
                     {% endblock %}
 
-                    <span selector-col-attr-name>{{ 'Super Attribute' | trans }} *</span>
-                    <span selector-col-attr-values-name>{{ 'Values' | trans }} *</span>
-                    <span selector-btn-attr-add-name>
-                        <web-spy-icon name="plus"></web-spy-icon>
-                        {{ 'Add' | trans }}
-                    </span>
+                    {% block attributesSelector %}
+                        <span selector-col-attr-name>{{ 'Super Attribute' | trans }} *</span>
+                        <span selector-col-attr-values-name>{{ 'Values' | trans }} *</span>
+                        <span selector-btn-attr-add-name>
+                            <web-spy-icon name="plus"></web-spy-icon>
+                            {{ 'Add' | trans }}
+                        </span>
+                    {% endblock %}
 
-                    <h3 preview-text>{{ 'Concrete Products’ Preview' | trans }}</h3>
+                    {% block productsPreview %}
+                        <h3 preview-text>{{ 'Concrete Products’ Preview' | trans }}</h3>
 
-                    <span preview-total-text>{{ 'to be created' | trans }}</span>
-                    <span preview-auto-sku-text>{{ 'Autogenerate SKUs' | trans }}</span>
-                    <span preview-auto-name-text>{{ 'Same Name as Abstract Product' | trans }}</span>
-                    <span preview-col-attr-name>{{ 'Super attribute value' | trans }}</span>
-                    <span preview-col-sku-name>{{ 'SKU' | trans }}</span>
-                    <span preview-col-name-name>{{ 'Name default' | trans }}</span>
-                    <span preview-no-data-text>{{ 'No concretes created yet' | trans }}</span>
+                        <span preview-total-text>{{ 'to be created' | trans }}</span>
+                        <span preview-auto-sku-text>{{ 'Autogenerate SKUs' | trans }}</span>
+                        <span preview-auto-name-text>{{ 'Same Name as Abstract Product' | trans }}</span>
+                        <span preview-col-attr-name>{{ 'Super attribute value' | trans }}</span>
+                        <span preview-col-sku-name>{{ 'SKU' | trans }}</span>
+                        <span preview-col-name-name>{{ 'Name default' | trans }}</span>
+                        <span preview-no-data-text>{{ 'No concretes created yet' | trans }}</span>
+                    {% endblock %}
 
+{# TODO: remove #}
 {#                    {% for productManagementAttribute in productManagementAttributes %}#}
 {#                        <p>{{ productManagementAttribute.key }}:</p>#}
 {#                        <p>#}

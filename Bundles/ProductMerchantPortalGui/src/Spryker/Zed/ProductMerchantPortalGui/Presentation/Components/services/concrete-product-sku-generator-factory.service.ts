@@ -3,14 +3,12 @@ import { InjectionTokenType } from '@spryker/utils';
 import { ConcreteProductSkuGeneratorProviderToken, ConcreteProductSkuGeneratorToken } from './tokens';
 import { ConcreteProductSkuGeneratorFactory } from './types';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class ConcreteProductSkuGeneratorFactoryService implements ConcreteProductSkuGeneratorFactory {
     constructor(
         private injector: Injector,
         @Inject(ConcreteProductSkuGeneratorProviderToken)
         private concreteProductSkuGeneratorProvider: InjectionTokenType<typeof ConcreteProductSkuGeneratorProviderToken>,
-        @Inject(ConcreteProductSkuGeneratorToken)
-        private concreteProductSkuGenerator: InjectionTokenType<typeof ConcreteProductSkuGeneratorToken>,
     ) {}
 
     create(): InjectionTokenType<typeof ConcreteProductSkuGeneratorToken> {
@@ -20,6 +18,6 @@ export class ConcreteProductSkuGeneratorFactoryService implements ConcreteProduc
             parent: this.injector,
         });
 
-        return concreteProductSkuGeneratorInjector.get(this.concreteProductSkuGenerator);
+        return concreteProductSkuGeneratorInjector.get(ConcreteProductSkuGeneratorToken);
     }
 }

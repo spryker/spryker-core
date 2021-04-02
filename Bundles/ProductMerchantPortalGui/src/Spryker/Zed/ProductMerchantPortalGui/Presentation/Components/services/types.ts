@@ -1,5 +1,5 @@
 export interface IdGenerator<T = string> {
-    generate(prevId?: T): T;
+    generate(index?: number, prevId?: T): T;
 }
 
 export interface ConcreteProductGeneratorData {

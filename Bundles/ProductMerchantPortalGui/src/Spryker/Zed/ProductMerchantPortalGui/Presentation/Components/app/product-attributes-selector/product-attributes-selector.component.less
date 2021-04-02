@@ -1,23 +1,38 @@
 @import '~@spryker/styles/src/lib/themes/default/variables/index.less';
 
+@product-attributes-selector-border-radius: 10px;
+@product-attributes-selector-padding: 20px 12px;
+@product-attributes-selector-content-min-width: 400px;
 @product-attributes-selector-col-padding: 0 8px;
-@product-attributes-selector-row-margin: 0 -8px;
-@product-attributes-selector-name-max-width: 220px;
-@product-attributes-selector-value-max-width: 600px;
+@product-attributes-selector-header-margin-bottom: 7px;
+@product-attributes-selector-row-margin-bottom: 15px;
+@product-attributes-selector-delete-icon-font-size: 20px;
+@product-attributes-selector-name-width: 30%;
+@product-attributes-selector-value-width: 70%;
+@product-attributes-selector-button-margin-left: 10px;
+@product-attributes-selector-button-add-padding: 0 8px;
 
 .mp-product-attributes-selector {
+    display: block;
+    overflow: auto;
+    background-color: @gray-lighter;
+    border-radius: @product-attributes-selector-border-radius;
+    padding: @product-attributes-selector-padding;
+
+    &__container {
+        min-width: @product-attributes-selector-content-min-width;
+    }
+
     &__header {
         display: flex;
-        margin: @product-attributes-selector-row-margin;
+        margin-bottom: @product-attributes-selector-header-margin-bottom;
 
         &-name {
-            max-width: @product-attributes-selector-name-max-width;
-            width: 100%;
+            flex-basis: @product-attributes-selector-name-width;
         }
 
         &-values-name {
-            max-width: @product-attributes-selector-value-max-width;
-            width: 100%;
+            flex-basis: @product-attributes-selector-value-width;
         }
     }
 
@@ -32,22 +47,34 @@
     &__content-row {
         display: flex;
         align-items: center;
-        margin: @product-attributes-selector-row-margin;
+        margin-bottom: @product-attributes-selector-row-margin-bottom;
 
         &-name {
-            max-width: @product-attributes-selector-name-max-width;
+            flex-basis: @product-attributes-selector-name-width;
             padding: @product-attributes-selector-col-padding;
-            width: 100%;
         }
 
         &-values-name {
-            max-width: @product-attributes-selector-value-max-width;
+            flex-basis: @product-attributes-selector-value-width;
             padding: @product-attributes-selector-col-padding;
-            width: 100%;
+            display: flex;
+            align-items: center;
+
+            &-select {
+                flex-grow: 1;
+            }
         }
 
         &-button {
-            padding: @product-attributes-selector-col-padding;
+            margin-left: @product-attributes-selector-button-margin-left;
         }
+
+        &-delete-icon {
+            font-size: @product-attributes-selector-delete-icon-font-size;
+        }
+    }
+
+    &__button-add {
+        padding: @product-attributes-selector-button-add-padding;
     }
 }

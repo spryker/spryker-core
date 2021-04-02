@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { ConcreteProductGeneratorData, IdGenerator } from './types';
+import { IdGenerator } from './types';
+import { ConcreteProductGeneratorDataService } from './concrete-product-generator-data.service';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class ConcreteProductNameGeneratorService implements IdGenerator {
     constructor(
-        private concreteProductGeneratorData: ConcreteProductGeneratorData,
+        private concreteProductGeneratorData: ConcreteProductGeneratorDataService,
     ) {}
 
     generate(): string {
