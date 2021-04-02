@@ -10,6 +10,8 @@ namespace Spryker\Zed\MerchantSalesReturn\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\MerchantSalesReturn\Business\Creator\MerchantReturnCreator;
 use Spryker\Zed\MerchantSalesReturn\Business\Creator\MerchantReturnCreatorInterface;
+use Spryker\Zed\MerchantSalesReturn\Business\Expander\MerchantReturnCollectionExpander;
+use Spryker\Zed\MerchantSalesReturn\Business\Expander\MerchantReturnCollectionExpanderInterface;
 use Spryker\Zed\MerchantSalesReturn\Business\Validator\MerchantReturnValidator;
 use Spryker\Zed\MerchantSalesReturn\Business\Validator\MerchantReturnValidatorInterface;
 use Spryker\Zed\MerchantSalesReturn\Dependency\Facade\MerchantSalesReturnToMerchantSalesOrderFacadeInterface;
@@ -17,7 +19,6 @@ use Spryker\Zed\MerchantSalesReturn\MerchantSalesReturnDependencyProvider;
 
 /**
  * @method \Spryker\Zed\MerchantSalesReturn\MerchantSalesReturnConfig getConfig()
- * @method \Spryker\Zed\MerchantSalesReturn\Persistence\MerchantSalesReturnQueryContainer getQueryContainer()
  */
 class MerchantSalesReturnBusinessFactory extends AbstractBusinessFactory
 {
@@ -43,5 +44,13 @@ class MerchantSalesReturnBusinessFactory extends AbstractBusinessFactory
     public function getMerchantSalesOrderFacade(): MerchantSalesReturnToMerchantSalesOrderFacadeInterface
     {
         return $this->getProvidedDependency(MerchantSalesReturnDependencyProvider::FACADE_MERCHANT_SALES_ORDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantSalesReturn\Business\Expander\MerchantReturnCollectionExpanderInterface
+     */
+    public function createMerchantReturnCollectionExpander(): MerchantReturnCollectionExpanderInterface
+    {
+        return new MerchantReturnCollectionExpander();
     }
 }
