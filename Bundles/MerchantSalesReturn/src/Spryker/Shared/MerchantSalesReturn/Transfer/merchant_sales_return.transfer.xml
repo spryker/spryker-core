@@ -3,9 +3,12 @@
    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
    xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
+    <transfer name="MerchantOrderCollection">
+        <property name="merchantOrders" type="MerchantOrder[]" singular="merchantOrder"/>
+    </transfer>
+
     <transfer name="Return">
-        <property name="merchantOrder" type="MerchantOrder"/>
-        <property name="merchantSalesOrderReference" type="string"/>
+        <property name="merchantOrders" type="MerchantOrder[]" singular="merchantOrder"/>
         <property name="merchantReference" type="string"/>
         <property name="returnItems" type="ReturnItem[]" singular="returnItem"/>
     </transfer>
@@ -38,8 +41,7 @@
     </transfer>
 
     <transfer name="MerchantOrderCriteria">
-        <property name="orderItemUuid" type="string"/>
-        <property name="merchantOrderReference" type="string"/>
+        <property name="orderItemUuids" type="string[]" singular="orderItemUuid"/>
         <property name="withMerchant" type="bool"/>
     </transfer>
 

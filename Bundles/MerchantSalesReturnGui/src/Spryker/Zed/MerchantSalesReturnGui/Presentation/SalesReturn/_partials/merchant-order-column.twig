@@ -5,10 +5,12 @@
 
         <div class="row m-b-sm">
             <div class="col-sm-6 font-bold">
-                {{ 'Merchant Order Reference' | trans }}
+                {{ 'Merchant Order References' | trans }}
             </div>
             <div class="col-sm-6">
-                {{ merchantOrder.merchantOrderReference }}
+                {% for merchantOrder in merchantOrders %}
+                    {{ merchantOrder.merchantOrderReference }}<br/>
+                {% endfor %}
             </div>
         </div>
 
@@ -17,8 +19,8 @@
                 {{ 'Merchant' | trans }}
             </div>
             <div class="col-sm-6 word-break-all">
-                <a target="_blank" href="{{ url('/merchant-gui/edit-merchant', {'id-merchant': merchantOrder.merchant.idMerchant}) }}">
-                    {{ merchantOrder.merchant.name }}
+                <a target="_blank" href="{{ url('/merchant-gui/edit-merchant', {'id-merchant': (merchantOrders | first).merchant.idMerchant}) }}">
+                    {{ (merchantOrders | first).merchant.name }}
                 </a>
             </div>
         </div>

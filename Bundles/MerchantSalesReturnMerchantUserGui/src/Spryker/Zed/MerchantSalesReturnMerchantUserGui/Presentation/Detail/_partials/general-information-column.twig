@@ -18,10 +18,12 @@
 
         <div class="row m-b-sm">
             <div class="col-sm-6 font-bold">
-                {{ 'Merchant Order Reference' | trans }}
+                {{ 'Merchant Order References' | trans }}
             </div>
             <div class="col-sm-6">
-                {{ return.merchantSalesOrderReference }}
+                {% for merchantOrder in return.merchantOrders %}
+                    {{ merchantOrder.merchantOrderReference }}<br/>
+                {% endfor %}
             </div>
         </div>
 

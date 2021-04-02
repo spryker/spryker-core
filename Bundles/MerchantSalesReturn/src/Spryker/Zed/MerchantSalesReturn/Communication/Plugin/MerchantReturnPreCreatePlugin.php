@@ -20,7 +20,7 @@ class MerchantReturnPreCreatePlugin extends AbstractPlugin implements ReturnPreC
 {
     /**
      * {@inheritDoc}
-     * - Sets merchant order reference in return transfer.
+     * - Sets merchant reference in return transfer.
      *
      * @api
      *

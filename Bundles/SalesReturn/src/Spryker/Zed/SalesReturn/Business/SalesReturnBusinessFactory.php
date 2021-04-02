@@ -189,6 +189,8 @@ class SalesReturnBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnCollectionExpanderPluginInterface[]
      */
     public function getReturnCollectionExpanderPlugins(): array

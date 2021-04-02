@@ -1,5 +1,6 @@
 {
     "include": {
+        "spryker/merchant-sales-return": "Added for forward compatibility.",
         "spryker/sales-order-threshold-gui": "Provides a controller action."
     }
 }

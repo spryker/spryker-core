@@ -50,6 +50,8 @@ class ReturnReader implements ReturnReaderInterface
     protected $returnExpanderPlugins;
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @var \Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnCollectionExpanderPluginInterface[]
      */
     protected $returnCollectionExpanderPlugins;

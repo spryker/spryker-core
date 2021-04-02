@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\MerchantSalesReturn\Business\Expander;
 
+use Generated\Shared\Transfer\MerchantOrderCollectionTransfer;
 use Generated\Shared\Transfer\MerchantOrderCriteriaTransfer;
-use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Generated\Shared\Transfer\ReturnTransfer;
 use Spryker\Zed\MerchantSalesReturn\Dependency\Facade\MerchantSalesReturnToMerchantSalesOrderFacadeInterface;
 
@@ -34,8 +34,8 @@ class MerchantReturnExpander implements MerchantReturnExpanderInterface
      */
     public function expand(ReturnTransfer $returnTransfer): ReturnTransfer
     {
-        $returnTransfer->setMerchantOrder(
-            $this->findMerchantOrder($returnTransfer)
+        $returnTransfer->setMerchantOrders(
+            $this->getMerchantOrderCollection($returnTransfer)->getMerchantOrders()
         );
 
         return $returnTransfer;
@@ -44,15 +44,21 @@ class MerchantReturnExpander implements MerchantReturnExpanderInterface
     /**
      * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantOrderTransfer|null
+     * @return \Generated\Shared\Transfer\MerchantOrderCollectionTransfer
      */
-    protected function findMerchantOrder(ReturnTransfer $returnTransfer): ?MerchantOrderTransfer
+    protected function getMerchantOrderCollection(ReturnTransfer $returnTransfer): MerchantOrderCollectionTransfer
     {
+        $orderItemUuids = [];
+
+        foreach ($returnTransfer->getReturnItems() as $returnItemTransfer) {
+            $orderItemUuids[] = $returnItemTransfer->getOrderItemOrFail()->getUuidOrFail();
+        }
+
         $merchantOrderCriteriaTransfer = (new MerchantOrderCriteriaTransfer())
-            ->setMerchantOrderReference($returnTransfer->getMerchantSalesOrderReference())
+            ->setOrderItemUuids($orderItemUuids)
             ->setWithMerchant(true);
 
         return $this->merchantSalesOrderFacade
-            ->findMerchantOrder($merchantOrderCriteriaTransfer);
+            ->getMerchantOrderCollection($merchantOrderCriteriaTransfer);
     }
 }
