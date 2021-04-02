@@ -87,14 +87,6 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
             return $checkoutResponseTransfer;
         }
 
-        if ($quoteTransfer->getOrderReference() !== null) {
-            $checkoutResponseTransfer->getSaveOrder()->setOrderReference(
-                $quoteTransfer->getOrderReference()
-            );
-
-            return $checkoutResponseTransfer;
-        }
-
         $quoteTransfer = $this->doPreSave($quoteTransfer, $checkoutResponseTransfer);
         $quoteTransfer = $this->doSaveOrder($quoteTransfer, $checkoutResponseTransfer);
 

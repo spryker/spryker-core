@@ -31,6 +31,9 @@ class SessionStorageStrategy implements StorageStrategyInterface
     {
         if (!$checkoutResponseTransfer->getIsSuccess()) {
             $quoteTransfer->setOrderReference(null);
+            $checkoutResponseTransfer->setSaveOrder(null);
+
+            return;
         }
 
         $quoteTransfer->setOrderReference(
