@@ -8,6 +8,8 @@
 namespace Spryker\Zed\MerchantProfile\Business\MerchantProfile;
 
 use Generated\Shared\Transfer\MerchantProfileTransfer;
+use Generated\Shared\Transfer\MerchantResponseTransfer;
+use Generated\Shared\Transfer\MerchantTransfer;
 
 interface MerchantProfileWriterInterface
 {
@@ -24,4 +26,11 @@ interface MerchantProfileWriterInterface
      * @return \Generated\Shared\Transfer\MerchantProfileTransfer
      */
     public function update(MerchantProfileTransfer $merchantProfileTransfer): MerchantProfileTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantResponseTransfer
+     */
+    public function postUpdateMerchant(MerchantTransfer $merchantTransfer): MerchantResponseTransfer;
 }

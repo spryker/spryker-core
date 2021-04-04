@@ -10,6 +10,8 @@ namespace Spryker\Zed\MerchantProfile\Business;
 use Generated\Shared\Transfer\MerchantProfileCollectionTransfer;
 use Generated\Shared\Transfer\MerchantProfileCriteriaFilterTransfer;
 use Generated\Shared\Transfer\MerchantProfileTransfer;
+use Generated\Shared\Transfer\MerchantResponseTransfer;
+use Generated\Shared\Transfer\MerchantTransfer;
 
 interface MerchantProfileFacadeInterface
 {
@@ -66,4 +68,18 @@ interface MerchantProfileFacadeInterface
      * @return \Generated\Shared\Transfer\MerchantProfileCollectionTransfer
      */
     public function find(MerchantProfileCriteriaFilterTransfer $merchantProfileCriteriaFilterTransfer): MerchantProfileCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Saves merchant profile after the merchant is updated.
+     * - Does not save merchant profile if MerchantTransfer.merchantProfile is not set.
+     * - Creates a new merchant profile if MerchantTransfer.merchantProfile.idMerchantProfile is not set.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantResponseTransfer
+     */
+    public function postUpdateMerchant(MerchantTransfer $merchantTransfer): MerchantResponseTransfer;
 }
