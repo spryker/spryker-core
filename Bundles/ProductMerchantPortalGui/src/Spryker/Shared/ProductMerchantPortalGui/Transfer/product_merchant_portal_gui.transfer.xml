@@ -122,8 +122,10 @@
     </transfer>
 
     <transfer name="MerchantProductCriteria">
+        <property name="idMerchant" type="int"/>
         <property name="idProductAbstract" type="int"/>
         <property name="merchantIds" type="int[]" singular="idMerchant"/>
+        <property name="productConcreteIds" type="int[]" singular="idProductConcrete"/>
     </transfer>
 
     <transfer name="MerchantProduct">
@@ -245,6 +247,42 @@
 
     <transfer name="GuiTableEditableButton">
         <property name="title" type="string"/>
+    </transfer>
+
+    <transfer name="ProductTableCriteria">
+        <property name="filterIsActive" type="bool"/>
+        <property name="filterValidity" type="CriteriaRangeFilter"/>
+        <property name="searchTerm" type="string"/>
+        <property name="locale" type="Locale"/>
+        <property name="idMerchant" type="int"/>
+        <property name="idProductAbstract" type="int"/>
+        <property name="page" type="int"/>
+        <property name="pageSize" type="int"/>
+        <property name="orderBy" type="string"/>
+        <property name="orderDirection" type="string"/>
+    </transfer>
+
+    <transfer name="CriteriaRangeFilter">
+        <property name="from" type="string"/>
+        <property name="to" type="string"/>
+    </transfer>
+
+    <transfer name="ProductConcreteCollection">
+        <property name="products" type="ProductConcrete[]" singular="product"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="ProductConcrete">
+        <property name="localizedAttributes" type="LocalizedAttributes[]" singular="localizedAttributes"/>
+        <property name="attributes" type="array" singular="attribute"/>
+        <property name="sku" type="string"/>
+        <property name="name" type="string"/>
+        <property name="imageSets" type="ProductImageSet[]" singular="imageSet"/>
+        <property name="isActive" type="bool"/>
+        <property name="validTo" type="string"/>
+        <property name="validFrom" type="string"/>
+        <property name="fkProductAbstract" type="int"/>
+        <property name="idProductConcrete" type="int"/>
     </transfer>
 
 </transfers>

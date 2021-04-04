@@ -11,6 +11,8 @@ use Generated\Shared\Transfer\MerchantSwitchRequestTransfer;
 use Generated\Shared\Transfer\MerchantSwitchResponseTransfer;
 use Generated\Shared\Transfer\SingleMerchantQuoteValidationRequestTransfer;
 use Generated\Shared\Transfer\SingleMerchantQuoteValidationResponseTransfer;
+use Generated\Shared\Transfer\ValidationResponseTransfer;
+use Generated\Shared\Transfer\WishlistTransfer;
 
 interface MerchantSwitcherFacadeInterface
 {
@@ -58,4 +60,35 @@ interface MerchantSwitcherFacadeInterface
     public function validateMerchantInQuoteItems(
         SingleMerchantQuoteValidationRequestTransfer $singleMerchantQuoteValidationRequestTransfer
     ): SingleMerchantQuoteValidationResponseTransfer;
+
+    /**
+     * Specification:
+     * - Finds product offer substitution for items in wishlist depending on the provided merchant reference.
+     * - Changes `WishlistItem::productOfferReference` transfer property to reference of the product offer from merchant `MerchantSwitcherRequestTransfer::merchantReference`.
+     * - Changes WishlistItem.merchantReference transfer property to the value of MerchantSwitchRequestTransfer.merchantReference.
+     * - Requires MerchantSwitchRequestTransfer.wishlist.
+     * - Requires MerchantSwitchRequestTransfer.merchantReference.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantSwitchRequestTransfer $merchantSwitchRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantSwitchResponseTransfer
+     */
+    public function switchMerchantInWishlistItems(
+        MerchantSwitchRequestTransfer $merchantSwitchRequestTransfer
+    ): MerchantSwitchResponseTransfer;
+
+    /**
+     * Specification:
+     * - Validates that all items in the wishlist have the requested merchant reference.
+     * - Returns `ValidationResponseTransfer` transfer object that contains a list of errors in case of a failed validation.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
+     *
+     * @return \Generated\Shared\Transfer\ValidationResponseTransfer
+     */
+    public function validateWishlistItems(WishlistTransfer $wishlistTransfer): ValidationResponseTransfer;
 }

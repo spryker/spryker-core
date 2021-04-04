@@ -20,4 +20,8 @@
         <property name="template" type="string"/>
     </transfer>
 
+    <transfer name="UserPasswordResetRequest">
+        <property name="email" type="string"/>
+    </transfer>
+
 </transfers>

@@ -14,6 +14,9 @@ use Spryker\Zed\PriceProductOfferDataImport\Business\DataSet\PriceProductOfferDa
 
 class PriceProductStoreWriterStep implements DataImportStepInterface
 {
+    protected const VALUE_NET = PriceProductOfferDataSetInterface::VALUE_NET;
+    protected const VALUE_GROSS = PriceProductOfferDataSetInterface::VALUE_GROSS;
+
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
@@ -35,8 +38,8 @@ class PriceProductStoreWriterStep implements DataImportStepInterface
             ->filterByFkStore($dataSet[PriceProductOfferDataSetInterface::FK_STORE])
             ->filterByFkCurrency($dataSet[PriceProductOfferDataSetInterface::FK_CURRENCY])
             ->filterByFkPriceProduct($dataSet[PriceProductOfferDataSetInterface::FK_PRICE_PRODUCT])
-            ->filterByNetPrice((int)$dataSet[PriceProductOfferDataSetInterface::VALUE_NET])
-            ->filterByGrossPrice((int)$dataSet[PriceProductOfferDataSetInterface::VALUE_GROSS])
+            ->filterByNetPrice((int)$dataSet[static::VALUE_NET])
+            ->filterByGrossPrice((int)$dataSet[static::VALUE_GROSS])
             ->findOneOrCreate();
 
         $priceProductStoreEntity->setPriceData($dataSet[PriceProductOfferDataSetInterface::KEY_PRICE_DATA]);
