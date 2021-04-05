@@ -4,9 +4,7 @@ import { ConcreteProductGeneratorDataService } from './concrete-product-generato
 
 @Injectable()
 export class ConcreteProductNameGeneratorService implements IdGenerator {
-    constructor(
-        private concreteProductGeneratorData: ConcreteProductGeneratorDataService,
-    ) {}
+    constructor(private concreteProductGeneratorData: ConcreteProductGeneratorDataService) {}
 
     generate(): string {
         return this.concreteProductGeneratorData.getAbstractName();

@@ -8,37 +8,35 @@ import { ConcreteProductGeneratorDataService } from '../../services/concrete-pro
 const mockName = 'Name';
 const mockAttributes = [
     {
-        title: "name1",
-        value: "value1",
+        title: 'name1',
+        value: 'value1',
         values: [
             {
-                title: "name11",
-                value: "value11"
+                title: 'name11',
+                value: 'value11',
             },
             {
-                title: "name12",
-                value: "value12"
-            }
-        ]
+                title: 'name12',
+                value: 'value12',
+            },
+        ],
     },
     {
-        title: "name2",
-        value: "value2",
+        title: 'name2',
+        value: 'value2',
         values: [
             {
-                title: "name21",
-                value: "value21"
-            }
-        ]
-    }
+                title: 'name21',
+                value: 'value21',
+            },
+        ],
+    },
 ];
 
 @Component({
     selector: 'spy-test',
     template: `
-        <mp-concrete-products-preview
-            [name]="name"
-            [attributes]="attributes">
+        <mp-concrete-products-preview [name]="name" [attributes]="attributes">
             <span total-text>to be created</span>
             <span auto-sku-text>Autogenerate SKUs</span>
             <span auto-name-text>Same Name as Abstract Product</span>
@@ -47,7 +45,7 @@ const mockAttributes = [
             <span col-name-name>Name default</span>
             <span no-data-text>No concretes created yet</span>
         </mp-concrete-products-preview>
-    `
+    `,
 })
 class TestComponent {
     name: string;
@@ -76,13 +74,9 @@ describe('ConcreteProductsPreviewComponent', () => {
         component.attributes = [];
         fixture.detectChanges();
 
-        const noDataElement = fixture.debugElement.query(
-            By.css('.mp-concrete-products-preview__no-data'),
-        );
+        const noDataElement = fixture.debugElement.query(By.css('.mp-concrete-products-preview__no-data'));
 
-        const noDataText = fixture.debugElement.query(
-            By.css('.mp-concrete-products-preview__no-data [no-data-text]'),
-        );
+        const noDataText = fixture.debugElement.query(By.css('.mp-concrete-products-preview__no-data [no-data-text]'));
 
         expect(noDataElement).toBeTruthy();
         expect(noDataText.nativeElement.textContent).toBe('No concretes created yet');
@@ -92,9 +86,7 @@ describe('ConcreteProductsPreviewComponent', () => {
         component.attributes = mockAttributes;
         fixture.detectChanges();
 
-        const headerChips = fixture.debugElement.query(
-            By.css('.mp-concrete-products-preview__header spy-chips'),
-        );
+        const headerChips = fixture.debugElement.query(By.css('.mp-concrete-products-preview__header spy-chips'));
         const headerChipsTotalText = fixture.debugElement.query(
             By.css('.mp-concrete-products-preview__header spy-chips [total-text]'),
         );
@@ -170,9 +162,7 @@ describe('ConcreteProductsPreviewComponent', () => {
         component.attributes = mockAttributes;
         fixture.detectChanges();
 
-        const cdkVirtualScrollViewport = fixture.debugElement.query(
-            By.css('cdk-virtual-scroll-viewport'),
-        );
+        const cdkVirtualScrollViewport = fixture.debugElement.query(By.css('cdk-virtual-scroll-viewport'));
 
         expect(cdkVirtualScrollViewport).toBeTruthy();
     });
@@ -222,9 +212,7 @@ describe('ConcreteProductsPreviewComponent', () => {
         component.name = mockName;
         fixture.detectChanges();
 
-        const hiddenInput = fixture.debugElement.query(
-            By.css('input[type=hidden]'),
-        );
+        const hiddenInput = fixture.debugElement.query(By.css('input[type=hidden]'));
 
         expect(hiddenInput).toBeTruthy();
     });

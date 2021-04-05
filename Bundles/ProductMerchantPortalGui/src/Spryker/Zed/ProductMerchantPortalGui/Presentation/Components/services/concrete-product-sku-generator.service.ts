@@ -4,9 +4,7 @@ import { ConcreteProductGeneratorDataService } from './concrete-product-generato
 
 @Injectable()
 export class ConcreteProductSkuGeneratorService implements IdGenerator {
-    constructor(
-        private concreteProductGeneratorData: ConcreteProductGeneratorDataService,
-    ) {}
+    constructor(private concreteProductGeneratorData: ConcreteProductGeneratorDataService) {}
 
     generate(index?: number, prevId?: string): string {
         const abstractSku = this.concreteProductGeneratorData.getAbstractSku();

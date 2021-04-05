@@ -9,13 +9,16 @@
     </div>
 
     <div class="mp-product-attributes-selector__content">
-        <div class="mp-product-attributes-selector__content-row"
-             *ngFor="let attribute of selectedAttributes; let i = index">
+        <div
+            class="mp-product-attributes-selector__content-row"
+            *ngFor="let attribute of selectedAttributes; let i = index"
+        >
             <div class="mp-product-attributes-selector__content-row-name">
                 <spy-select
                     [options]="attributes"
                     [value]="attribute?.value"
-                    (valueChange)="superAttributeChange($event, i)">
+                    (valueChange)="superAttributeChange($event, i)"
+                >
                 </spy-select>
             </div>
             <div class="mp-product-attributes-selector__content-row-values-name">
@@ -23,28 +26,27 @@
                     [options]="getAttributes(i)"
                     (valueChange)="attributesChange($event, i, attribute)"
                     multiple
-                    class="mp-product-attributes-selector__content-row-values-name-select">
+                    class="mp-product-attributes-selector__content-row-values-name-select"
+                >
                 </spy-select>
                 <spy-button
                     variant="link"
                     *ngIf="selectedAttributes.length > 1"
                     (click)="delete(i)"
-                    class="mp-product-attributes-selector__content-row-button">
-                    <spy-icon
-                        [name]="deleteIcon"
-                        class="mp-product-attributes-selector__content-row-delete-icon">
+                    class="mp-product-attributes-selector__content-row-button"
+                >
+                    <spy-icon [name]="deleteIcon" class="mp-product-attributes-selector__content-row-delete-icon">
                     </spy-icon>
                 </spy-button>
             </div>
         </div>
 
-        <div *ngIf="selectedAttributes.length !== attributes.length"
-             class="mp-product-attributes-selector__button-add">
+        <div *ngIf="selectedAttributes.length !== attributes.length" class="mp-product-attributes-selector__button-add">
             <spy-button (click)="create()">
                 <ng-content select="[btn-attr-add-name]"></ng-content>
             </spy-button>
         </div>
 
-        <input *ngIf="name" type="hidden" [name]="name" [value]="selectedAttributes | json"/>
+        <input *ngIf="name" type="hidden" [name]="name" [value]="selectedAttributes | json" />
     </div>
 </div>

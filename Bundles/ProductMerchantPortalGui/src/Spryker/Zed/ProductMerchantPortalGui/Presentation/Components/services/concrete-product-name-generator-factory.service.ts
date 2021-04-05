@@ -8,7 +8,9 @@ export class ConcreteProductNameGeneratorFactoryService implements ConcreteProdu
     constructor(
         private injector: Injector,
         @Inject(ConcreteProductNameGeneratorProviderToken)
-        private concreteProductNameGeneratorProvider: InjectionTokenType<typeof ConcreteProductNameGeneratorProviderToken>,
+        private concreteProductNameGeneratorProvider: InjectionTokenType<
+            typeof ConcreteProductNameGeneratorProviderToken
+        >,
     ) {}
 
     create(): InjectionTokenType<typeof ConcreteProductNameGeneratorToken> {

@@ -3,7 +3,7 @@ import {
     ConcreteProductNameGeneratorProviderToken,
     ConcreteProductNameGeneratorToken,
     ConcreteProductSkuGeneratorProviderToken,
-    ConcreteProductSkuGeneratorToken
+    ConcreteProductSkuGeneratorToken,
 } from '../../services/tokens';
 import { ConcreteProductGeneratorDataService } from '../../services/concrete-product-generator-data.service';
 import { ConcreteProductSkuGeneratorService } from '../../services/concrete-product-sku-generator.service';
@@ -26,15 +26,15 @@ import { ConcreteProductGeneratorData } from '../../services/types';
             useValue: {
                 provide: ConcreteProductSkuGeneratorToken,
                 useClass: ConcreteProductSkuGeneratorService,
-            }
+            },
         },
         {
             provide: ConcreteProductNameGeneratorProviderToken,
             useValue: {
                 provide: ConcreteProductNameGeneratorToken,
                 useClass: ConcreteProductNameGeneratorService,
-            }
-        }
+            },
+        },
     ],
 })
 export class ConcreteProductGeneratorDataComponent implements ConcreteProductGeneratorData {

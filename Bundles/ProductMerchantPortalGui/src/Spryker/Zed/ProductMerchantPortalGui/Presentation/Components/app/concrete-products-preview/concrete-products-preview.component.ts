@@ -1,12 +1,14 @@
 import {
-    ChangeDetectionStrategy, ChangeDetectorRef,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
     Component,
     EventEmitter,
     Input,
     OnChanges,
     Output,
     QueryList,
-    SimpleChanges, ViewChild,
+    SimpleChanges,
+    ViewChild,
     ViewChildren,
     ViewEncapsulation,
 } from '@angular/core';
@@ -76,7 +78,7 @@ export class ConcreteProductsPreviewComponent implements OnChanges {
             return;
         }
 
-        this.attributeValues = this.attributes.map(item => item?.values).filter(item => item?.length);
+        this.attributeValues = this.attributes.map((item) => item?.values).filter((item) => item?.length);
 
         if (!this.attributeValues.length) {
             this.generatedProducts = [];
@@ -84,16 +86,19 @@ export class ConcreteProductsPreviewComponent implements OnChanges {
             return;
         }
 
-        this.generatedAttributeValues = this.attributeValues.reduce((accum, values) => {
-            return accum.flatMap(currentValue => values.map(value => [...currentValue, value]));
-        }, [[]]);
+        this.generatedAttributeValues = this.attributeValues.reduce(
+            (accum, values) => {
+                return accum.flatMap((currentValue) => values.map((value) => [...currentValue, value]));
+            },
+            [[]],
+        );
 
         this.generatedProducts = this.generatedAttributeValues.map((values) => {
             return {
                 name: '',
                 sku: '',
                 superAttributes: values,
-            }
+            };
         });
     }
 

@@ -6,12 +6,10 @@ import { By } from '@angular/platform-browser';
 @Component({
     selector: 'spy-test',
     template: `
-        <mp-concrete-product-generator-data
-            [abstractName]="abstractName"
-            [abstractSku]="abstractSku">
+        <mp-concrete-product-generator-data [abstractName]="abstractName" [abstractSku]="abstractSku">
             Content
         </mp-concrete-product-generator-data>
-    `
+    `,
 })
 class TestComponent {
     abstractSku: string;

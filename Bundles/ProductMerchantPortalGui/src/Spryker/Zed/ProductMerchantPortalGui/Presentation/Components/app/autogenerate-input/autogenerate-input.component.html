@@ -1,13 +1,6 @@
 <div class="mp-autogenerate-input__field">
-    <spy-input
-        [name]="name"
-        [(value)]="value"
-        [placeholder]="placeholder"
-        [disabled]="isAutogenerate">
-    </spy-input>
+    <spy-input [name]="name" [(value)]="value" [placeholder]="placeholder" [disabled]="isAutogenerate"> </spy-input>
 </div>
-<spy-checkbox
-    [(checked)]="isAutogenerate"
-    (checkedChange)="onCheckboxChange($event)">
+<spy-checkbox [(checked)]="isAutogenerate" (checkedChange)="onCheckboxChange($event)">
     <ng-content></ng-content>
 </spy-checkbox>

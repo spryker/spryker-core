@@ -6,42 +6,42 @@ import { ProductAttributesSelectorComponent } from './product-attributes-selecto
 const mockName = 'Name';
 const mockAttributes = [
     {
-        title: "name1",
-        value: "value1",
+        title: 'name1',
+        value: 'value1',
         values: [
             {
-                title: "name11",
-                value: "value11"
+                title: 'name11',
+                value: 'value11',
             },
             {
-                title: "name12",
-                value: "value12"
-            }
-        ]
+                title: 'name12',
+                value: 'value12',
+            },
+        ],
     },
     {
-        title: "name2",
-        value: "value2",
+        title: 'name2',
+        value: 'value2',
         values: [
             {
-                title: "name21",
-                value: "value21"
-            }
-        ]
-    }
+                title: 'name21',
+                value: 'value21',
+            },
+        ],
+    },
 ];
 
 const mockSelectedAttributes = [
     {
-        title: "name1",
-        value: "value1",
+        title: 'name1',
+        value: 'value1',
         values: [
             {
-                title: "name11",
-                value: "value11"
-            }
-        ]
-    }
+                title: 'name11',
+                value: 'value11',
+            },
+        ],
+    },
 ];
 
 @Component({
@@ -50,7 +50,8 @@ const mockSelectedAttributes = [
         <mp-product-attributes-selector
             [attributes]="attributes"
             [selectedAttributes]="selectedAttributes"
-            [name]="name">
+            [name]="name"
+        >
             <span col-attr-name>Super Attribute</span>
             <span col-attr-values-name>Values</span>
             <span btn-attr-add-name>Add</span>
@@ -153,9 +154,7 @@ describe('ProductAttributesSelectorComponent', () => {
         component.name = mockName;
         fixture.detectChanges();
 
-        const hiddenInput = fixture.debugElement.query(
-            By.css('input[type=hidden]'),
-        );
+        const hiddenInput = fixture.debugElement.query(By.css('input[type=hidden]'));
 
         expect(hiddenInput).toBeTruthy();
     });

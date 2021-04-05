@@ -3,9 +3,11 @@ import {
     Component,
     EventEmitter,
     Input,
-    OnChanges, OnInit,
-    Output, SimpleChanges,
-    ViewEncapsulation
+    OnChanges,
+    OnInit,
+    Output,
+    SimpleChanges,
+    ViewEncapsulation,
 } from '@angular/core';
 import { ProductAttribute, ProductAttributeValue } from './types';
 import { IconDeleteModule } from '../../icons';
@@ -43,7 +45,7 @@ export class ProductAttributesSelectorComponent implements OnChanges, OnInit {
             return {
                 ...accum,
                 [attribute.value]: attribute,
-            }
+            };
         }, {});
     }
 
@@ -65,12 +67,15 @@ export class ProductAttributesSelectorComponent implements OnChanges, OnInit {
     attributesChange(values: string[], index: number, selectedAttribute: ProductAttribute): void {
         const attribute = this.attributesObject[selectedAttribute.value];
         this.selectedAttributes = [...this.selectedAttributes];
-        this.selectedAttributes[index].values = attribute.values.filter(value => values.includes(value.value));
+        this.selectedAttributes[index].values = attribute.values.filter((value) => values.includes(value.value));
         this.selectedAttributesChange.emit(this.selectedAttributes);
     }
 
     disableSelectedAttributes(): void {
-        this.attributes = this.attributes.map(attr => ({ ...attr, isDisabled: this.selectedAttributes.some(selectedAttr => selectedAttr?.value === attr?.value) }));
+        this.attributes = this.attributes.map((attr) => ({
+            ...attr,
+            isDisabled: this.selectedAttributes.some((selectedAttr) => selectedAttr?.value === attr?.value),
+        }));
     }
 
     create(): void {
