@@ -53,13 +53,14 @@ class ProductConcreteEditFormDataProvider implements ProductConcreteEditFormData
     public function getData(int $idProductConcrete): array
     {
         $idMerchant = $this->merchantUserFacade->getCurrentMerchantUser()->getIdMerchantOrFail();
+        /** @var \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer */
         $productConcreteTransfer = $this->merchantProductFacade->findProductConcrete(
             (new MerchantProductCriteriaTransfer())->addIdMerchant($idMerchant)->addIdProductConcrete($idProductConcrete)
         );
 
         return [
             ProductConcreteEditForm::FIELD_PRODUCT_CONCRETE => $productConcreteTransfer,
-            ProductConcreteEditForm::FIELD_USE_ABSTRACT_PRODUCT_PRICES => false,
+            ProductConcreteEditForm::FIELD_USE_ABSTRACT_PRODUCT_PRICES => !(bool)$productConcreteTransfer->getPrices()->count(),
         ];
     }
 
