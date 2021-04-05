@@ -12,6 +12,7 @@ use Spryker\Zed\Cache\Business\Model\CacheClearer;
 use Spryker\Zed\Cache\CacheConfig;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\Finder\SplFileInfo;
 
 /**
  * Auto-generated group annotations
@@ -171,6 +172,132 @@ class CacheClearerTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testClearCodeBucketCacheEmptiesDirectories(): void
+    {
+        /**
+         * @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Cache\CacheConfig $configMock
+         */
+        $configMock = $this->getConfigMock([]);
+        $configMock
+            ->expects($this->once())
+            ->method('getCodeBucketCachePath')
+            ->will($this->returnValue(
+                sprintf('/path/to/cache/code-bucket-%s', 'DE')
+            ));
+
+        /**
+         * @var \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\Filesystem\Filesystem $fileSystemMock
+         */
+        $fileSystemMock = $this->getFileSystemMock();
+        $fileSystemMock
+            ->expects($this->once())
+            ->method('remove');
+
+        /**
+         * @return \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\Finder\SplFileInfo
+         */
+        $splFileInfoMock = $this->createMock(SplFileInfo::class);
+        $splFileInfoMock
+            ->method('getPath')
+            ->willReturn('/path/to/cache');
+
+        /**
+         * @var \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\Finder\Finder $finderMock
+         */
+        $finderMock = $this->getFinderMock();
+        $finderMock
+            ->expects($this->once())
+            ->method('directories')
+            ->will($this->returnSelf());
+        $finderMock
+            ->expects($this->exactly(2))
+            ->method('depth')
+            ->will($this->returnSelf());
+        $finderMock
+            ->expects($this->exactly(2))
+            ->method('in')
+            ->with($this->equalTo('/path/to/cache'))
+            ->will($this->returnSelf());
+        $finderMock
+            ->expects($this->once())
+            ->method('name')
+            ->with($this->equalTo('code-bucket-DE'))
+            ->will($this->returnSelf());
+        $finderMock
+            ->method('getIterator')
+            ->willReturnCallback(function () use ($splFileInfoMock) {
+                yield $splFileInfoMock;
+            });
+
+        $cacheClearer = new CacheClearer($configMock, $fileSystemMock, $finderMock);
+        $cacheClearer->clearCodeBucketCache();
+    }
+
+    /**
+     * @return void
+     */
+    public function testClearDefaultCodeBucketCacheEmptiesDirectories(): void
+    {
+        /**
+         * @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Cache\CacheConfig $configMock
+         */
+        $configMock = $this->getConfigMock([]);
+        $configMock
+            ->expects($this->once())
+            ->method('getDefaultCodeBucketCachePath')
+            ->will($this->returnValue('/path/to/cache/code-bucket'));
+
+        /**
+         * @var \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\Filesystem\Filesystem $fileSystemMock
+         */
+        $fileSystemMock = $this->getFileSystemMock();
+        $fileSystemMock
+            ->expects($this->once())
+            ->method('remove');
+
+        /**
+         * @return \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\Finder\SplFileInfo
+         */
+        $splFileInfoMock = $this->createMock(SplFileInfo::class);
+        $splFileInfoMock
+            ->method('getPath')
+            ->willReturn('/path/to/cache');
+
+        /**
+         * @var \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\Finder\Finder $finderMock
+         */
+        $finderMock = $this->getFinderMock();
+        $finderMock
+            ->expects($this->once())
+            ->method('directories')
+            ->will($this->returnSelf());
+        $finderMock
+            ->expects($this->exactly(2))
+            ->method('depth')
+            ->will($this->returnSelf());
+        $finderMock
+            ->expects($this->exactly(2))
+            ->method('in')
+            ->with($this->equalTo('/path/to/cache'))
+            ->will($this->returnSelf());
+        $finderMock
+            ->expects($this->once())
+            ->method('name')
+            ->with($this->equalTo('code-bucket'))
+            ->will($this->returnSelf());
+        $finderMock
+            ->method('getIterator')
+            ->willReturnCallback(function () use ($splFileInfoMock) {
+                yield $splFileInfoMock;
+            });
+
+        $cacheClearer = new CacheClearer($configMock, $fileSystemMock, $finderMock);
+        $cacheClearer->clearDefaultCodeBucketCache();
+    }
+
+    /**
      * @param string[] $stores
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Cache\CacheConfig
@@ -183,7 +310,7 @@ class CacheClearerTest extends Unit
             ->getMock();
 
         $mock
-            ->expects($this->once())
+            ->expects($this->any())
             ->method('getAllowedStores')
             ->will($this->returnValue($stores));
 
