@@ -10,9 +10,9 @@ namespace Spryker\Zed\CategoryGui\Communication\Table;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryTableMap;
 use Orm\Zed\Category\Persistence\SpyCategory;
 use Orm\Zed\Category\Persistence\SpyCategoryQuery;
-use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToLocaleFacadeInterface;
+use Spryker\Zed\CategoryGui\Persistence\CategoryGuiRepositoryInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
@@ -41,11 +41,20 @@ class CategoryTable extends AbstractTable
     protected $localeFacade;
 
     /**
-     * @param \Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToLocaleFacadeInterface $localeFacade
+     * @var \Spryker\Zed\CategoryGui\Persistence\CategoryGuiRepositoryInterface
      */
-    public function __construct(CategoryGuiToLocaleFacadeInterface $localeFacade)
-    {
+    protected $categoryGuiRepository;
+
+    /**
+     * @param \Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToLocaleFacadeInterface $localeFacade
+     * @param \Spryker\Zed\CategoryGui\Persistence\CategoryGuiRepositoryInterface $categoryGuiRepository
+     */
+    public function __construct(
+        CategoryGuiToLocaleFacadeInterface $localeFacade,
+        CategoryGuiRepositoryInterface $categoryGuiRepository
+    ) {
         $this->localeFacade = $localeFacade;
+        $this->categoryGuiRepository = $categoryGuiRepository;
     }
 
     /**
@@ -105,10 +114,15 @@ class CategoryTable extends AbstractTable
         $query = $this->prepareQuery($fkLocale);
         $queryResults = $this->runQuery($query, $config, true);
 
-        $categoryCollection = [];
-
+        $categoryIds = [];
         foreach ($queryResults as $categoryEntity) {
-            $categoryCollection[] = $this->generateItem($categoryEntity);
+            $categoryIds[] = $categoryEntity->getIdCategory();
+        }
+        $map = $this->categoryGuiRepository->getCategoryStoreNamesGroupedByCategoryId($categoryIds)->getCategoryStoreNames();
+
+        $categoryCollection = [];
+        foreach ($queryResults as $categoryEntity) {
+            $categoryCollection[] = $this->generateItem($categoryEntity, $map);
         }
 
         return $categoryCollection;
@@ -124,9 +138,6 @@ class CategoryTable extends AbstractTable
         $query = SpyCategoryQuery::create('sc')
             ->useAttributeQuery('attr', Criteria::LEFT_JOIN)
                 ->filterByFkLocale($fkLocale)
-            ->endUse()
-            ->useSpyCategoryStoreQuery('store', Criteria::LEFT_JOIN)
-                ->leftJoinSpyStore()
             ->endUse()
             ->leftJoinCategoryTemplate('tpl')
             ->leftJoinNode('node')
@@ -155,10 +166,11 @@ class CategoryTable extends AbstractTable
 
     /**
      * @param \Orm\Zed\Category\Persistence\SpyCategory $categoryEntity
+     * @param array $categoryStoreNamesGroupedByCategoryId
      *
      * @return array
      */
-    protected function generateItem(SpyCategory $categoryEntity): array
+    protected function generateItem(SpyCategory $categoryEntity, array $categoryStoreNamesGroupedByCategoryId): array
     {
         return [
             static::COL_CATEGORY_KEY => $categoryEntity->getCategoryKey(),
@@ -168,7 +180,7 @@ class CategoryTable extends AbstractTable
             static::COL_VISIBLE => $this->yesNoOutput($categoryEntity->getIsInMenu()),
             static::COL_SEARCHABLE => $this->yesNoOutput($categoryEntity->getIsSearchable()),
             static::COL_TEMPLATE => $categoryEntity->getVirtualColumn(static::COL_TEMPLATE),
-            static::COL_STORE_RELATION => $this->getStoreNames($categoryEntity->getSpyCategoryStoresJoinSpyStore()),
+            static::COL_STORE_RELATION => $this->getStoreNames($categoryEntity->getIdCategory(), $categoryStoreNamesGroupedByCategoryId),
             static::COL_ACTIONS => $this->generateActionsButton($categoryEntity),
         ];
     }
@@ -289,17 +301,22 @@ class CategoryTable extends AbstractTable
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Category\Persistence\SpyCategoryStore[] $spyCategoryStoreCollection
+     * @param int $idCategory
+     * @param array $categoryStoreNamesGroupedByCategoryId
      *
      * @return string
      */
-    protected function getStoreNames(ObjectCollection $spyCategoryStoreCollection): string
+    protected function getStoreNames(int $idCategory, array $categoryStoreNamesGroupedByCategoryId): string
     {
+        if (!array_key_exists($idCategory, $categoryStoreNamesGroupedByCategoryId)) {
+            return '';
+        }
+
         $storeNames = [];
-        foreach ($spyCategoryStoreCollection as $spyCategoryStore) {
+        foreach ($categoryStoreNamesGroupedByCategoryId[$idCategory] as $categoryStoreName) {
             $storeNames[] = sprintf(
                 '<span class="label label-info">%s</span>',
-                $spyCategoryStore->getSpyStore()->getName()
+                $categoryStoreName
             );
         }
 

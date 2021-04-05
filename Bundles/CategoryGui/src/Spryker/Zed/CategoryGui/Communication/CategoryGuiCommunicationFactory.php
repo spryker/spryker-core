@@ -12,6 +12,10 @@ use Spryker\Zed\CategoryGui\Communication\Table\CategoryTable;
 use Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToLocaleFacadeInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
+/**
+ * @method \Spryker\Zed\CategoryGui\CategoryGuiConfig getConfig()
+ * @method \Spryker\Zed\CategoryGui\Persistence\CategoryGuiRepositoryInterface getRepository()
+ */
 class CategoryGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
@@ -19,7 +23,10 @@ class CategoryGuiCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCategoryTable(): CategoryTable
     {
-        return new CategoryTable($this->getLocaleFacade());
+        return new CategoryTable(
+            $this->getLocaleFacade(),
+            $this->getRepository()
+        );
     }
 
     /**
