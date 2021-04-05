@@ -54,7 +54,7 @@ describe('AutogenerateInputComponent', () => {
     it('should render default content inside the <spy-checkbox> component', () => {
         const checkboxElem = fixture.debugElement.query(By.css('spy-checkbox'));
 
-        expect(checkboxElem.nativeElement.textContent).toBe('Content');
+        expect(checkboxElem.nativeElement.textContent).toContain('Content');
     });
 
     it('should change <spy-input> `disabled` property if `checkedChange` event of the <spy-checkbox> component has been called', () => {

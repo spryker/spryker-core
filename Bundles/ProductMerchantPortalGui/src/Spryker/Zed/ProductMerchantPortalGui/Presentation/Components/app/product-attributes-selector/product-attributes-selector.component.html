@@ -30,8 +30,9 @@
                     *ngIf="selectedAttributes.length > 1"
                     (click)="delete(i)"
                     class="mp-product-attributes-selector__content-row-button">
-                    <spy-icon [name]="deleteIcon"
-                              class="mp-product-attributes-selector__content-row-delete-icon">
+                    <spy-icon
+                        [name]="deleteIcon"
+                        class="mp-product-attributes-selector__content-row-delete-icon">
                     </spy-icon>
                 </spy-button>
             </div>

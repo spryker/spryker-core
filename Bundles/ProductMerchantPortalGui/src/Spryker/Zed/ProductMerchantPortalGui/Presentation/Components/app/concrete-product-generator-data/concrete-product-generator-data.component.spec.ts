@@ -36,12 +36,6 @@ describe('ConcreteProductGeneratorDataComponent', () => {
         component = fixture.componentInstance;
     });
 
-    it('should render default content inside component', () => {
-        const customElem = fixture.debugElement.query(By.css('span'));
-
-        expect(customElem.nativeElement.textContent).toContain('Content');
-    });
-
     it('`getAbstractName` method should return value from `@Input(abstractName)`', () => {
         const mockAbstractName = 'AbstractName';
 

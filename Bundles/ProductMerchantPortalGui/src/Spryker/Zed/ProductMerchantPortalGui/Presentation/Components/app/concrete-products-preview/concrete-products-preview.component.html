@@ -34,7 +34,7 @@
             </div>
 
             <cdk-virtual-scroll-viewport itemSize="10" class="mp-concrete-products-preview__table-list">
-                <div *cdkVirtualFor="let product of generatedProducts">
+                <div *cdkVirtualFor="let product of generatedProducts; let i = index;">
                     <div class="mp-concrete-products-preview__table-row">
                         <div class="mp-concrete-products-preview__table-row-attr">
                             <span *ngFor="let superAttribute of product.superAttributes; let isLast = last">
@@ -43,16 +43,27 @@
                             </span>
                         </div>
                         <div class="mp-concrete-products-preview__table-row-sku">
-                            <spy-input [value]="product.sku" #skuInputRef></spy-input>
+                            <spy-input
+                                [value]="product.sku"
+                                (valueChange)="skuChange($event, i)"
+                                #skuInputRef>
+                            </spy-input>
                         </div>
                         <div class="mp-concrete-products-preview__table-row-name">
-                            <spy-input [value]="product.name"
-                                       #nameInputRef
-                                       class="mp-concrete-products-preview__table-row-name-input">
+                            <spy-input
+                                [value]="product.name"
+                                (valueChange)="nameChange($event, i)"
+                                #nameInputRef
+                                class="mp-concrete-products-preview__table-row-name-input">
                             </spy-input>
-                            <spy-button variant="link" class="mp-concrete-products-preview__table-row-button">
-                                <spy-icon [name]="deleteIcon"
-                                          class="mp-concrete-products-preview__table-row-delete-icon">
+                            <spy-button
+                                variant="link"
+                                class="mp-concrete-products-preview__table-row-button"
+                                (click)="delete(i)"
+                            >
+                                <spy-icon
+                                    [name]="deleteIcon"
+                                    class="mp-concrete-products-preview__table-row-delete-icon">
                                 </spy-icon>
                             </spy-button>
                         </div>

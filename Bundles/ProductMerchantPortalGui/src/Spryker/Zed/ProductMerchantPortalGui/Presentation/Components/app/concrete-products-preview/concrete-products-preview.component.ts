@@ -116,4 +116,19 @@ export class ConcreteProductsPreviewComponent implements OnChanges {
             }
         });
     }
+
+    skuChange(value: string, index: number): void {
+        this.generatedProducts[index].sku = value;
+        this.generatedProductsChange.emit(this.generatedProducts);
+    }
+
+    nameChange(value: string, index: number): void {
+        this.generatedProducts[index].name = value;
+        this.generatedProductsChange.emit(this.generatedProducts);
+    }
+
+    delete(index: number): void {
+        this.generatedProducts = [...this.generatedProducts.filter((product, productIndex) => index !== productIndex)];
+        this.generatedProductsChange.emit(this.generatedProducts);
+    }
 }
