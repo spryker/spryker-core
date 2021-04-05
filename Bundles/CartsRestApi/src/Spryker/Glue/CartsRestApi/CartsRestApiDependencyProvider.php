@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\CartsRestApi;
 
+use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToCustomerClientBridge;
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToPersistentCartClientBridge;
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;

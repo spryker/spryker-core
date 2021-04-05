@@ -45,7 +45,7 @@ class CustomerCartsResourceRoutePlugin extends AbstractPlugin implements Resourc
      */
     public function getResourceType(): string
     {
-        return CartsRestApiConfig::RESOURCE_CUSTOMER_CARTS;
+        return CartsRestApiConfig::RESOURCE_CARTS;
     }
 
     /**
