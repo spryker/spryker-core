@@ -107,6 +107,10 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
     {
         $checkoutResponseTransfer = $this->createCheckoutResponseTransfer();
 
+        if ($quoteTransfer->getOrderConfirmed()) {
+            return $checkoutResponseTransfer->setIsSuccess(true);
+        }
+
         $checkoutResponseTransfer->setIsSuccess($this->checkPreConditions($quoteTransfer, $checkoutResponseTransfer));
 
         return $checkoutResponseTransfer;
