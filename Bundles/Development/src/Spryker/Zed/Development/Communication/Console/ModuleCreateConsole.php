@@ -65,6 +65,6 @@ class ModuleCreateConsole extends Console
 
         $this->getFacade()->createModule($module, $options);
 
-        return null;
+        return static::CODE_SUCCESS;
     }
 }
