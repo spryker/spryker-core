@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\CartsRestApi\CartsRestApiClientInterface;
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToCustomerClientInterface;
 use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface;
+use Spryker\Glue\CartsRestApi\Processor\Validator\CartsRestApiValidatorInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
@@ -35,21 +36,34 @@ class CartReader implements CartReaderInterface
     protected $customerExpanderPlugins;
 
     /**
+     * @var \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToCustomerClientInterface
+     */
+    protected $customerClient;
+
+    /**
+     * @var \Spryker\Glue\CartsRestApi\Processor\Validator\CartsRestApiValidatorInterface
+     */
+    protected $restApiValidator;
+
+    /**
      * @param \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface $cartRestResponseBuilder
      * @param \Spryker\Client\CartsRestApi\CartsRestApiClientInterface $cartsRestApiClient
      * @param \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\CustomerExpanderPluginInterface[] $customerExpanderPlugins
      * @param \Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToCustomerClientInterface $customerClient
+     * @param \Spryker\Glue\CartsRestApi\Processor\Validator\CartsRestApiValidatorInterface $restApiValidator
      */
     public function __construct(
         CartRestResponseBuilderInterface $cartRestResponseBuilder,
         CartsRestApiClientInterface $cartsRestApiClient,
         array $customerExpanderPlugins,
-        CartsRestApiToCustomerClientInterface $customerClient
+        CartsRestApiToCustomerClientInterface $customerClient,
+        CartsRestApiValidatorInterface $restApiValidator
     ) {
         $this->cartRestResponseBuilder = $cartRestResponseBuilder;
         $this->cartsRestApiClient = $cartsRestApiClient;
         $this->customerExpanderPlugins = $customerExpanderPlugins;
         $this->customerClient = $customerClient;
+        $this->restApiValidator = $restApiValidator;
     }
 
     /**
@@ -94,8 +108,12 @@ class CartReader implements CartReaderInterface
             return $this->readCurrentCustomerCarts($restRequest);
         }
 
+        if (!$this->restApiValidator->isSameCustomerReference($restRequest)) {
+            return $this->cartRestResponseBuilder->createCustomerUnauthorizedErrorResponse();
+        }
+
         $customerTransfer = (new CustomerTransfer())
-            ->setIdCustomer($parentResources['customers']->getId());
+            ->setIdCustomer((int)$parentResources['customers']->getId());
 
         $customer = $this->customerClient->findCustomerById($customerTransfer);
         if (!$customer) {
