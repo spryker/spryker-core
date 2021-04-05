@@ -57,7 +57,7 @@ class ProductConcreteOffersStorageMerchantPublishListenerTest extends AbstractSt
     /**
      * @return void
      */
-    public function testProductConcreteOffersStorageMerchantPublishListener(): void
+    public function testProductConcreteOffersStorageMerchantPublishListenerSaveCollectionByProductSkusSuccessfully(): void
     {
         $expectedCount = 1;
         $productOfferTransfer = $this->tester->createProductOffer($this->tester->getLocator()->store()->facade()->getCurrentStore());
@@ -77,7 +77,7 @@ class ProductConcreteOffersStorageMerchantPublishListenerTest extends AbstractSt
     /**
      * @return void
      */
-    public function testProductConcreteOffersStorageMerchantPublishListenerWithoutProductSkus(): void
+    public function testProductConcreteOffersStorageMerchantPublishListenerWithoutProductSkusDoesNotSaveAnyStorageEntity(): void
     {
         $expectedCount = 0;
         $merchantTransfer = $this->tester->haveMerchant();
