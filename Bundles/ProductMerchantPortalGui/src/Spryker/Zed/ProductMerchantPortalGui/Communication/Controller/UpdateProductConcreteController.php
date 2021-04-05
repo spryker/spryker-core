@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Controller;
 
 use ArrayObject;
 use Generated\Shared\Transfer\MerchantProductTransfer;
+use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductTableViewTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
@@ -90,6 +91,7 @@ class UpdateProductConcreteController extends UpdateProductController
     ): JsonResponse {
         /** @var \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer */
         $productConcreteTransfer = $productConcreteEditForm->getData()[ProductConcreteForm::BLOCK_PREFIX];
+
         $pricesValidationResponseTransfer = $this->getFactory()
             ->getPriceProductFacade()
             ->validatePrices($productConcreteTransfer->getPrices());
@@ -114,9 +116,13 @@ class UpdateProductConcreteController extends UpdateProductController
             }
 
             if ($productConcreteEditForm->getData()[ProductConcreteEditForm::FIELD_USE_ABSTRACT_PRODUCT_PRICES]) {
+                $priceProductCriteriaTransfer = (new PriceProductCriteriaTransfer())
+                    ->setIdProductConcrete($productConcreteTransfer->getIdProductConcreteOrFail());
+
                 $priceProductTransfers = $this->getFactory()->getPriceProductFacade()->findProductConcretePricesWithoutPriceExtraction(
                     $productConcreteTransfer->getIdProductConcreteOrFail(),
-                    $productConcreteTransfer->getFkProductAbstractOrFail()
+                    $productConcreteTransfer->getFkProductAbstractOrFail(),
+                    $priceProductCriteriaTransfer
                 );
                 foreach ($priceProductTransfers as $priceProductTransfer) {
                     $this->getFactory()->getPriceProductFacade()->removePriceProductDefaultForPriceProduct($priceProductTransfer);
