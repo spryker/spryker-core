@@ -39,9 +39,7 @@ describe('EditConcreteProductComponent', () => {
     });
 
     it('should render default projected title to the `.mp-edit-concrete-product__header` element', () => {
-        const projectedTitle = fixture.debugElement.query(
-            By.css('.mp-edit-concrete-product__header .projected-title'),
-        );
+        const projectedTitle = fixture.debugElement.query(By.css('.mp-edit-concrete-product__header .projected-title'));
 
         expect(projectedTitle.nativeElement.textContent).toBe('Name');
     });
