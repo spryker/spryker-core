@@ -10,21 +10,21 @@ namespace Spryker\Zed\MerchantSalesOrder\Business\Expander;
 use Generated\Shared\Transfer\MerchantOrderCollectionTransfer;
 use Generated\Shared\Transfer\MerchantOrderCriteriaTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Spryker\Zed\MerchantSalesOrder\Persistence\MerchantSalesOrderRepositoryInterface;
+use Spryker\Zed\MerchantSalesOrder\Business\Reader\MerchantSalesOrderReaderInterface;
 
 class OrderExpander implements OrderExpanderInterface
 {
     /**
-     * @var \Spryker\Zed\MerchantSalesOrder\Persistence\MerchantSalesOrderRepositoryInterface
+     * @var \Spryker\Zed\MerchantSalesOrder\Business\Reader\MerchantSalesOrderReaderInterface
      */
-    protected $merchantSalesOrderRepository;
+    protected $merchantSalesOrderReader;
 
     /**
-     * @param \Spryker\Zed\MerchantSalesOrder\Persistence\MerchantSalesOrderRepositoryInterface $merchantSalesOrderRepository
+     * @param \Spryker\Zed\MerchantSalesOrder\Business\Reader\MerchantSalesOrderReaderInterface $merchantSalesOrderReader
      */
-    public function __construct(MerchantSalesOrderRepositoryInterface $merchantSalesOrderRepository)
+    public function __construct(MerchantSalesOrderReaderInterface $merchantSalesOrderReader)
     {
-        $this->merchantSalesOrderRepository = $merchantSalesOrderRepository;
+        $this->merchantSalesOrderReader = $merchantSalesOrderReader;
     }
 
     /**
@@ -38,7 +38,7 @@ class OrderExpander implements OrderExpanderInterface
             ->setWithItems(true)
             ->setIdOrder($orderTransfer->getIdSalesOrder());
 
-        $merchantOrderCollectionTransfer = $this->merchantSalesOrderRepository->getMerchantOrderCollection(
+        $merchantOrderCollectionTransfer = $this->merchantSalesOrderReader->getMerchantOrderCollection(
             $merchantOrderCriteriaTransfer
         );
 

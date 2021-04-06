@@ -70,7 +70,7 @@ class MerchantSalesOrderBusinessFactory extends AbstractBusinessFactory
      */
     public function createOrderExpander(): OrderExpanderInterface
     {
-        return new OrderExpander($this->getRepository());
+        return new OrderExpander($this->createMerchantSalesOrderReader());
     }
 
     /**

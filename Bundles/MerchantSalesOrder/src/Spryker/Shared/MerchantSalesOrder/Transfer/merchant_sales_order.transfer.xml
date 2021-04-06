@@ -61,6 +61,7 @@
 
     <transfer name="MerchantCriteria">
         <property name="merchantReference" type="string"/>
+        <property name="merchantReferences" type="string[]" singular="merchantReference"/>
     </transfer>
 
     <transfer name="MerchantOrderCriteria">
@@ -140,6 +141,10 @@
 
     <transfer name="MerchantOrderItemCollection">
         <property name="merchantOrderItems" type="MerchantOrderItem[]" singular="merchantOrderItem"/>
+    </transfer>
+
+    <transfer name="MerchantCollection">
+        <property name="merchants" type="Merchant[]" singular="merchants"/>
     </transfer>
 
 </transfers>

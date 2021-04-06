@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantSalesOrder\Business\Reader;
 
+use Generated\Shared\Transfer\MerchantOrderCollectionTransfer;
 use Generated\Shared\Transfer\MerchantOrderCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
 
@@ -18,4 +19,13 @@ interface MerchantSalesOrderReaderInterface
      * @return \Generated\Shared\Transfer\MerchantOrderTransfer|null
      */
     public function findMerchantOrder(MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer): ?MerchantOrderTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantOrderCollectionTransfer
+     */
+    public function getMerchantOrderCollection(
+        MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer
+    ): MerchantOrderCollectionTransfer;
 }

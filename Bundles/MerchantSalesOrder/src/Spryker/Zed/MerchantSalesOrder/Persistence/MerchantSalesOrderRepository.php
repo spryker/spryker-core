@@ -79,10 +79,6 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
             $merchantOrderTransfers = $this->addMerchantOrderItemsToMerchantOrders($merchantOrderTransfers);
         }
 
-        if ($merchantOrderCriteriaTransfer->getWithMerchant()) {
-            $merchantOrderTransfers = $this->addMerchantToMerchantOrders($merchantOrderTransfers);
-        }
-
         return (new MerchantOrderCollectionTransfer())->setMerchantOrders(
             new ArrayObject(array_values($merchantOrderTransfers))
         );
@@ -429,42 +425,6 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
         }
 
         return $merchantSalesOrderItemQuery;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantOrderTransfer[] $merchantOrderTransfers
-     *
-     * @return \Generated\Shared\Transfer\MerchantOrderTransfer[]
-     */
-    protected function addMerchantToMerchantOrders(array $merchantOrderTransfers): array
-    {
-        $merchantReferences = [];
-
-        foreach ($merchantOrderTransfers as $merchantOrderTransfer) {
-            $merchantReferences[] = $merchantOrderTransfer->getMerchantReference();
-        }
-
-        $merchantCollection = $this->getMerchantsByMerchantReferences($merchantReferences);
-
-        return $this->getFactory()
-            ->createMerchantSalesOrderMapper()
-            ->mapMerchantCollectionToMerchantOrderTransfers($merchantCollection, $merchantOrderTransfers);
-    }
-
-    /**
-     * @phpstan-param array<int, string|null> $merchantReferences
-     *
-     * @param string[] $merchantReferences
-     *
-     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Merchant\Persistence\SpyMerchant[]
-     */
-    protected function getMerchantsByMerchantReferences(array $merchantReferences): ObjectCollection
-    {
-        $merchantSalesOrderItemQuery = $this->getFactory()->getMerchantQuery();
-
-        return $merchantSalesOrderItemQuery
-            ->filterByMerchantReference_In($merchantReferences)
-            ->find();
     }
 
     /**

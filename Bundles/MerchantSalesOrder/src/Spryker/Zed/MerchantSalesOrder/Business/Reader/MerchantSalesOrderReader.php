@@ -8,9 +8,12 @@
 namespace Spryker\Zed\MerchantSalesOrder\Business\Reader;
 
 use ArrayObject;
+use Generated\Shared\Transfer\MerchantCollectionTransfer;
 use Generated\Shared\Transfer\MerchantCriteriaTransfer;
+use Generated\Shared\Transfer\MerchantOrderCollectionTransfer;
 use Generated\Shared\Transfer\MerchantOrderCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
+use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\MerchantSalesOrder\Dependency\Facade\MerchantSalesOrderToMerchantFacadeInterface;
 use Spryker\Zed\MerchantSalesOrder\Dependency\Facade\MerchantSalesOrderToSalesFacadeInterface;
@@ -75,10 +78,6 @@ class MerchantSalesOrderReader implements MerchantSalesOrderReaderInterface
 
         if (!$merchantOrderTransfer) {
             return null;
-        }
-
-        if ($merchantOrderCriteriaTransfer->getWithMerchant()) {
-            $merchantOrderTransfer = $this->addMerchant($merchantOrderTransfer);
         }
 
         if ($merchantOrderCriteriaTransfer->getWithOrder()) {
@@ -149,23 +148,6 @@ class MerchantSalesOrderReader implements MerchantSalesOrderReaderInterface
 
     /**
      * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantOrderTransfer
-     */
-    protected function addMerchant(MerchantOrderTransfer $merchantOrderTransfer): MerchantOrderTransfer
-    {
-        $merchantCriteriaTransfer = (new MerchantCriteriaTransfer())
-            ->setMerchantReference($merchantOrderTransfer->getMerchantReferenceOrFail());
-
-        $merchantTransfer = $this->merchantFacade->findOne($merchantCriteriaTransfer);
-
-        $merchantOrderTransfer->setMerchant($merchantTransfer);
-
-        return $merchantOrderTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
      * @param \Generated\Shared\Transfer\MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantOrderTransfer
@@ -226,5 +208,87 @@ class MerchantSalesOrderReader implements MerchantSalesOrderReaderInterface
         $orderTransfer->setItems($orderItemTransfers);
 
         return $orderTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantOrderCollectionTransfer
+     */
+    public function getMerchantOrderCollection(
+        MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer
+    ): MerchantOrderCollectionTransfer {
+        $merchantOrderCollectionTransfer = $this->merchantSalesOrderRepository
+            ->getMerchantOrderCollection($merchantOrderCriteriaTransfer);
+
+        if ($merchantOrderCriteriaTransfer->getWithMerchant()) {
+            $merchantOrderCollectionTransfer = $this->addMerchantToMerchantOrders($merchantOrderCollectionTransfer);
+        }
+
+        return $merchantOrderCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantOrderCollectionTransfer $merchantOrderCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantOrderCollectionTransfer
+     */
+    protected function addMerchantToMerchantOrders(
+        MerchantOrderCollectionTransfer $merchantOrderCollectionTransfer
+    ): MerchantOrderCollectionTransfer {
+        $merchantReferences = [];
+
+        foreach ($merchantOrderCollectionTransfer->getMerchantOrders() as $merchantOrderTransfer) {
+            if ($merchantOrderTransfer->getMerchantReference() !== null) {
+                $merchantReferences[] = $merchantOrderTransfer->getMerchantReference();
+            }
+        }
+
+        $merchantCollectionTransfer = $this->getMerchantsByMerchantReferences($merchantReferences);
+
+        return $this->mapMerchantCollectionToMerchantOrderTransfers(
+            $merchantCollectionTransfer,
+            $merchantOrderCollectionTransfer
+        );
+    }
+
+    /**
+     * @phpstan-param array<string> $merchantReferences
+     *
+     * @param string[] $merchantReferences
+     *
+     * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
+     */
+    protected function getMerchantsByMerchantReferences(array $merchantReferences): MerchantCollectionTransfer
+    {
+        $merchantCriteriaTransfer = (new MerchantCriteriaTransfer())
+            ->setMerchantReferences($merchantReferences);
+
+        return $this->merchantFacade->get($merchantCriteriaTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantCollectionTransfer $merchantCollectionTransfer
+     * @param \Generated\Shared\Transfer\MerchantOrderCollectionTransfer $merchantOrderCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantOrderCollectionTransfer
+     */
+    public function mapMerchantCollectionToMerchantOrderTransfers(
+        MerchantCollectionTransfer $merchantCollectionTransfer,
+        MerchantOrderCollectionTransfer $merchantOrderCollectionTransfer
+    ): MerchantOrderCollectionTransfer {
+        $merchantTransfers = [];
+        foreach ($merchantCollectionTransfer->getMerchants() as $merchant) {
+            $merchantTransfers[$merchant->getMerchantReference()] = (new MerchantTransfer())
+                ->fromArray($merchant->toArray(), true);
+        }
+
+        foreach ($merchantOrderCollectionTransfer->getMerchantOrders() as $merchantOrderTransfer) {
+            if (isset($merchantTransfers[$merchantOrderTransfer->getMerchantReference()])) {
+                $merchantOrderTransfer->setMerchant($merchantTransfers[$merchantOrderTransfer->getMerchantReference()]);
+            }
+        }
+
+        return $merchantOrderCollectionTransfer;
     }
 }

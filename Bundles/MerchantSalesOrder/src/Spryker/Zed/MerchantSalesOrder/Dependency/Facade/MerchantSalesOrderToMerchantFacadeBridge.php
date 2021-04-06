@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\MerchantSalesOrder\Dependency\Facade;
 
+use Generated\Shared\Transfer\MerchantCollectionTransfer;
 use Generated\Shared\Transfer\MerchantCriteriaTransfer;
-use Generated\Shared\Transfer\MerchantTransfer;
 
 class MerchantSalesOrderToMerchantFacadeBridge implements MerchantSalesOrderToMerchantFacadeInterface
 {
@@ -28,10 +28,10 @@ class MerchantSalesOrderToMerchantFacadeBridge implements MerchantSalesOrderToMe
     /**
      * @param \Generated\Shared\Transfer\MerchantCriteriaTransfer $merchantCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantTransfer|null
+     * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
      */
-    public function findOne(MerchantCriteriaTransfer $merchantCriteriaTransfer): ?MerchantTransfer
+    public function get(MerchantCriteriaTransfer $merchantCriteriaTransfer): MerchantCollectionTransfer
     {
-        return $this->merchantFacade->findOne($merchantCriteriaTransfer);
+        return $this->merchantFacade->get($merchantCriteriaTransfer);
     }
 }
