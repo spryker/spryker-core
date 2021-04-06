@@ -40,7 +40,8 @@ class CategoryGuiRepository extends AbstractRepository implements CategoryGuiRep
         $categoryStoreNamesGroupedByIdCategory = [];
         foreach ($categoryStoreNames as $categoryStoreName) {
             $idCategory = $categoryStoreName[SpyCategoryTableMap::COL_ID_CATEGORY];
-            $categoryStoreNamesGroupedByIdCategory[$idCategory][] = $categoryStoreName[SpyStoreTableMap::COL_NAME];
+            $storeName = $categoryStoreName[SpyStoreTableMap::COL_NAME];
+            $categoryStoreNamesGroupedByIdCategory[$idCategory][] = $storeName;
         }
 
         return $categoryStoreNamesGroupedByIdCategory;
