@@ -27,8 +27,8 @@ use Symfony\Component\Finder\SplFileInfo;
  */
 class CacheClearerTest extends Unit
 {
-    public const TEST_DIRECTORY_NAME = 'path/to/cache/code-bucket-de/';
-    public const TEST_DEFAULT_DIRECTORY_NAME = 'path/to/cache/code-bucket/';
+    protected const TEST_DIRECTORY_NAME = 'path/to/cache/code-bucket-de/';
+    protected const TEST_DEFAULT_DIRECTORY_NAME = 'path/to/cache/code-bucket/';
 
     /**
      * @return void
@@ -177,56 +177,40 @@ class CacheClearerTest extends Unit
     /**
      * @return void
      */
-    public function testExecuteShouldDeleteCodeBucketDirectory(): void
+    public function testClearCodeBucketCacheRemovesDirectory(): void
     {
-        /**
-         * @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Cache\CacheConfig $configMock
-         */
+        //Arrange
         $configMock = $this->getCodeBucketConfigMock('getCodeBucketCachePath', $this->getTestCodeBucketDirectory());
-
-        /**
-         * @var \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\Finder\Finder $finderMock
-         */
         $finderMock = $this->getCodeBucketFinderMock($this->getTestCodeBucketDirectory());
-
-        /**
-         * @var \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\Filesystem\Filesystem $fileSystemMock
-         */
-        $fileSystemMock = new Filesystem();
+        $fileSystem = new Filesystem();
 
         $this->assertTrue(is_dir($this->getTestCodeBucketDirectory()));
 
-        $cacheClearer = new CacheClearer($configMock, $fileSystemMock, $finderMock);
+        //Act
+        $cacheClearer = new CacheClearer($configMock, $fileSystem, $finderMock);
         $cacheClearer->clearCodeBucketCache();
 
+        //Assert
         $this->assertFalse(is_dir($this->getTestCodeBucketDirectory()));
     }
 
     /**
      * @return void
      */
-    public function testExecuteShouldDeleteDefaultCodeBucketDirectory(): void
+    public function testClearDefaultCodeBucketCacheRemovesDirectory(): void
     {
-        /**
-         * @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Cache\CacheConfig $configMock
-         */
+        //Arrange
         $configMock = $this->getCodeBucketConfigMock('getDefaultCodeBucketCachePath', $this->getTestDefaultCodeBucketDirectory());
-
-        /**
-         * @var \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\Finder\Finder $finderMock
-         */
         $finderMock = $this->getCodeBucketFinderMock($this->getTestDefaultCodeBucketDirectory());
-
-        /**
-         * @var \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\Filesystem\Filesystem $fileSystemMock
-         */
-        $fileSystemMock = new Filesystem();
+        $fileSystem = new Filesystem();
 
         $this->assertTrue(is_dir($this->getTestDefaultCodeBucketDirectory()));
 
-        $cacheClearer = new CacheClearer($configMock, $fileSystemMock, $finderMock);
+        //Act
+        $cacheClearer = new CacheClearer($configMock, $fileSystem, $finderMock);
         $cacheClearer->clearDefaultCodeBucketCache();
 
+        //Assert
         $this->assertFalse(is_dir($this->getTestDefaultCodeBucketDirectory()));
     }
 
