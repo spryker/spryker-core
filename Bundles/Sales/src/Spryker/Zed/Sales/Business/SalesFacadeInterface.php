@@ -420,4 +420,21 @@ interface SalesFacadeInterface
      * @return \Generated\Shared\Transfer\OrderCancelResponseTransfer
      */
     public function cancelOrder(OrderCancelRequestTransfer $orderCancelRequestTransfer): OrderCancelResponseTransfer;
+
+    /**
+     * Specifications:
+     * - Checks QuoteTransfer::orderReference.
+     * - Checks QuoteTransfer::orderConfirmed.
+     * - Sets CheckoutResponseTransfer::saveOrder::orderReference with QuoteTransfer::orderReference.
+     * - Sets "isSuccess=false" in CheckoutResponseTransfer if order was failed.
+     * - Returns false if order already in database and false otherwise.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return bool
+     */
+    public function checkConfirmedOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool;
 }

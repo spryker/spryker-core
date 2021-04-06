@@ -3,7 +3,6 @@
 namespace Spryker\Zed\Sales\Communication\Plugin\Checkout;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
-use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutPreConditionPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -21,50 +20,6 @@ class OrderConfirmedCheckoutPreConditionPlugin extends AbstractPlugin implements
      */
     public function checkCondition(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
-        if ($this->successfulOrderExistsInDatabase($quoteTransfer)) {
-            $checkoutResponseTransfer->getSaveOrder()->setOrderReference(
-                $quoteTransfer->getOrderReference()
-            );
-
-            return false;
-        }
-
-        if ($this->failedOrderExistsInDatabase($quoteTransfer)) {
-            $checkoutResponseTransfer->getSaveOrder()->setOrderReference(
-                $quoteTransfer->getOrderReference()
-            );
-            $checkoutResponseTransfer->setIsSuccess(false);
-
-            return false;
-        }
-
-        return true;
+        return $this->getFacade()->checkConfirmedOrder($quoteTransfer, $checkoutResponseTransfer);
     }
-
-    protected function successfulOrderExistsInDatabase(QuoteTransfer $quoteTransfer)
-    {
-        return
-            $quoteTransfer->getOrderReference() &&
-            $quoteTransfer->getOrderConfirmed() === true &&
-            $this->orderExistsInDatabase($quoteTransfer);
-    }
-
-    protected function failedOrderExistsInDatabase(QuoteTransfer $quoteTransfer)
-    {
-        return
-            $quoteTransfer->getOrderReference() &&
-            $quoteTransfer->getOrderConfirmed() === false &&
-            $this->orderExistsInDatabase($quoteTransfer);
-    }
-
-    protected function orderExistsInDatabase(QuoteTransfer $quoteTransfer): bool
-    {
-        $orderTransfer = (new OrderTransfer())
-            ->setOrderReference($quoteTransfer->getOrderReference())
-            ->setCustomerReference($quoteTransfer->getCustomer()->getCustomerReference());
-        $orderTransfer = $this->getFacade()->getCustomerOrderByOrderReference($orderTransfer);
-
-        return (bool) $orderTransfer->getIdSalesOrder();
-    }
-
 }
