@@ -61,4 +61,30 @@ class UserEditCest
         $i->seeResponseCodeIs(302);
         $i->amOnPage('/user');
     }
+
+    /**
+     * @param \SprykerTest\Zed\User\UserCommunicationTester $i
+     *
+     * @return void
+     */
+    public function editUserWithInvalidEmailAndFail(UserCommunicationTester $i): void
+    {
+        $formData = [
+            UserTransfer::FIRST_NAME => 'John',
+            UserTransfer::LAST_NAME => 'Doe',
+            UserTransfer::USERNAME => '><h1>r</h1>@tim-philipp-schaefers.de',
+            UserTransfer::PASSWORD => 'qwerty',
+        ];
+
+        $userTransfer = $i->haveUser($formData);
+
+        $i->amOnPage('/user/edit/update?id-user=' . $userTransfer->getIdUser());
+
+        $formData[UserTransfer::FIRST_NAME] = 'Jack';
+
+        $i->submitForm(['name' => 'user'], $formData);
+        $i->expect('I am back on the form page');
+        $i->seeCurrentUrlEquals('/user/edit/update?id-user=' . $userTransfer->getIdUser());
+        $i->seeInSource('This value is not a valid email address.');
+    }
 }
