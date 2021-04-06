@@ -79,9 +79,6 @@ class UserEditCest
         $userTransfer = $i->haveUser($formData);
 
         $i->amOnPage('/user/edit/update?id-user=' . $userTransfer->getIdUser());
-
-        $formData[UserTransfer::FIRST_NAME] = 'Jack';
-
         $i->submitForm(['name' => 'user'], $formData);
         $i->expect('I am back on the form page');
         $i->seeCurrentUrlEquals('/user/edit/update?id-user=' . $userTransfer->getIdUser());
