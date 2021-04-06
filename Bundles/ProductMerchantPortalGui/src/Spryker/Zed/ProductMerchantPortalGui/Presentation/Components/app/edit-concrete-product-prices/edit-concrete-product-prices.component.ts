@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
 import { TableConfig } from '@spryker/table';
+import { ToBoolean } from '@spryker/utils';
 
 @Component({
     selector: 'mp-edit-concrete-product-prices',
@@ -13,6 +14,9 @@ export class EditConcreteProductPricesComponent {
     @Input() tableConfig: TableConfig;
     @Input() tableId?: string;
     @Input() checkboxName?: string;
+    @Input() @ToBoolean() isTableHidden: boolean;
 
-    isTableHidden = false;
+    handleCheckChange(checked: boolean): void {
+        this.isTableHidden = checked;
+    }
 }

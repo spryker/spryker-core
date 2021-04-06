@@ -32,25 +32,31 @@ describe('EditConcreteProductComponent', () => {
         component = fixture.componentInstance;
     });
 
-    it('should render default projected title to the `.mp-edit-concrete-product__heading-col` element', () => {
+    it('should render <spy-headline> component', () => {
+        const headlineElem = fixture.debugElement.query(By.css('spy-headline'));
+
+        expect(headlineElem).toBeTruthy();
+    });
+
+    it('should render default projected title to the `.mp-edit-concrete-product__header` element', () => {
         const projectedTitle = fixture.debugElement.query(
-            By.css('.mp-edit-concrete-product__heading-col .projected-title'),
+            By.css('.mp-edit-concrete-product__header .projected-title'),
         );
 
         expect(projectedTitle.nativeElement.textContent).toBe('Name');
     });
 
-    it('should render default projected sub-title to the `.mp-edit-concrete-product__heading-col` element', () => {
+    it('should render default projected sub-title to the `.mp-edit-concrete-product__header` element', () => {
         const projectedSubTitle = fixture.debugElement.query(
-            By.css('.mp-edit-concrete-product__heading-col .projected-sub-title'),
+            By.css('.mp-edit-concrete-product__header .projected-sub-title'),
         );
 
         expect(projectedSubTitle.nativeElement.textContent).toBe('Sku');
     });
 
-    it('should render default projected action to the `.mp-edit-concrete-product__heading-col` element', () => {
+    it('should render default projected action to the `.mp-edit-concrete-product__header` element', () => {
         const projectedAction = fixture.debugElement.query(
-            By.css('.mp-edit-concrete-product__heading-col .projected-action'),
+            By.css('.mp-edit-concrete-product__header .projected-action'),
         );
 
         expect(projectedAction.nativeElement.textContent).toBe('Button');

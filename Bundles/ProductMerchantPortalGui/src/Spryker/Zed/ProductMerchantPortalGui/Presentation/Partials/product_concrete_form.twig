@@ -132,10 +132,11 @@
                     {% do productConcreteFormFields.validTo.setRendered %}
                 {% endblock %}
 
-                {% block priceCard %}
+                {% block prices %}
                     <web-spy-card cloak spy-title="{{ 'Price' | trans }}" class="{{ editConcreteProductClass }}__card">
                         <web-mp-edit-concrete-product-prices
                             cloak
+                            is-table-hidden="{{ form.useAbstractProductPrices.vars.checked | json_encode }}"
                             checkbox-name="{{ form.useAbstractProductPrices.vars.full_name }}"
                             table-id="web-mp-edit-concrete-product-prices"
                             table-config='{{ guiTableConfiguration(priceProductConcreteTableConfiguration) }}'>

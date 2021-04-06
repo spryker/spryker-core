@@ -71,10 +71,29 @@ describe('EditConcreteProductPricesComponent', () => {
         expect(tableComponent.properties.tableId).toEqual(mockTableId);
     });
 
+    it('should bind @Input(isTableHidden) to `checked` of <spy-checkbox> component', () => {
+        const checkboxComponent = fixture.debugElement.query(By.css('spy-checkbox'));
+
+        component.isTableHidden = true;
+        fixture.detectChanges();
+
+        expect(checkboxComponent.properties.checked).toEqual(true);
+    });
+
+    it('should bind @Input(isTableHidden) to `hidden` of <spy-table> component', () => {
+        const tableComponent = fixture.debugElement.query(By.css('spy-table'));
+
+        component.isTableHidden = true;
+        fixture.detectChanges();
+
+        expect(tableComponent.properties.hidden).toEqual(true);
+    });
+
     it('should change `hidden` property of <spy-table> by <spy-checkbox> change', () => {
         const tableComponent = fixture.debugElement.query(By.css('spy-table'));
         const checkboxComponent = fixture.debugElement.query(By.css('spy-checkbox'));
 
+        component.isTableHidden = false;
         fixture.detectChanges();
 
         expect(tableComponent.properties.hidden).toBe(false);

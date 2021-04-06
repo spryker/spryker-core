@@ -1,5 +1,5 @@
 <spy-card class="mp-edit-concrete-product-prices__card">
-    <spy-checkbox [(checked)]="isTableHidden" [name]="checkboxName">
+    <spy-checkbox [checked]="isTableHidden" [name]="checkboxName" (checkedChange)="handleCheckChange($event)">
         <ng-content select="[toggle-text]"></ng-content>
     </spy-checkbox>
 </spy-card>
