@@ -30,7 +30,7 @@ class DetailController extends AbstractController
      */
     protected const ROUTE_RETURN_LIST = '/merchant-sales-return-merchant-user-gui';
 
-    protected const MESSAGE_RETURN_NOT_FOUND_ERROR = 'Requested return with ID "%id%" was not found.';
+    protected const MESSAGE_RETURN_NOT_FOUND_ERROR = 'Requested return with ID %id% was not found.';
     protected const MESSAGE_PARAM_ID = '%id%';
     protected const DEFAULT_LABEL_CLASS = 'label-default';
     protected const MESSAGE_MERCHANT_NOT_FOUND_ERROR = 'Merchant for current user not found.';

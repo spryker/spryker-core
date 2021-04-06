@@ -41,7 +41,7 @@ Quantity,Menge
 "Unit Price",Stückpreis
 "Item total","Artikel Gesamt"
 State,Zustand
-"Trigger event","Auslösendes Ereignis"
+"Trigger event","Event auslösen"
 "Variant Details",Variantendetails
 "Show less","Weniger anzeigen"
 "Show more","Mehr anzeigen"
@@ -56,3 +56,4 @@ Sku,SKU
 "Shipment has not been updated.","Die Lieferung wurde nicht aktualisiert."
 "Shipment #%d not found.","Die Lieferung #%d wurde nicht gefunden."
 "New Shipment for Order: %idMerchantSalesOrder%","Neue Lieferung für Bestellung: %idMerchantSalesOrder%"
+Return,Retoure

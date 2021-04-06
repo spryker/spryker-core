@@ -33,7 +33,7 @@ Reason,Grund
 "Back to Order","Zurück zur Bestellung"
 "General information","Allgemeine Information"
 "Order reference",Bestellnummer
-"Select Items to Return","Artikeln zum Zurückgeben auswählen"
+"Select Items to Return","Artikel zum Zurückgeben auswählen"
 Product,Produkt
 Quantity,Anzahl
 Price,Preis
@@ -47,7 +47,7 @@ Customer,Kunde
 Name,Name
 Email,E-Mail
 "Retured Items","Retournierte Artikel"
-"Trigger all matching states","Alle passenden Stati anstoßen"
+"Trigger all matching states","Alle passenden Status anstoßen"
 Total,Gesamt
 "Back to Returns","Zurück zu Retouren"
 "Print Return Slip","Retourenbeleg drucken"
