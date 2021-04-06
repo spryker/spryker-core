@@ -7,16 +7,15 @@
 
 namespace Spryker\Zed\CategoryGui\Persistence;
 
-use Generated\Shared\Transfer\CategoryStoreNameCollectionTransfer;
-
 interface CategoryGuiRepositoryInterface
 {
     /**
      * @module Category
+     * @module Store
      *
      * @param int[] $categoryIds
      *
-     * @return \Generated\Shared\Transfer\CategoryStoreNameCollectionTransfer
+     * @return array
      */
-    public function getCategoryStoreNamesGroupedByCategoryId(array $categoryIds): CategoryStoreNameCollectionTransfer;
+    public function getCategoryStoreNamesGroupedByCategoryId(array $categoryIds): array;
 }

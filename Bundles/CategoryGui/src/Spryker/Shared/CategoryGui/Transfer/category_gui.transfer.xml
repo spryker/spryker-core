@@ -7,8 +7,4 @@
         <property name="idLocale" type="int"/>
     </transfer>
 
-    <transfer name="CategoryStoreNameCollection">
-        <property name="categoryStoreNames" type="array" singular="categoryStoreName"/>
-    </transfer>
-
 </transfers>

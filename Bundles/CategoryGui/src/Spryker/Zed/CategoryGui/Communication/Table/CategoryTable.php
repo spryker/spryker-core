@@ -10,6 +10,7 @@ namespace Spryker\Zed\CategoryGui\Communication\Table;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryTableMap;
 use Orm\Zed\Category\Persistence\SpyCategory;
 use Orm\Zed\Category\Persistence\SpyCategoryQuery;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToLocaleFacadeInterface;
 use Spryker\Zed\CategoryGui\Persistence\CategoryGuiRepositoryInterface;
@@ -114,15 +115,12 @@ class CategoryTable extends AbstractTable
         $query = $this->prepareQuery($fkLocale);
         $queryResults = $this->runQuery($query, $config, true);
 
-        $categoryIds = [];
-        foreach ($queryResults as $categoryEntity) {
-            $categoryIds[] = $categoryEntity->getIdCategory();
-        }
-        $map = $this->categoryGuiRepository->getCategoryStoreNamesGroupedByCategoryId($categoryIds)->getCategoryStoreNames();
+        $categoryIds = $this->extractCategoryIds($queryResults);
+        $categoryStoreNamesGroupedByCategoryId = $this->categoryGuiRepository->getCategoryStoreNamesGroupedByCategoryId($categoryIds);
 
         $categoryCollection = [];
         foreach ($queryResults as $categoryEntity) {
-            $categoryCollection[] = $this->generateItem($categoryEntity, $map);
+            $categoryCollection[] = $this->generateItem($categoryEntity, $categoryStoreNamesGroupedByCategoryId);
         }
 
         return $categoryCollection;
@@ -313,13 +311,28 @@ class CategoryTable extends AbstractTable
         }
 
         $storeNames = [];
-        foreach ($categoryStoreNamesGroupedByCategoryId[$idCategory] as $categoryStoreName) {
+        foreach ($categoryStoreNamesGroupedByCategoryId[$idCategory] as $storeName) {
             $storeNames[] = sprintf(
                 '<span class="label label-info">%s</span>',
-                $categoryStoreName
+                $storeName
             );
         }
 
         return implode(' ', $storeNames);
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection $queryResults
+     *
+     * @return array
+     */
+    private function extractCategoryIds(ObjectCollection $queryResults): array
+    {
+        $categoryIds = [];
+        foreach ($queryResults as $categoryEntity) {
+            $categoryIds[] = $categoryEntity->getIdCategory();
+        }
+
+        return $categoryIds;
     }
 }

@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\CategoryGui\Persistence;
 
-use Generated\Shared\Transfer\CategoryStoreNameCollectionTransfer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryTableMap;
 use Orm\Zed\Store\Persistence\Map\SpyStoreTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -19,12 +18,13 @@ class CategoryGuiRepository extends AbstractRepository implements CategoryGuiRep
 {
     /**
      * @module Category
+     * @module Store
      *
      * @param int[] $categoryIds
      *
-     * @return \Generated\Shared\Transfer\CategoryStoreNameCollectionTransfer
+     * @return array
      */
-    public function getCategoryStoreNamesGroupedByCategoryId(array $categoryIds): CategoryStoreNameCollectionTransfer
+    public function getCategoryStoreNamesGroupedByCategoryId(array $categoryIds): array
     {
         $categoryStoreNames = $this->getFactory()->getCategoryPropelQuery()
             ->filterByIdCategory_In($categoryIds)
@@ -43,6 +43,6 @@ class CategoryGuiRepository extends AbstractRepository implements CategoryGuiRep
                 = $categoryStoreName[SpyStoreTableMap::COL_NAME];
         }
 
-        return (new CategoryStoreNameCollectionTransfer())->setCategoryStoreNames($categoryStoreNamesGroupedByCategoryId);
+        return $categoryStoreNamesGroupedByCategoryId;
     }
 }
