@@ -11,20 +11,14 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
-use Spryker\Zed\Checkout\Business\StorageStrategy\DatabaseStorageStrategy;
-use Spryker\Zed\Checkout\Business\StorageStrategy\SessionStorageStrategy;
-use Spryker\Zed\Checkout\Business\StorageStrategy\StorageStrategyInterface;
-use Spryker\Zed\Checkout\Business\StorageStrategy\StorageStrategyProvider;
 use Spryker\Zed\Checkout\Business\Workflow\CheckoutWorkflow;
 use Spryker\Zed\Checkout\Dependency\Facade\CheckoutToOmsFacadeBridge;
-use Spryker\Zed\Checkout\Dependency\Facade\CheckoutToQuoteFacadeBridge;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutDoSaveOrderInterface;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPostSaveHookInterface;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface;
 use Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutPreConditionPluginInterface;
 use Spryker\Zed\Oms\Business\OmsFacade;
-use Spryker\Zed\Quote\Business\QuoteFacade;
 use SprykerTest\Zed\Checkout\Business\Fixture\MockPostHook;
 use SprykerTest\Zed\Checkout\Business\Fixture\ResponseManipulatorPreCondition;
 
@@ -41,8 +35,6 @@ use SprykerTest\Zed\Checkout\Business\Fixture\ResponseManipulatorPreCondition;
  */
 class CheckoutWorkflowTest extends Unit
 {
-    protected const TEST_ORDER_REFERENCE = 'TEST';
-
     /**
      * @return void
      */
@@ -52,7 +44,6 @@ class CheckoutWorkflowTest extends Unit
         $checkoutResponse = $this->createBaseCheckoutResponse();
         $checkoutWorkflow = new CheckoutWorkflow(
             new CheckoutToOmsFacadeBridge(new OmsFacade()),
-            $this->provideQuoteStorageStrategy(),
             [],
             [],
             [new MockPostHook($checkoutResponse)]
@@ -82,7 +73,6 @@ class CheckoutWorkflowTest extends Unit
         $checkoutResponse = $this->createBaseCheckoutResponse();
         $checkoutWorkflow = new CheckoutWorkflow(
             new CheckoutToOmsFacadeBridge(new OmsFacade()),
-            $this->provideQuoteStorageStrategy(),
             [$mockBuilder],
             [],
             [new MockPostHook($checkoutResponse)]
@@ -116,7 +106,6 @@ class CheckoutWorkflowTest extends Unit
 
         $checkoutWorkflow = new CheckoutWorkflow(
             new CheckoutToOmsFacadeBridge(new OmsFacade()),
-            $this->provideQuoteStorageStrategy(),
             [$mock1, $mock2],
             [],
             []
@@ -149,7 +138,6 @@ class CheckoutWorkflowTest extends Unit
 
         $checkoutWorkflow = new CheckoutWorkflow(
             new CheckoutToOmsFacadeBridge(new OmsFacade()),
-            $this->provideQuoteStorageStrategy(),
             [],
             [$mock1, $mock2],
             [],
@@ -186,7 +174,6 @@ class CheckoutWorkflowTest extends Unit
 
         $checkoutWorkflow = new CheckoutWorkflow(
             new CheckoutToOmsFacadeBridge(new OmsFacade()),
-            $this->provideQuoteStorageStrategy(),
             [],
             [$mock1, $mock2, $mock3],
             [],
@@ -218,7 +205,6 @@ class CheckoutWorkflowTest extends Unit
 
         $checkoutWorkflow = new CheckoutWorkflow(
             new CheckoutToOmsFacadeBridge(new OmsFacade()),
-            $this->provideQuoteStorageStrategy(),
             [],
             [],
             [$mock1, $mock2]
@@ -243,7 +229,6 @@ class CheckoutWorkflowTest extends Unit
 
         $checkoutWorkflow = new CheckoutWorkflow(
             new CheckoutToOmsFacadeBridge(new OmsFacade()),
-            $this->provideQuoteStorageStrategy(),
             [$mock1],
             [$mock2],
             []
@@ -271,7 +256,6 @@ class CheckoutWorkflowTest extends Unit
 
         $checkoutWorkflow = new CheckoutWorkflow(
             new CheckoutToOmsFacadeBridge(new OmsFacade()),
-            $this->provideQuoteStorageStrategy(),
             [],
             [],
             [$mock]
@@ -284,29 +268,6 @@ class CheckoutWorkflowTest extends Unit
     }
 
     /**
-     * @return void
-     */
-    public function testOrderIsNotDuplicatedIfOrderReferenceIsInQuote(): void
-    {
-        // Arange
-        $quoteTransfer = new QuoteTransfer();
-        $quoteTransfer->setOrderReference(static::TEST_ORDER_REFERENCE);
-        $checkoutWorkflow = new CheckoutWorkflow(
-            new CheckoutToOmsFacadeBridge(new OmsFacade()),
-            $this->provideQuoteStorageStrategy(),
-            [],
-            [],
-            []
-        );
-
-        // Act
-        $checkoutResponseTransfer = $checkoutWorkflow->placeOrder($quoteTransfer);
-
-        // Assert
-        $this->assertEquals(static::TEST_ORDER_REFERENCE, $checkoutResponseTransfer->getSaveOrder()->getOrderReference());
-    }
-
-    /**
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
     protected function createBaseCheckoutResponse(): CheckoutResponseTransfer
@@ -316,23 +277,5 @@ class CheckoutWorkflowTest extends Unit
         $checkoutResponseTransfer->setSaveOrder(new SaveOrderTransfer());
 
         return $checkoutResponseTransfer;
-    }
-
-    /**
-     * @return \Spryker\Zed\Checkout\Business\StorageStrategy\StorageStrategyInterface
-     */
-    protected function provideQuoteStorageStrategy(): StorageStrategyInterface
-    {
-        return (new StorageStrategyProvider(
-            new CheckoutToQuoteFacadeBridge(
-                new CheckoutToQuoteFacadeBridge(new QuoteFacade())
-            ),
-            [
-                new SessionStorageStrategy(),
-                new DatabaseStorageStrategy(
-                    new CheckoutToQuoteFacadeBridge(new QuoteFacade())
-                ),
-            ]
-        ))->provideStorage();
     }
 }

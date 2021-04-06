@@ -10,7 +10,6 @@ namespace Spryker\Zed\Checkout\Business\Workflow;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
-use Spryker\Zed\Checkout\Business\StorageStrategy\StorageStrategyInterface;
 use Spryker\Zed\Checkout\Dependency\Facade\CheckoutToOmsFacadeInterface;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreSaveHookInterface;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface as ObsoleteCheckoutSaveOrderInterface;
@@ -52,7 +51,6 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
 
     /**
      * @param \Spryker\Zed\Checkout\Dependency\Facade\CheckoutToOmsFacadeInterface $omsFacade
-     * @param \Spryker\Zed\Checkout\Business\StorageStrategy\StorageStrategyInterface $storageStrategy
      * @param \Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutPreConditionPluginInterface[] $preConditionStack
      * @param \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface[]|\Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutDoSaveOrderInterface[] $saveOrderStack
      * @param \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPostSaveHookInterface[] $postSaveHookStack
@@ -60,7 +58,6 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
      */
     public function __construct(
         CheckoutToOmsFacadeInterface $omsFacade,
-        StorageStrategyInterface $storageStrategy,
         array $preConditionStack,
         array $saveOrderStack,
         array $postSaveHookStack,
@@ -92,8 +89,6 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
 
         $this->runStateMachine($checkoutResponseTransfer->getSaveOrder());
         $this->doPostSave($quoteTransfer, $checkoutResponseTransfer);
-
-        $this->storageStrategy->updateQuote($quoteTransfer, $checkoutResponseTransfer);
 
         return $checkoutResponseTransfer;
     }
