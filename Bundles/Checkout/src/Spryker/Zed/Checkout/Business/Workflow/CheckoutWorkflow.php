@@ -25,11 +25,6 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
     protected $omsFacade;
 
     /**
-     * @var \Spryker\Zed\Checkout\Business\StorageStrategy\StorageStrategyInterface
-     */
-    protected $storageStrategy;
-
-    /**
      * @var \Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutPreConditionPluginInterface[]
      */
     protected $preConditionStack;
@@ -64,7 +59,6 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
         array $preSave = []
     ) {
         $this->omsFacade = $omsFacade;
-        $this->storageStrategy = $storageStrategy;
         $this->preConditionStack = $preConditionStack;
         $this->postSaveHookStack = $postSaveHookStack;
         $this->saveOrderStack = $saveOrderStack;
