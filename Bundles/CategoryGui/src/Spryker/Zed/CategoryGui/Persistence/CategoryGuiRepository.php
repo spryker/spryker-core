@@ -22,7 +22,7 @@ class CategoryGuiRepository extends AbstractRepository implements CategoryGuiRep
      *
      * @param int[] $categoryIds
      *
-     * @return array
+     * @return string[][]
      */
     public function getCategoryStoreNamesGroupedByCategoryId(array $categoryIds): array
     {
@@ -39,8 +39,8 @@ class CategoryGuiRepository extends AbstractRepository implements CategoryGuiRep
 
         $categoryStoreNamesGroupedByCategoryId = [];
         foreach ($categoryStoreNames as $categoryStoreName) {
-            $categoryStoreNamesGroupedByCategoryId[$categoryStoreName[SpyCategoryTableMap::COL_ID_CATEGORY]][]
-                = $categoryStoreName[SpyStoreTableMap::COL_NAME];
+            $CategoryId = $categoryStoreName[SpyCategoryTableMap::COL_ID_CATEGORY];
+            $categoryStoreNamesGroupedByCategoryId[$CategoryId][] = $categoryStoreName[SpyStoreTableMap::COL_NAME];
         }
 
         return $categoryStoreNamesGroupedByCategoryId;

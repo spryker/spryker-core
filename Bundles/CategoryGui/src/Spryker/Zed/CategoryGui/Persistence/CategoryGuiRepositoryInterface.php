@@ -15,7 +15,7 @@ interface CategoryGuiRepositoryInterface
      *
      * @param int[] $categoryIds
      *
-     * @return array
+     * @return string[][]
      */
     public function getCategoryStoreNamesGroupedByCategoryId(array $categoryIds): array;
 }

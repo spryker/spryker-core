@@ -113,6 +113,7 @@ class CategoryTable extends AbstractTable
     {
         $fkLocale = $this->localeFacade->getCurrentLocale()->getIdLocale();
         $query = $this->prepareQuery($fkLocale);
+
         $queryResults = $this->runQuery($query, $config, true);
 
         $categoryIds = $this->extractCategoryIds($queryResults);
@@ -164,7 +165,7 @@ class CategoryTable extends AbstractTable
 
     /**
      * @param \Orm\Zed\Category\Persistence\SpyCategory $categoryEntity
-     * @param array $categoryStoreNamesGroupedByCategoryId
+     * @param string[][] $categoryStoreNamesGroupedByCategoryId
      *
      * @return array
      */
@@ -300,7 +301,7 @@ class CategoryTable extends AbstractTable
 
     /**
      * @param int $idCategory
-     * @param array $categoryStoreNamesGroupedByCategoryId
+     * @param string[][] $categoryStoreNamesGroupedByCategoryId
      *
      * @return string
      */
@@ -324,11 +325,12 @@ class CategoryTable extends AbstractTable
     /**
      * @param \Propel\Runtime\Collection\ObjectCollection $queryResults
      *
-     * @return array
+     * @return int[]
      */
     private function extractCategoryIds(ObjectCollection $queryResults): array
     {
         $categoryIds = [];
+        /** @var \Orm\Zed\Category\Persistence\SpyCategory $categoryEntity */
         foreach ($queryResults as $categoryEntity) {
             $categoryIds[] = $categoryEntity->getIdCategory();
         }
