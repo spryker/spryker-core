@@ -30,18 +30,26 @@ class HttpRequestValidator implements HttpRequestValidatorInterface
     protected $config;
 
     /**
+     * @var \Spryker\Glue\GlueApplication\Rest\Request\HeadersHttpRequestValidatorInterface
+     */
+    protected $headersHttpRequestValidator;
+
+    /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ValidateHttpRequestPluginInterface[] $requestValidatorPlugins
      * @param \Spryker\Glue\GlueApplication\Rest\ResourceRouteLoaderInterface $resourceRouteLoader
      * @param \Spryker\Glue\GlueApplication\GlueApplicationConfig $config
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\HeadersHttpRequestValidatorInterface $headersHttpRequestValidator
      */
     public function __construct(
         array $requestValidatorPlugins,
         ResourceRouteLoaderInterface $resourceRouteLoader,
-        GlueApplicationConfig $config
+        GlueApplicationConfig $config,
+        HeadersHttpRequestValidatorInterface $headersHttpRequestValidator
     ) {
         $this->requestValidatorPlugins = $requestValidatorPlugins;
         $this->resourceRouteLoader = $resourceRouteLoader;
         $this->config = $config;
+        $this->headersHttpRequestValidator = $headersHttpRequestValidator;
     }
 
     /**
@@ -51,6 +59,14 @@ class HttpRequestValidator implements HttpRequestValidatorInterface
      */
     public function validate(Request $request): ?RestErrorMessageTransfer
     {
+        if ($this->config->getValidateRequestHeaders()) {
+            $restErrorMessageTransfer = $this->headersHttpRequestValidator->validate($request);
+
+            if ($restErrorMessageTransfer) {
+                return $restErrorMessageTransfer;
+            }
+        }
+
         foreach ($this->requestValidatorPlugins as $requestValidatorPlugin) {
             $restErrorMessageTransfer = $requestValidatorPlugin->validate($request);
             if (!$restErrorMessageTransfer) {

@@ -239,7 +239,12 @@ class GlueApplicationFactory extends AbstractFactory
      */
     public function createRestHttpRequestValidator(): HttpRequestValidatorInterface
     {
-        return new HttpRequestValidator($this->getValidateRequestPlugins(), $this->createRestResourceRouteLoader(), $this->getConfig());
+        return new HttpRequestValidator(
+            $this->getValidateRequestPlugins(),
+            $this->createRestResourceRouteLoader(),
+            $this->getConfig(),
+            $this->createHeadersHttpRequestValidator()
+        );
     }
 
     /**

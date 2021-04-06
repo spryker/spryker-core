@@ -9,7 +9,6 @@ namespace Spryker\Glue\GlueApplication;
 
 use Spryker\Glue\GlueApplication\Dependency\Client\GlueApplicationToStoreClientBridge;
 use Spryker\Glue\GlueApplication\Dependency\Service\GlueApplicationToUtilEncodingServiceBridge;
-use Spryker\Glue\GlueApplication\Plugin\GlueApplication\HeadersValidateHttpRequestPlugin;
 use Spryker\Glue\GlueApplication\Rest\Collection\ResourceRelationshipCollection;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipCollectionInterface;
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
@@ -329,9 +328,7 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function getValidateHttpRequestPlugins(): array
     {
-        return [
-            new HeadersValidateHttpRequestPlugin(),
-        ];
+        return [];
     }
 
     /**
