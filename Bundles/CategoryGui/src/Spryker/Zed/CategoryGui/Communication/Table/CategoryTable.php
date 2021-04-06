@@ -117,11 +117,11 @@ class CategoryTable extends AbstractTable
         $queryResults = $this->runQuery($query, $config, true);
 
         $categoryIds = $this->extractCategoryIds($queryResults);
-        $categoryStoreNamesGroupedByCategoryId = $this->categoryGuiRepository->getCategoryStoreNamesGroupedByCategoryId($categoryIds);
+        $categoryStoreNamesGroupedByIdCategory = $this->categoryGuiRepository->getCategoryStoreNamesGroupedByIdCategory($categoryIds);
 
         $categoryCollection = [];
         foreach ($queryResults as $categoryEntity) {
-            $categoryCollection[] = $this->generateItem($categoryEntity, $categoryStoreNamesGroupedByCategoryId);
+            $categoryCollection[] = $this->generateItem($categoryEntity, $categoryStoreNamesGroupedByIdCategory);
         }
 
         return $categoryCollection;
@@ -165,11 +165,11 @@ class CategoryTable extends AbstractTable
 
     /**
      * @param \Orm\Zed\Category\Persistence\SpyCategory $categoryEntity
-     * @param string[][] $categoryStoreNamesGroupedByCategoryId
+     * @param string[][] $categoryStoreNamesGroupedByIdCategory
      *
      * @return array
      */
-    protected function generateItem(SpyCategory $categoryEntity, array $categoryStoreNamesGroupedByCategoryId): array
+    protected function generateItem(SpyCategory $categoryEntity, array $categoryStoreNamesGroupedByIdCategory): array
     {
         return [
             static::COL_CATEGORY_KEY => $categoryEntity->getCategoryKey(),
@@ -179,7 +179,7 @@ class CategoryTable extends AbstractTable
             static::COL_VISIBLE => $this->yesNoOutput($categoryEntity->getIsInMenu()),
             static::COL_SEARCHABLE => $this->yesNoOutput($categoryEntity->getIsSearchable()),
             static::COL_TEMPLATE => $categoryEntity->getVirtualColumn(static::COL_TEMPLATE),
-            static::COL_STORE_RELATION => $this->getStoreNames($categoryEntity->getIdCategory(), $categoryStoreNamesGroupedByCategoryId),
+            static::COL_STORE_RELATION => $this->getStoreNames($categoryEntity->getIdCategory(), $categoryStoreNamesGroupedByIdCategory),
             static::COL_ACTIONS => $this->generateActionsButton($categoryEntity),
         ];
     }
@@ -301,18 +301,18 @@ class CategoryTable extends AbstractTable
 
     /**
      * @param int $idCategory
-     * @param string[][] $categoryStoreNamesGroupedByCategoryId
+     * @param string[][] $categoryStoreNamesGroupedByIdCategory
      *
      * @return string
      */
-    protected function getStoreNames(int $idCategory, array $categoryStoreNamesGroupedByCategoryId): string
+    protected function getStoreNames(int $idCategory, array $categoryStoreNamesGroupedByIdCategory): string
     {
-        if (!array_key_exists($idCategory, $categoryStoreNamesGroupedByCategoryId)) {
+        if (!array_key_exists($idCategory, $categoryStoreNamesGroupedByIdCategory)) {
             return '';
         }
 
         $storeNames = [];
-        foreach ($categoryStoreNamesGroupedByCategoryId[$idCategory] as $storeName) {
+        foreach ($categoryStoreNamesGroupedByIdCategory[$idCategory] as $storeName) {
             $storeNames[] = sprintf(
                 '<span class="label label-info">%s</span>',
                 $storeName

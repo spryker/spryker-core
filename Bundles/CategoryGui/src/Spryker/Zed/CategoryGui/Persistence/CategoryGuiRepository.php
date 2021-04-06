@@ -24,7 +24,7 @@ class CategoryGuiRepository extends AbstractRepository implements CategoryGuiRep
      *
      * @return string[][]
      */
-    public function getCategoryStoreNamesGroupedByCategoryId(array $categoryIds): array
+    public function getCategoryStoreNamesGroupedByIdCategory(array $categoryIds): array
     {
         $categoryStoreNames = $this->getFactory()->getCategoryPropelQuery()
             ->filterByIdCategory_In($categoryIds)
@@ -37,12 +37,12 @@ class CategoryGuiRepository extends AbstractRepository implements CategoryGuiRep
                 SpyCategoryTableMap::COL_ID_CATEGORY,
             ])->find()->toArray();
 
-        $categoryStoreNamesGroupedByCategoryId = [];
+        $categoryStoreNamesGroupedByIdCategory = [];
         foreach ($categoryStoreNames as $categoryStoreName) {
-            $CategoryId = $categoryStoreName[SpyCategoryTableMap::COL_ID_CATEGORY];
-            $categoryStoreNamesGroupedByCategoryId[$CategoryId][] = $categoryStoreName[SpyStoreTableMap::COL_NAME];
+            $idCategory = $categoryStoreName[SpyCategoryTableMap::COL_ID_CATEGORY];
+            $categoryStoreNamesGroupedByIdCategory[$idCategory][] = $categoryStoreName[SpyStoreTableMap::COL_NAME];
         }
 
-        return $categoryStoreNamesGroupedByCategoryId;
+        return $categoryStoreNamesGroupedByIdCategory;
     }
 }
