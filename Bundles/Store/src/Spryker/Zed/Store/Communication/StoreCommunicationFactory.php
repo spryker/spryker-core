@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Store\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\Store\Communication\Form\DataProvider\StoreRelationDropdownDataProvider;
+use Spryker\Zed\Store\Communication\Form\DataProvider\StoreRelationDropdownDataProviderInterface;
 use Spryker\Zed\Store\Communication\Form\DataProvider\StoreRelationToggleDataProvider;
 use Spryker\Zed\Store\Communication\Form\Transformer\IdStoresDataTransformer;
 
@@ -33,5 +35,13 @@ class StoreCommunicationFactory extends AbstractCommunicationFactory
     public function createStoreRelationToggleDataProvider()
     {
         return new StoreRelationToggleDataProvider($this->getFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\Store\Communication\Form\DataProvider\StoreRelationDropdownDataProviderInterface
+     */
+    public function createStoreRelationDropdownDataProvider(): StoreRelationDropdownDataProviderInterface
+    {
+        return new StoreRelationDropdownDataProvider($this->getFacade());
     }
 }
