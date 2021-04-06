@@ -192,7 +192,7 @@ class CacheClearerTest extends Unit
         /**
          * @var \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\Filesystem\Filesystem $fileSystemMock
          */
-        $fileSystemMock = $this->getCodeBucketFileSystemMock();
+        $fileSystemMock = new Filesystem();
 
         $this->assertTrue(is_dir($this->getTestCodeBucketDirectory()));
 
@@ -220,7 +220,7 @@ class CacheClearerTest extends Unit
         /**
          * @var \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\Filesystem\Filesystem $fileSystemMock
          */
-        $fileSystemMock = $this->getCodeBucketFileSystemMock();
+        $fileSystemMock = new Filesystem();
 
         $this->assertTrue(is_dir($this->getTestDefaultCodeBucketDirectory()));
 
@@ -283,6 +283,9 @@ class CacheClearerTest extends Unit
      */
     protected function getCodeBucketConfigMock(string $method, string $directory): CacheConfig
     {
+        /**
+         * @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Cache\CacheConfig $configMock
+         */
         $configMock = $this->getConfigMock([]);
         $configMock
             ->expects($this->once())
@@ -293,28 +296,17 @@ class CacheClearerTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\Filesystem\Filesystem
-     */
-    protected function getCodeBucketFileSystemMock(): Filesystem
-    {
-        $fileSystemMock = $this->getFileSystemMock();
-        $fileSystemMock
-            ->expects($this->once())
-            ->method('remove');
-
-        return $fileSystemMock;
-    }
-
-    /**
      * @param string $directory
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\Finder\Finder
      */
     protected function getCodeBucketFinderMock(string $directory): Finder
     {
-        $splFileInfoMock = $this->createMock(SplFileInfo::class);
-        $splFileInfoMock->method('getPath')->willReturn(dirname($directory));
+        $splFileInfoMock = new SplFileInfo($directory, $directory, $directory);
 
+        /**
+         * @var \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\Finder\Finder $finderMock
+         */
         $finderMock = $this->createMock(Finder::class);
         $finderMock
             ->expects($this->exactly(2))
