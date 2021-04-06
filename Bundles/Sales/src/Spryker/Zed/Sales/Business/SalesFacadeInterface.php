@@ -422,7 +422,7 @@ interface SalesFacadeInterface
     public function cancelOrder(OrderCancelRequestTransfer $orderCancelRequestTransfer): OrderCancelResponseTransfer;
 
     /**
-     * Specifications:
+     * Specification:
      * - Checks QuoteTransfer::orderReference.
      * - Checks QuoteTransfer::orderConfirmed.
      * - Sets CheckoutResponseTransfer::saveOrder::orderReference with QuoteTransfer::orderReference.

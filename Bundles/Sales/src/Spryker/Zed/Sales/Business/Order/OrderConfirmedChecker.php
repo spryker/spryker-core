@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\Sales\Business\Order;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
@@ -57,8 +62,7 @@ class OrderConfirmedChecker implements OrderConfirmedCheckerInterface
      */
     protected function successfulOrderExistsInDatabase(QuoteTransfer $quoteTransfer)
     {
-        return
-            $quoteTransfer->getOrderReference() &&
+        return $quoteTransfer->getOrderReference() &&
             $quoteTransfer->getOrderConfirmed() === true &&
             $this->orderExistsInDatabase($quoteTransfer);
     }
@@ -70,8 +74,7 @@ class OrderConfirmedChecker implements OrderConfirmedCheckerInterface
      */
     protected function failedOrderExistsInDatabase(QuoteTransfer $quoteTransfer)
     {
-        return
-            $quoteTransfer->getOrderReference() &&
+        return $quoteTransfer->getOrderReference() &&
             $quoteTransfer->getOrderConfirmed() === false &&
             $this->orderExistsInDatabase($quoteTransfer);
     }
@@ -88,6 +91,6 @@ class OrderConfirmedChecker implements OrderConfirmedCheckerInterface
             ->setCustomerReference($quoteTransfer->getCustomer()->getCustomerReference());
         $orderTransfer = $this->orderRepositoryReader->getCustomerOrderByOrderReference($orderTransfer);
 
-        return (bool) $orderTransfer->getIdSalesOrder();
+        return (bool)$orderTransfer->getIdSalesOrder();
     }
 }
