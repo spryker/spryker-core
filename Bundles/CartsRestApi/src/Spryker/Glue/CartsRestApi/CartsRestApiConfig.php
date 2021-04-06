@@ -93,7 +93,7 @@ class CartsRestApiConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array<string, array<string, mixed>>
+     * @return array
      */
     public function getErrorIdentifierToRestErrorMapping(): array
     {
