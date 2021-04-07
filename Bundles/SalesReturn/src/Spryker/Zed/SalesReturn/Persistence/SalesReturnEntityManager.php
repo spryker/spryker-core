@@ -31,10 +31,6 @@ class SalesReturnEntityManager extends AbstractEntityManager implements SalesRet
             ->filterByIdSalesOrderItem($itemTransfer->getIdSalesOrderItem())
             ->findOne();
 
-        if (!$salesOrderItemEntity) {
-            return $itemTransfer;
-        }
-
         $salesOrderItemEntity->fromArray($itemTransfer->modifiedToArray());
 
         $salesOrderItemEntity->save();

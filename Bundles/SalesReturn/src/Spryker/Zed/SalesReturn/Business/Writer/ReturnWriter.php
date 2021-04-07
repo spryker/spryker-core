@@ -186,7 +186,7 @@ class ReturnWriter implements ReturnWriterInterface
     {
         foreach ($returnCreateRequestTransfer->getReturnItems() as $returnItemTransfer) {
             $returnItemTransfer->requireOrderItem();
-            $itemTransfer = $returnItemTransfer->getOrderItemOrFail();
+            $itemTransfer = $returnItemTransfer->getOrderItem();
 
             if (!$itemTransfer->getIdSalesOrderItem() && !$itemTransfer->getUuid()) {
                 return false;
@@ -292,7 +292,7 @@ class ReturnWriter implements ReturnWriterInterface
         }
 
         foreach ($returnCreateRequestTransfer->getReturnItems() as $returnItemTransfer) {
-            $itemTransfer = $returnItemTransfer->getOrderItemOrFail();
+            $itemTransfer = $returnItemTransfer->getOrderItem();
 
             if ($itemTransfer->getUuid()) {
                 $orderItemFilterTransfer->addSalesOrderItemUuid($itemTransfer->getUuidOrFail());
@@ -300,7 +300,7 @@ class ReturnWriter implements ReturnWriterInterface
                 continue;
             }
 
-            $orderItemFilterTransfer->addSalesOrderItemId($itemTransfer->getIdSalesOrderItemOrFail());
+            $orderItemFilterTransfer->addSalesOrderItemId($itemTransfer->getIdSalesOrderItem());
         }
 
         return $orderItemFilterTransfer;
@@ -317,7 +317,7 @@ class ReturnWriter implements ReturnWriterInterface
             return null;
         }
 
-        return $returnCreateRequestTransfer->getCustomerOrFail()->getCustomerReference();
+        return $returnCreateRequestTransfer->getCustomer()->getCustomerReference();
     }
 
     /**

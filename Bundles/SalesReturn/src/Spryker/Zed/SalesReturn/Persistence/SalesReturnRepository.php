@@ -90,11 +90,11 @@ class SalesReturnRepository extends AbstractRepository implements SalesReturnRep
      */
     public function getReturnCollectionByFilter(ReturnFilterTransfer $returnFilterTransfer): ReturnCollectionTransfer
     {
-        $filterTransfer = $returnFilterTransfer->getFilterOrFail();
+        $filterTransfer = $returnFilterTransfer->getFilter();
 
         $salesReturnQuery = $this->getFactory()
             ->getSalesReturnPropelQuery()
-            ->orderBy($filterTransfer->getOrderByOrFail(), $filterTransfer->getOrderDirectionOrFail());
+            ->orderBy($filterTransfer->getOrderBy(), $filterTransfer->getOrderDirection());
 
         $salesReturnQuery = $this->setSalesReturnFilters($salesReturnQuery, $returnFilterTransfer);
 

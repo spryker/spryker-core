@@ -69,7 +69,7 @@ class IsReturnableSetter implements IsReturnableSetterInterface
             return;
         }
 
-        $returnableTillDateTime = (new DateTime($itemTransfer->getCreatedAt() ?? ''))
+        $returnableTillDateTime = (new DateTime($itemTransfer->getCreatedAt()))
             ->modify('+' . $this->salesReturnConfig->getGlobalReturnableNumberOfDays() . ' days');
 
         $formattedReturnableTillDateTime = $this->utilDateTimeService->formatDate($returnableTillDateTime);
@@ -95,10 +95,10 @@ class IsReturnableSetter implements IsReturnableSetterInterface
         foreach ($itemTransfers as $itemTransfer) {
             $itemTransfer
                 ->requireState()
-                ->getStateOrFail()
+                ->getState()
                     ->requireName();
 
-            if (!in_array($itemTransfer->getStateOrFail()->getName(), $returnableStateNames, true)) {
+            if (!in_array($itemTransfer->getState()->getName(), $returnableStateNames, true)) {
                 $itemTransfer->setIsReturnable(false);
             }
         }
@@ -118,7 +118,7 @@ class IsReturnableSetter implements IsReturnableSetterInterface
         }
 
         $currentDate = (new DateTime())->setTime(0, 0);
-        $createdAt = (new DateTime($itemTransfer->getCreatedAt() ?? ''))->setTime(0, 0);
+        $createdAt = (new DateTime($itemTransfer->getCreatedAt()))->setTime(0, 0);
 
         return $currentDate->diff($createdAt)->days > $this->salesReturnConfig->getGlobalReturnableNumberOfDays();
     }

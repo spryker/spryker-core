@@ -28,7 +28,7 @@
             } only %}
 
             {% include '@MerchantSalesReturnGui/SalesReturn/_partials/merchant-order-column.twig' ignore missing with {
-                merchantOrders: return.merchantOrders,
+                merchantOrders: return.merchantOrders | default([]),
             } only %}
 
             {% if customer is not null %}
