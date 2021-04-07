@@ -35,19 +35,8 @@ class OrderConfirmedChecker implements OrderConfirmedCheckerInterface
      */
     public function checkConfirmedOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool
     {
-        if ($this->successfulOrderExistsInDatabase($quoteTransfer)) {
-            $checkoutResponseTransfer->getSaveOrder()->setOrderReference(
-                $quoteTransfer->getOrderReference()
-            );
-
-            return false;
-        }
-
-        if ($this->failedOrderExistsInDatabase($quoteTransfer)) {
-            $checkoutResponseTransfer->getSaveOrder()->setOrderReference(
-                $quoteTransfer->getOrderReference()
-            );
-            $checkoutResponseTransfer->setIsSuccess(false);
+        if ($this->isOrderExists($quoteTransfer)) {
+            $this->setCheckoutResponseData($quoteTransfer, $checkoutResponseTransfer);
 
             return false;
         }
@@ -60,37 +49,38 @@ class OrderConfirmedChecker implements OrderConfirmedCheckerInterface
      *
      * @return bool
      */
-    protected function successfulOrderExistsInDatabase(QuoteTransfer $quoteTransfer)
+    protected function isOrderExists(QuoteTransfer $quoteTransfer): bool
     {
-        return $quoteTransfer->getOrderReference() &&
-            $quoteTransfer->getOrderConfirmed() === true &&
-            $this->orderExistsInDatabase($quoteTransfer);
-    }
+        if (!$quoteTransfer->getOrderReference()) {
+            return false;
+        }
 
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
-    protected function failedOrderExistsInDatabase(QuoteTransfer $quoteTransfer)
-    {
-        return $quoteTransfer->getOrderReference() &&
-            $quoteTransfer->getOrderConfirmed() === false &&
-            $this->orderExistsInDatabase($quoteTransfer);
-    }
+        if ($quoteTransfer->getOrderConfirmed() === null) {
+            return false;
+        }
 
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
-    protected function orderExistsInDatabase(QuoteTransfer $quoteTransfer): bool
-    {
         $orderTransfer = (new OrderTransfer())
             ->setOrderReference($quoteTransfer->getOrderReference())
             ->setCustomerReference($quoteTransfer->getCustomer()->getCustomerReference());
         $orderTransfer = $this->orderRepositoryReader->getCustomerOrderByOrderReference($orderTransfer);
 
         return (bool)$orderTransfer->getIdSalesOrder();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return void
+     */
+    protected function setCheckoutResponseData(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): void
+    {
+        $checkoutResponseTransfer->getSaveOrder()->setOrderReference(
+            $quoteTransfer->getOrderReference()
+        );
+
+        if ($quoteTransfer->getOrderConfirmed() === false) {
+            $checkoutResponseTransfer->setIsSuccess(false);
+        }
     }
 }

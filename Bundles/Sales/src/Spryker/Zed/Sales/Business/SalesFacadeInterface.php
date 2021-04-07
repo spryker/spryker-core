@@ -423,11 +423,9 @@ interface SalesFacadeInterface
 
     /**
      * Specification:
-     * - Checks QuoteTransfer::orderReference.
-     * - Checks QuoteTransfer::orderConfirmed.
-     * - Sets CheckoutResponseTransfer::saveOrder::orderReference with QuoteTransfer::orderReference.
-     * - Sets "isSuccess=false" in CheckoutResponseTransfer if order was failed.
-     * - Returns false if order already in database and false otherwise.
+     * - Checks that the order is not a duplicate.
+     * - Sets `isSuccess=false` in `CheckoutResponseTransfer` if order is a duplicate and returns `false`.
+     * - Returns `true` if the order was not found in the database.
      *
      * @api
      *
