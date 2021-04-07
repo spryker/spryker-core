@@ -207,6 +207,7 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
         $productConcreteEntities = $this->productQueryContainer
             ->queryProduct()
             ->filterBySku_In($skus)
+            ->joinWithSpyProductAbstract()
             ->find();
 
         if (!$productConcreteEntities->getData()) {

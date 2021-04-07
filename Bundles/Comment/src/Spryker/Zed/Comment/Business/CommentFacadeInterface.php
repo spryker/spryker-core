@@ -9,6 +9,7 @@ namespace Spryker\Zed\Comment\Business;
 
 use Generated\Shared\Transfer\CommentFilterTransfer;
 use Generated\Shared\Transfer\CommentRequestTransfer;
+use Generated\Shared\Transfer\CommentsRequestTransfer;
 use Generated\Shared\Transfer\CommentTagRequestTransfer;
 use Generated\Shared\Transfer\CommentThreadResponseTransfer;
 use Generated\Shared\Transfer\CommentThreadTransfer;
@@ -26,6 +27,18 @@ interface CommentFacadeInterface
      * @return \Generated\Shared\Transfer\CommentThreadTransfer|null
      */
     public function findCommentThreadByOwner(CommentRequestTransfer $commentRequestTransfer): ?CommentThreadTransfer;
+
+    /**
+     * Specification:
+     * - Returns comment threads found for the CommentsRequestTransfer or an empty array if no comment threads were found.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CommentsRequestTransfer $commentsRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CommentThreadTransfer[]
+     */
+    public function getCommentThreads(CommentsRequestTransfer $commentsRequestTransfer): array;
 
     /**
      * Specification:
