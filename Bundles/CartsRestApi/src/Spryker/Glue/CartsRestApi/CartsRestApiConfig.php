@@ -16,13 +16,17 @@ class CartsRestApiConfig extends AbstractBundleConfig
 {
     public const RESOURCE_CARTS = 'carts';
     public const RESOURCE_CART_ITEMS = 'items';
+    public const RESOURCE_CUSTOMERS = 'customers';
     public const RESOURCE_GUEST_CARTS = 'guest-carts';
     public const RESOURCE_GUEST_CARTS_ITEMS = 'guest-cart-items';
+    public const RESOURCE_MY_CARTS = 'my-carts';
 
     public const CONTROLLER_CARTS = 'carts-resource';
     public const CONTROLLER_CART_ITEMS = 'cart-items-resource';
+    public const CONTROLLER_CUSTOMER_CARTS = 'customer-carts-resource';
     public const CONTROLLER_GUEST_CARTS = 'guest-carts-resource';
     public const CONTROLLER_GUEST_CART_ITEMS = 'guest-cart-items-resource';
+    public const CONTROLLER_MY_CARTS = 'my-carts-resource';
 
     public const RESPONSE_CODE_CART_NOT_FOUND = '101';
     public const RESPONSE_CODE_ITEM_VALIDATION = '102';
@@ -42,6 +46,7 @@ class CartsRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_CODE_CURRENCY_DATA_IS_INCORRECT = '117';
     public const RESPONSE_CODE_PRICE_MODE_DATA_IS_MISSING = '118';
     public const RESPONSE_CODE_PRICE_MODE_DATA_IS_INCORRECT = '119';
+    public const RESPONSE_CODE_CUSTOMER_UNAUTHORIZED = '802';
 
     public const EXCEPTION_MESSAGE_CART_ID_MISSING = 'Cart uuid is missing.';
     public const EXCEPTION_MESSAGE_CART_ITEM_NOT_FOUND = 'Item with the given group key not found in the cart.';
@@ -61,6 +66,8 @@ class CartsRestApiConfig extends AbstractBundleConfig
     public const EXCEPTION_MESSAGE_PRICE_MODE_DATA_IS_MISSING = 'Price mode is missing.';
     public const EXCEPTION_MESSAGE_PRICE_MODE_DATA_IS_INCORRECT = 'Price mode is incorrect.';
 
+    public const RESPONSE_DETAILS_CUSTOMER_UNAUTHORIZED = 'Unauthorized request.';
+
     public const HEADER_ANONYMOUS_CUSTOMER_UNIQUE_ID = 'X-Anonymous-Customer-Unique-Id';
 
     protected const GUEST_CART_RESOURCES = [
@@ -70,6 +77,18 @@ class CartsRestApiConfig extends AbstractBundleConfig
 
     protected const ALLOWED_CART_ITEM_EAGER_RELATIONSHIP = true;
     protected const ALLOWED_GUEST_CART_ITEM_EAGER_RELATIONSHIP = true;
+
+    /**
+     * @uses \Spryker\Glue\GlueApplication\Rest\RequestConstantsInterface::HEADER_DEPRECATION
+     */
+    public const HEADER_DEPRECATION = 'Deprecation';
+
+    /**
+     * @uses \Spryker\Glue\GlueApplication\Rest\RequestConstantsInterface::HEADER_LINK
+     */
+    public const HEADER_LINK = 'Link';
+
+    protected const CONVENTION_LINK = 'https://spryker.atlassian.net/wiki/spaces/RFC/pages/2160820295/RFC+Glue+endpoint+conventions';
 
     /**
      * @api

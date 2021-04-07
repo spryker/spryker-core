@@ -34,4 +34,11 @@ interface CartReaderInterface
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
     public function getCustomerQuotes(RestRequestInterface $restRequest): QuoteCollectionTransfer;
+
+        /**
+         * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+         *
+         * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+         */
+    public function readCustomerCarts(RestRequestInterface $restRequest): RestResponseInterface;
 }
