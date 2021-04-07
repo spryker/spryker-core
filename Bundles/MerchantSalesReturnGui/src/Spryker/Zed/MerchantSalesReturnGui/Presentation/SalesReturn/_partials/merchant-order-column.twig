@@ -2,28 +2,28 @@
     title: 'Marketplace'
 } %}
     {% block content %}
+        {% if merchantOrders is not empty %}
+            <div class="row m-b-sm">
+                <div class="col-sm-6 font-bold">
+                    {{ 'Merchant Order References' | trans }}
+                </div>
+                <div class="col-sm-6">
+                    {% for merchantOrder in merchantOrders %}
+                        {{ merchantOrder.merchantOrderReference }}<br/>
+                    {% endfor %}
+                </div>
+            </div>
 
-        <div class="row m-b-sm">
-            <div class="col-sm-6 font-bold">
-                {{ 'Merchant Order References' | trans }}
+            <div class="row">
+                <div class="col-sm-6 font-bold">
+                    {{ 'Merchant' | trans }}
+                </div>
+                <div class="col-sm-6 word-break-all">
+                    <a target="_blank" href="{{ url('/merchant-gui/edit-merchant', {'id-merchant': (merchantOrders | first).merchant.idMerchant}) }}">
+                        {{ (merchantOrders | first).merchant.name }}
+                    </a>
+                </div>
             </div>
-            <div class="col-sm-6">
-                {% for merchantOrder in merchantOrders %}
-                    {{ merchantOrder.merchantOrderReference }}<br/>
-                {% endfor %}
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-sm-6 font-bold">
-                {{ 'Merchant' | trans }}
-            </div>
-            <div class="col-sm-6 word-break-all">
-                <a target="_blank" href="{{ url('/merchant-gui/edit-merchant', {'id-merchant': (merchantOrders | first).merchant.idMerchant}) }}">
-                    {{ (merchantOrders | first).merchant.name }}
-                </a>
-            </div>
-        </div>
-
+        {% endif %}
     {% endblock %}
 {% endembed %}
