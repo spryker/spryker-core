@@ -39,7 +39,7 @@ class CustomerReader implements CustomerReaderInterface
     /**
      * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
      *
-     * * @return \Generated\Shared\Transfer\CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     public function getCustomerFromReturn(ReturnTransfer $returnTransfer): CustomerTransfer
     {
