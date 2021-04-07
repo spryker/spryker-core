@@ -14,8 +14,8 @@ use Spryker\Zed\CategoryGui\CategoryGuiDependencyProvider;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
- * @method \Spryker\Zed\CategoryGui\Persistence\CategoryGuiRepositoryInterface getRepository()
  * @method \Spryker\Zed\CategoryGui\CategoryGuiConfig getConfig()
+ * @method \Spryker\Zed\CategoryGui\Persistence\CategoryGuiRepositoryInterface getRepository()
  */
 class CategoryGuiPersistenceFactory extends AbstractPersistenceFactory
 {

@@ -138,7 +138,7 @@ class CategoryGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCategoryPropelQuery(Container $container): Container
     {
-        $container->set(static::PROPEL_QUERY_CATEGORY, $container->factory(function () {
+        $container->set(static::PROPEL_QUERY_CATEGORY, $container->factory(function (): SpyCategoryQuery {
             return SpyCategoryQuery::create();
         }));
 
@@ -154,7 +154,7 @@ class CategoryGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCategoryTemplatePropelQuery(Container $container): Container
     {
-        $container->set(static::PROPEL_QUERY_CATEGORY_TEMPLATE, $container->factory(function () {
+        $container->set(static::PROPEL_QUERY_CATEGORY_TEMPLATE, $container->factory(function (): SpyCategoryTemplateQuery {
             return SpyCategoryTemplateQuery::create();
         }));
 
@@ -170,7 +170,7 @@ class CategoryGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCategoryNodePropelQuery(Container $container): Container
     {
-        $container->set(static::PROPEL_QUERY_CATEGORY_NODE, $container->factory(function () {
+        $container->set(static::PROPEL_QUERY_CATEGORY_NODE, $container->factory(function (): SpyCategoryNodeQuery {
             return SpyCategoryNodeQuery::create();
         }));
 

@@ -9,6 +9,8 @@ namespace Spryker\Zed\CategoryGui\Persistence;
 
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
+use Orm\Zed\Category\Persistence\Map\SpyCategoryTableMap;
+use Orm\Zed\Store\Persistence\Map\SpyStoreTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -68,5 +70,36 @@ class CategoryGuiRepository extends AbstractRepository implements CategoryGuiRep
             ->select([static::CHILDREN_ID_CATEGORY_NODE, static::CHILDREN_CATEGORY_ATTRIBUTE_NAME])
             ->find()
             ->toArray();
+    }
+
+    /**
+     * @module Category
+     * @module Store
+     *
+     * @param int[] $categoryIds
+     *
+     * @return string[][]
+     */
+    public function getCategoryStoreNamesGroupedByIdCategory(array $categoryIds): array
+    {
+        $categoryStoreNames = $this->getFactory()->getCategoryPropelQuery()
+            ->filterByIdCategory_In($categoryIds)
+            ->leftJoinWithSpyCategoryStore()
+            ->useSpyCategoryStoreQuery()
+                ->leftJoinWithSpyStore()
+            ->endUse()
+            ->select([
+                SpyStoreTableMap::COL_NAME,
+                SpyCategoryTableMap::COL_ID_CATEGORY,
+            ])->find()->toArray();
+
+        $categoryStoreNamesGroupedByIdCategory = [];
+        foreach ($categoryStoreNames as $categoryStoreName) {
+            $idCategory = $categoryStoreName[SpyCategoryTableMap::COL_ID_CATEGORY];
+            $storeName = $categoryStoreName[SpyStoreTableMap::COL_NAME];
+            $categoryStoreNamesGroupedByIdCategory[$idCategory][] = $storeName;
+        }
+
+        return $categoryStoreNamesGroupedByIdCategory;
     }
 }

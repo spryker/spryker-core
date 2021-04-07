@@ -22,10 +22,22 @@ interface CategoryGuiRepositoryInterface
     public function getIndexedCategoryTemplateNames(): array;
 
     /**
+     * @module Category
+     *
      * @param int $idParentNode
      * @param int $idLocale
      *
      * @return string[]
      */
     public function getChildrenCategoryNodeNames(int $idParentNode, int $idLocale): array;
+
+    /**
+     * @module Category
+     * @module Store
+     *
+     * @param int[] $categoryIds
+     *
+     * @return string[][]
+     */
+    public function getCategoryStoreNamesGroupedByIdCategory(array $categoryIds): array;
 }

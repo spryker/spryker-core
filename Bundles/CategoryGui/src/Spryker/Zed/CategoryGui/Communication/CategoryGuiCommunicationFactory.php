@@ -43,7 +43,10 @@ class CategoryGuiCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCategoryTable(): CategoryTable
     {
-        return new CategoryTable($this->getLocaleFacade());
+        return new CategoryTable(
+            $this->getLocaleFacade(),
+            $this->getRepository()
+        );
     }
 
     /**
