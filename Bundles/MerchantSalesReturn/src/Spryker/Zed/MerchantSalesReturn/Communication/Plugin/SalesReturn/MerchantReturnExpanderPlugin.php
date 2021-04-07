@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantSalesReturn\Communication\Plugin;
+namespace Spryker\Zed\MerchantSalesReturn\Communication\Plugin\SalesReturn;
 
 use Generated\Shared\Transfer\ReturnTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -20,6 +20,7 @@ class MerchantReturnExpanderPlugin extends AbstractPlugin implements ReturnExpan
 {
     /**
      * {@inheritDoc}
+     * - Expands `Return` transfer object witg merchant orders.
      *
      * @api
      *

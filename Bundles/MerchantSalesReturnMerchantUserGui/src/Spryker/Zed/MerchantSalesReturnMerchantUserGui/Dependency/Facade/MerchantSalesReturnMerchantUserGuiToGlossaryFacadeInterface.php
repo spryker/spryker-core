@@ -12,9 +12,13 @@ use Generated\Shared\Transfer\LocaleTransfer;
 interface MerchantSalesReturnMerchantUserGuiToGlossaryFacadeInterface
 {
     /**
+     * @phpstan-param array<mixed> $data
+     *
      * @param string $keyName
-     * @param mixed[] $data
+     * @param array $data
      * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
+     *
+     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingTranslationException
      *
      * @return string
      */

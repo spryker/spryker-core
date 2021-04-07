@@ -18,9 +18,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ReturnCreateForm extends AbstractType
 {
-    public const FIELD_RETURN_ITEMS = 'returnItems';
+    protected const FIELD_RETURN_ITEMS = 'returnItems';
 
-    public const OPTION_RETURN_REASONS = 'option_return_reasons';
+    protected const OPTION_RETURN_REASONS = 'option_return_reasons';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -43,7 +43,7 @@ class ReturnCreateForm extends AbstractType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addReturnItemsField($builder, $options);
     }

@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantSalesReturnGui\Communication\Plugin;
+namespace Spryker\Zed\MerchantSalesReturnGui\Communication\Plugin\SalesReturnGui;
 
 use ArrayObject;
 use Generated\Shared\Transfer\MerchantOrderCriteriaTransfer;
@@ -21,7 +21,6 @@ class MerchantReturnCreateTemplatePlugin extends AbstractPlugin implements Retur
 {
     /**
      * {@inheritDoc}
-     * Specification:
      *  - Returns template path.
      *
      * @api
@@ -35,7 +34,6 @@ class MerchantReturnCreateTemplatePlugin extends AbstractPlugin implements Retur
 
     /**
      * {@inheritDoc}
-     * Specification:
      *  - Returns merchant order data for return template.
      *
      * @api

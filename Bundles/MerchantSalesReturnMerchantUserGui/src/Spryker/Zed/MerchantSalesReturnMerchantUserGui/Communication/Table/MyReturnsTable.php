@@ -20,7 +20,7 @@ use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Dependency\Facade\MerchantSal
 use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Dependency\Service\MerchantSalesReturnMerchantUserGuiToUtilDateTimeServiceInterface;
 use Spryker\Zed\MerchantSalesReturnMerchantUserGui\MerchantSalesReturnMerchantUserGuiConfig;
 
-class MerchantReturnTable extends AbstractTable
+class MyReturnsTable extends AbstractTable
 {
     protected const COL_RETURN_ID = 'id_sales_return';
     protected const COL_RETURN_REFERENCE = 'return_reference';
@@ -57,7 +57,7 @@ class MerchantReturnTable extends AbstractTable
     protected $merchantSalesReturnMerchantUserGuiConfig;
 
     /**
-     * @var \Orm\Zed\SalesReturn\Persistence\SpySalesReturnQuery|mixed[]
+     * @var \Orm\Zed\SalesReturn\Persistence\SpySalesReturnQuery
      */
     protected $salesReturnQuery;
 
@@ -185,11 +185,9 @@ class MerchantReturnTable extends AbstractTable
     }
 
     /**
-     * @phpstan-return array<int, mixed>
-     *
      * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\SalesReturn\Persistence\SpySalesReturn[] $salesReturnEntityCollection
      *
-     * @return mixed[]
+     * @return string[]
      */
     protected function mapReturns(ObjectCollection $salesReturnEntityCollection): array
     {
@@ -207,9 +205,7 @@ class MerchantReturnTable extends AbstractTable
     }
 
     /**
-     * @phpstan-return array<string, string>
-     *
-     * @param mixed[] $returns
+     * @param string[] $returns
      *
      * @return string[]
      */

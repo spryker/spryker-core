@@ -25,6 +25,7 @@ use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Dependency\Service\MerchantSa
 class MerchantSalesReturnMerchantUserGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PROPEL_QUERY_SALES_RETURN = 'PROPEL_QUERY_SALES_RETURN';
+
     public const FACADE_MONEY = 'FACADE_MONEY';
     public const FACADE_SALES = 'FACADE_SALES';
     public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
@@ -32,14 +33,14 @@ class MerchantSalesReturnMerchantUserGuiDependencyProvider extends AbstractBundl
     public const FACADE_MERCHANT_SALES_ORDER = 'FACADE_MERCHANT_SALES_ORDER';
     public const FACADE_MERCHANT_OMS = 'FACADE_MERCHANT_OMS';
     public const FACADE_SHIPMENT = 'FACADE_SHIPMENT';
+    public const FACADE_SALES_RETURN = 'FACADE_SALES_RETURN';
+    public const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
 
     public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
     public const SERVICE_DATE_TIME = 'SERVICE_DATE_TIME';
-
     public const SERVICE_SHIPMENT = 'SERVICE_SHIPMENT';
+
     public const PLUGIN_ITEM_FORM_TYPE = 'PLUGIN_ITEM_FORM_TYPE';
-    public const FACADE_SALES_RETURN = 'FACADE_SALES_RETURN';
-    public const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -182,7 +183,7 @@ class MerchantSalesReturnMerchantUserGuiDependencyProvider extends AbstractBundl
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addGlossaryFacade(Container $container)
+    protected function addGlossaryFacade(Container $container): Container
     {
         $container->set(static::FACADE_GLOSSARY, function (Container $container) {
             return new MerchantSalesReturnMerchantUserGuiToGlossaryFacadeBridge(

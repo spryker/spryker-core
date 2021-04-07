@@ -74,7 +74,7 @@ class DetailController extends AbstractController
 
         return [
             'return' => $returnTransfer,
-            'customer' => $this->getFactory()->createCustomerReader()->getCustomerFromReturn($returnTransfer),
+            'customer' => $this->getFactory()->createCustomerReader()->findCustomerByReturnOrder($returnTransfer),
             'uniqueOrderReferences' => $this->extractUniqueOrderReferencesFromReturn($returnTransfer),
             'uniqueItemStateLabels' => $this->extractUniqueItemStateLabelsFromReturn($merchantOrderItemTransfers),
             'uniqueOrderItemManualEvents' => $this->extractUniqueOrderItemManualEvents($merchantOrderItemTransfers),
@@ -131,7 +131,7 @@ class DetailController extends AbstractController
         return $this
             ->getFactory()
             ->createMerchantOrderReader()
-            ->findMerchantOrderItems($merchantOrderItemCriteriaTransfer);
+            ->getMerchantOrderItems($merchantOrderItemCriteriaTransfer);
     }
 
     /**

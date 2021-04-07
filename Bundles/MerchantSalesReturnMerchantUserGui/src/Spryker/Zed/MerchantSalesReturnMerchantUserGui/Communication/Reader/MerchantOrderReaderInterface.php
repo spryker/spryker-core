@@ -25,5 +25,5 @@ interface MerchantOrderReaderInterface
      *
      * @return \Generated\Shared\Transfer\MerchantOrderItemTransfer[]
      */
-    public function findMerchantOrderItems(MerchantOrderItemCriteriaTransfer $merchantOrderItemCriteriaTransfer): array;
+    public function getMerchantOrderItems(MerchantOrderItemCriteriaTransfer $merchantOrderItemCriteriaTransfer): array;
 }

@@ -29,7 +29,12 @@ class ReturnCreateItemsSubForm extends AbstractType
 
     protected const PLACEHOLDER_SELECT_REASON = 'Select reason';
 
-    public const FIELD_CUSTOM_REASON = 'customReason';
+    protected const FIELD_CUSTOM_REASON = 'customReason';
+
+    /**
+     * @uses \Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Form\ReturnCreateForm::OPTION_RETURN_REASONS
+     */
+    protected const OPTION_RETURN_REASONS = 'option_return_reasons';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -39,7 +44,7 @@ class ReturnCreateItemsSubForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setRequired([
-            ReturnCreateForm::OPTION_RETURN_REASONS,
+            static::OPTION_RETURN_REASONS,
         ]);
     }
 
@@ -54,8 +59,8 @@ class ReturnCreateItemsSubForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->addIsReturnable($builder)
-            ->addReason($builder, $options)
+        $this->addIsReturnableField($builder)
+            ->addReasonField($builder, $options)
             ->addCustomReasonField($builder);
 
         $builder->addEventListener(FormEvents::PRE_SUBMIT, $this->getReturnItemPreSubmitCallback());
@@ -68,7 +73,7 @@ class ReturnCreateItemsSubForm extends AbstractType
      *
      * @return $this
      */
-    protected function addIsReturnable(FormBuilderInterface $builder)
+    protected function addIsReturnableField(FormBuilderInterface $builder)
     {
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
             /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
@@ -93,7 +98,7 @@ class ReturnCreateItemsSubForm extends AbstractType
      *
      * @return $this
      */
-    protected function addReason(FormBuilderInterface $builder, array $options)
+    protected function addReasonField(FormBuilderInterface $builder, array $options)
     {
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($options) {
             /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
@@ -102,7 +107,7 @@ class ReturnCreateItemsSubForm extends AbstractType
             $event->getForm()->add(ReturnItemTransfer::REASON, ChoiceType::class, [
                 'label' => false,
                 'placeholder' => static::PLACEHOLDER_SELECT_REASON,
-                'choices' => $options[ReturnCreateForm::OPTION_RETURN_REASONS],
+                'choices' => $options[static::OPTION_RETURN_REASONS],
                 'required' => false,
                 'disabled' => !$itemTransfer->getIsReturnable(),
             ]);

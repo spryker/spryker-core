@@ -14,8 +14,7 @@ use Generated\Shared\Transfer\ReturnReasonCollectionTransfer;
 use Generated\Shared\Transfer\ReturnReasonFilterTransfer;
 use Generated\Shared\Transfer\ReturnResponseTransfer;
 
-class MerchantSalesReturnMerchantUserGuiToSalesReturnFacadeBridge implements
-    MerchantSalesReturnMerchantUserGuiToSalesReturnFacadeInterface
+class MerchantSalesReturnMerchantUserGuiToSalesReturnFacadeBridge implements MerchantSalesReturnMerchantUserGuiToSalesReturnFacadeInterface
 {
     /**
      * @var \Spryker\Zed\SalesReturn\Business\SalesReturnFacadeInterface

@@ -29,6 +29,8 @@ class ReturnCreateTemplateProvider implements ReturnCreateTemplateProviderInterf
     }
 
     /**
+     * @phpstan-param \Symfony\Component\Form\FormInterface<mixed> $returnCreateForm
+     *
      * @phpstan-return array<string, mixed>
      *
      * @param \Symfony\Component\Form\FormInterface $returnCreateForm
@@ -39,8 +41,8 @@ class ReturnCreateTemplateProvider implements ReturnCreateTemplateProviderInterf
     public function provide(FormInterface $returnCreateForm, OrderTransfer $orderTransfer): array
     {
         $templateDefaultData = [
-            self::FIELD_RETURN_CREATE_FORM => $returnCreateForm->createView(),
-            self::FIELD_ORDER => $orderTransfer,
+            static::FIELD_RETURN_CREATE_FORM => $returnCreateForm->createView(),
+            static::FIELD_ORDER => $orderTransfer,
         ];
 
         if (empty($this->returnCreateTemplatePlugins)) {

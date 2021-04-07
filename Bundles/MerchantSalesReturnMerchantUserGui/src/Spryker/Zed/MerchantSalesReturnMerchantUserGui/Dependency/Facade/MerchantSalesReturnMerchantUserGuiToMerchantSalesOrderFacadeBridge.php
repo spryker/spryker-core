@@ -28,13 +28,13 @@ class MerchantSalesReturnMerchantUserGuiToMerchantSalesOrderFacadeBridge impleme
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantOrderCriteriaTransfer $merchantCriteriaTransfer
+     * @param \Generated\Shared\Transfer\MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantOrderTransfer|null
      */
-    public function findMerchantOrder(MerchantOrderCriteriaTransfer $merchantCriteriaTransfer): ?MerchantOrderTransfer
+    public function findMerchantOrder(MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer): ?MerchantOrderTransfer
     {
-        return $this->merchantSalesOrderFacade->findMerchantOrder($merchantCriteriaTransfer);
+        return $this->merchantSalesOrderFacade->findMerchantOrder($merchantOrderCriteriaTransfer);
     }
 
     /**

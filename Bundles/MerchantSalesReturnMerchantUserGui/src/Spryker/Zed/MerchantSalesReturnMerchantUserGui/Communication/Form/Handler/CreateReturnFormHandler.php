@@ -13,13 +13,26 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ReturnCreateRequestTransfer;
 use Generated\Shared\Transfer\ReturnItemTransfer;
 use Generated\Shared\Transfer\ReturnResponseTransfer;
-use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Form\DataProvider\ReturnCreateFormDataProvider;
-use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Form\ReturnCreateForm;
-use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Form\ReturnCreateItemsSubForm;
 use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Dependency\Facade\MerchantSalesReturnMerchantUserGuiToSalesReturnFacadeInterface;
+use Symfony\Component\Form\FormInterface;
 
-class ReturnHandler implements ReturnHandlerInterface
+class CreateReturnFormHandler implements CreateReturnFormHandlerInterface
 {
+    /**
+     * @uses \Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Form\ReturnCreateItemsSubForm::FIELD_CUSTOM_REASON
+     */
+    protected const FIELD_CUSTOM_REASON = 'customReason';
+
+    /**
+     * @uses \Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Form\ReturnCreateForm::FIELD_RETURN_ITEMS
+     */
+    protected const FIELD_RETURN_ITEMS = 'returnItems';
+
+    /**
+     * @uses \Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Form\DataProvider\ReturnCreateFormDataProvider::CUSTOM_REASON_KEY
+     */
+    protected const CUSTOM_REASON_KEY = 'custom_reason';
+
     /**
      * @var \Spryker\Zed\MerchantSalesReturnMerchantUserGui\Dependency\Facade\MerchantSalesReturnMerchantUserGuiToSalesReturnFacadeInterface
      */
@@ -35,15 +48,16 @@ class ReturnHandler implements ReturnHandlerInterface
     }
 
     /**
-     * @phpstan-param array<string, mixed> $returnCreateFormData
+     * @phpstan-param \Symfony\Component\Form\FormInterface<mixed> $returnCreateForm
      *
-     * @param array $returnCreateFormData
+     * @param \Symfony\Component\Form\FormInterface $returnCreateForm
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\ReturnResponseTransfer
      */
-    public function createReturn(array $returnCreateFormData, OrderTransfer $orderTransfer): ReturnResponseTransfer
+    public function handleForm(FormInterface $returnCreateForm, OrderTransfer $orderTransfer): ReturnResponseTransfer
     {
+        $returnCreateFormData = $returnCreateForm->getData();
         $returnCreateRequestTransfer = $this->buildReturnCreateRequestTransfer($returnCreateFormData, $orderTransfer);
 
         if ($returnCreateRequestTransfer->getReturnItems()->count()) {
@@ -71,7 +85,7 @@ class ReturnHandler implements ReturnHandlerInterface
             ->setStore($orderTransfer->getStore())
             ->setReturnItems(new ArrayObject());
 
-        $returnItemsFormData = $returnCreateFormData[ReturnCreateForm::FIELD_RETURN_ITEMS] ?? [];
+        $returnItemsFormData = $returnCreateFormData[static::FIELD_RETURN_ITEMS] ?? [];
 
         foreach ($returnItemsFormData as $returnItemFormData) {
             if (!$this->isReturnItemChecked($returnItemFormData)) {
@@ -97,8 +111,8 @@ class ReturnHandler implements ReturnHandlerInterface
      */
     protected function extractReason(array $returnItemFormData): ?string
     {
-        if ($returnItemFormData[ReturnItemTransfer::REASON] === ReturnCreateFormDataProvider::CUSTOM_REASON_KEY && $returnItemFormData[ReturnCreateItemsSubForm::FIELD_CUSTOM_REASON]) {
-            return $returnItemFormData[ReturnCreateItemsSubForm::FIELD_CUSTOM_REASON];
+        if ($returnItemFormData[ReturnItemTransfer::REASON] === static::CUSTOM_REASON_KEY && $returnItemFormData[static::FIELD_CUSTOM_REASON]) {
+            return $returnItemFormData[static::FIELD_CUSTOM_REASON];
         }
 
         return $returnItemFormData[ReturnItemTransfer::REASON];

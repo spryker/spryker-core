@@ -7,8 +7,7 @@
 
 namespace Spryker\Zed\MerchantSalesReturnMerchantUserGui\Dependency\Service;
 
-class MerchantSalesReturnMerchantUserGuiToUtilDateTimeServiceBridge implements
-    MerchantSalesReturnMerchantUserGuiToUtilDateTimeServiceInterface
+class MerchantSalesReturnMerchantUserGuiToUtilDateTimeServiceBridge implements MerchantSalesReturnMerchantUserGuiToUtilDateTimeServiceInterface
 {
     /**
      * @var \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface

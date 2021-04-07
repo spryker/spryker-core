@@ -9,16 +9,17 @@ namespace Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Form\Hand
 
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ReturnResponseTransfer;
+use Symfony\Component\Form\FormInterface;
 
-interface ReturnHandlerInterface
+interface CreateReturnFormHandlerInterface
 {
     /**
-     * @phpstan-param array<string, mixed> $returnCreateFormData
+     * @phpstan-param \Symfony\Component\Form\FormInterface<mixed> $returnCreateForm
      *
-     * @param array $returnCreateFormData
+     * @param \Symfony\Component\Form\FormInterface $returnCreateForm
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\ReturnResponseTransfer
      */
-    public function createReturn(array $returnCreateFormData, OrderTransfer $orderTransfer): ReturnResponseTransfer;
+    public function handleForm(FormInterface $returnCreateForm, OrderTransfer $orderTransfer): ReturnResponseTransfer;
 }

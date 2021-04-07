@@ -15,14 +15,14 @@ use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Form\DataProvid
 use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Form\DataProvider\ReturnCreateFormDataProvider;
 use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Form\EventItemTriggerForm;
 use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Form\EventTriggerForm;
-use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Form\Handler\ReturnHandler;
-use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Form\Handler\ReturnHandlerInterface;
+use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Form\Handler\CreateReturnFormHandler;
+use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Form\Handler\CreateReturnFormHandlerInterface;
 use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Form\ReturnCreateForm;
 use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Reader\CustomerReader;
 use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Reader\CustomerReaderInterface;
 use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Reader\MerchantOrderReader;
 use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Reader\MerchantOrderReaderInterface;
-use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Table\MerchantReturnTable;
+use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Table\MyReturnsTable;
 use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Dependency\Facade\MerchantSalesReturnMerchantUserGuiToCustomerFacadeInterface;
 use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Dependency\Facade\MerchantSalesReturnMerchantUserGuiToGlossaryFacadeInterface;
 use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Dependency\Facade\MerchantSalesReturnMerchantUserGuiToMerchantOmsFacadeInterface;
@@ -40,11 +40,11 @@ use Symfony\Component\Form\FormInterface;
 class MerchantSalesReturnMerchantUserGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Table\MerchantReturnTable
+     * @return \Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Table\MyReturnsTable
      */
-    public function createMerchantReturnTable(): MerchantReturnTable
+    public function createMyReturnsTable(): MyReturnsTable
     {
-        return new MerchantReturnTable(
+        return new MyReturnsTable(
             $this->getDateTimeService(),
             $this->getConfig(),
             $this->getSalesReturnPropelQuery(),
@@ -75,11 +75,11 @@ class MerchantSalesReturnMerchantUserGuiCommunicationFactory extends AbstractCom
     }
 
     /**
-     * @return \Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Form\Handler\ReturnHandlerInterface
+     * @return \Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Form\Handler\CreateReturnFormHandlerInterface
      */
-    public function createReturnHandler(): ReturnHandlerInterface
+    public function createCreateReturnFormHandler(): CreateReturnFormHandlerInterface
     {
-        return new ReturnHandler(
+        return new CreateReturnFormHandler(
             $this->getSalesReturnFacade()
         );
     }
@@ -166,7 +166,7 @@ class MerchantSalesReturnMerchantUserGuiCommunicationFactory extends AbstractCom
     }
 
     /**
-     * @return \Orm\Zed\SalesReturn\Persistence\SpySalesReturnQuery|mixed[]
+     * @return \Orm\Zed\SalesReturn\Persistence\SpySalesReturnQuery
      */
     public function getSalesReturnPropelQuery(): SpySalesReturnQuery
     {

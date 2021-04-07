@@ -23,7 +23,7 @@ class IndexController extends AbstractController
     public function indexAction(): array
     {
         $myReturnsTable = $this->getFactory()
-            ->createMerchantReturnTable();
+            ->createMyReturnsTable();
 
         return $this->viewResponse([
             'myReturnsTable' => $myReturnsTable->render(),
@@ -36,7 +36,7 @@ class IndexController extends AbstractController
     public function tableAction(): JsonResponse
     {
         $table = $this->getFactory()
-            ->createMerchantReturnTable();
+            ->createMyReturnsTable();
 
         return $this->jsonResponse($table->fetchData());
     }

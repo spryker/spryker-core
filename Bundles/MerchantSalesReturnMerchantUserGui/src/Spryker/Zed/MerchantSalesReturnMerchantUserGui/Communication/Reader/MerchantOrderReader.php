@@ -62,16 +62,16 @@ class MerchantOrderReader implements MerchantOrderReaderInterface
      *
      * @return \Generated\Shared\Transfer\MerchantOrderItemTransfer[]
      */
-    public function findMerchantOrderItems(MerchantOrderItemCriteriaTransfer $merchantOrderItemCriteriaTransfer): array
+    public function getMerchantOrderItems(MerchantOrderItemCriteriaTransfer $merchantOrderItemCriteriaTransfer): array
     {
         $merchantOrderItemTransfers = $this->merchantSalesOrderFacade
             ->getMerchantOrderItemCollection($merchantOrderItemCriteriaTransfer);
 
         $merchantOrderItemTransfers = $this->expandMerchantOrderItemsWithManualEvents($merchantOrderItemTransfers);
         $merchantOrderItemTransfers = $this->expandMerchantOrderItemsStateHistory($merchantOrderItemTransfers);
-        $merchantOrderItemTransfers = $this->getMerchantOrderItemsIndexedByIdOrderItem($merchantOrderItemTransfers);
+        $indexedMerchantOrderItemTransfers = $this->getMerchantOrderItemsIndexedByIdOrderItem($merchantOrderItemTransfers);
 
-        return $merchantOrderItemTransfers;
+        return $indexedMerchantOrderItemTransfers;
     }
 
     /**

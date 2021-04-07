@@ -11,14 +11,23 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ReturnItemTransfer;
 use Generated\Shared\Transfer\ReturnReasonFilterTransfer;
-use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Form\ReturnCreateForm;
 use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Dependency\Facade\MerchantSalesReturnMerchantUserGuiToGlossaryFacadeInterface;
 use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Dependency\Facade\MerchantSalesReturnMerchantUserGuiToSalesReturnFacadeInterface;
 
 class ReturnCreateFormDataProvider
 {
-    public const CUSTOM_REASON = 'Custom reason';
-    public const CUSTOM_REASON_KEY = 'custom_reason';
+    protected const CUSTOM_REASON = 'Custom reason';
+    protected const CUSTOM_REASON_KEY = 'custom_reason';
+
+    /**
+     * @uses \Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Form\ReturnCreateForm::FIELD_RETURN_ITEMS
+     */
+    protected const FIELD_RETURN_ITEMS = 'returnItems';
+
+    /**
+     * @uses \Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Form\ReturnCreateForm::OPTION_RETURN_REASONS
+     */
+    protected const OPTION_RETURN_REASONS = 'option_return_reasons';
 
     /**
      * @var \Spryker\Zed\MerchantSalesReturnMerchantUserGui\Dependency\Facade\MerchantSalesReturnMerchantUserGuiToSalesReturnFacadeInterface
@@ -43,7 +52,7 @@ class ReturnCreateFormDataProvider
     }
 
     /**
-     * @phpstan-return array<string, mixed>
+     * @phpstan-return array<mixed>
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
@@ -54,19 +63,19 @@ class ReturnCreateFormDataProvider
         $orderTransfer = $this->translateReturnPolicyMessages($orderTransfer);
 
         return [
-            ReturnCreateForm::FIELD_RETURN_ITEMS => $this->mapReturnItemTransfers($orderTransfer),
+            static::FIELD_RETURN_ITEMS => $this->mapReturnItemTransfers($orderTransfer),
         ];
     }
 
     /**
-     * @phpstan-return array<string, mixed>
+     * @phpstan-return array<int|string, mixed>
      *
      * @return array
      */
     public function getOptions(): array
     {
         return [
-            ReturnCreateForm::OPTION_RETURN_REASONS => $this->prepareReturnReasonChoices(),
+            static::OPTION_RETURN_REASONS => $this->prepareReturnReasonChoices(),
         ];
     }
 
@@ -96,8 +105,7 @@ class ReturnCreateFormDataProvider
     protected function prepareReturnReasonChoices(): array
     {
         $returnReasonChoices = [];
-        $returnReasonTransfers = $this->salesReturnFacade
-            ->getReturnReasons(new ReturnReasonFilterTransfer())
+        $returnReasonTransfers = $this->salesReturnFacade->getReturnReasons(new ReturnReasonFilterTransfer())
             ->getReturnReasons();
 
         foreach ($returnReasonTransfers as $returnReasonTransfer) {

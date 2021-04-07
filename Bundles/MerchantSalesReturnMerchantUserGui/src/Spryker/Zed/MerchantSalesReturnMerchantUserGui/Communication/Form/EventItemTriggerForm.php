@@ -19,9 +19,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class EventItemTriggerForm extends AbstractType
 {
-    public const OPTION_EVENT = 'OPTION_EVENT';
-    public const OPTION_SUBMIT_BUTTON_CLASS = 'OPTION_SUBMIT_BUTTON_CLASS';
-    public const OPTION_ACTION_QUERY_PARAMETERS = 'OPTION_ACTION_QUERY_PARAMETERS';
+    protected const OPTION_EVENT = 'OPTION_EVENT';
+    protected const OPTION_SUBMIT_BUTTON_CLASS = 'OPTION_SUBMIT_BUTTON_CLASS';
+    protected const OPTION_ACTION_QUERY_PARAMETERS = 'OPTION_ACTION_QUERY_PARAMETERS';
 
     protected const BUTTON_SUBMIT = 'submit';
 
@@ -41,8 +41,7 @@ class EventItemTriggerForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this
-            ->addSubmitButton($builder, $options)
+        $this->addSubmitButton($builder, $options)
             ->setAction($builder, $options);
     }
 
@@ -84,7 +83,7 @@ class EventItemTriggerForm extends AbstractType
     protected function setAction(FormBuilderInterface $builder, array $options)
     {
         $builder->setAction(
-            $this->createAction($options)
+            $this->generateCreateActionUrl($options)
         );
 
         return $this;
@@ -97,7 +96,7 @@ class EventItemTriggerForm extends AbstractType
      *
      * @return string
      */
-    protected function createAction(array $options): string
+    protected function generateCreateActionUrl(array $options): string
     {
         return Url::generate(static::ACTION_ROUTE, $options[static::OPTION_ACTION_QUERY_PARAMETERS]);
     }

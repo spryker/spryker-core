@@ -11,8 +11,7 @@ use Generated\Shared\Transfer\MerchantOmsTriggerRequestTransfer;
 use Generated\Shared\Transfer\MerchantOmsTriggerResponseTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemCollectionTransfer;
 
-class MerchantSalesReturnMerchantUserGuiToMerchantOmsFacadeBridge implements
-    MerchantSalesReturnMerchantUserGuiToMerchantOmsFacadeInterface
+class MerchantSalesReturnMerchantUserGuiToMerchantOmsFacadeBridge implements MerchantSalesReturnMerchantUserGuiToMerchantOmsFacadeInterface
 {
     /**
      * @var \Spryker\Zed\MerchantOms\Business\MerchantOmsFacadeInterface

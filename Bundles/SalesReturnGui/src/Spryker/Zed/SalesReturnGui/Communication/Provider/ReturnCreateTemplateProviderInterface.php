@@ -13,6 +13,8 @@ use Symfony\Component\Form\FormInterface;
 interface ReturnCreateTemplateProviderInterface
 {
     /**
+     * @phpstan-param \Symfony\Component\Form\FormInterface<mixed> $returnCreateForm
+     *
      * @phpstan-return array<string, mixed>
      *
      * @param \Symfony\Component\Form\FormInterface $returnCreateForm

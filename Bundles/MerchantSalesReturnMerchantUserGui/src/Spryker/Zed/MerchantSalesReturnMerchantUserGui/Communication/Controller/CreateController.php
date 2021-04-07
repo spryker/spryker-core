@@ -46,7 +46,7 @@ class CreateController extends AbstractController
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function indexAction(Request $request)
     {
@@ -73,7 +73,7 @@ class CreateController extends AbstractController
         }
 
         $merchantOrderTransfer->setMerchantOrderItems(
-            new ArrayObject($this->findMerchantOrderItems($merchantOrderTransfer))
+            new ArrayObject($this->getMerchantOrderItems($merchantOrderTransfer))
         );
 
         $orderTransfer = $merchantOrderTransfer->getOrderOrFail();
@@ -105,8 +105,8 @@ class CreateController extends AbstractController
     protected function processReturnCreateForm(FormInterface $returnCreateForm, OrderTransfer $orderTransfer)
     {
         $returnResponseTransfer = $this->getFactory()
-            ->createReturnHandler()
-            ->createReturn($returnCreateForm->getData(), $orderTransfer);
+            ->createCreateReturnFormHandler()
+            ->handleForm($returnCreateForm, $orderTransfer);
 
         if ($returnResponseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage(static::MESSAGE_RETURN_CREATED_SUCCESS);
@@ -140,8 +140,7 @@ class CreateController extends AbstractController
             ->setWithItems(true)
             ->setWithOrder(true);
 
-        return $this
-            ->getFactory()
+        return $this->getFactory()
             ->createMerchantOrderReader()
             ->findMerchantOrder($merchantOrderCriteriaTransfer);
     }
@@ -151,19 +150,18 @@ class CreateController extends AbstractController
      *
      * @return \Generated\Shared\Transfer\MerchantOrderItemTransfer[]
      */
-    protected function findMerchantOrderItems(MerchantOrderTransfer $merchantOrderTransfer): array
+    protected function getMerchantOrderItems(MerchantOrderTransfer $merchantOrderTransfer): array
     {
         $merchantOrderItemCriteriaTransfer = new MerchantOrderItemCriteriaTransfer();
 
         foreach ($merchantOrderTransfer->getMerchantOrderItems() as $merchantOrderItem) {
-            $merchantOrderItemCriteriaTransfer->addIdMerchantOrderItem(
+            $merchantOrderItemCriteriaTransfer->addMerchantOrderItemId(
                 $merchantOrderItem->getIdMerchantOrderItemOrFail()
             );
         }
 
-        return $this
-            ->getFactory()
+        return $this->getFactory()
             ->createMerchantOrderReader()
-            ->findMerchantOrderItems($merchantOrderItemCriteriaTransfer);
+            ->getMerchantOrderItems($merchantOrderItemCriteriaTransfer);
     }
 }
