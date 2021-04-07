@@ -26,6 +26,7 @@ use SprykerTest\Zed\Sales\Helper\BusinessHelper;
  * @group Business
  * @group Facade
  * @group CheckConfirmedOrderTest
+ * Add your own group annotations below this line
  */
 class CheckConfirmedOrderTest extends Test
 {
@@ -146,7 +147,7 @@ class CheckConfirmedOrderTest extends Test
             QuoteTransfer::CURRENCY => $currencyTransfer,
             QuoteTransfer::CUSTOMER => $customerTransfer,
             QuoteTransfer::CUSTOMER_REFERENCE => $customerTransfer->getCustomerReference(),
-            QuoteTransfer::ORDER_REFERENCE => static::ORDER_REFERENCE
+            QuoteTransfer::ORDER_REFERENCE => static::ORDER_REFERENCE,
         ]);
 
         return $quoteTransfer;
