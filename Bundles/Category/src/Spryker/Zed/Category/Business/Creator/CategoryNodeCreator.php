@@ -114,8 +114,9 @@ class CategoryNodeCreator implements CategoryNodeCreatorInterface
     {
         $nodeTransfer = $categoryTransfer->getCategoryNodeOrFail()
             ->setIsMain(true)
-            ->setFkParentCategoryNode($categoryTransfer->getParentCategoryNodeOrFail()->getIdCategoryNode())
             ->setFkCategory($categoryTransfer->getIdCategory());
+
+        $nodeTransfer = $this->setParentCategoryNode($nodeTransfer, $categoryTransfer);
 
         $nodeTransfer = $this->categoryEntityManager->createCategoryNode($nodeTransfer);
 
@@ -154,5 +155,23 @@ class CategoryNodeCreator implements CategoryNodeCreatorInterface
         $this->categoryUrlCreator->createLocalizedCategoryUrlsForNode($nodeTransfer, $categoryTransfer->getLocalizedAttributes());
 
         $this->categoryToucher->touchCategoryNodeActiveRecursively($nodeTransfer->getIdCategoryNodeOrFail());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return \Generated\Shared\Transfer\NodeTransfer
+     */
+    protected function setParentCategoryNode(NodeTransfer $nodeTransfer, CategoryTransfer $categoryTransfer): NodeTransfer
+    {
+        $parentCategoryNode = $categoryTransfer->getParentCategoryNode();
+        if ($parentCategoryNode !== null) {
+            return $nodeTransfer->setFkParentCategoryNode($parentCategoryNode->getIdCategoryNode());
+        }
+
+        return $nodeTransfer
+            ->setIsRoot(true)
+            ->setFkParentCategoryNode(null);
     }
 }

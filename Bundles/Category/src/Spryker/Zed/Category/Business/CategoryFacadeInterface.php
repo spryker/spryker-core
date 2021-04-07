@@ -10,9 +10,11 @@ namespace Spryker\Zed\Category\Business;
 use Generated\Shared\Transfer\CategoryCollectionTransfer;
 use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryNodeCriteriaTransfer;
+use Generated\Shared\Transfer\CategoryNodeUrlCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeCollectionTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\UpdateCategoryStoreRelationRequestTransfer;
 
 interface CategoryFacadeInterface
@@ -281,4 +283,29 @@ interface CategoryFacadeInterface
      * @return \Generated\Shared\Transfer\NodeCollectionTransfer
      */
     public function getCategoryNodes(CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer): NodeCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Gets category store relation by `idCategoryNode`.
+     *
+     * @api
+     *
+     * @param int $idCategoryNode
+     *
+     * @return \Generated\Shared\Transfer\StoreRelationTransfer
+     */
+    public function getCategoryStoreRelationByIdCategoryNode(int $idCategoryNode): StoreRelationTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves urls entities from Persistent.
+     * - Filters by category node ids when provided.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CategoryNodeUrlCriteriaTransfer $categoryNodeUrlCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer[]
+     */
+    public function getCategoryNodeUrls(CategoryNodeUrlCriteriaTransfer $categoryNodeUrlCriteriaTransfer): array;
 }

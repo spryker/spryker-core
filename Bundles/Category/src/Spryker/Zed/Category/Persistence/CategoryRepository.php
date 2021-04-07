@@ -184,16 +184,18 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
      */
     public function checkSameLevelCategoryByNameExists(string $nodeName, CategoryTransfer $categoryTransfer): bool
     {
-        return $this->getFactory()->createCategoryNodeQuery()
-            ->setIgnoreCase(true)
-            ->filterByFkParentCategoryNode($categoryTransfer->getParentCategoryNodeOrFail()->getIdCategoryNodeOrFail())
+        $categoryNodeQuery = $this->getFactory()->createCategoryNodeQuery();
+        $categoryNodeQuery = $this->applyParentCategoryNodeFilter($categoryNodeQuery, $categoryTransfer);
+
+        $categoryNodeQuery->setIgnoreCase(true)
             ->useCategoryQuery()
                 ->filterByIdCategory($categoryTransfer->getIdCategory(), Criteria::NOT_EQUAL)
                 ->useAttributeQuery()
                     ->filterByName($nodeName)
                 ->endUse()
-            ->endUse()
-            ->exists();
+            ->endUse();
+
+        return $categoryNodeQuery->exists();
     }
 
     /**
@@ -644,5 +646,27 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
         }
 
         return $categoryClosureTableQuery;
+    }
+
+    /**
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery $categoryNodeQuery
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
+     */
+    protected function applyParentCategoryNodeFilter(SpyCategoryNodeQuery $categoryNodeQuery, CategoryTransfer $categoryTransfer): SpyCategoryNodeQuery
+    {
+        $parentCategoryNodeTransfer = $categoryTransfer->getParentCategoryNode();
+        if ($parentCategoryNodeTransfer === null) {
+            $categoryNodeQuery
+                ->filterByFkParentCategoryNode(null)
+                ->filterByIsRoot(true);
+
+            return $categoryNodeQuery;
+        }
+
+        $categoryNodeQuery->filterByFkParentCategoryNode($parentCategoryNodeTransfer->getIdCategoryNodeOrFail());
+
+        return $categoryNodeQuery;
     }
 }
