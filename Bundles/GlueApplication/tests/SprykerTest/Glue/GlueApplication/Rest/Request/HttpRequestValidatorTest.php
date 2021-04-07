@@ -9,12 +9,11 @@ namespace SprykerTest\Glue\GlueApplication\Rest\Request;
 
 use Codeception\Test\Unit;
 use Spryker\Glue\GlueApplication\GlueApplicationConfig;
-use Spryker\Glue\GlueApplication\Plugin\GlueApplication\HeadersValidateHttpRequestPlugin;
+use Spryker\Glue\GlueApplication\Rest\Request\HeadersHttpRequestValidator;
 use Spryker\Glue\GlueApplication\Rest\Request\HttpRequestValidator;
 use Spryker\Glue\GlueApplication\Rest\Request\HttpRequestValidatorInterface;
 use Spryker\Glue\GlueApplication\Rest\RequestConstantsInterface;
 use Spryker\Glue\GlueApplication\Rest\ResourceRouteLoaderInterface;
-use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ValidateHttpRequestPluginInterface;
 use Symfony\Component\HttpFoundation\HeaderBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -38,22 +37,13 @@ class HttpRequestValidatorTest extends Unit
      */
     public function testValidateAccessControllRequestHeaderError(): void
     {
-        $request = Request::create(
-            '/',
-            Request::METHOD_GET,
-            [],
-            [],
-            [],
-            [
-                'HTTP_CONTENT-TYPE' => 'application/vnd.api+json; version=1.0',
-                'HTTP_ACCEPT' => 'application/vnd.api+json; version=1.0',
-                'HTTP_' . RequestConstantsInterface::HEADER_ACCESS_CONTROL_REQUEST_HEADER => 'INVALID',
-            ]
-        );
-
-        $httpRequestValidator = $this->createHttpRequestValidator([
-            new HeadersValidateHttpRequestPlugin(),
+        $request = $this->createRequestWithHeaders([
+            'HTTP_CONTENT-TYPE' => 'application/vnd.api+json; version=1.0',
+            'HTTP_ACCEPT' => 'application/vnd.api+json; version=1.0',
+            'HTTP_' . RequestConstantsInterface::HEADER_ACCESS_CONTROL_REQUEST_HEADER => 'INVALID',
         ]);
+
+        $httpRequestValidator = $this->createHttpRequestValidator();
 
         $restErrorMessageTransfer = $httpRequestValidator->validate($request);
 
@@ -65,25 +55,16 @@ class HttpRequestValidatorTest extends Unit
      */
     public function testValidateAccessControllRequestMethodError(): void
     {
-        $request = Request::create(
-            '/',
-            Request::METHOD_GET,
-            [],
-            [],
-            [],
-            [
-                'HTTP_CONTENT-TYPE' => 'application/vnd.api+json; version=1.0',
-                'HTTP_ACCEPT' => 'application/vnd.api+json; version=1.0',
-                'HTTP_' . RequestConstantsInterface::HEADER_ACCESS_CONTROL_REQUEST_METHOD => 'INVALID',
-            ]
-        );
+        $request = $this->createRequestWithHeaders([
+            'HTTP_CONTENT-TYPE' => 'application/vnd.api+json; version=1.0',
+            'HTTP_ACCEPT' => 'application/vnd.api+json; version=1.0',
+            'HTTP_' . RequestConstantsInterface::HEADER_ACCESS_CONTROL_REQUEST_METHOD => 'INVALID',
+        ]);
 
         $request->attributes->set(RequestConstantsInterface::ATTRIBUTE_TYPE, 'invalid');
         $request->attributes->set(RequestConstantsInterface::ATTRIBUTE_ALL_RESOURCES, []);
 
-        $httpRequestValidator = $this->createHttpRequestValidator([
-            new HeadersValidateHttpRequestPlugin(),
-        ]);
+        $httpRequestValidator = $this->createHttpRequestValidator();
 
         $restErrorMessageTransfer = $httpRequestValidator->validate($request);
 
@@ -97,9 +78,7 @@ class HttpRequestValidatorTest extends Unit
     {
         $request = Request::create('/');
 
-        $httpRequestValidator = $this->createHttpRequestValidator([
-            new HeadersValidateHttpRequestPlugin(new GlueApplicationConfig()),
-        ]);
+        $httpRequestValidator = $this->createHttpRequestValidator();
 
         $restErrorMessageTransfer = $httpRequestValidator->validate($request);
 
@@ -113,9 +92,7 @@ class HttpRequestValidatorTest extends Unit
     {
         $request = $this->createRequestWithMockedHeaders();
 
-        $httpRequestValidator = $this->createHttpRequestValidator([
-            new HeadersValidateHttpRequestPlugin(new GlueApplicationConfig()),
-        ]);
+        $httpRequestValidator = $this->createHttpRequestValidator();
 
         $restErrorMessageTransfer = $httpRequestValidator->validate($request);
 
@@ -129,7 +106,7 @@ class HttpRequestValidatorTest extends Unit
     {
         $request = $this->createRequestWithMockedHeaders();
 
-        $httpRequestValidator = $this->createHttpRequestValidator();
+        $httpRequestValidator = $this->createHttpRequestValidator(false);
 
         $this->assertNull($httpRequestValidator->validate($request));
     }
@@ -139,52 +116,59 @@ class HttpRequestValidatorTest extends Unit
      */
     public function testValidateMustExecuteValidationPluginsWhenProvider(): void
     {
-        $request = Request::create(
-            '/',
-            Request::METHOD_GET,
-            [],
-            [],
-            [],
-            [
-                'HTTP_CONTENT-TYPE' => 'application/vnd.api+json; version=1.0',
-                'HTTP_ACCEPT' => 'application/vnd.api+json; version=1.0',
-            ]
-        );
-        $httpValidatorPluginMock = $this->getMockBuilder(ValidateHttpRequestPluginInterface::class)
-            ->setMethods(['validate'])
-            ->getMock();
+        $request = $this->createRequestWithHeaders([
+            'HTTP_CONTENT-TYPE' => 'application/vnd.api+json; version=1.0',
+            'HTTP_ACCEPT' => 'application/vnd.api+json; version=1.0',
+        ]);
 
-        $httpValidatorPluginMock
-            ->expects($this->once())
-            ->method('validate');
-
-        $httpRequestValidator = $this->createHttpRequestValidator([$httpValidatorPluginMock]);
+        $httpRequestValidator = $this->createHttpRequestValidator();
         $httpRequestValidator->validate($request);
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ValidateHttpRequestPluginInterface[] $validatorPlugins
+     * @param bool $headerValidationEnabled
      *
      * @return \Spryker\Glue\GlueApplication\Rest\Request\HttpRequestValidatorInterface
      */
-    public function createHttpRequestValidator(array $validatorPlugins = []): HttpRequestValidatorInterface
+    public function createHttpRequestValidator(bool $headerValidationEnabled = true): HttpRequestValidatorInterface
     {
-        return new HttpRequestValidator($validatorPlugins, $this->createResourceRouteLoaderMock(), new GlueApplicationConfig());
+        $resourceRouteLoaderMock = $this->createResourceRouteLoaderMock();
+        $glueApplicationConfigMock = $this->getMockBuilder(GlueApplicationConfig::class)
+            ->getMock();
+
+        $glueApplicationConfigMock->expects($this->any())
+            ->method('getValidateRequestHeaders')
+            ->willReturn($headerValidationEnabled);
+
+        return new HttpRequestValidator(
+            [],
+            $resourceRouteLoaderMock,
+            $glueApplicationConfigMock,
+            new HeadersHttpRequestValidator(
+                new GlueApplicationConfig(),
+                $resourceRouteLoaderMock
+            )
+        );
     }
 
     /**
+     * @param array $headers
+     *
+     * @return \Symfony\Component\HttpFoundation\Request;
+     */
+    protected function createRequestWithHeaders(array $headers)
+    {
+        return Request::create('/', Request::METHOD_GET, [], [], [], $headers);
+    }
+
+    /**
+     * @param array $headers
+     *
      * @return \Symfony\Component\HttpFoundation\Request;
      */
     protected function createRequestWithMockedHeaders(array $headers = []): Request
     {
-        $request = Request::create(
-            '/',
-            Request::METHOD_GET,
-            [],
-            [],
-            [],
-            []
-        );
+        $request = Request::create('/', Request::METHOD_GET, [], [], [], []);
 
         $request->headers = $this->getMockBuilder(HeaderBag::class)
             ->disableOriginalConstructor()
