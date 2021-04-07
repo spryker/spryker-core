@@ -9,7 +9,6 @@ namespace Spryker\Zed\Oauth\Communication\Plugin\Oauth;
 
 use Generated\Shared\Transfer\OauthGrantTypeConfigurationTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Oauth\Business\Model\League\Grant\PasswordGrantType;
 use Spryker\Zed\Oauth\Business\Model\League\Grant\PasswordGrantTypeBuilder;
 use Spryker\Zed\Oauth\OauthConfig;
 use Spryker\Zed\OauthExtension\Dependency\Plugin\OauthGrantTypeConfigurationProviderPluginInterface;
