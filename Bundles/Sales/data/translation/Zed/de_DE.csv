@@ -44,7 +44,7 @@ State,Status
 "Sub total",Zwischensumme
 Subtotal,Zwischensumme
 Totals,Gesamtsummen
-"Trigger all matching states","Alle passenden Status anstoßen"
+"Trigger all matching states","Alle passenden Status auslösen"
 "Trigger event","Event auslösen"
 "Unique Product Quantity","Anzahl der Produkte"
 "Unit Price",Stückpreis

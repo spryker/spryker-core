@@ -4,7 +4,6 @@
 "Return was successfully created.","Retoure erfolgreich erstellt."
 "Return has not been created.","Retoure wurde nicht erstellt."
 "Requested return with ID %id% was not found.","Angefragte Retoure mit ID %id% konnte nicht gefunden werden."
-"Merchant for current user not found.","Kein Marktplatz-Benutzer für den aktuellen Benutzer gefunden."
 "Status change triggered successfully.","Die Statusänderung wurde erfolgreich ausgelöst."
 "Request is invalid","Ungültige Anfrage"
 "Parameter redirect not found.","Parameter Weiterleitung nicht gefunden."
@@ -24,7 +23,7 @@ Sku,Sku
 "incl. %tax_amount% % tax","Inkl. %tax_amount% % Mehrwertsteuer"
 "Show history","Historie anzeigen"
 "Hide history","Historie ausblenden"
-"Create Return","Rückgabe erstellen"
+"Create Return","Retoure erstellen"
 "Back to Order","Zurück zur Bestellung"
 "Merchant Order Reference",Händlerbestellreferenz
 "Merchant Order References",Händlerbestellreferenzen
@@ -34,7 +33,7 @@ Quantity,Anzahl
 Price,Preis
 Total,Summe
 "Return policy",Rücknahmegarantie
-State,Zustand
+"Create return","Retoure erstellen"
 Customer,Kunde
 "Customer Reference",Kundenreferenz
 Name,Name
@@ -42,7 +41,7 @@ Email,E-Mail
 "General information","Allgemeine Informationen"
 "Returned Items","Retournierte Artikel"
 Reason,Grund
-"Trigger all matching states","Alle passenden Status anstoßen"
+"Trigger all matching states","Alle passenden Status auslösen"
 of,von
 "selected items","ausgewählte Artikel"
 "Trigger event","Event auslösen"

@@ -4,7 +4,6 @@
 "Return was successfully created.","Return was successfully created."
 "Return has not been created.","Return has not been created."
 "Requested return with ID %id% was not found.","Requested return with ID %id% was not found."
-"Merchant for current user not found.","Merchant for current user not found."
 "Status change triggered successfully.","Status change triggered successfully."
 "Request is invalid","Request is invalid"
 "Parameter redirect not found.","Parameter redirect not found."
@@ -34,7 +33,6 @@ Quantity,Quantity
 Price,Price
 Total,Total
 "Return policy","Return policy"
-State,State
 "Create return","Create return"
 Customer,Customer
 "Customer Reference","Customer Reference"
