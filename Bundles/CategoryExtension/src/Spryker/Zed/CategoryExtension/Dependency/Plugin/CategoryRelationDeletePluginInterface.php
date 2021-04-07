@@ -19,5 +19,5 @@ interface CategoryRelationDeletePluginInterface
      *
      * @return void
      */
-    public function delete(int $idCategory);
+    public function delete($idCategory);
 }
