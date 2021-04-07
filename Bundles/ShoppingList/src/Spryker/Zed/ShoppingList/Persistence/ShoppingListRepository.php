@@ -159,7 +159,7 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
      */
     public function findCustomerShoppingLists(string $customerReference): ShoppingListCollectionTransfer
     {
-        $shoppingListsQuery = $this->createCustomerShoppingListQuery($customerReference);
+        $shoppingListsQuery = $this->createCustomerShoppingListWithoutItemsQuery($customerReference);
         $shoppingListsEntityTransferCollection = $this->buildQueryFromCriteria($shoppingListsQuery)->find();
 
         return $this->getFactory()
@@ -533,5 +533,35 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
             ->createShoppingListCompanyBusinessUnitQuery()
             ->filterByFkCompanyBusinessUnit($idCompanyBusinessUnit)
             ->exists();
+    }
+
+    /**
+     * @module Customer
+     *
+     * @param string $customerReference
+     *
+     * @return \Orm\Zed\ShoppingList\Persistence\SpyShoppingListQuery
+     */
+    protected function createCustomerShoppingListWithoutItemsQuery(string $customerReference)
+    {
+        return $this->getFactory()
+            ->createShoppingListQuery()
+            ->addJoin(SpyShoppingListTableMap::COL_CUSTOMER_REFERENCE, SpyCustomerTableMap::COL_CUSTOMER_REFERENCE, Criteria::LEFT_JOIN)
+            ->leftJoinSpyShoppingListItem()
+            ->clearSelectColumns()
+            ->addSelfSelectColumns(true)
+            ->withColumn(SpyCustomerTableMap::COL_FIRST_NAME, ShoppingListMapper::FIELD_FIRST_NAME)
+            ->withColumn(SpyCustomerTableMap::COL_LAST_NAME, ShoppingListMapper::FIELD_LAST_NAME)
+            ->withColumn(sprintf('SUM(%s)', SpyShoppingListItemTableMap::COL_QUANTITY), ShoppingListMapper::FIELD_NUMBER_OF_ITEMS)
+            ->groupByCreatedAt()
+            ->groupByCustomerReference()
+            ->groupByDescription()
+            ->groupByIdShoppingList()
+            ->groupByKey()
+            ->groupByName()
+            ->groupByUpdatedAt()
+            ->groupByUuid()
+            ->filterByCustomerReference($customerReference)
+            ->orderByIdShoppingList();
     }
 }
