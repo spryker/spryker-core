@@ -7,49 +7,16 @@
 
 namespace Spryker\Zed\CategoryStorage\Business\Writer;
 
+use Generated\Shared\Transfer\CategoryNodeCriteriaTransfer;
+
 interface CategoryNodeStorageWriterInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
-     *
-     * @return void
-     */
-    public function writeCategoryNodeStorageCollectionByCategoryStoreEvents(array $eventEntityTransfers): void;
-
-    /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
-     *
-     * @return void
-     */
-    public function writeCategoryNodeStorageCollectionByCategoryAttributeEvents(array $eventEntityTransfers): void;
-
-    /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
-     *
-     * @return void
-     */
-    public function writeCategoryNodeStorageCollectionByCategoryStorePublishEvents(array $eventEntityTransfers): void;
-
-    /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
-     *
-     * @return void
-     */
-    public function writeCategoryNodeStorageCollectionByCategoryEvents(array $eventEntityTransfers): void;
-
     /**
      * @param int[] $categoryNodeIds
      *
      * @return void
      */
     public function writeCategoryNodeStorageCollection(array $categoryNodeIds): void;
-
-    /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
-     *
-     * @return void
-     */
-    public function writeCategoryNodeStorageCollectionByCategoryTemplateEvents(array $eventEntityTransfers): void;
 
     /**
      * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
@@ -64,4 +31,11 @@ interface CategoryNodeStorageWriterInterface
      * @return void
      */
     public function writeCategoryNodeStorageCollectionByCategoryNodeEvents(array $eventEntityTransfers): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
+     *
+     * @return void
+     */
+    public function writeCategoryNodeStorageCollectionByCategoryNodeCriteria(CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer): void;
 }

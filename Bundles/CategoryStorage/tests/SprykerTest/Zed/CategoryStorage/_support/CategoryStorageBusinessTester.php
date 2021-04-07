@@ -76,7 +76,7 @@ class CategoryStorageBusinessTester extends Actor
      *
      * @return \Orm\Zed\CategoryStorage\Persistence\SpyCategoryTreeStorage[]|\Propel\Runtime\Collection\ObjectCollection
      */
-    public function findCategoryTreeStorageEntetiesByLocalizedCategoryAndStoreName(CategoryTransfer $categoryTransfer, string $storeName): ObjectCollection
+    public function findCategoryTreeStorageEntitiesByLocalizedCategoryAndStoreName(CategoryTransfer $categoryTransfer, string $storeName): ObjectCollection
     {
         return $this->createSpyCategoryTreeStorageQueryByLocalizedCategoryAndStoreName($categoryTransfer, $storeName)->find();
     }

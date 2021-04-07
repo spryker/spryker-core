@@ -21,7 +21,7 @@ use Spryker\Zed\ProductCategoryStorage\Communication\Plugin\Event\Listener\Produ
 use Spryker\Zed\Url\Dependency\UrlEvents;
 
 /**
- * @deprecated This will be deleted in the next major without replacement.
+ * @deprecated Will be removed in the next major without replacement, registration of plugins now takes place in {@link \Pyz\Zed\Publisher\PublisherDependencyProvider::getPublisherPlugins()}.
  *
  * @method \Spryker\Zed\ProductCategoryStorage\Communication\ProductCategoryStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductCategoryStorage\Business\ProductCategoryStorageFacadeInterface getFacade()

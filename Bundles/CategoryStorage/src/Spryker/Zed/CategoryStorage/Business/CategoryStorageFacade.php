@@ -21,7 +21,7 @@ class CategoryStorageFacade extends AbstractFacade implements CategoryStorageFac
      *
      * @api
      *
-     * @deprecated This will be deleted in the next major without replacement.
+     * @deprecated Will be removed in the next major without replacement.
      *
      * @param int[] $categoryNodeIds
      *
@@ -37,7 +37,7 @@ class CategoryStorageFacade extends AbstractFacade implements CategoryStorageFac
      *
      * @api
      *
-     * @deprecated This will be deleted in the next major without replacement.
+     * @deprecated Will be removed in the next major without replacement.
      *
      * @param int[] $categoryNodeIds
      *
@@ -88,7 +88,7 @@ class CategoryStorageFacade extends AbstractFacade implements CategoryStorageFac
     public function writeCategoryNodeStorageCollectionByCategoryStoreEvents(array $eventEntityTransfers): void
     {
         $this->getFactory()
-            ->createCategoryNodeStorageWriter()
+            ->createCategoryNodeStorageByCategoryStoreEventsWriter()
             ->writeCategoryNodeStorageCollectionByCategoryStoreEvents($eventEntityTransfers);
     }
 
@@ -104,7 +104,7 @@ class CategoryStorageFacade extends AbstractFacade implements CategoryStorageFac
     public function writeCategoryNodeStorageCollectionByCategoryStorePublishEvents(array $eventEntityTransfers): void
     {
         $this->getFactory()
-            ->createCategoryNodeStorageWriter()
+            ->createCategoryNodeStorageByCategoryStoreEventsWriter()
             ->writeCategoryNodeStorageCollectionByCategoryStorePublishEvents($eventEntityTransfers);
     }
 
@@ -178,7 +178,7 @@ class CategoryStorageFacade extends AbstractFacade implements CategoryStorageFac
     public function writeCategoryNodeStorageCollectionByCategoryAttributeEvents(array $eventEntityTransfers): void
     {
         $this->getFactory()
-            ->createCategoryNodeStorageWriter()
+            ->createCategoryNodeStorageByCategoryAttributeEventsWriter()
             ->writeCategoryNodeStorageCollectionByCategoryAttributeEvents($eventEntityTransfers);
     }
 
@@ -194,7 +194,7 @@ class CategoryStorageFacade extends AbstractFacade implements CategoryStorageFac
     public function writeCategoryNodeStorageCollectionByCategoryEvents(array $eventEntityTransfers): void
     {
         $this->getFactory()
-            ->createCategoryNodeStorageWriter()
+            ->createCategoryNodeStorageByCategoryEventsWriter()
             ->writeCategoryNodeStorageCollectionByCategoryEvents($eventEntityTransfers);
     }
 
@@ -210,7 +210,7 @@ class CategoryStorageFacade extends AbstractFacade implements CategoryStorageFac
     public function writeCategoryNodeStorageCollectionByCategoryTemplateEvents(array $eventEntityTransfers): void
     {
         $this->getFactory()
-            ->createCategoryNodeStorageWriter()
+            ->createCategoryNodeStorageByCategoryTemplateEventsWriter()
             ->writeCategoryNodeStorageCollectionByCategoryTemplateEvents($eventEntityTransfers);
     }
 
@@ -258,7 +258,7 @@ class CategoryStorageFacade extends AbstractFacade implements CategoryStorageFac
     public function deleteCategoryNodeStorageCollectionByCategoryAttributeEvents(array $eventEntityTransfers): void
     {
         $this->getFactory()
-            ->createCategoryNodeStorageDeleter()
+            ->createCategoryNodeStorageByCategoryAttributeEventsDeleter()
             ->deleteCategoryNodeStorageCollectionByCategoryAttributeEvents($eventEntityTransfers);
     }
 
@@ -274,7 +274,7 @@ class CategoryStorageFacade extends AbstractFacade implements CategoryStorageFac
     public function deleteCategoryNodeStorageCollectionByCategoryTemplateEvents(array $eventEntityTransfers): void
     {
         $this->getFactory()
-            ->createCategoryNodeStorageDeleter()
+            ->createCategoryNodeStorageByCategoryTemplateEventsDeleter()
             ->deleteCategoryNodeStorageCollectionByCategoryTemplateEvents($eventEntityTransfers);
     }
 
@@ -290,7 +290,7 @@ class CategoryStorageFacade extends AbstractFacade implements CategoryStorageFac
     public function deleteCategoryNodeStorageCollectionByCategoryEvents(array $eventEntityTransfers): void
     {
         $this->getFactory()
-            ->createCategoryNodeStorageDeleter()
+            ->createCategoryNodeStorageByCategoryEventsDeleter()
             ->deleteCategoryNodeStorageCollectionByCategoryEvents($eventEntityTransfers);
     }
 

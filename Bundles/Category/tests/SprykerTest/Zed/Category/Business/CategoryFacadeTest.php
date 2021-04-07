@@ -676,7 +676,7 @@ class CategoryFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetCategoryNodesByFilterWillReturnCategoryNodesData(): void
+    public function testGetCategoryNodesWithFilterWillReturnCategoryNodesData(): void
     {
         // Arrange
         $expectedCount = 1;
@@ -695,35 +695,14 @@ class CategoryFacadeTest extends Unit
             ->setLimit($expectedCount)
             ->setOffset(0);
 
+        $categoryNodeCriteriaTransfer = (new CategoryNodeCriteriaTransfer())
+            ->setFilter($filterTransfer);
+
         // Act
-        $nodeCollectionTransfer = $this->getFacade()->getCategoryNodesByFilter($filterTransfer);
+        $nodeCollectionTransfer = $this->getFacade()->getCategoryNodes($categoryNodeCriteriaTransfer);
 
         // Assert
         $this->assertCount($expectedCount, $nodeCollectionTransfer->getNodes(), sprintf('Exactly %d category nodes should be found.', $expectedCount));
-    }
-
-    /**
-     * @return void
-     */
-    public function testGetCategoryIdsByNodeIdsWillReturnCategoryIdsFilteredByNodeIds(): void
-    {
-        // Arrange
-        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::TEST_STORE_DE]);
-
-        $categoryTransfer = $this->tester->haveCategory();
-        $this->tester->haveCategoryStoreRelation($categoryTransfer->getIdCategory(), $storeTransfer->getIdStore());
-
-        $expectedCategoriesIds = [
-            $categoryTransfer->getIdCategory(),
-        ];
-
-        // Act
-        $categoriesIds = $this->getFacade()->getCategoryIdsByNodeIds([
-            $categoryTransfer->getCategoryNode()->getIdCategoryNode(),
-        ]);
-
-        // Assert
-        $this->assertSame($expectedCategoriesIds, $categoriesIds, 'Found categories IDs are different from expected.');
     }
 
     /**

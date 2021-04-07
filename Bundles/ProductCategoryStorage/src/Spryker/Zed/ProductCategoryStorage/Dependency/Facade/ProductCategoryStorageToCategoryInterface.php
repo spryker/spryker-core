@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\ProductCategoryStorage\Dependency\Facade;
 
+use Generated\Shared\Transfer\CategoryNodeCriteriaTransfer;
+use Generated\Shared\Transfer\NodeCollectionTransfer;
+
 interface ProductCategoryStorageToCategoryInterface
 {
     /**
@@ -17,9 +20,9 @@ interface ProductCategoryStorageToCategoryInterface
     public function getAllNodesByIdCategory(int $idCategory): array;
 
     /**
-     * @param int[] $categoryNodeIds
+     * @param \Generated\Shared\Transfer\CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
      *
-     * @return int[]
+     * @return \Generated\Shared\Transfer\NodeCollectionTransfer
      */
-    public function getCategoryIdsByNodeIds(array $categoryNodeIds): array;
+    public function getCategoryNodes(CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer): NodeCollectionTransfer;
 }

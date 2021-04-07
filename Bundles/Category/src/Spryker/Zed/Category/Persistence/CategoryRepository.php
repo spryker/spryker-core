@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\CategoryNodeCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryNodeUrlCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryNodeUrlPathCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
-use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeCollectionTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
@@ -537,6 +536,13 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
             $categoryNodeQuery->filterByIsMain($categoryNodeCriteriaTransfer->getIsMain());
         }
 
+        $filterTransfer = $categoryNodeCriteriaTransfer->getFilter();
+        if ($filterTransfer !== null) {
+            $categoryNodeQuery = $this
+                ->buildQueryFromCriteria($categoryNodeQuery, $filterTransfer)
+                ->setFormatter(ModelCriteria::FORMAT_OBJECT);
+        }
+
         return $categoryNodeQuery;
     }
 
@@ -592,41 +598,6 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
         return $this->getFactory()
             ->createCategoryNodeMapper()
             ->mapCategoryNode($categoryNodeEntity, new NodeTransfer());
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     *
-     * @return \Generated\Shared\Transfer\NodeCollectionTransfer
-     */
-    public function getCategoryNodesByFilter(FilterTransfer $filterTransfer): NodeCollectionTransfer
-    {
-        $query = $this->getFactory()->createCategoryNodeQuery();
-        $categoryNodeEnteties = $this->buildQueryFromCriteria($query, $filterTransfer)
-            ->setFormatter(ModelCriteria::FORMAT_OBJECT)
-            ->find();
-
-        return $this->getFactory()
-            ->createCategoryNodeMapper()
-            ->mapNodeCollection($categoryNodeEnteties, (new NodeCollectionTransfer()));
-    }
-
-    /**
-     * @param int[] $categoryNodeIds
-     *
-     * @return int[]
-     */
-    public function getCategoryIdsByNodeIds(array $categoryNodeIds): array
-    {
-        $categoryIds = $this->getFactory()
-            ->createCategoryNodeQuery()
-            ->select(SpyCategoryNodeTableMap::COL_FK_CATEGORY)
-            ->filterByIdCategoryNode_In($categoryNodeIds)
-            ->orderBy(SpyCategoryNodeTableMap::COL_NODE_ORDER, Criteria::DESC)
-            ->find()
-            ->getData();
-
-        return array_map('intval', $categoryIds);
     }
 
     /**

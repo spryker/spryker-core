@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CategoryCollectionTransfer;
 use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryNodeCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
-use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeCollectionTransfer;
 use Generated\Shared\Transfer\UpdateCategoryStoreRelationRequestTransfer;
@@ -282,28 +281,4 @@ interface CategoryFacadeInterface
      * @return \Generated\Shared\Transfer\NodeCollectionTransfer
      */
     public function getCategoryNodes(CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer): NodeCollectionTransfer;
-
-    /**
-     * Specification:
-     * - Retrieves category nodes by filter.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     *
-     * @return \Generated\Shared\Transfer\NodeCollectionTransfer
-     */
-    public function getCategoryNodesByFilter(FilterTransfer $filterTransfer): NodeCollectionTransfer;
-
-    /**
-     * Specification:
-     * - Retrieves category ids by category nodes ids.
-     *
-     * @api
-     *
-     * @param int[] $categoryNodeIds
-     *
-     * @return int[]
-     */
-    public function getCategoryIdsByNodeIds(array $categoryNodeIds): array;
 }

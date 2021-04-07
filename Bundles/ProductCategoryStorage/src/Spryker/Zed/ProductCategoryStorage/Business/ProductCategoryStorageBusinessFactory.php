@@ -16,6 +16,18 @@ use Spryker\Zed\ProductCategoryStorage\Business\Reader\ProductAbstractReader;
 use Spryker\Zed\ProductCategoryStorage\Business\Reader\ProductAbstractReaderInterface;
 use Spryker\Zed\ProductCategoryStorage\Business\Reader\ProductCategoryStorageReader;
 use Spryker\Zed\ProductCategoryStorage\Business\Reader\ProductCategoryStorageReaderInterface;
+use Spryker\Zed\ProductCategoryStorage\Business\Writer\Category\ProductCategoryStorageByCategoryEventsWriter;
+use Spryker\Zed\ProductCategoryStorage\Business\Writer\Category\ProductCategoryStorageByCategoryEventsWriterInterface;
+use Spryker\Zed\ProductCategoryStorage\Business\Writer\Category\ProductCategoryStorageByCategoryStoreEventsWriter;
+use Spryker\Zed\ProductCategoryStorage\Business\Writer\Category\ProductCategoryStorageByCategoryStoreEventsWriterInterface;
+use Spryker\Zed\ProductCategoryStorage\Business\Writer\CategoryAttribute\ProductCategoryStorageByCategoryAttributeEventsWriter;
+use Spryker\Zed\ProductCategoryStorage\Business\Writer\CategoryAttribute\ProductCategoryStorageByCategoryAttributeEventsWriterInterface;
+use Spryker\Zed\ProductCategoryStorage\Business\Writer\CategoryNode\ProductCategoryStorageByCategoryNodeEventsWriter;
+use Spryker\Zed\ProductCategoryStorage\Business\Writer\CategoryNode\ProductCategoryStorageByCategoryNodeEventsWriterInterface;
+use Spryker\Zed\ProductCategoryStorage\Business\Writer\CategoryUrl\ProductCategoryStorageByCategoryUrlEventsWriter;
+use Spryker\Zed\ProductCategoryStorage\Business\Writer\CategoryUrl\ProductCategoryStorageByCategoryUrlEventsWriterInterface;
+use Spryker\Zed\ProductCategoryStorage\Business\Writer\ProductCategory\ProductCategoryStorageByProductCategoryEventsWriter;
+use Spryker\Zed\ProductCategoryStorage\Business\Writer\ProductCategory\ProductCategoryStorageByProductCategoryEventsWriterInterface;
 use Spryker\Zed\ProductCategoryStorage\Business\Writer\ProductCategoryStorageWriter;
 use Spryker\Zed\ProductCategoryStorage\Business\Writer\ProductCategoryStorageWriterInterface;
 use Spryker\Zed\ProductCategoryStorage\Dependency\Facade\ProductCategoryStorageToCategoryInterface;
@@ -40,7 +52,6 @@ class ProductCategoryStorageBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->getEntityManager(),
             $this->getStoreFacade(),
-            $this->getEventBehaviorFacade(),
             $this->createProductAbstractReader(),
             $this->createProductCategoryStorageReader(),
             $this->getCategoryFacade()
@@ -112,5 +123,73 @@ class ProductCategoryStorageBusinessFactory extends AbstractBusinessFactory
     public function getEventBehaviorFacade(): ProductCategoryStorageToEventBehaviorFacadeInterface
     {
         return $this->getProvidedDependency(ProductCategoryStorageDependencyProvider::FACADE_EVENT_BEHAVIOR);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductCategoryStorage\Business\Writer\Category\ProductCategoryStorageByCategoryEventsWriterInterface
+     */
+    public function createProductCategoryStorageByCategoryEventsWriter(): ProductCategoryStorageByCategoryEventsWriterInterface
+    {
+        return new ProductCategoryStorageByCategoryEventsWriter(
+            $this->getEventBehaviorFacade(),
+            $this->createProductCategoryStorageWriter()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductCategoryStorage\Business\Writer\Category\ProductCategoryStorageByCategoryStoreEventsWriterInterface
+     */
+    public function createProductCategoryStorageByCategoryStoreEventsWriter(): ProductCategoryStorageByCategoryStoreEventsWriterInterface
+    {
+        return new ProductCategoryStorageByCategoryStoreEventsWriter(
+            $this->getEventBehaviorFacade(),
+            $this->createProductAbstractReader(),
+            $this->createProductCategoryStorageWriter()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductCategoryStorage\Business\Writer\CategoryAttribute\ProductCategoryStorageByCategoryAttributeEventsWriterInterface
+     */
+    public function createProductCategoryStorageByCategoryAttributeEventsWriter(): ProductCategoryStorageByCategoryAttributeEventsWriterInterface
+    {
+        return new ProductCategoryStorageByCategoryAttributeEventsWriter(
+            $this->getEventBehaviorFacade(),
+            $this->createProductCategoryStorageWriter()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductCategoryStorage\Business\Writer\CategoryNode\ProductCategoryStorageByCategoryNodeEventsWriterInterface
+     */
+    public function createProductCategoryStorageByCategoryNodeEventsWriter(): ProductCategoryStorageByCategoryNodeEventsWriterInterface
+    {
+        return new ProductCategoryStorageByCategoryNodeEventsWriter(
+            $this->getEventBehaviorFacade(),
+            $this->createProductCategoryStorageWriter()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductCategoryStorage\Business\Writer\CategoryUrl\ProductCategoryStorageByCategoryUrlEventsWriterInterface
+     */
+    public function createProductCategoryStorageByCategoryUrlEventsWriter(): ProductCategoryStorageByCategoryUrlEventsWriterInterface
+    {
+        return new ProductCategoryStorageByCategoryUrlEventsWriter(
+            $this->getEventBehaviorFacade(),
+            $this->getCategoryFacade(),
+            $this->createProductCategoryStorageWriter()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductCategoryStorage\Business\Writer\ProductCategory\ProductCategoryStorageByProductCategoryEventsWriterInterface
+     */
+    public function createProductCategoryStorageByProductCategoryEventsWriter(): ProductCategoryStorageByProductCategoryEventsWriterInterface
+    {
+        return new ProductCategoryStorageByProductCategoryEventsWriter(
+            $this->getEventBehaviorFacade(),
+            $this->createProductCategoryStorageWriter()
+        );
     }
 }

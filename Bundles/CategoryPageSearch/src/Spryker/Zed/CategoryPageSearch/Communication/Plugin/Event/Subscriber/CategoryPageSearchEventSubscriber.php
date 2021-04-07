@@ -21,7 +21,7 @@ use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @deprecated This will be deleted in the next major without replacement.
+ * @deprecated Will be removed in the next major without replacement, registration of plugins now takes place in {@link \Pyz\Zed\Publisher\PublisherDependencyProvider::getPublisherPlugins()}.
  *
  * @method \Spryker\Zed\CategoryPageSearch\Communication\CategoryPageSearchCommunicationFactory getFactory()
  * @method \Spryker\Zed\CategoryPageSearch\Business\CategoryPageSearchFacadeInterface getFacade()

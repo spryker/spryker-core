@@ -86,6 +86,7 @@
         <property name="isRoot" type="bool"/>
         <property name="isMain" type="bool"/>
         <property name="withRelations" type="bool"/>
+        <property name="filter" type="Filter"/>
     </transfer>
 
     <transfer name="Image">

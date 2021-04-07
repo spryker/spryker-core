@@ -248,27 +248,22 @@ class CategoryPageSearchFacadeTest extends Unit
     public function testFindSynchronizationDataTransfersByCategoryNodeIdsWillReturnDataFilteredByIds(): void
     {
         // Arrange
-        $expectedCategoryNodeIds = [];
-        for ($i = 0; $i < 3; $i++) {
-            $categoryTransfer = $this->tester->haveLocalizedCategoryWithStoreRelation();
+        $categoryTransfer = $this->tester->haveLocalizedCategoryWithStoreRelation();
 
-            $categoryNodeId = $categoryTransfer->getCategoryNode()->getIdCategoryNode();
-            $this->tester->haveCategoryNodePageSearchByLocalizedCategory($categoryTransfer, [
-                static::KEY_CATEGORY_NODE_ID => $categoryNodeId,
-            ]);
-
-            $expectedCategoryNodeIds[] = $categoryNodeId;
-        }
+        $categoryNodeId = $categoryTransfer->getCategoryNode()->getIdCategoryNode();
+        $this->tester->haveCategoryNodePageSearchByLocalizedCategory($categoryTransfer, [
+            static::KEY_CATEGORY_NODE_ID => $categoryNodeId,
+        ]);
 
         // Act
-        $synchronizationDataTransfers = $this->tester->getFacade()->findSynchronizationDataTransfersByCategoryNodeIds(0, 100, $expectedCategoryNodeIds);
+        $synchronizationDataTransfers = $this->tester->getFacade()->findSynchronizationDataTransfersByCategoryNodeIds(0, 100, [$categoryNodeId]);
 
         // Assert
         $categoryNodeIds = array_map(function (SynchronizationDataTransfer $synchronizationDataTransfer) {
             return $synchronizationDataTransfer->getData()[static::KEY_CATEGORY_NODE_ID];
         }, $synchronizationDataTransfers);
 
-        $this->assertSame($expectedCategoryNodeIds, $categoryNodeIds, 'Synchronization data should be filtered by category node IDs.');
+        $this->assertSame([$categoryNodeId], $categoryNodeIds, 'Synchronization data should be filtered by category node IDs.');
     }
 
     /**

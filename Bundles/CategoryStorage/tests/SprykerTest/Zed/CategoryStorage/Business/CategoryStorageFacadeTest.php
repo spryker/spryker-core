@@ -76,7 +76,7 @@ class CategoryStorageFacadeTest extends Unit
         $this->tester->getFacade()->writeCategoryNodeStorageCollectionByCategoryStorePublishEvents([$eventEntityTransfer]);
 
         // Assert
-        $this->executeCategoryNodePageSearchWriterAsserts($categoryTransfer);
+        $this->executeCategoryNodeStorageWriterAsserts($categoryTransfer);
     }
 
     /**
@@ -95,7 +95,7 @@ class CategoryStorageFacadeTest extends Unit
         $this->tester->getFacade()->writeCategoryNodeStorageCollectionByCategoryStoreEvents([$eventEntityTransfer]);
 
         // Assert
-        $this->executeCategoryNodePageSearchWriterAsserts($categoryTransfer);
+        $this->executeCategoryNodeStorageWriterAsserts($categoryTransfer);
     }
 
     /**
@@ -113,7 +113,7 @@ class CategoryStorageFacadeTest extends Unit
         $this->tester->getFacade()->writeCategoryTreeStorageCollection();
 
         // Assert
-        $categoryTreeStorageEntities = $this->tester->findCategoryTreeStorageEntetiesByLocalizedCategoryAndStoreName(
+        $categoryTreeStorageEntities = $this->tester->findCategoryTreeStorageEntitiesByLocalizedCategoryAndStoreName(
             $categoryTransfer,
             static::STORE_NAME_DE
         );
@@ -155,7 +155,7 @@ class CategoryStorageFacadeTest extends Unit
         $this->tester->getFacade()->writeCategoryNodeStorageCollectionByCategoryAttributeEvents([$eventEntityTransfer]);
 
         // Assert
-        $this->executeCategoryNodePageSearchWriterAsserts($categoryTransfer);
+        $this->executeCategoryNodeStorageWriterAsserts($categoryTransfer);
     }
 
     /**
@@ -172,7 +172,7 @@ class CategoryStorageFacadeTest extends Unit
         $this->tester->getFacade()->writeCategoryNodeStorageCollectionByCategoryEvents([$eventEntityTransfer]);
 
         // Assert
-        $this->executeCategoryNodePageSearchWriterAsserts($categoryTransfer);
+        $this->executeCategoryNodeStorageWriterAsserts($categoryTransfer);
     }
 
     /**
@@ -194,7 +194,7 @@ class CategoryStorageFacadeTest extends Unit
         $this->tester->getFacade()->writeCategoryNodeStorageCollectionByCategoryTemplateEvents([$eventEntityTransfer]);
 
         // Assert
-        $this->executeCategoryNodePageSearchWriterAsserts($categoryTransfer);
+        $this->executeCategoryNodeStorageWriterAsserts($categoryTransfer);
     }
 
     /**
@@ -213,7 +213,7 @@ class CategoryStorageFacadeTest extends Unit
         $this->tester->getFacade()->writeCategoryNodeStorageCollectionByParentCategoryEvents([$eventEntityTransfer]);
 
         // Assert
-        $this->executeCategoryNodePageSearchWriterAsserts($categoryTransfer);
+        $this->executeCategoryNodeStorageWriterAsserts($categoryTransfer);
     }
 
     /**
@@ -239,8 +239,8 @@ class CategoryStorageFacadeTest extends Unit
         $this->tester->getFacade()->writeCategoryNodeStorageCollectionByParentCategoryEvents([$eventEntityTransfer]);
 
         // Assert
-        $this->executeCategoryNodePageSearchWriterAsserts($categoryTransfer);
-        $this->executeCategoryNodePageSearchWriterAsserts($originalParentCategoryTransfer);
+        $this->executeCategoryNodeStorageWriterAsserts($categoryTransfer);
+        $this->executeCategoryNodeStorageWriterAsserts($originalParentCategoryTransfer);
     }
 
     /**
@@ -259,7 +259,7 @@ class CategoryStorageFacadeTest extends Unit
         $this->tester->getFacade()->writeCategoryNodeStorageCollectionByCategoryNodeEvents([$eventEntityTransfer]);
 
         // Assert
-        $this->executeCategoryNodePageSearchWriterAsserts($categoryTransfer);
+        $this->executeCategoryNodeStorageWriterAsserts($categoryTransfer);
     }
 
     /**
@@ -277,7 +277,7 @@ class CategoryStorageFacadeTest extends Unit
         $this->tester->getFacade()->deleteCategoryNodeStorageCollectionByCategoryEvents([$eventEntityTransfer]);
 
         // Assert
-        $this->executeCategoryNodePageSearchDeleterAsserts($categoryTransfer);
+        $this->executeCategoryNodeStorageDeleterAsserts($categoryTransfer);
     }
 
     /**
@@ -297,7 +297,7 @@ class CategoryStorageFacadeTest extends Unit
         $this->tester->getFacade()->deleteCategoryNodeStorageCollectionByCategoryAttributeEvents([$eventEntityTransfer]);
 
         // Assert
-        $this->executeCategoryNodePageSearchDeleterAsserts($categoryTransfer);
+        $this->executeCategoryNodeStorageDeleterAsserts($categoryTransfer);
     }
 
     /**
@@ -321,7 +321,7 @@ class CategoryStorageFacadeTest extends Unit
         $this->tester->getFacade()->deleteCategoryNodeStorageCollectionByCategoryTemplateEvents([$eventEntityTransfer]);
 
         // Assert
-        $this->executeCategoryNodePageSearchDeleterAsserts($categoryTransfer);
+        $this->executeCategoryNodeStorageDeleterAsserts($categoryTransfer);
     }
 
     /**
@@ -339,7 +339,7 @@ class CategoryStorageFacadeTest extends Unit
         $this->tester->getFacade()->deleteCategoryNodeStorageCollectionByCategoryNodeEvents([$eventEntityTransfer]);
 
         // Assert
-        $this->executeCategoryNodePageSearchDeleterAsserts($categoryTransfer);
+        $this->executeCategoryNodeStorageDeleterAsserts($categoryTransfer);
     }
 
     /**
@@ -348,29 +348,24 @@ class CategoryStorageFacadeTest extends Unit
     public function testFindCategoryNodeStorageSynchronizationDataTransfersByCategoryNodeIdsWillReturnCategoryStorageDataFilteredByIds(): void
     {
         // Arrange
-        $expectedCategoryNodeIds = [];
-        for ($i = 0; $i < 3; $i++) {
-            $categoryTransfer = $this->tester->haveLocalizedCategoryWithStoreRelation([], [StoreTransfer::NAME => static::STORE_NAME_DE]);
-
-            $categoryNodeId = $categoryTransfer->getCategoryNode()->getIdCategoryNode();
-
-            $this->tester->haveCategoryNodeStorageByLocalizedCategory(
-                $categoryTransfer,
-                static::STORE_NAME_DE,
-                [static::KEY_CATEGORY_NODE_ID => $categoryNodeId]
-            );
-
-            $expectedCategoryNodeIds[] = $categoryNodeId;
-        }
+        $categoryTransfer = $this->tester->haveLocalizedCategoryWithStoreRelation([], [StoreTransfer::NAME => static::STORE_NAME_DE]);
+        $categoryNodeId = $categoryTransfer->getCategoryNode()->getIdCategoryNode();
+        $this->tester->haveCategoryNodeStorageByLocalizedCategory(
+            $categoryTransfer,
+            static::STORE_NAME_DE,
+            [static::KEY_CATEGORY_NODE_ID => $categoryNodeId]
+        );
 
         // Act
-        $synchronizationDataTransfers = $this->tester->getFacade()->findCategoryNodeStorageSynchronizationDataTransfersByCategoryNodeIds(0, 100, $expectedCategoryNodeIds);
+        $synchronizationDataTransfers = $this->tester
+            ->getFacade()
+            ->findCategoryNodeStorageSynchronizationDataTransfersByCategoryNodeIds(0, 100, [$categoryNodeId]);
 
         // Assert
         $categoryNodeIds = array_map(function (SynchronizationDataTransfer $synchronizationDataTransfer) {
             return $synchronizationDataTransfer->getData()[static::KEY_CATEGORY_NODE_ID];
         }, $synchronizationDataTransfers);
-        $this->assertSame($expectedCategoryNodeIds, $categoryNodeIds, 'Synchronization data should be filtered by category node IDs.');
+        $this->assertSame([$categoryNodeId], $categoryNodeIds, 'Synchronization data should be filtered by category node IDs.');
     }
 
     /**
@@ -438,7 +433,7 @@ class CategoryStorageFacadeTest extends Unit
      *
      * @return void
      */
-    protected function executeCategoryNodePageSearchWriterAsserts(CategoryTransfer $categoryTransfer): void
+    protected function executeCategoryNodeStorageWriterAsserts(CategoryTransfer $categoryTransfer): void
     {
         $categoryNodeStorageEntity = $this->tester->findCategoryNodeStorageEntityByLocalizedCategoryAndStoreName($categoryTransfer, static::STORE_NAME_DE);
 
@@ -460,7 +455,7 @@ class CategoryStorageFacadeTest extends Unit
      *
      * @return void
      */
-    protected function executeCategoryNodePageSearchDeleterAsserts(CategoryTransfer $categoryTransfer): void
+    protected function executeCategoryNodeStorageDeleterAsserts(CategoryTransfer $categoryTransfer): void
     {
         $categoryNodeStorageEntity = $this->tester->findCategoryNodeStorageEntityByLocalizedCategoryAndStoreName($categoryTransfer, static::STORE_NAME_DE);
         $this->assertNull($categoryNodeStorageEntity, 'CategoryNodeStorageEntity should not exist.');

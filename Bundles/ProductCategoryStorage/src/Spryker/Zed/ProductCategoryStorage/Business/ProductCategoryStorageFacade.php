@@ -22,7 +22,7 @@ class ProductCategoryStorageFacade extends AbstractFacade implements ProductCate
      *
      * @api
      *
-     * @deprecated This will be deleted in the next major without replacement.
+     * @deprecated Will be removed in the next major without replacement.
      *
      * @param int[] $productAbstractIds
      *
@@ -38,7 +38,7 @@ class ProductCategoryStorageFacade extends AbstractFacade implements ProductCate
      *
      * @api
      *
-     * @deprecated This will be deleted in the next major without replacement.
+     * @deprecated Will be removed in the next major without replacement.
      *
      * @param int[] $productAbstractIds
      *
@@ -75,7 +75,7 @@ class ProductCategoryStorageFacade extends AbstractFacade implements ProductCate
     public function writeCollectionByCategoryStoreEvents(array $eventEntityTransfers): void
     {
         $this->getFactory()
-            ->createProductCategoryStorageWriter()
+            ->createProductCategoryStorageByCategoryStoreEventsWriter()
             ->writeCollectionByCategoryStoreEvents($eventEntityTransfers);
     }
 
@@ -91,7 +91,7 @@ class ProductCategoryStorageFacade extends AbstractFacade implements ProductCate
     public function writeCollectionByCategoryStorePublishingEvents(array $eventEntityTransfers): void
     {
         $this->getFactory()
-            ->createProductCategoryStorageWriter()
+            ->createProductCategoryStorageByCategoryStoreEventsWriter()
             ->writeCollectionByCategoryStorePublishingEvents($eventEntityTransfers);
     }
 
@@ -123,7 +123,7 @@ class ProductCategoryStorageFacade extends AbstractFacade implements ProductCate
     public function writeCollectionByCategoryAttributeEvents(array $eventEntityTransfers): void
     {
         $this->getFactory()
-            ->createProductCategoryStorageWriter()
+            ->createProductCategoryStorageByCategoryAttributeEventsWriter()
             ->writeCollectionByCategoryAttributeEvents($eventEntityTransfers);
     }
 
@@ -139,7 +139,7 @@ class ProductCategoryStorageFacade extends AbstractFacade implements ProductCate
     public function writeCollectionByCategoryAttributeNameEvents(array $eventEntityTransfers): void
     {
         $this->getFactory()
-            ->createProductCategoryStorageWriter()
+            ->createProductCategoryStorageByCategoryAttributeEventsWriter()
             ->writeCollectionByCategoryAttributeNameEvents($eventEntityTransfers);
     }
 
@@ -155,7 +155,7 @@ class ProductCategoryStorageFacade extends AbstractFacade implements ProductCate
     public function writeCollectionByCategoryNodeEvents(array $eventEntityTransfers): void
     {
         $this->getFactory()
-            ->createProductCategoryStorageWriter()
+            ->createProductCategoryStorageByCategoryNodeEventsWriter()
             ->writeCollectionByCategoryNodeEvents($eventEntityTransfers);
     }
 
@@ -171,7 +171,7 @@ class ProductCategoryStorageFacade extends AbstractFacade implements ProductCate
     public function writeCollectionByCategoryEvents(array $eventEntityTransfers): void
     {
         $this->getFactory()
-            ->createProductCategoryStorageWriter()
+            ->createProductCategoryStorageByCategoryEventsWriter()
             ->writeCollectionByCategoryEvents($eventEntityTransfers);
     }
 
@@ -187,7 +187,7 @@ class ProductCategoryStorageFacade extends AbstractFacade implements ProductCate
     public function writeCollectionByCategoryIsActiveAndCategoryKeyEvents(array $eventEntityTransfers): void
     {
         $this->getFactory()
-            ->createProductCategoryStorageWriter()
+            ->createProductCategoryStorageByCategoryEventsWriter()
             ->writeCollectionByCategoryIsActiveAndCategoryKeyEvents($eventEntityTransfers);
     }
 
@@ -203,7 +203,7 @@ class ProductCategoryStorageFacade extends AbstractFacade implements ProductCate
     public function writeCollectionByCategoryUrlEvents(array $eventEntityTransfers): void
     {
         $this->getFactory()
-            ->createProductCategoryStorageWriter()
+            ->createProductCategoryStorageByCategoryUrlEventsWriter()
             ->writeCollectionByCategoryUrlEvents($eventEntityTransfers);
     }
 
@@ -219,7 +219,7 @@ class ProductCategoryStorageFacade extends AbstractFacade implements ProductCate
     public function writeCollectionByCategoryUrlAndResourceCategorynodeEvents(array $eventEntityTransfers): void
     {
         $this->getFactory()
-            ->createProductCategoryStorageWriter()
+            ->createProductCategoryStorageByCategoryUrlEventsWriter()
             ->writeCollectionByCategoryUrlAndResourceCategorynodeEvents($eventEntityTransfers);
     }
 
@@ -235,7 +235,7 @@ class ProductCategoryStorageFacade extends AbstractFacade implements ProductCate
     public function writeCollectionByProductCategoryPublishingEvents(array $eventEntityTransfers): void
     {
         $this->getFactory()
-            ->createProductCategoryStorageWriter()
+            ->createProductCategoryStorageByProductCategoryEventsWriter()
             ->writeCollectionByProductCategoryPublishingEvents($eventEntityTransfers);
     }
 
@@ -251,7 +251,7 @@ class ProductCategoryStorageFacade extends AbstractFacade implements ProductCate
     public function writeCollectionByProductCategoryEvents(array $eventEntityTransfers): void
     {
         $this->getFactory()
-            ->createProductCategoryStorageWriter()
+            ->createProductCategoryStorageByProductCategoryEventsWriter()
             ->writeCollectionByProductCategoryEvents($eventEntityTransfers);
     }
 

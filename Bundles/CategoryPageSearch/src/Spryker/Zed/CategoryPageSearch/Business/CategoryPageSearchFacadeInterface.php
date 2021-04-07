@@ -142,7 +142,7 @@ interface CategoryPageSearchFacadeInterface
      * Specification:
      * - Extracts category IDs from the $eventTransfers created by category attribute entity events.
      * - Finds all category node IDs related to category IDs.
-     * - Deletes category node storage entities with category node IDs.
+     * - Deletes category node search entities with category node IDs.
      * - Sends a copy of data to the queue.
      *
      * @api
@@ -157,7 +157,7 @@ interface CategoryPageSearchFacadeInterface
      * Specification:
      * - Extracts category IDs from the $eventTransfers created by category entity events.
      * - Finds all category node IDs related to category IDs.
-     * - Deletes category node storage entities with category node IDs.
+     * - Deletes category node search entities with category node IDs.
      * - Sends a copy of data to the queue.
      *
      * @api
@@ -172,7 +172,7 @@ interface CategoryPageSearchFacadeInterface
      * Specification:
      * - Extracts category template IDs from the $eventTransfers created by category template events.
      * - Finds all category node IDs related to category template IDs.
-     * - Deletes category node storage entities with category node IDs.
+     * - Deletes category node search entities with category node IDs.
      * - Sends a copy of data to the queue.
      *
      * @api
@@ -186,7 +186,7 @@ interface CategoryPageSearchFacadeInterface
     /**
      * Specification:
      * - Extracts category node IDs from the $eventTransfers created by category node events.
-     * - Deletes category node storage entities with category node IDs.
+     * - Deletes category node search entities with category node IDs.
      * - Sends a copy of data to the queue.
      *
      * @api

@@ -63,6 +63,7 @@
         <property name="isActive" type="bool"/>
         <property name="withRelations" type="bool"/>
         <property name="categoryTemplateIds" type="int[]" singular="idCategoryTemplate"/>
+        <property name="filter" type="Filter"/>
     </transfer>
 
     <transfer name="Filter">

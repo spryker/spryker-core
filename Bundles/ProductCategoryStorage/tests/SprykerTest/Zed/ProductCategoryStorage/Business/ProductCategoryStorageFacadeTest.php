@@ -805,38 +805,32 @@ class ProductCategoryStorageFacadeTest extends Unit
     public function testFindProductAbstractCategoryStorageSynchronizationDataTransfersByProductAbstractIdsWillReturnDataFilteredByIds(): void
     {
         // Arrange
-        $expectedProductAbstractIds = [];
+        $productConcreteTransfer = $this->tester->haveFullProduct();
+        $this->tester->assignProductToCategory(
+            $this->categoryTransfer->getIdCategory(),
+            $productConcreteTransfer->getFkProductAbstract()
+        );
 
-        for ($i = 0; $i < 3; $i++) {
-            $productConcreteTransfer = $this->tester->haveFullProduct();
-            $this->tester->assignProductToCategory(
-                $this->categoryTransfer->getIdCategory(),
-                $productConcreteTransfer->getFkProductAbstract()
-            );
+        $idProductAbstract = $productConcreteTransfer->getFkProductAbstract();
 
-            $idProductAbstract = $productConcreteTransfer->getFkProductAbstract();
-
-            $this->tester->haveProductAbstractCategoryStorageEntity(
-                $productConcreteTransfer,
-                static::STORE_DE,
-                [
-                    static::KEY_ID_PRODUCT_ABSTRACT => $productConcreteTransfer->getFkProductAbstract(),
-                ]
-            );
-
-            $expectedProductAbstractIds[] = $idProductAbstract;
-        }
+        $this->tester->haveProductAbstractCategoryStorageEntity(
+            $productConcreteTransfer,
+            static::STORE_DE,
+            [
+                static::KEY_ID_PRODUCT_ABSTRACT => $productConcreteTransfer->getFkProductAbstract(),
+            ]
+        );
 
         // Act
         $synchronizationDataTransfers = $this->tester->getFacade()
-            ->findProductAbstractCategoryStorageSynchronizationDataTransfersByProductAbstractIds(0, 100, $expectedProductAbstractIds);
+            ->findProductAbstractCategoryStorageSynchronizationDataTransfersByProductAbstractIds(0, 100, [$idProductAbstract]);
 
         // Assert
         $productAbstractIds = array_map(function (SynchronizationDataTransfer $synchronizationDataTransfer) {
             return $synchronizationDataTransfer->getData()[static::KEY_ID_PRODUCT_ABSTRACT];
         }, $synchronizationDataTransfers);
 
-        $this->assertSame($expectedProductAbstractIds, $productAbstractIds, 'Synchronization data should be filtered by product abstract IDs.');
+        $this->assertSame([$idProductAbstract], $productAbstractIds, 'Synchronization data should be filtered by product abstract IDs.');
     }
 
     /**
@@ -875,13 +869,11 @@ class ProductCategoryStorageFacadeTest extends Unit
     {
         // Arrange
         $expectedCount = 1;
-        for ($i = 0; $i < 3; $i++) {
-            $productConcreteTransfer = $this->tester->haveFullProduct();
-            $this->tester->assignProductToCategory(
-                $this->categoryTransfer->getIdCategory(),
-                $productConcreteTransfer->getFkProductAbstract()
-            );
-        }
+        $productConcreteTransfer = $this->tester->haveFullProduct();
+        $this->tester->assignProductToCategory(
+            $this->categoryTransfer->getIdCategory(),
+            $productConcreteTransfer->getFkProductAbstract()
+        );
 
         $filterTransfer = (new FilterTransfer())
             ->setOffset(0)

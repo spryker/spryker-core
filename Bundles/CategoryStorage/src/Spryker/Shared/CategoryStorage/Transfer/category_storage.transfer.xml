@@ -115,6 +115,7 @@
         <property name="isInMenu" type="bool"/>
         <property name="isRoot" type="bool"/>
         <property name="withRelations" type="bool"/>
+        <property name="filter" type="Filter"/>
     </transfer>
 
     <transfer name="NodeCollection">

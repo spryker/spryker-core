@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CategoryStorage\Business\Deleter;
 
+use Generated\Shared\Transfer\CategoryNodeCriteriaTransfer;
+
 interface CategoryNodeStorageDeleterInterface
 {
     /**
@@ -29,26 +31,12 @@ interface CategoryNodeStorageDeleterInterface
      *
      * @return void
      */
-    public function deleteCategoryNodeStorageCollectionByCategoryAttributeEvents(array $eventEntityTransfers): void;
-
-    /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
-     *
-     * @return void
-     */
-    public function deleteCategoryNodeStorageCollectionByCategoryEvents(array $eventEntityTransfers): void;
-
-    /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
-     *
-     * @return void
-     */
-    public function deleteCategoryNodeStorageCollectionByCategoryTemplateEvents(array $eventEntityTransfers): void;
-
-    /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
-     *
-     * @return void
-     */
     public function deleteCategoryNodeStorageCollectionByCategoryNodeEvents(array $eventEntityTransfers): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
+     *
+     * @return void
+     */
+    public function deleteCategoryNodeStorageCollectionByCategoryNodeCriteria(CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer): void;
 }

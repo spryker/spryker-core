@@ -21,7 +21,7 @@ class ProductCategorySynchronizationDataBulkRepositoryPlugin extends AbstractPlu
 {
     /**
      * {@inheritDoc}
-     * - Retrieves a collection of product abstract category storage collection according to provided offset, limit and ids.
+     * - Retrieves a product abstract category storage collection according to provided offset, limit and ids.
      *
      * @api
      *

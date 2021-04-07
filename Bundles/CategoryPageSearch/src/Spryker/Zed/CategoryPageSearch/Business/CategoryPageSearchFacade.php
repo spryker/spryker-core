@@ -21,7 +21,7 @@ class CategoryPageSearchFacade extends AbstractFacade implements CategoryPageSea
      *
      * @api
      *
-     * @deprecated This will be deleted in the next major without replacement.
+     * @deprecated Will be removed in the next major without replacement.
      *
      * @param array $categoryNodeIds
      *
@@ -37,7 +37,7 @@ class CategoryPageSearchFacade extends AbstractFacade implements CategoryPageSea
      *
      * @api
      *
-     * @deprecated This will be deleted in the next major without replacement.
+     * @deprecated Will be removed in the next major without replacement.
      *
      * @param array $categoryNodeIds
      *
@@ -60,7 +60,7 @@ class CategoryPageSearchFacade extends AbstractFacade implements CategoryPageSea
     public function writeCategoryNodePageSearchCollectionByCategoryStoreEvents(array $eventEntityTransfers): void
     {
         $this->getFactory()
-            ->createCategoryNodePageSearchWriter()
+            ->createCategoryNodePageSearchByCategoryStoreEventsWriter()
             ->writeCategoryNodePageSearchCollectionByCategoryStoreEvents($eventEntityTransfers);
     }
 
@@ -76,7 +76,7 @@ class CategoryPageSearchFacade extends AbstractFacade implements CategoryPageSea
     public function writeCategoryNodePageSearchCollectionByCategoryStorePublishEvents(array $eventEntityTransfers): void
     {
         $this->getFactory()
-            ->createCategoryNodePageSearchWriter()
+            ->createCategoryNodePageSearchByCategoryStoreEventsWriter()
             ->writeCategoryNodePageSearchCollectionByCategoryStorePublishEvents($eventEntityTransfers);
     }
 
@@ -92,7 +92,7 @@ class CategoryPageSearchFacade extends AbstractFacade implements CategoryPageSea
     public function writeCategoryNodePageSearchCollectionByCategoryAttributeEvents(array $eventEntityTransfers): void
     {
         $this->getFactory()
-            ->createCategoryNodePageSearchWriter()
+            ->createCategoryNodePageSearchByCategoryAttributeEventsWriter()
             ->writeCategoryNodePageSearchCollectionByCategoryAttributeEvents($eventEntityTransfers);
     }
 
@@ -108,7 +108,7 @@ class CategoryPageSearchFacade extends AbstractFacade implements CategoryPageSea
     public function writeCategoryNodePageSearchCollectionByCategoryEvents(array $eventEntityTransfers): void
     {
         $this->getFactory()
-            ->createCategoryNodePageSearchWriter()
+            ->createCategoryNodePageSearchByCategoryEventsWriter()
             ->writeCategoryNodePageSearchCollectionByCategoryEvents($eventEntityTransfers);
     }
 
@@ -124,7 +124,7 @@ class CategoryPageSearchFacade extends AbstractFacade implements CategoryPageSea
     public function writeCategoryNodePageSearchCollectionByCategoryTemplateEvents(array $eventEntityTransfers): void
     {
         $this->getFactory()
-            ->createCategoryNodePageSearchWriter()
+            ->createCategoryNodePageSearchByCategoryTemplateEventsWriter()
             ->writeCategoryNodePageSearchCollectionByCategoryTemplateEvents($eventEntityTransfers);
     }
 
@@ -156,7 +156,7 @@ class CategoryPageSearchFacade extends AbstractFacade implements CategoryPageSea
     public function deleteCategoryNodePageSearchCollectionByCategoryAttributeEvents(array $eventEntityTransfers): void
     {
         $this->getFactory()
-            ->createCategoryNodePageSearchDeleter()
+            ->createCategoryNodePageSearchByCategoryAttributeEventsDeleter()
             ->deleteCategoryNodePageSearchCollectionByCategoryAttributeEvents($eventEntityTransfers);
     }
 
@@ -172,7 +172,7 @@ class CategoryPageSearchFacade extends AbstractFacade implements CategoryPageSea
     public function deleteCategoryNodePageSearchCollectionByCategoryEvents(array $eventEntityTransfers): void
     {
         $this->getFactory()
-            ->createCategoryNodePageSearchDeleter()
+            ->createCategoryNodePageSearchByCategoryEventsDeleter()
             ->deleteCategoryNodePageSearchCollectionByCategoryEvents($eventEntityTransfers);
     }
 
@@ -188,7 +188,7 @@ class CategoryPageSearchFacade extends AbstractFacade implements CategoryPageSea
     public function deleteCategoryNodePageSearchCollectionByCategoryTemplateEvents(array $eventEntityTransfers): void
     {
         $this->getFactory()
-            ->createCategoryNodePageSearchDeleter()
+            ->createCategoryNodePageSearchByCategoryTemplateEventsDeleter()
             ->deleteCategoryNodePageSearchCollectionByCategoryTemplateEvents($eventEntityTransfers);
     }
 

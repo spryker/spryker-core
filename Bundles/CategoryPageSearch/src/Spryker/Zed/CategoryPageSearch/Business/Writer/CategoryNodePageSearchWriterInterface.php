@@ -7,22 +7,10 @@
 
 namespace Spryker\Zed\CategoryPageSearch\Business\Writer;
 
+use Generated\Shared\Transfer\CategoryNodeCriteriaTransfer;
+
 interface CategoryNodePageSearchWriterInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
-     *
-     * @return void
-     */
-    public function writeCategoryNodePageSearchCollectionByCategoryStoreEvents(array $eventEntityTransfers): void;
-
-    /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
-     *
-     * @return void
-     */
-    public function writeCategoryNodePageSearchCollectionByCategoryStorePublishEvents(array $eventEntityTransfers): void;
-
     /**
      * @param int[] $categoryNodeIds
      *
@@ -35,26 +23,12 @@ interface CategoryNodePageSearchWriterInterface
      *
      * @return void
      */
-    public function writeCategoryNodePageSearchCollectionByCategoryAttributeEvents(array $eventEntityTransfers): void;
-
-    /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
-     *
-     * @return void
-     */
-    public function writeCategoryNodePageSearchCollectionByCategoryEvents(array $eventEntityTransfers): void;
-
-    /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
-     *
-     * @return void
-     */
-    public function writeCategoryNodePageSearchCollectionByCategoryTemplateEvents(array $eventEntityTransfers): void;
-
-    /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
-     *
-     * @return void
-     */
     public function writeCategoryNodePageSearchCollectionByCategoryNodeEvents(array $eventEntityTransfers): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
+     *
+     * @return void
+     */
+    public function writeCategoryNodeStorageCollectionByCategoryNodeCriteria(CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer): void;
 }

@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CategoryCollectionTransfer;
 use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryNodeCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
-use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeCollectionTransfer;
 use Generated\Shared\Transfer\UpdateCategoryStoreRelationRequestTransfer;
@@ -280,35 +279,5 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     public function getCategoryNodes(CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer): NodeCollectionTransfer
     {
         return $this->getRepository()->getCategoryNodes($categoryNodeCriteriaTransfer);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     *
-     * @return \Generated\Shared\Transfer\NodeCollectionTransfer
-     */
-    public function getCategoryNodesByFilter(FilterTransfer $filterTransfer): NodeCollectionTransfer
-    {
-        return $this->getRepository()
-            ->getCategoryNodesByFilter($filterTransfer);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param int[] $categoryNodeIds
-     *
-     * @return int[]
-     */
-    public function getCategoryIdsByNodeIds(array $categoryNodeIds): array
-    {
-        return $this->getRepository()
-            ->getCategoryIdsByNodeIds($categoryNodeIds);
     }
 }

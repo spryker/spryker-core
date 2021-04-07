@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CategoryStorage\Communication\Plugin\Publisher;
 
+use Generated\Shared\Transfer\CategoryNodeCriteriaTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
 use Spryker\Shared\CategoryStorage\CategoryStorageConstants;
@@ -34,11 +35,11 @@ class CategoryNodePublisherTriggerPlugin extends AbstractPlugin implements Publi
      */
     public function getData(int $offset, int $limit): array
     {
-        $filterTransfer = $this->createFilterTransfer($offset, $limit);
+        $categoryNodeCriteriaTransfer = $this->createCategoryNodeCriteriaTransfer($offset, $limit);
 
         return $this->getFactory()
             ->getCategoryFacade()
-            ->getCategoryNodesByFilter($filterTransfer)
+            ->getCategoryNodes($categoryNodeCriteriaTransfer)
             ->getNodes()
             ->getArrayCopy();
     }
@@ -83,12 +84,15 @@ class CategoryNodePublisherTriggerPlugin extends AbstractPlugin implements Publi
      * @param int $offset
      * @param int $limit
      *
-     * @return \Generated\Shared\Transfer\FilterTransfer
+     * @return \Generated\Shared\Transfer\CategoryNodeCriteriaTransfer
      */
-    protected function createFilterTransfer(int $offset, int $limit): FilterTransfer
+    protected function createCategoryNodeCriteriaTransfer(int $offset, int $limit): CategoryNodeCriteriaTransfer
     {
-        return (new FilterTransfer())
+        $filterTransfer = (new FilterTransfer())
             ->setOffset($offset)
             ->setLimit($limit);
+
+        return (new CategoryNodeCriteriaTransfer())
+            ->setFilter($filterTransfer);
     }
 }

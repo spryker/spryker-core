@@ -25,6 +25,7 @@
 
     <transfer name="Node">
         <property name="idCategoryNode" type="int"/>
+        <property name="fkCategory" type="int"/>
     </transfer>
 
     <transfer name="ProductAbstractLocalizedAttributes">
@@ -66,6 +67,10 @@
         <property name="limit" type="int"/>
         <property name="offset" type="int"/>
         <property name="orderBy" type="string"/>
+    </transfer>
+
+    <transfer name="CategoryNodeCriteria">
+        <property name="categoryNodeIds" type="int[]" singular="idCategoryNode"/>
     </transfer>
 
 </transfers>

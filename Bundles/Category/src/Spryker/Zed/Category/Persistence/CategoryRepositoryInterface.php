@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\CategoryNodeCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryNodeUrlCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryNodeUrlPathCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
-use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeCollectionTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
@@ -134,18 +133,4 @@ interface CategoryRepositoryInterface
      * @return \Generated\Shared\Transfer\NodeTransfer|null
      */
     public function findCategoryNodeByIdCategoryNode(int $idCategoryNode): ?NodeTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     *
-     * @return \Generated\Shared\Transfer\NodeCollectionTransfer
-     */
-    public function getCategoryNodesByFilter(FilterTransfer $filterTransfer): NodeCollectionTransfer;
-
-    /**
-     * @param int[] $categoryNodeIds
-     *
-     * @return int[]
-     */
-    public function getCategoryIdsByNodeIds(array $categoryNodeIds): array;
 }
