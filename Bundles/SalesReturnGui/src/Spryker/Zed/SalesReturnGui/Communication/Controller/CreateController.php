@@ -99,7 +99,7 @@ class CreateController extends AbstractController
             $this->addSuccessMessage(static::MESSAGE_RETURN_CREATED);
 
             $redirectUrl = Url::generate(static::ROUTE_RETURN_DETAIL, [
-                static::PARAM_ID_RETURN => $returnResponseTransfer->getReturnOrFail()->getIdSalesReturn(),
+                static::PARAM_ID_RETURN => $returnResponseTransfer->getReturn()->getIdSalesReturn(),
             ]);
 
             return $this->redirectResponse($redirectUrl);

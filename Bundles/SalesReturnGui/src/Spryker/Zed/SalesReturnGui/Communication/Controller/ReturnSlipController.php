@@ -76,10 +76,7 @@ class ReturnSlipController extends AbstractController
     {
         $returnTransfer->getReturnItems()->uasort(
             function (ReturnItemTransfer $firstReturnItemTransfer, ReturnItemTransfer $secondReturnItemTransfer) {
-                return strcmp(
-                    $firstReturnItemTransfer->getOrderItemOrFail()->getOrderReferenceOrFail(),
-                    $secondReturnItemTransfer->getOrderItemOrFail()->getOrderReferenceOrFail()
-                );
+                return strcmp($firstReturnItemTransfer->getOrderItem()->getOrderReference(), $secondReturnItemTransfer->getOrderItem()->getOrderReference());
             }
         );
 
