@@ -76,7 +76,7 @@ class CategorySlotBlockDataProvider implements CategorySlotBlockDataProviderInte
     protected function getCategories(): array
     {
         $categoryCollectionTransfer = $this->categoryFacade
-            ->getAllCategoryCollection($this->localeFacade->getCurrentLocale());
+            ->getAllCategoryMainFieldsCollection($this->localeFacade->getCurrentLocale());
 
         return $this->getCategoryIdsFromCollection($categoryCollectionTransfer);
     }

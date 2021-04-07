@@ -34,4 +34,14 @@ class CmsSlotBlockCategoryGuiToCategoryFacadeBridge implements CmsSlotBlockCateg
     {
         return $this->categoryFacade->getAllCategoryCollection($localeTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
+     */
+    public function getAllCategoryMainFieldsCollection(LocaleTransfer $localeTransfer): CategoryCollectionTransfer
+    {
+        return $this->categoryFacade->getAllCategoryMainFieldsCollection($localeTransfer);
+    }
 }

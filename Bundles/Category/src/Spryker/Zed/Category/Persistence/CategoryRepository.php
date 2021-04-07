@@ -79,6 +79,28 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
     }
 
     /**
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
+     */
+    public function getAllCategoryMainFieldsCollection(LocaleTransfer $localeTransfer): CategoryCollectionTransfer
+    {
+        $categoryQuery = SpyCategoryQuery::create();
+        $spyCategories = $categoryQuery
+            ->joinWithAttribute()
+            ->addAnd(
+                SpyCategoryAttributeTableMap::COL_FK_LOCALE,
+                $localeTransfer->getIdLocale(),
+                Criteria::EQUAL
+            )
+            ->find();
+
+        return $this->getFactory()
+            ->createCategoryMapper()
+            ->mapCategoryCollection($spyCategories, new CategoryCollectionTransfer());
+    }
+
+    /**
      * @param int $idCategoryNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *

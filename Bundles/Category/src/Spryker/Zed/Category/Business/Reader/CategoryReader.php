@@ -109,6 +109,16 @@ class CategoryReader implements CategoryReaderInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
+     */
+    public function getAllCategoryMainFieldsCollection(LocaleTransfer $localeTransfer): CategoryCollectionTransfer
+    {
+        return $this->categoryRepository->getAllCategoryMainFieldsCollection($localeTransfer);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
      * @return \Generated\Shared\Transfer\CategoryTransfer

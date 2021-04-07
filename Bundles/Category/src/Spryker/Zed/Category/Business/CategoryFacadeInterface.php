@@ -204,6 +204,19 @@ interface CategoryFacadeInterface
 
     /**
      * Specification:
+     * - Retrieves collection with all categories(without node relations) from DB.
+     * - Filters collection by related locale.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
+     */
+    public function getAllCategoryMainFieldsCollection(LocaleTransfer $localeTransfer): CategoryCollectionTransfer;
+
+    /**
+     * Specification:
      * - Finds a Category transfer by id with category nodes and attributes.
      * - Returns NULL if a Category does not exist.
      *
