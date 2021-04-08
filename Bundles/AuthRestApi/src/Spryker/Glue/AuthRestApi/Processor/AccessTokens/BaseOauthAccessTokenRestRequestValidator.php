@@ -8,17 +8,10 @@
 namespace Spryker\Glue\AuthRestApi\Processor\AccessTokens;
 
 use Generated\Shared\Transfer\OauthAccessTokenValidationRequestTransfer;
-use Generated\Shared\Transfer\RestErrorCollectionTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
-use Spryker\Glue\AuthRestApi\AuthRestApiConfig;
 use Spryker\Glue\AuthRestApi\Dependency\Client\AuthRestApiToOauthClientInterface;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
-/**
- * @deprecated Use {@link \Spryker\Glue\AuthRestApi\Processor\AccessTokens\OauthAccessTokenRestRequestValidator} instead.
- */
-class OauthAccessTokenValidator implements OauthAccessTokenValidatorInterface
+abstract class BaseOauthAccessTokenRestRequestValidator implements OauthAccessTokenValidatorInterface
 {
     protected const REQUEST_ATTRIBUTE_IS_PROTECTED = 'is-protected';
 
@@ -33,43 +26,6 @@ class OauthAccessTokenValidator implements OauthAccessTokenValidatorInterface
     public function __construct(AuthRestApiToOauthClientInterface $oauthClient)
     {
         $this->oauthClient = $oauthClient;
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Generated\Shared\Transfer\RestErrorCollectionTransfer|null
-     */
-    public function validate(Request $request): ?RestErrorCollectionTransfer
-    {
-        $isProtected = $request->attributes->get(static::REQUEST_ATTRIBUTE_IS_PROTECTED, false);
-
-        $authorizationToken = $request->headers->get(AuthRestApiConfig::HEADER_AUTHORIZATION);
-        if (!$authorizationToken && $isProtected === true) {
-            return (new RestErrorCollectionTransfer())->addRestError(
-                $this->createErrorMessageTransfer(
-                    AuthRestApiConfig::RESPONSE_DETAIL_MISSING_ACCESS_TOKEN,
-                    Response::HTTP_FORBIDDEN,
-                    AuthRestApiConfig::RESPONSE_CODE_FORBIDDEN
-                )
-            );
-        }
-
-        if (!$authorizationToken) {
-            return null;
-        }
-
-        if (!$this->validateAccessToken($authorizationToken)) {
-            return (new RestErrorCollectionTransfer())->addRestError(
-                $this->createErrorMessageTransfer(
-                    AuthRestApiConfig::RESPONSE_DETAIL_INVALID_ACCESS_TOKEN,
-                    Response::HTTP_UNAUTHORIZED,
-                    AuthRestApiConfig::RESPONSE_CODE_ACCESS_CODE_INVALID
-                )
-            );
-        }
-
-        return null;
     }
 
     /**
@@ -125,7 +81,7 @@ class OauthAccessTokenValidator implements OauthAccessTokenValidatorInterface
             ->setAccessToken($accessToken)
             ->setType($type);
 
-        $authAccessTokenValidationResponseTransfer = $this->oauthClient->validateAccessToken(
+        $authAccessTokenValidationResponseTransfer = $this->oauthClient->validateOauthAccessToken(
             $authAccessTokenValidationRequestTransfer
         );
 
