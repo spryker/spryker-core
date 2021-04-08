@@ -413,4 +413,7 @@
     <transfer name="ProductBundleGroup">
     </transfer>
 
+    <transfer name="CheckoutError">
+    </transfer>
+
 </transfers>
