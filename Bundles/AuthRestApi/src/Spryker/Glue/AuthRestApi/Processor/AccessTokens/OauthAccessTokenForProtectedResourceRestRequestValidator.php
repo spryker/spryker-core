@@ -12,7 +12,7 @@ use Spryker\Glue\AuthRestApi\AuthRestApiConfig;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class OauthAccessTokenRestRequestValidator extends BaseOauthAccessTokenRestRequestValidator
+class OauthAccessTokenForProtectedResourceRestRequestValidator extends BaseOauthAccessTokenRestRequestValidator
 {
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -24,17 +24,8 @@ class OauthAccessTokenRestRequestValidator extends BaseOauthAccessTokenRestReque
         $isProtected = $request->attributes->get(static::REQUEST_ATTRIBUTE_IS_PROTECTED, false);
 
         $authorizationToken = $request->headers->get(AuthRestApiConfig::HEADER_AUTHORIZATION);
-        if (!$authorizationToken && $isProtected === true) {
-            return (new RestErrorCollectionTransfer())->addRestError(
-                $this->createErrorMessageTransfer(
-                    AuthRestApiConfig::RESPONSE_DETAIL_MISSING_ACCESS_TOKEN,
-                    Response::HTTP_FORBIDDEN,
-                    AuthRestApiConfig::RESPONSE_CODE_FORBIDDEN
-                )
-            );
-        }
 
-        if (!$authorizationToken) {
+        if (!$isProtected || !$authorizationToken) {
             return null;
         }
 

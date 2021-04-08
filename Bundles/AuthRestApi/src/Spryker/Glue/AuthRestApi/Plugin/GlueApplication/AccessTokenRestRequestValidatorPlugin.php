@@ -14,6 +14,8 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
+ * @deprecated Use {@link \Spryker\Glue\AuthRestApi\Plugin\GlueApplication\ValidateAccessTokenPlugin} instead.
+ *
  * @method \Spryker\Glue\AuthRestApi\AuthRestApiFactory getFactory()
  */
 class AccessTokenRestRequestValidatorPlugin extends AbstractPlugin implements RestRequestValidatorPluginInterface
@@ -33,6 +35,6 @@ class AccessTokenRestRequestValidatorPlugin extends AbstractPlugin implements Re
     {
         return $this->getFactory()
             ->createOauthAccessTokenRestRequestValidator()
-            ->validate($httpRequest, $restRequest);
+            ->validate($httpRequest);
     }
 }
