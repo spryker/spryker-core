@@ -1,7 +1,4 @@
 {% block select2_widget %}
-    {% for key, var in form.vars.attr  %}
-        <pre>{{ dump(key, var) }}</pre>
-    {% endfor %}
     {% set css = 'spryker-form-select2combobox' %}
     {% set tags = false %}
     {% if form.vars.attr.class is defined %}
