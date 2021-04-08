@@ -75,7 +75,7 @@ class CheckDuplicateOrderTest extends Test
     /**
      * @return void
      */
-    public function testCheckDuplicateOrderWithUnsuccessfullyСreatedOrder(): void
+    public function testCheckDuplicateOrderWithUnsuccessfullyCreatedOrder(): void
     {
         // Arrange
         $checkoutResponseTransfer = $this->createCheckoutResponseTransfer();
