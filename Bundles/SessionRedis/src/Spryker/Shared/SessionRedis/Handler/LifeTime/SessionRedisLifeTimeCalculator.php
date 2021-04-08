@@ -18,7 +18,7 @@ class SessionRedisLifeTimeCalculator implements SessionRedisLifeTimeCalculatorIn
     protected $requestStack;
 
     /**
-     * @var \Spryker\Zed\SessionRedisExtension\Dependency\Plugin\SessionRedisLifeTimeCalculatorPluginInterface[]
+     * @var \Spryker\Shared\SessionRedisExtension\Dependency\Plugin\SessionRedisLifeTimeCalculatorPluginInterface[]
      */
     protected $sessionRedisLifeTimeCalculatorPlugins;
 
@@ -29,7 +29,7 @@ class SessionRedisLifeTimeCalculator implements SessionRedisLifeTimeCalculatorIn
 
     /**
      * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
-     * @param \Spryker\Zed\SessionRedisExtension\Dependency\Plugin\SessionRedisLifeTimeCalculatorPluginInterface[] $sessionRedisLifeTimeCalculatorPlugins
+     * @param \Spryker\Shared\SessionRedisExtension\Dependency\Plugin\SessionRedisLifeTimeCalculatorPluginInterface[] $sessionRedisLifeTimeCalculatorPlugins
      * @param int $defaultSessionLifeTime
      */
     public function __construct(

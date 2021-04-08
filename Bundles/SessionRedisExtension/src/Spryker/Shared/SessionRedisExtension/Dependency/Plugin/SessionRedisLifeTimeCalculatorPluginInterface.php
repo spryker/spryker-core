@@ -5,13 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SessionRedisExtension\Dependency\Plugin;
+namespace Spryker\Shared\SessionRedisExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\HttpRequestTransfer;
 
 /**
- * @deprecated Use {@link \Spryker\Shared\SessionRedisExtension\Dependency\Plugin\SessionRedisLifeTimeCalculatorPluginInterface} instead.
- *
  * Use this plugin if life time of redis session must be changed.
  */
 interface SessionRedisLifeTimeCalculatorPluginInterface
