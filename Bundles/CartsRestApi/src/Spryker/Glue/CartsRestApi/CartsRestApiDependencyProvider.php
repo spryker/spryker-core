@@ -7,7 +7,6 @@
 
 namespace Spryker\Glue\CartsRestApi;
 
-use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToCustomerClientBridge;
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToPersistentCartClientBridge;
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
@@ -17,7 +16,6 @@ use Spryker\Glue\Kernel\Container;
  */
 class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
     public const CLIENT_CART = 'CLIENT_CART';
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
@@ -41,7 +39,6 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addRestCartItemsAttributesMapperPlugins($container);
         $container = $this->addCartItemExpanderPlugins($container);
         $container = $this->addCartItemFilterPlugins($container);
-        $container = $this->addCustomerClient($container);
 
         return $container;
     }
@@ -55,22 +52,6 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::CLIENT_PERSISTENT_CART, function (Container $container) {
             return new CartsRestApiToPersistentCartClientBridge($container->getLocator()->persistentCart()->client());
-        });
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Glue\Kernel\Container $container
-     *
-     * @return \Spryker\Glue\Kernel\Container
-     */
-    protected function addCustomerClient(Container $container): Container
-    {
-        $container->set(static::CLIENT_CUSTOMER, function (Container $container) {
-            return new CartsRestApiToCustomerClientBridge(
-                $container->getLocator()->customer()->client()
-            );
         });
 
         return $container;

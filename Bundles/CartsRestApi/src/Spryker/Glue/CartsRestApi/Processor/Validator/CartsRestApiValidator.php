@@ -20,12 +20,16 @@ class CartsRestApiValidator implements CartsRestApiValidatorInterface
     public function isSameCustomerReference(RestRequestInterface $restRequest): bool
     {
         $restUser = $restRequest->getRestUser();
-        if (!$restUser) {
+        if ($restUser === null) {
             return false;
         }
 
-        $customerResource = $restRequest->findParentResourceByType(CartsRestApiConfig::RESOURCE_CUSTOMERS) ?? $restRequest->getResource();
+        $customerResource = $restRequest->findParentResourceByType(CartsRestApiConfig::RESOURCE_CUSTOMERS);
 
-        return $restUser->getSurrogateIdentifier() === (int)$customerResource->getId();
+        if ($customerResource === null) {
+            return false;
+        }
+
+        return $restUser->getNaturalIdentifier() === $customerResource->getId();
     }
 }

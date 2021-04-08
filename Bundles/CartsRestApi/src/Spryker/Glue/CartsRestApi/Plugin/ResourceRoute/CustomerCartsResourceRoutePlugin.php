@@ -57,7 +57,7 @@ class CustomerCartsResourceRoutePlugin extends AbstractPlugin implements Resourc
      */
     public function getController(): string
     {
-        return CartsRestApiConfig::CONTROLLER_CUSTOMER_CARTS;
+        return 'customer-carts-resource';
     }
 
     /**

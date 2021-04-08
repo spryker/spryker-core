@@ -56,7 +56,7 @@ class MyCartsResourceRoutePlugin extends AbstractPlugin implements ResourceRoute
      */
     public function getController(): string
     {
-        return CartsRestApiConfig::CONTROLLER_MY_CARTS;
+        return 'my-carts-resource';
     }
 
     /**

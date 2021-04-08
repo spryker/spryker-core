@@ -16,17 +16,20 @@ class CartsRestApiConfig extends AbstractBundleConfig
 {
     public const RESOURCE_CARTS = 'carts';
     public const RESOURCE_CART_ITEMS = 'items';
+
+    /**
+     * @uses \Spryker\Glue\CustomersRestApi\CustomersRestApiConfig::RESOURCE_CUSTOMERS
+     */
     public const RESOURCE_CUSTOMERS = 'customers';
+
     public const RESOURCE_GUEST_CARTS = 'guest-carts';
     public const RESOURCE_GUEST_CARTS_ITEMS = 'guest-cart-items';
     public const RESOURCE_MY_CARTS = 'my-carts';
 
     public const CONTROLLER_CARTS = 'carts-resource';
     public const CONTROLLER_CART_ITEMS = 'cart-items-resource';
-    public const CONTROLLER_CUSTOMER_CARTS = 'customer-carts-resource';
     public const CONTROLLER_GUEST_CARTS = 'guest-carts-resource';
     public const CONTROLLER_GUEST_CART_ITEMS = 'guest-cart-items-resource';
-    public const CONTROLLER_MY_CARTS = 'my-carts-resource';
 
     public const RESPONSE_CODE_CART_NOT_FOUND = '101';
     public const RESPONSE_CODE_ITEM_VALIDATION = '102';
@@ -87,8 +90,6 @@ class CartsRestApiConfig extends AbstractBundleConfig
      * @uses \Spryker\Glue\GlueApplication\Rest\RequestConstantsInterface::HEADER_LINK
      */
     public const HEADER_LINK = 'Link';
-
-    protected const CONVENTION_LINK = 'https://spryker.atlassian.net/wiki/spaces/RFC/pages/2160820295/RFC+Glue+endpoint+conventions';
 
     /**
      * @api
