@@ -36,7 +36,7 @@ class CategoryStoreWithStateMapper implements CategoryStoreWithStateMapperInterf
         }
 
         return (new StoreWithStateCollectionTransfer())
-            ->setStores($stores);
+            ->setStoresWithState($stores);
     }
 
     /**
