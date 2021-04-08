@@ -18,7 +18,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\Sales\SalesConfig getConfig()
  * @method \Spryker\Zed\Sales\Communication\SalesCommunicationFactory getFactory()
  */
-class OrderConfirmedCheckoutPreConditionPlugin extends AbstractPlugin implements CheckoutPreConditionPluginInterface
+class DuplicateOrderCheckoutPreConditionPlugin extends AbstractPlugin implements CheckoutPreConditionPluginInterface
 {
     /**
      * {@inheritDoc}
