@@ -543,7 +543,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     public function createDuplicateOrderChecker(): DuplicateOrderCheckerInterface
     {
         return new DuplicateOrderChecker(
-            $this->createOrderRepositoryReader()
+            $this->getRepository()
         );
     }
 

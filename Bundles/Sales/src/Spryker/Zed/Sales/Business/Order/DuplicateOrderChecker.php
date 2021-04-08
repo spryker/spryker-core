@@ -10,21 +10,21 @@ namespace Spryker\Zed\Sales\Business\Order;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Sales\Business\Model\Order\OrderRepositoryReaderInterface;
+use Spryker\Zed\Sales\Persistence\SalesRepositoryInterface;
 
 class DuplicateOrderChecker implements DuplicateOrderCheckerInterface
 {
     /**
-     * @var \Spryker\Zed\Sales\Business\Model\Order\OrderRepositoryReaderInterface
+     * @var \Spryker\Zed\Sales\Persistence\SalesRepositoryInterface
      */
-    protected $orderRepositoryReader;
+    protected $salesRepository;
 
     /**
-     * @param \Spryker\Zed\Sales\Business\Model\Order\OrderRepositoryReaderInterface $orderRepositoryReader
+     * @param \Spryker\Zed\Sales\Persistence\SalesRepositoryInterface $salesRepository
      */
-    public function __construct(OrderRepositoryReaderInterface $orderRepositoryReader)
+    public function __construct(SalesRepositoryInterface $salesRepository)
     {
-        $this->orderRepositoryReader = $orderRepositoryReader;
+        $this->salesRepository = $salesRepository;
     }
 
     /**
@@ -59,12 +59,10 @@ class DuplicateOrderChecker implements DuplicateOrderCheckerInterface
             return false;
         }
 
-        $orderTransfer = (new OrderTransfer())
-            ->setOrderReference($quoteTransfer->getOrderReference())
-            ->setCustomerReference($quoteTransfer->getCustomer()->getCustomerReference());
-        $orderTransfer = $this->orderRepositoryReader->getCustomerOrderByOrderReference($orderTransfer);
-
-        return (bool)$orderTransfer->getIdSalesOrder();
+        return (bool)$this->salesRepository->findCustomerOrderIdByOrderReference(
+            $quoteTransfer->getCustomer()->getCustomerReference(),
+            $quoteTransfer->getOrderReference()
+        );
     }
 
     /**
