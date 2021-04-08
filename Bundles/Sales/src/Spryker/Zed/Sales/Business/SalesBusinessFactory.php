@@ -41,8 +41,8 @@ use Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaverPluginExecutor;
 use Spryker\Zed\Sales\Business\Model\OrderItem\OrderItemTransformer;
 use Spryker\Zed\Sales\Business\Model\OrderItem\OrderItemTransformerInterface;
 use Spryker\Zed\Sales\Business\Model\OrderItem\SalesOrderItemMapper as ModelSalesOrderItemMapper;
-use Spryker\Zed\Sales\Business\Order\DuplicateOrderChecker;
-use Spryker\Zed\Sales\Business\Order\DuplicateOrderCheckerInterface;
+use Spryker\Zed\Sales\Business\Checker\DuplicateOrderChecker;
+use Spryker\Zed\Sales\Business\Checker\DuplicateOrderCheckerInterface;
 use Spryker\Zed\Sales\Business\Order\OrderHydrator as OrderHydratorWithMultiShippingAddress;
 use Spryker\Zed\Sales\Business\Order\OrderHydratorInterface;
 use Spryker\Zed\Sales\Business\Order\OrderReader as OrderReaderWithMultiShippingAddress;
@@ -538,7 +538,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Sales\Business\Order\DuplicateOrderCheckerInterface
+     * @return \Spryker\Zed\Sales\Business\Checker\DuplicateOrderCheckerInterface
      */
     public function createDuplicateOrderChecker(): DuplicateOrderCheckerInterface
     {
