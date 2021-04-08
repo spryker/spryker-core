@@ -27,9 +27,6 @@ use Symfony\Component\Finder\SplFileInfo;
  */
 class CacheClearerTest extends Unit
 {
-    protected const TEST_DIRECTORY_NAME = 'path/to/cache/code-bucket-de/';
-    protected const TEST_DEFAULT_DIRECTORY_NAME = 'path/to/cache/code-bucket/';
-
     /**
      * @return void
      */
@@ -175,46 +172,6 @@ class CacheClearerTest extends Unit
     }
 
     /**
-     * @return void
-     */
-    public function testClearCodeBucketCacheRemovesDirectory(): void
-    {
-        //Arrange
-        $configMock = $this->getCodeBucketConfigMock('getCodeBucketCachePath', $this->getTestCodeBucketDirectory());
-        $finderMock = $this->getCodeBucketFinderMock($this->getTestCodeBucketDirectory());
-        $fileSystem = new Filesystem();
-
-        $this->assertTrue(is_dir($this->getTestCodeBucketDirectory()));
-
-        //Act
-        $cacheClearer = new CacheClearer($configMock, $fileSystem, $finderMock);
-        $cacheClearer->clearCodeBucketCache();
-
-        //Assert
-        $this->assertFalse(is_dir($this->getTestCodeBucketDirectory()));
-    }
-
-    /**
-     * @return void
-     */
-    public function testClearDefaultCodeBucketCacheRemovesDirectory(): void
-    {
-        //Arrange
-        $configMock = $this->getCodeBucketConfigMock('getDefaultCodeBucketCachePath', $this->getTestDefaultCodeBucketDirectory());
-        $finderMock = $this->getCodeBucketFinderMock($this->getTestDefaultCodeBucketDirectory());
-        $fileSystem = new Filesystem();
-
-        $this->assertTrue(is_dir($this->getTestDefaultCodeBucketDirectory()));
-
-        //Act
-        $cacheClearer = new CacheClearer($configMock, $fileSystem, $finderMock);
-        $cacheClearer->clearDefaultCodeBucketCache();
-
-        //Assert
-        $this->assertFalse(is_dir($this->getTestDefaultCodeBucketDirectory()));
-    }
-
-    /**
      * @param string[] $stores
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Cache\CacheConfig
@@ -257,111 +214,5 @@ class CacheClearerTest extends Unit
         return $this
             ->getMockBuilder(Finder::class)
             ->getMock();
-    }
-
-    /**
-     * @param string $method
-     * @param string $directory
-     *
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Cache\CacheConfig
-     */
-    protected function getCodeBucketConfigMock(string $method, string $directory): CacheConfig
-    {
-        /**
-         * @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Cache\CacheConfig $configMock
-         */
-        $configMock = $this->getConfigMock([]);
-        $configMock
-            ->expects($this->once())
-            ->method($method)
-            ->will($this->returnValue($directory));
-
-        return $configMock;
-    }
-
-    /**
-     * @param string $directory
-     *
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\Finder\Finder
-     */
-    protected function getCodeBucketFinderMock(string $directory): Finder
-    {
-        $splFileInfoMock = new SplFileInfo($directory, $directory, $directory);
-
-        /**
-         * @var \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\Finder\Finder $finderMock
-         */
-        $finderMock = $this->createMock(Finder::class);
-        $finderMock
-            ->expects($this->exactly(2))
-            ->method('depth')
-            ->will($this->returnSelf());
-        $finderMock
-            ->expects($this->exactly(2))
-            ->method('in')
-            ->with($this->equalTo(dirname($directory)))
-            ->will($this->returnSelf());
-        $finderMock
-            ->expects($this->once())
-            ->method('directories')
-            ->will($this->returnSelf());
-        $finderMock
-            ->expects($this->once())
-            ->method('name')
-            ->with($this->equalTo(basename($directory)))
-            ->will($this->returnSelf());
-        $finderMock
-            ->method('getIterator')
-            ->willReturnCallback(function () use ($splFileInfoMock) {
-                yield $splFileInfoMock;
-            });
-
-        return $finderMock;
-    }
-
-    /**
-     * @return void
-     */
-    public function setUp(): void
-    {
-        $testCodeBucketDirectory = $this->getTestCodeBucketDirectory();
-        if (!is_dir($testCodeBucketDirectory)) {
-            mkdir($testCodeBucketDirectory, 0775, true);
-        }
-
-        $testDefaultCodeBucketDirectory = $this->getTestDefaultCodeBucketDirectory();
-        if (!is_dir($testDefaultCodeBucketDirectory)) {
-            mkdir($testDefaultCodeBucketDirectory, 0775, true);
-        }
-    }
-
-    /**
-     * @return string
-     */
-    private function getTestCodeBucketDirectory(): string
-    {
-        return codecept_data_dir(static::TEST_DIRECTORY_NAME);
-    }
-
-    /**
-     * @return string
-     */
-    private function getTestDefaultCodeBucketDirectory(): string
-    {
-        return codecept_data_dir(static::TEST_DEFAULT_DIRECTORY_NAME);
-    }
-
-    /**
-     * @return void
-     */
-    public function tearDown(): void
-    {
-        if (is_dir($this->getTestCodeBucketDirectory())) {
-            rmdir($this->getTestCodeBucketDirectory());
-        }
-
-        if (is_dir($this->getTestDefaultCodeBucketDirectory())) {
-            rmdir($this->getTestDefaultCodeBucketDirectory());
-        }
     }
 }

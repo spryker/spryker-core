@@ -45,7 +45,7 @@ class CacheFacadeTest extends Unit
 
         //Arrange
         $cacheDirectory = $this->tester->getVirtualDirectory($structure);
-        $path = sprintf('%s' . static::TEST_CACHE_DIRECTORY_NAME . DIRECTORY_SEPARATOR . static::TEST_CODE_BUCKET_DIRECTORY_NAME . DIRECTORY_SEPARATOR, $cacheDirectory);
+        $path = $cacheDirectory . static::TEST_CACHE_DIRECTORY_NAME . DIRECTORY_SEPARATOR . static::TEST_CODE_BUCKET_DIRECTORY_NAME . DIRECTORY_SEPARATOR;
 
         $this->tester->mockConfigMethod('getCodeBucketCachePath', $path);
 
@@ -71,7 +71,7 @@ class CacheFacadeTest extends Unit
 
         //Arrange
         $cacheDirectory = $this->tester->getVirtualDirectory($structure);
-        $path = sprintf('%s' . static::TEST_CACHE_DIRECTORY_NAME . DIRECTORY_SEPARATOR . static::TEST_DEFAULT_CODE_BUCKET_DIRECTORY_NAME . DIRECTORY_SEPARATOR, $cacheDirectory);
+        $path = $cacheDirectory . static::TEST_CACHE_DIRECTORY_NAME . DIRECTORY_SEPARATOR . static::TEST_DEFAULT_CODE_BUCKET_DIRECTORY_NAME . DIRECTORY_SEPARATOR;
 
         $this->tester->mockConfigMethod('getDefaultCodeBucketCachePath', $path);
 
