@@ -7,12 +7,16 @@
 
 namespace Spryker\Zed\Sales\Business\Order;
 
+use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Sales\Persistence\SalesRepositoryInterface;
 
 class DuplicateOrderChecker implements DuplicateOrderCheckerInterface
 {
+    protected const GLOSSARY_KEY_CHECKOUT_DUPLICATE_ORDER = 'checkout.order.duplicate';
+    protected const DUPLICATE_ORDER_REFERENCE_PARAMETER = '{{reference}}';
+
     /**
      * @var \Spryker\Zed\Sales\Persistence\SalesRepositoryInterface
      */
@@ -34,13 +38,13 @@ class DuplicateOrderChecker implements DuplicateOrderCheckerInterface
      */
     public function checkDuplicateOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool
     {
-        if ($this->isOrderExists($quoteTransfer)) {
-            $this->setCheckoutResponseData($quoteTransfer, $checkoutResponseTransfer);
-
-            return false;
+        if (!$this->isOrderExists($quoteTransfer)) {
+            return true;
         }
 
-        return true;
+        $this->setCheckoutResponseData($quoteTransfer, $checkoutResponseTransfer);
+
+        return false;
     }
 
     /**
@@ -58,8 +62,13 @@ class DuplicateOrderChecker implements DuplicateOrderCheckerInterface
             return false;
         }
 
+        $customerTransfer = $quoteTransfer->getCustomer();
+        if (!$customerTransfer || !$customerTransfer->getCustomerReference()) {
+            return false;
+        }
+
         return (bool)$this->salesRepository->findCustomerOrderIdByOrderReference(
-            $quoteTransfer->getCustomer()->getCustomerReference(),
+            $customerTransfer->getCustomerReference(),
             $quoteTransfer->getOrderReference()
         );
     }
@@ -76,8 +85,18 @@ class DuplicateOrderChecker implements DuplicateOrderCheckerInterface
             $quoteTransfer->getOrderReference()
         );
 
-        if ($quoteTransfer->getIsOrderPlacedSuccessfully() === false) {
-            $checkoutResponseTransfer->setIsSuccess(false);
+        if ($quoteTransfer->getIsOrderPlacedSuccessfully() === true) {
+            return;
         }
+
+        $checkoutErrorTransfer = (new CheckoutErrorTransfer())
+            ->setMessage(static::GLOSSARY_KEY_CHECKOUT_DUPLICATE_ORDER)
+            ->setParameters([
+                static::DUPLICATE_ORDER_REFERENCE_PARAMETER => $quoteTransfer->getOrderReference(),
+            ]);
+
+        $checkoutResponseTransfer
+            ->setIsSuccess(false)
+            ->addError($checkoutErrorTransfer);
     }
 }
