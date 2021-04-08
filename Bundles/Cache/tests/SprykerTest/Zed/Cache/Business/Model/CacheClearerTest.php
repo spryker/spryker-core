@@ -12,7 +12,6 @@ use Spryker\Zed\Cache\Business\Model\CacheClearer;
 use Spryker\Zed\Cache\CacheConfig;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\Finder\SplFileInfo;
 
 /**
  * Auto-generated group annotations
