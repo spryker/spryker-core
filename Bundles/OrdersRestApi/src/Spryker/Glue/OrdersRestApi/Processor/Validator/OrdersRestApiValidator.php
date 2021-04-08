@@ -24,7 +24,10 @@ class OrdersRestApiValidator implements OrdersRestApiValidatorInterface
             return false;
         }
 
-        $customerResource = $restRequest->findParentResourceByType(OrdersRestApiConfig::RESOURCE_CUSTOMERS) ?? $restRequest->getResource();
+        $customerResource = $restRequest->findParentResourceByType(OrdersRestApiConfig::RESOURCE_CUSTOMERS);
+        if (!$customerResource) {
+            return false;
+        }
 
         return $restUser->getNaturalIdentifier() === $customerResource->getId();
     }
