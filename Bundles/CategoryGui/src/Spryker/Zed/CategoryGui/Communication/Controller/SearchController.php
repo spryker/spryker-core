@@ -48,6 +48,6 @@ class SearchController extends AbstractController
     {
         return array_map(function (StoreWithStateTransfer $storeWithStateTransfers) {
             return $storeWithStateTransfers->toArray();
-        }, $storeWithStateCollectionTransfer->getStores()->getArrayCopy());
+        }, $storeWithStateCollectionTransfer->getStoresWithState()->getArrayCopy());
     }
 }

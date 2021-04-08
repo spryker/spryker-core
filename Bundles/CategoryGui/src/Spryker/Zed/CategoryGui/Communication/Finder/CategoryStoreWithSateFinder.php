@@ -71,7 +71,7 @@ class CategoryStoreWithSateFinder implements CategoryStoreWithSateFinderInterfac
         $storeWithEnablementCollectionTransfer = $this->getAllStoresWithStateByIdCategoryNode($idCategoryNode);
 
         $inactiveStoreIds = [];
-        foreach ($storeWithEnablementCollectionTransfer->getStores() as $storeWithStateTransfer) {
+        foreach ($storeWithEnablementCollectionTransfer->getStoresWithState() as $storeWithStateTransfer) {
             if (!$storeWithStateTransfer->getIsActive()) {
                 $inactiveStoreIds[] = $storeWithStateTransfer->getIdStoreOrFail();
             }

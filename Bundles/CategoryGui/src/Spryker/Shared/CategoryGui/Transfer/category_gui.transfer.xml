@@ -78,7 +78,7 @@
     </transfer>
 
     <transfer name="StoreWithStateCollection">
-        <property name="Stores" type="StoreWithState[]" singular="Store"/>
+        <property name="storesWithState" type="StoreWithState[]" singular="storeWithState"/>
     </transfer>
 
 </transfers>
