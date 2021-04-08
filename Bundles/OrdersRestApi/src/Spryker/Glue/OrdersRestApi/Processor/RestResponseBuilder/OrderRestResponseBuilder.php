@@ -201,7 +201,7 @@ class OrderRestResponseBuilder implements OrderRestResponseBuilderInterface
     /**
      * @return mixed[]
      */
-    public function getCantFindOrderRestError(): array
+    protected function getCantFindOrderRestError(): array
     {
         return [
             RestErrorMessageTransfer::CODE => OrdersRestApiConfig::RESPONSE_CODE_CANT_FIND_ORDER,
@@ -213,7 +213,7 @@ class OrderRestResponseBuilder implements OrderRestResponseBuilderInterface
     /**
      * @return mixed[]
      */
-    public function getCustomerUnauthorizedRestError(): array
+    protected function getCustomerUnauthorizedRestError(): array
     {
         return [
             RestErrorMessageTransfer::CODE => OrdersRestApiConfig::RESPONSE_CODE_CUSTOMER_UNAUTHORIZED,
