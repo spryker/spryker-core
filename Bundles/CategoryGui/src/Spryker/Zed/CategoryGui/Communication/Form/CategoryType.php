@@ -34,6 +34,9 @@ class CategoryType extends CommonCategoryType
     protected const LABEL_PARENT_CATEGORY_NODE = 'Parent';
     protected const LABEL_EXTRA_PARENTS = 'Additional Parents';
 
+    protected const DEFAULT_ACTION_EVENT = 'change';
+    protected const DEFAULT_ACTION_URL = '/category-gui/search/category-store';
+
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
@@ -44,7 +47,12 @@ class CategoryType extends CommonCategoryType
         parent::configureOptions($resolver);
 
         $resolver
-            ->setRequired(static::OPTION_PARENT_CATEGORY_NODE_CHOICES);
+            ->setRequired(static::OPTION_PARENT_CATEGORY_NODE_CHOICES)
+            ->setDefaults([
+                static::OPTION_ATTRIBUTE_ACTION_URL => static::DEFAULT_ACTION_URL,
+                static::OPTION_ATTRIBUTE_ACTION_EVENT => static::DEFAULT_ACTION_EVENT,
+                static::OPTION_ATTRIBUTE_ACTION_FIELD => static::FIELD_PARENT_CATEGORY_NODE,
+            ]);
     }
 
     /**
@@ -128,9 +136,9 @@ class CategoryType extends CommonCategoryType
             [
                 'label' => false,
                 'required' => true,
-                static::OPTION_ATTRIBUTE_ACTION_FIELD => static::FIELD_PARENT_CATEGORY_NODE,
-                static::OPTION_ATTRIBUTE_ACTION_URL => 'suggestion/stores',
-                static::OPTION_ATTRIBUTE_ACTION_EVENT => 'change',
+                static::OPTION_ATTRIBUTE_ACTION_FIELD => $options[static::OPTION_ATTRIBUTE_ACTION_FIELD],
+                static::OPTION_ATTRIBUTE_ACTION_URL => $options[static::OPTION_ATTRIBUTE_ACTION_URL],
+                static::OPTION_ATTRIBUTE_ACTION_EVENT => $options[static::OPTION_ATTRIBUTE_ACTION_EVENT],
                 'constraints' => [
                     new NotBlank(),
                 ],
