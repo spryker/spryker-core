@@ -139,14 +139,12 @@ class UserForm extends AbstractType
      */
     protected function addEmailField(FormBuilderInterface $builder)
     {
-        $options['mode'] = Email::VALIDATION_MODE_HTML5;
-
         $builder
             ->add(self::FIELD_USERNAME, TextType::class, [
                 'label' => 'E-mail',
                 'constraints' => [
                     new NotBlank(),
-                    new Email($options),
+                    new Email(['mode' => Email::VALIDATION_MODE_HTML5]),
                     $this->createUniqueEmailConstraint(),
                 ],
             ]);
