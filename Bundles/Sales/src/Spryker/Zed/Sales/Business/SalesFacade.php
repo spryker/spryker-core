@@ -486,10 +486,10 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
      *
      * @return bool
      */
-    public function checkConfirmedOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool
+    public function checkDuplicateOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool
     {
         return $this->getFactory()
-            ->createOrderConfirmedChecker()
-            ->checkConfirmedOrder($quoteTransfer, $checkoutResponseTransfer);
+            ->createDuplicateOrderChecker()
+            ->checkDuplicateOrder($quoteTransfer, $checkoutResponseTransfer);
     }
 }

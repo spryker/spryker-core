@@ -434,5 +434,5 @@ interface SalesFacadeInterface
      *
      * @return bool
      */
-    public function checkConfirmedOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool;
+    public function checkDuplicateOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool;
 }

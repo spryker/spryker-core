@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Sales\Business\Model\Order\OrderRepositoryReaderInterface;
 
-class OrderConfirmedChecker implements OrderConfirmedCheckerInterface
+class DuplicateOrderChecker implements DuplicateOrderCheckerInterface
 {
     /**
      * @var \Spryker\Zed\Sales\Business\Model\Order\OrderRepositoryReaderInterface
@@ -33,7 +33,7 @@ class OrderConfirmedChecker implements OrderConfirmedCheckerInterface
      *
      * @return bool
      */
-    public function checkConfirmedOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool
+    public function checkDuplicateOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool
     {
         if ($this->isOrderExists($quoteTransfer)) {
             $this->setCheckoutResponseData($quoteTransfer, $checkoutResponseTransfer);

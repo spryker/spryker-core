@@ -25,10 +25,10 @@ use SprykerTest\Zed\Sales\Helper\BusinessHelper;
  * @group Sales
  * @group Business
  * @group Facade
- * @group CheckConfirmedOrderTest
+ * @group CheckDuplicateOrderTest
  * Add your own group annotations below this line
  */
-class CheckConfirmedOrderTest extends Test
+class CheckDuplicateOrderTest extends Test
 {
     protected const CURRENCY_ISO_CODE = 'CODE';
     protected const ORDER_REFERENCE = 'ORDER_REFERENCE';
@@ -52,7 +52,7 @@ class CheckConfirmedOrderTest extends Test
     /**
      * @return void
      */
-    public function testCheckConfirmedOrderWithCreatedSuccessfulOrder(): void
+    public function testCheckDuplicateOrderWithCreatedSuccessfulOrder(): void
     {
         // Arrange
         $checkoutResponseTransfer = $this->createCheckoutResponseTransfer();
@@ -60,7 +60,7 @@ class CheckConfirmedOrderTest extends Test
         $quoteTransfer->setIsOrderPlacedSuccessfully(true);
 
         // Act
-        $confirmedOrderCheck = $this->tester->getFacade()->checkConfirmedOrder($quoteTransfer, $checkoutResponseTransfer);
+        $confirmedOrderCheck = $this->tester->getFacade()->checkDuplicateOrder($quoteTransfer, $checkoutResponseTransfer);
 
         // Assert
         $this->assertFalse($confirmedOrderCheck);
@@ -75,7 +75,7 @@ class CheckConfirmedOrderTest extends Test
     /**
      * @return void
      */
-    public function testCheckConfirmedOrderWithCreatedFailedOrder(): void
+    public function testCheckDuplicateOrderWithCreatedFailedOrder(): void
     {
         // Arrange
         $checkoutResponseTransfer = $this->createCheckoutResponseTransfer();
@@ -83,7 +83,7 @@ class CheckConfirmedOrderTest extends Test
         $quoteTransfer->setIsOrderPlacedSuccessfully(false);
 
         // Act
-        $confirmedOrderCheck = $this->tester->getFacade()->checkConfirmedOrder($quoteTransfer, $checkoutResponseTransfer);
+        $confirmedOrderCheck = $this->tester->getFacade()->checkDuplicateOrder($quoteTransfer, $checkoutResponseTransfer);
 
         // Assert
         $this->assertFalse($confirmedOrderCheck);
@@ -98,7 +98,7 @@ class CheckConfirmedOrderTest extends Test
     /**
      * @return void
      */
-    public function testCheckConfirmedOrderWithNotCreatedOrder(): void
+    public function testCheckDuplicateOrderWithNotCreatedOrder(): void
     {
         // Arrange
         $checkoutResponseTransfer = $this->createCheckoutResponseTransfer();
@@ -106,7 +106,7 @@ class CheckConfirmedOrderTest extends Test
         $quoteTransfer->setIsOrderPlacedSuccessfully(false);
 
         // Act
-        $confirmedOrderCheck = $this->tester->getFacade()->checkConfirmedOrder($quoteTransfer, $checkoutResponseTransfer);
+        $confirmedOrderCheck = $this->tester->getFacade()->checkDuplicateOrder($quoteTransfer, $checkoutResponseTransfer);
 
         // Assert
         $this->assertTrue($confirmedOrderCheck);

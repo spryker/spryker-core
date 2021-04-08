@@ -32,6 +32,6 @@ class OrderConfirmedCheckoutPreConditionPlugin extends AbstractPlugin implements
      */
     public function checkCondition(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
-        return $this->getFacade()->checkConfirmedOrder($quoteTransfer, $checkoutResponseTransfer);
+        return $this->getFacade()->checkDuplicateOrder($quoteTransfer, $checkoutResponseTransfer);
     }
 }

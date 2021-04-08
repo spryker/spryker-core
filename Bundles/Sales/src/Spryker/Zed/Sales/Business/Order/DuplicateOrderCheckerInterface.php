@@ -10,7 +10,7 @@ namespace Spryker\Zed\Sales\Business\Order;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface OrderConfirmedCheckerInterface
+interface DuplicateOrderCheckerInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -18,5 +18,5 @@ interface OrderConfirmedCheckerInterface
      *
      * @return bool
      */
-    public function checkConfirmedOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool;
+    public function checkDuplicateOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool;
 }
