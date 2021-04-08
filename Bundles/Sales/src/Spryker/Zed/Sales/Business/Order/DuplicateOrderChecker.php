@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Sales\Business\Order;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
-use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Sales\Persistence\SalesRepositoryInterface;
 
