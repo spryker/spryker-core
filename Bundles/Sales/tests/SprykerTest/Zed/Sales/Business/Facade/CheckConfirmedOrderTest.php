@@ -57,7 +57,7 @@ class CheckConfirmedOrderTest extends Test
         // Arrange
         $checkoutResponseTransfer = $this->createCheckoutResponseTransfer();
         $quoteTransfer = $this->createCustomerOrderByQuoteTransfer();
-        $quoteTransfer->setOrderConfirmed(true);
+        $quoteTransfer->setIsOrderPlacedSuccessfully(true);
 
         // Act
         $confirmedOrderCheck = $this->tester->getFacade()->checkConfirmedOrder($quoteTransfer, $checkoutResponseTransfer);
@@ -80,7 +80,7 @@ class CheckConfirmedOrderTest extends Test
         // Arrange
         $checkoutResponseTransfer = $this->createCheckoutResponseTransfer();
         $quoteTransfer = $this->createCustomerOrderByQuoteTransfer();
-        $quoteTransfer->setOrderConfirmed(false);
+        $quoteTransfer->setIsOrderPlacedSuccessfully(false);
 
         // Act
         $confirmedOrderCheck = $this->tester->getFacade()->checkConfirmedOrder($quoteTransfer, $checkoutResponseTransfer);
@@ -103,7 +103,7 @@ class CheckConfirmedOrderTest extends Test
         // Arrange
         $checkoutResponseTransfer = $this->createCheckoutResponseTransfer();
         $quoteTransfer = $this->createQuoteTransferWithoutOrder();
-        $quoteTransfer->setOrderConfirmed(false);
+        $quoteTransfer->setIsOrderPlacedSuccessfully(false);
 
         // Act
         $confirmedOrderCheck = $this->tester->getFacade()->checkConfirmedOrder($quoteTransfer, $checkoutResponseTransfer);

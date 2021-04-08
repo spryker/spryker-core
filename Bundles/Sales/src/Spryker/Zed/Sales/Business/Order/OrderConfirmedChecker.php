@@ -55,7 +55,7 @@ class OrderConfirmedChecker implements OrderConfirmedCheckerInterface
             return false;
         }
 
-        if ($quoteTransfer->getOrderConfirmed() === null) {
+        if ($quoteTransfer->getIsOrderPlacedSuccessfully() === null) {
             return false;
         }
 
@@ -79,7 +79,7 @@ class OrderConfirmedChecker implements OrderConfirmedCheckerInterface
             $quoteTransfer->getOrderReference()
         );
 
-        if ($quoteTransfer->getOrderConfirmed() === false) {
+        if ($quoteTransfer->getIsOrderPlacedSuccessfully() === false) {
             $checkoutResponseTransfer->setIsSuccess(false);
         }
     }
