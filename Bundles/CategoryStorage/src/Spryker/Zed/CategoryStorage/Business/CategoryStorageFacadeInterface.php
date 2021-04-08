@@ -18,7 +18,7 @@ interface CategoryStorageFacadeInterface
      *
      * @api
      *
-     * @deprecated This will be deleted in the next major without replacement.
+     * @deprecated Will be removed in the next major without replacement.
      *
      * @param int[] $categoryNodeIds
      *
@@ -33,7 +33,7 @@ interface CategoryStorageFacadeInterface
      *
      * @api
      *
-     * @deprecated This will be deleted in the next major without replacement.
+     * @deprecated Will be removed in the next major without replacement.
      *
      * @param int[] $categoryNodeIds
      *
@@ -71,7 +71,7 @@ interface CategoryStorageFacadeInterface
 
     /**
      * Specification:
-     * - Extracts category IDs from the $eventTransfers created by category entity events.
+     * - Extracts category IDs from the $eventTransfers created by category store entity events.
      * - Finds all category node IDs related to category IDs.
      * - Queries all category nodes with category node IDs.
      * - Creates a data structure tree.
@@ -143,7 +143,7 @@ interface CategoryStorageFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves a collection of category tree storage collection according to provided offset, limit and categoryTreeStorageIds.
+     * - Retrieves a category tree storage collection according to provided offset, limit and `categoryTreeStorageIds`.
      *
      * @api
      *

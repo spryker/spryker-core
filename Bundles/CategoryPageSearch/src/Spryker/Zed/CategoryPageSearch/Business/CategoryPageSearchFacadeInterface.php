@@ -18,7 +18,7 @@ interface CategoryPageSearchFacadeInterface
      *
      * @api
      *
-     * @deprecated This will be deleted in the next major without replacement.
+     * @deprecated Will be removed in the next major without replacement.
      *
      * @param array $categoryNodeIds
      *
@@ -33,7 +33,7 @@ interface CategoryPageSearchFacadeInterface
      *
      * @api
      *
-     * @deprecated This will be deleted in the next major without replacement.
+     * @deprecated Will be removed in the next major without replacement.
      *
      * @param array $categoryNodeIds
      *

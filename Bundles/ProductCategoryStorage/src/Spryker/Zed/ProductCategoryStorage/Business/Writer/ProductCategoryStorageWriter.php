@@ -45,11 +45,6 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
     protected $productCategoryStorageReader;
 
     /**
-     * @var \Spryker\Zed\ProductCategoryStorage\Dependency\Facade\ProductCategoryStorageToCategoryInterface
-     */
-    protected $categoryFacade;
-
-    /**
      * @param \Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStorageRepositoryInterface $productCategoryStorageRepository
      * @param \Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStorageEntityManagerInterface $productCategoryStorageEntityManager
      * @param \Spryker\Zed\ProductCategoryStorage\Dependency\Facade\ProductCategoryStorageToStoreFacadeInterface $storeFacade
@@ -62,15 +57,13 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
         ProductCategoryStorageEntityManagerInterface $productCategoryStorageEntityManager,
         ProductCategoryStorageToStoreFacadeInterface $storeFacade,
         ProductAbstractReaderInterface $productAbstractReader,
-        ProductCategoryStorageReaderInterface $productCategoryStorageReader,
-        ProductCategoryStorageToCategoryInterface $categoryFacade
+        ProductCategoryStorageReaderInterface $productCategoryStorageReader
     ) {
         $this->productCategoryStorageRepository = $productCategoryStorageRepository;
         $this->productCategoryStorageEntityManager = $productCategoryStorageEntityManager;
         $this->storeFacade = $storeFacade;
         $this->productAbstractReader = $productAbstractReader;
         $this->productCategoryStorageReader = $productCategoryStorageReader;
-        $this->categoryFacade = $categoryFacade;
     }
 
     /**

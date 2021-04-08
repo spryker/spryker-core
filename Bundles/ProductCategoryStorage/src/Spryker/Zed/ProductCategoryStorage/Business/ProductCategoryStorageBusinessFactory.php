@@ -18,8 +18,8 @@ use Spryker\Zed\ProductCategoryStorage\Business\Reader\ProductCategoryStorageRea
 use Spryker\Zed\ProductCategoryStorage\Business\Reader\ProductCategoryStorageReaderInterface;
 use Spryker\Zed\ProductCategoryStorage\Business\Writer\Category\ProductCategoryStorageByCategoryEventsWriter;
 use Spryker\Zed\ProductCategoryStorage\Business\Writer\Category\ProductCategoryStorageByCategoryEventsWriterInterface;
-use Spryker\Zed\ProductCategoryStorage\Business\Writer\Category\ProductCategoryStorageByCategoryStoreEventsWriter;
-use Spryker\Zed\ProductCategoryStorage\Business\Writer\Category\ProductCategoryStorageByCategoryStoreEventsWriterInterface;
+use Spryker\Zed\ProductCategoryStorage\Business\Writer\CategoryStore\ProductCategoryStorageByCategoryStoreEventsWriter;
+use Spryker\Zed\ProductCategoryStorage\Business\Writer\CategoryStore\ProductCategoryStorageByCategoryStoreEventsWriterInterface;
 use Spryker\Zed\ProductCategoryStorage\Business\Writer\CategoryAttribute\ProductCategoryStorageByCategoryAttributeEventsWriter;
 use Spryker\Zed\ProductCategoryStorage\Business\Writer\CategoryAttribute\ProductCategoryStorageByCategoryAttributeEventsWriterInterface;
 use Spryker\Zed\ProductCategoryStorage\Business\Writer\CategoryNode\ProductCategoryStorageByCategoryNodeEventsWriter;
@@ -53,8 +53,7 @@ class ProductCategoryStorageBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->getStoreFacade(),
             $this->createProductAbstractReader(),
-            $this->createProductCategoryStorageReader(),
-            $this->getCategoryFacade()
+            $this->createProductCategoryStorageReader()
         );
     }
 
@@ -137,7 +136,7 @@ class ProductCategoryStorageBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductCategoryStorage\Business\Writer\Category\ProductCategoryStorageByCategoryStoreEventsWriterInterface
+     * @return \Spryker\Zed\ProductCategoryStorage\Business\Writer\CategoryStore\ProductCategoryStorageByCategoryStoreEventsWriterInterface
      */
     public function createProductCategoryStorageByCategoryStoreEventsWriter(): ProductCategoryStorageByCategoryStoreEventsWriterInterface
     {

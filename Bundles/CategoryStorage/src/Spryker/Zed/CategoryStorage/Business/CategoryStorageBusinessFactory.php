@@ -221,7 +221,7 @@ class CategoryStorageBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\CategoryStorage\Business\Extractor\CategoryNodeExtractorInterface
      */
-    protected function createCategoryNodeExtractor(): CategoryNodeExtractorInterface
+    public function createCategoryNodeExtractor(): CategoryNodeExtractorInterface
     {
         return new CategoryNodeExtractor();
     }

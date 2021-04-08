@@ -21,7 +21,7 @@ class CategoryTreeSynchronizationDataBulkRepositoryPlugin extends AbstractPlugin
 {
     /**
      * {@inheritDoc}
-     * - Retrieves a collection of category tree storage collection according to provided offset, limit and categoryTreeStorageIds.
+     * - Retrieves a category tree storage collection according to provided offset, limit and `categoryTreeStorageIds`.
      *
      * @api
      *

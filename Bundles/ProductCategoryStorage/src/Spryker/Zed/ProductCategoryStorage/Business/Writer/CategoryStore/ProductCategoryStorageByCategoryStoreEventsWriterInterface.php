@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductCategoryStorage\Business\Writer\Category;
+namespace Spryker\Zed\ProductCategoryStorage\Business\Writer\CategoryStore;
 
 interface ProductCategoryStorageByCategoryStoreEventsWriterInterface
 {

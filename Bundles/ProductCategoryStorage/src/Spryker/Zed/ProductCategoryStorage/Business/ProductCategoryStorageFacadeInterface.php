@@ -19,7 +19,7 @@ interface ProductCategoryStorageFacadeInterface
      *
      * @api
      *
-     * @deprecated This will be deleted in the next major without replacement.
+     * @deprecated Will be removed in the next major without replacement.
      *
      * @param int[] $productAbstractIds
      *
@@ -34,7 +34,7 @@ interface ProductCategoryStorageFacadeInterface
      *
      * @api
      *
-     * @deprecated This will be deleted in the next major without replacement.
+     * @deprecated Will be removed in the next major without replacement.
      *
      * @param int[] $productAbstractIds
      *
@@ -250,7 +250,7 @@ interface ProductCategoryStorageFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves a collection of product abstract category storage collection according to provided offset, limit and productAbstractIds.
+     * - Retrieves a product abstract category storage collection according to provided offset, limit and `productAbstractIds`.
      *
      * @api
      *

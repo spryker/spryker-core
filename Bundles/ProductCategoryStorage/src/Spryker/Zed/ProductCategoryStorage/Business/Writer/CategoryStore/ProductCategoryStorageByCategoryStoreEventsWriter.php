@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductCategoryStorage\Business\Writer\Category;
+namespace Spryker\Zed\ProductCategoryStorage\Business\Writer\CategoryStore;
 
 use Orm\Zed\Category\Persistence\Map\SpyCategoryStoreTableMap;
 use Spryker\Zed\ProductCategoryStorage\Business\Reader\ProductAbstractReaderInterface;
