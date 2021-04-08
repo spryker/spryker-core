@@ -22,6 +22,9 @@ class DuplicateOrderCheckoutPreConditionPlugin extends AbstractPlugin implements
 {
     /**
      * {@inheritDoc}
+     * - Checks that the order is not a duplicate.
+     * - Sets `isSuccess=false` in `CheckoutResponseTransfer` if order is a duplicate and returns `false`.
+     * - Returns `true` if the order was not found in the database.
      *
      * @api
      *
