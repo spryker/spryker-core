@@ -10,6 +10,8 @@ namespace Spryker\Zed\CategoryGui\Persistence;
 interface CategoryGuiRepositoryInterface
 {
     /**
+     * @module Category
+     *
      * @param string $categoryKey
      *
      * @return bool
@@ -17,6 +19,8 @@ interface CategoryGuiRepositoryInterface
     public function isCategoryKeyUsed(string $categoryKey): bool;
 
     /**
+     * @module Category
+     *
      * @return string[]
      */
     public function getIndexedCategoryTemplateNames(): array;

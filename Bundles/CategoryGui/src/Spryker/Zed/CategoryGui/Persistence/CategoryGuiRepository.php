@@ -26,6 +26,8 @@ class CategoryGuiRepository extends AbstractRepository implements CategoryGuiRep
     protected const CHILDREN_CATEGORY_ATTRIBUTE_NAME = 'text';
 
     /**
+     * @module Category
+     *
      * @param string $categoryKey
      *
      * @return bool
@@ -39,6 +41,8 @@ class CategoryGuiRepository extends AbstractRepository implements CategoryGuiRep
     }
 
     /**
+     * @module Category
+     *
      * @return string[]
      */
     public function getIndexedCategoryTemplateNames(): array
@@ -50,6 +54,8 @@ class CategoryGuiRepository extends AbstractRepository implements CategoryGuiRep
     }
 
     /**
+     * @module Category
+     *
      * @param int $idParentNode
      * @param int $idLocale
      *

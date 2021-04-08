@@ -65,7 +65,7 @@ class CategoryGuiToCategoryFacadeBridge implements CategoryGuiToCategoryFacadeIn
      *
      * @return \Generated\Shared\Transfer\NodeTransfer[]
      */
-    public function getAllNodesByIdCategory(int $idCategory)
+    public function getAllNodesByIdCategory(int $idCategory): array
     {
         return $this->categoryFacade->getAllNodesByIdCategory($idCategory);
     }

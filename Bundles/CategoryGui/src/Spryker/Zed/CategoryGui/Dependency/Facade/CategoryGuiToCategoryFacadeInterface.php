@@ -43,7 +43,7 @@ interface CategoryGuiToCategoryFacadeInterface
      *
      * @return \Generated\Shared\Transfer\NodeTransfer[]
      */
-    public function getAllNodesByIdCategory(int $idCategory);
+    public function getAllNodesByIdCategory(int $idCategory): array;
 
     /**
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
