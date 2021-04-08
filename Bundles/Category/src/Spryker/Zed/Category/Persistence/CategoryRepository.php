@@ -464,6 +464,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
         $categoryNodeQuery = $this->getFactory()
             ->createCategoryNodeQuery();
 
+        /** @var \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery $categoryNodeQuery */
         $categoryNodeQuery = $this->setCategoryNodeFilters($categoryNodeQuery, $categoryNodeCriteriaTransfer);
 
         if (!$categoryNodeCriteriaTransfer->getWithRelations()) {
@@ -499,12 +500,12 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
      * @param \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery $categoryNodeQuery
      * @param \Generated\Shared\Transfer\CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
      *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
      */
     protected function setCategoryNodeFilters(
         SpyCategoryNodeQuery $categoryNodeQuery,
         CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
-    ): SpyCategoryNodeQuery {
+    ) {
         if ($categoryNodeCriteriaTransfer->getCategoryNodeIds()) {
             $categoryNodeQuery->filterByIdCategoryNode_In($categoryNodeCriteriaTransfer->getCategoryNodeIds());
         }
