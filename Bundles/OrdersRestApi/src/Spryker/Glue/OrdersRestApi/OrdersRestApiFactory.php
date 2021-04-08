@@ -68,8 +68,7 @@ class OrdersRestApiFactory extends AbstractFactory
     {
         return new OrderRestResponseBuilder(
             $this->getResourceBuilder(),
-            $this->createOrderMapper(),
-            $this->getConfig()
+            $this->createOrderMapper()
         );
     }
 

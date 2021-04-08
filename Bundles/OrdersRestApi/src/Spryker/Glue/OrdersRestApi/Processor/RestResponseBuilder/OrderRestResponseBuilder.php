@@ -18,6 +18,7 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\OrdersRestApi\OrdersRestApiConfig;
 use Spryker\Glue\OrdersRestApi\Processor\Mapper\OrderMapperInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 class OrderRestResponseBuilder implements OrderRestResponseBuilderInterface
 {
@@ -34,23 +35,15 @@ class OrderRestResponseBuilder implements OrderRestResponseBuilderInterface
     protected $orderResourceMapper;
 
     /**
-     * @var \Spryker\Glue\OrdersRestApi\OrdersRestApiConfig
-     */
-    protected $ordersRestApiConfig;
-
-    /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\OrdersRestApi\Processor\Mapper\OrderMapperInterface $orderResourceMapper
-     * @param \Spryker\Glue\OrdersRestApi\OrdersRestApiConfig $ordersRestApiConfig
      */
     public function __construct(
         RestResourceBuilderInterface $restResourceBuilder,
-        OrderMapperInterface $orderResourceMapper,
-        OrdersRestApiConfig $ordersRestApiConfig
+        OrderMapperInterface $orderResourceMapper
     ) {
         $this->restResourceBuilder = $restResourceBuilder;
         $this->orderResourceMapper = $orderResourceMapper;
-        $this->ordersRestApiConfig = $ordersRestApiConfig;
     }
 
     /**
@@ -117,7 +110,7 @@ class OrderRestResponseBuilder implements OrderRestResponseBuilderInterface
      */
     public function createOrderNotFoundErrorResponse(): RestResponseInterface
     {
-        $restErrorPayload = $this->ordersRestApiConfig->getCantFindOrderRestError();
+        $restErrorPayload = $this->getCantFindOrderRestError();
 
         return $this->createErrorResponse(
             (new RestErrorMessageTransfer())
@@ -146,7 +139,7 @@ class OrderRestResponseBuilder implements OrderRestResponseBuilderInterface
      */
     public function createCustomerUnauthorizedErrorResponse(): RestResponseInterface
     {
-        $restErrorPayload = $this->ordersRestApiConfig->getCustomerUnauthorizedRestError();
+        $restErrorPayload = $this->getCustomerUnauthorizedRestError();
 
         return $this->createErrorResponse(
             (new RestErrorMessageTransfer())
@@ -203,5 +196,29 @@ class OrderRestResponseBuilder implements OrderRestResponseBuilderInterface
             OrdersRestApiConfig::RESOURCE_ORDER_ITEMS,
             $idOrderItem
         );
+    }
+
+    /**
+     * @return mixed[]
+     */
+    public function getCantFindOrderRestError(): array
+    {
+        return [
+            RestErrorMessageTransfer::CODE => OrdersRestApiConfig::RESPONSE_CODE_CANT_FIND_ORDER,
+            RestErrorMessageTransfer::DETAIL => OrdersRestApiConfig::RESPONSE_DETAIL_CANT_FIND_ORDER,
+            RestErrorMessageTransfer::STATUS => Response::HTTP_NOT_FOUND,
+        ];
+    }
+
+    /**
+     * @return mixed[]
+     */
+    public function getCustomerUnauthorizedRestError(): array
+    {
+        return [
+            RestErrorMessageTransfer::CODE => OrdersRestApiConfig::RESPONSE_CODE_CUSTOMER_UNAUTHORIZED,
+            RestErrorMessageTransfer::DETAIL => OrdersRestApiConfig::RESPONSE_DETAILS_CUSTOMER_UNAUTHORIZED,
+            RestErrorMessageTransfer::STATUS => Response::HTTP_FORBIDDEN,
+        ];
     }
 }
