@@ -18,7 +18,7 @@ use Spryker\Zed\StockAddressDataImport\Business\Writer\StockAddress\DataSet\Stoc
 class CountryIsoCodeToIdCountryStep implements DataImportStepInterface
 {
     /**
-     * @var array int|null>
+     * @var array
      */
     protected static $idCountryCache = [];
 
