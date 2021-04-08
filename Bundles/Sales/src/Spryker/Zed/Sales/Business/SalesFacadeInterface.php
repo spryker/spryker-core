@@ -424,7 +424,8 @@ interface SalesFacadeInterface
     /**
      * Specification:
      * - Checks that the order is not a duplicate.
-     * - Sets `isSuccess=false` in `CheckoutResponseTransfer` if order is a duplicate and returns `false`.
+     * - Expects `Quote::orderReference`, `Quote::getIsOrderPlacedSuccessfully` and `Quote::customer::customerReference()` to be set.
+     * - Sets `isSuccess=false` and adds an error message in `CheckoutResponseTransfer` if order is a duplicate and returns `false`.
      * - Returns `true` if the order was not found in the database.
      *
      * @api

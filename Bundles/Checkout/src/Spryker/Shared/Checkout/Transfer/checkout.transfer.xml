@@ -76,7 +76,6 @@
         <property name="billingSameAsShipping" type="bool"/>
         <property name="customer" type="Customer"/>
         <property name="orderReference" type="string"/>
-        <property name="isOrderPlacedSuccessfully" type="bool"/>
     </transfer>
 
     <transfer name="QuoteValidationResponse">

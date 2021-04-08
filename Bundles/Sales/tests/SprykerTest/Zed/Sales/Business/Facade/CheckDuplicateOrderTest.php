@@ -52,7 +52,7 @@ class CheckDuplicateOrderTest extends Test
     /**
      * @return void
      */
-    public function testCheckDuplicateOrderWithCreatedSuccessfulOrder(): void
+    public function testCheckDuplicateOrderWithSuccessfullyCreatedOrder(): void
     {
         // Arrange
         $checkoutResponseTransfer = $this->createCheckoutResponseTransfer();
@@ -75,7 +75,7 @@ class CheckDuplicateOrderTest extends Test
     /**
      * @return void
      */
-    public function testCheckDuplicateOrderWithCreatedFailedOrder(): void
+    public function testCheckDuplicateOrderWithUnsuccessfullyСreatedOrder(): void
     {
         // Arrange
         $checkoutResponseTransfer = $this->createCheckoutResponseTransfer();
@@ -98,7 +98,7 @@ class CheckDuplicateOrderTest extends Test
     /**
      * @return void
      */
-    public function testCheckDuplicateOrderWithNotCreatedOrder(): void
+    public function testCheckDuplicateOrderWithNotExistingOrder(): void
     {
         // Arrange
         $checkoutResponseTransfer = $this->createCheckoutResponseTransfer();
