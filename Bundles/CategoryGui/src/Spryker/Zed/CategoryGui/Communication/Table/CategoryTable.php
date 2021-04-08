@@ -247,7 +247,7 @@ class CategoryTable extends AbstractTable
     {
         return $this->createButtonGroupItem(
             'Edit',
-            Url::generate('/category/edit', [
+            Url::generate('/category-gui/edit', [
                 static::REQUEST_PARAM_ID_CATEGORY => $item->getIdCategory(),
             ])
         );
@@ -262,7 +262,7 @@ class CategoryTable extends AbstractTable
     {
         return $this->createButtonGroupItem(
             'Delete',
-            Url::generate('/category/delete', [
+            Url::generate('/category-gui/delete', [
                 static::REQUEST_PARAM_ID_CATEGORY => $item->getIdCategory(),
             ])
         );
@@ -277,7 +277,7 @@ class CategoryTable extends AbstractTable
     {
         return $this->createButtonGroupItem(
             'Re-sort child categories',
-            Url::generate('/category/re-sort', [
+            Url::generate('/category-gui/re-sort', [
                 static::REQUEST_PARAM_ID_NODE => $item->getVirtualColumn(static::COL_ID_CATEGORY_NODE),
             ])
         );
@@ -292,7 +292,7 @@ class CategoryTable extends AbstractTable
     {
         return $this->createButtonGroupItem(
             'Add category to this node',
-            Url::generate('/category/create', [
+            Url::generate('/category-gui/create', [
                 static::REQUEST_PARAM_ID_PARENT_NODE => $item->getVirtualColumn(static::COL_ID_CATEGORY_NODE),
             ]),
             true

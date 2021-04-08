@@ -27,7 +27,6 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 abstract class CommonCategoryType extends AbstractType
 {
     public const OPTION_CATEGORY_TEMPLATE_CHOICES = 'category_template_choices';
-    public const OPTION_INACTIVE_CHOICES = 'inactive_choices';
     public const OPTION_DATA_CLASS = 'data_class';
 
     public const FIELD_CATEGORY_KEY = 'category_key';
@@ -71,9 +70,7 @@ abstract class CommonCategoryType extends AbstractType
     {
         parent::configureOptions($resolver);
 
-        $resolver
-            ->setRequired(static::OPTION_CATEGORY_TEMPLATE_CHOICES)
-            ->setDefined(static::OPTION_INACTIVE_CHOICES);
+        $resolver->setRequired(static::OPTION_CATEGORY_TEMPLATE_CHOICES);
     }
 
     /**
@@ -217,7 +214,6 @@ abstract class CommonCategoryType extends AbstractType
             [
                 'label' => false,
                 'required' => true,
-                static::OPTION_INACTIVE_CHOICES => $options[static::OPTION_INACTIVE_CHOICES] ?? [],
                 'constraints' => [
                     new NotBlank(),
                 ],

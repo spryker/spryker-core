@@ -9,17 +9,20 @@ namespace Spryker\Zed\CategoryGui\Communication;
 
 use Generated\Shared\Transfer\CategoryTransfer;
 use Spryker\Zed\CategoryGui\CategoryGuiDependencyProvider;
-use Spryker\Zed\CategoryGui\Communication\Finder\InactiveCategoryStoreFinder;
-use Spryker\Zed\CategoryGui\Communication\Finder\InactiveCategoryStoreFinderInterface;
+use Spryker\Zed\CategoryGui\Communication\Finder\CategoryStoreWithSateFinder;
+use Spryker\Zed\CategoryGui\Communication\Finder\CategoryStoreWithSateFinderInterface;
 use Spryker\Zed\CategoryGui\Communication\Form\CategoryType;
 use Spryker\Zed\CategoryGui\Communication\Form\DataProvider\CategoryDeleteDataProvider;
 use Spryker\Zed\CategoryGui\Communication\Form\DataProvider\CategoryEditDataProvider;
 use Spryker\Zed\CategoryGui\Communication\Form\DataProvider\Create\CategoryCreateDataProvider;
 use Spryker\Zed\CategoryGui\Communication\Form\DataProvider\Create\RootCategoryCreateDataProvider;
 use Spryker\Zed\CategoryGui\Communication\Form\DeleteType;
+use Spryker\Zed\CategoryGui\Communication\Form\EventListener\CategoryStoreRelationFieldEventSubscriber;
 use Spryker\Zed\CategoryGui\Communication\Form\RootCategoryType;
 use Spryker\Zed\CategoryGui\Communication\Handler\CategoryFormHandler;
 use Spryker\Zed\CategoryGui\Communication\Handler\CategoryFormHandlerInterface;
+use Spryker\Zed\CategoryGui\Communication\Mapper\CategoryStoreWithStateMapper;
+use Spryker\Zed\CategoryGui\Communication\Mapper\CategoryStoreWithStateMapperInterface;
 use Spryker\Zed\CategoryGui\Communication\Table\CategoryTable;
 use Spryker\Zed\CategoryGui\Communication\Tabs\CategoryFormTabs;
 use Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToCategoryFacadeInterface;
@@ -29,6 +32,7 @@ use Spryker\Zed\CategoryGui\Dependency\Service\CategoryGuiToUtilEncodingServiceI
 use Spryker\Zed\Gui\Communication\Tabs\TabsInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
@@ -238,13 +242,25 @@ class CategoryGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\CategoryGui\Communication\Finder\InactiveCategoryStoreFinderInterface
+     * @return \Spryker\Zed\CategoryGui\Communication\Finder\CategoryStoreWithSateFinderInterface
      */
-    public function createInactiveCategoryStoresFinder(): InactiveCategoryStoreFinderInterface
+    public function createCategoryStoreWithSateFinder(): CategoryStoreWithSateFinderInterface
     {
-        return new InactiveCategoryStoreFinder(
+        return new CategoryStoreWithSateFinder(
             $this->getCategoryFacade(),
-            $this->getStoreFacade()
+            $this->getStoreFacade(),
+            $this->createCategoryStoreWithStateMapper()
+        );
+    }
+
+    /**
+     * @return \Symfony\Component\EventDispatcher\EventSubscriberInterface
+     */
+    public function createCategoryStoreRelationFieldEventSubscriber(): EventSubscriberInterface
+    {
+        return new CategoryStoreRelationFieldEventSubscriber(
+            $this->createCategoryStoreWithSateFinder(),
+            $this->getStoreRelationFormTypePlugin()
         );
     }
 
@@ -254,5 +270,13 @@ class CategoryGuiCommunicationFactory extends AbstractCommunicationFactory
     protected function getStoreFacade(): CategoryGuiToStoreFacadeInterface
     {
         return $this->getProvidedDependency(CategoryGuiDependencyProvider::FACADE_STORE);
+    }
+
+    /**
+     * @return \Spryker\Zed\CategoryGui\Communication\Mapper\CategoryStoreWithStateMapperInterface
+     */
+    protected function createCategoryStoreWithStateMapper(): CategoryStoreWithStateMapperInterface
+    {
+        return new CategoryStoreWithStateMapper();
     }
 }

@@ -71,4 +71,14 @@
     <transfer name="CategoryCollection">
     </transfer>
 
+    <transfer name="StoreWithState">
+        <property name="idStore" type="int"/>
+        <property name="name" type="string"/>
+        <property name="isActive" type="bool"/>
+    </transfer>
+
+    <transfer name="StoreWithStateCollection">
+        <property name="Stores" type="StoreWithState[]" singular="Store"/>
+    </transfer>
+
 </transfers>

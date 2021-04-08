@@ -31,7 +31,11 @@ class StoreRelationDrowdownType extends AbstractType
     public const FIELD_ID_STORES_DISABLED = 'id_stores_disabled';
 
     public const OPTION_INACTIVE_CHOICES = 'inactive_choices';
-    protected const OPTION_DATA_CLASS = 'data_class';
+    public const OPTION_DATA_CLASS = 'data_class';
+
+    public const OPTION_ATTRIBUTE_ACTION_URL = 'action_url';
+    public const OPTION_ATTRIBUTE_ACTION_EVENT = 'action_event';
+    public const OPTION_ATTRIBUTE_ACTION_FIELD = 'action_field';
 
     protected const LABEL_STORES = 'Stores';
 
@@ -64,12 +68,12 @@ class StoreRelationDrowdownType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefined([
-            static::OPTION_INACTIVE_CHOICES,
-        ]);
-
         $resolver->setDefaults([
             static::OPTION_DATA_CLASS => StoreRelationTransfer::class,
+            static::OPTION_INACTIVE_CHOICES => [],
+            static::OPTION_ATTRIBUTE_ACTION_URL => '',
+            static::OPTION_ATTRIBUTE_ACTION_EVENT => '',
+            static::OPTION_ATTRIBUTE_ACTION_FIELD => '',
         ]);
     }
 
@@ -135,6 +139,11 @@ class StoreRelationDrowdownType extends AbstractType
                 'label' => static::LABEL_STORES,
                 'multiple' => true,
                 'choices' => array_flip($this->getStoreNameMap()),
+                'attr' => [
+                    static::OPTION_ATTRIBUTE_ACTION_URL => $options[static::OPTION_ATTRIBUTE_ACTION_URL],
+                    static::OPTION_ATTRIBUTE_ACTION_EVENT => $options[static::OPTION_ATTRIBUTE_ACTION_EVENT],
+                    static::OPTION_ATTRIBUTE_ACTION_FIELD => $options[static::OPTION_ATTRIBUTE_ACTION_FIELD],
+                ],
                 'choice_attr' => function ($idStore) use ($options) {
                     return [
                         'disabled' => $this->getIsStoreDisabled($idStore, $options),
@@ -199,7 +208,7 @@ class StoreRelationDrowdownType extends AbstractType
      */
     protected function getIsStoreDisabled(string $idStore, array $options): bool
     {
-        $inactiveChoices = $options[static::OPTION_INACTIVE_CHOICES] ?? [];
+        $inactiveChoices = $options[static::OPTION_INACTIVE_CHOICES];
 
         return ($inactiveChoices !== [] && in_array($idStore, $inactiveChoices));
     }

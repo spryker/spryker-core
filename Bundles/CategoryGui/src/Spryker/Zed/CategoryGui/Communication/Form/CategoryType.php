@@ -8,13 +8,11 @@
 namespace Spryker\Zed\CategoryGui\Communication\Form;
 
 use ArrayObject;
-use Generated\Shared\Transfer\CategoryTransfer;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * @method \Spryker\Zed\CategoryGui\Communication\CategoryGuiCommunicationFactory getFactory()
@@ -23,10 +21,15 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class CategoryType extends CommonCategoryType
 {
-    public const OPTION_PARENT_CATEGORY_NODE_CHOICES = 'parent_category_node_choices';
-
     public const FIELD_PARENT_CATEGORY_NODE = 'parent_category_node';
     public const FIELD_EXTRA_PARENTS = 'extra_parents';
+
+    public const OPTION_PARENT_CATEGORY_NODE_CHOICES = 'parent_category_node_choices';
+    public const OPTION_INACTIVE_CHOICES = 'inactive_choices';
+
+    public const OPTION_ATTRIBUTE_ACTION_URL = 'action_url';
+    public const OPTION_ATTRIBUTE_ACTION_EVENT = 'action_event';
+    public const OPTION_ATTRIBUTE_ACTION_FIELD = 'action_field';
 
     protected const LABEL_PARENT_CATEGORY_NODE = 'Parent';
     protected const LABEL_EXTRA_PARENTS = 'Additional Parents';
@@ -113,51 +116,39 @@ class CategoryType extends CommonCategoryType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
      *
      * @return $this
      */
-    protected function addStoreRelationEventSubscriber(FormBuilderInterface $builder)
+    protected function addStoreRelationForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
-            $idCategoryNode = $this->extractIdParentCategoryNodeFromEvent($event);
-            if ($idCategoryNode === null) {
-                return $this;
-            }
-
-            $form = $event->getForm();
-
-            $options = $form->get(static::FIELD_STORE_RELATION)->getConfig()->getOptions();
-            $options[static::OPTION_INACTIVE_CHOICES] = $this->getFactory()
-                ->createInactiveCategoryStoresFinder()
-                ->findStoresByIdCategoryNode($idCategoryNode);
-
-            $form->add(
-                static::FIELD_STORE_RELATION,
-                $this->getFactory()->getStoreRelationFormTypePlugin()->getType(),
-                $options
-            );
-        });
+        $builder->add(
+            static::FIELD_STORE_RELATION,
+            $this->getFactory()->getStoreRelationFormTypePlugin()->getType(),
+            [
+                'label' => false,
+                'required' => true,
+                static::OPTION_ATTRIBUTE_ACTION_FIELD => static::FIELD_PARENT_CATEGORY_NODE,
+                static::OPTION_ATTRIBUTE_ACTION_URL => 'suggestion/stores',
+                static::OPTION_ATTRIBUTE_ACTION_EVENT => 'change',
+                'constraints' => [
+                    new NotBlank(),
+                ],
+            ]
+        );
 
         return $this;
     }
 
     /**
-     * @param \Symfony\Component\Form\FormEvent $event
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return int|null
+     * @return $this
      */
-    protected function extractIdParentCategoryNodeFromEvent(FormEvent $event): ?int
+    protected function addStoreRelationEventSubscriber(FormBuilderInterface $builder)
     {
-        $categoryTransfer = $event->getData();
-        if (!($categoryTransfer instanceof CategoryTransfer)) {
-            return null;
-        }
+        $builder->addEventSubscriber($this->getFactory()->createCategoryStoreRelationFieldEventSubscriber());
 
-        $categoryNodeParentTransfer = $categoryTransfer->getParentCategoryNode();
-        if ($categoryNodeParentTransfer !== null) {
-            return $categoryNodeParentTransfer->getIdCategoryNode();
-        }
-
-        return null;
+        return $this;
     }
 }
