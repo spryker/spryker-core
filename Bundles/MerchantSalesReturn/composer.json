@@ -1,44 +1,44 @@
 {
-  "name": "spryker/merchant-sales-return",
-  "type": "library",
-  "description": "MerchantSalesReturn module",
-  "license": "proprietary",
-  "require": {
-    "php": ">=7.3",
-    "spryker/kernel": "^3.33.0",
-    "spryker/merchant-sales-order": "^0.8.1",
-    "spryker/sales-return-extension": "^1.1.0"
-  },
-  "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/merchant": "*",
-    "spryker/oms": "*",
-    "spryker/propel": "*",
-    "spryker/sales": "*",
-    "spryker/testify": "*"
-  },
-  "autoload": {
-    "psr-4": {
-      "Spryker\\": "src/Spryker/"
+    "name": "spryker/merchant-sales-return",
+    "type": "library",
+    "description": "MerchantSalesReturn module",
+    "license": "proprietary",
+    "require": {
+        "php": ">=7.3",
+        "spryker/kernel": "^3.33.0",
+        "spryker/merchant-sales-order": "^0.9.0",
+        "spryker/sales-return-extension": "^1.2.0"
+    },
+    "require-dev": {
+        "spryker/code-sniffer": "*",
+        "spryker/merchant": "*",
+        "spryker/oms": "*",
+        "spryker/propel": "*",
+        "spryker/sales": "*",
+        "spryker/testify": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Spryker\\": "src/Spryker/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "SprykerTest\\": "tests/SprykerTest/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
     }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "SprykerTest\\": "tests/SprykerTest/"
-    }
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "scripts": {
-    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/",
-    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/"
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "1.0.x-dev"
-    }
-  },
-  "config": {
-    "sort-packages": true
-  }
 }

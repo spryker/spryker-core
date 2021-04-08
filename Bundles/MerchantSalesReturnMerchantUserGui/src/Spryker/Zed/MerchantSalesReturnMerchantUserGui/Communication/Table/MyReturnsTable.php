@@ -69,7 +69,7 @@ class MyReturnsTable extends AbstractTable
     /**
      * @param \Spryker\Zed\MerchantSalesReturnMerchantUserGui\Dependency\Service\MerchantSalesReturnMerchantUserGuiToUtilDateTimeServiceInterface $utilDateTimeService
      * @param \Spryker\Zed\MerchantSalesReturnMerchantUserGui\MerchantSalesReturnMerchantUserGuiConfig $merchantSalesReturnMerchantUserGuiConfig
-     * @param \Orm\Zed\SalesReturn\Persistence\SpySalesReturnQuery|mixed[] $salesReturnQuery
+     * @param \Orm\Zed\SalesReturn\Persistence\SpySalesReturnQuery $salesReturnQuery
      * @param \Spryker\Zed\MerchantSalesReturnMerchantUserGui\Dependency\Facade\MerchantSalesReturnMerchantUserGuiToMerchantUserFacadeInterface $merchantUserFacade
      */
     public function __construct(
@@ -150,7 +150,7 @@ class MyReturnsTable extends AbstractTable
     }
 
     /**
-     * @return \Orm\Zed\SalesReturn\Persistence\SpySalesReturnQuery|mixed[]
+     * @return \Orm\Zed\SalesReturn\Persistence\SpySalesReturnQuery
      */
     protected function prepareQuery(): SpySalesReturnQuery
     {
@@ -163,7 +163,7 @@ class MyReturnsTable extends AbstractTable
             ->requireMerchantReference()
             ->getMerchantReference();
 
-        /** @var \Orm\Zed\SalesReturn\Persistence\SpySalesReturnQuery|mixed[] $salesReturnQuery */
+        /** @var \Orm\Zed\SalesReturn\Persistence\SpySalesReturnQuery $salesReturnQuery */
         $salesReturnQuery = $this->salesReturnQuery
             ->groupByIdSalesReturn()
             ->useSpySalesReturnItemQuery()
@@ -195,7 +195,7 @@ class MyReturnsTable extends AbstractTable
 
         foreach ($salesReturnEntityCollection as $salesReturnEntity) {
             $returnData = $salesReturnEntity->toArray();
-            $returnData[static::COL_RETURN_DATE] = $this->utilDateTimeService->formatDateTime($salesReturnEntity->getCreatedAt() ?? '');
+            $returnData[static::COL_RETURN_DATE] = $this->utilDateTimeService->formatDateTime($salesReturnEntity->getCreatedAt());
             $returnData[static::COL_ACTIONS] = $this->buildLinks($salesReturnEntity);
 
             $returns[] = $returnData;
@@ -211,8 +211,8 @@ class MyReturnsTable extends AbstractTable
      */
     protected function expandReturnsWithItemStates(array $returns): array
     {
-        foreach ($returns as &$return) {
-            $return[static::COL_STATE] = implode(' ', $this->getItemStateLabelsByIdSalesReturn($return[static::COL_RETURN_ID]));
+        foreach ($returns as $index => $return) {
+            $returns[$index][static::COL_STATE] = implode(' ', $this->getItemStateLabelsByIdSalesReturn($return[static::COL_RETURN_ID]));
         }
 
         return $returns;
@@ -225,9 +225,7 @@ class MyReturnsTable extends AbstractTable
      */
     protected function getItemStateLabelsByIdSalesReturn(int $idSalesReturn): array
     {
-        $salesReturnQuery = clone $this->salesReturnQuery;
-
-        $states = $salesReturnQuery
+        $states = $this->salesReturnQuery
             ->clear()
             ->filterByIdSalesReturn($idSalesReturn)
             ->useSpySalesReturnItemQuery()

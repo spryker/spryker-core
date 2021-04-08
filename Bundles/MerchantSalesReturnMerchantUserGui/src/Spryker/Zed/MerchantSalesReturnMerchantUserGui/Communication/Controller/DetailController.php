@@ -114,7 +114,7 @@ class DetailController extends AbstractController
 
         return $this
             ->getFactory()
-            ->createMerchantOrderReader()
+            ->getMerchantSalesOrderFacade()
             ->findMerchantOrder($merchantOrderCriteriaTransfer);
     }
 

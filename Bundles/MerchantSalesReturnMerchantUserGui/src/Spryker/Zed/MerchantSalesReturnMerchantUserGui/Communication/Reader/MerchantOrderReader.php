@@ -8,10 +8,8 @@
 namespace Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Reader;
 
 use ArrayObject;
-use Generated\Shared\Transfer\MerchantOrderCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemCollectionTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemCriteriaTransfer;
-use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Dependency\Facade\MerchantSalesReturnMerchantUserGuiToMerchantOmsFacadeInterface;
 use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Dependency\Facade\MerchantSalesReturnMerchantUserGuiToMerchantSalesOrderFacadeInterface;
 
@@ -40,24 +38,6 @@ class MerchantOrderReader implements MerchantOrderReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantOrderTransfer|null
-     */
-    public function findMerchantOrder(MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer): ?MerchantOrderTransfer
-    {
-        $merchantOrderTransfer = $this
-            ->merchantSalesOrderFacade
-            ->findMerchantOrder($merchantOrderCriteriaTransfer);
-
-        if (!$merchantOrderTransfer) {
-            return null;
-        }
-
-        return $merchantOrderTransfer;
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\MerchantOrderItemCriteriaTransfer $merchantOrderItemCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantOrderItemTransfer[]
@@ -67,23 +47,11 @@ class MerchantOrderReader implements MerchantOrderReaderInterface
         $merchantOrderItemTransfers = $this->merchantSalesOrderFacade
             ->getMerchantOrderItemCollection($merchantOrderItemCriteriaTransfer);
 
-        $merchantOrderItemTransfers = $this->expandMerchantOrderItemsWithManualEvents($merchantOrderItemTransfers);
+        $merchantOrderItemTransfers = $this->merchantOmsFacade->expandMerchantOrderItemsWithManualEvents($merchantOrderItemTransfers);
         $merchantOrderItemTransfers = $this->expandMerchantOrderItemsStateHistory($merchantOrderItemTransfers);
         $indexedMerchantOrderItemTransfers = $this->getMerchantOrderItemsIndexedByIdOrderItem($merchantOrderItemTransfers);
 
         return $indexedMerchantOrderItemTransfers;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantOrderItemCollectionTransfer $merchantOrderItemTransfers
-     *
-     * @return \Generated\Shared\Transfer\MerchantOrderItemCollectionTransfer
-     */
-    protected function expandMerchantOrderItemsWithManualEvents(
-        MerchantOrderItemCollectionTransfer $merchantOrderItemTransfers
-    ): MerchantOrderItemCollectionTransfer {
-        return $this->merchantOmsFacade
-            ->expandMerchantOrderItemsWithManualEvents($merchantOrderItemTransfers);
     }
 
     /**

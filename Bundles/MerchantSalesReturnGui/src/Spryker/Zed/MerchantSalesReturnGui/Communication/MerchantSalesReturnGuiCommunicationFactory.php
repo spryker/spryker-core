@@ -8,6 +8,8 @@
 namespace Spryker\Zed\MerchantSalesReturnGui\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\MerchantSalesReturnGui\Communication\Reader\MerchantSalesReturnReader;
+use Spryker\Zed\MerchantSalesReturnGui\Communication\Reader\MerchantSalesReturnReaderInterface;
 use Spryker\Zed\MerchantSalesReturnGui\Dependency\Facade\MerchantSalesReturnGuiToMerchantSalesOrderFacadeInterface;
 use Spryker\Zed\MerchantSalesReturnGui\MerchantSalesReturnGuiDependencyProvider;
 
@@ -16,6 +18,14 @@ use Spryker\Zed\MerchantSalesReturnGui\MerchantSalesReturnGuiDependencyProvider;
  */
 class MerchantSalesReturnGuiCommunicationFactory extends AbstractCommunicationFactory
 {
+    /**
+     * @return \Spryker\Zed\MerchantSalesReturnGui\Communication\Reader\MerchantSalesReturnReaderInterface
+     */
+    public function createMerchantSalesReturnReader(): MerchantSalesReturnReaderInterface
+    {
+        return new MerchantSalesReturnReader($this->getMerchantSalesOrderFacade());
+    }
+
     /**
      * @return \Spryker\Zed\MerchantSalesReturnGui\Dependency\Facade\MerchantSalesReturnGuiToMerchantSalesOrderFacadeInterface
      */

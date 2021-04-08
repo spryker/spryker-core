@@ -141,7 +141,7 @@ class CreateController extends AbstractController
             ->setWithOrder(true);
 
         return $this->getFactory()
-            ->createMerchantOrderReader()
+            ->getMerchantSalesOrderFacade()
             ->findMerchantOrder($merchantOrderCriteriaTransfer);
     }
 

@@ -37,6 +37,8 @@ class CreateController extends AbstractController
     protected const MESSAGE_PARAM_ID = '%id%';
 
     /**
+     * @phpstan-return \Symfony\Component\HttpFoundation\RedirectResponse|array<string, mixed>
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
@@ -53,6 +55,8 @@ class CreateController extends AbstractController
     }
 
     /**
+     * @phpstan-return \Symfony\Component\HttpFoundation\RedirectResponse|array<string, mixed>
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
@@ -84,10 +88,14 @@ class CreateController extends AbstractController
     }
 
     /**
+     * @phpstan-param \Symfony\Component\Form\FormInterface<mixed> $returnCreateForm
+     *
+     * @phpstan-return \Symfony\Component\HttpFoundation\RedirectResponse|array<string, mixed>
+     *
      * @param \Symfony\Component\Form\FormInterface $returnCreateForm
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     protected function processReturnCreateForm(FormInterface $returnCreateForm, OrderTransfer $orderTransfer)
     {
@@ -111,6 +119,8 @@ class CreateController extends AbstractController
     }
 
     /**
+     * @phpstan-param \Symfony\Component\Form\FormInterface<mixed> $returnCreateForm
+     *
      * @phpstan-return array<string, mixed>
      *
      * @param \Symfony\Component\Form\FormInterface $returnCreateForm
@@ -121,6 +131,7 @@ class CreateController extends AbstractController
     protected function provideTemplateData(FormInterface $returnCreateForm, OrderTransfer $orderTransfer): array
     {
         return [
+            'returnCreateForm' => $returnCreateForm->createView(),
             'order' => $orderTransfer,
             'templates' => $this->getFactory()
                 ->createReturnCreateTemplateProvider()

@@ -9,9 +9,13 @@
 {% endblock %}
 
 {% block content %}
-    {% for templatePath, templateData in templates %}
-        {% include templatePath with templateData %}
-    {% endfor %}
+    {% if templates %}
+        {% for templatePath, templateData in templates %}
+            {% include templatePath with templateData %}
+        {% endfor %}
+    {% else %}
+        {% include '@SalesReturnGui/Create/default.twig' %}
+    {% endif %}
 {% endblock %}
 
 {% block head_css %}

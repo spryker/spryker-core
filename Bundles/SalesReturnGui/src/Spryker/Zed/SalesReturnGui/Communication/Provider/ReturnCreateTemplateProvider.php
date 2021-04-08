@@ -40,26 +40,24 @@ class ReturnCreateTemplateProvider implements ReturnCreateTemplateProviderInterf
      */
     public function provide(FormInterface $returnCreateForm, OrderTransfer $orderTransfer): array
     {
-        $templateDefaultData = [
+        if (count($this->returnCreateTemplatePlugins) < 1) {
+            return [];
+        }
+
+        $templateData = [
             static::FIELD_RETURN_CREATE_FORM => $returnCreateForm->createView(),
             static::FIELD_ORDER => $orderTransfer,
         ];
 
-        if (empty($this->returnCreateTemplatePlugins)) {
-            return [
-                '@SalesReturnGui/Create/default.twig' => $templateDefaultData,
-            ];
-        }
-
-        $templateData = [];
+        $templates = [];
 
         foreach ($this->returnCreateTemplatePlugins as $returnCreateTemplatePlugin) {
-            $templateData[$returnCreateTemplatePlugin->getTemplatePath()] = array_merge(
-                $templateDefaultData,
+            $templates[$returnCreateTemplatePlugin->getTemplatePath()] = array_merge(
+                $templateData,
                 $returnCreateTemplatePlugin->getTemplateData($orderTransfer)
             );
         }
 
-        return $templateData;
+        return $templates;
     }
 }

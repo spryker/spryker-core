@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\MerchantSalesReturnGui\Communication\Plugin\SalesReturnGui;
 
-use ArrayObject;
-use Generated\Shared\Transfer\MerchantOrderCriteriaTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SalesReturnGuiExtension\Dependency\Plugin\ReturnCreateTemplatePluginInterface;
@@ -45,27 +43,7 @@ class MerchantReturnCreateTemplatePlugin extends AbstractPlugin implements Retur
     public function getTemplateData(OrderTransfer $orderTransfer): array
     {
         return [
-            'merchantOrders' => $this->getMerchantOrders($orderTransfer),
+            'merchantOrders' => $this->getFactory()->createMerchantSalesReturnReader()->getMerchantOrders($orderTransfer),
         ];
-    }
-
-    /**
-     * @phpstan-return \ArrayObject<int,\Generated\Shared\Transfer\MerchantOrderTransfer>
-     *
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return \ArrayObject|\Generated\Shared\Transfer\MerchantOrderTransfer[]
-     */
-    protected function getMerchantOrders(OrderTransfer $orderTransfer): ArrayObject
-    {
-        $merchantOrderCriteriaTransfer = (new MerchantOrderCriteriaTransfer())
-            ->setIdOrder($orderTransfer->getIdSalesOrder())
-            ->setWithMerchant(true);
-
-        $merchantOrderCollection = $this->getFactory()
-            ->getMerchantSalesOrderFacade()
-            ->getMerchantOrderCollection($merchantOrderCriteriaTransfer);
-
-        return $merchantOrderCollection->getMerchantOrders();
     }
 }
