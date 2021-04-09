@@ -47,7 +47,7 @@ class CategoryStoreWithStateMapper implements CategoryStoreWithStateMapperInterf
      */
     protected function isStoreEnable(StoreTransfer $storeTransfer, array $categoryStoreIds): bool
     {
-        return ($categoryStoreIds !== [] && in_array($storeTransfer->getIdStoreOrFail(), $categoryStoreIds));
+        return ($categoryStoreIds === [] || in_array($storeTransfer->getIdStoreOrFail(), $categoryStoreIds));
     }
 
     /**

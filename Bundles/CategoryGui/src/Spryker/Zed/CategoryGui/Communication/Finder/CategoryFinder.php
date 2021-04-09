@@ -5,20 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CategoryGui\Communication\Form\DataProvider;
+namespace Spryker\Zed\CategoryGui\Communication\Finder;
 
+use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
-use Spryker\Zed\CategoryGui\Communication\Form\CategoryType;
 use Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToCategoryFacadeInterface;
 use Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToLocaleFacadeInterface;
-use Spryker\Zed\CategoryGui\Persistence\CategoryGuiRepositoryInterface;
 
-class CategoryEditDataProvider
+class CategoryFinder implements CategoryFinderInterface
 {
-    protected const DATA_CLASS = 'data_class';
-
     /**
      * @var \Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToCategoryFacadeInterface
      */
@@ -30,23 +27,15 @@ class CategoryEditDataProvider
     protected $localeFacade;
 
     /**
-     * @var \Spryker\Zed\CategoryGui\Persistence\CategoryGuiRepositoryInterface
-     */
-    protected $categoryGuiRepository;
-
-    /**
      * @param \Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToCategoryFacadeInterface $categoryFacade
      * @param \Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToLocaleFacadeInterface $localeFacade
-     * @param \Spryker\Zed\CategoryGui\Persistence\CategoryGuiRepositoryInterface $categoryGuiRepository
      */
     public function __construct(
         CategoryGuiToCategoryFacadeInterface $categoryFacade,
-        CategoryGuiToLocaleFacadeInterface $localeFacade,
-        CategoryGuiRepositoryInterface $categoryGuiRepository
+        CategoryGuiToLocaleFacadeInterface $localeFacade
     ) {
         $this->categoryFacade = $categoryFacade;
         $this->localeFacade = $localeFacade;
-        $this->categoryGuiRepository = $categoryGuiRepository;
     }
 
     /**
@@ -54,37 +43,26 @@ class CategoryEditDataProvider
      *
      * @return \Generated\Shared\Transfer\CategoryTransfer|null
      */
-    public function getData(int $idCategory): ?CategoryTransfer
+    public function findCategoryWithLocalizedAttributesById(int $idCategory): ?CategoryTransfer
     {
-        $categoryTransfer = $this->categoryFacade->findCategoryById($idCategory);
+        $categoryCriteriaTransfer = (new CategoryCriteriaTransfer())
+            ->setIdCategory($idCategory)
+            ->setWithChildrenRecursively(true);
 
-        if ($categoryTransfer !== null) {
-            $categoryTransfer = $this->addLocalizedAttributeTransfers($categoryTransfer);
+        $categoryTransfer = $this->categoryFacade->findCategory($categoryCriteriaTransfer);
+        if ($categoryTransfer === null) {
+            return null;
         }
 
-        return $categoryTransfer;
+        return $this->addLocalizedAttributeTransfers($categoryTransfer);
     }
 
     /**
-     * @param int $idCategory
-     *
-     * @return array
-     */
-    public function getOptions(int $idCategory): array
-    {
-        return [
-            static::DATA_CLASS => CategoryTransfer::class,
-            CategoryType::OPTION_PARENT_CATEGORY_NODE_CHOICES => $this->getCategoryNodes($idCategory),
-            CategoryType::OPTION_CATEGORY_TEMPLATE_CHOICES => $this->categoryGuiRepository->getIndexedCategoryTemplateNames(),
-        ];
-    }
-
-    /**
-     * @param int $idCategory
+     * @param int|null $idCategory
      *
      * @return \Generated\Shared\Transfer\NodeTransfer[]
      */
-    protected function getCategoryNodes(int $idCategory): array
+    public function getCategoryNodes(?int $idCategory = null): array
     {
         $nodeTransfers = [];
 
@@ -103,31 +81,13 @@ class CategoryEditDataProvider
     }
 
     /**
-     * @param \Generated\Shared\Transfer\NodeTransfer[] $nodeTransfers
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return \Generated\Shared\Transfer\NodeTransfer[]
-     */
-    protected function extractNodesFromCategory(array $nodeTransfers, CategoryTransfer $categoryTransfer): array
-    {
-        foreach ($categoryTransfer->getNodeCollection()->getNodes() as $nodeTransfer) {
-            $nodeTransfers[] = (new NodeTransfer())
-                ->setPath('/' . $nodeTransfer->getPath())
-                ->setIdCategoryNode($nodeTransfer->getIdCategoryNode())
-                ->setName($categoryTransfer->getName());
-        }
-
-        return $nodeTransfers;
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
      * @return \Generated\Shared\Transfer\CategoryTransfer
      */
     protected function addLocalizedAttributeTransfers(CategoryTransfer $categoryTransfer): CategoryTransfer
     {
-        $categoryLocaleIds = $this->getCategoryLocaleIds($categoryTransfer);
+        $categoryLocaleIds = $this->extractCategoryLocaleIds($categoryTransfer);
 
         foreach ($this->localeFacade->getLocaleCollection() as $localeTransfer) {
             if (in_array($localeTransfer->getIdLocale(), $categoryLocaleIds, true)) {
@@ -147,14 +107,31 @@ class CategoryEditDataProvider
      *
      * @return int[]
      */
-    protected function getCategoryLocaleIds(CategoryTransfer $categoryTransfer): array
+    protected function extractCategoryLocaleIds(CategoryTransfer $categoryTransfer): array
     {
         $categoryLocaleIds = [];
-
         foreach ($categoryTransfer->getLocalizedAttributes() as $localizedAttribute) {
             $categoryLocaleIds[] = $localizedAttribute->getLocale()->getIdLocale();
         }
 
         return $categoryLocaleIds;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\NodeTransfer[] $nodeTransfers
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return \Generated\Shared\Transfer\NodeTransfer[]
+     */
+    protected function extractNodesFromCategory(array $nodeTransfers, CategoryTransfer $categoryTransfer): array
+    {
+        foreach ($categoryTransfer->getNodeCollection()->getNodes() as $nodeTransfer) {
+            $nodeTransfers[] = (new NodeTransfer())
+                ->setPath('/' . $nodeTransfer->getPath())
+                ->setIdCategoryNode($nodeTransfer->getIdCategoryNode())
+                ->setName($categoryTransfer->getName());
+        }
+
+        return $nodeTransfers;
     }
 }

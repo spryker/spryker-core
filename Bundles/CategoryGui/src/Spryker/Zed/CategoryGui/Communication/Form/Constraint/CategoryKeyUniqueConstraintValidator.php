@@ -33,7 +33,7 @@ class CategoryKeyUniqueConstraintValidator extends ConstraintValidator
             return;
         }
 
-        if ($constraint->getCategoryGuiRepository()->isCategoryKeyUsed($value)) {
+        if ($constraint->getCategoryGuiRepository()->isCategoryKeyUsed($categoryTransfer)) {
             $this->context
                 ->buildViolation(sprintf($constraint->message, $value))
                 ->addViolation();

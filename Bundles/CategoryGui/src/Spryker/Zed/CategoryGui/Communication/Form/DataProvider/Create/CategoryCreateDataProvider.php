@@ -11,8 +11,8 @@ use Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
+use Spryker\Zed\CategoryGui\Communication\Finder\CategoryFinderInterface;
 use Spryker\Zed\CategoryGui\Communication\Form\CategoryType;
-use Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToCategoryFacadeInterface;
 use Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToLocaleFacadeInterface;
 use Spryker\Zed\CategoryGui\Persistence\CategoryGuiRepositoryInterface;
 
@@ -24,28 +24,28 @@ class CategoryCreateDataProvider
     protected $localeFacade;
 
     /**
-     * @var \Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToCategoryFacadeInterface
-     */
-    protected $categoryFacade;
-
-    /**
      * @var \Spryker\Zed\CategoryGui\Persistence\CategoryGuiRepositoryInterface
      */
     protected $categoryGuiRepository;
 
     /**
+     * @var \Spryker\Zed\CategoryGui\Communication\Finder\CategoryFinderInterface
+     */
+    protected $categoryFinder;
+
+    /**
      * @param \Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToLocaleFacadeInterface $localeFacade
-     * @param \Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToCategoryFacadeInterface $categoryFacade
      * @param \Spryker\Zed\CategoryGui\Persistence\CategoryGuiRepositoryInterface $categoryGuiRepository
+     * @param \Spryker\Zed\CategoryGui\Communication\Finder\CategoryFinderInterface $categoryFinder
      */
     public function __construct(
         CategoryGuiToLocaleFacadeInterface $localeFacade,
-        CategoryGuiToCategoryFacadeInterface $categoryFacade,
-        CategoryGuiRepositoryInterface $categoryGuiRepository
+        CategoryGuiRepositoryInterface $categoryGuiRepository,
+        CategoryFinderInterface $categoryFinder
     ) {
         $this->localeFacade = $localeFacade;
-        $this->categoryFacade = $categoryFacade;
         $this->categoryGuiRepository = $categoryGuiRepository;
+        $this->categoryFinder = $categoryFinder;
     }
 
     /**
@@ -88,43 +88,8 @@ class CategoryCreateDataProvider
     {
         return [
             CategoryType::OPTION_DATA_CLASS => CategoryTransfer::class,
-            CategoryType::OPTION_PARENT_CATEGORY_NODE_CHOICES => $this->getCategoryNodes(),
+            CategoryType::OPTION_PARENT_CATEGORY_NODE_CHOICES => $this->categoryFinder->getCategoryNodes(),
             CategoryType::OPTION_CATEGORY_TEMPLATE_CHOICES => $this->categoryGuiRepository->getIndexedCategoryTemplateNames(),
         ];
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\NodeTransfer[]
-     */
-    protected function getCategoryNodes(): array
-    {
-        $nodeTransfers = [];
-
-        $localeTransfer = $this->localeFacade->getCurrentLocale();
-        $categoryCollectionTransfer = $this->categoryFacade->getAllCategoryCollection($localeTransfer);
-
-        foreach ($categoryCollectionTransfer->getCategories() as $categoryTransfer) {
-            $nodeTransfers = $this->extractNodesFromCategory($nodeTransfers, $categoryTransfer);
-        }
-
-        return $nodeTransfers;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\NodeTransfer[] $nodeTransfers
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return \Generated\Shared\Transfer\NodeTransfer[]
-     */
-    protected function extractNodesFromCategory(array $nodeTransfers, CategoryTransfer $categoryTransfer): array
-    {
-        foreach ($categoryTransfer->getNodeCollection()->getNodes() as $nodeTransfer) {
-            $nodeTransfers[] = (new NodeTransfer())
-                ->setPath('/' . $nodeTransfer->getPath())
-                ->setIdCategoryNode($nodeTransfer->getIdCategoryNode())
-                ->setName($categoryTransfer->getName());
-        }
-
-        return $nodeTransfers;
     }
 }

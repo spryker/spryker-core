@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CategoryGui\Persistence;
 
+use Generated\Shared\Transfer\CategoryTransfer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryTableMap;
@@ -28,15 +29,16 @@ class CategoryGuiRepository extends AbstractRepository implements CategoryGuiRep
     /**
      * @module Category
      *
-     * @param string $categoryKey
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
      * @return bool
      */
-    public function isCategoryKeyUsed(string $categoryKey): bool
+    public function isCategoryKeyUsed(CategoryTransfer $categoryTransfer): bool
     {
         return $this->getFactory()
             ->getCategoryPropelQuery()
-            ->filterByCategoryKey($categoryKey)
+            ->filterByCategoryKey($categoryTransfer->getCategoryKey())
+            ->filterByIdCategory($categoryTransfer->getIdCategory(), Criteria::NOT_EQUAL)
             ->count() > 0;
     }
 

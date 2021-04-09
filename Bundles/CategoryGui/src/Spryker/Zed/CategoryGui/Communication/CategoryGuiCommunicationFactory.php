@@ -9,15 +9,18 @@ namespace Spryker\Zed\CategoryGui\Communication;
 
 use Generated\Shared\Transfer\CategoryTransfer;
 use Spryker\Zed\CategoryGui\CategoryGuiDependencyProvider;
+use Spryker\Zed\CategoryGui\Communication\Finder\CategoryFinder;
+use Spryker\Zed\CategoryGui\Communication\Finder\CategoryFinderInterface;
 use Spryker\Zed\CategoryGui\Communication\Finder\CategoryStoreWithSateFinder;
 use Spryker\Zed\CategoryGui\Communication\Finder\CategoryStoreWithSateFinderInterface;
 use Spryker\Zed\CategoryGui\Communication\Form\CategoryType;
 use Spryker\Zed\CategoryGui\Communication\Form\Constraint\CategoryKeyUniqueConstraint;
 use Spryker\Zed\CategoryGui\Communication\Form\Constraint\CategoryLocalizedAttributeNameUniqueConstraint;
 use Spryker\Zed\CategoryGui\Communication\Form\DataProvider\CategoryDeleteDataProvider;
-use Spryker\Zed\CategoryGui\Communication\Form\DataProvider\CategoryEditDataProvider;
 use Spryker\Zed\CategoryGui\Communication\Form\DataProvider\Create\CategoryCreateDataProvider;
 use Spryker\Zed\CategoryGui\Communication\Form\DataProvider\Create\RootCategoryCreateDataProvider;
+use Spryker\Zed\CategoryGui\Communication\Form\DataProvider\Edit\CategoryEditDataProvider;
+use Spryker\Zed\CategoryGui\Communication\Form\DataProvider\Edit\RootCategoryEditDataProvider;
 use Spryker\Zed\CategoryGui\Communication\Form\DeleteType;
 use Spryker\Zed\CategoryGui\Communication\Form\EventListener\CategoryStoreRelationFieldEventSubscriber;
 use Spryker\Zed\CategoryGui\Communication\Form\RootCategoryType;
@@ -81,8 +84,8 @@ class CategoryGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new CategoryCreateDataProvider(
             $this->getLocaleFacade(),
-            $this->getCategoryFacade(),
-            $this->getRepository()
+            $this->getRepository(),
+            $this->createCategoryFinder()
         );
     }
 
@@ -103,14 +106,40 @@ class CategoryGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\CategoryGui\Communication\Form\DataProvider\CategoryEditDataProvider
+     * @return \Spryker\Zed\CategoryGui\Communication\Form\DataProvider\Edit\CategoryEditDataProvider
      */
     public function createCategoryEditFormDataProvider(): CategoryEditDataProvider
     {
         return new CategoryEditDataProvider(
-            $this->getCategoryFacade(),
-            $this->getLocaleFacade(),
-            $this->getRepository()
+            $this->getRepository(),
+            $this->createCategoryFinder()
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createRootCategoryEditForm(CategoryTransfer $categoryTransfer): FormInterface
+    {
+        $rootCategoryCreateDataFormProvider = $this->createRootCategoryEditDataProvider();
+
+        return $this->getFormFactory()->create(
+            RootCategoryType::class,
+            $categoryTransfer,
+            $rootCategoryCreateDataFormProvider->getOptions()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\CategoryGui\Communication\Form\DataProvider\Edit\RootCategoryEditDataProvider
+     */
+    public function createRootCategoryEditDataProvider(): RootCategoryEditDataProvider
+    {
+        return new RootCategoryEditDataProvider(
+            $this->getRepository(),
+            $this->createCategoryFinder()
         );
     }
 
@@ -311,5 +340,16 @@ class CategoryGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createCategoryExtraParentsTransformer(): DataTransformerInterface
     {
         return new CategoryExtraParentsTransformer();
+    }
+
+    /**
+     * @return \Spryker\Zed\CategoryGui\Communication\Finder\CategoryFinderInterface
+     */
+    public function createCategoryFinder(): CategoryFinderInterface
+    {
+        return new CategoryFinder(
+            $this->getCategoryFacade(),
+            $this->getLocaleFacade()
+        );
     }
 }

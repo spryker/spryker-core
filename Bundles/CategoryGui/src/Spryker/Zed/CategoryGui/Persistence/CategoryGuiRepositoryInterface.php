@@ -7,16 +7,18 @@
 
 namespace Spryker\Zed\CategoryGui\Persistence;
 
+use Generated\Shared\Transfer\CategoryTransfer;
+
 interface CategoryGuiRepositoryInterface
 {
     /**
      * @module Category
      *
-     * @param string $categoryKey
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
      * @return bool
      */
-    public function isCategoryKeyUsed(string $categoryKey): bool;
+    public function isCategoryKeyUsed(CategoryTransfer $categoryTransfer): bool;
 
     /**
      * @module Category
