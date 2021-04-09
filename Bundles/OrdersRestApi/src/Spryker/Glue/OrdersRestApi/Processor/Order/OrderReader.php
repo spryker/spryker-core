@@ -72,16 +72,6 @@ class OrderReader implements OrderReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function getMyOrders(RestRequestInterface $restRequest): RestResponseInterface
-    {
-        return $this->getOrderListAttributes($restRequest);
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
     public function getCustomerOrders(RestRequestInterface $restRequest): RestResponseInterface
     {
         if (!$this->ordersRestApiValidator->isSameCustomerReference($restRequest)) {

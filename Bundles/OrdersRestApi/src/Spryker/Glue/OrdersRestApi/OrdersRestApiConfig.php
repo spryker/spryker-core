@@ -12,7 +12,6 @@ use Spryker\Glue\Kernel\AbstractBundleConfig;
 class OrdersRestApiConfig extends AbstractBundleConfig
 {
     public const RESOURCE_ORDERS = 'orders';
-    public const RESOURCE_MY_ORDERS = 'my-orders';
     public const RESOURCE_ORDER_ITEMS = 'order-items';
     public const RESOURCE_CUSTOMERS = 'customers';
 
