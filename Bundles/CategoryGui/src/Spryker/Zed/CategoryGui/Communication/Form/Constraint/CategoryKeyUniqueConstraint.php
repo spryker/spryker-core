@@ -27,7 +27,7 @@ class CategoryKeyUniqueConstraint extends Constraint
     /**
      * @return \Spryker\Zed\CategoryGui\Persistence\CategoryGuiRepositoryInterface
      */
-    public function getCategoryGuiRepositoryFacade(): CategoryGuiRepositoryInterface
+    public function getCategoryGuiRepository(): CategoryGuiRepositoryInterface
     {
         return $this->categoryGuiRepository;
     }
