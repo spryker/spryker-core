@@ -7,13 +7,13 @@
 
 namespace Spryker\Zed\SessionRedisExtension\Dependency\Plugin;
 
-use Spryker\Shared\SessionRedisExtension\Dependency\Plugin\SessionRedisLifeTimeCalculatorPluginInterface as NewSessionRedisLifeTimeCalculatorPluginInterface;
+use Spryker\Shared\SessionRedisExtension\Dependency\Plugin\SessionRedisLifeTimeCalculatorPluginInterface as SessionRedisExtensionSessionRedisLifeTimeCalculatorPluginInterface;
 
 /**
  * @deprecated Use {@link \Spryker\Shared\SessionRedisExtension\Dependency\Plugin\SessionRedisLifeTimeCalculatorPluginInterface} instead.
  *
  * Use this plugin if life time of redis session must be changed.
  */
-interface SessionRedisLifeTimeCalculatorPluginInterface extends NewSessionRedisLifeTimeCalculatorPluginInterface
+interface SessionRedisLifeTimeCalculatorPluginInterface extends SessionRedisExtensionSessionRedisLifeTimeCalculatorPluginInterface
 {
 }
