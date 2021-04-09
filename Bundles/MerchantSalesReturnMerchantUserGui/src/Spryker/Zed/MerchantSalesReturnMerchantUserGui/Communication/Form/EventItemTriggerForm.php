@@ -41,7 +41,7 @@ class EventItemTriggerForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->addSubmitButton($builder, $options)
+        $this->addSubmitButtonField($builder, $options)
             ->setAction($builder, $options);
     }
 
@@ -54,7 +54,7 @@ class EventItemTriggerForm extends AbstractType
      *
      * @return $this
      */
-    protected function addSubmitButton(FormBuilderInterface $builder, array $options)
+    protected function addSubmitButtonField(FormBuilderInterface $builder, array $options)
     {
         $fieldOptions = [
             'label' => $options[static::OPTION_EVENT],

@@ -41,8 +41,22 @@ class EventTriggerForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->addSubmitButton($builder, $options)
+        $this->addSubmitButtonField($builder, $options)
             ->setAction($builder, $options);
+    }
+
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     *
+     * @return void
+     */
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults([
+            static::OPTION_EVENT => null,
+            static::OPTION_SUBMIT_BUTTON_CLASS => null,
+            static::OPTION_ACTION_QUERY_PARAMETERS => [],
+        ]);
     }
 
     /**
@@ -54,7 +68,7 @@ class EventTriggerForm extends AbstractType
      *
      * @return $this
      */
-    protected function addSubmitButton(FormBuilderInterface $builder, array $options)
+    protected function addSubmitButtonField(FormBuilderInterface $builder, array $options)
     {
         $fieldOptions = [
             'label' => $options[static::OPTION_EVENT],
@@ -99,19 +113,5 @@ class EventTriggerForm extends AbstractType
     protected function generateCreateActionUrl(array $options): string
     {
         return Url::generate(static::ACTION_ROUTE, $options[static::OPTION_ACTION_QUERY_PARAMETERS]);
-    }
-
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     *
-     * @return void
-     */
-    public function configureOptions(OptionsResolver $resolver): void
-    {
-        $resolver->setDefaults([
-            static::OPTION_EVENT => null,
-            static::OPTION_SUBMIT_BUTTON_CLASS => null,
-            static::OPTION_ACTION_QUERY_PARAMETERS => [],
-        ]);
     }
 }

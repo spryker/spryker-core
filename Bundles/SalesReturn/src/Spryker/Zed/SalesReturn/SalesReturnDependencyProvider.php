@@ -233,7 +233,7 @@ class SalesReturnDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @return \Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnExpanderPluginInterface[]
      */
-    public function getReturnExpanderPlugins(): array
+    protected function getReturnExpanderPlugins(): array
     {
         return [];
     }

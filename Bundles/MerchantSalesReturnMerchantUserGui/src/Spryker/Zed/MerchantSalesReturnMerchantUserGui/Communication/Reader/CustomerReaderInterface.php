@@ -17,5 +17,5 @@ interface CustomerReaderInterface
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
-    public function findCustomerByReturnOrder(ReturnTransfer $returnTransfer): ?CustomerTransfer;
+    public function findCustomerByReturn(ReturnTransfer $returnTransfer): ?CustomerTransfer;
 }

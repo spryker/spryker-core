@@ -41,12 +41,12 @@ class CustomerReader implements CustomerReaderInterface
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
-    public function findCustomerByReturnOrder(ReturnTransfer $returnTransfer): ?CustomerTransfer
+    public function findCustomerByReturn(ReturnTransfer $returnTransfer): ?CustomerTransfer
     {
         $customerReference = $returnTransfer->getCustomerReference();
 
         if (!$customerReference) {
-            return $this->findCustomerByReturnOrder($returnTransfer);
+            return $this->findCustomerByReturn($returnTransfer);
         }
 
         $customerTransfer = $this->customerFacade
@@ -54,7 +54,7 @@ class CustomerReader implements CustomerReaderInterface
             ->getCustomerTransfer();
 
         if (!$customerTransfer) {
-            return $this->findCustomerByReturnOrder($returnTransfer);
+            return $this->findCustomerByReturn($returnTransfer);
         }
 
         return $customerTransfer;

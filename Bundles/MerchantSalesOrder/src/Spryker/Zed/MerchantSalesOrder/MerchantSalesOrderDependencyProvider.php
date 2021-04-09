@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\MerchantSalesOrder;
 
-use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\MerchantSalesOrder\Dependency\Facade\MerchantSalesOrderToCalculationFacadeBridge;
@@ -27,8 +26,6 @@ class MerchantSalesOrderDependencyProvider extends AbstractBundleDependencyProvi
     public const PLUGINS_MERCHANT_ORDER_EXPANDER = 'PLUGINS_MERCHANT_ORDER_EXPANDER';
     public const PLUGINS_MERCHANT_ORDER_FILTER = 'PLUGINS_MERCHANT_ORDER_FILTER';
 
-    public const PROPEL_QUERY_MERCHANT = 'PROPEL_QUERY_MERCHANT';
-
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -44,20 +41,6 @@ class MerchantSalesOrderDependencyProvider extends AbstractBundleDependencyProvi
         $container = $this->addMerchantOrderPostCreatePlugins($container);
         $container = $this->addMerchantOrderExpanderPlugins($container);
         $container = $this->addMerchantOrderFilterPlugins($container);
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    public function providePersistenceLayerDependencies(Container $container): Container
-    {
-        $container = parent::providePersistenceLayerDependencies($container);
-
-        $container = $this->addMerchantPropelQuery($container);
 
         return $container;
     }
@@ -152,20 +135,6 @@ class MerchantSalesOrderDependencyProvider extends AbstractBundleDependencyProvi
         $container->set(static::PLUGINS_MERCHANT_ORDER_FILTER, function () {
             return $this->getMerchantOrderFilterPlugins();
         });
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addMerchantPropelQuery(Container $container): Container
-    {
-        $container->set(static::PROPEL_QUERY_MERCHANT, $container->factory(function (): SpyMerchantQuery {
-            return SpyMerchantQuery::create();
-        }));
 
         return $container;
     }

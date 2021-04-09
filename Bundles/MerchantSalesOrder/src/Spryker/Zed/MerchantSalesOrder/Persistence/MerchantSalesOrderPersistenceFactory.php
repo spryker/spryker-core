@@ -48,12 +48,4 @@ class MerchantSalesOrderPersistenceFactory extends AbstractPersistenceFactory
     {
         return new MerchantSalesOrderMapper();
     }
-
-    /**
-     * @return \Orm\Zed\Merchant\Persistence\SpyMerchantQuery
-     */
-    public function getMerchantQuery(): SpyMerchantQuery
-    {
-        return $this->getProvidedDependency(MerchantSalesOrderDependencyProvider::PROPEL_QUERY_MERCHANT);
-    }
 }
