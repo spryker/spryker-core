@@ -110,7 +110,7 @@ class OrderRestResponseBuilder implements OrderRestResponseBuilderInterface
      */
     public function createOrderNotFoundErrorResponse(): RestResponseInterface
     {
-        $restErrorPayload = $this->getCantFindOrderRestError();
+        $restErrorPayload = $this->getOrderNotFoundError();
 
         return $this->createErrorResponse(
             (new RestErrorMessageTransfer())
@@ -201,7 +201,7 @@ class OrderRestResponseBuilder implements OrderRestResponseBuilderInterface
     /**
      * @return mixed[]
      */
-    protected function getCantFindOrderRestError(): array
+    protected function getOrderNotFoundError(): array
     {
         return [
             RestErrorMessageTransfer::CODE => OrdersRestApiConfig::RESPONSE_CODE_CANT_FIND_ORDER,

@@ -13,6 +13,9 @@ class OrdersRestApiConfig extends AbstractBundleConfig
 {
     public const RESOURCE_ORDERS = 'orders';
     public const RESOURCE_ORDER_ITEMS = 'order-items';
+    /**
+     * @uses \Spryker\Glue\CustomersRestApi\CustomersRestApiConfig::RESOURCE_CUSTOMERS
+     */
     public const RESOURCE_CUSTOMERS = 'customers';
 
     public const RESOURCE_ORDERS_IS_PROTECTED = true;
