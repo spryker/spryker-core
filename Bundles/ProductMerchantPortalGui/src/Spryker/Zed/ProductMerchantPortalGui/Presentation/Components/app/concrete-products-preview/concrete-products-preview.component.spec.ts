@@ -68,7 +68,7 @@ const mockGeneratedProducts = [
 class MockGenerator implements IdGenerator {
     index = 0;
     generate = jest.fn().mockImplementation(() => {
-        return `mockId-${this.index++}`
+        return `mockId-${this.index++}`;
     });
 }
 
@@ -107,20 +107,22 @@ describe('ConcreteProductsPreviewComponent', () => {
             imports: [ScrollingModule],
             declarations: [ConcreteProductsPreviewComponent, TestComponent],
             schemas: [NO_ERRORS_SCHEMA],
-        }).overrideComponent(ConcreteProductsPreviewComponent, {
-            set: {
-                providers: [
-                    {
-                        provide: ConcreteProductSkuGeneratorFactoryService,
-                        useClass: MockGeneratorFactory,
-                    },
-                    {
-                        provide: ConcreteProductNameGeneratorFactoryService,
-                        useClass: MockGeneratorFactory,
-                    }
-                ]
-            }
-        }).compileComponents();
+        })
+            .overrideComponent(ConcreteProductsPreviewComponent, {
+                set: {
+                    providers: [
+                        {
+                            provide: ConcreteProductSkuGeneratorFactoryService,
+                            useClass: MockGeneratorFactory,
+                        },
+                        {
+                            provide: ConcreteProductNameGeneratorFactoryService,
+                            useClass: MockGeneratorFactory,
+                        },
+                    ],
+                },
+            })
+            .compileComponents();
     }));
 
     beforeEach(() => {
@@ -135,7 +137,9 @@ describe('ConcreteProductsPreviewComponent', () => {
 
             const noDataElement = fixture.debugElement.query(By.css('.mp-concrete-products-preview__no-data'));
 
-            const noDataText = fixture.debugElement.query(By.css('.mp-concrete-products-preview__no-data [no-data-text]'));
+            const noDataText = fixture.debugElement.query(
+                By.css('.mp-concrete-products-preview__no-data [no-data-text]'),
+            );
 
             expect(noDataElement).toBeTruthy();
             expect(noDataText.nativeElement.textContent).toBe('No concretes created yet');
@@ -284,7 +288,7 @@ describe('ConcreteProductsPreviewComponent', () => {
             const mockAttrNames = {
                 firstRow: 'name11  /  name21',
                 secondRow: 'name12  /  name21',
-            }
+            };
 
             component.attributes = mockAttributes;
             fixture.autoDetectChanges();
@@ -302,7 +306,7 @@ describe('ConcreteProductsPreviewComponent', () => {
             const mockSkuValues = {
                 firstRow: 'mockId-0',
                 secondRow: 'mockId-1',
-            }
+            };
 
             component.attributes = mockAttributes;
             fixture.autoDetectChanges();
@@ -315,7 +319,9 @@ describe('ConcreteProductsPreviewComponent', () => {
                 By.css('cdk-virtual-scroll-viewport .mp-concrete-products-preview__table-row-sku spy-input'),
             );
             const componentElem = fixture.debugElement.query(By.directive(ConcreteProductsPreviewComponent));
-            const skuGeneratorFactory = componentElem.injector.get(ConcreteProductSkuGeneratorFactoryService) as any as MockGeneratorFactory;
+            const skuGeneratorFactory = (componentElem.injector.get(
+                ConcreteProductSkuGeneratorFactoryService,
+            ) as any) as MockGeneratorFactory;
 
             expect(skuInputs[0].properties.value).toBe(mockSkuValues.firstRow);
             expect(skuGeneratorFactory.generator.generate).toHaveBeenCalledWith(mockSkuValues.firstRow);
@@ -337,7 +343,7 @@ describe('ConcreteProductsPreviewComponent', () => {
             const mockNameValues = {
                 firstRow: 'mockId-0',
                 secondRow: 'mockId-1',
-            }
+            };
 
             component.attributes = mockAttributes;
             fixture.autoDetectChanges();
@@ -350,7 +356,9 @@ describe('ConcreteProductsPreviewComponent', () => {
                 By.css('cdk-virtual-scroll-viewport .mp-concrete-products-preview__table-row-name spy-input'),
             );
             const componentElem = fixture.debugElement.query(By.directive(ConcreteProductsPreviewComponent));
-            const nameGeneratorFactory = componentElem.injector.get(ConcreteProductNameGeneratorFactoryService) as any as MockGeneratorFactory;
+            const nameGeneratorFactory = (componentElem.injector.get(
+                ConcreteProductNameGeneratorFactoryService,
+            ) as any) as MockGeneratorFactory;
 
             expect(nameInputs[0].properties.value).toBe(mockNameValues.firstRow);
             expect(nameGeneratorFactory.generator.generate).toHaveBeenCalledWith(mockNameValues.firstRow);

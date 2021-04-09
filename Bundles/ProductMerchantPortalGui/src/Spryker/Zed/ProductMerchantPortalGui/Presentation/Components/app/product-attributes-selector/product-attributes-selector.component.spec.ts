@@ -162,7 +162,9 @@ describe('ProductAttributesSelectorComponent', () => {
 
             expect(hiddenInput).toBeTruthy();
             expect(hiddenInput.properties.name).toBe(mockName);
-            expect(hiddenInput.properties.value.replace(/\s/g, '')).toBe(JSON.stringify([...mockSelectedAttributes, {}]));
+            expect(hiddenInput.properties.value.replace(/\s/g, '')).toBe(
+                JSON.stringify([...mockSelectedAttributes, {}]),
+            );
         });
 
         it('should add a new attribute row by `Add` button click', () => {
@@ -195,7 +197,9 @@ describe('ProductAttributesSelectorComponent', () => {
             );
             const hiddenInput = fixture.debugElement.query(By.css('input[type=hidden]'));
 
-            expect(hiddenInput.properties.value.replace(/\s/g, '')).toBe(JSON.stringify([...mockSelectedAttributes, {}, {}]));
+            expect(hiddenInput.properties.value.replace(/\s/g, '')).toBe(
+                JSON.stringify([...mockSelectedAttributes, {}, {}]),
+            );
 
             buttonDeleteElems[0].triggerEventHandler('click', 0);
             fixture.detectChanges();
@@ -209,9 +213,9 @@ describe('ProductAttributesSelectorComponent', () => {
                 {
                     title: 'name1',
                     value: mockValue,
-                    values: []
-                }
-            ]
+                    values: [],
+                },
+            ];
 
             component.attributes = mockAttributes;
             component.selectedAttributes = [];
@@ -243,8 +247,8 @@ describe('ProductAttributesSelectorComponent', () => {
                     title: 'name1',
                     value: mockValue,
                     values: [mockValues],
-                }
-            ]
+                },
+            ];
 
             component.attributes = mockAttributes;
             component.selectedAttributes = [];

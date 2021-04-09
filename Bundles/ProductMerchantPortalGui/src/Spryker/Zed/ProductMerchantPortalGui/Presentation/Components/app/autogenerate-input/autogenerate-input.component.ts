@@ -1,11 +1,4 @@
-import {
-    ChangeDetectionStrategy,
-    Component,
-    Input,
-    OnChanges,
-    SimpleChanges,
-    ViewEncapsulation,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges, ViewEncapsulation } from '@angular/core';
 
 @Component({
     selector: 'mp-autogenerate-input',
