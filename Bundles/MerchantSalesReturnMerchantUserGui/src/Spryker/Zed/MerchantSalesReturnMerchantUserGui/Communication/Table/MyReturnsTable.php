@@ -129,7 +129,7 @@ class MyReturnsTable extends AbstractTable
     /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
-     * @return string[]
+     * @return (int|string|null)[][]
      */
     protected function prepareData(TableConfiguration $config): array
     {
@@ -185,17 +185,21 @@ class MyReturnsTable extends AbstractTable
     }
 
     /**
+     * @phpstan-return array<array<string|int|null>>
+     *
      * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\SalesReturn\Persistence\SpySalesReturn[] $salesReturnEntityCollection
      *
-     * @return string[]
+     * @return (int|string|null)[][]
      */
     protected function mapReturns(ObjectCollection $salesReturnEntityCollection): array
     {
         $returns = [];
 
         foreach ($salesReturnEntityCollection as $salesReturnEntity) {
+            $createdAt = $salesReturnEntity->getCreatedAt() ?? '';
+
             $returnData = $salesReturnEntity->toArray();
-            $returnData[static::COL_RETURN_DATE] = $this->utilDateTimeService->formatDateTime($salesReturnEntity->getCreatedAt());
+            $returnData[static::COL_RETURN_DATE] = $this->utilDateTimeService->formatDateTime($createdAt);
             $returnData[static::COL_ACTIONS] = $this->buildLinks($salesReturnEntity);
 
             $returns[] = $returnData;
@@ -205,14 +209,15 @@ class MyReturnsTable extends AbstractTable
     }
 
     /**
-     * @param string[] $returns
+     * @param (int|string|null)[][] $returns
      *
-     * @return string[]
+     * @return (int|string|null)[][]
      */
     protected function expandReturnsWithItemStates(array $returns): array
     {
         foreach ($returns as $index => $return) {
-            $returns[$index][static::COL_STATE] = implode(' ', $this->getItemStateLabelsByIdSalesReturn($return[static::COL_RETURN_ID]));
+            $idSalesReturn = (int)$return[static::COL_RETURN_ID];
+            $returns[$index][static::COL_STATE] = implode(' ', $this->getItemStateLabelsByIdSalesReturn($idSalesReturn));
         }
 
         return $returns;

@@ -101,7 +101,7 @@ class MerchantSalesReturnMerchantUserGuiCommunicationFactory extends AbstractCom
     }
 
     /**
-     * @phpstan-param array<string, mixed> $options
+     * @phpstan-param array<int|string, mixed> $options
      *
      * @phpstan-return \Symfony\Component\Form\FormInterface<mixed>
      *
@@ -115,7 +115,7 @@ class MerchantSalesReturnMerchantUserGuiCommunicationFactory extends AbstractCom
     }
 
     /**
-     * @phpstan-param array<string, mixed> $options
+     * @phpstan-param array<int|string, mixed> $options
      *
      * @phpstan-return \Symfony\Component\Form\FormInterface<mixed>
      *
