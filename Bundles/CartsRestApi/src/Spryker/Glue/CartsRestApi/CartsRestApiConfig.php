@@ -24,7 +24,6 @@ class CartsRestApiConfig extends AbstractBundleConfig
 
     public const RESOURCE_GUEST_CARTS = 'guest-carts';
     public const RESOURCE_GUEST_CARTS_ITEMS = 'guest-cart-items';
-    public const RESOURCE_MY_CARTS = 'my-carts';
 
     public const CONTROLLER_CARTS = 'carts-resource';
     public const CONTROLLER_CART_ITEMS = 'cart-items-resource';
@@ -80,16 +79,6 @@ class CartsRestApiConfig extends AbstractBundleConfig
 
     protected const ALLOWED_CART_ITEM_EAGER_RELATIONSHIP = true;
     protected const ALLOWED_GUEST_CART_ITEM_EAGER_RELATIONSHIP = true;
-
-    /**
-     * @uses \Spryker\Glue\GlueApplication\Rest\RequestConstantsInterface::HEADER_DEPRECATION
-     */
-    public const HEADER_DEPRECATION = 'Deprecation';
-
-    /**
-     * @uses \Spryker\Glue\GlueApplication\Rest\RequestConstantsInterface::HEADER_LINK
-     */
-    public const HEADER_LINK = 'Link';
 
     /**
      * @api
