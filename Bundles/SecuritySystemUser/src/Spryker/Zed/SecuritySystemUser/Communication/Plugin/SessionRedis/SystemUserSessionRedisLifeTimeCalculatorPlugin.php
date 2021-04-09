@@ -8,9 +8,9 @@
 namespace Spryker\Zed\SecuritySystemUser\Communication\Plugin\SessionRedis;
 
 use Generated\Shared\Transfer\HttpRequestTransfer;
-use Spryker\Shared\SessionRedisExtension\Dependency\Plugin\SessionRedisLifeTimeCalculatorPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SecuritySystemUser\SecuritySystemUserConfig;
+use Spryker\Zed\SessionRedisExtension\Dependency\Plugin\SessionRedisLifeTimeCalculatorPluginInterface;
 
 /**
  * @method \Spryker\Zed\SecuritySystemUser\Communication\SecuritySystemUserCommunicationFactory getFactory()

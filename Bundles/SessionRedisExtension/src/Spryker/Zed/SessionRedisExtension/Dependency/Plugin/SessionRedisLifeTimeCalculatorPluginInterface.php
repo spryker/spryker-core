@@ -7,36 +7,13 @@
 
 namespace Spryker\Zed\SessionRedisExtension\Dependency\Plugin;
 
-use Generated\Shared\Transfer\HttpRequestTransfer;
+use Spryker\Shared\SessionRedisExtension\Dependency\Plugin\SessionRedisLifeTimeCalculatorPluginInterface as NewSessionRedisLifeTimeCalculatorPluginInterface;
 
 /**
  * @deprecated Use {@link \Spryker\Shared\SessionRedisExtension\Dependency\Plugin\SessionRedisLifeTimeCalculatorPluginInterface} instead.
  *
  * Use this plugin if life time of redis session must be changed.
  */
-interface SessionRedisLifeTimeCalculatorPluginInterface
+interface SessionRedisLifeTimeCalculatorPluginInterface extends NewSessionRedisLifeTimeCalculatorPluginInterface
 {
-    /**
-     * Specification:
-     *  - Returns true if life time of redis session must be changed.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\HttpRequestTransfer $httpRequestTransfer
-     *
-     * @return bool
-     */
-    public function isApplicable(HttpRequestTransfer $httpRequestTransfer): bool;
-
-    /**
-     * Specification:
-     *  - Returns life time in seconds.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\HttpRequestTransfer $httpRequestTransfer
-     *
-     * @return int
-     */
-    public function getLifeTime(HttpRequestTransfer $httpRequestTransfer): int;
 }
