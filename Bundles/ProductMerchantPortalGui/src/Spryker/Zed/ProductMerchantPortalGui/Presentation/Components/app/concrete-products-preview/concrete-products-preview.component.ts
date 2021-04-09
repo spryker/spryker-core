@@ -37,8 +37,9 @@ export class ConcreteProductsPreviewComponent implements OnChanges {
 
     @ViewChildren('skuInputRef') skuInputRefs: QueryList<InputComponent>;
     @ViewChildren('nameInputRef') nameInputRefs: QueryList<InputComponent>;
-    @ViewChild('generateSkuCheckboxRef') generateSkuCheckboxRef: CheckboxComponent;
-    @ViewChild('generateNameCheckboxRef') generateNameCheckboxRef: CheckboxComponent;
+
+    isAutoGenerateSkuCheckbox = true;
+    isAutoGenerateNameCheckbox = true;
 
     deleteIcon = IconDeleteModule.icon;
     attributeValues: ProductAttributeValue[][] = [];
@@ -57,19 +58,17 @@ export class ConcreteProductsPreviewComponent implements OnChanges {
         if ('attributes' in changes) {
             this.generateProductsArray();
 
-            if (this.generateSkuCheckboxRef?.checked) {
-                setTimeout(() => {
-                    this.generateSku(this.generateSkuCheckboxRef?.checked);
-                    this.cdr.markForCheck();
-                });
-            }
+            setTimeout(() => {
+                if (this.isAutoGenerateSkuCheckbox) {
+                    this.generateSku(this.isAutoGenerateSkuCheckbox);
+                }
 
-            if (this.generateNameCheckboxRef?.checked) {
-                setTimeout(() => {
-                    this.generateName(this.generateNameCheckboxRef?.checked);
-                    this.cdr.markForCheck();
-                });
-            }
+                if (this.isAutoGenerateNameCheckbox) {
+                    this.generateName(this.isAutoGenerateNameCheckbox);
+                }
+
+                this.cdr.markForCheck();
+            });
         }
     }
 
@@ -103,31 +102,49 @@ export class ConcreteProductsPreviewComponent implements OnChanges {
     }
 
     generateSku(checked: boolean): void {
+        let generatedSku = this.concreteProductSkuGenerator.generate();
+
         this.skuInputRefs.forEach((item, index) => {
-            item.value = checked ? this.concreteProductSkuGenerator.generate(index + 1) : '';
+            item.value = checked ? generatedSku : '';
             item.disabled = checked;
+
             if (this.generatedProducts[index]) {
-                this.generatedProducts[index].sku = checked ? this.concreteProductSkuGenerator.generate(index + 1) : '';
+                this.generatedProducts = [...this.generatedProducts];
+                this.generatedProducts[index].sku = checked ? generatedSku : '';
+            }
+
+            if (this.skuInputRefs.length - 1 !== index) {
+                generatedSku = this.concreteProductSkuGenerator.generate(generatedSku);
             }
         });
     }
 
     generateName(checked: boolean): void {
+        let generatedName = this.concreteProductNameGenerator.generate();
+
         this.nameInputRefs.forEach((item, index) => {
-            item.value = checked ? this.concreteProductNameGenerator.generate() : '';
+            item.value = checked ? generatedName : '';
             item.disabled = checked;
+
             if (this.generatedProducts[index]) {
-                this.generatedProducts[index].name = checked ? this.concreteProductNameGenerator.generate() : '';
+                this.generatedProducts = [...this.generatedProducts];
+                this.generatedProducts[index].name = checked ? generatedName : '';
+            }
+
+            if (this.nameInputRefs.length - 1 !== index) {
+                generatedName = this.concreteProductNameGenerator.generate(generatedName);
             }
         });
     }
 
     skuChange(value: string, index: number): void {
+        this.generatedProducts = [...this.generatedProducts];
         this.generatedProducts[index].sku = value;
         this.generatedProductsChange.emit(this.generatedProducts);
     }
 
     nameChange(value: string, index: number): void {
+        this.generatedProducts = [...this.generatedProducts];
         this.generatedProducts[index].name = value;
         this.generatedProductsChange.emit(this.generatedProducts);
     }

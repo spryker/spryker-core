@@ -26,6 +26,7 @@ import { ConcreteProductGeneratorData } from '../../services/types';
             useValue: {
                 provide: ConcreteProductSkuGeneratorToken,
                 useClass: ConcreteProductSkuGeneratorService,
+                deps: [ConcreteProductGeneratorDataService],
             },
         },
         {
@@ -33,6 +34,7 @@ import { ConcreteProductGeneratorData } from '../../services/types';
             useValue: {
                 provide: ConcreteProductNameGeneratorToken,
                 useClass: ConcreteProductNameGeneratorService,
+                deps: [ConcreteProductGeneratorDataService],
             },
         },
     ],

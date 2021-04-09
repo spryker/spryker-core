@@ -30,7 +30,6 @@ const mockAttributes = [
         ],
     },
 ];
-
 const mockSelectedAttributes = [
     {
         title: 'name1',
@@ -51,6 +50,7 @@ const mockSelectedAttributes = [
             [attributes]="attributes"
             [selectedAttributes]="selectedAttributes"
             [name]="name"
+            (selectedAttributesChange)="changeEvent()"
         >
             <span col-attr-name>Super Attribute</span>
             <span col-attr-values-name>Values</span>
@@ -62,6 +62,7 @@ class TestComponent {
     attributes: any;
     selectedAttributes: any;
     name: string;
+    changeEvent = jest.fn();
 }
 
 describe('ProductAttributesSelectorComponent', () => {
@@ -80,82 +81,193 @@ describe('ProductAttributesSelectorComponent', () => {
         component = fixture.componentInstance;
     });
 
-    it('should render default `col-attr-name` slot to the `.mp-product-attributes-selector__header` element', () => {
-        const colAttrName = fixture.debugElement.query(
-            By.css('.mp-product-attributes-selector__header [col-attr-name]'),
-        );
+    describe('Slots and components', () => {
+        it('should render default `col-attr-name` slot to the `.mp-product-attributes-selector__header` element', () => {
+            const colAttrName = fixture.debugElement.query(
+                By.css('.mp-product-attributes-selector__header [col-attr-name]'),
+            );
 
-        expect(colAttrName.nativeElement.textContent).toBe('Super Attribute');
+            expect(colAttrName.nativeElement.textContent).toBe('Super Attribute');
+        });
+
+        it('should render default `col-attr-values-name` slot to the `.mp-product-attributes-selector__header` element', () => {
+            const colAttrValuesName = fixture.debugElement.query(
+                By.css('.mp-product-attributes-selector__header [col-attr-values-name]'),
+            );
+
+            expect(colAttrValuesName.nativeElement.textContent).toBe('Values');
+        });
+
+        it('should render default `btn-attr-add-name` slot to the `.mp-product-attributes-selector__button-add` element', () => {
+            component.attributes = mockAttributes;
+            component.selectedAttributes = [];
+            fixture.detectChanges();
+
+            const btnAttrAddName = fixture.debugElement.query(
+                By.css('.mp-product-attributes-selector__button-add [btn-attr-add-name]'),
+            );
+
+            expect(btnAttrAddName.nativeElement.textContent).toBe('Add');
+        });
+
+        it('should render <spy-select> component to the `.mp-product-attributes-selector__content-row-name` element', () => {
+            component.attributes = mockAttributes;
+            component.selectedAttributes = mockSelectedAttributes;
+            fixture.detectChanges();
+
+            const rowNameSelect = fixture.debugElement.query(
+                By.css('.mp-product-attributes-selector__content-row-name spy-select'),
+            );
+
+            expect(rowNameSelect).toBeTruthy();
+        });
+
+        it('should render <spy-select> component to the `.mp-product-attributes-selector__content-row-values-name` element', () => {
+            component.attributes = mockAttributes;
+            component.selectedAttributes = mockSelectedAttributes;
+            fixture.detectChanges();
+
+            const rowValuesNameSelect = fixture.debugElement.query(
+                By.css('.mp-product-attributes-selector__content-row-values-name spy-select'),
+            );
+
+            expect(rowValuesNameSelect).toBeTruthy();
+        });
+
+        it('should render <spy-button> with <spy-icon> components to the `.mp-product-attributes-selector__content-row-values-name` element', () => {
+            component.attributes = mockAttributes;
+            component.selectedAttributes = mockSelectedAttributes;
+            fixture.detectChanges();
+
+            const rowValuesNameButton = fixture.debugElement.query(
+                By.css('.mp-product-attributes-selector__content-row-values-name spy-button'),
+            );
+            const rowValuesNameButtonIcon = fixture.debugElement.query(
+                By.css('.mp-product-attributes-selector__content-row-values-name spy-button spy-icon'),
+            );
+
+            expect(rowValuesNameButton).toBeTruthy();
+            expect(rowValuesNameButtonIcon).toBeTruthy();
+        });
     });
 
-    it('should render default `col-attr-values-name` slot to the `.mp-product-attributes-selector__header` element', () => {
-        const colAttrValuesName = fixture.debugElement.query(
-            By.css('.mp-product-attributes-selector__header [col-attr-values-name]'),
-        );
+    describe('Host functionality', () => {
+        it('should render <input type="hidden"> element if `@Input(name) exists`', () => {
+            component.attributes = mockAttributes;
+            component.selectedAttributes = mockSelectedAttributes;
+            component.name = mockName;
+            fixture.detectChanges();
 
-        expect(colAttrValuesName.nativeElement.textContent).toBe('Values');
-    });
+            const hiddenInput = fixture.debugElement.query(By.css('input[type=hidden]'));
 
-    it('should render default `btn-attr-add-name` slot to the `.mp-product-attributes-selector__button-add` element', () => {
-        component.attributes = mockAttributes;
-        component.selectedAttributes = [];
-        fixture.detectChanges();
+            expect(hiddenInput).toBeTruthy();
+            expect(hiddenInput.properties.name).toBe(mockName);
+            expect(hiddenInput.properties.value.replace(/\s/g, '')).toBe(JSON.stringify([...mockSelectedAttributes, {}]));
+        });
 
-        const btnAttrAddName = fixture.debugElement.query(
-            By.css('.mp-product-attributes-selector__button-add [btn-attr-add-name]'),
-        );
+        it('should add a new attribute row by `Add` button click', () => {
+            component.attributes = mockAttributes;
+            component.selectedAttributes = [];
+            component.name = mockName;
+            fixture.detectChanges();
 
-        expect(btnAttrAddName.nativeElement.textContent).toBe('Add');
-    });
+            const buttonAddElem = fixture.debugElement.query(
+                By.css('.mp-product-attributes-selector__button-add spy-button'),
+            );
+            const hiddenInput = fixture.debugElement.query(By.css('input[type=hidden]'));
 
-    it('should render <spy-select> component to the `.mp-product-attributes-selector__content-row-name` element', () => {
-        component.attributes = mockAttributes;
-        component.selectedAttributes = mockSelectedAttributes;
-        fixture.detectChanges();
+            expect(hiddenInput.properties.value.replace(/\s/g, '')).toBe(JSON.stringify([{}]));
 
-        const rowNameSelect = fixture.debugElement.query(
-            By.css('.mp-product-attributes-selector__content-row-name spy-select'),
-        );
+            buttonAddElem!.triggerEventHandler('click', null);
+            fixture.detectChanges();
 
-        expect(rowNameSelect).toBeTruthy();
-    });
+            expect(hiddenInput.properties.value.replace(/\s/g, '')).toBe(JSON.stringify([{}, {}]));
+        });
 
-    it('should render <spy-select> component to the `.mp-product-attributes-selector__content-row-values-name` element', () => {
-        component.attributes = mockAttributes;
-        component.selectedAttributes = mockSelectedAttributes;
-        fixture.detectChanges();
+        it('should remove attribute row by `Delete` button click', () => {
+            component.attributes = mockAttributes;
+            component.selectedAttributes = [...mockSelectedAttributes, {}];
+            component.name = mockName;
+            fixture.detectChanges();
 
-        const rowValuesNameSelect = fixture.debugElement.query(
-            By.css('.mp-product-attributes-selector__content-row-values-name spy-select'),
-        );
+            const buttonDeleteElems = fixture.debugElement.queryAll(
+                By.css('.mp-product-attributes-selector__content-row-button'),
+            );
+            const hiddenInput = fixture.debugElement.query(By.css('input[type=hidden]'));
 
-        expect(rowValuesNameSelect).toBeTruthy();
-    });
+            expect(hiddenInput.properties.value.replace(/\s/g, '')).toBe(JSON.stringify([...mockSelectedAttributes, {}, {}]));
 
-    it('should render <spy-button> with <spy-icon> components to the `.mp-product-attributes-selector__content-row-values-name` element', () => {
-        component.attributes = mockAttributes;
-        component.selectedAttributes = mockSelectedAttributes;
-        fixture.detectChanges();
+            buttonDeleteElems[0].triggerEventHandler('click', 0);
+            fixture.detectChanges();
 
-        const rowValuesNameButton = fixture.debugElement.query(
-            By.css('.mp-product-attributes-selector__content-row-values-name spy-button'),
-        );
-        const rowValuesNameButtonIcon = fixture.debugElement.query(
-            By.css('.mp-product-attributes-selector__content-row-values-name spy-button spy-icon'),
-        );
+            expect(hiddenInput.properties.value.replace(/\s/g, '')).toBe(JSON.stringify([{}, {}]));
+        });
 
-        expect(rowValuesNameButton).toBeTruthy();
-        expect(rowValuesNameButtonIcon).toBeTruthy();
-    });
+        it('should update selected attributes by `Super attribute` select change', () => {
+            const mockValue = 'value1';
+            const mockSelectedSuperAttribute = [
+                {
+                    title: 'name1',
+                    value: mockValue,
+                    values: []
+                }
+            ]
 
-    it('should render <input type="hidden"> element if `@Input(name) exists`', () => {
-        component.attributes = mockAttributes;
-        component.selectedAttributes = mockAttributes;
-        component.name = mockName;
-        fixture.detectChanges();
+            component.attributes = mockAttributes;
+            component.selectedAttributes = [];
+            component.name = mockName;
+            fixture.detectChanges();
 
-        const hiddenInput = fixture.debugElement.query(By.css('input[type=hidden]'));
+            const selectElem = fixture.debugElement.query(
+                By.css('.mp-product-attributes-selector__content-row-name spy-select'),
+            );
+            const hiddenInput = fixture.debugElement.query(By.css('input[type=hidden]'));
 
-        expect(hiddenInput).toBeTruthy();
+            expect(hiddenInput.properties.value.replace(/\s/g, '')).toBe(JSON.stringify([{}]));
+
+            selectElem.triggerEventHandler('valueChange', mockValue);
+            fixture.detectChanges();
+
+            expect(hiddenInput.properties.value.replace(/\s/g, '')).toBe(JSON.stringify(mockSelectedSuperAttribute));
+            expect(component.changeEvent).toHaveBeenCalled();
+        });
+
+        it('should update selected attributes by `Values` select change', () => {
+            const mockValue = 'value1';
+            const mockValues = {
+                title: 'name11',
+                value: 'value11',
+            };
+            const mockSelectedSuperAttribute = [
+                {
+                    title: 'name1',
+                    value: mockValue,
+                    values: [mockValues],
+                }
+            ]
+
+            component.attributes = mockAttributes;
+            component.selectedAttributes = [];
+            component.name = mockName;
+            fixture.detectChanges();
+
+            const attrSelectElem = fixture.debugElement.query(
+                By.css('.mp-product-attributes-selector__content-row-name spy-select'),
+            );
+            const hiddenInput = fixture.debugElement.query(By.css('input[type=hidden]'));
+
+            attrSelectElem.triggerEventHandler('valueChange', mockValue);
+            fixture.detectChanges();
+
+            const attrValuesSelectElem = fixture.debugElement.query(
+                By.css('.mp-product-attributes-selector__content-row-values-name spy-select'),
+            );
+
+            attrValuesSelectElem.triggerEventHandler('valueChange', [mockValues.value]);
+            fixture.detectChanges();
+
+            expect(hiddenInput.properties.value.replace(/\s/g, '')).toBe(JSON.stringify(mockSelectedSuperAttribute));
+            expect(component.changeEvent).toHaveBeenCalled();
+        });
     });
 });

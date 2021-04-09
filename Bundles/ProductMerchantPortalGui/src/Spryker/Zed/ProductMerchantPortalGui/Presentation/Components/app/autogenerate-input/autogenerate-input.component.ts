@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    Component,
+    Input,
+    OnChanges,
+    SimpleChanges,
+    ViewEncapsulation,
+} from '@angular/core';
 
 @Component({
     selector: 'mp-autogenerate-input',
@@ -8,7 +15,7 @@ import { ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation } 
     encapsulation: ViewEncapsulation.None,
     host: { class: 'mp-autogenerate-input' },
 })
-export class AutogenerateInputComponent implements OnInit {
+export class AutogenerateInputComponent implements OnChanges {
     @Input() name: string;
     @Input() value: string;
     @Input() placeholder: string;
@@ -16,12 +23,14 @@ export class AutogenerateInputComponent implements OnInit {
 
     defaultValue: string;
 
-    ngOnInit(): void {
-        this.defaultValue = this.value;
+    ngOnChanges(changes: SimpleChanges): void {
+        if ('value' in changes) {
+            this.defaultValue = this.value;
+        }
     }
 
     onCheckboxChange(checked: boolean): void {
-        if (checked && this.value !== this.defaultValue) {
+        if (checked) {
             this.value = this.defaultValue;
         }
     }

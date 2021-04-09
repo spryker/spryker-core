@@ -7,12 +7,12 @@
 
         <div class="mp-concrete-products-preview__header-checkboxes">
             <div class="mp-concrete-products-preview__header-checkbox">
-                <spy-checkbox (checkedChange)="generateSku($event)" checked #generateSkuCheckboxRef>
+                <spy-checkbox (checkedChange)="generateSku($event)" [(checked)]="isAutoGenerateSkuCheckbox">
                     <ng-content select="[auto-sku-text]"></ng-content>
                 </spy-checkbox>
             </div>
             <div class="mp-concrete-products-preview__header-checkbox">
-                <spy-checkbox (checkedChange)="generateName($event)" checked #generateNameCheckboxRef>
+                <spy-checkbox (checkedChange)="generateName($event)" [(checked)]="isAutoGenerateNameCheckbox">
                     <ng-content select="[auto-name-text]"></ng-content>
                 </spy-checkbox>
             </div>
@@ -69,8 +69,6 @@
                     </div>
                 </div>
             </cdk-virtual-scroll-viewport>
-
-            <input *ngIf="name" type="hidden" [name]="name" [value]="generatedProducts | json" />
         </div>
     </div>
 </div>
@@ -83,3 +81,5 @@
         </div>
     </div>
 </ng-template>
+
+<input *ngIf="name" type="hidden" [name]="name" [value]="generatedProducts | json" />

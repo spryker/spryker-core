@@ -41,12 +41,12 @@
             </div>
         </div>
 
-        <div *ngIf="selectedAttributes.length !== attributes.length" class="mp-product-attributes-selector__button-add">
+        <div *ngIf="selectedAttributes.length < attributes.length" class="mp-product-attributes-selector__button-add">
             <spy-button (click)="create()">
                 <ng-content select="[btn-attr-add-name]"></ng-content>
             </spy-button>
         </div>
-
-        <input *ngIf="name" type="hidden" [name]="name" [value]="selectedAttributes | json" />
     </div>
 </div>
+
+<input *ngIf="name" type="hidden" [name]="name" [value]="selectedAttributes | json" />

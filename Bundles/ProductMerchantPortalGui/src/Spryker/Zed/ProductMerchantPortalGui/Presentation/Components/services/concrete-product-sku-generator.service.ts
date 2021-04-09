@@ -6,12 +6,12 @@ import { ConcreteProductGeneratorDataService } from './concrete-product-generato
 export class ConcreteProductSkuGeneratorService implements IdGenerator {
     constructor(private concreteProductGeneratorData: ConcreteProductGeneratorDataService) {}
 
-    generate(index?: number, prevId?: string): string {
+    generate(prevId?: string): string {
         const abstractSku = this.concreteProductGeneratorData.getAbstractSku();
         let id;
 
         if (!prevId) {
-            id = index;
+            id = 1;
         } else {
             id = Number(prevId.split('-')[1]);
             id++;
