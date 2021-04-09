@@ -7,7 +7,10 @@
 
 namespace Spryker\Zed\CategoryStorage\Business\Deleter;
 
-use Generated\Shared\Transfer\NodeTransfer;
+use Generated\Shared\Transfer\CategoryNodeCriteriaTransfer;
+use Spryker\Zed\CategoryStorage\Business\Extractor\CategoryNodeExtractorInterface;
+use Spryker\Zed\CategoryStorage\Dependency\Facade\CategoryStorageToCategoryFacadeInterface;
+use Spryker\Zed\CategoryStorage\Dependency\Facade\CategoryStorageToEventBehaviorFacadeInterface;
 use Spryker\Zed\CategoryStorage\Persistence\CategoryStorageEntityManagerInterface;
 
 class CategoryNodeStorageDeleter implements CategoryNodeStorageDeleterInterface
@@ -18,11 +21,36 @@ class CategoryNodeStorageDeleter implements CategoryNodeStorageDeleterInterface
     protected $categoryStorageEntityManager;
 
     /**
-     * @param \Spryker\Zed\CategoryStorage\Persistence\CategoryStorageEntityManagerInterface $categoryStorageEntityManager
+     * @var \Spryker\Zed\CategoryStorage\Dependency\Facade\CategoryStorageToCategoryFacadeInterface
      */
-    public function __construct(CategoryStorageEntityManagerInterface $categoryStorageEntityManager)
-    {
+    protected $categoryFacade;
+
+    /**
+     * @var \Spryker\Zed\CategoryStorage\Dependency\Facade\CategoryStorageToEventBehaviorFacadeInterface
+     */
+    protected $eventBehaviorFacade;
+
+    /**
+     * @var \Spryker\Zed\CategoryStorage\Business\Extractor\CategoryNodeExtractorInterface
+     */
+    protected $categoryNodeExtractor;
+
+    /**
+     * @param \Spryker\Zed\CategoryStorage\Persistence\CategoryStorageEntityManagerInterface $categoryStorageEntityManager
+     * @param \Spryker\Zed\CategoryStorage\Dependency\Facade\CategoryStorageToCategoryFacadeInterface $categoryFacade
+     * @param \Spryker\Zed\CategoryStorage\Dependency\Facade\CategoryStorageToEventBehaviorFacadeInterface $eventBehaviorFacade
+     * @param \Spryker\Zed\CategoryStorage\Business\Extractor\CategoryNodeExtractorInterface $categoryNodeExtractor
+     */
+    public function __construct(
+        CategoryStorageEntityManagerInterface $categoryStorageEntityManager,
+        CategoryStorageToCategoryFacadeInterface $categoryFacade,
+        CategoryStorageToEventBehaviorFacadeInterface $eventBehaviorFacade,
+        CategoryNodeExtractorInterface $categoryNodeExtractor
+    ) {
         $this->categoryStorageEntityManager = $categoryStorageEntityManager;
+        $this->categoryFacade = $categoryFacade;
+        $this->eventBehaviorFacade = $eventBehaviorFacade;
+        $this->categoryNodeExtractor = $categoryNodeExtractor;
     }
 
     /**
@@ -41,6 +69,18 @@ class CategoryNodeStorageDeleter implements CategoryNodeStorageDeleterInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function deleteCategoryNodeStorageCollectionByCategoryNodeEvents(array $eventEntityTransfers): void
+    {
+        $categoryNodeIds = $this->eventBehaviorFacade->getEventTransferIds($eventEntityTransfers);
+
+        $this->deleteCategoryNodeStorageCollection($categoryNodeIds);
+    }
+
+    /**
      * @param int[] $categoryNodeIds
      *
      * @return void
@@ -48,18 +88,6 @@ class CategoryNodeStorageDeleter implements CategoryNodeStorageDeleterInterface
     public function deleteCategoryNodeStorageCollection(array $categoryNodeIds): void
     {
         $this->categoryStorageEntityManager->deleteCategoryNodeStorageByCategoryNodeIds($categoryNodeIds);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\NodeTransfer[] $nodeTransfers
-     *
-     * @return int[]
-     */
-    protected function getCategoryNodeIdsFromNodeTransfers(array $nodeTransfers): array
-    {
-        return array_map(function (NodeTransfer $nodeTransfer): int {
-            return $nodeTransfer->getIdCategoryNodeOrFail();
-        }, $nodeTransfers);
     }
 
     /**
@@ -82,5 +110,18 @@ class CategoryNodeStorageDeleter implements CategoryNodeStorageDeleterInterface
         }
 
         $this->categoryStorageEntityManager->deleteCategoryNodeStoragesForStoreAndLocale($categoryNodeIdsToDelete, $localeName, $storeName);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
+     *
+     * @return void
+     */
+    public function deleteCategoryNodeStorageCollectionByCategoryNodeCriteria(CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer): void
+    {
+        $nodeCollectionTransfer = $this->categoryFacade->getCategoryNodes($categoryNodeCriteriaTransfer);
+        $categoryNodeIds = $this->categoryNodeExtractor->extractCategoryNodeIdsFromNodeCollection($nodeCollectionTransfer);
+
+        $this->deleteCategoryNodeStorageCollection($categoryNodeIds);
     }
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductCategoryStorage\Business;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -21,6 +22,8 @@ class ProductCategoryStorageFacade extends AbstractFacade implements ProductCate
      *
      * @api
      *
+     * @deprecated Will be removed in the next major without replacement.
+     *
      * @param int[] $productAbstractIds
      *
      * @return void
@@ -34,6 +37,8 @@ class ProductCategoryStorageFacade extends AbstractFacade implements ProductCate
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Will be removed in the next major without replacement.
      *
      * @param int[] $productAbstractIds
      *
@@ -70,7 +75,7 @@ class ProductCategoryStorageFacade extends AbstractFacade implements ProductCate
     public function writeCollectionByCategoryStoreEvents(array $eventEntityTransfers): void
     {
         $this->getFactory()
-            ->createProductCategoryStorageWriter()
+            ->createProductCategoryStorageByCategoryStoreEventsWriter()
             ->writeCollectionByCategoryStoreEvents($eventEntityTransfers);
     }
 
@@ -86,7 +91,7 @@ class ProductCategoryStorageFacade extends AbstractFacade implements ProductCate
     public function writeCollectionByCategoryStorePublishingEvents(array $eventEntityTransfers): void
     {
         $this->getFactory()
-            ->createProductCategoryStorageWriter()
+            ->createProductCategoryStorageByCategoryStoreEventsWriter()
             ->writeCollectionByCategoryStorePublishingEvents($eventEntityTransfers);
     }
 
@@ -104,5 +109,184 @@ class ProductCategoryStorageFacade extends AbstractFacade implements ProductCate
         $this->getFactory()
             ->createProductCategoryStorageDeleter()
             ->deleteCollectionByCategoryStoreEvents($eventEntityTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeCollectionByCategoryAttributeEvents(array $eventEntityTransfers): void
+    {
+        $this->getFactory()
+            ->createProductCategoryStorageByCategoryAttributeEventsWriter()
+            ->writeCollectionByCategoryAttributeEvents($eventEntityTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeCollectionByCategoryAttributeNameEvents(array $eventEntityTransfers): void
+    {
+        $this->getFactory()
+            ->createProductCategoryStorageByCategoryAttributeEventsWriter()
+            ->writeCollectionByCategoryAttributeNameEvents($eventEntityTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeCollectionByCategoryNodeEvents(array $eventEntityTransfers): void
+    {
+        $this->getFactory()
+            ->createProductCategoryStorageByCategoryNodeEventsWriter()
+            ->writeCollectionByCategoryNodeEvents($eventEntityTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeCollectionByCategoryEvents(array $eventEntityTransfers): void
+    {
+        $this->getFactory()
+            ->createProductCategoryStorageByCategoryEventsWriter()
+            ->writeCollectionByCategoryEvents($eventEntityTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeCollectionByCategoryIsActiveAndCategoryKeyEvents(array $eventEntityTransfers): void
+    {
+        $this->getFactory()
+            ->createProductCategoryStorageByCategoryEventsWriter()
+            ->writeCollectionByCategoryIsActiveAndCategoryKeyEvents($eventEntityTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeCollectionByCategoryUrlEvents(array $eventEntityTransfers): void
+    {
+        $this->getFactory()
+            ->createProductCategoryStorageByCategoryUrlEventsWriter()
+            ->writeCollectionByCategoryUrlEvents($eventEntityTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeCollectionByCategoryUrlAndResourceCategorynodeEvents(array $eventEntityTransfers): void
+    {
+        $this->getFactory()
+            ->createProductCategoryStorageByCategoryUrlEventsWriter()
+            ->writeCollectionByCategoryUrlAndResourceCategorynodeEvents($eventEntityTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeCollectionByProductCategoryPublishingEvents(array $eventEntityTransfers): void
+    {
+        $this->getFactory()
+            ->createProductCategoryStorageByProductCategoryEventsWriter()
+            ->writeCollectionByProductCategoryPublishingEvents($eventEntityTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeCollectionByProductCategoryEvents(array $eventEntityTransfers): void
+    {
+        $this->getFactory()
+            ->createProductCategoryStorageByProductCategoryEventsWriter()
+            ->writeCollectionByProductCategoryEvents($eventEntityTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int $offset
+     * @param int $limit
+     * @param int[] $productAbstractIds
+     *
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     */
+    public function findProductAbstractCategoryStorageSynchronizationDataTransfersByProductAbstractIds(
+        int $offset,
+        int $limit,
+        array $productAbstractIds
+    ): array {
+        return $this->getRepository()
+            ->findProductAbstractCategoryStorageSynchronizationDataTransfersByProductAbstractIds($offset, $limit, $productAbstractIds);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductCategoryTransfer[]
+     */
+    public function findProductCategoryTransfersByFilter(FilterTransfer $filterTransfer): array
+    {
+        return $this->getRepository()
+            ->findProductCategoryTransfersByFilter($filterTransfer);
     }
 }

@@ -110,10 +110,12 @@
     <transfer name="CategoryNodeCriteria">
         <property name="categoryNodeIds" type="int[]" singular="idCategoryNode"/>
         <property name="categoryIds" type="int[]" singular="idCategory"/>
+        <property name="categoryTemplateIds" type="int[]" singular="idCategoryTemplate"/>
         <property name="isActive" type="bool"/>
         <property name="isInMenu" type="bool"/>
         <property name="isRoot" type="bool"/>
         <property name="withRelations" type="bool"/>
+        <property name="filter" type="Filter"/>
     </transfer>
 
     <transfer name="NodeCollection">
@@ -122,6 +124,12 @@
 
     <transfer name="CategoryNodeFilter">
         <property name="categoryIds" type="int[]" singular="idCategory"/>
+    </transfer>
+
+    <transfer name="Filter">
+        <property name="limit" type="int"/>
+        <property name="offset" type="int"/>
+        <property name="orderBy" type="string"/>
     </transfer>
 
 </transfers>

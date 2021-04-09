@@ -18,6 +18,8 @@ interface CategoryStorageFacadeInterface
      *
      * @api
      *
+     * @deprecated Will be removed in the next major without replacement.
+     *
      * @param int[] $categoryNodeIds
      *
      * @return void
@@ -30,6 +32,8 @@ interface CategoryStorageFacadeInterface
      * - Sends a copy of data to the queue.
      *
      * @api
+     *
+     * @deprecated Will be removed in the next major without replacement.
      *
      * @param int[] $categoryNodeIds
      *
@@ -67,8 +71,8 @@ interface CategoryStorageFacadeInterface
 
     /**
      * Specification:
-     * - Extracts category store IDs from the $eventTransfers created by category store entity events.
-     * - Finds all category node IDs related to category store IDs.
+     * - Extracts category IDs from the $eventTransfers created by category store entity events.
+     * - Finds all category node IDs related to category IDs.
      * - Queries all category nodes with category node IDs.
      * - Creates a data structure tree.
      * - Stores data as json encoded to storage table.
@@ -84,8 +88,8 @@ interface CategoryStorageFacadeInterface
 
     /**
      * Specification:
-     * - Extracts category store IDs from the $eventTransfers created by category store publish events.
-     * - Finds all category node IDs related to category store IDs.
+     * - Extracts category IDs from the $eventTransfers created by category store publish events.
+     * - Finds all category node IDs related to category IDs.
      * - Queries all category nodes with category node IDs.
      * - Creates a data structure tree.
      * - Stores data as json encoded to storage table.
@@ -122,4 +126,172 @@ interface CategoryStorageFacadeInterface
      * @return void
      */
     public function deleteCategoryTreeStorageCollection(): void;
+
+    /**
+     * Specification:
+     * - Retrieves a category node storage collection according to provided offset, limit and categoryNodeIds.
+     *
+     * @api
+     *
+     * @param int $offset
+     * @param int $limit
+     * @param int[] $categoryNodeIds
+     *
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     */
+    public function findCategoryNodeStorageSynchronizationDataTransfersByCategoryNodeIds(int $offset, int $limit, array $categoryNodeIds): array;
+
+    /**
+     * Specification:
+     * - Retrieves a category tree storage collection according to provided offset, limit and `categoryTreeStorageIds`.
+     *
+     * @api
+     *
+     * @param int $offset
+     * @param int $limit
+     * @param int[] $categoryTreeStorageIds
+     *
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     */
+    public function findCategoryTreeStorageSynchronizationDataTransfersByCategoryTreeStorageIds(int $offset, int $limit, array $categoryTreeStorageIds): array;
+
+    /**
+     * Specification:
+     * - Extracts category IDs from the $eventTransfers created by category attribute entity events.
+     * - Finds all category node IDs related to category IDs.
+     * - Queries all category nodes with category node IDs.
+     * - Creates a data structure tree.
+     * - Stores data as json encoded to storage table.
+     * - Sends a copy of data to the queue.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeCategoryNodeStorageCollectionByCategoryAttributeEvents(array $eventEntityTransfers): void;
+
+    /**
+     * Specification:
+     * - Extracts category IDs from the $eventTransfers created by category entity events.
+     * - Finds all category node IDs related to category IDs.
+     * - Queries all category nodes with category node IDs.
+     * - Creates a data structure tree.
+     * - Stores data as json encoded to storage table.
+     * - Sends a copy of data to the queue.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeCategoryNodeStorageCollectionByCategoryEvents(array $eventEntityTransfers): void;
+
+    /**
+     * Specification:
+     * - Extracts category template IDs from the $eventTransfers created by category template events.
+     * - Finds all category node IDs related to category template IDs.
+     * - Queries all category nodes with category node IDs.
+     * - Creates a data structure tree.
+     * - Stores data as json encoded to storage table.
+     * - Sends a copy of data to the queue.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeCategoryNodeStorageCollectionByCategoryTemplateEvents(array $eventEntityTransfers): void;
+
+    /**
+     * Specification:
+     * - Extracts category node IDs from the $eventTransfers created by parent category entity events.
+     * - Creates a data structure tree.
+     * - Stores data as json encoded to storage table.
+     * - Sends a copy of data to the queue.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeCategoryNodeStorageCollectionByParentCategoryEvents(array $eventEntityTransfers): void;
+
+    /**
+     * Specification:
+     * - Extracts category node IDs from the $eventTransfers created by category node entity events.
+     * - Creates a data structure tree.
+     * - Stores data as json encoded to storage table.
+     * - Sends a copy of data to the queue.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeCategoryNodeStorageCollectionByCategoryNodeEvents(array $eventEntityTransfers): void;
+
+    /**
+     * Specification:
+     * - Extracts category IDs from the $eventTransfers created by category entity events.
+     * - Finds all category node IDs related to category IDs.
+     * - Deletes category node storage entities with category node IDs.
+     * - Sends a copy of data to the queue.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function deleteCategoryNodeStorageCollectionByCategoryEvents(array $eventEntityTransfers): void;
+
+    /**
+     * Specification:
+     * - Extracts category IDs from the $eventTransfers created by category attribute entity events.
+     * - Finds all category node IDs related to category IDs.
+     * - Deletes category node storage entities with category node IDs.
+     * - Sends a copy of data to the queue.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function deleteCategoryNodeStorageCollectionByCategoryAttributeEvents(array $eventEntityTransfers): void;
+
+    /**
+     * Specification:
+     * - Extracts category template IDs from the $eventTransfers created by category template events.
+     * - Finds all category node IDs related to category template IDs.
+     * - Deletes category node storage entities with category node IDs.
+     * - Sends a copy of data to the queue.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function deleteCategoryNodeStorageCollectionByCategoryTemplateEvents(array $eventEntityTransfers): void;
+
+    /**
+     * Specification:
+     * - Extracts category node IDs from the $eventTransfers created by category node entity events.
+     * - Deletes category node storage entities with category node IDs.
+     * - Sends a copy of data to the queue.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function deleteCategoryNodeStorageCollectionByCategoryNodeEvents(array $eventEntityTransfers): void;
 }

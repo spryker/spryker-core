@@ -62,6 +62,14 @@
         <property name="categoryIds" type="int[]" singular="idCategory"/>
         <property name="isActive" type="bool"/>
         <property name="withRelations" type="bool"/>
+        <property name="categoryTemplateIds" type="int[]" singular="idCategoryTemplate"/>
+        <property name="filter" type="Filter"/>
+    </transfer>
+
+    <transfer name="Filter">
+        <property name="limit" type="int"/>
+        <property name="offset" type="int"/>
+        <property name="orderBy" type="string"/>
     </transfer>
 
 </transfers>

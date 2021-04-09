@@ -21,6 +21,8 @@ use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
+ * @deprecated Will be removed in the next major without replacement, registration of plugins now takes place in {@link \Pyz\Zed\Publisher\PublisherDependencyProvider::getPublisherPlugins()}.
+ *
  * @method \Spryker\Zed\CategoryPageSearch\Communication\CategoryPageSearchCommunicationFactory getFactory()
  * @method \Spryker\Zed\CategoryPageSearch\Business\CategoryPageSearchFacadeInterface getFacade()
  * @method \Spryker\Zed\CategoryPageSearch\CategoryPageSearchConfig getConfig()
@@ -56,6 +58,8 @@ class CategoryPageSearchEventSubscriber extends AbstractPlugin implements EventS
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\CategoryPageSearch\Communication\Plugin\Publisher\CategoryTemplate\CategoryTemplateWritePublisherPlugin} instead.
+     *
      * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
@@ -66,6 +70,8 @@ class CategoryPageSearchEventSubscriber extends AbstractPlugin implements EventS
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\CategoryPageSearch\Communication\Plugin\Publisher\CategoryTemplate\CategoryTemplateWritePublisherPlugin} instead.
+     *
      * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
@@ -76,6 +82,8 @@ class CategoryPageSearchEventSubscriber extends AbstractPlugin implements EventS
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\CategoryPageSearch\Communication\Plugin\Publisher\CategoryTemplate\CategoryTemplateDeletePublisherPlugin} instead.
+     *
      * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
@@ -86,6 +94,8 @@ class CategoryPageSearchEventSubscriber extends AbstractPlugin implements EventS
     }
 
     /**
+     * @deprecated Use {\Spryker\Zed\CategoryPageSearch\Communication\Plugin\Publisher\CategoryAttribute\CategoryAttributeWritePublisherPlugin} instead.
+     *
      * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
@@ -96,6 +106,8 @@ class CategoryPageSearchEventSubscriber extends AbstractPlugin implements EventS
     }
 
     /**
+     * @deprecated Use {\Spryker\Zed\CategoryPageSearch\Communication\Plugin\Publisher\CategoryAttribute\CategoryAttributeWritePublisherPlugin} instead.
+     *
      * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
@@ -106,6 +118,8 @@ class CategoryPageSearchEventSubscriber extends AbstractPlugin implements EventS
     }
 
     /**
+     * @deprecated Use {\Spryker\Zed\CategoryPageSearch\Communication\Plugin\Publisher\CategoryAttribute\CategoryAttributeDeletePublisherPlugin} instead.
+     *
      * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
@@ -116,6 +130,8 @@ class CategoryPageSearchEventSubscriber extends AbstractPlugin implements EventS
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\CategoryPageSearch\Communication\Plugin\Publisher\Category\CategoryWritePublisherPlugin} instead.
+     *
      * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
@@ -126,6 +142,8 @@ class CategoryPageSearchEventSubscriber extends AbstractPlugin implements EventS
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\CategoryPageSearch\Communication\Plugin\Publisher\Category\CategoryWritePublisherPlugin} instead.
+     *
      * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
@@ -136,6 +154,8 @@ class CategoryPageSearchEventSubscriber extends AbstractPlugin implements EventS
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\CategoryPageSearch\Communication\Plugin\Publisher\Category\CategoryDeletePublisherPlugin} instead.
+     *
      * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
@@ -146,6 +166,8 @@ class CategoryPageSearchEventSubscriber extends AbstractPlugin implements EventS
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\CategoryPageSearch\Communication\Plugin\Publisher\CategoryNode\CategoryNodeWritePublisherPlugin} instead.
+     *
      * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
@@ -156,6 +178,8 @@ class CategoryPageSearchEventSubscriber extends AbstractPlugin implements EventS
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\CategoryPageSearch\Communication\Plugin\Publisher\CategoryNode\CategoryNodeDeletePublisherPlugin} instead.
+     *
      * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
@@ -166,6 +190,8 @@ class CategoryPageSearchEventSubscriber extends AbstractPlugin implements EventS
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\CategoryPageSearch\Communication\Plugin\Publisher\CategoryNode\CategoryNodeWritePublisherPlugin} instead.
+     *
      * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
@@ -176,6 +202,8 @@ class CategoryPageSearchEventSubscriber extends AbstractPlugin implements EventS
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\CategoryPageSearch\Communication\Plugin\Publisher\CategoryNode\CategoryNodeWritePublisherPlugin} instead.
+     *
      * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
@@ -186,6 +214,8 @@ class CategoryPageSearchEventSubscriber extends AbstractPlugin implements EventS
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\CategoryPageSearch\Communication\Plugin\Publisher\CategoryNode\CategoryNodeDeletePublisherPlugin} instead.
+     *
      * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void

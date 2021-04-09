@@ -25,6 +25,7 @@ use Orm\Zed\Category\Persistence\Map\SpyCategoryTableMap;
 use Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery;
 use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
 use Orm\Zed\Category\Persistence\SpyCategoryQuery;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\PropelOrm\Business\Model\Formatter\PropelArraySetFormatter;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
@@ -463,6 +464,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
         $categoryNodeQuery = $this->getFactory()
             ->createCategoryNodeQuery();
 
+        /** @var \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery $categoryNodeQuery */
         $categoryNodeQuery = $this->setCategoryNodeFilters($categoryNodeQuery, $categoryNodeCriteriaTransfer);
 
         if (!$categoryNodeCriteriaTransfer->getWithRelations()) {
@@ -498,12 +500,12 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
      * @param \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery $categoryNodeQuery
      * @param \Generated\Shared\Transfer\CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
      *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
      */
     protected function setCategoryNodeFilters(
         SpyCategoryNodeQuery $categoryNodeQuery,
         CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
-    ): SpyCategoryNodeQuery {
+    ) {
         if ($categoryNodeCriteriaTransfer->getCategoryNodeIds()) {
             $categoryNodeQuery->filterByIdCategoryNode_In($categoryNodeCriteriaTransfer->getCategoryNodeIds());
         }
@@ -512,6 +514,14 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
             $categoryNodeQuery
                 ->useCategoryQuery(null, Criteria::LEFT_JOIN)
                     ->filterByIsActive($categoryNodeCriteriaTransfer->getIsActive())
+                ->endUse();
+        }
+
+        $categoryTemplateIds = $categoryNodeCriteriaTransfer->getCategoryTemplateIds();
+        if (count($categoryTemplateIds) !== 0) {
+            $categoryNodeQuery
+                ->useCategoryQuery()
+                    ->filterByFkCategoryTemplate_In($categoryTemplateIds)
                 ->endUse();
         }
 
@@ -525,6 +535,13 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
 
         if ($categoryNodeCriteriaTransfer->getIsMain() !== null) {
             $categoryNodeQuery->filterByIsMain($categoryNodeCriteriaTransfer->getIsMain());
+        }
+
+        $filterTransfer = $categoryNodeCriteriaTransfer->getFilter();
+        if ($filterTransfer !== null) {
+            $categoryNodeQuery = $this
+                ->buildQueryFromCriteria($categoryNodeQuery, $filterTransfer)
+                ->setFormatter(ModelCriteria::FORMAT_OBJECT);
         }
 
         return $categoryNodeQuery;
