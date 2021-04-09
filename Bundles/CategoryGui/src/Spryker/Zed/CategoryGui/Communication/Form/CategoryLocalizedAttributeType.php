@@ -8,16 +8,13 @@
 namespace Spryker\Zed\CategoryGui\Communication\Form;
 
 use Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer;
-use Generated\Shared\Transfer\CategoryTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @method \Spryker\Zed\CategoryGui\Communication\CategoryGuiCommunicationFactory getFactory()
@@ -39,8 +36,6 @@ class CategoryLocalizedAttributeType extends AbstractType
     protected const LABEL_META_TITLE = 'Meta Title';
     protected const LABEL_META_DESCRIPTION = 'Meta Description';
     protected const LABEL_META_KEYWORDS = 'Meta Keywords';
-
-    protected const VALIDATION_MESSAGE_UNIQUE_NAME = 'Category with name "%s" already in use in this category level, please choose another one.';
 
     protected const BLOCK_PREFIX = 'localizedAttributes';
 
@@ -130,32 +125,12 @@ class CategoryLocalizedAttributeType extends AbstractType
             ->add(static::FIELD_NAME, TextType::class, [
                 'constraints' => [
                     new NotBlank(),
-                    new Callback([
-                        'callback' => $this->nameValidateCallback(),
-                    ]),
+                    $this->getFactory()->createCategoryLocalizedAttributeNameUniqueConstraint(),
                 ],
                 'required' => false,
             ]);
 
         return $this;
-    }
-
-    /**
-     * @return \Closure
-     */
-    protected function nameValidateCallback(): callable
-    {
-        return function ($nameKey, ExecutionContextInterface $context) {
-            $categoryTransfer = $context->getRoot()->getData();
-
-            if (!($categoryTransfer instanceof CategoryTransfer)) {
-                return;
-            }
-
-            if ($nameKey && $this->getFactory()->getCategoryFacade()->checkSameLevelCategoryByNameExists($nameKey, $categoryTransfer)) {
-                $context->addViolation(sprintf(static::VALIDATION_MESSAGE_UNIQUE_NAME, $nameKey));
-            }
-        };
     }
 
     /**

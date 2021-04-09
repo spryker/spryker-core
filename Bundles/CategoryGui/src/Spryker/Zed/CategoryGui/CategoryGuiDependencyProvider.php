@@ -72,7 +72,7 @@ class CategoryGuiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function providePersistenceLayerDependencies(Container $container)
+    public function providePersistenceLayerDependencies(Container $container): Container
     {
         $container = $this->addCategoryPropelQuery($container);
         $container = $this->addCategoryTemplatePropelQuery($container);

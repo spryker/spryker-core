@@ -12,6 +12,8 @@ use Spryker\Zed\CategoryGui\CategoryGuiDependencyProvider;
 use Spryker\Zed\CategoryGui\Communication\Finder\CategoryStoreWithSateFinder;
 use Spryker\Zed\CategoryGui\Communication\Finder\CategoryStoreWithSateFinderInterface;
 use Spryker\Zed\CategoryGui\Communication\Form\CategoryType;
+use Spryker\Zed\CategoryGui\Communication\Form\Constraint\CategoryKeyUniqueConstraint;
+use Spryker\Zed\CategoryGui\Communication\Form\Constraint\CategoryLocalizedAttributeNameUniqueConstraint;
 use Spryker\Zed\CategoryGui\Communication\Form\DataProvider\CategoryDeleteDataProvider;
 use Spryker\Zed\CategoryGui\Communication\Form\DataProvider\CategoryEditDataProvider;
 use Spryker\Zed\CategoryGui\Communication\Form\DataProvider\Create\CategoryCreateDataProvider;
@@ -19,6 +21,7 @@ use Spryker\Zed\CategoryGui\Communication\Form\DataProvider\Create\RootCategoryC
 use Spryker\Zed\CategoryGui\Communication\Form\DeleteType;
 use Spryker\Zed\CategoryGui\Communication\Form\EventListener\CategoryStoreRelationFieldEventSubscriber;
 use Spryker\Zed\CategoryGui\Communication\Form\RootCategoryType;
+use Spryker\Zed\CategoryGui\Communication\Form\Transformer\CategoryExtraParentsTransformer;
 use Spryker\Zed\CategoryGui\Communication\Handler\CategoryFormHandler;
 use Spryker\Zed\CategoryGui\Communication\Handler\CategoryFormHandlerInterface;
 use Spryker\Zed\CategoryGui\Communication\Mapper\CategoryStoreWithStateMapper;
@@ -33,8 +36,10 @@ use Spryker\Zed\Gui\Communication\Tabs\TabsInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
+use Symfony\Component\Validator\Constraint;
 
 /**
  * @method \Spryker\Zed\CategoryGui\CategoryGuiConfig getConfig()
@@ -267,7 +272,7 @@ class CategoryGuiCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToStoreFacadeInterface
      */
-    protected function getStoreFacade(): CategoryGuiToStoreFacadeInterface
+    public function getStoreFacade(): CategoryGuiToStoreFacadeInterface
     {
         return $this->getProvidedDependency(CategoryGuiDependencyProvider::FACADE_STORE);
     }
@@ -275,8 +280,36 @@ class CategoryGuiCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\CategoryGui\Communication\Mapper\CategoryStoreWithStateMapperInterface
      */
-    protected function createCategoryStoreWithStateMapper(): CategoryStoreWithStateMapperInterface
+    public function createCategoryStoreWithStateMapper(): CategoryStoreWithStateMapperInterface
     {
         return new CategoryStoreWithStateMapper();
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraint
+     */
+    public function createCategoryLocalizedAttributeNameUniqueConstraint(): Constraint
+    {
+        return new CategoryLocalizedAttributeNameUniqueConstraint([
+            CategoryLocalizedAttributeNameUniqueConstraint::OPTION_CATEGORY_FACADE => $this->getCategoryFacade(),
+        ]);
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraint
+     */
+    public function createCategoryKeyUniqueConstraint(): Constraint
+    {
+        return new CategoryKeyUniqueConstraint([
+            CategoryKeyUniqueConstraint::OPTION_CATEGORY_GUI_REPOSITORY => $this->getRepository(),
+        ]);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\DataTransformerInterface
+     */
+    public function createCategoryExtraParentsTransformer(): DataTransformerInterface
+    {
+        return new CategoryExtraParentsTransformer();
     }
 }

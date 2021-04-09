@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\CategoryGui\Communication\Form;
 
-use Generated\Shared\Transfer\CategoryTransfer;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -15,9 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @method \Spryker\Zed\CategoryGui\Communication\CategoryGuiCommunicationFactory getFactory()
@@ -43,8 +40,6 @@ abstract class CommonCategoryType extends AbstractType
     protected const LABEL_IS_IN_MENU = 'Visible in the category tree';
     protected const LABEL_IS_SEARCHABLE = 'Allow to search for this category';
     protected const LABEL_TEMPLATE = 'Template';
-
-    protected const VALIDATION_MESSAGE_UNIQUE_KEY = 'Category with key "%s" already in use, please choose another one.';
 
     protected const BLOCK_PREFIX = 'category';
 
@@ -112,9 +107,7 @@ abstract class CommonCategoryType extends AbstractType
         $builder->add(static::FIELD_CATEGORY_KEY, TextType::class, [
             'constraints' => [
                 new NotBlank(),
-                new Callback([
-                    'callback' => $this->uniqueKeyValidateCallback(),
-                ]),
+                $this->getFactory()->createCategoryKeyUniqueConstraint(),
             ],
         ]);
 
@@ -235,23 +228,5 @@ abstract class CommonCategoryType extends AbstractType
         }
 
         return $this;
-    }
-
-    /**
-     * @return \Closure
-     */
-    protected function uniqueKeyValidateCallback(): callable
-    {
-        return function ($key, ExecutionContextInterface $context) {
-            $data = $context->getRoot()->getData();
-
-            if (!($data instanceof CategoryTransfer)) {
-                return;
-            }
-
-            if ($this->getRepository()->isCategoryKeyUsed($key)) {
-                $context->addViolation(sprintf(static::VALIDATION_MESSAGE_UNIQUE_KEY, $key));
-            }
-        };
     }
 }

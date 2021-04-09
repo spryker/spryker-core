@@ -24,7 +24,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * @method \Spryker\Zed\Store\Persistence\StoreQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Store\Persistence\StoreRepositoryInterface getRepository()
  */
-class StoreRelationDrowdownType extends AbstractType
+class StoreRelationDropdownType extends AbstractType
 {
     public const FIELD_ID_ENTITY = 'id_entity';
     public const FIELD_ID_STORES = 'id_stores';

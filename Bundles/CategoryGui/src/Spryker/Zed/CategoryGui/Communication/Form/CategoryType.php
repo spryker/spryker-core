@@ -7,9 +7,7 @@
 
 namespace Spryker\Zed\CategoryGui\Communication\Form;
 
-use ArrayObject;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
-use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -110,14 +108,9 @@ class CategoryType extends CommonCategoryType
             'required' => false,
         ]);
 
-        $builder->get(static::FIELD_EXTRA_PARENTS)->addModelTransformer(new CallbackTransformer(
-            function ($extraParents) {
-                return (array)$extraParents;
-            },
-            function ($extraParents) {
-                return new ArrayObject($extraParents);
-            }
-        ));
+        $builder->get(static::FIELD_EXTRA_PARENTS)->addModelTransformer(
+            $this->getFactory()->createCategoryExtraParentsTransformer()
+        );
 
         return $this;
     }

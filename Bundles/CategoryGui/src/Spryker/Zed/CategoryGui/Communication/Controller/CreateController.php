@@ -34,19 +34,7 @@ class CreateController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $categoryResponseTransfer = $this->getFactory()
-                ->createCategoryFormHandler()
-                ->createCategory($form->getData());
-
-            if ($categoryResponseTransfer->getIsSuccessful()) {
-                $this->addSuccessMessages($categoryResponseTransfer->getMessages());
-
-                return $this->redirectResponse(
-                    $this->createSuccessRedirectUrl($categoryResponseTransfer->getCategory()->getIdCategory())
-                );
-            }
-
-            $this->addErrorMessages($categoryResponseTransfer->getMessages());
+            $this->handleCreateFormSubmission($form);
         }
 
         return $this->viewResponse([
@@ -54,6 +42,30 @@ class CreateController extends AbstractController
             'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale()->getLocaleName(),
             'categoryFormTabs' => $this->getFactory()->createCategoryFormTabs()->createView(),
         ]);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $form
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|void
+     */
+    protected function handleCreateFormSubmission(FormInterface $form)
+    {
+        $categoryResponseTransfer = $this->getFactory()
+            ->createCategoryFormHandler()
+            ->createCategory($form->getData());
+
+        if (!$categoryResponseTransfer->getIsSuccessful()) {
+            $this->addErrorMessages($categoryResponseTransfer->getMessages());
+
+            return;
+        }
+
+        $this->addSuccessMessages($categoryResponseTransfer->getMessages());
+
+        return $this->redirectResponse(
+            $this->createSuccessRedirectUrl($categoryResponseTransfer->getCategory()->getIdCategory())
+        );
     }
 
     /**

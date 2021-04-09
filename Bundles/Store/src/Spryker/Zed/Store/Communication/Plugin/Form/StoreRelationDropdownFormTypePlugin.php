@@ -9,7 +9,7 @@ namespace Spryker\Zed\Store\Communication\Plugin\Form;
 
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
-use Spryker\Zed\Store\Communication\Form\Type\StoreRelationDrowdownType;
+use Spryker\Zed\Store\Communication\Form\Type\StoreRelationDropdownType;
 
 /**
  * @method \Spryker\Zed\Store\Business\StoreFacadeInterface getFacade()
@@ -28,6 +28,6 @@ class StoreRelationDropdownFormTypePlugin extends AbstractPlugin implements Form
      */
     public function getType()
     {
-        return StoreRelationDrowdownType::class;
+        return StoreRelationDropdownType::class;
     }
 }
