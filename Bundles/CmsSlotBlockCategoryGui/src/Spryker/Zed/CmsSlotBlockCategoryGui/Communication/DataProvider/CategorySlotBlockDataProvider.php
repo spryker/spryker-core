@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CmsSlotBlockCategoryGui\Communication\DataProvider;
 
 use Generated\Shared\Transfer\CategoryCollectionTransfer;
+use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Spryker\Zed\CmsSlotBlockCategoryGui\Communication\Form\CategorySlotBlockConditionForm;
 use Spryker\Zed\CmsSlotBlockCategoryGui\Dependency\Facade\CmsSlotBlockCategoryGuiToCategoryFacadeInterface;
 use Spryker\Zed\CmsSlotBlockCategoryGui\Dependency\Facade\CmsSlotBlockCategoryGuiToLocaleFacadeInterface;
@@ -75,8 +76,9 @@ class CategorySlotBlockDataProvider implements CategorySlotBlockDataProviderInte
      */
     protected function getCategories(): array
     {
-        $categoryCollectionTransfer = $this->categoryFacade
-            ->getAllCategoryMainFieldsCollection($this->localeFacade->getCurrentLocale());
+        $categoryCollectionTransfer = $this->categoryFacade->findCategoriesByCriteria(
+            (new CategoryCriteriaTransfer())->setLocaleId($this->localeFacade->getCurrentLocale()->getIdLocale())
+        );
 
         return $this->getCategoryIdsFromCollection($categoryCollectionTransfer);
     }

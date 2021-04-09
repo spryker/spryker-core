@@ -36,9 +36,9 @@ interface CategoryReaderInterface
     public function getAllCategoryCollection(LocaleTransfer $localeTransfer): CategoryCollectionTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer $categoryCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
      */
-    public function getAllCategoryMainFieldsCollection(LocaleTransfer $localeTransfer): CategoryCollectionTransfer;
+    public function findCategoriesByCriteria(CategoryCriteriaTransfer $categoryCriteriaTransfer): CategoryCollectionTransfer;
 }

@@ -196,15 +196,15 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer $categoryCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
      */
-    public function getAllCategoryMainFieldsCollection(LocaleTransfer $localeTransfer): CategoryCollectionTransfer
+    public function findCategoriesByCriteria(CategoryCriteriaTransfer $categoryCriteriaTransfer): CategoryCollectionTransfer
     {
         return $this->getFactory()
             ->createCategoryReader()
-            ->getAllCategoryMainFieldsCollection($localeTransfer);
+            ->findCategoriesByCriteria($categoryCriteriaTransfer);
     }
 
     /**

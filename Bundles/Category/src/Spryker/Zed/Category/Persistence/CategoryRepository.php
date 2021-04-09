@@ -79,21 +79,16 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
     }
 
     /**
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer $categoryCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
      */
-    public function getAllCategoryMainFieldsCollection(LocaleTransfer $localeTransfer): CategoryCollectionTransfer
+    public function findCategoriesByCriteria(CategoryCriteriaTransfer $categoryCriteriaTransfer): CategoryCollectionTransfer
     {
-        $categoryQuery = SpyCategoryQuery::create();
-        $spyCategories = $categoryQuery
-            ->joinWithAttribute()
-            ->addAnd(
-                SpyCategoryAttributeTableMap::COL_FK_LOCALE,
-                $localeTransfer->getIdLocale(),
-                Criteria::EQUAL
-            )
-            ->find();
+        $categoryQuery = $this->getFactory()->createCategoryQuery();
+        $categoryQuery = $this->applyCategoryFilters($categoryQuery->joinWithAttribute(), $categoryCriteriaTransfer);
+
+        $spyCategories = $categoryQuery->find();
 
         return $this->getFactory()
             ->createCategoryMapper()
@@ -632,6 +627,19 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
                         ->filterByLocaleName($categoryCriteriaTransfer->getLocaleName())
                     ->endUse()
                 ->endUse();
+        }
+
+        if ($categoryCriteriaTransfer->getLocaleId()) {
+            $categoryQuery
+                ->addAnd(
+                    SpyCategoryAttributeTableMap::COL_FK_LOCALE,
+                    $categoryCriteriaTransfer->getLocaleId(),
+                    Criteria::EQUAL
+                );
+        }
+
+        if ($categoryCriteriaTransfer->getWithNodes() === true) {
+            $categoryQuery->leftJoinNode();
         }
 
         return $categoryQuery;

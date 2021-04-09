@@ -109,13 +109,13 @@ class CategoryReader implements CategoryReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer $categoryCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
      */
-    public function getAllCategoryMainFieldsCollection(LocaleTransfer $localeTransfer): CategoryCollectionTransfer
+    public function findCategoriesByCriteria(CategoryCriteriaTransfer $categoryCriteriaTransfer): CategoryCollectionTransfer
     {
-        return $this->categoryRepository->getAllCategoryMainFieldsCollection($localeTransfer);
+        return $this->categoryRepository->findCategoriesByCriteria($categoryCriteriaTransfer);
     }
 
     /**
