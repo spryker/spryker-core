@@ -104,6 +104,7 @@ interface MerchantProductFacadeInterface
     /**
      * Specification:
      * - Returns concrete product by provided criteria.
+     * - Requires at least 1 ID in MerchantProductCriteriaTransfer.productConcreteIds.
      *
      * @api
      *
