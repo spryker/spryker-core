@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Stock\Business\Stock;
 
+use ArrayObject;
+use Generated\Shared\Transfer\StockCollectionTransfer;
 use Generated\Shared\Transfer\StockCriteriaFilterTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use InvalidArgumentException;
@@ -33,18 +35,26 @@ class StockReader implements StockReaderInterface
     protected $storeFacade;
 
     /**
+     * @var \Spryker\Zed\StockExtension\Dependency\Plugin\StockCollectionExpanderPluginInterface[]
+     */
+    protected $stockCollectionExpanderPlugins;
+
+    /**
      * @param \Spryker\Zed\Stock\Persistence\StockRepositoryInterface $stockRepository
      * @param \Spryker\Zed\Stock\Business\Stock\StockMapperInterface $stockMapper
      * @param \Spryker\Zed\Stock\Dependency\Facade\StockToStoreFacadeInterface $storeFacade
+     * @param \Spryker\Zed\StockExtension\Dependency\Plugin\StockCollectionExpanderPluginInterface[] $stockCollectionExpanderPlugins
      */
     public function __construct(
         StockRepositoryInterface $stockRepository,
         StockMapperInterface $stockMapper,
-        StockToStoreFacadeInterface $storeFacade
+        StockToStoreFacadeInterface $storeFacade,
+        array $stockCollectionExpanderPlugins
     ) {
         $this->stockRepository = $stockRepository;
         $this->stockMapper = $stockMapper;
         $this->storeFacade = $storeFacade;
+        $this->stockCollectionExpanderPlugins = $stockCollectionExpanderPlugins;
     }
 
     /**
@@ -83,7 +93,12 @@ class StockReader implements StockReaderInterface
             ->setIsActive(true)
             ->setStoreNames([$storeTransfer->getName()]);
 
-        return $this->stockRepository->getStocksWithRelatedStoresByCriteriaFilter($stockCriteriaFilterTransfer);
+        $stockTransfers = $this->stockRepository->getStocksWithRelatedStoresByCriteriaFilter($stockCriteriaFilterTransfer);
+
+        $stockCollectionTransfer = (new StockCollectionTransfer())->setStocks(new ArrayObject($stockTransfers));
+        $stockCollectionTransfer = $this->executeStockCollectionExpanderPlugins($stockCollectionTransfer);
+
+        return $stockCollectionTransfer->getStocks()->getArrayCopy();
     }
 
     /**
@@ -123,5 +138,19 @@ class StockReader implements StockReaderInterface
         }
 
         return $stockTransfer->getIdStock();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StockCollectionTransfer $stockCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\StockCollectionTransfer
+     */
+    protected function executeStockCollectionExpanderPlugins(StockCollectionTransfer $stockCollectionTransfer): StockCollectionTransfer
+    {
+        foreach ($this->stockCollectionExpanderPlugins as $stockCollectionExpanderPlugin) {
+            $stockCollectionTransfer = $stockCollectionExpanderPlugin->expandStockCollection($stockCollectionTransfer);
+        }
+
+        return $stockCollectionTransfer;
     }
 }

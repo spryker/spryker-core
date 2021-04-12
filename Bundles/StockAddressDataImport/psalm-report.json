@@ -1,0 +1,31 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 33,
+            "line_to": 33,
+            "type": "MissingDependency",
+            "message": "Orm\\Zed\\StockAddress\\Persistence\\SpyStockAddressQuery depends on class or interface spryker\\zed\\stockaddress\\persistence\\propel\\abstractspystockaddressquery that does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/StockAddressDataImport/src/Spryker/Zed/StockAddressDataImport/Business/Writer/StockAddress/StockAddressWriterStep.php",
+            "snippet": "        $stockAddressEntity = SpyStockAddressQuery::create()",
+            "selected_text": "SpyStockAddressQuery",
+            "error_level": -1,
+            "shortcode": 157
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 32,
+            "line_to": 32,
+            "type": "PossiblyUndefinedMethod",
+            "message": "Method Spryker\\Zed\\DataImport\\Business\\Model\\DataImporterAfterImportAwareInterface::import does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/StockAddressDataImport/src/Spryker/Zed/StockAddressDataImport/Business/StockAddressDataImportFacade.php",
+            "snippet": "            ->import($dataImporterConfigurationTransfer);",
+            "selected_text": "import",
+            "error_level": 3,
+            "shortcode": 108
+        }
+    ],
+    "deprecation": []
+}
