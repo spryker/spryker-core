@@ -10,7 +10,6 @@ namespace Spryker\Zed\CategoryGui\Communication\Form;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * @method \Spryker\Zed\CategoryGui\Communication\CategoryGuiCommunicationFactory getFactory()
@@ -128,13 +127,10 @@ class CategoryType extends CommonCategoryType
             $this->getFactory()->getStoreRelationFormTypePlugin()->getType(),
             [
                 'label' => false,
-                'required' => true,
+                'required' => false,
                 static::OPTION_ATTRIBUTE_ACTION_FIELD => $options[static::OPTION_ATTRIBUTE_ACTION_FIELD],
                 static::OPTION_ATTRIBUTE_ACTION_URL => $options[static::OPTION_ATTRIBUTE_ACTION_URL],
                 static::OPTION_ATTRIBUTE_ACTION_EVENT => $options[static::OPTION_ATTRIBUTE_ACTION_EVENT],
-                'constraints' => [
-                    new NotBlank(),
-                ],
             ]
         );
 
