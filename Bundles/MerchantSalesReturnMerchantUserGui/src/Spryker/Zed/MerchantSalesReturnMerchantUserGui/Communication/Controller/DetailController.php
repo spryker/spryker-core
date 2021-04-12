@@ -69,7 +69,7 @@ class DetailController extends AbstractController
         }
 
         $salesOrderItemIds = $this->extractSalesOrderItemIdsFromReturn($returnTransfer);
-        $merchantOrderItemTransfers = $this->findMerchantOrderItems($salesOrderItemIds);
+        $merchantOrderItemTransfers = $this->getMerchantOrderItems($salesOrderItemIds);
         $merchantOrderTransfer->setMerchantOrderItems(new ArrayObject($merchantOrderItemTransfers));
 
         return [
@@ -123,7 +123,7 @@ class DetailController extends AbstractController
      *
      * @return \Generated\Shared\Transfer\MerchantOrderItemTransfer[]
      */
-    protected function findMerchantOrderItems(array $salesOrderItemIds): array
+    protected function getMerchantOrderItems(array $salesOrderItemIds): array
     {
         $merchantOrderItemCriteriaTransfer = (new MerchantOrderItemCriteriaTransfer())
             ->setOrderItemIds($salesOrderItemIds);
