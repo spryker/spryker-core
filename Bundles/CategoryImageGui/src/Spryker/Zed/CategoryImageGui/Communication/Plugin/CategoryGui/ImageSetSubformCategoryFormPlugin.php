@@ -8,7 +8,6 @@
 namespace Spryker\Zed\CategoryImageGui\Communication\Plugin\CategoryGui;
 
 use Spryker\Zed\CategoryGuiExtension\Dependency\Plugin\CategoryFormPluginInterface;
-use Spryker\Zed\CategoryImageGui\Communication\Form\ImageSetCollectionForm;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -18,8 +17,6 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class ImageSetSubformCategoryFormPlugin extends AbstractPlugin implements CategoryFormPluginInterface
 {
-    public const FIELD_IMAGE_SETS = 'imageSets';
-
     /**
      * {@inheritDoc}
      * - Adds subform with image sets to CategoryType.
@@ -32,12 +29,8 @@ class ImageSetSubformCategoryFormPlugin extends AbstractPlugin implements Catego
      */
     public function buildForm(FormBuilderInterface $builder): void
     {
-        $localeFacade = $this->getFactory()->getLocaleFacade();
-        $builder->add(static::FIELD_IMAGE_SETS, ImageSetCollectionForm::class, [
-            ImageSetCollectionForm::OPTION_LOCALES => $localeFacade->getAvailableLocales(),
-        ]);
-        $builder->get(static::FIELD_IMAGE_SETS)->addModelTransformer(
-            $this->getFactory()->createImageSetCollectionTransformer()
-        );
+        $this->getFactory()
+            ->createCategoryImageFormExpander()
+            ->buildForm($builder);
     }
 }

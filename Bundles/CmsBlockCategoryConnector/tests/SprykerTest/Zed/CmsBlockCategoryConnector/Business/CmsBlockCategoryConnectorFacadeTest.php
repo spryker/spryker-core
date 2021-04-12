@@ -8,8 +8,6 @@
 namespace SprykerTest\Zed\CmsBlockCategoryConnector\Business;
 
 use Codeception\Test\Unit;
-use Spryker\Zed\CmsBlockCategoryConnector\Business\CmsBlockCategoryConnectorFacadeInterface;
-use Spryker\Zed\CmsBlockCategoryConnector\CmsBlockCategoryConnectorConfig;
 
 /**
  * Auto-generated group annotations
@@ -25,7 +23,7 @@ use Spryker\Zed\CmsBlockCategoryConnector\CmsBlockCategoryConnectorConfig;
 class CmsBlockCategoryConnectorFacadeTest extends Unit
 {
     /**
-     * @var \SprykerTest\Zed\CmsBlockCategoryConnector\BusinessTester
+     * @var \SprykerTest\Zed\CmsBlockCategoryConnector\CmsBlockCategoryConnectorBusinessTester
      */
     protected $tester;
 
@@ -38,10 +36,10 @@ class CmsBlockCategoryConnectorFacadeTest extends Unit
 
         $this->assertEmpty($cmsBlockTransfer->getIdCategories());
 
-        $this->createCmsBlockCategoryConnectorFacade()
+        $this->tester->getCmsBlockCategoryConnectorFacade()
             ->syncCmsBlockCategoryPosition();
-        $cmsBlockCategoryPositionTransfer = $this->createCmsBlockCategoryConnectorFacade()
-            ->findCmsBlockCategoryPositionByName($this->getDefaultPositionName());
+        $cmsBlockCategoryPositionTransfer = $this->tester->getCmsBlockCategoryConnectorFacade()
+            ->findCmsBlockCategoryPositionByName($this->tester->getDefaultPositionName());
 
         $categoryTransfer = $this->tester->haveCategory();
         $cmsBlockTransfer->setFkTemplate($categoryTransfer->getFkCategoryTemplate());
@@ -49,10 +47,10 @@ class CmsBlockCategoryConnectorFacadeTest extends Unit
             $cmsBlockCategoryPositionTransfer->getIdCmsBlockCategoryPosition() => [$categoryTransfer->getIdCategory()],
         ]);
 
-        $this->createCmsBlockCategoryConnectorFacade()
+        $this->tester->getCmsBlockCategoryConnectorFacade()
             ->updateCmsBlockCategoryRelations($cmsBlockTransfer);
 
-        $cmsBlockTransfer = $this->createCmsBlockCategoryConnectorFacade()
+        $cmsBlockTransfer = $this->tester->getCmsBlockCategoryConnectorFacade()
             ->hydrateCmsBlockCategoryRelations($cmsBlockTransfer);
 
         $this->assertEquals([$categoryTransfer->getIdCategory()], $cmsBlockTransfer->getIdCategories());
@@ -67,11 +65,11 @@ class CmsBlockCategoryConnectorFacadeTest extends Unit
 
         $this->assertEmpty($cmsBlockTransfer->getIdCategories());
 
-        $this->createCmsBlockCategoryConnectorFacade()
+        $this->tester->getCmsBlockCategoryConnectorFacade()
             ->syncCmsBlockCategoryPosition();
 
-        $cmsBlockCategoryPositionTransfer = $this->createCmsBlockCategoryConnectorFacade()
-            ->findCmsBlockCategoryPositionByName($this->getDefaultPositionName());
+        $cmsBlockCategoryPositionTransfer = $this->tester->getCmsBlockCategoryConnectorFacade()
+            ->findCmsBlockCategoryPositionByName($this->tester->getDefaultPositionName());
 
         $categoryTransfer = $this->tester->haveCategory();
         $cmsBlockTransfer->setFkTemplate($categoryTransfer->getFkCategoryTemplate());
@@ -79,10 +77,10 @@ class CmsBlockCategoryConnectorFacadeTest extends Unit
             $cmsBlockCategoryPositionTransfer->getIdCmsBlockCategoryPosition() => [$categoryTransfer->getIdCategory()],
         ]);
 
-        $this->createCmsBlockCategoryConnectorFacade()
+        $this->tester->getCmsBlockCategoryConnectorFacade()
             ->updateCmsBlockCategoryRelations($cmsBlockTransfer);
 
-        $cmsBlockTransfer = $this->createCmsBlockCategoryConnectorFacade()
+        $cmsBlockTransfer = $this->tester->getCmsBlockCategoryConnectorFacade()
             ->hydrateCmsBlockCategoryRelations($cmsBlockTransfer);
 
         $this->assertEquals([$categoryTransfer->getIdCategory()], $cmsBlockTransfer->getIdCategories());
@@ -93,28 +91,34 @@ class CmsBlockCategoryConnectorFacadeTest extends Unit
      */
     public function testSyncCmsBlockCategoryPosition(): void
     {
-        $this->createCmsBlockCategoryConnectorFacade()
+        $this->tester->getCmsBlockCategoryConnectorFacade()
             ->syncCmsBlockCategoryPosition();
 
-        $cmsBlockCategoryPositionTransfer = $this->createCmsBlockCategoryConnectorFacade()
-            ->findCmsBlockCategoryPositionByName($this->getDefaultPositionName());
+        $cmsBlockCategoryPositionTransfer = $this->tester->getCmsBlockCategoryConnectorFacade()
+            ->findCmsBlockCategoryPositionByName($this->tester->getDefaultPositionName());
 
         $this->assertNotEmpty($cmsBlockCategoryPositionTransfer);
     }
 
     /**
-     * @return \Spryker\Zed\CmsBlockCategoryConnector\Business\CmsBlockCategoryConnectorFacadeInterface
+     * @return void
      */
-    protected function createCmsBlockCategoryConnectorFacade(): CmsBlockCategoryConnectorFacadeInterface
+    public function testGetCmsBlockIdsWithNamesByCategoryWillReturnCmsBlockIdsWithNames(): void
     {
-        return $this->tester->getLocator()->cmsBlockCategoryConnector()->facade();
-    }
+        // Arrange
+        $categoryTransfer = $this->tester->haveCategory();
+        $cmsBlockTransfer = $this->tester->haveCmsBlockWithCategory($categoryTransfer);
 
-    /**
-     * @return string
-     */
-    protected function getDefaultPositionName(): string
-    {
-        return (new CmsBlockCategoryConnectorConfig())->getCmsBlockCategoryPositionDefault();
+        $expectedCmsBlockIdsWithNames = [
+            $cmsBlockTransfer->getIdCmsBlock() => $cmsBlockTransfer->getName(),
+        ];
+
+        // Act
+        $cmsBlockNames = $this->tester
+            ->getCmsBlockCategoryConnectorFacade()
+            ->getCmsBlockIdsWithNamesByCategory($categoryTransfer);
+
+        // Assert
+        $this->assertSame($expectedCmsBlockIdsWithNames, $cmsBlockNames, 'Cms blocks should be filtered by category.');
     }
 }

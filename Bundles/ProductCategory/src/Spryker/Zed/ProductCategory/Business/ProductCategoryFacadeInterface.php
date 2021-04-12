@@ -128,4 +128,17 @@ interface ProductCategoryFacadeInterface
      * @return int[]
      */
     public function getProductConcreteIdsByCategoryIds(array $categoryIds): array;
+
+    /**
+     * Specification:
+     *  - Gets localized products abstract names by category.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return string[]
+     */
+    public function getLocalizedProductAbstractNamesByCategory(CategoryTransfer $categoryTransfer, LocaleTransfer $localeTransfer): array;
 }

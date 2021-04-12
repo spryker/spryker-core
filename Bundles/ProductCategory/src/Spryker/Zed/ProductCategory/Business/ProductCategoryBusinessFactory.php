@@ -11,6 +11,8 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductCategory\Business\Manager\ProductCategoryManager;
 use Spryker\Zed\ProductCategory\Business\Model\CategoryReader;
 use Spryker\Zed\ProductCategory\Business\Model\CategoryReaderInterface;
+use Spryker\Zed\ProductCategory\Business\Model\ProductCategoryReader;
+use Spryker\Zed\ProductCategory\Business\Model\ProductCategoryReaderInterface;
 use Spryker\Zed\ProductCategory\ProductCategoryDependencyProvider;
 
 /**
@@ -65,6 +67,16 @@ class ProductCategoryBusinessFactory extends AbstractBusinessFactory
         return new CategoryReader(
             $this->getRepository(),
             $this->getCategoryFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductCategory\Business\Model\ProductCategoryReaderInterface
+     */
+    public function createProductCategoryReader(): ProductCategoryReaderInterface
+    {
+        return new ProductCategoryReader(
+            $this->createProductCategoryManager()
         );
     }
 }

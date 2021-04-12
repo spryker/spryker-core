@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CmsBlockCategoryConnector\Business\Model;
 
+use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\CmsBlockTransfer;
 
 interface CmsBlockCategoryReaderInterface
@@ -33,4 +34,11 @@ interface CmsBlockCategoryReaderInterface
      * @return \Generated\Shared\Transfer\CmsBlockTransfer[]
      */
     public function getCmsBlockCollection($idCategory, $idCategoryTemplate);
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return string[]
+     */
+    public function getCmsBlockIdsWithNamesByCategory(CategoryTransfer $categoryTransfer): array;
 }

@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\CategoryImageGui\Communication\Plugin\CategoryGui;
 
-use Generated\Shared\Transfer\TabItemTransfer;
 use Generated\Shared\Transfer\TabsViewTransfer;
 use Spryker\Zed\CategoryGuiExtension\Dependency\Plugin\CategoryFormTabExpanderPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -30,12 +29,8 @@ class ImageSetCategoryFormTabExpanderPlugin extends AbstractPlugin implements Ca
      */
     public function expand(TabsViewTransfer $tabsViewTransfer): TabsViewTransfer
     {
-        $tabItemTransfer = (new TabItemTransfer())->setName('image')
-            ->setTitle('Image')
-            ->setTemplate('@CategoryImageGui/_partials/image-tab.twig');
-
-        $tabsViewTransfer->addTab($tabItemTransfer);
-
-        return $tabsViewTransfer;
+        return $this->getFactory()
+            ->createCategoryImageTabExpander()
+            ->expandWithImageTab($tabsViewTransfer);
     }
 }

@@ -141,4 +141,16 @@ interface CmsBlockCategoryConnectorFacadeInterface
         TouchUpdaterInterface $touchUpdater,
         OutputInterface $output
     );
+
+    /**
+     * Specification:
+     * - Gets collection of related CMS Blocks ids and names.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return string[]
+     */
+    public function getCmsBlockIdsWithNamesByCategory(CategoryTransfer $categoryTransfer): array;
 }

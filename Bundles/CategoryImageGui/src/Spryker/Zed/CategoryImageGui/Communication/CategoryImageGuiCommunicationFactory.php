@@ -8,6 +8,10 @@
 namespace Spryker\Zed\CategoryImageGui\Communication;
 
 use Spryker\Zed\CategoryImageGui\CategoryImageGuiDependencyProvider;
+use Spryker\Zed\CategoryImageGui\Communication\Expander\CategoryImageFormExpander;
+use Spryker\Zed\CategoryImageGui\Communication\Expander\CategoryImageFormExpanderInterface;
+use Spryker\Zed\CategoryImageGui\Communication\Expander\CategoryImageTabExpander;
+use Spryker\Zed\CategoryImageGui\Communication\Expander\CategoryImageTabExpanderInterface;
 use Spryker\Zed\CategoryImageGui\Communication\Form\Transformer\ImageCollectionTransformer;
 use Spryker\Zed\CategoryImageGui\Communication\Form\Transformer\ImageSetCollectionTransformer;
 use Spryker\Zed\CategoryImageGui\Communication\Form\Transformer\LocaleTransformer;
@@ -54,5 +58,24 @@ class CategoryImageGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getLocaleFacade(): CategoryImageGuiToLocaleInterface
     {
         return $this->getProvidedDependency(CategoryImageGuiDependencyProvider::FACADE_LOCALE);
+    }
+
+    /**
+     * @return \Spryker\Zed\CategoryImageGui\Communication\Expander\CategoryImageTabExpanderInterface
+     */
+    public function createCategoryImageTabExpander(): CategoryImageTabExpanderInterface
+    {
+        return new CategoryImageTabExpander();
+    }
+
+    /**
+     * @return \Spryker\Zed\CategoryImageGui\Communication\Expander\CategoryImageFormExpanderInterface
+     */
+    public function createCategoryImageFormExpander(): CategoryImageFormExpanderInterface
+    {
+        return new CategoryImageFormExpander(
+            $this->getLocaleFacade(),
+            $this->createImageSetCollectionTransformer()
+        );
     }
 }

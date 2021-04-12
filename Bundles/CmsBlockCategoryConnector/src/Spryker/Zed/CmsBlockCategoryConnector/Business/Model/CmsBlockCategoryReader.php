@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CmsBlockCategoryConnector\Business\Model;
 
+use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Orm\Zed\CmsBlock\Persistence\SpyCmsBlock;
 use Spryker\Zed\CmsBlockCategoryConnector\Persistence\CmsBlockCategoryConnectorQueryContainerInterface;
@@ -91,6 +92,27 @@ class CmsBlockCategoryReader implements CmsBlockCategoryReaderInterface
         }
 
         return $cmsBlockTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return string[]
+     */
+    public function getCmsBlockIdsWithNamesByCategory(CategoryTransfer $categoryTransfer): array
+    {
+        $cmsBlocks = [];
+
+        $cmsBlockTransfers = $this->getCmsBlockCollection(
+            $categoryTransfer->getIdCategory(),
+            $categoryTransfer->getFkCategoryTemplate()
+        );
+
+        foreach ($cmsBlockTransfers as $cmsBlockTransfer) {
+            $cmsBlocks[$cmsBlockTransfer->getIdCmsBlock()] = $cmsBlockTransfer->getName();
+        }
+
+        return $cmsBlocks;
     }
 
     /**

@@ -44,19 +44,7 @@ class ProductCategoryRelationReadPlugin extends AbstractPlugin implements Catego
      */
     public function getRelations(CategoryTransfer $categoryTransfer, LocaleTransfer $localeTransfer): array
     {
-        $productNames = [];
-        $productTransferCollection = $this
-            ->getFacade()
-            ->getAbstractProductsByIdCategory($categoryTransfer->getIdCategory(), $localeTransfer);
-
-        foreach ($productTransferCollection as $productTransfer) {
-            $productNames[] = sprintf(
-                '%s (%s)',
-                $productTransfer->getLocalizedAttributes()[0]->getName(),
-                $productTransfer->getSku()
-            );
-        }
-
-        return $productNames;
+        return $this->getFacade()
+            ->getLocalizedProductAbstractNamesByCategory($categoryTransfer, $localeTransfer);
     }
 }
