@@ -11,15 +11,18 @@ describe('ZedMerchantLayoutCentralComponent', () => {
     @Component({
         selector: 'test',
         template: `
-            <mp-merchant-layout-centered>Content</mp-merchant-layout-centered>
-        `
+            <mp-merchant-layout-centered>
+                <div class="default-content"></div>
+                <div footer class="footer-content"></div>
+            </mp-merchant-layout-centered>
+        `,
     })
     class TestComponent {}
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [MerchantLayoutCenteredModule],
-            declarations: [TestComponent]
+            declarations: [TestComponent],
         }).compileComponents();
     }));
 
@@ -27,16 +30,28 @@ describe('ZedMerchantLayoutCentralComponent', () => {
         fixture = TestBed.createComponent(TestComponent);
         component = fixture.componentInstance;
 
-	    fixture.detectChanges();
+        fixture.detectChanges();
     });
 
     it('should create component', () => {
         expect(component).toBeTruthy();
     });
 
-	it('should render <mp-layout-centered>', () => {
-		const centeredLayoutElem = fixture.debugElement.query(By.css('mp-layout-centered'));
+    it('should render <mp-layout-centered>', () => {
+        const centeredLayoutElem = fixture.debugElement.query(By.css('mp-layout-centered'));
 
-		expect(centeredLayoutElem).toBeTruthy();
-	});
+        expect(centeredLayoutElem).toBeTruthy();
+    });
+
+    it('should render default content in the `mp-layout-centered` component', () => {
+        const defaultContentElem = fixture.debugElement.query(By.css('mp-layout-centered .default-content'));
+
+        expect(defaultContentElem).toBeTruthy();
+    });
+
+    it('should render footer content in the `mp-layout-centered__footer` element', () => {
+        const footerContentElem = fixture.debugElement.query(By.css('.mp-layout-centered__footer .footer-content'));
+
+        expect(footerContentElem).toBeTruthy();
+    });
 });

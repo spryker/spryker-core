@@ -12,6 +12,9 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 interface StockQueryContainerInterface extends QueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProduct
@@ -21,6 +24,9 @@ interface StockQueryContainerInterface extends QueryContainerInterface
     public function queryStockByNeverOutOfStockAllTypes($idProduct);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProduct
@@ -31,6 +37,9 @@ interface StockQueryContainerInterface extends QueryContainerInterface
     public function queryStockByNeverOutOfStockAllTypesForStockNames($idProduct, array $stockNames);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProduct
@@ -40,6 +49,9 @@ interface StockQueryContainerInterface extends QueryContainerInterface
     public function queryStockByProducts($idProduct);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProduct
@@ -50,6 +62,9 @@ interface StockQueryContainerInterface extends QueryContainerInterface
     public function queryStockByProductsForStockNames($idProduct, array $stockNames);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idStock
@@ -60,6 +75,9 @@ interface StockQueryContainerInterface extends QueryContainerInterface
     public function queryStockProductByStockAndProduct($idStock, $idProduct);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $sku
@@ -70,6 +88,9 @@ interface StockQueryContainerInterface extends QueryContainerInterface
     public function queryStockProductBySkuAndType($sku, $type);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $sku
@@ -80,6 +101,9 @@ interface StockQueryContainerInterface extends QueryContainerInterface
     public function queryStockProductBySkuAndTypes($sku, array $types);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $name
@@ -89,6 +113,9 @@ interface StockQueryContainerInterface extends QueryContainerInterface
     public function queryStockByName($name);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\Stock\Persistence\SpyStockQuery
@@ -96,6 +123,9 @@ interface StockQueryContainerInterface extends QueryContainerInterface
     public function queryAllStockTypes();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $names
@@ -105,6 +135,9 @@ interface StockQueryContainerInterface extends QueryContainerInterface
     public function queryStockByNames(array $names);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery
@@ -112,6 +145,9 @@ interface StockQueryContainerInterface extends QueryContainerInterface
     public function queryAllStockProducts();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery
@@ -119,6 +155,9 @@ interface StockQueryContainerInterface extends QueryContainerInterface
     public function queryAllStockProductsJoinedStockJoinedProduct();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idStockProduct
@@ -128,6 +167,9 @@ interface StockQueryContainerInterface extends QueryContainerInterface
     public function queryStockProductByIdStockProduct($idStockProduct);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProduct
@@ -137,6 +179,9 @@ interface StockQueryContainerInterface extends QueryContainerInterface
     public function queryStockByIdProduct($idProduct);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProduct

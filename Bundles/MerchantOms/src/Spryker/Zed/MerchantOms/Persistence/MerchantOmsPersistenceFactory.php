@@ -21,6 +21,8 @@ use Spryker\Zed\MerchantOms\Persistence\Propel\Mapper\StateMachineItemMapper;
 class MerchantOmsPersistenceFactory extends AbstractPersistenceFactory
 {
     /**
+     * @phpstan-return \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItemQuery<\Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItem>
+     *
      * @return \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItemQuery
      */
     public function getMerchantSalesOrderItemPropelQuery(): SpyMerchantSalesOrderItemQuery
@@ -29,6 +31,8 @@ class MerchantOmsPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
+     * @phpstan-return \Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateHistoryQuery<\Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateHistory>
+     *
      * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateHistoryQuery
      */
     public function getStateMachineItemStateHistoryPropelQuery(): SpyStateMachineItemStateHistoryQuery

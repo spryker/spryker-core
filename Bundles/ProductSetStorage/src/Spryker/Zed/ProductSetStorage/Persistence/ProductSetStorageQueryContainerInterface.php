@@ -13,6 +13,9 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 interface ProductSetStorageQueryContainerInterface extends QueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @deprecated Use {@link queryProductSetDataByProductSetIds()} instead.
@@ -24,6 +27,9 @@ interface ProductSetStorageQueryContainerInterface extends QueryContainerInterfa
     public function queryProductSetDataByIds(array $productSetIds);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int[] $productSetIds
@@ -33,6 +39,9 @@ interface ProductSetStorageQueryContainerInterface extends QueryContainerInterfa
     public function queryProductSetDataByProductSetIds(array $productSetIds): SpyProductSetDataQuery;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $productSetIds
@@ -42,6 +51,9 @@ interface ProductSetStorageQueryContainerInterface extends QueryContainerInterfa
     public function queryProductSetStorageByIds(array $productSetIds);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $productImageIds
@@ -51,6 +63,9 @@ interface ProductSetStorageQueryContainerInterface extends QueryContainerInterfa
     public function queryProductSetIdsByProductImageIds(array $productImageIds);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $productImageSetToProductImageIds
@@ -60,6 +75,9 @@ interface ProductSetStorageQueryContainerInterface extends QueryContainerInterfa
     public function queryProductSetIdsByProductImageSetToProductImageIds(array $productImageSetToProductImageIds);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int[] $productSetIds

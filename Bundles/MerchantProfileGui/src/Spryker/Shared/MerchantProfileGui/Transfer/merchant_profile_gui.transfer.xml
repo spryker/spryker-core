@@ -27,7 +27,7 @@
         <property name="contactPersonFirstName" type="string"/>
         <property name="contactPersonTitle" type="string"/>
         <property name="contactPersonRole" type="string"/>
-        <property name="merchantKey" type="string"/>
+        <property name="addressCollection" type="MerchantProfileAddress[]" singular="address"/>
     </transfer>
 
     <transfer name="MerchantProfileLocalizedGlossaryAttributes">
@@ -82,10 +82,6 @@
     <transfer name="Translation">
         <property name="value" type="string"/>
         <property name="isActive" type="bool"/>
-    </transfer>
-
-    <transfer name="MerchantProfileAddressCollection">
-        <property name="addresses" type="MerchantProfileAddress[]" singular="address"/>
     </transfer>
 
     <transfer name="MerchantProfileAddress">

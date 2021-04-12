@@ -11,7 +11,10 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\MerchantProductCollectionTransfer;
 use Generated\Shared\Transfer\MerchantProductCriteriaTransfer;
+use Generated\Shared\Transfer\MerchantProductTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
+use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
+use Generated\Shared\Transfer\ValidationResponseTransfer;
 
 interface MerchantProductFacadeInterface
 {
@@ -42,7 +45,7 @@ interface MerchantProductFacadeInterface
     public function get(MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer): MerchantProductCollectionTransfer;
 
     /**
-     * Specifications:
+     * Specification:
      * - Validates that merchant references in the cart items match existing merchant products.
      *
      * @api
@@ -52,4 +55,48 @@ interface MerchantProductFacadeInterface
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
     public function validateCartChange(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer;
+
+    /**
+     * Specification:
+     * - Finds merchant product by provided MerchantProductCriteria.
+     * - Sets corresponding abstract product if exists.
+     * - Returns null if merchant product not found.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantProductTransfer|null
+     */
+    public function findMerchantProduct(
+        MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer
+    ): ?MerchantProductTransfer;
+
+    /**
+     * Specification:
+     * - Validates abstract product belongs to a merchant.
+     * - Returns ValidationResponseTransfer transfer object.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantProductTransfer $merchantProductTransfer
+     *
+     * @return \Generated\Shared\Transfer\ValidationResponseTransfer
+     */
+    public function validateMerchantProduct(MerchantProductTransfer $merchantProductTransfer): ValidationResponseTransfer;
+
+    /**
+     * Specification:
+     * - Requires MerchantProductCriteriaTransfer.idMerchant.
+     * - Returns the list of concrete products related to the provided merchant by criteria.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteCollectionTransfer
+     */
+    public function getProductConcreteCollection(
+        MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer
+    ): ProductConcreteCollectionTransfer;
 }

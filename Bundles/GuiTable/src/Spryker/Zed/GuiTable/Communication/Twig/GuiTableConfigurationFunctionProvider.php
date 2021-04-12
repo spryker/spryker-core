@@ -10,6 +10,7 @@ namespace Spryker\Zed\GuiTable\Communication\Twig;
 use Generated\Shared\Transfer\GuiTableBatchActionsConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableDataSourceConfigurationTransfer;
+use Generated\Shared\Transfer\GuiTableEditableConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableFiltersConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTablePaginationConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableRowActionsConfigurationTransfer;
@@ -82,6 +83,8 @@ class GuiTableConfigurationFunctionProvider extends TwigFunctionProvider
                 GuiTableConfigurationTransfer::SEARCH => $this->prepareSearchData($guiTableConfigurationTransfer),
                 GuiTableConfigurationTransfer::ITEM_SELECTION => $this->prepareItemSelectionData($guiTableConfigurationTransfer),
                 GuiTableConfigurationTransfer::SYNC_STATE_URL => $this->prepareSyncStateUrlData($guiTableConfigurationTransfer),
+                GuiTableConfigurationTransfer::EDITABLE => $this->prepareEditableData($guiTableConfigurationTransfer),
+                GuiTableConfigurationTransfer::COLUMN_CONFIGURATOR => $guiTableConfigurationTransfer->getColumnConfigurator()->toArray(),
             ];
 
             if (count($overwrite)) {
@@ -93,6 +96,8 @@ class GuiTableConfigurationFunctionProvider extends TwigFunctionProvider
     }
 
     /**
+     * @phpstan-return array<int, mixed>
+     *
      * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
      *
      * @return array
@@ -109,28 +114,33 @@ class GuiTableConfigurationFunctionProvider extends TwigFunctionProvider
     }
 
     /**
+     * @phpstan-return array<string, mixed>
+     *
      * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
      *
      * @return array
      */
     protected function prepareDataSourceData(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): array
     {
-        $guiTableDataSourceConfigurationTransfer = $guiTableConfigurationTransfer->getDataSource();
+        $guiTableDataSourceConfigurationTransfer = $guiTableConfigurationTransfer->getDataSourceOrFail();
 
         return [
             GuiTableDataSourceConfigurationTransfer::TYPE => $guiTableDataSourceConfigurationTransfer->getType(),
             GuiTableDataSourceConfigurationTransfer::URL => $guiTableDataSourceConfigurationTransfer->getUrl(),
+            GuiTableDataSourceConfigurationTransfer::DATA => $guiTableDataSourceConfigurationTransfer->getData(),
         ];
     }
 
     /**
+     * @phpstan-return array<int|string, array<int>|bool|null>
+     *
      * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
      *
      * @return array
      */
     protected function preparePaginationData(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): array
     {
-        $guiTablePaginationConfigurationTransfer = $guiTableConfigurationTransfer->getPagination();
+        $guiTablePaginationConfigurationTransfer = $guiTableConfigurationTransfer->getPaginationOrFail();
 
         return [
             static::CONFIG_ENABLED => $guiTablePaginationConfigurationTransfer->getIsEnabled(),
@@ -139,13 +149,15 @@ class GuiTableConfigurationFunctionProvider extends TwigFunctionProvider
     }
 
     /**
+     * @phpstan-return array<mixed>
+     *
      * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
      *
      * @return array
      */
     protected function prepareFiltersConfigurationData(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): array
     {
-        $guiTableFiltersConfigurationTransfer = $guiTableConfigurationTransfer->getFilters();
+        $guiTableFiltersConfigurationTransfer = $guiTableConfigurationTransfer->getFiltersOrFail();
 
         $filtersItems = [];
 
@@ -160,13 +172,15 @@ class GuiTableConfigurationFunctionProvider extends TwigFunctionProvider
     }
 
     /**
+     * @phpstan-return array<int|string, array<int, array>|bool|string|null>
+     *
      * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
      *
      * @return array
      */
     protected function prepareRowActions(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): array
     {
-        $guiTableRowActionsConfigurationTransfer = $guiTableConfigurationTransfer->getRowActions();
+        $guiTableRowActionsConfigurationTransfer = $guiTableConfigurationTransfer->getRowActionsOrFail();
 
         $actions = [];
 
@@ -184,13 +198,15 @@ class GuiTableConfigurationFunctionProvider extends TwigFunctionProvider
     }
 
     /**
+     * @phpstan-return array<int|string, array<int, array>|bool|string|null>
+     *
      * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
      *
      * @return array
      */
     protected function prepareBatchActions(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): array
     {
-        $guiTableBatchActionsConfigurationTransfer = $guiTableConfigurationTransfer->getBatchActions();
+        $guiTableBatchActionsConfigurationTransfer = $guiTableConfigurationTransfer->getBatchActionsOrFail();
 
         $actions = [];
 
@@ -208,6 +224,8 @@ class GuiTableConfigurationFunctionProvider extends TwigFunctionProvider
     }
 
     /**
+     * @phpstan-return array<int|string, bool|null>
+     *
      * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
      *
      * @return array
@@ -215,11 +233,13 @@ class GuiTableConfigurationFunctionProvider extends TwigFunctionProvider
     protected function prepareItemSelectionData(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): array
     {
         return [
-            static::CONFIG_ENABLED => $guiTableConfigurationTransfer->getItemSelection()->getIsEnabled(),
+            static::CONFIG_ENABLED => $guiTableConfigurationTransfer->getItemSelectionOrFail()->getIsEnabled(),
         ];
     }
 
     /**
+     * @phpstan-return array<int|string, bool|null>
+     *
      * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
      *
      * @return array
@@ -227,18 +247,20 @@ class GuiTableConfigurationFunctionProvider extends TwigFunctionProvider
     protected function prepareSyncStateUrlData(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): array
     {
         return [
-            static::CONFIG_ENABLED => $guiTableConfigurationTransfer->getSyncStateUrl()->getIsEnabled(),
+            static::CONFIG_ENABLED => $guiTableConfigurationTransfer->getSyncStateUrlOrFail()->getIsEnabled(),
         ];
     }
 
     /**
+     * @phpstan-return array<string, mixed>
+     *
      * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
      *
      * @return array
      */
     protected function prepareSearchData(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): array
     {
-        $guiTableSearchConfigurationTransfer = $guiTableConfigurationTransfer->getSearch();
+        $guiTableSearchConfigurationTransfer = $guiTableConfigurationTransfer->getSearchOrFail();
 
         return $guiTableSearchConfigurationTransfer->getSearch() + [
                 static::CONFIG_ENABLED => $guiTableSearchConfigurationTransfer->getIsEnabled(),
@@ -246,6 +268,8 @@ class GuiTableConfigurationFunctionProvider extends TwigFunctionProvider
     }
 
     /**
+     * @phpstan-return array<int|string, string|bool|null>
+     *
      * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
      *
      * @return array
@@ -267,5 +291,28 @@ class GuiTableConfigurationFunctionProvider extends TwigFunctionProvider
             static::CONFIG_ENABLED => true,
             GuiTableTitleConfigurationTransfer::TITLE => $guiTableTitleConfigurationTransfer->getTitle(),
         ];
+    }
+
+    /**
+     * @phpstan-return array<int|string, false>
+     *
+     * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
+     *
+     * @return array
+     */
+    protected function prepareEditableData(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): array
+    {
+        $editable = $guiTableConfigurationTransfer->getEditable();
+
+        if (!$editable) {
+            return [
+                static::CONFIG_ENABLED => false,
+            ];
+        }
+
+        $editable = $guiTableConfigurationTransfer->getEditable()->toArray(true, true);
+        $editable[GuiTableEditableConfigurationTransfer::COLUMNS] = array_values($editable[GuiTableEditableConfigurationTransfer::COLUMNS]);
+
+        return $editable;
     }
 }

@@ -46,6 +46,7 @@ interface ProductGroupCollectorFacadeInterface
     );
 
     /**
+     * Specification:
      * - Executes product group storage collector.
      * - Collects all touched "product_abstract_group" entries.
      * - Exports a fully hydrated representation of ProductAbstractGroupsTransfer.

@@ -15,7 +15,9 @@ use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\LocalizedProductManagementAttributeKeyTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
 use Orm\Zed\Product\Persistence\SpyProductAttributeKey;
+use Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery;
 use Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttribute;
+use Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeQuery;
 use Spryker\Zed\Locale\Business\LocaleFacadeInterface;
 use Spryker\Zed\Product\Business\ProductFacadeInterface;
 use Spryker\Zed\ProductAttribute\ProductAttributeConfig;
@@ -26,6 +28,9 @@ class ProductAttributeDataHelper extends Module
 {
     use DataCleanupHelperTrait;
     use LocatorHelperTrait;
+
+    protected const COLUMN_PRODUCT_ATTRIBUTE_KEY = 'key';
+    protected const COLUMN_PRODUCT_MANAGEMENT_ATTRIBUTE_FK_PRODUCT_ATTRIBUTE_KEY = 'fk_product_attribute_key';
 
     /**
      * @param array $seedData
@@ -61,29 +66,44 @@ class ProductAttributeDataHelper extends Module
         $seedData = $seedData + ['key' => md5(microtime())];
 
         $productAttributeKeyEntity = new SpyProductAttributeKey();
-        $productAttributeKeyEntity->fromArray($seedData);
-        $productAttributeKeyEntity->save();
 
-        $this->getDataCleanupHelper()->_addCleanup(function () use ($productAttributeKeyEntity): void {
-            $productAttributeKeyEntity->delete();
-        });
+        if (isset($seedData[static::COLUMN_PRODUCT_ATTRIBUTE_KEY])) {
+            $productAttributeKeyEntity = (new SpyProductAttributeKeyQuery())
+                ->filterByKey($seedData[static::COLUMN_PRODUCT_ATTRIBUTE_KEY])
+                ->findOneOrCreate();
+        }
+
+        $productAttributeKeyEntity->fromArray($seedData);
+
+        if ($productAttributeKeyEntity->isNew()) {
+            $this->getDataCleanupHelper()->_addCleanup(function () use ($productAttributeKeyEntity): void {
+                $productAttributeKeyEntity->delete();
+            });
+        }
+
+        $productAttributeKeyEntity->save();
 
         return $productAttributeKeyEntity;
     }
 
     /**
      * @param array $seedData
+     * @param array $productAttributeKeySeed
      *
      * @return \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttribute
      */
-    public function haveProductManagementAttributeEntity(array $seedData = []): SpyProductManagementAttribute
+    public function haveProductManagementAttributeEntity(array $seedData = [], array $productAttributeKeySeed = []): SpyProductManagementAttribute
     {
         $seedData = $seedData + [
             'input_type' => 'bar',
-            'fk_product_attribute_key' => $this->haveProductAttributeKeyEntity()->getIdProductAttributeKey(),
+            static::COLUMN_PRODUCT_MANAGEMENT_ATTRIBUTE_FK_PRODUCT_ATTRIBUTE_KEY => $this
+                ->haveProductAttributeKeyEntity($productAttributeKeySeed)
+                ->getIdProductAttributeKey(),
         ];
 
-        $productManagementAttributeEntity = new SpyProductManagementAttribute();
+        $productManagementAttributeEntity = (new SpyProductManagementAttributeQuery())
+            ->filterByFkProductAttributeKey($seedData[static::COLUMN_PRODUCT_MANAGEMENT_ATTRIBUTE_FK_PRODUCT_ATTRIBUTE_KEY])
+            ->findOneOrCreate();
         $productManagementAttributeEntity->fromArray($seedData);
         $productManagementAttributeEntity->save();
 

@@ -153,7 +153,8 @@ class CacheClearer implements CacheClearerInterface
         $finder = clone $this->finder;
         $finder
             ->in($directory)
-            ->depth(0);
+            ->depth(0)
+            ->ignoreDotFiles(false);
 
         return $finder;
     }
@@ -166,7 +167,8 @@ class CacheClearer implements CacheClearerInterface
     protected function clearDirectoriesByPattern(string $directoryPattern): string
     {
         try {
-            $iterator = $this->finder->directories()->depth(0)->in($directoryPattern);
+            $finder = clone $this->finder;
+            $iterator = $finder->directories()->depth(0)->in(dirname($directoryPattern))->name(basename($directoryPattern));
         } catch (DirectoryNotFoundException $e) {
             return '';
         }

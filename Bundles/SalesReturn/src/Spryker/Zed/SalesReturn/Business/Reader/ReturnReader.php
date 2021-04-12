@@ -45,18 +45,26 @@ class ReturnReader implements ReturnReaderInterface
     protected $returnTotalCalculator;
 
     /**
+     * @var \Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnCollectionExpanderPluginInterface[]
+     */
+    protected $returnCollectionExpanderPlugins;
+
+    /**
      * @param \Spryker\Zed\SalesReturn\Persistence\SalesReturnRepositoryInterface $salesReturnRepository
      * @param \Spryker\Zed\SalesReturn\Dependency\Facade\SalesReturnToSalesFacadeInterface $salesFacade
      * @param \Spryker\Zed\SalesReturn\Business\Calculator\ReturnTotalCalculatorInterface $returnTotalCalculator
+     * @param \Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnCollectionExpanderPluginInterface[] $returnCollectionExpanderPlugins
      */
     public function __construct(
         SalesReturnRepositoryInterface $salesReturnRepository,
         SalesReturnToSalesFacadeInterface $salesFacade,
-        ReturnTotalCalculatorInterface $returnTotalCalculator
+        ReturnTotalCalculatorInterface $returnTotalCalculator,
+        array $returnCollectionExpanderPlugins
     ) {
         $this->salesReturnRepository = $salesReturnRepository;
         $this->salesFacade = $salesFacade;
         $this->returnTotalCalculator = $returnTotalCalculator;
+        $this->returnCollectionExpanderPlugins = $returnCollectionExpanderPlugins;
     }
 
     /**
@@ -96,6 +104,10 @@ class ReturnReader implements ReturnReaderInterface
 
         $returnCollectionTransfer = $this->expandReturnCollectionWithReturnItems($returnCollectionTransfer);
         $returnCollectionTransfer = $this->expandReturnCollectionWithReturnTotals($returnCollectionTransfer);
+
+        foreach ($this->returnCollectionExpanderPlugins as $collectionExpanderPlugin) {
+            $returnCollectionTransfer = $collectionExpanderPlugin->expand($returnCollectionTransfer);
+        }
 
         return $returnCollectionTransfer;
     }

@@ -16,6 +16,8 @@ interface GuiTableConfigurationBuilderInterface
     public const COLUMN_TYPE_DATE = 'date';
     public const COLUMN_TYPE_CHIP = 'chip';
     public const COLUMN_TYPE_LIST = 'list';
+    public const COLUMN_TYPE_SELECT = 'select';
+    public const COLUMN_TYPE_INPUT = 'input';
 
     public const FILTER_TYPE_SELECT = 'select';
     public const FILTER_TYPE_TREE_SELECT = 'tree-select';
@@ -24,6 +26,8 @@ interface GuiTableConfigurationBuilderInterface
     public const ACTION_TYPE_FORM_OVERLAY = 'form-overlay';
     public const ACTION_TYPE_HTML_OVERLAY = 'html-overlay';
     public const ACTION_TYPE_URL = 'url';
+
+    public const DATA_SOURCE_TYPE_INLINE = 'inline';
 
     /**
      * @api
@@ -215,17 +219,18 @@ interface GuiTableConfigurationBuilderInterface
     );
 
     /**
-     * Adds a new batch action with type url for rows.
+     * Adds a new batch action for rows. If $type is not set url type is used as default.
      *
      * @api
      *
      * @param string $id
      * @param string $title
      * @param string $url
+     * @param string|null $type
      *
      * @return $this
      */
-    public function addBatchActionUrl(string $id, string $title, string $url);
+    public function addBatchActionUrl(string $id, string $title, string $url, ?string $type = null);
 
     /**
      * Sets an action ID which will be triggered when clicking on a row.
@@ -307,6 +312,17 @@ interface GuiTableConfigurationBuilderInterface
     public function setDataSourceUrl(string $url);
 
     /**
+     * Sets inline data.
+     *
+     * @api
+     *
+     * @param string[][] $data
+     *
+     * @return $this
+     */
+    public function setDataSourceInlineData(array $data);
+
+    /**
      * Sets a number if rows which will be displayed by default.
      *
      * @api
@@ -316,6 +332,24 @@ interface GuiTableConfigurationBuilderInterface
      * @return $this
      */
     public function setDefaultPageSize(int $defaultPageSize);
+
+    /**
+     * @api
+     *
+     * @param bool $isEnabled
+     *
+     * @return $this
+     */
+    public function isSearchEnabled(bool $isEnabled = true);
+
+    /**
+     * @api
+     *
+     * @param bool $isEnabled
+     *
+     * @return $this
+     */
+    public function isColumnConfiguratorEnabled(bool $isEnabled = true);
 
     /**
      * Sets a placeholders for a search field.
@@ -340,6 +374,8 @@ interface GuiTableConfigurationBuilderInterface
     public function setIsItemSelectionEnabled(bool $isItemSelectionEnabled);
 
     /**
+     * Sets table title.
+     *
      * @param string $title
      *
      * @return $this
@@ -347,9 +383,94 @@ interface GuiTableConfigurationBuilderInterface
     public function setTableTitle(string $title);
 
     /**
+     * Sets if pagination is enabled.
+     *
+     * @api
+     *
+     * @param bool $isPaginationEnabled
+     *
+     * @return $this
+     */
+    public function setIsPaginationEnabled(bool $isPaginationEnabled);
+
+    /**
      * @api
      *
      * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
      */
     public function createConfiguration(): GuiTableConfigurationTransfer;
+
+    /**
+     * @api
+     *
+     * @phpstan-param array<mixed> $initialData
+     * @phpstan-param array<mixed> $addButton
+     * @phpstan-param array<mixed> $cancelButton
+     *
+     * @param string $formInputName
+     * @param array|null $initialData
+     * @param array|null $addButton
+     * @param array|null $cancelButton
+     *
+     * @return $this
+     */
+    public function enableAddingNewRows(
+        string $formInputName,
+        array $initialData = [],
+        ?array $addButton = null,
+        ?array $cancelButton = null
+    );
+
+    /**
+     * @api
+     *
+     * @phpstan-param array<mixed> $saveButton
+     * @phpstan-param array<mixed> $cancelButton
+     *
+     * @param string $url
+     * @param string|null $method
+     * @param array|null $saveButton
+     * @param array|null $cancelButton
+     *
+     * @return $this
+     */
+    public function enableInlineDataEditing(
+        string $url,
+        ?string $method = 'POST',
+        ?array $saveButton = null,
+        ?array $cancelButton = null
+    );
+
+    /**
+     * @api
+     *
+     * @phpstan-param array<string, mixed> $options
+     *
+     * @param string $id
+     * @param string $title
+     * @param string $inputType
+     * @param array|null $options
+     *
+     * @return $this
+     */
+    public function addEditableColumnInput(string $id, string $title, string $inputType = 'text', ?array $options = []);
+
+    /**
+     * @api
+     *
+     * @phpstan-param array<mixed> $options
+     *
+     * @param string $id
+     * @param string $title
+     * @param bool $isMultiselect
+     * @param array $options
+     *
+     * @return $this
+     */
+    public function addEditableColumnSelect(
+        string $id,
+        string $title,
+        bool $isMultiselect,
+        array $options
+    );
 }

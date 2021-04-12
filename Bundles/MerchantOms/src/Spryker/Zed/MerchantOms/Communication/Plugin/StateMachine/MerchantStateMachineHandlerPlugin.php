@@ -101,7 +101,10 @@ class MerchantStateMachineHandlerPlugin extends AbstractPlugin implements StateM
                     ->setFkStateMachineItemState($stateMachineItemTransfer->getIdItemState())
             );
 
-        return $merchantOrderItemResponseTransfer->getIsSuccessful();
+        /** @var bool $isSuccessfulMerchantOrderItemResponse */
+        $isSuccessfulMerchantOrderItemResponse = $merchantOrderItemResponseTransfer->getIsSuccessful();
+
+        return $isSuccessfulMerchantOrderItemResponse;
     }
 
     /**

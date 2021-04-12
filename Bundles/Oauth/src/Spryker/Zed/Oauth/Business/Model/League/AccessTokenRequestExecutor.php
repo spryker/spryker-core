@@ -66,7 +66,7 @@ class AccessTokenRequestExecutor implements AccessTokenRequestExecutorInterface
             ->loadGrantTypeConfigurationByGrantType($oauthRequestTransfer);
 
         if (!$oauthGrantTypeConfigurationTransfer) {
-            return $this->createErrorResponseTransfer($oauthRequestTransfer);
+            return $this->createUnsupportedGrantTypeError($oauthRequestTransfer);
         }
 
         $grant = $this->grantTypeBuilder->buildGrant($oauthGrantTypeConfigurationTransfer);
@@ -96,11 +96,12 @@ class AccessTokenRequestExecutor implements AccessTokenRequestExecutorInterface
      *
      * @return \Generated\Shared\Transfer\OauthResponseTransfer
      */
-    protected function createErrorResponseTransfer(OauthRequestTransfer $oauthRequestTransfer): OauthResponseTransfer
+    protected function createUnsupportedGrantTypeError(OauthRequestTransfer $oauthRequestTransfer): OauthResponseTransfer
     {
         $oauthResponseTransfer = new OauthResponseTransfer();
         $oauthErrorTransfer = new OauthErrorTransfer();
-        $oauthErrorTransfer->setMessage(sprintf('Grant type "%s" not found', $oauthRequestTransfer->getGrantType()));
+        $oauthErrorTransfer->setMessage(sprintf('Grant type "%s" not found', $oauthRequestTransfer->getGrantType()))
+        ->setErrorType('unsupported_grant_type');
         $oauthResponseTransfer->setError($oauthErrorTransfer)
             ->setIsValid(false);
 

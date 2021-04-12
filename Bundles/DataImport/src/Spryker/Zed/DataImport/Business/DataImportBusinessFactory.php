@@ -43,6 +43,7 @@ use Spryker\Zed\DataImport\Business\Model\Publisher\DataImporterPublisher;
 use Spryker\Zed\DataImport\DataImportDependencyProvider;
 use Spryker\Zed\DataImport\Dependency\Client\DataImportToQueueClientInterface;
 use Spryker\Zed\DataImport\Dependency\Facade\DataImportToEventFacadeInterface;
+use Spryker\Zed\DataImport\Dependency\Facade\DataImportToGracefulRunnerInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -177,7 +178,15 @@ class DataImportBusinessFactory extends AbstractBusinessFactory
      */
     public function createDataImporter($importType, DataReaderInterface $reader)
     {
-        return new DataImporter($importType, $reader);
+        return new DataImporter($importType, $reader, $this->getGracefulRunnerFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\DataImport\Dependency\Facade\DataImportToGracefulRunnerInterface
+     */
+    public function getGracefulRunnerFacade(): DataImportToGracefulRunnerInterface
+    {
+        return $this->getProvidedDependency(DataImportDependencyProvider::FACADE_GRACEFUL_RUNNER);
     }
 
     /**
@@ -195,7 +204,8 @@ class DataImportBusinessFactory extends AbstractBusinessFactory
             $queueDataImporterConfigurationTransfer->getImportType(),
             $dataReader,
             $this->getQueueClient(),
-            $this->createQueueMessageHelper()
+            $this->createQueueMessageHelper(),
+            $this->getGracefulRunnerFacade()
         );
     }
 
@@ -215,7 +225,7 @@ class DataImportBusinessFactory extends AbstractBusinessFactory
      */
     public function createDataImporterWriterAware($importType, DataReaderInterface $reader)
     {
-        return new DataImporterDataSetWriterAware($importType, $reader);
+        return new DataImporterDataSetWriterAware($importType, $reader, $this->getGracefulRunnerFacade());
     }
 
     /**

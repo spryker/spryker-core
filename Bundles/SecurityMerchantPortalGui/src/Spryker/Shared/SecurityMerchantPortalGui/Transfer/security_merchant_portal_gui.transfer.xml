@@ -6,6 +6,8 @@
     <transfer name="MerchantUserCriteria">
         <property name="withUser" type="bool"/>
         <property name="username" type="string"/>
+        <property name="status" type="string"/>
+        <property name="merchantStatus" type="string"/>
     </transfer>
 
     <transfer name="MerchantUser">
@@ -19,6 +21,11 @@
 
     <transfer name="Message">
         <property name="value" type="string"/>
+    </transfer>
+
+    <transfer name="UserPasswordResetRequest">
+        <property name="resetPasswordPath" type="string"/>
+        <property name="email" type="string"/>
     </transfer>
 
 </transfers>

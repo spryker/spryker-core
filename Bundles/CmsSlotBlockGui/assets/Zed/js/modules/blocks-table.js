@@ -62,14 +62,14 @@ var BlocksTable = function (options) {
         _self.$blocksTable.DataTable({
             destroy: true,
             ajax: {
-                cache: false
+                cache: false,
             },
             autoWidth: false,
             language: dataTable.defaultConfiguration.language,
             searching: false,
-            info: false
+            info: false,
         });
-        _self.$blocksTable.DataTable().on('draw', function(){
+        _self.$blocksTable.DataTable().on('draw', function () {
             if (_self.isFirstTableRender === true) {
                 _self.setInitTableState();
             }
@@ -77,10 +77,10 @@ var BlocksTable = function (options) {
             _self.initDataTableListeners(idCmsSlotTemplate, idCmsSlot);
             _self.tableRowSelect();
         });
-        _self.$blocksTable.DataTable().on('preInit', function(){
+        _self.$blocksTable.DataTable().on('preInit', function () {
             _self.isFirstTableRender = true;
         });
-        _self.$blocksTable.DataTable().on('init', function(){
+        _self.$blocksTable.DataTable().on('init', function () {
             _self.isFirstTableRender = false;
         });
     };
@@ -89,7 +89,12 @@ var BlocksTable = function (options) {
         _self.$blocksTable.on('processing.dt', function () {
             _self.overlayToggler(true);
         });
-        _self.slotBlocksForm.rebuildForm(idCmsSlotTemplate, idCmsSlot, _self.$blocksTable.DataTable().rows().data(), _self.isUnsaved());
+        _self.slotBlocksForm.rebuildForm(
+            idCmsSlotTemplate,
+            idCmsSlot,
+            _self.$blocksTable.DataTable().rows().data(),
+            _self.isUnsaved(),
+        );
         _self.isFirstTableRender = false;
         _self.initActionButtonsListeners();
         $(_self.$blocksTable).find('tbody').on('click', 'tr', _self.tableRowSelect);
@@ -98,13 +103,16 @@ var BlocksTable = function (options) {
     this.initActionButtonsListeners = function () {
         _self.$blocksTable.find(_self.changeOrderButtonSelector).on('click', _self.changeOrderButtonsHandler);
         _self.$blocksTable.find(_self.removeButtonSelector).on('click', _self.removeButtonsHandler);
-        _self.$cmsSlotBlocks.find(_self.resetButtonSelector).off('click.resetSlotBlocks').on('click.resetSlotBlocks', _self.resetButtonsHandler);
+        _self.$cmsSlotBlocks
+            .find(_self.resetButtonSelector)
+            .off('click.resetSlotBlocks')
+            .on('click.resetSlotBlocks', _self.resetButtonsHandler);
     };
 
     this.updateTable = function (tableApi, tableData) {
         tableApi.rows().remove();
         tableApi.rows.add(tableData).draw();
-        tableApi.rows( { selected: true } ).deselect();
+        tableApi.rows({ selected: true }).deselect();
         tableApi.row(_self.selectedRowIndex).select();
     };
 
@@ -114,11 +122,11 @@ var BlocksTable = function (options) {
 
     this.isBlockModified = function (id) {
         return _self.modifiedBlocks.includes(id);
-    }
+    };
 
     this.resetModifiedBlocks = function () {
         _self.modifiedBlocks = [];
-    }
+    };
 
     this.toggleIsModified = function (id) {
         var blockIndex = _self.modifiedBlocks.indexOf(id);
@@ -127,7 +135,7 @@ var BlocksTable = function (options) {
         } else {
             _self.modifiedBlocks.push(id);
         }
-    }
+    };
 
     this.addRow = function (rowData = {}) {
         var blockId = Number(rowData.blockId);
@@ -147,11 +155,11 @@ var BlocksTable = function (options) {
         _self.toggleIsModified(blockId);
     };
 
-    this.getActionButtons = function(blockId) {
+    this.getActionButtons = function (blockId) {
         var $buttons = $(_self.$cmsSlotBlocks.data('actions-buttons-template'));
         var buttonsTemplate = '';
 
-        $buttons.each(function() {
+        $buttons.each(function () {
             var $button = $(this);
 
             if (!$button.is('a')) {
@@ -196,7 +204,7 @@ var BlocksTable = function (options) {
         var isRowFirst = clickInfo.$clickedTableRow === 0;
         var isRowLast = clickInfo.$clickedTableRow === clickInfo.$tableLength - 1;
 
-        if (isRowFirst && direction === 'up' || isRowLast && direction === 'down') {
+        if ((isRowFirst && direction === 'up') || (isRowLast && direction === 'down')) {
             return;
         }
 
@@ -269,16 +277,16 @@ var BlocksTable = function (options) {
     this.toggleRowOverlay = function (state = _self.isUnsaved()) {
         var $rowUnsavedOverlay = $(_self.rowUnsavedOverlaySelector);
         state = state === undefined ? true : !!state;
-        $rowUnsavedOverlay.each(function(i, element) {
+        $rowUnsavedOverlay.each(function (i, element) {
             var $element = $(element);
             if (state && $element.find('.js-row-overlay').length === 0) {
-                var $overlay = $("<div/>").addClass('js-row-overlay');
+                var $overlay = $('<div/>').addClass('js-row-overlay');
                 $element.append($overlay).addClass('js-row-overlayed');
-                $overlay.on('click', function(){
+                $overlay.on('click', function () {
                     _self.showAlert();
                 });
                 $overlay.show();
-            } else if(!state) {
+            } else if (!state) {
                 $element.removeClass('js-row-overlayed').find('.js-row-overlay').remove();
             }
         });
@@ -288,12 +296,12 @@ var BlocksTable = function (options) {
         $(_self.resetButtonSelector).toggleClass('hidden', !state);
     };
 
-    this.getClickInfo = function(event) {
+    this.getClickInfo = function (event) {
         return {
             $button: $(event.currentTarget),
             $clickedTableRow: $(event.currentTarget).parents('tr').index(),
             $tableLength: $(event.currentTarget).parents('tbody').children('tr').length,
-        }
+        };
     };
 
     this.isUnsaved = function () {
@@ -323,7 +331,7 @@ var BlocksTable = function (options) {
         }
 
         return initTableState.some(function (item, index) {
-            return item[0] !== currentTableState[index][0]
+            return item[0] !== currentTableState[index][0];
         });
     };
 
@@ -379,7 +387,7 @@ var BlocksTable = function (options) {
         }
 
         $blocksTable.closest('.wrapper > .row').show();
-    }
+    };
 };
 
 module.exports = BlocksTable;

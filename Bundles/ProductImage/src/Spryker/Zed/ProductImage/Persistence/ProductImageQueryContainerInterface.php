@@ -12,6 +12,9 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 interface ProductImageQueryContainerInterface extends QueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProductImageSet
@@ -21,6 +24,9 @@ interface ProductImageQueryContainerInterface extends QueryContainerInterface
     public function queryImagesByIdProductImageSet($idProductImageSet);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageQuery
@@ -28,6 +34,9 @@ interface ProductImageQueryContainerInterface extends QueryContainerInterface
     public function queryProductImage();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImageQuery
@@ -35,6 +44,9 @@ interface ProductImageQueryContainerInterface extends QueryContainerInterface
     public function queryProductImageSetToProductImage();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery
@@ -42,6 +54,9 @@ interface ProductImageQueryContainerInterface extends QueryContainerInterface
     public function queryProductImageSet();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProductAbstract
@@ -51,6 +66,9 @@ interface ProductImageQueryContainerInterface extends QueryContainerInterface
     public function queryImageCollectionByProductAbstractId($idProductAbstract);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProduct
@@ -60,6 +78,9 @@ interface ProductImageQueryContainerInterface extends QueryContainerInterface
     public function queryImageCollectionByProductId($idProduct);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProductAbstract
@@ -70,6 +91,9 @@ interface ProductImageQueryContainerInterface extends QueryContainerInterface
     public function queryImageSetByProductAbstractId($idProductAbstract, array $excludeIdProductImageSets = []);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProduct
@@ -80,6 +104,9 @@ interface ProductImageQueryContainerInterface extends QueryContainerInterface
     public function queryImageSetByProductId($idProduct, array $excludeIdProductImageSets = []);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProductImageSet
@@ -90,6 +117,9 @@ interface ProductImageQueryContainerInterface extends QueryContainerInterface
     public function queryProductImageSetToProductImageByProductImageSetId($idProductImageSet, array $excludeIdProductImage = []);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProductAbstract
@@ -99,6 +129,9 @@ interface ProductImageQueryContainerInterface extends QueryContainerInterface
     public function queryDefaultAbstractProductImageSets($idProductAbstract);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProductAbstract
@@ -109,6 +142,9 @@ interface ProductImageQueryContainerInterface extends QueryContainerInterface
     public function queryLocalizedAbstractProductImageSets($idProductAbstract, $idLocale);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProductConcrete
@@ -118,6 +154,9 @@ interface ProductImageQueryContainerInterface extends QueryContainerInterface
     public function queryDefaultConcreteProductImageSets($idProductConcrete);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProductConcrete
@@ -128,6 +167,9 @@ interface ProductImageQueryContainerInterface extends QueryContainerInterface
     public function queryLocalizedConcreteProductImageSets($idProductConcrete, $idLocale);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProductImageSet

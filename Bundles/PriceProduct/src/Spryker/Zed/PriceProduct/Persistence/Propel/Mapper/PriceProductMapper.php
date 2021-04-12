@@ -134,6 +134,7 @@ class PriceProductMapper
     protected function createPriceTypeTransfer(SpyPriceProduct $priceProductEntity): PriceTypeTransfer
     {
         return (new PriceTypeTransfer())
+            ->setIdPriceType($priceProductEntity->getPriceType()->getIdPriceType())
             ->setName($priceProductEntity->getPriceType()->getName())
             ->setPriceModeConfiguration($priceProductEntity->getPriceType()->getPriceModeConfiguration());
     }
@@ -209,6 +210,7 @@ class PriceProductMapper
             ->setPriceTypeName($priceTypeTransfer->getName())
             ->setMoneyValue($moneyValueTransfer)
             ->setPriceDimension($priceProductDimensionTransfer)
-            ->setIsMergeable(true);
+            ->setIsMergeable(true)
+            ->setFkPriceType($priceTypeTransfer->getIdPriceType());
     }
 }

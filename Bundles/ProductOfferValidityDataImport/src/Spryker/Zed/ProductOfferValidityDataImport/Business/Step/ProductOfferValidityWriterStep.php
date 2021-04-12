@@ -15,6 +15,10 @@ use Spryker\Zed\ProductOfferValidityDataImport\Business\DataSet\ProductOfferVali
 
 class ProductOfferValidityWriterStep implements DataImportStepInterface
 {
+    protected const PRODUCT_VALID_FROM = ProductOfferValidityDataSetInterface::PRODUCT_VALID_FROM;
+    protected const PRODUCT_VALID_TO = ProductOfferValidityDataSetInterface::PRODUCT_VALID_TO;
+    protected const FK_PRODUCT_OFFER = ProductOfferValidityDataSetInterface::FK_PRODUCT_OFFER;
+
     protected const REQUIRED_DATA_SET_KEYS = [
         ProductOfferValidityDataSetInterface::FK_PRODUCT_OFFER,
     ];
@@ -29,12 +33,12 @@ class ProductOfferValidityWriterStep implements DataImportStepInterface
         $this->validateDataSet($dataSet);
 
         $productOfferValidityEntity = SpyProductOfferValidityQuery::create()
-            ->filterByFkProductOffer($dataSet[ProductOfferValidityDataSetInterface::FK_PRODUCT_OFFER])
+            ->filterByFkProductOffer($dataSet[static::FK_PRODUCT_OFFER])
             ->findOneOrCreate();
 
         $productOfferValidityEntity
-            ->setValidFrom($dataSet[ProductOfferValidityDataSetInterface::PRODUCT_VALID_FROM])
-            ->setValidTo($dataSet[ProductOfferValidityDataSetInterface::PRODUCT_VALID_TO])
+            ->setValidFrom($dataSet[static::PRODUCT_VALID_FROM])
+            ->setValidTo($dataSet[static::PRODUCT_VALID_TO])
             ->save();
     }
 

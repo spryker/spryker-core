@@ -13,7 +13,7 @@ var categoryTable;
  */
 function initialize(selector) {
     categoryTable = $(selector).DataTable();
-    
+
     categoryTree.initialize();
 
     $(selector).find('tbody').on('click', 'tr', tableRowSelect);
@@ -77,15 +77,13 @@ function getDataTableApi(settings) {
 function categoryTableSearchDelay(selector, categoryTable) {
     var categorySearchInput = selector.parents('.dataTables_wrapper').find('input[type="search"]');
     var categoryTimeOutId = 0;
-    
-    if(categorySearchInput.length) {
-        categorySearchInput
-        .unbind()
-        .bind("input", function(e) {
+
+    if (categorySearchInput.length) {
+        categorySearchInput.unbind().bind('input', function (e) {
             var self = this;
-            
+
             clearTimeout(categoryTimeOutId);
-            categoryTimeOutId = setTimeout(function() {
+            categoryTimeOutId = setTimeout(function () {
                 categoryTable.search(self.value).draw();
             }, 1000);
             return;
@@ -97,5 +95,5 @@ function categoryTableSearchDelay(selector, categoryTable) {
  * Open public methods
  */
 module.exports = {
-    initialize: initialize
+    initialize: initialize,
 };

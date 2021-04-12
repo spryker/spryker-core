@@ -21,9 +21,12 @@ before_install:
 
 install:
   - composer install --no-interaction --prefer-dist --optimize-autoloader
+  - npm ci
 
 script:
-  - vendor/bin/phpcs Bundles --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml -p
+  - php -d memory_limit=1300M vendor/bin/phpcs Bundles --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml -p
+  - npm run formatter
+  - npm run mp:tslint
 
 notifications:
   email: false

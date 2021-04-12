@@ -12,9 +12,11 @@ use Generated\Shared\Transfer\RawProductAttributesTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductAttributeKeyTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Propel\Runtime\Map\TableMap;
+use Spryker\Zed\ProductStorage\Business\Filter\SingleValueSuperAttributeFilterInterface;
 use Spryker\Zed\ProductStorage\Dependency\Facade\ProductStorageToProductInterface;
 use Spryker\Zed\ProductStorage\Exception\InvalidArgumentException;
 use Spryker\Zed\ProductStorage\Persistence\ProductStorageQueryContainerInterface;
+use Spryker\Zed\ProductStorage\ProductStorageConfig;
 
 class AttributeMap implements AttributeMapInterface
 {
@@ -36,13 +38,31 @@ class AttributeMap implements AttributeMapInterface
     protected static $superAttributesCache;
 
     /**
+     * @var \Spryker\Zed\ProductStorage\ProductStorageConfig
+     */
+    protected $productStorageConfig;
+
+    /**
+     * @var \Spryker\Zed\ProductStorage\Business\Filter\SingleValueSuperAttributeFilterInterface
+     */
+    protected $singleValueSuperAttributeFilter;
+
+    /**
      * @param \Spryker\Zed\ProductStorage\Dependency\Facade\ProductStorageToProductInterface $productFacade
      * @param \Spryker\Zed\ProductStorage\Persistence\ProductStorageQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\ProductStorage\ProductStorageConfig $productStorageConfig
+     * @param \Spryker\Zed\ProductStorage\Business\Filter\SingleValueSuperAttributeFilterInterface $singleValueSuperAttributeFilter
      */
-    public function __construct(ProductStorageToProductInterface $productFacade, ProductStorageQueryContainerInterface $queryContainer)
-    {
+    public function __construct(
+        ProductStorageToProductInterface $productFacade,
+        ProductStorageQueryContainerInterface $queryContainer,
+        ProductStorageConfig $productStorageConfig,
+        SingleValueSuperAttributeFilterInterface $singleValueSuperAttributeFilter
+    ) {
         $this->productFacade = $productFacade;
         $this->queryContainer = $queryContainer;
+        $this->productStorageConfig = $productStorageConfig;
+        $this->singleValueSuperAttributeFilter = $singleValueSuperAttributeFilter;
     }
 
     /**
@@ -113,10 +133,29 @@ class AttributeMap implements AttributeMapInterface
             }
         }
 
+        if (!$this->productStorageConfig->isProductAttributesWithSingleValueIncluded()) {
+            $productConcreteSuperAttributes = $this->singleValueSuperAttributeFilter->filterOutSingleValueSuperAttributes(
+                $productConcreteSuperAttributes,
+                $superAttributeVariations,
+            );
+        }
+
+        $attributeVariants = [];
+        if (!$this->productStorageConfig->isOptimizedAttributeVariantsMapEnabled()) {
+            $attributeVariants = $this->buildProductVariants($productConcreteSuperAttributes);
+
+            return $this->createAttributeMapStorageTransfer(
+                $concreteProductIds,
+                $superAttributeVariations,
+                $attributeVariants
+            );
+        }
+
         return $this->createAttributeMapStorageTransfer(
             $concreteProductIds,
             $superAttributeVariations,
-            $this->buildProductVariants($productConcreteSuperAttributes)
+            $attributeVariants,
+            $productConcreteSuperAttributes
         );
     }
 
@@ -172,18 +211,21 @@ class AttributeMap implements AttributeMapInterface
      * @param array $concreteProductIds
      * @param array $superAttributes
      * @param array $attributeVariants
+     * @param array $attributeVariantMap
      *
      * @return \Generated\Shared\Transfer\AttributeMapStorageTransfer
      */
     protected function createAttributeMapStorageTransfer(
         array $concreteProductIds,
         array $superAttributes = [],
-        array $attributeVariants = []
+        array $attributeVariants = [],
+        array $attributeVariantMap = []
     ) {
         return (new AttributeMapStorageTransfer())
             ->setProductConcreteIds($concreteProductIds)
             ->setSuperAttributes($superAttributes)
-            ->setAttributeVariants($attributeVariants);
+            ->setAttributeVariants($attributeVariants)
+            ->setAttributeVariantMap($attributeVariantMap);
     }
 
     /**
@@ -301,6 +343,8 @@ class AttributeMap implements AttributeMapInterface
     }
 
     /**
+     * @deprecated Exists for Backward Compatibility reasons only.
+     *
      * @param array $productSuperAttributes
      *
      * @return array
