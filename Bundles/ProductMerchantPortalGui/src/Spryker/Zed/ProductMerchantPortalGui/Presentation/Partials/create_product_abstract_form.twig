@@ -1,28 +1,64 @@
 {% form_theme form '@ZedUi/Form/form-webcomponent-layout.twig' %}
 
 {% block body %}
-    {% set mainClass = 'mp-edit-abstract-product' %}
+    {% set mainClass = 'mp-create-abstract-product' %}
 
-    {{ form_start(form, {attr: {excludeFormTag: true}}) }}
+    {% block createAbstractProduct %}
+        <web-mp-create-abstract-product cloak>
+            {{ form_start(form, { attr: { excludeFormTag: true } }) }}
+                {% block title %}
+                    <span title>{{ 'Create Abstract Product' | trans }}</span>
+                {% endblock %}
 
-        {% block action %}
-            <web-spy-button size="lg" type="submit" action>{{ 'Next' | trans }}</web-spy-button>
-        {% endblock %}
+                {% block action %}
+                    <web-spy-button cloak size="lg" type="submit" action>
+                        {{ 'Next' | trans }}
+                    </web-spy-button>
+                {% endblock %}
 
-        <web-spy-card spy-title="{{ form.sku.vars.label | trans }} {{ form.sku.vars.required ? '*' }}" class="{{ mainClass }}__card">
-            {{ form_row(form.sku, {label: false, row_attr: {'no-spaces': 'true'}}) }}
-        </web-spy-card>
+                {% block sku %}
+                    <web-spy-card cloak
+                                  spy-title="{{ form.sku.vars.label | trans }} {{ form.sku.vars.required ? '*' }}"
+                                  class="{{ mainClass }}__card {{ mainClass }}__card--half-width">
+                        {{ form_row(form.sku, { label: false, row_attr: { 'no-spaces': 'true' } }) }}
+                    </web-spy-card>
+                {% endblock %}
 
-        <web-spy-card spy-title="{{ form.name.vars.label | trans }} {{ form.name.vars.required ? '*' }}" class="{{ mainClass }}__card">
-            {{ defaultLocaleCode | default }}
-            {{ form_row(form.name, {label: false, row_attr: {'no-spaces': 'true'}}) }}
-        </web-spy-card>
+                {% block name %}
+                    <web-spy-card cloak
+                                  spy-title="{{ form.name.vars.label | trans }} {{ form.name.vars.required ? '*' }}"
+                                  class="{{ mainClass }}__card">
+                        <div class="{{ mainClass }}__card-name-input-header">
+                            <web-spy-icon name="united-states"
+                                          class="{{ mainClass }}__card-name-input-header-icon">
+                            </web-spy-icon>
+                            {{ 'English' | trans }}
+                            ({{ defaultLocaleCode | default }})
+                        </div>
+                        {{ form_row(form.name, { label: false, row_attr: { 'no-spaces': 'true' } }) }}
+                        <small class="{{ mainClass }}__card-name-notification-message">
+                            {{ 'The rest of the locales will be defined once the product has been created.' | trans }}
+                        </small>
+                    </web-spy-card>
+                {% endblock %}
 
-        <web-spy-card spy-title="{{ form.isSingleConcrete.vars.label | trans }} {{ form.isSingleConcrete.vars.required ? '*' }}" class="{{ mainClass }}__card">
-            {# use radio #}
-            {{ form_row(form.isSingleConcrete, {label: false, row_attr: {'no-spaces': 'true'}}) }}
-        </web-spy-card>
+                {% block concreteProducts %}
+                    <web-spy-card cloak
+                                  spy-title="{{ form.isSingleConcrete.vars.label | trans }} {{ form.isSingleConcrete.vars.required ? '*' }}"
+                                  class="{{ mainClass }}__card">
+                        <web-spy-radio-group
+                            cloak
+                            value="{{ form.isSingleConcrete.vars.value }}"
+                            name="{{ form.isSingleConcrete.vars.full_name }}">
+                            {% for choice in form.isSingleConcrete.vars.choices %}
+                                <web-spy-radio cloak value="{{ choice.value }}">{{ choice.label | trans }}</web-spy-radio>
+                            {% endfor %}
 
-    {{ form_end(form) }}
-
+                            {% do form.isSingleConcrete.setRendered %}
+                        </web-spy-radio-group>
+                    </web-spy-card>
+                {% endblock %}
+            {{ form_end(form) }}
+        </web-mp-create-abstract-product>
+    {% endblock %}
 {% endblock %}

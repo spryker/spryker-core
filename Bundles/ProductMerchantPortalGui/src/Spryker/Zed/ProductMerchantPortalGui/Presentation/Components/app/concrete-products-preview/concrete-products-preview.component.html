@@ -1,0 +1,85 @@
+<div *ngIf="generatedProducts?.length; else noData">
+    <div class="mp-concrete-products-preview__header">
+        <spy-chips color="grey">
+            {{ generatedProducts.length }}
+            <ng-content select="[total-text]"></ng-content>
+        </spy-chips>
+
+        <div class="mp-concrete-products-preview__header-checkboxes">
+            <div class="mp-concrete-products-preview__header-checkbox">
+                <spy-checkbox (checkedChange)="generateSku($event)" [(checked)]="isAutoGenerateSkuCheckbox">
+                    <ng-content select="[auto-sku-text]"></ng-content>
+                </spy-checkbox>
+            </div>
+            <div class="mp-concrete-products-preview__header-checkbox">
+                <spy-checkbox (checkedChange)="generateName($event)" [(checked)]="isAutoGenerateNameCheckbox">
+                    <ng-content select="[auto-name-text]"></ng-content>
+                </spy-checkbox>
+            </div>
+        </div>
+    </div>
+
+    <div class="mp-concrete-products-preview__table">
+        <div class="mp-concrete-products-preview__table-content">
+            <div class="mp-concrete-products-preview__table-header mp-concrete-products-preview__table-row">
+                <div class="mp-concrete-products-preview__table-row-attr">
+                    <ng-content select="[col-attr-name]"></ng-content>
+                </div>
+                <div class="mp-concrete-products-preview__table-row-sku">
+                    <ng-content select="[col-sku-name]"></ng-content>
+                </div>
+                <div class="mp-concrete-products-preview__table-row-name">
+                    <ng-content select="[col-name-name]"></ng-content>
+                </div>
+            </div>
+
+            <cdk-virtual-scroll-viewport itemSize="10" class="mp-concrete-products-preview__table-list">
+                <div *cdkVirtualFor="let product of generatedProducts; let i = index">
+                    <div class="mp-concrete-products-preview__table-row">
+                        <div class="mp-concrete-products-preview__table-row-attr">
+                            <span *ngFor="let superAttribute of product.superAttributes; let isLast = last">
+                                {{ superAttribute.title }}
+                                <span *ngIf="!isLast"> / </span>
+                            </span>
+                        </div>
+                        <div class="mp-concrete-products-preview__table-row-sku">
+                            <spy-input [value]="product.sku" (valueChange)="skuChange($event, i)" #skuInputRef>
+                            </spy-input>
+                        </div>
+                        <div class="mp-concrete-products-preview__table-row-name">
+                            <spy-input
+                                [value]="product.name"
+                                (valueChange)="nameChange($event, i)"
+                                #nameInputRef
+                                class="mp-concrete-products-preview__table-row-name-input"
+                            >
+                            </spy-input>
+                            <spy-button
+                                variant="link"
+                                class="mp-concrete-products-preview__table-row-button"
+                                (click)="delete(i)"
+                            >
+                                <spy-icon
+                                    [name]="deleteIcon"
+                                    class="mp-concrete-products-preview__table-row-delete-icon"
+                                >
+                                </spy-icon>
+                            </spy-button>
+                        </div>
+                    </div>
+                </div>
+            </cdk-virtual-scroll-viewport>
+        </div>
+    </div>
+</div>
+
+<ng-template #noData>
+    <div class="mp-concrete-products-preview__no-data">
+        <spy-icon name="no-data" class="mp-concrete-products-preview__no-data-icon"></spy-icon>
+        <div class="mp-concrete-products-preview__no-data-text">
+            <ng-content select="[no-data-text]"></ng-content>
+        </div>
+    </div>
+</ng-template>
+
+<input *ngIf="name" type="hidden" [name]="name" [value]="generatedProducts | json" />

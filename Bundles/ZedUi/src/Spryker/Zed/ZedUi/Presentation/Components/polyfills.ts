@@ -63,6 +63,7 @@ import 'zone.js/dist/zone'; // Included with Angular CLI.
 import 'classlist.js';
 import 'core-js/features/reflect';
 import 'core-js/features/array/flat';
+import 'core-js/features/array/flat-map';
 import 'core-js/features/array/includes';
 import 'core-js/features/object/entries';
 import 'core-js/features/object/values';
