@@ -27,6 +27,8 @@ class AuthRestApiHelper extends Module
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      * @param string|null $anonymousCustomerReference
+     * @param string|null $clientId
+     * @param string|null $clientSecret
      *
      * @return \Generated\Shared\Transfer\OauthResponseTransfer
      */
