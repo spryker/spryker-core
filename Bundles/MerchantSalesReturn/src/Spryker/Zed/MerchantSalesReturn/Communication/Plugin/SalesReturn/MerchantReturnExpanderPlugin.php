@@ -20,7 +20,7 @@ class MerchantReturnExpanderPlugin extends AbstractPlugin implements ReturnExpan
 {
     /**
      * {@inheritDoc}
-     * - Expands `Return` transfer object witg merchant orders.
+     * - Expands `Return` transfer object with merchant orders.
      *
      * @api
      *

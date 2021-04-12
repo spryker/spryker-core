@@ -25,7 +25,8 @@
     "spryker/code-sniffer": "*"
   },
   "suggest": {
-    "spryker/shipment-gui": "If you want to adjust form with shipment form types, use version more than 2.3.2."
+    "spryker/shipment-gui": "If you want to adjust form with shipment form types, use version more than 2.3.2.",
+    "spryker/merchant-sales-return-merchant-user-gui": "If you want to extend Zed UI with return elements."
   },
   "autoload": {
     "psr-4": {

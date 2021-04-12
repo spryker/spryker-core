@@ -10,7 +10,7 @@ namespace Spryker\Zed\SalesReturnGuiExtension\Dependency\Plugin;
 use Generated\Shared\Transfer\OrderTransfer;
 
 /**
- * Allows to replace the template, that renders item table, for return create page.
+ * Allows to replace the template, that renders item table on return create page.
  */
 interface ReturnCreateTemplatePluginInterface
 {
