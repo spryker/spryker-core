@@ -1094,7 +1094,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
                 $eventDispatcher = $this->getDispatcher($container);
                 if ($logoutEventClassExist) {
                     $httpUtils = $container->get(static::SERVICE_SECURITY_HTTP_UTILS);
-                    $this->getDispatcher($container)->addSubscriber(new DefaultLogoutListener($httpUtils, '/'));
+                    $this->getDispatcher($container)->addSubscriber(new DefaultLogoutListener($httpUtils, $options['target_url'] ?? '/'));
                     $this->getDispatcher($container)->addSubscriber(new SessionLogoutListener());
                 }
 
