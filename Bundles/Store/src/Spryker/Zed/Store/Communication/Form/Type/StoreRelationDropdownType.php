@@ -10,7 +10,6 @@ namespace Spryker\Zed\Store\Communication\Form\Type;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -166,11 +165,10 @@ class StoreRelationDropdownType extends AbstractType
 
         $builder->add(
             static::FIELD_ID_STORES_DISABLED,
-            ChoiceType::class,
+            Select2ComboBoxType::class,
             [
                 'label' => $storeToggleName,
                 'disabled' => true,
-                'expanded' => true,
                 'property_path' => static::FIELD_ID_STORES,
                 'multiple' => true,
                 'choices' => array_flip($this->getStoreNameMap()),

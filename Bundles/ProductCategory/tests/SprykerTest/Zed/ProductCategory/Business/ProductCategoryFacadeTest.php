@@ -66,6 +66,32 @@ class ProductCategoryFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testGetLocalizedProductAbstractNamesByCategoryWillReturnLocalizedProductsNamesByCategory(): void
+    {
+        // Arrange
+        $categoryTransfer = $this->tester->haveCategory();
+        $productTransfer = $this->tester->haveFullProduct();
+        $localeTransfer = $this->tester->getCurrentLocale();
+
+        $expectedProductName = sprintf(
+            '%s (%s)',
+            $productTransfer->getLocalizedAttributes()[0]->getName(),
+            $productTransfer->getAbstractSku()
+        );
+
+        $this->tester->assignProductToCategory($categoryTransfer->getIdCategory(), $productTransfer->getFkProductAbstract());
+
+        // Act
+        $productNames = $this->getProductCategoryFacade()
+            ->getLocalizedProductAbstractNamesByCategory($categoryTransfer, $localeTransfer);
+
+        // Arrange
+        $this->assertTrue(in_array($expectedProductName, $productNames), 'Localized product name should be found.');
+    }
+
+    /**
      * @return \Spryker\Zed\ProductCategory\Business\ProductCategoryFacadeInterface
      */
     public function getProductCategoryFacade(): ProductCategoryFacadeInterface

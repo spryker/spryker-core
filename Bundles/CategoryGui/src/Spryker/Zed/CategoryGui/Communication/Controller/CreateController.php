@@ -11,6 +11,7 @@ use ArrayObject;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -23,6 +24,9 @@ class CreateController extends AbstractController
     protected const REQUEST_PARAM_ID_PARENT_NODE = 'id-parent-node';
     protected const REQUEST_PARAM_IS_ROOT = 'is-root';
 
+    protected const ROUTE_CATEGORY_CREATE = '/category-gui/create';
+    protected const ROUTE_CATEGORY_EDIT = '/category-gui/edit';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -34,7 +38,7 @@ class CreateController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->handleCreateFormSubmission($form);
+            return $this->handleCreateFormSubmission($form);
         }
 
         return $this->viewResponse([
@@ -47,9 +51,9 @@ class CreateController extends AbstractController
     /**
      * @param \Symfony\Component\Form\FormInterface $form
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|void
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function handleCreateFormSubmission(FormInterface $form)
+    protected function handleCreateFormSubmission(FormInterface $form): RedirectResponse
     {
         $categoryResponseTransfer = $this->getFactory()
             ->createCategoryFormHandler()
@@ -58,7 +62,7 @@ class CreateController extends AbstractController
         if (!$categoryResponseTransfer->getIsSuccessful()) {
             $this->addErrorMessages($categoryResponseTransfer->getMessages());
 
-            return;
+            return $this->redirectResponse(static::ROUTE_CATEGORY_CREATE);
         }
 
         $this->addSuccessMessages($categoryResponseTransfer->getMessages());
@@ -108,7 +112,7 @@ class CreateController extends AbstractController
     protected function createSuccessRedirectUrl(int $idCategory): string
     {
         $url = Url::generate(
-            '/category-gui/edit',
+            static::ROUTE_CATEGORY_EDIT,
             [
                 static::REQUEST_PARAM_ID_CATEGORY => $idCategory,
             ]

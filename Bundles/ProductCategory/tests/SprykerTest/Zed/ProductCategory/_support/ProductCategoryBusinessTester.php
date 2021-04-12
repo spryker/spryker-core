@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\ProductCategory;
 
 use Codeception\Actor;
+use Generated\Shared\Transfer\LocaleTransfer;
 
 /**
  * @method void wantToTest($text)
@@ -26,4 +27,15 @@ use Codeception\Actor;
 class ProductCategoryBusinessTester extends Actor
 {
     use _generated\ProductCategoryBusinessTesterActions;
+
+    /**
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    public function getCurrentLocale(): LocaleTransfer
+    {
+        return $this->getLocator()
+            ->locale()
+            ->facade()
+            ->getCurrentLocale();
+    }
 }

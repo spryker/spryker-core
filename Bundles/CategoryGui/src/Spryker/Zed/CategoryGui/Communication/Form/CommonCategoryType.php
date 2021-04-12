@@ -206,10 +206,7 @@ abstract class CommonCategoryType extends AbstractType
             $this->getFactory()->getStoreRelationFormTypePlugin()->getType(),
             [
                 'label' => false,
-                'required' => true,
-                'constraints' => [
-                    new NotBlank(),
-                ],
+                'required' => false,
             ]
         );
 
