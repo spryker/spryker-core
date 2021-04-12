@@ -50,7 +50,7 @@ const mockSelectedAttributes = [
             [attributes]="attributes"
             [selectedAttributes]="selectedAttributes"
             [name]="name"
-            (selectedAttributesChange)="changeEvent()"
+            (selectedAttributesChange)="changeEvent($event)"
         >
             <span col-attr-name>Super Attribute</span>
             <span col-attr-values-name>Values</span>
@@ -170,20 +170,25 @@ describe('ProductAttributesSelectorComponent', () => {
         it('should add a new attribute row by `Add` button click', () => {
             component.attributes = mockAttributes;
             component.selectedAttributes = [];
-            component.name = mockName;
             fixture.detectChanges();
 
             const buttonAddElem = fixture.debugElement.query(
                 By.css('.mp-product-attributes-selector__button-add spy-button'),
             );
-            const hiddenInput = fixture.debugElement.query(By.css('input[type=hidden]'));
+            const selectElems = fixture.debugElement.queryAll(
+                By.css('.mp-product-attributes-selector__content-row-name spy-select'),
+            );
 
-            expect(hiddenInput.properties.value.replace(/\s/g, '')).toBe(JSON.stringify([{}]));
+            expect(selectElems.length).toBe(1);
 
             buttonAddElem!.triggerEventHandler('click', null);
             fixture.detectChanges();
 
-            expect(hiddenInput.properties.value.replace(/\s/g, '')).toBe(JSON.stringify([{}, {}]));
+            const updatedSelectElems = fixture.debugElement.queryAll(
+                By.css('.mp-product-attributes-selector__content-row-name spy-select'),
+            );
+
+            expect(updatedSelectElems.length).toBe(2);
         });
 
         it('should remove attribute row by `Delete` button click', () => {
@@ -233,7 +238,7 @@ describe('ProductAttributesSelectorComponent', () => {
             fixture.detectChanges();
 
             expect(hiddenInput.properties.value.replace(/\s/g, '')).toBe(JSON.stringify(mockSelectedSuperAttribute));
-            expect(component.changeEvent).toHaveBeenCalled();
+            expect(component.changeEvent).toHaveBeenCalledWith(mockSelectedSuperAttribute);
         });
 
         it('should update selected attributes by `Values` select change', () => {
@@ -271,7 +276,7 @@ describe('ProductAttributesSelectorComponent', () => {
             fixture.detectChanges();
 
             expect(hiddenInput.properties.value.replace(/\s/g, '')).toBe(JSON.stringify(mockSelectedSuperAttribute));
-            expect(component.changeEvent).toHaveBeenCalled();
+            expect(component.changeEvent).toHaveBeenCalledWith(mockSelectedSuperAttribute);
         });
     });
 });

@@ -1,5 +1,6 @@
 import {
     ChangeDetectionStrategy,
+    ChangeDetectorRef,
     Component,
     EventEmitter,
     Input,
@@ -29,6 +30,8 @@ export class ProductAttributesSelectorComponent implements OnChanges, OnInit {
     deleteIcon = IconDeleteModule.icon;
     attributesObject: Record<string, ProductAttribute> = {};
     attributeOptions: ProductAttributeValue[][] = [];
+
+    constructor(private cdr: ChangeDetectorRef) {}
 
     ngOnInit(): void {
         this.create();
@@ -62,6 +65,7 @@ export class ProductAttributesSelectorComponent implements OnChanges, OnInit {
         this.selectedAttributes[index] = attribute;
         this.disableSelectedAttributes();
         this.selectedAttributesChange.emit(this.selectedAttributes);
+        this.cdr.markForCheck();
     }
 
     attributesChange(values: string[], index: number, selectedAttribute: ProductAttribute): void {
@@ -69,6 +73,7 @@ export class ProductAttributesSelectorComponent implements OnChanges, OnInit {
         this.selectedAttributes = [...this.selectedAttributes];
         this.selectedAttributes[index].values = attribute.values.filter((value) => values.includes(value.value));
         this.selectedAttributesChange.emit(this.selectedAttributes);
+        this.cdr.markForCheck();
     }
 
     disableSelectedAttributes(): void {
