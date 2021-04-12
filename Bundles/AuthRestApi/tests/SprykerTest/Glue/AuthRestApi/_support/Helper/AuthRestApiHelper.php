@@ -32,12 +32,16 @@ class AuthRestApiHelper extends Module
      */
     public function haveAuthorizationToGlue(
         CustomerTransfer $customerTransfer,
-        ?string $anonymousCustomerReference = null
+        ?string $anonymousCustomerReference = null,
+        ?string $clientId = null,
+        ?string $clientSecret = null
     ): OauthResponseTransfer {
         $oauthRequestTransfer = (new OauthRequestTransfer())
             ->setGrantType(AuthRestApiConfig::CLIENT_GRANT_PASSWORD)
             ->setUsername($customerTransfer->getEmail())
-            ->setPassword($customerTransfer->getNewPassword());
+            ->setPassword($customerTransfer->getNewPassword())
+            ->setClientId($clientId)
+            ->setClientSecret($clientSecret);
 
         if ($anonymousCustomerReference) {
             $oauthRequestTransfer->setCustomerReference($anonymousCustomerReference);
