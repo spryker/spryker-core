@@ -48,8 +48,10 @@ class EditController extends AbstractController
         }
 
         $form = $this->getForm($categoryTransfer)->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->handleEditFormSubmission($form);
+        if ($form->isSubmitted() && $form->isValid() && $this->handleEditFormSubmission($form)) {
+            return $this->redirectResponse(
+                $this->createSuccessRedirectUrl($idCategory)
+            );
         }
 
         return $this->viewResponse([
@@ -77,9 +79,9 @@ class EditController extends AbstractController
     /**
      * @param \Symfony\Component\Form\FormInterface $form
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|void
+     * @return bool
      */
-    protected function handleEditFormSubmission(FormInterface $form)
+    protected function handleEditFormSubmission(FormInterface $form): bool
     {
         $categoryResponseTransfer = $this->getFactory()
             ->createCategoryFormHandler()
@@ -88,14 +90,12 @@ class EditController extends AbstractController
         if (!$categoryResponseTransfer->getIsSuccessful()) {
             $this->addErrorMessages($categoryResponseTransfer->getMessages());
 
-            return;
+            return false;
         }
 
         $this->addSuccessMessages($categoryResponseTransfer->getMessages());
 
-        return $this->redirectResponse(
-            $this->createSuccessRedirectUrl($categoryResponseTransfer->getCategory()->getIdCategory())
-        );
+        return true;
     }
 
     /**
