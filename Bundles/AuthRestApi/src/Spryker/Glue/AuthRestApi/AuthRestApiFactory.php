@@ -16,7 +16,8 @@ use Spryker\Glue\AuthRestApi\Processor\AccessTokens\AccessTokenUserFinder;
 use Spryker\Glue\AuthRestApi\Processor\AccessTokens\AccessTokenUserFinderInterface;
 use Spryker\Glue\AuthRestApi\Processor\AccessTokens\AccessTokenValidator;
 use Spryker\Glue\AuthRestApi\Processor\AccessTokens\AccessTokenValidatorInterface;
-use Spryker\Glue\AuthRestApi\Processor\AccessTokens\OauthAccessTokenForProtectedResourceRestRequestValidator;
+use Spryker\Glue\AuthRestApi\Processor\AccessTokens\OauthAccessTokenHttpRequestValidator;
+use Spryker\Glue\AuthRestApi\Processor\AccessTokens\OauthAccessTokenHttpRequestValidatorInterface;
 use Spryker\Glue\AuthRestApi\Processor\AccessTokens\OauthAccessTokenRestRequestValidator;
 use Spryker\Glue\AuthRestApi\Processor\AccessTokens\OauthAccessTokenValidator;
 use Spryker\Glue\AuthRestApi\Processor\AccessTokens\OauthAccessTokenValidatorInterface;
@@ -101,11 +102,11 @@ class AuthRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\AuthRestApi\Processor\AccessTokens\OauthAccessTokenValidatorInterface
+     * @return \Spryker\Glue\AuthRestApi\Processor\AccessTokens\OauthAccessTokenHttpRequestValidatorInterface
      */
-    public function createOauthAccessTokenForProtectedResourceRestRequestValidator(): OauthAccessTokenValidatorInterface
+    public function createOauthAccessTokenHttpRequestValidator(): OauthAccessTokenHttpRequestValidatorInterface
     {
-        return new OauthAccessTokenForProtectedResourceRestRequestValidator($this->getOauthClient());
+        return new OauthAccessTokenHttpRequestValidator($this->createOauthAccessTokenRestRequestValidator());
     }
 
     /**
