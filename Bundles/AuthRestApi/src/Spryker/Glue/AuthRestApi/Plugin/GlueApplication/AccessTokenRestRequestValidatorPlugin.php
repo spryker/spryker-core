@@ -14,7 +14,7 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @deprecated
+ * @deprecated Will be removed without replacement.
  *
  * @method \Spryker\Glue\AuthRestApi\AuthRestApiFactory getFactory()
  */
