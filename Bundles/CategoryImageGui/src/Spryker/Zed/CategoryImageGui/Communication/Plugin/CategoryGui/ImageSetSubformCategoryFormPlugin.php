@@ -19,7 +19,7 @@ class ImageSetSubformCategoryFormPlugin extends AbstractPlugin implements Catego
 {
     /**
      * {@inheritDoc}
-     * - Adds subform with image sets to CategoryType.
+     * - Adds subform with image sets to `CategoryType`.
      *
      * @api
      *

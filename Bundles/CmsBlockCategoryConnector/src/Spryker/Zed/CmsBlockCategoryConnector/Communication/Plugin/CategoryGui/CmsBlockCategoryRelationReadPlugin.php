@@ -45,6 +45,6 @@ class CmsBlockCategoryRelationReadPlugin extends AbstractPlugin implements Categ
     public function getRelations(CategoryTransfer $categoryTransfer, LocaleTransfer $localeTransfer): array
     {
         return $this->getFacade()
-            ->getCmsBlockIdsWithNamesByCategory($categoryTransfer);
+            ->getCmsBlockNamesIndexedByCmsBlockIdsForCategory($categoryTransfer);
     }
 }

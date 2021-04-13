@@ -40,5 +40,5 @@ interface CmsBlockCategoryReaderInterface
      *
      * @return string[]
      */
-    public function getCmsBlockIdsWithNamesByCategory(CategoryTransfer $categoryTransfer): array;
+    public function getCmsBlockNamesIndexedByCmsBlockIdsForCategory(CategoryTransfer $categoryTransfer): array;
 }

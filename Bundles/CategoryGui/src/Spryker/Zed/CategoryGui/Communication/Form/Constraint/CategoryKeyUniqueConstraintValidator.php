@@ -29,14 +29,16 @@ class CategoryKeyUniqueConstraintValidator extends ConstraintValidator
         }
 
         $categoryTransfer = $this->context->getRoot()->getData();
-        if (!($categoryTransfer instanceof CategoryTransfer) || !$value) {
+        if (
+            !($categoryTransfer instanceof CategoryTransfer)
+            || !$value
+            || !$constraint->getCategoryGuiRepository()->isCategoryKeyUsed($value)
+        ) {
             return;
         }
 
-        if ($constraint->getCategoryGuiRepository()->isCategoryKeyUsed($value)) {
-            $this->context
-                ->buildViolation(sprintf($constraint->message, $value))
-                ->addViolation();
-        }
+        $this->context
+            ->buildViolation(sprintf($constraint->message, $value))
+            ->addViolation();
     }
 }

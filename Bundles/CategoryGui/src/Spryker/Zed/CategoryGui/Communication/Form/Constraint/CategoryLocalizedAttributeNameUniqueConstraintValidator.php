@@ -29,14 +29,16 @@ class CategoryLocalizedAttributeNameUniqueConstraintValidator extends Constraint
         }
 
         $categoryTransfer = $this->context->getRoot()->getData();
-        if (!($categoryTransfer instanceof CategoryTransfer) || !$value) {
+        if (
+            !($categoryTransfer instanceof CategoryTransfer)
+            || !$value
+            || !$constraint->getCategoryFacade()->checkSameLevelCategoryByNameExists($value, $categoryTransfer)
+        ) {
             return;
         }
 
-        if ($constraint->getCategoryFacade()->checkSameLevelCategoryByNameExists($value, $categoryTransfer)) {
-            $this->context
-                ->buildViolation(sprintf($constraint->message, $value))
-                ->addViolation();
-        }
+        $this->context
+            ->buildViolation(sprintf($constraint->message, $value))
+            ->addViolation();
     }
 }

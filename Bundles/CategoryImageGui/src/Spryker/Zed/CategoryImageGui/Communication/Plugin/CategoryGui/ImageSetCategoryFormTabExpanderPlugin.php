@@ -19,7 +19,7 @@ class ImageSetCategoryFormTabExpanderPlugin extends AbstractPlugin implements Ca
 {
     /**
      * {@inheritDoc}
-     * - Adds image tab to CategoryFormTabs.
+     * - Adds image tab to `CategoryFormTabs`.
      *
      * @api
      *
