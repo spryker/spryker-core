@@ -17,7 +17,6 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\SalesReturnsRestApi\Dependency\Client\SalesReturnsRestApiToSalesReturnClientInterface;
 use Spryker\Glue\SalesReturnsRestApi\Processor\Builder\RestReturnResponseBuilderInterface;
-use Spryker\Shared\SalesReturnsRestApi\SalesReturnsRestApiConfig as SalesReturnsRestApiSharedConfig;
 
 class ReturnWriter implements ReturnWriterInterface
 {
@@ -57,7 +56,8 @@ class ReturnWriter implements ReturnWriterInterface
         $returnResponseTransfer = $this->salesReturnClient->createReturn($returnFilterTransfer);
 
         if (!$returnResponseTransfer->getIsSuccessful()) {
-            return $this->restReturnResponseBuilder->createErrorRestResponse(SalesReturnsRestApiSharedConfig::ERROR_IDENTIFIER_FAILED_CREATE_RETURN);
+            return $this->restReturnResponseBuilder
+                ->createErrorRestResponseFromReturnResponse($returnResponseTransfer);
         }
 
         return $this->restReturnResponseBuilder->createReturnRestResponse($returnResponseTransfer->getReturn());

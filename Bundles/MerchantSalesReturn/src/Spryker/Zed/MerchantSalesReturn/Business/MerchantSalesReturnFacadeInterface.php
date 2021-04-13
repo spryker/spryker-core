@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantSalesReturn\Business;
 
+use Generated\Shared\Transfer\ReturnCollectionTransfer;
 use Generated\Shared\Transfer\ReturnCreateRequestTransfer;
 use Generated\Shared\Transfer\ReturnResponseTransfer;
 use Generated\Shared\Transfer\ReturnTransfer;
@@ -40,4 +41,18 @@ interface MerchantSalesReturnFacadeInterface
      * @return \Generated\Shared\Transfer\ReturnResponseTransfer
      */
     public function validateReturn(ReturnCreateRequestTransfer $returnCreateRequestTransfer): ReturnResponseTransfer;
+
+    /**
+     * Specification:
+     * - Expands `ReturnCollectionTransfer` with merchant data.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ReturnCollectionTransfer $returnCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ReturnCollectionTransfer
+     */
+    public function expandReturnCollection(
+        ReturnCollectionTransfer $returnCollectionTransfer
+    ): ReturnCollectionTransfer;
 }
