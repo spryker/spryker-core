@@ -14,6 +14,7 @@ use Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInter
 use Spryker\Shared\ApplicationExtension\Dependency\Plugin\BootableApplicationPluginInterface;
 use Spryker\Shared\SecurityExtension\Configuration\SecurityConfigurationInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\Security\Communication\EventListener\RedirectLogoutListener;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestMatcher;
@@ -46,7 +47,6 @@ use Symfony\Component\Security\Http\Authentication\DefaultAuthenticationSuccessH
 use Symfony\Component\Security\Http\EntryPoint\BasicAuthenticationEntryPoint;
 use Symfony\Component\Security\Http\EntryPoint\FormAuthenticationEntryPoint;
 use Symfony\Component\Security\Http\Event\LogoutEvent;
-use Symfony\Component\Security\Http\EventListener\DefaultLogoutListener;
 use Symfony\Component\Security\Http\EventListener\RememberMeLogoutListener;
 use Symfony\Component\Security\Http\EventListener\SessionLogoutListener;
 use Symfony\Component\Security\Http\Firewall;
@@ -1094,7 +1094,22 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
                 $eventDispatcher = $this->getDispatcher($container);
                 if ($logoutEventClassExist) {
                     $httpUtils = $container->get(static::SERVICE_SECURITY_HTTP_UTILS);
-                    $this->getDispatcher($container)->addSubscriber(new DefaultLogoutListener($httpUtils, $options['target_url'] ?? '/'));
+                    $config = $this->getSecurityConfiguration($container)->getFirewalls()[$name];
+                    $requestMatcher = $config['pattern'];
+                    if (is_string($config['pattern'])) {
+                        $requestMatcher = new RequestMatcher(
+                            $config['pattern'],
+                            $config['hosts'] ?? null,
+                            $config['methods'] ?? null
+                        );
+                    }
+
+                    $this->getDispatcher($container)->addSubscriber(new RedirectLogoutListener(
+                        $httpUtils,
+                        $requestMatcher,
+                        $options['target_url'] ?? '/',
+                        $options['priority'] ?? 64
+                    ));
                     $this->getDispatcher($container)->addSubscriber(new SessionLogoutListener());
                 }
 

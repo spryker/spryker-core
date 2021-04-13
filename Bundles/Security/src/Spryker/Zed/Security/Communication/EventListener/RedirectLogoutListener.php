@@ -8,15 +8,21 @@
 namespace Spryker\Zed\Security\Communication\EventListener;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpFoundation\RequestMatcherInterface;
 use Symfony\Component\Security\Http\Event\LogoutEvent;
 use Symfony\Component\Security\Http\HttpUtils;
 
-class LogoutListener implements EventSubscriberInterface
+class RedirectLogoutListener implements EventSubscriberInterface
 {
     /**
      * @var \Symfony\Component\Security\Http\HttpUtils
      */
     protected $httpUtils;
+
+    /**
+     * @var \Symfony\Component\HttpFoundation\RequestMatcherInterface
+     */
+    protected $requestMatcher;
 
     /**
      * @var string
@@ -30,12 +36,18 @@ class LogoutListener implements EventSubscriberInterface
 
     /**
      * @param \Symfony\Component\Security\Http\HttpUtils $httpUtils
+     * @param \Symfony\Component\HttpFoundation\RequestMatcherInterface $requestMatcher
      * @param string $targetUrl
      * @param int $priority
      */
-    public function __construct(HttpUtils $httpUtils, string $targetUrl = '/', int $priority = 64)
-    {
+    public function __construct(
+        HttpUtils $httpUtils,
+        RequestMatcherInterface $requestMatcher,
+        string $targetUrl = '/',
+        int $priority = 64
+    ) {
         $this->httpUtils = $httpUtils;
+        $this->requestMatcher = $requestMatcher;
         $this->targetUrl = $targetUrl;
 
         static::$priority = $priority;
@@ -48,11 +60,17 @@ class LogoutListener implements EventSubscriberInterface
      */
     public function onLogout(LogoutEvent $event): void
     {
+        $request = $event->getRequest();
+
+        if (!$this->requestMatcher->matches($request)) {
+            return;
+        }
+
         if ($event->getResponse() !== null) {
             return;
         }
 
-        $event->setResponse($this->httpUtils->createRedirectResponse($event->getRequest(), $this->targetUrl));
+        $event->setResponse($this->httpUtils->createRedirectResponse($request, $this->targetUrl));
     }
 
     /**
