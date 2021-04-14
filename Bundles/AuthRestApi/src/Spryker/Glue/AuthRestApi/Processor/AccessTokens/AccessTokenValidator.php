@@ -71,7 +71,11 @@ class AccessTokenValidator implements AccessTokenValidatorInterface
      *
      * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
      */
-    protected function createErrorMessageTransfer(string $detail, int $status, string $code): RestErrorMessageTransfer
+    protected function createErrorMessageTransfer(
+        string $detail,
+        int $status,
+        string $code
+    ): RestErrorMessageTransfer
     {
         return (new RestErrorMessageTransfer())
             ->setDetail($detail)
@@ -117,10 +121,6 @@ class AccessTokenValidator implements AccessTokenValidatorInterface
             ->setAccessToken($accessToken)
             ->setType($type);
 
-        $authAccessTokenValidationResponseTransfer = $this->oauthClient->validateOauthAccessToken(
-            $authAccessTokenValidationRequestTransfer
-        );
-
-        return $authAccessTokenValidationResponseTransfer->getIsValid();
+        return $this->oauthClient->validateOauthAccessToken($authAccessTokenValidationRequestTransfer)->getIsValid();
     }
 }
