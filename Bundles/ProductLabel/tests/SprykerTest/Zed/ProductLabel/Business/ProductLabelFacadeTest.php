@@ -601,8 +601,16 @@ class ProductLabelFacadeTest extends Unit
         // Arrange
         $productTransfer1 = $this->tester->haveProduct();
         $productTransfer2 = $this->tester->haveProduct();
+        $productTransfer3 = $this->tester->haveProduct();
         $productLabelTransfer = $this->tester->haveProductLabel();
-        $this->tester->haveProductLabelToAbstractProductRelation($productLabelTransfer->getIdProductLabel(), $productTransfer2->getFkProductAbstract());
+        $this->tester->haveProductLabelToAbstractProductRelation(
+            $productLabelTransfer->getIdProductLabel(),
+            $productTransfer2->getFkProductAbstract(),
+        );
+        $this->tester->haveProductLabelToAbstractProductRelation(
+            $productLabelTransfer->getIdProductLabel(),
+            $productTransfer3->getFkProductAbstract(),
+        );
 
         $productLabelRelationUpdaterPluginMock = $this->getMockBuilder(ProductLabelRelationUpdaterPluginInterface::class)
             ->setMethods(['findProductLabelProductAbstractRelationChanges'])
@@ -616,6 +624,7 @@ class ProductLabelFacadeTest extends Unit
                 ],
                 ProductLabelProductAbstractRelationsTransfer::IDS_PRODUCT_ABSTRACT_TO_DE_ASSIGN => [
                     $productTransfer2->getFkProductAbstract(),
+                    $productTransfer3->getFkProductAbstract(),
                 ],
             ]))->build(),
         ]);
@@ -623,6 +632,8 @@ class ProductLabelFacadeTest extends Unit
         $this->tester->setDependency(ProductLabelDependencyProvider::PLUGIN_PRODUCT_LABEL_RELATION_UPDATERS, [
             $productLabelRelationUpdaterPluginMock,
         ]);
+
+        $this->tester->setConfig(ProductLabelConstants::PRODUCT_LABEL_DE_ASSIGN_CHUNK_SIZE, 1);
 
         // Act
         $this->getProductLabelFacade()->updateDynamicProductLabelRelations();
@@ -646,6 +657,10 @@ class ProductLabelFacadeTest extends Unit
         $this->tester->assertTouchDeleted(
             ProductLabelConstants::RESOURCE_TYPE_PRODUCT_ABSTRACT_PRODUCT_LABEL_RELATIONS,
             $productTransfer2->getFkProductAbstract()
+        );
+        $this->tester->assertTouchDeleted(
+            ProductLabelConstants::RESOURCE_TYPE_PRODUCT_ABSTRACT_PRODUCT_LABEL_RELATIONS,
+            $productTransfer3->getFkProductAbstract()
         );
         $this->tester->assertTouchActive(
             ProductConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT,

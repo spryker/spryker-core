@@ -157,4 +157,19 @@ class ProductLabelEntityManager extends AbstractEntityManager implements Product
                 ->save();
         }
     }
+
+    /**
+     * @param int $idProductLabel
+     * @param int $idProductAbstract
+     *
+     * @return void
+     */
+    public function deleteProductLabelProductAbstractRelation(int $idProductLabel, int $idProductAbstract): void
+    {
+        $this->getFactory()
+            ->createProductRelationQuery()
+            ->filterByFkProductLabel($idProductLabel)
+            ->filterByFkProductAbstract($idProductAbstract)
+            ->delete();
+    }
 }

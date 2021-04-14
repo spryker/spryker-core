@@ -7,9 +7,14 @@
 
 namespace Spryker\Zed\ProductLabel\Business\ProductAbstractRelation;
 
+use Generated\Shared\Transfer\FilterTransfer;
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Zed\ProductLabel\Business\Touch\ProductAbstractRelationTouchManagerInterface;
+use Spryker\Zed\ProductLabel\Persistence\ProductLabelEntityManager;
 use Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface;
+use Spryker\Zed\ProductLabel\Persistence\ProductLabelRepositoryInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
+use Spryker\Zed\ProductLabel\ProductLabelConfig;
 
 class ProductAbstractRelationDeleter implements ProductAbstractRelationDeleterInterface
 {
@@ -26,15 +31,41 @@ class ProductAbstractRelationDeleter implements ProductAbstractRelationDeleterIn
     protected $productRelationTouchManager;
 
     /**
+     * @var \Spryker\Zed\ProductLabel\Persistence\ProductLabelRepositoryInterface
+     */
+    protected $productLabelRepository;
+
+    /**
+     * @var \Spryker\Zed\ProductLabel\ProductLabelConfig
+     */
+    protected $productLabelConfig;
+
+    /**
+     * @var \Spryker\Zed\ProductLabel\Business\ProductAbstractRelation\ProductLabelEntityManager
+     */
+    private $productLabelEntityManager;
+
+    /**
+     * ProductAbstractRelationDeleter constructor.
+     *
      * @param \Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\ProductLabel\Business\Touch\ProductAbstractRelationTouchManagerInterface $productRelationTouchManager
+     * @param \Spryker\Zed\ProductLabel\Persistence\ProductLabelRepositoryInterface $productLabelRepository
+     * @param \Spryker\Zed\ProductLabel\Persistence\ProductLabelEntityManager $productLabelEntityManager
+     * @param \Spryker\Zed\ProductLabel\ProductLabelConfig $productLabelConfig
      */
     public function __construct(
         ProductLabelQueryContainerInterface $queryContainer,
-        ProductAbstractRelationTouchManagerInterface $productRelationTouchManager
+        ProductAbstractRelationTouchManagerInterface $productRelationTouchManager,
+        ProductLabelRepositoryInterface $productLabelRepository,
+        ProductLabelEntityManager $productLabelEntityManager,
+        ProductLabelConfig $productLabelConfig
     ) {
         $this->queryContainer = $queryContainer;
         $this->productRelationTouchManager = $productRelationTouchManager;
+        $this->productLabelRepository = $productLabelRepository;
+        $this->productLabelEntityManager = $productLabelEntityManager;
+        $this->productLabelConfig = $productLabelConfig;
     }
 
     /**
@@ -60,30 +91,37 @@ class ProductAbstractRelationDeleter implements ProductAbstractRelationDeleterIn
      */
     protected function executeDeleteRelationsTransaction($idProductLabel, array $idsProductAbstract, bool $isTouchEnabled = true)
     {
-        foreach ($this->findRelationEntities($idProductLabel, $idsProductAbstract) as $relationEntity) {
-            $relationEntity->delete();
+        $productLabelDeAssignChunkSize = $this->productLabelConfig->getProductLabelDeAssignChankSize();
 
-            if ($isTouchEnabled) {
-                $this->touchRelationsForAbstractProduct($relationEntity->getFkProductAbstract());
-            }
+        foreach (array_chunk($idsProductAbstract, $productLabelDeAssignChunkSize) as $idsProductAbstractChunk) {
+            $this->deleteRelationsByChunk($idProductLabel, $idsProductAbstractChunk, $isTouchEnabled);
         }
     }
 
     /**
      * @param int $idProductLabel
-     * @param int[] $idsProductAbstract
+     * @param array $idsProductAbstract
+     * @param bool $isTouchEnabled
      *
-     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstract[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return void
      */
-    protected function findRelationEntities($idProductLabel, array $idsProductAbstract)
+    protected function deleteRelationsByChunk(int $idProductLabel, array $idsProductAbstract, bool $isTouchEnabled): void
     {
-        return $this
-            ->queryContainer
-            ->queryProductAbstractRelationsByIdProductLabelAndIdsProductAbstract(
-                $idProductLabel,
-                $idsProductAbstract
-            )
-            ->find();
+        $productAbstractRelations = $this->productLabelRepository->getProductAbstractRelationsByIdProductLabelAndIdsProductAbstract(
+            $idProductLabel,
+            $idsProductAbstract
+        );
+
+        foreach ($productAbstractRelations as $productAbstractRelation) {
+            $this->productLabelEntityManager->deleteProductLabelProductAbstractRelation(
+                $productAbstractRelation->getFkProductLabel(),
+                $productAbstractRelation->getFkProductAbstract()
+            );
+
+            if ($isTouchEnabled) {
+                $this->touchRelationsForAbstractProduct($productAbstractRelation->getFkProductAbstract());
+            }
+        }
     }
 
     /**
