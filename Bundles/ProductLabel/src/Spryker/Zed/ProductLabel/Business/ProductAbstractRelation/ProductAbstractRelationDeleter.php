@@ -87,7 +87,7 @@ class ProductAbstractRelationDeleter implements ProductAbstractRelationDeleterIn
      */
     protected function executeDeleteRelationsTransaction($idProductLabel, array $idsProductAbstract, bool $isTouchEnabled = true)
     {
-        $productLabelDeAssignChunkSize = $this->productLabelConfig->getProductLabelDeAssignChankSize();
+        $productLabelDeAssignChunkSize = $this->productLabelConfig->getProductLabelDeAssignChunkSize();
 
         foreach (array_chunk($idsProductAbstract, $productLabelDeAssignChunkSize) as $idsProductAbstractChunk) {
             $this->deleteRelationsByChunk($idProductLabel, $idsProductAbstractChunk, $isTouchEnabled);

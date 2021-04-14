@@ -15,11 +15,14 @@ class ProductLabelConfig extends AbstractBundleConfig
     protected const PRODUCT_LABEL_DE_ASSIGN_CHUNK_SIZE = 1000;
 
     /**
+     * Specification:
+     * - Returns the number of product label relations in the chunk to be deassigned.
+     *
      * @api
      *
      * @return int
      */
-    public function getProductLabelDeAssignChankSize(): int
+    public function getProductLabelDeAssignChunkSize(): int
     {
         return $this->get(
             ProductLabelConstants::PRODUCT_LABEL_DE_ASSIGN_CHUNK_SIZE,
