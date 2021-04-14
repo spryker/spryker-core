@@ -51,8 +51,10 @@ class AbstractProductPricesRelationshipExpander implements AbstractProductPrices
         }
 
         foreach ($resources as $resource) {
+            /** @var string $sku */
+            $sku = $resource->getId();
             $abstractProductPricesResource = $this->abstractProductPricesReader
-                ->findAbstractProductPricesBySku($resource->getId(), $restRequest);
+                ->findAbstractProductPricesBySku($sku, $restRequest);
             if ($abstractProductPricesResource) {
                 $resource->addRelationship($abstractProductPricesResource);
             }

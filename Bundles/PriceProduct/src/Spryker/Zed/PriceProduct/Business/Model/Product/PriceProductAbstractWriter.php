@@ -104,7 +104,8 @@ class PriceProductAbstractWriter extends BaseProductPriceWriter implements Price
         ProductAbstractTransfer $productAbstractTransfer
     ): ProductAbstractTransfer {
         foreach ($productAbstractTransfer->getPrices() as $priceProductTransfer) {
-            $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
+            /** @var \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer */
+            $moneyValueTransfer = $priceProductTransfer->requireMoneyValue()->getMoneyValue();
             if ($this->isEmptyMoneyValue($moneyValueTransfer)) {
                 continue;
             }
@@ -125,6 +126,7 @@ class PriceProductAbstractWriter extends BaseProductPriceWriter implements Price
         ProductAbstractTransfer $productAbstractTransfer,
         PriceProductTransfer $priceProductTransfer
     ): PriceProductTransfer {
+        /** @var int $idProductAbstract */
         $idProductAbstract = $productAbstractTransfer
             ->requireIdProductAbstract()
             ->getIdProductAbstract();
@@ -151,7 +153,10 @@ class PriceProductAbstractWriter extends BaseProductPriceWriter implements Price
     protected function executePriceDimensionAbstractSaverPlugins(
         PriceProductTransfer $priceProductTransfer
     ): PriceProductTransfer {
-        $priceDimensionType = $priceProductTransfer->getPriceDimension()->getType();
+        /** @var \Generated\Shared\Transfer\PriceProductDimensionTransfer $priceDimensionTransfer */
+        $priceDimensionTransfer = $priceProductTransfer->requirePriceDimension()->getPriceDimension();
+        /** @var string $priceDimensionType */
+        $priceDimensionType = $priceDimensionTransfer->getType();
 
         if ($priceDimensionType === $this->config->getPriceDimensionDefault()) {
             return $this->persistPriceProductIfDimensionTypeDefault($priceProductTransfer);
@@ -170,7 +175,11 @@ class PriceProductAbstractWriter extends BaseProductPriceWriter implements Price
         PriceProductTransfer $priceProductTransfer,
         $idProductAbstract
     ): PriceProductTransfer {
-        $priceTypeEntity = $this->priceTypeReader->getPriceTypeByName($priceProductTransfer->getPriceType()->getName());
+        /** @var \Generated\Shared\Transfer\PriceTypeTransfer $priceTypeTransfer */
+        $priceTypeTransfer = $priceProductTransfer->requirePriceType()->getPriceType();
+        /** @var string $priceTypeName */
+        $priceTypeName = $priceTypeTransfer->requireName()->getName();
+        $priceTypeEntity = $this->priceTypeReader->getPriceTypeByName($priceTypeName);
 
         $priceProductEntity = $this->priceProductQueryContainer
             ->queryPriceProductForAbstractProduct($idProductAbstract, $priceTypeEntity->getIdPriceType())
@@ -214,10 +223,12 @@ class PriceProductAbstractWriter extends BaseProductPriceWriter implements Price
         PriceProductTransfer $priceProductTransfer
     ): PriceProductTransfer {
         $priceProductDefaultEntityTransfer = $this->priceProductDefaultWriter->persistPriceProductDefault($priceProductTransfer);
-        $priceProductTransfer->getPriceDimension()->setIdPriceProductDefault(
-            $priceProductDefaultEntityTransfer->getIdPriceProductDefault()
-        );
+        /** @var \Generated\Shared\Transfer\PriceProductDimensionTransfer $priceDimensionTransfer */
+        $priceDimensionTransfer = $priceProductTransfer->requirePriceDimension()->getPriceDimension();
+        /** @var string $idPriceProductDefault */
+        $idPriceProductDefault = $priceProductDefaultEntityTransfer->getIdPriceProductDefault();
+        $priceDimensionTransfer->setIdPriceProductDefault((int)$idPriceProductDefault);
 
-        return $priceProductTransfer;
+        return $priceProductTransfer->setPriceDimension($priceDimensionTransfer);
     }
 }

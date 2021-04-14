@@ -33,9 +33,11 @@ class PriceProductToProductFacadeBridge implements PriceProductToProductFacadeIn
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductFacadeBridge::findProductConcreteIdBySku()} instead.
+     *
      * @param string $sku
      *
-     * @return int
+     * @return int|null
      */
     public function getProductConcreteIdBySku($sku)
     {
@@ -90,5 +92,15 @@ class PriceProductToProductFacadeBridge implements PriceProductToProductFacadeIn
     public function getProductAbstractIdByConcreteId(int $idProductConcrete): int
     {
         return $this->productFacade->getProductAbstractIdByConcreteId($idProductConcrete);
+    }
+
+    /**
+     * @param string $sku
+     *
+     * @return int|null
+     */
+    public function findProductConcreteIdBySku($sku)
+    {
+        return $this->productFacade->findProductConcreteIdBySku($sku);
     }
 }

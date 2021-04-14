@@ -17,6 +17,7 @@ use Spryker\Zed\MerchantProductOfferWishlist\MerchantProductOfferWishlistDepende
 /**
  * @method \Spryker\Zed\MerchantProductOfferWishlist\Persistence\MerchantProductOfferWishlistRepositoryInterface getRepository()
  * @method \Spryker\Zed\MerchantProductOfferWishlist\MerchantProductOfferWishlistConfig getConfig()
+ * @method \Spryker\Zed\MerchantProductOfferWishlist\Business\MerchantProductOfferWishlistFacadeInterface getFacade()
  */
 class MerchantProductOfferWishlistCommunicationFactory extends AbstractCommunicationFactory
 {

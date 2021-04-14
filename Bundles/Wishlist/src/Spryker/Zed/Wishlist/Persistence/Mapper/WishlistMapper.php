@@ -45,15 +45,39 @@ class WishlistMapper implements WishlistMapperInterface
         SpyWishlist $wishlistEntity,
         WishlistTransfer $wishlistTransfer
     ): WishlistTransfer {
-        $wishlistTransfer = $wishlistTransfer->fromArray($wishlistEntity->toArray(), false);
-        $wishlistItemEntities = $wishlistEntity->getSpyWishlistItems();
-        foreach ($wishlistItemEntities as $wishlistItemEntity) {
-            $wishlistTransfer->addWishlistItem(
-                $this->mapWishlistItemEntityToWishlistItemTransfer($wishlistItemEntity, new WishlistItemTransfer())
-            );
+        $wishlistData = $wishlistEntity->toArray();
+
+        if (array_key_exists(WishlistTransfer::NUMBER_OF_ITEMS, $wishlistData)) {
+            $wishlistData[WishlistTransfer::NUMBER_OF_ITEMS] = (int)$wishlistData[WishlistTransfer::NUMBER_OF_ITEMS];
         }
 
-        $wishlistTransfer->setNumberOfItems($wishlistItemEntities->count());
+        return $wishlistTransfer->fromArray($wishlistData, false);
+    }
+
+    /**
+     * @param \Orm\Zed\Wishlist\Persistence\SpyWishlist $wishlistEntity
+     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistTransfer
+     */
+    public function mapWishlistEntityToWishlistTransferIncludingWishlistItems(
+        SpyWishlist $wishlistEntity,
+        WishlistTransfer $wishlistTransfer
+    ): WishlistTransfer {
+        $wishlistTransfer = $this->mapWishlistEntityToWishlistTransfer($wishlistEntity, $wishlistTransfer);
+
+        foreach ($wishlistEntity->getSpyWishlistItems() as $wishlistItemEntity) {
+            $wishlistItemTransfer = $this->mapWishlistItemEntityToWishlistItemTransfer(
+                $wishlistItemEntity,
+                new WishlistItemTransfer()
+            );
+
+            $wishlistItemTransfer
+                ->setFkCustomer($wishlistTransfer->getFkCustomer())
+                ->setWishlistName($wishlistTransfer->getName());
+
+            $wishlistTransfer->addWishlistItem($wishlistItemTransfer);
+        }
 
         return $wishlistTransfer;
     }

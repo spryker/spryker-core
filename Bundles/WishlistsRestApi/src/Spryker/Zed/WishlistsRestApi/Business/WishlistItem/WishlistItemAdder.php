@@ -50,8 +50,11 @@ class WishlistItemAdder implements WishlistItemAdderInterface
             return $this->createWishlistNotFoundErrorResponse($wishlistResponseTransfer);
         }
 
+        /** @var \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer */
+        $wishlistTransfer = $wishlistResponseTransfer->getWishlist();
+
         $wishlistItemTransfer = $this->createWishlistItemTransfer(
-            $wishlistResponseTransfer->getWishlist(),
+            $wishlistTransfer,
             $wishlistItemRequestTransfer
         );
 

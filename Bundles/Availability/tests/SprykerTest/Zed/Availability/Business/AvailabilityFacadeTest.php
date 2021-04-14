@@ -16,6 +16,7 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Generated\Shared\Transfer\WishlistItemTransfer;
 use Orm\Zed\Availability\Persistence\SpyAvailability;
 use Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery;
 use Orm\Zed\Availability\Persistence\SpyAvailabilityQuery;
@@ -715,6 +716,45 @@ class AvailabilityFacadeTest extends Unit
 
         // Assert
         $this->assertCount(0, $productConcreteAvailabilityCollectionTransfer->getProductConcreteAvailabilities());
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandWishlistItemWithAvailabilitySuccess(): void
+    {
+        // Arrange
+        $this->tester->ensureAvailabilityTableIsEmpty();
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
+        $productTransfer1 = $this->tester->haveProduct(['sku' => static::CONCRETE_SKU]);
+        $wishlsitItemTransfer = (new WishlistItemTransfer())->setSku($productTransfer1->getSku());
+        $productConcreteAvailabilityTransfer = $this->tester->haveAvailabilityConcrete($productTransfer1->getSku(), $storeTransfer, new Decimal(1));
+
+        // Act
+        $wishlsitItemTransfer = $this->tester->getFacade()->expandWishlistItemWithAvailability($wishlsitItemTransfer);
+
+        // Assert
+        $this->assertSame($wishlsitItemTransfer->getProductConcreteAvailability()->getSku(), $productConcreteAvailabilityTransfer->getSku());
+        $this->assertSame($wishlsitItemTransfer->getProductConcreteAvailability()->getIsNeverOutOfStock(), $productConcreteAvailabilityTransfer->getIsNeverOutOfStock());
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandWishlistItemWithSellableSuccess(): void
+    {
+        // Arrange
+        $this->tester->ensureAvailabilityTableIsEmpty();
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
+        $productTransfer1 = $this->tester->haveProduct(['sku' => static::CONCRETE_SKU]);
+        $wishlsitItemTransfer = (new WishlistItemTransfer())->setSku($productTransfer1->getSku());
+        $productConcreteAvailabilityTransfer = $this->tester->haveAvailabilityConcrete($productTransfer1->getSku(), $storeTransfer, new Decimal(1));
+
+        // Act
+        $wishlsitItemTransfer = $this->tester->getFacade()->expandWishlistItemWithSellable($wishlsitItemTransfer);
+
+        // Assert
+        $this->assertTrue($wishlsitItemTransfer->getIsSellable());
     }
 
     /**

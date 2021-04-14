@@ -16,6 +16,7 @@ use Generated\Shared\Transfer\PriceTypeTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ValidationResponseTransfer;
+use Generated\Shared\Transfer\WishlistItemTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -284,6 +285,8 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
      *
      * @api
      *
+     * @phpstan-return array<mixed>
+     *
      * @param string $sku
      * @param \Generated\Shared\Transfer\PriceProductDimensionTransfer|null $priceProductDimensionTransfer
      *
@@ -302,6 +305,8 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
      * {@inheritDoc}
      *
      * @api
+     *
+     * @phpstan-return array<mixed>
      *
      * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      *
@@ -389,6 +394,8 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
      * {@inheritDoc}
      *
      * @api
+     *
+     * @phpstan-param array<mixed> $priceData
      *
      * @param array $priceData
      *
@@ -633,5 +640,21 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
         return $this->getFactory()
             ->createPriceProductValidator()
             ->validatePrices($priceProductTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemTransfer
+     */
+    public function expandWishlistItem(WishlistItemTransfer $wishlistItemTransfer): WishlistItemTransfer
+    {
+        return $this->getFactory()
+            ->createPriceProductWishlsitItemExpander()
+            ->expandWishlistItem($wishlistItemTransfer);
     }
 }

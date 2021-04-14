@@ -24,4 +24,17 @@ interface PriceProductOfferVolumeServiceInterface
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     public function getMinPriceProducts(array $priceProductTransfers, PriceProductFilterTransfer $priceProductFilterTransfer): array;
+
+    /**
+     * Specification:
+     * - Extracts volume prices from price product offer collection.
+     * - Returns volume price collection.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function extractVolumePrices(array $priceProductTransfers): array;
 }

@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\PriceProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Generated\Shared\Transfer\ValidationResponseTransfer;
+use Generated\Shared\Transfer\WishlistItemTransfer;
 
 interface PriceProductOfferFacadeInterface
 {
@@ -104,4 +105,16 @@ interface PriceProductOfferFacadeInterface
      * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
      */
     public function getProductOfferPrices(PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer): ArrayObject;
+
+    /**
+     * Specification:
+     * - Expands provided `WishlistItem` transfer object with `PriceProduct` transfer objects.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemTransfer
+     */
+    public function expandWishlistItemWithPrices(WishlistItemTransfer $wishlistItemTransfer): WishlistItemTransfer;
 }
