@@ -221,6 +221,27 @@ class ProductLabelQueryContainer extends AbstractQueryContainer implements Produ
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\ProductLabel\Persistence\ProductLabelRepositoryInterface::getProductAbstractRelationsByIdProductLabelAndIdsProductAbstract()} instead.
+     *
+     * @param int $idProductLabel
+     * @param int[] $idsProductAbstract
+     *
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery
+     */
+    public function queryProductAbstractRelationsByIdProductLabelAndIdsProductAbstract(
+        $idProductLabel,
+        array $idsProductAbstract
+    ) {
+        return $this
+            ->queryProductAbstractRelationsByIdProductLabel($idProductLabel)
+            ->filterByFkProductAbstract($idsProductAbstract, Criteria::IN);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery
      */
     public function queryUnpublishedProductLabelsBecomingValid()

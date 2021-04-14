@@ -156,6 +156,24 @@ interface ProductLabelQueryContainerInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\ProductLabel\Persistence\ProductLabelRepositoryInterface::getProductAbstractRelationsByIdProductLabelAndIdsProductAbstract()} instead.
+     *
+     * @param int $idProductLabel
+     * @param int[] $idsProductAbstract
+     *
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery
+     */
+    public function queryProductAbstractRelationsByIdProductLabelAndIdsProductAbstract(
+        $idProductLabel,
+        array $idsProductAbstract
+    );
+
+    /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
+     * @api
+     *
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery
      */
     public function queryUnpublishedProductLabelsBecomingValid();
