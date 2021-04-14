@@ -75,8 +75,7 @@ class AccessTokenValidator implements AccessTokenValidatorInterface
         string $detail,
         int $status,
         string $code
-    ): RestErrorMessageTransfer
-    {
+    ): RestErrorMessageTransfer {
         return (new RestErrorMessageTransfer())
             ->setDetail($detail)
             ->setStatus($status)
