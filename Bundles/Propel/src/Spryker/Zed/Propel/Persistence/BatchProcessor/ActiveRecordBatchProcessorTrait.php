@@ -141,8 +141,13 @@ trait ActiveRecordBatchProcessorTrait
     protected function insertIdenticalEntities(array $entitiesToInsert): void
     {
         foreach ($entitiesToInsert as $entityClassName => $entities) {
-            $statement = $this->buildInsertStatementForIdenticalEntities($entityClassName, $entities);
-            $this->executeStatements([$statement], $entityClassName, 'insert identical');
+            $connection = $this->getWriteConnection($entityClassName);
+
+            $entities = $this->preSave($entities, $connection);
+            $entities = $this->preInsert($entities, $connection);
+            $statement = $this->buildInsertStatementIdentical($entityClassName, $entities);
+            $this->executeStatements([$statement], $entityClassName, 'insert');
+            $this->postInsert($entities, $connection);
         }
     }
 
@@ -357,6 +362,70 @@ trait ActiveRecordBatchProcessorTrait
     }
 
     /**
+     * @param string $entityClassName
+     * @param array $entities
+     *
+     * @return \PDOStatement
+     */
+    protected function buildInsertStatementIdentical(string $entityClassName, array $entities): PDOStatement
+    {
+        $tableMapClass = $this->getTableMapClass($entityClassName);
+        $columnMapCollection = $tableMapClass->getColumns();
+        $adapter = $this->getAdapter();
+        $requiresPrimaryKeyValue = ($adapter instanceof PgsqlAdapter);
+        $tableMapClassName = $entityClassName::TABLE_MAP;
+
+        $connection = $this->getWriteConnection($entityClassName);
+        $keyIndex = 0;
+        $valuesForBind = [];
+        $entitiesQueryParams = [];
+        $entityQueryParams = [];
+
+        foreach ($entities as $entity) {
+            $entity = $this->updateDateTimes($entity);
+            $valuesForInsert = $this->prepareValuesForInsert(
+                $columnMapCollection,
+                $tableMapClass,
+                $tableMapClassName,
+                $entity,
+                $requiresPrimaryKeyValue
+            );
+
+            foreach ($valuesForInsert as $columnDetails) {
+                if ($requiresPrimaryKeyValue && $columnDetails['columnMap']->isPrimaryKey() && $tableMapClass->getPrimaryKeyMethodInfo() !== null) {
+                    $entityQueryParams[] = sprintf('(SELECT nextval(\'%s\'))', $tableMapClass->getPrimaryKeyMethodInfo());
+
+                    continue;
+                }
+
+                $queryParamKey = sprintf(':p%d', $keyIndex);
+
+                $valuesForBind[$queryParamKey] = $columnDetails;
+
+                $entityQueryParams[] = $queryParamKey;
+            }
+
+            $entitiesQueryParams[] = sprintf('(%s)', implode(', ', $entityQueryParams));
+
+            $entityQueryParams = [];
+        }
+
+        $sql = sprintf(
+            'INSERT INTO %s (%s) VALUES %s;',
+            $tableMapClass->getName(),
+            implode(', ', array_keys($valuesForInsert)),
+            implode(', ', $entitiesQueryParams)
+        );
+
+        $statement = $this->prepareStatement($sql, $connection);
+        $statement = $this->bindInsertValuesIdentical($statement, $valuesForBind);
+
+        return $statement;
+    }
+
+    /**
+     * @deprecated
+     *
      * @param string $entityClassName
      * @param array $entities
      *
@@ -718,5 +787,64 @@ trait ActiveRecordBatchProcessorTrait
         }
 
         return $value;
+    }
+
+    /**
+     * @param \PDOStatement $statement
+     * @param array $valuesForBind
+     *
+     * @return \PDOStatement
+     */
+    protected function bindInsertValuesIdentical(PDOStatement $statement, array $valuesForBind): PDOStatement
+    {
+        foreach ($valuesForBind as $queryParam => $value) {
+            $statement->bindValue($queryParam, $value['value'], $value['type']);
+        }
+
+        return $statement;
+    }
+
+    /**
+     * @param \Propel\Runtime\Map\ColumnMap[] $columnMapCollection
+     * @param \Propel\Runtime\Map\TableMap $tableMapClass
+     * @param string $tableMapClassName
+     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $entity
+     * @param bool $requiresPrimaryKeyValue
+     *
+     * @return array
+     */
+    protected function prepareValuesForInsertIdentical(
+        array $columnMapCollection,
+        TableMap $tableMapClass,
+        string $tableMapClassName,
+        ActiveRecordInterface $entity,
+        bool $requiresPrimaryKeyValue
+    ): array {
+        $valuesForInsert = [];
+
+        $entityData = $entity->toArray(TableMap::TYPE_FIELDNAME);
+
+        foreach ($columnMapCollection as $columnIdentifier => $columnMap) {
+            $quotedColumnName = $this->quote($columnMap->getName(), $tableMapClass);
+            if ($columnMap->isPrimaryKey()) {
+                if (!$requiresPrimaryKeyValue || $tableMapClass->getPrimaryKeyMethodInfo() === null) {
+                    continue;
+                }
+
+                $value = sprintf('(SELECT nextval(\'%s\'))', $tableMapClass->getPrimaryKeyMethodInfo());
+                $valuesForInsert[$quotedColumnName] = $this->prepareValuesForSave($columnMap, $entityData, $value);
+
+                continue;
+            }
+
+            $columnIdentifier = sprintf('COL_%s', $columnIdentifier);
+            $fullyQualifiedColumnName = constant(sprintf('%s::%s', $tableMapClassName, $columnIdentifier));
+
+            if ($entity->isColumnModified($fullyQualifiedColumnName)) {
+                $valuesForInsert[$quotedColumnName] = $this->prepareValuesForSave($columnMap, $entityData);
+            }
+        }
+
+        return $valuesForInsert;
     }
 }
