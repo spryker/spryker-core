@@ -24,9 +24,9 @@ class MyReturnsTable extends AbstractTable
 {
     protected const COL_RETURN_ID = 'id_sales_return';
     protected const COL_RETURN_REFERENCE = 'return_reference';
-    protected const COL_ORDER_REFERENCE = 'order_reference';
+    protected const COL_MARKETPLACE_ORDER_REFERENCE = 'order_reference';
     protected const COL_RETURNED_PRODUCTS = 'returned_products';
-    protected const COL_MERCHANT_SALES_ORDER_REFERENCE = 'merchant_sales_order_reference';
+    protected const COL_ORDER_REFERENCE = 'merchant_reference';
     protected const COL_RETURN_DATE = 'created_at';
     protected const COL_STATE = 'state';
     protected const COL_ACTIONS = 'actions';
@@ -95,7 +95,7 @@ class MyReturnsTable extends AbstractTable
             static::COL_RETURN_ID => 'Return ID',
             static::COL_RETURN_REFERENCE => 'Return Reference',
             static::COL_ORDER_REFERENCE => 'Order Reference',
-            static::COL_MERCHANT_SALES_ORDER_REFERENCE => 'Marketplace Order Reference',
+            static::COL_MARKETPLACE_ORDER_REFERENCE => 'Marketplace Order Reference',
             static::COL_RETURNED_PRODUCTS => 'Returned Products',
             static::COL_RETURN_DATE => 'Return Date',
             static::COL_STATE => 'State',
@@ -116,8 +116,8 @@ class MyReturnsTable extends AbstractTable
         $config->setSearchable([
             static::COL_RETURN_ID,
             static::COL_RETURN_REFERENCE,
+            static::COL_MARKETPLACE_ORDER_REFERENCE,
             static::COL_ORDER_REFERENCE,
-            static::COL_MERCHANT_SALES_ORDER_REFERENCE,
         ]);
 
         $config->setHasSearchableFieldsWithAggregateFunctions(true);
@@ -178,7 +178,7 @@ class MyReturnsTable extends AbstractTable
             )
             ->withColumn(
                 sprintf('GROUP_CONCAT(DISTINCT %s)', SpySalesOrderTableMap::COL_ORDER_REFERENCE),
-                static::COL_ORDER_REFERENCE
+                static::COL_MARKETPLACE_ORDER_REFERENCE
             );
 
         return $salesReturnQuery;

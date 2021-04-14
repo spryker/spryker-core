@@ -7,22 +7,20 @@
                 {{ 'Order Reference' | trans }}
             </div>
             <div class="col-sm-6">
-                {% for idSalesOrder, orderReference in uniqueOrderReferences %}
-                    <a target="_blank" href="{{ url('/sales/detail', {'id-sales-order': idSalesOrder}) }}">
-                        {{ orderReference }}
-                    </a>
-                    {% if not loop.last %},&nbsp;{% endif %}
+                {% for merchantOrder in return.merchantOrders %}
+                    {{ merchantOrder.merchantOrderReference }}<br/>
                 {% endfor %}
             </div>
         </div>
 
         <div class="row m-b-sm">
             <div class="col-sm-6 font-bold">
-                {{ 'Merchant Order References' | trans }}
+                {{ 'Marketplace Order Reference' | trans }}
             </div>
             <div class="col-sm-6">
-                {% for merchantOrder in return.merchantOrders %}
-                    {{ merchantOrder.merchantOrderReference }}<br/>
+                {% for idSalesOrder, orderReference in uniqueOrderReferences %}
+                    {{ orderReference }}
+                    {% if not loop.last %},&nbsp;{% endif %}
                 {% endfor %}
             </div>
         </div>
