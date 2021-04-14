@@ -23,6 +23,8 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilder;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\Language\LanguageNegotiation;
 use Spryker\Glue\GlueApplication\Rest\Language\LanguageNegotiationInterface;
+use Spryker\Glue\GlueApplication\Rest\Request\HeadersHttpRequestValidator;
+use Spryker\Glue\GlueApplication\Rest\Request\HeadersHttpRequestValidatorInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\HttpRequestValidator;
 use Spryker\Glue\GlueApplication\Rest\Request\HttpRequestValidatorInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\PaginationParametersHttpRequestValidator;
@@ -237,7 +239,12 @@ class GlueApplicationFactory extends AbstractFactory
      */
     public function createRestHttpRequestValidator(): HttpRequestValidatorInterface
     {
-        return new HttpRequestValidator($this->getValidateRequestPlugins(), $this->createRestResourceRouteLoader(), $this->getConfig());
+        return new HttpRequestValidator(
+            $this->getValidateRequestPlugins(),
+            $this->createRestResourceRouteLoader(),
+            $this->getConfig(),
+            $this->createHeadersHttpRequestValidator()
+        );
     }
 
     /**
@@ -367,6 +374,17 @@ class GlueApplicationFactory extends AbstractFactory
     public function createPaginationParametersRequestValidator(): PaginationParametersHttpRequestValidatorInterface
     {
         return new PaginationParametersHttpRequestValidator();
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\Request\HeadersHttpRequestValidatorInterface
+     */
+    public function createHeadersHttpRequestValidator(): HeadersHttpRequestValidatorInterface
+    {
+        return new HeadersHttpRequestValidator(
+            $this->getConfig(),
+            $this->createRestResourceRouteLoader()
+        );
     }
 
     /**

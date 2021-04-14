@@ -420,4 +420,20 @@ interface SalesFacadeInterface
      * @return \Generated\Shared\Transfer\OrderCancelResponseTransfer
      */
     public function cancelOrder(OrderCancelRequestTransfer $orderCancelRequestTransfer): OrderCancelResponseTransfer;
+
+    /**
+     * Specification:
+     * - Checks that the order is not a duplicate.
+     * - Expects `Quote::orderReference`, `Quote::getIsOrderPlacedSuccessfully` and `Quote::customer::customerReference()` to be set.
+     * - Sets `isSuccess=false` and adds an error message in `CheckoutResponseTransfer` if order is a duplicate and returns `false`.
+     * - Returns `true` if the order was not found in the database.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return bool
+     */
+    public function checkDuplicateOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool;
 }
