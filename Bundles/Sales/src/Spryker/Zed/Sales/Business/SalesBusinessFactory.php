@@ -10,6 +10,8 @@ namespace Spryker\Zed\Sales\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Sales\Business\Address\OrderAddressWriter;
 use Spryker\Zed\Sales\Business\Address\OrderAddressWriterInterface;
+use Spryker\Zed\Sales\Business\Checker\DuplicateOrderChecker;
+use Spryker\Zed\Sales\Business\Checker\DuplicateOrderCheckerInterface;
 use Spryker\Zed\Sales\Business\Expander\ItemCurrencyExpander;
 use Spryker\Zed\Sales\Business\Expander\ItemCurrencyExpanderInterface;
 use Spryker\Zed\Sales\Business\Expander\SalesAddressExpander;
@@ -533,6 +535,16 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     public function createOmsEventTriggerer(): OmsEventTriggererInterface
     {
         return new OmsEventTriggerer($this->getOmsFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\Checker\DuplicateOrderCheckerInterface
+     */
+    public function createDuplicateOrderChecker(): DuplicateOrderCheckerInterface
+    {
+        return new DuplicateOrderChecker(
+            $this->getRepository()
+        );
     }
 
     /**
