@@ -21,7 +21,8 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
-  "scripts: {},
+  "scripts": {
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"

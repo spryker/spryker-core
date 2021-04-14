@@ -68,8 +68,11 @@ class AvailabilityEntityManager extends AbstractEntityManager implements Availab
             ->filterByFkStore($storeTransfer->getIdStore())
             ->findOneOrCreate();
 
+        /** @var \Spryker\DecimalObject\Decimal $availability */
+        $availability = $productAbstractAvailabilityTransfer->requireAvailability()->getAvailability();
+
         $availabilityAbstractEntity
-            ->setQuantity($productAbstractAvailabilityTransfer->getAvailability())
+            ->setQuantity($availability)
             ->save();
 
         return $productAbstractAvailabilityTransfer;
@@ -109,7 +112,10 @@ class AvailabilityEntityManager extends AbstractEntityManager implements Availab
             $availabilityEntity->setFkAvailabilityAbstract($availabilityAbstractEntity->getIdAvailabilityAbstract());
         }
 
-        $availabilityEntity->setQuantity($productConcreteAvailabilityTransfer->getAvailability());
+        /** @var \Spryker\DecimalObject\Decimal $availability */
+        $availability = $productConcreteAvailabilityTransfer->requireAvailability()->getAvailability();
+
+        $availabilityEntity->setQuantity($availability);
         $availabilityEntity->setIsNeverOutOfStock($productConcreteAvailabilityTransfer->getIsNeverOutOfStock());
 
         return $availabilityEntity;

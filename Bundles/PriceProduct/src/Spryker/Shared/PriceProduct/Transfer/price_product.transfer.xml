@@ -140,4 +140,8 @@
         <property name="quantity" type="int"/>
     </transfer>
 
+    <transfer name="WishlistItem">
+        <property name="prices" type="PriceProduct[]" singular="price"/>
+    </transfer>
+
 </transfers>

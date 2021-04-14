@@ -83,6 +83,8 @@ class ProductPriceResolver implements ProductPriceResolverInterface
     /**
      * {@inheritDoc}
      *
+     * @phpstan-param array<mixed> $priceMap
+     *
      * @param array $priceMap
      *
      * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
@@ -160,8 +162,12 @@ class ProductPriceResolver implements ProductPriceResolverInterface
             return $currentProductPriceTransfer;
         }
 
-        $priceMode = $priceProductFilter->getPriceMode();
-        $price = $this->getPriceValueByPriceMode($priceProductTransfer->getMoneyValue(), $priceMode);
+        /** @var string $priceMode */
+        $priceMode = $priceProductFilter->requirePriceMode()->getPriceMode();
+        /** @var \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer */
+        $moneyValueTransfer = $priceProductTransfer->requireMoneyValue()->getMoneyValue();
+
+        $price = $this->getPriceValueByPriceMode($moneyValueTransfer, $priceMode);
 
         if ($price === null) {
             return $currentProductPriceTransfer;
@@ -178,7 +184,9 @@ class ProductPriceResolver implements ProductPriceResolverInterface
 
         $prices = [];
         foreach ($priceProductAllPriceTypesTransfers as $priceProductOnePriceTypeTransfer) {
-            $prices[$priceProductOnePriceTypeTransfer->getPriceTypeName()] = $this->getPriceValueByPriceMode($priceProductOnePriceTypeTransfer->getMoneyValue(), $priceMode);
+            /** @var \Generated\Shared\Transfer\MoneyValueTransfer $onePriceTypeMoneyValueTransfer */
+            $onePriceTypeMoneyValueTransfer = $priceProductOnePriceTypeTransfer->requireMoneyValue()->getMoneyValue();
+            $prices[$priceProductOnePriceTypeTransfer->getPriceTypeName()] = $this->getPriceValueByPriceMode($onePriceTypeMoneyValueTransfer, $priceMode);
         }
 
         return $currentProductPriceTransfer
@@ -188,7 +196,7 @@ class ProductPriceResolver implements ProductPriceResolverInterface
             ->setQuantity($priceProductFilter->getQuantity())
             ->setPriceMode($priceMode)
             ->setSumPrice($price * $priceProductFilter->getQuantity())
-            ->setPriceData($priceProductTransfer->getMoneyValue()->getPriceData())
+            ->setPriceData($moneyValueTransfer->getPriceData())
             ->setPriceDimension($priceProductTransfer->getPriceDimension());
     }
 
@@ -250,6 +258,8 @@ class ProductPriceResolver implements ProductPriceResolverInterface
     }
 
     /**
+     * @phpstan-param array<mixed> $priceMap
+     *
      * @param array $priceMap
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
@@ -283,13 +293,18 @@ class ProductPriceResolver implements ProductPriceResolverInterface
                             )
                             ->setPriceTypeName($priceType);
                     }
+                    /** @var \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer */
+                    $moneyValueTransfer = $priceProductTransfers[$index]->requireMoneyValue()->getMoneyValue();
+
                     if ($priceMode === $this->priceProductConfig->getPriceModeIdentifierForNetType()) {
-                        $priceProductTransfers[$index]->getMoneyValue()->setNetAmount($priceAmount);
+                        $moneyValueTransfer->setNetAmount($priceAmount);
+                        $priceProductTransfers[$index]->setMoneyValue($moneyValueTransfer);
 
                         continue;
                     }
 
-                    $priceProductTransfers[$index]->getMoneyValue()->setGrossAmount($priceAmount);
+                    $moneyValueTransfer->setGrossAmount($priceAmount);
+                    $priceProductTransfers[$index]->setMoneyValue($moneyValueTransfer);
                 }
             }
         }

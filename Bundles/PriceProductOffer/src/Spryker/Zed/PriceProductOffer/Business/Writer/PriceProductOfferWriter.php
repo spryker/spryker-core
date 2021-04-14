@@ -72,10 +72,10 @@ class PriceProductOfferWriter implements PriceProductOfferWriterInterface
      */
     public function savePriceProductOfferRelation(PriceProductTransfer $priceProductTransfer): PriceProductTransfer
     {
-        $idPriceProductOffer = $priceProductTransfer->requirePriceDimension()
-            ->getPriceDimension()
-            ->requireIdProductOffer()
-            ->getIdPriceProductOffer();
+        /** @var \Generated\Shared\Transfer\PriceProductDimensionTransfer $priceDimensionTransfer */
+        $priceDimensionTransfer = $priceProductTransfer->requirePriceDimension()->getPriceDimension();
+        /** @var int $idPriceProductOffer */
+        $idPriceProductOffer = $priceDimensionTransfer->requireIdProductOffer()->getIdPriceProductOffer();
 
         if ($idPriceProductOffer) {
             return $this->priceProductOfferEntityManager->updatePriceProductOfferRelation($priceProductTransfer);
@@ -85,6 +85,8 @@ class PriceProductOfferWriter implements PriceProductOfferWriterInterface
     }
 
     /**
+     * @phpstan-return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
+     *
      * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
@@ -95,10 +97,12 @@ class PriceProductOfferWriter implements PriceProductOfferWriterInterface
         $priceProductTransfers = new ArrayObject();
 
         foreach ($productOfferTransfer->getPrices() as $priceProductTransfer) {
-            $priceProductTransfer->requirePriceDimension();
+            /** @var int $idProductOffer */
+            $idProductOffer = $productOfferTransfer->getIdProductOffer();
 
-            $priceProductDimensionTransfer = $priceProductTransfer->getPriceDimension();
-            $priceProductDimensionTransfer->setIdProductOffer($productOfferTransfer->getIdProductOffer());
+            /** @var \Generated\Shared\Transfer\PriceProductDimensionTransfer $priceProductDimensionTransfer */
+            $priceProductDimensionTransfer = $priceProductTransfer->requirePriceDimension()->getPriceDimension();
+            $priceProductDimensionTransfer->setIdProductOffer($idProductOffer);
             $priceProductDimensionTransfer->setType(PriceProductOfferConfig::DIMENSION_TYPE_PRODUCT_OFFER);
             $priceProductTransfer->setPriceDimension($priceProductDimensionTransfer);
             $priceProductTransfer->setIdProduct($productOfferTransfer->getIdProductConcrete());

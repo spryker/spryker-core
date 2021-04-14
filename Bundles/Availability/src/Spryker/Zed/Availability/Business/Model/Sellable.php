@@ -129,11 +129,14 @@ class Sellable implements SellableInterface
             return true;
         }
 
+        /** @var \Spryker\DecimalObject\Decimal $availability */
+        $availability = $productConcreteAvailabilityTransfer->requireAvailability()->getAvailability();
+
         if ($quantity->isZero()) {
-            return $productConcreteAvailabilityTransfer->getAvailability()->greaterThan($quantity);
+            return $availability->greaterThan($quantity);
         }
 
-        return $productConcreteAvailabilityTransfer->getAvailability()->greatherThanOrEquals($quantity);
+        return $availability->greatherThanOrEquals($quantity);
     }
 
     /**
@@ -147,9 +150,9 @@ class Sellable implements SellableInterface
             return $storeTransfer;
         }
 
-        $storeTransfer
-            ->requireName();
+        /** @var string $storeName */
+        $storeName = $storeTransfer->requireName()->getName();
 
-        return $this->storeFacade->getStoreByName($storeTransfer->getName());
+        return $this->storeFacade->getStoreByName($storeName);
     }
 }

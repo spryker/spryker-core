@@ -9,6 +9,8 @@ namespace Spryker\Zed\PriceProduct\Business;
 
 use Spryker\Service\PriceProduct\PriceProductServiceInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\PriceProduct\Business\Expander\Wishlist\PriceProductWishlistItemExpander;
+use Spryker\Zed\PriceProduct\Business\Expander\Wishlist\PriceProductWishlistItemExpanderInterface;
 use Spryker\Zed\PriceProduct\Business\Internal\Install;
 use Spryker\Zed\PriceProduct\Business\Internal\InstallInterface;
 use Spryker\Zed\PriceProduct\Business\Model\BulkWriter;
@@ -395,6 +397,18 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     public function createValidCurrencyAssignedToStoreConstraint(): Constraint
     {
         return new ValidCurrencyAssignedToStoreConstraint($this->getStoreFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProduct\Business\Expander\Wishlist\PriceProductWishlistItemExpanderInterface
+     */
+    public function createPriceProductWishlsitItemExpander(): PriceProductWishlistItemExpanderInterface
+    {
+        return new PriceProductWishlistItemExpander(
+            $this->createPriceProductConcreteReader(),
+            $this->getConfig(),
+            $this->getStoreFacade()
+        );
     }
 
     /**

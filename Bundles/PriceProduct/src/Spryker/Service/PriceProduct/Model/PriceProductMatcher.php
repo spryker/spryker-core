@@ -113,24 +113,35 @@ class PriceProductMatcher implements PriceProductMatcherInterface
             ->requirePriceTypeName()
             ->requireMoneyValue();
 
-        if (!$priceProductTransfer->getPriceDimension()->getType()) {
+        /** @var \Generated\Shared\Transfer\PriceProductDimensionTransfer $priceDimensionTransfer */
+        $priceDimensionTransfer = $priceProductTransfer->getPriceDimension();
+
+        if (!$priceDimensionTransfer->getType()) {
             return false;
         }
 
-        if ($priceProductCriteriaTransfer->getIdStore() !== $priceProductTransfer->getMoneyValue()->getFkStore()) {
+        /** @var \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer */
+        $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
+
+        if ($priceProductCriteriaTransfer->getIdStore() !== $moneyValueTransfer->getFkStore()) {
             return false;
         }
 
         if ($priceProductCriteriaTransfer->getPriceDimension() !== null) {
-            if ($priceProductCriteriaTransfer->getPriceDimension()->getType() !== $priceProductTransfer->getPriceDimension()->getType()) {
+            /** @var \Generated\Shared\Transfer\PriceProductDimensionTransfer $priceCriteriaDimensionTransfer */
+            $priceCriteriaDimensionTransfer = $priceProductCriteriaTransfer->getPriceDimension();
+
+            if ($priceCriteriaDimensionTransfer->getType() !== $priceDimensionTransfer->getType()) {
                 return false;
             }
         }
 
         if ($priceProductCriteriaTransfer->getIdCurrency() !== null) {
-            $priceProductTransfer->getMoneyValue()->requireCurrency();
+            $moneyValueTransfer->requireCurrency();
+            /** @var \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer */
+            $currencyTransfer = $moneyValueTransfer->requireCurrency()->getCurrency();
 
-            if ($priceProductCriteriaTransfer->getIdCurrency() !== $priceProductTransfer->getMoneyValue()->getCurrency()->getIdCurrency()) {
+            if ($priceProductCriteriaTransfer->getIdCurrency() !== $currencyTransfer->getIdCurrency()) {
                 return false;
             }
         }
@@ -221,21 +232,24 @@ class PriceProductMatcher implements PriceProductMatcherInterface
         if ($priceProductFilterTransfer->getPriceDimension() !== null) {
             $priceProductTransfer->requirePriceDimension();
 
-            if ($priceProductFilterTransfer->getPriceDimension()->getType() !== $priceProductTransfer->getPriceDimension()->getType()) {
+            /** @var \Generated\Shared\Transfer\PriceProductDimensionTransfer $priceDimensionTransfer */
+            $priceDimensionTransfer = $priceProductTransfer->requirePriceDimension()->getPriceDimension();
+
+            /** @var \Generated\Shared\Transfer\PriceProductDimensionTransfer $priceProductFilterDimensionTransfer */
+            $priceProductFilterDimensionTransfer = $priceProductFilterTransfer->getPriceDimension();
+
+            if ($priceProductFilterDimensionTransfer->getType() !== $priceDimensionTransfer->getType()) {
                 return false;
             }
         }
 
         if ($priceProductFilterTransfer->getCurrencyIsoCode() !== null) {
-            $priceProductTransfer
-                ->getMoneyValue()
-                ->requireCurrency();
-            $priceProductTransfer
-                ->getMoneyValue()
-                ->getCurrency()
-                ->requireCode();
+            /** @var \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer */
+            $moneyValueTransfer = $priceProductTransfer->requireMoneyValue()->getMoneyValue();
+            /** @var \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer */
+            $currencyTransfer = $moneyValueTransfer->requireCurrency()->getCurrency();
 
-            if ($priceProductTransfer->getMoneyValue()->getCurrency()->getCode() !== $priceProductFilterTransfer->getCurrencyIsoCode()) {
+            if ($currencyTransfer->requireCode()->getCode() !== $priceProductFilterTransfer->getCurrencyIsoCode()) {
                 return false;
             }
         }

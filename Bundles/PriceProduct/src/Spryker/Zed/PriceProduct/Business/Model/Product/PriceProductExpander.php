@@ -68,7 +68,8 @@ class PriceProductExpander implements PriceProductExpanderInterface
      */
     protected function expandPriceProductTransfer(PriceProductTransfer $priceProductTransfer): PriceProductTransfer
     {
-        $priceDimensionTransfer = $priceProductTransfer->getPriceDimension();
+        /** @var \Generated\Shared\Transfer\PriceProductDimensionTransfer $priceDimensionTransfer */
+        $priceDimensionTransfer = $priceProductTransfer->requirePriceDimension()->getPriceDimension();
         $priceProductTransfer->setPriceDimension($this->expandPriceProductDimensionTransfer($priceDimensionTransfer));
         $priceProductTransfer->setGroupKey($this->priceProductService->buildPriceProductGroupKey($priceProductTransfer));
 

@@ -49,9 +49,10 @@ class WishlistDeleter implements WishlistDeleterInterface
         );
 
         if (!$wishlistResponseTransfer->getIsSuccess()) {
-            return $this->wishlistRestResponseBuilder->createErrorResponseFromErrorIdentifier(
-                $wishlistResponseTransfer->getErrorIdentifier()
-            );
+            /** @var string $errorIdentifier */
+            $errorIdentifier = $wishlistResponseTransfer->getErrorIdentifier();
+
+            return $this->wishlistRestResponseBuilder->createErrorResponseFromErrorIdentifier($errorIdentifier);
         }
 
         return $this->wishlistRestResponseBuilder->createWishlistsRestResponse();
@@ -64,8 +65,13 @@ class WishlistDeleter implements WishlistDeleterInterface
      */
     protected function createWishlistFilterTransferFromRequest(RestRequestInterface $restRequest)
     {
+        /** @var \Generated\Shared\Transfer\RestUserTransfer $restUser */
+        $restUser = $restRequest->getRestUser();
+        /** @var int $surrogateIdentifier */
+        $surrogateIdentifier = $restUser->getSurrogateIdentifier();
+
         return (new WishlistFilterTransfer())
             ->setUuid($restRequest->getResource()->getId())
-            ->setIdCustomer($restRequest->getRestUser()->getSurrogateIdentifier());
+            ->setIdCustomer($surrogateIdentifier);
     }
 }

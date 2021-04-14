@@ -60,9 +60,10 @@ class WishlistUpdater implements WishlistUpdaterInterface
 
         $wishlistResponseTransfer = $this->wishlistsRestApiClient->updateWishlist($wishlistRequestTransfer);
         if (!$wishlistResponseTransfer->getIsSuccess()) {
-            return $this->wishlistRestResponseBuilder->createErrorResponseFromErrorIdentifier(
-                $wishlistResponseTransfer->getErrorIdentifier()
-            );
+            /** @var string $errorIdentifier */
+            $errorIdentifier = $wishlistResponseTransfer->getErrorIdentifier();
+
+            return $this->wishlistRestResponseBuilder->createErrorResponseFromErrorIdentifier($errorIdentifier);
         }
 
         return $this->wishlistRestResponseBuilder
@@ -82,9 +83,14 @@ class WishlistUpdater implements WishlistUpdaterInterface
         $wishlistTransfer = $this->wishlistMapper
             ->mapWishlistAttributesToWishlistTransfer($restWishlistsAttributesTransfer, new WishlistTransfer());
 
+        /** @var \Generated\Shared\Transfer\RestUserTransfer $restUser */
+        $restUser = $restRequest->getRestUser();
+        /** @var int $customerId */
+        $customerId = $restUser->getSurrogateIdentifier();
+
         return (new WishlistRequestTransfer())
             ->setUuid($restRequest->getResource()->getId())
-            ->setIdCustomer($restRequest->getRestUser()->getSurrogateIdentifier())
+            ->setIdCustomer($customerId)
             ->setWishlist($wishlistTransfer);
     }
 }

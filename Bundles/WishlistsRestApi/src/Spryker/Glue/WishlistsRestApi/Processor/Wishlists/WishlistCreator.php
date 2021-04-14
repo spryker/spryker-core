@@ -76,8 +76,13 @@ class WishlistCreator implements WishlistCreatorInterface
         RestWishlistsAttributesTransfer $restWishlistsAttributesTransfer,
         RestRequestInterface $restRequest
     ): WishlistTransfer {
+        /** @var \Generated\Shared\Transfer\RestUserTransfer $restUser */
+        $restUser = $restRequest->getRestUser();
+        /** @var int $surrogateIdentifier */
+        $surrogateIdentifier = $restUser->getSurrogateIdentifier();
+
         return $this->wishlistMapper
             ->mapWishlistAttributesToWishlistTransfer($restWishlistsAttributesTransfer, new WishlistTransfer())
-            ->setFkCustomer($restRequest->getRestUser()->getSurrogateIdentifier());
+            ->setFkCustomer($surrogateIdentifier);
     }
 }
