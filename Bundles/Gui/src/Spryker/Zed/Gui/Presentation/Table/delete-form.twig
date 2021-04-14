@@ -7,6 +7,6 @@
             {% endif %}
         {% endif %}
     {% endfor %}
-    {{ form_widget(form) }}
+    {{ form_widget(form._token) }}
     <button type="submit" class="safe-submit btn btn-xs btn-outline btn-danger"><i class="fa fa-trash"></i> {{ title | trans }}</button>
 {{ form_end(form) }}
