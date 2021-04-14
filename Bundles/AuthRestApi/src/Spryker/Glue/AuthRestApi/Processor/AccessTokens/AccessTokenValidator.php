@@ -8,17 +8,12 @@
 namespace Spryker\Glue\AuthRestApi\Processor\AccessTokens;
 
 use Generated\Shared\Transfer\OauthAccessTokenValidationRequestTransfer;
-use Generated\Shared\Transfer\OauthAccessTokenValidationResponseTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\AuthRestApi\AuthRestApiConfig;
 use Spryker\Glue\AuthRestApi\Dependency\Client\AuthRestApiToOauthClientInterface;
-use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * @deprecated Use {@link \Spryker\Glue\AuthRestApi\Processor\AccessTokens\OauthAccessTokenValidator} instead.
- */
 class AccessTokenValidator implements AccessTokenValidatorInterface
 {
     protected const REQUEST_ATTRIBUTE_IS_PROTECTED = 'is-protected';
@@ -38,16 +33,19 @@ class AccessTokenValidator implements AccessTokenValidatorInterface
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Generated\Shared\Transfer\RestErrorMessageTransfer|null
      */
-    public function validate(Request $request, RestRequestInterface $restRequest): ?RestErrorMessageTransfer
+    public function validate(Request $request): ?RestErrorMessageTransfer
     {
         $isProtected = $request->attributes->get(static::REQUEST_ATTRIBUTE_IS_PROTECTED, false);
 
+        if (!$isProtected) {
+            return null;
+        }
+
         $authorizationToken = $request->headers->get(AuthRestApiConfig::HEADER_AUTHORIZATION);
-        if (!$authorizationToken && $isProtected === true) {
+        if (!$authorizationToken) {
             return $this->createErrorMessageTransfer(
                 AuthRestApiConfig::RESPONSE_DETAIL_MISSING_ACCESS_TOKEN,
                 Response::HTTP_FORBIDDEN,
@@ -55,21 +53,13 @@ class AccessTokenValidator implements AccessTokenValidatorInterface
             );
         }
 
-        if (!$authorizationToken) {
-            return null;
-        }
-
-        $authAccessTokenValidationResponseTransfer = $this->validateAccessToken((string)$authorizationToken);
-
-        if (!$authAccessTokenValidationResponseTransfer->getIsValid()) {
+        if (!$this->validateAccessToken($authorizationToken)) {
             return $this->createErrorMessageTransfer(
                 AuthRestApiConfig::RESPONSE_DETAIL_INVALID_ACCESS_TOKEN,
                 Response::HTTP_UNAUTHORIZED,
                 AuthRestApiConfig::RESPONSE_CODE_ACCESS_CODE_INVALID
             );
         }
-
-        $this->setCustomerData($restRequest, $authAccessTokenValidationResponseTransfer);
 
         return null;
     }
@@ -81,11 +71,8 @@ class AccessTokenValidator implements AccessTokenValidatorInterface
      *
      * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
      */
-    protected function createErrorMessageTransfer(
-        string $detail,
-        int $status,
-        string $code
-    ): RestErrorMessageTransfer {
+    protected function createErrorMessageTransfer(string $detail, int $status, string $code): RestErrorMessageTransfer
+    {
         return (new RestErrorMessageTransfer())
             ->setDetail($detail)
             ->setStatus($status)
@@ -95,47 +82,45 @@ class AccessTokenValidator implements AccessTokenValidatorInterface
     /**
      * @param string $authorizationToken
      *
-     * @return array
+     * @return string|null
      */
-    protected function extractToken(string $authorizationToken): array
+    protected function extractToken(string $authorizationToken): ?string
     {
-        return preg_split('/\s+/', $authorizationToken);
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param \Generated\Shared\Transfer\OauthAccessTokenValidationResponseTransfer $authAccessTokenValidationResponseTransfer
-     *
-     * @return void
-     */
-    protected function setCustomerData(
-        RestRequestInterface $restRequest,
-        OauthAccessTokenValidationResponseTransfer $authAccessTokenValidationResponseTransfer
-    ): void {
-        $customerIdentifier = json_decode($authAccessTokenValidationResponseTransfer->getOauthUserId(), true);
-        $restRequest->setUser(
-            $customerIdentifier['id_customer'],
-            $customerIdentifier['customer_reference'],
-            $authAccessTokenValidationResponseTransfer->getOauthScopes()
-        );
+        return preg_split('/\s+/', $authorizationToken)[1] ?? null;
     }
 
     /**
      * @param string $authorizationToken
      *
-     * @return \Generated\Shared\Transfer\OauthAccessTokenValidationResponseTransfer
+     * @return string|null
      */
-    protected function validateAccessToken(string $authorizationToken): OauthAccessTokenValidationResponseTransfer
+    protected function extractTokenType(string $authorizationToken): ?string
     {
-        [$type, $accessToken] = $this->extractToken($authorizationToken);
+        return preg_split('/\s+/', $authorizationToken)[0] ?? null;
+    }
+
+    /**
+     * @param string $authorizationToken
+     *
+     * @return bool
+     */
+    protected function validateAccessToken(string $authorizationToken): bool
+    {
+        $accessToken = $this->extractToken($authorizationToken);
+        $type = $this->extractTokenType($authorizationToken);
+        if (!$accessToken || !$type) {
+            return false;
+        }
 
         $authAccessTokenValidationRequestTransfer = new OauthAccessTokenValidationRequestTransfer();
         $authAccessTokenValidationRequestTransfer
             ->setAccessToken($accessToken)
             ->setType($type);
 
-        return $this->oauthClient->validateAccessToken(
+        $authAccessTokenValidationResponseTransfer = $this->oauthClient->validateOauthAccessToken(
             $authAccessTokenValidationRequestTransfer
         );
+
+        return $authAccessTokenValidationResponseTransfer->getIsValid();
     }
 }

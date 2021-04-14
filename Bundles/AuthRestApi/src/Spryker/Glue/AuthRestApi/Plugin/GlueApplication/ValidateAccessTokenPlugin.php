@@ -19,7 +19,7 @@ class ValidateAccessTokenPlugin extends AbstractPlugin implements ValidateHttpRe
 {
     /**
      * {@inheritDoc}
-     * - Validates access token passed via Oauth access token.
+     * - Validates Oauth access token of HTTP request 'authorization' header.
      *
      * @api
      *
@@ -30,7 +30,7 @@ class ValidateAccessTokenPlugin extends AbstractPlugin implements ValidateHttpRe
     public function validate(Request $request): ?RestErrorMessageTransfer
     {
         return $this->getFactory()
-            ->createOauthAccessTokenHttpRequestValidator()
+            ->createAccessTokenValidator()
             ->validate($request);
     }
 }
