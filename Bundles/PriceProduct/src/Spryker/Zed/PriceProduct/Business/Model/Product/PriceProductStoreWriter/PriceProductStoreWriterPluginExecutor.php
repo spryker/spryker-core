@@ -48,7 +48,9 @@ class PriceProductStoreWriterPluginExecutor implements PriceProductStoreWriterPl
      */
     public function executePriceDimensionAbstractSaverPlugins(PriceProductTransfer $priceProductTransfer): PriceProductTransfer
     {
-        $priceDimensionType = $priceProductTransfer->getPriceDimension()->getType();
+        /** @var \Generated\Shared\Transfer\PriceProductDimensionTransfer $priceDimensionTransfer */
+        $priceDimensionTransfer = $priceProductTransfer->requirePriceDimension()->getPriceDimension();
+        $priceDimensionType = $priceDimensionTransfer->getType();
 
         foreach ($this->priceDimensionAbstractSaverPlugins as $priceDimensionAbstractSaverPlugin) {
             if ($priceDimensionAbstractSaverPlugin->getDimensionName() !== $priceDimensionType) {
@@ -68,7 +70,9 @@ class PriceProductStoreWriterPluginExecutor implements PriceProductStoreWriterPl
      */
     public function executePriceDimensionConcreteSaverPlugins(PriceProductTransfer $priceProductTransfer): PriceProductTransfer
     {
-        $priceDimensionType = $priceProductTransfer->getPriceDimension()->getType();
+        /** @var \Generated\Shared\Transfer\PriceProductDimensionTransfer $priceDimensionTransfer */
+        $priceDimensionTransfer = $priceProductTransfer->requirePriceDimension()->getPriceDimension();
+        $priceDimensionType = $priceDimensionTransfer->getType();
 
         foreach ($this->priceDimensionConcreteSaverPlugins as $priceDimensionConcreteSaverPlugin) {
             if ($priceDimensionConcreteSaverPlugin->getDimensionName() !== $priceDimensionType) {

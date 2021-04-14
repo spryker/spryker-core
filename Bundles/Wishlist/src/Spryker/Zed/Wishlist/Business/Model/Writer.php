@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Wishlist\Business\Model;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\WishlistItemCriteriaTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistResponseTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
@@ -324,8 +325,22 @@ class Writer implements WriterInterface
         $wishlistItemTransfer->setFkWishlist($idWishlist);
 
         $wishlistItemTransfer = $this->executeWishlistPreAddItemPlugins($wishlistItemTransfer);
+        $this->wishlistEntityManager->addItem($wishlistItemTransfer);
 
-        return $this->wishlistEntityManager->addItem($wishlistItemTransfer);
+        // This part for expanding created wishlist item.
+        $wishlistItemCriteriaTransfer = (new WishlistItemCriteriaTransfer())
+            ->fromArray($wishlistItemTransfer->toArray(), true);
+
+        $newWishlistItemTransfer = $this->reader->findWishlistItem($wishlistItemCriteriaTransfer);
+
+        if (!$newWishlistItemTransfer) {
+            return new WishlistItemTransfer();
+        }
+
+        $newWishlistItemTransfer->setWishlistName($wishlistItemTransfer->getWishlistName())
+            ->setFkCustomer($wishlistItemTransfer->getFkCustomer());
+
+        return $newWishlistItemTransfer;
     }
 
     /**

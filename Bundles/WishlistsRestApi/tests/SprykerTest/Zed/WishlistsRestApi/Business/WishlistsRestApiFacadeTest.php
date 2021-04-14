@@ -326,7 +326,8 @@ class WishlistsRestApiFacadeTest extends Test
         $wishlistItemRequestTransfer = (new WishlistItemRequestTransfer())
             ->setUuidWishlist($wishlist->getUuid())
             ->setIdCustomer($this->customer->getIdCustomer())
-            ->setSku($wishlistItem->getSku());
+            ->setSku($wishlistItem->getSku())
+            ->setUuid($wishlistItem->getSku());
 
         //Act
         $wishlistItemResponseTransfer = $this->tester->getWishlistsRestApiFacade()->deleteWishlistItem($wishlistItemRequestTransfer);
@@ -363,7 +364,8 @@ class WishlistsRestApiFacadeTest extends Test
         $wishlistItemRequestTransfer = (new WishlistItemRequestTransfer())
             ->setUuidWishlist('uuid-does-not-exist')
             ->setIdCustomer($this->customer->getIdCustomer())
-            ->setSku($wishlistItem->getSku());
+            ->setSku($wishlistItem->getSku())
+            ->setUuid($wishlistItem->getSku());
 
         //Act
         $wishlistItemResponseTransfer = $this->tester->getWishlistsRestApiFacade()->deleteWishlistItem($wishlistItemRequestTransfer);
@@ -393,7 +395,8 @@ class WishlistsRestApiFacadeTest extends Test
         $wishlistItemRequestTransfer = (new WishlistItemRequestTransfer())
             ->setUuidWishlist($wishlist->getUuid())
             ->setIdCustomer($this->customer->getIdCustomer())
-            ->setSku($concreteProduct->getSku());
+            ->setSku($concreteProduct->getSku())
+            ->setUuid($concreteProduct->getSku());
 
         //Act
         $wishlistItemResponseTransfer = $this->tester->getWishlistsRestApiFacade()->deleteWishlistItem($wishlistItemRequestTransfer);

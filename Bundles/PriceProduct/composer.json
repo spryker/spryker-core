@@ -17,14 +17,17 @@
     "spryker/symfony": "^3.0.0",
     "spryker/touch": "^3.0.0 || ^4.0.0",
     "spryker/transfer": "^3.25.0",
-    "spryker/util-encoding": "^2.0.0"
+    "spryker/util-encoding": "^2.0.0",
+    "spryker/wishlist-extension": "^1.2.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/customer": "*",
     "spryker/installer": "*",
     "spryker/price-product-storage": "*",
     "spryker/propel": "*",
-    "spryker/testify": "*"
+    "spryker/testify": "*",
+    "spryker/wishlist": "*"
   },
   "suggest": {
     "spryker/installer": "If you want to use default price product data installer"

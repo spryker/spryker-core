@@ -13,6 +13,19 @@ use Generated\Shared\Transfer\WishlistItemTransfer;
 class WishlistItemMapper implements WishlistItemMapperInterface
 {
     /**
+     * @var \Spryker\Glue\WishlistsRestApiExtension\Dependency\Plugin\RestWishlistItemsAttributesMapperPluginInterface[]
+     */
+    protected $restWishlistItemsAttributesMapperPlugins;
+
+    /**
+     * @param \Spryker\Glue\WishlistsRestApiExtension\Dependency\Plugin\RestWishlistItemsAttributesMapperPluginInterface[] $restWishlistItemsAttributesMapperPlugins
+     */
+    public function __construct(array $restWishlistItemsAttributesMapperPlugins = [])
+    {
+        $this->restWishlistItemsAttributesMapperPlugins = $restWishlistItemsAttributesMapperPlugins;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
      * @param \Generated\Shared\Transfer\RestWishlistItemsAttributesTransfer $restWishlistItemsAttributesTransfer
      *
@@ -22,6 +35,33 @@ class WishlistItemMapper implements WishlistItemMapperInterface
         WishlistItemTransfer $wishlistItemTransfer,
         RestWishlistItemsAttributesTransfer $restWishlistItemsAttributesTransfer
     ): RestWishlistItemsAttributesTransfer {
-        return $restWishlistItemsAttributesTransfer->fromArray($wishlistItemTransfer->toArray(), true);
+        $restWishlistItemsAttributesTransfer->fromArray($wishlistItemTransfer->toArray(), true);
+        $restWishlistItemsAttributesTransfer->setId($wishlistItemTransfer->getSku());
+        $restWishlistItemsAttributesTransfer = $this->executeRestWishlistItemsAttributesMapperPlugins(
+            $wishlistItemTransfer,
+            $restWishlistItemsAttributesTransfer
+        );
+
+        return $restWishlistItemsAttributesTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
+     * @param \Generated\Shared\Transfer\RestWishlistItemsAttributesTransfer $restWishlistItemsAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestWishlistItemsAttributesTransfer
+     */
+    protected function executeRestWishlistItemsAttributesMapperPlugins(
+        WishlistItemTransfer $wishlistItemTransfer,
+        RestWishlistItemsAttributesTransfer $restWishlistItemsAttributesTransfer
+    ): RestWishlistItemsAttributesTransfer {
+        foreach ($this->restWishlistItemsAttributesMapperPlugins as $restWishlistItemsAttributesMapperPlugin) {
+            $restWishlistItemsAttributesTransfer = $restWishlistItemsAttributesMapperPlugin->map(
+                $wishlistItemTransfer,
+                $restWishlistItemsAttributesTransfer
+            );
+        }
+
+        return $restWishlistItemsAttributesTransfer;
     }
 }

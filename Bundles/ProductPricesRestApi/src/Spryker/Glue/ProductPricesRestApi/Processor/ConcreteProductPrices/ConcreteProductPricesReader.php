@@ -89,6 +89,7 @@ class ConcreteProductPricesReader implements ConcreteProductPricesReaderInterfac
             return $restResponse->addError($this->createConcreteProductSkuIsNotSpecifiedError());
         }
 
+        /** @var string $productConcreteSku */
         $productConcreteSku = $concreteProductResource->getId();
         $restResource = $this->findConcreteProductPricesBySku($productConcreteSku, $restRequest);
 

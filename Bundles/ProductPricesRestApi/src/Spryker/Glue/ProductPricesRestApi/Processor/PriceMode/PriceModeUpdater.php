@@ -47,6 +47,9 @@ class PriceModeUpdater implements PriceModeUpdaterInterface
      */
     protected function getRequestParameter(RestRequestInterface $restRequest, string $parameterName): string
     {
-        return $restRequest->getHttpRequest()->query->get($parameterName, '');
+        /** @var string $response */
+        $response = $restRequest->getHttpRequest()->query->get($parameterName, '');
+
+        return $response;
     }
 }

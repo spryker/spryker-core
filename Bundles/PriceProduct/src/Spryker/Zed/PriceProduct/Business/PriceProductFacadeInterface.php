@@ -16,6 +16,7 @@ use Generated\Shared\Transfer\PriceTypeTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ValidationResponseTransfer;
+use Generated\Shared\Transfer\WishlistItemTransfer;
 
 interface PriceProductFacadeInterface
 {
@@ -276,6 +277,8 @@ interface PriceProductFacadeInterface
      *
      * @api
      *
+     * @phpstan-return array<mixed>
+     *
      * @param string $sku
      * @param \Generated\Shared\Transfer\PriceProductDimensionTransfer|null $priceProductDimensionTransfer
      *
@@ -300,6 +303,8 @@ interface PriceProductFacadeInterface
      *  ];
      *
      * @api
+     *
+     * @phpstan-return array<mixed>
      *
      * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      *
@@ -381,6 +386,8 @@ interface PriceProductFacadeInterface
      *  - Generates checksum hash for price data field.
      *
      * @api
+     *
+     * @phpstan-param array<mixed> $priceData
      *
      * @param array $priceData
      *
@@ -604,4 +611,17 @@ interface PriceProductFacadeInterface
      * @return \Generated\Shared\Transfer\ValidationResponseTransfer
      */
     public function validatePrices(ArrayObject $priceProductTransfers): ValidationResponseTransfer;
+
+    /**
+     * Specification:
+     * - Expands `WishlistItem` transfer object with a price data.
+     * - Return expanded `WishlistItem` transfer object.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemTransfer
+     */
+    public function expandWishlistItem(WishlistItemTransfer $wishlistItemTransfer): WishlistItemTransfer;
 }

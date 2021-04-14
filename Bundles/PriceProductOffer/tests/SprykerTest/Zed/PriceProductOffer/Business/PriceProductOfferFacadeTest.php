@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\PriceProductOfferTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
+use Generated\Shared\Transfer\WishlistItemTransfer;
 use Spryker\Shared\PriceProductOffer\PriceProductOfferConfig;
 use Spryker\Zed\PriceProductOffer\Dependency\Facade\PriceProductOfferToPriceProductFacadeBridge;
 use Spryker\Zed\PriceProductOffer\Dependency\Facade\PriceProductOfferToPriceProductFacadeInterface;
@@ -452,6 +453,34 @@ class PriceProductOfferFacadeTest extends Unit
 
         // Assert
         $this->assertCount(2, $productOfferPrices);
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandWishlistItemWithPrices(): void
+    {
+        // Arrange
+        $this->tester->ensurePriceProductOfferTableIsEmpty();
+        $priceProduct = $this->tester->havePriceProductSaved([PriceProductTransfer::SKU_PRODUCT_ABSTRACT => 'sku']);
+        $priceProductOfferCriteriaTransfer = new PriceProductOfferCriteriaTransfer();
+        $priceProductOfferCriteriaTransfer->setPriceProductOfferIds(
+            [$priceProduct->getPriceDimension()->getIdPriceProductOffer()]
+        );
+
+        $wishlistItemTransfer = (new WishlistItemTransfer())
+            ->setProductOfferReference($priceProduct->getPriceDimension()->getProductOfferReference());
+
+        // Act
+        $wishlistItemTransfer = $this->tester->getFacade()
+            ->expandWishlistItemWithPrices($wishlistItemTransfer);
+
+        // Assert
+        $this->assertSame(1, $wishlistItemTransfer->getPrices()->count());
+        $this->assertSame(
+            $priceProduct->getPriceDimension()->getIdPriceProductOffer(),
+            $wishlistItemTransfer->getPrices()->getIterator()->current()->getPriceDimension()->getIdPriceProductOffer()
+        );
     }
 
     /**

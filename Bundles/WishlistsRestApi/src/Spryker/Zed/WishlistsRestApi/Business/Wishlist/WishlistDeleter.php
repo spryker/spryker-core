@@ -42,7 +42,9 @@ class WishlistDeleter implements WishlistDeleterInterface
             return $wishlistResponseTransfer;
         }
 
-        $this->wishlistFacade->removeWishlist($wishlistResponseTransfer->getWishlist());
+        /** @var \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer */
+        $wishlistTransfer = $wishlistResponseTransfer->requireWishlist()->getWishlist();
+        $this->wishlistFacade->removeWishlist($wishlistTransfer);
 
         return $wishlistResponseTransfer;
     }

@@ -156,7 +156,10 @@ class PriceProductCriteriaBuilder implements PriceProductCriteriaBuilderInterfac
     protected function getCurrencyFromFilter(PriceProductFilterTransfer $priceFilterTransfer)
     {
         if ($priceFilterTransfer->getCurrencyIsoCode()) {
-            return $this->currencyFacade->fromIsoCode($priceFilterTransfer->getCurrencyIsoCode());
+            /** @var string $currencyIsoCode */
+            $currencyIsoCode = $priceFilterTransfer->getCurrencyIsoCode();
+
+            return $this->currencyFacade->fromIsoCode($currencyIsoCode);
         }
 
         return $this->currencyFacade->getDefaultCurrencyForCurrentStore();
@@ -170,7 +173,10 @@ class PriceProductCriteriaBuilder implements PriceProductCriteriaBuilderInterfac
     protected function getStoreFromFilter(PriceProductFilterTransfer $priceFilterTransfer)
     {
         if ($priceFilterTransfer->getStoreName()) {
-            return $this->storeFacade->getStoreByName($priceFilterTransfer->getStoreName());
+            /** @var string $storeName */
+            $storeName = $priceFilterTransfer->getStoreName();
+
+            return $this->storeFacade->getStoreByName($storeName);
         }
 
         return $this->storeFacade->getCurrentStore();

@@ -87,6 +87,7 @@ class AbstractProductPricesReader implements AbstractProductPricesReaderInterfac
         if (!$abstractProductResource) {
             return $restResponse->addError($this->createAbstractProductSkuIsNotSpecifiedError());
         }
+        /** @var string $abstractProductSku */
         $abstractProductSku = $abstractProductResource->getId();
         $restResource = $this->findAbstractProductPricesBySku($abstractProductSku, $restRequest);
 

@@ -8,6 +8,8 @@
 namespace SprykerTest\Service\PriceProductOfferVolume;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\MoneyValueTransfer;
+use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 
@@ -22,6 +24,11 @@ use Generated\Shared\Transfer\PriceProductTransfer;
  */
 class PriceProductOfferVolumeServiceTest extends Unit
 {
+    protected const PRICE_DATA_VOLUME = '{"volume_prices":[{"quantity":3,"net_price":350,"gross_price":385},{"quantity":8,"net_price":340,"gross_price":375}]}';
+    protected const MONEY_VALUE = 10000;
+    protected const PRICE_DIMENSION_TYPE = 'PRODUCT_OFFER';
+    protected const PRICE_TYPE_DEFAULT = 'DEFAULT';
+
     /**
      * @var \SprykerTest\Service\PriceProductOfferVolume\PriceProductOfferVolumeServiceTester
      */
@@ -119,5 +126,34 @@ class PriceProductOfferVolumeServiceTest extends Unit
         // Assert
         $this->assertCount(1, $minPriceProductTransfers);
         $this->assertSame($priceProductTransfer1, $minPriceProductTransfers[0]);
+    }
+
+    /**
+     * @return void
+     */
+    public function testExtractVolumePrices(): void
+    {
+        // Arrange
+        $priceDimensionTransfer = (new PriceProductDimensionTransfer())
+            ->setType(static::PRICE_DIMENSION_TYPE);
+
+        $priceProductTransfer = (new PriceProductTransfer())
+            ->setPriceTypeName(static::PRICE_TYPE_DEFAULT)
+            ->setPriceDimension($priceDimensionTransfer);
+
+        $moneyValueTransfer = (new MoneyValueTransfer())
+            ->setNetAmount(static::MONEY_VALUE)
+            ->setGrossAmount(static::MONEY_VALUE)
+            ->setPriceData(static::PRICE_DATA_VOLUME);
+
+        $priceProductTransfer->setMoneyValue($moneyValueTransfer);
+
+        // Act
+        $volumePrices = $this->tester
+            ->getPriceProductOfferVolumeService()
+            ->extractVolumePrices([$priceProductTransfer]);
+
+        // Assert
+        $this->assertCount(2, $volumePrices);
     }
 }

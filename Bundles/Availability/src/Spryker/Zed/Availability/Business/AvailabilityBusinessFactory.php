@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Availability\Business;
 
 use Spryker\Zed\Availability\AvailabilityDependencyProvider;
+use Spryker\Zed\Availability\Business\Expander\Wishlist\AvailabilityWishlistItemExpander;
+use Spryker\Zed\Availability\Business\Expander\Wishlist\AvailabilityWishlistItemExpanderInterface;
 use Spryker\Zed\Availability\Business\Model\AvailabilityHandler;
 use Spryker\Zed\Availability\Business\Model\AvailabilityHandlerInterface;
 use Spryker\Zed\Availability\Business\Model\ProductAvailabilityCalculator;
@@ -113,6 +115,18 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
     {
         return new AvailabilityReader(
             $this->getRepository(),
+            $this->getStoreFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Availability\Business\Expander\Wishlist\AvailabilityWishlistItemExpanderInterface
+     */
+    public function createAvailabilityWishlistItemExpander(): AvailabilityWishlistItemExpanderInterface
+    {
+        return new AvailabilityWishlistItemExpander(
+            $this->createProductAvailabilityReader(),
+            $this->createSellableModel(),
             $this->getStoreFacade()
         );
     }
