@@ -28,14 +28,12 @@ Sku,Sku
 "Back to Order","Back to Order"
 "Merchant Order Reference","Merchant Order Reference"
 "Merchant Order References","Merchant Order References"
-"Marketpace Order Reference","Marketpace Order Reference"
 "Select Items to Return","Select Items to Return"
 Product,Product
 Quantity,Quantity
 Price,Price
 Total,Total
 "Return policy","Return policy"
-"Create return","Create return"
 Customer,Customer
 "Customer Reference","Customer Reference"
 Name,Name
