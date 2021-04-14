@@ -9,6 +9,7 @@ namespace Spryker\Glue\GlueApplication\Rest;
 
 use Exception;
 use Generated\Shared\Transfer\RestErrorCollectionTransfer;
+use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\GlueApplication\Controller\ErrorControllerInterface;
 use Spryker\Glue\GlueApplication\GlueApplicationConfig;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
@@ -128,13 +129,14 @@ class ControllerFilter implements ControllerFilterInterface
     {
         try {
             $restErrorMessageTransfer = $this->httpRequestValidator->validate($httpRequest);
-            if ($restErrorMessageTransfer) {
-                return new Response($restErrorMessageTransfer->getDetail(), $restErrorMessageTransfer->getStatus());
-            }
 
             if ($controller instanceof FormattedAbstractController) {
-                return $controller->$action($httpRequest);
+                return $this->filterFormattedAbstractController($controller, $action, $httpRequest, $restErrorMessageTransfer);
             }
+
+
+            // TODO
+
 
             $restRequest = $this->requestFormatter->formatRequest($httpRequest);
             $restErrorCollectionTransfer = $this->validateRequest($controller, $httpRequest, $restRequest);
@@ -145,6 +147,28 @@ class ControllerFilter implements ControllerFilterInterface
         } catch (Exception $exception) {
             return $this->handleException($exception);
         }
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Controller\FormattedAbstractController $formattedAbstractController
+     * @param string $action
+     * @param \Symfony\Component\HttpFoundation\Request $httpRequest
+     * @param \Generated\Shared\Transfer\RestErrorMessageTransfer|null $restErrorMessageTransfer
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    protected function filterFormattedAbstractController(
+        FormattedAbstractController $formattedAbstractController,
+        string $action,
+        Request $httpRequest,
+        RestErrorMessageTransfer $restErrorMessageTransfer = null
+    ): Response
+    {
+        if ($restErrorMessageTransfer) {
+            return new Response($restErrorMessageTransfer->getDetail(), $restErrorMessageTransfer->getStatus());
+        }
+
+        return $formattedAbstractController->$action($httpRequest);
     }
 
     /**
