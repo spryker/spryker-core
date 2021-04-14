@@ -7,14 +7,12 @@
 
 namespace Spryker\Zed\ProductLabel\Business\ProductAbstractRelation;
 
-use Generated\Shared\Transfer\FilterTransfer;
-use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Zed\ProductLabel\Business\Touch\ProductAbstractRelationTouchManagerInterface;
 use Spryker\Zed\ProductLabel\Persistence\ProductLabelEntityManager;
 use Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface;
 use Spryker\Zed\ProductLabel\Persistence\ProductLabelRepositoryInterface;
-use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 use Spryker\Zed\ProductLabel\ProductLabelConfig;
+use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class ProductAbstractRelationDeleter implements ProductAbstractRelationDeleterInterface
 {
@@ -46,8 +44,6 @@ class ProductAbstractRelationDeleter implements ProductAbstractRelationDeleterIn
     private $productLabelEntityManager;
 
     /**
-     * ProductAbstractRelationDeleter constructor.
-     *
      * @param \Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\ProductLabel\Business\Touch\ProductAbstractRelationTouchManagerInterface $productRelationTouchManager
      * @param \Spryker\Zed\ProductLabel\Persistence\ProductLabelRepositoryInterface $productLabelRepository

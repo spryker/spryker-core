@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\ProductLabel;
 
-use Spryker\Zed\Kernel\AbstractBundleConfig;
 use Spryker\Shared\ProductLabel\ProductLabelConstants;
+use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductLabelConfig extends AbstractBundleConfig
 {
