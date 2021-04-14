@@ -163,9 +163,8 @@ class ControllerFilter implements ControllerFilterInterface
         FormattedAbstractController $formattedAbstractController,
         string $action,
         Request $httpRequest,
-        RestErrorMessageTransfer $restErrorMessageTransfer = null
-    ): Response
-    {
+        ?RestErrorMessageTransfer $restErrorMessageTransfer = null
+    ): Response {
         if ($restErrorMessageTransfer) {
             return new Response($restErrorMessageTransfer->getDetail(), $restErrorMessageTransfer->getStatus());
         }
