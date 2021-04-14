@@ -10,8 +10,10 @@ namespace Spryker\Zed\MerchantProduct\Business\Reader;
 use ArrayObject;
 use Generated\Shared\Transfer\MerchantProductCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantProductTransfer;
+use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Spryker\Zed\MerchantProduct\Business\Exception\EmptyRequiredPropertyException;
 use Spryker\Zed\MerchantProduct\Dependency\Facade\MerchantProductToProductFacadeInterface;
 use Spryker\Zed\MerchantProduct\Persistence\MerchantProductRepositoryInterface;
 
@@ -84,5 +86,54 @@ class MerchantProductReader implements MerchantProductReaderInterface
         $productConcreteTransfers = $this->productFacade->getProductConcreteTransfersByProductIds($productConcreteIds);
 
         return (new ProductConcreteCollectionTransfer())->setProducts(new ArrayObject($productConcreteTransfers));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer
+     *
+     * @throws \Spryker\Zed\MerchantProduct\Business\Exception\EmptyRequiredPropertyException
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
+     */
+    public function findProductConcrete(
+        MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer
+    ): ?ProductConcreteTransfer {
+        if (!count($merchantProductCriteriaTransfer->getProductConcreteIds())) {
+            throw new EmptyRequiredPropertyException(MerchantProductCriteriaTransfer::PRODUCT_CONCRETE_IDS);
+        }
+
+        $merchantProductTransfer = $this->merchantProductRepository->findMerchantProduct($merchantProductCriteriaTransfer);
+
+        if (!$merchantProductTransfer || !$merchantProductTransfer->getProducts()->count()) {
+            return null;
+        }
+
+        $idProductConcrete = $merchantProductCriteriaTransfer->getProductConcreteIds()[0];
+
+        foreach ($merchantProductTransfer->getProducts() as $productConcreteTransfer) {
+            if ($idProductConcrete === $productConcreteTransfer->getIdProductConcreteOrFail()) {
+                return $this->productFacade->findProductConcreteById($productConcreteTransfer->getIdProductConcreteOrFail());
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     *
+     * @return bool
+     */
+    public function isProductConcreteOwnedByMerchant(
+        ProductConcreteTransfer $productConcreteTransfer,
+        MerchantTransfer $merchantTransfer
+    ): bool {
+        $merchantProductCriteriaTransfer = (new MerchantProductCriteriaTransfer())
+            ->addIdMerchant($merchantTransfer->getIdMerchantOrFail())
+            ->addIdProductConcrete($productConcreteTransfer->getIdProductConcreteOrFail());
+        $merchantTransfer = $this->merchantProductRepository->findMerchant($merchantProductCriteriaTransfer);
+
+        return $merchantTransfer !== null;
     }
 }

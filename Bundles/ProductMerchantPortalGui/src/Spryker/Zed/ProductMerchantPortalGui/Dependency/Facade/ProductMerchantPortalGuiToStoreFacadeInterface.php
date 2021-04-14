@@ -13,4 +13,9 @@ interface ProductMerchantPortalGuiToStoreFacadeInterface
      * @return \Generated\Shared\Transfer\StoreTransfer[]
      */
     public function getAllStores();
+
+    /**
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    public function getCurrentStore();
 }

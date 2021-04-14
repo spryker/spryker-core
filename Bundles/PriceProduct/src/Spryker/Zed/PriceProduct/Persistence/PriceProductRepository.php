@@ -237,6 +237,13 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
                 ->endUse();
         }
 
+        if ($priceProductCriteriaTransfer->getIdProductConcrete()) {
+            $priceProductStoreQuery
+                ->usePriceProductQuery()
+                    ->filterByFkProduct($priceProductCriteriaTransfer->getIdProductConcrete())
+                ->endUse();
+        }
+
         if ($priceProductCriteriaTransfer->getPriceProductStoreIds()) {
             $priceProductStoreQuery->filterByIdPriceProductStore_In($priceProductCriteriaTransfer->getPriceProductStoreIds());
         }
@@ -528,10 +535,9 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
             ->addAsColumn('product_sku', SpyProductTableMap::COL_SKU)
             ->innerJoinWithPriceProduct()
             ->usePriceProductQuery()
-                ->innerJoinWithSpyProductAbstract()
                 ->joinWithPriceType()
-                ->useSpyProductAbstractQuery()
-                    ->innerJoinWithSpyProduct()
+                ->useSpyProductAbstractQuery(null, Criteria::LEFT_JOIN)
+                    ->leftJoinWithSpyProduct()
                 ->endUse()
             ->endUse()
             ->find();

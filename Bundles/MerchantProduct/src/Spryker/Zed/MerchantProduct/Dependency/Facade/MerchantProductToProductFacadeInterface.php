@@ -31,4 +31,11 @@ interface MerchantProductToProductFacadeInterface
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
     public function getProductConcreteTransfersByProductIds(array $productIds): array;
+
+    /**
+     * @param int $idProduct
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
+     */
+    public function findProductConcreteById($idProduct);
 }
