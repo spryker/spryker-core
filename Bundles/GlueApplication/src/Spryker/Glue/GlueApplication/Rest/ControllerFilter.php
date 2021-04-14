@@ -134,12 +134,14 @@ class ControllerFilter implements ControllerFilterInterface
                 return $this->filterFormattedAbstractController($controller, $action, $httpRequest, $restErrorMessageTransfer);
             }
 
-
-            // TODO
-
-
             $restRequest = $this->requestFormatter->formatRequest($httpRequest);
-            $restErrorCollectionTransfer = $this->validateRequest($controller, $httpRequest, $restRequest);
+
+            if ($restErrorMessageTransfer) {
+                $restErrorCollectionTransfer = (new RestErrorCollectionTransfer())->addRestError($restErrorMessageTransfer);
+            } else {
+                $restErrorCollectionTransfer = $this->validateRequest($controller, $httpRequest, $restRequest);
+            }
+
             $restResponse = $this->getRestResponse($restRequest, $restErrorCollectionTransfer, $controller, $action);
             $httpResponse = $this->responseFormatter->format($restResponse, $restRequest);
 
