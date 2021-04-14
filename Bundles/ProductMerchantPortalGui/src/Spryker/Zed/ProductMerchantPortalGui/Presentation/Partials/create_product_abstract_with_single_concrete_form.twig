@@ -29,6 +29,7 @@
                         value="{{ form.concreteSku.vars.value }}"
                         placeholder="{{ form.concreteSku.vars.attr.placeholder }}"
                         isAutogenerate="{{ form.autogenerateSku.vars.checked }}"
+                        {% if form.concreteSku.vars.errors %}error="{{ form.concreteSku.vars.errors[0].message | default | trans }}"{% endif %}
                     >
                         {{ 'Autogenerate SKU' | trans }}
                     </web-mp-autogenerate-input>

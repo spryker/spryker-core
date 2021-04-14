@@ -7,13 +7,8 @@
 
 namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Controller;
 
-use Generated\Shared\Transfer\LocalizedAttributesTransfer;
-use Generated\Shared\Transfer\ProductAbstractLocalizedAttributesTransfer;
-use Generated\Shared\Transfer\ProductAbstractTransfer;
-use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\CreateProductAbstractForm;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,9 +24,11 @@ class CreateProductAbstractController extends AbstractController
     protected const RESPONSE_KEY_TYPE = 'type';
     protected const RESPONSE_KEY_MESSAGE = 'message';
 
+    protected const RESPONSE_TYPE_SUCCESS = 'success';
     protected const RESPONSE_TYPE_ERROR = 'error';
     protected const RESPONSE_TYPE_REFRESH_TABLE = 'refresh_table';
     protected const RESPONSE_TYPE_CLOSE_OVERLAY = 'close_overlay';
+    protected const RESPONSE_MESSAGE_SUCCESS = 'Product successfully created!';
     protected const RESPONSE_MESSAGE_ERROR = 'Please resolve all errors.';
 
     /**
@@ -116,6 +113,12 @@ class CreateProductAbstractController extends AbstractController
                     ],
                     [
                         static::RESPONSE_KEY_TYPE => static::RESPONSE_TYPE_REFRESH_TABLE,
+                    ],
+                ],
+                static::RESPONSE_KEY_NOTIFICATIONS => [
+                    [
+                        static::RESPONSE_KEY_TYPE => static::RESPONSE_TYPE_SUCCESS,
+                        static::RESPONSE_KEY_MESSAGE => static::RESPONSE_MESSAGE_SUCCESS,
                     ],
                 ],
 

@@ -27,11 +27,11 @@ class PriceProductOfferWriterStep extends PublishAwareStep implements DataImport
         /** @var \Orm\Zed\PriceProductOffer\Persistence\SpyPriceProductOffer|null $priceProductOfferEntity */
         $priceProductOfferEntity = SpyPriceProductOfferQuery::create()
             ->filterByFkProductOffer($dataSet[PriceProductOfferDataSetInterface::FK_PRODUCT_OFFER])
-            ->useSpyPriceProductStoreQuery()
-                ->filterByFkStore($dataSet[PriceProductOfferDataSetInterface::FK_STORE])
-                ->filterByFkCurrency($dataSet[PriceProductOfferDataSetInterface::FK_CURRENCY])
-                ->filterByFkPriceProduct($dataSet[PriceProductOfferDataSetInterface::FK_PRICE_PRODUCT])
-            ->endUse()
+//            ->useSpyPriceProductStoreQuery()
+//                ->filterByFkStore($dataSet[PriceProductOfferDataSetInterface::FK_STORE])
+//                ->filterByFkCurrency($dataSet[PriceProductOfferDataSetInterface::FK_CURRENCY])
+//                ->filterByFkPriceProduct($dataSet[PriceProductOfferDataSetInterface::FK_PRICE_PRODUCT])
+//            ->endUse()
             ->findOne();
 
         if ($priceProductOfferEntity === null) {

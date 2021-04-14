@@ -71,9 +71,8 @@ class CreateProductAbstractWithSingleConcreteFormSubmitter implements CreateProd
         $productAbstractTransfer = (new ProductAbstractTransfer())
             ->setSku($formData[CreateProductAbstractWithSingleConcreteForm::FIELD_SKU])
             ->setName($formData[CreateProductAbstractWithSingleConcreteForm::FIELD_NAME])
-            ->setIdMerchant($merchantUserTransfer->getIdMerchantOrFail())
-//            ->setIdTaxSet(2)
-        ;
+            ->setIdMerchant($merchantUserTransfer->getIdMerchantOrFail());
+
         $productConcreteTransfer = (new ProductConcreteTransfer())
             ->setName($formData[CreateProductAbstractWithSingleConcreteForm::FIELD_CONCRETE_NAME])
             ->setSku($formData[CreateProductAbstractWithSingleConcreteForm::FIELD_CONCRETE_SKU])

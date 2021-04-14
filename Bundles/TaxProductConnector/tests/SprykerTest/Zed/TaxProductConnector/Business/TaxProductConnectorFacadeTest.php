@@ -20,7 +20,6 @@ use Spryker\Zed\Product\ProductDependencyProvider;
 use Spryker\Zed\Tax\Business\TaxFacade;
 use Spryker\Zed\Tax\Business\TaxFacadeInterface;
 use Spryker\Zed\TaxProductConnector\Business\Exception\ProductAbstractNotFoundException;
-use Spryker\Zed\TaxProductConnector\Business\Exception\TaxSetNotFoundException;
 use Spryker\Zed\TaxProductConnector\Business\TaxProductConnectorFacade;
 use Spryker\Zed\TaxProductConnector\Business\TaxProductConnectorFacadeInterface;
 use Spryker\Zed\TaxProductConnector\Communication\Plugin\TaxSetProductAbstractReadPlugin;
@@ -110,15 +109,15 @@ class TaxProductConnectorFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testAddTaxSetWhenTaxSetDoesNotExistShouldThrowException(): void
+    public function testAddTaxSetWhenTaxSetDoesNotExistShouldDoNothing(): void
     {
-        $this->expectException(TaxSetNotFoundException::class);
-
         $productAbstractTransfer = new ProductAbstractTransfer();
         $productAbstractTransfer->setIdProductAbstract(-1);
 
         $taxProductConnectorFacade = $this->createTaxProductConnectorFacade();
         $taxProductConnectorFacade->mapTaxSet($productAbstractTransfer);
+
+        $this->assertNull($productAbstractTransfer->getIdTaxSet());
     }
 
     /**
