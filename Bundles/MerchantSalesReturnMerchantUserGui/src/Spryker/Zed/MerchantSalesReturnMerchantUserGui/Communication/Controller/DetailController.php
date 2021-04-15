@@ -109,7 +109,7 @@ class DetailController extends AbstractController
     protected function findMerchantOrder(ReturnTransfer $returnTransfer): ?MerchantOrderTransfer
     {
         $merchantOrderCriteriaTransfer = (new MerchantOrderCriteriaTransfer())
-            ->setMerchantOrderReference($returnTransfer->getMerchantSalesOrderReference())
+            ->setMerchantOrderReference($returnTransfer->getMerchantReference())
             ->setWithItems(true);
 
         return $this
