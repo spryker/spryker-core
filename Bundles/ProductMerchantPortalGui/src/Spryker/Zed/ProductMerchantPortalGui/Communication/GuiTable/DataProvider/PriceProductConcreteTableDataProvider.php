@@ -13,7 +13,7 @@ use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortal
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMoneyFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Persistence\ProductMerchantPortalGuiRepositoryInterface;
 
-class PriceProductConcreteTableDataProvider extends PriceProductTableDataProvider
+class PriceProductConcreteTableDataProvider extends AbstractPriceProductTableDataProvider
 {
     /**
      * @var int

@@ -18,7 +18,7 @@ use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortal
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMoneyFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Persistence\ProductMerchantPortalGuiRepositoryInterface;
 
-abstract class PriceProductTableDataProvider extends AbstractGuiTableDataProvider
+abstract class AbstractPriceProductTableDataProvider extends AbstractGuiTableDataProvider
 {
     protected const INDEX_PRICE_TYPE = 0;
     protected const INDEX_AMOUNT_TYPE = 2;

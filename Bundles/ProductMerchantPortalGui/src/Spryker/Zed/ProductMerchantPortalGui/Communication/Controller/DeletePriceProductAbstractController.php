@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @method \Spryker\Zed\ProductMerchantPortalGui\Communication\ProductMerchantPortalGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductMerchantPortalGui\Persistence\ProductMerchantPortalGuiRepositoryInterface getRepository()
  */
-class DeletePriceProductAbstractController extends DeletePriceProductController
+class DeletePriceProductAbstractController extends AbstractDeletePriceProductController
 {
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -25,36 +25,31 @@ class DeletePriceProductAbstractController extends DeletePriceProductController
      */
     public function indexAction(Request $request): JsonResponse
     {
-        $priceProductDefaultIds = array_map(
-            'intval',
-            $this->getFactory()->getUtilEncodingService()->decodeJson(
-                $request->get(PriceProductTableViewTransfer::PRICE_PRODUCT_DEFAULT_IDS),
-                true
-            ) ?: []
-        );
         $idProductAbstract = (int)$request->get(PriceProductTableViewTransfer::ID_PRODUCT_ABSTRACT);
 
         if (!$idProductAbstract) {
             return $this->createErrorResponse();
         }
 
-        $idMerchant = $this->getFactory()->getMerchantUserFacade()->getCurrentMerchantUser()->getIdMerchantOrFail();
+        $idMerchant = $this->getIdMerchantFromCurrentUser();
         $merchantProductTransfer = $this->getFactory()->getMerchantProductFacade()->findMerchantProduct(
-            (new MerchantProductCriteriaTransfer())->addIdMerchant($idMerchant)->setIdProductAbstract($idProductAbstract)
+            (new MerchantProductCriteriaTransfer())
+                ->addIdMerchant($idMerchant)
+                ->setIdProductAbstract($idProductAbstract)
         );
 
         if (!$merchantProductTransfer || !$merchantProductTransfer->getProductAbstract()) {
             return $this->createErrorResponse();
         }
 
-        $priceProductTransfersToRemove = $this->filterPriceProductTransfersByPriceProductDefaultIds(
-            $merchantProductTransfer->getProductAbstractOrFail()->getPrices(),
-            $priceProductDefaultIds
-        );
+        $priceProductTransfers = $merchantProductTransfer
+            ->getProductAbstractOrFail()
+            ->getPrices();
 
-        foreach ($priceProductTransfersToRemove as $priceProductTransfer) {
-            $this->getFactory()->getPriceProductFacade()->removePriceProductDefaultForPriceProduct($priceProductTransfer);
-        }
+        $this->deletePrices(
+            $priceProductTransfers,
+            $this->getDefaultPriceProductIds($request)
+        );
 
         return $this->createSuccessResponse();
     }

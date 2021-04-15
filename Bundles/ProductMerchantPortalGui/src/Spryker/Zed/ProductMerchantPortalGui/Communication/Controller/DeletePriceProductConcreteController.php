@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @method \Spryker\Zed\ProductMerchantPortalGui\Communication\ProductMerchantPortalGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductMerchantPortalGui\Persistence\ProductMerchantPortalGuiRepositoryInterface getRepository()
  */
-class DeletePriceProductConcreteController extends DeletePriceProductController
+class DeletePriceProductConcreteController extends AbstractDeletePriceProductController
 {
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -25,36 +25,27 @@ class DeletePriceProductConcreteController extends DeletePriceProductController
      */
     public function indexAction(Request $request): JsonResponse
     {
-        $priceProductDefaultIds = array_map(
-            'intval',
-            $this->getFactory()->getUtilEncodingService()->decodeJson(
-                $request->get(PriceProductTableViewTransfer::PRICE_PRODUCT_DEFAULT_IDS),
-                true
-            ) ?: []
-        );
         $idProductConcrete = (int)$request->get(PriceProductTableViewTransfer::ID_PRODUCT_CONCRETE);
 
         if (!$idProductConcrete) {
             return $this->createErrorResponse();
         }
 
-        $idMerchant = $this->getFactory()->getMerchantUserFacade()->getCurrentMerchantUser()->getIdMerchantOrFail();
+        $idMerchant = $this->getIdMerchantFromCurrentUser();
         $productConcreteTransfer = $this->getFactory()->getMerchantProductFacade()->findProductConcrete(
-            (new MerchantProductCriteriaTransfer())->addIdMerchant($idMerchant)->addIdProductConcrete($idProductConcrete)
+            (new MerchantProductCriteriaTransfer())
+                ->addIdMerchant($idMerchant)
+                ->addIdProductConcrete($idProductConcrete)
         );
 
         if (!$productConcreteTransfer) {
             return $this->createErrorResponse();
         }
 
-        $priceProductTransfersToRemove = $this->filterPriceProductTransfersByPriceProductDefaultIds(
+        $this->deletePrices(
             $productConcreteTransfer->getPrices(),
-            $priceProductDefaultIds
+            $this->getDefaultPriceProductIds($request)
         );
-
-        foreach ($priceProductTransfersToRemove as $priceProductTransfer) {
-            $this->getFactory()->getPriceProductFacade()->removePriceProductDefaultForPriceProduct($priceProductTransfer);
-        }
 
         return $this->createSuccessResponse();
     }

@@ -16,7 +16,7 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
  * @method \Spryker\Zed\ProductMerchantPortalGui\Communication\ProductMerchantPortalGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductMerchantPortalGui\Persistence\ProductMerchantPortalGuiRepositoryInterface getRepository()
  */
-abstract class UpdateProductController extends AbstractController
+abstract class AbstractUpdateProductController extends AbstractController
 {
     protected const RESPONSE_TYPE_SUCCESS = 'success';
     protected const RESPONSE_TYPE_ERROR = 'error';

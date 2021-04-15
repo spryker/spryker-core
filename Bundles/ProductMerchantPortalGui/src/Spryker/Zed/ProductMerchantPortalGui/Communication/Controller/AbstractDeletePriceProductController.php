@@ -8,10 +8,16 @@
 namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Controller;
 
 use ArrayObject;
+use Generated\Shared\Transfer\PriceProductTableViewTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 
-abstract class DeletePriceProductController extends AbstractController
+/**
+ * @method \Spryker\Zed\ProductMerchantPortalGui\Communication\ProductMerchantPortalGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductMerchantPortalGui\Persistence\ProductMerchantPortalGuiRepositoryInterface getRepository()
+ */
+abstract class AbstractDeletePriceProductController extends AbstractController
 {
     protected const RESPONSE_MESSAGE_SUCCESS = 'Success! The Price is deleted.';
     protected const RESPONSE_MESSAGE_ERROR = 'Something went wrong, please try again.';
@@ -31,6 +37,28 @@ abstract class DeletePriceProductController extends AbstractController
      * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      * @param int[] $priceProductDefaultIds
      *
+     * @return void
+     */
+    protected function deletePrices(array $priceProductTransfers, array $priceProductDefaultIds): void
+    {
+        $priceProductTransfersToRemove = $this->filterPriceProductTransfersByPriceProductDefaultIds(
+            $priceProductTransfers,
+            $priceProductDefaultIds
+        );
+
+        foreach ($priceProductTransfersToRemove as $priceProductTransfer) {
+            $this->getFactory()
+                ->getPriceProductFacade()
+                ->removePriceProductDefaultForPriceProduct($priceProductTransfer);
+        }
+    }
+
+    /**
+     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
+     *
+     * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param int[] $priceProductDefaultIds
+     *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     protected function filterPriceProductTransfersByPriceProductDefaultIds(
@@ -40,12 +68,43 @@ abstract class DeletePriceProductController extends AbstractController
         $priceProductTransfersToRemove = [];
 
         foreach ($priceProductTransfers as $priceProductTransfer) {
-            if (in_array($priceProductTransfer->getPriceDimensionOrFail()->getIdPriceProductDefault(), $priceProductDefaultIds)) {
+            $idPriceProductDefault = $priceProductTransfer
+                ->getPriceDimensionOrFail()
+                ->getIdPriceProductDefault();
+
+            if (in_array($idPriceProductDefault, $priceProductDefaultIds)) {
                 $priceProductTransfersToRemove[] = $priceProductTransfer;
             }
         }
 
         return $priceProductTransfersToRemove;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array
+     */
+    protected function getDefaultPriceProductIds(Request $request): array
+    {
+        return array_map(
+            'intval',
+            $this->getFactory()->getUtilEncodingService()->decodeJson(
+                $request->get(PriceProductTableViewTransfer::PRICE_PRODUCT_DEFAULT_IDS),
+                true
+            ) ?: []
+        );
+    }
+
+    /**
+     * @return int
+     */
+    protected function getIdMerchantFromCurrentUser(): int
+    {
+        return $this->getFactory()
+            ->getMerchantUserFacade()
+            ->getCurrentMerchantUser()
+            ->getIdMerchantOrFail();
     }
 
     /**

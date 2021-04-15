@@ -34,6 +34,7 @@ class ProductConcreteForm extends AbstractType
     protected const LABEL_STOCK = 'Stock';
 
     protected const DATE_TIME_FORMAT = 'Y-m-d H:i:s';
+    protected const WIDGET_SINGLE_TEXT = 'single_text';
 
     /**
      * @return string
@@ -128,7 +129,7 @@ class ProductConcreteForm extends AbstractType
             'constraints' => [
                 new ValidFromRangeConstraint(),
             ],
-            'widget' => 'single_text',
+            'widget' => static::WIDGET_SINGLE_TEXT,
         ]);
 
         $builder->get(ProductConcreteTransfer::VALID_FROM)
@@ -152,7 +153,7 @@ class ProductConcreteForm extends AbstractType
             'constraints' => [
                 new ValidToRangeConstraint(),
             ],
-            'widget' => 'single_text',
+            'widget' => static::WIDGET_SINGLE_TEXT,
         ]);
 
         $builder->get(ProductConcreteTransfer::VALID_TO)

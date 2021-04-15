@@ -21,7 +21,7 @@ use Symfony\Component\HttpFoundation\Response;
  * @method \Spryker\Zed\ProductMerchantPortalGui\Communication\ProductMerchantPortalGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductMerchantPortalGui\Persistence\ProductMerchantPortalGuiRepositoryInterface getRepository()
  */
-class UpdateProductAbstractController extends UpdateProductController
+class UpdateProductAbstractController extends AbstractUpdateProductController
 {
     protected const PARAM_ID_PRODUCT_ABSTRACT = 'product-abstract-id';
 

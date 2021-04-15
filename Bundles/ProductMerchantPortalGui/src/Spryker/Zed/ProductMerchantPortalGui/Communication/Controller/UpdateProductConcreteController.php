@@ -27,7 +27,7 @@ use Symfony\Component\HttpFoundation\Response;
  * @method \Spryker\Zed\ProductMerchantPortalGui\Communication\ProductMerchantPortalGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductMerchantPortalGui\Persistence\ProductMerchantPortalGuiRepositoryInterface getRepository()
  */
-class UpdateProductConcreteController extends UpdateProductController
+class UpdateProductConcreteController extends AbstractUpdateProductController
 {
     protected const PARAM_PRODUCT_ID = 'product-id';
 
@@ -52,13 +52,20 @@ class UpdateProductConcreteController extends UpdateProductController
 
         $productConcreteEditForm = $this->getFactory()->createProductConcreteEditForm($formData, $formOptions);
         $productConcreteEditForm->handleRequest($request);
-        $initialData = $this->getDefaultInitialData($request->get($productConcreteEditForm->getName())[ProductConcreteEditForm::FIELD_PRODUCT_CONCRETE]);
+        $initialData = $this->getDefaultInitialData(
+            $request->get($productConcreteEditForm->getName())[ProductConcreteEditForm::FIELD_PRODUCT_CONCRETE]
+        );
 
-        if (!$productConcreteEditForm->isSubmitted()) {
-            return $this->getResponse($productConcreteEditForm, $productConcreteTransfer, new ValidationResponseTransfer(), $initialData);
+        if ($productConcreteEditForm->isSubmitted()) {
+            return $this->executeProductConcreteEditFormSubmission($productConcreteEditForm, $initialData);
         }
 
-        return $this->executeProductConcreteEditFormSubmission($productConcreteEditForm, $initialData);
+        return $this->getResponse(
+            $productConcreteEditForm,
+            $productConcreteTransfer,
+            new ValidationResponseTransfer(),
+            $initialData
+        );
     }
 
     /**
@@ -97,43 +104,27 @@ class UpdateProductConcreteController extends UpdateProductController
             ->validatePrices($productConcreteTransfer->getPrices());
         $merchantProductValidationResponseTransfer = new ValidationResponseTransfer();
 
-        $initialData = $this->getFactory()->createPriceProductMapper()->mapValidationResponseTransferToInitialDataErrors(
-            $pricesValidationResponseTransfer,
-            $initialData
-        );
+        $initialData = $this->getFactory()
+            ->createPriceProductMapper()
+            ->mapValidationResponseTransferToInitialDataErrors($pricesValidationResponseTransfer, $initialData);
 
         if ($productConcreteEditForm->isValid() && $pricesValidationResponseTransfer->getIsSuccess()) {
-            $idMerchant = $this->getFactory()->getMerchantUserFacade()->getCurrentMerchantUser()->getIdMerchantOrFail();
-            $merchantProductValidationResponseTransfer = $this->getFactory()
-                ->getMerchantProductFacade()->validateMerchantProduct(
-                    (new MerchantProductTransfer())->setIdMerchant($idMerchant)->setProductAbstract(
-                        (new ProductAbstractTransfer())->setIdProductAbstract($productConcreteTransfer->getFkProductAbstractOrFail())
-                    )
-                );
+            $merchantProductValidationResponseTransfer = $this->validateMerchantProduct(
+                $this->getIdMerchantFromCurrentUser(),
+                $productConcreteTransfer->getFkProductAbstractOrFail()
+            );
 
-            if (!$merchantProductValidationResponseTransfer->getIsSuccess()) {
-                return $this->getResponse($productConcreteEditForm, $productConcreteTransfer, $merchantProductValidationResponseTransfer, $initialData);
+            if ($merchantProductValidationResponseTransfer->getIsSuccess()) {
+                $this->saveProductConcreteData($productConcreteEditForm, $productConcreteTransfer);
             }
-
-            if ($productConcreteEditForm->getData()[ProductConcreteEditForm::FIELD_USE_ABSTRACT_PRODUCT_PRICES]) {
-                $priceProductCriteriaTransfer = (new PriceProductCriteriaTransfer())
-                    ->setIdProductConcrete($productConcreteTransfer->getIdProductConcreteOrFail());
-
-                $priceProductTransfers = $this->getFactory()->getPriceProductFacade()->findProductConcretePricesWithoutPriceExtraction(
-                    $productConcreteTransfer->getIdProductConcreteOrFail(),
-                    $productConcreteTransfer->getFkProductAbstractOrFail(),
-                    $priceProductCriteriaTransfer
-                );
-                foreach ($priceProductTransfers as $priceProductTransfer) {
-                    $this->getFactory()->getPriceProductFacade()->removePriceProductDefaultForPriceProduct($priceProductTransfer);
-                }
-                $productConcreteTransfer->setPrices(new ArrayObject());
-            }
-
-            $this->getFactory()->getProductFacade()->saveProductConcrete($productConcreteTransfer);
         }
 
-        return $this->getResponse($productConcreteEditForm, $productConcreteTransfer, $merchantProductValidationResponseTransfer, $initialData);
+        return $this->getResponse(
+            $productConcreteEditForm,
+            $productConcreteTransfer,
+            $merchantProductValidationResponseTransfer,
+            $initialData
+        );
     }
 
     /**
@@ -203,5 +194,70 @@ class UpdateProductConcreteController extends UpdateProductController
         }
 
         return new JsonResponse($responseData);
+    }
+
+    /**
+     * @param int $idMerchant
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\ValidationResponseTransfer
+     */
+    protected function validateMerchantProduct(int $idMerchant, int $idProductAbstract): ValidationResponseTransfer
+    {
+        $productAbstractTransfer = (new ProductAbstractTransfer())
+            ->setIdProductAbstract($idProductAbstract);
+
+        $merchantProductTransfer = (new MerchantProductTransfer())
+            ->setIdMerchant($idMerchant)
+            ->setProductAbstract($productAbstractTransfer);
+
+        return $this->getFactory()
+            ->getMerchantProductFacade()
+            ->validateMerchantProduct($merchantProductTransfer);
+    }
+
+    /**
+     * @return int
+     */
+    protected function getIdMerchantFromCurrentUser(): int
+    {
+        return $this->getFactory()
+            ->getMerchantUserFacade()
+            ->getCurrentMerchantUser()
+            ->getIdMerchantOrFail();
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $productConcreteEditForm
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return void
+     */
+    protected function saveProductConcreteData(
+        FormInterface $productConcreteEditForm,
+        ProductConcreteTransfer $productConcreteTransfer
+    ): void {
+        if ($productConcreteEditForm->getData()[ProductConcreteEditForm::FIELD_USE_ABSTRACT_PRODUCT_PRICES]) {
+            $priceProductCriteriaTransfer = (new PriceProductCriteriaTransfer())
+                ->setIdProductConcrete($productConcreteTransfer->getIdProductConcreteOrFail());
+
+            $priceProductTransfers = $this->getFactory()
+                ->getPriceProductFacade()
+                ->findProductConcretePricesWithoutPriceExtraction(
+                    $productConcreteTransfer->getIdProductConcreteOrFail(),
+                    $productConcreteTransfer->getFkProductAbstractOrFail(),
+                    $priceProductCriteriaTransfer
+                );
+
+            foreach ($priceProductTransfers as $priceProductTransfer) {
+                $this->getFactory()
+                    ->getPriceProductFacade()
+                    ->removePriceProductDefaultForPriceProduct($priceProductTransfer);
+            }
+
+            $productConcreteTransfer->setPrices(new ArrayObject());
+        }
+
+        $this->getFactory()->getProductFacade()->saveProductConcrete($productConcreteTransfer);
     }
 }

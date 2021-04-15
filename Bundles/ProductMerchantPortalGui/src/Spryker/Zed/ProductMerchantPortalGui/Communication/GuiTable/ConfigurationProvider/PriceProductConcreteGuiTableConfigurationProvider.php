@@ -24,7 +24,7 @@ class PriceProductConcreteGuiTableConfigurationProvider implements PriceProductC
     protected const TITLE_EDITABLE_BUTTON = 'Add';
 
     /**
-     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\UpdateProductconcreteController::priceTableDataAction()
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\UpdateProductConcreteController::priceTableDataAction()
      */
     protected const DATA_URL = '/product-merchant-portal-gui/update-product-concrete/price-table-data';
 
