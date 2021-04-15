@@ -21,6 +21,7 @@ use Twig\Environment;
 class UserTwigPlugin extends AbstractPlugin implements TwigPluginInterface
 {
     protected const TWIG_GLOBAL_VARIABLE_USERNAME = 'username';
+    protected const TWIG_GLOBAL_VARIABLE_USER_EMAIL = 'userEmail';
 
     /**
      * {@inheritDoc}
@@ -47,6 +48,7 @@ class UserTwigPlugin extends AbstractPlugin implements TwigPluginInterface
     protected function addTwigGlobalVariables(Environment $twig): Environment
     {
         $twig->addGlobal(static::TWIG_GLOBAL_VARIABLE_USERNAME, $this->getUsername());
+        $twig->addGlobal(static::TWIG_GLOBAL_VARIABLE_USER_EMAIL, $this->getUserEmail());
 
         return $twig;
     }
@@ -64,5 +66,20 @@ class UserTwigPlugin extends AbstractPlugin implements TwigPluginInterface
         }
 
         return $username;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getUserEmail(): string
+    {
+        $userEmail = '';
+
+        if ($this->getFacade()->hasCurrentUser()) {
+            $user = $this->getFacade()->getCurrentUser();
+            $userEmail = $user->getUsernameOrFail();
+        }
+
+        return $userEmail;
     }
 }

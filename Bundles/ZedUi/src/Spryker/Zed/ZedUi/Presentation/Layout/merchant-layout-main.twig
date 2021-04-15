@@ -1,10 +1,31 @@
 {% extends '@ZedUi/Layout/layout.twig' %}
 
 {% block body %}
-    {% if navigation is defined %}
-        {% set navigationConfig = render_navigation_component_config(navigation.menu) %}
+    {% if app.twig.getFunction('navigation') != false %}
+        {% set navigationConfig = render_navigation_component_config(navigation('main').menu) %}
+        {% set userMenuNavigationItems = navigation('secondary').menu %}
+
         <web-mp-merchant-layout-main cloak navigation-config="{{ navigationConfig }}">
-            <web-mp-header name="header"></web-mp-header>
+            <web-mp-header header>
+                <web-mp-header-menu menu>
+                    {% if username is not empty %}
+                        <span info-primary>{{ username }}</span>
+                    {% endif %}
+
+                    {% if userEmail is not empty %}
+                        <span info-secondary>{{ userEmail }}</span>
+                    {% endif %}
+
+                    {% for userMenuNavigationItem in userMenuNavigationItems %}
+                        <a href="{{ userMenuNavigationItem.uri }}">
+                            <web-spy-user-menu-link
+                                {% if userMenuNavigationItem.type is not empty %}type="{{ userMenuNavigationItem.type }}"{% endif %}>
+                                {{ userMenuNavigationItem.title }}
+                            </web-spy-user-menu-link>
+                        </a>
+                    {% endfor %}
+                </web-mp-header-menu>
+            </web-mp-header>
 
             {% include '@ZedUi/Partials/FlashMessages/flash-messages.twig' %}
 

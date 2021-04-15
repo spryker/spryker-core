@@ -31,6 +31,8 @@ class MenuFormatter implements MenuFormatterInterface
     public const IS_ACTIVE = 'is_active';
     public const CHILD_IS_ACTIVE = 'child_is_active';
 
+    protected const TYPE = 'type';
+
     /**
      * @var \Spryker\Zed\ZedNavigation\Business\Model\Validator\UrlUniqueValidatorInterface
      */
@@ -164,6 +166,8 @@ class MenuFormatter implements MenuFormatterInterface
         if (isset($page[self::SHORTCUT]) && strlen($page[self::SHORTCUT]) === 1) {
             $formattedPage[self::SHORTCUT] = $page[self::SHORTCUT];
         }
+
+        $formattedPage[static::TYPE] = $page[static::TYPE] ?? null;
 
         return $formattedPage;
     }

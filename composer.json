@@ -780,6 +780,8 @@
     "spryker/user-extension": "*",
     "spryker/user-locale": "*",
     "spryker/user-locale-gui": "*",
+    "spryker/user-merchant-portal-gui": "*",
+    "spryker/user-merchant-portal-gui-extension": "*",
     "spryker/user-password-reset": "*",
     "spryker/user-password-reset-extension": "*",
     "spryker/user-password-reset-mail": "*",

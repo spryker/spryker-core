@@ -58,4 +58,12 @@ interface MerchantUserToUserFacadeInterface
      * @return mixed
      */
     public function setCurrentUser(UserTransfer $user);
+
+    /**
+     * @param string $password
+     * @param string $hash
+     *
+     * @return bool
+     */
+    public function isValidPassword($password, $hash);
 }

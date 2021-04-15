@@ -139,6 +139,22 @@ class MerchantUserFacade extends AbstractFacade implements MerchantUserFacadeInt
      *
      * @param \Generated\Shared\Transfer\MerchantUserTransfer $merchantUserTransfer
      *
+     * @return mixed
+     */
+    public function setCurrentMerchantUser(MerchantUserTransfer $merchantUserTransfer)
+    {
+        return $this->getFactory()
+            ->getUserFacade()
+            ->setCurrentUser($merchantUserTransfer->getUserOrFail());
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantUserTransfer $merchantUserTransfer
+     *
      * @return void
      */
     public function authenticateMerchantUser(MerchantUserTransfer $merchantUserTransfer): void
@@ -195,5 +211,20 @@ class MerchantUserFacade extends AbstractFacade implements MerchantUserFacadeInt
         return $this->getFactory()
             ->getUserPasswordResetFacade()
             ->setNewPassword($token, $password);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string $password
+     * @param string $hash
+     *
+     * @return bool
+     */
+    public function isValidPassword($password, $hash): bool
+    {
+        return $this->getFactory()->getUserFacade()->isValidPassword($password, $hash);
     }
 }
