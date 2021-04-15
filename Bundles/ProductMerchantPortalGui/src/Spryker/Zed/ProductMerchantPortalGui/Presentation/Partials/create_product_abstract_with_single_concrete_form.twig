@@ -25,11 +25,11 @@
                               spy-title="{{ form.concreteSku.vars.label | trans }} {{ form.concreteSku.vars.required ? '*' }}"
                               class="{{ mainClass }}__card">
                     <web-mp-autogenerate-input
-                        name="{{ form.concreteSku.vars.full_name }}"
-                        value="{{ form.concreteSku.vars.value }}"
-                        placeholder="{{ form.concreteSku.vars.attr.placeholder }}"
-                        isAutogenerate="{{ form.autogenerateSku.vars.checked }}"
-                        {% if form.concreteSku.vars.errors %}error="{{ form.concreteSku.vars.errors[0].message | default | trans }}"{% endif %}
+                            name="{{ form.concreteSku.vars.full_name }}"
+                            value="{{ form.concreteSku.vars.value }}"
+                            placeholder="{{ form.concreteSku.vars.attr.placeholder }}"
+                            isAutogenerate="{{ form.autogenerateSku.vars.checked }}"
+                            {% if form.concreteSku.vars.errors %}error="{{ form.concreteSku.vars.errors[0].message | default | trans }}"{% endif %}
                     >
                         {{ 'Autogenerate SKU' | trans }}
                     </web-mp-autogenerate-input>
@@ -46,6 +46,7 @@
                         value="{{ form.concreteName.vars.value }}"
                         placeholder="{{ form.concreteName.vars.attr.placeholder }}"
                         isAutogenerate="{{ form.useAbstractProductName.vars.checked }}"
+                        {% if form.concreteName.vars.errors %}error="{{ form.concreteName.vars.errors[0].message | default | trans }}"{% endif %}
                     >
                         {{ 'Same as Abstract Product' | trans }}
                     </web-mp-autogenerate-input>
