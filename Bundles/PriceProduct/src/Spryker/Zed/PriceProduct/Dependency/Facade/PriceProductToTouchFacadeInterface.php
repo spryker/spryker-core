@@ -11,21 +11,24 @@ interface PriceProductToTouchFacadeInterface
 {
     /**
      * @param string $itemType
-     * @param int $itemId
+     * @param int $idItem
+     * @param bool $keyChange
      *
      * @return bool
      */
-    public function touchActive($itemType, $itemId);
+    public function touchActive($itemType, $idItem, $keyChange = false);
 
     /**
      * @param string $itemType
-     * @param int $itemId
+     * @param int $idItem
      *
      * @return bool
      */
-    public function touchDeleted($itemType, $itemId);
+    public function touchDeleted($itemType, $idItem);
 
     /**
+     * @phpstan-param array<int> $itemIds
+     *
      * @param string $itemType
      * @param array $itemIds
      *
@@ -34,6 +37,8 @@ interface PriceProductToTouchFacadeInterface
     public function bulkTouchActive($itemType, array $itemIds);
 
     /**
+     * @phpstan-param array<int> $itemIds
+     *
      * @param string $itemType
      * @param array $itemIds
      *

@@ -330,8 +330,9 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
         $idStore,
         array $stockNames = []
     ) {
-        $query = $this->queryAvailabilityAbstractWithStockByIdLocale($idLocale, $idStore, $stockNames)
-            ->filterByIdProductAbstract($idProductAbstract);
+        /** @var \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $query */
+        $query = $this->queryAvailabilityAbstractWithStockByIdLocale($idLocale, $idStore, $stockNames);
+        $query->filterByIdProductAbstract($idProductAbstract);
 
         return $query;
     }
@@ -354,8 +355,11 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
         int $idStore,
         array $stockNames = []
     ): SpyProductAbstractQuery {
-        return $this->queryAvailabilityAbstractWithStockByIdLocale($idLocale, $idStore, $stockNames)
-            ->filterByIdProductAbstract_In($productAbstractIds);
+        /** @var \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $query */
+        $query = $this->queryAvailabilityAbstractWithStockByIdLocale($idLocale, $idStore, $stockNames);
+        $query->filterByIdProductAbstract_In($productAbstractIds);
+
+        return $query;
     }
 
     /**

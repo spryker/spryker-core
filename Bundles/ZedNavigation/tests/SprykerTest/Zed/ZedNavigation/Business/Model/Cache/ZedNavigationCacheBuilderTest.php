@@ -32,14 +32,18 @@ class ZedNavigationCacheBuilderTest extends ZedNavigationBusinessTester
         //prepare
         $navigationCacheMock = $this->getZedNavigationCacheMock();
         $navigationCollectorMock = $this->getZedNavigationCollectorMock();
-        $navigationCacheBuilder = new ZedNavigationCacheBuilder($navigationCollectorMock, $navigationCacheMock);
+        $navigationCacheBuilder = new ZedNavigationCacheBuilder(
+            $navigationCollectorMock,
+            $navigationCacheMock,
+            $this->getZedNavigationConfigMock()
+        );
         $expectedNavigation = [['key' => 'value']];
 
         //assert
-        $navigationCacheMock->expects($this->once())
+        $navigationCacheMock->expects($this->atLeastOnce())
             ->method('setNavigation')
             ->with($this->equalTo($expectedNavigation));
-        $navigationCollectorMock->expects($this->once())
+        $navigationCollectorMock->expects($this->atLeastOnce())
             ->method('getNavigation')
             ->will($this->returnValue($expectedNavigation));
 

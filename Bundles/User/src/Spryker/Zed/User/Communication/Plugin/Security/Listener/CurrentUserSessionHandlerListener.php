@@ -56,21 +56,22 @@ class CurrentUserSessionHandlerListener extends AbstractListener
      */
     public function authenticate(RequestEvent $event)
     {
-        if (!$this->tokenStorage->getToken()) {
+        $token = $this->tokenStorage->getToken();
+        if (!$token) {
             return;
         }
 
-        if (!$this->tokenStorage->getToken()->getUser() instanceof UserInterface) {
+        if (!$token->getUser() instanceof UserInterface) {
             return;
         }
 
         $currentUser = $this->userFacade->getCurrentUser();
-        if ($currentUser->getUsername() === $this->tokenStorage->getToken()->getUser()->getUsername()) {
+        if ($currentUser->getUsername() === $token->getUser()->getUsername()) {
             return;
         }
 
         $currentUser = $this->userFacade->getUserByUsername(
-            $this->tokenStorage->getToken()->getUser()->getUsername()
+            $token->getUser()->getUsername()
         );
 
         $this->userFacade->setCurrentUser($currentUser);

@@ -60,7 +60,8 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
     {
         $quoteTransfer->requireStore();
         $isPassed = true;
-        $storeTransfer = $quoteTransfer->getStore();
+        /** @var \Generated\Shared\Transfer\StoreTransfer $storeTransfer */
+        $storeTransfer = $quoteTransfer->requireStore()->getStore();
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $quantity = $this->getAccumulatedItemQuantityForGivenItemSku($quoteTransfer, $itemTransfer);
@@ -68,11 +69,14 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
             $productAvailabilityCriteriaTransfer = (new ProductAvailabilityCriteriaTransfer())
                 ->fromArray($itemTransfer->toArray(), true);
 
-            if ($this->sellable->isProductSellableForStore($itemTransfer->getSku(), $quantity, $storeTransfer, $productAvailabilityCriteriaTransfer)) {
+            /** @var string $sku */
+            $sku = $itemTransfer->requireSku()->getSku();
+
+            if ($this->sellable->isProductSellableForStore($sku, $quantity, $storeTransfer, $productAvailabilityCriteriaTransfer)) {
                 continue;
             }
 
-            $this->addAvailabilityErrorToCheckoutResponse($checkoutResponse, $itemTransfer->getSku());
+            $this->addAvailabilityErrorToCheckoutResponse($checkoutResponse, $sku);
             $isPassed = false;
         }
 
@@ -92,10 +96,16 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
         $cartItemQuantity = $this->executeCartItemQuantityCounterStrategyPlugin($quoteTransfer, $itemTransfer);
 
         if ($cartItemQuantity) {
-            return (new Decimal(0))->add($cartItemQuantity->getQuantity());
+            /** @var int $quantity */
+            $quantity = $cartItemQuantity->getQuantity();
+
+            return (new Decimal(0))->add($quantity);
         }
 
-        return $this->calculateCurrentCartQuantityForGivenSku($quoteTransfer, $itemTransfer->getSku());
+        /** @var string $sku */
+        $sku = $itemTransfer->requireSku()->getSku();
+
+        return $this->calculateCurrentCartQuantityForGivenSku($quoteTransfer, $sku);
     }
 
     /**
@@ -113,7 +123,10 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
                 continue;
             }
 
-            $quantity = $quantity->add($itemTransfer->getQuantity());
+            /** @var int $itemQuantity */
+            $itemQuantity = $itemTransfer->getQuantity();
+
+            $quantity = $quantity->add($itemQuantity);
         }
 
         return $quantity;

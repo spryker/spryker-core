@@ -22,6 +22,7 @@
     "spryker/store": "^1.5.0",
     "spryker/touch": "^3.0.0 || ^4.0.0",
     "spryker/transfer": "^3.18.0",
+    "spryker/wishlist-extension": "^1.2.0",
     "spryker/zed-request": "^3.0.0"
   },
   "require-dev": {

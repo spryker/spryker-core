@@ -1,0 +1,27 @@
+@import '~@spryker/styles/src/lib/themes/default/variables/index.less';
+
+@header-menu-top-margin: -13px;
+@header-menu-user-info-padding: 12px 15px;
+@header-menu-user-info-primary-bottom-padding: 5px;
+
+.mp-header-menu {
+    display: block;
+    margin-top: @header-menu-top-margin;
+
+    &__user-info {
+        overflow: hidden;
+        word-break: break-all;
+    }
+
+    &__user-info-primary {
+        display: block;
+        font-size: @font-size-lg;
+        font-weight: @font-weight-semi-bold;
+        letter-spacing: @letter-spacing-base;
+        margin-bottom: @header-menu-user-info-primary-bottom-padding;
+    }
+
+    &__user-info-secondary {
+        color: @gray-dark;
+    }
+}

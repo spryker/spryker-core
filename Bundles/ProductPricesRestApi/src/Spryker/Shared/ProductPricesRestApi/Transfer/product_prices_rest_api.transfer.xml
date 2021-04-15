@@ -40,7 +40,31 @@
         <property name="prices" type="array" singular="price"/>
     </transfer>
 
+    <transfer name="RestWishlistItemsAttributes">
+        <property name="prices" type="RestPriceProduct[]" singular="price"/>
+    </transfer>
+
     <transfer name="Currency">
+    </transfer>
+
+    <transfer name="WishlistItem">
+        <property name="prices" type="PriceProduct[]" singular="price"/>
+    </transfer>
+
+    <transfer name="RestPriceProduct">
+        <property name="priceTypeName" type="string"/>
+    </transfer>
+
+    <transfer name="PriceProduct">
+        <property name="moneyValue" type="MoneyValue"/>
+        <property name="priceType"  type="PriceType"/>
+    </transfer>
+
+    <transfer name="MoneyValue">
+    </transfer>
+
+    <transfer name="PriceType">
+        <property name="name" type="string"/>
     </transfer>
 
 </transfers>

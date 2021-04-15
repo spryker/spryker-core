@@ -49,11 +49,16 @@ class PriceProductEntityManager extends AbstractEntityManager implements PricePr
      */
     public function deletePriceProductStore(int $idPriceProductStore): void
     {
-        $this->getFactory()
+        $priceProductStoreEntity = $this->getFactory()
             ->createPriceProductStoreQuery()
             ->filterByIdPriceProductStore($idPriceProductStore)
-            ->findOne()
-            ->delete();
+            ->findOne();
+
+        if (!$priceProductStoreEntity) {
+            return;
+        }
+
+        $priceProductStoreEntity->delete();
     }
 
     /**
@@ -74,17 +79,17 @@ class PriceProductEntityManager extends AbstractEntityManager implements PricePr
      */
     public function deletePriceProductStoreByPriceProductTransfer(PriceProductTransfer $priceProductTransfer): void
     {
-        $priceProductTransfer
-            ->requireMoneyValue();
-
-        $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
+        /** @var \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer */
+        $moneyValueTransfer = $priceProductTransfer->requireMoneyValue()->getMoneyValue();
+        /** @var \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer */
+        $currencyTransfer = $moneyValueTransfer->requireCurrency()->getCurrency();
 
         $moneyValueTransfer
             ->requireCurrency();
 
         $this->getFactory()
             ->createPriceProductStoreQuery()
-            ->filterByFkCurrency($moneyValueTransfer->getCurrency()->getIdCurrency())
+            ->filterByFkCurrency($currencyTransfer->getIdCurrency())
             ->filterByFkPriceProduct($priceProductTransfer->getIdPriceProduct())
             ->filterByFkStore($moneyValueTransfer->getFkStore())
             ->find()

@@ -58,9 +58,10 @@ class WishlistItemDeleter implements WishlistItemDeleterInterface
         );
 
         if (!$deleteWishlistItemResponse->getIsSuccess()) {
-            return $this->wishlistRestResponseBuilder->createErrorResponseFromErrorIdentifier(
-                $deleteWishlistItemResponse->getErrorIdentifier()
-            );
+            /** @var string $errorIdentifier */
+            $errorIdentifier = $deleteWishlistItemResponse->getErrorIdentifier();
+
+            return $this->wishlistRestResponseBuilder->createErrorResponseFromErrorIdentifier($errorIdentifier);
         }
 
         return $this->wishlistRestResponseBuilder->createEmptyResponse();
@@ -73,9 +74,21 @@ class WishlistItemDeleter implements WishlistItemDeleterInterface
      */
     protected function createWishlistItemRequest(RestRequestInterface $restRequest): WishlistItemRequestTransfer
     {
+        /** @var string $idResource */
+        $idResource = $restRequest->getResource()->getId();
+        /** @var \Generated\Shared\Transfer\RestUserTransfer $restUser */
+        $restUser = $restRequest->getRestUser();
+        /** @var int $surrogateIdentifier */
+        $surrogateIdentifier = $restUser->getSurrogateIdentifier();
+
+        /** @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource */
+        $resource = $restRequest->findParentResourceByType(WishlistsRestApiConfig::RESOURCE_WISHLISTS);
+        /** @var string $wishlistUuid */
+        $wishlistUuid = $resource->getId();
+
         return (new WishlistItemRequestTransfer())
-            ->setSku($restRequest->getResource()->getId())
-            ->setUuidWishlist($restRequest->findParentResourceByType(WishlistsRestApiConfig::RESOURCE_WISHLISTS)->getId())
-            ->setIdCustomer($restRequest->getRestUser()->getSurrogateIdentifier());
+            ->setUuid($idResource)
+            ->setUuidWishlist($wishlistUuid)
+            ->setIdCustomer($surrogateIdentifier);
     }
 }

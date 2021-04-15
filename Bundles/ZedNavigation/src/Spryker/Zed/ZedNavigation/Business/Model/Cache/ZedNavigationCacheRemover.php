@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ZedNavigation\Business\Model\Cache;
 
+use Spryker\Zed\ZedNavigation\ZedNavigationConfig;
+
 class ZedNavigationCacheRemover
 {
     /**
@@ -15,11 +17,20 @@ class ZedNavigationCacheRemover
     protected $navigationCache;
 
     /**
-     * @param \Spryker\Zed\ZedNavigation\Business\Model\Cache\ZedNavigationCacheInterface $navigationCache
+     * @var \Spryker\Zed\ZedNavigation\ZedNavigationConfig
      */
-    public function __construct(ZedNavigationCacheInterface $navigationCache)
-    {
+    protected $zedNavigationConfig;
+
+    /**
+     * @param \Spryker\Zed\ZedNavigation\Business\Model\Cache\ZedNavigationCacheInterface $navigationCache
+     * @param \Spryker\Zed\ZedNavigation\ZedNavigationConfig $zedNavigationConfig
+     */
+    public function __construct(
+        ZedNavigationCacheInterface $navigationCache,
+        ZedNavigationConfig $zedNavigationConfig
+    ) {
         $this->navigationCache = $navigationCache;
+        $this->zedNavigationConfig = $zedNavigationConfig;
     }
 
     /**
@@ -27,6 +38,8 @@ class ZedNavigationCacheRemover
      */
     public function removeNavigationCache(): void
     {
-        $this->navigationCache->removeCache();
+        foreach ($this->zedNavigationConfig->getCacheFilePaths() as $cacheFileName) {
+            $this->navigationCache->removeCache($cacheFileName);
+        }
     }
 }

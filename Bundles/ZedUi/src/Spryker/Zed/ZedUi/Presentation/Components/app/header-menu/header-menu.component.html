@@ -1,0 +1,14 @@
+<spy-user-menu>
+    <spy-user-menu-item>
+        <div class="mp-header-menu__user-info">
+            <div class="mp-header-menu__user-info-primary">
+                <ng-content select="[info-primary]"></ng-content>
+            </div>
+            <div class="mp-header-menu__user-info-secondary">
+                <ng-content select="[info-secondary]"></ng-content>
+            </div>
+        </div>
+    </spy-user-menu-item>
+
+    <ng-content></ng-content>
+</spy-user-menu>

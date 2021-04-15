@@ -17,12 +17,15 @@ use Spryker\Zed\SecurityMerchantPortalGui\Communication\Plugin\Security\Handler\
 use Spryker\Zed\SecurityMerchantPortalGui\Communication\Plugin\Security\Provider\MerchantUserProvider;
 use Spryker\Zed\SecurityMerchantPortalGui\Communication\Security\MerchantUser;
 use Spryker\Zed\SecurityMerchantPortalGui\Communication\Security\MerchantUserInterface;
+use Spryker\Zed\SecurityMerchantPortalGui\Communication\Updater\SecurityTokenUpdater;
+use Spryker\Zed\SecurityMerchantPortalGui\Communication\Updater\SecurityTokenUpdaterInterface;
 use Spryker\Zed\SecurityMerchantPortalGui\Dependency\Facade\SecurityMerchantPortalGuiToMerchantUserFacadeInterface;
 use Spryker\Zed\SecurityMerchantPortalGui\Dependency\Facade\SecurityMerchantPortalGuiToMessengerFacadeInterface;
 use Spryker\Zed\SecurityMerchantPortalGui\Dependency\Facade\SecurityMerchantPortalGuiToSecurityFacadeInterface;
 use Spryker\Zed\SecurityMerchantPortalGui\SecurityMerchantPortalGuiConfig;
 use Spryker\Zed\SecurityMerchantPortalGui\SecurityMerchantPortalGuiDependencyProvider;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface;
@@ -94,6 +97,14 @@ class SecurityMerchantPortalGuiCommunicationFactory extends AbstractCommunicatio
     }
 
     /**
+     * @return \Spryker\Zed\SecurityMerchantPortalGui\Communication\Updater\SecurityTokenUpdaterInterface
+     */
+    public function createSecurityTokenUpdater(): SecurityTokenUpdaterInterface
+    {
+        return new SecurityTokenUpdater($this->getTokenStorageService());
+    }
+
+    /**
      * @return \Spryker\Zed\SecurityMerchantPortalGui\Dependency\Facade\SecurityMerchantPortalGuiToMerchantUserFacadeInterface
      */
     public function getMerchantUserFacade(): SecurityMerchantPortalGuiToMerchantUserFacadeInterface
@@ -115,5 +126,13 @@ class SecurityMerchantPortalGuiCommunicationFactory extends AbstractCommunicatio
     public function getSecurityFacade(): SecurityMerchantPortalGuiToSecurityFacadeInterface
     {
         return $this->getProvidedDependency(SecurityMerchantPortalGuiDependencyProvider::FACADE_SECURITY);
+    }
+
+    /**
+     * @return \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface
+     */
+    public function getTokenStorageService(): TokenStorageInterface
+    {
+        return $this->getProvidedDependency(SecurityMerchantPortalGuiDependencyProvider::SERVICE_SECURITY_TOKEN_STORAGE);
     }
 }

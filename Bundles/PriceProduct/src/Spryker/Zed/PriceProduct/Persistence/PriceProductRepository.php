@@ -138,9 +138,12 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
      */
     public function buildUnconditionalDefaultPriceDimensionQueryCriteria(): QueryCriteriaTransfer
     {
-        return $this->getFactory()
+        /** @var \Generated\Shared\Transfer\QueryCriteriaTransfer $defaultPriceDimensionQueryCriteria */
+        $defaultPriceDimensionQueryCriteria = $this->getFactory()
             ->createDefaultPriceQueryExpander()
             ->buildDefaultPriceDimensionQueryCriteria(new PriceProductCriteriaTransfer());
+
+        return $defaultPriceDimensionQueryCriteria;
     }
 
     /**
@@ -312,6 +315,10 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
         array $productAbstractIds,
         ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null
     ): ObjectCollection {
+        if (!$priceProductCriteriaTransfer) {
+            $priceProductCriteriaTransfer = new PriceProductCriteriaTransfer();
+        }
+
         $priceProductStoreQuery = $this->createBasePriceProductStoreQuery($priceProductCriteriaTransfer);
 
         $priceProductStoreQuery
@@ -331,15 +338,15 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
      */
     public function findIdPriceProductStoreByPriceProduct(PriceProductTransfer $priceProductTransfer): ?int
     {
-        $priceProductTransfer->requireMoneyValue();
-
-        $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
-        $moneyValueTransfer->requireCurrency();
+        /** @var \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer */
+        $moneyValueTransfer = $priceProductTransfer->requireMoneyValue()->getMoneyValue();
+        /** @var \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer */
+        $currencyTransfer = $moneyValueTransfer->requireCurrency()->getCurrency();
 
         $priceProductStoreEntity = $this->getFactory()
             ->createPriceProductStoreQuery()
             ->filterByFkPriceProduct($priceProductTransfer->getIdPriceProduct())
-            ->filterByFkCurrency($moneyValueTransfer->getCurrency()->getIdCurrency())
+            ->filterByFkCurrency($currencyTransfer->getIdCurrency())
             ->filterByFkStore($moneyValueTransfer->getFkStore())
             ->findOne();
 
@@ -357,16 +364,17 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
      */
     public function isPriceProductUsedForOtherCurrencyAndStore(PriceProductTransfer $priceProductTransfer): bool
     {
-        $priceProductTransfer->requireIdPriceProduct()
-            ->requireMoneyValue();
+        $priceProductTransfer->requireIdPriceProduct();
 
-        $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
-        $moneyValueTransfer->requireCurrency();
+        /** @var \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer */
+        $moneyValueTransfer = $priceProductTransfer->requireMoneyValue()->getMoneyValue();
+        /** @var \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer */
+        $currencyTransfer = $moneyValueTransfer->requireCurrency()->getCurrency();
 
         $priceProductStoreEntityQuery = $this->getFactory()
             ->createPriceProductStoreQuery()
             ->filterByFkPriceProduct($priceProductTransfer->getIdPriceProduct())
-            ->filterByFkCurrency($moneyValueTransfer->getCurrency()->getIdCurrency(), Criteria::NOT_EQUAL)
+            ->filterByFkCurrency($currencyTransfer->getIdCurrency(), Criteria::NOT_EQUAL)
             ->_or()
             ->filterByFkStore($moneyValueTransfer->getFkStore(), Criteria::NOT_EQUAL);
 
@@ -380,15 +388,15 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
      */
     public function findPriceProductStoresByPriceProduct(PriceProductTransfer $priceProductTransfer): array
     {
-        $priceProductTransfer->requireMoneyValue();
-
-        $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
-        $moneyValueTransfer->requireCurrency();
+        /** @var \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer */
+        $moneyValueTransfer = $priceProductTransfer->requireMoneyValue()->getMoneyValue();
+        /** @var \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer */
+        $currencyTransfer = $moneyValueTransfer->requireCurrency()->getCurrency();
 
         $priceProductStoreEntityQuery = $this->getFactory()
             ->createPriceProductStoreQuery()
             ->filterByFkPriceProduct($priceProductTransfer->getIdPriceProduct())
-            ->filterByFkCurrency($moneyValueTransfer->getCurrency()->getIdCurrency())
+            ->filterByFkCurrency($currencyTransfer->getIdCurrency())
             ->filterByFkStore($moneyValueTransfer->getFkStore());
 
         return $this->buildQueryFromCriteria($priceProductStoreEntityQuery)->find();

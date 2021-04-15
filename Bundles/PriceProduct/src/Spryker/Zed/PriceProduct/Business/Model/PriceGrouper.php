@@ -46,6 +46,8 @@ class PriceGrouper implements PriceGrouperInterface
     }
 
     /**
+     * @phpstan-return array<mixed>
+     *
      * @param string $sku
      * @param \Generated\Shared\Transfer\PriceProductDimensionTransfer|null $priceProductDimensionTransfer
      *
@@ -66,6 +68,8 @@ class PriceGrouper implements PriceGrouperInterface
     }
 
     /**
+     * @phpstan-return array<mixed>
+     *
      * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      *
      * @return array
@@ -81,6 +85,10 @@ class PriceGrouper implements PriceGrouperInterface
     }
 
     /**
+     * @phpstan-param array<mixed> $prices
+     *
+     * @phpstan-return array<mixed>
+     *
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      * @param array $prices
      *
@@ -88,10 +96,16 @@ class PriceGrouper implements PriceGrouperInterface
      */
     protected function groupPriceByCurrencyAndStore(PriceProductTransfer $priceProductTransfer, array $prices): array
     {
-        $priceMoneyValueTransfer = $priceProductTransfer->getMoneyValue();
+        /** @var \Generated\Shared\Transfer\MoneyValueTransfer $priceMoneyValueTransfer */
+        $priceMoneyValueTransfer = $priceProductTransfer->requireMoneyValue()->getMoneyValue();
 
-        $priceType = $priceProductTransfer->getPriceType()->getName();
-        $currencyIsoCode = $priceMoneyValueTransfer->getCurrency()->getCode();
+        /** @var \Generated\Shared\Transfer\PriceTypeTransfer $priceTypeTransfer */
+        $priceTypeTransfer = $priceProductTransfer->requirePriceType()->getPriceType();
+        $priceType = $priceTypeTransfer->getName();
+
+        /** @var \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer */
+        $currencyTransfer = $priceMoneyValueTransfer->requireCurrency()->getCurrency();
+        $currencyIsoCode = $currencyTransfer->getCode();
 
         if (
             !isset($prices[$currencyIsoCode][SharedPriceProductConfig::PRICE_DATA])

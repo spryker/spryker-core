@@ -56,8 +56,10 @@ class WishlistUpdater implements WishlistUpdaterInterface
             return $wishlistResponseTransfer;
         }
 
-        $originalWishlist = $wishlistResponseTransfer->getWishlist();
-        $updatedWishlist = $wishlistRequestTransfer->getWishlist();
+        /** @var \Generated\Shared\Transfer\WishlistTransfer $originalWishlist */
+        $originalWishlist = $wishlistResponseTransfer->requireWishlist()->getWishlist();
+        /** @var \Generated\Shared\Transfer\WishlistTransfer $updatedWishlist */
+        $updatedWishlist = $wishlistRequestTransfer->requireWishlist()->getWishlist();
         $wishlistTransfer = $originalWishlist->fromArray($updatedWishlist->modifiedToArray(), true);
 
         $wishlistResponseTransfer = $this->wishlistFacade->validateAndUpdateWishlist($wishlistTransfer);

@@ -61,8 +61,10 @@ class PriceProductValidator implements PriceProductValidatorInterface
 
         /** @var \Symfony\Component\Validator\ConstraintViolationInterface $constraintViolation */
         foreach ($constraintViolationList as $constraintViolation) {
+            /** @var string $message */
+            $message = $constraintViolation->getMessage();
             $validationErrorTransfer = (new ValidationErrorTransfer())
-                ->setMessage($constraintViolation->getMessage())
+                ->setMessage($message)
                 ->setPropertyPath($constraintViolation->getPropertyPath())
                 ->setInvalidValue($constraintViolation->getInvalidValue())
                 ->setRoot($constraintViolation->getRoot());

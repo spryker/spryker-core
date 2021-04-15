@@ -23,6 +23,8 @@ class PriceProductOfferDependencyProvider extends AbstractBundleDependencyProvid
 
     public const EXTERNAL_ADAPTER_VALIDATION = 'EXTERNAL_ADAPTER_VALIDATION';
 
+    public const PLUGINS_PRICE_PRODUCT_OFFER_EXTRACTOR = 'PLUGINS_PRICE_PRODUCT_OFFER_EXTRACTOR';
+
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -33,6 +35,7 @@ class PriceProductOfferDependencyProvider extends AbstractBundleDependencyProvid
         $container = $this->addPriceProductFacade($container);
         $container = $this->addValidationAdapter($container);
         $container = $this->addStoreFacadeFacade($container);
+        $container = $this->addPriceProductOfferExtractorPlugins($container);
 
         return $container;
     }
@@ -81,5 +84,27 @@ class PriceProductOfferDependencyProvider extends AbstractBundleDependencyProvid
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addPriceProductOfferExtractorPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_PRICE_PRODUCT_OFFER_EXTRACTOR, function () {
+            return $this->getPriceProductOfferExtractorPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductOfferExtension\Dependency\Plugin\PriceProductOfferExtractorPluginInterface[]
+     */
+    protected function getPriceProductOfferExtractorPlugins(): array
+    {
+        return [];
     }
 }

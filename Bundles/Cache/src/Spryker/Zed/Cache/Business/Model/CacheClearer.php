@@ -168,7 +168,7 @@ class CacheClearer implements CacheClearerInterface
     {
         try {
             $finder = clone $this->finder;
-            $iterator = $finder->directories()->depth(0)->in($directoryPattern);
+            $iterator = $finder->directories()->depth(0)->in(dirname($directoryPattern))->name(basename($directoryPattern));
         } catch (DirectoryNotFoundException $e) {
             return '';
         }

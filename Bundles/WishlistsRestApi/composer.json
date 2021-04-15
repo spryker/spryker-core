@@ -12,6 +12,7 @@
     "spryker/symfony": "^3.0.0",
     "spryker/uuid-behavior": "^1.0.0",
     "spryker/wishlist": "^6.5.0 || ^8.1.0",
+    "spryker/wishlists-rest-api-extension": "^1.0.0",
     "spryker/zed-request": "^3.0.0"
   },
   "require-dev": {

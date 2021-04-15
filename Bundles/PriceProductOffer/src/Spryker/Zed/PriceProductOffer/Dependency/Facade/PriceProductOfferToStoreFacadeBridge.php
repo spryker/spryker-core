@@ -31,4 +31,12 @@ class PriceProductOfferToStoreFacadeBridge implements PriceProductOfferToStoreFa
     {
         return $this->storeFacade->getStoreById($idStore);
     }
+
+    /**
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    public function getCurrentStore()
+    {
+        return $this->storeFacade->getCurrentStore();
+    }
 }

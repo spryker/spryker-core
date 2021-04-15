@@ -13,6 +13,8 @@ use Orm\Zed\PriceProduct\Persistence\SpyPriceProduct;
 class BulkWriter extends Writer implements BulkWriterInterface
 {
     /**
+     * @phpstan-var array<mixed>
+     *
      * @var array
      */
     protected $recordsToTouch = [];
@@ -32,7 +34,9 @@ class BulkWriter extends Writer implements BulkWriterInterface
         $persistedPriceProductTransfer = $this->savePriceProductEntity($priceProductTransfer, new SpyPriceProduct());
 
         if ($priceProductTransfer->getIdProduct()) {
-            $this->addRecordToTouch(static::TOUCH_PRODUCT, $priceProductTransfer->getIdProduct());
+            /** @var int $idProduct */
+            $idProduct = $priceProductTransfer->requireIdProduct()->getIdProduct();
+            $this->addRecordToTouch(static::TOUCH_PRODUCT, $idProduct);
         }
 
         /** @var \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer */
@@ -52,11 +56,15 @@ class BulkWriter extends Writer implements BulkWriterInterface
 
         $this->loadPriceProductTransfer($priceProductTransfer);
 
-        $priceProductEntity = $this->getPriceProductById($priceProductTransfer->getIdPriceProduct());
+        /** @var int $idPriceProduct */
+        $idPriceProduct = $priceProductTransfer->getIdPriceProduct();
+        $priceProductEntity = $this->getPriceProductById($idPriceProduct);
         $this->savePriceProductEntity($priceProductTransfer, $priceProductEntity);
 
         if ($priceProductTransfer->getIdProduct()) {
-            $this->addRecordToTouch(static::TOUCH_PRODUCT, $priceProductTransfer->getIdProduct());
+            /** @var int $idProduct */
+            $idProduct = $priceProductTransfer->getIdProduct();
+            $this->addRecordToTouch(static::TOUCH_PRODUCT, $idProduct);
         }
     }
 
