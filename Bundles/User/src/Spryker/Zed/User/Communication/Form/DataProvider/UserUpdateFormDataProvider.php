@@ -8,6 +8,7 @@
 namespace Spryker\Zed\User\Communication\Form\DataProvider;
 
 use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
+use Spryker\Zed\User\Business\Exception\ArrayCombineException;
 use Spryker\Zed\User\Communication\Form\UserUpdateForm;
 
 class UserUpdateFormDataProvider extends UserFormDataProvider
@@ -25,13 +26,21 @@ class UserUpdateFormDataProvider extends UserFormDataProvider
     }
 
     /**
+     * @throws \Spryker\Zed\User\Business\Exception\ArrayCombineException
+     *
      * @return array
      */
     protected function getStatusSelectChoices()
     {
-        return array_combine(
+        $statusSelectChoices = array_combine(
             SpyUserTableMap::getValueSet(SpyUserTableMap::COL_STATUS),
             SpyUserTableMap::getValueSet(SpyUserTableMap::COL_STATUS)
         );
+
+        if ($statusSelectChoices === false) {
+            throw new ArrayCombineException();
+        }
+
+        return $statusSelectChoices;
     }
 }

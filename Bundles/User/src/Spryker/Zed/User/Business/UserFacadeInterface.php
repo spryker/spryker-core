@@ -157,7 +157,7 @@ interface UserFacadeInterface
 
     /**
      * Specification:
-     * - TODO: Add method specification.
+     * - Sets User to the session.
      *
      * @api
      *
@@ -189,7 +189,7 @@ interface UserFacadeInterface
 
     /**
      * Specification:
-     * - TODO: Add method specification.
+     * - Verifies that the password matches the hash.
      *
      * @api
      *

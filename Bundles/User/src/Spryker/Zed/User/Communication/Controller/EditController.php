@@ -350,7 +350,7 @@ class EditController extends AbstractController
 
         $groupPlugin = $this->getFactory()->getGroupPlugin();
         foreach ($formData[UserForm::FIELD_GROUP] as $idGroup) {
-            $groupPlugin->addUserToGroup($userTransfer->getIdUser(), $idGroup);
+            $groupPlugin->addUserToGroup($userTransfer->getIdUserOrFail(), $idGroup);
         }
 
         return true;
@@ -367,7 +367,10 @@ class EditController extends AbstractController
         $userGroups = $groupPlugin->getUserGroups($idUser);
 
         foreach ($userGroups->getGroups() as $groupTransfer) {
-            $groupPlugin->removeUserFromGroup($idUser, $groupTransfer->getIdAclGroup());
+            $groupPlugin->removeUserFromGroup(
+                $idUser,
+                $groupTransfer->getIdAclGroupOrFail()
+            );
         }
     }
 

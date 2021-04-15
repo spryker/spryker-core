@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<config>
+    <my-account>
+        <label>My Account</label>
+        <title>My Account</title>
+        <bundle>user-merchant-portal-gui</bundle>
+        <controller>my-account</controller>
+        <action>index</action>
+    </my-account>
+</config>

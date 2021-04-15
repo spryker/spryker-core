@@ -92,4 +92,15 @@ class MerchantUserToUserFacadeBridge implements MerchantUserToUserFacadeInterfac
     {
         return $this->userFacade->setCurrentUser($user);
     }
+
+    /**
+     * @param string $password
+     * @param string $hash
+     *
+     * @return bool
+     */
+    public function isValidPassword($password, $hash)
+    {
+        return $this->userFacade->isValidPassword($password, $hash);
+    }
 }

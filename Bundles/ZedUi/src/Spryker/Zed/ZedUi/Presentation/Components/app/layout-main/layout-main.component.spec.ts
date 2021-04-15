@@ -12,7 +12,7 @@ describe('LayoutMainComponent', () => {
         selector: 'test-component',
         template: `
             <mp-layout-main [navigationConfig]="navigationConfig">
-                <div name="header">Header Slot</div>
+                <div header>Header Slot</div>
                 Main Slot
             </mp-layout-main>
         `,

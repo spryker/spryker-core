@@ -44,6 +44,7 @@ class CurrentPasswordValidator extends ConstraintValidator
     {
         $userTransfer = $constraint->getFacadeUser()->getCurrentUser();
 
-        return $constraint->getFacadeUser()->isValidPassword($password, $userTransfer->getPassword());
+        return $constraint->getFacadeUser()
+            ->isValidPassword($password, $userTransfer->getPasswordOrFail());
     }
 }

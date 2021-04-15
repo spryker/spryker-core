@@ -49,20 +49,24 @@ class ZedNavigationCollectorCacheDecorator implements ZedNavigationCollectorInte
     }
 
     /**
+     * @param string $navigationType
+     *
      * @return array [string => string][] @see MenuFormatter
      */
-    public function getNavigation()
+    public function getNavigation(string $navigationType): array
     {
         if (!$this->config->isNavigationCacheEnabled()) {
-            return $this->navigationCollector->getNavigation();
+            return $this->navigationCollector->getNavigation($navigationType);
         }
 
-        if (!$this->navigationCache->hasContent()) {
+        $cacheFilePath = $this->config->getCacheFilePaths()[$navigationType];
+
+        if (!$this->navigationCache->hasContent($cacheFilePath)) {
             $this->getLogger()->error(static::MESSAGE_CACHE_LOST);
 
-            $this->navigationCache->setNavigation($this->navigationCollector->getNavigation());
+            $this->navigationCache->setNavigation($this->navigationCollector->getNavigation($navigationType), $cacheFilePath);
         }
 
-        return $this->navigationCache->getNavigation();
+        return $this->navigationCache->getNavigation($cacheFilePath);
     }
 }
