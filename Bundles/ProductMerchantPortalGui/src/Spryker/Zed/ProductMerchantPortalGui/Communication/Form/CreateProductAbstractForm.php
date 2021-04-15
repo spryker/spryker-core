@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\NotNull;
 
 /**
  * @method \Spryker\Zed\ProductMerchantPortalGui\ProductMerchantPortalGuiConfig getConfig()
@@ -111,6 +112,10 @@ class CreateProductAbstractForm extends AbstractType
             'required' => true,
             'expanded' => true,
             'multiple' => false,
+            'empty_data' => null,
+            'constraints' => [
+                new NotNull(),
+            ],
         ]);
 
         return $this;

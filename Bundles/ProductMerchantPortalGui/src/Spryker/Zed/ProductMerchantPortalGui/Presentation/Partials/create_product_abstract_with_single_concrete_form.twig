@@ -28,8 +28,8 @@
                             name="{{ form.concreteSku.vars.full_name }}"
                             value="{{ form.concreteSku.vars.value }}"
                             placeholder="{{ form.concreteSku.vars.attr.placeholder }}"
-                            isAutogenerate="{{ form.autogenerateSku.vars.checked }}"
-                            {% if form.concreteSku.vars.errors %}error="{{ form.concreteSku.vars.errors[0].message | default | trans }}"{% endif %}
+                            is-autogenerate="{{ form.autogenerateSku.vars.attr.checked }}"
+                            error="{% if form.concreteSku.vars.errors %}{{ form.concreteSku.vars.errors[0].message | default | trans }}{% endif %}"
                     >
                         {{ 'Autogenerate SKU' | trans }}
                     </web-mp-autogenerate-input>
@@ -45,8 +45,8 @@
                         name="{{ form.concreteName.vars.full_name }}"
                         value="{{ form.concreteName.vars.value }}"
                         placeholder="{{ form.concreteName.vars.attr.placeholder }}"
-                        isAutogenerate="{{ form.useAbstractProductName.vars.checked }}"
-                        {% if form.concreteName.vars.errors %}error="{{ form.concreteName.vars.errors[0].message | default | trans }}"{% endif %}
+                        is-autogenerate="{{ form.useAbstractProductName.vars.attr.checked | json_encode }}"
+                        error="{% if form.concreteName.vars.errors %}{{ form.concreteName.vars.errors[0].message | default | trans }}{% endif %}"
                     >
                         {{ 'Same as Abstract Product' | trans }}
                     </web-mp-autogenerate-input>

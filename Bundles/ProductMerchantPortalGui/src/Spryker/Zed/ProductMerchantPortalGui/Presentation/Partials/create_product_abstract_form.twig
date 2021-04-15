@@ -47,11 +47,15 @@
                                   spy-title="{{ form.isSingleConcrete.vars.label | trans }} {{ form.isSingleConcrete.vars.required ? '*' }}"
                                   class="{{ mainClass }}__card">
                         <web-spy-radio-group
-                            cloak
-                            value="{{ form.isSingleConcrete.vars.value }}"
-                            name="{{ form.isSingleConcrete.vars.full_name }}">
+                                cloak
+                                value="{{ form.isSingleConcrete.vars.value }}"
+                                name="{{ form.isSingleConcrete.vars.full_name }}">
                             {% for choice in form.isSingleConcrete.vars.choices %}
-                                <web-spy-radio cloak value="{{ choice.value }}">{{ choice.label | trans }}</web-spy-radio>
+                                <web-spy-radio cloak
+                                               value="{{ choice.value }}"
+                                               {% if form.isSingleConcrete.vars.errors %}has-error="true"{% endif %}>
+                                    {{ choice.label | trans }}
+                                </web-spy-radio>
                             {% endfor %}
 
                             {% do form.isSingleConcrete.setRendered %}

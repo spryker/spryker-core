@@ -13,6 +13,7 @@ export class AutogenerateInputComponent implements OnChanges {
     @Input() value: string;
     @Input() placeholder: string;
     @Input() isAutogenerate: boolean;
+    @Input() error?: string;
 
     defaultValue: string;
 
