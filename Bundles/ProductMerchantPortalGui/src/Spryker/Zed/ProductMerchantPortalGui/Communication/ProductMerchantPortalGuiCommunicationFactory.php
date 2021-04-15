@@ -207,22 +207,15 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
     }
 
     /**
-     * @param int|null $idProductAbstract
-     * @param int|null $idProductConcrete
-     *
-     * @return \Symfony\Component\Form\DataTransformerInterface
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Transformer\PriceProductTransformer
      */
-    public function createPriceProductTransformer(
-        ?int $idProductAbstract = null,
-        ?int $idProductConcrete = null
-    ): DataTransformerInterface {
+    public function createPriceProductTransformer(): DataTransformerInterface
+    {
         return new PriceProductTransformer(
             $this->getPriceProductFacade(),
             $this->getCurrencyFacade(),
             $this->getMoneyFacade(),
-            $this->getUtilEncodingService(),
-            $idProductAbstract,
-            $idProductConcrete
+            $this->getUtilEncodingService()
         );
     }
 

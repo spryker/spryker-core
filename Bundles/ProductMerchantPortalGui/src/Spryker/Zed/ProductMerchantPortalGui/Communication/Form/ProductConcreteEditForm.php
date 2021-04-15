@@ -86,10 +86,10 @@ class ProductConcreteEditForm extends AbstractType
 
         /** @var \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer */
         $productConcreteTransfer = $builder->getData()[ProductConcreteForm::BLOCK_PREFIX];
-        $priceProductTransformer = $this->getFactory()->createPriceProductTransformer(
-            null,
-            $productConcreteTransfer->getIdProductConcrete()
-        );
+        $priceProductTransformer = $this->getFactory()
+            ->createPriceProductTransformer()
+            ->setIdProductConcrete($productConcreteTransfer->getIdProductConcrete());
+
         $builder->get(static::FIELD_PRODUCT_CONCRETE)->get(ProductConcreteTransfer::PRICES)->addModelTransformer(
             $priceProductTransformer
         );

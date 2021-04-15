@@ -58,23 +58,41 @@ class PriceProductTransformer implements DataTransformerInterface
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToCurrencyFacadeInterface $currencyFacade
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMoneyFacadeInterface $moneyFacade
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Service\ProductMerchantPortalGuiToUtilEncodingServiceInterface $utilEncodingService
-     * @param int|null $idProductAbstract
-     * @param int|null $idProductConcrete
      */
     public function __construct(
         ProductMerchantPortalGuiToPriceProductFacadeInterface $priceProductFacade,
         ProductMerchantPortalGuiToCurrencyFacadeInterface $currencyFacade,
         ProductMerchantPortalGuiToMoneyFacadeInterface $moneyFacade,
-        ProductMerchantPortalGuiToUtilEncodingServiceInterface $utilEncodingService,
-        ?int $idProductAbstract = null,
-        ?int $idProductConcrete = null
+        ProductMerchantPortalGuiToUtilEncodingServiceInterface $utilEncodingService
     ) {
         $this->priceProductFacade = $priceProductFacade;
         $this->currencyFacade = $currencyFacade;
         $this->moneyFacade = $moneyFacade;
         $this->utilEncodingService = $utilEncodingService;
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return $this
+     */
+    public function setIdProductAbstract(int $idProductAbstract)
+    {
         $this->idProductAbstract = $idProductAbstract;
+
+        return $this;
+    }
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return $this
+     */
+    public function setIdProductConcrete(int $idProductConcrete)
+    {
         $this->idProductConcrete = $idProductConcrete;
+
+        return $this;
     }
 
     /**

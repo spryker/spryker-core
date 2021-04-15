@@ -654,21 +654,21 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
                 ->endUse()
             ->endUse()
             ->addAsColumn(PriceProductTableViewTransfer::ID_PRODUCT_CONCRETE, SpyProductTableMap::COL_ID_PRODUCT);
-
-            return $priceProductDefaultQuery;
         }
 
-        $priceProductDefaultQuery->usePriceProductStoreQuery()
-            ->usePriceProductQuery()
-                ->filterByFkProductAbstract($priceProductTableCriteriaTransfer->getIdProductAbstractOrFail())
-                ->useSpyProductAbstractQuery()
-                    ->useSpyMerchantProductAbstractQuery()
-                        ->filterByFkMerchant($priceProductTableCriteriaTransfer->getIdMerchantOrFail())
+        if ($priceProductTableCriteriaTransfer->getIdProductAbstract()) {
+            $priceProductDefaultQuery->usePriceProductStoreQuery()
+                ->usePriceProductQuery()
+                    ->filterByFkProductAbstract($priceProductTableCriteriaTransfer->getIdProductAbstract())
+                    ->useSpyProductAbstractQuery()
+                        ->useSpyMerchantProductAbstractQuery()
+                            ->filterByFkMerchant($priceProductTableCriteriaTransfer->getIdMerchantOrFail())
+                        ->endUse()
                     ->endUse()
                 ->endUse()
             ->endUse()
-        ->endUse()
-        ->addAsColumn(PriceProductTableViewTransfer::ID_PRODUCT_ABSTRACT, SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT);
+            ->addAsColumn(PriceProductTableViewTransfer::ID_PRODUCT_ABSTRACT, SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT);
+        }
 
         return $priceProductDefaultQuery;
     }

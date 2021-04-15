@@ -108,11 +108,15 @@ class MerchantProductReader implements MerchantProductReaderInterface
             return null;
         }
 
-        $idProductConcrete = $merchantProductCriteriaTransfer->getProductConcreteIds()[0];
+        $idProductConcretes = $merchantProductCriteriaTransfer->getProductConcreteIds();
 
         foreach ($merchantProductTransfer->getProducts() as $productConcreteTransfer) {
-            if ($idProductConcrete === $productConcreteTransfer->getIdProductConcreteOrFail()) {
-                return $this->productFacade->findProductConcreteById($productConcreteTransfer->getIdProductConcreteOrFail());
+            foreach ($idProductConcretes as $idProductConcrete) {
+                if ($idProductConcrete === $productConcreteTransfer->getIdProductConcreteOrFail()) {
+                    return $this->productFacade->findProductConcreteById(
+                        $productConcreteTransfer->getIdProductConcreteOrFail()
+                    );
+                }
             }
         }
 
@@ -132,6 +136,7 @@ class MerchantProductReader implements MerchantProductReaderInterface
         $merchantProductCriteriaTransfer = (new MerchantProductCriteriaTransfer())
             ->addIdMerchant($merchantTransfer->getIdMerchantOrFail())
             ->addIdProductConcrete($productConcreteTransfer->getIdProductConcreteOrFail());
+
         $merchantTransfer = $this->merchantProductRepository->findMerchant($merchantProductCriteriaTransfer);
 
         return $merchantTransfer !== null;
