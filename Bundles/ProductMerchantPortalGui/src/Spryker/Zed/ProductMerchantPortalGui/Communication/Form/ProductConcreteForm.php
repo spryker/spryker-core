@@ -1,8 +1,8 @@
 <?php
 
 /**
- * This file is part of the Spryker Suite.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Form;
@@ -15,10 +15,11 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class CreateProductAbstractWithMultiConcreteForm extends AbstractType
+class ProductConcreteForm extends AbstractType
 {
-    protected const FIELD_NAME = 'name';
     protected const FIELD_SKU = 'sku';
+    protected const FIELD_NAME = 'name';
+    protected const FIELD_SUPER_ATTRIBUTES = 'superAttributes';
 
     /**
      * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
@@ -31,7 +32,8 @@ class CreateProductAbstractWithMultiConcreteForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addSkuField($builder)
-            ->addNameField($builder);
+            ->addNameField($builder)
+            ->addSuperAttributesField($builder);
     }
 
     /**
@@ -70,10 +72,18 @@ class CreateProductAbstractWithMultiConcreteForm extends AbstractType
         return $this;
     }
 
-    protected function addConcreteProductsField(FormBuilderInterface $builder)
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addSuperAttributesField(FormBuilderInterface $builder)
     {
-        $builder->add('concreteProductsField', CollectionType::class, [
-            'entry_type' => ProductConcreteForm::class,
+        $builder->add(static::FIELD_SUPER_ATTRIBUTES, CollectionType::class, [
+            'required'=> true,
+            'entry_type' => SuperAttributeForm::class,
         ]);
+
+        return $this;
     }
 }

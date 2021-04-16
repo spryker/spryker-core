@@ -4,8 +4,7 @@
     {% set mainClass = 'mp-create-multi-concrete-product' %}
 
     {# TODO: replace with real data #}
-    {% set mockedProductsName = 'name' %}
-
+    {% set productsName = 'concreteProducts' %}
 
     {% block createMultiConcreteProduct %}
         <web-mp-concrete-product-generator-data
@@ -15,7 +14,7 @@
             <web-mp-create-multi-concrete-product
                 cloak
                 attributes="{{ superProductManagementAttributes | json_encode }}"
-                products-name="{{ mockedProductsName }}">
+                products-name="{{ productsName }}">
                 {{ form_start(form, { attr: { excludeFormTag: true } }) }}
                     {% block title %}
                         <span title>{{ 'Create an Abstract Product with multiple Concrete Products' | trans }}</span>

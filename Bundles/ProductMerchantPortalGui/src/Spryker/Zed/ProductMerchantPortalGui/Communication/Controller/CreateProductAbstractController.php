@@ -151,7 +151,6 @@ class CreateProductAbstractController extends AbstractController
         $productAbstractTransfer->setSku($request->query->get('sku'));
         $productAbstractTransfer->setName($request->query->get('name'));
 
-
         $formData = $createProductAbstractWithMultiConcreteForm->getData();
         $responseData = [
             'form' => $this->renderView('@ProductMerchantPortalGui/Partials/create_product_abstract_with_multi_concrete_form.twig', [
@@ -197,18 +196,19 @@ class CreateProductAbstractController extends AbstractController
             ->getProductAttributeFacade()
             ->getProductAttributeCollection();
 
-        $superAttributes = [];
+        $superProductManagementAttributes = [];
+
         foreach ($productManagementAttributeTransfers as $productManagementAttributeTransfer) {
             if ($productManagementAttributeTransfer->getIsSuper()) {
                 $values = [];
                 foreach ($productManagementAttributeTransfer->getValues() as $productManagementAttributeValueTransfer) {
                     $values[] = [
-                        'title' => $productManagementAttributeValueTransfer->getValueOrFail(),
+                        'title' => $productManagementAttributeTransfer->getKeyOrFail(),
                         'value' => $productManagementAttributeValueTransfer->getValueOrFail(),
                     ];
                 }
 
-                $superAttributes[] = [
+                $superProductManagementAttributes[] = [
                     'title' => $productManagementAttributeTransfer->getKeyOrFail(),
                     'value' => $productManagementAttributeTransfer->getKeyOrFail(),
                     'values' => $values,
@@ -216,6 +216,6 @@ class CreateProductAbstractController extends AbstractController
             }
         }
 
-        return $superAttributes;
+        return $superProductManagementAttributes;
     }
 }
