@@ -10,7 +10,9 @@ namespace Spryker\Zed\ContentStorage\Business\ContentStorage;
 use Generated\Shared\Transfer\ContentStorageTransfer;
 use Generated\Shared\Transfer\ContentTransfer;
 use Spryker\Shared\ContentStorage\ContentStorageConfig;
+use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\ContentStorage\Dependency\Facade\ContentStorageToLocaleFacadeInterface;
+use Spryker\Zed\ContentStorage\Dependency\Facade\ContentStorageToStoreFacadeInterface;
 use Spryker\Zed\ContentStorage\Dependency\Service\ContentStorageToUtilEncodingInterface;
 use Spryker\Zed\ContentStorage\Persistence\ContentStorageEntityManagerInterface;
 use Spryker\Zed\ContentStorage\Persistence\ContentStorageRepositoryInterface;
@@ -43,21 +45,29 @@ class ContentStorageWriter implements ContentStorageWriterInterface
     protected $utilEncodingService;
 
     /**
+     * @var \Spryker\Shared\Kernel\Store
+     */
+    protected $store;
+
+    /**
      * @param \Spryker\Zed\ContentStorage\Persistence\ContentStorageRepositoryInterface $contentStorageRepository
      * @param \Spryker\Zed\ContentStorage\Persistence\ContentStorageEntityManagerInterface $contentStorageEntityManager
      * @param \Spryker\Zed\ContentStorage\Dependency\Facade\ContentStorageToLocaleFacadeInterface $localeFacade
      * @param \Spryker\Zed\ContentStorage\Dependency\Service\ContentStorageToUtilEncodingInterface $utilEncodingService
+     * @param \Spryker\Shared\Kernel\Store $store
      */
     public function __construct(
         ContentStorageRepositoryInterface $contentStorageRepository,
         ContentStorageEntityManagerInterface $contentStorageEntityManager,
         ContentStorageToLocaleFacadeInterface $localeFacade,
-        ContentStorageToUtilEncodingInterface $utilEncodingService
+        ContentStorageToUtilEncodingInterface $utilEncodingService,
+        Store $store
     ) {
         $this->contentStorageRepository = $contentStorageRepository;
         $this->contentStorageEntityManager = $contentStorageEntityManager;
         $this->localeFacade = $localeFacade;
         $this->utilEncodingService = $utilEncodingService;
+        $this->store = $store;
     }
 
     /**
@@ -83,7 +93,8 @@ class ContentStorageWriter implements ContentStorageWriterInterface
      */
     protected function executePublishTransaction(iterable $contentTransfers, iterable $contentStorageTransfers): bool
     {
-        $availableLocales = $this->localeFacade->getLocaleCollection();
+        $availableLocales = $this->getSharedPersistenceLocaleNames();
+
         $contentStorageTransfers = $this->groupByIdContentAndLocale($contentStorageTransfers);
         foreach ($contentTransfers as $contentTransfer) {
             $this->saveContentStorage($contentTransfer, $contentStorageTransfers, $availableLocales);
@@ -93,9 +104,22 @@ class ContentStorageWriter implements ContentStorageWriterInterface
     }
 
     /**
+     * @return string[]
+     */
+    protected function getSharedPersistenceLocaleNames(): array
+    {
+        $localeNames = $this->store->getLocales();
+        foreach ($this->store->getStoresWithSharedPersistence() as $storeName) {
+            $localeNames = $this->addSharedLocales($storeName, $localeNames);
+        }
+
+        return array_unique($localeNames);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ContentTransfer $contentTransfer
      * @param \Generated\Shared\Transfer\ContentStorageTransfer[][] $contentStorageTransfers
-     * @param \Generated\Shared\Transfer\LocaleTransfer[] $availableLocales
+     * @param string[] $availableLocales
      *
      * @return void
      */
@@ -104,18 +128,18 @@ class ContentStorageWriter implements ContentStorageWriterInterface
         $localizedContentTransfers = $this->indexContentTransfersByLocale($contentTransfer);
 
         foreach ($availableLocales as $availableLocale) {
-            $localizedContentTransfer = $localizedContentTransfers[$availableLocale->getLocaleName()] ?? $localizedContentTransfers[static::DEFAULT_LOCALE];
+            $localizedContentTransfer = $localizedContentTransfers[$availableLocale] ?? $localizedContentTransfers[static::DEFAULT_LOCALE];
 
             $contentStorageTransfer = new ContentStorageTransfer();
-            if (!empty($contentStorageTransfers[$contentTransfer->getIdContent()][$availableLocale->getLocaleName()])) {
+            if (!empty($contentStorageTransfers[$contentTransfer->getIdContent()][$availableLocale])) {
                 $contentStorageTransfer->fromArray(
-                    $contentStorageTransfers[$contentTransfer->getIdContent()][$availableLocale->getLocaleName()]->toArray()
+                    $contentStorageTransfers[$contentTransfer->getIdContent()][$availableLocale]->toArray()
                 );
             }
 
             $contentStorageTransfer->setFkContent($contentTransfer->getIdContent())
                 ->setContentKey($contentTransfer->getKey())
-                ->setLocale($availableLocale->getLocaleName())
+                ->setLocale($availableLocale)
                 ->setData($this->utilEncodingService->encodeJson([
                     ContentStorageConfig::ID_CONTENT => $contentTransfer->getIdContent(),
                     ContentStorageConfig::TERM_KEY => $contentTransfer->getContentTermKey(),
@@ -157,5 +181,19 @@ class ContentStorageWriter implements ContentStorageWriterInterface
         }
 
         return $contentStorageList;
+    }
+
+    /**
+     * @param string $storeName
+     * @param array $localeNames
+     *
+     * @return array
+     */
+    protected function addSharedLocales(string $storeName, array $localeNames): array
+    {
+        foreach ($this->store->getLocalesPerStore($storeName) as $localeName) {
+            $localeNames[] = $localeName;
+        }
+        return $localeNames;
     }
 }

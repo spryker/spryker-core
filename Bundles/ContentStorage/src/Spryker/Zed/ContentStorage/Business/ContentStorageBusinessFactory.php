@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ContentStorage\Business;
 
+use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\ContentStorage\Business\ContentStorage\ContentStorageWriter;
 use Spryker\Zed\ContentStorage\Business\ContentStorage\ContentStorageWriterInterface;
 use Spryker\Zed\ContentStorage\ContentStorageDependencyProvider;
@@ -29,7 +30,8 @@ class ContentStorageBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->getEntityManager(),
             $this->getLocaleFacade(),
-            $this->getUtilEncoding()
+            $this->getUtilEncoding(),
+            $this->getStore()
         );
     }
 
@@ -47,5 +49,13 @@ class ContentStorageBusinessFactory extends AbstractBusinessFactory
     public function getUtilEncoding()
     {
         return $this->getProvidedDependency(ContentStorageDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\Store
+     */
+    protected function getStore(): Store
+    {
+        return $this->getProvidedDependency(ContentStorageDependencyProvider::STORE);
     }
 }
