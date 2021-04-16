@@ -53,7 +53,7 @@
                             {% for choice in form.isSingleConcrete.vars.choices %}
                                 <web-spy-radio cloak
                                                value="{{ choice.value }}"
-                                               {% if form.isSingleConcrete.vars.errors %}has-error="true"{% endif %}>
+                                               {% if form.isSingleConcrete.vars.errors | length > 0 %}has-error="true"{% endif %}>
                                     {{ choice.label | trans }}
                                 </web-spy-radio>
                             {% endfor %}

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Controller;
 
+use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\CreateProductAbstractForm;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -145,21 +146,18 @@ class CreateProductAbstractController extends AbstractController
         $createProductAbstractWithMultiConcreteForm = $this->getFactory()
             ->createCreateProductAbstractWithMultiConcreteForm($request->query->all());
         $createProductAbstractWithMultiConcreteForm->handleRequest($request);
-        $productManagementAttributeTransfers = $this->getFactory()
-            ->getProductAttributeFacade()
-            ->getProductAttributeCollection();
-        $filteredProductManagementAttributeTransfers = [];
-        foreach ($productManagementAttributeTransfers as $productManagementAttributeTransfer) {
-            if ($productManagementAttributeTransfer->getIsSuper()) {
-                $filteredProductManagementAttributeTransfers[] = $productManagementAttributeTransfer;
-            }
-        }
+
+        $productAbstractTransfer = new ProductAbstractTransfer();
+        $productAbstractTransfer->setSku($request->query->get('sku'));
+        $productAbstractTransfer->setName($request->query->get('name'));
+
 
         $formData = $createProductAbstractWithMultiConcreteForm->getData();
         $responseData = [
             'form' => $this->renderView('@ProductMerchantPortalGui/Partials/create_product_abstract_with_multi_concrete_form.twig', [
                 'form' => $createProductAbstractWithMultiConcreteForm->createView(),
-                'productManagementAttributes' => $filteredProductManagementAttributeTransfers,
+                'superProductManagementAttributes' => $this->getSuperAttributes(),
+                'productAbstract' => $productAbstractTransfer,
             ])->getContent(),
             'action' => $this->getCreateUrl($formData, false),
         ];
@@ -188,5 +186,36 @@ class CreateProductAbstractController extends AbstractController
             $isSingleConcrete ? static::URL_WITH_SINGLE_CONCRETE_ACTION : static::URL_WITH_MULTI_CONCRETE_ACTION,
             $getParams
         );
+    }
+
+    /**
+     * @return string[][]
+     */
+    protected function getSuperAttributes(): array
+    {
+        $productManagementAttributeTransfers = $this->getFactory()
+            ->getProductAttributeFacade()
+            ->getProductAttributeCollection();
+
+        $superAttributes = [];
+        foreach ($productManagementAttributeTransfers as $productManagementAttributeTransfer) {
+            if ($productManagementAttributeTransfer->getIsSuper()) {
+                $values = [];
+                foreach ($productManagementAttributeTransfer->getValues() as $productManagementAttributeValueTransfer) {
+                    $values[] = [
+                        'title' => $productManagementAttributeValueTransfer->getValueOrFail(),
+                        'value' => $productManagementAttributeValueTransfer->getValueOrFail(),
+                    ];
+                }
+
+                $superAttributes[] = [
+                    'title' => $productManagementAttributeTransfer->getKeyOrFail(),
+                    'value' => $productManagementAttributeTransfer->getKeyOrFail(),
+                    'values' => $values,
+                ];
+            }
+        }
+
+        return $superAttributes;
     }
 }
