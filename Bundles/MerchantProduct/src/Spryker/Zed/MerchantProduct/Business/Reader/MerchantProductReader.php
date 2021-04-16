@@ -111,12 +111,9 @@ class MerchantProductReader implements MerchantProductReaderInterface
         $idProductConcretes = $merchantProductCriteriaTransfer->getProductConcreteIds();
 
         foreach ($merchantProductTransfer->getProducts() as $productConcreteTransfer) {
-            foreach ($idProductConcretes as $idProductConcrete) {
-                if ($idProductConcrete === $productConcreteTransfer->getIdProductConcreteOrFail()) {
-                    return $this->productFacade->findProductConcreteById(
-                        $productConcreteTransfer->getIdProductConcreteOrFail()
-                    );
-                }
+            $idProductConcrete = $productConcreteTransfer->getIdProductConcreteOrFail();
+            if (in_array($idProductConcrete, $idProductConcretes)) {
+                return $this->productFacade->findProductConcreteById($idProductConcrete);
             }
         }
 
