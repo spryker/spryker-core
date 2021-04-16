@@ -39,7 +39,7 @@ abstract class AbstractDeletePriceProductController extends AbstractController
      *
      * @return void
      */
-    protected function deletePrices(array $priceProductTransfers, array $priceProductDefaultIds): void
+    protected function deletePrices(ArrayObject $priceProductTransfers, array $priceProductDefaultIds): void
     {
         $priceProductTransfersToRemove = $this->filterPriceProductTransfersByPriceProductDefaultIds(
             $priceProductTransfers,
@@ -83,7 +83,7 @@ abstract class AbstractDeletePriceProductController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return int[]
      */
     protected function getDefaultPriceProductIds(Request $request): array
     {
