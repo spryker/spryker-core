@@ -1,0 +1,15 @@
+{% set returnItems = return.returnItems | filter(returnItem => returnItem.orderItem.salesOrderConfiguredBundle is empty and returnItem.orderItem.productBundle is empty) %}
+{% set changeStatusRedirectUrl = url('/merchant-sales-return-merchant-user-gui/detail', {'id-return': return.idSalesReturn}) %}
+
+{% for returnItem in returnItems %}
+    {% set merchantOrderItem = merchantOrder.merchantOrderItems[returnItem.orderItem.idSalesOrderItem] %}
+    {% include '@MerchantSalesReturnMerchantUserGui/Detail/_partials/return-detail-item.twig' with {
+        returnItem: returnItem,
+        orderItem: returnItem.orderItem,
+        merchantOrder: merchantOrder,
+        merchantOrderItem: merchantOrderItem,
+        order: order,
+        changeStatusRedirectUrl: changeStatusRedirectUrl,
+        isBundleProduct: false,
+    } only %}
+{% endfor %}

@@ -1,0 +1,52 @@
+"My Returns","My Returns"
+Return,Return
+"Merchant for current user not found.","Merchant for current user not found."
+"Merchant sales order #%d not found.","Merchant sales order #%d not found."
+"Return was successfully created.","Return was successfully created."
+"Return has not been created.","Return has not been created."
+"Requested return with ID %id% was not found.","Requested return with ID %id% was not found."
+"Status change triggered successfully.","Status change triggered successfully."
+"Request is invalid","Request is invalid"
+"Parameter redirect not found.","Parameter redirect not found."
+"Item selected for return is not eligible for return anymore.","Item selected for return is not eligible for return anymore."
+"Select reason","Select reason"
+View,View
+"Print Slip","Print Slip"
+"Return ID","Return ID"
+"Return Reference","Return Reference"
+"Order Reference","Order Reference"
+"Marketplace Order Reference","Marketplace Order Reference"
+"Returned Products","Returned Products"
+"Return Date","Return Date"
+State,State
+Actions,Actions
+Sku,Sku
+"incl. %tax_amount% % tax","incl. %tax_amount% % tax"
+"Show history","Show history"
+"Hide history","Hide history"
+"Create Return","Create Return"
+"Back to Order","Back to Order"
+"Merchant Order Reference","Merchant Order Reference"
+"Merchant Order References","Merchant Order References"
+"Select Items to Return","Select Items to Return"
+Product,Product
+Quantity,Quantity
+Price,Price
+Total,Total
+"Return policy","Return policy"
+Customer,Customer
+"Customer Reference","Customer Reference"
+Name,Name
+Email,Email
+"General information","General information"
+"Returned Items","Returned Items"
+Reason,Reason
+"Trigger all matching states","Trigger all matching states"
+of,of
+"selected items","selected items"
+"Trigger event","Trigger event"
+items,items
+"Remuneration Total","Remuneration Total"
+"Overview of Return","Overview of Return"
+"Back to Returns","Back to Returns"
+"Print Return Slip","Print Return Slip"

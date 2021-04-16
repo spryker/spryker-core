@@ -47,14 +47,16 @@ class MerchantSalesOrderFacade extends AbstractFacade implements MerchantSalesOr
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\MerchantOrderCriteriaTransfer $merchantCriteriaTransfer
+     * @param \Generated\Shared\Transfer\MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantOrderCollectionTransfer
      */
     public function getMerchantOrderCollection(
-        MerchantOrderCriteriaTransfer $merchantCriteriaTransfer
+        MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer
     ): MerchantOrderCollectionTransfer {
-        return $this->getRepository()->getMerchantOrderCollection($merchantCriteriaTransfer);
+        return $this->getFactory()
+            ->createMerchantSalesOrderReader()
+            ->getMerchantOrderCollection($merchantOrderCriteriaTransfer);
     }
 
     /**

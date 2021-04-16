@@ -44,7 +44,7 @@ State,Status
 "Sub total",Zwischensumme
 Subtotal,Zwischensumme
 Totals,Gesamtsummen
-"Trigger all matching states","Alle passenden Stati antriggern"
+"Trigger all matching states","Alle passenden Status auslösen"
 "Trigger event","Event auslösen"
 "Unique Product Quantity","Anzahl der Produkte"
 "Unit Price",Stückpreis
@@ -52,7 +52,7 @@ Totals,Gesamtsummen
 "View Order","Bestellung anzeigen"
 "View Order:","Bestellung anzeigen:"
 "Remuneration total",Rückerstattungsbetrag
-"Trigger all matching states inside this order","Alle übereinstimmenden Stati innerhalb dieser Bestellung auslösen"
+"Trigger all matching states inside this order","Alle übereinstimmenden Status innerhalb dieser Bestellung auslösen"
 "Previous orders count","Anzahl der vorherigen Bestellungen des Kunden"
 Name,Name
 E-mail,E-Mail

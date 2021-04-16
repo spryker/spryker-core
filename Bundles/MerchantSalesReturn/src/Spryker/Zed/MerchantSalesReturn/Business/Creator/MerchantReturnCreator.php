@@ -7,9 +7,6 @@
 
 namespace Spryker\Zed\MerchantSalesReturn\Business\Creator;
 
-use ArrayObject;
-use Generated\Shared\Transfer\MerchantOrderCriteriaTransfer;
-use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Generated\Shared\Transfer\ReturnTransfer;
 use Spryker\Zed\MerchantSalesReturn\Dependency\Facade\MerchantSalesReturnToMerchantSalesOrderFacadeInterface;
 
@@ -39,31 +36,11 @@ class MerchantReturnCreator implements MerchantReturnCreatorInterface
             ->requireReturnItems()
             ->getReturnItems();
 
-        $merchantOrderTransfer = $this->findMerchantOrder($returnItemTransfers);
-
-        if ($merchantOrderTransfer === null) {
-            return $returnTransfer;
-        }
-
-        return $returnTransfer->setMerchantSalesOrderReference(
-            $merchantOrderTransfer->getMerchantOrderReference()
-        );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ReturnItemTransfer[]|\ArrayObject $returnItemTransfers
-     *
-     * @return \Generated\Shared\Transfer\MerchantOrderTransfer|null
-     */
-    protected function findMerchantOrder(ArrayObject $returnItemTransfers): ?MerchantOrderTransfer
-    {
         /** @var \Generated\Shared\Transfer\ReturnItemTransfer $firstReturnItem */
         $firstReturnItem = $returnItemTransfers->offsetGet(0);
 
-        $merchantOrderCriteriaTransfer = (new MerchantOrderCriteriaTransfer())
-            ->setOrderItemUuid($firstReturnItem->getOrderItemOrFail()->getUuidOrFail());
-
-        return $this->merchantSalesOrderFacade
-            ->findMerchantOrder($merchantOrderCriteriaTransfer);
+        return $returnTransfer->setMerchantReference(
+            $firstReturnItem->getOrderItemOrFail()->getMerchantReference()
+        );
     }
 }

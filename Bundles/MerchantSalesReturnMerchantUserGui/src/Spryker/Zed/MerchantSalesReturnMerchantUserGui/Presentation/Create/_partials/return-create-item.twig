@@ -1,0 +1,111 @@
+{% set productUniqueKey = orderItem.idSalesOrderItem %}
+{% set numberOfItemAdditions = not isBundleProduct ? orderItem.productOptions | length + 1 %}
+{% set merchantOrderItem = merchantOrder.merchantOrderItems[orderItem.idSalesOrderItem] %}
+
+{% if isBundleProduct %}
+    {% set productUniqueKey = orderItem.bundleItemIdentifier ~ '-bundle' %}
+{% endif %}
+
+<tr>
+    <td>
+        {{ form_row(returnItem.isReturnable, {
+            attr: {
+                class: 'js-check-item',
+            },
+        }) }}
+    </td>
+    <td>
+        <div class="image-wrap">
+            <img class="product-image" src="{{ orderItem.metadata.image }}" alt="{{ orderItem.name }}">
+        </div>
+    </td>
+    <td>
+        <a target="_blank" href="{{ url('/product-management/view/variant', {'id-product-abstract': orderItem.idProductAbstract, 'id-product': orderItem.id, 'type': 'regular'}) }}">
+            {{ orderItem.name }}
+        </a>
+        <div class="sku">
+            {{ 'Sku' | trans }}: {{ orderItem.sku }}
+        </div>
+        <div class="m-b-sm">
+            {% include ['@ProductPackagingUnitGui/Sales/Detail/boxes/item-packaging-unit.twig', '@Sales/Detail/boxes/item-packaging-unit.twig'] with {
+                orderItem: orderItem,
+            } %}
+        </div>
+    </td>
+    <td>
+        x {{ orderItem.quantity }}
+
+        {% include '@Sales/Detail/boxes/item-measurement-unit.twig' with {
+            orderItem: orderItem,
+        } %}
+    </td>
+    <td>
+        {% include '@Sales/Detail/boxes/discounted-price.twig' with {
+            subtotal: orderItem.sumPrice,
+            priceToPay: orderItem.sumPrice - orderItem.sumDiscountAmountFullAggregation | default(0),
+            order: merchantOrder.order,
+        } %}
+
+        <div class="tax-info">{{ 'incl. %tax_amount% % tax' | trans({'%tax_amount%': orderItem.taxRate | default(0)}) }}</div>
+    </td>
+    <td data-qa="item-total-amount" data-qa-raw="{{ orderItem.sumPriceToPayAggregation }}">
+        {% include '@Sales/Detail/boxes/discounted-price.twig' with {
+            subtotal: orderItem.sumSubtotalAggregation,
+            priceToPay: orderItem.sumPriceToPayAggregation,
+            order: merchantOrder.order,
+        } %}
+    </td>
+    <td>
+        {% for returnPolicyMessage in orderItem.returnPolicyMessages %}
+            {% if returnPolicyMessage.message is not null %}
+                <div>{{ returnPolicyMessage.message | trans }}</div>
+            {% endif %}
+        {% endfor %}
+    </td>
+    <td rowspan="{{ numberOfItemAdditions }}" class="state-history">
+        {% if not isBundleProduct %}
+            <a href="{{ url('/state-machine/graph/draw', {'process': merchantOrder.process, 'highlight-state': (merchantOrderItem.stateHistory | first).stateName, 'state-machine': 'Merchant'}) }}" target="_blank">{{ (merchantOrderItem.stateHistory | first).stateName }}</a> ({{ merchantOrder.process }})
+
+            <br>
+
+            {% if merchantOrderItem.stateHistory | length > 1 %}
+                <div id="history_details_{{ merchantOrderItem.idMerchantOrderItem }}" class="hidden">
+                    {% for stateHistory in merchantOrderItem.stateHistory | slice(1) %}
+                        <div>{{ stateHistory.stateName }} ({{ stateHistory.createdAt | formatDateTime }})</div>
+                    {% endfor %}
+                </div>
+
+                <a id="history-btn-{{ merchantOrderItem.idMerchantOrderItem }}" class="btn btn-sm more-history is-hidden" data-id="{{ merchantOrderItem.idMerchantOrderItem }}">
+                    <span class="show-more">{{ 'Show history' | trans }}</span>
+                    <span class="show-less">{{ 'Hide history' | trans }}</span>
+                </a>
+            {% endif %}
+        {% endif %}
+    </td>
+</tr>
+
+{% if not isBundleProduct %}
+    {% include '@Sales/Detail/boxes/order-item-option.twig' with {
+        orderItem: orderItem,
+        order: merchantOrder.order,
+    } %}
+{% endif %}
+
+<tr class="addition-row">
+    <td colspan="2"></td>
+    <td>
+        {{ form_row(returnItem.reason, {
+            attr: {
+                class: 'select-reason js-select-reason',
+                'data-target': 'js-custom-reason-' ~ productUniqueKey,
+            },
+        }) }}
+
+        {{ form_row(returnItem.customReason, {
+            attr: {
+                class: 'js-custom-reason-' ~ productUniqueKey ~ ' hidden',
+            },
+        }) }}
+    </td>
+    <td colspan="5"></td>
+</tr>

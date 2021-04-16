@@ -37,6 +37,8 @@ class CreateController extends AbstractController
     protected const MESSAGE_PARAM_ID = '%id%';
 
     /**
+     * @phpstan-return \Symfony\Component\HttpFoundation\RedirectResponse|array<string, mixed>
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
@@ -53,6 +55,8 @@ class CreateController extends AbstractController
     }
 
     /**
+     * @phpstan-return \Symfony\Component\HttpFoundation\RedirectResponse|array<string, mixed>
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
@@ -80,17 +84,18 @@ class CreateController extends AbstractController
             return $this->processReturnCreateForm($returnCreateForm, $orderTransfer);
         }
 
-        return [
-            'returnCreateForm' => $returnCreateForm->createView(),
-            'order' => $orderTransfer,
-        ];
+        return $this->provideTemplateData($returnCreateForm, $orderTransfer);
     }
 
     /**
+     * @phpstan-param \Symfony\Component\Form\FormInterface<mixed> $returnCreateForm
+     *
+     * @phpstan-return \Symfony\Component\HttpFoundation\RedirectResponse|array<string, mixed>
+     *
      * @param \Symfony\Component\Form\FormInterface $returnCreateForm
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     protected function processReturnCreateForm(FormInterface $returnCreateForm, OrderTransfer $orderTransfer)
     {
@@ -110,9 +115,27 @@ class CreateController extends AbstractController
 
         $this->addErrorMessage(static::MESSAGE_RETURN_CREATE_FAIL);
 
+        return $this->provideTemplateData($returnCreateForm, $orderTransfer);
+    }
+
+    /**
+     * @phpstan-param \Symfony\Component\Form\FormInterface<mixed> $returnCreateForm
+     *
+     * @phpstan-return array<string, mixed>
+     *
+     * @param \Symfony\Component\Form\FormInterface $returnCreateForm
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return array
+     */
+    protected function provideTemplateData(FormInterface $returnCreateForm, OrderTransfer $orderTransfer): array
+    {
         return [
             'returnCreateForm' => $returnCreateForm->createView(),
             'order' => $orderTransfer,
+            'templates' => $this->getFactory()
+                ->createReturnCreateTemplateProvider()
+                ->provide($returnCreateForm, $orderTransfer),
         ];
     }
 }

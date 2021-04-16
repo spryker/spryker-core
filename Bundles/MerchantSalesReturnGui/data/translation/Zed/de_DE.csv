@@ -1,0 +1,14 @@
+"General information","Allgemeine Information"
+"Order reference",Bestellnummer
+"Select Items to Return","Artikel zum Zurückgeben auswählen"
+"You can only return products from one merchant at a time.","Es können nur Produkte eines Händlers gleichzeitig zurückgegeben werden."
+"Merchant Order %row% of %length%","Händlerbestellung %row% von %length%"
+"Fullfilled by merchant","Verkauft durch Händler"
+"Merchant Order Reference",Händlerbestellreferenz
+Product,Produkt
+Quantity,Anzahl
+Price,Preis
+Total,Summe
+"Return policy",Rücknahmegarantie
+State,Zustand
+"Create return","Retoure erstellen"

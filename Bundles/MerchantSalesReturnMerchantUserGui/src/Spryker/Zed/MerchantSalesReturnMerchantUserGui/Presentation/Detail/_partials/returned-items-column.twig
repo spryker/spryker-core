@@ -1,0 +1,55 @@
+{% embed '@SalesReturnGui/_partials/column.twig' with {
+    title: 'Returned Items'
+} %}
+    {% block content %}
+        {% set changeStatusRedirectUrl = url('/merchant-sales-return-merchant-user-gui/detail', {'id-return': return.idSalesReturn}) %}
+
+        <div class="row">
+            <div class="col-md-6">
+                {{ 'Trigger all matching states' | trans }}
+                <span class="js-item-counter-wrapper hidden">{{ 'of' | trans }}
+                    <span class="js-item-counter"></span>
+                    {{ 'selected items' | trans }}
+                </span>
+            </div>
+            <div class="header-actions js-return-bulk-trigger-buttons col-md-6">
+                {% include '@MerchantSalesReturnMerchantUserGui/_partials/merchant-order-actions.twig' with {
+                    redirectUrl: changeStatusRedirectUrl,
+                    merchantSalesOrderReference: merchantOrder.merchantOrderReference,
+                    events: uniqueOrderItemManualEvents,
+                } only %}
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="table-responsive">
+            <table class="table js-return-items-table" data-qa="return-items-table">
+                <thead>
+                    <tr class="text-left">
+                        <th><input type="checkbox" class="js-check-all-items"></th>
+                        <th colspan="2">{{ 'Product' | trans }}</th>
+                        <th>{{ 'Quantity' | trans }}</th>
+                        <th>{{ 'Price' | trans }}</th>
+                        <th>{{ 'Total' | trans }}</th>
+                        <th>{{ 'State' | trans }}</th>
+                        <th>{{ 'Trigger event' | trans }}</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% set order = {
+                        currencyIsoCode: (return.returnItems | first).orderItem.currencyIsoCode ?? null
+                    } %}
+
+                    {% include '@MerchantSalesReturnMerchantUserGui/Detail/_partials/return-detail-items.twig' with {
+                        return: return,
+                        order: order,
+                        merchantOrder: merchantOrder,
+                        changeStatusRedirectUrl: changeStatusRedirectUrl,
+                    } only %}
+                </tbody>
+            </table>
+        </div>
+    {% endblock %}
+{% endembed %}

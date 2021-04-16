@@ -146,17 +146,18 @@ class OrderReturnTable extends AbstractTable
         $this->orderTransfer->requireIdSalesOrder();
 
         $salesReturnIds = (clone $this->salesReturnQuery)
+            ->groupByIdSalesReturn()
             ->useSpySalesReturnItemQuery(null, Criteria::LEFT_JOIN)
                 ->useSpySalesOrderItemQuery(null, Criteria::LEFT_JOIN)
                     ->filterByFkSalesOrder($this->orderTransfer->getIdSalesOrder())
                 ->endUse()
             ->endUse()
-            ->groupByIdSalesReturn()
             ->select([SpySalesReturnTableMap::COL_ID_SALES_RETURN])
             ->find()
             ->toArray();
 
-        return $this->salesReturnQuery
+        $this->salesReturnQuery
+            ->groupByIdSalesReturn()
             ->filterByIdSalesReturn_In($salesReturnIds)
             ->useSpySalesReturnItemQuery(null, Criteria::LEFT_JOIN)
                 ->useSpySalesOrderItemQuery(null, Criteria::LEFT_JOIN)
@@ -166,8 +167,9 @@ class OrderReturnTable extends AbstractTable
                     ->endUse()
                 ->endUse()
             ->endUse()
-            ->withColumn(sprintf('COUNT(%s)', SpySalesReturnItemTableMap::COL_ID_SALES_RETURN_ITEM), static::COL_ITEMS)
-            ->groupByIdSalesReturn();
+            ->withColumn(sprintf('COUNT(%s)', SpySalesReturnItemTableMap::COL_ID_SALES_RETURN_ITEM), static::COL_ITEMS);
+
+        return $this->salesReturnQuery;
     }
 
     /**

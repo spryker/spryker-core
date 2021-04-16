@@ -36,6 +36,7 @@
         <property name="totals" type="Totals"/>
         <property name="uniqueProductsCount" type="int"/>
         <property name="order" type="Order"/>
+        <property name="merchant" type="Merchant"/>
     </transfer>
 
     <transfer name="MerchantOrderCollection">
@@ -55,6 +56,12 @@
         <property name="idOrderItem" type="int"/>
         <property name="merchantOrderItemReference" type="string"/>
         <property name="merchantOrderItemIds" type="int[]" singular="merchantOrderItemId"/>
+        <property name="orderItemIds" type="int[]" singular="idOrderItem"/>
+    </transfer>
+
+    <transfer name="MerchantCriteria">
+        <property name="merchantReference" type="string"/>
+        <property name="merchantReferences" type="string[]" singular="merchantReference"/>
     </transfer>
 
     <transfer name="MerchantOrderCriteria">
@@ -69,7 +76,9 @@
         <property name="withOrder" type="bool"/>
         <property name="withUniqueProductsCount" type="bool"/>
         <property name="customerReference" type="string"/>
-        <property name="orderItemUuid" type="string"/>
+        <property name="orderItemUuid" type="string" deprecated="Use orderItemUuids property instead."/>
+        <property name="orderItemUuids" type="string[]" singular="orderItemUuid"/>
+        <property name="withMerchant" type="bool"/>
     </transfer>
 
     <transfer name="MerchantOrderItemResponse">
@@ -132,6 +141,10 @@
 
     <transfer name="MerchantOrderItemCollection">
         <property name="merchantOrderItems" type="MerchantOrderItem[]" singular="merchantOrderItem"/>
+    </transfer>
+
+    <transfer name="MerchantCollection">
+        <property name="merchants" type="Merchant[]" singular="merchants"/>
     </transfer>
 
 </transfers>

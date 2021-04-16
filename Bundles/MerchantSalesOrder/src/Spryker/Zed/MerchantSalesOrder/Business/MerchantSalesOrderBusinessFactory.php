@@ -25,6 +25,7 @@ use Spryker\Zed\MerchantSalesOrder\Business\Reader\MerchantSalesOrderReaderInter
 use Spryker\Zed\MerchantSalesOrder\Business\Writer\MerchantOrderItemWriter;
 use Spryker\Zed\MerchantSalesOrder\Business\Writer\MerchantOrderItemWriterInterface;
 use Spryker\Zed\MerchantSalesOrder\Dependency\Facade\MerchantSalesOrderToCalculationFacadeInterface;
+use Spryker\Zed\MerchantSalesOrder\Dependency\Facade\MerchantSalesOrderToMerchantFacadeInterface;
 use Spryker\Zed\MerchantSalesOrder\Dependency\Facade\MerchantSalesOrderToSalesFacadeInterface;
 use Spryker\Zed\MerchantSalesOrder\MerchantSalesOrderDependencyProvider;
 
@@ -69,7 +70,7 @@ class MerchantSalesOrderBusinessFactory extends AbstractBusinessFactory
      */
     public function createOrderExpander(): OrderExpanderInterface
     {
-        return new OrderExpander($this->getRepository());
+        return new OrderExpander($this->createMerchantSalesOrderReader());
     }
 
     /**
@@ -105,7 +106,8 @@ class MerchantSalesOrderBusinessFactory extends AbstractBusinessFactory
             $this->getSalesFacade(),
             $this->getRepository(),
             $this->getMerchantOrderFilterPlugins(),
-            $this->getMerchantOrderExpanderPlugins()
+            $this->getMerchantOrderExpanderPlugins(),
+            $this->getMerchantFacade(),
         );
     }
 
@@ -115,6 +117,14 @@ class MerchantSalesOrderBusinessFactory extends AbstractBusinessFactory
     public function getCalculationFacade(): MerchantSalesOrderToCalculationFacadeInterface
     {
         return $this->getProvidedDependency(MerchantSalesOrderDependencyProvider::FACADE_CALCULATION);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantSalesOrder\Dependency\Facade\MerchantSalesOrderToMerchantFacadeInterface
+     */
+    public function getMerchantFacade(): MerchantSalesOrderToMerchantFacadeInterface
+    {
+        return $this->getProvidedDependency(MerchantSalesOrderDependencyProvider::FACADE_MERCHANT);
     }
 
     /**

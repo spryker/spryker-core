@@ -1,0 +1,139 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="MerchantOrderItemCriteria">
+        <property name="merchantOrderItemIds" type="int[]" singular="merchantOrderItemId"/>
+        <property name="orderItemIds" type="int[]" singular="idOrderItem"/>
+    </transfer>
+
+    <transfer name="MerchantUser">
+        <property name="idMerchant" type="int"/>
+        <property name="merchant" type="Merchant"/>
+    </transfer>
+
+    <transfer name="MerchantOrder">
+        <property name="merchantOrderItems" type="MerchantOrderItem[]" singular="merchantOrderItem"/>
+        <property name="order" type="Order"/>
+        <property name="return" type="Return"/>
+    </transfer>
+
+    <transfer name="ReturnResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="return" type="Return"/>
+    </transfer>
+
+    <transfer name="MerchantOrderCriteria">
+        <property name="idMerchantOrder" type="int"/>
+        <property name="merchantOrderReference" type="string"/>
+        <property name="idMerchant" type="int"/>
+        <property name="withItems" type="bool"/>
+        <property name="withOrder" type="bool"/>
+    </transfer>
+
+    <transfer name="ReturnItem">
+        <property name="orderItem" type="Item"/>
+        <property name="reason" type="string"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="isReturnable" type="bool"/>
+        <property name="returnPolicyMessages" type="Message[]" singular="returnPolicyMessage"/>
+        <property name="fkSalesOrder" type="int"/>
+        <property name="orderReference" type="string"/>
+        <property name="idSalesOrderItem" type="int"/>
+    </transfer>
+
+    <transfer name="Return">
+        <property name="idSalesReturn" type="int"/>
+        <property name="returnItems" type="ReturnItem[]" singular="returnItem"/>
+        <property name="customerReference" type="string"/>
+        <property name="merchantSalesOrderReference" type="string"/>
+    </transfer>
+
+    <transfer name="ReturnCollection">
+        <property name="returns" type="Return[]" singular="return"/>
+    </transfer>
+
+    <transfer name="ReturnFilter">
+        <property name="returnIds" singular="idReturn" type="int[]"/>
+    </transfer>
+
+    <transfer name="MerchantOrderItem">
+        <property name="state" type="string"/>
+        <property name="manualEvents" type="string[]" singular="manualEvent"/>
+        <property name="idMerchantOrderItem" type="int"/>
+        <property name="stateHistory" type="StateMachineItem[]" singular="stateHistory"/>
+        <property name="idOrderItem" type="int"/>
+    </transfer>
+
+    <transfer name="MerchantOmsTriggerRequest">
+        <property name="merchantOmsEventName" type="string"/>
+        <property name="merchantOrderItemReference" type="string"/>
+        <property name="merchantOrderItems" type="MerchantOrderItem[]" singular="merchantOrderItem"/>
+    </transfer>
+
+    <transfer name="MerchantOmsTriggerResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="Order">
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="customer" type="Customer"/>
+        <property name="store" type="string"/>
+        <property name="email" type="string"/>
+        <property name="lastName" type="string"/>
+        <property name="firstName" type="string"/>
+    </transfer>
+
+    <transfer name="ReturnReasonCollection">
+        <property name="returnReasons" type="ReturnReason[]" singular="returnReason"/>
+    </transfer>
+
+    <transfer name="ReturnCreateRequest">
+        <property name="returnItems" type="ReturnItem[]" singular="returnItem"/>
+        <property name="customer" type="Customer"/>
+        <property name="store" type="string"/>
+    </transfer>
+
+    <transfer name="CustomerResponse">
+        <property name="customerTransfer" type="Customer"/>
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="email" type="string"/>
+        <property name="firstName" type="string"/>
+        <property name="lastName" type="string"/>
+    </transfer>
+
+    <transfer name="MerchantOrderItemCollection">
+        <property name="merchantOrderItems" type="MerchantOrderItem[]" singular="merchantOrderItem"/>
+    </transfer>
+
+    <transfer name="StateMachineItem">
+        <property name="stateName" type="string"/>
+    </transfer>
+
+    <transfer name="ReturnReasonFilter">
+    </transfer>
+
+    <transfer name="Locale">
+    </transfer>
+
+    <transfer name="ReturnReason">
+        <property name="glossaryKeyReason" type="string"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
+        <property name="parameters" type="array" singular="parameters"/>
+        <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="Merchant">
+        <property name="merchantReference" type="string"/>
+    </transfer>
+
+</transfers>

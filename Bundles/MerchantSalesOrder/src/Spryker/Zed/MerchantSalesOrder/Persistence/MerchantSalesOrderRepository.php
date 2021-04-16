@@ -253,7 +253,9 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
             );
         }
 
-        if ($merchantOrderCriteriaTransfer->getOrderItemUuid() !== null) {
+        $this->applyFilterByOrderItemUuid($merchantSalesOrderQuery, $merchantOrderCriteriaTransfer);
+
+        if ($merchantOrderCriteriaTransfer->getOrderItemUuids()) {
             $merchantSalesOrderQuery->addJoin(
                 SpyMerchantSalesOrderTableMap::COL_ID_MERCHANT_SALES_ORDER,
                 SpyMerchantSalesOrderItemTableMap::COL_FK_MERCHANT_SALES_ORDER,
@@ -266,7 +268,8 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
             );
             $merchantSalesOrderQuery->addAnd(
                 SpySalesOrderItemTableMap::COL_UUID,
-                $merchantOrderCriteriaTransfer->getOrderItemUuid()
+                $merchantOrderCriteriaTransfer->getOrderItemUuids(),
+                Criteria::IN
             );
         }
 
@@ -411,6 +414,10 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
             $merchantSalesOrderItemQuery->filterByFkSalesOrderItem($merchantOrderItemCriteriaTransfer->getIdOrderItem());
         }
 
+        if ($merchantOrderItemCriteriaTransfer->getOrderItemIds()) {
+            $merchantSalesOrderItemQuery->filterByFkSalesOrderItem_In($merchantOrderItemCriteriaTransfer->getOrderItemIds());
+        }
+
         if ($merchantOrderItemCriteriaTransfer->getMerchantOrderItemReference() !== null) {
             $merchantSalesOrderItemQuery->filterByMerchantOrderItemReference(
                 $merchantOrderItemCriteriaTransfer->getMerchantOrderItemReference()
@@ -418,5 +425,37 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
         }
 
         return $merchantSalesOrderItemQuery;
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @param \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery $merchantSalesOrderQuery
+     * @param \Generated\Shared\Transfer\MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer
+     *
+     * @return \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery
+     */
+    protected function applyFilterByOrderItemUuid(
+        SpyMerchantSalesOrderQuery $merchantSalesOrderQuery,
+        MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer
+    ): SpyMerchantSalesOrderQuery {
+        if ($merchantOrderCriteriaTransfer->getOrderItemUuid() !== null) {
+            $merchantSalesOrderQuery->addJoin(
+                SpyMerchantSalesOrderTableMap::COL_ID_MERCHANT_SALES_ORDER,
+                SpyMerchantSalesOrderItemTableMap::COL_FK_MERCHANT_SALES_ORDER,
+                Criteria::INNER_JOIN
+            );
+            $merchantSalesOrderQuery->addJoin(
+                SpyMerchantSalesOrderItemTableMap::COL_FK_SALES_ORDER_ITEM,
+                SpySalesOrderItemTableMap::COL_ID_SALES_ORDER_ITEM,
+                Criteria::INNER_JOIN
+            );
+            $merchantSalesOrderQuery->addAnd(
+                SpySalesOrderItemTableMap::COL_UUID,
+                $merchantOrderCriteriaTransfer->getOrderItemUuid()
+            );
+        }
+
+        return $merchantSalesOrderQuery;
     }
 }

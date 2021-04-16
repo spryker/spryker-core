@@ -5,22 +5,22 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantSalesReturn\Communication\Plugin;
+namespace Spryker\Zed\MerchantSalesReturn\Communication\Plugin\SalesReturn;
 
 use Generated\Shared\Transfer\ReturnTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnPreCreatePluginInterface;
+use Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnExpanderPluginInterface;
 
 /**
  * @method \Spryker\Zed\MerchantSalesReturn\MerchantSalesReturnConfig getConfig()
  * @method \Spryker\Zed\MerchantSalesReturn\Business\MerchantSalesReturnFacade getFacade()
  * @method \Spryker\Zed\MerchantSalesReturn\Communication\MerchantSalesReturnCommunicationFactory getFactory()
  */
-class MerchantReturnPreCreatePlugin extends AbstractPlugin implements ReturnPreCreatePluginInterface
+class MerchantReturnExpanderPlugin extends AbstractPlugin implements ReturnExpanderPluginInterface
 {
     /**
      * {@inheritDoc}
-     * - Sets merchant order reference in return transfer.
+     * - Expands `Return` transfer object with merchant orders.
      *
      * @api
      *
@@ -28,8 +28,8 @@ class MerchantReturnPreCreatePlugin extends AbstractPlugin implements ReturnPreC
      *
      * @return \Generated\Shared\Transfer\ReturnTransfer
      */
-    public function preCreate(ReturnTransfer $returnTransfer): ReturnTransfer
+    public function expand(ReturnTransfer $returnTransfer): ReturnTransfer
     {
-        return $this->getFacade()->preCreate($returnTransfer);
+        return $this->getFacade()->expand($returnTransfer);
     }
 }
