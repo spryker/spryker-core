@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @method \Spryker\Zed\ProductMerchantPortalGui\Communication\ProductMerchantPortalGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductMerchantPortalGui\Persistence\ProductMerchantPortalGuiRepositoryInterface getRepository()
  */
-class SavePriceProductAbstractController extends SavePriceProductController
+class SavePriceProductAbstractController extends AbstractSavePriceProductController
 {
     /**
      * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers

@@ -23,7 +23,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @method \Spryker\Zed\ProductMerchantPortalGui\Communication\ProductMerchantPortalGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductMerchantPortalGui\Persistence\ProductMerchantPortalGuiRepositoryInterface getRepository()
  */
-abstract class SavePriceProductController extends AbstractController
+abstract class AbstractSavePriceProductController extends AbstractController
 {
     /**
      * @uses \Spryker\Shared\PriceProduct\PriceProductConfig::PRICE_DIMENSION_DEFAULT
