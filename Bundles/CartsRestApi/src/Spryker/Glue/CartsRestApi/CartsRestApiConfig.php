@@ -16,6 +16,12 @@ class CartsRestApiConfig extends AbstractBundleConfig
 {
     public const RESOURCE_CARTS = 'carts';
     public const RESOURCE_CART_ITEMS = 'items';
+
+    /**
+     * @uses \Spryker\Glue\CustomersRestApi\CustomersRestApiConfig::RESOURCE_CUSTOMERS
+     */
+    public const RESOURCE_CUSTOMERS = 'customers';
+
     public const RESOURCE_GUEST_CARTS = 'guest-carts';
     public const RESOURCE_GUEST_CARTS_ITEMS = 'guest-cart-items';
 
@@ -42,6 +48,7 @@ class CartsRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_CODE_CURRENCY_DATA_IS_INCORRECT = '117';
     public const RESPONSE_CODE_PRICE_MODE_DATA_IS_MISSING = '118';
     public const RESPONSE_CODE_PRICE_MODE_DATA_IS_INCORRECT = '119';
+    public const RESPONSE_CODE_CUSTOMER_UNAUTHORIZED = '802';
 
     public const EXCEPTION_MESSAGE_CART_ID_MISSING = 'Cart uuid is missing.';
     public const EXCEPTION_MESSAGE_CART_ITEM_NOT_FOUND = 'Item with the given group key not found in the cart.';
@@ -60,6 +67,8 @@ class CartsRestApiConfig extends AbstractBundleConfig
     public const EXCEPTION_MESSAGE_CURRENCY_DATA_IS_INCORRECT = 'Currency is incorrect.';
     public const EXCEPTION_MESSAGE_PRICE_MODE_DATA_IS_MISSING = 'Price mode is missing.';
     public const EXCEPTION_MESSAGE_PRICE_MODE_DATA_IS_INCORRECT = 'Price mode is incorrect.';
+
+    public const RESPONSE_DETAILS_CUSTOMER_UNAUTHORIZED = 'Unauthorized request.';
 
     public const HEADER_ANONYMOUS_CUSTOMER_UNIQUE_ID = 'X-Anonymous-Customer-Unique-Id';
 
