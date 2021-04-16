@@ -49,7 +49,6 @@
         <property name="idSalesReturn" type="int"/>
         <property name="returnItems" type="ReturnItem[]" singular="returnItem"/>
         <property name="customerReference" type="string"/>
-        <property name="merchantSalesOrderReference" type="string"/>
     </transfer>
 
     <transfer name="ReturnCollection">

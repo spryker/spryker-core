@@ -7,9 +7,11 @@
 
 namespace Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Controller;
 
+use ArrayObject;
 use Generated\Shared\Transfer\MerchantOmsTriggerRequestTransfer;
-use Generated\Shared\Transfer\MerchantOrderCriteriaTransfer;
-use Generated\Shared\Transfer\MerchantOrderTransfer;
+use Generated\Shared\Transfer\MerchantOrderItemCriteriaTransfer;
+use Generated\Shared\Transfer\ReturnFilterTransfer;
+use Generated\Shared\Transfer\ReturnTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -21,7 +23,7 @@ use Symfony\Component\HttpFoundation\Request;
 class OmsTriggerController extends AbstractController
 {
     protected const URL_PARAM_MERCHANT_SALES_ORDER_ITEM_REFERENCE = 'merchant-sales-order-item-reference';
-    protected const URL_PARAM_MERCHANT_SALES_ORDER_REFERENCE = 'merchant-sales-order-reference';
+    protected const URL_PARAM_RETURN_REFERENCE = 'return-reference';
     protected const URL_PARAM_REDIRECT = 'redirect';
     protected const URL_PARAM_EVENT = 'event';
 
@@ -34,7 +36,7 @@ class OmsTriggerController extends AbstractController
      */
     protected const REDIRECT_URL_DEFAULT = '/merchant-sales-return-merchant-user-gui/detail';
 
-    protected const MESSAGE_ORDER_NOT_FOUND_ERROR = 'Merchant sales order #%d not found.';
+    protected const MESSAGE_RETURN_NOT_FOUND_ERROR = 'Merchant sales return #%d not found.';
     protected const MESSAGE_REDIRECT_NOT_FOUND_ERROR = 'Parameter redirect not found.';
 
     /**
@@ -64,23 +66,26 @@ class OmsTriggerController extends AbstractController
         }
 
         $event = $request->query->get(static::URL_PARAM_EVENT);
-        $merchantOrderReference = $request->get(static::URL_PARAM_MERCHANT_SALES_ORDER_REFERENCE);
+        $returnReference = $request->get(static::URL_PARAM_RETURN_REFERENCE);
 
-        $merchantOrderTransfer = $this->findMerchantOrder($merchantOrderReference);
+        $returnTransfer = $this->findReturn($returnReference);
 
-        if (!$merchantOrderTransfer) {
-            $this->addErrorMessage(static::MESSAGE_ORDER_NOT_FOUND_ERROR, ['%d' => $merchantOrderReference]);
+        if (!$returnTransfer) {
+            $this->addErrorMessage(static::MESSAGE_RETURN_NOT_FOUND_ERROR, ['%d' => $returnReference]);
             $redirectUrl = Url::generate(static::REDIRECT_URL_DEFAULT)->build();
 
             return $this->redirectResponse($redirectUrl);
         }
+
+        $salesOrderItemIds = $this->extractSalesOrderItemIdsFromReturn($returnTransfer);
+        $merchantOrderItemTransfers = $this->getMerchantOrderItems($salesOrderItemIds);
 
         $countTriggeredItems = $this->getFactory()
             ->getMerchantOmsFacade()
             ->triggerEventForMerchantOrderItems(
                 (new MerchantOmsTriggerRequestTransfer())
                     ->setMerchantOmsEventName($event)
-                    ->setMerchantOrderItems($merchantOrderTransfer->getMerchantOrderItems())
+                    ->setMerchantOrderItems(new ArrayObject($merchantOrderItemTransfers))
             );
 
         if (!$countTriggeredItems) {
@@ -146,16 +151,51 @@ class OmsTriggerController extends AbstractController
     }
 
     /**
-     * @param string $merchantOrderReference
+     * @param string $returnReference
      *
-     * @return \Generated\Shared\Transfer\MerchantOrderTransfer|null
+     * @return \Generated\Shared\Transfer\ReturnTransfer|null
      */
-    protected function findMerchantOrder(string $merchantOrderReference): ?MerchantOrderTransfer
+    protected function findReturn(string $returnReference): ?ReturnTransfer
     {
-        return $this->getFactory()->getMerchantSalesOrderFacade()->findMerchantOrder(
-            (new MerchantOrderCriteriaTransfer())
-                ->setMerchantOrderReference($merchantOrderReference)
-                ->setWithItems(true)
-        );
+        return $this->getFactory()
+            ->getSalesReturnFacade()
+            ->getReturns((new ReturnFilterTransfer())->setReturnReference($returnReference))
+            ->getReturns()
+            ->getIterator()
+            ->current();
+    }
+
+    /**
+     * @phpstan-return array<int, int>
+     *
+     * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
+     *
+     * @return int[]
+     */
+    protected function extractSalesOrderItemIdsFromReturn(ReturnTransfer $returnTransfer): array
+    {
+        $salesOrderItemIds = [];
+
+        foreach ($returnTransfer->getReturnItems() as $returnItemTransfer) {
+            $salesOrderItemIds[] = $returnItemTransfer->getOrderItemOrFail()->getIdSalesOrderItemOrFail();
+        }
+
+        return $salesOrderItemIds;
+    }
+
+    /**
+     * @param int[] $salesOrderItemIds
+     *
+     * @return \Generated\Shared\Transfer\MerchantOrderItemTransfer[]
+     */
+    protected function getMerchantOrderItems(array $salesOrderItemIds): array
+    {
+        $merchantOrderItemCriteriaTransfer = (new MerchantOrderItemCriteriaTransfer())
+            ->setOrderItemIds($salesOrderItemIds);
+
+        return $this
+            ->getFactory()
+            ->createMerchantOrderReader()
+            ->getMerchantOrderItems($merchantOrderItemCriteriaTransfer);
     }
 }
