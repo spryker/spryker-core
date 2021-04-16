@@ -6,3 +6,35 @@
 .progress-bar-100 {
     width: 100%;
 }
+
+.store-selector-container {
+    position: relative;
+}
+
+.store-seletor-loader {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -6px;
+    z-index: 10;
+
+    animation-name: spin-to;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+
+    &.active {
+        display: block;
+    }
+}
+
+@keyframes spin-to {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}

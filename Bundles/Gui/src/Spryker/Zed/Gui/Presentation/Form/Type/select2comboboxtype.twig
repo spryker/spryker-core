@@ -1,11 +1,23 @@
 {% block select2_widget %}
     {% set css = 'spryker-form-select2combobox' %}
     {% set tags = false %}
+
     {% if form.vars.attr.class is defined %}
         {% set css = form.vars.attr.class ~ ' spryker-form-select2combobox' %}
     {% endif %}
+
     {% if form.vars.attr.tags is defined and form.vars.attr.tags %}
         {% set css = css ~ ' tags' %}
     {% endif %}
-    {{ form_widget(form, { 'attr': {'class': css } }) }}
+
+    <div class="store-selector-container">
+        {{ form_widget(form, { 'attr': {
+            'class': css,
+            'action-url': form.vars.attr.action_url | default,
+            'action-event': form.vars.attr.action_event | default,
+            'action-field': form.vars.attr.action_field | default
+        } }) }}
+
+        <i class="store-seletor-loader fa fa-spinner"></i>
+    </div>
 {% endblock select2_widget %}
