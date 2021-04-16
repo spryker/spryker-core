@@ -35,6 +35,11 @@ class CategorySlotBlockDataProvider implements CategorySlotBlockDataProviderInte
     protected $translatorFacade;
 
     /**
+     * @var int[]|null
+     */
+    protected static $categoryCache = null;
+
+    /**
      * @param \Spryker\Zed\CmsSlotBlockCategoryGui\Dependency\Facade\CmsSlotBlockCategoryGuiToCategoryFacadeInterface $categoryFacade
      * @param \Spryker\Zed\CmsSlotBlockCategoryGui\Dependency\Facade\CmsSlotBlockCategoryGuiToLocaleFacadeInterface $localeFacade
      * @param \Spryker\Zed\CmsSlotBlockCategoryGui\Dependency\Facade\CmsSlotBlockCategoryGuiToTranslatorFacadeInterface $translatorFacade
@@ -76,11 +81,11 @@ class CategorySlotBlockDataProvider implements CategorySlotBlockDataProviderInte
      */
     protected function getCategories(): array
     {
-        $categoryCollectionTransfer = $this->categoryFacade->findCategoriesByCriteria(
-            (new CategoryCriteriaTransfer())->setLocaleId($this->localeFacade->getCurrentLocale()->getIdLocale())
+        return static::$categoryCache !== null ? static::$categoryCache : static::$categoryCache = $this->getCategoryIdsFromCollection(
+            $this->categoryFacade->getCategoriesByCriteria(
+                (new CategoryCriteriaTransfer())->setIdLocale($this->localeFacade->getCurrentLocale()->getIdLocale())
+            )
         );
-
-        return $this->getCategoryIdsFromCollection($categoryCollectionTransfer);
     }
 
     /**

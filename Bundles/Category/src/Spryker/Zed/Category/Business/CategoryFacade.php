@@ -200,11 +200,9 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
      */
-    public function findCategoriesByCriteria(CategoryCriteriaTransfer $categoryCriteriaTransfer): CategoryCollectionTransfer
+    public function getCategoriesByCriteria(CategoryCriteriaTransfer $categoryCriteriaTransfer): CategoryCollectionTransfer
     {
-        return $this->getFactory()
-            ->createCategoryReader()
-            ->findCategoriesByCriteria($categoryCriteriaTransfer);
+        return $this->getRepository()->getCategoriesByCriteria($categoryCriteriaTransfer);
     }
 
     /**

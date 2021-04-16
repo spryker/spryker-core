@@ -41,8 +41,8 @@ class CmsSlotBlockCategoryGuiToCategoryFacadeBridge implements CmsSlotBlockCateg
      *
      * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
      */
-    public function findCategoriesByCriteria(CategoryCriteriaTransfer $categoryCriteriaTransfer): CategoryCollectionTransfer
+    public function getCategoriesByCriteria(CategoryCriteriaTransfer $categoryCriteriaTransfer): CategoryCollectionTransfer
     {
-        return $this->categoryFacade->findCategoriesByCriteria($categoryCriteriaTransfer);
+        return $this->categoryFacade->getCategoriesByCriteria($categoryCriteriaTransfer);
     }
 }

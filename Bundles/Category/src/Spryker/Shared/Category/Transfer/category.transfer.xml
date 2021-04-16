@@ -72,7 +72,7 @@
         <property name="idCategory" type="int"/>
         <property name="storeName" type="string"/>
         <property name="localeName" type="string"/>
-        <property name="localeId" type="int"/>
+        <property name="idLocale" type="int"/>
         <property name="withNodes" type="bool"/>
         <property name="withChildren" type="bool"/>
         <property name="isMain" type="bool"/>

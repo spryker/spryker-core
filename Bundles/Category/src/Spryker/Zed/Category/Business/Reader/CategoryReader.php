@@ -109,16 +109,6 @@ class CategoryReader implements CategoryReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer $categoryCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
-     */
-    public function findCategoriesByCriteria(CategoryCriteriaTransfer $categoryCriteriaTransfer): CategoryCollectionTransfer
-    {
-        return $this->categoryRepository->findCategoriesByCriteria($categoryCriteriaTransfer);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
      * @return \Generated\Shared\Transfer\CategoryTransfer
