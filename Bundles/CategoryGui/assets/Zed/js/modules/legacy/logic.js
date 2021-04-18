@@ -9,7 +9,7 @@ window.serializedList = {};
 
 var categoryHelper = require('./helpers.js');
 var STORE_SELECTOR_ID = '#category_store_relation_id_stores';
-var STORE_SELECTOR_LOADER_CLASS_NAME = '.store-seletor-loader';
+var STORE_SELECTOR_LOADER_CLASS_NAME = '.store-selector-loader';
 var STORE_SELECTOR_ACTION_URL_ATTRIBUTE = 'action-url';
 var STORE_SELECTOR_ACTION_EVENT_ATTRIBUTE = 'action-event';
 var STORE_SELECTOR_ACTION_FIELD_ATTRIBUTE = 'action-field';
@@ -68,7 +68,7 @@ $(document).ready(function () {
     var parentCategoryId = parentCategorySelector.select2('data')[0].id;
 
     if (!parentCategoryId) {
-        storeSelector.attr('disabled', true);
+        storeSelector.prop('disabled', true);
     }
 
     parentCategorySelector.on(storeSelectorActionEvent, function (event) {
@@ -88,7 +88,7 @@ $(document).ready(function () {
                         }
 
                         storeSelector.append(optionTemplate);
-                        storeSelector.attr('disabled', false);
+                        storeSelector.prop('disabled', false);
                     })
                 },
                 beforeSend: function(){
@@ -102,6 +102,6 @@ $(document).ready(function () {
             return;
         }
 
-        storeSelector.attr('disabled', true);
+        storeSelector.prop('disabled', true);
     })
 });
