@@ -146,7 +146,7 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
     protected function addValidateFormattedControllerBeforeActionHttpRequestPlugins(Container $container): Container
     {
         $container->set(static::PLUGIN_VALIDATE_FORMATTED_CONTROLLER_BEFORE_ACTION_HTTP_REQUEST, function (Container $container) {
-            return $this->getValidateFormattedControllerBeforeActionHttpRequestPlugins();
+            return $this->getFormattedControllerBeforeActionTerminatePlugins();
         });
 
         return $container;
@@ -352,7 +352,7 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ValidateHttpRequestPluginInterface[]
      */
-    protected function getValidateFormattedControllerBeforeActionHttpRequestPlugins(): array
+    protected function getFormattedControllerBeforeActionTerminatePlugins(): array
     {
         return [];
     }
