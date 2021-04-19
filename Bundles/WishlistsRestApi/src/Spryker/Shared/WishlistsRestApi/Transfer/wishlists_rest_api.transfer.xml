@@ -12,6 +12,7 @@
 
     <transfer name="RestWishlistItemsAttributes">
         <property name="sku" type="string" restRequestParameter="required"/>
+        <property name="id" type="string"/>
     </transfer>
 
     <transfer name="Wishlist">
@@ -45,6 +46,7 @@
     <transfer name="WishlistItemRequest">
         <property name="idCustomer" type="int"/>
         <property name="uuidWishlist" type="string"/>
+        <property name="uuid" type="string"/>
         <property name="sku" type="string"/>
     </transfer>
 

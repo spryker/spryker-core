@@ -42,7 +42,8 @@ class ZedNavigationBusinessFactory extends AbstractBusinessFactory
             $this->createCachedNavigationCollector(),
             $this->createMenuFormatter(),
             $this->createPathExtractor(),
-            $this->createNavigationItemFilter()
+            $this->createNavigationItemFilter(),
+            $this->getConfig()
         );
     }
 
@@ -64,7 +65,8 @@ class ZedNavigationBusinessFactory extends AbstractBusinessFactory
     {
         return new ZedNavigationCacheBuilder(
             $this->createNavigationCollector(),
-            $this->createNavigationCache()
+            $this->createNavigationCache(),
+            $this->getConfig()
         );
     }
 
@@ -74,7 +76,8 @@ class ZedNavigationBusinessFactory extends AbstractBusinessFactory
     public function createNavigationCacheRemover(): ZedNavigationCacheRemover
     {
         return new ZedNavigationCacheRemover(
-            $this->createNavigationCache()
+            $this->createNavigationCache(),
+            $this->getConfig()
         );
     }
 
@@ -99,10 +102,7 @@ class ZedNavigationBusinessFactory extends AbstractBusinessFactory
      */
     public function createNavigationSchemaFinder()
     {
-        return new ZedNavigationSchemaFinder(
-            $this->getConfig()->getNavigationSchemaPathPattern(),
-            $this->getConfig()->getNavigationSchemaFileNamePattern()
-        );
+        return new ZedNavigationSchemaFinder($this->getConfig()->getNavigationSchemaPathPattern());
     }
 
     /**
@@ -141,7 +141,6 @@ class ZedNavigationBusinessFactory extends AbstractBusinessFactory
     public function createNavigationCache()
     {
         return new ZedNavigationCache(
-            $this->getConfig()->getCacheFile(),
             $this->getConfig()->isNavigationCacheEnabled(),
             $this->getUtilEncodingService()
         );

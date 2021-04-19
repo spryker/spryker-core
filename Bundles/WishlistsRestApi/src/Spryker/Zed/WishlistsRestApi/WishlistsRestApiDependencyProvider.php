@@ -20,6 +20,7 @@ class WishlistsRestApiDependencyProvider extends AbstractBundleDependencyProvide
     public const PROPEL_QUERY_WISHLIST = 'PROPEL_QUERY_WISHLIST';
 
     public const FACADE_WISHLIST = 'FACADE_WISHLIST';
+    public const PLUGINS_REST_WISHLIST_ITEMS_ATTRIBUTES_DELETE_STRATEGY = 'PLUGINS_REST_WISHLIST_ITEMS_ATTRIBUTES_DELETE_STRATEGY';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -43,6 +44,7 @@ class WishlistsRestApiDependencyProvider extends AbstractBundleDependencyProvide
     {
         $container = parent::provideBusinessLayerDependencies($container);
         $container = $this->addWishlistFacade($container);
+        $container = $this->addRestWishlistItemsAttributesDeleteStrategyPlugins($container);
 
         return $container;
     }
@@ -75,5 +77,27 @@ class WishlistsRestApiDependencyProvider extends AbstractBundleDependencyProvide
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function addRestWishlistItemsAttributesDeleteStrategyPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_REST_WISHLIST_ITEMS_ATTRIBUTES_DELETE_STRATEGY, function (Container $container) {
+            return $this->getRestWishlistItemsAttributesDeleteStrategyPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\WishlistsRestApiExtension\Dependency\Plugin\RestWishlistItemsAttributesDeleteStrategyPluginInterface[]
+     */
+    protected function getRestWishlistItemsAttributesDeleteStrategyPlugins(): array
+    {
+        return [];
     }
 }

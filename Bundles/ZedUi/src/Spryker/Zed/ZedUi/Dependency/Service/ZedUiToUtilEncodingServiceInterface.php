@@ -10,7 +10,7 @@ namespace Spryker\Zed\ZedUi\Dependency\Service;
 interface ZedUiToUtilEncodingServiceInterface
 {
     /**
-     * @param array $value
+     * @param mixed $value
      * @param int|null $options
      * @param int|null $depth
      *

@@ -183,7 +183,7 @@ class CacheClearerTest extends Unit
             ->getMock();
 
         $mock
-            ->expects($this->once())
+            ->expects($this->any())
             ->method('getAllowedStores')
             ->will($this->returnValue($stores));
 
@@ -200,11 +200,9 @@ class CacheClearerTest extends Unit
      */
     protected function getFileSystemMock(): Filesystem
     {
-        $mock = $this
+        return $this
             ->getMockBuilder(Filesystem::class)
             ->getMock();
-
-        return $mock;
     }
 
     /**

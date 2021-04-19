@@ -20,12 +20,13 @@ class ZedNavigationFacade extends AbstractFacade implements ZedNavigationFacadeI
      * @api
      *
      * @param string $pathInfo
+     * @param string|null $navigationType
      *
      * @return array
      */
-    public function buildNavigation($pathInfo)
+    public function buildNavigation($pathInfo, ?string $navigationType = null)
     {
-        return $this->getFactory()->createNavigationBuilder()->build($pathInfo);
+        return $this->getFactory()->createNavigationBuilder()->build($pathInfo, $navigationType);
     }
 
     /**

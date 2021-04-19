@@ -61,7 +61,7 @@ class QuoteShareDetailMapper implements QuoteShareDetailMapperInterface
         $indexedQuotePermissionGroupTransfers = $this->indexQuotePermissionGroupById($quotePermissionGroupTransfers);
         foreach ($quoteCompanyUserEntities as $quoteCompanyUserEntity) {
             $idQuote = $quoteCompanyUserEntity->getFkQuote();
-            if ($shareDetailCollectionByQuoteId[$idQuote] === null) {
+            if (!isset($shareDetailCollectionByQuoteId[$idQuote])) {
                 $shareDetailCollectionByQuoteId[$idQuote] = new ShareDetailCollectionTransfer();
             }
 
