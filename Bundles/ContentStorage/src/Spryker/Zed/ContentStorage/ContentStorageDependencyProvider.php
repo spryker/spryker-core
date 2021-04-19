@@ -11,7 +11,6 @@ use Orm\Zed\Content\Persistence\SpyContentQuery;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\ContentStorage\Dependency\Facade\ContentStorageToEventBehaviorFacadeBridge;
 use Spryker\Zed\ContentStorage\Dependency\Facade\ContentStorageToLocaleFacadeBridge;
-use Spryker\Zed\ContentStorage\Dependency\Facade\ContentStorageToStoreFacadeBridge;
 use Spryker\Zed\ContentStorage\Dependency\Service\ContentStorageToUtilEncodingBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
