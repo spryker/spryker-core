@@ -77,31 +77,31 @@ $(document).ready(function () {
         if (selectedCategoryId) {
             $.ajax({
                 url: `${storeSelectorActionUrl}?id-category-node=${selectedCategoryId}`,
-                success: function(data) {
+                success: function (data) {
                     storeSelector.empty();
 
                     data.forEach(function (item) {
                         var optionTemplate = `<option value="${item.id_store}">${item.name}</option>`;
 
                         if (!item.is_active) {
-                            optionTemplate = `<option disabled value="${item.id_store}">${item.name}</option>`
+                            optionTemplate = `<option disabled value="${item.id_store}">${item.name}</option>`;
                         }
 
                         storeSelector.append(optionTemplate);
                         storeSelector.prop('disabled', false);
-                    })
+                    });
                 },
-                beforeSend: function(){
+                beforeSend: function () {
                     storeSelectorLoader.addClass('active');
                 },
-                complete: function(){
+                complete: function () {
                     storeSelectorLoader.removeClass('active');
-                }
+                },
             });
 
             return;
         }
 
         storeSelector.prop('disabled', true);
-    })
+    });
 });
