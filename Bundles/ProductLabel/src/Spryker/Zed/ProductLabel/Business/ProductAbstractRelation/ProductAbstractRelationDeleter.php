@@ -85,7 +85,7 @@ class ProductAbstractRelationDeleter implements ProductAbstractRelationDeleterIn
      *
      * @return void
      */
-    protected function executeDeleteRelationsTransaction($idProductLabel, array $idsProductAbstract, bool $isTouchEnabled = true)
+    protected function executeDeleteRelationsTransaction(int $idProductLabel, array $idsProductAbstract, bool $isTouchEnabled = true)
     {
         $productLabelDeAssignChunkSize = $this->productLabelConfig->getProductLabelDeAssignChunkSize();
 
@@ -96,26 +96,35 @@ class ProductAbstractRelationDeleter implements ProductAbstractRelationDeleterIn
 
     /**
      * @param int $idProductLabel
-     * @param array $idsProductAbstract
+     * @param array $productAbstractIds
      * @param bool $isTouchEnabled
      *
      * @return void
      */
-    protected function deleteRelationsByChunk(int $idProductLabel, array $idsProductAbstract, bool $isTouchEnabled): void
+    protected function deleteRelationsByChunk(int $idProductLabel, array $productAbstractIds, bool $isTouchEnabled): void
     {
-        $productAbstractRelations = $this->productLabelRepository->getProductAbstractRelationsByIdProductLabelAndIdsProductAbstract(
+        $productAbstractRelations = $this->productLabelRepository->getProductAbstractRelationsByIdProductLabelAndProductAbstractIds(
             $idProductLabel,
-            $idsProductAbstract
+            $productAbstractIds
         );
 
-        foreach ($productAbstractRelations as $productAbstractRelation) {
-            $this->productLabelEntityManager->deleteProductLabelProductAbstractRelation(
-                $productAbstractRelation->getFkProductLabel(),
-                $productAbstractRelation->getFkProductAbstract()
-            );
+        if (!count($productAbstractRelations)) {
+            return;
+        }
 
-            if ($isTouchEnabled) {
-                $this->touchRelationsForAbstractProduct($productAbstractRelation->getFkProductAbstract());
+        $productAbstractWithRelationsIds = [];
+        foreach ($productAbstractRelations as $productAbstractRelation) {
+            $productAbstractWithRelationsIds[] = $productAbstractRelation->getFkProductAbstract();
+        }
+
+        $this->productLabelEntityManager->deleteProductLabelProductAbstractRelationBatch(
+            $idProductLabel,
+            $productAbstractWithRelationsIds
+        );
+
+        if ($isTouchEnabled) {
+            foreach ($productAbstractWithRelationsIds as $idProductAbstract) {
+                $this->touchRelationsForAbstractProduct($idProductAbstract);
             }
         }
     }

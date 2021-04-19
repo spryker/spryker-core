@@ -257,16 +257,16 @@ class ProductLabelRepository extends AbstractRepository implements ProductLabelR
 
     /**
      * @param int $idProductLabel
-     * @param array $idsProductAbstract
+     * @param int[] $productAbstractIds
      *
      * @return \Generated\Shared\Transfer\ProductLabelProductAbstractTransfer[]
      */
-    public function getProductAbstractRelationsByIdProductLabelAndIdsProductAbstract(int $idProductLabel, array $idsProductAbstract): array
+    public function getProductAbstractRelationsByIdProductLabelAndProductAbstractIds(int $idProductLabel, array $productAbstractIds): array
     {
         $productLabelProductAbstractEntities = $this->getFactory()
             ->createProductRelationQuery()
             ->filterByFkProductLabel($idProductLabel)
-            ->filterByFkProductAbstract_In($idsProductAbstract)
+            ->filterByFkProductAbstract_In($productAbstractIds)
             ->find();
 
         if (!$productLabelProductAbstractEntities->count()) {

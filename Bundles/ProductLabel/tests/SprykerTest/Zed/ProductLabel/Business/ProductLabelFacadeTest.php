@@ -26,8 +26,10 @@ use Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabelStoreQuery;
 use Spryker\Shared\Product\ProductConfig;
 use Spryker\Shared\ProductLabel\ProductLabelConstants;
+use Spryker\Zed\ProductLabel\Business\ProductLabelBusinessFactory;
 use Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface;
 use Spryker\Zed\ProductLabel\Dependency\Plugin\ProductLabelRelationUpdaterPluginInterface;
+use Spryker\Zed\ProductLabel\ProductLabelConfig;
 use Spryker\Zed\ProductLabel\ProductLabelDependencyProvider;
 
 /**
@@ -633,10 +635,19 @@ class ProductLabelFacadeTest extends Unit
             $productLabelRelationUpdaterPluginMock,
         ]);
 
-        $this->tester->setConfig(ProductLabelConstants::PRODUCT_LABEL_DE_ASSIGN_CHUNK_SIZE, 1);
+        $productLabelConfigMock = $this->getMockBuilder(ProductLabelConfig::class)
+            ->setMethods(['getProductLabelDeAssignChunkSize'])
+            ->getMock();
+        $productLabelConfigMock->method('getProductLabelDeAssignChunkSize')->willReturn(1);
+
+        $productLabelBusinessFactory = new ProductLabelBusinessFactory();
+        $productLabelBusinessFactory->setConfig($productLabelConfigMock);
+
+        $productLabelFacade = $this->getProductLabelFacade();
+        $productLabelFacade->setFactory($productLabelBusinessFactory);
 
         // Act
-        $this->getProductLabelFacade()->updateDynamicProductLabelRelations();
+        $productLabelFacade->updateDynamicProductLabelRelations();
 
         // Assert
         $actualIdProductAbstracts = $this
