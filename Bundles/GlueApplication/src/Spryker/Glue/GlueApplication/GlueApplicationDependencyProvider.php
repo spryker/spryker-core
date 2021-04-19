@@ -23,6 +23,7 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGIN_RESOURCE_ROUTES = 'PLUGIN_RESOURCE_ROUTES';
     public const PLUGIN_RESOURCE_RELATIONSHIP = 'PLUGIN_RESOURCE_RELATIONSHIP';
     public const PLUGIN_VALIDATE_HTTP_REQUEST = 'PLUGIN_VALIDATE_HTTP_REQUEST';
+    public const PLUGIN_VALIDATE_FORMATTED_CONTROLLER_BEFORE_ACTION_HTTP_REQUEST = 'PLUGIN_VALIDATE_FORMATTED_CONTROLLER_BEFORE_ACTION_HTTP_REQUEST';
     public const PLUGIN_VALIDATE_REST_REQUEST = 'PLUGIN_VALIDATE_REST_REQUEST';
     public const PLUGINS_VALIDATE_REST_USER = 'PLUGIN_VALIDATE_REST_USER';
     public const PLUGIN_REST_REQUEST_VALIDATOR = 'PLUGIN_REST_REQUEST_VALIDATOR';
@@ -52,6 +53,7 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addResourceRoutePlugins($container);
         $container = $this->addResourceRelationshipPlugins($container);
         $container = $this->addValidateHttpRequestPlugins($container);
+        $container = $this->addValidateFormattedControllerBeforeActionHttpRequestPlugins($container);
         $container = $this->addValidateRestRequestPlugins($container);
         $container = $this->addRestUserValidatorPlugins($container);
         $container = $this->addRestRequestValidatorPlugins($container);
@@ -131,6 +133,20 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::PLUGIN_VALIDATE_HTTP_REQUEST, function (Container $container) {
             return $this->getValidateHttpRequestPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addValidateFormattedControllerBeforeActionHttpRequestPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGIN_VALIDATE_FORMATTED_CONTROLLER_BEFORE_ACTION_HTTP_REQUEST, function (Container $container) {
+            return $this->getValidateFormattedControllerBeforeActionHttpRequestPlugins();
         });
 
         return $container;
@@ -327,6 +343,16 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ValidateHttpRequestPluginInterface[]
      */
     protected function getValidateHttpRequestPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * Http request validation plugins called before {@link \Spryker\Glue\Kernel\Controller\FormattedAbstractController}
+     *
+     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ValidateHttpRequestPluginInterface[]
+     */
+    protected function getValidateFormattedControllerBeforeActionHttpRequestPlugins(): array
     {
         return [];
     }

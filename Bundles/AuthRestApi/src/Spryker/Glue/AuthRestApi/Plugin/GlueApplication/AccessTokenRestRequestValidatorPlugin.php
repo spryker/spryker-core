@@ -14,8 +14,6 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @deprecated Will be removed without replacement.
- *
  * @method \Spryker\Glue\AuthRestApi\AuthRestApiFactory getFactory()
  */
 class AccessTokenRestRequestValidatorPlugin extends AbstractPlugin implements RestRequestValidatorPluginInterface

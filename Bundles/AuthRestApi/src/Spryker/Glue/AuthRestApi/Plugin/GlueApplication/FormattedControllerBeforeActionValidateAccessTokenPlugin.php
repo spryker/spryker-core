@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Glue\AuthRestApi\AuthRestApiFactory getFactory()
  */
-class ValidateAccessTokenPlugin extends AbstractPlugin implements ValidateHttpRequestPluginInterface
+class FormattedControllerBeforeActionValidateAccessTokenPlugin extends AbstractPlugin implements ValidateHttpRequestPluginInterface
 {
     /**
      * {@inheritDoc}

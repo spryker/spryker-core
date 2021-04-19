@@ -6,7 +6,7 @@
   "require": {
     "php": ">=7.3",
     "spryker/auth-rest-api-extension": "^1.1.0",
-    "spryker/glue-application": "^1.28.0",
+    "spryker/glue-application": "^1.30.0",
     "spryker/glue-application-extension": "^1.2.0",
     "spryker/kernel": "^3.58.0",
     "spryker/oauth": "^1.9.0 || ^2.0.0",
