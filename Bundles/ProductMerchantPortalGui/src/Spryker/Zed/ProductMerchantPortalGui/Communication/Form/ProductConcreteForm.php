@@ -17,9 +17,9 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class ProductConcreteForm extends AbstractType
 {
-    protected const FIELD_SKU = 'sku';
-    protected const FIELD_NAME = 'name';
-    protected const FIELD_SUPER_ATTRIBUTES = 'superAttributes';
+    public const FIELD_SKU = 'sku';
+    public const FIELD_NAME = 'name';
+    public const FIELD_SUPER_ATTRIBUTES = 'superAttributes';
 
     /**
      * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
@@ -80,7 +80,7 @@ class ProductConcreteForm extends AbstractType
     protected function addSuperAttributesField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_SUPER_ATTRIBUTES, CollectionType::class, [
-            'required'=> true,
+            'required' => true,
             'entry_type' => SuperAttributeForm::class,
         ]);
 

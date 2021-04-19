@@ -47,6 +47,8 @@ use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\DataProvider\Pro
 use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\DataProvider\ProductTableDataProvider;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\PriceProductMapper;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\PriceProductMapperInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Submitter\CreateProductAbstractWithMultiConcreteFormSubmitter;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Submitter\CreateProductAbstractWithMultiConcreteFormSubmitterInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Submitter\CreateProductAbstractWithSingleConcreteFormSubmitter;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Submitter\CreateProductAbstractWithSingleConcreteFormSubmitterInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToCategoryFacadeInterface;
@@ -338,6 +340,20 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
             $this->getMerchantUserFacade(),
             $this->getLocaleFacade(),
             $this->getProductFacade(),
+            $this->createLocaleDataProvider()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\Submitter\CreateProductAbstractWithMultiConcreteFormSubmitterInterface
+     */
+    public function createCreateProductAbstractWithMultiConcreteFormSubmitter(): CreateProductAbstractWithMultiConcreteFormSubmitterInterface
+    {
+        return new CreateProductAbstractWithMultiConcreteFormSubmitter(
+            $this->getMerchantUserFacade(),
+            $this->getLocaleFacade(),
+            $this->getProductFacade(),
+            $this->getProductAttributeFacade(),
             $this->createLocaleDataProvider()
         );
     }

@@ -8,16 +8,14 @@
 namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Form;
 
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
-use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Constraint\SkuRegexConstraint;
-use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Constraint\UniqueAbstractSkuConstraint;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 class SuperAttributeForm extends AbstractType
 {
-    protected const FIELD_KEY = 'key';
-    protected const FIELD_VALUE = 'value';
+    public const FIELD_KEY = 'key';
+    public const FIELD_VALUE = 'value';
 
     /**
      * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder

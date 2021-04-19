@@ -8,6 +8,9 @@
 namespace Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade;
 
 
+use Generated\Shared\Transfer\ProductManagementAttributeCollectionTransfer;
+use Generated\Shared\Transfer\ProductManagementAttributeFilterTransfer;
+
 class ProductMerchantPortalGuiToProductAttributeFacadeBridge implements ProductMerchantPortalGuiToProductAttributeFacadeInterface
 {
     /**
@@ -29,5 +32,16 @@ class ProductMerchantPortalGuiToProductAttributeFacadeBridge implements ProductM
     public function getProductAttributeCollection()
     {
         return $this->productAttributeFacade->getProductAttributeCollection();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductManagementAttributeFilterTransfer $productManagementAttributeFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductManagementAttributeCollectionTransfer
+     */
+    public function getProductManagementAttributes(
+        ProductManagementAttributeFilterTransfer $productManagementAttributeFilterTransfer
+    ): ProductManagementAttributeCollectionTransfer {
+        return $this->productAttributeFacade->getProductManagementAttributes($productManagementAttributeFilterTransfer);
     }
 }

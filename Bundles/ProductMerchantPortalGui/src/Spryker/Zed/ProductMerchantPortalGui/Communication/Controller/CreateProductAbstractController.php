@@ -161,6 +161,40 @@ class CreateProductAbstractController extends AbstractController
             'action' => $this->getCreateUrl($formData, false),
         ];
 
+        if ($createProductAbstractWithMultiConcreteForm->isSubmitted()) {
+            return new JsonResponse($responseData);
+        }
+
+        if ($createProductAbstractWithMultiConcreteForm->isValid()) {
+            $this->getFactory()
+                ->createCreateProductAbstractWithMultiConcreteFormSubmitter()
+                ->executeFormSubmission($createProductAbstractWithMultiConcreteForm);
+
+            $responseData = [
+                static::RESPONSE_KEY_POST_ACTIONS => [
+                    [
+                        static::RESPONSE_KEY_TYPE => static::RESPONSE_TYPE_CLOSE_OVERLAY,
+                    ],
+                    [
+                        static::RESPONSE_KEY_TYPE => static::RESPONSE_TYPE_REFRESH_TABLE,
+                    ],
+                ],
+                static::RESPONSE_KEY_NOTIFICATIONS => [
+                    [
+                        static::RESPONSE_KEY_TYPE => static::RESPONSE_TYPE_SUCCESS,
+                        static::RESPONSE_KEY_MESSAGE => static::RESPONSE_MESSAGE_SUCCESS,
+                    ],
+                ],
+            ];
+
+            return new JsonResponse($responseData);
+        }
+
+        $responseData[static::RESPONSE_KEY_NOTIFICATIONS] = [[
+            static::RESPONSE_KEY_TYPE => static::RESPONSE_TYPE_ERROR,
+            static::RESPONSE_KEY_MESSAGE => static::RESPONSE_MESSAGE_ERROR,
+        ]];
+
         return new JsonResponse($responseData);
     }
 
@@ -203,7 +237,7 @@ class CreateProductAbstractController extends AbstractController
                 $values = [];
                 foreach ($productManagementAttributeTransfer->getValues() as $productManagementAttributeValueTransfer) {
                     $values[] = [
-                        'title' => $productManagementAttributeTransfer->getKeyOrFail(),
+                        'title' => $productManagementAttributeValueTransfer->getValueOrFail(),
                         'value' => $productManagementAttributeValueTransfer->getValueOrFail(),
                     ];
                 }
