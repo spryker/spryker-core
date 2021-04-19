@@ -20,7 +20,7 @@ interface ProductRelationConstants
      *
      * @api
      */
-    public const PRODUCT_RELATION_READ_CHUNK = 'PRODUCT_RELATION_READ_CHUNK';
+    public const PRODUCT_RELATION_READ_CHUNK = 'PRODUCT_RELATION:PRODUCT_RELATION_READ_CHUNK';
 
     /**
      * Specification:
@@ -28,5 +28,5 @@ interface ProductRelationConstants
      *
      * @api
      */
-    public const PRODUCT_RELATION_UPDATE_CHUNK = 'PRODUCT_RELATION_UPDATE_CHUNK';
+    public const PRODUCT_RELATION_UPDATE_CHUNK = 'PRODUCT_RELATION:PRODUCT_RELATION_UPDATE_CHUNK';
 }
