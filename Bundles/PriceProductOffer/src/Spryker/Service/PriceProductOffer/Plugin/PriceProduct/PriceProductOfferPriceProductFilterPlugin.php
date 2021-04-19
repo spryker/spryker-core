@@ -31,7 +31,7 @@ class PriceProductOfferPriceProductFilterPlugin extends AbstractPlugin implement
     public function filter(array $priceProductTransfers, PriceProductFilterTransfer $priceProductFilterTransfer): array
     {
         $priceProductTransfers = array_filter($priceProductTransfers, function (PriceProductTransfer $priceProductTransfer) use ($priceProductFilterTransfer) {
-            $productOfferReference = $priceProductTransfer->getPriceDimension()->getProductOfferReference();
+            $productOfferReference = $priceProductTransfer->getPriceDimensionOrFail()->getProductOfferReference();
             $filterProductOfferReference = $priceProductFilterTransfer->getProductOfferReference();
 
             return !$productOfferReference || $productOfferReference === $filterProductOfferReference;
@@ -39,7 +39,7 @@ class PriceProductOfferPriceProductFilterPlugin extends AbstractPlugin implement
 
         $selectedOfferHasPrice = false;
         foreach ($priceProductTransfers as $priceProductTransfer) {
-            if ($priceProductTransfer->getPriceDimension()->getProductOfferReference()) {
+            if ($priceProductTransfer->getPriceDimensionOrFail()->getProductOfferReference()) {
                 $selectedOfferHasPrice = true;
 
                 break;
@@ -48,7 +48,7 @@ class PriceProductOfferPriceProductFilterPlugin extends AbstractPlugin implement
 
         $priceProductTransfers = array_filter($priceProductTransfers, function (PriceProductTransfer $priceProductTransfer) use ($selectedOfferHasPrice) {
             if ($selectedOfferHasPrice) {
-                return $priceProductTransfer->getPriceDimension()->getProductOfferReference();
+                return (bool)$priceProductTransfer->getPriceDimensionOrFail()->getProductOfferReference();
             }
 
             return true;
