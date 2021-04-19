@@ -54,6 +54,7 @@ class PriceProductOfferRepository extends AbstractRepository implements PricePro
      */
     public function getProductOfferPrices(PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer): ArrayObject
     {
+        /** @var \Orm\Zed\PriceProductOffer\Persistence\SpyPriceProductOfferQuery $priceProductOfferQuery */
         $priceProductOfferQuery = $this->getFactory()
             ->getPriceProductOfferPropelQuery()
             ->joinWithSpyPriceProductStore()
@@ -82,6 +83,7 @@ class PriceProductOfferRepository extends AbstractRepository implements PricePro
      */
     public function count(PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer): int
     {
+        /** @var \Orm\Zed\PriceProductOffer\Persistence\SpyPriceProductOfferQuery $priceProductOfferQuery */
         $priceProductOfferQuery = $this->getFactory()
             ->getPriceProductOfferPropelQuery()
             ->joinWithSpyProductOffer()
@@ -106,15 +108,26 @@ class PriceProductOfferRepository extends AbstractRepository implements PricePro
         if ($priceProductOfferCriteriaTransfer->getPriceProductOfferIds()) {
             $priceProductOfferQuery->filterByIdPriceProductOffer_In($priceProductOfferCriteriaTransfer->getPriceProductOfferIds());
         }
-        if (
-            $priceProductOfferCriteriaTransfer->getProductOfferCriteria()
-            && $priceProductOfferCriteriaTransfer->getProductOfferCriteria()->getMerchantIds()
-        ) {
-            $priceProductOfferQuery->filterBy(
-                SpyProductOfferTableMap::COL_FK_MERCHANT,
-                $priceProductOfferCriteriaTransfer->getProductOfferCriteria()->getMerchantIds(),
-                Criteria::IN
-            );
+
+        if ($priceProductOfferCriteriaTransfer->getProductOfferCriteria()) {
+            /** @var \Generated\Shared\Transfer\ProductOfferCriteriaTransfer $productOfferCriteriaTransfer */
+            $productOfferCriteriaTransfer = $priceProductOfferCriteriaTransfer->getProductOfferCriteria();
+
+            if ($productOfferCriteriaTransfer->getMerchantIds()) {
+                $priceProductOfferQuery->filterBy(
+                    SpyProductOfferTableMap::COL_FK_MERCHANT,
+                    $productOfferCriteriaTransfer->getMerchantIds(),
+                    Criteria::IN
+                );
+            }
+
+            if ($productOfferCriteriaTransfer->getProductOfferReference()) {
+                $priceProductOfferQuery->useSpyProductOfferQuery()
+                    ->filterByProductOfferReference(
+                        $productOfferCriteriaTransfer->getProductOfferReference()
+                    )
+                    ->endUse();
+            }
         }
 
         if ($priceProductOfferCriteriaTransfer->getIdProductOffer()) {

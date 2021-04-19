@@ -1,0 +1,7 @@
+{
+    "include": {
+        "spryker/transfer": "Provides transfer objects definition with `::get*OrFail()` functionality.",
+        "spryker/user-locale": "Allows to assign locale to Zed user.",
+        "spryker/zed-ui": "If you want to use Zed Ui layout templates."
+    }
+}

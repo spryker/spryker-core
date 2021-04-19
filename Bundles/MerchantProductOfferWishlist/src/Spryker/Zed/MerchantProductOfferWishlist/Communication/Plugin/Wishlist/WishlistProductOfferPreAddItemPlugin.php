@@ -12,7 +12,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\WishlistExtension\Dependency\Plugin\WishlistPreAddItemPluginInterface;
 
 /**
- * @method \Spryker\Zed\MerchantProductOfferWishlist\MerchantProductOfferWishlistConfig getConfig()()
+ * @method \Spryker\Zed\MerchantProductOfferWishlist\MerchantProductOfferWishlistConfig getConfig()
+ * @method \Spryker\Zed\MerchantProductOfferWishlist\Business\MerchantProductOfferWishlistFacadeInterface getFacade()
  * @method \Spryker\Zed\MerchantProductOfferWishlist\Communication\MerchantProductOfferWishlistCommunicationFactory getFactory()
  */
 class WishlistProductOfferPreAddItemPlugin extends AbstractPlugin implements WishlistPreAddItemPluginInterface

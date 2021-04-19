@@ -51,8 +51,10 @@ class ConcreteProductPricesRelationshipExpander implements ConcreteProductPrices
         }
 
         foreach ($resources as $resource) {
+            /** @var string $sku */
+            $sku = $resource->getId();
             $concreteProductPricesResource = $this->concreteProductPricesReader
-                ->findConcreteProductPricesBySku($resource->getId(), $restRequest);
+                ->findConcreteProductPricesBySku($sku, $restRequest);
             if ($concreteProductPricesResource) {
                 $resource->addRelationship($concreteProductPricesResource);
             }

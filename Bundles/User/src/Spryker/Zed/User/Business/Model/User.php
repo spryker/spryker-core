@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\UserTransfer;
 use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
 use Orm\Zed\User\Persistence\SpyUser;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
+use Spryker\Zed\User\Business\Exception\PasswordEncryptionFailedException;
 use Spryker\Zed\User\Business\Exception\UsernameExistsException;
 use Spryker\Zed\User\Business\Exception\UserNotFoundException;
 use Spryker\Zed\User\Persistence\UserQueryContainerInterface;
@@ -115,7 +116,7 @@ class User implements UserInterface
      */
     public function createUser(UserTransfer $userTransfer): UserTransfer
     {
-        $userCheck = $this->hasUserByUsername($userTransfer->getUsername());
+        $userCheck = $this->hasUserByUsername($userTransfer->getUsernameOrFail());
 
         if ($userCheck === true) {
             throw new UsernameExistsException(
@@ -129,7 +130,7 @@ class User implements UserInterface
     /**
      * @param string $password
      *
-     * @return string
+     * @return string|false
      */
     public function encryptPassword($password)
     {
@@ -162,6 +163,8 @@ class User implements UserInterface
     /**
      * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
      *
+     * @throws \Spryker\Zed\User\Business\Exception\PasswordEncryptionFailedException
+     *
      * @return \Generated\Shared\Transfer\UserTransfer
      */
     protected function executeSaveTransaction(UserTransfer $userTransfer): UserTransfer
@@ -181,7 +184,12 @@ class User implements UserInterface
 
         $password = $userTransfer->getPassword();
         if (!empty($password) && $this->isRawPassword($password)) {
-            $userEntity->setPassword($this->encryptPassword($password));
+            $passwordEncrypted = $this->encryptPassword($password);
+            if ($passwordEncrypted === false) {
+                throw new PasswordEncryptionFailedException();
+            }
+
+            $userEntity->setPassword($passwordEncrypted);
         }
 
         $userEntity->save();
@@ -549,7 +557,7 @@ class User implements UserInterface
      */
     public function activateUser($idUser)
     {
-        $userEntity = $this->queryContainer->queryUserById($idUser)->findOne();
+        $userEntity = $this->queryUserById($idUser);
         $userEntity->setStatus(SpyUserTableMap::COL_STATUS_ACTIVE);
         $rowsAffected = $userEntity->save();
 
@@ -563,11 +571,28 @@ class User implements UserInterface
      */
     public function deactivateUser($idUser)
     {
-        $userEntity = $this->queryContainer->queryUserById($idUser)->findOne();
+        $userEntity = $this->queryUserById($idUser);
         $userEntity->setStatus(SpyUserTableMap::COL_STATUS_BLOCKED);
         $rowsAffected = $userEntity->save();
 
         return $rowsAffected > 0;
+    }
+
+    /**
+     * @param int $idUser
+     *
+     * @throws \Spryker\Zed\User\Business\Exception\UserNotFoundException
+     *
+     * @return \Orm\Zed\User\Persistence\SpyUser
+     */
+    protected function queryUserById(int $idUser): SpyUser
+    {
+        $userEntity = $this->queryContainer->queryUserById($idUser)->findOne();
+        if (!$userEntity) {
+            throw new UserNotFoundException();
+        }
+
+        return $userEntity;
     }
 
     /**
