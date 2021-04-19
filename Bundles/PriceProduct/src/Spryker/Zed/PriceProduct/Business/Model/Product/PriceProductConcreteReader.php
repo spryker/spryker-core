@@ -270,8 +270,10 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
                 ->setType(PriceProductConfig::PRICE_DIMENSION_DEFAULT)
         );
 
+        /** @var int $idProductConcrete */
+        $idProductConcrete = $productConcreteTransfer->requireIdProductConcrete()->getIdProductConcrete();
         $priceProductTransfers = $this->findProductConcretePricesById(
-            $productConcreteTransfer->getIdProductConcrete(),
+            $idProductConcrete,
             $priceProductCriteriaTransfer
         );
 

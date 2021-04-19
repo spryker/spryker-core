@@ -15,7 +15,7 @@ interface AddItemPreCheckPluginInterface
     /**
      * Specification:
      * - This plugin is executed before add item operation is executed.
-     * - Should return ShoppingListPreAddItemCheckResponseTransfer where error messages set and flag that check failed.
+     * - Should return `WishlistPreAddItemCheckResponse` transfer object where error messages and flag that check is failed are set.
      *
      * @api
      *

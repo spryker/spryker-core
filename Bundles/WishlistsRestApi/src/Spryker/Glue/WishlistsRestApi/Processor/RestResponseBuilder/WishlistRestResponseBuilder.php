@@ -101,17 +101,24 @@ class WishlistRestResponseBuilder implements WishlistRestResponseBuilderInterfac
      */
     public function createWishlistItemsRestResponse(string $idWishlist, ?WishlistItemTransfer $wishlistItemTransfer = null): RestResponseInterface
     {
+        if (!$wishlistItemTransfer) {
+            $wishlistItemTransfer = new WishlistItemTransfer();
+        }
+
         $restWishlistItemsAttributesTransfer = $this->wishlistItemMapper
             ->mapWishlistItemTransferToRestWishlistItemsAttributes($wishlistItemTransfer, new RestWishlistItemsAttributesTransfer());
 
+        /** @var string $idRestWishlistItemsAttributes */
+        $idRestWishlistItemsAttributes = $restWishlistItemsAttributesTransfer->getId();
+
         $wishlistItemResource = $this->restResourceBuilder->createRestResource(
             WishlistsRestApiConfig::RESOURCE_WISHLIST_ITEMS,
-            $restWishlistItemsAttributesTransfer->getSku(),
+            $idRestWishlistItemsAttributes,
             $restWishlistItemsAttributesTransfer
         );
         $wishlistItemResource->addLink(
             RestLinkInterface::LINK_SELF,
-            $this->createSelfLinkForWishlistItem($idWishlist, $restWishlistItemsAttributesTransfer->getSku())
+            $this->createSelfLinkForWishlistItem($idWishlist, $idRestWishlistItemsAttributes)
         );
 
         return $this->restResourceBuilder
@@ -126,6 +133,10 @@ class WishlistRestResponseBuilder implements WishlistRestResponseBuilderInterfac
      */
     public function createErrorResponseFromErrorIdentifier(?string $errorIdentifier): RestResponseInterface
     {
+        if (!$errorIdentifier) {
+            $errorIdentifier = '';
+        }
+
         return $this->restResourceBuilder->createRestResponse()
             ->addError($this->createRestErrorMessageFromErrorIdentifier($errorIdentifier));
     }
@@ -139,19 +150,27 @@ class WishlistRestResponseBuilder implements WishlistRestResponseBuilderInterfac
     {
         $restWishlistsAttributesTransfer = $this->wishlistMapper
             ->mapWishlistTransferToRestWishlistsAttributes($wishlistTransfer);
+        /** @var string $wishlistUuid */
+        $wishlistUuid = $wishlistTransfer->getUuid();
 
         $wishlistResource = $this->restResourceBuilder->createRestResource(
             WishlistsRestApiConfig::RESOURCE_WISHLISTS,
-            $wishlistTransfer->getUuid(),
+            $wishlistUuid,
             $restWishlistsAttributesTransfer
         );
 
         foreach ($wishlistTransfer->getWishlistItems() as $wishlistItemTransfer) {
+            $restWishlistItemsAttributesTransfer = $this->wishlistItemMapper
+                ->mapWishlistItemTransferToRestWishlistItemsAttributes($wishlistItemTransfer, new RestWishlistItemsAttributesTransfer());
+
+            /** @var string $idRestWishlistItemsAttributes */
+            $idRestWishlistItemsAttributes = $restWishlistItemsAttributesTransfer->requireId()->getId();
+
             $wishlistResource->addRelationship(
                 $this->createWishlistItemsResource($wishlistItemTransfer)
                     ->addLink(
                         RestLinkInterface::LINK_SELF,
-                        $this->createSelfLinkForWishlistItem($wishlistTransfer->getUuid(), $wishlistItemTransfer->getSku())
+                        $this->createSelfLinkForWishlistItem($wishlistUuid, $idRestWishlistItemsAttributes)
                     )
             );
         }
@@ -196,6 +215,8 @@ class WishlistRestResponseBuilder implements WishlistRestResponseBuilderInterfac
     }
 
     /**
+     * @phpstan-param array<mixed> $errors
+     *
      * @param array $errors
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
@@ -296,7 +317,7 @@ class WishlistRestResponseBuilder implements WishlistRestResponseBuilderInterfac
 
         return $this->restResourceBuilder->createRestResource(
             WishlistsRestApiConfig::RESOURCE_WISHLIST_ITEMS,
-            $restWishlistsItemAttributesTransfer->getSku(),
+            $restWishlistsItemAttributesTransfer->getId(),
             $restWishlistsItemAttributesTransfer
         );
     }

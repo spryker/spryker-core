@@ -12,6 +12,10 @@ use Spryker\Zed\PriceProductOffer\Business\Deleter\PriceProductOfferDeleter;
 use Spryker\Zed\PriceProductOffer\Business\Deleter\PriceProductOfferDeleterInterface;
 use Spryker\Zed\PriceProductOffer\Business\Expander\ProductOfferExpander;
 use Spryker\Zed\PriceProductOffer\Business\Expander\ProductOfferExpanderInterface;
+use Spryker\Zed\PriceProductOffer\Business\Expander\Wishlist\PriceProductOfferWishlistExpander;
+use Spryker\Zed\PriceProductOffer\Business\Expander\Wishlist\PriceProductOfferWishlistExpanderInterface;
+use Spryker\Zed\PriceProductOffer\Business\Reader\PriceProductOfferReader;
+use Spryker\Zed\PriceProductOffer\Business\Reader\PriceProductOfferReaderInterface;
 use Spryker\Zed\PriceProductOffer\Business\Validator\Constraint\ValidCurrencyAssignedToStoreConstraint;
 use Spryker\Zed\PriceProductOffer\Business\Validator\Constraint\ValidUniqueStoreCurrencyGrossNetConstraint;
 use Spryker\Zed\PriceProductOffer\Business\Validator\PriceProductConstraintProvider;
@@ -24,6 +28,7 @@ use Spryker\Zed\PriceProductOffer\Business\Writer\PriceProductOfferWriter;
 use Spryker\Zed\PriceProductOffer\Business\Writer\PriceProductOfferWriterInterface;
 use Spryker\Zed\PriceProductOffer\Dependency\External\PriceProductOfferToValidationAdapterInterface;
 use Spryker\Zed\PriceProductOffer\Dependency\Facade\PriceProductOfferToPriceProductFacadeInterface;
+use Spryker\Zed\PriceProductOffer\Dependency\Facade\PriceProductOfferToStoreFacadeInterface;
 use Spryker\Zed\PriceProductOffer\PriceProductOfferDependencyProvider;
 use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
@@ -106,6 +111,28 @@ class PriceProductOfferBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\PriceProductOffer\Business\Reader\PriceProductOfferReaderInterface
+     */
+    public function createPriceProductOfferReader(): PriceProductOfferReaderInterface
+    {
+        return new PriceProductOfferReader(
+            $this->getRepository(),
+            $this->getPriceProductOfferExtractorPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductOffer\Business\Expander\Wishlist\PriceProductOfferWishlistExpanderInterface
+     */
+    public function createPriceProductOfferWishlistExpander(): PriceProductOfferWishlistExpanderInterface
+    {
+        return new PriceProductOfferWishlistExpander(
+            $this->createPriceProductOfferReader(),
+            $this->getStoreFacade()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\PriceProductOffer\Dependency\Facade\PriceProductOfferToPriceProductFacadeInterface
      */
     public function getPriceProductFacade(): PriceProductOfferToPriceProductFacadeInterface
@@ -126,7 +153,17 @@ class PriceProductOfferBusinessFactory extends AbstractBusinessFactory
      */
     public function createValidCurrencyAssignedToStoreConstraint(): SymfonyConstraint
     {
-        return new ValidCurrencyAssignedToStoreConstraint($this->getProvidedDependency(PriceProductOfferDependencyProvider::FACADE_STORE));
+        return new ValidCurrencyAssignedToStoreConstraint(
+            $this->getStoreFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductOffer\Dependency\Facade\PriceProductOfferToStoreFacadeInterface
+     */
+    public function getStoreFacade(): PriceProductOfferToStoreFacadeInterface
+    {
+        return $this->getProvidedDependency(PriceProductOfferDependencyProvider::FACADE_STORE);
     }
 
     /**
@@ -135,5 +172,13 @@ class PriceProductOfferBusinessFactory extends AbstractBusinessFactory
     public function getValidationAdapter(): PriceProductOfferToValidationAdapterInterface
     {
         return $this->getProvidedDependency(PriceProductOfferDependencyProvider::EXTERNAL_ADAPTER_VALIDATION);
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductOfferExtension\Dependency\Plugin\PriceProductOfferExtractorPluginInterface[]
+     */
+    public function getPriceProductOfferExtractorPlugins(): array
+    {
+        return $this->getProvidedDependency(PriceProductOfferDependencyProvider::PLUGINS_PRICE_PRODUCT_OFFER_EXTRACTOR);
     }
 }

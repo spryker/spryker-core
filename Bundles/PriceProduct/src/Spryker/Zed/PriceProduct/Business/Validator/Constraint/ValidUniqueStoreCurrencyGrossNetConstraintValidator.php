@@ -33,23 +33,31 @@ class ValidUniqueStoreCurrencyGrossNetConstraintValidator extends AbstractConstr
             throw new UnexpectedTypeException($constraint, ValidUniqueStoreCurrencyGrossNetConstraint::class);
         }
 
+        /** @var \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer */
         $moneyValueTransfer = $value->getMoneyValueOrFail();
 
         if (!$value->getIdProductAbstract() || !$moneyValueTransfer->getFkStore() || !$moneyValueTransfer->getFkCurrency()) {
             return;
         }
 
+        /** @var \Generated\Shared\Transfer\PriceTypeTransfer $priceTypeTransfer */
+        $priceTypeTransfer = $value->getPriceTypeOrFail();
+
         $priceProductCriteriaTransfer = (new PriceProductCriteriaTransfer())
             ->setIdProductAbstract($value->getIdProductAbstract())
             ->setIdCurrency($moneyValueTransfer->getFkCurrency())
             ->setIdStore($moneyValueTransfer->getFkStore())
-            ->setPriceType($value->getPriceType()->getNameOrFail());
+            ->setPriceType($priceTypeTransfer->getNameOrFail());
 
         $priceProductTransfers = $constraint->getPriceProductRepository()->getProductPricesByCriteria($priceProductCriteriaTransfer);
+        /** @var \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer */
+        $priceProductTransfer = $priceProductTransfers->offsetGet(0);
+        /** @var \Generated\Shared\Transfer\MoneyValueTransfer $priceProductMoneyValueTransfer */
+        $priceProductMoneyValueTransfer = $priceProductTransfer->getMoneyValue();
         if (
             $priceProductTransfers->count() > 1
             || ($priceProductTransfers->count() === 1
-                && $priceProductTransfers->offsetGet(0)->getMoneyValue()->getIdEntity() !== $value->getMoneyValue()->getIdEntity())
+                && $priceProductMoneyValueTransfer->getIdEntity() !== $moneyValueTransfer->getIdEntity())
         ) {
             $this->context->addViolation($constraint->getMessage());
         }

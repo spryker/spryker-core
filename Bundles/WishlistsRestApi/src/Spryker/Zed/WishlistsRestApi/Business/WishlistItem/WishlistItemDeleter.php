@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\WishlistsRestApi\Business\WishlistItem;
 
+use ArrayObject;
 use Generated\Shared\Transfer\WishlistFilterTransfer;
 use Generated\Shared\Transfer\WishlistItemRequestTransfer;
 use Generated\Shared\Transfer\WishlistItemResponseTransfer;
@@ -24,11 +25,20 @@ class WishlistItemDeleter implements WishlistItemDeleterInterface
     protected $wishlistFacade;
 
     /**
-     * @param \Spryker\Zed\WishlistsRestApi\Dependency\Facade\WishlistsRestApiToWishlistFacadeInterface $wishlistFacade
+     * @var \Spryker\Zed\WishlistsRestApiExtension\Dependency\Plugin\RestWishlistItemsAttributesDeleteStrategyPluginInterface[]
      */
-    public function __construct(WishlistsRestApiToWishlistFacadeInterface $wishlistFacade)
-    {
+    protected $restWishlistItemsAttributesDeleteStrategyPlugins;
+
+    /**
+     * @param \Spryker\Zed\WishlistsRestApi\Dependency\Facade\WishlistsRestApiToWishlistFacadeInterface $wishlistFacade
+     * @param \Spryker\Zed\WishlistsRestApiExtension\Dependency\Plugin\RestWishlistItemsAttributesDeleteStrategyPluginInterface[] $restWishlistItemsAttributesDeleteStrategyPlugins
+     */
+    public function __construct(
+        WishlistsRestApiToWishlistFacadeInterface $wishlistFacade,
+        array $restWishlistItemsAttributesDeleteStrategyPlugins
+    ) {
         $this->wishlistFacade = $wishlistFacade;
+        $this->restWishlistItemsAttributesDeleteStrategyPlugins = $restWishlistItemsAttributesDeleteStrategyPlugins;
     }
 
     /**
@@ -40,7 +50,7 @@ class WishlistItemDeleter implements WishlistItemDeleterInterface
     {
         $wishlistItemRequestTransfer->requireIdCustomer()
             ->requireUuidWishlist()
-            ->requireSku();
+            ->requireUuid();
 
         $wishlistResponseTransfer = $this->wishlistFacade
             ->getWishlistByFilter($this->createWishlistFilterTransfer($wishlistItemRequestTransfer));
@@ -49,15 +59,23 @@ class WishlistItemDeleter implements WishlistItemDeleterInterface
             return $this->createWishlistNotFoundErrorResponse($wishlistResponseTransfer);
         }
 
-        if (!$this->isItemInWishlist($wishlistResponseTransfer->getWishlist(), $wishlistItemRequestTransfer->getSku())) {
+        /** @var \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer */
+        $wishlistTransfer = $wishlistResponseTransfer->getWishlist();
+        $wishlistItemTransfers = $wishlistTransfer->getWishlistItems();
+
+        foreach ($this->restWishlistItemsAttributesDeleteStrategyPlugins as $restWishlistItemsAttributesDeleteStrategyPlugin) {
+            if ($restWishlistItemsAttributesDeleteStrategyPlugin->isApplicable($wishlistItemRequestTransfer, $wishlistItemTransfers)) {
+                $restWishlistItemsAttributesDeleteStrategyPlugin->delete($wishlistItemRequestTransfer, $wishlistItemTransfers);
+
+                return $this->createSuccessResponse();
+            }
+        }
+
+        if (!$this->isItemInWishlist($wishlistTransfer, $wishlistItemRequestTransfer)) {
             return $this->createWishlistItemNotFoundErrorResponse();
         }
 
-        $wishlistItemTransfer = $this->createWishlistItemTransfer(
-            $wishlistResponseTransfer->getWishlist(),
-            $wishlistItemRequestTransfer
-        );
-        $this->wishlistFacade->removeItem($wishlistItemTransfer);
+        $this->deleteWishlistItems($wishlistItemRequestTransfer, $wishlistItemTransfers);
 
         return $this->createSuccessResponse();
     }
@@ -86,7 +104,7 @@ class WishlistItemDeleter implements WishlistItemDeleterInterface
         WishlistItemRequestTransfer $wishlistItemRequestTransfer
     ): WishlistItemTransfer {
         return (new WishlistItemTransfer())
-            ->setSku($wishlistItemRequestTransfer->getSku())
+            ->setSku($wishlistItemRequestTransfer->getUuid())
             ->setFkCustomer($wishlistItemRequestTransfer->getIdCustomer())
             ->setFkWishlist($wishlistTransfer->getIdWishlist())
             ->setWishlistName($wishlistTransfer->getName());
@@ -112,18 +130,20 @@ class WishlistItemDeleter implements WishlistItemDeleterInterface
 
     /**
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
-     * @param string $sku
+     * @param \Generated\Shared\Transfer\WishlistItemRequestTransfer $wishlistItemRequestTransfer
      *
      * @return bool
      */
-    protected function isItemInWishlist(WishlistTransfer $wishlistTransfer, string $sku): bool
+    protected function isItemInWishlist(WishlistTransfer $wishlistTransfer, WishlistItemRequestTransfer $wishlistItemRequestTransfer): bool
     {
         if (!$wishlistTransfer->getWishlistItems()->count()) {
             return false;
         }
 
-        foreach ($wishlistTransfer->getWishlistItems() as $wishlistItemTransfer) {
-            if ($wishlistItemTransfer->getSku() === $sku) {
+        $wishlistItemTransfers = $wishlistTransfer->getWishlistItems();
+
+        foreach ($wishlistItemTransfers as $wishlistItemTransfer) {
+            if ($wishlistItemTransfer->getSku() === $wishlistItemRequestTransfer->getUuid()) {
                 return true;
             }
         }
@@ -141,5 +161,22 @@ class WishlistItemDeleter implements WishlistItemDeleterInterface
         return (new WishlistFilterTransfer())
             ->fromArray($wishlistItemRequestTransfer->toArray(), true)
             ->setUuid($wishlistItemRequestTransfer->getUuidWishlist());
+    }
+
+    /**
+     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\WishlistItemTransfer> $wishlistItemTransfers
+     *
+     * @param \Generated\Shared\Transfer\WishlistItemRequestTransfer $wishlistItemRequestTransfer
+     * @param \ArrayObject|\Generated\Shared\Transfer\WishlistItemTransfer[] $wishlistItemTransfers
+     *
+     * @return void
+     */
+    protected function deleteWishlistItems(WishlistItemRequestTransfer $wishlistItemRequestTransfer, ArrayObject $wishlistItemTransfers): void
+    {
+        foreach ($wishlistItemTransfers as $wishlistItemTransfer) {
+            if ($wishlistItemTransfer->getSku() === $wishlistItemRequestTransfer->getUuid()) {
+                $this->wishlistFacade->removeItem($wishlistItemTransfer);
+            }
+        }
     }
 }

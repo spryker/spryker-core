@@ -21,9 +21,10 @@
 
     <transfer name="ProductOfferCriteriaFilter">
         <property name="merchantIds" type="int[]" singular="idMerchant"/>
+        <property name="productOfferReference" type="string"/>
     </transfer>
 
-   <transfer name="PriceProductStoreCriteria">
+    <transfer name="PriceProductStoreCriteria">
         <property name="currencyIds" type="int[]" singular="idCurrency"/>
         <property name="storeIds" type="int[]" singular="idStore"/>
     </transfer>
@@ -102,6 +103,7 @@
     </transfer>
 
     <transfer name="Store">
+        <property name="idStore" type="int"/>
         <property name="name" type="string"/>
         <property name="availableCurrencyIsoCodes" type="array" singular="availableCurrencyIsoCode"/>
     </transfer>
@@ -124,5 +126,10 @@
 
     <transfer name="PriceProductFilterIdentifier">
         <property name="productOfferReference" type="string"/>
+    </transfer>
+
+    <transfer name="WishlistItem">
+        <property name="productOfferReference" type="string"/>
+        <property name="prices" type="PriceProduct[]" singular="price"/>
     </transfer>
 </transfers>
