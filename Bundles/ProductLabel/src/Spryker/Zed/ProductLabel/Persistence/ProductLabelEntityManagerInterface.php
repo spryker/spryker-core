@@ -68,4 +68,12 @@ interface ProductLabelEntityManagerInterface
      * @return void
      */
     public function createProductLabelStoreRelationForStores(array $idStores, int $idProductLabel): void;
+
+    /**
+     * @param int $idProductLabel
+     * @param int[] $productAbstractIds
+     *
+     * @return void
+     */
+    public function deleteProductLabelProductAbstractRelationBatch(int $idProductLabel, array $productAbstractIds): void;
 }
