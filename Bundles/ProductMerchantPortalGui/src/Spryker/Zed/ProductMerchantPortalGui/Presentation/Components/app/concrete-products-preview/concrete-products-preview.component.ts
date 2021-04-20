@@ -77,7 +77,9 @@ export class ConcreteProductsPreviewComponent implements OnChanges {
             return;
         }
 
-        this.attributeValues = this.attributes.map((item) => item?.values).filter((item) => item?.length);
+        this.attributeValues = this.attributes
+            .map((item) => item.values.map((attrValue) => ({ ...attrValue, key: item.title })))
+            .filter((item) => item?.length);
 
         if (!this.attributeValues.length) {
             this.generatedProducts = [];
