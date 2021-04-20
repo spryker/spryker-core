@@ -1,20 +1,29 @@
 @import '~@spryker/styles/src/lib/themes/default/variables/index.less';
 
-@autogenerate-input-margin-bottom: 25px;
 @autogenerate-input-max-width: 420px;
 @autogenerate-input-half-width: @autogenerate-input-max-width / 2;
 
 .mp-autogenerate-input {
     display: block;
 
-    &__field {
-        margin-bottom: @autogenerate-input-margin-bottom;
+    .@{input-prefix-cls} {
         max-width: @autogenerate-input-max-width;
     }
 
     &--half-width {
-        &__field {
+        .@{input-prefix-cls} {
             max-width: @autogenerate-input-half-width;
         }
+    }
+
+    .@{form-item-prefix-cls}-control-input {
+        display: none;
+    }
+
+    .@{form-item-prefix-cls}-label > label {
+        display: block;
+        padding-bottom: 0;
+        margin-bottom: 0;
+        line-height: unset;
     }
 }

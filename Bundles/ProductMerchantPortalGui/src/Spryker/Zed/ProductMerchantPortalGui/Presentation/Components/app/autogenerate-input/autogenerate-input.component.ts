@@ -6,7 +6,10 @@ import { ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges, Vi
     styleUrls: ['./autogenerate-input.component.less'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
-    host: { class: 'mp-autogenerate-input' },
+    host: {
+        class: 'mp-autogenerate-input',
+        '[class.mp-autogenerate-input--half-width]': 'isFieldHasHalfWidth',
+    },
 })
 export class AutogenerateInputComponent implements OnChanges {
     @Input() name: string;
@@ -14,6 +17,7 @@ export class AutogenerateInputComponent implements OnChanges {
     @Input() placeholder: string;
     @Input() isAutogenerate: boolean;
     @Input() error?: string;
+    @Input() isFieldHasHalfWidth?: boolean;
 
     defaultValue: string;
 

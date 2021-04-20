@@ -42,10 +42,12 @@ const mockGeneratedProducts = [
             {
                 title: 'name11',
                 value: 'value11',
+                key: 'name1',
             },
             {
                 title: 'name21',
                 value: 'value21',
+                key: 'name2',
             },
         ],
     },
@@ -56,10 +58,12 @@ const mockGeneratedProducts = [
             {
                 title: 'name12',
                 value: 'value12',
+                key: 'name1',
             },
             {
                 title: 'name21',
                 value: 'value21',
+                key: 'name2',
             },
         ],
     },

@@ -11,6 +11,8 @@ import { By } from '@angular/platform-browser';
             [value]="value"
             [placeholder]="placeholder"
             [isAutogenerate]="isAutogenerate"
+            [error]="error"
+            [isFieldHasHalfWidth]="isFieldHasHalfWidth"
         >
             Content
         </mp-autogenerate-input>
@@ -21,6 +23,8 @@ class TestComponent {
     value: string;
     placeholder: string;
     isAutogenerate: boolean;
+    error: string;
+    isFieldHasHalfWidth: boolean;
 }
 
 describe('AutogenerateInputComponent', () => {
@@ -37,6 +41,12 @@ describe('AutogenerateInputComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(TestComponent);
         component = fixture.componentInstance;
+    });
+
+    it('should render <spy-form-item> component', () => {
+        const formItemElem = fixture.debugElement.query(By.css('spy-form-item'));
+
+        expect(formItemElem).toBeTruthy();
     });
 
     it('should render <spy-input> component', () => {
@@ -140,6 +150,27 @@ describe('AutogenerateInputComponent', () => {
             fixture.detectChanges();
 
             expect(checkboxElem.properties.checked).toBe(mockAutogenerate);
+        });
+
+        it('should bound `@Input(error)` to the input `error` of <spy-form-item> component', () => {
+            const mockError = 'Error';
+            const formItemElem = fixture.debugElement.query(By.css('spy-form-item'));
+
+            component.error = mockError;
+            fixture.detectChanges();
+
+            expect(formItemElem.properties.error).toBe(mockError);
+        });
+
+        it('should add `mp-autogenerate-input--half-width` class to the component if @Input(isFieldHasHalfWidth) is true', () => {
+            component.isFieldHasHalfWidth = true;
+            fixture.detectChanges();
+
+            const componentElem = fixture.debugElement.query(
+                By.css('.mp-autogenerate-input.mp-autogenerate-input--half-width'),
+            );
+
+            expect(componentElem).toBeTruthy();
         });
     });
 });
