@@ -9,11 +9,11 @@ namespace Spryker\Zed\Category\Business\Updater;
 
 use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
-use Generated\Shared\Transfer\NodeCollectionTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\UpdateCategoryStoreRelationRequestTransfer;
 use Spryker\Zed\Category\Business\Exception\MissingCategoryException;
 use Spryker\Zed\Category\Business\Reader\CategoryReaderInterface;
+use Spryker\Zed\Category\CategoryConfig;
 use Spryker\Zed\Category\Dependency\CategoryEvents;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToEventFacadeInterface;
 use Spryker\Zed\Category\Persistence\CategoryEntityManagerInterface;
@@ -23,6 +23,11 @@ use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 class CategoryStoreUpdater implements CategoryStoreUpdaterInterface
 {
     use TransactionTrait;
+
+    /**
+     * @var \Spryker\Zed\Category\CategoryConfig;
+     */
+    protected $categoryConfig;
 
     /**
      * @var \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface
@@ -49,17 +54,20 @@ class CategoryStoreUpdater implements CategoryStoreUpdaterInterface
      * @param \Spryker\Zed\Category\Persistence\CategoryEntityManagerInterface $categoryEntityManager
      * @param \Spryker\Zed\Category\Business\Reader\CategoryReaderInterface $categoryReader
      * @param \Spryker\Zed\Category\Dependency\Facade\CategoryToEventFacadeInterface $eventFacade
+     * @param \Spryker\Zed\Category\CategoryConfig $categoryConfig
      */
     public function __construct(
         CategoryRepositoryInterface $categoryRepository,
         CategoryEntityManagerInterface $categoryEntityManager,
         CategoryReaderInterface $categoryReader,
-        CategoryToEventFacadeInterface $eventFacade
+        CategoryToEventFacadeInterface $eventFacade,
+        CategoryConfig $categoryConfig
     ) {
         $this->categoryRepository = $categoryRepository;
         $this->categoryEntityManager = $categoryEntityManager;
         $this->categoryReader = $categoryReader;
         $this->eventFacade = $eventFacade;
+        $this->categoryConfig = $categoryConfig;
     }
 
     /**
@@ -114,7 +122,7 @@ class CategoryStoreUpdater implements CategoryStoreUpdaterInterface
             return;
         }
 
-        $this->updateCategoryStoreRelations($idCategory, $storeIdsToAdd, $storeIdsToDelete);
+        $this->updateCategoryStoreRelations([$idCategory], $storeIdsToAdd, $storeIdsToDelete);
         $this->updateChildrenCategoryStoreRelations($categoryTransfer, $storeIdsToAdd, $storeIdsToDelete);
 
         $this->triggerCategoryTreePublishEvent($idCategory);
@@ -192,16 +200,16 @@ class CategoryStoreUpdater implements CategoryStoreUpdaterInterface
     }
 
     /**
-     * @param int $idCategory
+     * @param int[] $idsCategory
      * @param int[] $storeIdsToAdd
      * @param int[] $storeIdsToDelete
      *
      * @return void
      */
-    protected function updateCategoryStoreRelations(int $idCategory, array $storeIdsToAdd, array $storeIdsToDelete): void
+    protected function updateCategoryStoreRelations(array $idsCategory, array $storeIdsToAdd, array $storeIdsToDelete): void
     {
-        $this->categoryEntityManager->createCategoryStoreRelationForStores($idCategory, $storeIdsToAdd);
-        $this->categoryEntityManager->deleteCategoryStoreRelationForStores($idCategory, $storeIdsToDelete);
+        $this->categoryEntityManager->bulkCreateCategoryStoreRelationForStores($idsCategory, $storeIdsToAdd);
+        $this->categoryEntityManager->bulkDeleteCategoryStoreRelationForStores($idsCategory, $storeIdsToDelete);
     }
 
     /**
@@ -228,8 +236,7 @@ class CategoryStoreUpdater implements CategoryStoreUpdaterInterface
     {
         $categoryCriteriaTransfer = (new CategoryCriteriaTransfer())
             ->setIdCategory($idCategory)
-            ->setIsMain(true)
-            ->setWithChildrenRecursively(true);
+            ->setIsMain(true);
         $categoryTransfer = $this->categoryReader->findCategory($categoryCriteriaTransfer);
 
         if (!$categoryTransfer) {
@@ -248,38 +255,20 @@ class CategoryStoreUpdater implements CategoryStoreUpdaterInterface
      */
     protected function updateChildrenCategoryStoreRelations(CategoryTransfer $categoryTransfer, array $storeIdsToAdd, array $storeIdsToDelete): void
     {
-        if (!$categoryTransfer->getNodeCollection() || $categoryTransfer->getNodeCollectionOrFail()->getNodes()->count() === 0) {
+        $categoryNodeChildCount = $this->categoryRepository->getCategoryNodeChildCountByParentNodeId($categoryTransfer);
+
+        if (!$categoryNodeChildCount) {
             return;
         }
 
-        foreach ($categoryTransfer->getNodeCollectionOrFail()->getNodes() as $nodeTransfer) {
-            if (!$nodeTransfer->getIsMain()) {
-                continue;
-            }
-            $this->updateMainChildCategoryStoreRelation($nodeTransfer->getChildrenNodesOrFail(), $storeIdsToAdd, $storeIdsToDelete);
-        }
-    }
+        $categoryReadChunkSize = $this->categoryConfig->getCategoryReadChunkSize();
+        $categoryCriteriaTransfer = (new CategoryCriteriaTransfer())->setLimit($categoryReadChunkSize);
 
-    /**
-     * @param \Generated\Shared\Transfer\NodeCollectionTransfer $nodeCollectionTransfer
-     * @param int[] $storeIdsToAdd
-     * @param int[] $storeIdsToDelete
-     *
-     * @return void
-     */
-    protected function updateMainChildCategoryStoreRelation(NodeCollectionTransfer $nodeCollectionTransfer, array $storeIdsToAdd, array $storeIdsToDelete): void
-    {
-        foreach ($nodeCollectionTransfer->getNodes() as $nodeTransfer) {
-            if (!$nodeTransfer->getIsMain()) {
-                continue;
-            }
-            $this->updateCategoryStoreRelations($nodeTransfer->getFkCategoryOrFail(), $storeIdsToAdd, $storeIdsToDelete);
+        for ($offset = 0; $offset <= $categoryNodeChildCount; $offset += $categoryReadChunkSize) {
+            $categoryCriteriaTransfer->setOffset($offset);
+            $categoryNodeChildIds = $this->categoryRepository->getCategoryNodeChildIdsByParentNodeId($categoryTransfer, $categoryCriteriaTransfer);
 
-            if (!$nodeTransfer->getChildrenNodesOrFail()->getNodes()->count()) {
-                continue;
-            }
-
-            $this->updateMainChildCategoryStoreRelation($nodeTransfer->getChildrenNodesOrFail(), $storeIdsToAdd, $storeIdsToDelete);
+            $this->updateCategoryStoreRelations($categoryNodeChildIds, $storeIdsToAdd, $storeIdsToDelete);
         }
     }
 }

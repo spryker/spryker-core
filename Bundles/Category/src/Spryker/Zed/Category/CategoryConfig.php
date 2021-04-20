@@ -30,6 +30,18 @@ class CategoryConfig extends AbstractBundleConfig
 
     protected const REDIRECT_URL_CATEGORY_GUI = '/category-gui/list';
 
+    protected const CATEGORY_READ_CHUNK_SIZE = 1000;
+
+    /**
+     * @api
+     *
+     * @return int
+     */
+    public function getCategoryReadChunkSize(): int
+    {
+        return static::CATEGORY_READ_CHUNK_SIZE;
+    }
+
     /**
      * @api
      *

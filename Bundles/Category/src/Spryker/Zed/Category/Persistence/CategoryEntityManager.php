@@ -56,19 +56,39 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
     }
 
     /**
-     * @param int $idCategory
+     * @param int[] $idsCategory
      * @param int[] $storeIds
      *
      * @return void
      */
-    public function createCategoryStoreRelationForStores(int $idCategory, array $storeIds): void
+    public function bulkCreateCategoryStoreRelationForStores(array $idsCategory, array $storeIds): void
     {
-        foreach ($storeIds as $idStore) {
-            (new SpyCategoryStore())
-                ->setFkCategory($idCategory)
-                ->setFkStore($idStore)
-                ->save();
+        $this->insertCategoryStoreRelationForStoresChunk($idsCategory, $storeIds);
+    }
+
+    /**
+     * @param int[] $idsCategory
+     * @param int[] $storeIds
+     *
+     * @return void
+     */
+    protected function insertCategoryStoreRelationForStoresChunk(array $idsCategory, array $storeIds)
+    {
+        $propelCollection = new ObjectCollection();
+        $propelCollection->setModel(SpyCategoryStore::class);
+
+        foreach ($idsCategory as $idCategory) {
+            foreach ($storeIds as $storeId) {
+                $categoryStoreEntity = new SpyCategoryStore();
+                $categoryStoreEntity
+                    ->setFkCategory($idCategory)
+                    ->setFkStore($storeId);
+
+                $propelCollection->append($categoryStoreEntity);
+            }
         }
+
+        $propelCollection->save();
     }
 
     /**
@@ -336,12 +356,12 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
     }
 
     /**
-     * @param int $idCategory
+     * @param int[] $idsCategory
      * @param int[] $storeIds
      *
      * @return void
      */
-    public function deleteCategoryStoreRelationForStores(int $idCategory, array $storeIds): void
+    public function bulkDeleteCategoryStoreRelationForStores(array $idsCategory, array $storeIds): void
     {
         if ($storeIds === []) {
             return;
@@ -349,7 +369,7 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
 
         $this->getFactory()
             ->createCategoryStoreQuery()
-            ->filterByFkCategory($idCategory)
+            ->filterByFkCategory_in($idsCategory)
             ->filterByFkStore_In($storeIds)
             ->find()
             ->delete();

@@ -272,6 +272,77 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
 
     /**
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return int
+     */
+    public function getCategoryNodeChildCountByParentNodeId(
+        CategoryTransfer $categoryTransfer
+    ): int {
+        /** @var \Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery $categoryClosureTableQuery */
+        $categoryClosureTableQuery = $this->getFactory()
+            ->createCategoryClosureTableQuery()
+            ->leftJoinWithDescendantNode()
+            ->useNodeQuery('node')
+            ->filterByFkCategory($categoryTransfer->getIdCategoryOrFail())
+            ->endUse();
+
+        $categoryClosureTableQuery
+            ->useDescendantNodeQuery()
+            ->leftJoinWithCategory()
+            ->endUse();
+
+        $categoryClosureTableQuery->filterByDepth(0, Criteria::NOT_EQUAL);
+
+        return $categoryClosureTableQuery->count();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer $categoryCriteriaTransfer
+     *
+     * @return int[]
+     */
+    public function getCategoryNodeChildIdsByParentNodeId(
+        CategoryTransfer $categoryTransfer,
+        CategoryCriteriaTransfer $categoryCriteriaTransfer
+    ): array {
+        /** @var \Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery $categoryClosureTableQuery */
+        $categoryClosureTableQuery = $this->getFactory()
+            ->createCategoryClosureTableQuery()
+            ->leftJoinWithDescendantNode()
+            ->useNodeQuery('node')
+                ->filterByFkCategory($categoryTransfer->getIdCategoryOrFail())
+            ->endUse();
+
+        if ($categoryCriteriaTransfer->getLimit() !== null && $categoryCriteriaTransfer->getOffset() !== null) {
+            $categoryClosureTableQuery
+                ->limit($categoryCriteriaTransfer->getLimit())
+                ->offset($categoryCriteriaTransfer->getOffset());
+        }
+
+        $categoryClosureTableQuery
+            ->useDescendantNodeQuery()
+                ->leftJoinWithCategory()
+                ->orderByNodeOrder(Criteria::DESC)
+            ->endUse();
+
+        $categoryClosureTableQuery->filterByDepth(0, Criteria::NOT_EQUAL);
+        $categoryClosureTableEntities = $categoryClosureTableQuery->find();
+
+        if (!$categoryClosureTableEntities->count()) {
+            return [];
+        }
+
+        $categoryIds = [];
+        foreach ($categoryClosureTableEntities as $categoryClosureTable) {
+            $categoryIds[] = $categoryClosureTable->getDescendantNode()->getIdCategoryNode();
+        }
+
+        return $categoryIds;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer $categoryCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\NodeTransfer[][]
@@ -285,13 +356,13 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
             ->createCategoryClosureTableQuery()
             ->leftJoinWithDescendantNode()
             ->useNodeQuery('node')
-                ->filterByFkCategory($categoryTransfer->getIdCategoryOrFail())
+            ->filterByFkCategory($categoryTransfer->getIdCategoryOrFail())
             ->endUse();
 
         $categoryClosureTableQuery
             ->useDescendantNodeQuery()
-                ->leftJoinWithCategory()
-                ->orderByNodeOrder(Criteria::DESC)
+            ->leftJoinWithCategory()
+            ->orderByNodeOrder(Criteria::DESC)
             ->endUse();
 
         $this->applyCategoryClosureTableFilters($categoryClosureTableQuery, $categoryCriteriaTransfer);

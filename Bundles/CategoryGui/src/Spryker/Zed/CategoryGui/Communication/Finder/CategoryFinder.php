@@ -46,8 +46,7 @@ class CategoryFinder implements CategoryFinderInterface
     public function findCategoryWithLocalizedAttributesById(int $idCategory): ?CategoryTransfer
     {
         $categoryCriteriaTransfer = (new CategoryCriteriaTransfer())
-            ->setIdCategory($idCategory)
-            ->setWithChildrenRecursively(true);
+            ->setIdCategory($idCategory);
 
         $categoryTransfer = $this->categoryFacade->findCategory($categoryCriteriaTransfer);
         if ($categoryTransfer === null) {

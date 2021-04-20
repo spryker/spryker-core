@@ -91,6 +91,26 @@ interface CategoryRepositoryInterface
     ): array;
 
     /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return int
+     */
+    public function getCategoryNodeChildCountByParentNodeId(
+        CategoryTransfer $categoryTransfer
+    ): int;
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer $categoryCriteriaTransfer
+     *
+     * @return int[]
+     */
+    public function getCategoryNodeChildIdsByParentNodeId(
+        CategoryTransfer $categoryTransfer,
+        CategoryCriteriaTransfer $categoryCriteriaTransfer
+    ): array;
+
+    /**
      * @param \Generated\Shared\Transfer\CategoryNodeUrlCriteriaTransfer $categoryNodeUrlCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\UrlTransfer[]
