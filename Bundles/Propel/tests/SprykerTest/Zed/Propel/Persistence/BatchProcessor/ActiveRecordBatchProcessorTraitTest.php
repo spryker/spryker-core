@@ -178,6 +178,7 @@ class ActiveRecordBatchProcessorTraitTest extends Unit
                 || strpos($message, 'Cannot assign bundle product or use bundled product as a bundle') !== false
                 || strpos($message, 'Insert value list does not match column list') !== false
                 || strpos($message, 'INSERT has more expressions than target columns') !== false
+                || strpos($message, 'INSERT has more target columns than expressions') !== false
             ) {
                 codecept_debug($throwable->getMessage());
 
