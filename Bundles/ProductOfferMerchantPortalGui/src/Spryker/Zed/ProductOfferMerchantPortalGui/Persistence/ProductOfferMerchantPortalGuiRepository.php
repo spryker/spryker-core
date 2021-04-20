@@ -1045,7 +1045,7 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
                     ->filterByIdProductOffer($productOfferPriceTableCriteriaTransfer->getIdProductOffer())
                     ->useSpyMerchantQuery()
                         ->filterByIdMerchant($productOfferPriceTableCriteriaTransfer->getIdMerchant())
-                        ->endUse()
+                    ->endUse()
                 ->endUse()
             ->endUse();
 
