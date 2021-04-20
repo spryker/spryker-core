@@ -16,8 +16,6 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ReservationRequestTransfer;
 use Generated\Shared\Transfer\ValidationResponseTransfer;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Exception\ProductConcreteNotFoundException;
-use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductConcreteEditForm;
-use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductConcreteForm;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,6 +30,21 @@ class UpdateProductConcreteController extends AbstractUpdateProductController
     protected const PARAM_PRODUCT_ID = 'product-id';
 
     /**
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductConcreteForm::BLOCK_PREFIX
+     */
+    protected const BLOCK_PREFIX_PRODUCT_CONCRETE_FORM = 'productConcrete';
+
+    /**
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductConcreteEditForm::FIELD_USE_ABSTRACT_PRODUCT_PRICES
+     */
+    protected const PRODUCT_CONCRETE_EDIT_FORM_FIELD_USE_ABSTRACT_PRODUCT_PRICES = 'useAbstractProductPrices';
+
+    /**
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductConcreteEditForm::FIELD_PRODUCT_CONCRETE
+     */
+    protected const PRODUCT_CONCRETE_EDIT_FORM_FIELD_PRODUCT_CONCRETE = 'productConcrete';
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @throws \Spryker\Zed\ProductMerchantPortalGui\Communication\Exception\ProductConcreteNotFoundException
@@ -41,23 +54,24 @@ class UpdateProductConcreteController extends AbstractUpdateProductController
     public function indexAction(Request $request): JsonResponse
     {
         $idProduct = $this->castId($request->get(static::PARAM_PRODUCT_ID));
-        $formData = $this->getFactory()->createProductConcreteEditFormDataProvider()->getData($idProduct);
+        $productConcreteEditFormDataProvider = $this->getFactory()->createProductConcreteEditFormDataProvider();
+        $formData = $productConcreteEditFormDataProvider->getData($idProduct);
 
-        if (!$formData[ProductConcreteEditForm::FIELD_PRODUCT_CONCRETE]) {
+        if (!$formData[static::PRODUCT_CONCRETE_EDIT_FORM_FIELD_PRODUCT_CONCRETE]) {
             throw new ProductConcreteNotFoundException($idProduct);
         }
 
-        $formOptions = $this->getFactory()->createProductConcreteEditFormDataProvider()->getOptions();
-        $productConcreteTransfer = $formData[ProductConcreteEditForm::FIELD_PRODUCT_CONCRETE];
+        $formOptions = $productConcreteEditFormDataProvider->getOptions();
+        $productConcreteTransfer = $formData[static::PRODUCT_CONCRETE_EDIT_FORM_FIELD_PRODUCT_CONCRETE];
 
         $productConcreteEditForm = $this->getFactory()->createProductConcreteEditForm($formData, $formOptions);
         $productConcreteEditForm->handleRequest($request);
         $initialData = $this->getDefaultInitialData(
-            $request->get($productConcreteEditForm->getName())[ProductConcreteEditForm::FIELD_PRODUCT_CONCRETE]
+            $request->get($productConcreteEditForm->getName())[static::PRODUCT_CONCRETE_EDIT_FORM_FIELD_PRODUCT_CONCRETE]
         );
 
         if ($productConcreteEditForm->isSubmitted()) {
-            return $this->executeProductConcreteEditFormSubmission($productConcreteEditForm, $initialData);
+            return $this->handleProductConcreteEditFormSubmission($productConcreteEditForm, $initialData);
         }
 
         return $this->getResponse(
@@ -92,12 +106,12 @@ class UpdateProductConcreteController extends AbstractUpdateProductController
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    protected function executeProductConcreteEditFormSubmission(
+    protected function handleProductConcreteEditFormSubmission(
         FormInterface $productConcreteEditForm,
         array $initialData
     ): JsonResponse {
         /** @var \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer */
-        $productConcreteTransfer = $productConcreteEditForm->getData()[ProductConcreteForm::BLOCK_PREFIX];
+        $productConcreteTransfer = $productConcreteEditForm->getData()[static::BLOCK_PREFIX_PRODUCT_CONCRETE_FORM];
 
         $pricesValidationResponseTransfer = $this->getFactory()
             ->getPriceProductFacade()
@@ -237,7 +251,7 @@ class UpdateProductConcreteController extends AbstractUpdateProductController
         FormInterface $productConcreteEditForm,
         ProductConcreteTransfer $productConcreteTransfer
     ): void {
-        if ($productConcreteEditForm->getData()[ProductConcreteEditForm::FIELD_USE_ABSTRACT_PRODUCT_PRICES]) {
+        if ($productConcreteEditForm->getData()[static::PRODUCT_CONCRETE_EDIT_FORM_FIELD_USE_ABSTRACT_PRODUCT_PRICES]) {
             $priceProductCriteriaTransfer = (new PriceProductCriteriaTransfer())
                 ->setIdProductConcrete($productConcreteTransfer->getIdProductConcreteOrFail());
 

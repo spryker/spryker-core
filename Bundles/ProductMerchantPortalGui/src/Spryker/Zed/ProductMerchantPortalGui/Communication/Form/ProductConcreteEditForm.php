@@ -13,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * @method \Spryker\Zed\ProductMerchantPortalGui\ProductMerchantPortalGuiConfig getConfig()
@@ -21,18 +22,23 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ProductConcreteEditForm extends AbstractType
 {
-    public const FIELD_PRODUCT_CONCRETE = 'productConcrete';
-    public const FIELD_USE_ABSTRACT_PRODUCT_PRICES = 'useAbstractProductPrices';
-    public const FIELD_SEARCHABILITY = 'searchability';
+    protected const FIELD_PRODUCT_CONCRETE = 'productConcrete';
+    protected const FIELD_USE_ABSTRACT_PRODUCT_PRICES = 'useAbstractProductPrices';
+    protected const FIELD_SEARCHABILITY = 'searchability';
 
-    public const BLOCK_PREFIX = 'productConcreteEdit';
+    protected const BLOCK_PREFIX = 'productConcreteEdit';
 
-    public const OPTION_SEARCHABILITY_CHOICES = 'OPTION_SEARCHABILITY_CHOICES';
+    protected const OPTION_SEARCHABILITY_CHOICES = 'OPTION_SEARCHABILITY_CHOICES';
 
     protected const LABEL_USE_ABSTRACT_PRODUCT_PRICES = 'Use Abstract Product prices';
     protected const LABEL_SEARCHABILITY = 'Searchability';
 
     protected const PLACEHOLDER_SEARCHABILITY = 'Select Locales';
+
+    /**
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductConcreteForm::BLOCK_PREFIX
+     */
+    protected const BLOCK_PREFIX_PRODUCT_CONCRETE_FORM = 'productConcrete';
 
     /**
      * @return string
@@ -80,12 +86,13 @@ class ProductConcreteEditForm extends AbstractType
         $builder->add(static::FIELD_PRODUCT_CONCRETE, ProductConcreteForm::class, [
             'constraints' => [
                 $this->getFactory()->createProductConcreteOwnedByMerchantConstraint(),
+                new NotBlank(),
             ],
             'label' => false,
         ]);
 
         /** @var \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer */
-        $productConcreteTransfer = $builder->getData()[ProductConcreteForm::BLOCK_PREFIX];
+        $productConcreteTransfer = $builder->getData()[static::BLOCK_PREFIX_PRODUCT_CONCRETE_FORM];
         $priceProductTransformer = $this->getFactory()
             ->createPriceProductTransformer()
             ->setIdProductConcrete($productConcreteTransfer->getIdProductConcreteOrFail());

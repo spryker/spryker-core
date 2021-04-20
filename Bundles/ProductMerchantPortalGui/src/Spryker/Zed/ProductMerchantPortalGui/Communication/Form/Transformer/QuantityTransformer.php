@@ -17,7 +17,7 @@ class QuantityTransformer implements DataTransformerInterface
      *
      * @return float|null
      */
-    public function transform($quantity)
+    public function transform($quantity): ?float
     {
         if ($quantity === null) {
             return null;
@@ -31,7 +31,7 @@ class QuantityTransformer implements DataTransformerInterface
      *
      * @return \Spryker\DecimalObject\Decimal|null
      */
-    public function reverseTransform($quantity)
+    public function reverseTransform($quantity): ?Decimal
     {
         if ($quantity === null) {
             return null;

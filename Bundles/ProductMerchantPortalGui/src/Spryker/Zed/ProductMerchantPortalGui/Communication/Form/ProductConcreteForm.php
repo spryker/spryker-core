@@ -27,7 +27,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ProductConcreteForm extends AbstractType
 {
-    public const BLOCK_PREFIX = 'productConcrete';
+    protected const BLOCK_PREFIX = 'productConcrete';
 
     protected const LABEL_VALID_FROM = 'From';
     protected const LABEL_VALID_TO = 'To';

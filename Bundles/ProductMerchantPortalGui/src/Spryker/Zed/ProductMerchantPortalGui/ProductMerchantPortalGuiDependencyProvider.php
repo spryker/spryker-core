@@ -344,7 +344,7 @@ class ProductMerchantPortalGuiDependencyProvider extends AbstractBundleDependenc
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addOmsFacade(Container $container)
+    protected function addOmsFacade(Container $container): Container
     {
         $container->set(static::FACADE_OMS, function (Container $container) {
             return new ProductMerchantPortalGuiToOmsFacadeBridge($container->getLocator()->oms()->facade());

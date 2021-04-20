@@ -11,8 +11,6 @@ use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableEditableButtonTransfer;
 use Generated\Shared\Transfer\PriceProductTableViewTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductConcreteEditForm;
-use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductConcreteForm;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ConfigurationBuilderProvider\PriceProductGuiTableConfigurationBuilderProviderInterface;
 
 class PriceProductConcreteGuiTableConfigurationProvider implements PriceProductConcreteGuiTableConfigurationProviderInterface
@@ -22,6 +20,16 @@ class PriceProductConcreteGuiTableConfigurationProvider implements PriceProductC
 
     protected const TITLE_ROW_ACTION_DELETE = 'Delete';
     protected const TITLE_EDITABLE_BUTTON = 'Add';
+
+    /**
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductConcreteEditForm::BLOCK_PREFIX
+     */
+    protected const BLOCK_PREFIX_PRODUCT_CONCRETE_EDIT_FORM = 'productConcreteEdit';
+
+    /**
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductConcreteForm::BLOCK_PREFIX
+     */
+    protected const BLOCK_PREFIX_PRODUCT_CONCRETE_FORM = 'productConcrete';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\UpdateProductConcreteController::priceTableDataAction()
@@ -85,7 +93,12 @@ class PriceProductConcreteGuiTableConfigurationProvider implements PriceProductC
             PriceProductTableViewTransfer::ID_PRODUCT_CONCRETE,
             PriceProductTableViewTransfer::ID_PRODUCT_CONCRETE
         );
-        $formInputName = sprintf('%s[%s][%s]', ProductConcreteEditForm::BLOCK_PREFIX, ProductConcreteForm::BLOCK_PREFIX, ProductConcreteTransfer::PRICES);
+        $formInputName = sprintf(
+            '%s[%s][%s]',
+            static::BLOCK_PREFIX_PRODUCT_CONCRETE_EDIT_FORM,
+            static::BLOCK_PREFIX_PRODUCT_CONCRETE_FORM,
+            ProductConcreteTransfer::PRICES
+        );
 
         $guiTableConfigurationBuilder->setDataSourceUrl($dataSourceUrl)
             ->addRowActionUrl(static::ID_ROW_ACTION_URL_DELETE_PRICE, static::TITLE_ROW_ACTION_DELETE, $deletePriceUrl)

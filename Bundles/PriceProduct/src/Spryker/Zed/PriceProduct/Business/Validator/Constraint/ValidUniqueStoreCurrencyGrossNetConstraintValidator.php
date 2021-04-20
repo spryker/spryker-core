@@ -55,6 +55,11 @@ class ValidUniqueStoreCurrencyGrossNetConstraintValidator extends AbstractConstr
             ->setPriceType($priceTypeTransfer->getNameOrFail());
 
         $priceProductTransfers = $constraint->getPriceProductRepository()->getProductPricesByCriteria($priceProductCriteriaTransfer);
+
+        if (!$priceProductTransfers->count()) {
+            return;
+        }
+
         /** @var \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer */
         $priceProductTransfer = $priceProductTransfers->offsetGet(0);
         /** @var \Generated\Shared\Transfer\MoneyValueTransfer $priceProductMoneyValueTransfer */

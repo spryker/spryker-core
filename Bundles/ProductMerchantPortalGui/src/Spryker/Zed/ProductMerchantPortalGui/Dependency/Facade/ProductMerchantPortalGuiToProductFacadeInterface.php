@@ -15,12 +15,16 @@ interface ProductMerchantPortalGuiToProductFacadeInterface
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
+     * @throws \Spryker\Zed\Product\Business\Exception\ProductAbstractExistsException
+     *
      * @return int
      */
     public function saveProductAbstract(ProductAbstractTransfer $productAbstractTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @throws \Spryker\Zed\Product\Business\Exception\ProductConcreteExistsException
      *
      * @return int
      */

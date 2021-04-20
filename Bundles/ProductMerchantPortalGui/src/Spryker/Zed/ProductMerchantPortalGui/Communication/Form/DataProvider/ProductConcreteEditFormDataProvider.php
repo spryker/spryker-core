@@ -8,13 +8,27 @@
 namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\MerchantProductCriteriaTransfer;
-use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductConcreteEditForm;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToLocaleFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantProductFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantUserFacadeInterface;
 
 class ProductConcreteEditFormDataProvider implements ProductConcreteEditFormDataProviderInterface
 {
+    /**
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductConcreteEditForm::OPTION_SEARCHABILITY_CHOICES
+     */
+    protected const OPTION_SEARCHABILITY_CHOICES = 'OPTION_SEARCHABILITY_CHOICES';
+
+    /**
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductConcreteEditForm::FIELD_USE_ABSTRACT_PRODUCT_PRICES
+     */
+    protected const PRODUCT_CONCRETE_EDIT_FORM_FIELD_USE_ABSTRACT_PRODUCT_PRICES = 'useAbstractProductPrices';
+
+    /**
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductConcreteEditForm::FIELD_PRODUCT_CONCRETE
+     */
+    protected const PRODUCT_CONCRETE_EDIT_FORM_FIELD_PRODUCT_CONCRETE = 'productConcrete';
+
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantUserFacadeInterface
      */
@@ -59,18 +73,18 @@ class ProductConcreteEditFormDataProvider implements ProductConcreteEditFormData
         );
 
         return [
-            ProductConcreteEditForm::FIELD_PRODUCT_CONCRETE => $productConcreteTransfer,
-            ProductConcreteEditForm::FIELD_USE_ABSTRACT_PRODUCT_PRICES => !(bool)$productConcreteTransfer->getPrices()->count(),
+            static::PRODUCT_CONCRETE_EDIT_FORM_FIELD_PRODUCT_CONCRETE => $productConcreteTransfer,
+            static::PRODUCT_CONCRETE_EDIT_FORM_FIELD_USE_ABSTRACT_PRODUCT_PRICES => $productConcreteTransfer->getPrices()->count() === null,
         ];
     }
 
     /**
-     * @return int[][]
+     * @return string[][]
      */
     public function getOptions(): array
     {
         return [
-            ProductConcreteEditForm::OPTION_SEARCHABILITY_CHOICES => array_flip($this->localeFacade->getAvailableLocales()),
+            static::OPTION_SEARCHABILITY_CHOICES => array_flip($this->localeFacade->getAvailableLocales()),
         ];
     }
 }

@@ -88,7 +88,7 @@ interface MerchantProductFacadeInterface
 
     /**
      * Specification:
-     * - Requires MerchantProductCriteriaTransfer.idMerchant.
+     * - Requires MerchantProductCriteria.idMerchant transfer field to be set.
      * - Returns the list of concrete products related to the provided merchant by criteria.
      *
      * @api
@@ -104,7 +104,8 @@ interface MerchantProductFacadeInterface
     /**
      * Specification:
      * - Returns concrete product by provided criteria.
-     * - Requires at least 1 ID in MerchantProductCriteriaTransfer.productConcreteIds.
+     * - Requires at least 1 ID in MerchantProductCriteria.productConcreteIds transfer field to be set.
+     * - Requires at least 1 ID in MerchantProductCriteria.merchantIds transfer field to be set.
      *
      * @api
      *
@@ -119,6 +120,7 @@ interface MerchantProductFacadeInterface
     /**
      * Specification:
      * - Returns true if concrete product belongs to merchant, false otherwise.
+     * - Requires Merchant.idMerchant and ProductConcrete.idProductConcrete transfer fields to be set.
      *
      * @api
      *

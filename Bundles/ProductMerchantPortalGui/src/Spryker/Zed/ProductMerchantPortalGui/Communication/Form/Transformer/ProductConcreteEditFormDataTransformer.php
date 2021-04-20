@@ -7,11 +7,20 @@
 
 namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Transformer;
 
-use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductConcreteEditForm;
 use Symfony\Component\Form\DataTransformerInterface;
 
 class ProductConcreteEditFormDataTransformer implements DataTransformerInterface
 {
+    /**
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductConcreteEditForm::FIELD_SEARCHABILITY
+     */
+    protected const FIELD_SEARCHABILITY = 'searchability';
+
+    /**
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductConcreteEditForm::FIELD_PRODUCT_CONCRETE
+     */
+    protected const PRODUCT_CONCRETE_EDIT_FORM_FIELD_PRODUCT_CONCRETE = 'productConcrete';
+
     /**
      * @param mixed[] $productConcreteEditFormData
      *
@@ -19,15 +28,15 @@ class ProductConcreteEditFormDataTransformer implements DataTransformerInterface
      */
     public function transform($productConcreteEditFormData)
     {
-        $productConcreteEditFormData[ProductConcreteEditForm::FIELD_SEARCHABILITY] = [];
+        $productConcreteEditFormData[static::FIELD_SEARCHABILITY] = [];
 
         /** @var \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer */
-        $productConcreteTransfer = $productConcreteEditFormData[ProductConcreteEditForm::FIELD_PRODUCT_CONCRETE];
+        $productConcreteTransfer = $productConcreteEditFormData[static::PRODUCT_CONCRETE_EDIT_FORM_FIELD_PRODUCT_CONCRETE];
 
         foreach ($productConcreteTransfer->getLocalizedAttributes() as $localizedAttributesTransfer) {
             if ($localizedAttributesTransfer->getIsSearchable()) {
                 $idLocale = $localizedAttributesTransfer->getLocaleOrFail()->getIdLocaleOrFail();
-                $productConcreteEditFormData[ProductConcreteEditForm::FIELD_SEARCHABILITY][] = $idLocale;
+                $productConcreteEditFormData[static::FIELD_SEARCHABILITY][] = $idLocale;
             }
         }
 
@@ -42,12 +51,12 @@ class ProductConcreteEditFormDataTransformer implements DataTransformerInterface
     public function reverseTransform($productConcreteEditFormData)
     {
         /** @var \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer */
-        $productConcreteTransfer = $productConcreteEditFormData[ProductConcreteEditForm::FIELD_PRODUCT_CONCRETE];
+        $productConcreteTransfer = $productConcreteEditFormData[static::PRODUCT_CONCRETE_EDIT_FORM_FIELD_PRODUCT_CONCRETE];
 
         foreach ($productConcreteTransfer->getLocalizedAttributes() as $localizedAttributesTransfer) {
             $idLocale = $localizedAttributesTransfer->getLocaleOrFail()->getIdLocaleOrFail();
             $localizedAttributesTransfer->setIsSearchable(
-                in_array($idLocale, $productConcreteEditFormData[ProductConcreteEditForm::FIELD_SEARCHABILITY])
+                in_array($idLocale, $productConcreteEditFormData[static::FIELD_SEARCHABILITY])
             );
         }
 
