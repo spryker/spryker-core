@@ -23,4 +23,8 @@
         <property name="name" type="string"/>
         <property name="idCategory" type="int"/>
     </transfer>
+
+    <transfer name="CategoryCriteria">
+        <property name="idLocale" type="int"/>
+    </transfer>
 </transfers>
