@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ZedNavigation\Business\Model\Cache;
 
 use Spryker\Zed\ZedNavigation\Business\Model\Collector\ZedNavigationCollectorInterface;
+use Spryker\Zed\ZedNavigation\ZedNavigationConfig;
 
 class ZedNavigationCacheBuilder
 {
@@ -22,13 +23,23 @@ class ZedNavigationCacheBuilder
     protected $navigationCache;
 
     /**
+     * @var \Spryker\Zed\ZedNavigation\ZedNavigationConfig
+     */
+    protected $zedNavigationConfig;
+
+    /**
      * @param \Spryker\Zed\ZedNavigation\Business\Model\Collector\ZedNavigationCollectorInterface $navigationCollector
      * @param \Spryker\Zed\ZedNavigation\Business\Model\Cache\ZedNavigationCacheInterface $navigationCache
+     * @param \Spryker\Zed\ZedNavigation\ZedNavigationConfig $zedNavigationConfig
      */
-    public function __construct(ZedNavigationCollectorInterface $navigationCollector, ZedNavigationCacheInterface $navigationCache)
-    {
+    public function __construct(
+        ZedNavigationCollectorInterface $navigationCollector,
+        ZedNavigationCacheInterface $navigationCache,
+        ZedNavigationConfig $zedNavigationConfig
+    ) {
         $this->navigationCollector = $navigationCollector;
         $this->navigationCache = $navigationCache;
+        $this->zedNavigationConfig = $zedNavigationConfig;
     }
 
     /**
@@ -36,7 +47,9 @@ class ZedNavigationCacheBuilder
      */
     public function writeNavigationCache()
     {
-        $navigation = $this->navigationCollector->getNavigation();
-        $this->navigationCache->setNavigation($navigation);
+        foreach ($this->zedNavigationConfig->getCacheFilePaths() as $navigationType => $cacheFilePath) {
+            $navigation = $this->navigationCollector->getNavigation($navigationType);
+            $this->navigationCache->setNavigation($navigation, $cacheFilePath);
+        }
     }
 }

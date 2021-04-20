@@ -54,6 +54,7 @@ class PriceProductOfferRepository extends AbstractRepository implements PricePro
      */
     public function getProductOfferPrices(PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer): ArrayObject
     {
+        /** @var \Orm\Zed\PriceProductOffer\Persistence\SpyPriceProductOfferQuery $priceProductOfferQuery */
         $priceProductOfferQuery = $this->getFactory()
             ->getPriceProductOfferPropelQuery()
             ->joinWithSpyPriceProductStore()
@@ -82,6 +83,7 @@ class PriceProductOfferRepository extends AbstractRepository implements PricePro
      */
     public function count(PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer): int
     {
+        /** @var \Orm\Zed\PriceProductOffer\Persistence\SpyPriceProductOfferQuery $priceProductOfferQuery */
         $priceProductOfferQuery = $this->getFactory()
             ->getPriceProductOfferPropelQuery()
             ->joinWithSpyProductOffer()
@@ -111,11 +113,20 @@ class PriceProductOfferRepository extends AbstractRepository implements PricePro
             $priceProductOfferCriteriaTransfer->getProductOfferCriteriaFilter()
             && $priceProductOfferCriteriaTransfer->getProductOfferCriteriaFilter()->getProductOfferReferences()
         ) {
-            $priceProductOfferQuery->filterBy(
+                $priceProductOfferQuery->filterBy(
                 SpyProductOfferTableMap::COL_MERCHANT_REFERENCE,
                 $priceProductOfferCriteriaTransfer->getProductOfferCriteriaFilter()->getProductOfferReferences(),
-                Criteria::IN
-            );
+                    Criteria::IN
+                );
+            }
+
+            if ($productOfferCriteriaFilterTransfer->getProductOfferReference()) {
+                $priceProductOfferQuery->useSpyProductOfferQuery()
+                    ->filterByProductOfferReference(
+                        $productOfferCriteriaFilterTransfer->getProductOfferReference()
+                    )
+                    ->endUse();
+            }
         }
 
         if ($priceProductOfferCriteriaTransfer->getIdProductOffer()) {

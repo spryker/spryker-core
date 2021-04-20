@@ -35,18 +35,27 @@ class ValidCurrencyAssignedToStoreConstraintValidator extends AbstractConstraint
         $priceProductTransfers = $value->getProductOfferOrFail()->getPrices();
 
         foreach ($priceProductTransfers as $priceProductTransfer) {
+            /** @var \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer */
             $moneyValueTransfer = $priceProductTransfer->getMoneyValueOrFail();
 
             if (!$moneyValueTransfer->getFkStore() || !$moneyValueTransfer->getCurrency()) {
                 return;
             }
 
-            $storeTransfer = $constraint->getStoreFacade()->getStoreById($moneyValueTransfer->getFkStore());
+            /** @var int $idStore */
+            $idStore = $moneyValueTransfer->getFkStore();
+            $storeTransfer = $constraint->getStoreFacade()->getStoreById($idStore);
+            /** @var string $storeName */
+            $storeName = $storeTransfer->getName();
+            /** @var \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer */
+            $currencyTransfer = $moneyValueTransfer->getCurrency();
+            /** @var string $currencyName */
+            $currencyName = $currencyTransfer->getName();
 
-            if (!in_array($moneyValueTransfer->getCurrencyOrFail()->getCode(), $storeTransfer->getAvailableCurrencyIsoCodes(), true)) {
+            if (!in_array($currencyTransfer->getCode(), $storeTransfer->getAvailableCurrencyIsoCodes(), true)) {
                 $this->context->buildViolation($constraint->getMessage())
-                    ->setParameter('{{ currency }}', $moneyValueTransfer->getCurrency()->getName())
-                    ->setParameter('{{ store }}', $storeTransfer->getName())
+                    ->setParameter('{{ currency }}', $currencyName)
+                    ->setParameter('{{ store }}', $storeName)
                     ->addViolation();
             }
         }

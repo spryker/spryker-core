@@ -19,6 +19,7 @@
     <transfer name="WishlistItem">
         <property name="productOfferReference" type="string"/>
         <property name="merchantReference" type="string"/>
+        <property name="sku" type="string"/>
     </transfer>
 
     <transfer name="Item">
@@ -40,17 +41,23 @@
         <property name="merchantReference" type="string"/>
     </transfer>
 
-    <transfer name="ProductOfferCriteriaFilter">
-        <property name="productOfferReference" type="string"/>
-    </transfer>
-
     <transfer name="ProductOffer">
         <property name="fkMerchant" type="int"/>
+        <property name="productOfferReference" type="string"/>
     </transfer>
 
     <transfer name="WishlistItemCriteria">
         <property name="merchantReference" type="string"/>
         <property name="productOfferReference" type="string"/>
+    </transfer>
+
+    <transfer name="WishlistPreAddItemCheckResponse">
+        <property name="isSuccess" type="bool"/>
+    </transfer>
+
+    <transfer name="ProductOfferCriteriaFilter">
+        <property name="productOfferReference" type="string"/>
+        <property name="concreteSkus" type="string[]" singular="concreteSku"/>
     </transfer>
 
 </transfers>

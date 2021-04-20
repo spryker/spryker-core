@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\CartsRestApi\CartsRestApiClientInterface;
 use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface;
+use Spryker\Glue\CartsRestApi\Processor\Validator\CartsRestApiValidatorInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
@@ -34,18 +35,26 @@ class CartReader implements CartReaderInterface
     protected $customerExpanderPlugins;
 
     /**
+     * @var \Spryker\Glue\CartsRestApi\Processor\Validator\CartsRestApiValidatorInterface
+     */
+    protected $restApiValidator;
+
+    /**
      * @param \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface $cartRestResponseBuilder
      * @param \Spryker\Client\CartsRestApi\CartsRestApiClientInterface $cartsRestApiClient
      * @param \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\CustomerExpanderPluginInterface[] $customerExpanderPlugins
+     * @param \Spryker\Glue\CartsRestApi\Processor\Validator\CartsRestApiValidatorInterface $restApiValidator
      */
     public function __construct(
         CartRestResponseBuilderInterface $cartRestResponseBuilder,
         CartsRestApiClientInterface $cartsRestApiClient,
-        array $customerExpanderPlugins
+        array $customerExpanderPlugins,
+        CartsRestApiValidatorInterface $restApiValidator
     ) {
         $this->cartRestResponseBuilder = $cartRestResponseBuilder;
         $this->cartsRestApiClient = $cartsRestApiClient;
         $this->customerExpanderPlugins = $customerExpanderPlugins;
+        $this->restApiValidator = $restApiValidator;
     }
 
     /**
@@ -59,6 +68,7 @@ class CartReader implements CartReaderInterface
         $customerTransfer = (new CustomerTransfer())
             ->setIdCustomer($restRequest->getRestUser()->getSurrogateIdentifier())
             ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier());
+
         $customerTransfer = $this->executeCustomerExpanderPlugins($customerTransfer, $restRequest);
         $quoteTransfer = (new QuoteTransfer())
             ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier())
@@ -75,6 +85,20 @@ class CartReader implements CartReaderInterface
             $quoteResponseTransfer->getQuoteTransfer(),
             $restRequest->getMetadata()->getLocale()
         );
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function readCustomerCarts(RestRequestInterface $restRequest): RestResponseInterface
+    {
+        if (!$this->restApiValidator->isSameCustomerReference($restRequest)) {
+            return $this->cartRestResponseBuilder->createCustomerUnauthorizedErrorResponse();
+        }
+
+        return $this->readCurrentCustomerCarts($restRequest);
     }
 
     /**
@@ -101,12 +125,26 @@ class CartReader implements CartReaderInterface
     public function getCustomerQuotes(RestRequestInterface $restRequest): QuoteCollectionTransfer
     {
         $quoteCollectionTransfer = $this->cartsRestApiClient->getQuoteCollection(
-            (new QuoteCriteriaFilterTransfer())
-                ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier())
-                ->setIdCompanyUser($restRequest->getRestUser()->getIdCompanyUser())
+            $this->createQuoteCriteriaFilter(
+                $restRequest->getRestUser()->getNaturalIdentifier(),
+                $restRequest->getRestUser()->getIdCompanyUser()
+            )
         );
 
         return $quoteCollectionTransfer;
+    }
+
+    /**
+     * @param string|null $customerReference
+     * @param int|null $idCompanyUser
+     *
+     * @return \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer
+     */
+    protected function createQuoteCriteriaFilter(?string $customerReference, ?int $idCompanyUser): QuoteCriteriaFilterTransfer
+    {
+        return (new QuoteCriteriaFilterTransfer())
+            ->setCustomerReference($customerReference)
+            ->setIdCompanyUser($idCompanyUser);
     }
 
     /**

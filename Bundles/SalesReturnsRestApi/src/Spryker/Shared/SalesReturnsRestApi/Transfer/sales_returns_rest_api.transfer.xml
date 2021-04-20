@@ -81,6 +81,7 @@
     <transfer name="ReturnResponse">
         <property name="isSuccessful" type="bool"/>
         <property name="return" type="Return"/>
+        <property name="messages" type="Message[]" singular="message"/>
     </transfer>
 
     <transfer name="Item">

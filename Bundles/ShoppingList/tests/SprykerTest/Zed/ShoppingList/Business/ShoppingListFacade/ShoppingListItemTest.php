@@ -305,7 +305,7 @@ class ShoppingListItemTest extends Unit
             ShoppingListItemTransfer::QUANTITY => 1,
             ShoppingListItemTransfer::SKU => $this->product->getSku(),
         ]);
-        $this->tester->getFacade()->addItem($shoppingListItemTransfer);
+        $this->tester->getFacade()->addShoppingListItem($shoppingListItemTransfer);
 
         $shoppingListItemTransfer = $this->tester->buildShoppingListItem([
             ShoppingListItemTransfer::ID_COMPANY_USER => $this->ownerCompanyUserTransfer->getIdCompanyUser(),
@@ -313,7 +313,7 @@ class ShoppingListItemTest extends Unit
             ShoppingListItemTransfer::QUANTITY => 2,
             ShoppingListItemTransfer::SKU => $this->product->getSku(),
         ]);
-        $this->tester->getFacade()->addItem($shoppingListItemTransfer);
+        $this->tester->getFacade()->addShoppingListItem($shoppingListItemTransfer);
 
         // Act
         $shoppingListItemResponseTransfer = $this->tester->getFacade()->getCustomerShoppingListCollection($this->ownerCompanyUserTransfer->getCustomer());

@@ -22,6 +22,7 @@ class ProductConfiguratorCheckSumResponsePlugin extends AbstractPlugin implement
      * {@inheritDoc}
      * - Validates response trough validators stack.
      * - Saves product configuration instance to the session storage when source type is pdp.
+     * - Adjusts cart item quantity according to product configuration quantity restrictions.
      * - Replaces quote item product configuration with new one when source type is cart page.
      * - Returns `isSuccessful=true` on success or `isSuccessful=false` with error messages otherwise.
      *

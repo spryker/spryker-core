@@ -10,9 +10,11 @@ import { TextareaComponent, TextareaModule } from '@spryker/textarea';
 import { SelectModule, SelectComponent } from '@spryker/select';
 import { ToggleModule, ToggleComponent } from '@spryker/toggle';
 import { CheckboxModule, CheckboxComponent } from '@spryker/checkbox';
-
+import { UserMenuLinkComponent } from '@spryker/user-menu';
 import { HeaderComponent } from './header/header.component';
 import { HeaderModule } from './header/header.module';
+import { HeaderMenuComponent } from './header-menu/header-menu.component';
+import { HeaderMenuModule } from './header-menu/header-menu.module';
 import { LayoutCenteredComponent } from './layout-centered/layout-centered.component';
 import { LayoutCenteredModule } from './layout-centered/layout-centered.module';
 import { LayoutMainComponent } from './layout-main/layout-main.component';
@@ -31,6 +33,7 @@ import { FormModule } from './form/form.module';
         MerchantLayoutMainModule,
         LayoutMainModule,
         HeaderModule,
+        HeaderMenuModule,
         NotificationModule,
         LocaleModule,
         FormModule,
@@ -64,6 +67,7 @@ export class ComponentsModule extends CustomElementModule {
             isRoot: true,
         },
         HeaderComponent,
+        HeaderMenuComponent,
         NotificationComponent,
         LocaleSwitcherComponent,
         FormComponent,
@@ -75,5 +79,6 @@ export class ComponentsModule extends CustomElementModule {
         SelectComponent,
         ToggleComponent,
         CheckboxComponent,
+        UserMenuLinkComponent,
     ];
 }

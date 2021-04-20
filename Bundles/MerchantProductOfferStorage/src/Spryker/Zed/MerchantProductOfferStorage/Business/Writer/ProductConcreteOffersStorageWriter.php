@@ -19,6 +19,8 @@ use Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStor
 class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorageWriterInterface
 {
     /**
+     * @phpstan-var array<mixed>
+     *
      * @var array
      */
     public static $storeNames = [];
@@ -116,10 +118,6 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
          */
         $productSkus = $this->eventBehaviorFacade->getEventTransfersAdditionalValues($eventTransfers, SpyProductOfferTableMap::COL_CONCRETE_SKU);
 
-        if (!$productSkus) {
-            return;
-        }
-
         $this->writeCollectionByProductSkus($productSkus);
     }
 
@@ -130,6 +128,10 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
      */
     protected function writeCollectionByProductSkus(array $productConcreteSkus): void
     {
+        if (count($productConcreteSkus) === 0) {
+            return;
+        }
+
         $productConcreteSkus = array_unique($productConcreteSkus);
 
         $productOfferCriteriaFilterTransfer = $this->productOfferCriteriaFilterTransferProvider->createProductOfferCriteriaFilterTransfer()
@@ -157,6 +159,8 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
     }
 
     /**
+     * @phpstan-return array<mixed>
+     *
      * @param string[] $productConcreteSkus
      * @param \Generated\Shared\Transfer\ProductOfferCollectionTransfer $productOfferCollectionTransfer
      *

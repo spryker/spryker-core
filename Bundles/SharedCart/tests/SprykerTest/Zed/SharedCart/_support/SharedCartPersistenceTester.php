@@ -8,6 +8,11 @@
 namespace SprykerTest\Zed\SharedCart;
 
 use Codeception\Actor;
+use Generated\Shared\Transfer\QuotePermissionGroupTransfer;
+use Orm\Zed\CompanyUser\Persistence\SpyCompanyUser;
+use Orm\Zed\Customer\Persistence\SpyCustomer;
+use Orm\Zed\SharedCart\Persistence\SpyQuoteCompanyUser;
+use Propel\Runtime\Collection\ObjectCollection;
 
 /**
  * @method void wantToTest($text)
@@ -27,4 +32,42 @@ use Codeception\Actor;
 class SharedCartPersistenceTester extends Actor
 {
     use _generated\SharedCartPersistenceTesterActions;
+
+    public const MAPPING_KEY = 1;
+
+    /**
+     * @return \Propel\Runtime\Collection\ObjectCollection
+     */
+    public function getQuoteCompanyUserCollection(): ObjectCollection
+    {
+        $quoteCompanyUserEntity = new SpyQuoteCompanyUser();
+        $quoteCompanyUserEntity->setFkQuote(static::MAPPING_KEY);
+        $quoteCompanyUserEntity->setFkQuotePermissionGroup(static::MAPPING_KEY);
+
+        $spyCustomer = new SpyCustomer();
+        $spyCustomer->setFirstName('Cat');
+        $spyCustomer->setLastName('Face');
+
+        $spyCompanyUserEntity = new SpyCompanyUser();
+        $spyCompanyUserEntity->setCustomer($spyCustomer);
+        $quoteCompanyUserEntity->setSpyCompanyUser($spyCompanyUserEntity);
+
+        $quoteCompanyUserEntities = new ObjectCollection();
+        $quoteCompanyUserEntities->append($quoteCompanyUserEntity);
+
+        return $quoteCompanyUserEntities;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\QuotePermissionGroupTransfer[]
+     */
+    public function getQuotePermissionGroupTransferCollection(): array
+    {
+        $quotePermissionGroupTransfer = new QuotePermissionGroupTransfer();
+        $quotePermissionGroupTransfer->setIdQuotePermissionGroup(static::MAPPING_KEY);
+
+        return [
+            $quotePermissionGroupTransfer,
+        ];
+    }
 }

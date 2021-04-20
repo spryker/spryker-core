@@ -102,7 +102,9 @@ class Writer implements WriterInterface
 
         $priceProductTransfer = $this->savePriceProductEntity($priceProductTransfer, new SpyPriceProduct());
         if ($priceProductTransfer->getIdProduct()) {
-            $this->insertTouchRecord(static::TOUCH_PRODUCT, $priceProductTransfer->getIdProduct());
+            /** @var int $idProduct */
+            $idProduct = $priceProductTransfer->getIdProduct();
+            $this->insertTouchRecord(static::TOUCH_PRODUCT, $idProduct);
         }
 
         $priceProductTransfer->setIdPriceProduct($priceProductTransfer->getIdPriceProduct());
@@ -129,11 +131,15 @@ class Writer implements WriterInterface
 
         $this->loadPriceProductTransfer($priceProductTransfer);
 
-        $priceProductEntity = $this->getPriceProductById($priceProductTransfer->getIdPriceProduct());
+        /** @var int $idPriceProduct */
+        $idPriceProduct = $priceProductTransfer->requireIdPriceProduct()->getIdPriceProduct();
+        $priceProductEntity = $this->getPriceProductById($idPriceProduct);
         $this->savePriceProductEntity($priceProductTransfer, $priceProductEntity);
 
         if ($priceProductTransfer->getIdProduct()) {
-            $this->insertTouchRecord(self::TOUCH_PRODUCT, $priceProductTransfer->getIdProduct());
+            /** @var int $idProduct */
+            $idProduct = $priceProductTransfer->getIdProduct();
+            $this->insertTouchRecord(self::TOUCH_PRODUCT, $idProduct);
         }
     }
 
@@ -159,8 +165,10 @@ class Writer implements WriterInterface
             return;
         }
 
+        /** @var string $skuProductAbstract */
+        $skuProductAbstract = $priceProductTransfer->requireSkuProductAbstract()->getSkuProductAbstract();
         $priceProductTransfer->setIdProductAbstract(
-            $this->productFacade->findProductAbstractIdBySku($priceProductTransfer->getSkuProductAbstract())
+            $this->productFacade->findProductAbstractIdBySku($skuProductAbstract)
         );
     }
 
@@ -171,13 +179,16 @@ class Writer implements WriterInterface
      */
     protected function loadProductConcreteIdForPriceProductTransfer(PriceProductTransfer $priceProductTransfer)
     {
+        /** @var string $skuProduct */
+        $skuProduct = $priceProductTransfer->getSkuProduct();
+
         if (
             $priceProductTransfer->getIdProduct() === null &&
-            $this->productFacade->hasProductConcrete($priceProductTransfer->getSkuProduct())
+            $this->productFacade->hasProductConcrete($skuProduct)
         ) {
-            $priceProductTransfer->setIdProduct(
-                $this->productFacade->getProductConcreteIdBySku($priceProductTransfer->getSkuProduct())
-            );
+            /** @var int $idProduct */
+            $idProduct = $this->productFacade->findProductConcreteIdBySku($skuProduct);
+            $priceProductTransfer->setIdProduct($idProduct);
         }
     }
 
@@ -189,7 +200,9 @@ class Writer implements WriterInterface
      */
     protected function savePriceProductEntity(PriceProductTransfer $priceProductTransfer, SpyPriceProduct $priceProductEntity): PriceProductTransfer
     {
-        $priceType = $this->priceTypeReader->getPriceTypeByName($priceProductTransfer->getPriceTypeName());
+        /** @var string $priceTypeName */
+        $priceTypeName = $priceProductTransfer->requirePriceTypeName()->getPriceTypeName();
+        $priceType = $this->priceTypeReader->getPriceTypeByName($priceTypeName);
         $priceProductEntity->setPriceType($priceType);
 
         if ($priceProductTransfer->getIdProduct()) {
@@ -268,9 +281,11 @@ class Writer implements WriterInterface
 
         $priceProductCriteriaTransfer = $this->createPriceProductCriteriaFor($priceProductTransfer);
 
+        /** @var string $skuProductAbstract */
+        $skuProductAbstract = $priceProductTransfer->requireSkuProductAbstract()->getSkuProductAbstract();
         $priceEntities = $this->queryContainer
             ->queryPriceEntityForProductAbstract(
-                $priceProductTransfer->getSkuProductAbstract(),
+                $skuProductAbstract,
                 $priceProductCriteriaTransfer
             )->findOne();
 
@@ -284,13 +299,14 @@ class Writer implements WriterInterface
      */
     protected function isPriceTypeExistingForProductConcrete(PriceProductTransfer $priceProductTransfer)
     {
-        $priceProductTransfer->requireSkuProduct();
+        /** @var string $skuProduct */
+        $skuProduct = $priceProductTransfer->requireSkuProduct()->getSkuProduct();
 
         $priceProductCriteriaTransfer = $this->createPriceProductCriteriaFor($priceProductTransfer);
 
         $priceEntities = $this->queryContainer
             ->queryPriceEntityForProductConcrete(
-                $priceProductTransfer->getSkuProduct(),
+                $skuProduct,
                 $priceProductCriteriaTransfer
             );
 
@@ -326,10 +342,11 @@ class Writer implements WriterInterface
      */
     protected function createPriceProductCriteriaFor(PriceProductTransfer $priceProductTransfer)
     {
-        $priceProductTransfer->requireMoneyValue();
-
-        $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
-        $priceTypeEntity = $this->priceTypeReader->getPriceTypeByName($priceProductTransfer->getPriceTypeName());
+        /** @var \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer */
+        $moneyValueTransfer = $priceProductTransfer->requireMoneyValue()->getMoneyValue();
+        /** @var string $priceTypeName */
+        $priceTypeName = $priceProductTransfer->requirePriceTypeName()->getPriceTypeName();
+        $priceTypeEntity = $this->priceTypeReader->getPriceTypeByName($priceTypeName);
 
         return (new PriceProductCriteriaTransfer())
             ->setIdCurrency($moneyValueTransfer->getFkCurrency())

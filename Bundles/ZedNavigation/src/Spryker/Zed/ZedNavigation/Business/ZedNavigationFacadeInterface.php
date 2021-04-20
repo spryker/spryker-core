@@ -23,10 +23,11 @@ interface ZedNavigationFacadeInterface
      * @api
      *
      * @param string $pathInfo
+     * @param string|null $navigationType
      *
      * @return array
      */
-    public function buildNavigation($pathInfo);
+    public function buildNavigation($pathInfo, ?string $navigationType = null);
 
     /**
      * Specification:

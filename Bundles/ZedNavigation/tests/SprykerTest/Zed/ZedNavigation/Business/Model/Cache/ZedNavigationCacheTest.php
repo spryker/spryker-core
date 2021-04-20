@@ -47,10 +47,10 @@ class ZedNavigationCacheTest extends ZedNavigationBusinessTester
     public function testIsNavigationCacheHasContentMustReturnFalseOnNotExistsFile(): void
     {
         //prepare
-        $navigationCache = $this->getZedNavigationCache('');
+        $navigationCache = $this->getZedNavigationCache();
 
         //assert
-        $this->assertFalse($navigationCache->hasContent());
+        $this->assertFalse($navigationCache->hasContent(''));
     }
 
     /**
@@ -59,10 +59,10 @@ class ZedNavigationCacheTest extends ZedNavigationBusinessTester
     public function testIsNavigationCacheHasContentMustReturnTrue(): void
     {
         //prepare
-        $navigationCache = $this->getZedNavigationCache(__FILE__);
+        $navigationCache = $this->getZedNavigationCache();
 
         //assert
-        $this->assertTrue($navigationCache->hasContent());
+        $this->assertTrue($navigationCache->hasContent(__FILE__));
     }
 
     /**
@@ -75,7 +75,7 @@ class ZedNavigationCacheTest extends ZedNavigationBusinessTester
         $navigationData = ['foo' => 'bar'];
 
         //act
-        $navigationCache->setNavigation($navigationData);
+        $navigationCache->setNavigation($navigationData, $this->getCacheFile());
 
         //asser
         $this->assertTrue($navigationCache->isEnabled());
@@ -91,8 +91,9 @@ class ZedNavigationCacheTest extends ZedNavigationBusinessTester
         $navigationData = ['foo' => 'bar'];
 
         //act
-        $navigationCache->setNavigation($navigationData);
-        $cachedNavigationData = $navigationCache->getNavigation();
+        $cacheFile = $this->getCacheFile();
+        $navigationCache->setNavigation($navigationData, $cacheFile);
+        $cachedNavigationData = $navigationCache->getNavigation($cacheFile);
 
         //assert
         $this->assertSame($navigationData, $cachedNavigationData);
@@ -104,13 +105,13 @@ class ZedNavigationCacheTest extends ZedNavigationBusinessTester
     public function testGetMustThrowExceptionIfCacheEnabledButCacheFileDoesNotExists(): void
     {
         //prepare
-        $navigationCache = $this->getZedNavigationCache('');
+        $navigationCache = $this->getZedNavigationCache();
 
         //assert
         $this->expectException(ZedNavigationCacheFileDoesNotExistException::class);
 
         //act
-        $navigationCache->getNavigation();
+        $navigationCache->getNavigation('');
     }
 
     /**
@@ -125,7 +126,7 @@ class ZedNavigationCacheTest extends ZedNavigationBusinessTester
         $this->expectException(ZedNavigationCacheEmptyException::class);
 
         //act
-        $navigationCache->getNavigation();
+        $navigationCache->getNavigation($this->getCacheFile());
     }
 
     /**
@@ -139,11 +140,11 @@ class ZedNavigationCacheTest extends ZedNavigationBusinessTester
         $cacheFile = $this->getCacheFile();
         $isEnabled = true;
         $utilEncodingService = $this->getUtilEncodingService();
-        $navigationCache = new ZedNavigationCache($cacheFile, $isEnabled, $utilEncodingService);
+        $navigationCache = new ZedNavigationCache($isEnabled, $utilEncodingService);
         $navigationData = ['foo' => 'bar'];
 
         //act
-        $navigationCache->setNavigation($navigationData);
+        $navigationCache->setNavigation($navigationData, $cacheFile);
 
         //assert
         $rawData = file_get_contents($cacheFile);
@@ -152,19 +153,13 @@ class ZedNavigationCacheTest extends ZedNavigationBusinessTester
     }
 
     /**
-     * @param string|null $cacheFile
-     *
      * @return \Spryker\Zed\ZedNavigation\Business\Model\Cache\ZedNavigationCache
      */
-    protected function getZedNavigationCache(?string $cacheFile = null): ZedNavigationCache
+    protected function getZedNavigationCache(): ZedNavigationCache
     {
-        if ($cacheFile === null) {
-            $cacheFile = $this->getCacheFile();
-        }
-
         $utilEncodingService = $this->getUtilEncodingService();
 
-        return new ZedNavigationCache($cacheFile, true, $utilEncodingService);
+        return new ZedNavigationCache(true, $utilEncodingService);
     }
 
     /**
