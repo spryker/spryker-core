@@ -114,7 +114,7 @@ class ProductAbstractRelationDeleter implements ProductAbstractRelationDeleterIn
 
         $productAbstractWithRelationsIds = $this->extractProductAbstractIdsFromProductAbstractRelations($productAbstractRelations);
 
-        $this->productLabelEntityManager->deleteProductLabelProductAbstractRelationBatch(
+        $this->productLabelEntityManager->deleteProductLabelProductAbstractRelations(
             $idProductLabel,
             $productAbstractWithRelationsIds
         );
