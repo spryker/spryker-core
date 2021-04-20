@@ -17,6 +17,8 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class RootCategoryType extends CommonCategoryType
 {
+    protected const OPTION_PROPERTY_PATH_CATEGORY_NODE_IS_ROOT = 'categoryNode.isRoot';
+
     protected const FIELD_IS_ROOT = 'is_root';
 
     /**
@@ -40,7 +42,7 @@ class RootCategoryType extends CommonCategoryType
     protected function addIsRootField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_IS_ROOT, HiddenType::class, [
-            'property_path' => 'categoryNode.isRoot',
+            'property_path' => static::OPTION_PROPERTY_PATH_CATEGORY_NODE_IS_ROOT,
         ]);
 
         return $this;

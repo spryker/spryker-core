@@ -7,12 +7,13 @@
 
 namespace Spryker\Zed\CategoryGui\Communication\Finder;
 
+use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\StoreWithStateCollectionTransfer;
 use Spryker\Zed\CategoryGui\Communication\Mapper\CategoryStoreWithStateMapperInterface;
 use Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToCategoryFacadeInterface;
 use Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToStoreFacadeInterface;
 
-class CategoryStoreWithSateFinder implements CategoryStoreWithSateFinderInterface
+class CategoryStoreWithStateFinder implements CategoryStoreWithStateFinderInterface
 {
     /**
      * @var \Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToCategoryFacadeInterface
@@ -52,8 +53,18 @@ class CategoryStoreWithSateFinder implements CategoryStoreWithSateFinderInterfac
     public function getAllStoresWithStateByIdCategoryNode(int $idCategoryNode): StoreWithStateCollectionTransfer
     {
         $storeTransfers = $this->storeFacade->getAllStores();
-        $categoryStoreRelationTransfers = $this->categoryFacade
-            ->getCategoryStoreRelationByIdCategoryNode($idCategoryNode)
+
+        $categoryTransfer = $this->categoryFacade->findCategory(
+            (new CategoryCriteriaTransfer())->setIdCategoryNode($idCategoryNode)
+        );
+
+        if ($categoryTransfer === null || $categoryTransfer->getStoreRelation() === null) {
+            return $this->categoryStoreWithStateMapper
+                ->mapStoresWithCategoryStoreRelatedTransfersToStoreWithStateCollection($storeTransfers, []);
+        }
+
+        $categoryStoreRelationTransfers = $categoryTransfer
+            ->getStoreRelation()
             ->getStores()
             ->getArrayCopy();
 

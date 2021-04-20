@@ -9,21 +9,33 @@ namespace Spryker\Zed\CategoryGui\Communication\Tabs;
 
 use Generated\Shared\Transfer\TabItemTransfer;
 use Generated\Shared\Transfer\TabsViewTransfer;
+use Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToTranslatorFacadeInterface;
 use Spryker\Zed\Gui\Communication\Tabs\AbstractTabs;
 
 class CategoryFormTabs extends AbstractTabs
 {
+    protected const TITLE_GENERAL = 'General';
+
     /**
      * @var \Spryker\Zed\CategoryGuiExtension\Dependency\Plugin\CategoryFormTabExpanderPluginInterface[]
      */
     protected $categoryFormTabExpanderPlugins;
 
     /**
-     * @param \Spryker\Zed\CategoryGuiExtension\Dependency\Plugin\CategoryFormTabExpanderPluginInterface[] $categoryFormTabExpanderPlugins
+     * @var \Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToTranslatorFacadeInterface
      */
-    public function __construct(array $categoryFormTabExpanderPlugins)
-    {
+    protected $translatorFacade;
+
+    /**
+     * @param \Spryker\Zed\CategoryGuiExtension\Dependency\Plugin\CategoryFormTabExpanderPluginInterface[] $categoryFormTabExpanderPlugins
+     * @param \Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToTranslatorFacadeInterface $translatorFacade
+     */
+    public function __construct(
+        array $categoryFormTabExpanderPlugins,
+        CategoryGuiToTranslatorFacadeInterface $translatorFacade
+    ) {
         $this->categoryFormTabExpanderPlugins = $categoryFormTabExpanderPlugins;
+        $this->translatorFacade = $translatorFacade;
     }
 
     /**
@@ -48,7 +60,7 @@ class CategoryFormTabs extends AbstractTabs
     {
         $tabItemTransfer = new TabItemTransfer();
         $tabItemTransfer->setName('general')
-            ->setTitle('General')
+            ->setTitle($this->translatorFacade->trans(static::TITLE_GENERAL))
             ->setTemplate('@CategoryGui/_partials/general-tab.twig');
 
         $tabsViewTransfer->addTab($tabItemTransfer);

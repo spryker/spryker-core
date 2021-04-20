@@ -8,7 +8,7 @@
 namespace Spryker\Zed\CategoryGui\Communication\Form\EventListener;
 
 use Generated\Shared\Transfer\CategoryTransfer;
-use Spryker\Zed\CategoryGui\Communication\Finder\CategoryStoreWithSateFinderInterface;
+use Spryker\Zed\CategoryGui\Communication\Finder\CategoryStoreWithStateFinderInterface;
 use Spryker\Zed\CategoryGui\Communication\Form\CategoryType;
 use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -18,7 +18,7 @@ use Symfony\Component\Form\FormEvents;
 class CategoryStoreRelationFieldEventSubscriber implements EventSubscriberInterface
 {
     /**
-     * @var \Spryker\Zed\CategoryGui\Communication\Finder\CategoryStoreWithSateFinderInterface
+     * @var \Spryker\Zed\CategoryGui\Communication\Finder\CategoryStoreWithStateFinderInterface
      */
     protected $categoryStoreWithSateFinder;
 
@@ -28,11 +28,11 @@ class CategoryStoreRelationFieldEventSubscriber implements EventSubscriberInterf
     protected $storeRelationFormTypePlugin;
 
     /**
-     * @param \Spryker\Zed\CategoryGui\Communication\Finder\CategoryStoreWithSateFinderInterface $categoryStoreWithSateFinder
+     * @param \Spryker\Zed\CategoryGui\Communication\Finder\CategoryStoreWithStateFinderInterface $categoryStoreWithSateFinder
      * @param \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface $storeRelationFormTypePlugin
      */
     public function __construct(
-        CategoryStoreWithSateFinderInterface $categoryStoreWithSateFinder,
+        CategoryStoreWithStateFinderInterface $categoryStoreWithSateFinder,
         FormTypeInterface $storeRelationFormTypePlugin
     ) {
         $this->categoryStoreWithSateFinder = $categoryStoreWithSateFinder;

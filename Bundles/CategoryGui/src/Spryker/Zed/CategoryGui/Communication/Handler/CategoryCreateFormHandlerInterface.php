@@ -10,7 +10,7 @@ namespace Spryker\Zed\CategoryGui\Communication\Handler;
 use Generated\Shared\Transfer\CategoryResponseTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 
-interface CategoryFormHandlerInterface
+interface CategoryCreateFormHandlerInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
@@ -18,18 +18,4 @@ interface CategoryFormHandlerInterface
      * @return \Generated\Shared\Transfer\CategoryResponseTransfer
      */
     public function createCategory(CategoryTransfer $categoryTransfer): CategoryResponseTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryResponseTransfer
-     */
-    public function updateCategory(CategoryTransfer $categoryTransfer): CategoryResponseTransfer;
-
-    /**
-     * @param int $idCategory
-     *
-     * @return \Generated\Shared\Transfer\CategoryResponseTransfer
-     */
-    public function deleteCategory(int $idCategory): CategoryResponseTransfer;
 }

@@ -55,21 +55,9 @@ class ReSortController extends AbstractController
             ]);
         }
 
-        $categoryNodesToReorder = $this->getFactory()
-            ->getUtilEncodingService()
-            ->decodeJson($request->request->get(static::REQUEST_PARAM_NODES), true);
-
-        $positionCursor = count($categoryNodesToReorder);
-
-        foreach ($categoryNodesToReorder as $index => $nodeData) {
-            $idCategoryNode = $this->castId($nodeData['id']);
-
-            $this->getFactory()
-                ->getCategoryFacade()
-                ->updateCategoryNodeOrder($idCategoryNode, $positionCursor);
-
-            $positionCursor--;
-        }
+        $this->getFactory()
+            ->createCategoryReSortHandler()
+            ->handle($request->request->get(static::REQUEST_PARAM_NODES));
 
         return $this->jsonResponse([
             'code' => Response::HTTP_OK,

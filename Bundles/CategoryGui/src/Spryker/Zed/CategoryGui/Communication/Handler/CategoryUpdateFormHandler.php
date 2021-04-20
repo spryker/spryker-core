@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToCategoryFacadeInterface;
 
-class CategoryFormHandler implements CategoryFormHandlerInterface
+class CategoryUpdateFormHandler implements CategoryUpdateFormHandlerInterface
 {
     /**
      * @var \Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToCategoryFacadeInterface
@@ -33,30 +33,6 @@ class CategoryFormHandler implements CategoryFormHandlerInterface
      *
      * @return \Generated\Shared\Transfer\CategoryResponseTransfer
      */
-    public function createCategory(CategoryTransfer $categoryTransfer): CategoryResponseTransfer
-    {
-        $categoryResponseTransfer = (new CategoryResponseTransfer())
-            ->setCategory($categoryTransfer)
-            ->setIsSuccessful(true);
-
-        try {
-            $this->categoryFacade->create($categoryTransfer);
-            $categoryResponseTransfer
-                ->addMessage((new MessageTransfer())->setValue('The category was added successfully.'));
-        } catch (Exception $e) {
-            $categoryResponseTransfer
-                ->addMessage((new MessageTransfer())->setValue($e->getMessage()))
-                ->setIsSuccessful(false);
-        }
-
-        return $categoryResponseTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryResponseTransfer
-     */
     public function updateCategory(CategoryTransfer $categoryTransfer): CategoryResponseTransfer
     {
         $categoryResponseTransfer = (new CategoryResponseTransfer())
@@ -67,29 +43,6 @@ class CategoryFormHandler implements CategoryFormHandlerInterface
             $this->categoryFacade->update($categoryTransfer);
             $categoryResponseTransfer
                 ->addMessage((new MessageTransfer())->setValue('The category was updated successfully.'));
-        } catch (Exception $e) {
-            $categoryResponseTransfer
-                ->addMessage((new MessageTransfer())->setValue($e->getMessage()))
-                ->setIsSuccessful(false);
-        }
-
-        return $categoryResponseTransfer;
-    }
-
-    /**
-     * @param int $idCategory
-     *
-     * @return \Generated\Shared\Transfer\CategoryResponseTransfer
-     */
-    public function deleteCategory(int $idCategory): CategoryResponseTransfer
-    {
-        $categoryResponseTransfer = (new CategoryResponseTransfer())
-            ->setIsSuccessful(true);
-
-        try {
-            $this->categoryFacade->delete($idCategory);
-            $categoryResponseTransfer
-                ->addMessage((new MessageTransfer())->setValue('The category was deleted successfully.'));
         } catch (Exception $e) {
             $categoryResponseTransfer
                 ->addMessage((new MessageTransfer())->setValue($e->getMessage()))

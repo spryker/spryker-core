@@ -7,9 +7,7 @@
 
 namespace Spryker\Zed\CategoryGui\Communication\Controller;
 
-use ArrayObject;
 use Spryker\Service\UtilText\Model\Url\Url;
-use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,13 +16,17 @@ use Symfony\Component\HttpFoundation\Request;
  * @method \Spryker\Zed\CategoryGui\Communication\CategoryGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\CategoryGui\Persistence\CategoryGuiRepositoryInterface getRepository()
  */
-class CreateController extends AbstractController
+class CreateController extends CategoryAbstractController
 {
     protected const REQUEST_PARAM_ID_CATEGORY = 'id-category';
     protected const REQUEST_PARAM_ID_PARENT_NODE = 'id-parent-node';
     protected const REQUEST_PARAM_IS_ROOT = 'is-root';
 
     protected const ROUTE_CATEGORY_CREATE = '/category-gui/create';
+
+    /**
+     * @uses \Spryker\Zed\CategoryGui\Communication\Controller\EditController::indexAction()
+     */
     protected const ROUTE_CATEGORY_EDIT = '/category-gui/edit';
 
     /**
@@ -38,7 +40,7 @@ class CreateController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            return $this->handleCreateFormSubmission($form);
+            return $this->handleCategoryCreateForm($form);
         }
 
         return $this->viewResponse([
@@ -53,10 +55,10 @@ class CreateController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function handleCreateFormSubmission(FormInterface $form): RedirectResponse
+    protected function handleCategoryCreateForm(FormInterface $form): RedirectResponse
     {
         $categoryResponseTransfer = $this->getFactory()
-            ->createCategoryFormHandler()
+            ->createCategoryCreateFormHandler()
             ->createCategory($form->getData());
 
         if (!$categoryResponseTransfer->getIsSuccessful()) {
@@ -119,29 +121,5 @@ class CreateController extends AbstractController
         );
 
         return $url->build();
-    }
-
-    /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\MessageTransfer[] $messageTransfers
-     *
-     * @return void
-     */
-    protected function addSuccessMessages(ArrayObject $messageTransfers): void
-    {
-        foreach ($messageTransfers as $messageTransfer) {
-            $this->addSuccessMessage($messageTransfer->getValue());
-        }
-    }
-
-    /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\MessageTransfer[] $messageTransfers
-     *
-     * @return void
-     */
-    protected function addErrorMessages(ArrayObject $messageTransfers): void
-    {
-        foreach ($messageTransfers as $messageTransfer) {
-            $this->addErrorMessage($messageTransfer->getValue());
-        }
     }
 }

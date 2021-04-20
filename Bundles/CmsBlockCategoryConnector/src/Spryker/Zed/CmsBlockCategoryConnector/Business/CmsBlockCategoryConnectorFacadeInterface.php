@@ -145,6 +145,7 @@ interface CmsBlockCategoryConnectorFacadeInterface
     /**
      * Specification:
      * - Gets collection of related CMS Blocks ids and names.
+     * - Requires CategoryTransfer::idCategory and CategoryTransfer::fkCategoryTemplate to be set.
      *
      * @api
      *

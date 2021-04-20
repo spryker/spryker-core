@@ -13,11 +13,10 @@ use Symfony\Component\Validator\Constraint;
 class CategoryKeyUniqueConstraint extends Constraint
 {
     public const OPTION_CATEGORY_GUI_REPOSITORY = 'categoryGuiRepository';
+    public const OPTION_TRANSLATOR_FACADE = 'translatorFacade';
 
-    /**
-     * @var string
-     */
-    public $message = 'Category with key "%s" already in use, please choose another one.';
+    protected const PARAMETER_CATEGORY_KEY = '%categoryKey%';
+    protected const ERROR_MESSAGE = 'Category with key "%categoryKey%" already in use, please choose another one.';
 
     /**
      * @var \Spryker\Zed\CategoryGui\Persistence\CategoryGuiRepositoryInterface
@@ -25,10 +24,30 @@ class CategoryKeyUniqueConstraint extends Constraint
     protected $categoryGuiRepository;
 
     /**
+     * @var \Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToTranslatorFacadeInterface
+     */
+    protected $translatorFacade;
+
+    /**
      * @return \Spryker\Zed\CategoryGui\Persistence\CategoryGuiRepositoryInterface
      */
     public function getCategoryGuiRepository(): CategoryGuiRepositoryInterface
     {
         return $this->categoryGuiRepository;
+    }
+
+    /**
+     * @param string $categoryKey
+     *
+     * @return string
+     */
+    public function getMessage(string $categoryKey): string
+    {
+        return $this->translatorFacade->trans(
+            static::ERROR_MESSAGE,
+            [
+                static::PARAMETER_CATEGORY_KEY => $categoryKey,
+            ]
+        );
     }
 }

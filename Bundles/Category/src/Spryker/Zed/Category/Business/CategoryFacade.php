@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\CategoryNodeUrlCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeCollectionTransfer;
-use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\UpdateCategoryStoreRelationRequestTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -281,21 +280,6 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     public function getCategoryNodes(CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer): NodeCollectionTransfer
     {
         return $this->getRepository()->getCategoryNodes($categoryNodeCriteriaTransfer);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param int $idCategoryNode
-     *
-     * @return \Generated\Shared\Transfer\StoreRelationTransfer
-     */
-    public function getCategoryStoreRelationByIdCategoryNode(int $idCategoryNode): StoreRelationTransfer
-    {
-        return $this->getRepository()
-            ->getCategoryStoreRelationByIdCategoryNode($idCategoryNode);
     }
 
     /**

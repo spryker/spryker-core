@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryNodeUrlCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\StoreRelationTransfer;
 
 class CategoryGuiToCategoryFacadeBridge implements CategoryGuiToCategoryFacadeInterface
 {
@@ -41,16 +40,6 @@ class CategoryGuiToCategoryFacadeBridge implements CategoryGuiToCategoryFacadeIn
     }
 
     /**
-     * @param int $idCategory
-     *
-     * @return \Generated\Shared\Transfer\CategoryTransfer|null
-     */
-    public function findCategoryById(int $idCategory): ?CategoryTransfer
-    {
-        return $this->categoryFacade->findCategoryById($idCategory);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
      * @return void
@@ -58,16 +47,6 @@ class CategoryGuiToCategoryFacadeBridge implements CategoryGuiToCategoryFacadeIn
     public function create(CategoryTransfer $categoryTransfer): void
     {
         $this->categoryFacade->create($categoryTransfer);
-    }
-
-    /**
-     * @param int $idCategory
-     *
-     * @return \Generated\Shared\Transfer\NodeTransfer[]
-     */
-    public function getAllNodesByIdCategory(int $idCategory): array
-    {
-        return $this->categoryFacade->getAllNodesByIdCategory($idCategory);
     }
 
     /**
@@ -122,17 +101,6 @@ class CategoryGuiToCategoryFacadeBridge implements CategoryGuiToCategoryFacadeIn
     }
 
     /**
-     * @param int $idNode
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return string
-     */
-    public function getNodePath(int $idNode, LocaleTransfer $localeTransfer): string
-    {
-        return $this->categoryFacade->getNodePath($idNode, $localeTransfer);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\CategoryNodeUrlCriteriaTransfer $categoryNodeUrlCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\UrlTransfer[]
@@ -140,15 +108,5 @@ class CategoryGuiToCategoryFacadeBridge implements CategoryGuiToCategoryFacadeIn
     public function getCategoryNodeUrls(CategoryNodeUrlCriteriaTransfer $categoryNodeUrlCriteriaTransfer): array
     {
         return $this->categoryFacade->getCategoryNodeUrls($categoryNodeUrlCriteriaTransfer);
-    }
-
-    /**
-     * @param int $idCategoryNode
-     *
-     * @return \Generated\Shared\Transfer\StoreRelationTransfer
-     */
-    public function getCategoryStoreRelationByIdCategoryNode(int $idCategoryNode): StoreRelationTransfer
-    {
-        return $this->categoryFacade->getCategoryStoreRelationByIdCategoryNode($idCategoryNode);
     }
 }

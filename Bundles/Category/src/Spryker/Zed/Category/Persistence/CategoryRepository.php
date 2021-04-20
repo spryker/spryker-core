@@ -614,6 +614,15 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
                 ->endUse();
         }
 
+        $idCategoryNode = $categoryCriteriaTransfer->getIdCategoryNode();
+        if ($idCategoryNode) {
+            $categoryQuery
+                ->joinWithNode()
+                ->useNodeQuery()
+                    ->filterByIdCategoryNode($idCategoryNode)
+                ->endUse();
+        }
+
         return $categoryQuery;
     }
 

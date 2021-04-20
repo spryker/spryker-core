@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CategoryGui\Communication\Form\DataProvider;
 
+use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
@@ -56,7 +57,9 @@ class CategoryEditDataProvider
      */
     public function getData(int $idCategory): ?CategoryTransfer
     {
-        $categoryTransfer = $this->categoryFacade->findCategoryById($idCategory);
+        $categoryTransfer = $this->categoryFacade->findCategory(
+            (new CategoryCriteriaTransfer())->setIdCategory($idCategory)
+        );
 
         if ($categoryTransfer !== null) {
             $categoryTransfer = $this->addLocalizedAttributeTransfers($categoryTransfer);

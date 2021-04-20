@@ -9,7 +9,7 @@ namespace Spryker\Zed\CategoryGui\Communication\Finder;
 
 use Generated\Shared\Transfer\StoreWithStateCollectionTransfer;
 
-interface CategoryStoreWithSateFinderInterface
+interface CategoryStoreWithStateFinderInterface
 {
     /**
      * @param int $idCategoryNode

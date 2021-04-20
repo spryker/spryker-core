@@ -7,21 +7,19 @@
 
 namespace Spryker\Zed\CategoryGui\Communication\Controller;
 
-use ArrayObject;
 use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryNodeUrlCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeCollectionTransfer;
 use Spryker\Zed\CategoryGui\Communication\Form\DeleteType;
-use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\CategoryGui\Persistence\CategoryGuiRepositoryInterface getRepository()
  * @method \Spryker\Zed\CategoryGui\Communication\CategoryGuiCommunicationFactory getFactory()
  */
-class DeleteController extends AbstractController
+class DeleteController extends CategoryAbstractController
 {
     protected const REQUEST_PARAM_ID_CATEGORY = 'id-category';
 
@@ -54,7 +52,7 @@ class DeleteController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $categoryResponseTransfer = $this->getFactory()
-                ->createCategoryFormHandler()
+                ->createCategoryDeleteFormHandler()
                 ->deleteCategory($form->getData()[DeleteType::FIELD_FK_NODE_CATEGORY]);
 
             if ($categoryResponseTransfer->getIsSuccessful()) {
@@ -181,29 +179,5 @@ class DeleteController extends AbstractController
         }
 
         return $this->currentLocale;
-    }
-
-    /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\MessageTransfer[] $messageTransfers
-     *
-     * @return void
-     */
-    protected function addSuccessMessages(ArrayObject $messageTransfers): void
-    {
-        foreach ($messageTransfers as $messageTransfer) {
-            $this->addSuccessMessage($messageTransfer->getValue());
-        }
-    }
-
-    /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\MessageTransfer[] $messageTransfers
-     *
-     * @return void
-     */
-    protected function addErrorMessages(ArrayObject $messageTransfers): void
-    {
-        foreach ($messageTransfers as $messageTransfer) {
-            $this->addErrorMessage($messageTransfer->getValue());
-        }
     }
 }

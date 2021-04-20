@@ -10,8 +10,6 @@ namespace Spryker\Zed\CategoryGui\Persistence;
 interface CategoryGuiRepositoryInterface
 {
     /**
-     * @module Category
-     *
      * @param string $categoryKey
      *
      * @return bool

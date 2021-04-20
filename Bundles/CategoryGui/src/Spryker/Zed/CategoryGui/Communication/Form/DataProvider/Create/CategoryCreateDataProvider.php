@@ -18,6 +18,8 @@ use Spryker\Zed\CategoryGui\Persistence\CategoryGuiRepositoryInterface;
 
 class CategoryCreateDataProvider
 {
+    protected const PATH_DELIMITER = '/';
+
     /**
      * @var \Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToLocaleFacadeInterface
      */
@@ -120,7 +122,7 @@ class CategoryCreateDataProvider
     {
         foreach ($categoryTransfer->getNodeCollection()->getNodes() as $nodeTransfer) {
             $nodeTransfers[] = (new NodeTransfer())
-                ->setPath('/' . $nodeTransfer->getPath())
+                ->setPath(static::PATH_DELIMITER . $nodeTransfer->getPath())
                 ->setIdCategoryNode($nodeTransfer->getIdCategoryNode())
                 ->setName($categoryTransfer->getName());
         }

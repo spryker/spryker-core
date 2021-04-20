@@ -8,10 +8,10 @@
 namespace Spryker\Zed\Store\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\StoreRelationTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Store\Business\StoreFacadeInterface;
+use Spryker\Zed\Store\Communication\Form\Type\StoreRelationDropdownType;
 
-class StoreRelationDropdownDataProvider implements StoreRelationDropdownDataProviderInterface
+class StoreRelationDropdownDataProvider
 {
     /**
      * @var \Spryker\Zed\Store\Business\StoreFacadeInterface
@@ -29,19 +29,41 @@ class StoreRelationDropdownDataProvider implements StoreRelationDropdownDataProv
     /**
      * @return \Generated\Shared\Transfer\StoreRelationTransfer
      */
-    public function getDefaultFormData(): StoreRelationTransfer
+    public function getData(): StoreRelationTransfer
     {
+        $allStoreIds = array_keys($this->getStoreNameMap());
+
         return (new StoreRelationTransfer())
-            ->setIdStores($this->getAllIdStores());
+            ->setIdStores($allStoreIds);
     }
 
     /**
-     * @return int[]
+     * @return array
      */
-    protected function getAllIdStores(): array
+    public function getOptions(): array
     {
-        return array_map(function (StoreTransfer $storeTransfer) {
-            return $storeTransfer->getIdStore();
-        }, $this->storeFacade->getAllStores());
+        return [
+            StoreRelationDropdownType::OPTION_DATA_CLASS => StoreRelationTransfer::class,
+            StoreRelationDropdownType::OPTION_INACTIVE_CHOICES => [],
+            StoreRelationDropdownType::OPTION_ATTRIBUTE_ACTION_URL => '',
+            StoreRelationDropdownType::OPTION_ATTRIBUTE_ACTION_EVENT => '',
+            StoreRelationDropdownType::OPTION_ATTRIBUTE_ACTION_FIELD => '',
+            StoreRelationDropdownType::OPTION_STORE_CHOICES => $this->getStoreNameMap(),
+        ];
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getStoreNameMap(): array
+    {
+        $storeTransferCollection = $this->storeFacade->getAllStores();
+
+        $storeNameMap = [];
+        foreach ($storeTransferCollection as $storeTransfer) {
+            $storeNameMap[$storeTransfer->getIdStore()] = $storeTransfer->getName();
+        }
+
+        return $storeNameMap;
     }
 }

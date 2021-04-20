@@ -29,16 +29,28 @@ class CategoryKeyUniqueConstraintValidator extends ConstraintValidator
         }
 
         $categoryTransfer = $this->context->getRoot()->getData();
-        if (
-            !($categoryTransfer instanceof CategoryTransfer)
-            || !$value
-            || !$constraint->getCategoryGuiRepository()->isCategoryKeyUsed($value)
-        ) {
+        if ($this->isCategoryKeyValid($categoryTransfer, $value, $constraint)) {
             return;
         }
 
         $this->context
-            ->buildViolation(sprintf($constraint->message, $value))
+            ->buildViolation($constraint->getMessage($value))
             ->addViolation();
+    }
+
+    /**
+     * @param mixed $categoryTransfer
+     * @param string $categoryKey
+     * @param \Spryker\Zed\CategoryGui\Communication\Form\Constraint\CategoryKeyUniqueConstraint $constraint
+     *
+     * @return bool
+     */
+    protected function isCategoryKeyValid($categoryTransfer, string $categoryKey, CategoryKeyUniqueConstraint $constraint): bool
+    {
+        return (
+            !($categoryTransfer instanceof CategoryTransfer)
+            || !$categoryKey
+            || !$constraint->getCategoryGuiRepository()->isCategoryKeyUsed($categoryKey)
+        );
     }
 }

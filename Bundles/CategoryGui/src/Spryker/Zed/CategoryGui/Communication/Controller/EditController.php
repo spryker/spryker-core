@@ -7,16 +7,13 @@
 
 namespace Spryker\Zed\CategoryGui\Communication\Controller;
 
-use ArrayObject;
-use Spryker\Service\UtilText\Model\Url\Url;
-use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\CategoryGui\Communication\CategoryGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\CategoryGui\Persistence\CategoryGuiRepositoryInterface getRepository()
  */
-class EditController extends AbstractController
+class EditController extends CategoryAbstractController
 {
     protected const REQUEST_PARAM_ID_CATEGORY = 'id-category';
 
@@ -33,7 +30,7 @@ class EditController extends AbstractController
     public function indexAction(Request $request)
     {
         $categoryTransfer = $this->getFactory()
-            ->createCategoryEditFormDataProvider()
+            ->createCategoryEditDataProvider()
             ->getData($this->castId($request->get(static::REQUEST_PARAM_ID_CATEGORY)));
 
         if ($categoryTransfer === null) {
@@ -50,15 +47,13 @@ class EditController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $categoryResponseTransfer = $this->getFactory()
-                ->createCategoryFormHandler()
+                ->createCategoryUpdateFormHandler()
                 ->updateCategory($form->getData());
 
             if ($categoryResponseTransfer->getIsSuccessful()) {
                 $this->addSuccessMessages($categoryResponseTransfer->getMessages());
 
-                return $this->redirectResponse(
-                    $this->createSuccessRedirectUrl($categoryResponseTransfer->getCategory()->getIdCategory())
-                );
+                return $this->redirectResponse(static::ROUTE_CATEGORY_LIST);
             }
 
             $this->addErrorMessages($categoryResponseTransfer->getMessages());
@@ -70,46 +65,5 @@ class EditController extends AbstractController
             'idCategory' => $this->castId($request->query->get(static::REQUEST_PARAM_ID_CATEGORY)),
             'categoryFormTabs' => $this->getFactory()->createCategoryFormTabs()->createView(),
         ]);
-    }
-
-    /**
-     * @param int $idCategory
-     *
-     * @return string
-     */
-    protected function createSuccessRedirectUrl(int $idCategory): string
-    {
-        $url = Url::generate(
-            '/category-gui/edit',
-            [
-                static::REQUEST_PARAM_ID_CATEGORY => $idCategory,
-            ]
-        );
-
-        return $url->build();
-    }
-
-    /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\MessageTransfer[] $messageTransfers
-     *
-     * @return void
-     */
-    protected function addSuccessMessages(ArrayObject $messageTransfers): void
-    {
-        foreach ($messageTransfers as $messageTransfer) {
-            $this->addSuccessMessage($messageTransfer->getValue());
-        }
-    }
-
-    /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\MessageTransfer[] $messageTransfers
-     *
-     * @return void
-     */
-    protected function addErrorMessages(ArrayObject $messageTransfers): void
-    {
-        foreach ($messageTransfers as $messageTransfer) {
-            $this->addErrorMessage($messageTransfer->getValue());
-        }
     }
 }

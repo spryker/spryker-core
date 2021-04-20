@@ -13,6 +13,7 @@ use Orm\Zed\Category\Persistence\SpyCategoryTemplateQuery;
 use Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToCategoryFacadeBridge;
 use Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToLocaleFacadeBridge;
 use Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToStoreFacadeBridge;
+use Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToTranslatorFacadeBridge;
 use Spryker\Zed\CategoryGui\Dependency\Service\CategoryGuiToUtilEncodingServiceBridge;
 use Spryker\Zed\CategoryGui\Exception\MissingStoreRelationFormTypePluginException;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
@@ -27,10 +28,12 @@ class CategoryGuiDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_LOCALE = 'FACADE_LOCALE';
     public const FACADE_CATEGORY = 'FACADE_CATEGORY';
     public const FACADE_STORE = 'FACADE_STORE';
+    public const FACADE_TRANSLATOR = 'FACADE_TRANSLATOR';
 
     public const PLUGINS_CATEGORY_FORM = 'PLUGINS_CATEGORY_FORM';
     public const PLUGINS_CATEGORY_FORM_TAB_EXPANDER = 'PLUGINS_CATEGORY_FORM_TAB_EXPANDER';
     public const PLUGINS_CATEGORY_RELATION_READ = 'PLUGINS_CATEGORY_RELATION_READ';
+    public const PLUGIN_STORE_RELATION_FORM_TYPE = 'PLUGIN_STORE_RELATION_FORM_TYPE';
 
     public const PROPEL_QUERY_CATEGORY = 'PROPEL_QUERY_CATEGORY';
     public const PROPEL_QUERY_CATEGORY_TEMPLATE = 'PROPEL_QUERY_CATEGORY_TEMPLATE';
@@ -42,8 +45,6 @@ class CategoryGuiDependencyProvider extends AbstractBundleDependencyProvider
      * @uses \Spryker\Zed\Form\Communication\Plugin\Application\FormApplicationPlugin::SERVICE_FORM_CSRF_PROVIDER
      */
     public const SERVICE_FORM_CSRF_PROVIDER = 'form.csrf_provider';
-
-    public const PLUGIN_STORE_RELATION_FORM_TYPE = 'PLUGIN_STORE_RELATION_FORM_TYPE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -57,12 +58,13 @@ class CategoryGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addLocaleFacade($container);
         $container = $this->addCategoryFacade($container);
         $container = $this->addStoreFacade($container);
+        $container = $this->addTranslatorFacade($container);
         $container = $this->addCategoryFormPlugins($container);
         $container = $this->addCategoryFormTabExpanderPlugins($container);
         $container = $this->addCategoryRelationReadPlugins($container);
+        $container = $this->addStoreRelationFormTypePlugin($container);
         $container = $this->addCsrfProviderService($container);
         $container = $this->addUtilEncodingService($container);
-        $container = $this->addStoreRelationFormTypePlugin($container);
 
         return $container;
     }
@@ -282,7 +284,7 @@ class CategoryGuiDependencyProvider extends AbstractBundleDependencyProvider
             sprintf(
                 'Missing instance of %s! You need to configure StoreRelationFormType ' .
                 'in your own CategoryGuiDependencyProvider::getStoreRelationFormTypePlugin() ' .
-                'to be able to manage stocks.',
+                'to be able to manage categories.',
                 FormTypeInterface::class
             )
         );
@@ -298,6 +300,22 @@ class CategoryGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container->set(static::FACADE_STORE, function (Container $container) {
             return new CategoryGuiToStoreFacadeBridge(
                 $container->getLocator()->store()->facade()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addTranslatorFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_TRANSLATOR, function (Container $container) {
+            return new CategoryGuiToTranslatorFacadeBridge(
+                $container->getLocator()->translator()->facade()
             );
         });
 

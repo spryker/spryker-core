@@ -21,6 +21,7 @@ class StoreRelationDropdownFormTypePlugin extends AbstractPlugin implements Form
 {
     /**
      * {@inheritDoc}
+     * - Gets store relation dropdown type.
      *
      * @api
      *

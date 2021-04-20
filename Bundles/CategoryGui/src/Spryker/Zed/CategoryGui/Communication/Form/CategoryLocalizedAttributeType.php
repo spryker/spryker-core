@@ -23,15 +23,19 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class CategoryLocalizedAttributeType extends AbstractType
 {
-    public const FIELD_NAME = 'name';
-    public const FIELD_FK_LOCALE = 'fk_locale';
-    public const FIELD_LOCALE_NAME = 'locale_name';
-    public const FIELD_META_TITLE = 'meta_title';
-    public const FIELD_META_DESCRIPTION = 'meta_description';
-    public const FIELD_META_KEYWORDS = 'meta_keywords';
-    public const FIELD_CATEGORY_IMAGE_NAME = 'category_image_name';
+    public const OPTION_META_DESCRIPTION_ROWS = 'meta_description_rows';
 
     protected const OPTION_DATA_CLASS = 'data_class';
+    protected const OPTION_PROPERTY_PATH_LOCALE_ID_LOCALE = 'locale.idLocale';
+    protected const OPTION_PROPERTY_PATH_LOCALE_LOCALE_NAME = 'locale.localeName';
+
+    protected const FIELD_NAME = 'name';
+    protected const FIELD_FK_LOCALE = 'fk_locale';
+    protected const FIELD_LOCALE_NAME = 'locale_name';
+    protected const FIELD_META_TITLE = 'meta_title';
+    protected const FIELD_META_DESCRIPTION = 'meta_description';
+    protected const FIELD_META_KEYWORDS = 'meta_keywords';
+    protected const FIELD_CATEGORY_IMAGE_NAME = 'category_image_name';
 
     protected const LABEL_META_TITLE = 'Meta Title';
     protected const LABEL_META_DESCRIPTION = 'Meta Description';
@@ -58,6 +62,7 @@ class CategoryLocalizedAttributeType extends AbstractType
 
         $resolver->setDefaults([
             static::OPTION_DATA_CLASS => CategoryLocalizedAttributesTransfer::class,
+            static::OPTION_META_DESCRIPTION_ROWS => 5,
         ]);
     }
 
@@ -74,7 +79,7 @@ class CategoryLocalizedAttributeType extends AbstractType
             ->addLocaleNameField($builder)
             ->addNameField($builder)
             ->addMetaTitleField($builder)
-            ->addMetaDescriptionField($builder)
+            ->addMetaDescriptionField($builder, $options)
             ->addMetaKeywordsField($builder);
     }
 
@@ -90,7 +95,7 @@ class CategoryLocalizedAttributeType extends AbstractType
                 'constraints' => [
                     new NotBlank(),
                 ],
-                'property_path' => 'locale.idLocale',
+                'property_path' => static::OPTION_PROPERTY_PATH_LOCALE_ID_LOCALE,
             ]);
 
         return $this;
@@ -108,7 +113,7 @@ class CategoryLocalizedAttributeType extends AbstractType
                 'constraints' => [
                     new NotBlank(),
                 ],
-                'property_path' => 'locale.localeName',
+                'property_path' => static::OPTION_PROPERTY_PATH_LOCALE_LOCALE_NAME,
             ]);
 
         return $this;
@@ -151,17 +156,18 @@ class CategoryLocalizedAttributeType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
      *
      * @return $this
      */
-    protected function addMetaDescriptionField(FormBuilderInterface $builder)
+    protected function addMetaDescriptionField(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add(static::FIELD_META_DESCRIPTION, TextareaType::class, [
                 'label' => static::LABEL_META_DESCRIPTION,
                 'required' => false,
                 'attr' => [
-                    'rows' => 5,
+                    'rows' => $options[static::OPTION_META_DESCRIPTION_ROWS],
                 ],
             ]);
 

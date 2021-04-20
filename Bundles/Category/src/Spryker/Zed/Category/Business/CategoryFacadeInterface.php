@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\CategoryNodeUrlCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeCollectionTransfer;
-use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\UpdateCategoryStoreRelationRequestTransfer;
 
 interface CategoryFacadeInterface
@@ -286,19 +285,7 @@ interface CategoryFacadeInterface
 
     /**
      * Specification:
-     * - Gets category store relation by `idCategoryNode`.
-     *
-     * @api
-     *
-     * @param int $idCategoryNode
-     *
-     * @return \Generated\Shared\Transfer\StoreRelationTransfer
-     */
-    public function getCategoryStoreRelationByIdCategoryNode(int $idCategoryNode): StoreRelationTransfer;
-
-    /**
-     * Specification:
-     * - Retrieves urls entities from Persistent.
+     * - Retrieves URLs entities from Persistent.
      * - Filters by category node ids when provided.
      *
      * @api

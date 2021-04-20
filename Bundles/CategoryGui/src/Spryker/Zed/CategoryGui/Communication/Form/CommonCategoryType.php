@@ -26,15 +26,15 @@ abstract class CommonCategoryType extends AbstractType
     public const OPTION_CATEGORY_TEMPLATE_CHOICES = 'category_template_choices';
     public const OPTION_DATA_CLASS = 'data_class';
 
-    public const FIELD_CATEGORY_KEY = 'category_key';
-    public const FIELD_IS_ACTIVE = 'is_active';
-    public const FIELD_IS_IN_MENU = 'is_in_menu';
-    public const FIELD_IS_CLICKABLE = 'is_clickable';
-    public const FIELD_IS_SEARCHABLE = 'is_searchable';
-    public const FIELD_IS_MAIN = 'is_main';
-    public const FIELD_TEMPLATE = 'fk_category_template';
-    public const FIELD_LOCALIZED_ATTRIBUTES = 'localized_attributes';
     public const FIELD_STORE_RELATION = 'store_relation';
+    protected const FIELD_CATEGORY_KEY = 'category_key';
+    protected const FIELD_IS_ACTIVE = 'is_active';
+    protected const FIELD_IS_IN_MENU = 'is_in_menu';
+    protected const FIELD_IS_CLICKABLE = 'is_clickable';
+    protected const FIELD_IS_SEARCHABLE = 'is_searchable';
+    protected const FIELD_IS_MAIN = 'is_main';
+    protected const FIELD_TEMPLATE = 'fk_category_template';
+    protected const FIELD_LOCALIZED_ATTRIBUTES = 'localized_attributes';
 
     protected const LABEL_IS_ACTIVE = 'Active';
     protected const LABEL_IS_IN_MENU = 'Visible in the category tree';
@@ -82,7 +82,7 @@ abstract class CommonCategoryType extends AbstractType
             ->addIsInMenuField($builder)
             ->addIsSearchableField($builder)
             ->addTemplateField($builder, $options)
-            ->addPluginForms($builder)
+            ->addFormPlugins($builder)
             ->addLocalizedAttributesForm($builder)
             ->addStoreRelationForm($builder, $options);
     }
@@ -122,7 +122,7 @@ abstract class CommonCategoryType extends AbstractType
     protected function addIsActiveField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_IS_ACTIVE, CheckboxType::class, [
-            'label' => static::LABEL_IS_ACTIVE,
+            'label' => $this->translate(static::LABEL_IS_ACTIVE),
             'required' => false,
         ]);
 
@@ -137,7 +137,7 @@ abstract class CommonCategoryType extends AbstractType
     protected function addIsInMenuField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_IS_IN_MENU, CheckboxType::class, [
-            'label' => static::LABEL_IS_IN_MENU,
+            'label' => $this->translate(static::LABEL_IS_IN_MENU),
             'required' => false,
         ]);
 
@@ -152,7 +152,7 @@ abstract class CommonCategoryType extends AbstractType
     protected function addIsSearchableField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_IS_SEARCHABLE, CheckboxType::class, [
-            'label' => static::LABEL_IS_SEARCHABLE,
+            'label' => $this->translate(static::LABEL_IS_SEARCHABLE),
             'required' => false,
         ]);
 
@@ -168,7 +168,7 @@ abstract class CommonCategoryType extends AbstractType
     protected function addTemplateField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_TEMPLATE, Select2ComboBoxType::class, [
-            'label' => static::LABEL_TEMPLATE,
+            'label' => $this->translate(static::LABEL_TEMPLATE),
             'choices' => array_flip($options[static::OPTION_CATEGORY_TEMPLATE_CHOICES]),
             'required' => true,
             'constraints' => [
@@ -218,12 +218,24 @@ abstract class CommonCategoryType extends AbstractType
      *
      * @return $this
      */
-    protected function addPluginForms(FormBuilderInterface $builder)
+    protected function addFormPlugins(FormBuilderInterface $builder)
     {
         foreach ($this->getFactory()->getCategoryFormPlugins() as $formPlugin) {
             $formPlugin->buildForm($builder);
         }
 
         return $this;
+    }
+
+    /**
+     * @param string $text
+     *
+     * @return string
+     */
+    protected function translate(string $text): string
+    {
+        return $this->getFactory()
+            ->getTranslatorFacade()
+            ->trans($text);
     }
 }

@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Store\Communication\Form\Type;
 
-use Generated\Shared\Transfer\StoreRelationTransfer;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -31,6 +30,7 @@ class StoreRelationDropdownType extends AbstractType
 
     public const OPTION_INACTIVE_CHOICES = 'inactive_choices';
     public const OPTION_DATA_CLASS = 'data_class';
+    public const OPTION_STORE_CHOICES = 'store_choices';
 
     public const OPTION_ATTRIBUTE_ACTION_URL = 'action_url';
     public const OPTION_ATTRIBUTE_ACTION_EVENT = 'action_event';
@@ -67,13 +67,11 @@ class StoreRelationDropdownType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults([
-            static::OPTION_DATA_CLASS => StoreRelationTransfer::class,
-            static::OPTION_INACTIVE_CHOICES => [],
-            static::OPTION_ATTRIBUTE_ACTION_URL => '',
-            static::OPTION_ATTRIBUTE_ACTION_EVENT => '',
-            static::OPTION_ATTRIBUTE_ACTION_FIELD => '',
-        ]);
+        $resolver->setDefaults(
+            $this->getFactory()
+                ->createStoreRelationDropdownDataProvider()
+                ->getOptions()
+        );
     }
 
     /**
@@ -89,7 +87,7 @@ class StoreRelationDropdownType extends AbstractType
 
         $dataProvider = $this->getFactory()->createStoreRelationDropdownDataProvider();
 
-        $event->setData($dataProvider->getDefaultFormData());
+        $event->setData($dataProvider->getData());
     }
 
     /**
@@ -118,7 +116,7 @@ class StoreRelationDropdownType extends AbstractType
             return $this;
         }
 
-        $this->addFieldImmutableIdStores($builder);
+        $this->addFieldImmutableIdStores($builder, $options);
 
         return $this;
     }
@@ -137,7 +135,7 @@ class StoreRelationDropdownType extends AbstractType
             [
                 'label' => static::LABEL_STORES,
                 'multiple' => true,
-                'choices' => array_flip($this->getStoreNameMap()),
+                'choices' => array_flip($options[static::OPTION_STORE_CHOICES]),
                 'attr' => [
                     static::OPTION_ATTRIBUTE_ACTION_URL => $options[static::OPTION_ATTRIBUTE_ACTION_URL],
                     static::OPTION_ATTRIBUTE_ACTION_EVENT => $options[static::OPTION_ATTRIBUTE_ACTION_EVENT],
@@ -156,10 +154,11 @@ class StoreRelationDropdownType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
      *
      * @return $this
      */
-    protected function addFieldImmutableIdStores(FormBuilderInterface $builder)
+    protected function addFieldImmutableIdStores(FormBuilderInterface $builder, array $options)
     {
         $storeToggleName = sprintf('%s (%s)', static::LABEL_STORES, static::MESSAGE_MULTI_STORE_PER_ZED_DISABLED);
 
@@ -171,7 +170,7 @@ class StoreRelationDropdownType extends AbstractType
                 'disabled' => true,
                 'property_path' => static::FIELD_ID_STORES,
                 'multiple' => true,
-                'choices' => array_flip($this->getStoreNameMap()),
+                'choices' => array_flip($options[static::OPTION_STORE_CHOICES]),
             ]
         );
 
@@ -181,21 +180,6 @@ class StoreRelationDropdownType extends AbstractType
         );
 
         return $this;
-    }
-
-    /**
-     * @return string[]
-     */
-    protected function getStoreNameMap(): array
-    {
-        $storeTransferCollection = $this->getFacade()->getAllStores();
-
-        $storeNameMap = [];
-        foreach ($storeTransferCollection as $storeTransfer) {
-            $storeNameMap[$storeTransfer->getIdStore()] = $storeTransfer->getName();
-        }
-
-        return $storeNameMap;
     }
 
     /**

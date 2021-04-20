@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CategoryGui\Communication\Controller;
 
+use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,7 +33,11 @@ class ViewController extends AbstractController
     public function indexAction(Request $request)
     {
         $idCategory = $request->query->getInt(static::REQUEST_PARAM_ID_CATEGORY);
-        $categoryTransfer = $this->getFactory()->getCategoryFacade()->findCategoryById($idCategory);
+        $categoryTransfer = $this->getFactory()
+            ->getCategoryFacade()
+            ->findCategory(
+                (new CategoryCriteriaTransfer())->setIdCategory($idCategory)
+            );
 
         if ($categoryTransfer === null) {
             $this->addErrorMessage("Category with id %s doesn't exist", ['%s' => $idCategory]);
