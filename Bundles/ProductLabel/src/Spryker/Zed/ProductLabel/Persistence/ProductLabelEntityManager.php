@@ -117,8 +117,9 @@ class ProductLabelEntityManager extends AbstractEntityManager implements Product
      */
     public function deleteProductLabelProductAbstractRelations(int $idProductLabel, array $productAbstractIds = []): void
     {
-        $productRelationQuery = $this->getFactory()->createProductRelationQuery();
-        $productRelationQuery->filterByFkProductLabel($idProductLabel);
+        $productRelationQuery = $this->getFactory()
+            ->createProductRelationQuery()
+            ->filterByFkProductLabel($idProductLabel);
 
         if ($productAbstractIds) {
             $productRelationQuery->filterByFkProductAbstract_In($productAbstractIds);
