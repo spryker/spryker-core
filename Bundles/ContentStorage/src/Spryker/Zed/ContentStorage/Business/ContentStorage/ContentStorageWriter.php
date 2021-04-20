@@ -10,7 +10,6 @@ namespace Spryker\Zed\ContentStorage\Business\ContentStorage;
 use Generated\Shared\Transfer\ContentStorageTransfer;
 use Generated\Shared\Transfer\ContentTransfer;
 use Spryker\Shared\ContentStorage\ContentStorageConfig;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\ContentStorage\Dependency\Facade\ContentStorageToLocaleFacadeInterface;
 use Spryker\Zed\ContentStorage\Dependency\Facade\ContentStorageToStoreFacadeInterface;
 use Spryker\Zed\ContentStorage\Dependency\Service\ContentStorageToUtilEncodingInterface;
@@ -194,6 +193,7 @@ class ContentStorageWriter implements ContentStorageWriterInterface
         foreach ($this->store->getLocalesPerStore($storeName) as $localeName) {
             $localeNames[] = $localeName;
         }
+
         return $localeNames;
     }
 }

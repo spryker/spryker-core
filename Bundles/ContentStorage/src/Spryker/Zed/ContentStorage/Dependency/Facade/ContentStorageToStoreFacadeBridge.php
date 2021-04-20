@@ -9,7 +9,7 @@ namespace Spryker\Zed\ContentStorage\Dependency\Facade;
 
 use Generated\Shared\Transfer\StoreTransfer;
 
-class ContentStorageToStoreFacadeBridge implements CmsStorageToStoreFacadeInterface
+class ContentStorageToStoreFacadeBridge implements ContentStorageToStoreFacadeInterface
 {
     /**
      * @var \Spryker\Zed\Store\Business\StoreFacadeInterface
@@ -44,8 +44,6 @@ class ContentStorageToStoreFacadeBridge implements CmsStorageToStoreFacadeInterf
 
     /**
      * @param int $idStore
-     *
-     * @throws \Spryker\Zed\Store\Business\Model\Exception\StoreNotFoundException
      *
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
