@@ -112,10 +112,7 @@ class ProductAbstractRelationDeleter implements ProductAbstractRelationDeleterIn
             return;
         }
 
-        $productAbstractWithRelationsIds = [];
-        foreach ($productAbstractRelations as $productAbstractRelation) {
-            $productAbstractWithRelationsIds[] = $productAbstractRelation->getFkProductAbstract();
-        }
+        $productAbstractWithRelationsIds = $this->extractProductAbstractIdsFromProductAbstractRelations($productAbstractRelations);
 
         $this->productLabelEntityManager->deleteProductLabelProductAbstractRelationBatch(
             $idProductLabel,
@@ -134,7 +131,7 @@ class ProductAbstractRelationDeleter implements ProductAbstractRelationDeleterIn
      *
      * @return void
      */
-    protected function touchRelationsForAbstractProduct($idProductAbstract)
+    protected function touchRelationsForAbstractProduct(int $idProductAbstract): void
     {
         if ($this->isEmptyRelationForAbstractProduct($idProductAbstract)) {
             $this->productRelationTouchManager->touchDeletedByIdProductAbstract($idProductAbstract);
@@ -158,5 +155,20 @@ class ProductAbstractRelationDeleter implements ProductAbstractRelationDeleterIn
             ->count();
 
         return ($relationCount === 0);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductLabelProductAbstractTransfer[] $productAbstractRelations
+     *
+     * @return int[]
+     */
+    protected function extractProductAbstractIdsFromProductAbstractRelations(array $productAbstractRelations): array
+    {
+        $productAbstractIds = [];
+        foreach ($productAbstractRelations as $productAbstractRelation) {
+            $productAbstractIds[] = $productAbstractRelation->getFkProductAbstract();
+        }
+
+        return $productAbstractIds;
     }
 }
