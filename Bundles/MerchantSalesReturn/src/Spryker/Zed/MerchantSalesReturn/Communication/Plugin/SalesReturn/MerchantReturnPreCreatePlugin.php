@@ -7,29 +7,29 @@
 
 namespace Spryker\Zed\MerchantSalesReturn\Communication\Plugin\SalesReturn;
 
-use Generated\Shared\Transfer\ReturnCollectionTransfer;
+use Generated\Shared\Transfer\ReturnTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnCollectionExpanderPluginInterface;
+use Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnPreCreatePluginInterface;
 
 /**
  * @method \Spryker\Zed\MerchantSalesReturn\MerchantSalesReturnConfig getConfig()
  * @method \Spryker\Zed\MerchantSalesReturn\Business\MerchantSalesReturnFacade getFacade()
  * @method \Spryker\Zed\MerchantSalesReturn\Communication\MerchantSalesReturnCommunicationFactory getFactory()
  */
-class MerchantReturnCollectionExpanderPlugin extends AbstractPlugin implements ReturnCollectionExpanderPluginInterface
+class MerchantReturnPreCreatePlugin extends AbstractPlugin implements ReturnPreCreatePluginInterface
 {
     /**
      * {@inheritDoc}
-     * - Expands return collection with merchant data.
+     * - Sets merchant reference in return transfer.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ReturnCollectionTransfer $returnCollectionTransfer
+     * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
      *
-     * @return \Generated\Shared\Transfer\ReturnCollectionTransfer
+     * @return \Generated\Shared\Transfer\ReturnTransfer
      */
-    public function expand(ReturnCollectionTransfer $returnCollectionTransfer): ReturnCollectionTransfer
+    public function preCreate(ReturnTransfer $returnTransfer): ReturnTransfer
     {
-        return $this->getFacade()->expandReturnCollection($returnCollectionTransfer);
+        return $this->getFacade()->preCreate($returnTransfer);
     }
 }
