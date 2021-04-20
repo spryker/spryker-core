@@ -113,6 +113,18 @@ interface MerchantUserFacadeInterface
 
     /**
      * Specification:
+     * - Sets MerchantUser.User to the session.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantUserTransfer $merchantUserTransfer
+     *
+     * @return mixed
+     */
+    public function setCurrentMerchantUser(MerchantUserTransfer $merchantUserTransfer);
+
+    /**
+     * Specification:
      * - Authenticates a merchant user.
      * - Updates User's last login date.
      *
@@ -171,4 +183,17 @@ interface MerchantUserFacadeInterface
      * @return bool
      */
     public function setNewPassword(string $token, string $password): bool;
+
+    /**
+     * Specification:
+     * - Verifies that the password matches the hash.
+     *
+     * @api
+     *
+     * @param string $password
+     * @param string $hash
+     *
+     * @return bool
+     */
+    public function isValidPassword($password, $hash): bool;
 }

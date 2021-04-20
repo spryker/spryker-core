@@ -10,6 +10,8 @@ namespace Spryker\Zed\SalesReturnExtension\Dependency\Plugin;
 use Generated\Shared\Transfer\ReturnCollectionTransfer;
 
 /**
+ * @deprecated Will be removed without replacement.
+ *
  * Allows to expand ReturnCollectionTransfer with additional data.
  */
 interface ReturnCollectionExpanderPluginInterface

@@ -7,17 +7,17 @@
 
 namespace Spryker\Zed\MerchantSalesReturn\Dependency\Facade;
 
+use Generated\Shared\Transfer\MerchantOrderCollectionTransfer;
 use Generated\Shared\Transfer\MerchantOrderCriteriaTransfer;
-use Generated\Shared\Transfer\MerchantOrderTransfer;
 
 interface MerchantSalesReturnToMerchantSalesOrderFacadeInterface
 {
     /**
      * @param \Generated\Shared\Transfer\MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantOrderTransfer|null
+     * @return \Generated\Shared\Transfer\MerchantOrderCollectionTransfer
      */
-    public function findMerchantOrder(
+    public function getMerchantOrderCollection(
         MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer
-    ): ?MerchantOrderTransfer;
+    ): MerchantOrderCollectionTransfer;
 }
