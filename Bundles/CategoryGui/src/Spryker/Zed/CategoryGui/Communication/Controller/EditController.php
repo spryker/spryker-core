@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CategoryGui\Communication\Controller;
 
+use Spryker\Service\UtilText\Model\Url\Url;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -21,6 +22,7 @@ class EditController extends CategoryAbstractController
      * @uses \Spryker\Zed\CategoryGui\Communication\Controller\ListController::indexAction()
      */
     protected const ROUTE_CATEGORY_LIST = '/category-gui/list';
+    protected const ROUTE_CATEGORY_EDIT = '/category-gui/edit';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -53,7 +55,9 @@ class EditController extends CategoryAbstractController
             if ($categoryResponseTransfer->getIsSuccessful()) {
                 $this->addSuccessMessages($categoryResponseTransfer->getMessages());
 
-                return $this->redirectResponse(static::ROUTE_CATEGORY_LIST);
+                return $this->redirectResponse(
+                    $this->createSuccessRedirectUrl($categoryResponseTransfer->getCategoryOrFail()->getIdCategoryOrFail())
+                );
             }
 
             $this->addErrorMessages($categoryResponseTransfer->getMessages());
@@ -65,5 +69,22 @@ class EditController extends CategoryAbstractController
             'idCategory' => $this->castId($request->query->get(static::REQUEST_PARAM_ID_CATEGORY)),
             'categoryFormTabs' => $this->getFactory()->createCategoryFormTabs()->createView(),
         ]);
+    }
+
+    /**
+     * @param int $idCategory
+     *
+     * @return string
+     */
+    protected function createSuccessRedirectUrl(int $idCategory): string
+    {
+        $url = Url::generate(
+            static::ROUTE_CATEGORY_EDIT,
+            [
+                static::REQUEST_PARAM_ID_CATEGORY => $idCategory,
+            ]
+        );
+
+        return $url->build();
     }
 }
