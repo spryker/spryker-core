@@ -635,7 +635,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
                 ->endUse();
         }
 
-        if ($categoryCriteriaTransfer->getWithNodes() === true) {
+        if ($categoryCriteriaTransfer->getWithNodes()) {
             $categoryQuery->leftJoinNode();
         }
 
