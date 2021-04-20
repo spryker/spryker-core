@@ -52,6 +52,8 @@ use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\GuestCartRestRespons
 use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\GuestCartRestResponseBuilderInterface;
 use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\ItemResponseBuilder;
 use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\ItemResponseBuilderInterface;
+use Spryker\Glue\CartsRestApi\Processor\Validator\CartsRestApiValidator;
+use Spryker\Glue\CartsRestApi\Processor\Validator\CartsRestApiValidatorInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
 
 /**
@@ -70,7 +72,8 @@ class CartsRestApiFactory extends AbstractFactory
         return new CartReader(
             $this->createCartRestResponseBuilder(),
             $this->getClient(),
-            $this->getCustomerExpanderPlugins()
+            $this->getCustomerExpanderPlugins(),
+            $this->createCartsRestApiValidator()
         );
     }
 
@@ -354,5 +357,13 @@ class CartsRestApiFactory extends AbstractFactory
     public function getCartItemFilterPlugins(): array
     {
         return $this->getProvidedDependency(CartsRestApiDependencyProvider::PLUGINS_CART_ITEM_FILTER);
+    }
+
+    /**
+     * @return \Spryker\Glue\CartsRestApi\Processor\Validator\CartsRestApiValidatorInterface
+     */
+    public function createCartsRestApiValidator(): CartsRestApiValidatorInterface
+    {
+        return new CartsRestApiValidator();
     }
 }

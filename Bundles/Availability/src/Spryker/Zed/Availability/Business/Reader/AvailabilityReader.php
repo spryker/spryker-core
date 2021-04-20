@@ -47,6 +47,7 @@ class AvailabilityReader implements AvailabilityReaderInterface
         }
 
         $storeTransfer = $this->storeFacade->getCurrentStore();
+        /** @var int[] $productConcreteIds */
         $productConcreteIds = $this->extractProductConcreteIdsFromProductConcreteTransfers($productConcreteTransfers);
 
         $mappedProductConcreteAvailabilityTransfers = $this->availabilityRepository
@@ -85,9 +86,11 @@ class AvailabilityReader implements AvailabilityReaderInterface
     }
 
     /**
+     * @phpstan-return array<int, int|null>
+     *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
      *
-     * @return int[]
+     * @return array
      */
     protected function extractProductConcreteIdsFromProductConcreteTransfers(array $productConcreteTransfers): array
     {

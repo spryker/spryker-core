@@ -55,7 +55,9 @@ class PriceProductMerger implements PriceProductMergerInterface
         PriceProductTransfer $abstractPriceProductTransfer,
         PriceProductTransfer $concretePriceProductTransfer
     ): PriceProductTransfer {
+        /** @var \Generated\Shared\Transfer\MoneyValueTransfer $abstractMoneyValueTransfer */
         $abstractMoneyValueTransfer = $abstractPriceProductTransfer->getMoneyValue();
+        /** @var \Generated\Shared\Transfer\MoneyValueTransfer $concreteMoneyValueTransfer */
         $concreteMoneyValueTransfer = $concretePriceProductTransfer->getMoneyValue();
 
         if ($concreteMoneyValueTransfer->getGrossAmount() === null) {
@@ -122,7 +124,7 @@ class PriceProductMerger implements PriceProductMergerInterface
     protected function filterNotMergeableProductPrices(array $priceProductTransfers): array
     {
         return array_filter($priceProductTransfers, function (PriceProductTransfer $priceProductTransfer) {
-            return $priceProductTransfer->getIsMergeable();
+            return (bool)$priceProductTransfer->getIsMergeable();
         });
     }
 }

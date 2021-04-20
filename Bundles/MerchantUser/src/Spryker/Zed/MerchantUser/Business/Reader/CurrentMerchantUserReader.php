@@ -68,6 +68,7 @@ class CurrentMerchantUserReader implements CurrentMerchantUserReaderInterface
         }
 
         $merchantUserTransfer = reset($merchantUserTransfers);
+        $merchantUserTransfer->setUser($userTransfer);
 
         return $this->expandWithMerchant($merchantUserTransfer);
     }

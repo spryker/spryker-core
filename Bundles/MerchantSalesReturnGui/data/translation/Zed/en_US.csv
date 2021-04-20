@@ -1,0 +1,14 @@
+"General information","General information"
+"Order reference","Order reference"
+"Select Items to Return","Select Items to Return"
+"You can only return products from one merchant at a time.","You can only return products from one merchant at a time."
+"Merchant Order %row% of %length%","Merchant Order %row% of %length%"
+"Fullfilled by merchant","Fullfilled by merchant"
+"Merchant Order Reference","Merchant Order Reference"
+Product,Product
+Quantity,Quantity
+Price,Price
+Total,Total
+"Return policy","Return policy"
+State,State
+"Create return","Create return"

@@ -5,6 +5,7 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.3",
+    "spryker/availability": "^9.9.0",
     "spryker/availability-storage": "^2.2.0",
     "spryker/glue-application": "^1.8.0",
     "spryker/glue-application-extension": "^1.0.0",
@@ -12,7 +13,8 @@
     "spryker/product-storage": "^1.2.0",
     "spryker/products-rest-api": "^2.0.0",
     "spryker/symfony": "^3.0.0",
-    "spryker/transfer": "^3.18.0"
+    "spryker/transfer": "^3.18.0",
+    "spryker/wishlists-rest-api-extension": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

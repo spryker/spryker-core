@@ -8,25 +8,15 @@
 namespace Spryker\Client\PriceProductOfferVolume;
 
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Client\PriceProductOfferVolume\Dependency\Service\PriceProductOfferVolumeToUtilEncodingServiceInterface;
-use Spryker\Client\PriceProductOfferVolume\VolumePriceExtractor\ProductOfferVolumePriceExtractor;
-use Spryker\Client\PriceProductOfferVolume\VolumePriceExtractor\ProductOfferVolumePriceExtractorInterface;
+use Spryker\Service\PriceProductOfferVolume\PriceProductOfferVolumeServiceInterface;
 
 class PriceProductOfferVolumeFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Client\PriceProductOfferVolume\VolumePriceExtractor\ProductOfferVolumePriceExtractorInterface
+     * @return \Spryker\Service\PriceProductOfferVolume\PriceProductOfferVolumeServiceInterface
      */
-    public function createProductOfferVolumePriceExtractor(): ProductOfferVolumePriceExtractorInterface
+    public function getPriceProductOfferVolumeService(): PriceProductOfferVolumeServiceInterface
     {
-        return new ProductOfferVolumePriceExtractor($this->getUtilEncodingService());
-    }
-
-    /**
-     * @return \Spryker\Client\PriceProductOfferVolume\Dependency\Service\PriceProductOfferVolumeToUtilEncodingServiceInterface
-     */
-    public function getUtilEncodingService(): PriceProductOfferVolumeToUtilEncodingServiceInterface
-    {
-        return $this->getProvidedDependency(PriceProductOfferVolumeDependencyProvider::SERVICE_UTIL_ENCODING);
+        return $this->getProvidedDependency(PriceProductOfferVolumeDependencyProvider::SERVICE_PRICE_PRODUCT_OFFER_VOLUME);
     }
 }
