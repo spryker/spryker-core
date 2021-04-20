@@ -136,7 +136,7 @@ class ContentStorageDependencyProvider extends AbstractBundleDependencyProvider
     protected function addStore(Container $container): Container
     {
         $container->set(static::STORE, function (Container $container) {
-            return Store::getInstance();
+            return new ContentStorageToStoreFacadeBridge(Store::getInstance());
         });
 
         return $container;

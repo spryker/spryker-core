@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ContentTransfer;
 use Spryker\Shared\ContentStorage\ContentStorageConfig;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\ContentStorage\Dependency\Facade\ContentStorageToLocaleFacadeInterface;
+use Spryker\Zed\ContentStorage\Dependency\Facade\ContentStorageToStoreFacadeInterface;
 use Spryker\Zed\ContentStorage\Dependency\Service\ContentStorageToUtilEncodingInterface;
 use Spryker\Zed\ContentStorage\Persistence\ContentStorageEntityManagerInterface;
 use Spryker\Zed\ContentStorage\Persistence\ContentStorageRepositoryInterface;
@@ -44,7 +45,7 @@ class ContentStorageWriter implements ContentStorageWriterInterface
     protected $utilEncodingService;
 
     /**
-     * @var \Spryker\Shared\Kernel\Store
+     * @var \Spryker\Zed\ContentStorage\Dependency\Facade\ContentStorageToStoreFacadeInterface
      */
     protected $store;
 
@@ -53,14 +54,14 @@ class ContentStorageWriter implements ContentStorageWriterInterface
      * @param \Spryker\Zed\ContentStorage\Persistence\ContentStorageEntityManagerInterface $contentStorageEntityManager
      * @param \Spryker\Zed\ContentStorage\Dependency\Facade\ContentStorageToLocaleFacadeInterface $localeFacade
      * @param \Spryker\Zed\ContentStorage\Dependency\Service\ContentStorageToUtilEncodingInterface $utilEncodingService
-     * @param \Spryker\Shared\Kernel\Store $store
+     * @param \Spryker\Zed\ContentStorage\Dependency\Facade\ContentStorageToStoreFacadeInterface $store
      */
     public function __construct(
         ContentStorageRepositoryInterface $contentStorageRepository,
         ContentStorageEntityManagerInterface $contentStorageEntityManager,
         ContentStorageToLocaleFacadeInterface $localeFacade,
         ContentStorageToUtilEncodingInterface $utilEncodingService,
-        Store $store
+        ContentStorageToStoreFacadeInterface $store
     ) {
         $this->contentStorageRepository = $contentStorageRepository;
         $this->contentStorageEntityManager = $contentStorageEntityManager;
