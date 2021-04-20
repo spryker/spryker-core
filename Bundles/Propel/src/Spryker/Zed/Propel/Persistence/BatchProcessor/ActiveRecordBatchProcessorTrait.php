@@ -315,8 +315,6 @@ trait ActiveRecordBatchProcessorTrait
     protected function buildInsertStatements(string $entityClassName, array $entities): array
     {
         $tableMapClass = $this->getTableMapClass($entityClassName);
-        $adapter = $this->getAdapter();
-        $requiresPrimaryKeyValue = ($adapter instanceof PgsqlAdapter);
 
         $connection = $this->getWriteConnection($entityClassName);
         $statements = [];
@@ -329,7 +327,7 @@ trait ActiveRecordBatchProcessorTrait
                 $tableMapClass,
                 $entityClassName::TABLE_MAP,
                 $entity,
-                $requiresPrimaryKeyValue
+                $this->requiresPrimaryKeyValue()
             );
 
             $columnNamesForInsertWithPdoPlaceholder = array_map(function (array $columnDetails) use (&$keyIndex, $tableMapClass) {
@@ -365,8 +363,7 @@ trait ActiveRecordBatchProcessorTrait
     protected function buildInsertStatementIdentical(string $entityClassName, array $entities): StatementInterface
     {
         $tableMapClass = $this->getTableMapClass($entityClassName);
-        $adapter = $this->getAdapter();
-        $requiresPrimaryKeyValue = ($adapter instanceof PgsqlAdapter);
+        $requiresPrimaryKeyValue = $this->requiresPrimaryKeyValue();
 
         $connection = $this->getWriteConnection($entityClassName);
         $keyIndex = 0;
@@ -424,8 +421,6 @@ trait ActiveRecordBatchProcessorTrait
     protected function buildInsertStatementForIdenticalEntities(string $entityClassName, array $entities): StatementInterface
     {
         $tableMapClass = $this->getTableMapClass($entityClassName);
-        $adapter = $this->getAdapter();
-        $requiresPrimaryKeyValue = ($adapter instanceof PgsqlAdapter);
 
         $connection = $this->getWriteConnection($entityClassName);
         $statements = [];
@@ -438,7 +433,7 @@ trait ActiveRecordBatchProcessorTrait
                 $tableMapClass,
                 $entityClassName::TABLE_MAP,
                 $entity,
-                $requiresPrimaryKeyValue
+                $this->requiresPrimaryKeyValue()
             );
 
             $columnNamesForInsertWithPdoPlaceholder = array_map(function (array $columnDetails) use (&$keyIndex, $tableMapClass) {
@@ -787,5 +782,13 @@ trait ActiveRecordBatchProcessorTrait
         }
 
         return $value;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function requiresPrimaryKeyValue()
+    {
+        return ($this->getAdapter() instanceof PgsqlAdapter);
     }
 }
