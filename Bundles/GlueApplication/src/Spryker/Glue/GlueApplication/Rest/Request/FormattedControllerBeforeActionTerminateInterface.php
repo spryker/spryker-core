@@ -10,12 +10,12 @@ namespace Spryker\Glue\GlueApplication\Rest\Request;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Symfony\Component\HttpFoundation\Request;
 
-interface FormattedControllerBeforeActionHttpRequestValidatorInterface
+interface FormattedControllerBeforeActionTerminateInterface
 {
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Generated\Shared\Transfer\RestErrorMessageTransfer|null
      */
-    public function validate(Request $request): ?RestErrorMessageTransfer;
+    public function beforeAction(Request $request): ?RestErrorMessageTransfer;
 }

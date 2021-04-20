@@ -9,14 +9,14 @@ namespace Spryker\Glue\AuthRestApi\Plugin\GlueApplication;
 
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\FormattedControllerBeforeActionTerminatePluginInterface;
-use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ValidateHttpRequestPluginInterface;
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\TerminationAwareBeforeActionPluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Glue\AuthRestApi\AuthRestApiFactory getFactory()
  */
-class FormattedControllerBeforeActionValidateAccessTokenPlugin extends AbstractPlugin implements FormattedControllerBeforeActionTerminatePluginInterface
+class FormattedControllerBeforeActionValidateAccessTokenPlugin extends AbstractPlugin implements FormattedControllerBeforeActionTerminatePluginInterface, TerminationAwareBeforeActionPluginInterface
 {
     /**
      * {@inheritDoc}
@@ -28,10 +28,22 @@ class FormattedControllerBeforeActionValidateAccessTokenPlugin extends AbstractP
      *
      * @return \Generated\Shared\Transfer\RestErrorMessageTransfer|null
      */
-    public function terminate(Request $request): ?RestErrorMessageTransfer
+    public function beforeAction(Request $request): ?RestErrorMessageTransfer
     {
         return $this->getFactory()
             ->createAccessTokenValidator()
             ->validate($request);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function terminateOnFailure(): bool
+    {
+        return true;
     }
 }
