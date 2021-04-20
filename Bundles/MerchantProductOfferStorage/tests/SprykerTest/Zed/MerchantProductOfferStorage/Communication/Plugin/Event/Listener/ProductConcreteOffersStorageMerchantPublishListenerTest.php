@@ -62,7 +62,7 @@ class ProductConcreteOffersStorageMerchantPublishListenerTest extends AbstractSt
         $expectedCount = 1;
         $productOfferTransfer = $this->tester->createProductOffer($this->tester->getLocator()->store()->facade()->getCurrentStore());
         $eventTransfers = [
-            (new EventEntityTransfer())->setId($productOfferTransfer->getFkMerchant()),
+            (new EventEntityTransfer())->setId($productOfferTransfer->getMerchantReference()),
         ];
 
         $this->productConcreteOffersStorageMerchantPublishListener->handleBulk(

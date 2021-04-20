@@ -20,6 +20,13 @@ interface MerchantProductOfferStorageRepositoryInterface
     public function getProductConcreteSkusByMerchantIds(array $merchantIds): array;
 
     /**
+     * @param string[] $merchantReferences
+     *
+     * @return string[]
+     */
+    public function getProductConcreteSkusByMerchantReferences(array $merchantReferences): array;
+
+    /**
      * @param \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOfferCollectionTransfer

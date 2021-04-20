@@ -44,6 +44,26 @@ class MerchantProductOfferStorageRepository extends AbstractRepository implement
     }
 
     /**
+     * @param string[] $merchantReferences
+     *
+     * @return string[]
+     */
+    public function getProductConcreteSkusByMerchantReferences(array $merchantReferences): array
+    {
+        $productOfferPropelQuery = $this->getFactory()->getProductOfferPropelQuery();
+        $productOfferPropelQuery
+            ->useSpyMerchantQuery()
+                ->filterByMerchantReference_In($merchantReferences)
+            ->endUse();
+
+        return $productOfferPropelQuery
+            ->select(SpyProductOfferTableMap::COL_CONCRETE_SKU)
+            ->distinct()
+            ->find()
+            ->getData();
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOfferCollectionTransfer
