@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ContentStorage\Business;
 
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\ContentStorage\Business\ContentStorage\ContentStorageWriter;
 use Spryker\Zed\ContentStorage\Business\ContentStorage\ContentStorageWriterInterface;
 use Spryker\Zed\ContentStorage\ContentStorageDependencyProvider;

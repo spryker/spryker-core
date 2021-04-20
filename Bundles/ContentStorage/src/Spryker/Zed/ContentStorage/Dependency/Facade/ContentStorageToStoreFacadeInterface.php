@@ -17,7 +17,7 @@ interface ContentStorageToStoreFacadeInterface
     public function getCurrentStore(): StoreTransfer;
 
     /**
-     * @param StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return array
      */
@@ -26,7 +26,7 @@ interface ContentStorageToStoreFacadeInterface
     /**
      * @param int $idStore
      *
-     * @return StoreTransfer
+     * @return \Generated\Shared\Transfer\StoreTransfer
      */
     public function getStoreById($idStore): StoreTransfer;
 }
