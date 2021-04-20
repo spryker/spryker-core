@@ -452,14 +452,17 @@ class MerchantProductFacadeTest extends Unit
         // Arrange
         $this->tester->ensureMerchantProductAbstractTableIsEmpty();
         $productConcreteTransfer = $this->tester->haveFullProduct();
+        $merchantTransfer = $this->tester->haveMerchant();
         $this->createMerchantProduct(
-            $this->tester->haveMerchant()->getIdMerchantOrFail(),
+            $merchantTransfer->getIdMerchantOrFail(),
             $productConcreteTransfer->getFkProductAbstractOrFail()
         );
 
         // Act
         $merchantProductConcreteTransfer = $this->tester->getFacade()->findProductConcrete(
-            (new MerchantProductCriteriaTransfer())->addIdProductConcrete($productConcreteTransfer->getIdProductConcreteOrFail())
+            (new MerchantProductCriteriaTransfer())
+                ->addIdProductConcrete($productConcreteTransfer->getIdProductConcreteOrFail())
+                ->addIdMerchant($merchantTransfer->getIdMerchantOrFail())
         );
 
         // Assert
@@ -478,14 +481,16 @@ class MerchantProductFacadeTest extends Unit
         // Arrange
         $this->tester->ensureMerchantProductAbstractTableIsEmpty();
         $productConcreteTransfer = $this->tester->haveFullProduct();
+        $merchantTransfer = $this->tester->haveMerchant();
         $merchantProductTransfer = $this->createMerchantProduct(
-            $this->tester->haveMerchant()->getIdMerchantOrFail(),
+            $merchantTransfer->getIdMerchantOrFail(),
             $productConcreteTransfer->getFkProductAbstractOrFail()
         );
 
         $merchantProductCriteriaTransfer = (new MerchantProductCriteriaTransfer())
+            ->addIdMerchant($merchantTransfer->getIdMerchantOrFail())
             ->addMerchantProductAbstractId($merchantProductTransfer->getIdMerchantProductAbstractOrFail())
-            ->addIdProductConcrete($productConcreteTransfer->getIdProductConcrete());
+            ->addIdProductConcrete($productConcreteTransfer->getIdProductConcreteOrFail());
 
         // Act
         $merchantProductConcreteTransfer = $this->tester
@@ -508,42 +513,16 @@ class MerchantProductFacadeTest extends Unit
         // Arrange
         $this->tester->ensureMerchantProductAbstractTableIsEmpty();
         $productConcreteTransfer = $this->tester->haveFullProduct();
+        $merchantTransfer = $this->tester->haveMerchant();
         $this->createMerchantProduct(
-            $this->tester->haveMerchant()->getIdMerchantOrFail(),
+            $merchantTransfer->getIdMerchantOrFail(),
             $productConcreteTransfer->getFkProductAbstractOrFail()
         );
 
         $merchantProductCriteriaTransfer = (new MerchantProductCriteriaTransfer())
             ->setIdProductAbstract($productConcreteTransfer->getFkProductAbstractOrFail())
-            ->addIdProductConcrete($productConcreteTransfer->getIdProductConcreteOrFail());
-
-        // Act
-        $merchantProductConcreteTransfer = $this->tester
-            ->getFacade()
-            ->findProductConcrete($merchantProductCriteriaTransfer);
-
-        // Assert
-        $this->assertNotNull($merchantProductConcreteTransfer);
-        $this->assertEquals(
-            $productConcreteTransfer->getIdProductConcreteOrFail(),
-            $merchantProductConcreteTransfer->getIdProductConcreteOrFail()
-        );
-    }
-
-    /**
-     * @return void
-     */
-    public function testFindProductConcreteFindsConcreteProductByIdMerchant(): void
-    {
-        // Arrange
-        $this->tester->ensureMerchantProductAbstractTableIsEmpty();
-        $merchantTransfer = $this->tester->haveMerchant();
-        $productConcreteTransfer = $this->tester->haveFullProduct();
-        $this->createMerchantProduct($merchantTransfer->getIdMerchantOrFail(), $productConcreteTransfer->getFkProductAbstractOrFail());
-
-        $merchantProductCriteriaTransfer = (new MerchantProductCriteriaTransfer())
-            ->addIdMerchant($merchantTransfer->getIdMerchantOrFail())
-            ->addIdProductConcrete($productConcreteTransfer->getIdProductConcreteOrFail());
+            ->addIdProductConcrete($productConcreteTransfer->getIdProductConcreteOrFail())
+            ->addIdMerchant($merchantTransfer->getIdMerchantOrFail());
 
         // Act
         $merchantProductConcreteTransfer = $this->tester
@@ -569,7 +548,9 @@ class MerchantProductFacadeTest extends Unit
 
         // Act
         $merchantProductConcreteTransfer = $this->tester->getFacade()->findProductConcrete(
-            (new MerchantProductCriteriaTransfer())->addIdProductConcrete($productConcreteTransfer->getIdProductConcreteOrFail())
+            (new MerchantProductCriteriaTransfer())
+                ->addIdProductConcrete($productConcreteTransfer->getIdProductConcreteOrFail())
+                ->addIdMerchant($this->tester->haveMerchant()->getIdMerchantOrFail())
         );
 
         // Assert
