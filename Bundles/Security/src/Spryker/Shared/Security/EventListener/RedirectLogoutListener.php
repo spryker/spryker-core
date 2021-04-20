@@ -43,7 +43,7 @@ class RedirectLogoutListener implements EventSubscriberInterface
     public function __construct(
         HttpUtils $httpUtils,
         RequestMatcherInterface $requestMatcher,
-        string $targetUrl = '/',
+        string $targetUrl,
         int $priority = 64
     ) {
         $this->httpUtils = $httpUtils;
@@ -74,7 +74,7 @@ class RedirectLogoutListener implements EventSubscriberInterface
     }
 
     /**
-     * @return array[]
+     * @return array
      */
     public static function getSubscribedEvents(): array
     {

@@ -1132,15 +1132,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
                 $eventDispatcher = $this->getDispatcher($container);
                 if ($logoutEventClassExist) {
                     $httpUtils = $container->get(static::SERVICE_SECURITY_HTTP_UTILS);
-                    $config = $this->getSecurityConfiguration($container)->getFirewalls()[$name];
-                    $requestMatcher = $config['pattern'];
-                    if (is_string($config['pattern'])) {
-                        $requestMatcher = new RequestMatcher(
-                            $config['pattern'],
-                            $config['hosts'] ?? null,
-                            $config['methods'] ?? null
-                        );
-                    }
+                    $requestMatcher = $this->createRequestMatcher($container, $name);
 
                     $this->getDispatcher($container)->addSubscriber(new RedirectLogoutListener(
                         $httpUtils,
@@ -1513,5 +1505,26 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
 
         $router = new Router($loader, $resource, []);
         $container->get(static::SERVICE_ROUTER)->add($router, 1);
+    }
+
+    /**
+     * @param \Spryker\Service\Container\ContainerInterface $container
+     * @param string $name
+     *
+     * @return mixed|\Symfony\Component\HttpFoundation\RequestMatcher
+     */
+    protected function createRequestMatcher(ContainerInterface $container, string $name)
+    {
+        $config = $this->getSecurityConfiguration($container)->getFirewalls()[$name];
+        $requestMatcher = $config['pattern'];
+        if (is_string($config['pattern'])) {
+            $requestMatcher = new RequestMatcher(
+                $config['pattern'],
+                $config['hosts'] ?? null,
+                $config['methods'] ?? null
+            );
+        }
+
+        return $requestMatcher;
     }
 }
