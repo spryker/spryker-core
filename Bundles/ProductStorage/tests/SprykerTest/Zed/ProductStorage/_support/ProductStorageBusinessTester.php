@@ -22,6 +22,7 @@ use Codeception\Actor;
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method void pause()
+ * @method \Spryker\Zed\ProductStorage\Business\ProductStorageFacadeInterface getFacade()
  *
  * @SuppressWarnings(PHPMD)
  */

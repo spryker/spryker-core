@@ -19,11 +19,11 @@ interface PriceProductToProductFacadeInterface
     public function findProductAbstractIdBySku($sku);
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductFacadeInterface::findProductConcreteIdBySku()} instead.
+     *
      * @param string $sku
      *
-     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
-     *
-     * @return int
+     * @return int|null
      */
     public function getProductConcreteIdBySku($sku);
 
@@ -65,4 +65,11 @@ interface PriceProductToProductFacadeInterface
      * @return int
      */
     public function getProductAbstractIdByConcreteId(int $idProductConcrete): int;
+
+    /**
+     * @param string $sku
+     *
+     * @return int|null
+     */
+    public function findProductConcreteIdBySku($sku);
 }

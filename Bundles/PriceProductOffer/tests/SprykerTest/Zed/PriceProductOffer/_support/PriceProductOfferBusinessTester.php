@@ -69,9 +69,14 @@ class PriceProductOfferBusinessTester extends Actor
         $priceProductTransfer = $this->havePriceProduct($priceProductOverride);
         $priceProductDimensionTransfer = $priceProductTransfer->getPriceDimension();
         $priceProductDimensionTransfer->setIdProductOffer($productOfferTransfer->getIdProductOffer());
+        $priceProductDimensionTransfer->setProductOfferReference($productOfferTransfer->getProductOfferReference());
         $priceProductTransfer->setPriceDimension($priceProductDimensionTransfer);
 
         $this->getFacade()->savePriceProductOfferRelation($priceProductTransfer);
+
+        if (!$priceProductTransfer->getPriceDimension()->getProductOfferReference()) {
+            $priceProductTransfer->getPriceDimension()->setProductOfferReference($productOfferTransfer->getProductOfferReference());
+        }
 
         return $priceProductTransfer;
     }

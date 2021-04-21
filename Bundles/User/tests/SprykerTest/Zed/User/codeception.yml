@@ -61,3 +61,5 @@ suites:
                 - \SprykerTest\Zed\Application\Helper\ApplicationHelper
                 - \SprykerTest\Service\Container\Helper\ContainerHelper
                 - \SprykerTest\Zed\Security\Helper\SecurityHelper
+                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+                - \SprykerTest\Shared\User\Helper\UserDataHelper

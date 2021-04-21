@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\AvailabilityNotification\Persistence\Propel\Mapper;
 
+use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionCollectionTransfer;
 use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer;
 use Orm\Zed\AvailabilityNotification\Persistence\SpyAvailabilityNotificationSubscription;
 use Propel\Runtime\Collection\ObjectCollection;
@@ -23,9 +24,13 @@ interface AvailabilityNotificationSubscriptionMapperInterface
     ): AvailabilityNotificationSubscriptionTransfer;
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $availabilityNotificationSubscriptionEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\AvailabilityNotification\Persistence\SpyAvailabilityNotificationSubscription[] $availabilityNotificationSubscriptionEntities
+     * @param \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionCollectionTransfer $availabilityNotificationSubscriptionCollectionTransfer
      *
-     * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer[]
+     * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionCollectionTransfer
      */
-    public function mapAvailabilityNotificationSubscriptionTransferCollection(ObjectCollection $availabilityNotificationSubscriptionEntities): array;
+    public function mapAvailabilityNotificationSubscriptionEntitiesToAvailabilityNotificationCollectionTransfer(
+        ObjectCollection $availabilityNotificationSubscriptionEntities,
+        AvailabilityNotificationSubscriptionCollectionTransfer $availabilityNotificationSubscriptionCollectionTransfer
+    ): AvailabilityNotificationSubscriptionCollectionTransfer;
 }

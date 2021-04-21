@@ -5,7 +5,7 @@
   "license": "proprietary",
   "require": {
     "codeception/codeception": "^2.3.5 || ^3.0.0 ||  ^4.0.0",
-    "dms/phpunit-arraysubset-asserts": "^0.1.0",
+    "dms/phpunit-arraysubset-asserts": "^0.1.0 || ^0.2.0",
     "fzaninotto/faker": "^1.6.0",
     "mikey179/vfsstream": "^1.6",
     "php": ">=7.3",
@@ -39,6 +39,7 @@
       "SprykerTest\\Glue\\Testify\\Tester\\": "tests/SprykerTest/Glue/Testify/_support/Tester/",
       "SprykerTest\\Yves\\Testify\\Helper\\": "tests/SprykerTest/Yves/Testify/_support/Helper/",
       "SprykerTest\\Zed\\Testify\\Helper\\": "tests/SprykerTest/Zed/Testify/_support/Helper/",
+      "SprykerTest\\Service\\Testify\\Helper\\": "tests/SprykerTest/Service/Testify/_support/Helper/",
       "SprykerTest\\Shared\\Testify\\Fixtures\\": "tests/SprykerTest/Shared/Testify/_support/Fixtures/",
       "SprykerTest\\Shared\\Testify\\Tester\\": "tests/SprykerTest/Shared/Testify/_support/Tester/",
       "SprykerTest\\Shared\\Testify\\StepOverride\\": "tests/SprykerTest/Shared/Testify/_support/StepOverride/",

@@ -14,6 +14,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
  * @method \Spryker\Zed\Wishlist\Persistence\WishlistQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Wishlist\Persistence\WishlistRepositoryInterface getRepository()
  * @method \Spryker\Zed\Wishlist\Business\WishlistFacadeInterface getFacade()
+ * @method \Spryker\Zed\Wishlist\Persistence\WishlistEntityManagerInterface getEntityManager()
  */
 class WishlistCommunicationFactory extends AbstractCommunicationFactory
 {

@@ -8,4 +8,9 @@
         <property name="name" dataBuilderRule="unique()->word"/>
     </transfer>
 
+    <transfer name="WishlistItem">
+        <property name="wishlistName" dataBuilderRule="unique()->sentence"/>
+        <property name="sku" dataBuilderRule="unique()->sentence"/>
+    </transfer>
+
 </transfers>

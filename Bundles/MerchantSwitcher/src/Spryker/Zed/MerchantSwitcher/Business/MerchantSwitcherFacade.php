@@ -11,6 +11,8 @@ use Generated\Shared\Transfer\MerchantSwitchRequestTransfer;
 use Generated\Shared\Transfer\MerchantSwitchResponseTransfer;
 use Generated\Shared\Transfer\SingleMerchantQuoteValidationRequestTransfer;
 use Generated\Shared\Transfer\SingleMerchantQuoteValidationResponseTransfer;
+use Generated\Shared\Transfer\ValidationResponseTransfer;
+use Generated\Shared\Transfer\WishlistTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -65,5 +67,37 @@ class MerchantSwitcherFacade extends AbstractFacade implements MerchantSwitcherF
         return $this->getFactory()
             ->createMerchantInQuoteValidator()
             ->validateMerchantInQuoteItems($singleMerchantQuoteValidationRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantSwitchRequestTransfer $merchantSwitchRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantSwitchResponseTransfer
+     */
+    public function switchMerchantInWishlistItems(MerchantSwitchRequestTransfer $merchantSwitchRequestTransfer): MerchantSwitchResponseTransfer
+    {
+        return $this->getFactory()
+            ->createWishlistMerchantSwitcher()
+            ->switchMerchantInWishlistItems($merchantSwitchRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
+     *
+     * @return \Generated\Shared\Transfer\ValidationResponseTransfer
+     */
+    public function validateWishlistItems(WishlistTransfer $wishlistTransfer): ValidationResponseTransfer
+    {
+        return $this->getFactory()
+            ->createMerchantWishlistValidator()
+            ->validateItems($wishlistTransfer);
     }
 }

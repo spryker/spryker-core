@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\DataProvider;
 
-use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMerchantStockFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface;
@@ -47,7 +47,7 @@ class ProductOfferUpdateFormDataProvider extends AbstractProductOfferFormDataPro
         /** @var int $currentMerchantId */
         $currentMerchantId = $this->merchantUserFacade->getCurrentMerchantUser()->getIdMerchantOrFail();
         $productOfferTransfer = $this->productOfferFacade->findOne(
-            (new ProductOfferCriteriaFilterTransfer())->setIdProductOffer($idProductOffer)
+            (new ProductOfferCriteriaTransfer())->setIdProductOffer($idProductOffer)
                 ->addIdMerchant($currentMerchantId)
         );
 

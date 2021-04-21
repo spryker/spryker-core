@@ -17,6 +17,9 @@ use Generated\Shared\Transfer\ProductConcreteStorageTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use ReflectionProperty;
 use Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToStorageClientInterface;
+use Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToUtilSanitizeServiceInterface;
+use Spryker\Client\ProductStorage\Filter\ProductAttributeFilter;
+use Spryker\Client\ProductStorage\Filter\ProductAttributeFilterInterface;
 use Spryker\Client\ProductStorage\Mapper\ProductVariantExpander;
 use Spryker\Client\ProductStorage\ProductStorageDependencyProvider;
 use Spryker\Client\ProductStorage\ProductStorageFactory;
@@ -100,9 +103,10 @@ class ProductStorageClientTest extends Unit
         // Arrange
         $productViewTransfer = $this->tester->createProductViewTransfer();
         $productConcreteStorageReaderMock = $this->getProductConcreteStorageReaderMock();
+        $productAttributeFilterMock = $this->getProductAttributeFilterMock();
 
         // Act
-        $productConcreteStorageData = (new ProductVariantExpander($productConcreteStorageReaderMock))
+        $productConcreteStorageData = (new ProductVariantExpander($productConcreteStorageReaderMock, $productAttributeFilterMock))
             ->expandProductVariantData($productViewTransfer, static::LOCALE_NAME);
 
         // Assert
@@ -216,6 +220,54 @@ class ProductStorageClientTest extends Unit
     /**
      * @return void
      */
+    public function testExpandProductViewWithProductVariantFilterSelectedAttributesByAttributeVariantMap(): void
+    {
+        // Arrange
+        $attributeMapStorageTransfer = $this->buildAttributeMapStorageTransfer([
+            AttributeMapStorageTransfer::PRODUCT_CONCRETE_IDS => [static::PRODUCT_CONCRETE_ID_1, static::PRODUCT_CONCRETE_ID_2],
+            AttributeMapStorageTransfer::SUPER_ATTRIBUTES => [
+                static::SUPER_ATTRIBUTE_NAME_1 => [
+                    static::SUPER_ATTRIBUTE_VALUE_1,
+                ],
+                static::SUPER_ATTRIBUTE_NAME_2 => [
+                    static::SUPER_ATTRIBUTE_VALUE_2_1,
+                    static::SUPER_ATTRIBUTE_VALUE_2_2,
+                ],
+            ],
+            AttributeMapStorageTransfer::ATTRIBUTE_VARIANT_MAP => [
+                static::PRODUCT_CONCRETE_ID_1 => [
+                    static::SUPER_ATTRIBUTE_NAME_1 => static::SUPER_ATTRIBUTE_VALUE_1,
+                    static::SUPER_ATTRIBUTE_NAME_2 => static::SUPER_ATTRIBUTE_VALUE_2_1,
+                ],
+                static::PRODUCT_CONCRETE_ID_2 => [
+                    static::SUPER_ATTRIBUTE_NAME_1 => static::SUPER_ATTRIBUTE_VALUE_1,
+                    static::SUPER_ATTRIBUTE_NAME_2 => static::SUPER_ATTRIBUTE_VALUE_2_2,
+                ],
+            ],
+        ]);
+
+        $productViewTransfer = $this->tester->createProductViewTransfer();
+        $productViewTransfer->setAttributeMap($attributeMapStorageTransfer)
+            ->setSelectedAttributes([static::SUPER_ATTRIBUTE_NAME_1 => static::SUPER_ATTRIBUTE_VALUE_1]);
+
+        // Act
+        $expandedProductViewTransfer = $this->tester->getProductStorageClient()
+            ->expandProductViewWithProductVariant($productViewTransfer, static::LOCALE_NAME);
+
+        // Assert
+        $this->assertSame(
+            [
+            static::SUPER_ATTRIBUTE_NAME_2 => [
+                static::SUPER_ATTRIBUTE_VALUE_2_1,
+                static::SUPER_ATTRIBUTE_VALUE_2_2,
+            ]],
+            $expandedProductViewTransfer->getAvailableAttributes()
+        );
+    }
+
+    /**
+     * @return void
+     */
     protected function resetProductConcreteStorageReaderCache(): void
     {
         $reflection = new ReflectionProperty(ProductConcreteStorageReader::class, 'productsConcreteDataCache');
@@ -236,6 +288,26 @@ class ProductStorageClientTest extends Unit
         );
 
         return $storageClientMock;
+    }
+
+    /**
+     * @return \Spryker\Client\ProductStorage\Filter\ProductAttributeFilterInterface|\PHPUnit\Framework\MockObject\MockObject
+     */
+    protected function getProductAttributeFilterMock(): ProductAttributeFilterInterface
+    {
+        return $this->getMockBuilder(ProductAttributeFilter::class)
+            ->setConstructorArgs([
+                $this->getSanitizeServiceMock(),
+            ])
+            ->getMock();
+    }
+
+    /**
+     * @return \Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToUtilSanitizeServiceInterface|\PHPUnit\Framework\MockObject\MockObject
+     */
+    protected function getSanitizeServiceMock(): ProductStorageToUtilSanitizeServiceInterface
+    {
+        return $this->getMockBuilder(ProductStorageToUtilSanitizeServiceInterface::class)->getMock();
     }
 
     /**

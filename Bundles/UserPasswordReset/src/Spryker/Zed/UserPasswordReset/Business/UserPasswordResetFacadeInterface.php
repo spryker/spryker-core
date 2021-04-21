@@ -7,10 +7,13 @@
 
 namespace Spryker\Zed\UserPasswordReset\Business;
 
+use Generated\Shared\Transfer\UserPasswordResetRequestTransfer;
+
 interface UserPasswordResetFacadeInterface
 {
     /**
      * Specification:
+     * - Requires UserPasswordResetRequest.email.
      * - Retrieves user by given email.
      * - Generates reset password token.
      * - Persists the reset password to DB.
@@ -20,11 +23,11 @@ interface UserPasswordResetFacadeInterface
      *
      * @api
      *
-     * @param string $email
+     * @param \Generated\Shared\Transfer\UserPasswordResetRequestTransfer $userPasswordResetRequestTransfer
      *
      * @return bool
      */
-    public function requestPasswordReset(string $email): bool;
+    public function requestPasswordReset(UserPasswordResetRequestTransfer $userPasswordResetRequestTransfer): bool;
 
     /**
      * Specification:

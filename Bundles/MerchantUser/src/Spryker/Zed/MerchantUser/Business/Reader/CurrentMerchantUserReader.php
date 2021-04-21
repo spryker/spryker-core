@@ -55,11 +55,11 @@ class CurrentMerchantUserReader implements CurrentMerchantUserReaderInterface
     public function getCurrentMerchantUser(): MerchantUserTransfer
     {
         $userTransfer = $this->userFacade->getCurrentUser();
-        $merchantUserCriteriaFilterTransfer = (new MerchantUserCriteriaTransfer())->setIdUser(
+        $merchantUserCriteriaTransfer = (new MerchantUserCriteriaTransfer())->setIdUser(
             $userTransfer->getIdUser()
         );
 
-        $merchantUserTransfers = $this->merchantUserRepository->getMerchantUsers($merchantUserCriteriaFilterTransfer);
+        $merchantUserTransfers = $this->merchantUserRepository->getMerchantUsers($merchantUserCriteriaTransfer);
 
         if (count($merchantUserTransfers) === 0) {
             throw new CurrentMerchantUserNotFoundException(
@@ -68,6 +68,7 @@ class CurrentMerchantUserReader implements CurrentMerchantUserReaderInterface
         }
 
         $merchantUserTransfer = reset($merchantUserTransfers);
+        $merchantUserTransfer->setUser($userTransfer);
 
         return $this->expandWithMerchant($merchantUserTransfer);
     }

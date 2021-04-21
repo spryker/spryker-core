@@ -9,7 +9,8 @@
     "spryker/product-configuration": "^0.1.0",
     "spryker/propel-orm": "^1.5.0",
     "spryker/sales": "^11.0.0",
-    "spryker/sales-extension": "^1.6.0"
+    "spryker/sales-extension": "^1.6.0",
+    "spryker/transfer": "^3.25.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

@@ -8,7 +8,7 @@
     "spryker/glue-application": "^1.0.0",
     "spryker/glue-application-extension": "^1.0.0",
     "spryker/kernel": "^3.33.0",
-    "spryker/sales-return": "^1.0.0",
+    "spryker/sales-return": "^1.2.0",
     "spryker/sales-return-search": "^1.0.0",
     "spryker/symfony": "^3.0.0"
   },

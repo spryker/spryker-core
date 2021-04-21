@@ -1,0 +1,53 @@
+{% extends '@ZedUi/Layout/merchant-layout-centered.twig' %}
+
+{% block headTitle %}
+    {{ 'Merchant Portal' | trans }}
+{% endblock %}
+
+{% set layoutComponentClass = 'login' %}
+{% set subTitle = 'Merchant Portal' | trans %}
+{% set title = 'Login' | trans %}
+{% set submitButtonClass = layoutComponentClass ~ '__submit' %}
+{% set linkClass = layoutComponentClass ~ '__link' %}
+{% set linkUrl = '' %}
+{% set linkText = '' %}
+
+{% block content %}
+    <web-mp-login-layout cloak>
+        {% block notification %}
+            {%- include '@ZedUi/Partials/StaticMessages/static-messages.twig' -%}
+        {% endblock %}
+
+        {% if subTitle %}
+            <span sub-title>{{ subTitle }}</span>
+        {% endif %}
+
+        {% if title %}
+            <span title>{{ title }}</span>
+        {% endif %}
+
+        {% block form %}
+            {% form_theme form '@ZedUi/Form/form-webcomponent-layout.twig' %}
+            
+            {{ form_errors(form) }}
+            {{ form_start(form, {attr: {novalidate: ''}}) }}
+                {% block formContent %}
+                {% endblock %}
+            {{ form_end(form) }}
+        {% endblock %}
+
+        {% block link %}
+            {% if linkUrl %}
+                <web-spy-button-link class="{{ linkClass }}" url="{{ linkUrl }}" variant="link">
+                    {{ linkText }}
+                </web-spy-button-link>
+            {% endif %}
+        {% endblock %}
+    </web-mp-login-layout>
+{% endblock %}
+
+{% block footerJs %}
+    <script src="{{ assetsPath('js/mp/spy/security-merchant-portal-gui-es2015.js') }}" type="module"></script>
+    <script src="{{ assetsPath('js/mp/spy/security-merchant-portal-gui-es5.js') }}" nomodule defer></script>
+    {{ parent() }}
+{% endblock %}

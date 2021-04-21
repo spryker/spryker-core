@@ -51,12 +51,6 @@
         <property name="bannerUrlGlossaryKey" type="string"/>
     </transfer>
 
-    <transfer name="MerchantProfileCriteriaFilter">
-        <property name="fkMerchant" type="int"/>
-        <property name="idMerchant" type="int"/>
-        <property name="idMerchantProfile" type="int"/>
-    </transfer>
-
     <transfer name="TabItem">
         <property name="name" type="string"/>
         <property name="title" type="string"/>

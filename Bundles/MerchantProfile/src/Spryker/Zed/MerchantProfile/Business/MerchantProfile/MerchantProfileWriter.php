@@ -8,6 +8,8 @@
 namespace Spryker\Zed\MerchantProfile\Business\MerchantProfile;
 
 use Generated\Shared\Transfer\MerchantProfileTransfer;
+use Generated\Shared\Transfer\MerchantResponseTransfer;
+use Generated\Shared\Transfer\MerchantTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\MerchantProfile\Business\MerchantProfileAddress\MerchantProfileAddressWriterInterface;
 use Spryker\Zed\MerchantProfile\Business\MerchantProfileGlossary\MerchantProfileGlossaryWriterInterface;
@@ -73,6 +75,33 @@ class MerchantProfileWriter implements MerchantProfileWriterInterface
         });
 
         return $merchantProfileTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantResponseTransfer
+     */
+    public function postUpdateMerchant(MerchantTransfer $merchantTransfer): MerchantResponseTransfer
+    {
+        $merchantProfileTransfer = $merchantTransfer->getMerchantProfile();
+        $merchantResponseTransfer = (new MerchantResponseTransfer())->setIsSuccess(true);
+
+        if (!$merchantProfileTransfer) {
+            return $merchantResponseTransfer->setMerchant($merchantTransfer);
+        }
+
+        $merchantProfileTransfer->setFkMerchant($merchantTransfer->getIdMerchant());
+
+        if (!$merchantProfileTransfer->getIdMerchantProfile()) {
+            $merchantProfileTransfer = $this->create($merchantProfileTransfer);
+
+            return $merchantResponseTransfer->setMerchant($merchantTransfer->setMerchantProfile($merchantProfileTransfer));
+        }
+
+        $merchantProfileTransfer = $this->update($merchantProfileTransfer);
+
+        return $merchantResponseTransfer->setMerchant($merchantTransfer->setMerchantProfile($merchantProfileTransfer));
     }
 
     /**
