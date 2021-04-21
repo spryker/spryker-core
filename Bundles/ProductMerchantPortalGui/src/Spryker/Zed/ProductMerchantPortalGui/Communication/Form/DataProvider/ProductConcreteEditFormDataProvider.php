@@ -74,7 +74,7 @@ class ProductConcreteEditFormDataProvider implements ProductConcreteEditFormData
 
         return [
             static::PRODUCT_CONCRETE_EDIT_FORM_FIELD_PRODUCT_CONCRETE => $productConcreteTransfer,
-            static::PRODUCT_CONCRETE_EDIT_FORM_FIELD_USE_ABSTRACT_PRODUCT_PRICES => $productConcreteTransfer->getPrices()->count() === null,
+            static::PRODUCT_CONCRETE_EDIT_FORM_FIELD_USE_ABSTRACT_PRODUCT_PRICES => $productConcreteTransfer->getPrices()->count() === 0,
         ];
     }
 
