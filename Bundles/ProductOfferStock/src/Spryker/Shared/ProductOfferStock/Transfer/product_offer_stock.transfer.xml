@@ -17,6 +17,11 @@
         <property name="productOfferReference" type="string"/>
     </transfer>
 
+    <transfer name="ProductOfferStockResult">
+        <property name="quantity" type="decimal"/>
+        <property name="isNeverOutOfStock" type="bool"/>
+    </transfer>
+
     <transfer name="Store">
         <property name="idStore" type="int"/>
         <property name="name" type="string"/>

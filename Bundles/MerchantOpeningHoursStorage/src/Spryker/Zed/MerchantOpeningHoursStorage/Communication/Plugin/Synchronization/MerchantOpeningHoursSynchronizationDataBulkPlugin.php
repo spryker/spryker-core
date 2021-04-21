@@ -8,7 +8,7 @@
 namespace Spryker\Zed\MerchantOpeningHoursStorage\Communication\Plugin\Synchronization;
 
 use Generated\Shared\Transfer\FilterTransfer;
-use Generated\Shared\Transfer\MerchantOpeningHoursStorageCriteriaFilterTransfer;
+use Generated\Shared\Transfer\MerchantOpeningHoursStorageCriteriaTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Orm\Zed\MerchantOpeningHoursStorage\Persistence\Map\SpyMerchantOpeningHoursStorageTableMap;
 use Spryker\Shared\MerchantOpeningHoursStorage\MerchantOpeningHoursStorageConfig;
@@ -62,10 +62,10 @@ class MerchantOpeningHoursSynchronizationDataBulkPlugin extends AbstractPlugin i
     {
         $synchronizationDataTransfers = [];
         $filterTransfer = $this->createFilterTransfer($offset, $limit);
-        $merchantOpeningHoursStorageCriteriaFilterTransfer = $this->createMerchantOpeningHoursStorageCriteriaFilterTransfer($filterTransfer, $ids);
+        $merchantOpeningHoursStorageCriteriaTransfer = $this->createMerchantOpeningHoursStorageCriteriaTransfer($filterTransfer, $ids);
 
         $merchantOpeningHoursStorageEntities = $this->getRepository()
-            ->getFilteredMerchantOpeningHoursStorageEntityTransfers($merchantOpeningHoursStorageCriteriaFilterTransfer);
+            ->getFilteredMerchantOpeningHoursStorageEntityTransfers($merchantOpeningHoursStorageCriteriaTransfer);
 
         foreach ($merchantOpeningHoursStorageEntities as $merchantOpeningHoursStorageEntity) {
             $synchronizationDataTransfer = new SynchronizationDataTransfer();
@@ -132,13 +132,13 @@ class MerchantOpeningHoursSynchronizationDataBulkPlugin extends AbstractPlugin i
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param int[] $merchantIds
      *
-     * @return \Generated\Shared\Transfer\MerchantOpeningHoursStorageCriteriaFilterTransfer
+     * @return \Generated\Shared\Transfer\MerchantOpeningHoursStorageCriteriaTransfer
      */
-    protected function createMerchantOpeningHoursStorageCriteriaFilterTransfer(
+    protected function createMerchantOpeningHoursStorageCriteriaTransfer(
         FilterTransfer $filterTransfer,
         array $merchantIds
-    ): MerchantOpeningHoursStorageCriteriaFilterTransfer {
-        return (new MerchantOpeningHoursStorageCriteriaFilterTransfer())
+    ): MerchantOpeningHoursStorageCriteriaTransfer {
+        return (new MerchantOpeningHoursStorageCriteriaTransfer())
             ->setFilter($filterTransfer)
             ->setMerchantIds($merchantIds);
     }

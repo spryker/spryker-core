@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ProductOfferAvailabilityStorage\Communication\Plugin\AvailabilityStorage;
+namespace Spryker\Client\ProductOfferAvailabilityStorage\Plugin\AvailabilityStorage;
 
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Client\AvailabilityStorageExtension\Dependency\Plugin\AvailabilityStorageStrategyPluginInterface;
