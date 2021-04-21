@@ -12,43 +12,41 @@ use Generated\Shared\Transfer\StoreTransfer;
 class ContentStorageToStoreFacadeBridge implements ContentStorageToStoreFacadeInterface
 {
     /**
-     * @var \Spryker\Zed\Store\Business\StoreFacadeInterface
+     * @var \Spryker\Shared\Kernel\Store
      */
-    protected $storeFacade;
+    protected $store;
 
     /**
-     * @param \Spryker\Zed\Store\Business\StoreFacadeInterface $storeFacade
+     * @param \Spryker\Shared\Kernel\Store $store
      */
-    public function __construct($storeFacade)
+    public function __construct(Store $store)
     {
-        $this->storeFacade = $storeFacade;
+        $this->store = $store;
     }
 
     /**
-     * @return \Generated\Shared\Transfer\StoreTransfer
-     */
-    public function getCurrentStore(): StoreTransfer
-    {
-        return $this->storeFacade->getCurrentStore();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     *
      * @return \Generated\Shared\Transfer\StoreTransfer[]
      */
-    public function getStoresWithSharedPersistence(StoreTransfer $storeTransfer): array
+    public function getStoresWithSharedPersistence(): array
     {
-        return $this->storeFacade->getStoresWithSharedPersistence($storeTransfer);
+        return $this->store->getStoresWithSharedPersistence();
     }
 
     /**
-     * @param int $idStore
-     *
-     * @return \Generated\Shared\Transfer\StoreTransfer
+     * @return string[]
      */
-    public function getStoreById($idStore): StoreTransfer
+    public function getLocales(): array
     {
-        return $this->storeFacade->getStoreById($idStore);
+        return $this->store->getLocales();
+    }
+
+    /**
+     * @param string $storeName
+     *
+     * @return string[]
+     */
+    public function getLocalesPerStore(string $storeName): array
+    {
+        return $this->store->getLocalesPerStore($storeName);
     }
 }

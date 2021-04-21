@@ -12,21 +12,19 @@ use Generated\Shared\Transfer\StoreTransfer;
 interface ContentStorageToStoreFacadeInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\StoreTransfer
+     * @return string[]
      */
-    public function getCurrentStore(): StoreTransfer;
+    public function getLocales(): array;
 
     /**
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     *
      * @return array
      */
-    public function getStoresWithSharedPersistence(StoreTransfer $storeTransfer): array;
+    public function getStoresWithSharedPersistence(): array;
 
     /**
-     * @param int $idStore
+     * @param string $storeName
      *
-     * @return \Generated\Shared\Transfer\StoreTransfer
+     * @return string[]
      */
-    public function getStoreById($idStore): StoreTransfer;
+    public function getLocalesPerStore(string $storeName): array;
 }
