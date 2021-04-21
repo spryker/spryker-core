@@ -109,7 +109,7 @@ class CsvMeta implements CsvMetaInterface
                 $lines += substr_count($string, $this->lineSeparator);
             }
 
-            if ($string && !str_ends_with($string, "\n")) {
+            if ($string && substr($string, -1) !== "\n") {
                 $lines++;
             }
 
