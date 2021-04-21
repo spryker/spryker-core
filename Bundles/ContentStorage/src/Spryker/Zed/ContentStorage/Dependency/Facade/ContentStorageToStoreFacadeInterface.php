@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\ContentStorage\Dependency\Facade;
 
-use Generated\Shared\Transfer\StoreTransfer;
-
 interface ContentStorageToStoreFacadeInterface
 {
     /**

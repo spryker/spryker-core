@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\ContentStorage\Dependency\Facade;
 
-use Generated\Shared\Transfer\StoreTransfer;
-
 class ContentStorageToStoreFacadeBridge implements ContentStorageToStoreFacadeInterface
 {
     /**
@@ -19,7 +17,7 @@ class ContentStorageToStoreFacadeBridge implements ContentStorageToStoreFacadeIn
     /**
      * @param \Spryker\Shared\Kernel\Store $store
      */
-    public function __construct(Store $store)
+    public function __construct($store)
     {
         $this->store = $store;
     }
