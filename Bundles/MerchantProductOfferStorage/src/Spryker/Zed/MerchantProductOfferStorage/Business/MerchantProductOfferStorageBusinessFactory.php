@@ -14,8 +14,8 @@ use Spryker\Zed\MerchantProductOfferStorage\Business\Deleter\ProductOfferStorage
 use Spryker\Zed\MerchantProductOfferStorage\Business\Deleter\ProductOfferStorageDeleterInterface;
 use Spryker\Zed\MerchantProductOfferStorage\Business\Writer\ProductConcreteOffersStorageWriter;
 use Spryker\Zed\MerchantProductOfferStorage\Business\Writer\ProductConcreteOffersStorageWriterInterface;
-use Spryker\Zed\MerchantProductOfferStorage\Business\Writer\ProductOfferCriteriaFilterTransferProvider;
-use Spryker\Zed\MerchantProductOfferStorage\Business\Writer\ProductOfferCriteriaFilterTransferProviderInterface;
+use Spryker\Zed\MerchantProductOfferStorage\Business\Writer\ProductOfferCriteriaTransferProvider;
+use Spryker\Zed\MerchantProductOfferStorage\Business\Writer\ProductOfferCriteriaTransferProviderInterface;
 use Spryker\Zed\MerchantProductOfferStorage\Business\Writer\ProductOfferStorageWriter;
 use Spryker\Zed\MerchantProductOfferStorage\Business\Writer\ProductOfferStorageWriterInterface;
 use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToEventBehaviorFacadeInterface;
@@ -40,7 +40,7 @@ class MerchantProductOfferStorageBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->createProductConcreteProductOffersStorageDeleter(),
             $this->getStoreFacade(),
-            $this->createProductOfferCriteriaFilterTransferProvider()
+            $this->createProductOfferCriteriaTransferProvider()
         );
     }
 
@@ -55,7 +55,7 @@ class MerchantProductOfferStorageBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->createProductOfferStorageDeleter(),
             $this->getStoreFacade(),
-            $this->createProductOfferCriteriaFilterTransferProvider()
+            $this->createProductOfferCriteriaTransferProvider()
         );
     }
 
@@ -98,10 +98,10 @@ class MerchantProductOfferStorageBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\MerchantProductOfferStorage\Business\Writer\ProductOfferCriteriaFilterTransferProviderInterface
+     * @return \Spryker\Zed\MerchantProductOfferStorage\Business\Writer\ProductOfferCriteriaTransferProviderInterface
      */
-    public function createProductOfferCriteriaFilterTransferProvider(): ProductOfferCriteriaFilterTransferProviderInterface
+    public function createProductOfferCriteriaTransferProvider(): ProductOfferCriteriaTransferProviderInterface
     {
-        return new ProductOfferCriteriaFilterTransferProvider();
+        return new ProductOfferCriteriaTransferProvider();
     }
 }

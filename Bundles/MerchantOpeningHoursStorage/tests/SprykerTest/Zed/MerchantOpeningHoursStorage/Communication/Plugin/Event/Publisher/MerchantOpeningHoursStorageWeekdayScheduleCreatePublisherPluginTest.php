@@ -70,14 +70,10 @@ class MerchantOpeningHoursStorageWeekdayScheduleCreatePublisherPluginTest extend
     {
         // Arrange
         $merchantTransfer = $this->tester->haveMerchant();
-        $merchantOpeningHoursWeekdayScheduleEntity = $this->tester->createMerchantOpeningHoursWeekdaySchedule($merchantTransfer);
+        $this->tester->createMerchantOpeningHoursWeekdaySchedule($merchantTransfer);
         $merchantOpeningHoursStorageWeekdayScheduleCreatePublisherPlugin = new MerchantOpeningHoursStorageWeekdayScheduleCreatePublisherPlugin();
         $merchantOpeningHoursStorageWeekdayScheduleCreatePublisherPlugin->setFacade($this->tester->getFacade());
-        // Julia
-        $this->tester->createMerchantOpeningHoursWeekdaySchedule($merchantTransfer);
-        $merchantOpeningHoursWeekdayScheduleStoragePublishListener = new MerchantOpeningHoursWeekdayScheduleStoragePublishListener();
-        $merchantOpeningHoursWeekdayScheduleStoragePublishListener->setFacade($this->tester->getFacade());
-        //end
+
         $eventTransfers = [
             (new EventEntityBuilder())
                 ->build()

@@ -56,9 +56,9 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
     protected $storeFacade;
 
     /**
-     * @var \Spryker\Zed\MerchantProductOfferStorage\Business\Writer\ProductOfferCriteriaFilterTransferProviderInterface
+     * @var \Spryker\Zed\MerchantProductOfferStorage\Business\Writer\ProductOfferCriteriaTransferProviderInterface
      */
-    protected $productOfferCriteriaFilterTransferProvider;
+    protected $productOfferCriteriaTransferProvider;
 
     /**
      * @var string[]
@@ -71,7 +71,7 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
      * @param \Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStorageRepositoryInterface $merchantProductOfferStorageRepository
      * @param \Spryker\Zed\MerchantProductOfferStorage\Business\Deleter\ProductConcreteOffersStorageDeleterInterface $productConcreteOffersStorageDeleter
      * @param \Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToStoreFacadeInterface $storeFacade
-     * @param \Spryker\Zed\MerchantProductOfferStorage\Business\Writer\ProductOfferCriteriaFilterTransferProviderInterface $productOfferCriteriaFilterTransferProvider
+     * @param \Spryker\Zed\MerchantProductOfferStorage\Business\Writer\ProductOfferCriteriaTransferProviderInterface $productOfferCriteriaTransferProvider
      */
     public function __construct(
         MerchantProductOfferStorageToEventBehaviorFacadeInterface $eventBehaviorFacade,
@@ -79,14 +79,14 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
         MerchantProductOfferStorageRepositoryInterface $merchantProductOfferStorageRepository,
         ProductConcreteOffersStorageDeleterInterface $productConcreteOffersStorageDeleter,
         MerchantProductOfferStorageToStoreFacadeInterface $storeFacade,
-        ProductOfferCriteriaFilterTransferProviderInterface $productOfferCriteriaFilterTransferProvider
+        ProductOfferCriteriaTransferProviderInterface $productOfferCriteriaTransferProvider
     ) {
         $this->eventBehaviorFacade = $eventBehaviorFacade;
         $this->merchantProductOfferStorageEntityManager = $merchantProductOfferStorageEntityManager;
         $this->merchantProductOfferStorageRepository = $merchantProductOfferStorageRepository;
         $this->productConcreteOffersStorageDeleter = $productConcreteOffersStorageDeleter;
         $this->storeFacade = $storeFacade;
-        $this->productOfferCriteriaFilterTransferProvider = $productOfferCriteriaFilterTransferProvider;
+        $this->productOfferCriteriaTransferProvider = $productOfferCriteriaTransferProvider;
     }
 
     /**
@@ -134,7 +134,8 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
 
         $productConcreteSkus = array_unique($productConcreteSkus);
 
-        $productOfferCriteriaTransfer = $this->createProductOfferCriteriaTransfer($productConcreteSkus);
+        $productOfferCriteriaTransfer = $this->productOfferCriteriaTransferProvider->createProductOfferCriteriaTransfer()
+            ->setConcreteSkus($productConcreteSkus);
         $productOfferCollectionTransfer = $this->merchantProductOfferStorageRepository->getProductOffers($productOfferCriteriaTransfer);
 
         $productOfferReferencesGroupedByConcreteSku = $this->getProductOfferReferencesGroupedByConcreteSku(
@@ -190,21 +191,6 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
         }
 
         return $productOfferReferencesGroupedByConcreteSku;
-    }
-
-    /**
-     * @param string[] $productConcreteSkus
-     *
-     * @return \Generated\Shared\Transfer\ProductOfferCriteriaTransfer
-     */
-    protected function createProductOfferCriteriaTransfer(array $productConcreteSkus): ProductOfferCriteriaTransfer
-    {
-        return (new ProductOfferCriteriaTransfer())
-            ->setConcreteSkus($productConcreteSkus)
-            ->setIsActive(true)
-            ->setIsActiveMerchant(true)
-            ->setIsActiveConcreteProduct(true)
-            ->addApprovalStatus(static::STATUS_APPROVED);
     }
 
     /**
