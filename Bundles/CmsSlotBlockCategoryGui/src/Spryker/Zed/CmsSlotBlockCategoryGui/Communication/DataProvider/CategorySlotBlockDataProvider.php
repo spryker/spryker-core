@@ -81,15 +81,18 @@ class CategorySlotBlockDataProvider implements CategorySlotBlockDataProviderInte
      */
     protected function getCategories(): array
     {
-        return static::$categoryCache !== null
-            ? static::$categoryCache
-            : static::$categoryCache = $this->getCategoryIdsFromCollection(
-                $this->categoryFacade->getCategoriesByCriteria(
-                    (new CategoryCriteriaTransfer())->setIdLocale(
-                        $this->localeFacade->getCurrentLocale()->getIdLocale()
-                    )
-                )
-            );
+        if (static::$categoryCache !== null) {
+            return static::$categoryCache;
+        }
+
+        $categoryCriteriaTransfer = (new CategoryCriteriaTransfer())
+            ->setIdLocale($this->localeFacade->getCurrentLocale()->getIdLocale());
+
+        static::$categoryCache = $this->getCategoryIdsFromCollection(
+            $this->categoryFacade->getCategoriesByCriteria($categoryCriteriaTransfer)
+        );
+
+        return static::$categoryCache;
     }
 
     /**
