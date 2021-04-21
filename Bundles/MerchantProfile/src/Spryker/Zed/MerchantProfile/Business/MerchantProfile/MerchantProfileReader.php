@@ -8,7 +8,7 @@
 namespace Spryker\Zed\MerchantProfile\Business\MerchantProfile;
 
 use Generated\Shared\Transfer\MerchantProfileCollectionTransfer;
-use Generated\Shared\Transfer\MerchantProfileCriteriaFilterTransfer;
+use Generated\Shared\Transfer\MerchantProfileCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantProfileTransfer;
 use Spryker\Zed\MerchantProfile\Persistence\MerchantProfileRepositoryInterface;
 
@@ -28,22 +28,22 @@ class MerchantProfileReader implements MerchantProfileReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantProfileCriteriaFilterTransfer $merchantProfileCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\MerchantProfileCriteriaTransfer $merchantProfileCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantProfileTransfer|null
      */
-    public function findOne(MerchantProfileCriteriaFilterTransfer $merchantProfileCriteriaFilterTransfer): ?MerchantProfileTransfer
+    public function findOne(MerchantProfileCriteriaTransfer $merchantProfileCriteriaTransfer): ?MerchantProfileTransfer
     {
-        return $this->merchantProfileRepository->findOne($merchantProfileCriteriaFilterTransfer);
+        return $this->merchantProfileRepository->findOne($merchantProfileCriteriaTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantProfileCriteriaFilterTransfer $merchantProfileCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\MerchantProfileCriteriaTransfer $merchantProfileCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantProfileCollectionTransfer
      */
-    public function find(MerchantProfileCriteriaFilterTransfer $merchantProfileCriteriaFilterTransfer): MerchantProfileCollectionTransfer
+    public function get(MerchantProfileCriteriaTransfer $merchantProfileCriteriaTransfer): MerchantProfileCollectionTransfer
     {
-        return $this->merchantProfileRepository->find($merchantProfileCriteriaFilterTransfer);
+        return $this->merchantProfileRepository->get($merchantProfileCriteriaTransfer);
     }
 }

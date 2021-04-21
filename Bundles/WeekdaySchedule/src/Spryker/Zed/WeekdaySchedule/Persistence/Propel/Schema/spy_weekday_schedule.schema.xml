@@ -19,7 +19,7 @@
         <column name="date" type="DATE" required="true"/>
         <column name="time_from" type="TIME"/>
         <column name="time_to" type="TIME"/>
-        <column name="note" type="VARCHAR" size="255"/>
+        <column name="note_glossary_key" type="VARCHAR" size="255"/>
 
         <behavior name="timestampable"/>
     </table>

@@ -96,8 +96,11 @@ class MerchantReader implements MerchantReaderInterface
      */
     protected function expandMerchant(MerchantTransfer $merchantTransfer): MerchantTransfer
     {
-        $merchantStoreRelationTransferMap = $this->merchantRepository->getMerchantStoreRelationMapByMerchantIds([$merchantTransfer->getIdMerchant()]);
-        $merchantUrlTransfersMap = $this->merchantRepository->getUrlsMapByMerchantIds([$merchantTransfer->getIdMerchant()]);
+        /** @var int $idMerchant */
+        $idMerchant = $merchantTransfer->getIdMerchant();
+
+        $merchantStoreRelationTransferMap = $this->merchantRepository->getMerchantStoreRelationMapByMerchantIds([$idMerchant]);
+        $merchantUrlTransfersMap = $this->merchantRepository->getUrlsMapByMerchantIds([$idMerchant]);
 
         $merchantTransfer->setStoreRelation($merchantStoreRelationTransferMap[$merchantTransfer->getIdMerchant()]);
         $merchantTransfer->setUrlCollection(new ArrayObject($merchantUrlTransfersMap[$merchantTransfer->getIdMerchant()] ?? []));
@@ -127,7 +130,10 @@ class MerchantReader implements MerchantReaderInterface
     protected function getMerchantIds(MerchantCollectionTransfer $merchantCollectionTransfer): array
     {
         return array_map(function (MerchantTransfer $merchantTransfer): int {
-            return $merchantTransfer->getIdMerchant();
+            /** @var int $idMerchant */
+            $idMerchant = $merchantTransfer->getIdMerchant();
+
+            return $idMerchant;
         }, $merchantCollectionTransfer->getMerchants()->getArrayCopy());
     }
 }
