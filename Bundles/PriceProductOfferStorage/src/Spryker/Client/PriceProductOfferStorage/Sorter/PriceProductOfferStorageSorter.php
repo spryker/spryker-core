@@ -20,19 +20,19 @@ class PriceProductOfferStorageSorter implements PriceProductOfferStorageSorterIn
      */
     public function sort(ProductOfferStorageCollectionTransfer $productOfferStorageCollectionTransfer): ProductOfferStorageCollectionTransfer
     {
-        $productOfferStorageTransfers = $productOfferStorageCollectionTransfer->getProductOffersStorage()->getArrayCopy();
-        usort($productOfferStorageTransfers, function (ProductOfferStorageTransfer $firstProductOfferStorageTransfer, ProductOfferStorageTransfer $secondProductOfferStorageTransfer) {
-            if (!$firstProductOfferStorageTransfer->getPrice()) {
+        $productOffers = $productOfferStorageCollectionTransfer->getProductOffers()->getArrayCopy();
+        usort($productOffers, function (ProductOfferStorageTransfer $firstProductOffer, ProductOfferStorageTransfer $secondProductOffer) {
+            if (!$firstProductOffer->getPrice()) {
                 return -1;
             }
 
-            if (!$secondProductOfferStorageTransfer->getPrice()) {
+            if (!$secondProductOffer->getPrice()) {
                 return + 1;
             }
 
-            return $firstProductOfferStorageTransfer->getPrice()->getPrice() <=> $secondProductOfferStorageTransfer->getPrice()->getPrice();
+            return $firstProductOffer->getPrice()->getPrice() <=> $secondProductOffer->getPrice()->getPrice();
         });
 
-        return $productOfferStorageCollectionTransfer->setProductOffersStorage(new ArrayObject($productOfferStorageTransfers));
+        return $productOfferStorageCollectionTransfer->setProductOffers(new ArrayObject($productOffers));
     }
 }

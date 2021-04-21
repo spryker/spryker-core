@@ -8,7 +8,7 @@
 namespace Spryker\Zed\MerchantProductOfferStorage\Persistence;
 
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
-use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductOfferCriteriaTransfer;
 
 interface MerchantProductOfferStorageRepositoryInterface
 {
@@ -27,9 +27,9 @@ interface MerchantProductOfferStorageRepositoryInterface
     public function getProductConcreteSkusByMerchantReferences(array $merchantReferences): array;
 
     /**
-     * @param \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\ProductOfferCriteriaTransfer $productOfferCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOfferCollectionTransfer
      */
-    public function getProductOffersByFilterCriteria(ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilterTransfer): ProductOfferCollectionTransfer;
+    public function getProductOffers(ProductOfferCriteriaTransfer $productOfferCriteriaTransfer): ProductOfferCollectionTransfer;
 }

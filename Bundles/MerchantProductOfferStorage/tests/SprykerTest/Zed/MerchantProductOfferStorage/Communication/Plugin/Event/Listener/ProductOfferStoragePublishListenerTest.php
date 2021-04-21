@@ -10,7 +10,7 @@ namespace SprykerTest\Zed\MerchantProductOfferStorage\Communication\Plugin\Event
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
-use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
 use Spryker\Client\Kernel\Container;
@@ -190,7 +190,7 @@ class ProductOfferStoragePublishListenerTest extends AbstractStoragePublishListe
             ->method('saveProductOfferStorage')
             ->with($productOfferTransfer);
 
-        $productOfferCriteriaFilterTransfer = (new ProductOfferCriteriaFilterTransfer())
+        $productOfferCriteriaTransfer = (new ProductOfferCriteriaTransfer())
             ->setProductOfferReferences([$productOfferTransfer->getProductOfferReference()])
             ->setIsActive(true)
             ->setIsActiveConcreteProduct(true)
@@ -211,7 +211,12 @@ class ProductOfferStoragePublishListenerTest extends AbstractStoragePublishListe
             ->method('getProductOffersByFilterCriteria')
             ->withConsecutive([$incorrectProductOfferCriteriaFilterTransfer], [$productOfferCriteriaFilterTransfer])
             ->willReturnOnConsecutiveCalls($incorrectProductOfferCollectionTransfer, $productOfferCollectionTransfer);
-
+        //Julia
+        $merchantProductOfferStorageRepository->expects($this->once())
+            ->method('getProductOffers')
+            ->with($productOfferCriteriaTransfer)
+            ->willReturn($productOfferCollectionTransfer);
+        //end
         /** @var \Spryker\Zed\MerchantProductOfferStorage\Business\Deleter\ProductOfferStorageDeleterInterface|\PHPUnit\Framework\MockObject\MockObject $productOfferStorageDeleter */
         $productOfferStorageDeleter = $this->getMockBuilder(ProductOfferStorageDeleterInterface::class)->getMock();
         $productOfferStorageDeleter->expects($this->exactly(3))

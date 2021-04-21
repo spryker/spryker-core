@@ -19,7 +19,7 @@ use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBu
  * @method \Spryker\Zed\PriceProductOfferStorage\Business\PriceProductOfferStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\PriceProductOfferStorage\Communication\PriceProductOfferStorageCommunicationFactory getFactory()
  */
-class PriceProductOfferSynchronizationDataPlugin extends AbstractPlugin implements SynchronizationDataBulkRepositoryPluginInterface
+class PriceProductOfferSynchronizationDataBulkRepositoryPlugin extends AbstractPlugin implements SynchronizationDataBulkRepositoryPluginInterface
 {
     /**
      * {@inheritDoc}

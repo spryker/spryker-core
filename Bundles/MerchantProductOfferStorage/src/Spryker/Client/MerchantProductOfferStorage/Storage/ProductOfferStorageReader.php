@@ -126,7 +126,7 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
         $productOfferStorageTransfers = $this->expandProductOffersWithMerchants($productOfferStorageTransfers);
         $productOfferStorageTransfers = $this->executeProductOfferStorageExpanderPlugins($productOfferStorageTransfers);
 
-        $productOfferStorageCollectionTransfer->setProductOffersStorage(new ArrayObject($productOfferStorageTransfers));
+        $productOfferStorageCollectionTransfer->setProductOffers(new ArrayObject($productOfferStorageTransfers));
         $productOfferStorageCollectionTransfer = $this->productOfferStorageCollectionSorterPlugin
             ->sort($productOfferStorageCollectionTransfer);
 
@@ -280,17 +280,17 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
     protected function expandProductOffersWithDefaultProductOffer(
         ProductOfferStorageCollectionTransfer $productOfferStorageCollectionTransfer
     ): ProductOfferStorageCollectionTransfer {
-        if ($productOfferStorageCollectionTransfer->getProductOffersStorage()->count() < 1) {
+        if (!$productOfferStorageCollectionTransfer->getProductOffers()->count()) {
             return $productOfferStorageCollectionTransfer;
         }
 
-        $productOfferStorageTransfers = $productOfferStorageCollectionTransfer->getProductOffersStorage()->getArrayCopy();
+        $productOffers = $productOfferStorageCollectionTransfer->getProductOffers()->getArrayCopy();
 
-        foreach ($productOfferStorageTransfers as $key => $productOfferStorageTransfer) {
-            $productOfferStorageTransfers[$key] = $productOfferStorageTransfer->setIsDefault($key < 1);
+        foreach ($productOffers as $key => $productOffer) {
+            $productOffers[$key] = $productOffer->setIsDefault($key < 1);
         }
 
-        return $productOfferStorageCollectionTransfer->setProductOffersStorage(new ArrayObject($productOfferStorageTransfers));
+        return $productOfferStorageCollectionTransfer->setProductOffers(new ArrayObject($productOffers));
     }
 
     /**

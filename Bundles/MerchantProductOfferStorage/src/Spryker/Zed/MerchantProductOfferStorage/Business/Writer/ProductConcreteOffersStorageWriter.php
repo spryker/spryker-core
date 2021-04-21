@@ -8,7 +8,7 @@
 namespace Spryker\Zed\MerchantProductOfferStorage\Business\Writer;
 
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
-use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductOfferCriteriaTransfer;
 use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
 use Spryker\Zed\MerchantProductOfferStorage\Business\Deleter\ProductConcreteOffersStorageDeleterInterface;
 use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToEventBehaviorFacadeInterface;
@@ -134,11 +134,13 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
 
         $productConcreteSkus = array_unique($productConcreteSkus);
 
-        $productOfferCriteriaFilterTransfer = $this->productOfferCriteriaFilterTransferProvider->createProductOfferCriteriaFilterTransfer()
-            ->setConcreteSkus($productConcreteSkus);
-        $productOfferCollectionTransfer = $this->merchantProductOfferStorageRepository->getProductOffersByFilterCriteria($productOfferCriteriaFilterTransfer);
+        $productOfferCriteriaTransfer = $this->createProductOfferCriteriaTransfer($productConcreteSkus);
+        $productOfferCollectionTransfer = $this->merchantProductOfferStorageRepository->getProductOffers($productOfferCriteriaTransfer);
 
-        $productOfferReferencesGroupedByConcreteSku = $this->groupProductOfferReferencesByConcreteSku($productConcreteSkus, $productOfferCollectionTransfer);
+        $productOfferReferencesGroupedByConcreteSku = $this->getProductOfferReferencesGroupedByConcreteSku(
+            $productConcreteSkus,
+            $productOfferCollectionTransfer
+        );
 
         foreach ($productOfferReferencesGroupedByConcreteSku as $concreteSku => $productOfferReferencesGroupedByStore) {
             $storeNamesToRemove = [];
@@ -149,11 +151,11 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
 
                     continue;
                 }
-                $this->merchantProductOfferStorageEntityManager->saveProductConcreteProductOffersStorage($concreteSku, $productOfferReferenceList, $storeName);
+                $this->merchantProductOfferStorageEntityManager->saveProductConcreteProductOffers($concreteSku, $productOfferReferenceList, $storeName);
             }
 
             if ($storeNamesToRemove) {
-                $this->deleteProductConcreteProductOffersStorage($storeNamesToRemove, $concreteSku);
+                $this->deleteProductConcreteProductOffers($storeNamesToRemove, $concreteSku);
             }
         }
     }
@@ -166,7 +168,7 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
      *
      * @return array
      */
-    protected function groupProductOfferReferencesByConcreteSku(
+    protected function getProductOfferReferencesGroupedByConcreteSku(
         array $productConcreteSkus,
         ProductOfferCollectionTransfer $productOfferCollectionTransfer
     ): array {
@@ -193,11 +195,11 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
     /**
      * @param string[] $productConcreteSkus
      *
-     * @return \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer
+     * @return \Generated\Shared\Transfer\ProductOfferCriteriaTransfer
      */
-    protected function createProductOfferCriteriaFilterTransfer(array $productConcreteSkus): ProductOfferCriteriaFilterTransfer
+    protected function createProductOfferCriteriaTransfer(array $productConcreteSkus): ProductOfferCriteriaTransfer
     {
-        return (new ProductOfferCriteriaFilterTransfer())
+        return (new ProductOfferCriteriaTransfer())
             ->setConcreteSkus($productConcreteSkus)
             ->setIsActive(true)
             ->setIsActiveMerchant(true)
@@ -211,7 +213,7 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
      *
      * @return void
      */
-    protected function deleteProductConcreteProductOffersStorage(array $storeNamesToRemove, string $productSku): void
+    protected function deleteProductConcreteProductOffers(array $storeNamesToRemove, string $productSku): void
     {
         foreach ($storeNamesToRemove as $storeName) {
             $this->productConcreteOffersStorageDeleter->deleteCollectionByProductSkus(

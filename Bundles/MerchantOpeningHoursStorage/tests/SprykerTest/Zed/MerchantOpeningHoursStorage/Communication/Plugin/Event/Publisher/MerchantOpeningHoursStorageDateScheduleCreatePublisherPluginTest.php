@@ -73,6 +73,11 @@ class MerchantOpeningHoursStorageDateScheduleCreatePublisherPluginTest extends U
         $merchantOpeningHoursDateScheduleEntity = $this->tester->createMerchantOpeningHoursDateSchedule($merchantTransfer);
         $merchantOpeningHoursStorageDateScheduleCreatePublisherPlugin = new MerchantOpeningHoursStorageDateScheduleCreatePublisherPlugin();
         $merchantOpeningHoursStorageDateScheduleCreatePublisherPlugin->setFacade($this->tester->getFacade());
+       //By Julia
+        $this->tester->createMerchantOpeningHoursDateSchedule($merchantTransfer);
+        $merchantOpeningHoursDateScheduleStoragePublishListener = new MerchantOpeningHoursDateScheduleStoragePublishListener();
+        $merchantOpeningHoursDateScheduleStoragePublishListener->setFacade($this->tester->getFacade());
+       //end
         $eventTransfers = [
             (new EventEntityBuilder())
                 ->build()
@@ -84,7 +89,7 @@ class MerchantOpeningHoursStorageDateScheduleCreatePublisherPluginTest extends U
 
         // Assert
         $this->assertNotNull(
-            $this->tester->findMerchantOpeningHoursByFkMerchant($merchantOpeningHoursDateScheduleEntity->getFkMerchant())
+            $this->tester->findMerchantOpeningHoursByMerchantReference($merchantTransfer->getMerchantReference())
         );
     }
 }

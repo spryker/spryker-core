@@ -57,8 +57,7 @@
         <property name="dataPrivacyGlossaryKey" type="string"/>
     </transfer>
 
-    <transfer name="MerchantProfileCriteriaFilter">
-        <property name="fkMerchant" type="int"/>
+    <transfer name="MerchantProfileCriteria">
         <property name="idMerchantProfile" type="int"/>
         <property name="merchantIds" type="int[]" singular="idMerchant"/>
         <property name="merchantProfileIds" type="int[]" singular="idMerchantProfile"/>
