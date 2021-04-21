@@ -23,7 +23,7 @@ class ContentStorageToStoreFacadeBridge implements ContentStorageToStoreFacadeIn
     }
 
     /**
-     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     * @return string[]
      */
     public function getStoresWithSharedPersistence(): array
     {
