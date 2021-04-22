@@ -10,7 +10,7 @@ namespace Spryker\Zed\StoreGui\Dependency\Service;
 interface StoreGuiToUtilEncodingServiceInterface
 {
     /**
-     * @param array $value
+     * @param mixed $value
      * @param int|null $options
      * @param int|null $depth
      *

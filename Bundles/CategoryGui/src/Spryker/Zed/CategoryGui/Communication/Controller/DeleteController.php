@@ -136,8 +136,6 @@ class DeleteController extends CategoryAbstractController
     {
         $relations = [];
         $localeTransfer = $this->getCurrentLocale();
-
-        /** @var \Spryker\Zed\CategoryGuiExtension\Dependency\Plugin\CategoryRelationReadPluginInterface[] $categoryRelationReadPlugins */
         $categoryRelationReadPlugins = $this->getFactory()->getCategoryRelationReadPlugins();
 
         foreach ($categoryRelationReadPlugins as $categoryRelationReadPlugin) {

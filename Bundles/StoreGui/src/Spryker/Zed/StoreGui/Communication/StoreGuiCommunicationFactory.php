@@ -40,7 +40,7 @@ class StoreGuiCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createIdStoresDataTransformer(): DataTransformerInterface
     {
-        return new IdStoresDataTransformer();
+        return new IdStoresDataTransformer($this->getUtilEncodingService());
     }
 
     /**

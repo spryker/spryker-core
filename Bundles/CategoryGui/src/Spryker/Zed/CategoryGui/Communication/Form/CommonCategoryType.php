@@ -220,10 +220,7 @@ abstract class CommonCategoryType extends AbstractType
      */
     protected function addFormPlugins(FormBuilderInterface $builder)
     {
-        /** @var \Spryker\Zed\CategoryGuiExtension\Dependency\Plugin\CategoryFormPluginInterface[] $formPlugins */
-        $formPlugins = $this->getFactory()->getCategoryFormPlugins();
-
-        foreach ($formPlugins as $formPlugin) {
+        foreach ($this->getFactory()->getCategoryFormPlugins() as $formPlugin) {
             $formPlugin->buildForm($builder);
         }
 
