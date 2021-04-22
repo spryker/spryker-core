@@ -8,7 +8,6 @@ import { ProductListModule } from './product-list/product-list.module';
 import { CardModule, CardComponent } from '@spryker/card';
 import { ChipsModule, ChipsComponent } from '@spryker/chips';
 import { DateRangePickerModule, DateRangePickerComponent } from '@spryker/date-picker';
-import { SelectModule, SelectComponent } from '@spryker/select';
 import { CollapsibleModule, CollapsibleComponent } from '@spryker/collapsible';
 import { EditAbstractProductComponent } from './edit-abstract-product/edit-abstract-product.component';
 import { EditAbstractProductModule } from './edit-abstract-product/edit-abstract-product.module';

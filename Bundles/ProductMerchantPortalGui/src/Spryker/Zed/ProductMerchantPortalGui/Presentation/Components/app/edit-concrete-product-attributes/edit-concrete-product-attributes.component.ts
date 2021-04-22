@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
 import { TableConfig } from '@spryker/table';
+import { ToJson } from '@spryker/utils';
 
 @Component({
     selector: 'mp-edit-concrete-product-attributes',
@@ -9,6 +10,6 @@ import { TableConfig } from '@spryker/table';
     encapsulation: ViewEncapsulation.None,
 })
 export class EditConcreteProductAttributesComponent {
-    @Input() tableConfig: TableConfig;
+    @Input() @ToJson() tableConfig: TableConfig;
     @Input() tableId?: string;
 }

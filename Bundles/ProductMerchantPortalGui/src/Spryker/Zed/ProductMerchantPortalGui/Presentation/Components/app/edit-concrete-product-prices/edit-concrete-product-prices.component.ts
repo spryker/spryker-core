@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
 import { TableConfig } from '@spryker/table';
-import { ToBoolean } from '@spryker/utils';
+import { ToBoolean, ToJson } from '@spryker/utils';
 
 @Component({
     selector: 'mp-edit-concrete-product-prices',
@@ -11,7 +11,7 @@ import { ToBoolean } from '@spryker/utils';
     host: { class: 'mp-edit-concrete-product-prices' },
 })
 export class EditConcreteProductPricesComponent {
-    @Input() tableConfig: TableConfig;
+    @Input() @ToJson() tableConfig: TableConfig;
     @Input() tableId?: string;
     @Input() checkboxName?: string;
     @Input() @ToBoolean() isTableHidden: boolean;
