@@ -57,16 +57,16 @@ abstract class AbstractBuilderTester extends Unit
             ], [
                 'name' => static::TESTING_COLUMN_BOOLEAN_DEFAULT_VALUE_NAME,
                 'type' => static::TESTING_COLUMN_BOOLEAN_DEFAULT_VALUE_TYPE,
-                'setDefaultValue' => new ColumnDefaultValue(static::TESTING_COLUMN_BOOLEAN_DEFAULT_VALUE),
+                'defaultValue' => static::TESTING_COLUMN_BOOLEAN_DEFAULT_VALUE,
             ], [
                 'name' => static::TESTING_COLUMN_VARCHAR_NAME,
                 'type' => static::TESTING_COLUMN_VARCHAR_TYPE,
-                'setSize' => 64,
+                'size' => 64,
             ], [
                 'name' => static::TESTING_COLUMN_VARCHAR_DEFAULT_VALUE_NAME,
                 'type' => static::TESTING_COLUMN_VARCHAR_DEFAULT_VALUE_TYPE,
-                'setDefaultValue' => new ColumnDefaultValue(static::TESTING_COLUMN_VARCHAR_DEFAULT_VALUE),
-                'setSize' => 64,
+                'defaultValue' => static::TESTING_COLUMN_VARCHAR_DEFAULT_VALUE,
+                'size' => 64,
             ]];
 
         $table = $this->tester->createTable(

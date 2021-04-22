@@ -48,7 +48,9 @@ class TableHelper extends Module
 
         foreach ($columnsData as $columnData) {
             $column = new Column($columnData['name'], $columnData['type']);
-            $domain = $this->_setDomainExtraColumn(new Domain($columnData['type'], $columnData['type']), $columnData);
+            $domain = new Domain();
+            $domain->setDatabase($database);
+            $domain->loadMapping($columnData);
             $column->setDomain($domain);
 
             $table->addColumn($column);
