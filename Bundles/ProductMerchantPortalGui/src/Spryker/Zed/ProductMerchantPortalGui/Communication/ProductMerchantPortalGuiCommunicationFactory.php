@@ -19,6 +19,8 @@ use Spryker\Zed\ProductMerchantPortalGui\Communication\Builder\ProductAbstractNa
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Builder\ProductAbstractNameBuilderInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\LocaleDataProvider;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\LocaleDataProviderInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\SuperAttributesDataProvider;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\SuperAttributesDataProviderInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\CreateProductAbstractForm;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\CreateProductAbstractWithMultiConcreteForm;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\CreateProductAbstractWithSingleConcreteForm;
@@ -356,6 +358,16 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
         return new LocaleDataProvider(
             $this->getStoreFacade(),
             $this->getStore()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\SuperAttributesDataProviderInterface
+     */
+    public function createSuperAttributesDataProvider(): SuperAttributesDataProviderInterface
+    {
+        return new SuperAttributesDataProvider(
+            $this->getProductAttributeFacade()
         );
     }
 

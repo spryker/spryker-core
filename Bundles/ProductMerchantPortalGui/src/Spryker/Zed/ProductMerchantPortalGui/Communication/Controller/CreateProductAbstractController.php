@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Controller;
 
+use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ValidationResponseTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\CreateProductAbstractForm;
@@ -187,13 +188,9 @@ class CreateProductAbstractController extends AbstractController
             return $this->getErrorJsonResponse($validationResponseTransfer);
         }
 
-        $concreteProductTransfers = $this->getFactory()
-            ->createProductConcreteMapper()
-            ->mapRequestDataToProductConcreteTransfer($concreteProducts);
+        $concreteProductTransfers = $this->mapRequestDataToProductConcreteTransfer($concreteProducts);
 
-        $this->getFactory()
-            ->getProductFacade()
-            ->addProduct($productAbstractTransfer, $concreteProductTransfers);
+        $this->addProduct($productAbstractTransfer, $concreteProductTransfers);
 
         return $this->getSuccessResponseAndCloseOverlay();
     }
@@ -244,31 +241,9 @@ class CreateProductAbstractController extends AbstractController
      */
     protected function getSuperAttributes(): array
     {
-        $productManagementAttributeTransfers = $this->getFactory()
-            ->getProductAttributeFacade()
-            ->getProductAttributeCollection();
-
-        $superProductManagementAttributes = [];
-
-        foreach ($productManagementAttributeTransfers as $productManagementAttributeTransfer) {
-            if ($productManagementAttributeTransfer->getIsSuper()) {
-                $values = [];
-                foreach ($productManagementAttributeTransfer->getValues() as $productManagementAttributeValueTransfer) {
-                    $values[] = [
-                        'title' => $productManagementAttributeValueTransfer->getValueOrFail(),
-                        'value' => $productManagementAttributeValueTransfer->getValueOrFail(),
-                    ];
-                }
-
-                $superProductManagementAttributes[] = [
-                    'title' => $productManagementAttributeTransfer->getKeyOrFail(),
-                    'value' => $productManagementAttributeTransfer->getKeyOrFail(),
-                    'values' => $values,
-                ];
-            }
-        }
-
-        return $superProductManagementAttributes;
+        return $this->getFactory()
+            ->createSuperAttributesDataProvider()
+            ->getSuperAttributes();
     }
 
     /**
@@ -301,23 +276,49 @@ class CreateProductAbstractController extends AbstractController
     protected function getSuccessResponseAndCloseOverlay(): JsonResponse
     {
         $responseData = [
-        static::RESPONSE_KEY_POST_ACTIONS => [
-            [
-                static::RESPONSE_KEY_TYPE => static::RESPONSE_TYPE_CLOSE_OVERLAY,
-            ],
-            [
-                static::RESPONSE_KEY_TYPE => static::RESPONSE_TYPE_REFRESH_TABLE,
-            ],
-        ],
-
-        static::RESPONSE_KEY_NOTIFICATIONS => [
+            static::RESPONSE_KEY_POST_ACTIONS => [
                 [
-                    static::RESPONSE_KEY_TYPE => static::RESPONSE_TYPE_SUCCESS,
-                    static::RESPONSE_KEY_MESSAGE => static::RESPONSE_MESSAGE_SUCCESS,
+                    static::RESPONSE_KEY_TYPE => static::RESPONSE_TYPE_CLOSE_OVERLAY,
+                ],
+                [
+                    static::RESPONSE_KEY_TYPE => static::RESPONSE_TYPE_REFRESH_TABLE,
                 ],
             ],
+            static::RESPONSE_KEY_NOTIFICATIONS => [
+                    [
+                        static::RESPONSE_KEY_TYPE => static::RESPONSE_TYPE_SUCCESS,
+                        static::RESPONSE_KEY_MESSAGE => static::RESPONSE_MESSAGE_SUCCESS,
+                    ],
+                ],
         ];
 
         return new JsonResponse($responseData);
+    }
+
+    /**
+     * @param array $concreteProducts
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    protected function mapRequestDataToProductConcreteTransfer(array $concreteProducts): array
+    {
+        return $this->getFactory()
+            ->createProductConcreteMapper()
+            ->mapRequestDataToProductConcreteTransfer($concreteProducts);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param array $concreteProductTransfers
+     *
+     * @return int
+     */
+    protected function addProduct(
+        ProductAbstractTransfer $productAbstractTransfer,
+        array $concreteProductTransfers
+    ): int {
+        return $this->getFactory()
+            ->getProductFacade()
+            ->addProduct($productAbstractTransfer, $concreteProductTransfers);
     }
 }
