@@ -95,6 +95,7 @@ class MerchantSalesReturnBusinessTester extends Actor
             $merchantOrderItemTransfer = $this->haveMerchantOrderItem([
                 MerchantOrderItemTransfer::ID_ORDER_ITEM => $itemTransfer->getIdSalesOrderItem(),
                 MerchantOrderItemTransfer::ID_MERCHANT_ORDER => $merchantOrderTransfer->getIdMerchantOrder(),
+                MerchantOrderItemTransfer::ORDER_ITEM => $itemTransfer,
             ]);
 
             $merchantOrderTransfer->addMerchantOrderItem($merchantOrderItemTransfer);

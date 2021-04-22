@@ -1,0 +1,94 @@
+{% set numberOfItemAdditions = not isBundleProduct ? orderItem.productOptions | length + 1 %}
+
+<tr>
+    <td>
+        {% if not isBundleProduct %}
+            <input type="checkbox" name="order-item" value="{{ orderItem.idSalesOrderItem }}" class="js-check-item">
+        {% endif %}
+    </td>
+    <td>
+        <div class="image-wrap">
+            <img class="product-image" src="{{ orderItem.metadata.image }}" alt="{{ orderItem.name }}">
+        </div>
+    </td>
+    <td>
+        <a target="_blank" href="{{ url('/product-management/view/variant', {'id-product-abstract': orderItem.idProductAbstract, 'id-product': orderItem.id, 'type': 'regular'}) }}">
+            {{ orderItem.name }}
+        </a>
+        <div class="sku">
+            {{ 'Sku' | trans }}: {{ orderItem.sku }}
+        </div>
+        <div class="m-b-sm">
+            {% include ['@ProductPackagingUnitGui/Sales/Detail/boxes/item-packaging-unit.twig', '@Sales/Detail/boxes/item-packaging-unit.twig'] with {
+                orderItem: orderItem,
+            } %}
+        </div>
+    </td>
+    <td>
+        x {{ orderItem.quantity }}
+
+        {% include '@Sales/Detail/boxes/item-measurement-unit.twig' with {
+            orderItem: orderItem,
+        } %}
+    </td>
+    <td>
+        {% include '@Sales/Detail/boxes/discounted-price.twig' with {
+            subtotal: orderItem.sumPrice,
+            priceToPay: orderItem.sumPrice - orderItem.sumDiscountAmountFullAggregation | default(0),
+            order: order,
+        } %}
+
+        <div class="tax-info">{{ 'incl. %tax_amount% % tax' | trans({'%tax_amount%': orderItem.taxRate | default(0)}) }}</div>
+    </td>
+    <td data-qa="item-total-amount" data-qa-raw="{{ orderItem.sumPriceToPayAggregation }}">
+        {% include '@Sales/Detail/boxes/discounted-price.twig' with {
+            subtotal: orderItem.sumSubtotalAggregation,
+            priceToPay: orderItem.sumPriceToPayAggregation,
+            order: order,
+        } %}
+    </td>
+    <td rowspan="{{ numberOfItemAdditions }}" class="state-history">
+        {% if not isBundleProduct %}
+
+            <a href="{{ url('/state-machine/graph/draw', {'process': merchantOrder.process, 'highlight-state': (merchantOrderItem.stateHistory | first).stateName, 'state-machine': 'Merchant'}) }}" target="_blank">{{ (merchantOrderItem.stateHistory | first).stateName }}</a> ({{ merchantOrder.process }})
+            {% if merchantOrderItem.stateHistory is not empty %}
+
+                <br>
+                <div id="history_details_{{ merchantOrderItem.idMerchantOrderItem }}" class="hidden">
+                    {% for stateHistory in merchantOrderItem.stateHistory | slice(1) %}
+                        <div>{{ stateHistory.stateName }} ({{ stateHistory.createdAt | formatDateTime }})</div>
+                    {% endfor %}
+                </div>
+
+                <a id="history-btn-{{ merchantOrderItem.idMerchantOrderItem }}" class="btn btn-sm more-history is-hidden" data-id="{{ merchantOrderItem.idMerchantOrderItem }}">
+                    <span class="show-more">{{ 'Show history' | trans }}</span>
+                    <span class="show-less">{{ 'Hide history' | trans }}</span>
+                </a>
+            {% endif %}
+        {% endif %}
+    </td>
+    <td rowspan="{{ numberOfItemAdditions }}">
+        {% if merchantOrderItem.manualEvents is not empty %}
+            {% include '@MerchantSalesReturnMerchantUserGui/_partials/merchant-order-item-actions.twig' with {
+                redirectUrl: changeStatusRedirectUrl,
+                merchantSalesOrderItemReference: merchantOrderItem.merchantOrderItemReference,
+                events: merchantOrderItem.manualEvents,
+            } %}
+        {% endif %}
+    </td>
+</tr>
+
+{% if not isBundleProduct %}
+    {% include '@Sales/Detail/boxes/order-item-option.twig' with {
+        orderItem: orderItem,
+        order: order,
+    } %}
+{% endif %}
+
+<tr class="addition-row">
+    <td colspan="2"></td>
+    <td>
+        {{ 'Reason' | trans }}: {{ returnItem.reason ? returnItem.reason | trans : '--' }}
+    </td>
+    <td colspan="5"></td>
+</tr>

@@ -1,0 +1,35 @@
+{
+  "name": "spryker/merchant-sales-return-gui",
+  "type": "library",
+  "description": "MerchantSalesReturnGui module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.3",
+    "spryker/kernel": "^3.33.0",
+    "spryker/merchant-sales-order": "^0.8.2",
+    "spryker/merchant-sales-return": "^0.2.0",
+    "spryker/sales-return-gui-extension": "^1.1.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/"
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

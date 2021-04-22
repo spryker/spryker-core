@@ -206,10 +206,12 @@ class MerchantRepository extends AbstractRepository implements MerchantRepositor
     protected function getPaginatedCollection(ModelCriteria $query, ?PaginationTransfer $paginationTransfer = null)
     {
         if ($paginationTransfer !== null) {
+            /** @var int $page */
             $page = $paginationTransfer
                 ->requirePage()
                 ->getPage();
 
+            /** @var int $maxPerPage */
             $maxPerPage = $paginationTransfer
                 ->requireMaxPerPage()
                 ->getMaxPerPage();

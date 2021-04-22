@@ -8,7 +8,7 @@
 namespace Spryker\Zed\PriceProductOffer\Business\Expander\Wishlist;
 
 use Generated\Shared\Transfer\PriceProductOfferCriteriaTransfer;
-use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Spryker\Zed\PriceProductOffer\Business\Reader\PriceProductOfferReaderInterface;
 use Spryker\Zed\PriceProductOffer\Dependency\Facade\PriceProductOfferToStoreFacadeInterface;
@@ -48,13 +48,13 @@ class PriceProductOfferWishlistExpander implements PriceProductOfferWishlistExpa
             return $wishlistItemTransfer;
         }
 
-        $productOfferCriteriaFilterTransfer = (new ProductOfferCriteriaFilterTransfer())
+        $productOfferCriteriaTransfer = (new ProductOfferCriteriaTransfer())
             ->setProductOfferReference($wishlistItemTransfer->getProductOfferReference());
 
         /** @var int $idStore */
         $idStore = $this->storeFacade->getCurrentStore()->getIdStore();
         $priceProductOfferCriteriaTransfer = (new PriceProductOfferCriteriaTransfer())
-            ->setProductOfferCriteriaFilter($productOfferCriteriaFilterTransfer)
+            ->setProductOfferCriteria($productOfferCriteriaTransfer)
             ->addIdStore($idStore);
 
         $priceProductTransfers = $this->priceProductOfferReader->getProductOfferPrices($priceProductOfferCriteriaTransfer);

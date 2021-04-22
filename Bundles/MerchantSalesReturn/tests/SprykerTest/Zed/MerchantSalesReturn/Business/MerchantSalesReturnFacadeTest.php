@@ -32,6 +32,7 @@ class MerchantSalesReturnFacadeTest extends Unit
     protected const TEST_MERCHANT_REFERENCE_1 = 'test-merchant-reference-1';
     protected const TEST_MERCHANT_REFERENCE_2 = 'test-merchant-reference-2';
     protected const TEST_UUID = '3b6743a7-ad62-3779-8648-e0156e51a628';
+    protected const NOT_EXISTING_ORDER_ITEM_UUID = 'non-existing-order-item-uuid';
 
     /**
      * @var \SprykerTest\Zed\MerchantSalesReturn\MerchantSalesReturnBusinessTester
@@ -41,7 +42,7 @@ class MerchantSalesReturnFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testPreCreateSetsMerchantOrderReferenceSuccessfully(): void
+    public function testPreCreateSetsMerchantReferenceSuccessfully(): void
     {
         // Arrange
         $merchantTransfer = $this->tester->haveMerchant();
@@ -67,15 +68,15 @@ class MerchantSalesReturnFacadeTest extends Unit
 
         // Assert
         $this->assertSame(
-            $merchantOrderTransfer->getMerchantOrderReference(),
-            $actualReturnTransfer->getMerchantSalesOrderReference()
+            $merchantOrderTransfer->getMerchantReference(),
+            $actualReturnTransfer->getMerchantReference()
         );
     }
 
     /**
      * @return void
      */
-    public function testPreCreateReturnsResultWithoutMerchantOrderReferenceWhenOrderItemsIsNotValid(): void
+    public function testPreCreateDoesNotSetMerchantReferenceForReturnWithNonMerchantItems(): void
     {
         // Arrange
         $merchantTransfer = $this->tester->haveMerchant();
@@ -85,8 +86,8 @@ class MerchantSalesReturnFacadeTest extends Unit
 
         foreach ($saveOrderTransfer->getOrderItems() as $orderItem) {
             $orderItemTransfer = (new ItemTransfer())
-                ->setUuid(static::TEST_UUID)
-                ->setMerchantReference(static::TEST_MERCHANT_SALES_ORDER_REFERENCE_1);
+                ->setUuid(static::TEST_UUID);
+
             $returnItemTransfer = new ReturnItemTransfer();
             $returnItemTransfer->setOrderItem($orderItemTransfer);
             $returnTransfer->addReturnItem($returnItemTransfer);
@@ -98,7 +99,7 @@ class MerchantSalesReturnFacadeTest extends Unit
             ->preCreate($returnTransfer);
 
         // Assert
-        $this->assertNull($actualReturnTransfer->getMerchantSalesOrderReference());
+        $this->assertNull($actualReturnTransfer->getMerchantReference());
     }
 
     /**
@@ -154,25 +155,56 @@ class MerchantSalesReturnFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCollectionExpanderSetsMerchantReferenceToReturn(): void
+    public function testExpandSetsMerchantSuccessfully(): void
     {
         // Arrange
         $merchantTransfer = $this->tester->haveMerchant();
+        $saveOrderTransfer = $this->tester
+            ->getSaveOrderTransfer($merchantTransfer, static::TEST_STATE_MACHINE);
 
-        $returnCollectionTransfer = $this->tester
-            ->createMerchantReturnCollectionWithItem($merchantTransfer);
+        $merchantOrderTransfer = $this->tester->createMerchantOrderWithRelatedData(
+            $saveOrderTransfer,
+            $merchantTransfer
+        );
+
+        $returnItemTransfers = [];
+
+        foreach ($merchantOrderTransfer->getMerchantOrderItems() as $merchantOrderItemTransfer) {
+            $returnItemTransfers[] = (new ReturnItemTransfer())->setOrderItem($merchantOrderItemTransfer->getOrderItem());
+        }
+
+        $returnTransfer = (new ReturnTransfer())
+            ->setReturnItems(new ArrayObject($returnItemTransfers));
 
         // Act
-        $returnCollectionTransfer = $this->tester
+        $actualReturnTransfer = $this->tester
             ->getFacade()
-            ->expandReturnCollection($returnCollectionTransfer);
+            ->expand($returnTransfer);
 
         // Assert
-        foreach ($returnCollectionTransfer->getReturns() as $returnTransfer) {
-            $this->assertSame(
-                $merchantTransfer->getMerchantReference(),
-                $returnTransfer->getMerchantReference()
+        $this->assertCount(1, $actualReturnTransfer->getMerchantOrders());
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandDoesNotSetMerchantOrdersForNonMerchantReturn(): void
+    {
+        // Arrange
+        $returnTransfer = (new ReturnTransfer())
+            ->addReturnItem(
+                (new ReturnItemTransfer())
+                    ->setOrderItem(
+                        (new ItemTransfer())->setUuid(static::NOT_EXISTING_ORDER_ITEM_UUID)
+                    )
             );
-        }
+
+        // Act
+        $actualReturnTransfer = $this->tester
+            ->getFacade()
+            ->expand($returnTransfer);
+
+        // Assert
+        $this->assertCount(0, $actualReturnTransfer->getMerchantOrders());
     }
 }

@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\Constrain
 
 use Generated\Shared\Transfer\PriceProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\PriceProductOfferCriteriaTransfer;
-use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductOfferCriteriaTransfer;
 use Spryker\Zed\Kernel\Communication\Validator\AbstractConstraintValidator;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
@@ -49,7 +49,7 @@ class ValidProductOfferPriceIdsOwnByMerchantConstraintValidator extends Abstract
         foreach ($normalizedDataCollection as $idMerchant => $priceProductOfferIds) {
             $priceProductOfferCriteriaTransfer = new PriceProductOfferCriteriaTransfer();
             $priceProductOfferCriteriaTransfer->setPriceProductOfferIds($priceProductOfferIds)
-                ->setProductOfferCriteriaFilter((new ProductOfferCriteriaFilterTransfer())->setMerchantIds());
+                ->setProductOfferCriteria((new ProductOfferCriteriaTransfer())->setMerchantIds());
 
             $validProductOfferPriceIdsConstraint->getPriceProductOfferFacade()->count($priceProductOfferCriteriaTransfer) === count($priceProductOfferIds)
                 ?: $this->context->addViolation($validProductOfferPriceIdsConstraint->getMessage());
