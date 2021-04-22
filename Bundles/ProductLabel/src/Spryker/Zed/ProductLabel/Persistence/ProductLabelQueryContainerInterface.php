@@ -156,7 +156,7 @@ interface ProductLabelQueryContainerInterface
      *
      * @api
      *
-     * @deprecated Use {@link \Spryker\Zed\ProductLabel\Persistence\ProductLabelRepositoryInterface::getProductAbstractRelationsByIdProductLabelAndIdsProductAbstract()} instead.
+     * @deprecated Use {@link \Spryker\Zed\ProductLabel\Persistence\ProductLabelRepositoryInterface::getProductAbstractRelationsByIdProductLabelAndProductAbstractIds()} instead.
      *
      * @param int $idProductLabel
      * @param int[] $idsProductAbstract

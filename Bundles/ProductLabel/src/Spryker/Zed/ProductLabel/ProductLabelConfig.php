@@ -7,11 +7,12 @@
 
 namespace Spryker\Zed\ProductLabel;
 
+use Spryker\Shared\ProductLabel\ProductLabelConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductLabelConfig extends AbstractBundleConfig
 {
-    protected const PRODUCT_LABEL_DE_ASSIGN_CHUNK_SIZE = 1000;
+    protected const PRODUCT_LABEL_TO_DE_ASSIGN_CHUNK_SIZE = 1000;
 
     /**
      * Specification:
@@ -23,6 +24,9 @@ class ProductLabelConfig extends AbstractBundleConfig
      */
     public function getProductLabelDeAssignChunkSize(): int
     {
-        return static::PRODUCT_LABEL_DE_ASSIGN_CHUNK_SIZE;
+        return $this->get(
+            ProductLabelConstants::PRODUCT_LABEL_TO_DE_ASSIGN_CHUNK_SIZE,
+            static::PRODUCT_LABEL_TO_DE_ASSIGN_CHUNK_SIZE
+        );
     }
 }
