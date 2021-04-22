@@ -69,7 +69,7 @@ class ProductConcreteEditFormDataProvider implements ProductConcreteEditFormData
         $idMerchant = $this->merchantUserFacade->getCurrentMerchantUser()->getIdMerchantOrFail();
         /** @var \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer */
         $productConcreteTransfer = $this->merchantProductFacade->findProductConcrete(
-            (new MerchantProductCriteriaTransfer())->addIdMerchant($idMerchant)->addIdProductConcrete($idProductConcrete)
+            (new MerchantProductCriteriaTransfer())->setIdMerchant($idMerchant)->addIdProductConcrete($idProductConcrete)
         );
 
         return [

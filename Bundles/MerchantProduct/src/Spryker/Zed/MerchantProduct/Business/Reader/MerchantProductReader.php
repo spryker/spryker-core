@@ -102,9 +102,7 @@ class MerchantProductReader implements MerchantProductReaderInterface
             throw new EmptyRequiredPropertyException(MerchantProductCriteriaTransfer::PRODUCT_CONCRETE_IDS);
         }
 
-        if (!count($merchantProductCriteriaTransfer->getMerchantIds())) {
-            throw new EmptyRequiredPropertyException(MerchantProductCriteriaTransfer::MERCHANT_IDS);
-        }
+        $merchantProductCriteriaTransfer->addIdMerchant($merchantProductCriteriaTransfer->getIdMerchantOrFail());
 
         $merchantProductTransfer = $this->merchantProductRepository->findMerchantProduct($merchantProductCriteriaTransfer);
 

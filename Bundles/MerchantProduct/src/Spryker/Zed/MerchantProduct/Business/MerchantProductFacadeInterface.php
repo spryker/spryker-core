@@ -105,7 +105,7 @@ interface MerchantProductFacadeInterface
      * Specification:
      * - Returns concrete product by provided criteria.
      * - Requires at least 1 ID in MerchantProductCriteria.productConcreteIds transfer field to be set.
-     * - Requires at least 1 ID in MerchantProductCriteria.merchantIds transfer field to be set.
+     * - Requires MerchantProductCriteria.idMerchant transfer field to be set.
      *
      * @api
      *

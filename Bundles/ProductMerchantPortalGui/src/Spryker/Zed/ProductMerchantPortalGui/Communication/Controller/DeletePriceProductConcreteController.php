@@ -34,7 +34,7 @@ class DeletePriceProductConcreteController extends AbstractDeletePriceProductCon
         $idMerchant = $this->getIdMerchantFromCurrentUser();
         $productConcreteTransfer = $this->getFactory()->getMerchantProductFacade()->findProductConcrete(
             (new MerchantProductCriteriaTransfer())
-                ->addIdMerchant($idMerchant)
+                ->setIdMerchant($idMerchant)
                 ->addIdProductConcrete($idProductConcrete)
         );
 

@@ -462,7 +462,7 @@ class MerchantProductFacadeTest extends Unit
         $merchantProductConcreteTransfer = $this->tester->getFacade()->findProductConcrete(
             (new MerchantProductCriteriaTransfer())
                 ->addIdProductConcrete($productConcreteTransfer->getIdProductConcreteOrFail())
-                ->addIdMerchant($merchantTransfer->getIdMerchantOrFail())
+                ->setIdMerchant($merchantTransfer->getIdMerchantOrFail())
         );
 
         // Assert
@@ -488,7 +488,7 @@ class MerchantProductFacadeTest extends Unit
         );
 
         $merchantProductCriteriaTransfer = (new MerchantProductCriteriaTransfer())
-            ->addIdMerchant($merchantTransfer->getIdMerchantOrFail())
+            ->setIdMerchant($merchantTransfer->getIdMerchantOrFail())
             ->addMerchantProductAbstractId($merchantProductTransfer->getIdMerchantProductAbstractOrFail())
             ->addIdProductConcrete($productConcreteTransfer->getIdProductConcreteOrFail());
 
@@ -522,7 +522,7 @@ class MerchantProductFacadeTest extends Unit
         $merchantProductCriteriaTransfer = (new MerchantProductCriteriaTransfer())
             ->setIdProductAbstract($productConcreteTransfer->getFkProductAbstractOrFail())
             ->addIdProductConcrete($productConcreteTransfer->getIdProductConcreteOrFail())
-            ->addIdMerchant($merchantTransfer->getIdMerchantOrFail());
+            ->setIdMerchant($merchantTransfer->getIdMerchantOrFail());
 
         // Act
         $merchantProductConcreteTransfer = $this->tester
@@ -550,7 +550,7 @@ class MerchantProductFacadeTest extends Unit
         $merchantProductConcreteTransfer = $this->tester->getFacade()->findProductConcrete(
             (new MerchantProductCriteriaTransfer())
                 ->addIdProductConcrete($productConcreteTransfer->getIdProductConcreteOrFail())
-                ->addIdMerchant($this->tester->haveMerchant()->getIdMerchantOrFail())
+                ->setIdMerchant($this->tester->haveMerchant()->getIdMerchantOrFail())
         );
 
         // Assert
