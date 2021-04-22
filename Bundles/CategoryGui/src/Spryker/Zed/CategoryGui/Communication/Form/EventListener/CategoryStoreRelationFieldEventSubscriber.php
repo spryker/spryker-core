@@ -20,7 +20,7 @@ class CategoryStoreRelationFieldEventSubscriber implements EventSubscriberInterf
     /**
      * @var \Spryker\Zed\CategoryGui\Communication\Finder\CategoryStoreWithStateFinderInterface
      */
-    protected $categoryStoreWithSateFinder;
+    protected $categoryStoreWithStateFinder;
 
     /**
      * @var \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface
@@ -28,14 +28,14 @@ class CategoryStoreRelationFieldEventSubscriber implements EventSubscriberInterf
     protected $storeRelationFormTypePlugin;
 
     /**
-     * @param \Spryker\Zed\CategoryGui\Communication\Finder\CategoryStoreWithStateFinderInterface $categoryStoreWithSateFinder
+     * @param \Spryker\Zed\CategoryGui\Communication\Finder\CategoryStoreWithStateFinderInterface $categoryStoreWithStateFinder
      * @param \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface $storeRelationFormTypePlugin
      */
     public function __construct(
-        CategoryStoreWithStateFinderInterface $categoryStoreWithSateFinder,
+        CategoryStoreWithStateFinderInterface $categoryStoreWithStateFinder,
         FormTypeInterface $storeRelationFormTypePlugin
     ) {
-        $this->categoryStoreWithSateFinder = $categoryStoreWithSateFinder;
+        $this->categoryStoreWithStateFinder = $categoryStoreWithStateFinder;
         $this->storeRelationFormTypePlugin = $storeRelationFormTypePlugin;
     }
 
@@ -64,7 +64,7 @@ class CategoryStoreRelationFieldEventSubscriber implements EventSubscriberInterf
         $form = $event->getForm();
 
         $options = $form->get(CategoryType::FIELD_STORE_RELATION)->getConfig()->getOptions();
-        $options[CategoryType::OPTION_INACTIVE_CHOICES] = $this->categoryStoreWithSateFinder
+        $options[CategoryType::OPTION_INACTIVE_CHOICES] = $this->categoryStoreWithStateFinder
             ->getInactiveStoreIdsByIdCategoryNode($idCategoryNode);
 
         $form->add(

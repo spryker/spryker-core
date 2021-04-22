@@ -43,6 +43,8 @@ class CategoryLocalizedAttributeType extends AbstractType
 
     protected const BLOCK_PREFIX = 'localizedAttributes';
 
+    protected const DEFAULT_META_DESCRIPTION_ROWS_NUMBER = 5;
+
     /**
      * @return string
      */
@@ -62,7 +64,7 @@ class CategoryLocalizedAttributeType extends AbstractType
 
         $resolver->setDefaults([
             static::OPTION_DATA_CLASS => CategoryLocalizedAttributesTransfer::class,
-            static::OPTION_META_DESCRIPTION_ROWS => 5,
+            static::OPTION_META_DESCRIPTION_ROWS => static::DEFAULT_META_DESCRIPTION_ROWS_NUMBER,
         ]);
     }
 

@@ -75,7 +75,7 @@ var handleStoreSelector = function () {
 
         storeSelector.prop('disabled', true);
     });
-}
+};
 
 $(document).ready(function () {
     var triggeredFirstEvent = false;

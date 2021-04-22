@@ -31,7 +31,7 @@ class StoreRelationDropdownDataProvider
      */
     public function getData(): StoreRelationTransfer
     {
-        $allStoreIds = array_keys($this->getStoreNameMap());
+        $allStoreIds = array_keys($this->getStoreNamesIndexedByIdStore());
 
         return (new StoreRelationTransfer())
             ->setIdStores($allStoreIds);
@@ -48,7 +48,7 @@ class StoreRelationDropdownDataProvider
             StoreRelationDropdownType::OPTION_ATTRIBUTE_ACTION_URL => '',
             StoreRelationDropdownType::OPTION_ATTRIBUTE_ACTION_EVENT => '',
             StoreRelationDropdownType::OPTION_ATTRIBUTE_ACTION_FIELD => '',
-            StoreRelationDropdownType::OPTION_STORE_CHOICES => $this->getStoreNameMap(),
+            StoreRelationDropdownType::OPTION_STORE_CHOICES => $this->getStoreNamesIndexedByIdStore(),
             StoreRelationDropdownType::OPTION_EXTENDED => true,
         ];
     }
@@ -56,7 +56,7 @@ class StoreRelationDropdownDataProvider
     /**
      * @return string[]
      */
-    protected function getStoreNameMap(): array
+    protected function getStoreNamesIndexedByIdStore(): array
     {
         $storeTransferCollection = $this->storeFacade->getAllStores();
 
