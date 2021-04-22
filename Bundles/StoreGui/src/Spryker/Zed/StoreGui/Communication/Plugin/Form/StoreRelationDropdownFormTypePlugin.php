@@ -5,17 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Store\Communication\Plugin\Form;
+namespace Spryker\Zed\StoreGui\Communication\Plugin\Form;
 
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
-use Spryker\Zed\Store\Communication\Form\Type\StoreRelationDropdownType;
+use Spryker\Zed\StoreGui\Communication\Form\Type\StoreRelationDropdownType;
 
 /**
- * @method \Spryker\Zed\Store\Business\StoreFacadeInterface getFacade()
- * @method \Spryker\Zed\Store\Communication\StoreCommunicationFactory getFactory()
- * @method \Spryker\Zed\Store\StoreConfig getConfig()
- * @method \Spryker\Zed\Store\Persistence\StoreQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\StoreGui\Communication\StoreGuiCommunicationFactory getFactory()
  */
 class StoreRelationDropdownFormTypePlugin extends AbstractPlugin implements FormTypeInterface
 {

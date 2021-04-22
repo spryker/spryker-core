@@ -41,13 +41,25 @@ class CategoryCreateCest
             $i->click($closedIboxSelector);
         }
 
-        foreach ($localizedAttributes as $locale => $attributes) {
-            foreach ($attributes as $selector => $value) {
-                $i->fillField(['name' => $selector], $value);
-            }
+        foreach ($localizedAttributes as $attributes) {
+            $this->fillAttributeFields($i, $attributes);
         }
+
         $i->click(CategoryCreatePage::FORM_SUBMIT_BUTTON);
 
         $i->seeInPageSource(CategoryCreatePage::SUCCESS_MESSAGE);
+    }
+
+    /**
+     * @param \SprykerTest\Zed\CategoryGui\CategoryPresentationTester $i
+     * @param array $attributes
+     *
+     * @return void
+     */
+    protected function fillAttributeFields(CategoryPresentationTester $i, array $attributes): void
+    {
+        foreach ($attributes as $selector => $value) {
+            $i->fillField(['name' => $selector], $value);
+        }
     }
 }

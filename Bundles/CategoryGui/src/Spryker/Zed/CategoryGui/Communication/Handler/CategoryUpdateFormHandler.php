@@ -15,6 +15,8 @@ use Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToCategoryFacadeInterfa
 
 class CategoryUpdateFormHandler implements CategoryUpdateFormHandlerInterface
 {
+    protected const SUCCESS_MESSAGE_CATEGORY_UPDATED = 'The category was updated successfully.';
+
     /**
      * @var \Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToCategoryFacadeInterface
      */
@@ -42,7 +44,7 @@ class CategoryUpdateFormHandler implements CategoryUpdateFormHandlerInterface
         try {
             $this->categoryFacade->update($categoryTransfer);
             $categoryResponseTransfer
-                ->addMessage((new MessageTransfer())->setValue('The category was updated successfully.'));
+                ->addMessage((new MessageTransfer())->setValue(static::SUCCESS_MESSAGE_CATEGORY_UPDATED));
         } catch (Exception $e) {
             $categoryResponseTransfer
                 ->addMessage((new MessageTransfer())->setValue($e->getMessage()))

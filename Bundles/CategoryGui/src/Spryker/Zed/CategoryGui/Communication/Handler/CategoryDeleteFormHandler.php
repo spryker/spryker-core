@@ -14,6 +14,8 @@ use Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToCategoryFacadeInterfa
 
 class CategoryDeleteFormHandler implements CategoryDeleteFormHandlerInterface
 {
+    protected const SUCCESS_MESSAGE_CATEGORY_DELETED = 'The category was deleted successfully.';
+
     /**
      * @var \Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToCategoryFacadeInterface
      */
@@ -40,7 +42,7 @@ class CategoryDeleteFormHandler implements CategoryDeleteFormHandlerInterface
         try {
             $this->categoryFacade->delete($idCategory);
             $categoryResponseTransfer
-                ->addMessage((new MessageTransfer())->setValue('The category was deleted successfully.'));
+                ->addMessage((new MessageTransfer())->setValue(static::SUCCESS_MESSAGE_CATEGORY_DELETED));
         } catch (Exception $e) {
             $categoryResponseTransfer
                 ->addMessage((new MessageTransfer())->setValue($e->getMessage()))

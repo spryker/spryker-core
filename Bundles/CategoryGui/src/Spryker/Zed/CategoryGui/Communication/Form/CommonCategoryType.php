@@ -122,7 +122,7 @@ abstract class CommonCategoryType extends AbstractType
     protected function addIsActiveField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_IS_ACTIVE, CheckboxType::class, [
-            'label' => $this->translate(static::LABEL_IS_ACTIVE),
+            'label' => static::LABEL_IS_ACTIVE,
             'required' => false,
         ]);
 
@@ -137,7 +137,7 @@ abstract class CommonCategoryType extends AbstractType
     protected function addIsInMenuField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_IS_IN_MENU, CheckboxType::class, [
-            'label' => $this->translate(static::LABEL_IS_IN_MENU),
+            'label' => static::LABEL_IS_IN_MENU,
             'required' => false,
         ]);
 
@@ -152,7 +152,7 @@ abstract class CommonCategoryType extends AbstractType
     protected function addIsSearchableField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_IS_SEARCHABLE, CheckboxType::class, [
-            'label' => $this->translate(static::LABEL_IS_SEARCHABLE),
+            'label' => static::LABEL_IS_SEARCHABLE,
             'required' => false,
         ]);
 
@@ -168,7 +168,7 @@ abstract class CommonCategoryType extends AbstractType
     protected function addTemplateField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_TEMPLATE, Select2ComboBoxType::class, [
-            'label' => $this->translate(static::LABEL_TEMPLATE),
+            'label' => static::LABEL_TEMPLATE,
             'choices' => array_flip($options[static::OPTION_CATEGORY_TEMPLATE_CHOICES]),
             'required' => true,
             'constraints' => [
@@ -220,22 +220,13 @@ abstract class CommonCategoryType extends AbstractType
      */
     protected function addFormPlugins(FormBuilderInterface $builder)
     {
-        foreach ($this->getFactory()->getCategoryFormPlugins() as $formPlugin) {
+        /** @var \Spryker\Zed\CategoryGuiExtension\Dependency\Plugin\CategoryFormPluginInterface[] $formPlugins */
+        $formPlugins = $this->getFactory()->getCategoryFormPlugins();
+
+        foreach ($formPlugins as $formPlugin) {
             $formPlugin->buildForm($builder);
         }
 
         return $this;
-    }
-
-    /**
-     * @param string $text
-     *
-     * @return string
-     */
-    protected function translate(string $text): string
-    {
-        return $this->getFactory()
-            ->getTranslatorFacade()
-            ->trans($text);
     }
 }

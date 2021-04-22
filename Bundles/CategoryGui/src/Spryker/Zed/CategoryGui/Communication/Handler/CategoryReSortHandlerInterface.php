@@ -14,5 +14,5 @@ interface CategoryReSortHandlerInterface
      *
      * @return void
      */
-    public function handle(string $categoryNodesData): void;
+    public function updateCategoryNodeOrder(string $categoryNodesData): void;
 }

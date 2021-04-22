@@ -9,64 +9,35 @@ window.serializedList = {};
 
 var categoryHelper = require('./helpers.js');
 var STORE_SELECTOR_ID = '#category_store_relation_id_stores';
-var STORE_SELECTOR_LOADER_CLASS_NAME = '.store-selector-loader';
+var STORE_SELECTOR_LOADER_CLASS_NAME = '.relation-selector-loader';
 var STORE_SELECTOR_ACTION_URL_ATTRIBUTE = 'action-url';
 var STORE_SELECTOR_ACTION_EVENT_ATTRIBUTE = 'action-event';
 var STORE_SELECTOR_ACTION_FIELD_ATTRIBUTE = 'action-field';
 
-$(document).ready(function () {
-    var triggeredFirstEvent = false;
+var SELECTOR_ROOT_NODE_TABLE = '#root-node-table';
+var SELECTOR_CATEGORY_NODE_TREE = '#category-node-tree';
+var SELECTOR_GUI_TABLE_DATA_CATEGORY = '.gui-table-data-category';
+var SELECTOR_NESTABLE = '#nestable';
+var SELECTOR_SAVE_CATEGORIES_ORDER = '.save-categories-order';
 
-    $('#root-node-table').on('click', 'tbody tr', function () {
-        categoryHelper.showLoaderBar();
-        var idCategoryNode = $(this).children('td:first').text();
-        SprykerAjax.getCategoryTreeByIdCategoryNode(idCategoryNode);
-    });
-
-    $('#category-node-tree').on('click', '.category-tree', function (event) {
-        event.preventDefault();
-        categoryHelper.showLoaderBar();
-        var idCategoryNode = $(this).attr('id').replace('node-', '');
-        SprykerAjax.getCategoryTreeByIdCategoryNode(idCategoryNode);
-    });
-
-    $('.gui-table-data-category').dataTable({
-        bFilter: false,
-        createdRow: function (row, data, index) {
-            if (triggeredFirstEvent === false) {
-                categoryHelper.showLoaderBar();
-                var idCategoryNode = data[0];
-                SprykerAjax.getCategoryTreeByIdCategoryNode(idCategoryNode);
-                triggeredFirstEvent = true;
-            }
-        },
-    });
-
-    var updateOutput = function (e) {
-        var list = e.length ? e : $(e.target);
-        window.serializedList = window.JSON.stringify(list.nestable('serialize'));
-    };
-
-    $('#nestable')
-        .nestable({
-            group: 1,
-            maxDepth: 1,
-        })
-        .on('change', updateOutput);
-
-    $('.save-categories-order').click(function () {
-        SprykerAjax.updateCategoryNodesOrder(serializedList);
-    });
-
+/**
+ * @return {void}
+ */
+var handleStoreSelector = function () {
     var storeSelector = $(STORE_SELECTOR_ID);
-    var storeSelectorLoader = storeSelector.parent().find(STORE_SELECTOR_LOADER_CLASS_NAME);
-    var storeSelectorActionUrl = storeSelector.attr(STORE_SELECTOR_ACTION_URL_ATTRIBUTE);
-    var storeSelectorActionEvent = storeSelector.attr(STORE_SELECTOR_ACTION_EVENT_ATTRIBUTE);
     var storeSelectorActionFieldName = storeSelector.attr(STORE_SELECTOR_ACTION_FIELD_ATTRIBUTE);
     var createCategoryFormName = storeSelector.closest('form')[0].name;
     var parentCategorySelector = $(`[name='${createCategoryFormName}[${storeSelectorActionFieldName}]']`);
-    var parentCategoryId = parentCategorySelector.select2('data')[0].id;
 
+    var parentCategoryData = parentCategorySelector.select2('data');
+    if (!parentCategoryData) {
+        return;
+    }
+
+    var storeSelectorLoader = storeSelector.parent().find(STORE_SELECTOR_LOADER_CLASS_NAME);
+    var storeSelectorActionUrl = storeSelector.attr(STORE_SELECTOR_ACTION_URL_ATTRIBUTE);
+    var storeSelectorActionEvent = storeSelector.attr(STORE_SELECTOR_ACTION_EVENT_ATTRIBUTE);
+    var parentCategoryId = parentCategoryData[0].id;
     if (!parentCategoryId) {
         storeSelector.prop('disabled', true);
     }
@@ -104,4 +75,57 @@ $(document).ready(function () {
 
         storeSelector.prop('disabled', true);
     });
+}
+
+$(document).ready(function () {
+    var triggeredFirstEvent = false;
+
+    var selectorRootNodeTable = $(SELECTOR_ROOT_NODE_TABLE);
+    var selectorCategoryNodeTree = $(SELECTOR_CATEGORY_NODE_TREE);
+    var selectorCategoryGuiTableDataCategory = $(SELECTOR_GUI_TABLE_DATA_CATEGORY);
+    var selectorNestable = $(SELECTOR_NESTABLE);
+    var selectorSaveCategoriesOrder = $(SELECTOR_SAVE_CATEGORIES_ORDER);
+
+    selectorRootNodeTable.on('click', 'tbody tr', function () {
+        categoryHelper.showLoaderBar();
+        var idCategoryNode = $(this).children('td:first').text();
+        SprykerAjax.getCategoryTreeByIdCategoryNode(idCategoryNode);
+    });
+
+    selectorCategoryNodeTree.on('click', '.category-tree', function (event) {
+        event.preventDefault();
+        categoryHelper.showLoaderBar();
+        var idCategoryNode = $(this).attr('id').replace('node-', '');
+        SprykerAjax.getCategoryTreeByIdCategoryNode(idCategoryNode);
+    });
+
+    selectorCategoryGuiTableDataCategory.dataTable({
+        bFilter: false,
+        createdRow: function (row, data, index) {
+            if (triggeredFirstEvent === false) {
+                categoryHelper.showLoaderBar();
+                var idCategoryNode = data[0];
+                SprykerAjax.getCategoryTreeByIdCategoryNode(idCategoryNode);
+                triggeredFirstEvent = true;
+            }
+        },
+    });
+
+    var updateOutput = function (e) {
+        var list = e.length ? e : $(e.target);
+        window.serializedList = window.JSON.stringify(list.nestable('serialize'));
+    };
+
+    selectorNestable
+        .nestable({
+            group: 1,
+            maxDepth: 1,
+        })
+        .on('change', updateOutput);
+
+    selectorSaveCategoriesOrder.click(function () {
+        SprykerAjax.updateCategoryNodesOrder(serializedList);
+    });
+
+    handleStoreSelector();
 });

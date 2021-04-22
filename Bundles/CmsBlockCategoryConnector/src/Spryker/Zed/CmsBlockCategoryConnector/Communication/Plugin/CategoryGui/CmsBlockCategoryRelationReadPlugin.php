@@ -35,8 +35,8 @@ class CmsBlockCategoryRelationReadPlugin extends AbstractPlugin implements Categ
 
     /**
      * {@inheritDoc}
-     * - Gets collection of related CMS Blocks ids and names.
-     * - Requires CategoryTransfer::idCategory and CategoryTransfer::fkCategoryTemplate to be set.
+     * - Gets a collection of related CMS Block names indexed by `idCmsBlock`.
+     * - Requires `CategoryTransfer::idCategory` and `CategoryTransfer::fkCategoryTemplate` to be set.
      *
      * @api
      *

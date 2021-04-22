@@ -21,7 +21,9 @@ class CmsBlockCategoryCategoryRelationPlugin extends AbstractPlugin implements C
 {
     /**
      * {@inheritDoc}
-     * - Updates categories to CMS blocks relations.
+     * - Perform actions based on `Category` transfer.
+     * - Delete all relations categories to CMS blocks.
+     * - Add new relations defined in the transfer object.
      *
      * @api
      *

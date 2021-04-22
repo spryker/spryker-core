@@ -5,23 +5,23 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Store\Communication\Form\DataProvider;
+namespace Spryker\Zed\StoreGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\StoreRelationTransfer;
-use Spryker\Zed\Store\Business\StoreFacadeInterface;
-use Spryker\Zed\Store\Communication\Form\Type\StoreRelationDropdownType;
+use Spryker\Zed\StoreGui\Communication\Form\Type\StoreRelationDropdownType;
+use Spryker\Zed\StoreGui\Dependency\Facade\StoreGuiToStoreFacadeInterface;
 
 class StoreRelationDropdownDataProvider
 {
     /**
-     * @var \Spryker\Zed\Store\Business\StoreFacadeInterface
+     * @var \Spryker\Zed\StoreGui\Dependency\Facade\StoreGuiToStoreFacadeInterface
      */
     protected $storeFacade;
 
     /**
-     * @param \Spryker\Zed\Store\Business\StoreFacadeInterface $storeFacade
+     * @param \Spryker\Zed\StoreGui\Dependency\Facade\StoreGuiToStoreFacadeInterface $storeFacade
      */
-    public function __construct(StoreFacadeInterface $storeFacade)
+    public function __construct(StoreGuiToStoreFacadeInterface $storeFacade)
     {
         $this->storeFacade = $storeFacade;
     }
@@ -49,6 +49,7 @@ class StoreRelationDropdownDataProvider
             StoreRelationDropdownType::OPTION_ATTRIBUTE_ACTION_EVENT => '',
             StoreRelationDropdownType::OPTION_ATTRIBUTE_ACTION_FIELD => '',
             StoreRelationDropdownType::OPTION_STORE_CHOICES => $this->getStoreNameMap(),
+            StoreRelationDropdownType::OPTION_EXTENDED => true,
         ];
     }
 

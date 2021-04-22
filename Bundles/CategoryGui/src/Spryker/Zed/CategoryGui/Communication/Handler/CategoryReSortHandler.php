@@ -12,6 +12,8 @@ use Spryker\Zed\CategoryGui\Dependency\Service\CategoryGuiToUtilEncodingServiceI
 
 class CategoryReSortHandler implements CategoryReSortHandlerInterface
 {
+    protected const KEY_ID = 'id';
+
     /**
      * @var \Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToCategoryFacadeInterface
      */
@@ -39,14 +41,14 @@ class CategoryReSortHandler implements CategoryReSortHandlerInterface
      *
      * @return void
      */
-    public function handle(string $categoryNodesData): void
+    public function updateCategoryNodeOrder(string $categoryNodesData): void
     {
         $categoryNodesToReorder = $this->utilEncodingService->decodeJson($categoryNodesData, true);
 
         $positionCursor = count($categoryNodesToReorder);
 
         foreach ($categoryNodesToReorder as $nodeData) {
-            $idCategoryNode = (int)$nodeData['id'];
+            $idCategoryNode = (int)$nodeData[static::KEY_ID];
             $this->categoryFacade->updateCategoryNodeOrder($idCategoryNode, $positionCursor);
 
             $positionCursor--;

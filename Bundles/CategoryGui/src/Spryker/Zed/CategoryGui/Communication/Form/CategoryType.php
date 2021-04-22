@@ -84,7 +84,7 @@ class CategoryType extends CommonCategoryType
     {
         $builder->add(static::FIELD_PARENT_CATEGORY_NODE, Select2ComboBoxType::class, [
             'property_path' => static::OPTION_PROPERTY_PATH_PARENT_CATEGORY_NODE,
-            'label' => $this->translate(static::LABEL_PARENT_CATEGORY_NODE),
+            'label' => static::LABEL_PARENT_CATEGORY_NODE,
             'choices' => $choices,
             'choice_label' => 'name',
             'choice_value' => 'idCategoryNode',
@@ -104,7 +104,7 @@ class CategoryType extends CommonCategoryType
     protected function addExtraParentsField(FormBuilderInterface $builder, array $choices)
     {
         $builder->add(static::FIELD_EXTRA_PARENTS, Select2ComboBoxType::class, [
-            'label' => $this->translate(static::LABEL_EXTRA_PARENTS),
+            'label' => static::LABEL_EXTRA_PARENTS,
             'choices' => $choices,
             'choice_label' => 'name',
             'choice_value' => 'idCategoryNode',

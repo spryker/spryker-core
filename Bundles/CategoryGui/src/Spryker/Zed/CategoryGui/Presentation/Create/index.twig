@@ -11,21 +11,17 @@
 {% endblock %}
 
 {% block content %}
-
     {% embed '@Gui/Partials/widget.twig' %}
         {% block widget_content %}
-
             {{ form_start(categoryForm) }}
-                {% do categoryForm.localized_attributes.setRendered %}
-                {{ tabs(categoryFormTabs, {
-                    'categoryForm': categoryForm,
-                    'currentLocale': currentLocale
-                }) }}
+            {% do categoryForm.localized_attributes.setRendered %}
+            {{ tabs(categoryFormTabs, {
+                'categoryForm': categoryForm,
+                'currentLocale': currentLocale,
+            }) }}
             {{ form_end(categoryForm) }}
-
         {% endblock %}
     {% endembed %}
-
 {% endblock %}
 
 {% block head_css %}

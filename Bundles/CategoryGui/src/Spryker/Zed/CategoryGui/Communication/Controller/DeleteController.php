@@ -10,7 +10,6 @@ namespace Spryker\Zed\CategoryGui\Communication\Controller;
 use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryNodeUrlCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
-use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeCollectionTransfer;
 use Spryker\Zed\CategoryGui\Communication\Form\DeleteType;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,11 +26,6 @@ class DeleteController extends CategoryAbstractController
      * @uses \Spryker\Zed\CategoryGui\Communication\Controller\ListController::indexAction()
      */
     protected const ROUTE_CATEGORY_LIST = '/category-gui/list';
-
-    /**
-     * @var \Generated\Shared\Transfer\LocaleTransfer|null
-     */
-    protected $currentLocale;
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -85,7 +79,7 @@ class DeleteController extends CategoryAbstractController
             return null;
         }
 
-        return $this->findCategory($categoryTransfer->getParentCategoryNode()->getFkCategory());
+        return $this->findCategory($categoryTransfer->getParentCategoryNodeOrFail()->getFkCategoryOrFail());
     }
 
     /**
@@ -123,8 +117,8 @@ class DeleteController extends CategoryAbstractController
     {
         $categoryNodeIds = [];
 
-        foreach ($categoryTransfer->getNodeCollection()->getNodes() as $nodeTransfer) {
-            $categoryNodeIds[] = $nodeTransfer->getIdCategoryNode();
+        foreach ($categoryTransfer->getNodeCollectionOrFail()->getNodes() as $nodeTransfer) {
+            $categoryNodeIds[] = $nodeTransfer->getIdCategoryNodeOrFail();
         }
 
         $categoryNodeUrlCriteriaTransfer = (new CategoryNodeUrlCriteriaTransfer())
@@ -142,6 +136,8 @@ class DeleteController extends CategoryAbstractController
     {
         $relations = [];
         $localeTransfer = $this->getCurrentLocale();
+
+        /** @var \Spryker\Zed\CategoryGuiExtension\Dependency\Plugin\CategoryRelationReadPluginInterface[] $categoryRelationReadPlugins */
         $categoryRelationReadPlugins = $this->getFactory()->getCategoryRelationReadPlugins();
 
         foreach ($categoryRelationReadPlugins as $categoryRelationReadPlugin) {
@@ -167,17 +163,5 @@ class DeleteController extends CategoryAbstractController
         }
 
         return $categoryNodeCollectionTransfer->getNodes()->offsetGet(0)->getChildrenNodes() ?? new NodeCollectionTransfer();
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\LocaleTransfer
-     */
-    protected function getCurrentLocale(): LocaleTransfer
-    {
-        if (!$this->currentLocale) {
-            $this->currentLocale = $this->getFactory()->getLocaleFacade()->getCurrentLocale();
-        }
-
-        return $this->currentLocale;
     }
 }

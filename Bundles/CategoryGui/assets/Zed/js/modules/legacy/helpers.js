@@ -5,14 +5,23 @@
 
 'use strict';
 
+var SELECTOR_CATEGORY_LOADER = '#category-loader';
+var SELECTOR_CATEGORY_NODE_TREE = '#category-node-tree';
+var SELECTOT_CATEGORY_LIST = '#categories-list';
+
 var showLoaderBar = function () {
-    $('#category-loader').removeClass('hidden');
+    $(SELECTOR_CATEGORY_LOADER).removeClass('hidden');
 };
 
 var closeLoaderBar = function () {
-    $('#category-loader').addClass('hidden');
+    $(SELECTOR_CATEGORY_LOADER).addClass('hidden');
 };
 
+/**
+ * @param idCategoryNode
+ *
+ * @return {void}
+ */
 SprykerAjax.getCategoryTreeByIdCategoryNode = function (idCategoryNode) {
     var options = {
         'id-category-node': idCategoryNode,
@@ -20,6 +29,11 @@ SprykerAjax.getCategoryTreeByIdCategoryNode = function (idCategoryNode) {
     this.setUrl('/category/index/node').setDataType('html').ajaxSubmit(options, 'displayCategoryNodesTree');
 };
 
+/**
+ * @param ajaxResponse
+ *
+ * @return {void}
+ */
 SprykerAjax.updateCategoryNodesOrder = function (serializedCategoryNodes) {
     showLoaderBar();
     this.setUrl('/category/node/reorder').ajaxSubmit(
@@ -30,32 +44,35 @@ SprykerAjax.updateCategoryNodesOrder = function (serializedCategoryNodes) {
     );
 };
 
-/*
+/**
  * @param ajaxResponse
- * @returns string
+ *
+ * @return {void}
  */
 SprykerAjaxCallbacks.displayCategoryNodesTree = function (ajaxResponse) {
-    $('#category-node-tree').removeClass('hidden');
-    $('#categories-list').html(ajaxResponse);
+    $(SELECTOR_CATEGORY_NODE_TREE).removeClass('hidden');
+    $(SELECTOT_CATEGORY_LIST).html(ajaxResponse);
     closeLoaderBar();
 };
 
+/**
+ * @param ajaxResponse
+ *
+ * @return {boolean}
+ */
 SprykerAjaxCallbacks.updateCategoryNodesOrder = function (ajaxResponse) {
     closeLoaderBar();
-    if (ajaxResponse.code === this.codeSuccess) {
-        swal({
-            title: 'Success',
-            text: ajaxResponse.message,
-            type: 'success',
-        });
-        return true;
-    }
 
+    var isSuccessResponse = ajaxResponse.code === this.codeSuccess;
+    var alertTitle = isSuccessResponse ? 'Success' : 'Error';
+    var alertType = isSuccessResponse ? 'success' : 'error';
     swal({
-        title: 'Error',
+        title: alertTitle,
         text: ajaxResponse.message,
-        type: 'error',
+        type: alertType,
     });
+
+    return isSuccessResponse;
 };
 
 module.exports = {

@@ -65,7 +65,7 @@ class EditController extends CategoryAbstractController
 
         return $this->viewResponse([
             'categoryForm' => $form->createView(),
-            'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale()->getLocaleName(),
+            'currentLocale' => $this->getCurrentLocale()->getLocaleName(),
             'idCategory' => $this->castId($request->query->get(static::REQUEST_PARAM_ID_CATEGORY)),
             'categoryFormTabs' => $this->getFactory()->createCategoryFormTabs()->createView(),
         ]);

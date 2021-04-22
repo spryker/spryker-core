@@ -190,10 +190,7 @@ class CategoryGuiCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCategoryFormTabs(): TabsInterface
     {
-        return new CategoryFormTabs(
-            $this->getCategoryFormTabExpanderPlugins(),
-            $this->getTranslatorFacade()
-        );
+        return new CategoryFormTabs($this->getCategoryFormTabExpanderPlugins());
     }
 
     /**
@@ -224,7 +221,7 @@ class CategoryGuiCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\CategoryGui\Communication\Finder\CategoryStoreWithStateFinderInterface
      */
-    public function createCategoryStoreWithSateFinder(): CategoryStoreWithStateFinderInterface
+    public function createCategoryStoreWithStateFinder(): CategoryStoreWithStateFinderInterface
     {
         return new CategoryStoreWithStateFinder(
             $this->getCategoryFacade(),
@@ -239,7 +236,7 @@ class CategoryGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createCategoryStoreRelationFieldEventSubscriber(): EventSubscriberInterface
     {
         return new CategoryStoreRelationFieldEventSubscriber(
-            $this->createCategoryStoreWithSateFinder(),
+            $this->createCategoryStoreWithStateFinder(),
             $this->getStoreRelationFormTypePlugin()
         );
     }

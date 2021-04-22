@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Store\Communication\Form\Type;
+namespace Spryker\Zed\StoreGui\Communication\Form\Type;
 
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
@@ -16,18 +16,11 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * @method \Spryker\Zed\Store\Business\StoreFacadeInterface getFacade()
- * @method \Spryker\Zed\Store\Communication\StoreCommunicationFactory getFactory()
- * @method \Spryker\Zed\Store\StoreConfig getConfig()
- * @method \Spryker\Zed\Store\Persistence\StoreQueryContainerInterface getQueryContainer()
- * @method \Spryker\Zed\Store\Persistence\StoreRepositoryInterface getRepository()
+ * @method \Spryker\Zed\StoreGui\StoreGuiConfig getConfig()
+ * @method \Spryker\Zed\StoreGui\Communication\StoreGuiCommunicationFactory getFactory()
  */
 class StoreRelationDropdownType extends AbstractType
 {
-    public const FIELD_ID_ENTITY = 'id_entity';
-    public const FIELD_ID_STORES = 'id_stores';
-    public const FIELD_ID_STORES_DISABLED = 'id_stores_disabled';
-
     public const OPTION_INACTIVE_CHOICES = 'inactive_choices';
     public const OPTION_DATA_CLASS = 'data_class';
     public const OPTION_STORE_CHOICES = 'store_choices';
@@ -36,9 +29,17 @@ class StoreRelationDropdownType extends AbstractType
     public const OPTION_ATTRIBUTE_ACTION_EVENT = 'action_event';
     public const OPTION_ATTRIBUTE_ACTION_FIELD = 'action_field';
 
+    public const OPTION_EXTENDED = 'extended';
+
+    protected const FIELD_ID_ENTITY = 'id_entity';
+    protected const FIELD_ID_STORES = 'id_stores';
+    protected const FIELD_ID_STORES_DISABLED = 'id_stores_disabled';
+
     protected const LABEL_STORES = 'Stores';
 
-    protected const MESSAGE_MULTI_STORE_PER_ZED_DISABLED = 'Multi-store per Zed feature is disabled';
+    protected const MESSAGE_MULTI_STORE_PER_ZED_DISABLED = 'Stores (Multi-store per Zed feature is disabled)';
+
+    protected const BLOCK_PREFIX = 'relation_dropdown';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -67,11 +68,19 @@ class StoreRelationDropdownType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults(
-            $this->getFactory()
-                ->createStoreRelationDropdownDataProvider()
-                ->getOptions()
-        );
+        $options = $this->getFactory()
+            ->createStoreRelationDropdownDataProvider()
+            ->getOptions();
+
+        $resolver->setDefaults($options);
+    }
+
+    /**
+     * @return string
+     */
+    public function getBlockPrefix(): string
+    {
+        return static::BLOCK_PREFIX;
     }
 
     /**
@@ -110,7 +119,7 @@ class StoreRelationDropdownType extends AbstractType
      */
     protected function addFieldIdStores(FormBuilderInterface $builder, array $options)
     {
-        if ($this->getConfig()->isMultiStorePerZedEnabled()) {
+        if ($this->getFactory()->getStoreFacade()->isMultiStorePerZedEnabled()) {
             $this->addFieldEditableIdStores($builder, $options);
 
             return $this;
@@ -140,6 +149,7 @@ class StoreRelationDropdownType extends AbstractType
                     static::OPTION_ATTRIBUTE_ACTION_URL => $options[static::OPTION_ATTRIBUTE_ACTION_URL],
                     static::OPTION_ATTRIBUTE_ACTION_EVENT => $options[static::OPTION_ATTRIBUTE_ACTION_EVENT],
                     static::OPTION_ATTRIBUTE_ACTION_FIELD => $options[static::OPTION_ATTRIBUTE_ACTION_FIELD],
+                    static::OPTION_EXTENDED => $options[static::OPTION_EXTENDED],
                 ],
                 'choice_attr' => function ($idStore) use ($options) {
                     return [
@@ -160,17 +170,18 @@ class StoreRelationDropdownType extends AbstractType
      */
     protected function addFieldImmutableIdStores(FormBuilderInterface $builder, array $options)
     {
-        $storeToggleName = sprintf('%s (%s)', static::LABEL_STORES, static::MESSAGE_MULTI_STORE_PER_ZED_DISABLED);
-
         $builder->add(
             static::FIELD_ID_STORES_DISABLED,
             Select2ComboBoxType::class,
             [
-                'label' => $storeToggleName,
+                'label' => static::MESSAGE_MULTI_STORE_PER_ZED_DISABLED,
                 'disabled' => true,
                 'property_path' => static::FIELD_ID_STORES,
                 'multiple' => true,
                 'choices' => array_flip($options[static::OPTION_STORE_CHOICES]),
+                'attr' => [
+                    static::OPTION_EXTENDED => $options[static::OPTION_EXTENDED],
+                ],
             ]
         );
 

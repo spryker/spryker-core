@@ -1,8 +1,14 @@
+{# @var nodeCollection \Generated\Shared\Transfer\NodeCollectionTransfer #}
+{# @var childNodes \Generated\Shared\Transfer\NodeCollectionTransfer #}
+{# @var node \Generated\Shared\Transfer\NodeTransfer #}
+{# @var category \Generated\Shared\Transfer\CategoryTransfer #}
+{# @var parentCategory \Generated\Shared\Transfer\CategoryTransfer #}
+{# @var url \Generated\Shared\Transfer\UrlTransfer #}
+
 {% extends '@Gui/Layout/layout.twig' %}
 
 {% if submit_title is not defined %}
-    {% set widget_title = 'Delete category' | trans %}
-    {% set widget_title = widget_title ~ ': ' ~ category.localizedAttributes[0].name %}
+    {% set widget_title = 'Delete category' | trans ~ ': ' ~ category.localizedAttributes[0].name %}
 {% endif %}
 
 {% if idCategory is not defined %}
@@ -12,31 +18,27 @@
 {% block head_title -%}
     {{ widget_title | trans }} {% if idCategory > 0 %} [{{ idCategory }}] {% endif %}
 {%- endblock %}
+
 {% block section_title %}{{ widget_title }}{% endblock %}
 
 {% block action %}
-    {% include ['@CategoryGui/_partials/back-button.twig'] %}
+    {% include '@CategoryGui/_partials/back-button.twig' %}
 {% endblock %}
 
 {% block content %}
-
     {% embed '@Gui/Partials/widget.twig' %}
-
         {% block widget_content %}
-
             {{ form_start(form) }}
-
             {{ form_errors(form) }}
-
             {{ form_rest(form) }}
 
-            <input
-                type="submit"
-                class="btn btn-primary safe-submit"
-                value="{{ 'Delete' | trans }}"
-                disabled="disabled"
+            <button
                 id="submit_delete"
-            />
+                class="btn btn-primary safe-submit"
+                disabled="disabled"
+            >
+                {{ 'Delete' | trans }}
+            </button>
             <label for="delete_confirm">
                 <input type="checkbox" id="delete_confirm"/>
                 {{ 'Yes, I am sure' | trans }}
@@ -48,19 +50,16 @@
                 <ol class="dd-list">
                     {% for node in nodes %}
                         <li class="dd-item">
-                                <span class="dd-handle">
-                                    {{ node.text }}
-                                </span>
-
-                            {% if node.children is defined and node.children|length > 0 %}
+                            <span class="dd-handle">
+                                {{ node.text }}
+                            </span>
+                            {% if node.children is defined and node.children | length %}
                                 {{ _self.tree(node.children) }}
                             {% endif %}
                         </li>
                     {% endfor %}
                 </ol>
             {% endmacro %}
-
-            {% import _self as tree %}
 
             {% macro nodeCollectionTree(nodeCollection) %}
                 <ol class="dd-list">
@@ -70,7 +69,7 @@
                                 {{ node.category.localizedAttributes[0].name }}
                             </span>
 
-                            {% if node.childrenNodes is defined and node.childrenNodes | length > 0 %}
+                            {% if node.childrenNodes is defined and node.childrenNodes | length %}
                                 {{ _self.nodeCollectionTree(node.childrenNodes) }}
                             {% endif %}
                         </li>
@@ -84,7 +83,7 @@
                 {% if parentCategory is not empty and childNodes is defined and childNodes.nodes | length > 0 %}
                     <br />
                     <p>
-                        {% if category.categoryNode.isMain %} {{ 'Main' | trans }} {% else %} {{ 'Extra parent' | trans }} {% endif %}
+                        {{ (category.categoryNode.isMain ? 'Main' : 'Extra parent') | trans }}
                         {{ 'category will be moved to' | trans }} <em>{{ parentCategory.localizedAttributes[0].name }}</em>
                     </p>
                     <ol class="dd-list">

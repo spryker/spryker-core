@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CategoryGui\Communication\Controller;
 
 use ArrayObject;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 
 /**
@@ -17,6 +18,11 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 abstract class CategoryAbstractController extends AbstractController
 {
     /**
+     * @var \Generated\Shared\Transfer\LocaleTransfer|null
+     */
+    protected $currentLocale;
+
+    /**
      * @param \ArrayObject|\Generated\Shared\Transfer\MessageTransfer[] $messageTransfers
      *
      * @return void
@@ -24,7 +30,7 @@ abstract class CategoryAbstractController extends AbstractController
     protected function addSuccessMessages(ArrayObject $messageTransfers): void
     {
         foreach ($messageTransfers as $messageTransfer) {
-            $this->addSuccessMessage($messageTransfer->getValue());
+            $this->addSuccessMessage($messageTransfer->getValueOrFail());
         }
     }
 
@@ -36,7 +42,19 @@ abstract class CategoryAbstractController extends AbstractController
     protected function addErrorMessages(ArrayObject $messageTransfers): void
     {
         foreach ($messageTransfers as $messageTransfer) {
-            $this->addErrorMessage($messageTransfer->getValue());
+            $this->addErrorMessage($messageTransfer->getValueOrFail());
         }
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    protected function getCurrentLocale(): LocaleTransfer
+    {
+        if (!$this->currentLocale) {
+            $this->currentLocale = $this->getFactory()->getLocaleFacade()->getCurrentLocale();
+        }
+
+        return $this->currentLocale;
     }
 }

@@ -15,6 +15,8 @@ use Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToCategoryFacadeInterfa
 
 class CategoryCreateFormHandler implements CategoryCreateFormHandlerInterface
 {
+    protected const SUCCESS_MESSAGE_CATEGORY_ADDED = 'The category was added successfully.';
+
     /**
      * @var \Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToCategoryFacadeInterface
      */
@@ -42,7 +44,7 @@ class CategoryCreateFormHandler implements CategoryCreateFormHandlerInterface
         try {
             $this->categoryFacade->create($categoryTransfer);
             $categoryResponseTransfer
-                ->addMessage((new MessageTransfer())->setValue('The category was added successfully.'));
+                ->addMessage((new MessageTransfer())->setValue(static::SUCCESS_MESSAGE_CATEGORY_ADDED));
         } catch (Exception $e) {
             $categoryResponseTransfer
                 ->addMessage((new MessageTransfer())->setValue($e->getMessage()))

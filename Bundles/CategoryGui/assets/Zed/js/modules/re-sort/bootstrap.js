@@ -8,10 +8,13 @@
 var writer = require('./writer');
 var progressBar = require('../shared/progress-bar');
 
+var SELECTOR_CATEGORY_LIST = '#category-list';
+var SELECTOR_SAVE_BUTTON = '#save-button';
+
 jQuery(document).ready(function () {
     progressBar.setSelector('#progress-bar');
 
-    var categoryNestable = jQuery('#category-list').nestable({
+    var categoryNestable = jQuery(SELECTOR_CATEGORY_LIST).nestable({
         depth: 1,
     });
 
@@ -20,7 +23,7 @@ jQuery(document).ready(function () {
         window.serializedList = window.JSON.stringify(list.nestable('serialize'));
     });
 
-    jQuery('#save-button').on('click', function () {
+    jQuery(SELECTOR_SAVE_BUTTON).on('click', function () {
         writer.save(window.serializedList, progressBar);
     });
 });

@@ -45,7 +45,7 @@ class CreateController extends CategoryAbstractController
 
         return $this->viewResponse([
             'categoryForm' => $form->createView(),
-            'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale()->getLocaleName(),
+            'currentLocale' => $this->getCurrentLocale()->getLocaleName(),
             'categoryFormTabs' => $this->getFactory()->createCategoryFormTabs()->createView(),
         ]);
     }
@@ -70,7 +70,7 @@ class CreateController extends CategoryAbstractController
         $this->addSuccessMessages($categoryResponseTransfer->getMessages());
 
         return $this->redirectResponse(
-            $this->createSuccessRedirectUrl($categoryResponseTransfer->getCategory()->getIdCategory())
+            $this->createSuccessRedirectUrl($categoryResponseTransfer->getCategoryOrFail()->getIdCategoryOrFail())
         );
     }
 
