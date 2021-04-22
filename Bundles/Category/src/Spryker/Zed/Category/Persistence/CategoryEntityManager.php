@@ -19,12 +19,15 @@ use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\Join;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
+use Spryker\Zed\Propel\Persistence\BatchProcessor\ActiveRecordBatchProcessorTrait;
 
 /**
  * @method \Spryker\Zed\Category\Persistence\CategoryPersistenceFactory getFactory()
  */
 class CategoryEntityManager extends AbstractEntityManager implements CategoryEntityManagerInterface
 {
+    use ActiveRecordBatchProcessorTrait;
+
     /**
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
@@ -74,8 +77,15 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
      */
     protected function insertCategoryStoreRelationForStoresChunk(array $idsCategory, array $storeIds)
     {
-        $propelCollection = new ObjectCollection();
-        $propelCollection->setModel(SpyCategoryStore::class);
+        $idsCategory = array_unique($idsCategory);
+
+        if ($storeIds) {
+            $this->getFactory()
+                ->createCategoryStoreQuery()
+                ->filterByFkCategory_in($idsCategory)
+                ->filterByFkStore_In($storeIds)
+                ->delete();
+        }
 
         foreach ($idsCategory as $idCategory) {
             foreach ($storeIds as $storeId) {
@@ -84,11 +94,11 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
                     ->setFkCategory($idCategory)
                     ->setFkStore($storeId);
 
-                $propelCollection->append($categoryStoreEntity);
+                $this->persist($categoryStoreEntity);
             }
         }
 
-        $propelCollection->save();
+        $this->commit();
     }
 
     /**
@@ -100,7 +110,8 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
     {
         $idCategoryNode = $nodeTransfer->getIdCategoryNodeOrFail();
 
-        $this->createCategoryClosureTable($idCategoryNode, $idCategoryNode);
+        $categoryClosureTableEntity = $this->createCategoryClosureTableEntity($idCategoryNode, $idCategoryNode);
+        $categoryClosureTableEntity->save();
     }
 
     /**
@@ -119,14 +130,19 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
             ->find();
 
         foreach ($categoryClosureTableEntities as $categoryClosureTableEntity) {
-            $this->createCategoryClosureTable(
+            $categoryClosureTableEntity = $this->createCategoryClosureTableEntity(
                 $categoryClosureTableEntity->getFkCategoryNode(),
                 $idCategoryNode,
                 $categoryClosureTableEntity->getDepth() + 1
             );
+
+            $this->persist($categoryClosureTableEntity);
         }
 
-        $this->createCategoryClosureTable($idCategoryNode, $idCategoryNode);
+        $categoryClosureTableEntity = $this->createCategoryClosureTableEntity($idCategoryNode, $idCategoryNode);
+
+        $this->persist($categoryClosureTableEntity);
+        $this->commit();
     }
 
     /**
@@ -149,6 +165,8 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
         foreach ($categoryClosureTableEntities as $categoryClosureTableEntity) {
             $this->createCategoryClosureTableParentEntries($parentCategoryClosureTableEntities, $categoryClosureTableEntity);
         }
+
+        $this->commit();
     }
 
     /**
@@ -371,7 +389,6 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
             ->createCategoryStoreQuery()
             ->filterByFkCategory_in($idsCategory)
             ->filterByFkStore_In($storeIds)
-            ->find()
             ->delete();
     }
 
@@ -387,11 +404,13 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
     ): void {
         foreach ($parentCategoryClosureTableEntities as $parentCategoryClosureTableEntity) {
             $depth = $categoryClosureTableEntity->getDepth() + $parentCategoryClosureTableEntity->getDepth() + 1;
-            $this->createCategoryClosureTable(
+            $categoryClosureTableEntity = $this->createCategoryClosureTableEntity(
                 $parentCategoryClosureTableEntity->getFkCategoryNode(),
                 $categoryClosureTableEntity->getFkCategoryNodeDescendant(),
                 $depth
             );
+
+            $this->persist($categoryClosureTableEntity);
         }
     }
 
@@ -400,15 +419,16 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
      * @param int $idCategoryNodeDescendant
      * @param int $depth
      *
-     * @return void
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryClosureTable
      */
-    protected function createCategoryClosureTable(int $idCategoryNode, int $idCategoryNodeDescendant, int $depth = 0): void
-    {
-        $pathEntity = (new SpyCategoryClosureTable())
+    protected function createCategoryClosureTableEntity(
+        int $idCategoryNode,
+        int $idCategoryNodeDescendant,
+        int $depth = 0
+    ): SpyCategoryClosureTable {
+        return (new SpyCategoryClosureTable())
             ->setFkCategoryNode($idCategoryNode)
             ->setFkCategoryNodeDescendant($idCategoryNodeDescendant)
             ->setDepth($depth);
-
-        $pathEntity->save();
     }
 }

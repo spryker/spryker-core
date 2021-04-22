@@ -40,6 +40,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
     protected const KEY_NAME = 'name';
     protected const KEY_CATEGORY_KEY = 'category_key';
     protected const COL_FK_LOCALE = 'fk_locale';
+    protected const KEY_FK_PARENT_CATEGORY_NODE = 'fk_parent_category_node';
 
     public const NODE_PATH_GLUE = '/';
     public const CATEGORY_NODE_PATH_GLUE = ' / ';
@@ -71,6 +72,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
                 $localeTransfer->getIdLocale(),
                 Criteria::EQUAL
             )
+            ->filterByIdCategory(1) // TODO: remove it before merging to dev branch.
             ->find();
 
         return $this->getFactory()
@@ -275,25 +277,19 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
      *
      * @return int
      */
-    public function getCategoryNodeChildCountByParentNodeId(
-        CategoryTransfer $categoryTransfer
-    ): int {
-        /** @var \Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery $categoryClosureTableQuery */
-        $categoryClosureTableQuery = $this->getFactory()
+    public function getCategoryNodeChildCountByParentNodeId(CategoryTransfer $categoryTransfer): int
+    {
+        return $this->getFactory()
             ->createCategoryClosureTableQuery()
             ->leftJoinWithDescendantNode()
             ->useNodeQuery('node')
-            ->filterByFkCategory($categoryTransfer->getIdCategoryOrFail())
-            ->endUse();
-
-        $categoryClosureTableQuery
+                ->filterByFkCategory($categoryTransfer->getIdCategoryOrFail())
+            ->endUse()
             ->useDescendantNodeQuery()
-            ->leftJoinWithCategory()
-            ->endUse();
-
-        $categoryClosureTableQuery->filterByDepth(0, Criteria::NOT_EQUAL);
-
-        return $categoryClosureTableQuery->count();
+                ->leftJoinWithCategory()
+            ->endUse()
+            ->filterByDepth(0, Criteria::NOT_EQUAL)
+            ->count();
     }
 
     /**
@@ -312,7 +308,12 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
             ->leftJoinWithDescendantNode()
             ->useNodeQuery('node')
                 ->filterByFkCategory($categoryTransfer->getIdCategoryOrFail())
-            ->endUse();
+            ->endUse()
+            ->useDescendantNodeQuery()
+                ->leftJoinWithCategory()
+                ->orderByNodeOrder(Criteria::DESC)
+            ->endUse()
+            ->filterByDepth(0, Criteria::NOT_EQUAL);
 
         if ($categoryCriteriaTransfer->getLimit() !== null && $categoryCriteriaTransfer->getOffset() !== null) {
             $categoryClosureTableQuery
@@ -320,25 +321,18 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
                 ->offset($categoryCriteriaTransfer->getOffset());
         }
 
-        $categoryClosureTableQuery
-            ->useDescendantNodeQuery()
-                ->leftJoinWithCategory()
-                ->orderByNodeOrder(Criteria::DESC)
-            ->endUse();
-
-        $categoryClosureTableQuery->filterByDepth(0, Criteria::NOT_EQUAL);
+        $categoryNodeIds = [];
         $categoryClosureTableEntities = $categoryClosureTableQuery->find();
 
         if (!$categoryClosureTableEntities->count()) {
-            return [];
+            return $categoryNodeIds;
         }
 
-        $categoryIds = [];
-        foreach ($categoryClosureTableEntities as $categoryClosureTable) {
-            $categoryIds[] = $categoryClosureTable->getDescendantNode()->getIdCategoryNode();
+        foreach ($categoryClosureTableEntities as $categoryClosureTableEntity) {
+            $categoryNodeIds[] = $categoryClosureTableEntity->getDescendantNode()->getIdCategoryNode();
         }
 
-        return $categoryIds;
+        return $categoryNodeIds;
     }
 
     /**
@@ -445,6 +439,52 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
             ->withColumn(SpyCategoryAttributeTableMap::COL_FK_LOCALE, static::COL_FK_LOCALE);
 
         return $nodeQuery->find()->toArray();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryNodeUrlPathCriteriaTransfer $categoryNodeUrlPathCriteriaTransfer
+     *
+     * @return array
+     */
+    public function getBulkCategoryNodeUrlPathParts(
+        CategoryNodeUrlPathCriteriaTransfer $categoryNodeUrlPathCriteriaTransfer
+    ): array {
+        $categoryNodeQuery = $this->getFactory()->createCategoryNodeQuery();
+
+        if ($categoryNodeUrlPathCriteriaTransfer->getExcludeRootNode()) {
+            $categoryNodeQuery->filterByIsRoot(false);
+        }
+
+        $categoryNodeQuery
+            ->useClosureTableQuery()
+                ->orderByFkCategoryNodeDescendant(Criteria::DESC)
+                ->orderByDepth(Criteria::DESC)
+                ->filterByFkCategoryNodeDescendant_In($categoryNodeUrlPathCriteriaTransfer->getCategoryNodeDescendantIds())
+                ->filterByDepth($categoryNodeUrlPathCriteriaTransfer->getOnlyParents() ? 0 : null, Criteria::NOT_EQUAL)
+            ->endUse()
+            ->useCategoryQuery()
+                ->useAttributeQuery()
+                    ->filterByFkLocale($categoryNodeUrlPathCriteriaTransfer->getIdLocaleOrFail())
+                ->endUse()
+            ->endUse()
+            ->withColumn(SpyCategoryNodeTableMap::COL_FK_CATEGORY, static::KEY_FK_CATEGORY)
+            ->withColumn(SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE, static::KEY_ID_CATEGORY_NODE)
+            ->withColumn(SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE_DESCENDANT, static::KEY_FK_CATEGORY_NODE_DESCENDANT)
+            ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, static::KEY_NAME)
+            ->withColumn(SpyCategoryTableMap::COL_CATEGORY_KEY, static::KEY_CATEGORY_KEY)
+            ->withColumn(SpyCategoryAttributeTableMap::COL_FK_LOCALE, static::COL_FK_LOCALE)
+            ->withColumn(SpyCategoryNodeTableMap::COL_FK_PARENT_CATEGORY_NODE, static::KEY_FK_PARENT_CATEGORY_NODE)
+            ->select([
+                static::KEY_FK_CATEGORY,
+                static::KEY_ID_CATEGORY_NODE,
+                static::KEY_FK_CATEGORY_NODE_DESCENDANT,
+                static::KEY_NAME,
+                static::KEY_CATEGORY_KEY,
+                static::COL_FK_LOCALE,
+                static::KEY_FK_PARENT_CATEGORY_NODE,
+            ]);
+
+        return $categoryNodeQuery->find()->toArray(static::KEY_FK_CATEGORY_NODE_DESCENDANT);
     }
 
     /**
@@ -655,6 +695,23 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
         return $this->getFactory()
             ->createCategoryNodeMapper()
             ->mapCategoryNode($categoryNodeEntity, new NodeTransfer());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return string|null
+     */
+    public function findCategoryName(CategoryTransfer $categoryTransfer, LocaleTransfer $localeTransfer): ?string
+    {
+        $categoryAttributeEntity = $this->getFactory()
+            ->createCategoryAttributeQuery()
+            ->filterByFkCategory($categoryTransfer->getIdCategoryOrFail())
+            ->filterByFkLocale($localeTransfer->getIdLocaleOrFail())
+            ->findOne();
+
+        return $categoryAttributeEntity ? $categoryAttributeEntity->getName() : null;
     }
 
     /**

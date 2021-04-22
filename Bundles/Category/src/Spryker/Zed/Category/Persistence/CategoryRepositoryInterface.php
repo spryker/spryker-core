@@ -125,6 +125,13 @@ interface CategoryRepositoryInterface
     public function getCategoryNodeUrlPathParts(CategoryNodeUrlPathCriteriaTransfer $categoryNodeUrlPathCriteriaTransfer): array;
 
     /**
+     * @param \Generated\Shared\Transfer\CategoryNodeUrlPathCriteriaTransfer $categoryNodeUrlPathCriteriaTransfer
+     *
+     * @return array
+     */
+    public function getBulkCategoryNodeUrlPathParts(CategoryNodeUrlPathCriteriaTransfer $categoryNodeUrlPathCriteriaTransfer): array;
+
+    /**
      * @param \Generated\Shared\Transfer\CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\NodeCollectionTransfer
@@ -153,4 +160,12 @@ interface CategoryRepositoryInterface
      * @return \Generated\Shared\Transfer\NodeTransfer|null
      */
     public function findCategoryNodeByIdCategoryNode(int $idCategoryNode): ?NodeTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return string|null
+     */
+    public function findCategoryName(CategoryTransfer $categoryTransfer, LocaleTransfer $localeTransfer): ?string;
 }

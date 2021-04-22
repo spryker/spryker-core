@@ -83,7 +83,9 @@ class CategoryUrlUpdater implements CategoryUrlUpdaterInterface
 
         $categoryNodeChildCount = $this->categoryRepository->getCategoryNodeChildCountByParentNodeId($categoryTransfer);
         $categoryReadChunkSize = $this->categoryConfig->getCategoryReadChunkSize();
-        $categoryCriteriaTransfer = (new CategoryCriteriaTransfer())->setLimit($categoryReadChunkSize);
+
+        $categoryCriteriaTransfer = (new CategoryCriteriaTransfer())
+            ->setLimit($categoryReadChunkSize);
 
         for ($offset = 0; $offset <= $categoryNodeChildCount; $offset += $categoryReadChunkSize) {
             $categoryCriteriaTransfer->setOffset($offset);
@@ -93,16 +95,66 @@ class CategoryUrlUpdater implements CategoryUrlUpdaterInterface
             $categoryNodeUrlCriteriaTransfer->setCategoryNodeIds($categoryNodeChildIds);
             $urlTransfers = $this->categoryRepository->getCategoryNodeUrls($categoryNodeUrlCriteriaTransfer);
 
-            foreach ($categoryNodeChildIds as $categoryNodeChildId) {
-                $nodeTransfer = (new NodeTransfer())->setIdCategoryNode($categoryNodeChildId);
+            $this->bulkUpdateCategoryNodeUrlsForLocale(
+                $categoryNodeChildIds,
+                $urlTransfers,
+                $categoryTransfer
+            );
 
-                foreach ($categoryTransfer->getLocalizedAttributes() as $categoryLocalizedAttributesTransfer) {
-                    $this->updateCategoryNodeUrlsForLocale(
-                        $nodeTransfer,
-                        $urlTransfers,
-                        $categoryLocalizedAttributesTransfer->getLocaleOrFail()
-                    );
+            // old version
+//            foreach ($categoryNodeChildIds as $categoryNodeChildId) {
+//                $nodeTransfer = (new NodeTransfer())->setIdCategoryNode($categoryNodeChildId);
+//
+//                foreach ($categoryTransfer->getLocalizedAttributes() as $categoryLocalizedAttributesTransfer) {
+//                    $this->updateCategoryNodeUrlsForLocale(
+//                        $nodeTransfer,
+//                        $urlTransfers,
+//                        $categoryLocalizedAttributesTransfer->getLocaleOrFail()
+//                    );
+//                }
+//            }
+        }
+    }
+
+    /**
+     * @param int[] $categoryNodeChildIds
+     * @param \Generated\Shared\Transfer\UrlTransfer[] $urlTransfers
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return void
+     */
+    protected function bulkUpdateCategoryNodeUrlsForLocale(
+        array $categoryNodeChildIds,
+        array $urlTransfers,
+        CategoryTransfer $categoryTransfer
+    ): void {
+        foreach ($categoryTransfer->getLocalizedAttributes() as $categoryLocalizedAttributesTransfer) {
+            $localeTransfer = $categoryLocalizedAttributesTransfer->getLocaleOrFail();
+            $categoryName = $this->categoryRepository->findCategoryName($categoryTransfer, $localeTransfer);
+
+            if ($categoryLocalizedAttributesTransfer->getName() === $categoryName) {
+                continue;
+            }
+
+            $urlPaths = $this->urlPathGenerator->bulkBuildCategoryNodeUrlForLocale(
+                $categoryNodeChildIds,
+                $categoryLocalizedAttributesTransfer->getLocaleOrFail()
+            );
+
+            // TODO: move to separate method.
+            foreach ($urlTransfers as $urlTransfer) {
+                if ($urlTransfer->getFkLocaleOrFail() != $localeTransfer->getIdLocaleOrFail()) {
+                    continue;
                 }
+
+                $urlPath = $urlPaths[$urlTransfer->getFkResourceCategorynodeOrFail()] ?? null;
+
+                if (!$urlPath || $urlPath === $urlTransfer->getUrl()) {
+                    continue;
+                }
+
+                $urlTransfer->setUrl($urlPath);
+                $this->urlFacade->updateUrl($urlTransfer);
             }
         }
     }
@@ -118,8 +170,8 @@ class CategoryUrlUpdater implements CategoryUrlUpdaterInterface
     {
         foreach ($urlTransfers as $urlTransfer) {
             if (
-                $urlTransfer->getFkLocaleOrFail() !== $localeTransfer->getIdLocaleOrFail()
-                || $urlTransfer->getFkResourceCategorynodeOrFail() !== $nodeTransfer->getIdCategoryNodeOrFail()
+                $urlTransfer->getFkLocaleOrFail() != $localeTransfer->getIdLocaleOrFail()
+                || $urlTransfer->getFkResourceCategorynodeOrFail() != $nodeTransfer->getIdCategoryNodeOrFail()
             ) {
                 continue;
             }
