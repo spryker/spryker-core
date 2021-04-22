@@ -1,5 +1,6 @@
 "Overview of Orders","Overview of Orders"
 "List of Orders","List of Orders"
+"My Orders","My Orders"
 "Order Reference","Order Reference"
 "Marketplace Order Reference","Marketplace Order Reference"
 Created,Created
@@ -55,3 +56,4 @@ Sku,SKU
 "Shipment has not been updated.","Shipment has not been updated."
 "Shipment #%d not found.","Shipment #%d not found."
 "New Shipment for Order: %idMerchantSalesOrder%","New Shipment for Order: %idMerchantSalesOrder%"
+"Back to Orders","Back to Orders"

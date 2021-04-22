@@ -10,7 +10,7 @@ namespace SprykerTest\Zed\MerchantProductOfferStorage\Communication\Plugin\Event
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
-use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
 use Spryker\Client\Kernel\Container;
@@ -188,7 +188,7 @@ class ProductOfferStoragePublishListenerTest extends AbstractStoragePublishListe
             ->method('saveProductOfferStorage')
             ->with($productOfferTransfer);
 
-        $productOfferCriteriaFilterTransfer = (new ProductOfferCriteriaFilterTransfer())
+        $productOfferCriteriaTransfer = (new ProductOfferCriteriaTransfer())
             ->setProductOfferReferences([$productOfferTransfer->getProductOfferReference()])
             ->setIsActive(true)
             ->setIsActiveConcreteProduct(true)
@@ -199,8 +199,8 @@ class ProductOfferStoragePublishListenerTest extends AbstractStoragePublishListe
         /** @var \Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStorageRepositoryInterface|\PHPUnit\Framework\MockObject\MockObject $merchantProductOfferStorageRepository */
         $merchantProductOfferStorageRepository = $this->getMockBuilder(MerchantProductOfferStorageRepositoryInterface::class)->getMock();
         $merchantProductOfferStorageRepository->expects($this->once())
-            ->method('getProductOffersByFilterCriteria')
-            ->with($productOfferCriteriaFilterTransfer)
+            ->method('getProductOffers')
+            ->with($productOfferCriteriaTransfer)
             ->willReturn($productOfferCollectionTransfer);
 
         /** @var \Spryker\Zed\MerchantProductOfferStorage\Business\Deleter\ProductOfferStorageDeleterInterface|\PHPUnit\Framework\MockObject\MockObject $productOfferStorageDeleter */

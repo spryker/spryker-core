@@ -66,8 +66,11 @@ class WishlistItemAdder implements WishlistItemAdderInterface
             return $this->wishlistRestResponseBuilder->createCantAddWishlistItemErrorResponse();
         }
 
+        /** @var string $idRecource */
+        $idRecource = $wishlistResource->getId();
+
         return $this->wishlistRestResponseBuilder
-            ->createWishlistItemsRestResponse($wishlistResource->getId(), $wishlistItemResponse->getWishlistItem());
+            ->createWishlistItemsRestResponse($idRecource, $wishlistItemResponse->getWishlistItem());
     }
 
     /**
@@ -82,9 +85,16 @@ class WishlistItemAdder implements WishlistItemAdderInterface
         RestResourceInterface $wishlistResource,
         RestWishlistItemsAttributesTransfer $restWishlistItemsAttributesRequestTransfer
     ): WishlistItemRequestTransfer {
-        return (new WishlistItemRequestTransfer())
-            ->setIdCustomer($restRequest->getRestUser()->getSurrogateIdentifier())
+        /** @var \Generated\Shared\Transfer\RestUserTransfer $restUser */
+        $restUser = $restRequest->getRestUser();
+
+        $wishlistItemRequestTransfer = (new WishlistItemRequestTransfer())
+            ->setIdCustomer($restUser->getSurrogateIdentifier())
             ->setUuidWishlist($wishlistResource->getId())
             ->setSku($restWishlistItemsAttributesRequestTransfer->getSku());
+
+        $wishlistItemRequestTransfer->fromArray($restWishlistItemsAttributesRequestTransfer->toArray(), true);
+
+        return $wishlistItemRequestTransfer;
     }
 }

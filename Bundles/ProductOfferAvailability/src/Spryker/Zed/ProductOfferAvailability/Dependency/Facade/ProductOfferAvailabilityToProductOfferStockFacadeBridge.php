@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ProductOfferAvailability\Dependency\Facade;
 
 use Generated\Shared\Transfer\ProductOfferStockRequestTransfer;
-use Generated\Shared\Transfer\ProductOfferStockTransfer;
+use Generated\Shared\Transfer\ProductOfferStockResultTransfer;
 
 class ProductOfferAvailabilityToProductOfferStockFacadeBridge implements ProductOfferAvailabilityToProductOfferStockFacadeInterface
 {
@@ -28,10 +28,10 @@ class ProductOfferAvailabilityToProductOfferStockFacadeBridge implements Product
     /**
      * @param \Generated\Shared\Transfer\ProductOfferStockRequestTransfer $productOfferStockRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductOfferStockTransfer
+     * @return \Generated\Shared\Transfer\ProductOfferStockResultTransfer
      */
-    public function getProductOfferStock(ProductOfferStockRequestTransfer $productOfferStockRequestTransfer): ProductOfferStockTransfer
+    public function getProductOfferStockResult(ProductOfferStockRequestTransfer $productOfferStockRequestTransfer): ProductOfferStockResultTransfer
     {
-        return $this->productOfferStockFacade->getProductOfferStock($productOfferStockRequestTransfer);
+        return $this->productOfferStockFacade->getProductOfferStockResult($productOfferStockRequestTransfer);
     }
 }

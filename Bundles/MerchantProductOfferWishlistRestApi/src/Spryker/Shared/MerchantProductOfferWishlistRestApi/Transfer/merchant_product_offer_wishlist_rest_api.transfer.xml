@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="WishlistItemRequest">
+        <property name="productOfferReference" type="string"/>
+        <property name="uuid" type="string"/>
+    </transfer>
+
+    <transfer name="RestWishlistItemsAttributes">
+        <property name="productOfferReference" type="string"/>
+        <property name="merchantReference" type="string"/>
+        <property name="id" type="string"/>
+    </transfer>
+
+    <transfer name="WishlistItem">
+        <property name="sku" type="string"/>
+        <property name="productOfferReference" type="string"/>
+    </transfer>
+
+</transfers>

@@ -88,6 +88,8 @@
 
     <transfer name="CheckoutResponse">
         <property name="saveOrder" type="SaveOrder" deprecated="Use SaveOrderTransfer directly/decoupled from the checkout response"/>
+        <property name="errors" type="CheckoutError[]" singular="error"/>
+        <property name="isSuccess" type="bool"/>
     </transfer>
 
     <transfer name="Address">
@@ -411,6 +413,11 @@
     </transfer>
 
     <transfer name="ProductBundleGroup">
+    </transfer>
+
+    <transfer name="CheckoutError">
+        <property name="message" type="string"/>
+        <property name="parameters" type="array" singular="parameters"/>
     </transfer>
 
 </transfers>

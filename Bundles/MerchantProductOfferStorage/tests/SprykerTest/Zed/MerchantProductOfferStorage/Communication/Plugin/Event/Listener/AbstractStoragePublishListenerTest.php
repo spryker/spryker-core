@@ -57,7 +57,7 @@ class AbstractStoragePublishListenerTest extends Unit
         ProductOfferCollectionTransfer $productOfferCollectionTransfer
     ): MerchantProductOfferStorageRepositoryInterface {
         $productOfferFacade = $this->getMockBuilder(MerchantProductOfferStorageRepositoryInterface::class)->getMock();
-        $productOfferFacade->method('getProductOffersByFilterCriteria')->willReturn($productOfferCollectionTransfer);
+        $productOfferFacade->method('getProductOffers')->willReturn($productOfferCollectionTransfer);
 
         return $productOfferFacade;
     }

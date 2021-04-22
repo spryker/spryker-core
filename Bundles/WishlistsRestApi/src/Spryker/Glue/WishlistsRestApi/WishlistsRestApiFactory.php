@@ -130,7 +130,9 @@ class WishlistsRestApiFactory extends AbstractFactory
      */
     public function createWishlistItemMapper(): WishlistItemMapperInterface
     {
-        return new WishlistItemMapper();
+        return new WishlistItemMapper(
+            $this->getRestWishlistItemsAttributesMapperPlugins()
+        );
     }
 
     /**
@@ -147,5 +149,13 @@ class WishlistsRestApiFactory extends AbstractFactory
     public function getWishlistClient(): WishlistsRestApiToWishlistClientInterface
     {
         return $this->getProvidedDependency(WishlistsRestApiDependencyProvider::CLIENT_WISHLIST);
+    }
+
+    /**
+     * @return \Spryker\Glue\WishlistsRestApiExtension\Dependency\Plugin\RestWishlistItemsAttributesMapperPluginInterface[]
+     */
+    public function getRestWishlistItemsAttributesMapperPlugins(): array
+    {
+        return $this->getProvidedDependency(WishlistsRestApiDependencyProvider::PLUGINS_REST_WISHLIST_ITEMS_ATTRIBUTES_MAPPER);
     }
 }
