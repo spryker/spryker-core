@@ -1,35 +1,30 @@
 <?php
 
 /**
- * This file is part of the Spryker Suite.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Submitter;
+namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper;
 
 use ArrayObject;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
-use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeFilterTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeValueTransfer;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\LocaleDataProviderInterface;
-use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\CreateProductAbstractWithMultiConcreteForm;
-use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductConcreteForm;
-use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\SuperAttributeForm;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToLocaleFacadeInterface;
-use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantUserFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductAttributeFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductFacadeInterface;
-use Symfony\Component\Form\FormInterface;
 
-class CreateProductAbstractWithMultiConcreteFormSubmitter implements CreateProductAbstractWithMultiConcreteFormSubmitterInterface
+class ProductConcreteMapper implements ProductAbstractMapperInterface
 {
-    /**
-     * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantUserFacadeInterface
-     */
-    protected $merchantUserFacade;
+    public const FIELD_NAME = 'name';
+    public const FIELD_SKU = 'sku';
+    public const FIELD_SUPER_ATTRIBUTES = 'superAttributes';
+    public const FIELD_KEY = 'key';
+    public const FIELD_VALUE = 'value';
 
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToLocaleFacadeInterface
@@ -52,20 +47,17 @@ class CreateProductAbstractWithMultiConcreteFormSubmitter implements CreateProdu
     protected $localeDataProvider;
 
     /**
-     * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToLocaleFacadeInterface $localeFacade
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductFacadeInterface $productFacade
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductAttributeFacadeInterface $productAttributeFacade
      * @param \Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\LocaleDataProviderInterface $localeDataProvider
      */
     public function __construct(
-        ProductMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade,
         ProductMerchantPortalGuiToLocaleFacadeInterface $localeFacade,
         ProductMerchantPortalGuiToProductFacadeInterface $productFacade,
         ProductMerchantPortalGuiToProductAttributeFacadeInterface $productAttributeFacade,
         LocaleDataProviderInterface $localeDataProvider
     ) {
-        $this->merchantUserFacade = $merchantUserFacade;
         $this->localeFacade = $localeFacade;
         $this->productFacade = $productFacade;
         $this->productAttributeFacade = $productAttributeFacade;
@@ -73,28 +65,19 @@ class CreateProductAbstractWithMultiConcreteFormSubmitter implements CreateProdu
     }
 
     /**
-     * @param \Symfony\Component\Form\FormInterface $createProductAbstractWithMultiConcreteForm
+     * @param array $concreteProducts
      *
-     * @return int
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
-    public function executeFormSubmission(FormInterface $createProductAbstractWithMultiConcreteForm): int
+    public function mapRequestDataToProductConcreteTransfer(array $concreteProducts): array
     {
-        $formData = $createProductAbstractWithMultiConcreteForm->getData();
-        $merchantUserTransfer = $this->merchantUserFacade->getCurrentMerchantUser();
         $localeTransfers = $this->localeFacade->getLocaleCollection();
-
-        $productAbstractTransfer = (new ProductAbstractTransfer())
-            ->setSku($formData[CreateProductAbstractWithMultiConcreteForm::FIELD_SKU])
-            ->setName($formData[CreateProductAbstractWithMultiConcreteForm::FIELD_NAME])
-            ->setIdMerchant($merchantUserTransfer->getIdMerchantOrFail());
-
-        $concreteProducts = $productAbstractTransfer[CreateProductAbstractWithMultiConcreteForm::FIELD_CONCRETE_PRODUCTS];
 
         $concreteProductTransfers = [];
         foreach ($concreteProducts as $concreteProduct) {
             $concreteProductTransfer = (new ProductConcreteTransfer())
-                ->setSku($concreteProduct[ProductConcreteForm::FIELD_SKU])
-                ->setName($concreteProduct[ProductConcreteForm::FIELD_NAME]);
+                ->setSku($concreteProduct[static::FIELD_SKU])
+                ->setName($concreteProduct[static::FIELD_NAME]);
 
             $attributes = $this->reformatSuperAttributes($concreteProductTransfer);
             $productManagementAttributeTransfers = $this->getProductManagementAttributes($attributes);
@@ -108,7 +91,7 @@ class CreateProductAbstractWithMultiConcreteFormSubmitter implements CreateProdu
 
                 $concreteProductTransfer->addLocalizedAttributes(
                     (new LocalizedAttributesTransfer())
-                        ->setName($concreteProduct[ProductConcreteForm::FIELD_NAME])
+                        ->setName($concreteProduct[static::FIELD_NAME])
                         ->setLocale($localeTransfer)
                         ->setAttributes($localizedAttributes)
                 );
@@ -117,7 +100,7 @@ class CreateProductAbstractWithMultiConcreteFormSubmitter implements CreateProdu
             $concreteProductTransfers[] = $concreteProductTransfer;
         }
 
-        return $this->productFacade->addProduct($productAbstractTransfer, $concreteProductTransfers);
+        return $concreteProductTransfers;
     }
 
     /**
@@ -129,7 +112,7 @@ class CreateProductAbstractWithMultiConcreteFormSubmitter implements CreateProdu
     {
         $attributes = [];
         foreach ($concreteProductTransfer as $superAttribute) {
-            $attributes[$superAttribute[SuperAttributeForm::FIELD_KEY]] = $superAttribute[SuperAttributeForm::FIELD_VALUE];
+            $attributes[$superAttribute[static::FIELD_KEY]] = $superAttribute[static::FIELD_VALUE];
         }
 
         return $attributes;
