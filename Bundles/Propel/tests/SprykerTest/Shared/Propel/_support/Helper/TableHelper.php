@@ -66,24 +66,6 @@ class TableHelper extends Module
     }
 
     /**
-     * @param \Propel\Generator\Model\Domain $domain
-     * @param array $column
-     *
-     * @return \Propel\Generator\Model\Domain
-     */
-    protected function _setDomainExtraColumn(Domain $domain, array $column): Domain
-    {
-        foreach ($column as $propertySetterName => $propertyValue) {
-            if (!method_exists($domain, $propertySetterName)) {
-                continue;
-            }
-            $domain->$propertySetterName($propertyValue);
-        }
-
-        return $domain;
-    }
-
-    /**
      * @param \Codeception\TestInterface $test
      *
      * @return void
