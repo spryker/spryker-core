@@ -16,14 +16,14 @@ class FormattedControllerBeforeActionTerminate implements FormattedControllerBef
     /**
      * @var \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\FormattedControllerBeforeActionTerminatePluginInterface[]
      */
-    protected $formattedControllerBeforeActionTerminatePlugin;
+    protected $formattedControllerBeforeActionTerminatePlugins;
 
     /**
-     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\FormattedControllerBeforeActionTerminatePluginInterface[] $formattedControllerBeforeActionTerminatePlugin
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\FormattedControllerBeforeActionTerminatePluginInterface[] $formattedControllerBeforeActionTerminatePlugins
      */
-    public function __construct(array $formattedControllerBeforeActionTerminatePlugin)
+    public function __construct(array $formattedControllerBeforeActionTerminatePlugins)
     {
-        $this->formattedControllerBeforeActionTerminatePlugin = $formattedControllerBeforeActionTerminatePlugin;
+        $this->formattedControllerBeforeActionTerminatePlugins = $formattedControllerBeforeActionTerminatePlugins;
     }
 
     /**
@@ -33,7 +33,7 @@ class FormattedControllerBeforeActionTerminate implements FormattedControllerBef
      */
     public function beforeAction(Request $request): ?RestErrorMessageTransfer
     {
-        foreach ($this->formattedControllerBeforeActionTerminatePlugin as $formattedControllerBeforeActionHttpRequestsValidatorPlugin) {
+        foreach ($this->formattedControllerBeforeActionTerminatePlugins as $formattedControllerBeforeActionHttpRequestsValidatorPlugin) {
             $restErrorMessageTransfer = $formattedControllerBeforeActionHttpRequestsValidatorPlugin->beforeAction($request);
             if (!$restErrorMessageTransfer) {
                 continue;
