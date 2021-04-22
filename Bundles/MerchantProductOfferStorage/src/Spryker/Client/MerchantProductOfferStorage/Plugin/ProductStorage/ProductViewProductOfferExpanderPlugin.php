@@ -16,7 +16,7 @@ use Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductViewExpander
  * @method \Spryker\Client\MerchantProductOfferStorage\MerchantProductOfferStorageClientInterface getClient()
  * @method \Spryker\Client\MerchantProductOfferStorage\MerchantProductOfferStorageFactory getFactory()
  */
-class ProductViewOfferExpanderPlugin extends AbstractPlugin implements ProductViewExpanderByCriteriaPluginInterface
+class ProductViewProductOfferExpanderPlugin extends AbstractPlugin implements ProductViewExpanderByCriteriaPluginInterface
 {
     /**
      * {@inheritDoc}

@@ -132,7 +132,8 @@ class ProductRelationBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductRelationBuilder(
             $this->createProductRelationUpdater(),
-            $this->getRepository()
+            $this->getRepository(),
+            $this->getConfig()
         );
     }
 

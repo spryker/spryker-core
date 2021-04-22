@@ -8,7 +8,7 @@
 namespace Spryker\Zed\MerchantProfile\Business;
 
 use Generated\Shared\Transfer\MerchantProfileCollectionTransfer;
-use Generated\Shared\Transfer\MerchantProfileCriteriaFilterTransfer;
+use Generated\Shared\Transfer\MerchantProfileCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantProfileTransfer;
 use Generated\Shared\Transfer\MerchantResponseTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
@@ -58,15 +58,15 @@ class MerchantProfileFacade extends AbstractFacade implements MerchantProfileFac
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\MerchantProfileCriteriaFilterTransfer $merchantProfileCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\MerchantProfileCriteriaTransfer $merchantProfileCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantProfileTransfer|null
      */
-    public function findOne(MerchantProfileCriteriaFilterTransfer $merchantProfileCriteriaFilterTransfer): ?MerchantProfileTransfer
+    public function findOne(MerchantProfileCriteriaTransfer $merchantProfileCriteriaTransfer): ?MerchantProfileTransfer
     {
         return $this->getFactory()
             ->createMerchantProfileReader()
-            ->findOne($merchantProfileCriteriaFilterTransfer);
+            ->findOne($merchantProfileCriteriaTransfer);
     }
 
     /**
@@ -74,15 +74,15 @@ class MerchantProfileFacade extends AbstractFacade implements MerchantProfileFac
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\MerchantProfileCriteriaFilterTransfer $merchantProfileCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\MerchantProfileCriteriaTransfer $merchantProfileCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantProfileCollectionTransfer
      */
-    public function find(MerchantProfileCriteriaFilterTransfer $merchantProfileCriteriaFilterTransfer): MerchantProfileCollectionTransfer
+    public function get(MerchantProfileCriteriaTransfer $merchantProfileCriteriaTransfer): MerchantProfileCollectionTransfer
     {
         return $this->getFactory()
             ->createMerchantProfileReader()
-            ->find($merchantProfileCriteriaFilterTransfer);
+            ->get($merchantProfileCriteriaTransfer);
     }
 
     /**

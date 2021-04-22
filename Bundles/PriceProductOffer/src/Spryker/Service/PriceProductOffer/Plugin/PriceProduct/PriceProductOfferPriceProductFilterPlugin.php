@@ -5,18 +5,18 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\PriceProductOfferStorage\Plugin\PriceProduct;
+namespace Spryker\Service\PriceProductOffer\Plugin\PriceProduct;
 
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Service\Kernel\AbstractPlugin;
 use Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductFilterPluginInterface;
-use Spryker\Shared\PriceProductOfferStorage\PriceProductOfferStorageConfig;
+use Spryker\Shared\PriceProductOffer\PriceProductOfferConfig;
 
 /**
- * @method \Spryker\Service\PriceProductOfferStorage\PriceProductOfferStorageConfig getConfig()
+ * @method \Spryker\Service\PriceProductOffer\PriceProductOfferConfig getConfig()
  */
-class ProductOfferPriceProductFilterPlugin extends AbstractPlugin implements PriceProductFilterPluginInterface
+class PriceProductOfferPriceProductFilterPlugin extends AbstractPlugin implements PriceProductFilterPluginInterface
 {
     /**
      * {@inheritDoc}
@@ -31,7 +31,7 @@ class ProductOfferPriceProductFilterPlugin extends AbstractPlugin implements Pri
     public function filter(array $priceProductTransfers, PriceProductFilterTransfer $priceProductFilterTransfer): array
     {
         $priceProductTransfers = array_filter($priceProductTransfers, function (PriceProductTransfer $priceProductTransfer) use ($priceProductFilterTransfer) {
-            $productOfferReference = $priceProductTransfer->getPriceDimension()->getProductOfferReference();
+            $productOfferReference = $priceProductTransfer->getPriceDimensionOrFail()->getProductOfferReference();
             $filterProductOfferReference = $priceProductFilterTransfer->getProductOfferReference();
 
             return !$productOfferReference || $productOfferReference === $filterProductOfferReference;
@@ -39,7 +39,7 @@ class ProductOfferPriceProductFilterPlugin extends AbstractPlugin implements Pri
 
         $selectedOfferHasPrice = false;
         foreach ($priceProductTransfers as $priceProductTransfer) {
-            if ($priceProductTransfer->getPriceDimension()->getProductOfferReference()) {
+            if ($priceProductTransfer->getPriceDimensionOrFail()->getProductOfferReference()) {
                 $selectedOfferHasPrice = true;
 
                 break;
@@ -48,7 +48,7 @@ class ProductOfferPriceProductFilterPlugin extends AbstractPlugin implements Pri
 
         $priceProductTransfers = array_filter($priceProductTransfers, function (PriceProductTransfer $priceProductTransfer) use ($selectedOfferHasPrice) {
             if ($selectedOfferHasPrice) {
-                return $priceProductTransfer->getPriceDimension()->getProductOfferReference();
+                return (bool)$priceProductTransfer->getPriceDimensionOrFail()->getProductOfferReference();
             }
 
             return true;
@@ -62,6 +62,6 @@ class ProductOfferPriceProductFilterPlugin extends AbstractPlugin implements Pri
      */
     public function getDimensionName(): string
     {
-        return PriceProductOfferStorageConfig::DIMENSION_TYPE_PRODUCT_OFFER;
+        return PriceProductOfferConfig::DIMENSION_TYPE_PRODUCT_OFFER;
     }
 }

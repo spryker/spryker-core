@@ -6,7 +6,7 @@
   "require": {
     "php": ">=7.3",
     "spryker/decimal-object": "^1.0.0",
-    "spryker/kernel": "^3.56.0",
+    "spryker/kernel": "^3.59.0",
     "spryker/laminas": "^1.0.0",
     "spryker/log": "^3.0.0",
     "spryker/propel": "^3.21.0",

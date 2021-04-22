@@ -5,13 +5,13 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\PriceProductOfferStorage;
+namespace Spryker\Service\PriceProductOffer;
 
 use Spryker\Service\Kernel\AbstractBundleConfig;
 
 /**
- * @method \Spryker\Shared\PriceProductMerchantRelationship\PriceProductMerchantRelationshipConfig getSharedConfig()
+ * @method \Spryker\Shared\PriceProductOffer\PriceProductOfferConfig getSharedConfig()
  */
-class PriceProductOfferStorageConfig extends AbstractBundleConfig
+class PriceProductOfferConfig extends AbstractBundleConfig
 {
 }

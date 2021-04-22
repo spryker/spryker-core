@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\MerchantProductOfferWishlist\Business\Checker;
 
-use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistPreAddItemCheckResponseTransfer;
 use Spryker\Zed\MerchantProductOfferWishlist\Dependency\Facade\MerchantProductOfferWishlistToProductOfferFacadeInterface;
@@ -46,11 +46,11 @@ class WishlistItemRelationChecker implements WishlistItemRelationCheckerInterfac
         /** @var string $productOfferReference */
         $productOfferReference = $wishlistItemTransfer->getProductOfferReference();
 
-        $productOfferCriteriaFilterTransfer = (new ProductOfferCriteriaFilterTransfer())
+        $productOfferCriteriaTransfer = (new ProductOfferCriteriaTransfer())
             ->addConcreteSku($sku)
             ->setProductOfferReference($productOfferReference);
 
-        $productOfferTransfer = $this->productOfferFacade->findOne($productOfferCriteriaFilterTransfer);
+        $productOfferTransfer = $this->productOfferFacade->findOne($productOfferCriteriaTransfer);
 
         if (!$productOfferTransfer) {
             return $wishlistPreAddItemCheckResponseTransfer->setIsSuccess(false);
