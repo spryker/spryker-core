@@ -7,9 +7,10 @@
 
 namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Controller;
 
-use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ValidationResponseTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\CreateProductAbstractForm;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\CreateProductAbstractWithSingleConcreteForm;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,6 +32,15 @@ class CreateProductAbstractController extends AbstractController
     protected const RESPONSE_TYPE_CLOSE_OVERLAY = 'close_overlay';
     protected const RESPONSE_MESSAGE_SUCCESS = 'Product successfully created!';
     protected const RESPONSE_MESSAGE_ERROR = 'Please resolve all errors.';
+    protected const REQUEST_PARAM_NAME = 'name';
+    protected const REQUEST_PARAM_SKU = 'sku';
+    protected const REQUEST_PARAM_CONCRETE_PRODUCTS = 'concreteProducts';
+    protected const REQUEST_PARAM_SELECTED_ATTRIBUTES = 'selectedAttributes';
+
+    /**
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\CreateProductAbstractController::indexAction()
+     */
+    protected const URL_INDEX_ACTION = '/product-merchant-portal-gui/create-product-abstract';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\CreateProductAbstractController::createWithSingleConcreteAction()
@@ -86,14 +96,25 @@ class CreateProductAbstractController extends AbstractController
      */
     public function createWithSingleConcreteAction(Request $request): JsonResponse
     {
+        $abstractProductName = $request->get(static::REQUEST_PARAM_NAME);
+        $abstractProductSku = $request->get(static::REQUEST_PARAM_SKU);
+
         $createProductAbstractWithSingleConcreteForm = $this->getFactory()
-            ->createCreateProductAbstractWithSingleConcreteForm($request->query->all());
+            ->createCreateProductAbstractWithSingleConcreteForm(
+                [
+                    CreateProductAbstractWithSingleConcreteForm::FIELD_NAME => $abstractProductName,
+                    CreateProductAbstractWithSingleConcreteForm::FIELD_SKU => $abstractProductSku,
+                    CreateProductAbstractWithSingleConcreteForm::FIELD_CONCRETE_NAME => $abstractProductName,
+                    CreateProductAbstractWithSingleConcreteForm::FIELD_CONCRETE_SKU => $abstractProductSku,
+                ]
+            );
         $createProductAbstractWithSingleConcreteForm->handleRequest($request);
 
         $formData = $createProductAbstractWithSingleConcreteForm->getData();
         $responseData = [
             'form' => $this->renderView('@ProductMerchantPortalGui/Partials/create_product_abstract_with_single_concrete_form.twig', [
                 'form' => $createProductAbstractWithSingleConcreteForm->createView(),
+                'backActionUrl' => $this->getCreateProductAbstractUrl($abstractProductSku, $abstractProductName),
             ])->getContent(),
             'action' => $this->getCreateUrl($formData, true),
         ];
@@ -107,25 +128,7 @@ class CreateProductAbstractController extends AbstractController
                 ->createCreateProductAbstractWithSingleConcreteFormSubmitter()
                 ->executeFormSubmission($createProductAbstractWithSingleConcreteForm);
 
-            $responseData = [
-                static::RESPONSE_KEY_POST_ACTIONS => [
-                    [
-                        static::RESPONSE_KEY_TYPE => static::RESPONSE_TYPE_CLOSE_OVERLAY,
-                    ],
-                    [
-                        static::RESPONSE_KEY_TYPE => static::RESPONSE_TYPE_REFRESH_TABLE,
-                    ],
-                ],
-                static::RESPONSE_KEY_NOTIFICATIONS => [
-                    [
-                        static::RESPONSE_KEY_TYPE => static::RESPONSE_TYPE_SUCCESS,
-                        static::RESPONSE_KEY_MESSAGE => static::RESPONSE_MESSAGE_SUCCESS,
-                    ],
-                ],
-
-            ];
-
-            return new JsonResponse($responseData);
+            return $this->getSuccessResponseAndCloseOverlay();
         }
 
         $responseData[static::RESPONSE_KEY_NOTIFICATIONS] = [[
@@ -143,13 +146,21 @@ class CreateProductAbstractController extends AbstractController
      */
     public function createWithMultiConcreteAction(Request $request): JsonResponse
     {
+        $abstractProductName = $request->get(static::REQUEST_PARAM_NAME);
+        $abstractProductSku = $request->get(static::REQUEST_PARAM_SKU);
+        $concreteProductsJson = $request->request->get(static::REQUEST_PARAM_CONCRETE_PRODUCTS);
+        $selectedAttributesJson = $request->request->get(static::REQUEST_PARAM_SELECTED_ATTRIBUTES);
+
+        $concreteProducts = $this->getFactory()
+            ->getUtilEncodingService()
+            ->decodeJson($concreteProductsJson, true);
         $createProductAbstractWithMultiConcreteForm = $this->getFactory()
             ->createCreateProductAbstractWithMultiConcreteForm($request->query->all());
         $createProductAbstractWithMultiConcreteForm->handleRequest($request);
 
-        $productAbstractTransfer = new ProductAbstractTransfer();
-        $productAbstractTransfer->setSku($request->query->get('sku'));
-        $productAbstractTransfer->setName($request->query->get('name'));
+        $productAbstractTransfer = $this->getFactory()
+            ->createProductAbstractMapper()
+            ->mapFormDataToProductAbstractTransfer($createProductAbstractWithMultiConcreteForm);
 
         $formData = $createProductAbstractWithMultiConcreteForm->getData();
         $responseData = [
@@ -157,45 +168,34 @@ class CreateProductAbstractController extends AbstractController
                 'form' => $createProductAbstractWithMultiConcreteForm->createView(),
                 'superProductManagementAttributes' => $this->getSuperAttributes(),
                 'productAbstract' => $productAbstractTransfer,
+                'backActionUrl' => $this->getCreateProductAbstractUrl($abstractProductSku, $abstractProductName),
+                'concreteProductsJson' => $concreteProductsJson,
+                'selectedAttributesJson' => $selectedAttributesJson,
             ])->getContent(),
             'action' => $this->getCreateUrl($formData, false),
         ];
 
-        if (!$createProductAbstractWithMultiConcreteForm->isSubmitted()) {
+        if (!$request->isMethod(Request::METHOD_POST)) {
             return new JsonResponse($responseData);
         }
 
-        if ($createProductAbstractWithMultiConcreteForm->isValid()) {
-            $this->getFactory()
-                ->createCreateProductAbstractWithMultiConcreteFormSubmitter()
-                ->executeFormSubmission($createProductAbstractWithMultiConcreteForm);
+        $validationResponseTransfer = $this->getFactory()
+            ->createProductConcreteValidator()
+            ->validateConcreteProducts($concreteProducts);
 
-            $responseData = [
-                static::RESPONSE_KEY_POST_ACTIONS => [
-                    [
-                        static::RESPONSE_KEY_TYPE => static::RESPONSE_TYPE_CLOSE_OVERLAY,
-                    ],
-                    [
-                        static::RESPONSE_KEY_TYPE => static::RESPONSE_TYPE_REFRESH_TABLE,
-                    ],
-                ],
-                static::RESPONSE_KEY_NOTIFICATIONS => [
-                    [
-                        static::RESPONSE_KEY_TYPE => static::RESPONSE_TYPE_SUCCESS,
-                        static::RESPONSE_KEY_MESSAGE => static::RESPONSE_MESSAGE_SUCCESS,
-                    ],
-                ],
-            ];
-
-            return new JsonResponse($responseData);
+        if (!$validationResponseTransfer->getIsSuccessOrFail()) {
+            return $this->getErrorJsonResponse($validationResponseTransfer);
         }
 
-        $responseData[static::RESPONSE_KEY_NOTIFICATIONS] = [[
-            static::RESPONSE_KEY_TYPE => static::RESPONSE_TYPE_ERROR,
-            static::RESPONSE_KEY_MESSAGE => static::RESPONSE_MESSAGE_ERROR,
-        ]];
+        $concreteProductTransfers = $this->getFactory()
+            ->createProductConcreteMapper()
+            ->mapRequestDataToProductConcreteTransfer($concreteProducts);
 
-        return new JsonResponse($responseData);
+        $this->getFactory()
+            ->getProductFacade()
+            ->addProduct($productAbstractTransfer, $concreteProductTransfers);
+
+        return $this->getSuccessResponseAndCloseOverlay();
     }
 
     /**
@@ -218,6 +218,24 @@ class CreateProductAbstractController extends AbstractController
             '%s%s',
             $isSingleConcrete ? static::URL_WITH_SINGLE_CONCRETE_ACTION : static::URL_WITH_MULTI_CONCRETE_ACTION,
             $getParams
+        );
+    }
+
+    /**
+     * @param string $sku
+     * @param string $name
+     *
+     * @return string
+     */
+    protected function getCreateProductAbstractUrl(string $sku, string $name): string
+    {
+        return sprintf(
+            '%s?%s=%s&%s=%s',
+            static::URL_INDEX_ACTION,
+            CreateProductAbstractForm::FIELD_SKU,
+            $sku,
+            CreateProductAbstractForm::FIELD_NAME,
+            $name
         );
     }
 
@@ -251,5 +269,55 @@ class CreateProductAbstractController extends AbstractController
         }
 
         return $superProductManagementAttributes;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ValidationResponseTransfer $validationResponseTransfer
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    protected function getErrorJsonResponse(ValidationResponseTransfer $validationResponseTransfer): JsonResponse
+    {
+        $notifications = [];
+
+        $validationErrorTransfers = $validationResponseTransfer->getValidationErrors();
+        foreach ($validationErrorTransfers as $validationErrorTransfer) {
+            $notifications[] = [
+                static::RESPONSE_KEY_TYPE => static::RESPONSE_TYPE_ERROR,
+                static::RESPONSE_KEY_MESSAGE => $validationErrorTransfer->getMessage(),
+            ];
+        }
+
+        $response = [
+            static::RESPONSE_KEY_NOTIFICATIONS => $notifications,
+        ];
+
+        return new JsonResponse($response);
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    protected function getSuccessResponseAndCloseOverlay(): JsonResponse
+    {
+        $responseData = [
+        static::RESPONSE_KEY_POST_ACTIONS => [
+            [
+                static::RESPONSE_KEY_TYPE => static::RESPONSE_TYPE_CLOSE_OVERLAY,
+            ],
+            [
+                static::RESPONSE_KEY_TYPE => static::RESPONSE_TYPE_REFRESH_TABLE,
+            ],
+        ],
+
+        static::RESPONSE_KEY_NOTIFICATIONS => [
+                [
+                    static::RESPONSE_KEY_TYPE => static::RESPONSE_TYPE_SUCCESS,
+                    static::RESPONSE_KEY_MESSAGE => static::RESPONSE_MESSAGE_SUCCESS,
+                ],
+            ],
+        ];
+
+        return new JsonResponse($responseData);
     }
 }

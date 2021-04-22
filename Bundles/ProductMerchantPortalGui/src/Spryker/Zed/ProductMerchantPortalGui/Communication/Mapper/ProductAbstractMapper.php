@@ -12,7 +12,7 @@ use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\CreateProductAbstrac
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantUserFacadeInterface;
 use Symfony\Component\Form\FormInterface;
 
-class AbstractProductMapper
+class ProductAbstractMapper implements ProductAbstractMapperInterface
 {
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantUserFacadeInterface
@@ -32,13 +32,13 @@ class AbstractProductMapper
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
-    public function executeFormSubmission(FormInterface $createProductAbstractWithMultiConcreteForm): ProductAbstractTransfer
-    {
+    public function mapFormDataToProductAbstractTransfer(
+        FormInterface $createProductAbstractWithMultiConcreteForm
+    ): ProductAbstractTransfer {
         $formData = $createProductAbstractWithMultiConcreteForm->getData();
         $merchantUserTransfer = $this->merchantUserFacade->getCurrentMerchantUser();
-        $localeTransfers = $this->localeFacade->getLocaleCollection();
 
-        $productAbstractTransfer = (new ProductAbstractTransfer())
+        return (new ProductAbstractTransfer())
             ->setSku($formData[CreateProductAbstractWithMultiConcreteForm::FIELD_SKU])
             ->setName($formData[CreateProductAbstractWithMultiConcreteForm::FIELD_NAME])
             ->setIdMerchant($merchantUserTransfer->getIdMerchantOrFail());

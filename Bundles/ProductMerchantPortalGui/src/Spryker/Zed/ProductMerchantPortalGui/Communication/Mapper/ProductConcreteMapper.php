@@ -7,39 +7,182 @@
 
 namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper;
 
-use Generated\Shared\Transfer\ProductAbstractTransfer;
-use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\CreateProductAbstractWithMultiConcreteForm;
-use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantUserFacadeInterface;
-use Symfony\Component\Form\FormInterface;
+use ArrayObject;
+use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\LocalizedAttributesTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductManagementAttributeFilterTransfer;
+use Generated\Shared\Transfer\ProductManagementAttributeValueTransfer;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\LocaleDataProviderInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToLocaleFacadeInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductAttributeFacadeInterface;
 
-class ProductAbstractMapper implements ProductAbstractMapperInterface
+class ProductConcreteMapper implements ProductConcreteMapperInterface
 {
-    /**
-     * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantUserFacadeInterface
-     */
-    protected $merchantUserFacade;
+    public const FIELD_NAME = 'name';
+    public const FIELD_SKU = 'sku';
+    public const FIELD_SUPER_ATTRIBUTES = 'superAttributes';
+    public const FIELD_KEY = 'key';
+    public const FIELD_VALUE = 'value';
+    public const FIELD_TITLE = 'title';
 
     /**
-     * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade
+     * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToLocaleFacadeInterface
      */
-    public function __construct(ProductMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade)
-    {
-        $this->merchantUserFacade = $merchantUserFacade;
+    protected $localeFacade;
+
+    /**
+     * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductAttributeFacadeInterface
+     */
+    protected $productAttributeFacade;
+
+    /**
+     * @var \Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\LocaleDataProviderInterface
+     */
+    protected $localeDataProvider;
+
+    /**
+     * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToLocaleFacadeInterface $localeFacade
+     * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductAttributeFacadeInterface $productAttributeFacade
+     * @param \Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\LocaleDataProviderInterface $localeDataProvider
+     */
+    public function __construct(
+        ProductMerchantPortalGuiToLocaleFacadeInterface $localeFacade,
+        ProductMerchantPortalGuiToProductAttributeFacadeInterface $productAttributeFacade,
+        LocaleDataProviderInterface $localeDataProvider
+    ) {
+        $this->localeFacade = $localeFacade;
+        $this->productAttributeFacade = $productAttributeFacade;
+        $this->localeDataProvider = $localeDataProvider;
     }
 
     /**
-     * @param \Symfony\Component\Form\FormInterface $createProductAbstractWithMultiConcreteForm
+     * @param array $concreteProducts
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
-    public function executeFormSubmission(FormInterface $createProductAbstractWithMultiConcreteForm): ProductAbstractTransfer
+    public function mapRequestDataToProductConcreteTransfer(array $concreteProducts): array
     {
-        $formData = $createProductAbstractWithMultiConcreteForm->getData();
-        $merchantUserTransfer = $this->merchantUserFacade->getCurrentMerchantUser();
+        $localeTransfers = $this->localeFacade->getLocaleCollection();
 
-        return (new ProductAbstractTransfer())
-            ->setSku($formData[CreateProductAbstractWithMultiConcreteForm::FIELD_SKU])
-            ->setName($formData[CreateProductAbstractWithMultiConcreteForm::FIELD_NAME])
-            ->setIdMerchant($merchantUserTransfer->getIdMerchantOrFail());
+        $concreteProductTransfers = [];
+        foreach ($concreteProducts as $concreteProduct) {
+            $concreteProductTransfer = (new ProductConcreteTransfer())
+                ->setSku($concreteProduct[static::FIELD_SKU])
+                ->setName($concreteProduct[static::FIELD_NAME]);
+
+            $attributes = $this->reformatSuperAttributes($concreteProductTransfer);
+            $productManagementAttributeTransfers = $this->getProductManagementAttributes($attributes);
+
+            foreach ($localeTransfers as $localeTransfer) {
+                $localizedAttributes = $this->extractLocalizedAttributes(
+                    $productManagementAttributeTransfers->getArrayCopy(),
+                    $attributes,
+                    $localeTransfer
+                );
+
+                $concreteProductTransfer->addLocalizedAttributes(
+                    (new LocalizedAttributesTransfer())
+                        ->setName($concreteProduct[static::FIELD_NAME])
+                        ->setLocale($localeTransfer)
+                        ->setAttributes($localizedAttributes)
+                );
+            }
+
+            $concreteProductTransfers[] = $concreteProductTransfer;
+        }
+
+        return $concreteProductTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $concreteProductTransfer
+     *
+     * @return string[]
+     */
+    protected function reformatSuperAttributes(ProductConcreteTransfer $concreteProductTransfer): array
+    {
+        $attributes = [];
+        foreach ($concreteProductTransfer as $superAttribute) {
+            $attributes[$superAttribute[static::FIELD_KEY]] = $superAttribute[static::FIELD_VALUE];
+        }
+
+        return $attributes;
+    }
+
+    /**
+     * @param array $attributes
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
+     */
+    protected function getProductManagementAttributes(array $attributes): ArrayObject
+    {
+        $productManagementAttributeFilterTransfer = new ProductManagementAttributeFilterTransfer();
+        $productManagementAttributeFilterTransfer->setKeys(array_keys($attributes));
+
+        return $this->productAttributeFacade
+            ->getProductManagementAttributes($productManagementAttributeFilterTransfer)
+            ->getProductManagementAttributes();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductManagementAttributeTransfer[] $productManagementAttributeTransfers
+     * @param string[] $attributes
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return string[]
+     */
+    protected function extractLocalizedAttributes(
+        array $productManagementAttributeTransfers,
+        array $attributes,
+        LocaleTransfer $localeTransfer
+    ): array {
+        $localizedAttributes = [];
+
+        foreach ($attributes as $attributeKey => $attributeValue) {
+            $productManagementAttributeValueTransfer = $this->extractProductManagementAttributeValueTransfer(
+                $attributeKey,
+                $attributeValue,
+                $productManagementAttributeTransfers
+            );
+
+            if (!$productManagementAttributeValueTransfer) {
+                continue;
+            }
+
+            foreach ($productManagementAttributeValueTransfer->getLocalizedValues() as $attributeValueTranslationTransfer) {
+                if ($attributeValueTranslationTransfer->getLocaleName() === $localeTransfer->getLocaleName()) {
+                    $localizedAttributes[$attributeKey] = $attributeValueTranslationTransfer->getTranslation();
+                }
+            }
+        }
+
+        return $localizedAttributes;
+    }
+
+    /**
+     * @param string $attributeKey
+     * @param string $attributeValue
+     * @param \Generated\Shared\Transfer\ProductManagementAttributeTransfer[] $productManagementAttributeTransfers
+     *
+     * @return \Generated\Shared\Transfer\ProductManagementAttributeValueTransfer|null
+     */
+    protected function extractProductManagementAttributeValueTransfer(
+        string $attributeKey,
+        string $attributeValue,
+        array $productManagementAttributeTransfers
+    ): ?ProductManagementAttributeValueTransfer {
+        foreach ($productManagementAttributeTransfers as $productManagementAttributeTransfer) {
+            foreach ($productManagementAttributeTransfer->getValues() as $productManagementAttributeValueTransfer) {
+                if (
+                    $attributeKey === $productManagementAttributeTransfer->getKey()
+                    && $attributeValue === $productManagementAttributeValueTransfer->getValue()
+                ) {
+                    return $productManagementAttributeValueTransfer;
+                }
+            }
+        }
+
+        return null;
     }
 }

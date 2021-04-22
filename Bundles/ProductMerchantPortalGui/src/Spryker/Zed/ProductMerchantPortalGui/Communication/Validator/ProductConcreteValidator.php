@@ -11,18 +11,15 @@ use Generated\Shared\Transfer\ValidationErrorTransfer;
 use Generated\Shared\Transfer\ValidationResponseTransfer;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Constraint\SkuRegexConstraint;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Constraint\UniqueAbstractSkuConstraint;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\ProductConcreteMapper;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\External\ProductMerchantPortalGuiToValidationAdapterInterface;
+use Symfony\Component\Validator\Constraints\All;
 use Symfony\Component\Validator\Constraints\Collection;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Required;
 
-class ConcreteProductValidator
+class ProductConcreteValidator implements ProductConcreteValidatorInterface
 {
-    public const FIELD_NAME = 'name';
-    public const FIELD_SKU = 'sku';
-    public const FIELD_SUPER_ATTRIBUTES = 'superAttributes';
-    public const FIELD_KEY = 'key';
-    public const FIELD_VALUE = 'value';
-
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\External\ProductMerchantPortalGuiToValidationAdapterInterface
      */
@@ -69,31 +66,36 @@ class ConcreteProductValidator
     }
 
     /**
-     * @return \Symfony\Component\Validator\Constraints\Collection
+     * @return \Symfony\Component\Validator\Constraints\Collection[]
      */
-    protected function getProductConcreteConstraints(): Collection
+    protected function getProductConcreteConstraints(): array
     {
-        return new Collection(
-            [
-                static::FIELD_NAME => [
-                    new NotBlank(),
-                ],
-                static::FIELD_SKU => [
-                    new NotBlank(),
-                    new SkuRegexConstraint(),
-                    new UniqueAbstractSkuConstraint(),
-                ],
-                self::FIELD_SUPER_ATTRIBUTES => new Collection(
+        return [new All([new Collection(
                     [
-                        self::FIELD_KEY => [
+                        ProductConcreteMapper::FIELD_NAME => [
                             new NotBlank(),
                         ],
-                        self::FIELD_SUPER_ATTRIBUTES => [
+                        ProductConcreteMapper::FIELD_SKU => [
                             new NotBlank(),
+                            new SkuRegexConstraint(),
+                            new UniqueAbstractSkuConstraint(),
                         ],
-                    ]
+                        ProductConcreteMapper::FIELD_SUPER_ATTRIBUTES => [new Collection([new Collection(
+                            [
+                                ProductConcreteMapper::FIELD_TITLE => [
+                                    new NotBlank(),
+                                ],
+                                ProductConcreteMapper::FIELD_KEY => [
+                                    new NotBlank(),
+                                ],
+                                ProductConcreteMapper::FIELD_VALUE => [
+                                    new NotBlank(),
+                                ],
+                            ]
+                        )]
+                        )],
+                    ],
                 ),
-            ],
-        );
+        ])];
     }
 }

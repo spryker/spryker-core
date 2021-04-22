@@ -16,6 +16,7 @@ use Orm\Zed\Store\Persistence\SpyStoreQuery;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\ProductMerchantPortalGui\Dependency\External\ProductMerchantPortalGuiToValidationAdapter;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToCategoryFacadeBridge;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToCurrencyFacadeBridge;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToLocaleFacadeBridge;
@@ -74,6 +75,8 @@ class ProductMerchantPortalGuiDependencyProvider extends AbstractBundleDependenc
 
     public const STORE = 'STORE';
 
+    public const EXTERNAL_ADAPTER_VALIDATION = 'EXTERNAL_ADAPTER_VALIDATION';
+
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -102,6 +105,8 @@ class ProductMerchantPortalGuiDependencyProvider extends AbstractBundleDependenc
         $container = $this->addProductConcreteTableExpanderPlugins($container);
 
         $container = $this->addStore($container);
+
+        $container = $this->addValidationAdapter($container);
 
         return $container;
     }
@@ -506,6 +511,20 @@ class ProductMerchantPortalGuiDependencyProvider extends AbstractBundleDependenc
     {
         $container->set(static::STORE, function () {
             return Store::getInstance();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addValidationAdapter(Container $container): Container
+    {
+        $container->set(static::EXTERNAL_ADAPTER_VALIDATION, function () {
+            return new ProductMerchantPortalGuiToValidationAdapter();
         });
 
         return $container;

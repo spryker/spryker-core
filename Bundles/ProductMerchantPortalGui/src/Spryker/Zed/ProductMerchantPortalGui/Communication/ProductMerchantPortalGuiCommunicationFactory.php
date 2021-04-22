@@ -14,6 +14,7 @@ use Spryker\Shared\GuiTable\GuiTableFactoryInterface;
 use Spryker\Shared\GuiTable\Http\GuiTableDataRequestExecutorInterface;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\PriceProductOffer\PriceProductOfferDependencyProvider;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Builder\ProductAbstractNameBuilder;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Builder\ProductAbstractNameBuilderInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\LocaleDataProvider;
@@ -47,10 +48,15 @@ use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\DataProvider\Pro
 use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\DataProvider\ProductTableDataProvider;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\PriceProductMapper;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\PriceProductMapperInterface;
-use Spryker\Zed\ProductMerchantPortalGui\Communication\Submitter\CreateProductAbstractWithMultiConcreteFormSubmitter;
-use Spryker\Zed\ProductMerchantPortalGui\Communication\Submitter\CreateProductAbstractWithMultiConcreteFormSubmitterInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\ProductAbstractMapper;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\ProductAbstractMapperInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\ProductConcreteMapper;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\ProductConcreteMapperInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Submitter\CreateProductAbstractWithSingleConcreteFormSubmitter;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Submitter\CreateProductAbstractWithSingleConcreteFormSubmitterInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Validator\ProductConcreteValidator;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Validator\ProductConcreteValidatorInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Dependency\External\ProductMerchantPortalGuiToValidationAdapterInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToCategoryFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToCurrencyFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToLocaleFacadeInterface;
@@ -260,6 +266,28 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
     }
 
     /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\ProductAbstractMapperInterface
+     */
+    public function createProductAbstractMapper(): ProductAbstractMapperInterface
+    {
+        return new ProductAbstractMapper(
+            $this->getMerchantUserFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\ProductConcreteMapperInterface
+     */
+    public function createProductConcreteMapper(): ProductConcreteMapperInterface
+    {
+        return new ProductConcreteMapper(
+            $this->getLocaleFacade(),
+            $this->getProductAttributeFacade(),
+            $this->createLocaleDataProvider()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductAttributeGuiTableConfigurationProviderInterface
      */
     public function createProductAttributeGuiTableConfigurationProvider(): ProductAttributeGuiTableConfigurationProviderInterface
@@ -345,16 +373,12 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
     }
 
     /**
-     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\Submitter\CreateProductAbstractWithMultiConcreteFormSubmitterInterface
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\Validator\ProductConcreteValidatorInterface
      */
-    public function createCreateProductAbstractWithMultiConcreteFormSubmitter(): CreateProductAbstractWithMultiConcreteFormSubmitterInterface
+    public function createProductConcreteValidator(): ProductConcreteValidatorInterface
     {
-        return new CreateProductAbstractWithMultiConcreteFormSubmitter(
-            $this->getMerchantUserFacade(),
-            $this->getLocaleFacade(),
-            $this->getProductFacade(),
-            $this->getProductAttributeFacade(),
-            $this->createLocaleDataProvider()
+        return new ProductConcreteValidator(
+            $this->getValidationAdapter()
         );
     }
 
@@ -508,5 +532,13 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
     public function getStore(): Store
     {
         return $this->getProvidedDependency(ProductMerchantPortalGuiDependencyProvider::STORE);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Dependency\External\ProductMerchantPortalGuiToValidationAdapterInterface
+     */
+    public function getValidationAdapter(): ProductMerchantPortalGuiToValidationAdapterInterface
+    {
+        return $this->getProvidedDependency(ProductMerchantPortalGuiDependencyProvider::EXTERNAL_ADAPTER_VALIDATION);
     }
 }

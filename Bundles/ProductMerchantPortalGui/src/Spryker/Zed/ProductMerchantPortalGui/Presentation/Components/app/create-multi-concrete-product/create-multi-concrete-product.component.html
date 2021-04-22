@@ -9,7 +9,7 @@
 
 <div class="mp-create-multi-concrete-product__content">
     <div class="mp-create-multi-concrete-product__content-inner">
-        <mp-product-attributes-selector [attributes]="attributes" [(selectedAttributes)]="selectedAttributes">
+        <mp-product-attributes-selector [name]="productsName" [attributes]="attributes" [(selectedAttributes)]="selectedAttributes">
             <ng-content col-attr-name select="[selector-col-attr-name]"></ng-content>
             <ng-content col-attr-values-name select="[selector-col-attr-values-name]"></ng-content>
             <ng-content btn-attr-add-name select="[selector-btn-attr-add-name]"></ng-content>

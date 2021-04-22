@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductMerchantPortalGui\Dependency\External;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-class ProductMerchantPortalGuiToValidationAdapter
+class ProductMerchantPortalGuiToValidationAdapter implements ProductMerchantPortalGuiToValidationAdapterInterface
 {
     /**
      * @return \Symfony\Component\Validator\Validator\ValidatorInterface
