@@ -11,13 +11,18 @@ use Spryker\Service\Kernel\AbstractBundleConfig;
 
 class UtilSanitizeConfig extends AbstractBundleConfig
 {
+    protected const REPLACEMENT_VALUE = '***';
+
     /**
+     * Specification:
+     * - Defines the replacement for any findings of the sanitizer.
+     *
      * @api
      *
      * @return string
      */
     public function getStringSanitizerReplacement(): string
     {
-        return '***';
+        return static::REPLACEMENT_VALUE;
     }
 }

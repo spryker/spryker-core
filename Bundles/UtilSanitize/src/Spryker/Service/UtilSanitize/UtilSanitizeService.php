@@ -64,6 +64,10 @@ class UtilSanitizeService extends AbstractService implements UtilSanitizeService
     }
 
     /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param string $value
      *
      * @return string
