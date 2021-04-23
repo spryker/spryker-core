@@ -80,16 +80,18 @@ class ErrorHandler
         }
 
         $message = sprintf('FATAL ERROR - %s', $error['message']);
-        $exception = new ErrorException($message, 0, $error['type'], $error['file'], $error['line']);
+        $exception = new ErrorException($message, 0, (int)$error['type'], (string)$error['file'], (int)$error['line']);
         $this->handleException($exception);
     }
 
     /**
+     * @phpstan-return array<string, int|string>
+     *
      * @return array
      */
     protected function getLastError()
     {
-        return error_get_last();
+        return (array)error_get_last();
     }
 
     /**
