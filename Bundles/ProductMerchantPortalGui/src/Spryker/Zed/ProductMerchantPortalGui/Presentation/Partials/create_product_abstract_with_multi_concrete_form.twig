@@ -4,9 +4,11 @@
     {% set mainClass = 'mp-create-multi-concrete-product' %}
 
     {# TODO: replace with real data #}
+    {% set attributesName = 'concreteAttributes' %}
     {% set productsName = 'concreteProducts' %}
-    {% set selectedAttributes = selectedAttributesJson %}
-    {% set concreteProducts = concreteProductsJson %}
+    {% set attributes = superProductManagementAttributes | json_encode %}
+    {% set selectedAttributes = selectedAttributesJson | json_encode %}
+    {% set concreteProducts = concreteProductsJson | json_encode %}
 
     {% block createMultiConcreteProduct %}
         <web-mp-concrete-product-generator-data
@@ -15,7 +17,8 @@
             abstract-name="{{ productAbstract.name }}">
             <web-mp-create-multi-concrete-product
                 cloak
-                attributes="{{ superProductManagementAttributes | json_encode }}"
+                attributes="{{ attributes }}"
+                attributes-name="{{ productsName }}"
                 products-name="{{ productsName }}">
                 {{ form_start(form, { attr: { excludeFormTag: true } }) }}
                     {% block title %}

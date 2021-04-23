@@ -13,6 +13,7 @@ import { ProductAttribute } from '../product-attributes-selector/types';
 export class CreateMultiConcreteProductComponent {
     @Input() @ToJson() attributes: ProductAttribute[];
     @Input() productsName: string;
+    @Input() attributesName: string;
 
     selectedAttributes: ProductAttribute[] = [];
 }
