@@ -72,7 +72,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
                 $localeTransfer->getIdLocale(),
                 Criteria::EQUAL
             )
-            ->filterByIdCategory(1) // TODO: remove it before merging to dev branch.
+            ->filterByIdCategory(1) // TODO: Performance issue remove it before merging to dev branch.
             ->find();
 
         return $this->getFactory()
