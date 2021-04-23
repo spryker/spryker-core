@@ -26,6 +26,7 @@
             'rest_request_parameter' => '{{ property.restRequestParameter is defined ? property.restRequestParameter : 'no' }}',
             'is_associative' => {{ property.is_associative ? 'true' : 'false' }},
             'is_nullable' => {{ property.nullable ? 'true' : 'false' }},
+            'is_strict' => {{ property.is_strict ? 'true' : 'false' }},
         ],
     {% endfor -%}
 ];
@@ -133,7 +134,7 @@
      {% endif -%}
      * @return {{ method.return }}{% if method.typeShimNotice %} {{ method.typeShimNotice }}{% endif ~%}
      */
-    public function {{ method.name }}(){% if method.returnTypeHint is defined %}: {{ method.returnTypeHint }} {% endif ~%}
+    public function {{ method.name }}(){% if method.returnTypeHint is defined %}: {{ method.returnTypeHint }}{% endif ~%}
     {
         return $this->{{ method.property }};
     }
@@ -152,7 +153,7 @@
      {% endif -%}
      * @return {{ method.return }}
      */
-    public function {{ method.name }}(){% if method.returnTypeHint is defined %}: {{ method.returnTypeHint }} {% endif ~%}
+    public function {{ method.name }}(){% if method.returnTypeHint is defined %}: {{ method.returnTypeHint }}{% endif ~%}
     {
         if ($this->{{ method.property }} === null) {
             $this->throwNullValueException(static::{{ method.propertyConst }});
