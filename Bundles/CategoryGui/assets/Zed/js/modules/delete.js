@@ -12,7 +12,7 @@ $(document).ready(function () {
     var confirmCheckboxElement = $(SELECTOR_DELETE_CONFIRM);
 
     confirmCheckboxElement.off('click').on('click', function () {
-        var checkboxIsChecked = $confirmCheckboxElement.prop('checked');
+        var checkboxIsChecked = confirmCheckboxElement.prop('checked');
 
         var submitDeleteElement = $(SELECTOR_SUBMIT_DELETE);
         submitDeleteElement.prop('disabled', !checkboxIsChecked);
