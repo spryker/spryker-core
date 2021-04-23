@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ProductLabel\Business\ProductAbstractRelation;
 
 use Spryker\Zed\ProductLabel\Business\Touch\ProductAbstractRelationTouchManagerInterface;
-use Spryker\Zed\ProductLabel\Persistence\ProductLabelEntityManager;
+use Spryker\Zed\ProductLabel\Persistence\ProductLabelEntityManagerInterface;
 use Spryker\Zed\ProductLabel\Persistence\ProductLabelRepositoryInterface;
 use Spryker\Zed\ProductLabel\ProductLabelConfig;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
@@ -33,20 +33,20 @@ class ProductAbstractRelationDeleter implements ProductAbstractRelationDeleterIn
     protected $productLabelConfig;
 
     /**
-     * @var \Spryker\Zed\ProductLabel\Persistence\ProductLabelEntityManager
+     * @var \Spryker\Zed\ProductLabel\Persistence\ProductLabelEntityManagerInterface
      */
     private $productLabelEntityManager;
 
     /**
      * @param \Spryker\Zed\ProductLabel\Business\Touch\ProductAbstractRelationTouchManagerInterface $productRelationTouchManager
      * @param \Spryker\Zed\ProductLabel\Persistence\ProductLabelRepositoryInterface $productLabelRepository
-     * @param \Spryker\Zed\ProductLabel\Persistence\ProductLabelEntityManager $productLabelEntityManager
+     * @param \Spryker\Zed\ProductLabel\Persistence\ProductLabelEntityManagerInterface $productLabelEntityManager
      * @param \Spryker\Zed\ProductLabel\ProductLabelConfig $productLabelConfig
      */
     public function __construct(
         ProductAbstractRelationTouchManagerInterface $productRelationTouchManager,
         ProductLabelRepositoryInterface $productLabelRepository,
-        ProductLabelEntityManager $productLabelEntityManager,
+        ProductLabelEntityManagerInterface $productLabelEntityManager,
         ProductLabelConfig $productLabelConfig
     ) {
         $this->productRelationTouchManager = $productRelationTouchManager;
