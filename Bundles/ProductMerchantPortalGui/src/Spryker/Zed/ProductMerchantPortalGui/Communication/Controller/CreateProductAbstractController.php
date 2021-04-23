@@ -185,7 +185,9 @@ class CreateProductAbstractController extends AbstractController
             ->validateConcreteProducts($concreteProducts);
 
         if (!$validationResponseTransfer->getIsSuccessOrFail()) {
-            return $this->getErrorJsonResponse($validationResponseTransfer);
+            return new JsonResponse(
+                $this->addErrorNotifications($responseData, $validationResponseTransfer)
+            );
         }
 
         $concreteProductTransfers = $this->mapRequestDataToProductConcreteTransfer($concreteProducts);
@@ -247,12 +249,15 @@ class CreateProductAbstractController extends AbstractController
     }
 
     /**
+     * @param array $response
      * @param \Generated\Shared\Transfer\ValidationResponseTransfer $validationResponseTransfer
      *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @return array
      */
-    protected function getErrorJsonResponse(ValidationResponseTransfer $validationResponseTransfer): JsonResponse
-    {
+    protected function addErrorNotifications(
+        array $response,
+        ValidationResponseTransfer $validationResponseTransfer
+    ): array {
         $notifications = [];
 
         $validationErrorTransfers = $validationResponseTransfer->getValidationErrors();
@@ -263,11 +268,9 @@ class CreateProductAbstractController extends AbstractController
             ];
         }
 
-        $response = [
-            static::RESPONSE_KEY_NOTIFICATIONS => $notifications,
-        ];
+        $response[static::RESPONSE_KEY_NOTIFICATIONS] = $notifications;
 
-        return new JsonResponse($response);
+        return $response;
     }
 
     /**
