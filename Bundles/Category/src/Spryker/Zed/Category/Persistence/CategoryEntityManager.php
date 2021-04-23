@@ -103,7 +103,7 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
 
         $propelCollection->save();
 
-        // ignoring events.
+        // TODO: Performance issue.
 //        foreach ($idsCategory as $idCategory) {
 //            foreach ($storeIds as $storeId) {
 //                $categoryStoreEntity = new SpyCategoryStore();
@@ -159,7 +159,7 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
         $categoryClosureTableEntity = $this->createCategoryClosureTableEntity($idCategoryNode, $idCategoryNode);
         $categoryClosureTableEntity->save();
 
-        // Ignoring events
+        // TODO: Performance issue.
 //        foreach ($categoryClosureTableEntities as $categoryClosureTableEntity) {
 //            $categoryClosureTableEntity = $this->createCategoryClosureTableEntity(
 //                $categoryClosureTableEntity->getFkCategoryNode(),
@@ -197,7 +197,7 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
             $this->createCategoryClosureTableParentEntries($parentCategoryClosureTableEntities, $categoryClosureTableEntity);
         }
 
-        // Ignoring events
+        // TODO: Performance issue.
 //        $this->commit();
     }
 
@@ -421,7 +421,7 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
             ->createCategoryStoreQuery()
             ->filterByFkCategory_in($idsCategory)
             ->filterByFkStore_In($storeIds)
-            ->find() // remove it for ignoring events
+            ->find() // TODO: Performance issue.
             ->delete();
     }
 
@@ -447,7 +447,7 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
             $categoryClosureTableEntity->save();
         }
 
-        // Ignoring events
+        // TODO: Performance issue.
 //        foreach ($parentCategoryClosureTableEntities as $parentCategoryClosureTableEntity) {
 //            $depth = $categoryClosureTableEntity->getDepth() + $parentCategoryClosureTableEntity->getDepth() + 1;
 //            $categoryClosureTableEntity = $this->createCategoryClosureTableEntity(

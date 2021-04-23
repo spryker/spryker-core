@@ -153,12 +153,12 @@ class CategoryNodeUpdater implements CategoryNodeUpdaterInterface
         $this->categoryClosureTableUpdater->updateCategoryClosureTableParentEntriesForCategoryNode($nodeTransfer);
         $categoryTransfer->setCategoryNode($nodeTransfer);
 
-        // TODO: need refactoring ~ 20 sec loading in case 20k categories
-//        $this->touchCategoryNode($categoryTransfer, $nodeTransfer);
+        // TODO: Performance issue.
+        $this->touchCategoryNode($categoryTransfer, $nodeTransfer);
         $this->touchPossibleFormerParentCategoryNode($idFormerParentCategoryNode);
 
-        // TODO: need refactoring - it triggers all nodes ~ 20k jobs
-//        $this->categoryNodePublisher->triggerBulkCategoryNodePublishEventForUpdate($nodeTransfer->getIdCategoryNodeOrFail());
+        // TODO: Performance issue.
+        $this->categoryNodePublisher->triggerBulkCategoryNodePublishEventForUpdate($nodeTransfer->getIdCategoryNodeOrFail());
     }
 
     /**
