@@ -8,16 +8,20 @@
 namespace Spryker\Zed\ProductCategoryStorage\Persistence;
 
 use Generated\Shared\Transfer\CategoryNodeAggregationTransfer;
+use Generated\Shared\Transfer\FilterTransfer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryClosureTableTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryTableMap;
 use Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap;
 use Orm\Zed\ProductCategory\Persistence\Map\SpyProductCategoryTableMap;
+use Orm\Zed\ProductCategoryStorage\Persistence\Map\SpyProductAbstractCategoryStorageTableMap;
 use Orm\Zed\Store\Persistence\Map\SpyStoreTableMap;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
+use Spryker\Zed\Synchronization\Persistence\Propel\Formatter\SynchronizationDataTransferObjectFormatter;
 
 /**
  * @method \Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStoragePersistenceFactory getFactory()
@@ -200,5 +204,67 @@ class ProductCategoryStorageRepository extends AbstractRepository implements Pro
             ->select(SpyProductCategoryTableMap::COL_FK_PRODUCT_ABSTRACT)
             ->find()
             ->getData();
+    }
+
+    /**
+     * @param int $offset
+     * @param int $limit
+     * @param int[] $productAbstractIds
+     *
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     */
+    public function findProductAbstractCategoryStorageSynchronizationDataTransfersByProductAbstractIds(
+        int $offset,
+        int $limit,
+        array $productAbstractIds
+    ): array {
+        $filterTransfer = $this->createFilterTransfer(
+            $offset,
+            $limit,
+            SpyProductAbstractCategoryStorageTableMap::COL_ID_PRODUCT_ABSTRACT_CATEGORY_STORAGE
+        );
+
+        $query = $this->getFactory()->createProductAbstractCategoryStoragePropelQuery();
+
+        if ($productAbstractIds) {
+            $query->filterByFkProductAbstract_In($productAbstractIds);
+        }
+
+        return $this->buildQueryFromCriteria($query, $filterTransfer)
+            ->setFormatter(SynchronizationDataTransferObjectFormatter::class)
+            ->find();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductCategoryTransfer[]
+     */
+    public function findProductCategoryTransfersByFilter(FilterTransfer $filterTransfer): array
+    {
+        $query = $this->getFactory()->getProductCategoryPropelQuery();
+
+        $productCategoryEnteties = $this->buildQueryFromCriteria($query, $filterTransfer)
+            ->setFormatter(ModelCriteria::FORMAT_OBJECT)
+            ->find();
+
+         return $this->getFactory()
+             ->createProductCategoryMapper()
+             ->mapProductCategoryEntitiesToProductCategoryTransfers($productCategoryEnteties, []);
+    }
+
+    /**
+     * @param int $offset
+     * @param int $limit
+     * @param string $orderByColumnName
+     *
+     * @return \Generated\Shared\Transfer\FilterTransfer
+     */
+    protected function createFilterTransfer(int $offset, int $limit, string $orderByColumnName): FilterTransfer
+    {
+        return (new FilterTransfer())
+            ->setOrderBy($orderByColumnName)
+            ->setOffset($offset)
+            ->setLimit($limit);
     }
 }

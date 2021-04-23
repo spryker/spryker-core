@@ -12,8 +12,8 @@ use Generated\Shared\Transfer\CategoryNodePageSearchTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\NodeCollectionTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
-use Orm\Zed\Category\Persistence\Map\SpyCategoryStoreTableMap;
 use Spryker\Zed\CategoryPageSearch\Business\Deleter\CategoryNodePageSearchDeleterInterface;
+use Spryker\Zed\CategoryPageSearch\Business\Extractor\CategoryNodeExtractorInterface;
 use Spryker\Zed\CategoryPageSearch\Business\Mapper\CategoryNodePageSearchMapperInterface;
 use Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToCategoryFacadeInterface;
 use Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToEventBehaviorFacadeInterface;
@@ -53,12 +53,18 @@ class CategoryNodePageSearchWriter implements CategoryNodePageSearchWriterInterf
     protected $categoryNodePageSearchDeleter;
 
     /**
+     * @var \Spryker\Zed\CategoryPageSearch\Business\Extractor\CategoryNodeExtractorInterface
+     */
+    protected $categoryNodeExtractor;
+
+    /**
      * @param \Spryker\Zed\CategoryPageSearch\Persistence\CategoryPageSearchEntityManagerInterface $categoryPageSearchEntityManager
      * @param \Spryker\Zed\CategoryPageSearch\Business\Mapper\CategoryNodePageSearchMapperInterface $categoryNodePageSearchMapper
      * @param \Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToCategoryFacadeInterface $categoryFacade
      * @param \Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToEventBehaviorFacadeInterface $eventBehaviorFacade
      * @param \Spryker\Zed\CategoryPageSearch\Business\Deleter\CategoryNodePageSearchDeleterInterface $categoryNodePageSearchDeleter
+     * @param \Spryker\Zed\CategoryPageSearch\Business\Extractor\CategoryNodeExtractorInterface $categoryNodeExtractor
      */
     public function __construct(
         CategoryPageSearchEntityManagerInterface $categoryPageSearchEntityManager,
@@ -66,7 +72,8 @@ class CategoryNodePageSearchWriter implements CategoryNodePageSearchWriterInterf
         CategoryPageSearchToCategoryFacadeInterface $categoryFacade,
         CategoryPageSearchToStoreFacadeInterface $storeFacade,
         CategoryPageSearchToEventBehaviorFacadeInterface $eventBehaviorFacade,
-        CategoryNodePageSearchDeleterInterface $categoryNodePageSearchDeleter
+        CategoryNodePageSearchDeleterInterface $categoryNodePageSearchDeleter,
+        CategoryNodeExtractorInterface $categoryNodeExtractor
     ) {
         $this->categoryPageSearchEntityManager = $categoryPageSearchEntityManager;
         $this->categoryNodePageSearchMapper = $categoryNodePageSearchMapper;
@@ -74,6 +81,7 @@ class CategoryNodePageSearchWriter implements CategoryNodePageSearchWriterInterf
         $this->storeFacade = $storeFacade;
         $this->eventBehaviorFacade = $eventBehaviorFacade;
         $this->categoryNodePageSearchDeleter = $categoryNodePageSearchDeleter;
+        $this->categoryNodeExtractor = $categoryNodeExtractor;
     }
 
     /**
@@ -81,31 +89,9 @@ class CategoryNodePageSearchWriter implements CategoryNodePageSearchWriterInterf
      *
      * @return void
      */
-    public function writeCategoryNodePageSearchCollectionByCategoryStoreEvents(array $eventEntityTransfers): void
+    public function writeCategoryNodePageSearchCollectionByCategoryNodeEvents(array $eventEntityTransfers): void
     {
-        $categoryIds = $this->eventBehaviorFacade->getEventTransferForeignKeys($eventEntityTransfers, SpyCategoryStoreTableMap::COL_FK_CATEGORY);
-        $nodeCollectionTransfer = $this->categoryFacade->getCategoryNodes(
-            (new CategoryNodeCriteriaTransfer())->setCategoryIds($categoryIds)
-        );
-
-        $categoryNodeIds = $this->extractCategoryNodeIdsFromNodeCollection($nodeCollectionTransfer);
-
-        $this->writeCategoryNodePageSearchCollection($categoryNodeIds);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
-     *
-     * @return void
-     */
-    public function writeCategoryNodePageSearchCollectionByCategoryStorePublishEvents(array $eventEntityTransfers): void
-    {
-        $categoryIds = $this->eventBehaviorFacade->getEventTransferIds($eventEntityTransfers);
-        $nodeCollectionTransfer = $this->categoryFacade->getCategoryNodes(
-            (new CategoryNodeCriteriaTransfer())->setCategoryIds($categoryIds)
-        );
-
-        $categoryNodeIds = $this->extractCategoryNodeIdsFromNodeCollection($nodeCollectionTransfer);
+        $categoryNodeIds = $this->eventBehaviorFacade->getEventTransferIds($eventEntityTransfers);
 
         $this->writeCategoryNodePageSearchCollection($categoryNodeIds);
     }
@@ -125,6 +111,19 @@ class CategoryNodePageSearchWriter implements CategoryNodePageSearchWriterInterf
         $nodeCollectionTransfer = $this->categoryFacade->getCategoryNodes($categoryNodeCriteriaTransfer);
 
         $this->storeData($nodeCollectionTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
+     *
+     * @return void
+     */
+    public function writeCategoryNodeStorageCollectionByCategoryNodeCriteria(CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer): void
+    {
+        $nodeCollectionTransfer = $this->categoryFacade->getCategoryNodes($categoryNodeCriteriaTransfer);
+        $categoryNodeIds = $this->categoryNodeExtractor->extractCategoryNodeIdsFromNodeCollection($nodeCollectionTransfer);
+
+        $this->writeCategoryNodePageSearchCollection($categoryNodeIds);
     }
 
     /**
@@ -219,21 +218,5 @@ class CategoryNodePageSearchWriter implements CategoryNodePageSearchWriterInterf
         }
 
         return false;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\NodeCollectionTransfer $nodeCollectionTransfer
-     *
-     * @return int[]
-     */
-    protected function extractCategoryNodeIdsFromNodeCollection(NodeCollectionTransfer $nodeCollectionTransfer): array
-    {
-        $categoryNodeIds = [];
-
-        foreach ($nodeCollectionTransfer->getNodes() as $nodeTransfer) {
-            $categoryNodeIds[] = $nodeTransfer->getIdCategoryNodeOrFail();
-        }
-
-        return $categoryNodeIds;
     }
 }
