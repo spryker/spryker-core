@@ -159,7 +159,7 @@ class PaymentMethodReader implements PaymentMethodReaderInterface
         $persistentMethodNames = [];
 
         foreach ($paymentMethodsFromPersistence->getMethods() as $paymentMethodTransfer) {
-            $persistentMethodNames[] = $paymentMethodTransfer->getMethodName();
+            $persistentMethodNames[] = $paymentMethodTransfer->getPaymentMethodKey();
         }
 
         return $persistentMethodNames;

@@ -58,7 +58,8 @@
     </transfer>
 
     <transfer name="PaymentMethod">
-        <property name="methodName" type="string"/>
+        <property name="methodName" type="string" deprecated="Use paymentMethodKey instead."/>
+        <property name="paymentMethodKey" type="string" strict="true"/>
         <property name="idPaymentMethod" type="int"/>
         <property name="idPaymentProvider" type="int"/>
         <property name="name" type="string"/>
@@ -80,6 +81,12 @@
 
     <transfer name="PaymentMethodResponse">
         <property name="paymentMethod" type="PaymentMethod"/>
+        <property name="isSuccessful" type="bool"/>
+        <property name="messages" type="Message[]" singular="message"/>
+    </transfer>
+
+    <transfer name="PaymentProviderResponse" strict="true">
+        <property name="paymentProvider" type="PaymentProvider"/>
         <property name="isSuccessful" type="bool"/>
         <property name="messages" type="Message[]" singular="message"/>
     </transfer>

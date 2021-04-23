@@ -9,6 +9,8 @@ namespace SprykerTest\Zed\Payment\Business\Facade;
 
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\CheckoutResponseBuilder;
+use Generated\Shared\DataBuilder\PaymentMethodBuilder;
+use Generated\Shared\DataBuilder\PaymentProviderBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\DataBuilder\StoreRelationBuilder;
 use Generated\Shared\Transfer\PaymentMethodsTransfer;
@@ -103,7 +105,7 @@ class PaymentFacadeTest extends Unit
         $this->tester->ensurePaymentMethodTableIsEmpty();
         $paymentProviderTransfer = $this->tester->havePaymentProvider();
         $paymentMethodTransfer = $this->tester->havePaymentMethod([
-            PaymentMethodTransfer::METHOD_NAME => 'test',
+            PaymentMethodTransfer::PAYMENT_METHOD_KEY => 'test',
             PaymentMethodTransfer::ID_PAYMENT_PROVIDER => $paymentProviderTransfer->getIdPaymentProvider(),
         ]);
         $storeTransfer = $this->tester->haveStore([
@@ -119,7 +121,7 @@ class PaymentFacadeTest extends Unit
             ],
         ])->build();
         $paymentMethodTransfer->setStoreRelation($storeRelationTransfer);
-        $paymentMethodTransfer->setMethodName('test1');
+        $paymentMethodTransfer->setPaymentMethodKey('test1');
 
         // Act
         $this->paymentFacade->updatePaymentMethod($paymentMethodTransfer);
@@ -158,13 +160,13 @@ class PaymentFacadeTest extends Unit
         ])->build();
         $this->tester->havePaymentMethod([
             PaymentMethodTransfer::IS_ACTIVE => true,
-            PaymentMethodTransfer::METHOD_NAME => 'dummyPaymentInvoice',
+            PaymentMethodTransfer::PAYMENT_METHOD_KEY => 'dummyPaymentInvoice',
             PaymentMethodTransfer::ID_PAYMENT_PROVIDER => $paymentProviderTransfer->getIdPaymentProvider(),
             PaymentMethodTransfer::STORE_RELATION => $storeRelationTransfer,
         ]);
         $this->tester->havePaymentMethod([
             PaymentMethodTransfer::IS_ACTIVE => false,
-            PaymentMethodTransfer::METHOD_NAME => 'dummyPaymentCreditCard',
+            PaymentMethodTransfer::PAYMENT_METHOD_KEY => 'dummyPaymentCreditCard',
             PaymentMethodTransfer::ID_PAYMENT_PROVIDER => $paymentProviderTransfer->getIdPaymentProvider(),
         ]);
         $quoteTransfer = (new QuoteBuilder())->withStore([
@@ -204,19 +206,19 @@ class PaymentFacadeTest extends Unit
         ])->build();
         $this->tester->havePaymentMethod([
             PaymentMethodTransfer::IS_ACTIVE => true,
-            PaymentMethodTransfer::METHOD_NAME => 'dummyPaymentInvoice',
+            PaymentMethodTransfer::PAYMENT_METHOD_KEY => 'dummyPaymentInvoice',
             PaymentMethodTransfer::ID_PAYMENT_PROVIDER => $paymentProviderTransfer->getIdPaymentProvider(),
             PaymentMethodTransfer::STORE_RELATION => $storeRelationTransfer,
         ]);
         $this->tester->havePaymentMethod([
             PaymentMethodTransfer::IS_ACTIVE => false,
-            PaymentMethodTransfer::METHOD_NAME => 'dummyPaymentCreditCard',
+            PaymentMethodTransfer::PAYMENT_METHOD_KEY => 'dummyPaymentCreditCard',
             PaymentMethodTransfer::ID_PAYMENT_PROVIDER => $paymentProviderTransfer->getIdPaymentProvider(),
             PaymentMethodTransfer::STORE_RELATION => $storeRelationTransfer,
         ]);
         $this->tester->havePaymentMethod([
             PaymentMethodTransfer::IS_ACTIVE => true,
-            PaymentMethodTransfer::METHOD_NAME => 'dummyPaymentTest',
+            PaymentMethodTransfer::PAYMENT_METHOD_KEY => 'dummyPaymentTest',
             PaymentMethodTransfer::ID_PAYMENT_PROVIDER => $paymentProviderTransfer->getIdPaymentProvider(),
             PaymentMethodTransfer::STORE_RELATION => null,
         ]);
@@ -337,6 +339,143 @@ class PaymentFacadeTest extends Unit
 
         // Assert
         $this->assertFalse($isPaymentMethodExists);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreatePaymentProvider(): void
+    {
+        // Arrange
+        $this->tester->ensurePaymentMethodTableIsEmpty();
+        $paymentProviderTransfer = (new PaymentProviderBuilder())->build();
+        $storeTransfer = $this->tester->haveStore([
+            StoreTransfer::NAME => 'DE',
+        ]);
+
+        $paymentMethodTransfer = (new PaymentMethodBuilder())->build();
+        $storeRelationTransfer = (new StoreRelationBuilder())->seed([
+            StoreRelationTransfer::ID_ENTITY => $paymentMethodTransfer->getIdPaymentMethod(),
+            StoreRelationTransfer::ID_STORES => [
+                $storeTransfer->getIdStore(),
+            ],
+            StoreRelationTransfer::STORES => [
+                $storeTransfer,
+            ],
+        ])->build();
+        $paymentMethodTransfer->setStoreRelation($storeRelationTransfer);
+        $paymentProviderTransfer->addPaymentMethod($paymentMethodTransfer);
+
+        // Act
+        $paymentProviderResponseTransfer = $this->paymentFacade->createPaymentProvider($paymentProviderTransfer);
+
+        // Assert
+        $this->assertTrue($paymentProviderResponseTransfer->getIsSuccessful());
+        $this->assertNotEmpty($paymentProviderResponseTransfer->getPaymentProvider()->getIdPaymentProvider());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreatePaymentMethod(): void
+    {
+        // Arrange
+        $this->tester->ensurePaymentMethodTableIsEmpty();
+        $paymentProviderTransfer = $this->tester->havePaymentProvider();
+        $storeTransfer = $this->tester->haveStore([
+            StoreTransfer::NAME => 'DE',
+        ]);
+
+        $paymentMethodTransfer = (new PaymentMethodBuilder())
+            ->seed([PaymentMethodTransfer::ID_PAYMENT_PROVIDER => $paymentProviderTransfer->getIdPaymentProvider()])
+            ->build();
+        $storeRelationTransfer = (new StoreRelationBuilder())->seed([
+            StoreRelationTransfer::ID_ENTITY => $paymentMethodTransfer->getIdPaymentMethod(),
+            StoreRelationTransfer::ID_STORES => [
+                $storeTransfer->getIdStore(),
+            ],
+            StoreRelationTransfer::STORES => [
+                $storeTransfer,
+            ],
+        ])->build();
+        $paymentMethodTransfer->setStoreRelation($storeRelationTransfer);
+
+        // Act
+        $paymentMethodResponseTransfer = $this->paymentFacade->createPaymentMethod($paymentMethodTransfer);
+
+        // Assert
+        $this->assertTrue($paymentMethodResponseTransfer->getIsSuccessful());
+        $this->assertNotEmpty($paymentMethodResponseTransfer->getPaymentMethod()->getIdPaymentMethod());
+    }
+
+    /**
+     * @return void
+     */
+    public function testDeactivatePaymentMethod(): void
+    {
+        // Arrange
+        $this->tester->ensurePaymentMethodTableIsEmpty();
+        $paymentProviderTransfer = $this->tester->havePaymentProvider();
+        $storeTransfer = $this->tester->haveStore([
+            StoreTransfer::NAME => 'DE',
+        ]);
+        $storeRelationTransfer = (new StoreRelationBuilder())->seed([
+            StoreRelationTransfer::ID_STORES => [
+                $storeTransfer->getIdStore(),
+            ],
+            StoreRelationTransfer::STORES => [
+                $storeTransfer,
+            ],
+        ])->build();
+
+        $paymentMethodTransfer = $this->tester->havePaymentMethod([
+            PaymentMethodTransfer::IS_ACTIVE => true,
+            PaymentMethodTransfer::PAYMENT_METHOD_KEY => rand(),
+            PaymentMethodTransfer::ID_PAYMENT_PROVIDER => $paymentProviderTransfer->getIdPaymentProvider(),
+            PaymentMethodTransfer::STORE_RELATION => $storeRelationTransfer,
+        ]);
+
+        // Act
+        $paymentMethodResponseTransfer = $this->paymentFacade->deactivatePaymentMethod($paymentMethodTransfer);
+
+        // Assert
+        $this->assertTrue($paymentMethodResponseTransfer->getIsSuccessful());
+        $this->assertFalse($paymentMethodResponseTransfer->getPaymentMethod()->getIsActive());
+    }
+
+    /**
+     * @return void
+     */
+    public function testActivatePaymentMethod(): void
+    {
+        // Arrange
+        $this->tester->ensurePaymentMethodTableIsEmpty();
+        $paymentProviderTransfer = $this->tester->havePaymentProvider();
+        $storeTransfer = $this->tester->haveStore([
+            StoreTransfer::NAME => 'DE',
+        ]);
+        $storeRelationTransfer = (new StoreRelationBuilder())->seed([
+            StoreRelationTransfer::ID_STORES => [
+                $storeTransfer->getIdStore(),
+            ],
+            StoreRelationTransfer::STORES => [
+                $storeTransfer,
+            ],
+        ])->build();
+
+        $paymentMethodTransfer = $this->tester->havePaymentMethod([
+            PaymentMethodTransfer::IS_ACTIVE => false,
+            PaymentMethodTransfer::ID_PAYMENT_PROVIDER => $paymentProviderTransfer->getIdPaymentProvider(),
+            PaymentMethodTransfer::PAYMENT_METHOD_KEY => rand(),
+            PaymentMethodTransfer::STORE_RELATION => $storeRelationTransfer,
+        ]);
+
+        // Act
+        $paymentMethodResponseTransfer = $this->paymentFacade->activatePaymentMethod($paymentMethodTransfer);
+
+        // Assert
+        $this->assertTrue($paymentMethodResponseTransfer->getIsSuccessful());
+        $this->assertTrue($paymentMethodResponseTransfer->getPaymentMethod()->getIsActive());
     }
 
     /**

@@ -22,6 +22,8 @@ use Spryker\Zed\Payment\Business\Method\PaymentMethodValidatorInterface;
 use Spryker\Zed\Payment\Business\Order\SalesPaymentHydrator;
 use Spryker\Zed\Payment\Business\Order\SalesPaymentReader;
 use Spryker\Zed\Payment\Business\Order\SalesPaymentSaver;
+use Spryker\Zed\Payment\Business\Writer\PaymentWriter;
+use Spryker\Zed\Payment\Business\Writer\PaymentWriterInterface;
 use Spryker\Zed\Payment\Dependency\Facade\PaymentToStoreFacadeInterface;
 use Spryker\Zed\Payment\PaymentDependencyProvider;
 
@@ -159,5 +161,13 @@ class PaymentBusinessFactory extends AbstractBusinessFactory
     protected function getStoreFacade(): PaymentToStoreFacadeInterface
     {
         return $this->getProvidedDependency(PaymentDependencyProvider::FACADE_STORE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Payment\Business\Writer\PaymentWriterInterface
+     */
+    public function createPaymentWriter(): PaymentWriterInterface
+    {
+        return new PaymentWriter($this->getEntityManager());
     }
 }

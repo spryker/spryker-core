@@ -13,6 +13,8 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaymentMethodResponseTransfer;
 use Generated\Shared\Transfer\PaymentMethodTransfer;
 use Generated\Shared\Transfer\PaymentProviderCollectionTransfer;
+use Generated\Shared\Transfer\PaymentProviderResponseTransfer;
+use Generated\Shared\Transfer\PaymentProviderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SalesPaymentTransfer;
 
@@ -168,4 +170,64 @@ interface PaymentFacadeInterface
         QuoteTransfer $quoteTransfer,
         CheckoutResponseTransfer $checkoutResponseTransfer
     ): bool;
+
+    /**
+     * Specification:
+     * - Creates payment provider.
+     * - Requires PaymentProviderTransfer.paymentProviderKey.
+     * - Requires PaymentProviderTransfer.name.
+     * - Creates payment methods if PaymentProviderTransfer.paymentMethods are provided.
+     * - Requires PaymentMethodTransfer.paymentMethodKey.
+     * - Requires PaymentMethodTransfer.name.
+     * - Creates payment method store relations if PaymentMethodTransfer.storeRelation is provided.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PaymentProviderTransfer $paymentProviderTransfer
+     *
+     * @return \Generated\Shared\Transfer\PaymentProviderResponseTransfer
+     */
+    public function createPaymentProvider(PaymentProviderTransfer $paymentProviderTransfer): PaymentProviderResponseTransfer;
+
+    /**
+     * Specification:
+     * - Creates payment method.
+     * - Requires PaymentMethodTransfer.idPaymentProvider.
+     * - Requires PaymentMethodTransfer.paymentMethodKey.
+     * - Requires PaymentMethodTransfer.name.
+     * - Creates payment method store relations if PaymentMethodTransfer.storeRelation is provided.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PaymentMethodTransfer $paymentMethodTransfer
+     *
+     * @return \Generated\Shared\Transfer\PaymentMethodResponseTransfer
+     */
+    public function createPaymentMethod(PaymentMethodTransfer $paymentMethodTransfer): PaymentMethodResponseTransfer;
+
+    /**
+     * Specification:
+     * - Deactivates payment method.
+     * - Requires PaymentMethodTransfer.idPaymentMethod.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PaymentMethodTransfer $paymentMethodTransfer
+     *
+     * @return \Generated\Shared\Transfer\PaymentMethodResponseTransfer
+     */
+    public function deactivatePaymentMethod(PaymentMethodTransfer $paymentMethodTransfer): PaymentMethodResponseTransfer;
+
+    /**
+     * Specification:
+     * - Activates payment method.
+     * - Requires PaymentMethodTransfer.idPaymentMethod.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PaymentMethodTransfer $paymentMethodTransfer
+     *
+     * @return \Generated\Shared\Transfer\PaymentMethodResponseTransfer
+     */
+    public function activatePaymentMethod(PaymentMethodTransfer $paymentMethodTransfer): PaymentMethodResponseTransfer;
 }

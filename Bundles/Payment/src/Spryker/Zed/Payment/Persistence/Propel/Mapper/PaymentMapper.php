@@ -69,6 +69,7 @@ class PaymentMapper
         PaymentMethodTransfer $paymentMethodTransfer
     ): PaymentMethodTransfer {
         $paymentMethodTransfer->fromArray($paymentMethodEntity->toArray(), true);
+        /** @deprecated property usage for BC */
         $paymentMethodTransfer->setMethodName($paymentMethodEntity->getPaymentMethodKey());
 
         $paymentMethodTransfer->setPaymentProvider(
@@ -101,7 +102,8 @@ class PaymentMapper
         SpyPaymentMethod $paymentMethodEntity
     ): SpyPaymentMethod {
         $paymentMethodEntity->fromArray($paymentMethodTransfer->modifiedToArray());
-        $paymentMethodEntity->setPaymentMethodKey($paymentMethodTransfer->getMethodName());
+        $paymentMethodEntity->setFkPaymentProvider($paymentMethodTransfer->getIdPaymentProvider());
+        $paymentMethodEntity->setPaymentMethodKey($paymentMethodTransfer->getPaymentMethodKey() ?? $paymentMethodTransfer->getMethodName());
 
         return $paymentMethodEntity;
     }

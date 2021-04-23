@@ -44,7 +44,7 @@ class PaymentFormFilterPlugin extends AbstractPlugin implements SubFormFilterPlu
         $paymentMethodNames = [];
 
         foreach ($paymentMethodsTransfer->getMethods() as $paymentMethodTransfer) {
-            $paymentMethodNames[] = $paymentMethodTransfer->getMethodName();
+            $paymentMethodNames[] = $paymentMethodTransfer->getPaymentMethodKey();
         }
 
         return $paymentMethodNames;
