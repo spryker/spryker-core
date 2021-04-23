@@ -47,10 +47,14 @@ class CategoryKeyUniqueConstraintValidator extends ConstraintValidator
      */
     protected function isCategoryKeyValid($categoryTransfer, string $categoryKey, CategoryKeyUniqueConstraint $constraint): bool
     {
-        return (
-            !($categoryTransfer instanceof CategoryTransfer)
-            || !$categoryKey
-            || !$constraint->getCategoryGuiRepository()->isCategoryKeyUsed($categoryKey)
-        );
+        if (!($categoryTransfer instanceof CategoryTransfer)) {
+            return true;
+        }
+
+        if (!$categoryKey) {
+            return true;
+        }
+
+        return (!$constraint->getCategoryGuiRepository()->isCategoryKeyUsed($categoryTransfer));
     }
 }

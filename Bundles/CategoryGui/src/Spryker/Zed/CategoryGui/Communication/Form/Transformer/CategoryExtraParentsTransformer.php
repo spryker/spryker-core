@@ -27,7 +27,7 @@ class CategoryExtraParentsTransformer implements DataTransformerInterface
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\LocaleTransfer[]
      */
-    public function reverseTransform(array $value)
+    public function reverseTransform($value)
     {
         return new ArrayObject($value);
     }

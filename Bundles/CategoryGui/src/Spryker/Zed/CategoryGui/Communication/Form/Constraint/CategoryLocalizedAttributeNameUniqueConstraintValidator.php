@@ -47,10 +47,14 @@ class CategoryLocalizedAttributeNameUniqueConstraintValidator extends Constraint
      */
     protected function isCategoryNameValid($categoryTransfer, string $categoryName, CategoryLocalizedAttributeNameUniqueConstraint $constraint): bool
     {
-        return (
-            !($categoryTransfer instanceof CategoryTransfer)
-            || !$categoryName
-            || !$constraint->getCategoryFacade()->checkSameLevelCategoryByNameExists($categoryName, $categoryTransfer)
-        );
+        if (!($categoryTransfer instanceof CategoryTransfer)) {
+            return true;
+        }
+
+        if (!$categoryName) {
+            return true;
+        }
+
+        return (!$constraint->getCategoryFacade()->checkSameLevelCategoryByNameExists($categoryName, $categoryTransfer));
     }
 }
