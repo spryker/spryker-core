@@ -11,7 +11,7 @@ interface ProductLabelQueryContainerInterface
 {
     /**
      * Specification:
-     * - TODO: Add method specification.
+     * - Creates a query to find product labels sorted by a position.
      *
      * @api
      *
@@ -23,7 +23,7 @@ interface ProductLabelQueryContainerInterface
 
     /**
      * Specification:
-     * - TODO: Add method specification.
+     * - Creates a query to find a product label by it's id.
      *
      * @api
      *
@@ -37,7 +37,7 @@ interface ProductLabelQueryContainerInterface
 
     /**
      * Specification:
-     * - TODO: Add method specification.
+     * - Creates a query to find a product label by it's name.
      *
      * @api
      *
@@ -51,7 +51,7 @@ interface ProductLabelQueryContainerInterface
 
     /**
      * Specification:
-     * - TODO: Add method specification.
+     * - Creates a query to find product labels by a product abstract id.
      *
      * @api
      *
@@ -65,7 +65,7 @@ interface ProductLabelQueryContainerInterface
 
     /**
      * Specification:
-     * - TODO: Add method specification.
+     * - Creates a query to find active product labels by a product abstract id.
      *
      * @api
      *

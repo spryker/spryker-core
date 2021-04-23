@@ -22,7 +22,7 @@ class ProductLabelConfig extends AbstractBundleConfig
      *
      * @return int
      */
-    public function getProductLabelDeAssignChunkSize(): int
+    public function getProductLabelToDeAssignChunkSize(): int
     {
         return $this->get(
             ProductLabelConstants::PRODUCT_LABEL_TO_DE_ASSIGN_CHUNK_SIZE,

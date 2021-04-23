@@ -93,7 +93,7 @@ interface ProductLabelRepositoryInterface
     /**
      * @param int $idProductAbstract
      *
-     * @return int
+     * @return bool
      */
-    public function countProductLabelsByIdProductAbstract(int $idProductAbstract): int;
+    public function checkProductLabelsByIdProductAbstractExists(int $idProductAbstract): bool;
 }

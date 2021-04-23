@@ -57,32 +57,32 @@ class ProductAbstractRelationDeleter implements ProductAbstractRelationDeleterIn
 
     /**
      * @param int $idProductLabel
-     * @param int[] $idsProductAbstract
+     * @param int[] $productAbstractIds
      * @param bool $isTouchEnabled
      *
      * @return void
      */
-    public function removeRelations($idProductLabel, array $idsProductAbstract, bool $isTouchEnabled = true)
+    public function removeRelations($idProductLabel, array $productAbstractIds, bool $isTouchEnabled = true)
     {
-        $this->handleDatabaseTransaction(function () use ($idProductLabel, $idsProductAbstract, $isTouchEnabled) {
-            $this->executeDeleteRelationsTransaction($idProductLabel, $idsProductAbstract, $isTouchEnabled);
+        $this->handleDatabaseTransaction(function () use ($idProductLabel, $productAbstractIds, $isTouchEnabled) {
+            $this->executeDeleteRelationsTransaction($idProductLabel, $productAbstractIds, $isTouchEnabled);
         });
     }
 
     /**
      * @param int $idProductLabel
-     * @param int[] $idsProductAbstract
+     * @param int[] $productAbstractIds
      * @param bool $isTouchEnabled
      *
      * @return void
      */
-    protected function executeDeleteRelationsTransaction(int $idProductLabel, array $idsProductAbstract, bool $isTouchEnabled = true)
+    protected function executeDeleteRelationsTransaction(int $idProductLabel, array $productAbstractIds, bool $isTouchEnabled = true)
     {
-        $productLabelDeAssignChunkSize = $this->productLabelConfig->getProductLabelDeAssignChunkSize();
-        $idsProductAbstractChunkCollection = array_chunk($idsProductAbstract, $productLabelDeAssignChunkSize);
+        $productLabelDeAssignChunkSize = $this->productLabelConfig->getProductLabelToDeAssignChunkSize();
+        $productAbstractChunkCollectionIds = array_chunk($productAbstractIds, $productLabelDeAssignChunkSize);
 
-        foreach ($idsProductAbstractChunkCollection as $idsProductAbstractChunk) {
-            $this->deleteRelationsByChunk($idProductLabel, $idsProductAbstractChunk, $isTouchEnabled);
+        foreach ($productAbstractChunkCollectionIds as $productAbstractChunkIds) {
+            $this->deleteRelationsByChunk($idProductLabel, $productAbstractChunkIds, $isTouchEnabled);
         }
     }
 
@@ -95,16 +95,16 @@ class ProductAbstractRelationDeleter implements ProductAbstractRelationDeleterIn
      */
     protected function deleteRelationsByChunk(int $idProductLabel, array $productAbstractIds, bool $isTouchEnabled): void
     {
-        $productAbstractRelations = $this->productLabelRepository->getProductAbstractRelationsByIdProductLabelAndProductAbstractIds(
+        $productLabelProductAbstractTransfers = $this->productLabelRepository->getProductAbstractRelationsByIdProductLabelAndProductAbstractIds(
             $idProductLabel,
             $productAbstractIds
         );
 
-        if (!count($productAbstractRelations)) {
+        if (!count($productLabelProductAbstractTransfers)) {
             return;
         }
 
-        $productAbstractIds = $this->extractProductAbstractIdsFromProductAbstractRelations($productAbstractRelations);
+        $productAbstractIds = $this->extractProductAbstractIdsFromProductAbstractRelations($productLabelProductAbstractTransfers);
 
         $this->productLabelEntityManager->deleteProductLabelProductAbstractRelations(
             $idProductLabel,
@@ -127,25 +127,13 @@ class ProductAbstractRelationDeleter implements ProductAbstractRelationDeleterIn
      */
     protected function touchRelationsForAbstractProduct(int $idProductAbstract): void
     {
-        if ($this->isEmptyRelationForAbstractProduct($idProductAbstract)) {
+        if (!$this->productLabelRepository->checkProductLabelsByIdProductAbstractExists($idProductAbstract)) {
             $this->productRelationTouchManager->touchDeletedByIdProductAbstract($idProductAbstract);
 
             return;
         }
 
         $this->productRelationTouchManager->touchActiveByIdProductAbstract($idProductAbstract);
-    }
-
-    /**
-     * @param int $idProductAbstract
-     *
-     * @return bool
-     */
-    protected function isEmptyRelationForAbstractProduct(int $idProductAbstract): bool
-    {
-        $relationCount = $this->productLabelRepository->countProductLabelsByIdProductAbstract($idProductAbstract);
-
-        return ($relationCount === 0);
     }
 
     /**
