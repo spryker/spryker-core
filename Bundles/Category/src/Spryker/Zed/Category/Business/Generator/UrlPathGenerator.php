@@ -98,7 +98,7 @@ class UrlPathGenerator implements UrlPathGeneratorInterface
         $categoryUrlPathParts = $this->categoryRepository->getBulkCategoryNodeUrlPathParts($categoryNodeUrlPathCriteriaTransfer);
         $indexedCategoryUrlPathParts = $this->getCategoryUrlPathPartIndexedByIdCategoryNode($categoryUrlPathParts);
 
-        return $this->generateCategoryUrlPaths($indexedCategoryUrlPathParts);
+        return $this->generateCategoryUrlPaths($indexedCategoryUrlPathParts, $localeTransfer);
     }
 
     /**
@@ -157,15 +157,17 @@ class UrlPathGenerator implements UrlPathGeneratorInterface
 
     /**
      * @param array $indexedCategoryUrlPathParts
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return string[]
      */
-    protected function generateCategoryUrlPaths(array $indexedCategoryUrlPathParts): array
+    protected function generateCategoryUrlPaths(array $indexedCategoryUrlPathParts, LocaleTransfer $localeTransfer): array
     {
         $indexedCategoryUrlPaths = [];
 
         foreach ($indexedCategoryUrlPathParts as $key => $categoryUrlPathParts) {
-            $indexedCategoryUrlPaths[$key] = $this->generate($categoryUrlPathParts);
+            $expandedCategoryUrlPathParts = $this->executeCategoryUrlPathPlugins($categoryUrlPathParts, $localeTransfer);
+            $indexedCategoryUrlPaths[$key] = $this->generate($expandedCategoryUrlPathParts);
         }
 
         return $indexedCategoryUrlPaths;

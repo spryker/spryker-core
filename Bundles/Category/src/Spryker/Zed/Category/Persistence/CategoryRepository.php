@@ -350,13 +350,13 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
             ->createCategoryClosureTableQuery()
             ->leftJoinWithDescendantNode()
             ->useNodeQuery('node')
-            ->filterByFkCategory($categoryTransfer->getIdCategoryOrFail())
+                ->filterByFkCategory($categoryTransfer->getIdCategoryOrFail())
             ->endUse();
 
         $categoryClosureTableQuery
             ->useDescendantNodeQuery()
-            ->leftJoinWithCategory()
-            ->orderByNodeOrder(Criteria::DESC)
+                ->leftJoinWithCategory()
+                ->orderByNodeOrder(Criteria::DESC)
             ->endUse();
 
         $this->applyCategoryClosureTableFilters($categoryClosureTableQuery, $categoryCriteriaTransfer);
@@ -695,23 +695,6 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
         return $this->getFactory()
             ->createCategoryNodeMapper()
             ->mapCategoryNode($categoryNodeEntity, new NodeTransfer());
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return string|null
-     */
-    public function findCategoryName(CategoryTransfer $categoryTransfer, LocaleTransfer $localeTransfer): ?string
-    {
-        $categoryAttributeEntity = $this->getFactory()
-            ->createCategoryAttributeQuery()
-            ->filterByFkCategory($categoryTransfer->getIdCategoryOrFail())
-            ->filterByFkLocale($localeTransfer->getIdLocaleOrFail())
-            ->findOne();
-
-        return $categoryAttributeEntity ? $categoryAttributeEntity->getName() : null;
     }
 
     /**

@@ -160,12 +160,4 @@ interface CategoryRepositoryInterface
      * @return \Generated\Shared\Transfer\NodeTransfer|null
      */
     public function findCategoryNodeByIdCategoryNode(int $idCategoryNode): ?NodeTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return string|null
-     */
-    public function findCategoryName(CategoryTransfer $categoryTransfer, LocaleTransfer $localeTransfer): ?string;
 }
