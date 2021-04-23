@@ -11,7 +11,7 @@ interface ProductLabelQueryContainerInterface
 {
     /**
      * Specification:
-     * - Creates a query to find product labels sorted by a position.
+     * - Creates a query to find product labels sorted by a position column.
      *
      * @api
      *
