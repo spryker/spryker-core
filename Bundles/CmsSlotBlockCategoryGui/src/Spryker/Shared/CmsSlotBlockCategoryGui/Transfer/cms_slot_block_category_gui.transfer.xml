@@ -13,6 +13,7 @@
     </transfer>
 
     <transfer name="Locale">
+        <property name="idLocale" type="int"/>
     </transfer>
 
     <transfer name="CategoryCollection">
