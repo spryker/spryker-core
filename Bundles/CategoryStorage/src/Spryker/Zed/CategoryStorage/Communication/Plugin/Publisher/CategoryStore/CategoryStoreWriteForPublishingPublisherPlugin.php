@@ -47,9 +47,6 @@ class CategoryStoreWriteForPublishingPublisherPlugin extends AbstractPlugin impl
         return [
             CategoryStorageConstants::CATEGORY_STORE_PUBLISH,
             CategoryStorageConstants::CATEGORY_STORE_UNPUBLISH,
-//            CategoryEvents::CATEGORY_AFTER_CREATE,
-//            CategoryEvents::CATEGORY_AFTER_UPDATE,
-//            CategoryEvents::CATEGORY_AFTER_DELETE,
         ];
     }
 }

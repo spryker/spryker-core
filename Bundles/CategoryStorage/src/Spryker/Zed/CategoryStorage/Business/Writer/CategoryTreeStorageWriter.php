@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CategoryStorage\Business\Writer;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CategoryNodeCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryTreeStorageTransfer;
 use Generated\Shared\Transfer\NodeCollectionTransfer;
@@ -83,14 +84,15 @@ class CategoryTreeStorageWriter implements CategoryTreeStorageWriterInterface
         string $storeName,
         string $localeName
     ): void {
-        if ($categoryNodeStorageTransfers === []) {
-            return;
+        // TODO: was it tested????
+        $categoryNodeStorages = new ArrayObject();
+
+        if ($categoryNodeStorageTransfers !== []) {
+            $categoryNodeStorages = $categoryNodeStorageTransfers[array_key_first($categoryNodeStorageTransfers)]->getChildren();
         }
 
         $categoryTreeStorageTransfer = (new CategoryTreeStorageTransfer())
-            ->setCategoryNodesStorage(
-                $categoryNodeStorageTransfers[array_key_first($categoryNodeStorageTransfers)]->getChildren()
-            )
+            ->setCategoryNodesStorage($categoryNodeStorages)
             ->setLocale($localeName)
             ->setStore($storeName);
 
