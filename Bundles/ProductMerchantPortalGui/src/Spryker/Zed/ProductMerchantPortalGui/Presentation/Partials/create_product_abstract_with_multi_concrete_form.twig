@@ -3,12 +3,11 @@
 {% block body %}
     {% set mainClass = 'mp-create-multi-concrete-product' %}
 
-    {# TODO: replace with real data #}
     {% set attributesName = 'concreteAttributes' %}
     {% set productsName = 'concreteProducts' %}
     {% set attributes = superProductManagementAttributes | json_encode %}
-    {% set selectedAttributes = selectedAttributesJson | json_encode %}
-    {% set concreteProducts = concreteProductsJson | json_encode %}
+    {% set selectedAttributes = selectedAttributesJson %}
+    {% set concreteProducts = concreteProductsJson %}
 
     {% block createMultiConcreteProduct %}
         <web-mp-concrete-product-generator-data
