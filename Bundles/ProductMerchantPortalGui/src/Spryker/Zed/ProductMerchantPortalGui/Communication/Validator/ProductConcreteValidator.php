@@ -57,7 +57,7 @@ class ProductConcreteValidator implements ProductConcreteValidatorInterface
                 ->setMessage($constraintViolation->getMessage())
                 ->setPropertyPath($constraintViolation->getPropertyPath())
                 ->setInvalidValue($constraintViolation->getInvalidValue())
-                ->setRoot($constraintViolation->getRoot());
+                ->setRoot((object)$constraintViolation->getRoot());
 
             $validationResponseTransfer->addValidationError($validationErrorTransfer);
         }
