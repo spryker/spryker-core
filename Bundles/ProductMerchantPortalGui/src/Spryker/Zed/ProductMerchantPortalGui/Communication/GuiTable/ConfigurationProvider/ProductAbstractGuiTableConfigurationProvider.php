@@ -30,6 +30,10 @@ class ProductAbstractGuiTableConfigurationProvider implements ProductAbstractGui
     protected const SEARCH_PLACEHOLDER = 'Search by SKU, Name';
 
     protected const TITLE_ROW_ACTION_UPDATE_PRODUCT = 'Manage Product';
+
+    /**
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\UpdateProductAbstractController::indexAction()
+     */
     protected const URL_ROW_ACTION_UPDATE_PRODUCT = '/product-merchant-portal-gui/update-product-abstract?product-abstract-id=${row.%s}';
 
     /**
