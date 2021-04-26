@@ -67,4 +67,18 @@ class CategoryConfig extends AbstractBundleConfig
 
         return static::REDIRECT_URL_DEFAULT;
     }
+
+    /**
+     * Specification:
+     * - Enables propel events for `spy_category_closure_table` table.
+     * - Impacts category create/update operations.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isCategoryClosureTableEventsEnabled(): bool
+    {
+        return true;
+    }
 }
