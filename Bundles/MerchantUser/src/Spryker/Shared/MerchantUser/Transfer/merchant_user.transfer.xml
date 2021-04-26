@@ -89,4 +89,8 @@
         <property name="idMerchant" type="int"/>
     </transfer>
 
+    <transfer name="UserPasswordResetRequest">
+        <property name="email" type="string"/>
+    </transfer>
+
 </transfers>

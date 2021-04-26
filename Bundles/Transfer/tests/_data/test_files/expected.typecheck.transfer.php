@@ -115,6 +115,7 @@ class CatFaceTransfer extends AbstractTransfer
             'rest_request_parameter' => 'no',
             'is_associative' => false,
             'is_nullable' => false,
+            'is_strict' => false,
         ],
         self::ITEM => [
             'type' => 'Generated\Shared\Transfer\ItemTransfer',
@@ -126,6 +127,7 @@ class CatFaceTransfer extends AbstractTransfer
             'rest_request_parameter' => 'no',
             'is_associative' => false,
             'is_nullable' => false,
+            'is_strict' => false,
         ],
         self::ITEMS => [
             'type' => 'Generated\Shared\Transfer\ItemTransfer',
@@ -137,6 +139,7 @@ class CatFaceTransfer extends AbstractTransfer
             'rest_request_parameter' => 'no',
             'is_associative' => false,
             'is_nullable' => false,
+            'is_strict' => false,
         ],
         self::TYPED_ARRAY => [
             'type' => 'string[]',
@@ -148,6 +151,7 @@ class CatFaceTransfer extends AbstractTransfer
             'rest_request_parameter' => 'no',
             'is_associative' => false,
             'is_nullable' => false,
+            'is_strict' => false,
         ],
         self::TYPED_ASSOCIATIVE_STRING_ARRAY => [
             'type' => 'string[]',
@@ -159,6 +163,7 @@ class CatFaceTransfer extends AbstractTransfer
             'rest_request_parameter' => 'no',
             'is_associative' => true,
             'is_nullable' => false,
+            'is_strict' => false,
         ],
         self::TYPED_ASSOCIATIVE_COLLECTION => [
             'type' => 'Generated\Shared\Transfer\ItemTransfer',
@@ -170,6 +175,7 @@ class CatFaceTransfer extends AbstractTransfer
             'rest_request_parameter' => 'no',
             'is_associative' => true,
             'is_nullable' => false,
+            'is_strict' => false,
         ],
         self::TYPED_NOT_ASSOCIATIVE_STRING_ARRAY => [
             'type' => 'string[]',
@@ -181,6 +187,7 @@ class CatFaceTransfer extends AbstractTransfer
             'rest_request_parameter' => 'no',
             'is_associative' => false,
             'is_nullable' => false,
+            'is_strict' => false,
         ],
         self::TYPED_NOT_ASSOCIATIVE_ARRAY => [
             'type' => 'array',
@@ -192,6 +199,7 @@ class CatFaceTransfer extends AbstractTransfer
             'rest_request_parameter' => 'no',
             'is_associative' => false,
             'is_nullable' => false,
+            'is_strict' => false,
         ],
     ];
 
@@ -671,6 +679,10 @@ class CatFaceTransfer extends AbstractTransfer
                         $type = $this->transferMetadata[$normalizedPropertyName]['type'];
                         /** @var \Spryker\Shared\Kernel\Transfer\TransferInterface $transferObject */
                         $value = (new $type())->fromArray($value, $ignoreMissingProperty);
+                    }
+
+                    if ($this->isPropertyStrict($normalizedPropertyName)) {
+                        $this->assertInstanceOfTransfer($normalizedPropertyName, $value);
                     }
                     $this->$normalizedPropertyName = $value;
                     $this->modifiedProperties[$normalizedPropertyName] = true;

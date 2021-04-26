@@ -197,6 +197,22 @@ class SharedCartFacade extends AbstractFacade implements SharedCartFacadeInterfa
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShareDetailCollectionTransfer[]
+     */
+    public function getSharedCartDetails(ShareCartRequestTransfer $shareCartRequestTransfer): array
+    {
+        return $this->getFactory()
+            ->createQuoteShareDetailsReader()
+            ->getSharedCartDetails($shareCartRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param int $idCompanyUser
      *
      * @return void

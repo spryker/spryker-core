@@ -39,6 +39,17 @@ interface WishlistMapperInterface
     ): WishlistTransfer;
 
     /**
+     * @param \Orm\Zed\Wishlist\Persistence\SpyWishlist $wishlistEntity
+     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistTransfer
+     */
+    public function mapWishlistEntityToWishlistTransferIncludingWishlistItems(
+        SpyWishlist $wishlistEntity,
+        WishlistTransfer $wishlistTransfer
+    ): WishlistTransfer;
+
+    /**
      * @param \Orm\Zed\Wishlist\Persistence\SpyWishlistItem $wishlistItemEntity
      * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
      *

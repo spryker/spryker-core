@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SecurityGui\Communication\Controller;
 
+use Generated\Shared\Transfer\UserPasswordResetRequestTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\SecurityGui\Communication\Form\ResetPasswordForm;
 use Spryker\Zed\SecurityGui\Communication\Form\ResetPasswordRequestForm;
@@ -34,7 +35,10 @@ class PasswordController extends AbstractController
             $formData = $resetRequestForm->getData();
             $this->getFactory()
                 ->getUserPasswordResetFacade()
-                ->requestPasswordReset($formData[ResetPasswordRequestForm::FIELD_EMAIL]);
+                ->requestPasswordReset(
+                    (new UserPasswordResetRequestTransfer())
+                        ->setEmail($formData[ResetPasswordRequestForm::FIELD_EMAIL])
+                );
 
             $this->addSuccessMessage(
                 'If there is an account associated with this email, you will receive an Email with further instructions.'

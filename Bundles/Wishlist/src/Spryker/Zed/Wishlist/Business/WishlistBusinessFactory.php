@@ -34,7 +34,8 @@ class WishlistBusinessFactory extends AbstractBusinessFactory
             $this->createTransferMapper(),
             $this->getRepository(),
             $this->getWishlistReloadItemsPlugins(),
-            $this->getWishlistItemValidatorPlugins()
+            $this->getWishlistItemValidatorPlugins(),
+            $this->getWishlistItemExpanderPlugins()
         );
     }
 
@@ -127,5 +128,13 @@ class WishlistBusinessFactory extends AbstractBusinessFactory
     public function getWishlistPreAddItemPlugins()
     {
         return $this->getProvidedDependency(WishlistDependencyProvider::PLUGINS_WISHLIST_PRE_ADD_ITEM);
+    }
+
+    /**
+     * @return \Spryker\Zed\WishlistExtension\Dependency\Plugin\WishlistItemExpanderPluginInterface[]
+     */
+    public function getWishlistItemExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(WishlistDependencyProvider::PLUGINS_WISHLIST_ITEM_EXPANDER);
     }
 }

@@ -9,6 +9,7 @@ namespace Spryker\Zed\Comment\Business;
 
 use Generated\Shared\Transfer\CommentFilterTransfer;
 use Generated\Shared\Transfer\CommentRequestTransfer;
+use Generated\Shared\Transfer\CommentsRequestTransfer;
 use Generated\Shared\Transfer\CommentTagRequestTransfer;
 use Generated\Shared\Transfer\CommentThreadResponseTransfer;
 use Generated\Shared\Transfer\CommentThreadTransfer;
@@ -35,6 +36,22 @@ class CommentFacade extends AbstractFacade implements CommentFacadeInterface
         return $this->getFactory()
             ->createCommentThreadReader()
             ->findCommentThreadByOwner($commentRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CommentsRequestTransfer $commentsRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CommentThreadTransfer[]
+     */
+    public function getCommentThreads(CommentsRequestTransfer $commentsRequestTransfer): array
+    {
+        return $this->getFactory()
+            ->createCommentThreadReader()
+            ->getCommentThreads($commentsRequestTransfer);
     }
 
     /**

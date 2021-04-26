@@ -125,12 +125,14 @@ class MerchantCreator implements MerchantCreatorInterface
      */
     protected function createMerchantStores(MerchantTransfer $merchantTransfer): MerchantTransfer
     {
-        foreach ($merchantTransfer->getStoreRelation()->getIdStores() as $idStore) {
-            $storeTransfer = $this->merchantEntityManager->createMerchantStore($merchantTransfer, $idStore);
-            $merchantTransfer->getStoreRelation()->addStores($storeTransfer);
-        }
+        /** @var \Generated\Shared\Transfer\StoreRelationTransfer $storeRelationTransfer */
+        $storeRelationTransfer = $merchantTransfer->getStoreRelation();
 
-        $merchantTransfer->getStoreRelation()->setIdEntity($merchantTransfer->getIdMerchant());
+        foreach ($storeRelationTransfer->getIdStores() as $idStore) {
+            $storeTransfer = $this->merchantEntityManager->createMerchantStore($merchantTransfer, $idStore);
+            $storeRelationTransfer->addStores($storeTransfer);
+        }
+        $storeRelationTransfer->setIdEntity($merchantTransfer->getIdMerchant());
 
         return $merchantTransfer;
     }

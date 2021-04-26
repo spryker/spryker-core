@@ -1,0 +1,19 @@
+{% embed '@SalesReturnGui/_partials/column.twig' %}
+    {% block title %}
+        <h5>{{ 'Total' | trans }}</h5>
+        <h5 class="pull-right">{{ return.returnItems | length ~ ' ' ~ 'items' | trans }}</h5>
+    {% endblock %}
+
+    {% block content %}
+        {% set currencyIsoCode = (return.returnItems | first).orderItem.currencyIsoCode %}
+
+        <div class="row">
+            <div class="col-sm-9 font-bold">
+                {{ 'Remuneration Total' | trans ~ ':' }}
+            </div>
+            <div class="col-sm-3 text-right">
+                {{ return.returnTotals.remunerationTotal | money(true, currencyIsoCode) }}
+            </div>
+        </div>
+    {% endblock %}
+{% endembed %}

@@ -15,8 +15,7 @@ interface MerchantSalesReturnFacadeInterface
 {
     /**
      * Specification:
-     * - Requires `Return.returnItems.item.idSalesOrderItem` transfer field to be set.
-     * - Takes the first `ReturnItemTransfer` of the `ReturnTransfer` and finds the related `ItemTransfer` in the database.
+     * - Requires `Return.returnItems.item.orderItem.uuid` transfer field to be set.
      * - Sets `ReturnTransfer.merchantReference` by using the data from the first `ItemTransfer`.
      * - Returns `ReturnTransfer` object.
      *
@@ -40,4 +39,16 @@ interface MerchantSalesReturnFacadeInterface
      * @return \Generated\Shared\Transfer\ReturnResponseTransfer
      */
     public function validateReturn(ReturnCreateRequestTransfer $returnCreateRequestTransfer): ReturnResponseTransfer;
+
+    /**
+     * Specification:
+     * - Expands a `Return` transfer object.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
+     *
+     * @return \Generated\Shared\Transfer\ReturnTransfer
+     */
+    public function expand(ReturnTransfer $returnTransfer): ReturnTransfer;
 }

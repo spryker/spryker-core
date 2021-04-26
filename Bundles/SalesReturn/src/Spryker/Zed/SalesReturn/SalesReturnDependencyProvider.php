@@ -30,6 +30,12 @@ class SalesReturnDependencyProvider extends AbstractBundleDependencyProvider
 
     public const PLUGINS_RETURN_PRE_CREATE = 'PLUGINS_RETURN_PRE_CREATE';
     public const PLUGINS_RETURN_CREATE_REQUEST_VALIDATOR = 'PLUGINS_RETURN_CREATE_REQUEST_VALIDATOR';
+    public const PLUGINS_RETURN_EXPANDER = 'PLUGINS_RETURN_EXPANDER';
+
+    /**
+     * @deprecated Will be removed without replacement.
+     */
+    public const PLUGINS_RETURN_COLLECTION_EXPANDER = 'PLUGINS_RETURN_COLLECTION_EXPANDER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -46,6 +52,8 @@ class SalesReturnDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addUtilDateTimeService($container);
         $container = $this->addReturnPreCreatePlugins($container);
         $container = $this->addReturnRequestValidatorPlugins($container);
+        $container = $this->addReturnCollectionExpanderPlugins($container);
+        $container = $this->addReturnExpanderPlugins($container);
 
         return $container;
     }
@@ -167,6 +175,36 @@ class SalesReturnDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addReturnCollectionExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_RETURN_COLLECTION_EXPANDER, function () {
+            return $this->getReturnCollectionExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addReturnExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_RETURN_EXPANDER, function () {
+            return $this->getReturnExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
      * @return \Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnPreCreatePluginInterface[]
      */
     protected function getReturnPreCreatePlugins(): array
@@ -178,6 +216,24 @@ class SalesReturnDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnCreateRequestValidatorPluginInterface[]
      */
     protected function getReturnCreateRequestValidatorPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @return \Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnCollectionExpanderPluginInterface[]
+     */
+    protected function getReturnCollectionExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnExpanderPluginInterface[]
+     */
+    protected function getReturnExpanderPlugins(): array
     {
         return [];
     }

@@ -51,13 +51,18 @@ class WishlistReader implements WishlistReaderInterface
         }
 
         $wishlistUuid = $restRequest->getResource()->getId();
-        $customerId = $restRequest->getRestUser()->getSurrogateIdentifier();
+        /** @var \Generated\Shared\Transfer\RestUserTransfer $restUser */
+        $restUser = $restRequest->getRestUser();
+        /** @var int $customerId */
+        $customerId = $restUser->getSurrogateIdentifier();
+        /** @var string $customerReference */
+        $customerReference = $restUser->getNaturalIdentifier();
 
         if ($wishlistUuid) {
             return $this->getWishlistByFilter($customerId, $wishlistUuid);
         }
 
-        return $this->getCustomerWishlists($restRequest->getRestUser()->getNaturalIdentifier());
+        return $this->getCustomerWishlists($customerReference);
     }
 
     /**

@@ -14,6 +14,7 @@
         <property name="isEmptyResponse" type="bool"/>
         <property name="responseSchemas" singular="responseSchema" type="PathSchemaData[]"/>
         <property name="operationId" type="string"/>
+        <property name="deprecated" type="bool"/>
     </transfer>
 
     <transfer name="PathParameter">
@@ -87,6 +88,7 @@
         <property name="request" type="array" singular="request"/>
         <property name="security" type="array" singular="security"/>
         <property name="responses" type="array" singular="response"/>
+        <property name="deprecated" type="bool"/>
     </transfer>
 
     <transfer name="PathParameterComponent">
@@ -165,6 +167,7 @@
         <property name="isEmptyResponse" type="bool"/>
         <property name="responses" singular="response" type="array"/>
         <property name="isIdNullable" type="bool"/>
+        <property name="deprecated" type="bool"/>
     </transfer>
 
     <transfer name="RestErrorMessage">

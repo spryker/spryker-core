@@ -116,9 +116,8 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
      */
     public function persistPriceProductStore(PriceProductTransfer $priceProductTransfer): PriceProductTransfer
     {
-        $priceProductTransfer->requireMoneyValue();
-
-        $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
+        /** @var \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer */
+        $moneyValueTransfer = $priceProductTransfer->requireMoneyValue()->getMoneyValue();
 
         $moneyValueTransfer
             ->requireFkCurrency()
@@ -135,16 +134,20 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
 
         $priceProductStoreEntity->fromArray($moneyValueTransfer->toArray());
 
+        /** @var int $idPriceProduct */
+        $idPriceProduct = $priceProductTransfer->getIdPriceProduct();
         $priceProductStoreEntity
             ->setGrossPrice($moneyValueTransfer->getGrossAmount())
             ->setNetPrice($moneyValueTransfer->getNetAmount())
-            ->setFkPriceProduct($priceProductTransfer->getIdPriceProduct());
+            ->setFkPriceProduct($idPriceProduct);
 
         $priceProductStoreEntity = $this->setPriceDataChecksum($moneyValueTransfer, $priceProductStoreEntity);
 
         $priceProductStoreEntity->save();
 
-        $moneyValueTransfer->setIdEntity($priceProductStoreEntity->getIdPriceProductStore());
+        /** @var int $idPriceProductStore */
+        $idPriceProductStore = $priceProductStoreEntity->getIdPriceProductStore();
+        $moneyValueTransfer->setIdEntity($idPriceProductStore);
 
         $priceProductTransfer = $this->persistPriceProductDimension($priceProductTransfer);
 
@@ -250,7 +253,9 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
      */
     protected function persistPriceProductDimension(PriceProductTransfer $priceProductTransfer): PriceProductTransfer
     {
-        if ($priceProductTransfer->getPriceDimension()->getType() === $this->priceProductConfig->getPriceDimensionDefault()) {
+        /** @var \Generated\Shared\Transfer\PriceProductDimensionTransfer $priceDimensionTransfer */
+        $priceDimensionTransfer = $priceProductTransfer->requirePriceDimension()->getPriceDimension();
+        if ($priceDimensionTransfer->getType() === $this->priceProductConfig->getPriceDimensionDefault()) {
             return $this->persistPriceProductDefaultDimensionType($priceProductTransfer);
         }
 
@@ -276,9 +281,11 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
         $priceProductDefaultEntityTransfer = $this->priceProductDefaultWriter->persistPriceProductDefault($priceProductTransfer);
         /** @var int|null $idPriceProductDefault */
         $idPriceProductDefault = $priceProductDefaultEntityTransfer->getIdPriceProductDefault();
-        $priceProductTransfer->getPriceDimension()->setIdPriceProductDefault($idPriceProductDefault);
+        /** @var \Generated\Shared\Transfer\PriceProductDimensionTransfer $priceDimensionTransfer */
+        $priceDimensionTransfer = $priceProductTransfer->requirePriceDimension()->getPriceDimension();
+        $priceDimensionTransfer->setIdPriceProductDefault($idPriceProductDefault);
 
-        return $priceProductTransfer;
+        return $priceProductTransfer->setPriceDimension($priceDimensionTransfer);
     }
 
     /**
@@ -306,11 +313,18 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
         PriceProductTransfer $priceProductTransfer,
         MoneyValueTransfer $moneyValueTransfer
     ): SpyPriceProductStore {
+        /** @var int $idPriceProduct */
+        $idPriceProduct = $priceProductTransfer->requireIdPriceProduct()->getIdPriceProduct();
+        /** @var int $idCurrency */
+        $idCurrency = $moneyValueTransfer->requireFkCurrency()->getFkCurrency();
+        /** @var int $idStore */
+        $idStore = $moneyValueTransfer->requireFkStore()->getFkStore();
+
         return $this->priceProductQueryContainer
             ->queryPriceProductStoreByProductCurrencyStore(
-                $priceProductTransfer->getIdPriceProduct(),
-                $moneyValueTransfer->getFkCurrency(),
-                $moneyValueTransfer->getFkStore()
+                $idPriceProduct,
+                $idCurrency,
+                $idStore
             )
             ->filterByNetPrice($moneyValueTransfer->getNetAmount())
             ->filterByGrossPrice($moneyValueTransfer->getGrossAmount())

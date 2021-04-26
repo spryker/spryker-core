@@ -32,9 +32,9 @@ class MerchantOpeningHoursTranslator implements MerchantOpeningHoursTranslatorIn
      */
     public function translateMerchantOpeningHoursTransfers(array $merchantOpeningHoursStorageTransfers, string $localeName): array
     {
-        $scheduleNotes = $this->getScheduleNotes($merchantOpeningHoursStorageTransfers);
+        $scheduleNoteGlossaryKeys = $this->getScheduleNoteGlossaryKeys($merchantOpeningHoursStorageTransfers);
 
-        $translatedNotes = $this->glossaryStorageClient->translateBulk($scheduleNotes, $localeName);
+        $translatedNotes = $this->glossaryStorageClient->translateBulk($scheduleNoteGlossaryKeys, $localeName);
 
         return $this->updateDateScheduleTransfers($merchantOpeningHoursStorageTransfers, $translatedNotes);
     }
@@ -44,16 +44,16 @@ class MerchantOpeningHoursTranslator implements MerchantOpeningHoursTranslatorIn
      *
      * @return string[]
      */
-    protected function getScheduleNotes(array $merchantOpeningHoursStorageTransfers): array
+    protected function getScheduleNoteGlossaryKeys(array $merchantOpeningHoursStorageTransfers): array
     {
-        $scheduleNotes = [];
+        $scheduleNoteGlossaryKeys = [];
         foreach ($merchantOpeningHoursStorageTransfers as $merchantOpeningHoursStorageTransfer) {
             foreach ($merchantOpeningHoursStorageTransfer->getDateSchedule() as $dateScheduleTransfer) {
-                $scheduleNotes[] = $dateScheduleTransfer->getNote();
+                $scheduleNoteGlossaryKeys[] = $dateScheduleTransfer->getNoteGlossaryKey();
             }
         }
 
-        return array_unique(array_filter($scheduleNotes));
+        return array_unique(array_filter($scheduleNoteGlossaryKeys));
     }
 
     /**
@@ -66,8 +66,8 @@ class MerchantOpeningHoursTranslator implements MerchantOpeningHoursTranslatorIn
     {
         foreach ($merchantOpeningHoursStorageTransfers as $merchantOpeningHoursStorageTransfer) {
             foreach ($merchantOpeningHoursStorageTransfer->getDateSchedule() as $dateScheduleTransfer) {
-                if (isset($translatedNotes[$dateScheduleTransfer->getNote()])) {
-                    $dateScheduleTransfer->setNote($translatedNotes[$dateScheduleTransfer->getNote()]);
+                if (isset($translatedNotes[$dateScheduleTransfer->getNoteGlossaryKey()])) {
+                    $dateScheduleTransfer->setNoteGlossaryKey($translatedNotes[$dateScheduleTransfer->getNoteGlossaryKey()]);
                 }
             }
         }

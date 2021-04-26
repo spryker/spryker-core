@@ -7,14 +7,16 @@
 
 namespace Spryker\Zed\UserPasswordReset\Business\ResetPassword;
 
+use Generated\Shared\Transfer\UserPasswordResetRequestTransfer;
+
 interface ResetPasswordInterface
 {
     /**
-     * @param string $email
+     * @param \Generated\Shared\Transfer\UserPasswordResetRequestTransfer $userPasswordResetRequestTransfer
      *
      * @return bool
      */
-    public function requestPasswordReset(string $email): bool;
+    public function requestPasswordReset(UserPasswordResetRequestTransfer $userPasswordResetRequestTransfer): bool;
 
     /**
      * @param string $token

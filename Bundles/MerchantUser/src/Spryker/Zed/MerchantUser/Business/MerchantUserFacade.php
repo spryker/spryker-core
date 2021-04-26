@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\MerchantUserCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantUserResponseTransfer;
 use Generated\Shared\Transfer\MerchantUserTransfer;
 use Generated\Shared\Transfer\UserCriteriaTransfer;
+use Generated\Shared\Transfer\UserPasswordResetRequestTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -138,6 +139,22 @@ class MerchantUserFacade extends AbstractFacade implements MerchantUserFacadeInt
      *
      * @param \Generated\Shared\Transfer\MerchantUserTransfer $merchantUserTransfer
      *
+     * @return mixed
+     */
+    public function setCurrentMerchantUser(MerchantUserTransfer $merchantUserTransfer)
+    {
+        return $this->getFactory()
+            ->getUserFacade()
+            ->setCurrentUser($merchantUserTransfer->getUserOrFail());
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantUserTransfer $merchantUserTransfer
+     *
      * @return void
      */
     public function authenticateMerchantUser(MerchantUserTransfer $merchantUserTransfer): void
@@ -145,5 +162,69 @@ class MerchantUserFacade extends AbstractFacade implements MerchantUserFacadeInt
         $this->getFactory()
             ->createMerchantUserAuthenticator()
             ->authenticateMerchantUser($merchantUserTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\UserPasswordResetRequestTransfer $userPasswordResetRequestTransfer
+     *
+     * @return bool
+     */
+    public function requestPasswordReset(UserPasswordResetRequestTransfer $userPasswordResetRequestTransfer): bool
+    {
+        return $this->getFactory()
+            ->getUserPasswordResetFacade()
+            ->requestPasswordReset($userPasswordResetRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string $token
+     *
+     * @return bool
+     */
+    public function isValidPasswordResetToken(string $token): bool
+    {
+        return $this->getFactory()
+            ->getUserPasswordResetFacade()
+            ->isValidPasswordResetToken($token);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string $token
+     * @param string $password
+     *
+     * @return bool
+     */
+    public function setNewPassword(string $token, string $password): bool
+    {
+        return $this->getFactory()
+            ->getUserPasswordResetFacade()
+            ->setNewPassword($token, $password);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string $password
+     * @param string $hash
+     *
+     * @return bool
+     */
+    public function isValidPassword($password, $hash): bool
+    {
+        return $this->getFactory()->getUserFacade()->isValidPassword($password, $hash);
     }
 }

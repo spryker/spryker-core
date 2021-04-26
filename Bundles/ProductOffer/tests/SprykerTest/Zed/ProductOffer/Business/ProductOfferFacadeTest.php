@@ -15,7 +15,7 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
-use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
@@ -55,17 +55,18 @@ class ProductOfferFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFind(): void
+    public function testGet(): void
     {
         // Arrange
         $productOfferTransfer = $this->tester->haveProductOffer([
             ProductOfferTransfer::FK_MERCHANT => $this->tester->haveMerchant()->getIdMerchant(),
         ]);
-        $productOfferCriteriaFilterTransfer = new ProductOfferCriteriaFilterTransfer();
-        $productOfferCriteriaFilterTransfer->setProductOfferReference($productOfferTransfer->getProductOfferReference());
+        $productOfferCriteriaTransfer = new ProductOfferCriteriaTransfer();
+        $productOfferCriteriaTransfer->setProductOfferReference($productOfferTransfer->getProductOfferReference());
 
         // Act
-        $productOfferCollectionTransfer = $this->tester->getFacade()->find($productOfferCriteriaFilterTransfer);
+        $productOfferCollectionTransfer = $this->tester->getFacade()->get($productOfferCriteriaTransfer);
+
         // Assert
         $this->assertNotEmpty($productOfferCollectionTransfer);
     }
@@ -73,7 +74,7 @@ class ProductOfferFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindAddsStoresToProductOffer(): void
+    public function testGetAddsStoresToProductOffer(): void
     {
         // Arrange
         $productOfferTransfer = $this->tester->haveProductOffer();
@@ -81,11 +82,11 @@ class ProductOfferFacadeTest extends Unit
         $storeTransfer2 = $this->tester->haveStore();
         $this->tester->haveProductOfferStore($productOfferTransfer, $storeTransfer1);
         $this->tester->haveProductOfferStore($productOfferTransfer, $storeTransfer2);
-        $productOfferCriteriaFilterTransfer = (new ProductOfferCriteriaFilterTransfer())
+        $productOfferCriteriaTransfer = (new ProductOfferCriteriaTransfer())
             ->setProductOfferReference($productOfferTransfer->getProductOfferReference());
 
         // Act
-        $productOfferTransfer = $this->tester->getFacade()->find($productOfferCriteriaFilterTransfer)->getProductOffers()[0];
+        $productOfferTransfer = $this->tester->getFacade()->get($productOfferCriteriaTransfer)->getProductOffers()[0];
 
         // Assert
         $this->assertCount(2, $productOfferTransfer->getStores());
@@ -99,11 +100,11 @@ class ProductOfferFacadeTest extends Unit
     {
         // Arrange
         $productOfferTransfer = $this->tester->haveProductOffer();
-        $productOfferCriteriaFilterTransfer = (new ProductOfferCriteriaFilterTransfer())
+        $productOfferCriteriaTransfer = (new ProductOfferCriteriaTransfer())
             ->setProductOfferReference($productOfferTransfer->getProductOfferReference());
 
         // Act
-        $productOfferTransfer = $this->tester->getFacade()->findOne($productOfferCriteriaFilterTransfer);
+        $productOfferTransfer = $this->tester->getFacade()->findOne($productOfferCriteriaTransfer);
 
         // Assert
         $this->assertNotEmpty($productOfferTransfer);
@@ -116,11 +117,11 @@ class ProductOfferFacadeTest extends Unit
     {
         // Arrange
         $productOfferTransfer = $this->tester->haveProductOffer();
-        $productOfferCriteriaFilterTransfer = (new ProductOfferCriteriaFilterTransfer())
+        $productOfferCriteriaTransfer = (new ProductOfferCriteriaTransfer())
             ->setIdProductOffer($productOfferTransfer->getIdProductOffer());
 
         // Act
-        $productOfferTransfer = $this->tester->getFacade()->findOne($productOfferCriteriaFilterTransfer);
+        $productOfferTransfer = $this->tester->getFacade()->findOne($productOfferCriteriaTransfer);
 
         // Assert
         $this->assertNotEmpty($productOfferTransfer);
@@ -137,11 +138,11 @@ class ProductOfferFacadeTest extends Unit
         $storeTransfer2 = $this->tester->haveStore();
         $this->tester->haveProductOfferStore($productOfferTransfer, $storeTransfer1);
         $this->tester->haveProductOfferStore($productOfferTransfer, $storeTransfer2);
-        $productOfferCriteriaFilterTransfer = (new ProductOfferCriteriaFilterTransfer())
+        $productOfferCriteriaTransfer = (new ProductOfferCriteriaTransfer())
             ->setProductOfferReference($productOfferTransfer->getProductOfferReference());
 
         // Act
-        $productOfferTransfer = $this->tester->getFacade()->findOne($productOfferCriteriaFilterTransfer);
+        $productOfferTransfer = $this->tester->getFacade()->findOne($productOfferCriteriaTransfer);
 
         // Assert
         $this->assertCount(2, $productOfferTransfer->getStores());
@@ -179,13 +180,13 @@ class ProductOfferFacadeTest extends Unit
         ]))->build();
         $productOfferTransfer->addStore($this->tester->haveStore());
         $productOfferTransfer->addStore($this->tester->haveStore());
-        $productOfferCriteriaFilterTransfer = (new ProductOfferCriteriaFilterTransfer())
+        $productOfferCriteriaTransfer = (new ProductOfferCriteriaTransfer())
             ->setIdProductOffer($productOfferTransfer->getIdProductOffer());
 
         // Act
         $productOfferTransfer = $this->tester->getFacade()->create($productOfferTransfer);
         $storeTransfers = $this->tester->getProductOfferRepository()
-            ->findOne($productOfferCriteriaFilterTransfer)
+            ->findOne($productOfferCriteriaTransfer)
             ->getStores();
 
         // Assert
@@ -255,10 +256,10 @@ class ProductOfferFacadeTest extends Unit
         );
 
         $productOfferRepositoryMock = $this->getMockBuilder(ProductOfferRepositoryInterface::class)
-            ->onlyMethods(['find', 'findOne', 'getProductOfferStores', 'getMaxIdProductOffer', 'isProductOfferReferenceUsed'])
+            ->onlyMethods(['get', 'findOne', 'getProductOfferStores', 'getMaxIdProductOffer', 'isProductOfferReferenceUsed'])
             ->getMock();
         $productOfferRepositoryMock
-            ->method('find')
+            ->method('get')
             ->willReturn($productOfferCollectionTransfer);
 
         $productOfferBusinessFactoryMock = $this->getMockBuilder(ProductOfferBusinessFactory::class)
@@ -365,13 +366,13 @@ class ProductOfferFacadeTest extends Unit
         $productOfferTransfer->addStore($storeTransfer);
         $productOfferTransfer->addStore($this->tester->haveStore());
         $productOfferTransfer->addStore($this->tester->haveStore());
-        $productOfferCriteriaFilterTransfer = (new ProductOfferCriteriaFilterTransfer())
+        $productOfferCriteriaTransfer = (new ProductOfferCriteriaTransfer())
             ->setIdProductOffer($productOfferTransfer->getIdProductOffer());
 
         // Act
         $this->tester->getFacade()->update($productOfferTransfer);
         $storeTransfers = $this->tester->getProductOfferRepository()
-            ->findOne($productOfferCriteriaFilterTransfer)
+            ->findOne($productOfferCriteriaTransfer)
             ->getStores();
 
         // Assert
@@ -391,13 +392,13 @@ class ProductOfferFacadeTest extends Unit
         $this->tester->haveProductOfferStore($productOfferTransfer, $storeTransfer1);
         $this->tester->haveProductOfferStore($productOfferTransfer, $storeTransfer2);
         $productOfferTransfer->addStore($storeTransfer1);
-        $productOfferCriteriaFilterTransfer = (new ProductOfferCriteriaFilterTransfer())
+        $productOfferCriteriaTransfer = (new ProductOfferCriteriaTransfer())
             ->setIdProductOffer($productOfferTransfer->getIdProductOffer());
 
         // Act
         $this->tester->getFacade()->update($productOfferTransfer);
         $storeTransfers = $this->tester->getProductOfferRepository()
-            ->findOne($productOfferCriteriaFilterTransfer)
+            ->findOne($productOfferCriteriaTransfer)
             ->getStores();
 
         // Assert

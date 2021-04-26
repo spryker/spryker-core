@@ -60,5 +60,9 @@
         <property name="storesWithSharedPersistence" type="array" singular="storeWithSharedPersistence"/>
     </transfer>
 
+    <transfer name="StockCollection">
+        <property name="stocks" type="Stock[]" singular="stock"/>
+    </transfer>
+
 </transfers>
 

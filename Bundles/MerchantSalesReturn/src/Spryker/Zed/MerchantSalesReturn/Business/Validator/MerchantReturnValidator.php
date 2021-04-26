@@ -7,13 +7,14 @@
 
 namespace Spryker\Zed\MerchantSalesReturn\Business\Validator;
 
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ReturnCreateRequestTransfer;
 use Generated\Shared\Transfer\ReturnResponseTransfer;
 
 class MerchantReturnValidator implements MerchantReturnValidatorInterface
 {
+    protected const ERROR_MESSAGE_MERCHANT_RETURN_ITEMS_FROM_DIFFERENT_MERCHANTS = 'merchant_sales_return.message.items_from_different_merchant_detected';
+
     /**
      * @param \Generated\Shared\Transfer\ReturnCreateRequestTransfer $returnCreateRequestTransfer
      *
@@ -30,10 +31,10 @@ class MerchantReturnValidator implements MerchantReturnValidatorInterface
 
             if (
                 $previousItemTransfer
-                && !$this->isItemFromTheSameMerchantOrder($itemTransfer, $previousItemTransfer)
+                && $itemTransfer->getMerchantReference() !== $previousItemTransfer->getMerchantReference()
             ) {
                 return $this->addErrorMessageToResponse(
-                    'merchant_sales_return.message.items_from_different_merchant_detected',
+                    static::ERROR_MESSAGE_MERCHANT_RETURN_ITEMS_FROM_DIFFERENT_MERCHANTS,
                     $returnResponseTransfer
                 );
             }
@@ -42,20 +43,6 @@ class MerchantReturnValidator implements MerchantReturnValidatorInterface
         }
 
         return $returnResponseTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransferToCompare
-     *
-     * @return bool
-     */
-    protected function isItemFromTheSameMerchantOrder(
-        ItemTransfer $itemTransfer,
-        ItemTransfer $itemTransferToCompare
-    ): bool {
-        return $itemTransfer->getMerchantReference() === $itemTransferToCompare->getMerchantReference()
-            && $itemTransfer->getFkSalesOrderOrFail() === $itemTransferToCompare->getFkSalesOrderOrFail();
     }
 
     /**
