@@ -473,7 +473,7 @@ class ProductOfferFacadeTest extends Unit
 
         //Act
         $isCheckoutProductOfferValid = $this->tester->getFacade()
-            ->validateCheckoutProductOffer($quoteTransfer, new CheckoutResponseTransfer());
+            ->isQuoteReadyForCheckout($quoteTransfer, new CheckoutResponseTransfer());
 
         //Assert
         $this->assertTrue(
@@ -501,7 +501,7 @@ class ProductOfferFacadeTest extends Unit
 
         //Act
         $isCheckoutProductOfferValid = $this->tester->getFacade()
-            ->validateCheckoutProductOffer($quoteTransfer, new CheckoutResponseTransfer());
+            ->isQuoteReadyForCheckout($quoteTransfer, new CheckoutResponseTransfer());
 
         //Assert
         $this->assertFalse(
@@ -529,7 +529,7 @@ class ProductOfferFacadeTest extends Unit
 
         //Act
         $isCheckoutProductOfferValid = $this->tester->getFacade()
-            ->validateCheckoutProductOffer($quoteTransfer, new CheckoutResponseTransfer());
+            ->isQuoteReadyForCheckout($quoteTransfer, new CheckoutResponseTransfer());
 
         //Assert
         $this->assertFalse(

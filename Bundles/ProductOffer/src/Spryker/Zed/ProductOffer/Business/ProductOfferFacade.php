@@ -140,7 +140,7 @@ class ProductOfferFacade extends AbstractFacade implements ProductOfferFacadeInt
      *
      * @return bool
      */
-    public function validateCheckoutProductOffer(
+    public function isQuoteReadyForCheckout(
         QuoteTransfer $quoteTransfer,
         CheckoutResponseTransfer $checkoutResponseTransfer
     ): bool {

@@ -129,7 +129,7 @@ interface ProductOfferFacadeInterface
      *
      * @return bool
      */
-    public function validateCheckoutProductOffer(
+    public function isQuoteReadyForCheckout(
         QuoteTransfer $quoteTransfer,
         CheckoutResponseTransfer $checkoutResponseTransfer
     ): bool;

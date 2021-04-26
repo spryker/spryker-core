@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductOffer\Communication\Plugin\Checkout\Validator;
+namespace Spryker\Zed\ProductOffer\Business\Validator;
 
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
-use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\ProductOffer\ProductOfferConfig;
 use Spryker\Zed\ProductOffer\Persistence\ProductOfferRepositoryInterface;
@@ -91,14 +91,14 @@ class ProductOfferCheckoutValidator implements ProductOfferCheckoutValidatorInte
     protected function getProductOfferCollectionTransfer(
         QuoteTransfer $quoteTransfer
     ): ProductOfferCollectionTransfer {
-        $productOfferCriteriaFilterTransfer = (new ProductOfferCriteriaFilterTransfer())
+        $productOfferCriteriaFilterTransfer = (new ProductOfferCriteriaTransfer())
             ->setIsActive(true)
             ->setApprovalStatuses([ProductOfferConfig::STATUS_APPROVED])
             ->setProductOfferReferences(
                 $this->extractProductOfferReferences($quoteTransfer)
             );
 
-        return $this->productOfferRepository->find($productOfferCriteriaFilterTransfer);
+        return $this->productOfferRepository->get($productOfferCriteriaFilterTransfer);
     }
 
     /**

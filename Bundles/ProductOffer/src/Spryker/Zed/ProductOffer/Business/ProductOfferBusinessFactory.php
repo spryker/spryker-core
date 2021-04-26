@@ -18,10 +18,10 @@ use Spryker\Zed\ProductOffer\Business\Reader\ProductOfferReader;
 use Spryker\Zed\ProductOffer\Business\Reader\ProductOfferReaderInterface;
 use Spryker\Zed\ProductOffer\Business\Reader\ProductOfferStatusReader;
 use Spryker\Zed\ProductOffer\Business\Reader\ProductOfferStatusReaderInterface;
+use Spryker\Zed\ProductOffer\Business\Validator\ProductOfferCheckoutValidator;
+use Spryker\Zed\ProductOffer\Business\Validator\ProductOfferCheckoutValidatorInterface;
 use Spryker\Zed\ProductOffer\Business\Writer\ProductOfferWriter;
 use Spryker\Zed\ProductOffer\Business\Writer\ProductOfferWriterInterface;
-use Spryker\Zed\ProductOffer\Communication\Plugin\Checkout\Validator\ProductOfferCheckoutValidator;
-use Spryker\Zed\ProductOffer\Communication\Plugin\Checkout\Validator\ProductOfferCheckoutValidatorInterface;
 use Spryker\Zed\ProductOffer\Dependency\Facade\ProductOfferToMessengerFacadeInterface;
 use Spryker\Zed\ProductOffer\Dependency\Facade\ProductOfferToStoreFacadeInterface;
 use Spryker\Zed\ProductOffer\ProductOfferDependencyProvider;
@@ -136,7 +136,7 @@ class ProductOfferBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductOffer\Communication\Plugin\Checkout\Validator\ProductOfferCheckoutValidatorInterface
+     * @return \Spryker\Zed\ProductOffer\Business\Validator\ProductOfferCheckoutValidatorInterface
      */
     public function createProductOfferCheckoutValidator(): ProductOfferCheckoutValidatorInterface
     {
