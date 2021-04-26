@@ -10,7 +10,6 @@ namespace SprykerTest\Zed\PropelOrm\Business\Builder;
 use Codeception\Test\Unit;
 use Propel\Generator\Builder\Om\ObjectBuilder;
 use Propel\Generator\Builder\Om\TableMapBuilder;
-use Propel\Generator\Model\ColumnDefaultValue;
 use Propel\Generator\Model\PropelTypes;
 
 abstract class AbstractBuilderTester extends Unit
