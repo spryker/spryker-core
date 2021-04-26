@@ -36,6 +36,7 @@ export class ProductAttributesSelectorComponent implements OnChanges, OnInit {
 
     ngOnInit(): void {
         this.create();
+        console.log(this.attributes);
     }
 
     ngOnChanges(changes: SimpleChanges): void {
@@ -51,6 +52,8 @@ export class ProductAttributesSelectorComponent implements OnChanges, OnInit {
                 [attribute.value]: attribute,
             };
         }, {});
+        
+        console.log(this.attributesObject, 'this.attributesObject');
     }
 
     getAttributes(index: number): ProductAttributeValue[] {

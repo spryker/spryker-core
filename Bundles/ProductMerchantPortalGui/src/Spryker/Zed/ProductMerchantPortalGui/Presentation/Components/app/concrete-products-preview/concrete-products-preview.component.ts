@@ -94,7 +94,15 @@ export class ConcreteProductsPreviewComponent implements OnInit, OnChanges {
         }
 
         this.attributeValues = this.attributes
-            .map((item) => item.values.map((attrValue) => ({ ...attrValue, key: item.title })))
+            .map((item) => item.attributes.map((attr) => {
+                return {
+                    name: item.name,
+                    value: item.value,
+                    attribute: {
+                        ...attr,
+                    }
+                }
+            }))
             .filter((item) => item?.length);
 
         if (!this.attributeValues.length) {
@@ -109,14 +117,16 @@ export class ConcreteProductsPreviewComponent implements OnInit, OnChanges {
             },
             [[]],
         );
+        
+        console.log(this.generatedAttributeValues);
 
-        this.generatedProducts = this.generatedAttributeValues.map((values) => {
-            return {
-                name: '',
-                sku: '',
-                superAttributes: values,
-            };
-        });
+        // this.generatedProducts = this.generatedAttributeValues.map((values) => {
+        //     return {
+        //         name: '',
+        //         sku: '',
+        //         superAttributes: values,
+        //     };
+        // });
     }
 
     generateSku(checked: boolean): void {
