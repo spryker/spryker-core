@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ContentStorage;
 
 use Orm\Zed\Content\Persistence\SpyContentQuery;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\ContentStorage\Dependency\Facade\ContentStorageToEventBehaviorFacadeBridge;
 use Spryker\Zed\ContentStorage\Dependency\Facade\ContentStorageToLocaleFacadeBridge;
 use Spryker\Zed\ContentStorage\Dependency\Facade\ContentStorageToStoreFacadeBridge;
@@ -25,7 +24,7 @@ class ContentStorageDependencyProvider extends AbstractBundleDependencyProvider
     public const PROPEL_QUERY_CONTENT = 'PROPEL_QUERY_CONTENT';
     public const FACADE_LOCALE = 'FACADE_LOCALE';
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
-    public const STORE = 'STORE';
+    public const FACADE_STORE = 'FACADE_STORE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -64,7 +63,7 @@ class ContentStorageDependencyProvider extends AbstractBundleDependencyProvider
         $container = parent::provideBusinessLayerDependencies($container);
         $container = $this->addLocaleFacade($container);
         $container = $this->addUtilEncoding($container);
-        $container = $this->addStore($container);
+        $container = $this->addStoreFacade($container);
 
         return $container;
     }
@@ -134,10 +133,10 @@ class ContentStorageDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addStore(Container $container): Container
+    protected function addStoreFacade(Container $container): Container
     {
-        $container->set(static::STORE, function (Container $container) {
-            return new ContentStorageToStoreFacadeBridge(Store::getInstance());
+        $container->set(static::FACADE_STORE, function (Container $container) {
+            return new ContentStorageToStoreFacadeBridge($container->getLocator()->store()->facade());
         });
 
         return $container;

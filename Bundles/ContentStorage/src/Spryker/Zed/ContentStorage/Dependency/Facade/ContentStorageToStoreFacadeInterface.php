@@ -7,22 +7,19 @@
 
 namespace Spryker\Zed\ContentStorage\Dependency\Facade;
 
+use Generated\Shared\Transfer\StoreTransfer;
+
 interface ContentStorageToStoreFacadeInterface
 {
     /**
-     * @return string[]
-     */
-    public function getLocales(): array;
-
-    /**
-     * @return array
-     */
-    public function getStoresWithSharedPersistence(): array;
-
-    /**
-     * @param string $storeName
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return string[]
+     * @return \Generated\Shared\Transfer\StoreTransfer[]
      */
-    public function getLocalesPerStore(string $storeName): array;
+    public function getStoresWithSharedPersistence(StoreTransfer $storeTransfer): array;
+
+    /**
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    public function getCurrentStore(): StoreTransfer;
 }

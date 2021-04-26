@@ -7,44 +7,37 @@
 
 namespace Spryker\Zed\ContentStorage\Dependency\Facade;
 
+use Generated\Shared\Transfer\StoreTransfer;
+
 class ContentStorageToStoreFacadeBridge implements ContentStorageToStoreFacadeInterface
 {
     /**
-     * @var \Spryker\Shared\Kernel\Store
+     * @var \Spryker\Zed\Store\Business\StoreFacade
      */
-    protected $store;
+    protected $storeFacade;
 
     /**
-     * @param \Spryker\Shared\Kernel\Store $store
+     * @param \Spryker\Zed\Store\Business\StoreFacade $storeFacade
      */
-    public function __construct($store)
+    public function __construct($storeFacade)
     {
-        $this->store = $store;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
-     * @return string[]
-     */
-    public function getStoresWithSharedPersistence(): array
-    {
-        return $this->store->getStoresWithSharedPersistence();
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getLocales(): array
-    {
-        return $this->store->getLocales();
-    }
-
-    /**
-     * @param string $storeName
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return string[]
+     * @return \Generated\Shared\Transfer\StoreTransfer[]
      */
-    public function getLocalesPerStore(string $storeName): array
+    public function getStoresWithSharedPersistence(StoreTransfer $storeTransfer)
     {
-        return $this->store->getLocalesPerStore($storeName);
+        return $this->storeFacade->getStoresWithSharedPersistence($storeTransfer);
+    }
+    /**
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    public function getCurrentStore(): StoreTransfer
+    {
+        return $this->storeFacade->getCurrentStore();
     }
 }

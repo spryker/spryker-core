@@ -9,6 +9,7 @@ namespace Spryker\Zed\ContentStorage\Business\ContentStorage;
 
 use Generated\Shared\Transfer\ContentStorageTransfer;
 use Generated\Shared\Transfer\ContentTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Shared\ContentStorage\ContentStorageConfig;
 use Spryker\Zed\ContentStorage\Dependency\Facade\ContentStorageToLocaleFacadeInterface;
 use Spryker\Zed\ContentStorage\Dependency\Facade\ContentStorageToStoreFacadeInterface;
@@ -46,27 +47,27 @@ class ContentStorageWriter implements ContentStorageWriterInterface
     /**
      * @var \Spryker\Zed\ContentStorage\Dependency\Facade\ContentStorageToStoreFacadeInterface
      */
-    protected $store;
+    protected $storeFacade;
 
     /**
      * @param \Spryker\Zed\ContentStorage\Persistence\ContentStorageRepositoryInterface $contentStorageRepository
      * @param \Spryker\Zed\ContentStorage\Persistence\ContentStorageEntityManagerInterface $contentStorageEntityManager
      * @param \Spryker\Zed\ContentStorage\Dependency\Facade\ContentStorageToLocaleFacadeInterface $localeFacade
      * @param \Spryker\Zed\ContentStorage\Dependency\Service\ContentStorageToUtilEncodingInterface $utilEncodingService
-     * @param \Spryker\Zed\ContentStorage\Dependency\Facade\ContentStorageToStoreFacadeInterface $store
+     * @param \Spryker\Zed\ContentStorage\Dependency\Facade\ContentStorageToStoreFacadeInterface $storeFacade
      */
     public function __construct(
         ContentStorageRepositoryInterface $contentStorageRepository,
         ContentStorageEntityManagerInterface $contentStorageEntityManager,
         ContentStorageToLocaleFacadeInterface $localeFacade,
         ContentStorageToUtilEncodingInterface $utilEncodingService,
-        ContentStorageToStoreFacadeInterface $store
+        ContentStorageToStoreFacadeInterface $storeFacade
     ) {
         $this->contentStorageRepository = $contentStorageRepository;
         $this->contentStorageEntityManager = $contentStorageEntityManager;
         $this->localeFacade = $localeFacade;
         $this->utilEncodingService = $utilEncodingService;
-        $this->store = $store;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -92,7 +93,7 @@ class ContentStorageWriter implements ContentStorageWriterInterface
      */
     protected function executePublishTransaction(iterable $contentTransfers, iterable $contentStorageTransfers): bool
     {
-        $availableLocales = $this->getSharedPersistenceLocaleNames();
+        $availableLocales = $this->getSharedPersistenceLocaleNames($this->storeFacade->getCurrentStore());
 
         $contentStorageTransfers = $this->groupByIdContentAndLocale($contentStorageTransfers);
         foreach ($contentTransfers as $contentTransfer) {
@@ -105,14 +106,15 @@ class ContentStorageWriter implements ContentStorageWriterInterface
     /**
      * @return string[]
      */
-    protected function getSharedPersistenceLocaleNames(): array
+    protected function getSharedPersistenceLocaleNames(StoreTransfer $storeTransfer): array
     {
-        $localeNames = $this->store->getLocales();
-        foreach ($this->store->getStoresWithSharedPersistence() as $storeName) {
-            $localeNames = $this->addSharedLocales($storeName, $localeNames);
+        $localeNames = $this->storeFacade->getCurrentStore()->getAvailableLocaleIsoCodes();
+
+        foreach ($this->storeFacade->getStoresWithSharedPersistence($storeTransfer) as $store) {
+            $localeNames = array_merge($store->getAvailableLocaleIsoCodes(), $localeNames);
         }
 
-        return array_unique($localeNames);
+        return $localeNames;
     }
 
     /**
@@ -180,20 +182,5 @@ class ContentStorageWriter implements ContentStorageWriterInterface
         }
 
         return $contentStorageList;
-    }
-
-    /**
-     * @param string $storeName
-     * @param array $localeNames
-     *
-     * @return array
-     */
-    protected function addSharedLocales(string $storeName, array $localeNames): array
-    {
-        foreach ($this->store->getLocalesPerStore($storeName) as $localeName) {
-            $localeNames[] = $localeName;
-        }
-
-        return $localeNames;
     }
 }
