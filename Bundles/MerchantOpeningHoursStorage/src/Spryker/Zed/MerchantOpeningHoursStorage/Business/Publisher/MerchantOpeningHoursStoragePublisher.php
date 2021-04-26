@@ -11,6 +11,9 @@ use ArrayObject;
 use Generated\Shared\Transfer\MerchantCollectionTransfer;
 use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer;
+use Orm\Zed\MerchantOpeningHours\Persistence\Map\SpyMerchantOpeningHoursDateScheduleTableMap;
+use Orm\Zed\MerchantOpeningHours\Persistence\Map\SpyMerchantOpeningHoursWeekdayScheduleTableMap;
+use Spryker\Zed\MerchantOpeningHoursStorage\Dependency\Facade\MerchantOpeningHoursStorageToEventBehaviorFacadeInterface;
 use Spryker\Zed\MerchantOpeningHoursStorage\Dependency\Facade\MerchantOpeningHoursStorageToMerchantFacadeInterface;
 use Spryker\Zed\MerchantOpeningHoursStorage\Persistence\MerchantOpeningHoursStorageEntityManagerInterface;
 use Spryker\Zed\MerchantOpeningHoursStorage\Persistence\MerchantOpeningHoursStorageRepositoryInterface;
@@ -28,6 +31,11 @@ class MerchantOpeningHoursStoragePublisher implements MerchantOpeningHoursStorag
     protected $merchantOpeningHoursStorageRepository;
 
     /**
+     * @var \Spryker\Zed\MerchantOpeningHoursStorage\Dependency\Facade\MerchantOpeningHoursStorageToEventBehaviorFacadeInterface
+     */
+    protected $eventBehaviorFacade;
+
+    /**
      * @var \Spryker\Zed\MerchantOpeningHoursStorage\Dependency\Facade\MerchantOpeningHoursStorageToMerchantFacadeInterface
      */
     protected $merchantFacade;
@@ -35,15 +43,18 @@ class MerchantOpeningHoursStoragePublisher implements MerchantOpeningHoursStorag
     /**
      * @param \Spryker\Zed\MerchantOpeningHoursStorage\Persistence\MerchantOpeningHoursStorageEntityManagerInterface $merchantOpeningHoursStorageEntityManager
      * @param \Spryker\Zed\MerchantOpeningHoursStorage\Persistence\MerchantOpeningHoursStorageRepositoryInterface $merchantOpeningHoursStorageRepository
+     * @param \Spryker\Zed\MerchantOpeningHoursStorage\Dependency\Facade\MerchantOpeningHoursStorageToEventBehaviorFacadeInterface $eventBehaviorFacade
      * @param \Spryker\Zed\MerchantOpeningHoursStorage\Dependency\Facade\MerchantOpeningHoursStorageToMerchantFacadeInterface $merchantFacade
      */
     public function __construct(
         MerchantOpeningHoursStorageEntityManagerInterface $merchantOpeningHoursStorageEntityManager,
         MerchantOpeningHoursStorageRepositoryInterface $merchantOpeningHoursStorageRepository,
+        MerchantOpeningHoursStorageToEventBehaviorFacadeInterface $eventBehaviorFacade,
         MerchantOpeningHoursStorageToMerchantFacadeInterface $merchantFacade
     ) {
         $this->merchantOpeningHoursStorageEntityManager = $merchantOpeningHoursStorageEntityManager;
         $this->merchantOpeningHoursStorageRepository = $merchantOpeningHoursStorageRepository;
+        $this->eventBehaviorFacade = $eventBehaviorFacade;
         $this->merchantFacade = $merchantFacade;
     }
 
@@ -73,6 +84,48 @@ class MerchantOpeningHoursStoragePublisher implements MerchantOpeningHoursStorag
                 );
             }
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeMerchantOpenHoursStorageByMerchantOpeningHoursWeekdayScheduleCreateEvents(array $eventEntityTransfers): void
+    {
+        $merchantIds = $this->eventBehaviorFacade->getEventTransferForeignKeys(
+            $eventEntityTransfers,
+            SpyMerchantOpeningHoursWeekdayScheduleTableMap::COL_FK_MERCHANT
+        );
+
+        $this->publish($merchantIds);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeMerchantOpenHoursStorageByMerchantOpeningHoursDateScheduleCreateEvents(array $eventEntityTransfers): void
+    {
+        $merchantIds = $this->eventBehaviorFacade->getEventTransferForeignKeys(
+            $eventEntityTransfers,
+            SpyMerchantOpeningHoursDateScheduleTableMap::COL_FK_MERCHANT
+        );
+
+        $this->publish($merchantIds);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeMerchantOpenHoursStorageByMerchantOpeningHoursPublishEvents(array $eventEntityTransfers): void
+    {
+        $merchantIds = $this->eventBehaviorFacade->getEventTransferIds($eventEntityTransfers);
+
+        $this->publish($merchantIds);
     }
 
     /**

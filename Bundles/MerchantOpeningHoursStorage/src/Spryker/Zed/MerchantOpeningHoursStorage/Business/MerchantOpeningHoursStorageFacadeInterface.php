@@ -20,4 +20,40 @@ interface MerchantOpeningHoursStorageFacadeInterface
      * @return void
      */
     public function publish(array $merchantIds): void;
+
+    /**
+     * Specification:
+     * - Publishes merchant opening hours changes to storage on weekday schedule create.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeMerchantOpenHoursStorageByMerchantOpeningHoursWeekdayScheduleCreateEvents(array $eventEntityTransfers): void;
+
+    /**
+     * Specification:
+     * - Publishes merchant opening hours changes to storage on date schedule create.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeMerchantOpenHoursStorageByMerchantOpeningHoursDateScheduleCreateEvents(array $eventEntityTransfers): void;
+
+    /**
+     * Specification:
+     * - Publishes merchant opening hours changes to storage on schedule publish.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeMerchantOpenHoursStorageByMerchantOpeningHoursPublishEvents(array $eventEntityTransfers): void;
 }

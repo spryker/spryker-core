@@ -7,20 +7,11 @@
 
 namespace Spryker\Zed\ProductPageSearch\Dependency\Plugin;
 
-use Generated\Shared\Transfer\ProductPageSearchTransfer;
+use Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductPageDataExpanderInterface as PluginProductPageDataExpanderInterface;
 
-interface ProductPageDataExpanderInterface
+/**
+ * @deprecated Use {@link \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductPageDataExpanderInterface} instead.
+ */
+interface ProductPageDataExpanderInterface extends PluginProductPageDataExpanderInterface
 {
-    /**
-     * Specification:
-     * - Expands the provided ProductAbstractPageSearch transfer object's data by reference.
-     *
-     * @api
-     *
-     * @param array $productData
-     * @param \Generated\Shared\Transfer\ProductPageSearchTransfer $productAbstractPageSearchTransfer
-     *
-     * @return void
-     */
-    public function expandProductPageData(array $productData, ProductPageSearchTransfer $productAbstractPageSearchTransfer);
 }

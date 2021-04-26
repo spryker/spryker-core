@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\MerchantsRestApi\Processor\UrlResolver;
 
+use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 use Generated\Shared\Transfer\RestUrlResolverAttributesTransfer;
 use Generated\Shared\Transfer\UrlStorageTransfer;
 use Spryker\Glue\MerchantsRestApi\Dependency\Client\MerchantsRestApiToMerchantStorageClientInterface;
@@ -40,7 +41,8 @@ class MerchantUrlResolver implements MerchantUrlResolverInterface
          * @var int $fkResourceMerchant
          */
         $fkResourceMerchant = $urlStorageTransfer->getFkResourceMerchant();
-        $merchantStorageTransfer = $this->merchantStorageClient->findOne($fkResourceMerchant);
+        $merchantCriteriaTransfer = (new MerchantCriteriaTransfer())->setIdMerchant($fkResourceMerchant);
+        $merchantStorageTransfer = $this->merchantStorageClient->findOne($merchantCriteriaTransfer);
 
         if (!$merchantStorageTransfer) {
             return null;

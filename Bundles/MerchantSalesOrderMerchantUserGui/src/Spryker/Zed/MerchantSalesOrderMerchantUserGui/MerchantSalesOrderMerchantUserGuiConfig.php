@@ -11,8 +11,6 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class MerchantSalesOrderMerchantUserGuiConfig extends AbstractBundleConfig
 {
-    public const REQUEST_PARAM_ID_MERCHANT_SALES_ORDER = 'id-merchant-sales-order';
-
     /**
      * This method provides list of urls to render blocks inside order detail page.
      * URL defines path to external bundle controller.

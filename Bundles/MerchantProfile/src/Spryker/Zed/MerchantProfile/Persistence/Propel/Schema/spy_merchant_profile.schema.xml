@@ -14,8 +14,6 @@
         <column name="public_email" type="VARCHAR" size="255"/>
         <column name="public_phone" type="VARCHAR" size="255"/>
         <column name="fax_number" size="255" type="VARCHAR"/>
-        <column name="longitude" size="255" type="VARCHAR"/>
-        <column name="latitude" size="255" type="VARCHAR"/>
 
         <column name="description_glossary_key" type="VARCHAR" size="255"/>
         <column name="banner_url_glossary_key" type="VARCHAR" size="255"/>
@@ -45,6 +43,8 @@
         <column name="city" size="255" type="VARCHAR"/>
         <column name="zip_code" size="15" type="VARCHAR"/>
         <column name="fk_merchant_profile" required="true" type="INTEGER"/>
+        <column name="longitude" size="255" type="VARCHAR"/>
+        <column name="latitude" size="255" type="VARCHAR"/>
 
         <foreign-key name="spy_merchant_profile_address-fk_country" foreignTable="spy_country">
             <reference local="fk_country" foreign="id_country"/>

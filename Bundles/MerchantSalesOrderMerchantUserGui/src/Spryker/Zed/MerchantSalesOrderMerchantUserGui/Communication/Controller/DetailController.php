@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\MerchantOrderItemTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Spryker\Zed\MerchantSalesOrderMerchantUserGui\MerchantSalesOrderMerchantUserGuiConfig;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -23,7 +22,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DetailController extends AbstractController
 {
-    protected const PARAM_ID_MERCHANT_SALES_ORDER = 'id-merchant-sales-order';
+    public const REQUEST_PARAM_ID_MERCHANT_SALES_ORDER = 'id-merchant-sales-order';
 
     protected const ROUTE_REDIRECT = '/merchant-sales-order-merchant-user-gui/detail';
 
@@ -45,8 +44,9 @@ class DetailController extends AbstractController
     public function indexAction(Request $request)
     {
         $idMerchantSalesOrder = $this->castId(
-            $request->query->getInt(MerchantSalesOrderMerchantUserGuiConfig::REQUEST_PARAM_ID_MERCHANT_SALES_ORDER)
+            $request->query->getInt(static::REQUEST_PARAM_ID_MERCHANT_SALES_ORDER)
         );
+
         $idMerchant = $this->getFactory()->getMerchantUserFacade()->getCurrentMerchantUser()->getIdMerchant();
 
         if (!$idMerchant) {
@@ -223,7 +223,7 @@ class DetailController extends AbstractController
     protected function createRedirectLink(int $idMerchantSalesOrder): string
     {
         $redirectUrlParams = [
-            static::PARAM_ID_MERCHANT_SALES_ORDER => $idMerchantSalesOrder,
+            static::REQUEST_PARAM_ID_MERCHANT_SALES_ORDER => $idMerchantSalesOrder,
         ];
 
         return Url::generate(static::ROUTE_REDIRECT, $redirectUrlParams);

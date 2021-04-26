@@ -9,6 +9,9 @@ namespace Spryker\Zed\MerchantRelationshipExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 
+/**
+ * Provides extension capabilities for the MerchantRelationshipTransfer processing before delete of a merchant relation.
+ */
 interface MerchantRelationshipPreDeletePluginInterface
 {
     /**
