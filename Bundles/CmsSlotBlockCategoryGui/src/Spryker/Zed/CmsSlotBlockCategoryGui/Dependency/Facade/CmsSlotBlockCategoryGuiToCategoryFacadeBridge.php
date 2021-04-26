@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CmsSlotBlockCategoryGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\CategoryCollectionTransfer;
+use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 
 class CmsSlotBlockCategoryGuiToCategoryFacadeBridge implements CmsSlotBlockCategoryGuiToCategoryFacadeInterface
@@ -33,5 +34,15 @@ class CmsSlotBlockCategoryGuiToCategoryFacadeBridge implements CmsSlotBlockCateg
     public function getAllCategoryCollection(LocaleTransfer $localeTransfer): CategoryCollectionTransfer
     {
         return $this->categoryFacade->getAllCategoryCollection($localeTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer $categoryCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
+     */
+    public function getCategoriesByCriteria(CategoryCriteriaTransfer $categoryCriteriaTransfer): CategoryCollectionTransfer
+    {
+        return $this->categoryFacade->getCategoriesByCriteria($categoryCriteriaTransfer);
     }
 }
