@@ -204,6 +204,18 @@ interface CategoryFacadeInterface
 
     /**
      * Specification:
+     * - Retrieves collection with categories filtered by criteria.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer $categoryCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
+     */
+    public function getCategoriesByCriteria(CategoryCriteriaTransfer $categoryCriteriaTransfer): CategoryCollectionTransfer;
+
+    /**
+     * Specification:
      * - Finds a Category transfer by id with category nodes and attributes.
      * - Returns NULL if a Category does not exist.
      *
