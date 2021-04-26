@@ -9,7 +9,8 @@ import { CreateMultiConcreteProductComponent } from './create-multi-concrete-pro
         <mp-create-multi-concrete-product
             [attributes]="attributes"
             [attributesName]="attributesName"
-            [productsName]="productsName">
+            [productsName]="productsName"
+        >
             <span title class="projected-title">Name</span>
             <span action class="projected-action">Button</span>
 

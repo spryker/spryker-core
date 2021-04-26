@@ -10,7 +10,7 @@ import {
     SimpleChanges,
     ViewEncapsulation,
 } from '@angular/core';
-import { ProductAttribute, ProductAttributeValue } from './types';
+import { AttributeOptions, ProductAttribute } from './types';
 import { IconDeleteModule } from '../../icons';
 import { ToJson } from '@spryker/utils';
 
@@ -30,17 +30,18 @@ export class ProductAttributesSelectorComponent implements OnChanges, OnInit {
 
     deleteIcon = IconDeleteModule.icon;
     attributesObject: Record<string, ProductAttribute> = {};
-    attributeOptions: ProductAttributeValue[][] = [];
+    superAttributeOptions: AttributeOptions[] = [];
+    attributeOptions: AttributeOptions[][] = [];
 
     constructor(private cdr: ChangeDetectorRef) {}
 
     ngOnInit(): void {
         this.create();
-        console.log(this.attributes);
     }
 
     ngOnChanges(changes: SimpleChanges): void {
         if ('attributes' in changes) {
+            this.remapSuperAttributes();
             this.generateAttributesObject();
         }
     }
@@ -52,11 +53,19 @@ export class ProductAttributesSelectorComponent implements OnChanges, OnInit {
                 [attribute.value]: attribute,
             };
         }, {});
-        
-        console.log(this.attributesObject, 'this.attributesObject');
     }
 
-    getAttributes(index: number): ProductAttributeValue[] {
+    remapSuperAttributes(): void {
+        this.superAttributeOptions = this.attributes.map((attr) => {
+            return {
+                title: attr.name,
+                value: attr.value,
+                isDisabled: attr.isDisabled,
+            };
+        });
+    }
+
+    getAttributes(index: number): AttributeOptions[] {
         return this.attributeOptions[index];
     }
 
@@ -65,7 +74,12 @@ export class ProductAttributesSelectorComponent implements OnChanges, OnInit {
 
         superAttribute.attributes = [];
         this.selectedAttributes = [...this.selectedAttributes];
-        this.attributeOptions[index] = this.attributesObject[value]?.attributes;
+        this.attributeOptions[index] = this.attributesObject[value]?.attributes.map((attr) => {
+            return {
+                title: attr.name,
+                value: attr.value,
+            };
+        });
         this.selectedAttributes[index] = superAttribute;
         this.disableSelectedAttributes();
         this.selectedAttributesChange.emit(this.selectedAttributes);
@@ -76,7 +90,9 @@ export class ProductAttributesSelectorComponent implements OnChanges, OnInit {
         const superAttribute = this.attributesObject[selectedAttribute.value];
 
         this.selectedAttributes = [...this.selectedAttributes];
-        this.selectedAttributes[index].attributes = superAttribute.attributes.filter((attribute) => values.includes(attribute.value));
+        this.selectedAttributes[index].attributes = superAttribute.attributes.filter((attribute) =>
+            values.includes(attribute.value),
+        );
         this.selectedAttributesChange.emit(this.selectedAttributes);
         this.cdr.markForCheck();
     }
@@ -86,6 +102,7 @@ export class ProductAttributesSelectorComponent implements OnChanges, OnInit {
             ...attr,
             isDisabled: this.selectedAttributes.some((selectedAttr) => selectedAttr?.value === attr?.value),
         }));
+        this.remapSuperAttributes();
     }
 
     create(): void {

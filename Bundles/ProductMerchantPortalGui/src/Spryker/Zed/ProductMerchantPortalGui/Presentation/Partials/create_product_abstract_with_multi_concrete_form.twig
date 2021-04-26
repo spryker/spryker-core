@@ -9,8 +9,6 @@
     {% set selectedAttributes = selectedAttributesJson %}
     {% set concreteProducts = concreteProductsJson %}
 
-    <pre>{{ dump(attributes) }}</pre>
-
     {% block createMultiConcreteProduct %}
         <web-mp-concrete-product-generator-data
             cloak
@@ -19,7 +17,7 @@
             <web-mp-create-multi-concrete-product
                 cloak
                 attributes="{{ attributes }}"
-                attributes-name="{{ productsName }}"
+                attributes-name="{{ attributesName }}"
                 products-name="{{ productsName }}"
                 selected-attributes="{{ selectedAttributes }}"
                 generated-products="{{ concreteProducts }}">

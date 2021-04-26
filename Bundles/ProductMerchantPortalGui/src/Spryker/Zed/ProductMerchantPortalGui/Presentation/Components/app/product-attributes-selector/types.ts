@@ -9,3 +9,9 @@ export interface ProductAttributeValue {
     value: string;
     name: string;
 }
+
+export interface AttributeOptions {
+    value: string;
+    title: string;
+    isDisabled?: boolean;
+}

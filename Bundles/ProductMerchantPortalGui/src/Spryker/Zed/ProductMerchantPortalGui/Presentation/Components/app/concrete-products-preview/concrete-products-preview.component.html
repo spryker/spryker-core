@@ -38,7 +38,7 @@
                     <div class="mp-concrete-products-preview__table-row">
                         <div class="mp-concrete-products-preview__table-row-attr">
                             <span *ngFor="let superAttribute of product.superAttributes; let isLast = last">
-                                {{ superAttribute.title }}
+                                {{ superAttribute.attribute.name }}
                                 <span *ngIf="!isLast"> / </span>
                             </span>
                         </div>
