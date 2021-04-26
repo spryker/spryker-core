@@ -31,7 +31,7 @@ class ContentStorageBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->getLocaleFacade(),
             $this->getUtilEncoding(),
-            $this->getStore()
+            $this->getStoreFacade()
         );
     }
 
@@ -54,7 +54,7 @@ class ContentStorageBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ContentStorage\Dependency\Facade\ContentStorageToStoreFacadeInterface
      */
-    protected function getStore(): ContentStorageToStoreFacadeInterface
+    public function getStoreFacade(): ContentStorageToStoreFacadeInterface
     {
         return $this->getProvidedDependency(ContentStorageDependencyProvider::STORE);
     }
