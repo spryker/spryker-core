@@ -11,9 +11,9 @@ use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortal
 
 class SuperAttributesDataProvider implements SuperAttributesDataProviderInterface
 {
-    protected const FIELD_TITLE = 'title';
+    protected const FIELD_NAME = 'name';
     protected const FIELD_VALUE = 'value';
-    protected const VALUES = 'values';
+    protected const FIELD_ATTRIBUTES = 'attributes';
 
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductAttributeFacadeInterface
@@ -42,15 +42,15 @@ class SuperAttributesDataProvider implements SuperAttributesDataProviderInterfac
                 $values = [];
                 foreach ($productManagementAttributeTransfer->getValues() as $productManagementAttributeValueTransfer) {
                     $values[] = [
-                        static::FIELD_TITLE => $productManagementAttributeValueTransfer->getValueOrFail(),
+                        static::FIELD_NAME => $productManagementAttributeValueTransfer->getValueOrFail(),
                         static::FIELD_VALUE => $productManagementAttributeValueTransfer->getValueOrFail(),
                     ];
                 }
 
                 $superProductManagementAttributes[] = [
-                    static::FIELD_TITLE => $productManagementAttributeTransfer->getKeyOrFail(),
+                    static::FIELD_NAME => $productManagementAttributeTransfer->getKeyOrFail(),
                     static::FIELD_VALUE => $productManagementAttributeTransfer->getKeyOrFail(),
-                    static::VALUES => $values,
+                    static::FIELD_ATTRIBUTES => $values,
                 ];
             }
         }
