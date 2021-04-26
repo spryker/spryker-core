@@ -68,7 +68,6 @@ use Spryker\Zed\Category\Business\Updater\CategoryUpdater;
 use Spryker\Zed\Category\Business\Updater\CategoryUpdaterInterface;
 use Spryker\Zed\Category\Business\Updater\CategoryUrlUpdater;
 use Spryker\Zed\Category\Business\Updater\CategoryUrlUpdaterInterface;
-use Spryker\Zed\Category\CategoryConfig;
 use Spryker\Zed\Category\CategoryDependencyProvider;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToEventFacadeInterface;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToTouchInterface;
@@ -201,16 +200,8 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->createCategoryReader(),
             $this->getEventFacade(),
-            $this->createCategoryConfig()
+            $this->getConfig()
         );
-    }
-
-    /**
-     * @return \Spryker\Zed\Category\CategoryConfig
-     */
-    public function createCategoryConfig(): CategoryConfig
-    {
-        return new CategoryConfig();
     }
 
     /**
@@ -264,7 +255,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->createUrlPathGenerator(),
             $this->getUrlFacade(),
-            $this->createCategoryConfig()
+            $this->getConfig()
         );
     }
 

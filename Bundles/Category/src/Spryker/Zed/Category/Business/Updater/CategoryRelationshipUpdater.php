@@ -10,13 +10,11 @@ namespace Spryker\Zed\Category\Business\Updater;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\UpdateCategoryStoreRelationRequestTransfer;
 use Spryker\Zed\Category\Business\Model\CategoryTemplate\CategoryTemplateSyncInterface;
-use Spryker\Zed\Kernel\Persistence\EntityManager\InstancePoolingTrait;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
 class CategoryRelationshipUpdater implements CategoryRelationshipUpdaterInterface
 {
     use TransactionTrait;
-    use InstancePoolingTrait;
 
     /**
      * @var \Spryker\Zed\Category\Business\Updater\CategoryNodeUpdaterInterface
@@ -79,13 +77,9 @@ class CategoryRelationshipUpdater implements CategoryRelationshipUpdaterInterfac
      */
     public function updateCategoryRelationships(CategoryTransfer $categoryTransfer): void
     {
-        $this->disableInstancePooling();
-
         $this->getTransactionHandler()->handleTransaction(function () use ($categoryTransfer) {
             $this->executeUpdateCategoryRelationshipsTransaction($categoryTransfer);
         });
-
-        $this->enableInstancePooling();
     }
 
     /**

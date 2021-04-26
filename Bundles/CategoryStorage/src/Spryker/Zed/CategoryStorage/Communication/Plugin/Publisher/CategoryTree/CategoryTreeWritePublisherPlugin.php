@@ -8,7 +8,6 @@
 namespace Spryker\Zed\CategoryStorage\Communication\Plugin\Publisher\CategoryTree;
 
 use Spryker\Shared\CategoryStorage\CategoryStorageConstants;
-use Spryker\Zed\Category\Dependency\CategoryEvents;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface;
 

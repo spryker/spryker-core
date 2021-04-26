@@ -91,7 +91,6 @@ class CategoryTreeStorageWriter implements CategoryTreeStorageWriterInterface
         string $storeName,
         string $localeName
     ): void {
-        // TODO: was it tested????
         $categoryNodeStorages = new ArrayObject();
 
         if ($categoryNodeStorageTransfers !== []) {

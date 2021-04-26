@@ -24,4 +24,9 @@ interface CategoryToTouchInterface
      * @return bool
      */
     public function touchDeleted($itemType, $itemId);
+
+    /**
+     * @return bool
+     */
+    public function isTouchEnabled(): bool;
 }

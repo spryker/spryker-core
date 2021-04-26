@@ -157,7 +157,6 @@ class CategoryUrlUpdater implements CategoryUrlUpdaterInterface
         foreach ($categoryTransfer->getLocalizedAttributes() as $categoryLocalizedAttributesTransfer) {
             $localeTransfer = $categoryLocalizedAttributesTransfer->getLocaleOrFail();
 
-            // TODO: Performance issue.
             $indexedCategoryUrlPaths = $this->urlPathGenerator->bulkBuildCategoryNodeUrlForLocale(
                 $categoryNodeChildIds,
                 $categoryLocalizedAttributesTransfer->getLocaleOrFail()
@@ -220,7 +219,6 @@ class CategoryUrlUpdater implements CategoryUrlUpdaterInterface
                 continue;
             }
 
-            // TODO: Performance issue.
             $urlTransfer->setUrl($categoryUrlPath);
             $this->urlFacade->updateUrl($urlTransfer);
         }

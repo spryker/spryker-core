@@ -153,12 +153,10 @@ class CategoryNodeUpdater implements CategoryNodeUpdaterInterface
         $this->categoryClosureTableUpdater->updateCategoryClosureTableParentEntriesForCategoryNode($nodeTransfer);
         $categoryTransfer->setCategoryNode($nodeTransfer);
 
-        // TODO: Performance issue. (Disable it from touchFacade->getIsTouchEnabled())
-//        $this->touchCategoryNode($categoryTransfer, $nodeTransfer);
-//        $this->touchPossibleFormerParentCategoryNode($idFormerParentCategoryNode);
+        $this->touchCategoryNode($categoryTransfer, $nodeTransfer);
+        $this->touchPossibleFormerParentCategoryNode($idFormerParentCategoryNode);
 
-        // TODO: Performance issue.
-//        $this->categoryNodePublisher->triggerBulkCategoryNodePublishEventForUpdate($nodeTransfer->getIdCategoryNodeOrFail());
+        $this->categoryNodePublisher->triggerBulkCategoryNodePublishEventForUpdate($nodeTransfer->getIdCategoryNodeOrFail());
     }
 
     /**

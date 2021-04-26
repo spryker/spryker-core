@@ -200,16 +200,16 @@ class CategoryStoreUpdater implements CategoryStoreUpdaterInterface
     }
 
     /**
-     * @param int[] $idsCategory
+     * @param int[] $categoryIds
      * @param int[] $storeIdsToAdd
      * @param int[] $storeIdsToDelete
      *
      * @return void
      */
-    protected function updateCategoryStoreRelations(array $idsCategory, array $storeIdsToAdd, array $storeIdsToDelete): void
+    protected function updateCategoryStoreRelations(array $categoryIds, array $storeIdsToAdd, array $storeIdsToDelete): void
     {
-        $this->categoryEntityManager->bulkCreateCategoryStoreRelationForStores($idsCategory, $storeIdsToAdd);
-        $this->categoryEntityManager->bulkDeleteCategoryStoreRelationForStores($idsCategory, $storeIdsToDelete);
+        $this->categoryEntityManager->bulkCreateCategoryStoreRelationForStores($categoryIds, $storeIdsToAdd);
+        $this->categoryEntityManager->bulkDeleteCategoryStoreRelationForStores($categoryIds, $storeIdsToDelete);
     }
 
     /**
@@ -268,6 +268,7 @@ class CategoryStoreUpdater implements CategoryStoreUpdaterInterface
             $categoryCriteriaTransfer->setOffset($offset);
             $categoryNodeChildIds = $this->categoryRepository->getCategoryNodeChildIdsByParentNodeId($categoryTransfer, $categoryCriteriaTransfer);
 
+            // TODO: ensure that idCategoryNode === idCategory
             $this->updateCategoryStoreRelations($categoryNodeChildIds, $storeIdsToAdd, $storeIdsToDelete);
         }
     }
