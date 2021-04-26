@@ -15,6 +15,8 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
@@ -54,7 +56,8 @@ class CreateProductAbstractWithSingleConcreteForm extends AbstractType
             ->addConcreteSkuField($builder)
             ->addConcreteNameField($builder)
             ->addAutogenerateSkuField($builder)
-            ->addUseAbstractProductNameField($builder);
+            ->addUseAbstractProductNameField($builder)
+            ->addEventListener($builder);
     }
 
     /**
@@ -171,5 +174,25 @@ class CreateProductAbstractWithSingleConcreteForm extends AbstractType
         ]);
 
         return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return void
+     */
+    protected function addEventListener(FormBuilderInterface $builder): void
+    {
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+            $data = $event->getData();
+
+            if ($data[static::FIELD_CONCRETE_SKU] !== $data[static::FIELD_SKU]) {
+                return;
+            }
+
+            $data[static::FIELD_CONCRETE_SKU] = $data[static::FIELD_SKU] . '-1';
+
+            $event->setData($data);
+        });
     }
 }
