@@ -104,6 +104,8 @@ class ContentStorageWriter implements ContentStorageWriterInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
      * @return string[]
      */
     protected function getSharedPersistenceLocaleNames(StoreTransfer $storeTransfer): array

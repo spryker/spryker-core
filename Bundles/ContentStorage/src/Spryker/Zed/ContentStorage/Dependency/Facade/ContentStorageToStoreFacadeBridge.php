@@ -12,12 +12,12 @@ use Generated\Shared\Transfer\StoreTransfer;
 class ContentStorageToStoreFacadeBridge implements ContentStorageToStoreFacadeInterface
 {
     /**
-     * @var \Spryker\Zed\Store\Business\StoreFacade
+     * @var \Spryker\Zed\Store\Business\StoreFacadeInterface
      */
     protected $storeFacade;
 
     /**
-     * @param \Spryker\Zed\Store\Business\StoreFacade $storeFacade
+     * @param \Spryker\Zed\Store\Business\StoreFacadeInterface $storeFacade
      */
     public function __construct($storeFacade)
     {
@@ -33,6 +33,7 @@ class ContentStorageToStoreFacadeBridge implements ContentStorageToStoreFacadeIn
     {
         return $this->storeFacade->getStoresWithSharedPersistence($storeTransfer);
     }
+
     /**
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
