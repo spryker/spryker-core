@@ -21,20 +21,17 @@ function save(serializedNodeList, progressBar) {
     });
 
     promise.done(function (response) {
-        if (response.code === 200) {
-            window.sweetAlert({
-                title: 'Success',
-                text: response.message,
-                type: 'success',
-            });
-            return true;
-        }
+        var isSuccessResponse = response.code === 200;
+        var alertTitle = isSuccessResponse ? 'Success' : 'Error';
+        var alertType = isSuccessResponse ? 'success' : 'error';
 
         window.sweetAlert({
-            title: 'Error',
+            title: alertTitle,
             text: response.message,
-            type: 'error',
+            type: alertType,
         });
+
+        return isSuccessResponse;
     });
 
     promise.fail(function (xhr, statusMessage, errorMessage) {

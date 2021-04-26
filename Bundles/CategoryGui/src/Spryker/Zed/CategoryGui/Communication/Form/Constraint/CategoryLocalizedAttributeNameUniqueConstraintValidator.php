@@ -29,14 +29,32 @@ class CategoryLocalizedAttributeNameUniqueConstraintValidator extends Constraint
         }
 
         $categoryTransfer = $this->context->getRoot()->getData();
-        if (!($categoryTransfer instanceof CategoryTransfer) || !$value) {
+        if ($this->isCategoryNameValid($categoryTransfer, $value, $constraint)) {
             return;
         }
 
-        if ($constraint->getCategoryFacade()->checkSameLevelCategoryByNameExists($value, $categoryTransfer)) {
-            $this->context
-                ->buildViolation(sprintf($constraint->message, $value))
-                ->addViolation();
+        $this->context
+            ->buildViolation($constraint->getMessage($value))
+            ->addViolation();
+    }
+
+    /**
+     * @param mixed $categoryTransfer
+     * @param string $categoryName
+     * @param \Spryker\Zed\CategoryGui\Communication\Form\Constraint\CategoryLocalizedAttributeNameUniqueConstraint $constraint
+     *
+     * @return bool
+     */
+    protected function isCategoryNameValid($categoryTransfer, string $categoryName, CategoryLocalizedAttributeNameUniqueConstraint $constraint): bool
+    {
+        if (!($categoryTransfer instanceof CategoryTransfer)) {
+            return true;
         }
+
+        if (!$categoryName) {
+            return true;
+        }
+
+        return (!$constraint->getCategoryFacade()->checkSameLevelCategoryByNameExists($categoryName, $categoryTransfer));
     }
 }

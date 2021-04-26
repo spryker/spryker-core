@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\CategoryNodeCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
+use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
@@ -670,6 +671,38 @@ class CategoryFacadeTest extends Unit
         // Assert
         $childCategoryStoreRelationStoreIds = $this->getCategoryRelationStoreIds($childCategoryTransfer->getIdCategory());
         $this->assertCount(0, $childCategoryStoreRelationStoreIds, 'Number of category store relations does not equals to expected value.');
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCategoryNodesWithFilterWillReturnCategoryNodesData(): void
+    {
+        // Arrange
+        $expectedCount = 1;
+
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::TEST_STORE_DE]);
+
+        $parentCategoryTransfer = $this->tester->haveCategory();
+        $this->tester->haveCategoryStoreRelation($parentCategoryTransfer->getIdCategory(), $storeTransfer->getIdStore());
+
+        $childCategoryTransfer = $this->tester->haveCategory([
+            CategoryTransfer::PARENT_CATEGORY_NODE => $parentCategoryTransfer->getCategoryNode(),
+        ]);
+        $this->tester->haveCategoryStoreRelation($childCategoryTransfer->getIdCategory(), $storeTransfer->getIdStore());
+
+        $filterTransfer = (new FilterTransfer())
+            ->setLimit($expectedCount)
+            ->setOffset(0);
+
+        $categoryNodeCriteriaTransfer = (new CategoryNodeCriteriaTransfer())
+            ->setFilter($filterTransfer);
+
+        // Act
+        $nodeCollectionTransfer = $this->getFacade()->getCategoryNodes($categoryNodeCriteriaTransfer);
+
+        // Assert
+        $this->assertCount($expectedCount, $nodeCollectionTransfer->getNodes(), sprintf('Exactly %d category nodes should be found.', $expectedCount));
     }
 
     /**

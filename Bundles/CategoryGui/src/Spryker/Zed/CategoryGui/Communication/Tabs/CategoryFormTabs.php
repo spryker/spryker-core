@@ -13,6 +13,8 @@ use Spryker\Zed\Gui\Communication\Tabs\AbstractTabs;
 
 class CategoryFormTabs extends AbstractTabs
 {
+    protected const TITLE_GENERAL = 'General';
+
     /**
      * @var \Spryker\Zed\CategoryGuiExtension\Dependency\Plugin\CategoryFormTabExpanderPluginInterface[]
      */
@@ -48,7 +50,7 @@ class CategoryFormTabs extends AbstractTabs
     {
         $tabItemTransfer = new TabItemTransfer();
         $tabItemTransfer->setName('general')
-            ->setTitle('General')
+            ->setTitle(static::TITLE_GENERAL)
             ->setTemplate('@CategoryGui/_partials/general-tab.twig');
 
         $tabsViewTransfer->addTab($tabItemTransfer);

@@ -31,7 +31,7 @@ class SearchController extends AbstractController
         $idCategoryNode = $this->castId($request->query->get(static::REQUEST_PARAM_ID_CATEGORY_NODE));
 
         $storeWithStateCollectionTransfer = $this->getFactory()
-            ->createCategoryStoreWithSateFinder()
+            ->createCategoryStoreWithStateFinder()
             ->getAllStoresWithStateByIdCategoryNode($idCategoryNode);
 
         return $this->jsonResponse(

@@ -180,7 +180,7 @@ class CategoryTable extends AbstractTable
             static::COL_SEARCHABLE => $this->yesNoOutput($categoryEntity->getIsSearchable()),
             static::COL_TEMPLATE => $categoryEntity->getVirtualColumn(static::COL_TEMPLATE),
             static::COL_STORE_RELATION => $this->getStoreNames($categoryEntity->getIdCategory(), $categoryStoreNamesGroupedByIdCategory),
-            static::COL_ACTIONS => $this->generateActionsButton($categoryEntity),
+            static::COL_ACTIONS => $this->generateActionsButton($categoryEntity, $categoryStoreNamesGroupedByIdCategory),
         ];
     }
 
@@ -200,15 +200,20 @@ class CategoryTable extends AbstractTable
 
     /**
      * @param \Orm\Zed\Category\Persistence\SpyCategory $item
+     * @param string[][] $categoryStoreNamesGroupedByIdCategory
      *
      * @return string
      */
-    protected function generateActionsButton(SpyCategory $item): string
+    protected function generateActionsButton(SpyCategory $item, array $categoryStoreNamesGroupedByIdCategory): string
     {
         $buttonGroupItems = [];
 
         $buttonGroupItems[] = $this->generateEditCategoryButtonGroupItem($item);
-        $buttonGroupItems[] = $this->generateCategoryRemoveButtonGroupItem($item);
+
+        if (!$this->hasAssignedStores($item, $categoryStoreNamesGroupedByIdCategory)) {
+            $buttonGroupItems[] = $this->generateCategoryRemoveButtonGroupItem($item);
+        }
+
         $buttonGroupItems[] = $this->generateAddCategoryToNodeButtonGroupItem($item);
         $buttonGroupItems[] = $this->generateCategoryResortButtonGroupItem($item);
         $buttonGroupItems[] = $this->generateAssignProductsButtonGroupItem($item);
@@ -327,7 +332,7 @@ class CategoryTable extends AbstractTable
      *
      * @return int[]
      */
-    private function extractCategoryIds(ObjectCollection $queryResults): array
+    protected function extractCategoryIds(ObjectCollection $queryResults): array
     {
         $categoryIds = [];
         /** @var \Orm\Zed\Category\Persistence\SpyCategory $categoryEntity */
@@ -336,5 +341,16 @@ class CategoryTable extends AbstractTable
         }
 
         return $categoryIds;
+    }
+
+    /**
+     * @param \Orm\Zed\Category\Persistence\SpyCategory $item
+     * @param string[][] $categoryStoreNamesGroupedByIdCategory
+     *
+     * @return bool
+     */
+    protected function hasAssignedStores(SpyCategory $item, array $categoryStoreNamesGroupedByIdCategory): bool
+    {
+        return (isset($categoryStoreNamesGroupedByIdCategory[$item->getIdCategory()]));
     }
 }

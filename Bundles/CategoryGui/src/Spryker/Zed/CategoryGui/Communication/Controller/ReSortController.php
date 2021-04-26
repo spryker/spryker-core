@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\CategoryGui\Communication\Controller;
 
-use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,7 +16,7 @@ use Symfony\Component\Security\Csrf\CsrfToken;
  * @method \Spryker\Zed\CategoryGui\Persistence\CategoryGuiRepositoryInterface getRepository()
  * @method \Spryker\Zed\CategoryGui\Communication\CategoryGuiCommunicationFactory getFactory()
  */
-class ReSortController extends AbstractController
+class ReSortController extends CategoryAbstractController
 {
     protected const PARAM_RE_SORT_FORM_TOKEN_ID = 'category_nodes_re_sort_token';
     protected const PARAM_REQUEST_RE_SORT_FORM_TOKEN = 'token';
@@ -34,7 +33,7 @@ class ReSortController extends AbstractController
     public function indexAction(Request $request): array
     {
         $idCategoryNode = $request->get(static::REQUEST_PARAM_ID_NODE);
-        $idLocale = $this->getFactory()->getLocaleFacade()->getCurrentLocale()->getIdLocale();
+        $idLocale = $this->getCurrentLocale()->getIdLocaleOrFail();
 
         return [
             'items' => $this->getRepository()->getChildrenCategoryNodeNames($idCategoryNode, $idLocale),
@@ -55,21 +54,9 @@ class ReSortController extends AbstractController
             ]);
         }
 
-        $categoryNodesToReorder = $this->getFactory()
-            ->getUtilEncodingService()
-            ->decodeJson($request->request->get(static::REQUEST_PARAM_NODES), true);
-
-        $positionCursor = count($categoryNodesToReorder);
-
-        foreach ($categoryNodesToReorder as $index => $nodeData) {
-            $idCategoryNode = $this->castId($nodeData['id']);
-
-            $this->getFactory()
-                ->getCategoryFacade()
-                ->updateCategoryNodeOrder($idCategoryNode, $positionCursor);
-
-            $positionCursor--;
-        }
+        $this->getFactory()
+            ->createCategoryReSortHandler()
+            ->updateCategoryNodeOrder($request->request->get(static::REQUEST_PARAM_NODES));
 
         return $this->jsonResponse([
             'code' => Response::HTTP_OK,

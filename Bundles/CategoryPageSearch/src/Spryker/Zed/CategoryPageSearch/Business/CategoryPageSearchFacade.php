@@ -12,6 +12,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\CategoryPageSearch\Business\CategoryPageSearchBusinessFactory getFactory()
  * @method \Spryker\Zed\CategoryPageSearch\Persistence\CategoryPageSearchEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\CategoryPageSearch\Persistence\CategoryPageSearchRepositoryInterface getRepository()
  */
 class CategoryPageSearchFacade extends AbstractFacade implements CategoryPageSearchFacadeInterface
 {
@@ -19,6 +20,8 @@ class CategoryPageSearchFacade extends AbstractFacade implements CategoryPageSea
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Will be removed in the next major without replacement.
      *
      * @param array $categoryNodeIds
      *
@@ -33,6 +36,8 @@ class CategoryPageSearchFacade extends AbstractFacade implements CategoryPageSea
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Will be removed in the next major without replacement.
      *
      * @param array $categoryNodeIds
      *
@@ -55,7 +60,7 @@ class CategoryPageSearchFacade extends AbstractFacade implements CategoryPageSea
     public function writeCategoryNodePageSearchCollectionByCategoryStoreEvents(array $eventEntityTransfers): void
     {
         $this->getFactory()
-            ->createCategoryNodePageSearchWriter()
+            ->createCategoryNodePageSearchByCategoryStoreEventsWriter()
             ->writeCategoryNodePageSearchCollectionByCategoryStoreEvents($eventEntityTransfers);
     }
 
@@ -71,7 +76,152 @@ class CategoryPageSearchFacade extends AbstractFacade implements CategoryPageSea
     public function writeCategoryNodePageSearchCollectionByCategoryStorePublishEvents(array $eventEntityTransfers): void
     {
         $this->getFactory()
-            ->createCategoryNodePageSearchWriter()
+            ->createCategoryNodePageSearchByCategoryStoreEventsWriter()
             ->writeCategoryNodePageSearchCollectionByCategoryStorePublishEvents($eventEntityTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeCategoryNodePageSearchCollectionByCategoryAttributeEvents(array $eventEntityTransfers): void
+    {
+        $this->getFactory()
+            ->createCategoryNodePageSearchByCategoryAttributeEventsWriter()
+            ->writeCategoryNodePageSearchCollectionByCategoryAttributeEvents($eventEntityTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeCategoryNodePageSearchCollectionByCategoryEvents(array $eventEntityTransfers): void
+    {
+        $this->getFactory()
+            ->createCategoryNodePageSearchByCategoryEventsWriter()
+            ->writeCategoryNodePageSearchCollectionByCategoryEvents($eventEntityTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeCategoryNodePageSearchCollectionByCategoryTemplateEvents(array $eventEntityTransfers): void
+    {
+        $this->getFactory()
+            ->createCategoryNodePageSearchByCategoryTemplateEventsWriter()
+            ->writeCategoryNodePageSearchCollectionByCategoryTemplateEvents($eventEntityTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeCategoryNodePageSearchCollectionByCategoryNodeEvents(array $eventEntityTransfers): void
+    {
+        $this->getFactory()
+            ->createCategoryNodePageSearchWriter()
+            ->writeCategoryNodePageSearchCollectionByCategoryNodeEvents($eventEntityTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function deleteCategoryNodePageSearchCollectionByCategoryAttributeEvents(array $eventEntityTransfers): void
+    {
+        $this->getFactory()
+            ->createCategoryNodePageSearchByCategoryAttributeEventsDeleter()
+            ->deleteCategoryNodePageSearchCollectionByCategoryAttributeEvents($eventEntityTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function deleteCategoryNodePageSearchCollectionByCategoryEvents(array $eventEntityTransfers): void
+    {
+        $this->getFactory()
+            ->createCategoryNodePageSearchByCategoryEventsDeleter()
+            ->deleteCategoryNodePageSearchCollectionByCategoryEvents($eventEntityTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function deleteCategoryNodePageSearchCollectionByCategoryTemplateEvents(array $eventEntityTransfers): void
+    {
+        $this->getFactory()
+            ->createCategoryNodePageSearchByCategoryTemplateEventsDeleter()
+            ->deleteCategoryNodePageSearchCollectionByCategoryTemplateEvents($eventEntityTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function deleteCategoryNodePageSearchCollectionByCategoryNodeEvents(array $eventEntityTransfers): void
+    {
+        $this->getFactory()
+            ->createCategoryNodePageSearchDeleter()
+            ->deleteCategoryNodePageSearchCollectionByCategoryNodeEvents($eventEntityTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int $offset
+     * @param int $limit
+     * @param int[] $categoryNodeIds
+     *
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     */
+    public function findSynchronizationDataTransfersByCategoryNodeIds(int $offset, int $limit, array $categoryNodeIds): array
+    {
+        return $this->getRepository()
+            ->findSynchronizationDataTransfersByCategoryNodeIds($offset, $limit, $categoryNodeIds);
     }
 }

@@ -103,7 +103,7 @@ class CmsBlockCategoryConnectorFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetCmsBlockIdsWithNamesByCategoryWillReturnCmsBlockIdsWithNames(): void
+    public function testGetCmsBlockNamesIndexedByCmsBlockIdsForCategoryWillReturnCmsBlockNamesIndexedByCmsBlockIds(): void
     {
         // Arrange
         $categoryTransfer = $this->tester->haveCategory();
@@ -116,7 +116,7 @@ class CmsBlockCategoryConnectorFacadeTest extends Unit
         // Act
         $cmsBlockNames = $this->tester
             ->getCmsBlockCategoryConnectorFacade()
-            ->getCmsBlockIdsWithNamesByCategory($categoryTransfer);
+            ->getCmsBlockNamesIndexedByCmsBlockIdsForCategory($categoryTransfer);
 
         // Assert
         $this->assertSame($expectedCmsBlockIdsWithNames, $cmsBlockNames, 'Cms blocks should be filtered by category.');

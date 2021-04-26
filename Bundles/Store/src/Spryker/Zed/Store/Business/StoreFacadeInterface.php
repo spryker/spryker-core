@@ -123,4 +123,14 @@ interface StoreFacadeInterface
      * @return \Generated\Shared\Transfer\StoreTransfer[]
      */
     public function getStoreTransfersByStoreNames(array $storeNames): array;
+
+    /**
+     * Specification:
+     * - Checks if multi store per Zed is enabled.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isMultiStorePerZedEnabled(): bool;
 }

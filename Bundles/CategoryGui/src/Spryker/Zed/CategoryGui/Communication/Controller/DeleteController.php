@@ -8,20 +8,21 @@
 namespace Spryker\Zed\CategoryGui\Communication\Controller;
 
 use ArrayObject;
-use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryNodeUrlCriteriaTransfer;
+use Generated\Shared\Transfer\CategoryResponseTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
-use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\NodeCollectionTransfer;
 use Spryker\Zed\CategoryGui\Communication\Form\DeleteType;
-use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\CategoryGui\Persistence\CategoryGuiRepositoryInterface getRepository()
  * @method \Spryker\Zed\CategoryGui\Communication\CategoryGuiCommunicationFactory getFactory()
  */
-class DeleteController extends AbstractController
+class DeleteController extends CategoryAbstractController
 {
     protected const REQUEST_PARAM_ID_CATEGORY = 'id-category';
 
@@ -29,11 +30,9 @@ class DeleteController extends AbstractController
      * @uses \Spryker\Zed\CategoryGui\Communication\Controller\ListController::indexAction()
      */
     protected const ROUTE_CATEGORY_LIST = '/category-gui/list';
+    protected const ROUTE_DELETE_CATEGORY = '/category-gui/delete';
 
-    /**
-     * @var \Generated\Shared\Transfer\LocaleTransfer|null
-     */
-    protected $currentLocale;
+    protected const ERROR_MESSAGE_STORE_RELATION_NOT_REMOVABLE = 'Category with store relation cannot be removed.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -43,27 +42,24 @@ class DeleteController extends AbstractController
     public function indexAction(Request $request)
     {
         $idCategory = $this->castId($request->get(static::REQUEST_PARAM_ID_CATEGORY));
-        $categoryTransfer = $this->findCategory($idCategory);
+        $categoryFinder = $this->getFactory()->createCategoryFinder();
 
-        if (!$categoryTransfer) {
+        $categoryTransfer = $categoryFinder->findCategoryByIdCategoryAndLocale($idCategory, $this->getCurrentLocale());
+        if ($categoryTransfer === null) {
             return $this->redirectResponse(static::ROUTE_CATEGORY_LIST);
+        }
+
+        $storeRelationTransfer = $categoryTransfer->getStoreRelation();
+        if ($storeRelationTransfer !== null && $storeRelationTransfer->getStores()->count()) {
+            return $this->handleCategoryWithStoreRelationError();
         }
 
         $form = $this->getFactory()->createCategoryDeleteForm($idCategory);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $categoryResponseTransfer = $this->getFactory()
-                ->createCategoryFormHandler()
-                ->deleteCategory($form->getData()[DeleteType::FIELD_FK_NODE_CATEGORY]);
-
-            if ($categoryResponseTransfer->getIsSuccessful()) {
-                $this->addSuccessMessages($categoryResponseTransfer->getMessages());
-
-                return $this->redirectResponse(static::ROUTE_CATEGORY_LIST);
-            }
-
-            $this->addErrorMessages($categoryResponseTransfer->getMessages());
+        $categoryResponseTransfer = $this->handleCategoryDeleteForm($form);
+        if ($categoryResponseTransfer->getIsSuccessful()) {
+            return $this->redirectResponse(static::ROUTE_CATEGORY_LIST);
         }
 
         return $this->viewResponse([
@@ -71,49 +67,9 @@ class DeleteController extends AbstractController
             'category' => $categoryTransfer,
             'urls' => $this->getUrls($categoryTransfer),
             'relations' => $this->getRelations($categoryTransfer),
-            'parentCategory' => $this->findParentCategory($categoryTransfer),
+            'parentCategory' => $categoryFinder->findParentCategory($categoryTransfer, $this->getCurrentLocale()),
             'childNodes' => $this->getCategoryChildNodeCollection($categoryTransfer),
         ]);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryTransfer|null
-     */
-    protected function findParentCategory(CategoryTransfer $categoryTransfer): ?CategoryTransfer
-    {
-        if (!$categoryTransfer->getParentCategoryNode()) {
-            return null;
-        }
-
-        return $this->findCategory($categoryTransfer->getParentCategoryNode()->getFkCategory());
-    }
-
-    /**
-     * @param int $idCategory
-     *
-     * @return \Generated\Shared\Transfer\CategoryTransfer|null
-     */
-    protected function findCategory(int $idCategory): ?CategoryTransfer
-    {
-        $localeTransfer = $this->getCurrentLocale();
-
-        $categoryCriteriaTransfer = (new CategoryCriteriaTransfer())
-            ->setIdCategory($idCategory)
-            ->setLocaleName($localeTransfer->getLocaleName())
-            ->setWithChildrenRecursively(true);
-
-        $categoryTransfer = $this
-            ->getFactory()
-            ->getCategoryFacade()
-            ->findCategory($categoryCriteriaTransfer);
-
-        if (!$categoryTransfer) {
-            return null;
-        }
-
-        return $categoryTransfer;
     }
 
     /**
@@ -125,8 +81,8 @@ class DeleteController extends AbstractController
     {
         $categoryNodeIds = [];
 
-        foreach ($categoryTransfer->getNodeCollection()->getNodes() as $nodeTransfer) {
-            $categoryNodeIds[] = $nodeTransfer->getIdCategoryNode();
+        foreach ($categoryTransfer->getNodeCollectionOrFail()->getNodes() as $nodeTransfer) {
+            $categoryNodeIds[] = $nodeTransfer->getIdCategoryNodeOrFail();
         }
 
         $categoryNodeUrlCriteriaTransfer = (new CategoryNodeUrlCriteriaTransfer())
@@ -172,38 +128,41 @@ class DeleteController extends AbstractController
     }
 
     /**
-     * @return \Generated\Shared\Transfer\LocaleTransfer
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function getCurrentLocale(): LocaleTransfer
+    protected function handleCategoryWithStoreRelationError(): RedirectResponse
     {
-        if (!$this->currentLocale) {
-            $this->currentLocale = $this->getFactory()->getLocaleFacade()->getCurrentLocale();
-        }
+        $errorMessageTransfer = (new MessageTransfer())->setValue(static::ERROR_MESSAGE_STORE_RELATION_NOT_REMOVABLE);
+        $this->addErrorMessages(new ArrayObject([$errorMessageTransfer]));
 
-        return $this->currentLocale;
+        return $this->redirectResponse(static::ROUTE_CATEGORY_LIST);
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\MessageTransfer[] $messageTransfers
+     * @param \Symfony\Component\Form\FormInterface $form
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\CategoryResponseTransfer
      */
-    protected function addSuccessMessages(ArrayObject $messageTransfers): void
+    protected function handleCategoryDeleteForm(FormInterface $form): CategoryResponseTransfer
     {
-        foreach ($messageTransfers as $messageTransfer) {
-            $this->addSuccessMessage($messageTransfer->getValue());
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            return (new CategoryResponseTransfer())
+                ->setIsSuccessful(false);
         }
-    }
 
-    /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\MessageTransfer[] $messageTransfers
-     *
-     * @return void
-     */
-    protected function addErrorMessages(ArrayObject $messageTransfers): void
-    {
-        foreach ($messageTransfers as $messageTransfer) {
-            $this->addErrorMessage($messageTransfer->getValue());
+        $idCategory = $form->getData()[DeleteType::FIELD_FK_NODE_CATEGORY];
+        $categoryResponseTransfer = $this->getFactory()
+            ->createCategoryDeleteFormHandler()
+            ->deleteCategory($idCategory);
+
+        if ($categoryResponseTransfer->getIsSuccessful()) {
+            $this->addSuccessMessages($categoryResponseTransfer->getMessages());
+
+            return $categoryResponseTransfer;
         }
+
+        $this->addErrorMessages($categoryResponseTransfer->getMessages());
+
+        return $categoryResponseTransfer;
     }
 }

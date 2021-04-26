@@ -13,11 +13,10 @@ use Symfony\Component\Validator\Constraint;
 class CategoryLocalizedAttributeNameUniqueConstraint extends Constraint
 {
     public const OPTION_CATEGORY_FACADE = 'categoryFacade';
+    public const OPTION_TRANSLATOR_FACADE = 'translatorFacade';
 
-    /**
-     * @var string
-     */
-    public $message = 'Category with name "%s" already in use in this category level, please choose another one.';
+    protected const PARAMETER_CATEGORY_NAME = '%categoryName%';
+    protected const ERROR_MESSAGE = 'Category with name "%categoryName%" already in use in this category level, please choose another one.';
 
     /**
      * @var \Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToCategoryFacadeInterface
@@ -25,10 +24,30 @@ class CategoryLocalizedAttributeNameUniqueConstraint extends Constraint
     protected $categoryFacade;
 
     /**
+     * @var \Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToTranslatorFacadeInterface
+     */
+    protected $translatorFacade;
+
+    /**
      * @return \Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToCategoryFacadeInterface
      */
     public function getCategoryFacade(): CategoryGuiToCategoryFacadeInterface
     {
         return $this->categoryFacade;
+    }
+
+    /**
+     * @param string $categoryName
+     *
+     * @return string
+     */
+    public function getMessage(string $categoryName): string
+    {
+        return $this->translatorFacade->trans(
+            static::ERROR_MESSAGE,
+            [
+                static::PARAMETER_CATEGORY_NAME => $categoryName,
+            ]
+        );
     }
 }

@@ -144,7 +144,8 @@ interface CmsBlockCategoryConnectorFacadeInterface
 
     /**
      * Specification:
-     * - Gets collection of related CMS Blocks ids and names.
+     * - Gets a collection of related CMS Block names indexed by `idCmsBlock`.
+     * - Requires `CategoryTransfer::idCategory` and `CategoryTransfer::fkCategoryTemplate` to be set.
      *
      * @api
      *
@@ -152,5 +153,5 @@ interface CmsBlockCategoryConnectorFacadeInterface
      *
      * @return string[]
      */
-    public function getCmsBlockIdsWithNamesByCategory(CategoryTransfer $categoryTransfer): array;
+    public function getCmsBlockNamesIndexedByCmsBlockIdsForCategory(CategoryTransfer $categoryTransfer): array;
 }

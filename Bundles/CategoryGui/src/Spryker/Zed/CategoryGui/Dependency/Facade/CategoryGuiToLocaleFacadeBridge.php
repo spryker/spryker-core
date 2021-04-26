@@ -41,14 +41,6 @@ class CategoryGuiToLocaleFacadeBridge implements CategoryGuiToLocaleFacadeInterf
     }
 
     /**
-     * @return string[]
-     */
-    public function getAvailableLocales()
-    {
-        return $this->localeFacade->getAvailableLocales();
-    }
-
-    /**
      * @return \Generated\Shared\Transfer\LocaleTransfer[]
      */
     public function getLocaleCollection()

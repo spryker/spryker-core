@@ -22,6 +22,7 @@ class ProductCategoryRelationReadPlugin extends AbstractPlugin implements Catego
 {
     /**
      * {@inheritDoc}
+     * - Returns products relation name.
      *
      * @api
      *
@@ -34,6 +35,7 @@ class ProductCategoryRelationReadPlugin extends AbstractPlugin implements Catego
 
     /**
      * {@inheritDoc}
+     * - Gets localized products abstract names by category.
      *
      * @api
      *

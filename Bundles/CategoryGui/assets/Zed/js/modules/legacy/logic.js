@@ -8,24 +8,98 @@
 window.serializedList = {};
 
 var categoryHelper = require('./helpers.js');
+var STORE_SELECTOR_ID = '#category_store_relation_id_stores';
+var STORE_SELECTOR_LOADER_CLASS_NAME = '.relation-selector-loader';
+var STORE_SELECTOR_ACTION_URL_ATTRIBUTE = 'action-url';
+var STORE_SELECTOR_ACTION_EVENT_ATTRIBUTE = 'action-event';
+var STORE_SELECTOR_ACTION_FIELD_ATTRIBUTE = 'action-field';
+
+var SELECTOR_ROOT_NODE_TABLE = '#root-node-table';
+var SELECTOR_CATEGORY_NODE_TREE = '#category-node-tree';
+var SELECTOR_GUI_TABLE_DATA_CATEGORY = '.gui-table-data-category';
+var SELECTOR_NESTABLE = '#nestable';
+var SELECTOR_SAVE_CATEGORIES_ORDER = '.save-categories-order';
+
+/**
+ * @return {void}
+ */
+var handleStoreSelector = function () {
+    var storeSelector = $(STORE_SELECTOR_ID);
+    var storeSelectorActionFieldName = storeSelector.attr(STORE_SELECTOR_ACTION_FIELD_ATTRIBUTE);
+    var createCategoryFormName = storeSelector.closest('form')[0].name;
+    var parentCategorySelector = $(`[name='${createCategoryFormName}[${storeSelectorActionFieldName}]']`);
+
+    var parentCategoryData = parentCategorySelector.select2('data');
+    if (!parentCategoryData) {
+        return;
+    }
+
+    var storeSelectorLoader = storeSelector.parent().find(STORE_SELECTOR_LOADER_CLASS_NAME);
+    var storeSelectorActionUrl = storeSelector.attr(STORE_SELECTOR_ACTION_URL_ATTRIBUTE);
+    var storeSelectorActionEvent = storeSelector.attr(STORE_SELECTOR_ACTION_EVENT_ATTRIBUTE);
+    var parentCategoryId = parentCategoryData[0].id;
+    if (!parentCategoryId) {
+        storeSelector.prop('disabled', true);
+    }
+
+    parentCategorySelector.on(storeSelectorActionEvent, function (event) {
+        var selectedCategoryId = $(this).select2('data')[0].id;
+
+        if (selectedCategoryId) {
+            $.ajax({
+                url: `${storeSelectorActionUrl}?id-category-node=${selectedCategoryId}`,
+                success: function (data) {
+                    storeSelector.empty();
+
+                    data.forEach(function (item) {
+                        var optionTemplate = `<option value="${item.id_store}">${item.name}</option>`;
+
+                        if (!item.is_active) {
+                            optionTemplate = `<option disabled value="${item.id_store}">${item.name}</option>`;
+                        }
+
+                        storeSelector.append(optionTemplate);
+                        storeSelector.prop('disabled', false);
+                    });
+                },
+                beforeSend: function () {
+                    storeSelectorLoader.addClass('active');
+                },
+                complete: function () {
+                    storeSelectorLoader.removeClass('active');
+                },
+            });
+
+            return;
+        }
+
+        storeSelector.prop('disabled', true);
+    });
+};
 
 $(document).ready(function () {
     var triggeredFirstEvent = false;
 
-    $('#root-node-table').on('click', 'tbody tr', function () {
+    var selectorRootNodeTable = $(SELECTOR_ROOT_NODE_TABLE);
+    var selectorCategoryNodeTree = $(SELECTOR_CATEGORY_NODE_TREE);
+    var selectorCategoryGuiTableDataCategory = $(SELECTOR_GUI_TABLE_DATA_CATEGORY);
+    var selectorNestable = $(SELECTOR_NESTABLE);
+    var selectorSaveCategoriesOrder = $(SELECTOR_SAVE_CATEGORIES_ORDER);
+
+    selectorRootNodeTable.on('click', 'tbody tr', function () {
         categoryHelper.showLoaderBar();
         var idCategoryNode = $(this).children('td:first').text();
         SprykerAjax.getCategoryTreeByIdCategoryNode(idCategoryNode);
     });
 
-    $('#category-node-tree').on('click', '.category-tree', function (event) {
+    selectorCategoryNodeTree.on('click', '.category-tree', function (event) {
         event.preventDefault();
         categoryHelper.showLoaderBar();
         var idCategoryNode = $(this).attr('id').replace('node-', '');
         SprykerAjax.getCategoryTreeByIdCategoryNode(idCategoryNode);
     });
 
-    $('.gui-table-data-category').dataTable({
+    selectorCategoryGuiTableDataCategory.dataTable({
         bFilter: false,
         createdRow: function (row, data, index) {
             if (triggeredFirstEvent === false) {
@@ -42,14 +116,16 @@ $(document).ready(function () {
         window.serializedList = window.JSON.stringify(list.nestable('serialize'));
     };
 
-    $('#nestable')
+    selectorNestable
         .nestable({
             group: 1,
             maxDepth: 1,
         })
         .on('change', updateOutput);
 
-    $('.save-categories-order').click(function () {
+    selectorSaveCategoriesOrder.click(function () {
         SprykerAjax.updateCategoryNodesOrder(serializedList);
     });
+
+    handleStoreSelector();
 });

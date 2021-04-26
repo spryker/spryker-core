@@ -5,11 +5,16 @@
 
 'use strict';
 
-$(document).ready(function () {
-    var $confirmCheckboxElement = $('#delete_confirm');
+var SELECTOR_DELETE_CONFIRM = '#delete_confirm';
+var SELECTOR_SUBMIT_DELETE = '#submit_delete';
 
-    $confirmCheckboxElement.off('click').on('click', function () {
-        var checkboxIsChecked = $confirmCheckboxElement.prop('checked');
-        $('#submit_delete').prop('disabled', !checkboxIsChecked);
+$(document).ready(function () {
+    var confirmCheckboxElement = $(SELECTOR_DELETE_CONFIRM);
+
+    confirmCheckboxElement.off('click').on('click', function () {
+        var checkboxIsChecked = confirmCheckboxElement.prop('checked');
+
+        var submitDeleteElement = $(SELECTOR_SUBMIT_DELETE);
+        submitDeleteElement.prop('disabled', !checkboxIsChecked);
     });
 });

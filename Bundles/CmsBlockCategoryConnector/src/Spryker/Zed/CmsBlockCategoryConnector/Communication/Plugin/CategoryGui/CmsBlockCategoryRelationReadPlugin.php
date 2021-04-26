@@ -22,6 +22,7 @@ class CmsBlockCategoryRelationReadPlugin extends AbstractPlugin implements Categ
 {
     /**
      * {@inheritDoc}
+     * - Returns CMS block relation name.
      *
      * @api
      *
@@ -34,6 +35,8 @@ class CmsBlockCategoryRelationReadPlugin extends AbstractPlugin implements Categ
 
     /**
      * {@inheritDoc}
+     * - Gets a collection of related CMS Block names indexed by `idCmsBlock`.
+     * - Requires `CategoryTransfer::idCategory` and `CategoryTransfer::fkCategoryTemplate` to be set.
      *
      * @api
      *
@@ -45,6 +48,6 @@ class CmsBlockCategoryRelationReadPlugin extends AbstractPlugin implements Categ
     public function getRelations(CategoryTransfer $categoryTransfer, LocaleTransfer $localeTransfer): array
     {
         return $this->getFacade()
-            ->getCmsBlockIdsWithNamesByCategory($categoryTransfer);
+            ->getCmsBlockNamesIndexedByCmsBlockIdsForCategory($categoryTransfer);
     }
 }

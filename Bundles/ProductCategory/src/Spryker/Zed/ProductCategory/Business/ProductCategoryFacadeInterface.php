@@ -131,7 +131,7 @@ interface ProductCategoryFacadeInterface
 
     /**
      * Specification:
-     *  - Gets localized products abstract names by category.
+     * - Gets localized products abstract names by category.
      *
      * @api
      *

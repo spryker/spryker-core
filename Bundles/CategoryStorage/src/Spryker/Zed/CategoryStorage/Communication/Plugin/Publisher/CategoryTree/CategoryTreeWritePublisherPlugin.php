@@ -22,8 +22,11 @@ class CategoryTreeWritePublisherPlugin extends AbstractPlugin implements Publish
 {
     /**
      * {@inheritDoc}
-     * - Publishes category tree data by CategoryStore publish event.
-     * - Publishes category tree data by SpyCategoryStore entity events.
+     * - Publishes category tree data by `CategoryStore` publish event.
+     * - Publishes category tree data by `SpyCategoryStore` entity events.
+     * - Publishes category tree data by `CategoryTree` entity events.
+     * - Publishes category tree data by `SpyCategoryNode` entity events.
+     * - Publishes category tree data by `SpyCategoryAttribute` entity events.
      *
      * @api
      *
@@ -47,9 +50,22 @@ class CategoryTreeWritePublisherPlugin extends AbstractPlugin implements Publish
     public function getSubscribedEvents(): array
     {
         return [
+//            CategoryEvents::CATEGORY_AFTER_PUBLISH_UPDATE,
             CategoryStorageConstants::CATEGORY_STORE_PUBLISH,
             CategoryStorageConstants::CATEGORY_STORE_UNPUBLISH,
-            CategoryEvents::CATEGORY_AFTER_PUBLISH_UPDATE,
+            CategoryStorageConstants::ENTITY_SPY_CATEGORY_STORE_CREATE,
+            CategoryStorageConstants::ENTITY_SPY_CATEGORY_STORE_UPDATE,
+            CategoryStorageConstants::ENTITY_SPY_CATEGORY_STORE_DELETE,
+            CategoryStorageConstants::CATEGORY_TREE_PUBLISH,
+            CategoryStorageConstants::ENTITY_SPY_CATEGORY_CREATE,
+            CategoryStorageConstants::ENTITY_SPY_CATEGORY_UPDATE,
+            CategoryStorageConstants::ENTITY_SPY_CATEGORY_DELETE,
+            CategoryStorageConstants::ENTITY_SPY_CATEGORY_NODE_CREATE,
+            CategoryStorageConstants::ENTITY_SPY_CATEGORY_NODE_UPDATE,
+            CategoryStorageConstants::ENTITY_SPY_CATEGORY_NODE_DELETE,
+            CategoryStorageConstants::ENTITY_SPY_CATEGORY_ATTRIBUTE_CREATE,
+            CategoryStorageConstants::ENTITY_SPY_CATEGORY_ATTRIBUTE_UPDATE,
+            CategoryStorageConstants::ENTITY_SPY_CATEGORY_ATTRIBUTE_DELETE,
         ];
     }
 }

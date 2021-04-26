@@ -10,12 +10,15 @@ namespace Spryker\Zed\CategoryGui\Communication\Finder;
 use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToCategoryFacadeInterface;
 use Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToLocaleFacadeInterface;
 
 class CategoryFinder implements CategoryFinderInterface
 {
+    protected const PATH_DELIMITER = '/';
+
     /**
      * @var \Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToCategoryFacadeInterface
      */
@@ -40,20 +43,56 @@ class CategoryFinder implements CategoryFinderInterface
 
     /**
      * @param int $idCategory
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryTransfer|null
+     */
+    public function findCategoryByIdCategoryAndLocale(int $idCategory, ?LocaleTransfer $localeTransfer = null): ?CategoryTransfer
+    {
+        $categoryCriteriaTransfer = (new CategoryCriteriaTransfer())
+            ->setIdCategory($idCategory)
+            ->setWithChildrenRecursively(true);
+
+        if ($localeTransfer !== null) {
+            $categoryCriteriaTransfer = $categoryCriteriaTransfer
+                ->setLocaleName($localeTransfer->getLocaleName());
+        }
+
+        return $this->categoryFacade->findCategory($categoryCriteriaTransfer);
+    }
+
+    /**
+     * @param int $idCategory
      *
      * @return \Generated\Shared\Transfer\CategoryTransfer|null
      */
     public function findCategoryWithLocalizedAttributesById(int $idCategory): ?CategoryTransfer
     {
-        $categoryCriteriaTransfer = (new CategoryCriteriaTransfer())
-            ->setIdCategory($idCategory);
-
-        $categoryTransfer = $this->categoryFacade->findCategory($categoryCriteriaTransfer);
+        $categoryTransfer = $this->findCategoryByIdCategoryAndLocale($idCategory);
         if ($categoryTransfer === null) {
             return null;
         }
 
         return $this->addLocalizedAttributeTransfers($categoryTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryTransfer|null
+     */
+    public function findParentCategory(CategoryTransfer $categoryTransfer, LocaleTransfer $localeTransfer): ?CategoryTransfer
+    {
+        $parentCategoryNode = $categoryTransfer->getParentCategoryNode();
+        if ($parentCategoryNode === null) {
+            return null;
+        }
+
+        return $this->findCategoryByIdCategoryAndLocale(
+            $parentCategoryNode->getFkCategoryOrFail(),
+            $localeTransfer
+        );
     }
 
     /**
@@ -110,7 +149,7 @@ class CategoryFinder implements CategoryFinderInterface
     {
         $categoryLocaleIds = [];
         foreach ($categoryTransfer->getLocalizedAttributes() as $localizedAttribute) {
-            $categoryLocaleIds[] = $localizedAttribute->getLocale()->getIdLocale();
+            $categoryLocaleIds[] = $localizedAttribute->getLocaleOrFail()->getIdLocaleOrFail();
         }
 
         return $categoryLocaleIds;
@@ -124,9 +163,9 @@ class CategoryFinder implements CategoryFinderInterface
      */
     protected function extractNodesFromCategory(array $nodeTransfers, CategoryTransfer $categoryTransfer): array
     {
-        foreach ($categoryTransfer->getNodeCollection()->getNodes() as $nodeTransfer) {
+        foreach ($categoryTransfer->getNodeCollectionOrFail()->getNodes() as $nodeTransfer) {
             $nodeTransfers[] = (new NodeTransfer())
-                ->setPath('/' . $nodeTransfer->getPath())
+                ->setPath(static::PATH_DELIMITER . $nodeTransfer->getPath())
                 ->setIdCategoryNode($nodeTransfer->getIdCategoryNode())
                 ->setName($categoryTransfer->getName());
         }

@@ -22,11 +22,6 @@ interface CategoryGuiToLocaleFacadeInterface
     public function getLocale($localeName);
 
     /**
-     * @return string[]
-     */
-    public function getAvailableLocales();
-
-    /**
      * @return \Generated\Shared\Transfer\LocaleTransfer[]
      */
     public function getLocaleCollection();

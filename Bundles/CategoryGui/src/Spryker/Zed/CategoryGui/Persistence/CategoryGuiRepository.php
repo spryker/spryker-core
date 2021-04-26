@@ -37,7 +37,7 @@ class CategoryGuiRepository extends AbstractRepository implements CategoryGuiRep
     {
         return $this->getFactory()
             ->getCategoryPropelQuery()
-            ->filterByCategoryKey($categoryTransfer->getCategoryKey())
+            ->filterByCategoryKey($categoryTransfer->getCategoryKeyOrFail())
             ->filterByIdCategory($categoryTransfer->getIdCategory(), Criteria::NOT_EQUAL)
             ->count() > 0;
     }

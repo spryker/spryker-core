@@ -10,10 +10,8 @@ namespace Spryker\Zed\ProductCategoryStorage\Business\Writer;
 use ArrayObject;
 use Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer;
 use Generated\Shared\Transfer\ProductAbstractLocalizedAttributesTransfer;
-use Orm\Zed\Category\Persistence\Map\SpyCategoryStoreTableMap;
 use Spryker\Zed\ProductCategoryStorage\Business\Reader\ProductAbstractReaderInterface;
 use Spryker\Zed\ProductCategoryStorage\Business\Reader\ProductCategoryStorageReaderInterface;
-use Spryker\Zed\ProductCategoryStorage\Dependency\Facade\ProductCategoryStorageToEventBehaviorFacadeInterface;
 use Spryker\Zed\ProductCategoryStorage\Dependency\Facade\ProductCategoryStorageToStoreFacadeInterface;
 use Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStorageEntityManagerInterface;
 use Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStorageRepositoryInterface;
@@ -36,11 +34,6 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
     protected $storeFacade;
 
     /**
-     * @var \Spryker\Zed\ProductCategoryStorage\Dependency\Facade\ProductCategoryStorageToEventBehaviorFacadeInterface
-     */
-    protected $eventBehaviorFacade;
-
-    /**
      * @var \Spryker\Zed\ProductCategoryStorage\Business\Reader\ProductAbstractReaderInterface
      */
     protected $productAbstractReader;
@@ -54,7 +47,6 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
      * @param \Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStorageRepositoryInterface $productCategoryStorageRepository
      * @param \Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStorageEntityManagerInterface $productCategoryStorageEntityManager
      * @param \Spryker\Zed\ProductCategoryStorage\Dependency\Facade\ProductCategoryStorageToStoreFacadeInterface $storeFacade
-     * @param \Spryker\Zed\ProductCategoryStorage\Dependency\Facade\ProductCategoryStorageToEventBehaviorFacadeInterface $eventBehaviorFacade
      * @param \Spryker\Zed\ProductCategoryStorage\Business\Reader\ProductAbstractReaderInterface $productAbstractReader
      * @param \Spryker\Zed\ProductCategoryStorage\Business\Reader\ProductCategoryStorageReaderInterface $productCategoryStorageReader
      */
@@ -62,46 +54,14 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
         ProductCategoryStorageRepositoryInterface $productCategoryStorageRepository,
         ProductCategoryStorageEntityManagerInterface $productCategoryStorageEntityManager,
         ProductCategoryStorageToStoreFacadeInterface $storeFacade,
-        ProductCategoryStorageToEventBehaviorFacadeInterface $eventBehaviorFacade,
         ProductAbstractReaderInterface $productAbstractReader,
         ProductCategoryStorageReaderInterface $productCategoryStorageReader
     ) {
         $this->productCategoryStorageRepository = $productCategoryStorageRepository;
         $this->productCategoryStorageEntityManager = $productCategoryStorageEntityManager;
         $this->storeFacade = $storeFacade;
-        $this->eventBehaviorFacade = $eventBehaviorFacade;
         $this->productAbstractReader = $productAbstractReader;
         $this->productCategoryStorageReader = $productCategoryStorageReader;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
-     *
-     * @return void
-     */
-    public function writeCollectionByCategoryStoreEvents(array $eventEntityTransfers): void
-    {
-        $categoryIds = $this->eventBehaviorFacade->getEventTransferForeignKeys(
-            $eventEntityTransfers,
-            SpyCategoryStoreTableMap::COL_FK_CATEGORY
-        );
-
-        $productAbstractIds = $this->productAbstractReader->getProductAbstractIdsByCategoryIds($categoryIds);
-
-        $this->writeCollection($productAbstractIds);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
-     *
-     * @return void
-     */
-    public function writeCollectionByCategoryStorePublishingEvents(array $eventEntityTransfers): void
-    {
-        $categoryIds = $this->eventBehaviorFacade->getEventTransferIds($eventEntityTransfers);
-        $productAbstractIds = $this->productAbstractReader->getProductAbstractIdsByCategoryIds($categoryIds);
-
-        $this->writeCollection($productAbstractIds);
     }
 
     /**
@@ -119,6 +79,25 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
             ->getMappedProductAbstractCategoryStorages($productAbstractIds);
 
         $this->storeData($productAbstractLocalizedAttributesTransfers, $productAbstractCategoryStorageTransfers, $productCategoryTransfers);
+    }
+
+    /**
+     * @param int[] $categoryIds
+     * @param bool $allowEmptyCategories
+     *
+     * @return void
+     */
+    public function writeCollectionByRelatedCategories(array $categoryIds, bool $allowEmptyCategories): void
+    {
+        if (!$allowEmptyCategories && $categoryIds === []) {
+            return;
+        }
+
+        $relatedCategoryIds = $this->productAbstractReader->getRelatedCategoryIds($categoryIds);
+        $productAbstractIds = $this->productAbstractReader
+            ->getProductAbstractIdsByCategoryIds($relatedCategoryIds);
+
+        $this->writeCollection($productAbstractIds);
     }
 
     /**

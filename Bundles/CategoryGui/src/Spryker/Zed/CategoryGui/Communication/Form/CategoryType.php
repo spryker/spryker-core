@@ -18,9 +18,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class CategoryType extends CommonCategoryType
 {
-    public const FIELD_PARENT_CATEGORY_NODE = 'parent_category_node';
-    public const FIELD_EXTRA_PARENTS = 'extra_parents';
-
     public const OPTION_PARENT_CATEGORY_NODE_CHOICES = 'parent_category_node_choices';
     public const OPTION_INACTIVE_CHOICES = 'inactive_choices';
 
@@ -28,10 +25,19 @@ class CategoryType extends CommonCategoryType
     public const OPTION_ATTRIBUTE_ACTION_EVENT = 'action_event';
     public const OPTION_ATTRIBUTE_ACTION_FIELD = 'action_field';
 
+    protected const OPTION_PROPERTY_PATH_PARENT_CATEGORY_NODE = 'parentCategoryNode';
+
+    protected const FIELD_PARENT_CATEGORY_NODE = 'parent_category_node';
+    protected const FIELD_EXTRA_PARENTS = 'extra_parents';
+
     protected const LABEL_PARENT_CATEGORY_NODE = 'Parent';
     protected const LABEL_EXTRA_PARENTS = 'Additional Parents';
 
     protected const DEFAULT_ACTION_EVENT = 'change';
+
+    /**
+     * @uses \Spryker\Zed\CategoryGui\Communication\Controller\SearchController::categoryStoreAction()
+     */
     protected const DEFAULT_ACTION_URL = '/category-gui/search/category-store';
 
     /**
@@ -77,7 +83,7 @@ class CategoryType extends CommonCategoryType
     protected function addParentNodeField(FormBuilderInterface $builder, array $choices)
     {
         $builder->add(static::FIELD_PARENT_CATEGORY_NODE, Select2ComboBoxType::class, [
-            'property_path' => 'parentCategoryNode',
+            'property_path' => static::OPTION_PROPERTY_PATH_PARENT_CATEGORY_NODE,
             'label' => static::LABEL_PARENT_CATEGORY_NODE,
             'choices' => $choices,
             'choice_label' => 'name',

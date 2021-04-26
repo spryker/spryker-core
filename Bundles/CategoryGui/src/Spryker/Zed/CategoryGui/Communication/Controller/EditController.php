@@ -7,10 +7,9 @@
 
 namespace Spryker\Zed\CategoryGui\Communication\Controller;
 
-use ArrayObject;
+use Generated\Shared\Transfer\CategoryResponseTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
-use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -18,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @method \Spryker\Zed\CategoryGui\Communication\CategoryGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\CategoryGui\Persistence\CategoryGuiRepositoryInterface getRepository()
  */
-class EditController extends AbstractController
+class EditController extends CategoryAbstractController
 {
     protected const REQUEST_PARAM_ID_CATEGORY = 'id-category';
 
@@ -26,6 +25,9 @@ class EditController extends AbstractController
      * @uses \Spryker\Zed\CategoryGui\Communication\Controller\ListController::indexAction()
      */
     protected const ROUTE_CATEGORY_LIST = '/category-gui/list';
+    protected const ROUTE_CATEGORY_EDIT = '/category-gui/edit';
+
+    protected const ERROR_MESSAGE_CATEGORY_DOES_NOT_EXIST = 'Category with id %s does not exist';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -36,19 +38,22 @@ class EditController extends AbstractController
     {
         $idCategory = $this->castId($request->get(static::REQUEST_PARAM_ID_CATEGORY));
         $categoryTransfer = $this->getFactory()
-            ->createCategoryEditFormDataProvider()
+            ->createCategoryEditDataProvider()
             ->getData($idCategory);
 
         if ($categoryTransfer === null) {
-            $this->addErrorMessage("Category with id %s doesn't exist", [
+            $this->addErrorMessage(static::ERROR_MESSAGE_CATEGORY_DOES_NOT_EXIST, [
                 '%s' => $idCategory,
             ]);
 
             return $this->redirectResponse(static::ROUTE_CATEGORY_LIST);
         }
 
-        $form = $this->getForm($categoryTransfer)->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid() && $this->handleEditFormSubmission($form)) {
+        $form = $this->getForm($categoryTransfer);
+        $form->handleRequest($request);
+
+        $categoryResponseTransfer = $this->handleCategoryEditForm($form);
+        if ($categoryResponseTransfer->getIsSuccessful()) {
             return $this->redirectResponse(
                 $this->createSuccessRedirectUrl($idCategory)
             );
@@ -56,8 +61,8 @@ class EditController extends AbstractController
 
         return $this->viewResponse([
             'categoryForm' => $form->createView(),
-            'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale()->getLocaleName(),
-            'idCategory' => $this->castId($request->query->get(static::REQUEST_PARAM_ID_CATEGORY)),
+            'currentLocale' => $this->getCurrentLocale()->getLocaleName(),
+            'idCategory' => $idCategory,
             'categoryFormTabs' => $this->getFactory()->createCategoryFormTabs()->createView(),
         ]);
     }
@@ -77,28 +82,6 @@ class EditController extends AbstractController
     }
 
     /**
-     * @param \Symfony\Component\Form\FormInterface $form
-     *
-     * @return bool
-     */
-    protected function handleEditFormSubmission(FormInterface $form): bool
-    {
-        $categoryResponseTransfer = $this->getFactory()
-            ->createCategoryFormHandler()
-            ->updateCategory($form->getData());
-
-        if (!$categoryResponseTransfer->getIsSuccessful()) {
-            $this->addErrorMessages($categoryResponseTransfer->getMessages());
-
-            return false;
-        }
-
-        $this->addSuccessMessages($categoryResponseTransfer->getMessages());
-
-        return true;
-    }
-
-    /**
      * @param int $idCategory
      *
      * @return string
@@ -106,7 +89,7 @@ class EditController extends AbstractController
     protected function createSuccessRedirectUrl(int $idCategory): string
     {
         $url = Url::generate(
-            '/category-gui/edit',
+            static::ROUTE_CATEGORY_EDIT,
             [
                 static::REQUEST_PARAM_ID_CATEGORY => $idCategory,
             ]
@@ -116,26 +99,29 @@ class EditController extends AbstractController
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\MessageTransfer[] $messageTransfers
+     * @param \Symfony\Component\Form\FormInterface $form
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\CategoryResponseTransfer
      */
-    protected function addSuccessMessages(ArrayObject $messageTransfers): void
+    protected function handleCategoryEditForm(FormInterface $form): CategoryResponseTransfer
     {
-        foreach ($messageTransfers as $messageTransfer) {
-            $this->addSuccessMessage($messageTransfer->getValue());
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            return (new CategoryResponseTransfer())
+                ->setIsSuccessful(false);
         }
-    }
 
-    /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\MessageTransfer[] $messageTransfers
-     *
-     * @return void
-     */
-    protected function addErrorMessages(ArrayObject $messageTransfers): void
-    {
-        foreach ($messageTransfers as $messageTransfer) {
-            $this->addErrorMessage($messageTransfer->getValue());
+        $categoryResponseTransfer = $this->getFactory()
+            ->createCategoryUpdateFormHandler()
+            ->updateCategory($form->getData());
+
+        if ($categoryResponseTransfer->getIsSuccessful()) {
+            $this->addSuccessMessages($categoryResponseTransfer->getMessages());
+
+            return $categoryResponseTransfer;
         }
+
+        $this->addErrorMessages($categoryResponseTransfer->getMessages());
+
+        return $categoryResponseTransfer;
     }
 }

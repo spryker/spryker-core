@@ -12,8 +12,6 @@ use Generated\Shared\Transfer\CategoryTransfer;
 interface CategoryGuiRepositoryInterface
 {
     /**
-     * @module Category
-     *
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
      * @return bool
@@ -21,15 +19,11 @@ interface CategoryGuiRepositoryInterface
     public function isCategoryKeyUsed(CategoryTransfer $categoryTransfer): bool;
 
     /**
-     * @module Category
-     *
      * @return string[]
      */
     public function getIndexedCategoryTemplateNames(): array;
 
     /**
-     * @module Category
-     *
      * @param int $idParentNode
      * @param int $idLocale
      *
@@ -38,9 +32,6 @@ interface CategoryGuiRepositoryInterface
     public function getChildrenCategoryNodeNames(int $idParentNode, int $idLocale): array;
 
     /**
-     * @module Category
-     * @module Store
-     *
      * @param int[] $categoryIds
      *
      * @return string[][]

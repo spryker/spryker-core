@@ -19,7 +19,7 @@ class CategoryExtraParentsTransformer implements DataTransformerInterface
      */
     public function transform($value): array
     {
-        return (array)$value;
+        return $value->getArrayCopy();
     }
 
     /**

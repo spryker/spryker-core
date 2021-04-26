@@ -28,11 +28,7 @@ class CategoryStoreWithStateMapper implements CategoryStoreWithStateMapperInterf
 
         $stores = new ArrayObject();
         foreach ($storeTransfers as $storeTransfer) {
-            $stores->append(
-                (new StoreWithStateTransfer())
-                    ->fromArray($storeTransfer->toArray(), true)
-                    ->setIsActive($this->isStoreEnable($storeTransfer, $categoryStoreRelatedIds))
-            );
+            $stores->append($this->createStoreWithStateTransfer($storeTransfer, $categoryStoreRelatedIds));
         }
 
         return (new StoreWithStateCollectionTransfer())
@@ -45,7 +41,7 @@ class CategoryStoreWithStateMapper implements CategoryStoreWithStateMapperInterf
      *
      * @return bool
      */
-    protected function isStoreEnable(StoreTransfer $storeTransfer, array $categoryStoreIds): bool
+    protected function isStoreActive(StoreTransfer $storeTransfer, array $categoryStoreIds): bool
     {
         return ($categoryStoreIds === [] || in_array($storeTransfer->getIdStoreOrFail(), $categoryStoreIds));
     }
@@ -60,5 +56,18 @@ class CategoryStoreWithStateMapper implements CategoryStoreWithStateMapperInterf
         return array_map(function (StoreTransfer $storeTransfer) {
             return $storeTransfer->getIdStoreOrFail();
         }, $storeTransfers);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param int[] $categoryStoreRelatedIds
+     *
+     * @return \Generated\Shared\Transfer\StoreWithStateTransfer
+     */
+    protected function createStoreWithStateTransfer(StoreTransfer $storeTransfer, array $categoryStoreRelatedIds): StoreWithStateTransfer
+    {
+        return (new StoreWithStateTransfer())
+            ->fromArray($storeTransfer->toArray(), true)
+            ->setIsActive($this->isStoreActive($storeTransfer, $categoryStoreRelatedIds));
     }
 }
