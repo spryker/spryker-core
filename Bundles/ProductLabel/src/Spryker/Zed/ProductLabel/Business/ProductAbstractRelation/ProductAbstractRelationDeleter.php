@@ -78,11 +78,11 @@ class ProductAbstractRelationDeleter implements ProductAbstractRelationDeleterIn
      */
     protected function executeDeleteRelationsTransaction(int $idProductLabel, array $productAbstractIds, bool $isTouchEnabled = true)
     {
-        $productLabelDeAssignChunkSize = $this->productLabelConfig->getProductLabelToDeAssignChunkSize();
-        $productAbstractChunkCollectionIds = array_chunk($productAbstractIds, $productLabelDeAssignChunkSize);
+        $productLabelToDeAssignChunkSize = $this->productLabelConfig->getProductLabelToDeAssignChunkSize();
+        $productAbstractIdsChunkCollection = array_chunk($productAbstractIds, $productLabelToDeAssignChunkSize);
 
-        foreach ($productAbstractChunkCollectionIds as $productAbstractChunkIds) {
-            $this->deleteRelationsByChunk($idProductLabel, $productAbstractChunkIds, $isTouchEnabled);
+        foreach ($productAbstractIdsChunkCollection as $productAbstractIdsChunk) {
+            $this->deleteRelationsByChunk($idProductLabel, $productAbstractIdsChunk, $isTouchEnabled);
         }
     }
 
@@ -104,7 +104,7 @@ class ProductAbstractRelationDeleter implements ProductAbstractRelationDeleterIn
             return;
         }
 
-        $productAbstractIds = $this->extractProductAbstractIdsFromProductAbstractRelations($productLabelProductAbstractTransfers);
+        $productAbstractIds = $this->extractProductAbstractIds($productLabelProductAbstractTransfers);
 
         $this->productLabelEntityManager->deleteProductLabelProductAbstractRelations(
             $idProductLabel,
@@ -127,7 +127,7 @@ class ProductAbstractRelationDeleter implements ProductAbstractRelationDeleterIn
      */
     protected function touchRelationsForAbstractProduct(int $idProductAbstract): void
     {
-        if (!$this->productLabelRepository->checkProductLabelsByIdProductAbstractExists($idProductAbstract)) {
+        if (!$this->productLabelRepository->checkProductLabelProductAbstractByIdProductAbstractExists($idProductAbstract)) {
             $this->productRelationTouchManager->touchDeletedByIdProductAbstract($idProductAbstract);
 
             return;
@@ -137,15 +137,15 @@ class ProductAbstractRelationDeleter implements ProductAbstractRelationDeleterIn
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductLabelProductAbstractTransfer[] $productAbstractRelations
+     * @param \Generated\Shared\Transfer\ProductLabelProductAbstractTransfer[] $productLabelProductAbstractTransfers
      *
      * @return int[]
      */
-    protected function extractProductAbstractIdsFromProductAbstractRelations(array $productAbstractRelations): array
+    protected function extractProductAbstractIds(array $productLabelProductAbstractTransfers): array
     {
         $productAbstractIds = [];
-        foreach ($productAbstractRelations as $productAbstractRelation) {
-            $productAbstractIds[] = $productAbstractRelation->getFkProductAbstract();
+        foreach ($productLabelProductAbstractTransfers as $productLabelProductAbstractTransfer) {
+            $productAbstractIds[] = $productLabelProductAbstractTransfer->getFkProductAbstract();
         }
 
         return $productAbstractIds;

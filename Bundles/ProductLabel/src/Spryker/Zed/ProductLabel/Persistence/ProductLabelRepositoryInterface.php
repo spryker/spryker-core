@@ -95,5 +95,5 @@ interface ProductLabelRepositoryInterface
      *
      * @return bool
      */
-    public function checkProductLabelsByIdProductAbstractExists(int $idProductAbstract): bool;
+    public function checkProductLabelProductAbstractByIdProductAbstractExists(int $idProductAbstract): bool;
 }

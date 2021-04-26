@@ -283,7 +283,7 @@ class ProductLabelRepository extends AbstractRepository implements ProductLabelR
      *
      * @return bool
      */
-    public function checkProductLabelsByIdProductAbstractExists(int $idProductAbstract): bool
+    public function checkProductLabelProductAbstractByIdProductAbstractExists(int $idProductAbstract): bool
     {
         return $this->getFactory()
             ->createProductLabelQuery()

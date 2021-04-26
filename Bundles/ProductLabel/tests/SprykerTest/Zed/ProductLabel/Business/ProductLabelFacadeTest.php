@@ -635,19 +635,10 @@ class ProductLabelFacadeTest extends Unit
             $productLabelRelationUpdaterPluginMock,
         ]);
 
-        $productLabelConfigMock = $this->getMockBuilder(ProductLabelConfig::class)
-            ->setMethods(['getProductLabelDeAssignChunkSize'])
-            ->getMock();
-        $productLabelConfigMock->method('getProductLabelDeAssignChunkSize')->willReturn(1);
-
-        $productLabelBusinessFactory = new ProductLabelBusinessFactory();
-        $productLabelBusinessFactory->setConfig($productLabelConfigMock);
-
-        $productLabelFacade = $this->getProductLabelFacade();
-        $productLabelFacade->setFactory($productLabelBusinessFactory);
+        $this->tester->setConfig(ProductLabelConstants::PRODUCT_LABEL_TO_DE_ASSIGN_CHUNK_SIZE, 1);
 
         // Act
-        $productLabelFacade->updateDynamicProductLabelRelations();
+        $this->getProductLabelFacade()->updateDynamicProductLabelRelations();
 
         // Assert
         $actualIdProductAbstracts = $this
