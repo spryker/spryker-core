@@ -15,6 +15,21 @@ class GlueApplicationConfig extends AbstractBundleConfig
 {
     public const COLLECTION_IDENTIFIER_CURRENT_USER = 'mine';
 
+    public const VALIDATE_REQUEST_HEADERS = true;
+
+    /**
+     * Specification:
+     *  - Enables or disables request header validation.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function getValidateRequestHeaders(): bool
+    {
+        return static::VALIDATE_REQUEST_HEADERS;
+    }
+
     /**
      * Specification:
      *  - Domain name of glue application to build API links.

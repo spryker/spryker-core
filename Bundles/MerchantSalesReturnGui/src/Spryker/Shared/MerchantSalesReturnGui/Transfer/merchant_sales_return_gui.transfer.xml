@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="MerchantOrderCriteria">
+        <property name="idOrder" type="int"/>
+        <property name="withMerchant" type="bool"/>
+    </transfer>
+
+    <transfer name="Order">
+        <property name="idSalesOrder" type="int"/>
+    </transfer>
+
+    <transfer name="MerchantOrderCollection">
+        <property name="merchantOrders" type="MerchantOrder[]" singular="merchantOrder"/>
+    </transfer>
+
+    <transfer name="MerchantOrder">
+    </transfer>
+
+</transfers>

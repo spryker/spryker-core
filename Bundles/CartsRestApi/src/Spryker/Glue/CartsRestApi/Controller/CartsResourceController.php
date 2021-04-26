@@ -32,6 +32,7 @@ class CartsResourceController extends AbstractController
      *          }
      *     },
      *     "getCollection": {
+     *          "deprecated": true,
      *          "summary": [
      *              "Retrieves list of all customer's carts."
      *          ],

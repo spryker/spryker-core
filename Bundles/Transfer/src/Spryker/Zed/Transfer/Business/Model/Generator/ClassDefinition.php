@@ -285,6 +285,7 @@ class ClassDefinition implements ClassDefinitionInterface
             }
 
             $property['is_associative'] = $this->isAssociativeArray($property);
+            $property['is_strict'] = $this->isStrictProperty($property);
 
             $normalizedProperties[] = $property;
         }

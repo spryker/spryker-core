@@ -20,6 +20,8 @@ use Generated\Shared\Transfer\PriceTypeTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Generated\Shared\Transfer\WishlistItemTransfer;
+use Generated\Shared\Transfer\WishlistTransfer;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery;
 use ReflectionClass;
 use Spryker\Shared\Price\PriceConfig;
@@ -1305,6 +1307,48 @@ class PriceProductFacadeTest extends Unit
         $this->assertFalse($collectionValidationResponseTransfer->getIsSuccess());
         $this->assertSame('This field is missing.', $validationError->getMessage());
         $this->assertSame('[0][moneyValue][fkStore]', $validationError->getPropertyPath());
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandWishlistItemWithPrices(): void
+    {
+        // Arrange
+        $priceProductFacade = $this->getPriceProductFacade();
+
+        $priceTypeTransfer = new PriceTypeTransfer();
+        $priceTypeTransfer->setName($priceProductFacade->getDefaultPriceTypeName());
+
+        $productConcreteTransfer = $this->tester->haveProduct();
+        $priceProductTransfer = $this->createPriceProductTransfer(
+            $productConcreteTransfer,
+            $priceTypeTransfer,
+            10,
+            9,
+            self::EUR_ISO_CODE
+        );
+        $priceProductTransfer = $this->tester->havePriceProduct($priceProductTransfer->toArray());
+
+        $customer = $this->tester->haveCustomer();
+        $wishlistTransfer = $this->tester->haveWishlist([
+            WishlistTransfer::FK_CUSTOMER => $customer->getIdCustomer(),
+        ]);
+        $wishlistItem = [
+            WishlistItemTransfer::FK_CUSTOMER => $customer->getIdCustomer(),
+            WishlistItemTransfer::FK_WISHLIST => $wishlistTransfer->getIdWishlist(),
+            WishlistItemTransfer::SKU => $productConcreteTransfer->getSku(),
+        ];
+
+        $wishlistItemTransfer = $this->tester->haveItemInWishlist($wishlistItem);
+        $priceCountBefore = $wishlistItemTransfer->getPrices()->count();
+
+        // Act
+        $wishlistItemTransfer = $this->getPriceProductFacade()->expandWishlistItem($wishlistItemTransfer);
+
+        // Assert
+        $this->assertSame($priceCountBefore + 1, $wishlistItemTransfer->getPrices()->count());
+        $this->assertSame($priceProductTransfer->getSkuProduct(), $wishlistItemTransfer->getSku());
     }
 
     /**

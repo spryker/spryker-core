@@ -9,7 +9,7 @@
     "spryker/glue-application": "^1.9.0",
     "spryker/glue-application-extension": "^1.0.0",
     "spryker/kernel": "^3.33.0",
-    "spryker/merchant-profile": "^0.2.0 || ^0.3.0",
+    "spryker/merchant-profile": "^0.2.0 || ^0.3.0 || ^0.4.0",
     "spryker/merchant-search": "^0.3.0",
     "spryker/merchant-storage": "^0.1.0",
     "spryker/merchants-rest-api-extension": "^0.1.0",

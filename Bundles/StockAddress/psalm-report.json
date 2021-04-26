@@ -1,0 +1,30 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 63,
+            "line_to": 63,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\StockTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/StockAddress/src/Spryker/Zed/StockAddress/Business/Expander/StockCollectionExpander.php",
+            "snippet": "        }, $stockCollectionTransfer->getStocks()->getArrayCopy());",
+            "selected_text": "getArrayCopy",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 21,
+            "line_to": 21,
+            "type": "MismatchingDocblockParamType",
+            "message": "Parameter $stockAddressEntities has wrong type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\StockAddress\\Persistence\\SpyStockAddress>', should be 'Propel\\Runtime\\Collection\\ObjectCollection'",
+            "file_name": "vendor/spryker/spryker/Bundles/StockAddress/src/Spryker/Zed/StockAddress/Persistence/Propel/Mapper/StockAddressMapper.php",
+            "snippet": "     * @param \\Orm\\Zed\\StockAddress\\Persistence\\SpyStockAddress[]|\\Propel\\Runtime\\Collection\\ObjectCollection $stockAddressEntities",
+            "selected_text": "\\Orm\\Zed\\StockAddress\\Persistence\\SpyStockAddress[]|\\Propel\\Runtime\\Collection\\ObjectCollection",
+            "error_level": 4,
+            "shortcode": 141
+        }
+    ],
+    "deprecation": []
+}
