@@ -266,10 +266,12 @@ class CategoryStoreUpdater implements CategoryStoreUpdaterInterface
 
         for ($offset = 0; $offset <= $categoryNodeChildCount; $offset += $categoryReadChunkSize) {
             $categoryCriteriaTransfer->setOffset($offset);
-            $categoryNodeChildIds = $this->categoryRepository->getCategoryNodeChildIdsByParentNodeId($categoryTransfer, $categoryCriteriaTransfer);
+            $descendantCategoryIds = $this->categoryRepository->getDescendantCategoryIdsByIdCategory(
+                $categoryTransfer,
+                $categoryCriteriaTransfer
+            );
 
-            // TODO: ensure that idCategoryNode === idCategory
-            $this->updateCategoryStoreRelations($categoryNodeChildIds, $storeIdsToAdd, $storeIdsToDelete);
+            $this->updateCategoryStoreRelations($descendantCategoryIds, $storeIdsToAdd, $storeIdsToDelete);
         }
     }
 }

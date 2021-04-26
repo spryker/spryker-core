@@ -73,7 +73,6 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
                 $localeTransfer->getIdLocale(),
                 Criteria::EQUAL
             )
-            ->filterByIdCategory(1) // TODO: Performance issue remove it before merging to dev branch.
             ->find();
 
         return $this->getFactory()
@@ -299,7 +298,50 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
      *
      * @return int[]
      */
-    public function getCategoryNodeChildIdsByParentNodeId(
+    public function getDescendantCategoryIdsByIdCategory(
+        CategoryTransfer $categoryTransfer,
+        CategoryCriteriaTransfer $categoryCriteriaTransfer
+    ): array {
+        /** @var \Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery $categoryClosureTableQuery */
+        $categoryClosureTableQuery = $this->getFactory()
+            ->createCategoryClosureTableQuery()
+            ->leftJoinWithDescendantNode()
+            ->useNodeQuery('node')
+                ->filterByFkCategory($categoryTransfer->getIdCategoryOrFail())
+            ->endUse()
+            ->useDescendantNodeQuery()
+                ->leftJoinWithCategory()
+                ->orderByNodeOrder(Criteria::DESC)
+            ->endUse()
+            ->filterByDepth(0, Criteria::NOT_EQUAL);
+
+        if ($categoryCriteriaTransfer->getLimit() !== null && $categoryCriteriaTransfer->getOffset() !== null) {
+            $categoryClosureTableQuery
+                ->limit($categoryCriteriaTransfer->getLimit())
+                ->offset($categoryCriteriaTransfer->getOffset());
+        }
+
+        $categoryIds = [];
+        $categoryClosureTableEntities = $categoryClosureTableQuery->find();
+
+        if (!$categoryClosureTableEntities->count()) {
+            return $categoryIds;
+        }
+
+        foreach ($categoryClosureTableEntities as $categoryClosureTableEntity) {
+            $categoryIds[] = $categoryClosureTableEntity->getDescendantNode()->getCategory()->getIdCategory();
+        }
+
+        return $categoryIds;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer $categoryCriteriaTransfer
+     *
+     * @return int[]
+     */
+    public function getDescendantCategoryNodeIdsByIdCategory(
         CategoryTransfer $categoryTransfer,
         CategoryCriteriaTransfer $categoryCriteriaTransfer
     ): array {
@@ -370,9 +412,9 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
 
         $categoryMapper = $this->getFactory()->createCategoryMapper();
         $categoryNodes = [];
-        foreach ($categoryClosureTableEntities as $categoryClosureTable) {
+        foreach ($categoryClosureTableEntities as $categoryClosureTableEntity) {
             $nodeTransfer = $categoryMapper->mapCategoryNodeEntityToNodeTransferWithCategoryRelation(
-                $categoryClosureTable->getDescendantNode(),
+                $categoryClosureTableEntity->getDescendantNode(),
                 new NodeTransfer()
             );
             $categoryNodes[$nodeTransfer->getFkParentCategoryNode()][] = $nodeTransfer;

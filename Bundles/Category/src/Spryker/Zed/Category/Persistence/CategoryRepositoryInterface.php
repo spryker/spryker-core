@@ -105,7 +105,18 @@ interface CategoryRepositoryInterface
      *
      * @return int[]
      */
-    public function getCategoryNodeChildIdsByParentNodeId(
+    public function getDescendantCategoryIdsByIdCategory(
+        CategoryTransfer $categoryTransfer,
+        CategoryCriteriaTransfer $categoryCriteriaTransfer
+    ): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer $categoryCriteriaTransfer
+     *
+     * @return int[]
+     */
+    public function getDescendantCategoryNodeIdsByIdCategory(
         CategoryTransfer $categoryTransfer,
         CategoryCriteriaTransfer $categoryCriteriaTransfer
     ): array;

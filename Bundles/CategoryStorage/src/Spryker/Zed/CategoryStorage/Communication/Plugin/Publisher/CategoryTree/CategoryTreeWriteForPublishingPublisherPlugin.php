@@ -8,23 +8,23 @@
 namespace Spryker\Zed\CategoryStorage\Communication\Plugin\Publisher\CategoryTree;
 
 use Spryker\Shared\CategoryStorage\CategoryStorageConstants;
+use Spryker\Zed\Category\Dependency\CategoryEvents;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface;
 
 /**
- * @deprecated Use {@link \Spryker\Zed\CategoryStorage\Communication\Plugin\Publisher\CategoryTree\CategoryTreeWriteForPublishingPublisherPlugin} instead.
- *
  * @method \Spryker\Zed\CategoryStorage\Business\CategoryStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\CategoryStorage\Persistence\CategoryStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\CategoryStorage\Communication\CategoryStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\CategoryStorage\CategoryStorageConfig getConfig()
  */
-class CategoryTreeWritePublisherPlugin extends AbstractPlugin implements PublisherPluginInterface
+class CategoryTreeWriteForPublishingPublisherPlugin extends AbstractPlugin implements PublisherPluginInterface
 {
     /**
      * {@inheritDoc}
-     * - Publishes category tree data by CategoryStore publish event.
-     * - Publishes category tree data by SpyCategoryStore entity events.
+     * - Publishes category tree data by `CategoryStore` publish event.
+     * - Publishes category tree data by `CategoryTree` publish events.
+     * - Publishes category tree data by after (create/update/delete) publish events.
      *
      * @api
      *
@@ -50,9 +50,10 @@ class CategoryTreeWritePublisherPlugin extends AbstractPlugin implements Publish
         return [
             CategoryStorageConstants::CATEGORY_STORE_PUBLISH,
             CategoryStorageConstants::CATEGORY_STORE_UNPUBLISH,
-            CategoryStorageConstants::ENTITY_SPY_CATEGORY_STORE_CREATE,
-            CategoryStorageConstants::ENTITY_SPY_CATEGORY_STORE_UPDATE,
-            CategoryStorageConstants::ENTITY_SPY_CATEGORY_STORE_DELETE,
+            CategoryStorageConstants::CATEGORY_TREE_PUBLISH,
+            CategoryEvents::CATEGORY_AFTER_PUBLISH_CREATE,
+            CategoryEvents::CATEGORY_AFTER_PUBLISH_UPDATE,
+            CategoryEvents::CATEGORY_AFTER_PUBLISH_DELETE,
         ];
     }
 }

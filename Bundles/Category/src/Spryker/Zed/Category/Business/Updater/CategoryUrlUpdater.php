@@ -131,26 +131,26 @@ class CategoryUrlUpdater implements CategoryUrlUpdaterInterface
         for ($offset = 0; $offset <= $categoryNodeChildCount; $offset += $categoryReadChunkSize) {
             $categoryCriteriaTransfer->setOffset($offset);
 
-            $categoryNodeChildIds = $this->categoryRepository
-                ->getCategoryNodeChildIdsByParentNodeId($categoryTransfer, $categoryCriteriaTransfer);
-            $categoryNodeChildIds[] = $categoryTransfer->getIdCategoryOrFail();
+            $categoryNodeIds = $this->categoryRepository
+                ->getDescendantCategoryNodeIdsByIdCategory($categoryTransfer, $categoryCriteriaTransfer);
+            $categoryNodeIds[] = $categoryTransfer->getIdCategoryOrFail();
 
-            $categoryNodeUrlCriteriaTransfer->setCategoryNodeIds($categoryNodeChildIds);
+            $categoryNodeUrlCriteriaTransfer->setCategoryNodeIds($categoryNodeIds);
             $urlTransfers = $this->categoryRepository->getCategoryNodeUrls($categoryNodeUrlCriteriaTransfer);
 
-            $this->bulkUpdateCategoryNodeUrlsForLocale($categoryNodeChildIds, $urlTransfers, $categoryTransfer);
+            $this->bulkUpdateCategoryNodeUrlsForLocale($categoryNodeIds, $urlTransfers, $categoryTransfer);
         }
     }
 
     /**
-     * @param int[] $categoryNodeChildIds
+     * @param int[] $categoryNodeIds
      * @param \Generated\Shared\Transfer\UrlTransfer[] $urlTransfers
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
      * @return void
      */
     protected function bulkUpdateCategoryNodeUrlsForLocale(
-        array $categoryNodeChildIds,
+        array $categoryNodeIds,
         array $urlTransfers,
         CategoryTransfer $categoryTransfer
     ): void {
@@ -158,7 +158,7 @@ class CategoryUrlUpdater implements CategoryUrlUpdaterInterface
             $localeTransfer = $categoryLocalizedAttributesTransfer->getLocaleOrFail();
 
             $indexedCategoryUrlPaths = $this->urlPathGenerator->bulkBuildCategoryNodeUrlForLocale(
-                $categoryNodeChildIds,
+                $categoryNodeIds,
                 $categoryLocalizedAttributesTransfer->getLocaleOrFail()
             );
 
