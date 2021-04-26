@@ -32,6 +32,7 @@
                         placeholder="{{ form.concreteSku.vars.attr.placeholder }}"
                         is-autogenerate="{{ form.autogenerateSku.vars.attr.checked }}"
                         error="{% if form.concreteSku.vars.errors %}{{ form.concreteSku.vars.errors[0].message | default | trans }}{% endif %}"
+                        checkbox-name="{{ form.autogenerateSku.vars.full_name }}"
                     >
                         {{ 'Autogenerate SKU' | trans }}
                     </web-mp-autogenerate-input>
@@ -50,6 +51,7 @@
                         placeholder="{{ form.concreteName.vars.attr.placeholder }}"
                         is-autogenerate="{{ form.useAbstractProductName.vars.attr.checked | json_encode }}"
                         error="{% if form.concreteName.vars.errors %}{{ form.concreteName.vars.errors[0].message | default | trans }}{% endif %}"
+                        checkbox-name="{{ form.useAbstractProductName.vars.full_name }}"
                     >
                         {{ 'Same as Abstract Product' | trans }}
                     </web-mp-autogenerate-input>
