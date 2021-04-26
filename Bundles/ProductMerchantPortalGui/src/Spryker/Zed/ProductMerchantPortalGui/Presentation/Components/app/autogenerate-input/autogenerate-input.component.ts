@@ -17,6 +17,7 @@ export class AutogenerateInputComponent implements OnChanges {
     @Input() placeholder: string;
     @Input() isAutogenerate: boolean;
     @Input() error?: string;
+    @Input() checkboxName?: string;
     @Input() isFieldHasHalfWidth?: boolean;
 
     defaultValue: string;
