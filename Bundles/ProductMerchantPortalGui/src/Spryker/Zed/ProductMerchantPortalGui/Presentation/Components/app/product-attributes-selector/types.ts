@@ -1,11 +1,11 @@
 export interface ProductAttribute {
     value: string;
-    title: string;
+    name: string;
     isDisabled?: boolean;
-    values: ProductAttributeValue[];
+    attributes: ProductAttributeValue[];
 }
 
 export interface ProductAttributeValue {
     value: string;
-    title: string;
+    name: string;
 }

@@ -19,7 +19,7 @@
             <ng-content select="[preview-text]"></ng-content>
         </div>
 
-        <mp-concrete-products-preview [name]="productsName" [attributes]="selectedAttributes">
+        <mp-concrete-products-preview [name]="productsName" [attributes]="selectedAttributes" [generatedProducts]="generatedProducts">
             <ng-content total-text select="[preview-total-text]"></ng-content>
             <ng-content auto-sku-text select="[preview-auto-sku-text]"></ng-content>
             <ng-content auto-name-text select="[preview-auto-name-text]"></ng-content>

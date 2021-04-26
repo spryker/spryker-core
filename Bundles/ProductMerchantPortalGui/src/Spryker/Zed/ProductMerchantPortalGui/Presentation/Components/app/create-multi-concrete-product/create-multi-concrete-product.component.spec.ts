@@ -6,7 +6,10 @@ import { CreateMultiConcreteProductComponent } from './create-multi-concrete-pro
 @Component({
     selector: `spy-test`,
     template: `
-        <mp-create-multi-concrete-product [attributes]="attributes" [productsName]="productsName">
+        <mp-create-multi-concrete-product
+            [attributes]="attributes"
+            [attributesName]="attributesName"
+            [productsName]="productsName">
             <span title class="projected-title">Name</span>
             <span action class="projected-action">Button</span>
 
@@ -28,7 +31,8 @@ import { CreateMultiConcreteProductComponent } from './create-multi-concrete-pro
 })
 class TestComponent {
     attributes: any;
-    productsName: any;
+    productsName: string;
+    attributesName: string;
 }
 
 describe('CreateMultiConcreteProductComponent', () => {

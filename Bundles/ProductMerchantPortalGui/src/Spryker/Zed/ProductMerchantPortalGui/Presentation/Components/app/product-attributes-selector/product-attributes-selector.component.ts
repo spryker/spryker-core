@@ -12,6 +12,7 @@ import {
 } from '@angular/core';
 import { ProductAttribute, ProductAttributeValue } from './types';
 import { IconDeleteModule } from '../../icons';
+import { ToJson } from '@spryker/utils';
 
 @Component({
     selector: 'mp-product-attributes-selector',
@@ -22,8 +23,8 @@ import { IconDeleteModule } from '../../icons';
     host: { class: 'mp-product-attributes-selector' },
 })
 export class ProductAttributesSelectorComponent implements OnChanges, OnInit {
-    @Input() attributes: ProductAttribute[];
-    @Input() selectedAttributes: ProductAttribute[];
+    @Input() @ToJson() attributes: ProductAttribute[];
+    @Input() @ToJson() selectedAttributes: ProductAttribute[];
     @Input() name?: string;
     @Output() selectedAttributesChange = new EventEmitter<ProductAttribute[]>();
 
@@ -57,21 +58,22 @@ export class ProductAttributesSelectorComponent implements OnChanges, OnInit {
     }
 
     superAttributeChange(value: string, index: number): void {
-        const attribute = { ...this.attributesObject[value] };
+        const superAttribute = { ...this.attributesObject[value] };
 
-        attribute.values = [];
+        superAttribute.attributes = [];
         this.selectedAttributes = [...this.selectedAttributes];
-        this.attributeOptions[index] = this.attributesObject[value]?.values;
-        this.selectedAttributes[index] = attribute;
+        this.attributeOptions[index] = this.attributesObject[value]?.attributes;
+        this.selectedAttributes[index] = superAttribute;
         this.disableSelectedAttributes();
         this.selectedAttributesChange.emit(this.selectedAttributes);
         this.cdr.markForCheck();
     }
 
     attributesChange(values: string[], index: number, selectedAttribute: ProductAttribute): void {
-        const attribute = this.attributesObject[selectedAttribute.value];
+        const superAttribute = this.attributesObject[selectedAttribute.value];
+
         this.selectedAttributes = [...this.selectedAttributes];
-        this.selectedAttributes[index].values = attribute.values.filter((value) => values.includes(value.value));
+        this.selectedAttributes[index].attributes = superAttribute.attributes.filter((attribute) => values.includes(attribute.value));
         this.selectedAttributesChange.emit(this.selectedAttributes);
         this.cdr.markForCheck();
     }

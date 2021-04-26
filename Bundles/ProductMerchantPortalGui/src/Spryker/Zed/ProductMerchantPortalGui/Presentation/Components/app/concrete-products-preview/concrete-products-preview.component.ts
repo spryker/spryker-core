@@ -5,15 +5,15 @@ import {
     EventEmitter,
     Input,
     OnChanges,
+    OnInit,
     Output,
     QueryList,
     SimpleChanges,
-    ViewChild,
     ViewChildren,
     ViewEncapsulation,
 } from '@angular/core';
+import { ToJson } from '@spryker/utils';
 import { InputComponent } from '@spryker/input';
-import { CheckboxComponent } from '@spryker/checkbox';
 import { IconDeleteModule } from '../../icons';
 import { ConcreteProductPreview } from './types';
 import { ProductAttribute, ProductAttributeValue } from '../product-attributes-selector/types';
@@ -29,9 +29,9 @@ import { ConcreteProductNameGeneratorFactoryService } from '../../services/concr
     providers: [ConcreteProductSkuGeneratorFactoryService, ConcreteProductNameGeneratorFactoryService],
     host: { class: 'mp-concrete-products-preview' },
 })
-export class ConcreteProductsPreviewComponent implements OnChanges {
-    @Input() attributes: ProductAttribute[];
-    @Input() generatedProducts: ConcreteProductPreview[];
+export class ConcreteProductsPreviewComponent implements OnInit, OnChanges {
+    @Input() @ToJson() attributes: ProductAttribute[];
+    @Input() @ToJson() generatedProducts: ConcreteProductPreview[];
     @Input() name?: string;
     @Output() generatedProductsChange = new EventEmitter<ConcreteProductPreview[]>();
 
@@ -53,6 +53,22 @@ export class ConcreteProductsPreviewComponent implements OnChanges {
         private concreteProductNameGeneratorFactory: ConcreteProductNameGeneratorFactoryService,
         private cdr: ChangeDetectorRef,
     ) {}
+
+    ngOnInit() {
+        if (!this.generatedProducts.length) {
+            return;
+        }
+
+        this.generatedProducts.some((generatedProduct) => {
+            if (!generatedProduct.sku.length) {
+                this.isAutoGenerateSkuCheckbox = false;
+            }
+
+            if (!generatedProduct.name.length) {
+                this.isAutoGenerateNameCheckbox = false;
+            }
+        });
+    }
 
     ngOnChanges(changes: SimpleChanges) {
         if ('attributes' in changes) {

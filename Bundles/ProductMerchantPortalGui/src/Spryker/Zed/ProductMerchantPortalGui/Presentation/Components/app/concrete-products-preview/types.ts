@@ -3,5 +3,11 @@ import { ProductAttributeValue } from '../product-attributes-selector/types';
 export interface ConcreteProductPreview {
     name: string;
     sku: string;
-    superAttributes: ProductAttributeValue[];
+    superAttributes: ConcreteProductPreviewSuperAttribute[];
+}
+
+interface ConcreteProductPreviewSuperAttribute {
+    value: string;
+    name: string;
+    attribute: ProductAttributeValue;
 }
