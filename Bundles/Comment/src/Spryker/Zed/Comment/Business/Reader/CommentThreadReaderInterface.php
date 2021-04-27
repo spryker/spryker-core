@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Comment\Business\Reader;
 
 use Generated\Shared\Transfer\CommentRequestTransfer;
+use Generated\Shared\Transfer\CommentsRequestTransfer;
 use Generated\Shared\Transfer\CommentThreadTransfer;
 
 interface CommentThreadReaderInterface
@@ -18,6 +19,13 @@ interface CommentThreadReaderInterface
      * @return \Generated\Shared\Transfer\CommentThreadTransfer|null
      */
     public function findCommentThreadByOwner(CommentRequestTransfer $commentRequestTransfer): ?CommentThreadTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CommentsRequestTransfer $commentsRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CommentThreadTransfer[]
+     */
+    public function getCommentThreads(CommentsRequestTransfer $commentsRequestTransfer): array;
 
     /**
      * @param \Generated\Shared\Transfer\CommentThreadTransfer $commentThreadTransfer

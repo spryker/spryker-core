@@ -40,6 +40,12 @@
         <property name="comment" type="Comment"/>
     </transfer>
 
+    <transfer name="CommentsRequest">
+        <property name="ownerIds" type="array" singular="ownerId"/>
+        <property name="ownerType" type="string"/>
+        <property name="comments" type="Comment[]" singular="comment"/>
+    </transfer>
+
     <transfer name="CommentTagRequest">
         <property name="name" type="string"/>
         <property name="comment" type="Comment"/>

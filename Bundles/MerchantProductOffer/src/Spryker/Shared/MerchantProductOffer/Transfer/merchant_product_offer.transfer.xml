@@ -8,13 +8,13 @@
         <property name="merchantSku" type="string"/>
     </transfer>
 
-    <transfer name="MerchantProductOfferCriteriaFilter">
+    <transfer name="MerchantProductOfferCriteria">
         <property name="merchantReference" type="string"/>
         <property name="skus" type="array" singular="sku"/>
         <property name="isActive" type="bool"/>
     </transfer>
 
-    <transfer name="ProductOfferCriteriaFilter">
+    <transfer name="ProductOfferCriteria">
         <property name="productOfferIds" type="int[]" singular="idProductOffer"/>
     </transfer>
 

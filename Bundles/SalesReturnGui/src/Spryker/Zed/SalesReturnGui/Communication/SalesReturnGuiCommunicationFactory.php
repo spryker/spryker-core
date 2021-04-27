@@ -16,6 +16,8 @@ use Spryker\Zed\SalesReturnGui\Communication\Form\DataProvider\ReturnCreateFormD
 use Spryker\Zed\SalesReturnGui\Communication\Form\Handler\ReturnHandler;
 use Spryker\Zed\SalesReturnGui\Communication\Form\Handler\ReturnHandlerInterface;
 use Spryker\Zed\SalesReturnGui\Communication\Form\ReturnCreateForm;
+use Spryker\Zed\SalesReturnGui\Communication\Provider\ReturnCreateTemplateProvider;
+use Spryker\Zed\SalesReturnGui\Communication\Provider\ReturnCreateTemplateProviderInterface;
 use Spryker\Zed\SalesReturnGui\Communication\Reader\CustomerReader;
 use Spryker\Zed\SalesReturnGui\Communication\Reader\CustomerReaderInterface;
 use Spryker\Zed\SalesReturnGui\Communication\Table\OrderReturnTable;
@@ -60,6 +62,16 @@ class SalesReturnGuiCommunicationFactory extends AbstractCommunicationFactory
             $this->getSalesReturnFacade(),
             $this->getGlossaryFacade(),
             $this->getReturnCreateFormHandlerPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesReturnGui\Communication\Provider\ReturnCreateTemplateProviderInterface
+     */
+    public function createReturnCreateTemplateProvider(): ReturnCreateTemplateProviderInterface
+    {
+        return new ReturnCreateTemplateProvider(
+            $this->getReturnCreateTemplatePlugins()
         );
     }
 
@@ -189,5 +201,13 @@ class SalesReturnGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getReturnCreateFormHandlerPlugins(): array
     {
         return $this->getProvidedDependency(SalesReturnGuiDependencyProvider::PLUGINS_RETURN_CREATE_FORM_HANDLER);
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesReturnGuiExtension\Dependency\Plugin\ReturnCreateTemplatePluginInterface[]
+     */
+    public function getReturnCreateTemplatePlugins(): array
+    {
+        return $this->getProvidedDependency(SalesReturnGuiDependencyProvider::PLUGINS_RETURN_CREATE_TEMPLATE);
     }
 }

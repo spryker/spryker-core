@@ -104,9 +104,9 @@ class ZedNavigationTwigPlugin extends AbstractPlugin implements TwigPluginInterf
      */
     protected function getNavigationFunction(ContainerInterface $container): TwigFunction
     {
-        $navigation = new TwigFunction(static::TWIG_FUNCTION_NAME_NAVIGATION, function () use ($container) {
+        $navigation = new TwigFunction(static::TWIG_FUNCTION_NAME_NAVIGATION, function (?string $navigationType = null) use ($container) {
             $request = $this->getRequest($container);
-            $navigation = $this->buildNavigation($request);
+            $navigation = $this->buildNavigation($request, $navigationType);
 
             return $navigation;
         });
@@ -150,24 +150,29 @@ class ZedNavigationTwigPlugin extends AbstractPlugin implements TwigPluginInterf
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param string|null $navigationType
      *
      * @return array
      */
-    protected function buildNavigation(Request $request): array
+    protected function buildNavigation(Request $request, ?string $navigationType = null): array
     {
         $uri = $this->removeUriSuffix($request->getPathInfo());
 
-        if (isset($this->navigations[$uri])) {
-            return $this->navigations[$uri];
+        if (!$navigationType) {
+            $navigationType = $this->getConfig()->getDefaultNavigationType();
+        }
+
+        if (isset($this->navigations[$navigationType][$uri])) {
+            return $this->navigations[$navigationType][$uri];
         }
 
         $navigation = [];
 
         if ($this->getConfig()->isNavigationEnabled()) {
-            $navigation = $this->getFacade()->buildNavigation($uri);
+            $navigation = $this->getFacade()->buildNavigation($uri, $navigationType);
         }
 
-        $this->navigations[$uri] = $navigation;
+        $this->navigations[$navigationType][$uri] = $navigation;
 
         return $navigation;
     }

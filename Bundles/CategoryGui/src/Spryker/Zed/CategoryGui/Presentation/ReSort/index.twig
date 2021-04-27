@@ -4,19 +4,15 @@
 {% block section_title %}{{ page_title | trans }}{% endblock %}
 
 {% block action %}
-    {% include ['@CategoryGui/_partials/back-button.twig'] %}
+    {% include '@CategoryGui/_partials/back-button.twig' %}
 {% endblock %}
 
 {% block content %}
-
     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Categories' } %}
-
         {% block widget_content %}
-
             <div class="progress hidden" id="progress-bar">
                 <div class="progress-bar progress-bar-100 progress-bar-striped active" role="progressbar"></div>
             </div>
-
             <div id="category-list" class="dd">
                 <ol class="dd-list">
                     {% for item in items %}
@@ -32,7 +28,6 @@
             <button id="save-button" class="btn btn-sm btn-primary">{{ 'Save' | trans }}</button>
         {% endblock %}
     {% endembed %}
-
 {% endblock %}
 
 {% block footer_js %}

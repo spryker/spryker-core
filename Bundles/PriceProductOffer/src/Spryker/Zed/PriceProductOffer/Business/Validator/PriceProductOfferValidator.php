@@ -60,7 +60,9 @@ class PriceProductOfferValidator implements PriceProductOfferValidatorInterface
         $constraintViolationList = $this->validator->validate($priceProductOfferTransfers, $this->priceProductOfferConstraintProvider->getConstraints());
 
         foreach ($priceProductOfferTransfers as $priceProductOfferTransfer) {
-            $priceProductTransfers = $priceProductOfferTransfer->getProductOffer()->getPrices();
+            /** @var \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer */
+            $productOfferTransfer = $priceProductOfferTransfer->getProductOffer();
+            $priceProductTransfers = $productOfferTransfer->getPrices();
 
             foreach ($priceProductTransfers as $row => $priceProductTransfer) {
                 $this->validatePriceProduct($priceProductTransfer, $row, $validationResponseTransfer);
@@ -75,8 +77,10 @@ class PriceProductOfferValidator implements PriceProductOfferValidatorInterface
 
         /** @var \Symfony\Component\Validator\ConstraintViolationInterface $constraintViolation */
         foreach ($constraintViolationList as $constraintViolation) {
+            /** @var string $message */
+            $message = $constraintViolation->getMessage();
             $validationErrorTransfer = (new ValidationErrorTransfer())
-                ->setMessage($constraintViolation->getMessage())
+                ->setMessage($message)
                 ->setPropertyPath($constraintViolation->getPropertyPath())
                 ->setInvalidValue($constraintViolation->getInvalidValue())
                 ->setRoot($constraintViolation->getRoot());
@@ -99,7 +103,10 @@ class PriceProductOfferValidator implements PriceProductOfferValidatorInterface
         ConstraintViolationInterface $constraintViolation,
         int $row
     ): string {
-        $priceTypeName = $priceProductTransfer->getPriceType()->getName();
+        /** @var \Generated\Shared\Transfer\PriceTypeTransfer $priceTypeTransfer */
+        $priceTypeTransfer = $priceProductTransfer->requirePriceType()->getPriceType();
+        /** @var string $priceTypeName */
+        $priceTypeName = $priceTypeTransfer->getName();
         $propertyPath = $constraintViolation->getPropertyPath();
 
         return sprintf('[%s][%s]%s', (string)$row, mb_strtolower($priceTypeName), $propertyPath);

@@ -163,9 +163,9 @@ class ProductAvailabilityReader implements ProductAvailabilityReaderInterface
             return $storeTransfer;
         }
 
-        $storeTransfer
-            ->requireName();
+        /** @var string $storeName */
+        $storeName = $storeTransfer->requireName()->getName();
 
-        return $this->storeFacade->getStoreByName($storeTransfer->getName());
+        return $this->storeFacade->getStoreByName($storeName);
     }
 }

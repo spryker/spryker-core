@@ -10,6 +10,7 @@ namespace Spryker\Zed\MerchantSalesOrder;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\MerchantSalesOrder\Dependency\Facade\MerchantSalesOrderToCalculationFacadeBridge;
+use Spryker\Zed\MerchantSalesOrder\Dependency\Facade\MerchantSalesOrderToMerchantFacadeBridge;
 use Spryker\Zed\MerchantSalesOrder\Dependency\Facade\MerchantSalesOrderToSalesFacadeBridge;
 
 /**
@@ -18,6 +19,7 @@ use Spryker\Zed\MerchantSalesOrder\Dependency\Facade\MerchantSalesOrderToSalesFa
 class MerchantSalesOrderDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_CALCULATION = 'FACADE_CALCULATION';
+    public const FACADE_MERCHANT = 'FACADE_MERCHANT';
     public const FACADE_SALES = 'FACADE_SALES';
 
     public const PLUGINS_MERCHANT_ORDER_POST_CREATE = 'PLUGINS_MERCHANT_ORDER_POST_CREATE';
@@ -34,6 +36,7 @@ class MerchantSalesOrderDependencyProvider extends AbstractBundleDependencyProvi
         $container = parent::provideBusinessLayerDependencies($container);
 
         $container = $this->addCalculationFacade($container);
+        $container = $this->addMerchantFacade($container);
         $container = $this->addSalesFacade($container);
         $container = $this->addMerchantOrderPostCreatePlugins($container);
         $container = $this->addMerchantOrderExpanderPlugins($container);
@@ -51,6 +54,20 @@ class MerchantSalesOrderDependencyProvider extends AbstractBundleDependencyProvi
     {
         $container->set(static::FACADE_CALCULATION, function (Container $container) {
             return new MerchantSalesOrderToCalculationFacadeBridge($container->getLocator()->calculation()->facade());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMerchantFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_MERCHANT, function (Container $container) {
+            return new MerchantSalesOrderToMerchantFacadeBridge($container->getLocator()->merchant()->facade());
         });
 
         return $container;

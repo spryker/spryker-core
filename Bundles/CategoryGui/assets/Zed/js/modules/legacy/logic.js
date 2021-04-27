@@ -27,7 +27,7 @@ var handleStoreSelector = function () {
     var storeSelector = $(STORE_SELECTOR_ID);
     var storeSelectorActionFieldName = storeSelector.attr(STORE_SELECTOR_ACTION_FIELD_ATTRIBUTE);
     var createCategoryFormName = storeSelector.closest('form')[0].name;
-    var parentCategorySelector = $(`[name='${createCategoryFormName}[${storeSelectorActionFieldName}]']`);
+    var parentCategorySelector = $("[name='" + createCategoryFormName + '[' + storeSelectorActionFieldName + "]']");
 
     var parentCategoryData = parentCategorySelector.select2('data');
     if (!parentCategoryData) {
@@ -47,20 +47,20 @@ var handleStoreSelector = function () {
 
         if (selectedCategoryId) {
             $.ajax({
-                url: `${storeSelectorActionUrl}?id-category-node=${selectedCategoryId}`,
+                url: storeSelectorActionUrl + '?id-category-node=' + selectedCategoryId,
                 success: function (data) {
                     storeSelector.empty();
 
                     data.forEach(function (item) {
-                        var optionTemplate = `<option value="${item.id_store}">${item.name}</option>`;
+                        var optionItem = $('<option></option>')
+                            .prop('value', item.id_store)
+                            .prop('disabled', !item.is_active)
+                            .text(item.name);
 
-                        if (!item.is_active) {
-                            optionTemplate = `<option disabled value="${item.id_store}">${item.name}</option>`;
-                        }
-
-                        storeSelector.append(optionTemplate);
-                        storeSelector.prop('disabled', false);
+                        storeSelector.append(optionItem);
                     });
+
+                    storeSelector.prop('disabled', false);
                 },
                 beforeSend: function () {
                     storeSelectorLoader.addClass('active');
@@ -102,12 +102,14 @@ $(document).ready(function () {
     selectorCategoryGuiTableDataCategory.dataTable({
         bFilter: false,
         createdRow: function (row, data, index) {
-            if (triggeredFirstEvent === false) {
-                categoryHelper.showLoaderBar();
-                var idCategoryNode = data[0];
-                SprykerAjax.getCategoryTreeByIdCategoryNode(idCategoryNode);
-                triggeredFirstEvent = true;
+            if (triggeredFirstEvent !== false) {
+                return;
             }
+
+            categoryHelper.showLoaderBar();
+            var idCategoryNode = data[0];
+            SprykerAjax.getCategoryTreeByIdCategoryNode(idCategoryNode);
+            triggeredFirstEvent = true;
         },
     });
 

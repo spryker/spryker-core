@@ -483,6 +483,7 @@ class WishlistFacadeTest extends Test
      */
     public function testGetWishlistOverviewShouldReturnPaginatedResult(): void
     {
+        // Arrange
         $this->addItemsToWishlist();
 
         $pageNumber = 3;
@@ -504,34 +505,59 @@ class WishlistFacadeTest extends Test
             ->setOrderBy($orderBy)
             ->setOrderDirection($orderDirection);
 
+        // Act
         $wishlistOverviewResponse = $this->wishlistFacade->getWishlistOverview($wishlistOverviewRequest);
 
+        // Assert
         $this->assertInstanceOf(WishlistOverviewResponseTransfer::class, $wishlistOverviewResponse);
-        $this->assertSame($this->wishlist->getName(), $wishlistTransfer->getName());
+        $this->assertSame($this->wishlist->getName(), $wishlistOverviewResponse->getWishlist()->getName());
         $this->assertSame($pageNumber, $wishlistOverviewResponse->getPagination()->getPage());
         $this->assertSame($itemsPerPage, $wishlistOverviewResponse->getPagination()->getItemsPerPage());
         $this->assertSame($itemsTotal, $wishlistOverviewResponse->getPagination()->getItemsTotal());
+        $this->assertSame(27, $wishlistOverviewResponse->getWishlist()->getNumberOfItems());
+        $this->assertCount(7, $wishlistOverviewResponse->getWishlist()->getWishlistItems());
     }
 
     /**
      * @return void
      */
-    public function testGetWishlistsByCustomerReturnPersistedWishlists(): void
+    public function testGetCustomerWishlistCollectionReturnsPersistedWishlistsByCustomerReference(): void
     {
+        // Arrange
         $this->tester->haveWishlist([WishlistTransfer::FK_CUSTOMER => $this->customer->getIdCustomer()]);
         $this->tester->haveWishlist([WishlistTransfer::FK_CUSTOMER => $this->customer->getIdCustomer()]);
 
+        // Act
         $wishlistCollectionTransfer = $this->wishlistFacade->getCustomerWishlistCollection($this->customer);
 
+        // Assert
         $this->assertCount(3, $wishlistCollectionTransfer->getWishlists(), 'Customer wishlist collection should contain expected number of wishlists.');
     }
 
     /**
      * @return void
      */
-    public function testGetWishlistByFilterShouldReturnWishlistByName(): void
+    public function testGetCustomerWishlistCollectionReturnsPersistedWishlistsByCustomerId(): void
     {
-        //Arrange
+        // Arrange
+        $this->customer->setCustomerReference(null);
+
+        $this->tester->haveWishlist([WishlistTransfer::FK_CUSTOMER => $this->customer->getIdCustomer()]);
+        $this->tester->haveWishlist([WishlistTransfer::FK_CUSTOMER => $this->customer->getIdCustomer()]);
+
+        // Act
+        $wishlistCollectionTransfer = $this->wishlistFacade->getCustomerWishlistCollection($this->customer);
+
+        // Assert
+        $this->assertCount(3, $wishlistCollectionTransfer->getWishlists(), 'Customer wishlist collection should contain expected number of wishlists.');
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCustomerWishlistCollectionReturnsPersistedWishlistsWithItemsByCustomerReference(): void
+    {
+        // Arrange
         $wishlistTransfer = $this->tester->haveWishlist([WishlistTransfer::FK_CUSTOMER => $this->customer->getIdCustomer()]);
         $this->tester->haveItemInWishlist([
             WishlistItemTransfer::FK_WISHLIST => $wishlistTransfer->getIdWishlist(),
@@ -540,20 +566,56 @@ class WishlistFacadeTest extends Test
             WishlistItemTransfer::WISHLIST_NAME => $wishlistTransfer->getName(),
         ]);
 
+        // Act
+        $wishlistCollectionTransfer = $this->wishlistFacade->getCustomerWishlistCollection($this->customer);
+
+        // Assert
+        foreach ($wishlistCollectionTransfer->getWishlists() as $foundWishlistTransfer) {
+            if ($foundWishlistTransfer->getIdWishlist() === $wishlistTransfer->getIdWishlist()) {
+                $this->assertWishlistItemCount(1, $wishlistTransfer->getIdWishlist());
+            }
+        }
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCustomerWishlistCollectionReturnsPersistedWishlistsWithItemsByCustomerId(): void
+    {
+        // Arrange
+        $this->customer->setCustomerReference(null);
+
+        // Act
+        $wishlistCollectionTransfer = $this->wishlistFacade->getCustomerWishlistCollection($this->customer);
+
+        // Assert
+        /** @var \Generated\Shared\Transfer\WishlistTransfer $wishlistTransferActual */
+        $wishlistTransferActual = $wishlistCollectionTransfer->getWishlists()->offsetGet(0);
+
+        $this->assertSame(2, $wishlistTransferActual->getNumberOfItems(), 'Customer wishlist should contain expected number of wishlist items.');
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetWishlistByFilterShouldReturnWishlistByName(): void
+    {
+        // Arrange
         $wishlistFilterTransfer = (new WishlistFilterTransfer())
             ->setIdCustomer($this->customer->getIdCustomer())
-            ->setName($wishlistTransfer->getName());
+            ->setName($this->wishlist->getName());
 
-        //Act
+        // Act
         $wishlistResponseTransfer = $this->wishlistFacade->getWishlistByFilter($wishlistFilterTransfer);
 
-        //Assert
+        // Assert
         $this->assertTrue($wishlistResponseTransfer->getIsSuccess(), 'Wishlist response is unsuccessful.');
         $this->assertEmpty($wishlistResponseTransfer->getErrors(), 'Unexpected errors returned in response.');
         $this->assertNull($wishlistResponseTransfer->getErrorIdentifier(), 'Error identifier is supposed to be empty.');
         $this->assertNotNull($wishlistResponseTransfer->getWishlist(), 'No wishlist returned.');
-        $this->assertSame($wishlistTransfer->getName(), $wishlistResponseTransfer->getWishlist()->getName(), 'Wishlist name is different.');
-        $this->assertCount(1, $wishlistResponseTransfer->getWishlist()->getWishlistItems(), 'Returned wishlist items amount is not expected.');
+        $this->assertSame($this->wishlist->getName(), $wishlistResponseTransfer->getWishlist()->getName(), 'Wishlist name is different.');
+        $this->assertCount(2, $wishlistResponseTransfer->getWishlist()->getWishlistItems(), 'Returned wishlist items amount is not expected.');
+        $this->assertSame(2, $wishlistResponseTransfer->getWishlist()->getNumberOfItems(), 'Wishlist numberOfItems is not as expected.');
         $this->assertSame($this->product_1->getSku(), $wishlistResponseTransfer->getWishlist()->getWishlistItems()[0]->getSku(), 'Wishlist item sku is unexpected.');
     }
 
@@ -562,15 +624,15 @@ class WishlistFacadeTest extends Test
      */
     public function testGetWishlistByFilterShouldReturnErrorInCaseWishlistIsNotFoundByName(): void
     {
-        //Arrange
+        // Arrange
         $wishlistFilterTransfer = (new WishlistFilterTransfer())
             ->setIdCustomer($this->customer->getIdCustomer())
             ->setName('fake-name');
 
-        //Act
+        // Act
         $wishlistResponseTransfer = $this->wishlistFacade->getWishlistByFilter($wishlistFilterTransfer);
 
-        //Assert
+        // Assert
         $this->assertFalse($wishlistResponseTransfer->getIsSuccess(), 'Wishlist response should be unsuccessful.');
         $this->assertCount(1, $wishlistResponseTransfer->getErrors(), 'Exactly 1 error is expected');
         $this->assertNull($wishlistResponseTransfer->getErrorIdentifier(), 'Error identifier is supposed to be empty.');

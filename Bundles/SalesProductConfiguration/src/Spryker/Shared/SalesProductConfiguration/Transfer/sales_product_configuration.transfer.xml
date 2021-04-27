@@ -7,12 +7,14 @@
         <property name="productConfigurationInstance" type="ProductConfigurationInstance"/>
         <property name="salesOrderItemConfiguration" type="SalesOrderItemConfiguration"/>
         <property name="idSalesOrderItem" type="int"/>
+        <property name="groupKey" type="string"/>
     </transfer>
 
     <transfer name="ProductConfigurationInstance">
         <property name="displayData" type="string"/>
         <property name="configuration" type="string"/>
         <property name="configuratorKey" type="string"/>
+        <property name="isComplete" type="bool"/>
     </transfer>
 
     <transfer name="SalesOrderItemConfiguration">
@@ -32,6 +34,10 @@
 
     <transfer name="SalesOrderItemConfigurationFilter">
         <property name="salesOrderItemIds" type="int[]" singular="idSalesOrderItem"/>
+    </transfer>
+
+    <transfer name="Order">
+        <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
 </transfers>

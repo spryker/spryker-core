@@ -1,0 +1,66 @@
+{% embed '@SalesReturnGui/_partials/column.twig' with {
+    title: 'General information'
+} %}
+    {% block content %}
+        <div class="row m-b-sm">
+            <div class="col-sm-6 font-bold">
+                {{ 'Order Reference' | trans }}
+            </div>
+            <div class="col-sm-6">
+                {% for merchantOrder in return.merchantOrders %}
+                    {{ merchantOrder.merchantOrderReference }}<br/>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="row m-b-sm">
+            <div class="col-sm-6 font-bold">
+                {{ 'Marketplace Order Reference' | trans }}
+            </div>
+            <div class="col-sm-6">
+                {% for idSalesOrder, orderReference in uniqueOrderReferences %}
+                    {{ orderReference }}
+                    {% if not loop.last %},&nbsp;{% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="row m-b-sm">
+            <div class="col-sm-6 font-bold">
+                {{ 'Return Reference' | trans }}
+            </div>
+            <div class="col-sm-6">
+                {{ return.returnReference }}
+            </div>
+        </div>
+
+        <div class="row m-b-sm">
+            <div class="col-sm-6 font-bold">
+                {{ 'Return Date' | trans }}
+            </div>
+            <div class="col-sm-6">
+                {{ return.createdAt | formatDateTime }}
+            </div>
+        </div>
+
+        <div class="row m-b-sm">
+            <div class="col-sm-6 font-bold">
+                {{ 'Returned Items' | trans }}
+            </div>
+            <div class="col-sm-6">
+                {{ return.returnItems | length }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-6 font-bold">
+                {{ 'State' | trans }}
+            </div>
+            <div class="col-sm-6">
+                {% for stateName, labelClass in uniqueItemStateLabels %}
+                    <span class="label {{ labelClass }}">{{ stateName }}</span>
+                {% endfor %}
+            </div>
+        </div>
+    {% endblock %}
+{% endembed %}

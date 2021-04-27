@@ -8,28 +8,22 @@
 
 {% block action %}
     {{ viewActionButton('/product-category/assign?id-category='~idCategory, 'Assign products' | trans) }}
-    {% include ['@CategoryGui/_partials/back-button.twig'] %}
+    {% include '@CategoryGui/_partials/back-button.twig' %}
 {% endblock %}
 
 {% block content %}
-
     {% embed '@Gui/Partials/widget.twig' %}
         {% block widget_content %}
-
             {{ form_start(categoryForm) }}
-                {% do categoryForm.localized_attributes.setRendered %}
-                {{ tabs(categoryFormTabs, {
-                    'categoryForm': categoryForm,
-                    'currentLocale': currentLocale
-                }) }}
-
-                <hr />
+            {% do categoryForm.localized_attributes.setRendered %}
+            {{ tabs(categoryFormTabs, {
+                'categoryForm': categoryForm,
+                'currentLocale': currentLocale,
+            }) }}
+            <hr />
             {{ form_end(categoryForm) }}
-
         {% endblock %}
-
     {% endembed %}
-
 {% endblock %}
 
 {% block head_css %}

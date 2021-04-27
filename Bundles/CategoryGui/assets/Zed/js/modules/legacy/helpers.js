@@ -30,7 +30,7 @@ SprykerAjax.getCategoryTreeByIdCategoryNode = function (idCategoryNode) {
 };
 
 /**
- * @param ajaxResponse
+ * @param serializedCategoryNodes
  *
  * @return {void}
  */

@@ -81,6 +81,21 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer $categoryCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
+     */
+    public function getCategoriesByCriteria(CategoryCriteriaTransfer $categoryCriteriaTransfer): CategoryCollectionTransfer
+    {
+        return $this->getFactory()
+            ->createCategoryMapper()
+            ->mapCategoryCollection(
+                $this->applyCategoryFilters($this->getFactory()->createCategoryQuery(), $categoryCriteriaTransfer)->find(),
+                new CategoryCollectionTransfer()
+            );
+    }
+
+    /**
      * @param int $idCategoryNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
@@ -765,6 +780,18 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
                 ->endUse();
         }
 
+        if ($categoryCriteriaTransfer->getIdLocale()) {
+            $categoryQuery
+                ->joinWithAttribute()
+                ->useAttributeQuery()
+                    ->filterByFkLocale($categoryCriteriaTransfer->getIdLocale())
+                ->endUse();
+        }
+
+        if ($categoryCriteriaTransfer->getWithNodes()) {
+            $categoryQuery->leftJoinNode();
+        }
+
         return $categoryQuery;
     }
 
@@ -850,5 +877,27 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
         }
 
         return $categoryClosureTableQuery;
+    }
+
+    /**
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery $categoryNodeQuery
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
+     */
+    protected function applyParentCategoryNodeFilter(SpyCategoryNodeQuery $categoryNodeQuery, CategoryTransfer $categoryTransfer): SpyCategoryNodeQuery
+    {
+        $parentCategoryNodeTransfer = $categoryTransfer->getParentCategoryNode();
+        if ($parentCategoryNodeTransfer === null) {
+            $categoryNodeQuery
+                ->filterByFkParentCategoryNode(null)
+                ->filterByIsRoot(true);
+
+            return $categoryNodeQuery;
+        }
+
+        $categoryNodeQuery->filterByFkParentCategoryNode($parentCategoryNodeTransfer->getIdCategoryNodeOrFail());
+
+        return $categoryNodeQuery;
     }
 }

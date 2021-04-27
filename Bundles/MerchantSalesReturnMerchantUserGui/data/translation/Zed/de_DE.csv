@@ -1,0 +1,52 @@
+"My Returns","Meine Retouren"
+Return,Retoure
+"Merchant for current user not found.","Kein Händler für den aktuellen Benutzer gefunden."
+"Merchant sales order #%d not found.","Händler-Bestellnummer %d wurde nicht gefunden."
+"Return was successfully created.","Retoure erfolgreich erstellt."
+"Return has not been created.","Retoure wurde nicht erstellt."
+"Requested return with ID %id% was not found.","Angefragte Retoure mit ID %id% konnte nicht gefunden werden."
+"Status change triggered successfully.","Die Statusänderung wurde erfolgreich ausgelöst."
+"Request is invalid","Ungültige Anfrage"
+"Parameter redirect not found.","Parameter Weiterleitung nicht gefunden."
+"Item selected for return is not eligible for return anymore.","Der für die Rücksendung ausgewählte Artikel kann nicht mehr zurückgegeben werden."
+"Select reason","Grund auswählen"
+View,Ansicht
+"Print Slip","Beleg drucken"
+"Return ID","Retoure ID"
+"Return Reference",Retourenreferenz
+"Order Reference",Bestellreferenz
+"Marketplace Order Reference","Marktplatz Bestellreferenz"
+"Returned Products","Retournierte Artikel"
+"Return Date","Retoure Datum"
+State,Zustand
+Actions,Aktionen
+Sku,Sku
+"incl. %tax_amount% % tax","Inkl. %tax_amount% % Mehrwertsteuer"
+"Show history","Historie anzeigen"
+"Hide history","Historie ausblenden"
+"Create Return","Retoure erstellen"
+"Back to Order","Zurück zur Bestellung"
+"Merchant Order Reference",Händlerbestellreferenz
+"Merchant Order References",Händlerbestellreferenzen
+"Select Items to Return","Artikel zum Zurückgeben auswählen"
+Product,Produkt
+Quantity,Anzahl
+Price,Preis
+Total,Summe
+"Return policy",Rücknahmegarantie
+Customer,Kunde
+"Customer Reference",Kundenreferenz
+Name,Name
+Email,E-Mail
+"General information","Allgemeine Informationen"
+"Returned Items","Retournierte Artikel"
+Reason,Grund
+"Trigger all matching states","Alle passenden Status auslösen"
+of,von
+"selected items","ausgewählte Artikel"
+"Trigger event","Event auslösen"
+items,Artikel
+"Remuneration Total",Rückerstattungsbetrag
+"Overview of Return","Übersicht der Retoure"
+"Back to Returns","Zurück zu Retouren"
+"Print Return Slip","Retourenbeleg drucken"

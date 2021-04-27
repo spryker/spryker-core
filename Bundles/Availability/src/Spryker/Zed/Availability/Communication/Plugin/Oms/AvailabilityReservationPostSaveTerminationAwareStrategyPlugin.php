@@ -60,6 +60,9 @@ class AvailabilityReservationPostSaveTerminationAwareStrategyPlugin extends Abst
      */
     public function handle(ReservationRequestTransfer $reservationRequestTransfer): void
     {
-        $this->getFacade()->updateAvailability($reservationRequestTransfer->getSku());
+        /** @var string $sku */
+        $sku = $reservationRequestTransfer->requireSku()->getSku();
+
+        $this->getFacade()->updateAvailability($sku);
     }
 }
