@@ -302,24 +302,10 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
         CategoryTransfer $categoryTransfer,
         CategoryCriteriaTransfer $categoryCriteriaTransfer
     ): array {
-        /** @var \Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery $categoryClosureTableQuery */
-        $categoryClosureTableQuery = $this->getFactory()
-            ->createCategoryClosureTableQuery()
-            ->leftJoinWithDescendantNode()
-            ->useNodeQuery('node')
-                ->filterByFkCategory($categoryTransfer->getIdCategoryOrFail())
-            ->endUse()
-            ->useDescendantNodeQuery()
-                ->leftJoinWithCategory()
-                ->orderByNodeOrder(Criteria::DESC)
-            ->endUse()
-            ->filterByDepth(0, Criteria::NOT_EQUAL);
-
-        if ($categoryCriteriaTransfer->getLimit() !== null && $categoryCriteriaTransfer->getOffset() !== null) {
-            $categoryClosureTableQuery
-                ->limit($categoryCriteriaTransfer->getLimit())
-                ->offset($categoryCriteriaTransfer->getOffset());
-        }
+        $categoryClosureTableQuery = $this->buildCategoryClosureTableByIdCategory(
+            $categoryTransfer,
+            $categoryCriteriaTransfer
+        );
 
         $categoryIds = [];
         $categoryClosureTableEntities = $categoryClosureTableQuery->find();
@@ -345,24 +331,10 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
         CategoryTransfer $categoryTransfer,
         CategoryCriteriaTransfer $categoryCriteriaTransfer
     ): array {
-        /** @var \Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery $categoryClosureTableQuery */
-        $categoryClosureTableQuery = $this->getFactory()
-            ->createCategoryClosureTableQuery()
-            ->leftJoinWithDescendantNode()
-            ->useNodeQuery('node')
-                ->filterByFkCategory($categoryTransfer->getIdCategoryOrFail())
-            ->endUse()
-            ->useDescendantNodeQuery()
-                ->leftJoinWithCategory()
-                ->orderByNodeOrder(Criteria::DESC)
-            ->endUse()
-            ->filterByDepth(0, Criteria::NOT_EQUAL);
-
-        if ($categoryCriteriaTransfer->getLimit() !== null && $categoryCriteriaTransfer->getOffset() !== null) {
-            $categoryClosureTableQuery
-                ->limit($categoryCriteriaTransfer->getLimit())
-                ->offset($categoryCriteriaTransfer->getOffset());
-        }
+        $categoryClosureTableQuery = $this->buildCategoryClosureTableByIdCategory(
+            $categoryTransfer,
+            $categoryCriteriaTransfer
+        );
 
         $categoryNodeIds = [];
         $categoryClosureTableEntities = $categoryClosureTableQuery->find();
@@ -847,5 +819,36 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
         $categoryNodeQuery->filterByFkParentCategoryNode($parentCategoryNodeTransfer->getIdCategoryNodeOrFail());
 
         return $categoryNodeQuery;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer $categoryCriteriaTransfer
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery
+     */
+    protected function buildCategoryClosureTableByIdCategory(
+        CategoryTransfer $categoryTransfer,
+        CategoryCriteriaTransfer $categoryCriteriaTransfer
+    ): SpyCategoryClosureTableQuery {
+        $categoryClosureTableQuery = $this->getFactory()
+            ->createCategoryClosureTableQuery()
+            ->leftJoinWithDescendantNode()
+            ->useNodeQuery('node')
+                ->filterByFkCategory($categoryTransfer->getIdCategoryOrFail())
+            ->endUse()
+            ->useDescendantNodeQuery()
+                ->leftJoinWithCategory()
+                ->orderByNodeOrder(Criteria::DESC)
+            ->endUse()
+            ->filterByDepth(0, Criteria::NOT_EQUAL);
+
+        if ($categoryCriteriaTransfer->getLimit() !== null && $categoryCriteriaTransfer->getOffset() !== null) {
+            $categoryClosureTableQuery
+                ->limit($categoryCriteriaTransfer->getLimit())
+                ->offset($categoryCriteriaTransfer->getOffset());
+        }
+
+        return $categoryClosureTableQuery;
     }
 }
