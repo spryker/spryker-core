@@ -13,7 +13,7 @@ use Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryFormTabExpanderPlugi
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @deprecated Use {@link \Spryker\Zed\CategoryImageGui\Communication\Plugin\ImageSetCategoryFormTabExpanderPlugin} instead.
+ * @deprecated Use {@link \Spryker\Zed\CategoryImageGui\Communication\Plugin\CategoryGui\ImageSetCategoryFormTabExpanderPlugin} instead.
  *
  * @method \Spryker\Zed\CategoryImageGui\CategoryImageGuiConfig getConfig()
  * @method \Spryker\Zed\CategoryImageGui\Communication\CategoryImageGuiCommunicationFactory getFactory()
