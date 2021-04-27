@@ -146,17 +146,6 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
         string $localeName
     ): array {
         foreach ($productAbstractLocalizedAttributesTransfers as $productAbstractLocalizedAttributesTransfer) {
-            if ($productAbstractLocalizedAttributesTransfer->getLocaleOrFail()->getLocaleName() !== $localeName) {
-                $productAbstractCategoryStorageTransfers = $this->unsetProductAbstractCategoryStorage(
-                    $productAbstractCategoryStorageTransfers,
-                    $productAbstractLocalizedAttributesTransfer,
-                    $storeName,
-                    $localeName
-                );
-
-                continue;
-            }
-
             $productAbstractCategoryStorageTransfers = $this->saveProductAbstractCategoryStorage(
                 $productCategoryTransfers,
                 $productAbstractCategoryStorageTransfers,
@@ -164,33 +153,6 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
                 $storeName,
                 $localeName
             );
-        }
-
-        return $productAbstractCategoryStorageTransfers;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer[][][] $productAbstractCategoryStorageTransfers
-     * @param \Generated\Shared\Transfer\ProductAbstractLocalizedAttributesTransfer $productAbstractLocalizedAttributesTransfer
-     * @param string $storeName
-     * @param string $localeName
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer[][][]
-     */
-    protected function unsetProductAbstractCategoryStorage(
-        array $productAbstractCategoryStorageTransfers,
-        ProductAbstractLocalizedAttributesTransfer $productAbstractLocalizedAttributesTransfer,
-        string $storeName,
-        string $localeName
-    ): array {
-        $idProductAbstract = $productAbstractLocalizedAttributesTransfer->getIdProductAbstractOrFail();
-
-        $productAbstractCategoryStorageTransfer
-            = $productAbstractCategoryStorageTransfers[$idProductAbstract][$storeName][$localeName]
-            ?? null;
-
-        if ($productAbstractCategoryStorageTransfer) {
-            unset($productAbstractCategoryStorageTransfers[$idProductAbstract][$storeName][$localeName]);
         }
 
         return $productAbstractCategoryStorageTransfers;
