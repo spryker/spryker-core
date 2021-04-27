@@ -273,7 +273,9 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
     public function createProductAbstractMapper(): ProductAbstractMapperInterface
     {
         return new ProductAbstractMapper(
-            $this->getMerchantUserFacade()
+            $this->getMerchantUserFacade(),
+            $this->getLocaleFacade(),
+            $this->createLocaleDataProvider()
         );
     }
 

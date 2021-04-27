@@ -65,14 +65,18 @@ class ProductConcreteMapper implements ProductConcreteMapperInterface
     public function mapRequestDataToProductConcreteTransfer(array $concreteProducts): array
     {
         $localeTransfers = $this->localeFacade->getLocaleCollection();
+        $defaultStoreDefaultLocale = $this->localeDataProvider->findDefaultStoreDefaultLocale();
 
         $concreteProductTransfers = [];
         foreach ($concreteProducts as $concreteProduct) {
+            $attributes = $this->reformatSuperAttributes($concreteProduct);
+
             $concreteProductTransfer = (new ProductConcreteTransfer())
                 ->setSku($concreteProduct[static::FIELD_SKU])
-                ->setName($concreteProduct[static::FIELD_NAME]);
+                ->setName($concreteProduct[static::FIELD_NAME])
+                ->setIsActive(false)
+                ->setAttributes($attributes);
 
-            $attributes = $this->reformatSuperAttributes($concreteProductTransfer);
             $productManagementAttributeTransfers = $this->getProductManagementAttributes($attributes);
 
             foreach ($localeTransfers as $localeTransfer) {
@@ -81,10 +85,13 @@ class ProductConcreteMapper implements ProductConcreteMapperInterface
                     $attributes,
                     $localeTransfer
                 );
+                $productConcreteLocalizedName = $localeTransfer->getLocaleNameOrFail() === $defaultStoreDefaultLocale
+                    ? $concreteProduct[static::FIELD_NAME]
+                    : '';
 
                 $concreteProductTransfer->addLocalizedAttributes(
                     (new LocalizedAttributesTransfer())
-                        ->setName($concreteProduct[static::FIELD_NAME])
+                        ->setName($productConcreteLocalizedName)
                         ->setLocale($localeTransfer)
                         ->setAttributes($localizedAttributes)
                 );
@@ -97,14 +104,14 @@ class ProductConcreteMapper implements ProductConcreteMapperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $concreteProductTransfer
+     * @param array $concreteProduct
      *
      * @return string[]
      */
-    protected function reformatSuperAttributes(ProductConcreteTransfer $concreteProductTransfer): array
+    protected function reformatSuperAttributes(array $concreteProduct): array
     {
         $attributes = [];
-        foreach ($concreteProductTransfer as $superAttribute) {
+        foreach ($concreteProduct[static::FIELD_SUPER_ATTRIBUTES] as $superAttribute) {
             $attributeKey = $superAttribute[static::FIELD_VALUE];
             $attributeValue = $superAttribute[static::FIELD_ATTRIBUTE][static::FIELD_VALUE];
             $attributes[$attributeKey] = $attributeValue;
@@ -114,6 +121,8 @@ class ProductConcreteMapper implements ProductConcreteMapperInterface
     }
 
     /**
+     * @phpstan-return ArrayObject<int, \Generated\Shared\Transfer\ProductManagementAttributeTransfer>
+     *
      * @param array $attributes
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
@@ -133,7 +142,7 @@ class ProductConcreteMapper implements ProductConcreteMapperInterface
      * @param string[] $attributes
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return string[]
+     * @return array
      */
     protected function extractLocalizedAttributes(
         array $productManagementAttributeTransfers,
@@ -176,7 +185,8 @@ class ProductConcreteMapper implements ProductConcreteMapperInterface
         array $productManagementAttributeTransfers
     ): ?ProductManagementAttributeValueTransfer {
         foreach ($productManagementAttributeTransfers as $productManagementAttributeTransfer) {
-            foreach ($productManagementAttributeTransfer->getValues() as $productManagementAttributeValueTransfer) {
+            $attributeValues = $productManagementAttributeTransfer->getValues();
+            foreach ($attributeValues as $productManagementAttributeValueTransfer) {
                 if (
                     $attributeKey === $productManagementAttributeTransfer->getKey()
                     && $attributeValue === $productManagementAttributeValueTransfer->getValue()

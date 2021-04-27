@@ -286,4 +286,13 @@
         <property name="idProductConcrete" type="int"/>
     </transfer>
 
+    <transfer name="ProductManagementAttributeCollection">
+    </transfer>
+
+    <transfer name="ProductManagementAttributeFilter">
+    </transfer>
+
+    <transfer name="ProductManagementAttributeValue">
+    </transfer>
+
 </transfers>
