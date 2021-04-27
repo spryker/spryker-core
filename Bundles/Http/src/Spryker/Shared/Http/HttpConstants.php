@@ -150,4 +150,20 @@ interface HttpConstants
      * @api
      */
     public const GLUE_TRUSTED_HOSTS = 'HTTP:GLUE_TRUSTED_HOSTS';
+
+    /**
+     * Specification:
+     * - If option set to true, the application will set http strict transport header.
+     *
+     * @api
+     */
+    public const GLUE_HTTP_STRICT_TRANSPORT_SECURITY_ENABLED = 'HTTP:GLUE_HTTP_STRICT_TRANSPORT_SECURITY_ENABLED';
+
+    /**
+     * Specification:
+     * - Http strict transport header body.
+     *
+     * @api
+     */
+    public const GLUE_HTTP_STRICT_TRANSPORT_SECURITY_CONFIG = 'HTTP:GLUE_HTTP_STRICT_TRANSPORT_SECURITY_CONFIG';
 }

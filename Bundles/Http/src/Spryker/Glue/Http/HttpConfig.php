@@ -51,7 +51,7 @@ class HttpConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return string[]
      */
     public function getTrustedProxies(): array
     {
@@ -61,10 +61,32 @@ class HttpConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return string[]
      */
     public function getTrustedHosts(): array
     {
         return $this->get(HttpConstants::GLUE_TRUSTED_HOSTS, []);
+    }
+
+    /**
+     * @api
+     *
+     * @return bool
+     */
+    public function isHstsEnabled(): bool
+    {
+        return $this->get(HttpConstants::GLUE_HTTP_STRICT_TRANSPORT_SECURITY_ENABLED, false);
+    }
+
+    /**
+     * @phpstan-return array<string, mixed>
+     *
+     * @api
+     *
+     * @return array
+     */
+    public function getHstsConfig(): array
+    {
+        return $this->get(HttpConstants::GLUE_HTTP_STRICT_TRANSPORT_SECURITY_CONFIG, []);
     }
 }

@@ -13,8 +13,44 @@ use Spryker\Shared\GlueApplication\GlueApplicationConstants;
 
 class GlueApplicationConfig extends AbstractBundleConfig
 {
+    /**
+     * @const string
+     */
     public const COLLECTION_IDENTIFIER_CURRENT_USER = 'mine';
 
+    /**
+     * @const string
+     */
+    protected const HEADER_X_FRAME_OPTIONS_VALUE = 'SAMEORIGIN';
+
+    /**
+     * @const string
+     */
+    protected const HEADER_CONTENT_SECURITY_POLICY_VALUE = 'frame-ancestors \'self\'';
+
+    /**
+     * @const string
+     */
+    protected const HEADER_X_CONTENT_TYPE_OPTIONS_VALUE = 'nosniff';
+
+    /**
+     * @const string
+     */
+    protected const HEADER_X_XSS_PROTECTION_VALUE = '1; mode=block';
+
+    /**
+     * @const string
+     */
+    protected const HEADER_REFERRER_POLICY_VALUE = 'same-origin';
+
+    /**
+     * @const string
+     */
+    protected const HEADER_PERMISSIONS_POLICY_VALUE = '';
+
+    /**
+     * @const bool
+     */
     public const VALIDATE_REQUEST_HEADERS = true;
 
     /**
@@ -85,6 +121,25 @@ class GlueApplicationConfig extends AbstractBundleConfig
             RequestConstantsInterface::HEADER_CONTENT_LANGUAGE,
             RequestConstantsInterface::HEADER_ACCEPT_LANGUAGE,
             RequestConstantsInterface::HEADER_AUTHORIZATION,
+        ];
+    }
+
+    /**
+     * @phpstan-return array<string, mixed>
+     *
+     * @api
+     *
+     * @return array
+     */
+    public function getSecurityHeaders(): array
+    {
+        return [
+            'X-Frame-Options' => static::HEADER_X_FRAME_OPTIONS_VALUE,
+            'Content-Security-Policy' => static::HEADER_CONTENT_SECURITY_POLICY_VALUE,
+            'X-Content-Type-Options' => static::HEADER_X_CONTENT_TYPE_OPTIONS_VALUE,
+            'X-XSS-Protection' => static::HEADER_X_XSS_PROTECTION_VALUE,
+            'Referrer-Policy' => static::HEADER_REFERRER_POLICY_VALUE,
+            'Permissions-policy' => static::HEADER_PERMISSIONS_POLICY_VALUE,
         ];
     }
 
