@@ -24,12 +24,28 @@
         <property name="merchantOrderItems" type="MerchantOrderItem[]" singular="merchantOrderItem"/>
         <property name="order" type="Order"/>
         <property name="idMerchantOrder" type="int"/>
+        <property name="process" type="string"/>
+        <property name="totals" type="Totals"/>
     </transfer>
 
     <transfer name="Order">
         <property name="fkCustomer" type="int"/>
+        <property name="firstName" type="string"/>
+        <property name="lastName" type="string"/>
+        <property name="email" type="string"/>
+        <property name="billingAddress" type="Address"/>
         <property name="items" type="Item[]" singular="item"/>
         <property name="customer" type="Customer"/>
+        <property name="currencyIsoCode" type="string"/>
+        <property name="customerReference" type="string"/>
+        <property name="expenses" type="Expense[]" singular="expense"/>
+        <property name="priceMode" type="string"/>
+    </transfer>
+
+    <transfer name="Expense">
+        <property name="type" type="string"/>
+        <property name="shipment" type="Shipment"/>
+        <property name="sumPrice" type="int"/>
     </transfer>
 
     <transfer name="Customer">
@@ -90,6 +106,11 @@
         <property name="zipCode" type="string"/>
         <property name="city" type="string"/>
         <property name="idCustomerAddress" type="int"/>
+        <property name="country" type="Country"/>
+    </transfer>
+
+    <transfer name="Country">
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="Item">
@@ -111,4 +132,18 @@
     <transfer name="StateMachineItem">
         <property name="idMerchantOrderItem" type="int"/>
     </transfer>
+
+    <transfer name="Totals">
+        <property name="grandTotal" type="int"/>
+        <property name="taxTotal" type="TaxTotal"/>
+        <property name="subtotal" type="int"/>
+        <property name="discountTotal" type="int"/>
+        <property name="canceledTotal" type="int"/>
+        <property name="remunerationTotal" type="int"/>
+    </transfer>
+
+    <transfer name="TaxTotal">
+        <property name="amount" type="int"/>
+    </transfer>
+
 </transfers>
