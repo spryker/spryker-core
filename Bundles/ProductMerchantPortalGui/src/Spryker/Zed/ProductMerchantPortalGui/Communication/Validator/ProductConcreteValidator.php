@@ -71,7 +71,7 @@ class ProductConcreteValidator implements ProductConcreteValidatorInterface
     protected function getProductConcreteConstraints(): array
     {
         return [new All([new Collection(
-                    [
+            [
                         ProductConcreteMapper::FIELD_NAME => [
                             new NotBlank(),
                         ],
@@ -80,22 +80,29 @@ class ProductConcreteValidator implements ProductConcreteValidatorInterface
                             new SkuRegexConstraint(),
                             new UniqueAbstractSkuConstraint(),
                         ],
-                        ProductConcreteMapper::FIELD_SUPER_ATTRIBUTES => [new Collection([new Collection(
-                            [
-                                ProductConcreteMapper::FIELD_TITLE => [
-                                    new NotBlank(),
-                                ],
-                                ProductConcreteMapper::FIELD_KEY => [
-                                    new NotBlank(),
-                                ],
-                                ProductConcreteMapper::FIELD_VALUE => [
-                                    new NotBlank(),
-                                ],
-                            ]
-                        )]
+                        ProductConcreteMapper::FIELD_SUPER_ATTRIBUTES => [new Collection(
+                            [new Collection(
+                                [
+                                    ProductConcreteMapper::FIELD_NAME => [
+                                        new NotBlank(),
+                                    ],
+                                    ProductConcreteMapper::FIELD_ATTRIBUTE => [
+                                        new Collection(
+                                            [
+                                                ProductConcreteMapper::FIELD_NAME => [
+                                                    new NotBlank(),
+                                                ],
+                                                ProductConcreteMapper::FIELD_VALUE => [
+                                                    new NotBlank(),
+                                                ],
+                                            ]
+                                        ),
+                                    ],
+                                ]
+                            )]
                         )],
-                    ],
-                ),
+            ]
+        ),
         ])];
     }
 }
