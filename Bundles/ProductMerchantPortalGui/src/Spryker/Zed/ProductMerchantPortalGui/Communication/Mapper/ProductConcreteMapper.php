@@ -21,6 +21,7 @@ class ProductConcreteMapper implements ProductConcreteMapperInterface
 {
     public const FIELD_NAME = 'name';
     public const FIELD_SKU = 'sku';
+    public const FIELD_ATTRIBUTE = 'attribute';
     public const FIELD_SUPER_ATTRIBUTES = 'superAttributes';
     public const FIELD_KEY = 'key';
     public const FIELD_VALUE = 'value';
