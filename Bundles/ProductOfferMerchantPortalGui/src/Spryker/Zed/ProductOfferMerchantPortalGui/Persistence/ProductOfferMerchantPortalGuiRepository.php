@@ -132,7 +132,7 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
             ->addAsColumn(LocalizedAttributesTransfer::NAME, SpyProductLocalizedAttributesTableMap::COL_NAME)
             ->addAsColumn(ProductConcreteTransfer::STORES, sprintf('(%s)', $this->createProductStoresSubquery()))
             ->addAsColumn(ProductImageTransfer::EXTERNAL_URL_SMALL, sprintf('(%s)', $this->createProductImagesSubquery($idLocale)))
-            ->addAsColumn(ProductConcreteTransfer::NUMBER_OF_OFFERS, sprintf('(%s)', $this->createProductOffersCountSubquery($idMerchant)))
+            ->addAsColumn(ProductConcreteTransfer::NUMBER_OF_OFFERS, sprintf('(%s)', $this->createProductOffersSubquery($idMerchant, true)))
             ->addAsColumn(ProductConcreteTransfer::VALID_FROM, SpyProductValidityTableMap::COL_VALID_FROM)
             ->addAsColumn(ProductConcreteTransfer::VALID_TO, SpyProductValidityTableMap::COL_VALID_TO)
             ->where(sprintf('(%s) IS NOT NULL', $this->createProductStoresSubquery()))
@@ -205,13 +205,19 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
 
     /**
      * @param int $idMerchant
+     * @param bool $count
      *
      * @return string
      */
-    protected function createProductOffersCountSubquery(int $idMerchant): string
+    protected function createProductOffersSubquery(int $idMerchant, bool $count = false): string
     {
-        $productOffersSubquery = $this->getFactory()->getProductOfferPropelQuery()
-            ->addAsColumn('offers_count', 'COUNT(*)')
+        $productOffersSubquery = $this->getFactory()->getProductOfferPropelQuery();
+        if ($count) {
+            $productOffersSubquery->addAsColumn('offers_count', 'COUNT(*)');
+        } else {
+            $productOffersSubquery->addSelfSelectColumns();
+        }
+        $productOffersSubquery
             ->where(sprintf(
                 '%s = %s AND %s = %s',
                 SpyProductOfferTableMap::COL_CONCRETE_SKU,
@@ -385,9 +391,9 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
 
         $productConcreteQuery->where(
             sprintf(
-                '(%s) %s 0',
-                $this->createProductOffersCountSubquery($merchantUserId),
-                $productConcreteHasOffers ? '>' : '='
+                '%s (%s)',
+                $productConcreteHasOffers ? 'EXISTS ' : 'NOT EXISTS ',
+                $this->createProductOffersSubquery($merchantUserId)
             )
         );
 
