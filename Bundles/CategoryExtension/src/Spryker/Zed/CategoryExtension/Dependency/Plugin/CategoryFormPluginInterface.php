@@ -9,6 +9,9 @@ namespace Spryker\Zed\CategoryExtension\Dependency\Plugin;
 
 use Symfony\Component\Form\FormBuilderInterface;
 
+/**
+ * @deprecated Use {@link \Spryker\Zed\CategoryGuiExtension\Dependency\Plugin\CategoryFormPluginInterface} instead.
+ */
 interface CategoryFormPluginInterface
 {
     /**

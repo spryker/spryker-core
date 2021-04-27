@@ -7,12 +7,31 @@
 
 namespace Spryker\Zed\CategoryGui\Persistence;
 
+use Generated\Shared\Transfer\CategoryTransfer;
+
 interface CategoryGuiRepositoryInterface
 {
     /**
-     * @module Category
-     * @module Store
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
+     * @return bool
+     */
+    public function isCategoryKeyUsed(CategoryTransfer $categoryTransfer): bool;
+
+    /**
+     * @return string[]
+     */
+    public function getIndexedCategoryTemplateNames(): array;
+
+    /**
+     * @param int $idParentNode
+     * @param int $idLocale
+     *
+     * @return string[]
+     */
+    public function getChildrenCategoryNodeNames(int $idParentNode, int $idLocale): array;
+
+    /**
      * @param int[] $categoryIds
      *
      * @return string[][]

@@ -77,6 +77,7 @@
         <property name="withChildren" type="bool"/>
         <property name="isMain" type="bool"/>
         <property name="withChildrenRecursively" type="bool"/>
+        <property name="idCategoryNode" type="int"/>
     </transfer>
 
     <transfer name="CategoryNodeCriteria">
