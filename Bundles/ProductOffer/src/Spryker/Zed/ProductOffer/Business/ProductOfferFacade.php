@@ -146,6 +146,6 @@ class ProductOfferFacade extends AbstractFacade implements ProductOfferFacadeInt
     ): bool {
         return $this->getFactory()
             ->createProductOfferCheckoutValidator()
-            ->isQuoteItemsValid($quoteTransfer, $checkoutResponseTransfer);
+            ->isQuoteReadyForCheckout($quoteTransfer, $checkoutResponseTransfer);
     }
 }

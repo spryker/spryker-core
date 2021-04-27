@@ -457,7 +457,7 @@ class ProductOfferFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testValidateCheckoutProductOfferWithValidProductOffer(): void
+    public function testIsQuoteReadyForCheckoutWithValidProductOffer(): void
     {
         // Arrange
         $productOfferTransfer = $this->tester->haveProductOffer([
@@ -485,7 +485,7 @@ class ProductOfferFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testValidateCheckoutProductOfferWithInactiveProductOffer(): void
+    public function testIsQuoteReadyForCheckoutWithInactiveProductOffer(): void
     {
         // Arrange
         $productOfferTransfer = $this->tester->haveProductOffer([
@@ -513,7 +513,7 @@ class ProductOfferFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testValidateCheckoutProductOfferWithNotApprovedProductOffer(): void
+    public function testIsQuoteReadyForCheckoutWithNotApprovedProductOffer(): void
     {
         // Arrange
         $productOfferTransfer = $this->tester->haveProductOffer([

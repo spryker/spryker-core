@@ -39,7 +39,7 @@ class ProductOfferCheckoutValidator implements ProductOfferCheckoutValidatorInte
      *
      * @return bool
      */
-    public function isQuoteItemsValid(
+    public function isQuoteReadyForCheckout(
         QuoteTransfer $quoteTransfer,
         CheckoutResponseTransfer $checkoutResponseTransfer
     ): bool {
