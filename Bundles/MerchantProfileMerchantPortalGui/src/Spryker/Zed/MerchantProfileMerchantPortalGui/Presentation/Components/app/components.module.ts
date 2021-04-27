@@ -5,7 +5,6 @@ import { IconModule } from '@spryker/icon';
 import { LabelComponent, LabelModule } from '@spryker/label';
 import { TabComponent, TabsComponent, TabsModule } from '@spryker/tabs';
 import { CustomElementModule, WebComponentDefs } from '@spryker/web-components';
-
 import { IconGermanyModule, IconUnitedStatesModule } from '../icons';
 import { ProfileComponent } from './profile/profile.component';
 import { ProfileModule } from './profile/profile.module';

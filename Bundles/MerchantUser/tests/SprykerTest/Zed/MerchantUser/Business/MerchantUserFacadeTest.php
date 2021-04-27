@@ -75,7 +75,14 @@ class MerchantUserFacadeTest extends Unit
 
         $this->userFacadeMock = $this->getMockBuilder(MerchantUserToUserFacadeInterface::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['findUser', 'updateUser', 'createUser', 'getCurrentUser'])
+            ->onlyMethods([
+                'findUser',
+                'updateUser',
+                'createUser',
+                'getCurrentUser',
+                'setCurrentUser',
+                'isValidPassword',
+            ])
             ->getMockForAbstractClass();
     }
 
@@ -376,6 +383,7 @@ class MerchantUserFacadeTest extends Unit
         $merchantTransfer = $this->tester->haveMerchant();
         $userTransfer = $this->tester->haveUser();
         $merchantUserTransfer = $this->tester->haveMerchantUser($merchantTransfer, $userTransfer);
+        $merchantUserTransfer->setUser($userTransfer);
         $this->userFacadeMock->method('getCurrentUser')->willReturn($userTransfer);
 
         // Act
@@ -469,6 +477,46 @@ class MerchantUserFacadeTest extends Unit
 
         // Act
         $this->tester->getFacade()->setNewPassword(static::USER_AUTHENTICATION_TOKEN, static::USER_PASSWORD);
+    }
+
+    /**
+     * @return void
+     */
+    public function testSetCurrentMerchantUserCallsUserFacade(): void
+    {
+        // Arrange
+        $this->initializeFacadeMocks();
+
+        $userTransfer = new UserTransfer();
+        $merchantUserTransfer = (new MerchantUserTransfer())->setUser($userTransfer);
+
+        // Check call is proxied to UserFacade
+        $this->userFacadeMock->expects($this->once())->method('setCurrentUser')
+            ->with($userTransfer)
+            ->willReturn(null);
+
+        // Act
+        $this->tester->getFacade()->setCurrentMerchantUser($merchantUserTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsValidPasswordCallsUserFacade(): void
+    {
+        // Arrange
+        $this->initializeFacadeMocks();
+
+        $password = 'foo';
+        $hash = '$2y$10$y3HMfu3Dv0AyOlkILUt21O0mH3A3Tk0BPzUFqZab67zFpEMZIgx2K';
+
+        // Check call is proxied to UserFacade
+        $this->userFacadeMock->expects($this->once())->method('isValidPassword')
+            ->with($password, $hash)
+            ->willReturn(true);
+
+        // Act
+        $this->tester->getFacade()->isValidPassword($password, $hash);
     }
 
     /**

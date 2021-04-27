@@ -1,5 +1,6 @@
 namespace: SalesProductConfiguration
 include:
+    - tests/SprykerTest/Client/SalesProductConfiguration
     - tests/SprykerTest/Zed/SalesProductConfiguration
 paths:
     tests: tests

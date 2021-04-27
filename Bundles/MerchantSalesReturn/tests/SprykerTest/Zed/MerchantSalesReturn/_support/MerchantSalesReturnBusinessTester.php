@@ -12,7 +12,9 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
+use Generated\Shared\Transfer\ReturnCollectionTransfer;
 use Generated\Shared\Transfer\ReturnItemTransfer;
+use Generated\Shared\Transfer\ReturnTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 
 /**
@@ -56,17 +58,14 @@ class MerchantSalesReturnBusinessTester extends Actor
 
     /**
      * @param string $merchantReference
-     * @param int $idSalesOrder
+     * @param int|null $idSalesOrder
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    public function createItemTransfer(string $merchantReference, int $idSalesOrder): ItemTransfer
+    public function createItemTransfer(string $merchantReference, ?int $idSalesOrder = null): ItemTransfer
     {
-        $itemTransfer = new ItemTransfer();
-
-        if ($merchantReference) {
-            $itemTransfer->setMerchantReference($merchantReference);
-        }
+        $itemTransfer = (new ItemTransfer())
+            ->setMerchantReference($merchantReference);
 
         if ($idSalesOrder) {
             $itemTransfer->setFkSalesOrder($idSalesOrder);
@@ -96,6 +95,7 @@ class MerchantSalesReturnBusinessTester extends Actor
             $merchantOrderItemTransfer = $this->haveMerchantOrderItem([
                 MerchantOrderItemTransfer::ID_ORDER_ITEM => $itemTransfer->getIdSalesOrderItem(),
                 MerchantOrderItemTransfer::ID_MERCHANT_ORDER => $merchantOrderTransfer->getIdMerchantOrder(),
+                MerchantOrderItemTransfer::ORDER_ITEM => $itemTransfer,
             ]);
 
             $merchantOrderTransfer->addMerchantOrderItem($merchantOrderItemTransfer);
@@ -126,13 +126,38 @@ class MerchantSalesReturnBusinessTester extends Actor
 
     /**
      * @param string $merchantReference
-     * @param int $idSalesOrder
+     * @param int|null $idSalesOrder
      *
      * @return \Generated\Shared\Transfer\ReturnItemTransfer
      */
-    public function createReturnItem(string $merchantReference, int $idSalesOrder): ReturnItemTransfer
+    public function createReturnItem(string $merchantReference, ?int $idSalesOrder = null): ReturnItemTransfer
     {
         return (new ReturnItemTransfer())
             ->setOrderItem($this->createItemTransfer($merchantReference, $idSalesOrder));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     *
+     * @return \Generated\Shared\Transfer\ReturnCollectionTransfer
+     */
+    public function createMerchantReturnCollectionWithItem(
+        MerchantTransfer $merchantTransfer
+    ): ReturnCollectionTransfer {
+        $returnTransfer = $this->createMerchantReturnWithItem($merchantTransfer);
+
+        return (new ReturnCollectionTransfer())->addReturn($returnTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     *
+     * @return \Generated\Shared\Transfer\ReturnTransfer
+     */
+    public function createMerchantReturnWithItem(MerchantTransfer $merchantTransfer): ReturnTransfer
+    {
+        $returnItemTransfer = $this->createReturnItem($merchantTransfer->getMerchantReference());
+
+        return (new ReturnTransfer())->addReturnItem($returnItemTransfer);
     }
 }

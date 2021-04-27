@@ -80,6 +80,21 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer $categoryCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
+     */
+    public function getCategoriesByCriteria(CategoryCriteriaTransfer $categoryCriteriaTransfer): CategoryCollectionTransfer
+    {
+        return $this->getFactory()
+            ->createCategoryMapper()
+            ->mapCategoryCollection(
+                $this->applyCategoryFilters($this->getFactory()->createCategoryQuery(), $categoryCriteriaTransfer)->find(),
+                new CategoryCollectionTransfer()
+            );
+    }
+
+    /**
      * @param int $idCategoryNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
@@ -627,6 +642,18 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
                         ->filterByLocaleName($categoryCriteriaTransfer->getLocaleName())
                     ->endUse()
                 ->endUse();
+        }
+
+        if ($categoryCriteriaTransfer->getIdLocale()) {
+            $categoryQuery
+                ->joinWithAttribute()
+                ->useAttributeQuery()
+                    ->filterByFkLocale($categoryCriteriaTransfer->getIdLocale())
+                ->endUse();
+        }
+
+        if ($categoryCriteriaTransfer->getWithNodes()) {
+            $categoryQuery->leftJoinNode();
         }
 
         return $categoryQuery;

@@ -89,6 +89,21 @@ class EventConfig extends AbstractBundleConfig
     }
 
     /**
+     * Keeping instance pooling disallowed helps to avoid caching of used entities inside Propel which keeps
+     * memory consumption minimal.
+     * Allowing instance pooling can help performance. Make sure that the added memory consumption is
+     * not an issue then, though.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isInstancePoolingAllowed(): bool
+    {
+        return $this->get(EventConstants::IS_INSTANCE_POOLING_ALLOWED, false);
+    }
+
+    /**
      * @deprecated This is added only for BC reason and will
      * be removed in the next major.
      *

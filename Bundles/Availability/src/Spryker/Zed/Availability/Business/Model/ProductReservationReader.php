@@ -67,12 +67,14 @@ class ProductReservationReader implements ProductReservationReaderInterface
         $storeTransfer = $this->storeFacade->getCurrentStore();
 
         $stockNames = $this->stockFacade->getStoreToWarehouseMapping()[$storeTransfer->getName()];
+        /** @var int $idStore */
+        $idStore = $storeTransfer->requireIdStore()->getIdStore();
 
         $productAbstractEntity = $this->availabilityQueryContainer
             ->queryAvailabilityAbstractWithStockByIdProductAbstractAndIdLocale(
                 $idProductAbstract,
                 $idLocale,
-                $storeTransfer->getIdStore(),
+                $idStore,
                 $stockNames
             )
             ->findOne();
@@ -98,12 +100,14 @@ class ProductReservationReader implements ProductReservationReaderInterface
         $storeTransfer = $this->storeFacade->getStoreById($idStore);
 
         $stockTypes = $this->stockFacade->getStoreToWarehouseMapping()[$storeTransfer->getName()];
+        /** @var int $idStore */
+        $idStore = $storeTransfer->requireIdStore()->getIdStore();
 
         $productAbstractEntity = $this->availabilityQueryContainer
             ->queryAvailabilityAbstractWithStockByIdProductAbstractAndIdLocale(
                 $idProductAbstract,
                 $idLocale,
-                $storeTransfer->getIdStore(),
+                $idStore,
                 $stockTypes
             )
             ->findOne();
@@ -126,9 +130,13 @@ class ProductReservationReader implements ProductReservationReaderInterface
         $productConcreteAvailabilityRequestTransfer->requireSku();
 
         $storeTransfer = $this->storeFacade->getCurrentStore();
+        /** @var string $sku */
+        $sku = $productConcreteAvailabilityRequestTransfer->requireSku()->getSku();
+        /** @var int $idStore */
+        $idStore = $storeTransfer->requireIdStore()->getIdStore();
 
         $availabilityEntity = $this->availabilityQueryContainer
-            ->queryAvailabilityBySkuAndIdStore($productConcreteAvailabilityRequestTransfer->getSku(), $storeTransfer->getIdStore())
+            ->queryAvailabilityBySkuAndIdStore($sku, $idStore)
             ->findOne();
 
         if ($availabilityEntity === null) {

@@ -13,5 +13,5 @@ interface MerchantOpeningHoursDateScheduleDataSetInterface extends MerchantOpeni
     public const DATE = 'date';
     public const TIME_FROM = 'time_from';
     public const TIME_TO = 'time_to';
-    public const NOTE = 'note';
+    public const NOTE_GLOSSARY_KEY = 'note_glossary_key';
 }

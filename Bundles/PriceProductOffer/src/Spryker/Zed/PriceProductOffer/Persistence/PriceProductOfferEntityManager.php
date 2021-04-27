@@ -46,10 +46,10 @@ class PriceProductOfferEntityManager extends AbstractEntityManager implements Pr
      */
     public function updatePriceProductOfferRelation(PriceProductTransfer $priceProductTransfer): PriceProductTransfer
     {
-        $idPriceProductOffer = $priceProductTransfer->requirePriceDimension()
-            ->getPriceDimension()
-            ->requireIdPriceProductOffer()
-            ->getIdPriceProductOffer();
+        /** @var \Generated\Shared\Transfer\PriceProductDimensionTransfer $priceDimensionTransfer */
+        $priceDimensionTransfer = $priceProductTransfer->requirePriceDimension()->getPriceDimension();
+        /** @var int $idPriceProductOffer */
+        $idPriceProductOffer = $priceDimensionTransfer->requireIdPriceProductOffer()->getIdPriceProductOffer();
 
         $priceProductOfferEntity = $this->getFactory()
             ->getPriceProductOfferPropelQuery()

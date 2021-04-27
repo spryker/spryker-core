@@ -144,7 +144,7 @@ class UserForm extends AbstractType
                 'label' => 'E-mail',
                 'constraints' => [
                     new NotBlank(),
-                    new Email(),
+                    new Email(['mode' => Email::VALIDATION_MODE_HTML5]),
                     $this->createUniqueEmailConstraint(),
                 ],
             ]);

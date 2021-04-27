@@ -14,11 +14,6 @@ use Spryker\Zed\ZedNavigation\Dependency\Util\ZedNavigationToUtilEncodingInterfa
 class ZedNavigationCache implements ZedNavigationCacheInterface
 {
     /**
-     * @var string
-     */
-    protected $cacheFile;
-
-    /**
      * @deprecated Use settings in ZedNavigationCollectorCacheDecorator. Or any class, that use this one.
      *
      * @var bool
@@ -31,13 +26,11 @@ class ZedNavigationCache implements ZedNavigationCacheInterface
     protected $utilEncodingService;
 
     /**
-     * @param string $cacheFile
      * @param bool $isEnabled
      * @param \Spryker\Zed\ZedNavigation\Dependency\Util\ZedNavigationToUtilEncodingInterface $utilEncodingService
      */
-    public function __construct($cacheFile, $isEnabled, ZedNavigationToUtilEncodingInterface $utilEncodingService)
+    public function __construct($isEnabled, ZedNavigationToUtilEncodingInterface $utilEncodingService)
     {
-        $this->cacheFile = $cacheFile;
         $this->isEnabled = $isEnabled;
         $this->utilEncodingService = $utilEncodingService;
     }
@@ -54,31 +47,34 @@ class ZedNavigationCache implements ZedNavigationCacheInterface
 
     /**
      * @param array $navigation
+     * @param string $cacheFilePath
      *
      * @return void
      */
-    public function setNavigation(array $navigation)
+    public function setNavigation(array $navigation, string $cacheFilePath): void
     {
-        if (!is_dir(dirname($this->cacheFile))) {
-            mkdir(dirname($this->cacheFile), 0777, true);
+        if (!is_dir(dirname($cacheFilePath))) {
+            mkdir(dirname($cacheFilePath), 0777, true);
         }
 
-        file_put_contents($this->cacheFile, $this->utilEncodingService->encodeJson($navigation));
+        file_put_contents($cacheFilePath, $this->utilEncodingService->encodeJson($navigation));
     }
 
     /**
+     * @param string $cacheFilePath
+     *
      * @throws \Spryker\Zed\ZedNavigation\Business\Exception\ZedNavigationCacheFileDoesNotExistException
      * @throws \Spryker\Zed\ZedNavigation\Business\Exception\ZedNavigationCacheEmptyException
      *
      * @return array
      */
-    public function getNavigation()
+    public function getNavigation(string $cacheFilePath): array
     {
-        if (!file_exists($this->cacheFile)) {
+        if (!file_exists($cacheFilePath)) {
             throw new ZedNavigationCacheFileDoesNotExistException('Navigation cache is enabled, but there is no cache file.');
         }
 
-        $content = file_get_contents($this->cacheFile);
+        $content = file_get_contents($cacheFilePath);
 
         if (empty($content)) {
             throw new ZedNavigationCacheEmptyException('Navigation cache is enabled, but cache is empty.');
@@ -88,26 +84,30 @@ class ZedNavigationCache implements ZedNavigationCacheInterface
     }
 
     /**
+     * @param string $cacheFilePath
+     *
      * @return bool
      */
-    public function hasContent(): bool
+    public function hasContent(string $cacheFilePath): bool
     {
-        clearstatcache(false, $this->cacheFile);
-        if (!file_exists($this->cacheFile)) {
+        clearstatcache(false, $cacheFilePath);
+        if (!file_exists($cacheFilePath)) {
             return false;
         }
-        $cacheFileSized = filesize($this->cacheFile);
+        $cacheFileSized = filesize($cacheFilePath);
 
         return !empty($cacheFileSized);
     }
 
     /**
+     * @param string $cacheFilePath
+     *
      * @return void
      */
-    public function removeCache(): void
+    public function removeCache(string $cacheFilePath): void
     {
-        if (file_exists($this->cacheFile)) {
-            unlink($this->cacheFile);
+        if (file_exists($cacheFilePath)) {
+            unlink($cacheFilePath);
         }
     }
 }

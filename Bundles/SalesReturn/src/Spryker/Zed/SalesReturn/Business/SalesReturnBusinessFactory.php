@@ -85,7 +85,9 @@ class SalesReturnBusinessFactory extends AbstractBusinessFactory
         return new ReturnReader(
             $this->getRepository(),
             $this->getSalesFacade(),
-            $this->createReturnTotalCalculator()
+            $this->createReturnTotalCalculator(),
+            $this->getReturnExpanderPlugins(),
+            $this->getReturnCollectionExpanderPlugins()
         );
     }
 
@@ -184,5 +186,23 @@ class SalesReturnBusinessFactory extends AbstractBusinessFactory
     public function getReturnCreateRequestValidatorPlugins(): array
     {
         return $this->getProvidedDependency(SalesReturnDependencyProvider::PLUGINS_RETURN_CREATE_REQUEST_VALIDATOR);
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @return \Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnCollectionExpanderPluginInterface[]
+     */
+    public function getReturnCollectionExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(SalesReturnDependencyProvider::PLUGINS_RETURN_COLLECTION_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnExpanderPluginInterface[]
+     */
+    public function getReturnExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(SalesReturnDependencyProvider::PLUGINS_RETURN_EXPANDER);
     }
 }

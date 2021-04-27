@@ -15,6 +15,7 @@ use InvalidArgumentException;
 use Serializable;
 use Spryker\Service\UtilEncoding\Model\Json;
 use Spryker\Shared\Kernel\Transfer\Exception\ArrayAccessReadyOnlyException;
+use Spryker\Shared\Kernel\Transfer\Exception\InvalidStrictTypeException;
 use Spryker\Shared\Kernel\Transfer\Exception\NullValueException;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Shared\Kernel\Transfer\Exception\TransferUnserializationException;
@@ -71,6 +72,20 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
     public function isPropertyModified($propertyName)
     {
         return isset($this->modifiedProperties[$propertyName]);
+    }
+
+    /**
+     * @param string $propertyName
+     *
+     * @return bool
+     */
+    public function isPropertyStrict(string $propertyName): bool
+    {
+        if (!isset($this->transferMetadata[$propertyName]['is_strict'])) {
+            return false;
+        }
+
+        return $this->transferMetadata[$propertyName]['is_strict'];
     }
 
     /**
@@ -165,6 +180,10 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
                 $value = $this->processArrayObject($elementType, $value, $ignoreMissingProperty);
             } elseif ($this->transferMetadata[$property]['is_transfer']) {
                 $value = $this->initializeNestedTransferObject($property, $value, $ignoreMissingProperty);
+
+                if ($this->isPropertyStrict($property)) {
+                    $this->assertInstanceOfTransfer($property, $value);
+                }
             }
 
             $this->$property = $value;
@@ -172,6 +191,27 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
         }
 
         return $this;
+    }
+
+    /**
+     * @param string $property
+     * @param mixed $value
+     *
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\InvalidStrictTypeException
+     *
+     * @return void
+     */
+    protected function assertInstanceOfTransfer(string $property, $value): void
+    {
+        if (!($value instanceof TransferInterface)) {
+            throw new InvalidStrictTypeException(sprintf(
+                'The value for the property "%s::$%s" must be an instance of "%s" but "%s" given.',
+                static::class,
+                $property,
+                TransferInterface::class,
+                gettype($value)
+            ));
+        }
     }
 
     /**
