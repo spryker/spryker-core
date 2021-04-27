@@ -28,10 +28,10 @@
                     <web-mp-autogenerate-input
                         is-field-has-half-width="true"
                         name="{{ form.concreteSku.vars.full_name }}"
-                        value="{{ form.concreteSku.vars.value }}-1"
-                        default-value="{{ form.sku.vars.value }}"
+                        value="{{ form.concreteSku.vars.value }}"
+                        default-value="{{ form.sku.vars.value }}-1"
                         placeholder="{{ form.concreteSku.vars.attr.placeholder }}"
-                        is-autogenerate="{{ form.autogenerateSku.vars.attr.checked }}"
+                        {% if form.vars.value.autogenerateSku == true %}is-autogenerate="true"{% endif %}
                         error="{% if form.concreteSku.vars.errors %}{{ form.concreteSku.vars.errors[0].message | default | trans }}{% endif %}"
                         checkbox-name="{{ form.autogenerateSku.vars.full_name }}"
                     >
@@ -51,7 +51,7 @@
                         value="{{ form.concreteName.vars.value }}"
                         default-value="{{ form.name.vars.value }}"
                         placeholder="{{ form.concreteName.vars.attr.placeholder }}"
-                        is-autogenerate="{{ form.useAbstractProductName.vars.attr.checked | json_encode }}"
+                        {% if form.vars.value.useAbstractProductName == true %}is-autogenerate="true"{% endif %}
                         error="{% if form.concreteName.vars.errors %}{{ form.concreteName.vars.errors[0].message | default | trans }}{% endif %}"
                         checkbox-name="{{ form.useAbstractProductName.vars.full_name }}"
                     >

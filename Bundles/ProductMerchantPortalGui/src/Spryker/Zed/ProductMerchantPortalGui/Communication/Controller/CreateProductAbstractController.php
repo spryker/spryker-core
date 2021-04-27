@@ -100,15 +100,19 @@ class CreateProductAbstractController extends AbstractController
         $abstractProductName = $request->get(static::REQUEST_PARAM_NAME);
         $abstractProductSku = $request->get(static::REQUEST_PARAM_SKU);
 
+        $isNotPost = !$request->isMethod(Request::METHOD_POST);
+
+        $defaultData = [
+            CreateProductAbstractWithSingleConcreteForm::FIELD_NAME => $abstractProductName,
+            CreateProductAbstractWithSingleConcreteForm::FIELD_SKU => $abstractProductSku,
+            CreateProductAbstractWithSingleConcreteForm::FIELD_CONCRETE_NAME => $abstractProductName,
+            CreateProductAbstractWithSingleConcreteForm::FIELD_CONCRETE_SKU => $abstractProductSku,
+            CreateProductAbstractWithSingleConcreteForm::FIELD_USE_ABSTRACT_PRODUCT_NAME => $isNotPost,
+            CreateProductAbstractWithSingleConcreteForm::FIELD_AUTOGENERATE_SKU => $isNotPost,
+        ];
+
         $createProductAbstractWithSingleConcreteForm = $this->getFactory()
-            ->createCreateProductAbstractWithSingleConcreteForm(
-                [
-                    CreateProductAbstractWithSingleConcreteForm::FIELD_NAME => $abstractProductName,
-                    CreateProductAbstractWithSingleConcreteForm::FIELD_SKU => $abstractProductSku,
-                    CreateProductAbstractWithSingleConcreteForm::FIELD_CONCRETE_NAME => $abstractProductName,
-                    CreateProductAbstractWithSingleConcreteForm::FIELD_CONCRETE_SKU => $abstractProductSku,
-                ]
-            );
+            ->createCreateProductAbstractWithSingleConcreteForm($defaultData);
         $createProductAbstractWithSingleConcreteForm->handleRequest($request);
 
         $formData = $createProductAbstractWithSingleConcreteForm->getData();

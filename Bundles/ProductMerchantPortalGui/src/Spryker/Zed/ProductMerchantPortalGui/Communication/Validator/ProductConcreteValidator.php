@@ -16,7 +16,6 @@ use Spryker\Zed\ProductMerchantPortalGui\Dependency\External\ProductMerchantPort
 use Symfony\Component\Validator\Constraints\All;
 use Symfony\Component\Validator\Constraints\Collection;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Required;
 
 class ProductConcreteValidator implements ProductConcreteValidatorInterface
 {
@@ -70,39 +69,51 @@ class ProductConcreteValidator implements ProductConcreteValidatorInterface
      */
     protected function getProductConcreteConstraints(): array
     {
-        return [new All([new Collection(
-            [
-                        ProductConcreteMapper::FIELD_NAME => [
-                            new NotBlank(),
-                        ],
-                        ProductConcreteMapper::FIELD_SKU => [
-                            new NotBlank(),
-                            new SkuRegexConstraint(),
-                            new UniqueAbstractSkuConstraint(),
-                        ],
-                        ProductConcreteMapper::FIELD_SUPER_ATTRIBUTES => [new Collection(
-                            [new Collection(
-                                [
-                                    ProductConcreteMapper::FIELD_NAME => [
-                                        new NotBlank(),
-                                    ],
-                                    ProductConcreteMapper::FIELD_ATTRIBUTE => [
-                                        new Collection(
-                                            [
-                                                ProductConcreteMapper::FIELD_NAME => [
-                                                    new NotBlank(),
-                                                ],
-                                                ProductConcreteMapper::FIELD_VALUE => [
-                                                    new NotBlank(),
-                                                ],
-                                            ]
-                                        ),
-                                    ],
-                                ]
-                            )]
-                        )],
-            ]
-        ),
+        return [new All([
+            new Collection(
+                [
+                    ProductConcreteMapper::FIELD_NAME => [
+                        new NotBlank(),
+                    ],
+                    ProductConcreteMapper::FIELD_SKU => [
+                        new NotBlank(),
+                        new SkuRegexConstraint(),
+                        new UniqueAbstractSkuConstraint(),
+                    ],
+                    ProductConcreteMapper::FIELD_SUPER_ATTRIBUTES => [
+                        new All($this->getSuperAttributeConstraints()),
+                    ],
+                ]
+            ),
         ])];
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraints\Collection[]
+     */
+    protected function getSuperAttributeConstraints(): array
+    {
+        return [new Collection(
+            [
+                ProductConcreteMapper::FIELD_NAME => [
+                    new NotBlank(),
+                ],
+                ProductConcreteMapper::FIELD_VALUE => [
+                    new NotBlank(),
+                ],
+                ProductConcreteMapper::FIELD_ATTRIBUTE => [
+                    new Collection(
+                        [
+                            ProductConcreteMapper::FIELD_NAME => [
+                                new NotBlank(),
+                            ],
+                            ProductConcreteMapper::FIELD_VALUE => [
+                                new NotBlank(),
+                            ],
+                        ]
+                    ),
+                ],
+            ]
+        )];
     }
 }
