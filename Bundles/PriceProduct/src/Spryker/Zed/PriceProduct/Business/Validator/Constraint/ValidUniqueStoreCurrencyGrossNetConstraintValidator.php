@@ -36,7 +36,11 @@ class ValidUniqueStoreCurrencyGrossNetConstraintValidator extends AbstractConstr
         /** @var \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer */
         $moneyValueTransfer = $value->getMoneyValueOrFail();
 
-        if (!$value->getIdProductAbstract() || !$moneyValueTransfer->getFkStore() || !$moneyValueTransfer->getFkCurrency()) {
+        if (!$value->getIdProductAbstract() && !$value->getIdProduct()) {
+            return;
+        }
+
+        if (!$moneyValueTransfer->getFkStore() || !$moneyValueTransfer->getFkCurrency()) {
             return;
         }
 
@@ -45,11 +49,17 @@ class ValidUniqueStoreCurrencyGrossNetConstraintValidator extends AbstractConstr
 
         $priceProductCriteriaTransfer = (new PriceProductCriteriaTransfer())
             ->setIdProductAbstract($value->getIdProductAbstract())
+            ->setIdProductConcrete($value->getIdProduct())
             ->setIdCurrency($moneyValueTransfer->getFkCurrency())
             ->setIdStore($moneyValueTransfer->getFkStore())
             ->setPriceType($priceTypeTransfer->getNameOrFail());
 
         $priceProductTransfers = $constraint->getPriceProductRepository()->getProductPricesByCriteria($priceProductCriteriaTransfer);
+
+        if (!$priceProductTransfers->count()) {
+            return;
+        }
+
         /** @var \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer */
         $priceProductTransfer = $priceProductTransfers->offsetGet(0);
         /** @var \Generated\Shared\Transfer\MoneyValueTransfer $priceProductMoneyValueTransfer */
