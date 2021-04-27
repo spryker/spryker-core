@@ -29,7 +29,7 @@ class SuperAttributesDataProvider implements SuperAttributesDataProviderInterfac
     }
 
     /**
-     * @return string[][]
+     * @return array
      */
     public function getSuperAttributes(): array
     {

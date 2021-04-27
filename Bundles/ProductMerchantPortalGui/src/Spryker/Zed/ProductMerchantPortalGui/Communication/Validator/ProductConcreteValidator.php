@@ -65,7 +65,7 @@ class ProductConcreteValidator implements ProductConcreteValidatorInterface
     }
 
     /**
-     * @return \Symfony\Component\Validator\Constraints\Collection[]
+     * @return array
      */
     protected function getProductConcreteConstraints(): array
     {
@@ -89,7 +89,7 @@ class ProductConcreteValidator implements ProductConcreteValidatorInterface
     }
 
     /**
-     * @return \Symfony\Component\Validator\Constraints\Collection[]
+     * @return array
      */
     protected function getSuperAttributeConstraints(): array
     {

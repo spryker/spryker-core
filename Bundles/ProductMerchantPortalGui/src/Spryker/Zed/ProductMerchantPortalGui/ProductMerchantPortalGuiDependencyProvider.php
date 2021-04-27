@@ -503,9 +503,9 @@ class ProductMerchantPortalGuiDependencyProvider extends AbstractBundleDependenc
     }
 
     /**
-     * @param \Spryker\Client\Kernel\Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Spryker\Client\Kernel\Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     protected function addStore(Container $container): Container
     {

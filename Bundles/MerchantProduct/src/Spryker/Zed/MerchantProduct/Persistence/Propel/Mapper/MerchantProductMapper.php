@@ -47,8 +47,8 @@ class MerchantProductMapper
         SpyMerchantProductAbstract $merchantProductEntity
     ): SpyMerchantProductAbstract {
         $merchantProductEntity->fromArray($merchantProductTransfer->toArray());
-        $merchantProductEntity->setFkMerchant($merchantProductTransfer->getIdMerchant());
-        $merchantProductEntity->setFkProductAbstract($merchantProductTransfer->getIdProductAbstract());
+        $merchantProductEntity->setFkMerchant($merchantProductTransfer->getIdMerchantOrFail());
+        $merchantProductEntity->setFkProductAbstract($merchantProductTransfer->getIdProductAbstractOrFail());
 
         return $merchantProductEntity;
     }
