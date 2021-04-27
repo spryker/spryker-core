@@ -26,10 +26,8 @@ use Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabelStoreQuery;
 use Spryker\Shared\Product\ProductConfig;
 use Spryker\Shared\ProductLabel\ProductLabelConstants;
-use Spryker\Zed\ProductLabel\Business\ProductLabelBusinessFactory;
 use Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface;
 use Spryker\Zed\ProductLabel\Dependency\Plugin\ProductLabelRelationUpdaterPluginInterface;
-use Spryker\Zed\ProductLabel\ProductLabelConfig;
 use Spryker\Zed\ProductLabel\ProductLabelDependencyProvider;
 
 /**
