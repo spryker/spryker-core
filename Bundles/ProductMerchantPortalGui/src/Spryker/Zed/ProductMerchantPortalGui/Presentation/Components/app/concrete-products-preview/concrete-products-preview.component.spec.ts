@@ -10,25 +10,25 @@ import { IdGenerator } from '../../services/types';
 const mockName = 'Name';
 const mockAttributes = [
     {
-        title: 'name1',
+        name: 'name1',
         value: 'value1',
-        values: [
+        attributes: [
             {
-                title: 'name11',
+                name: 'name11',
                 value: 'value11',
             },
             {
-                title: 'name12',
+                name: 'name12',
                 value: 'value12',
             },
         ],
     },
     {
-        title: 'name2',
+        name: 'name2',
         value: 'value2',
-        values: [
+        attributes: [
             {
-                title: 'name21',
+                name: 'name21',
                 value: 'value21',
             },
         ],
@@ -40,14 +40,20 @@ const mockGeneratedProducts = [
         sku: '',
         superAttributes: [
             {
-                title: 'name11',
-                value: 'value11',
-                key: 'name1',
+                name: 'name1',
+                value: 'value1',
+                attribute: {
+                    name: 'name11',
+                    value: 'value11',
+                }
             },
             {
-                title: 'name21',
-                value: 'value21',
-                key: 'name2',
+                name: 'name2',
+                value: 'value2',
+                attribute: {
+                    name: 'name21',
+                    value: 'value21',
+                }
             },
         ],
     },
@@ -56,14 +62,20 @@ const mockGeneratedProducts = [
         sku: '',
         superAttributes: [
             {
-                title: 'name12',
-                value: 'value12',
-                key: 'name1',
+                name: 'name1',
+                value: 'value1',
+                attribute: {
+                    name: 'name12',
+                    value: 'value12',
+                }
             },
             {
-                title: 'name21',
-                value: 'value21',
-                key: 'name2',
+                name: 'name2',
+                value: 'value2',
+                attribute: {
+                    name: 'name21',
+                    value: 'value21',
+                }
             },
         ],
     },

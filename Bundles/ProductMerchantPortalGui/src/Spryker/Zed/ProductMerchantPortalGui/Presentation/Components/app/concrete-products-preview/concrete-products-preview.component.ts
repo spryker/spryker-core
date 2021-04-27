@@ -55,19 +55,19 @@ export class ConcreteProductsPreviewComponent implements OnInit, OnChanges {
     ) {}
 
     ngOnInit() {
-        if (!this.generatedProducts.length) {
-            return;
-        }
-
-        this.generatedProducts.some((generatedProduct) => {
-            if (!generatedProduct.sku.length) {
-                this.isAutoGenerateSkuCheckbox = false;
-            }
-
-            if (!generatedProduct.name.length) {
-                this.isAutoGenerateNameCheckbox = false;
-            }
-        });
+        // if (!this.generatedProducts?.length) {
+        //     return;
+        // }
+        //
+        // this.generatedProducts.some((generatedProduct) => {
+        //     if (!generatedProduct.sku.length) {
+        //         this.isAutoGenerateSkuCheckbox = false;
+        //     }
+        //
+        //     if (!generatedProduct.name.length) {
+        //         this.isAutoGenerateNameCheckbox = false;
+        //     }
+        // });
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -84,6 +84,22 @@ export class ConcreteProductsPreviewComponent implements OnInit, OnChanges {
                 }
 
                 this.cdr.markForCheck();
+            });
+        }
+
+        if ('generatedProducts' in changes) {
+            if (!this.generatedProducts?.length) {
+                return;
+            }
+
+            this.generatedProducts.some((generatedProduct) => {
+                if (!generatedProduct.sku.length) {
+                    this.isAutoGenerateSkuCheckbox = false;
+                }
+
+                if (!generatedProduct.name.length) {
+                    this.isAutoGenerateNameCheckbox = false;
+                }
             });
         }
     }
