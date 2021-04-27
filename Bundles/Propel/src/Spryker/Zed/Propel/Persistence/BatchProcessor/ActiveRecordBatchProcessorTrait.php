@@ -787,7 +787,7 @@ trait ActiveRecordBatchProcessorTrait
     /**
      * @return bool
      */
-    protected function requiresPrimaryKeyValue()
+    protected function requiresPrimaryKeyValue(): bool
     {
         return ($this->getAdapter() instanceof PgsqlAdapter);
     }
