@@ -36,7 +36,9 @@ export class ProductAttributesSelectorComponent implements OnChanges, OnInit {
     constructor(private cdr: ChangeDetectorRef) {}
 
     ngOnInit(): void {
-        this.create();
+        if (!this.selectedAttributes.length) {
+            this.create();
+        }
     }
 
     ngOnChanges(changes: SimpleChanges): void {
@@ -67,6 +69,12 @@ export class ProductAttributesSelectorComponent implements OnChanges, OnInit {
 
     getAttributes(index: number): AttributeOptions[] {
         return this.attributeOptions[index];
+    }
+
+    getSelectedAttributes(index: number): string[] {
+        if (this.selectedAttributes[index]?.attributes) {
+            return this.selectedAttributes[index].attributes.map((attr) => attr.value);
+        }
     }
 
     superAttributeChange(value: string, index: number): void {

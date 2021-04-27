@@ -339,20 +339,20 @@ describe('ConcreteProductsPreviewComponent', () => {
                 ConcreteProductSkuGeneratorFactoryService,
             ) as any) as MockGeneratorFactory;
 
-            expect(skuInputs[0].properties.value).toBe(mockSkuValues.firstRow);
-            expect(skuGeneratorFactory.generator.generate).toHaveBeenCalledWith(mockSkuValues.firstRow);
-            expect(skuGeneratorFactory.generator.generate).not.toHaveBeenCalledWith(mockSkuValues.secondRow);
-            expect(skuInputs[1].properties.value).toBe(mockSkuValues.secondRow);
+            expect(skuInputs[0].properties.value).toBe('');
+            expect(skuInputs[1].properties.value).toBe('');
 
-            headerCheckboxes[0].triggerEventHandler('checkedChange', false);
+            headerCheckboxes[0].triggerEventHandler('checkedChange', true);
             fixture.detectChanges();
 
             const updatedSkuInputs = fixture.debugElement.queryAll(
                 By.css('cdk-virtual-scroll-viewport .mp-concrete-products-preview__table-row-sku spy-input'),
             );
 
-            expect(updatedSkuInputs[0].properties.value).toBe('');
-            expect(updatedSkuInputs[1].properties.value).toBe('');
+            expect(updatedSkuInputs[0].properties.value).toBe(mockSkuValues.firstRow);
+            expect(skuGeneratorFactory.generator.generate).toHaveBeenCalledWith(mockSkuValues.firstRow);
+            expect(skuGeneratorFactory.generator.generate).not.toHaveBeenCalledWith(mockSkuValues.secondRow);
+            expect(updatedSkuInputs[1].properties.value).toBe(mockSkuValues.secondRow);
         }));
 
         it('`Same Name as Abstract Product` checkbox should set generated value to inputs', fakeAsync(() => {
@@ -376,20 +376,20 @@ describe('ConcreteProductsPreviewComponent', () => {
                 ConcreteProductNameGeneratorFactoryService,
             ) as any) as MockGeneratorFactory;
 
-            expect(nameInputs[0].properties.value).toBe(mockNameValues.firstRow);
-            expect(nameGeneratorFactory.generator.generate).toHaveBeenCalledWith(mockNameValues.firstRow);
-            expect(nameGeneratorFactory.generator.generate).not.toHaveBeenCalledWith(mockNameValues.secondRow);
-            expect(nameInputs[1].properties.value).toBe(mockNameValues.secondRow);
+            expect(nameInputs[0].properties.value).toBe('');
+            expect(nameInputs[1].properties.value).toBe('');
 
-            headerCheckboxes[1].triggerEventHandler('checkedChange', false);
+            headerCheckboxes[1].triggerEventHandler('checkedChange', true);
             fixture.detectChanges();
 
             const updatedNameInputs = fixture.debugElement.queryAll(
                 By.css('cdk-virtual-scroll-viewport .mp-concrete-products-preview__table-row-name spy-input'),
             );
 
-            expect(updatedNameInputs[0].properties.value).toBe('');
-            expect(updatedNameInputs[1].properties.value).toBe('');
+            expect(updatedNameInputs[0].properties.value).toBe(mockNameValues.firstRow);
+            expect(nameGeneratorFactory.generator.generate).toHaveBeenCalledWith(mockNameValues.firstRow);
+            expect(nameGeneratorFactory.generator.generate).not.toHaveBeenCalledWith(mockNameValues.secondRow);
+            expect(updatedNameInputs[1].properties.value).toBe(mockNameValues.secondRow);
         }));
     });
 });

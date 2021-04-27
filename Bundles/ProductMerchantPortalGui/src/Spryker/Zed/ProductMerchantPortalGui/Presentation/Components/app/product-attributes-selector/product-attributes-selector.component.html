@@ -24,6 +24,7 @@
             <div class="mp-product-attributes-selector__content-row-values-name">
                 <spy-select
                     [options]="getAttributes(i)"
+                    [value]="getSelectedAttributes(i)"
                     (valueChange)="attributesChange($event, i, attribute)"
                     multiple
                     class="mp-product-attributes-selector__content-row-values-name-select"

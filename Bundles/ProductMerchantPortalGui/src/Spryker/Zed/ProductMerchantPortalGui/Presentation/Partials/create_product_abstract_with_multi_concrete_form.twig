@@ -8,6 +8,8 @@
     {% set attributes = superProductManagementAttributes | json_encode %}
     {% set selectedAttributes = selectedAttributesJson %}
     {% set concreteProducts = concreteProductsJson %}
+    <pre>{{ dump(selectedAttributes) }}</pre>
+    <pre>{{ dump(concreteProducts) }}</pre>
 
     {% block createMultiConcreteProduct %}
         <web-mp-concrete-product-generator-data
