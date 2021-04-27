@@ -153,7 +153,7 @@ interface HttpConstants
 
     /**
      * Specification:
-     * - If option set to true, the application will set http strict transport header.
+     * - If option set to true, the application will set HTTP strict transport header.
      *
      * @api
      */

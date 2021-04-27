@@ -67,7 +67,7 @@ class HSTSHeaderEventDispatcher extends AbstractPlugin implements EventDispatche
     /**
      * @phpstan-param array<string, mixed> $hstsConfig
      *
-     * @param array $hstsConfig
+     * @param string[] $hstsConfig
      *
      * @return string
      */

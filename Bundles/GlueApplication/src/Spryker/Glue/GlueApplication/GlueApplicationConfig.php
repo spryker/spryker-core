@@ -125,11 +125,11 @@ class GlueApplicationConfig extends AbstractBundleConfig
     }
 
     /**
-     * @phpstan-return array<string, mixed>
+     * @phpstan-return array<string, string>
      *
      * @api
      *
-     * @return array
+     * @return string[]
      */
     public function getSecurityHeaders(): array
     {
