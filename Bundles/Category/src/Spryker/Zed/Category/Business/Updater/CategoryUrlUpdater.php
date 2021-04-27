@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\CategoryNodeUrlCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
+use Generated\Shared\Transfer\UrlTransfer;
 use Spryker\Zed\Category\Business\Generator\UrlPathGeneratorInterface;
 use Spryker\Zed\Category\CategoryConfig;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToUrlInterface;
@@ -133,7 +134,7 @@ class CategoryUrlUpdater implements CategoryUrlUpdaterInterface
 
             $categoryNodeIds = $this->categoryRepository
                 ->getDescendantCategoryNodeIdsByIdCategory($categoryTransfer, $categoryCriteriaTransfer);
-            $categoryNodeIds[] = $categoryTransfer->getIdCategoryOrFail();
+            $categoryNodeIds[] = $categoryTransfer->getCategoryNodeOrFail()->getIdCategoryNodeOrFail();
 
             $categoryNodeUrlCriteriaTransfer->setCategoryNodeIds($categoryNodeIds);
             $urlTransfers = $this->categoryRepository->getCategoryNodeUrls($categoryNodeUrlCriteriaTransfer);
@@ -180,7 +181,7 @@ class CategoryUrlUpdater implements CategoryUrlUpdaterInterface
     ): void {
         foreach ($urlTransfers as $urlTransfer) {
             if (
-                $urlTransfer->getFkLocaleOrFail() != $localeTransfer->getIdLocaleOrFail()
+                !$this->checkUrlLocale($urlTransfer, $localeTransfer)
                 || $urlTransfer->getFkResourceCategorynodeOrFail() != $nodeTransfer->getIdCategoryNodeOrFail()
             ) {
                 continue;
@@ -209,7 +210,7 @@ class CategoryUrlUpdater implements CategoryUrlUpdaterInterface
         array $indexedCategoryUrlPaths
     ): void {
         foreach ($urlTransfers as $urlTransfer) {
-            if ($urlTransfer->getFkLocaleOrFail() != $localeTransfer->getIdLocaleOrFail()) {
+            if (!$this->checkUrlLocale($urlTransfer, $localeTransfer)) {
                 continue;
             }
 
@@ -222,5 +223,16 @@ class CategoryUrlUpdater implements CategoryUrlUpdaterInterface
             $urlTransfer->setUrl($categoryUrlPath);
             $this->urlFacade->updateUrl($urlTransfer);
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return bool
+     */
+    protected function checkUrlLocale(UrlTransfer $urlTransfer, LocaleTransfer $localeTransfer): bool
+    {
+        return $urlTransfer->getFkLocaleOrFail() == $localeTransfer->getIdLocaleOrFail();
     }
 }

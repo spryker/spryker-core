@@ -24,7 +24,7 @@ class CategoryTreeWriteForPublishingPublisherPlugin extends AbstractPlugin imple
      * {@inheritDoc}
      * - Publishes category tree data by `CategoryStore` publish event.
      * - Publishes category tree data by `CategoryTree` publish events.
-     * - Publishes category tree data by after (create/update/delete) publish events.
+     * - Publishes category tree data after (create/update/delete) publish events.
      *
      * @api
      *

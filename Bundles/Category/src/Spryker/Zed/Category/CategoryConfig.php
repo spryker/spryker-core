@@ -33,6 +33,9 @@ class CategoryConfig extends AbstractBundleConfig
     protected const CATEGORY_READ_CHUNK_SIZE = 10000;
 
     /**
+     * Specification:
+     * - Returns the size of the batch retrieval.
+     *
      * @api
      *
      * @return int
