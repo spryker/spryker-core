@@ -18,7 +18,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
 /**
  * @method \Spryker\Glue\Http\HttpConfig getConfig()
  */
-class HstsHeaderEventDispatcher extends AbstractPlugin implements EventDispatcherPluginInterface
+class HSTSHeaderEventDispatcher extends AbstractPlugin implements EventDispatcherPluginInterface
 {
     protected const HEADER_HSTS = 'Strict-Transport-Security';
     protected const HSTS_CONFIG_MAX_AGE = 'max_age';

@@ -161,7 +161,7 @@ interface HttpConstants
 
     /**
      * Specification:
-     * - Http strict transport header body.
+     * - HTTP strict transport header body.
      *
      * @api
      */
