@@ -1,30 +1,31 @@
 import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { InvokeModule } from '@spryker/utils';
 import { ProductAttributesSelectorComponent } from './product-attributes-selector.component';
 
 const mockName = 'Name';
 const mockAttributes = [
     {
-        title: 'name1',
+        name: 'name1',
         value: 'value1',
-        values: [
+        attributes: [
             {
-                title: 'name11',
+                name: 'name11',
                 value: 'value11',
             },
             {
-                title: 'name12',
+                name: 'name12',
                 value: 'value12',
             },
         ],
     },
     {
-        title: 'name2',
+        name: 'name2',
         value: 'value2',
-        values: [
+        attributes: [
             {
-                title: 'name21',
+                name: 'name21',
                 value: 'value21',
             },
         ],
@@ -32,11 +33,11 @@ const mockAttributes = [
 ];
 const mockSelectedAttributes = [
     {
-        title: 'name1',
+        name: 'name1',
         value: 'value1',
-        values: [
+        attributes: [
             {
-                title: 'name11',
+                name: 'name11',
                 value: 'value11',
             },
         ],
@@ -71,6 +72,7 @@ describe('ProductAttributesSelectorComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
+            imports: [InvokeModule],
             declarations: [ProductAttributesSelectorComponent, TestComponent],
             schemas: [NO_ERRORS_SCHEMA],
         }).compileComponents();
@@ -136,7 +138,7 @@ describe('ProductAttributesSelectorComponent', () => {
 
         it('should render <spy-button> with <spy-icon> components to the `.mp-product-attributes-selector__content-row-values-name` element', () => {
             component.attributes = mockAttributes;
-            component.selectedAttributes = mockSelectedAttributes;
+            component.selectedAttributes = [...mockSelectedAttributes, {}];
             fixture.detectChanges();
 
             const rowValuesNameButton = fixture.debugElement.query(
@@ -162,9 +164,7 @@ describe('ProductAttributesSelectorComponent', () => {
 
             expect(hiddenInput).toBeTruthy();
             expect(hiddenInput.properties.name).toBe(mockName);
-            expect(hiddenInput.properties.value.replace(/\s/g, '')).toBe(
-                JSON.stringify([...mockSelectedAttributes, {}]),
-            );
+            expect(hiddenInput.properties.value.replace(/\s/g, '')).toBe(JSON.stringify([...mockSelectedAttributes]));
         });
 
         it('should add a new attribute row by `Add` button click', () => {
@@ -203,22 +203,22 @@ describe('ProductAttributesSelectorComponent', () => {
             const hiddenInput = fixture.debugElement.query(By.css('input[type=hidden]'));
 
             expect(hiddenInput.properties.value.replace(/\s/g, '')).toBe(
-                JSON.stringify([...mockSelectedAttributes, {}, {}]),
+                JSON.stringify([...mockSelectedAttributes, {}]),
             );
 
             buttonDeleteElems[0].triggerEventHandler('click', 0);
             fixture.detectChanges();
 
-            expect(hiddenInput.properties.value.replace(/\s/g, '')).toBe(JSON.stringify([{}, {}]));
+            expect(hiddenInput.properties.value.replace(/\s/g, '')).toBe(JSON.stringify([{}]));
         });
 
         it('should update selected attributes by `Super attribute` select change', () => {
             const mockValue = 'value1';
             const mockSelectedSuperAttribute = [
                 {
-                    title: 'name1',
+                    name: 'name1',
                     value: mockValue,
-                    values: [],
+                    attributes: [],
                 },
             ];
 
@@ -244,14 +244,14 @@ describe('ProductAttributesSelectorComponent', () => {
         it('should update selected attributes by `Values` select change', () => {
             const mockValue = 'value1';
             const mockValues = {
-                title: 'name11',
+                name: 'name11',
                 value: 'value11',
             };
             const mockSelectedSuperAttribute = [
                 {
-                    title: 'name1',
+                    name: 'name1',
                     value: mockValue,
-                    values: [mockValues],
+                    attributes: [mockValues],
                 },
             ];
 

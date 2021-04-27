@@ -105,7 +105,9 @@ class ProductConcreteMapper implements ProductConcreteMapperInterface
     {
         $attributes = [];
         foreach ($concreteProductTransfer as $superAttribute) {
-            $attributes[$superAttribute[static::FIELD_KEY]] = $superAttribute[static::FIELD_VALUE];
+            $attributeKey = $superAttribute[static::FIELD_VALUE];
+            $attributeValue = $superAttribute[static::FIELD_ATTRIBUTE][static::FIELD_VALUE];
+            $attributes[$attributeKey] = $attributeValue;
         }
 
         return $attributes;

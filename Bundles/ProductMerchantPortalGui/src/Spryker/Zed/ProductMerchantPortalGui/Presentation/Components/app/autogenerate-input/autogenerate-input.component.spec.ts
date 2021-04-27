@@ -1,7 +1,7 @@
 import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AutogenerateInputComponent } from './autogenerate-input.component';
 import { By } from '@angular/platform-browser';
+import { AutogenerateInputComponent } from './autogenerate-input.component';
 
 @Component({
     selector: 'spy-test',
@@ -12,6 +12,7 @@ import { By } from '@angular/platform-browser';
             [placeholder]="placeholder"
             [isAutogenerate]="isAutogenerate"
             [error]="error"
+            [checkboxName]="checkboxName"
             [isFieldHasHalfWidth]="isFieldHasHalfWidth"
         >
             Content
@@ -24,6 +25,7 @@ class TestComponent {
     placeholder: string;
     isAutogenerate: boolean;
     error: string;
+    checkboxName: string;
     isFieldHasHalfWidth: boolean;
 }
 
@@ -65,6 +67,15 @@ describe('AutogenerateInputComponent', () => {
         const checkboxElem = fixture.debugElement.query(By.css('spy-checkbox'));
 
         expect(checkboxElem.nativeElement.textContent).toContain('Content');
+    });
+
+    it('should render hidden input if `@Input(isAutogenerate)` is true', () => {
+        component.isAutogenerate = true;
+        fixture.detectChanges();
+
+        const hiddenInputElem = fixture.debugElement.query(By.css('input[type=hidden]'));
+
+        expect(hiddenInputElem).toBeTruthy();
     });
 
     it('should change <spy-input> `disabled` property if `checkedChange` event of the <spy-checkbox> component has been called', () => {
@@ -133,23 +144,31 @@ describe('AutogenerateInputComponent', () => {
         });
 
         it('should bound `@Input(isAutogenerate)` to the input `disabled` of <spy-input> component', () => {
-            const mockAutogenerate = true;
             const inputElem = fixture.debugElement.query(By.css('spy-input'));
 
-            component.isAutogenerate = mockAutogenerate;
+            component.isAutogenerate = true;
             fixture.detectChanges();
 
-            expect(inputElem.properties.disabled).toBe(mockAutogenerate);
+            expect(inputElem.properties.disabled).toBe(true);
         });
 
         it('should bound `@Input(isAutogenerate)` to the input `checked` of <spy-checkbox> component', () => {
-            const mockAutogenerate = true;
             const checkboxElem = fixture.debugElement.query(By.css('spy-checkbox'));
 
-            component.isAutogenerate = mockAutogenerate;
+            component.isAutogenerate = true;
             fixture.detectChanges();
 
-            expect(checkboxElem.properties.checked).toBe(mockAutogenerate);
+            expect(checkboxElem.properties.checked).toBe(true);
+        });
+
+        it('should bound `@Input(checkboxName)` to the input `name` of <spy-checkbox> component', () => {
+            const mockCheckboxName = 'checkboxName';
+            const checkboxElem = fixture.debugElement.query(By.css('spy-checkbox'));
+
+            component.checkboxName = mockCheckboxName;
+            fixture.detectChanges();
+
+            expect(checkboxElem.properties.name).toBe(mockCheckboxName);
         });
 
         it('should bound `@Input(error)` to the input `error` of <spy-form-item> component', () => {

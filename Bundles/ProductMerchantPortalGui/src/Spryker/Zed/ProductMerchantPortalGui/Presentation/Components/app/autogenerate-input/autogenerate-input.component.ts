@@ -14,12 +14,14 @@ import { ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges, Vi
 export class AutogenerateInputComponent implements OnChanges {
     @Input() name: string;
     @Input() value: string;
-    @Input() defaultValue: string;
+    @Input() originalValue: string;
     @Input() placeholder: string;
     @Input() isAutogenerate: boolean;
     @Input() error?: string;
     @Input() checkboxName?: string;
     @Input() isFieldHasHalfWidth?: boolean;
+
+    defaultValue: string;
 
     ngOnChanges(changes: SimpleChanges): void {
         if ('value' in changes) {
@@ -29,7 +31,7 @@ export class AutogenerateInputComponent implements OnChanges {
 
     onCheckboxChange(checked: boolean): void {
         if (checked) {
-            this.value = this.defaultValue;
+            this.value = this.defaultValue.length ? this.defaultValue : this.originalValue;
         }
     }
 }

@@ -46,6 +46,10 @@ export class ProductAttributesSelectorComponent implements OnChanges, OnInit {
             this.remapSuperAttributes();
             this.generateAttributesObject();
         }
+
+        if ('selectedAttributes' in changes) {
+            this.initAttributeOptions();
+        }
     }
 
     generateAttributesObject(): void {
@@ -55,6 +59,17 @@ export class ProductAttributesSelectorComponent implements OnChanges, OnInit {
                 [attribute.value]: attribute,
             };
         }, {});
+    }
+
+    initAttributeOptions(): void {
+        this.attributeOptions = this.selectedAttributes.map((attrs) => {
+            return this.attributesObject[attrs.value]?.attributes.map((attr) => {
+                return {
+                    title: attr.name,
+                    value: attr.value,
+                };
+            });
+        });
     }
 
     remapSuperAttributes(): void {
@@ -67,13 +82,13 @@ export class ProductAttributesSelectorComponent implements OnChanges, OnInit {
         });
     }
 
-    getAttributes(index: number): AttributeOptions[] {
-        return this.attributeOptions[index];
+    getAttributes(index: number, attributeOptions: AttributeOptions[][]): AttributeOptions[] {
+        return attributeOptions[index];
     }
 
-    getSelectedAttributes(index: number): string[] {
-        if (this.selectedAttributes[index]?.attributes) {
-            return this.selectedAttributes[index].attributes.map((attr) => attr.value);
+    getSelectedAttributes(index: number, selectedAttributes: ProductAttribute[]): string[] {
+        if (selectedAttributes[index]?.attributes) {
+            return selectedAttributes[index].attributes.map((attr) => attr.value);
         }
     }
 

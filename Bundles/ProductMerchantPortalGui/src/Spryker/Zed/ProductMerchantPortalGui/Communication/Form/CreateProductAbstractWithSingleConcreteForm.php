@@ -30,8 +30,8 @@ class CreateProductAbstractWithSingleConcreteForm extends AbstractType
     public const FIELD_SKU = 'sku';
     public const FIELD_CONCRETE_NAME = 'concreteName';
     public const FIELD_CONCRETE_SKU = 'concreteSku';
-    protected const FIELD_AUTOGENERATE_SKU = 'autogenerateSku';
-    protected const FIELD_USE_ABSTRACT_PRODUCT_NAME = 'useAbstractProductName';
+    public const FIELD_AUTOGENERATE_SKU = 'autogenerateSku';
+    public const FIELD_USE_ABSTRACT_PRODUCT_NAME = 'useAbstractProductName';
 
     protected const LABEL_CONCRETE_SKU = 'Concrete Product SKU';
     protected const LABEL_CONCRETE_NAME = 'Concrete Product Name';
@@ -150,9 +150,7 @@ class CreateProductAbstractWithSingleConcreteForm extends AbstractType
         $builder->add(static::FIELD_AUTOGENERATE_SKU, CheckboxType::class, [
             'required' => false,
             'label' => static::LABEL_AUTOGENERATE_SKU,
-//            'attr' => [
-//                'checked' => true,
-//            ],
+            'data' => false,
         ]);
 
         return $this;
@@ -168,9 +166,7 @@ class CreateProductAbstractWithSingleConcreteForm extends AbstractType
         $builder->add(static::FIELD_USE_ABSTRACT_PRODUCT_NAME, CheckboxType::class, [
             'required' => false,
             'label' => static::LABEL_USE_ABSTRACT_PRODUCT_NAME,
-//            'attr' => [
-//                'checked' => true,
-//            ],
+            'data' => false,
         ]);
 
         return $this;

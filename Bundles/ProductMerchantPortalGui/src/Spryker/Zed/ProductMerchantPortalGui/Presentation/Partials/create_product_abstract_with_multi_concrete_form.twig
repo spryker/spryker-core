@@ -6,10 +6,8 @@
     {% set attributesName = 'selectedAttributes' %}
     {% set productsName = 'concreteProducts' %}
     {% set attributes = superProductManagementAttributes | json_encode %}
-    {% set selectedAttributes = selectedAttributesJson %}
-    {% set concreteProducts = concreteProductsJson %}
-    <pre>{{ dump(selectedAttributes) }}</pre>
-    <pre>{{ dump(concreteProducts) }}</pre>
+    {% set selectedAttributes = selectedAttributesJson | default('[]') %}
+    {% set concreteProducts = concreteProductsJson | default('[]') %}
 
     {% block createMultiConcreteProduct %}
         <web-mp-concrete-product-generator-data
@@ -59,7 +57,6 @@
                         <span preview-col-name-name>{{ 'Name default' | trans }}</span>
                         <span preview-no-data-text>{{ 'No concretes created yet' | trans }}</span>
                     {% endblock %}
-
                 {{ form_end(form) }}
             </web-mp-create-multi-concrete-product>
         </web-mp-concrete-product-generator-data>

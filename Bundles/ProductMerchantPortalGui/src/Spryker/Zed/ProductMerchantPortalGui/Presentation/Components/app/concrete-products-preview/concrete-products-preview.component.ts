@@ -44,6 +44,7 @@ export class ConcreteProductsPreviewComponent implements OnInit, OnChanges {
     deleteIcon = IconDeleteModule.icon;
     attributeValues: ProductAttributeValue[][] = [];
     generatedAttributeValues: ProductAttributeValue[][] = [];
+    initialGeneratedProducts: ConcreteProductPreview[] = [];
 
     private concreteProductSkuGenerator = this.concreteProductSkuGeneratorFactory.create();
     private concreteProductNameGenerator = this.concreteProductNameGeneratorFactory.create();
@@ -55,11 +56,11 @@ export class ConcreteProductsPreviewComponent implements OnInit, OnChanges {
     ) {}
 
     ngOnInit() {
-        if (!this.generatedProducts?.length) {
+        if (!this.initialGeneratedProducts?.length) {
             return;
         }
 
-        this.generatedProducts.some((generatedProduct) => {
+        this.initialGeneratedProducts.some((generatedProduct) => {
             if (!generatedProduct.sku.length) {
                 this.isAutoGenerateSkuCheckbox = false;
             }
@@ -68,10 +69,12 @@ export class ConcreteProductsPreviewComponent implements OnInit, OnChanges {
                 this.isAutoGenerateNameCheckbox = false;
             }
         });
+        this.generatedProducts = [...this.initialGeneratedProducts];
     }
 
     ngOnChanges(changes: SimpleChanges) {
         if ('attributes' in changes) {
+            this.initialGeneratedProducts = this.generatedProducts?.length ? [...this.generatedProducts] : [];
             this.generateProductsArray();
 
             setTimeout(() => {
