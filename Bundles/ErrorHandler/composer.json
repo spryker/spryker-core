@@ -9,7 +9,8 @@
     "spryker/config": "^3.0.0",
     "spryker/kernel": "^3.30.0",
     "spryker/log": "^3.0.0",
-    "spryker/monitoring": "^1.0.0 || ^2.0.0"
+    "spryker/monitoring": "^1.0.0 || ^2.0.0",
+    "spryker/util-sanitize": "^2.3.0"
   },
   "require-dev": {
     "filp/whoops": "^2.1",
