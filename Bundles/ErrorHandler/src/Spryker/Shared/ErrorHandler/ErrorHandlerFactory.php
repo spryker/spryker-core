@@ -7,6 +7,8 @@
 
 namespace Spryker\Shared\ErrorHandler;
 
+use Spryker\Service\Kernel\Locator;
+use Spryker\Service\UtilSanitize\UtilSanitizeServiceInterface;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\ErrorHandler\ErrorRenderer\ApiErrorRenderer;
 use Spryker\Shared\ErrorHandler\ErrorRenderer\CliErrorRenderer;
@@ -37,10 +39,11 @@ class ErrorHandlerFactory
      */
     public function createErrorHandler()
     {
-        $errorLogger = ErrorLogger::getInstance();
-        $errorRenderer = $this->createErrorRenderer();
-
-        $errorHandler = new ErrorHandler($errorLogger, $errorRenderer);
+        $errorHandler = new ErrorHandler(
+            ErrorLogger::getInstance(),
+            $this->createErrorRenderer(),
+            $this->getUtilSanitizeService()
+        );
 
         return $errorHandler;
     }
@@ -69,6 +72,14 @@ class ErrorHandlerFactory
         $errorRendererClassName = Config::get(ErrorHandlerConstants::ERROR_RENDERER, WebHtmlErrorRenderer::class);
 
         return $this->createWebErrorRenderer($errorRendererClassName);
+    }
+
+    /**
+     * @return \Spryker\Service\UtilSanitize\UtilSanitizeServiceInterface
+     */
+    protected function getUtilSanitizeService(): UtilSanitizeServiceInterface
+    {
+        return Locator::getInstance()->utilSanitize()->service();
     }
 
     /**
