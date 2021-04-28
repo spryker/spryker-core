@@ -41,6 +41,7 @@
 
     <transfer name="MerchantUser">
         <property name="idMerchant" type="int"/>
+        <property name="merchant" type="Merchant"/>
     </transfer>
 
     <transfer name="Locale">
@@ -159,29 +160,31 @@
         <property name="categories" type="Category[]" singular="category"/>
     </transfer>
 
-    <transfer name="PriceProductAbstractTableCriteria">
+    <transfer name="PriceProductTableCriteria">
         <property name="filterInStores" type="int[]" singular="inStore"/>
         <property name="filterInCurrencies" type="string[]" singular="inCurrency"/>
         <property name="idMerchant" type="int"/>
         <property name="idProductAbstract" type="int"/>
+        <property name="idProductConcrete" type="int"/>
         <property name="page" type="int"/>
         <property name="pageSize" type="int"/>
         <property name="orderBy" type="string"/>
         <property name="orderDirection" type="string"/>
     </transfer>
 
-    <transfer name="PriceProductAbstractTableViewCollection">
-        <property name="priceProductAbstractTableViews" type="PriceProductAbstractTableView[]" singular="priceProductAbstractTableView"/>
+    <transfer name="PriceProductTableViewCollection">
+        <property name="priceProductTableViews" type="PriceProductTableView[]" singular="priceProductTableView"/>
         <property name="pagination" type="Pagination"/>
     </transfer>
 
-    <transfer name="PriceProductAbstractTableView">
+    <transfer name="PriceProductTableView">
         <property name="store" type="string"/>
         <property name="currency" type="string"/>
         <property name="prices" type="float[]" singular="price" associative="true"/>
         <property name="typePriceProductStoreIds" type="string"/>
         <property name="priceProductDefaultIds" type="string"/>
         <property name="idProductAbstract" type="int"/>
+        <property name="idProductConcrete" type="int"/>
     </transfer>
 
     <transfer name="PriceProduct">
@@ -284,6 +287,37 @@
         <property name="validFrom" type="string"/>
         <property name="fkProductAbstract" type="int"/>
         <property name="idProductConcrete" type="int"/>
+        <property name="stocks" type="StockProduct[]" singular="stock"/>
+    </transfer>
+
+    <transfer name="ProductManagementAttributeCollection">
+        <property name="productManagementAttributes" type="ProductManagementAttribute[]" singular="productManagementAttribute"/>
+    </transfer>
+
+    <transfer name="ProductManagementAttribute">
+        <property name="isSuper" type="bool"/>
+        <property name="key" type="string"/>
+    </transfer>
+
+    <transfer name="ProductManagementAttributeFilter">
+        <property name="keys" type="string[]" singular="key"/>
+    </transfer>
+
+    <transfer name="Merchant">
+    </transfer>
+
+    <transfer name="StockProduct">
+        <property name="quantity" type="decimal"/>
+        <property name="isNeverOutOfStock" type="string"/>
+    </transfer>
+
+    <transfer name="ReservationRequest">
+        <property name="sku" type="string"/>
+        <property name="store" type="Store"/>
+    </transfer>
+
+    <transfer name="ReservationResponse">
+        <property name="reservationQuantity" type="decimal"/>
     </transfer>
 
     <transfer name="ProductManagementAttributeCollection">

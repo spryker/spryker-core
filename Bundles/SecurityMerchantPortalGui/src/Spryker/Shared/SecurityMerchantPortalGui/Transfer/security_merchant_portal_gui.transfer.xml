@@ -23,4 +23,9 @@
         <property name="value" type="string"/>
     </transfer>
 
+    <transfer name="UserPasswordResetRequest">
+        <property name="resetPasswordPath" type="string"/>
+        <property name="email" type="string"/>
+    </transfer>
+
 </transfers>

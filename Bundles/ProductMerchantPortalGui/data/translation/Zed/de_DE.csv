@@ -56,6 +56,18 @@ Validity,Gültigkeit
 From,Von
 To,Bis
 "Bulk edit",Massenbearbeitung
+Searchability,Suchbar
+"Use Abstract Product prices","Preise vom abstrakten Produkt übernehmen"
+"Select Locales","Locales auswählen"
+Stock,Bestand
+Quantity,Menge
+"Always in stock","Immer auf lager"
+"Enter quantity","Anzahl eingeben"
+"Reserved Stock","Reservierter Bestand"
+"Variant is offline","Variante ist offline"
+"Variant is online","Variante ist online"
+"This means that the product does not appear online and noone can see it.","Dies bedeutet, dass das Produkt nicht online angezeigt wird und es niemand sehen kann."
+"This concrete product is not owned by this merchant.","Diese Variante gehört nicht diesem Händler."
 "Create Abstract Product","Create Abstract Product"
 English,English
 "The rest of the locales will be defined once the product has been created.","The rest of the locales will be defined once the product has been created."

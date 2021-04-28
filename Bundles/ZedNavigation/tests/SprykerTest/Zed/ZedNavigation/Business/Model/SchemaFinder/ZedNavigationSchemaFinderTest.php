@@ -56,11 +56,8 @@ class ZedNavigationSchemaFinderTest extends ZedNavigationBusinessTester
      */
     public function testGetSchemasShouldReturnIterateableFileCollection(): void
     {
-        $schemaFinder = new ZedNavigationSchemaFinder(
-            [$this->getFixtureDirectory()],
-            'file name pattern'
-        );
+        $schemaFinder = new ZedNavigationSchemaFinder([$this->getFixtureDirectory()]);
 
-        $this->assertInstanceOf(Finder::class, $schemaFinder->getSchemaFiles());
+        $this->assertInstanceOf(Finder::class, $schemaFinder->getSchemaFiles('navigation.xml'));
     }
 }

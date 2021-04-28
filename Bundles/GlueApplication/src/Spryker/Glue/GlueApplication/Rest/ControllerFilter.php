@@ -242,10 +242,6 @@ class ControllerFilter implements ControllerFilterInterface
      */
     protected function logException(Exception $exception): void
     {
-        if (!$this->getLogger()) {
-            return;
-        }
-
         $this->getLogger()->error($exception->getMessage(), ['trace' => $exception->getTraceAsString()]);
     }
 

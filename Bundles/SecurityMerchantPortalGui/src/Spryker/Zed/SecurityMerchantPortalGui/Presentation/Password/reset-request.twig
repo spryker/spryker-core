@@ -1,0 +1,23 @@
+{% extends '@SecurityMerchantPortalGui/Layout/layout.twig' %}
+
+{% set isFormRendered = form is defined %}
+
+{% block content %}
+    {% set linkClass = linkClass ~ (not isFormRendered ? ' ' ~ layoutComponentClass ~ '__link--spacingless') %}
+    {% set linkUrl = '/security-merchant-portal-gui/login' %}
+    {% set linkText = 'Back to Login' | trans %}
+    {% set title = 'Reset Password' | trans %}
+
+    {{ parent() }}
+{% endblock %}
+
+{% block form %}
+    {% if isFormRendered %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block formContent %}
+    {{ form_row(form.email) }}
+    {{ form_row(form.submit, {attr: {class: submitButtonClass}}) }}
+{% endblock %}

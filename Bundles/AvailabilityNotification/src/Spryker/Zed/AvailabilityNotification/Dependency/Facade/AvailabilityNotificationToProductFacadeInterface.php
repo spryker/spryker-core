@@ -28,7 +28,16 @@ interface AvailabilityNotificationToProductFacadeInterface
     /**
      * @param string $concreteSku
      *
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
+     *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function getProductConcrete($concreteSku);
+
+    /**
+     * @param string $sku
+     *
+     * @return bool
+     */
+    public function hasProductConcrete($sku);
 }

@@ -30,7 +30,7 @@
         <property name="store" type="Store"/>
     </transfer>
 
-    <transfer name="ProductOfferStock">
+    <transfer name="ProductOfferStockResult">
         <property name="isNeverOutOfStock" type="bool"/>
         <property name="quantity" type="decimal"/>
     </transfer>

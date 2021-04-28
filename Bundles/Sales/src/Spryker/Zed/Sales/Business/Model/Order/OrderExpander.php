@@ -62,16 +62,43 @@ class OrderExpander implements OrderExpanderInterface
      */
     public function expandSalesOrder(QuoteTransfer $quoteTransfer)
     {
-        $orderTransfer = new OrderTransfer();
-        $orderTransfer->fromArray($quoteTransfer->toArray(), true);
-        $orderTransfer->setStore($quoteTransfer->getStore()->getName());
+        $orderTransfer = $this->mapQuoteTransferToOrderTransfer($quoteTransfer, new OrderTransfer());
         $orderTransfer = $this->executeItemPreTransformerPlugins($orderTransfer, $quoteTransfer);
         $orderTransfer->setItems($this->transformItems($orderTransfer->getItems()));
 
         $this->groupOrderDiscountsByGroupKey($orderTransfer->getItems());
         $orderTransfer = $this->calculationFacade->recalculateOrder($orderTransfer);
 
+        $quoteTransfer = $this->mapOrderTransferToQuoteTransfer($orderTransfer, $quoteTransfer);
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    protected function mapQuoteTransferToOrderTransfer(QuoteTransfer $quoteTransfer, OrderTransfer $orderTransfer): OrderTransfer
+    {
+        $orderTransfer->fromArray($quoteTransfer->toArray(), true);
+        $orderTransfer->setStore($quoteTransfer->getStore()->getName());
+
+        return $orderTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function mapOrderTransferToQuoteTransfer(OrderTransfer $orderTransfer, QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        $storeTransfer = $quoteTransfer->getStore();
         $quoteTransfer->fromArray($orderTransfer->toArray(), true);
+        $quoteTransfer->setStore($storeTransfer);
 
         return $quoteTransfer;
     }

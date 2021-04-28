@@ -27,7 +27,7 @@ class UserPasswordResetToUtilTextServiceBridge implements UserPasswordResetToUti
      *
      * @return string
      */
-    public function generateRandomString(int $length)
+    public function generateRandomString($length)
     {
         return $this->utilTextService->generateRandomString($length);
     }

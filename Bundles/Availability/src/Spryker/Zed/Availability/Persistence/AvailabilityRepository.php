@@ -137,8 +137,8 @@ class AvailabilityRepository extends AbstractRepository implements AvailabilityR
     ): ?ProductAbstractAvailabilityTransfer {
         $storeTransfer->requireIdStore();
 
-        /** @var array|null $availabilityAbstractEntityArray */
-        $availabilityAbstractEntityArray = $this->getFactory()
+        /** @var \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery $query */
+        $query = $this->getFactory()
             ->createSpyAvailabilityAbstractQuery()
             ->filterByFkStore($storeTransfer->getIdStore())
             ->filterByAbstractSku($abstractSku)
@@ -149,8 +149,10 @@ class AvailabilityRepository extends AbstractRepository implements AvailabilityR
                 SpyAvailabilityAbstractTableMap::COL_ABSTRACT_SKU,
             ])->withColumn(SpyAvailabilityAbstractTableMap::COL_ABSTRACT_SKU, ProductAbstractAvailabilityTransfer::SKU)
             ->withColumn(SpyAvailabilityAbstractTableMap::COL_QUANTITY, ProductAbstractAvailabilityTransfer::AVAILABILITY)
-            ->withColumn('GROUP_CONCAT(' . SpyAvailabilityTableMap::COL_IS_NEVER_OUT_OF_STOCK . ')', ProductAbstractAvailabilityTransfer::IS_NEVER_OUT_OF_STOCK)
-            ->groupByAbstractSku()
+            ->withColumn('GROUP_CONCAT(' . SpyAvailabilityTableMap::COL_IS_NEVER_OUT_OF_STOCK . ')', ProductAbstractAvailabilityTransfer::IS_NEVER_OUT_OF_STOCK);
+
+        /** @var array|null $availabilityAbstractEntityArray */
+        $availabilityAbstractEntityArray = $query->groupByAbstractSku()
             ->findOne();
 
         if ($availabilityAbstractEntityArray === null) {
@@ -243,7 +245,10 @@ class AvailabilityRepository extends AbstractRepository implements AvailabilityR
 
         $storeEntities = [];
         foreach ($availabilityEntities as $availabilityEntity) {
-            $storeEntities[] = $availabilityEntity->getStore();
+            /** @var \Orm\Zed\Store\Persistence\SpyStore $storeEntity */
+            $storeEntity = $availabilityEntity->getStore();
+
+            $storeEntities[] = $storeEntity;
         }
 
         return $this->getFactory()
