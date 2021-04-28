@@ -25,7 +25,7 @@ import {
 
 import { _getNgModules, ComponentsNgModule } from './registry';
 import { TableRootModule } from './table/table-root.module';
-import { ActionsRootModule } from './actions/actions-root.module';
+import { DefaultActionsConfigModule } from './actions/default-actions-config.module';
 
 @NgModule({
     imports: [
@@ -51,7 +51,7 @@ import { ActionsRootModule } from './actions/actions-root.module';
         UnsavedChangesGuardNavigationModule.forRoot(),
         UnsavedChangesBrowserGuardModule.forRoot(),
         ModalModule.forRoot(),
-        ActionsRootModule,
+        DefaultActionsConfigModule,
     ],
     // FIXME: UnsavedChangesNavigationGuard should work without explicit providing
     // See https://spryker.atlassian.net/browse/BO-2055
