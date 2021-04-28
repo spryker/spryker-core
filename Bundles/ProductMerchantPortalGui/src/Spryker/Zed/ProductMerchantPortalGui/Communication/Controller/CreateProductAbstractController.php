@@ -93,12 +93,19 @@ class CreateProductAbstractController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function createWithSingleConcreteAction(Request $request): JsonResponse
+    public function createWithSingleConcreteAction(Request $request)
     {
         $abstractProductName = $request->get(static::REQUEST_PARAM_NAME);
         $abstractProductSku = $request->get(static::REQUEST_PARAM_SKU);
+
+        /** @TODO Fetch right param */
+        if ($request->request->get('back')) {
+            return new RedirectResponse(
+                $this->getCreateProductAbstractUrl($abstractProductSku, $abstractProductName)
+            );
+        }
 
         $isNotPost = !$request->isMethod(Request::METHOD_POST);
 
@@ -147,12 +154,20 @@ class CreateProductAbstractController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function createWithMultiConcreteAction(Request $request): JsonResponse
     {
         $abstractProductName = $request->get(static::REQUEST_PARAM_NAME);
         $abstractProductSku = $request->get(static::REQUEST_PARAM_SKU);
+
+        /** @TODO Fetch right param */
+        if ($request->request->get('back')) {
+            return new RedirectResponse(
+                $this->getCreateProductAbstractUrl($abstractProductSku, $abstractProductName)
+            );
+        }
+
         $concreteProductsJson = $request->request->get(static::REQUEST_PARAM_CONCRETE_PRODUCTS);
         $selectedAttributesJson = $request->request->get(static::REQUEST_PARAM_SELECTED_ATTRIBUTES);
 
@@ -173,7 +188,6 @@ class CreateProductAbstractController extends AbstractController
                 'form' => $createProductAbstractWithMultiConcreteForm->createView(),
                 'superProductManagementAttributes' => $this->getSuperAttributes(),
                 'productAbstract' => $productAbstractTransfer,
-                'backActionUrl' => $this->getCreateProductAbstractUrl($abstractProductSku, $abstractProductName),
                 'concreteProductsJson' => $concreteProductsJson,
                 'selectedAttributesJson' => $selectedAttributesJson,
             ])->getContent(),
