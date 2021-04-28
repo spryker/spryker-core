@@ -637,7 +637,8 @@ class MerchantProductFacadeTest extends Unit
     public function testCreateThrowsExceptionWhenIdMerchantIsNotSet(): void
     {
         // Arrange
-        $merchantProductTransfer = (new MerchantProductTransfer()) ->setIdProductAbstract(1);
+        $merchantProductTransfer = (new MerchantProductTransfer())
+            ->setIdProductAbstract(1);
 
         //Assert
         $this->expectException(RequiredTransferPropertyException::class);
@@ -652,7 +653,8 @@ class MerchantProductFacadeTest extends Unit
     public function testCreateThrowsExceptionWhenIdProductAbstractIsNotSet(): void
     {
         // Arrange
-        $merchantProductTransfer = (new MerchantProductTransfer()) ->setIdMerchant(1);
+        $merchantProductTransfer = (new MerchantProductTransfer())
+            ->setIdMerchant(1);
 
         //Assert
         $this->expectException(RequiredTransferPropertyException::class);
