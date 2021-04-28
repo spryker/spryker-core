@@ -53,7 +53,7 @@ class ProductConcreteValidator implements ProductConcreteValidatorInterface
         /** @var \Symfony\Component\Validator\ConstraintViolationInterface $constraintViolation */
         foreach ($constraintViolationList as $constraintViolation) {
             $validationErrorTransfer = (new ValidationErrorTransfer())
-                ->setMessage($constraintViolation->getMessage())
+                ->setMessage((string)$constraintViolation->getMessage())
                 ->setPropertyPath($constraintViolation->getPropertyPath())
                 ->setInvalidValue($constraintViolation->getInvalidValue())
                 ->setRoot((object)$constraintViolation->getRoot());
