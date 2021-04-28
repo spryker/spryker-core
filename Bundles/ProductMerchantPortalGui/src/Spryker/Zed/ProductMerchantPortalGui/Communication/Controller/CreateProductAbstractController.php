@@ -156,7 +156,7 @@ class CreateProductAbstractController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function createWithMultiConcreteAction(Request $request): JsonResponse
+    public function createWithMultiConcreteAction(Request $request)
     {
         $abstractProductName = $request->get(static::REQUEST_PARAM_NAME);
         $abstractProductSku = $request->get(static::REQUEST_PARAM_SKU);
