@@ -64,7 +64,7 @@
         <property name="categoryNames" type="string[]" singular="categoryName"/>
         <property name="storeNames" type="string[]" singular="storeName"/>
         <property name="categoryIds" type="int[]" singular="idCategory"/>
-        <property name="attributes" type="array" singular="attribute"/>
+        <property name="utes" type="array" singular="attribute"/>
         <property name="localizedAttributes" type="LocalizedAttributes[]" singular="localizedAttributes"/>
         <property name="imageSets" type="ProductImageSet[]" singular="imageSet"/>
         <property name="storeRelation" type="StoreRelation"/>
@@ -303,6 +303,9 @@
         <property name="keys" type="string[]" singular="key"/>
     </transfer>
 
+    <transfer name="ProductManagementAttributeValue">
+    </transfer>
+
     <transfer name="Merchant">
     </transfer>
 
@@ -318,15 +321,6 @@
 
     <transfer name="ReservationResponse">
         <property name="reservationQuantity" type="decimal"/>
-    </transfer>
-
-    <transfer name="ProductManagementAttributeCollection">
-    </transfer>
-
-    <transfer name="ProductManagementAttributeFilter">
-    </transfer>
-
-    <transfer name="ProductManagementAttributeValue">
     </transfer>
 
 </transfers>
