@@ -71,6 +71,7 @@ import 'core-js/features/object/from-entries';
 import 'core-js/es/global-this';
 import cssVars from 'css-vars-ponyfill';
 import 'url-search-params-polyfill';
+import './polyfills/event.submitter.polyfill';
 
 cssVars({
     preserveStatic: false,
