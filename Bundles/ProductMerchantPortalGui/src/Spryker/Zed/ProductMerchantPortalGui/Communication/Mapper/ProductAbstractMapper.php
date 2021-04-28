@@ -71,7 +71,9 @@ class ProductAbstractMapper implements ProductAbstractMapperInterface
                 ? $formData[CreateProductAbstractWithSingleConcreteForm::FIELD_NAME]
                 : '';
             $productAbstractTransfer->addLocalizedAttributes(
-                (new LocalizedAttributesTransfer())->setLocale($localeTransfer)->setName($productAbstractLocalizedName)
+                (new LocalizedAttributesTransfer())
+                    ->setLocale($localeTransfer)
+                    ->setName($productAbstractLocalizedName)
             );
         }
 

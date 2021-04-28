@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider;
 
-
 interface LocaleDataProviderInterface
 {
     /**

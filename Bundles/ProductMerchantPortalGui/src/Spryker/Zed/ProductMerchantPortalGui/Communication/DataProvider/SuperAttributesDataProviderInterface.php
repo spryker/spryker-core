@@ -7,12 +7,10 @@
 
 namespace Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider;
 
-use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductAttributeFacadeInterface;
-
 interface SuperAttributesDataProviderInterface
 {
     /**
-     * @return string[][]
+     * @return array
      */
     public function getSuperAttributes(): array;
 }

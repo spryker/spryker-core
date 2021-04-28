@@ -87,10 +87,14 @@ class CreateProductAbstractWithSingleConcreteFormSubmitter implements CreateProd
                 ? $formData[CreateProductAbstractWithSingleConcreteForm::FIELD_CONCRETE_NAME]
                 : '';
             $productAbstractTransfer->addLocalizedAttributes(
-                (new LocalizedAttributesTransfer())->setLocale($localeTransfer)->setName($productAbstractLocalizedName)
+                (new LocalizedAttributesTransfer())
+                    ->setLocale($localeTransfer)
+                    ->setName($productAbstractLocalizedName)
             );
             $productConcreteTransfer->addLocalizedAttributes(
-                (new LocalizedAttributesTransfer())->setLocale($localeTransfer)->setName($productConcreteLocalizedName)
+                (new LocalizedAttributesTransfer())
+                    ->setLocale($localeTransfer)
+                    ->setName($productConcreteLocalizedName)
             );
         }
 

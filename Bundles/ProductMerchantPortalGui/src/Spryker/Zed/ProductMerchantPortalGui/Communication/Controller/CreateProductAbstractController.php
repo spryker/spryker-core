@@ -306,11 +306,11 @@ class CreateProductAbstractController extends AbstractController
                 ],
             ],
             static::RESPONSE_KEY_NOTIFICATIONS => [
-                    [
-                        static::RESPONSE_KEY_TYPE => static::RESPONSE_TYPE_SUCCESS,
-                        static::RESPONSE_KEY_MESSAGE => static::RESPONSE_MESSAGE_SUCCESS,
-                    ],
+                [
+                    static::RESPONSE_KEY_TYPE => static::RESPONSE_TYPE_SUCCESS,
+                    static::RESPONSE_KEY_MESSAGE => static::RESPONSE_MESSAGE_SUCCESS,
                 ],
+            ],
         ];
 
         return new JsonResponse($responseData);

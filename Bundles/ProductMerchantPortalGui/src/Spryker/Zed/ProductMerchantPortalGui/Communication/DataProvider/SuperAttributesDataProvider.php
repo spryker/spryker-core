@@ -38,21 +38,23 @@ class SuperAttributesDataProvider implements SuperAttributesDataProviderInterfac
 
         $superProductManagementAttributes = [];
         foreach ($productManagementAttributeTransfers as $productManagementAttributeTransfer) {
-            if ($productManagementAttributeTransfer->getIsSuper()) {
-                $values = [];
-                foreach ($productManagementAttributeTransfer->getValues() as $productManagementAttributeValueTransfer) {
-                    $values[] = [
-                        static::FIELD_NAME => $productManagementAttributeValueTransfer->getValueOrFail(),
-                        static::FIELD_VALUE => $productManagementAttributeValueTransfer->getValueOrFail(),
-                    ];
-                }
+            if (!$productManagementAttributeTransfer->getIsSuper()) {
+                continue;
+            }
 
-                $superProductManagementAttributes[] = [
-                    static::FIELD_NAME => $productManagementAttributeTransfer->getKeyOrFail(),
-                    static::FIELD_VALUE => $productManagementAttributeTransfer->getKeyOrFail(),
-                    static::FIELD_ATTRIBUTES => $values,
+            $values = [];
+            foreach ($productManagementAttributeTransfer->getValues() as $productManagementAttributeValueTransfer) {
+                $values[] = [
+                    static::FIELD_NAME => $productManagementAttributeValueTransfer->getValueOrFail(),
+                    static::FIELD_VALUE => $productManagementAttributeValueTransfer->getValueOrFail(),
                 ];
             }
+
+            $superProductManagementAttributes[] = [
+                static::FIELD_NAME => $productManagementAttributeTransfer->getKeyOrFail(),
+                static::FIELD_VALUE => $productManagementAttributeTransfer->getKeyOrFail(),
+                static::FIELD_ATTRIBUTES => $values,
+            ];
         }
 
         return $superProductManagementAttributes;
