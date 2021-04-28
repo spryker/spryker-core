@@ -16,10 +16,10 @@ interface ContentStorageToStoreFacadeInterface
      *
      * @return \Generated\Shared\Transfer\StoreTransfer[]
      */
-    public function getStoresWithSharedPersistence(StoreTransfer $storeTransfer): array;
+    public function getStoresWithSharedPersistence(StoreTransfer $storeTransfer);
 
     /**
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getCurrentStore(): StoreTransfer;
+    public function getCurrentStore();
 }

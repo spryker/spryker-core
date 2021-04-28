@@ -110,13 +110,13 @@ class ContentStorageWriter implements ContentStorageWriterInterface
      */
     protected function getSharedPersistenceLocaleNames(StoreTransfer $storeTransfer): array
     {
-        $localeNames = $this->storeFacade->getCurrentStore()->getAvailableLocaleIsoCodes();
+        $localeNames[] = $storeTransfer->getAvailableLocaleIsoCodes();
 
         foreach ($this->storeFacade->getStoresWithSharedPersistence($storeTransfer) as $store) {
-            $localeNames = array_merge($store->getAvailableLocaleIsoCodes(), $localeNames);
+            $localeNames[] = $store->getAvailableLocaleIsoCodes();
         }
 
-        return $localeNames;
+        return array_merge(...$localeNames);
     }
 
     /**

@@ -37,7 +37,7 @@ class ContentStorageToStoreFacadeBridge implements ContentStorageToStoreFacadeIn
     /**
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getCurrentStore(): StoreTransfer
+    public function getCurrentStore()
     {
         return $this->storeFacade->getCurrentStore();
     }

@@ -56,6 +56,6 @@ class ContentStorageBusinessFactory extends AbstractBusinessFactory
      */
     public function getStoreFacade(): ContentStorageToStoreFacadeInterface
     {
-        return $this->getProvidedDependency(ContentStorageDependencyProvider::STORE);
+        return $this->getProvidedDependency(ContentStorageDependencyProvider::FACADE_STORE);
     }
 }
