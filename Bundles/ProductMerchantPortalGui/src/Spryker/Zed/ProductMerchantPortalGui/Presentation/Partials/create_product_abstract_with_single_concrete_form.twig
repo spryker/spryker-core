@@ -2,6 +2,9 @@
 
 {% block body %}
     {% set mainClass = 'mp-create-single-concrete-product' %}
+    {% set backButtonAttrs = '{
+        "name": "back"
+    }' %}
 
     {% block createSingleConcreteProduct %}
         <web-mp-create-single-concrete-product>
@@ -12,7 +15,7 @@
 
                 {% block actions %}
                     <div action class="{{ mainClass }}__actions-row">
-                        <web-spy-button cloak size="lg" type="submit" variant="secondary" name="back" class="{{ mainClass }}__action">
+                        <web-spy-button cloak size="lg" type="submit" variant="secondary" attrs="{{ backButtonAttrs }}" class="{{ mainClass }}__action">
                             {{ 'Back' | trans }}
                         </web-spy-button>
                         <web-spy-button cloak size="lg" type="submit" class="{{ mainClass }}__action">

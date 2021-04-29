@@ -8,6 +8,9 @@
     {% set attributes = superProductManagementAttributes | json_encode %}
     {% set selectedAttributes = selectedAttributesJson | default('[]') %}
     {% set concreteProducts = concreteProductsJson | default('[]') %}
+    {% set backButtonAttrs = '{
+        "name": "back"
+    }' %}
 
     {% block createMultiConcreteProduct %}
         <web-mp-concrete-product-generator-data
@@ -28,7 +31,7 @@
 
                     {% block actions %}
                         <div action class="{{ mainClass }}__actions-row">
-                            <web-spy-button cloak size="lg" type="submit" variant="secondary" name="back" class="{{ mainClass }}__action">
+                            <web-spy-button cloak size="lg" type="submit" variant="secondary" attrs="{{ backButtonAttrs }}" class="{{ mainClass }}__action">
                                 {{ 'Back' | trans }}
                             </web-spy-button>
                             <web-spy-button cloak size="lg" type="submit" class="{{ mainClass }}__action">
