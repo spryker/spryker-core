@@ -1,22 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CustomElementModule, WebComponentDefs } from '@spryker/web-components';
-import { ButtonModule, ButtonComponent } from '@spryker/button';
 import { TabComponent, TabsComponent, TabsModule } from '@spryker/tabs';
-import { TextareaComponent, TextareaModule } from '@spryker/textarea';
 import { TreeSelectComponent, TreeSelectModule } from '@spryker/tree-select';
 import { IconPlusModule } from '@spryker/icon/icons';
 import { IconGermanyModule, IconUnitedStatesModule, IconDeleteModule, IconNoDataModule } from '../icons';
-import { ProductListComponent } from './product-list/product-list.component';
-import { ProductListModule } from './product-list/product-list.module';
 import { CardModule, CardComponent } from '@spryker/card';
-import { SelectModule, SelectComponent } from '@spryker/select';
-import { InputModule, InputComponent } from '@spryker/input';
 import { CollapsibleModule, CollapsibleComponent } from '@spryker/collapsible';
 import { ChipsComponent, ChipsModule } from '@spryker/chips';
-import { FormItemModule, FormItemComponent } from '@spryker/form-item';
 import { IconModule, IconComponent } from '@spryker/icon';
 import { RadioModule, RadioComponent, RadioGroupComponent } from '@spryker/radio';
 import { ButtonActionComponent, ButtonActionModule } from '@spryker/button.action';
+
+import { ProductListComponent } from './product-list/product-list.component';
+import { ProductListModule } from './product-list/product-list.module';
 import { EditAbstractProductComponent } from './edit-abstract-product/edit-abstract-product.component';
 import { EditAbstractProductModule } from './edit-abstract-product/edit-abstract-product.module';
 import { EditAbstractProductPricesComponent } from './edit-abstract-product-prices/edit-abstract-product-prices.component';
@@ -47,14 +43,10 @@ import { ConcreteProductGeneratorDataComponent } from './concrete-product-genera
 @NgModule({
     imports: [
         ProductListModule,
-        ButtonModule,
         EditAbstractProductModule,
         TabsModule,
         CardModule,
-        InputModule,
         IconModule,
-        FormItemModule,
-        SelectModule,
         TreeSelectModule,
         CollapsibleModule,
         ChipsModule,
@@ -65,7 +57,6 @@ import { ConcreteProductGeneratorDataComponent } from './concrete-product-genera
         IconDeleteModule,
         IconNoDataModule,
         IconPlusModule,
-        TextareaModule,
         RadioModule,
         ImageSetsModule,
         BulkEditProductVariantsModule,
@@ -83,21 +74,16 @@ import { ConcreteProductGeneratorDataComponent } from './concrete-product-genera
 export class ComponentsModule extends CustomElementModule {
     protected components: WebComponentDefs = [
         ProductListComponent,
-        ButtonComponent,
         EditAbstractProductComponent,
         TabComponent,
         TabsComponent,
         CardComponent,
-        FormItemComponent,
-        InputComponent,
         IconComponent,
-        SelectComponent,
         TreeSelectComponent,
         CollapsibleComponent,
         ChipsComponent,
         EditAbstractProductAttributesComponent,
         EditAbstractProductPricesComponent,
-        TextareaComponent,
         RadioComponent,
         RadioGroupComponent,
         ImageSetsComponent,

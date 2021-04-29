@@ -11,6 +11,7 @@ import { SelectModule, SelectComponent } from '@spryker/select';
 import { ToggleModule, ToggleComponent } from '@spryker/toggle';
 import { CheckboxModule, CheckboxComponent } from '@spryker/checkbox';
 import { UserMenuLinkComponent } from '@spryker/user-menu';
+
 import { HeaderComponent } from './header/header.component';
 import { HeaderModule } from './header/header.module';
 import { HeaderMenuComponent } from './header-menu/header-menu.component';
