@@ -13,6 +13,7 @@
     </transfer>
 
     <transfer name="Locale">
+        <property name="idLocale" type="int"/>
     </transfer>
 
     <transfer name="CategoryCollection">
@@ -22,5 +23,9 @@
     <transfer name="Category">
         <property name="name" type="string"/>
         <property name="idCategory" type="int"/>
+    </transfer>
+
+    <transfer name="CategoryCriteria">
+        <property name="idLocale" type="int"/>
     </transfer>
 </transfers>

@@ -53,4 +53,14 @@ class MerchantProductToProductFacadeBridge implements MerchantProductToProductFa
     {
         return $this->productFacade->getProductConcreteTransfersByProductIds($productIds);
     }
+
+    /**
+     * @param int $idProduct
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
+     */
+    public function findProductConcreteById($idProduct)
+    {
+        return $this->productFacade->findProductConcreteById($idProduct);
+    }
 }

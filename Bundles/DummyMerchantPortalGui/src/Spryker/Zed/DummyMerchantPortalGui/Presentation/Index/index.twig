@@ -1,0 +1,39 @@
+{% extends '@ZedUi/Layout/merchant-layout-centered.twig' %}
+
+{% block headTitle %}
+    Dummy Merchant Portal Gui
+{% endblock %}
+
+{% block content %}
+    <web-mp-dummy-layout cloak>
+        {% block title %}
+            <span title>Title on the Core Level</span>
+        {% endblock %}
+
+        {% block card %}
+            <web-mp-dummy-card>
+                {% block cardTitle %}
+                    <span title>Card Title on the Core Level</span>
+                {% endblock %}
+
+                {% block cardContent %}
+                    Card Content on the Core Level
+
+                    {% block button %}
+                        <web-spy-button>
+                            {% block buttontText %}
+                                Dummy Ui Lib Buutton
+                            {% endblock %}
+                        </web-spy-button>
+                    {% endblock %}
+                {% endblock %}
+            </web-mp-dummy-card>
+        {% endblock %}
+    </web-mp-dummy-layout>
+{% endblock %}
+
+{% block footerJs %}
+    <script src="{{ assetsPath('js/mp/spy/dummy-merchant-portal-gui-es2015.js') }}" type="module"></script>
+    <script src="{{ assetsPath('js/mp/spy/dummy-merchant-portal-gui-es5.js') }}" nomodule defer></script>
+    {{ parent() }}
+{% endblock %}
