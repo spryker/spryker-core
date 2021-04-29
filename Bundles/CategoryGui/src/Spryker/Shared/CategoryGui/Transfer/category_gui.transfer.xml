@@ -66,6 +66,7 @@
     </transfer>
 
     <transfer name="NodeCollection">
+        <property name="nodes" type="Node[]" singular="node"/>
     </transfer>
 
     <transfer name="CategoryCollection">
@@ -79,6 +80,10 @@
 
     <transfer name="StoreWithStateCollection">
         <property name="storesWithState" type="StoreWithState[]" singular="storeWithState"/>
+    </transfer>
+
+    <transfer name="Url">
+        <property name="url" type="string"/>
     </transfer>
 
 </transfers>

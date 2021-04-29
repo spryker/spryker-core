@@ -108,7 +108,7 @@ class CategoryGuiCommunicationFactory extends AbstractCommunicationFactory
         return $this->getFormFactory()->create(
             CategoryType::class,
             $categoryTransfer,
-            $categoryCreateDataFormProvider->getOptions($categoryTransfer->getIdCategory())
+            $categoryCreateDataFormProvider->getOptions($categoryTransfer->getIdCategoryOrFail())
         );
     }
 

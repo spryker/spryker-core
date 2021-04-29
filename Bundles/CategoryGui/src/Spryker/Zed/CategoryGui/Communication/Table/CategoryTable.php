@@ -10,7 +10,6 @@ namespace Spryker\Zed\CategoryGui\Communication\Table;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryTableMap;
 use Orm\Zed\Category\Persistence\SpyCategory;
 use Orm\Zed\Category\Persistence\SpyCategoryQuery;
-use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToLocaleFacadeInterface;
 use Spryker\Zed\CategoryGui\Persistence\CategoryGuiRepositoryInterface;
@@ -111,7 +110,7 @@ class CategoryTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config)
     {
-        $fkLocale = $this->localeFacade->getCurrentLocale()->getIdLocale();
+        $fkLocale = $this->localeFacade->getCurrentLocale()->getIdLocaleOrFail();
         $query = $this->prepareQuery($fkLocale);
 
         $queryResults = $this->runQuery($query, $config, true);
@@ -134,12 +133,16 @@ class CategoryTable extends AbstractTable
      */
     protected function prepareQuery(int $fkLocale): SpyCategoryQuery
     {
+        /** @var \Orm\Zed\Category\Persistence\SpyCategoryQuery $query */
         $query = SpyCategoryQuery::create('sc')
-            ->useAttributeQuery('attr', Criteria::LEFT_JOIN)
-                ->filterByFkLocale($fkLocale)
-            ->endUse()
             ->leftJoinCategoryTemplate('tpl')
             ->leftJoinNode('node')
+            ->useAttributeQuery('attr', Criteria::LEFT_JOIN)
+                ->filterByFkLocale($fkLocale)
+            ->endUse();
+
+        /** @var \Orm\Zed\Category\Persistence\SpyCategoryQuery $query */
+        $query = $query
             ->useNodeQuery('node', Criteria::LEFT_JOIN)
                 ->groupByFkCategory()
                 ->groupByIsMain()
@@ -151,9 +154,8 @@ class CategoryTable extends AbstractTable
                     ->endUse()
                 ->endUse()
             ->endUse()
-            ->addOr('parent_node.id_category_node');
-        /** @var \Orm\Zed\Category\Persistence\SpyCategoryQuery $query */
-        $query = $query->having('node.is_main = ?', true)
+            ->addOr('parent_node.id_category_node')
+            ->having('node.is_main = ?', true)
             ->withColumn('count(node.fk_category)', 'count')
             ->withColumn('attr.name', static::COL_NAME)
             ->withColumn('tpl.name', static::COL_TEMPLATE)
@@ -175,9 +177,9 @@ class CategoryTable extends AbstractTable
             static::COL_CATEGORY_KEY => $categoryEntity->getCategoryKey(),
             static::COL_NAME => $categoryEntity->getVirtualColumn(static::COL_NAME),
             static::COL_PARENT => $categoryEntity->getVirtualColumn(static::COL_PARENT),
-            static::COL_ACTIVE => $this->yesNoOutput($categoryEntity->getIsActive()),
-            static::COL_VISIBLE => $this->yesNoOutput($categoryEntity->getIsInMenu()),
-            static::COL_SEARCHABLE => $this->yesNoOutput($categoryEntity->getIsSearchable()),
+            static::COL_ACTIVE => $this->yesNoOutput((bool)$categoryEntity->getIsActive()),
+            static::COL_VISIBLE => $this->yesNoOutput((bool)$categoryEntity->getIsInMenu()),
+            static::COL_SEARCHABLE => $this->yesNoOutput((bool)$categoryEntity->getIsSearchable()),
             static::COL_TEMPLATE => $categoryEntity->getVirtualColumn(static::COL_TEMPLATE),
             static::COL_STORE_RELATION => $this->getStoreNames($categoryEntity->getIdCategory(), $categoryStoreNamesGroupedByIdCategory),
             static::COL_ACTIONS => $this->generateActionsButton($categoryEntity, $categoryStoreNamesGroupedByIdCategory),
@@ -328,11 +330,11 @@ class CategoryTable extends AbstractTable
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $queryResults
+     * @param array|\Propel\Runtime\Collection\ObjectCollection $queryResults
      *
      * @return int[]
      */
-    protected function extractCategoryIds(ObjectCollection $queryResults): array
+    protected function extractCategoryIds($queryResults): array
     {
         $categoryIds = [];
         /** @var \Orm\Zed\Category\Persistence\SpyCategory $categoryEntity */

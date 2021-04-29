@@ -100,7 +100,7 @@ class CategoryStorageEventSubscriber extends AbstractPlugin implements EventSubs
     }
 
     /**
-     * @deprecated use {@link \Spryker\Zed\CategoryStorage\Communication\Plugin\Publisher\Parent\ParentWritePublisherPlugin} instead.
+     * @deprecated use {@link \Spryker\Zed\CategoryStorage\Communication\Plugin\Publisher\ParentWritePublisherPlugin} instead.
      *
      * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
@@ -124,7 +124,7 @@ class CategoryStorageEventSubscriber extends AbstractPlugin implements EventSubs
     }
 
     /**
-     * @deprecated use {@link \Spryker\Zed\CategoryStorage\Communication\Plugin\Publisher\Parent\ParentWritePublisherPlugin} instead.
+     * @deprecated use {@link \Spryker\Zed\CategoryStorage\Communication\Plugin\Publisher\ParentWritePublisherPlugin} instead.
      *
      * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
@@ -148,7 +148,7 @@ class CategoryStorageEventSubscriber extends AbstractPlugin implements EventSubs
     }
 
     /**
-     * @deprecated use {@link \Spryker\Zed\CategoryStorage\Communication\Plugin\Publisher\Parent\ParentWritePublisherPlugin} instead.
+     * @deprecated use {@link \Spryker\Zed\CategoryStorage\Communication\Plugin\Publisher\ParentWritePublisherPlugin} instead.
      *
      * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
@@ -172,7 +172,7 @@ class CategoryStorageEventSubscriber extends AbstractPlugin implements EventSubs
     }
 
     /**
-     * @deprecated use {@link \Spryker\Zed\CategoryStorage\Communication\Plugin\Publisher\Parent\ParentWritePublisherPlugin} instead.
+     * @deprecated use {@link \Spryker\Zed\CategoryStorage\Communication\Plugin\Publisher\ParentWritePublisherPlugin} instead.
      *
      * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
@@ -196,7 +196,7 @@ class CategoryStorageEventSubscriber extends AbstractPlugin implements EventSubs
     }
 
     /**
-     * @deprecated use {@link \Spryker\Zed\CategoryStorage\Communication\Plugin\Publisher\Parent\ParentWritePublisherPlugin} instead.
+     * @deprecated use {@link \Spryker\Zed\CategoryStorage\Communication\Plugin\Publisher\ParentWritePublisherPlugin} instead.
      *
      * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *

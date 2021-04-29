@@ -28,9 +28,9 @@ class IdStoresDataTransformer implements DataTransformerInterface
     /**
      * @param array|null $storeIds
      *
-     * @return string
+     * @return string|null
      */
-    public function transform($storeIds): string
+    public function transform($storeIds)
     {
         return $this->utilEncodingService->encodeJson($storeIds);
     }
