@@ -228,21 +228,20 @@
         <property name="columnErrors" type="array" singular="columnError" associative="true" description="Key is column ID."/>
     </transfer>
 
-    <transfer name="ValidationResponse">
+    <transfer name="TableValidationResponse">
         <property name="isSuccess" type="bool"/>
-        <property name="validationErrors" type="ValidationError[]" singular="validationError"/>
+        <property name="RowValidations" type="RowValidation[]" singular="rowValidation"/>
+    </transfer>
+
+    <transfer name="RowValidation">
+        <property name="fields" type="array"/>
+        <property name="errors" type="array"/>
     </transfer>
 
     <transfer name="PriceProductCriteria">
         <property name="priceProductStoreIds" type="int[]" singular="idPriceProductStore"/>
     </transfer>
 
-    <transfer name="ValidationError">
-        <property name="message" type="string"/>
-        <property name="root" type="object"/>
-        <property name="propertyPath" type="string"/>
-        <property name="invalidValue" type="string"/>
-    </transfer>
 
     <transfer name="PriceProductDimension">
         <property name="idPriceProductDefault" type="int"/>

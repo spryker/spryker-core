@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Controller;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
-use Generated\Shared\Transfer\ValidationResponseTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\CreateProductAbstractForm;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\CreateProductAbstractWithSingleConcreteForm;
@@ -35,6 +34,7 @@ class CreateProductAbstractController extends AbstractController
     protected const RESPONSE_MESSAGE_ERROR = 'Please resolve all errors.';
     protected const REQUEST_PARAM_NAME = 'name';
     protected const REQUEST_PARAM_SKU = 'sku';
+    protected const REQUEST_PARAM_BACK = 'back';
     protected const REQUEST_PARAM_CONCRETE_PRODUCTS = 'concreteProducts';
     protected const REQUEST_PARAM_SELECTED_ATTRIBUTES = 'selectedAttributes';
 
@@ -74,20 +74,17 @@ class CreateProductAbstractController extends AbstractController
             return new JsonResponse($responseData);
         }
 
-        if ($createProductAbstractForm->isValid()) {
-            $formData = $createProductAbstractForm->getData();
+        if (!$createProductAbstractForm->isValid()) {
+            $responseData = $this->addErrorNotification($responseData, static::RESPONSE_MESSAGE_ERROR);
 
-            return new RedirectResponse(
-                $this->getCreateUrl($formData, (bool)$formData[CreateProductAbstractForm::FIELD_IS_SINGLE_CONCRETE])
-            );
+            return new JsonResponse($responseData);
         }
 
-        $responseData[static::RESPONSE_KEY_NOTIFICATIONS] = [[
-            static::RESPONSE_KEY_TYPE => static::RESPONSE_TYPE_ERROR,
-            static::RESPONSE_KEY_MESSAGE => static::RESPONSE_MESSAGE_ERROR,
-        ]];
+        $formData = $createProductAbstractForm->getData();
 
-        return new JsonResponse($responseData);
+        return new RedirectResponse(
+            $this->getCreateUrl($formData, (bool)$formData[CreateProductAbstractForm::FIELD_IS_SINGLE_CONCRETE])
+        );
     }
 
     /**
@@ -100,8 +97,7 @@ class CreateProductAbstractController extends AbstractController
         $abstractProductName = $request->get(static::REQUEST_PARAM_NAME);
         $abstractProductSku = $request->get(static::REQUEST_PARAM_SKU);
 
-        /** @TODO Fetch right param */
-        if ($request->request->get('back')) {
+        if ($request->request->get(static::REQUEST_PARAM_BACK)) {
             return new RedirectResponse(
                 $this->getCreateProductAbstractUrl($abstractProductSku, $abstractProductName)
             );
@@ -135,20 +131,17 @@ class CreateProductAbstractController extends AbstractController
             return new JsonResponse($responseData);
         }
 
-        if ($createProductAbstractWithSingleConcreteForm->isValid()) {
-            $this->getFactory()
-                ->createCreateProductAbstractWithSingleConcreteFormSubmitter()
-                ->executeFormSubmission($createProductAbstractWithSingleConcreteForm);
+        if (!$createProductAbstractWithSingleConcreteForm->isValid()) {
+            $responseData = $this->addErrorNotification($responseData, static::RESPONSE_MESSAGE_ERROR);
 
-            return $this->getSuccessResponseAndCloseOverlay();
+            return new JsonResponse($responseData);
         }
 
-        $responseData[static::RESPONSE_KEY_NOTIFICATIONS] = [[
-            static::RESPONSE_KEY_TYPE => static::RESPONSE_TYPE_ERROR,
-            static::RESPONSE_KEY_MESSAGE => static::RESPONSE_MESSAGE_ERROR,
-        ]];
+        $this->getFactory()
+            ->createCreateProductAbstractWithSingleConcreteFormSubmitter()
+            ->executeFormSubmission($createProductAbstractWithSingleConcreteForm);
 
-        return new JsonResponse($responseData);
+        return $this->getSuccessResponseAndCloseOverlay();
     }
 
     /**
@@ -161,8 +154,7 @@ class CreateProductAbstractController extends AbstractController
         $abstractProductName = $request->get(static::REQUEST_PARAM_NAME);
         $abstractProductSku = $request->get(static::REQUEST_PARAM_SKU);
 
-        /** @TODO Fetch right param */
-        if ($request->request->get('back')) {
+        if ($request->request->get(static::REQUEST_PARAM_BACK)) {
             return new RedirectResponse(
                 $this->getCreateProductAbstractUrl($abstractProductSku, $abstractProductName)
             );
@@ -183,29 +175,31 @@ class CreateProductAbstractController extends AbstractController
             ->mapFormDataToProductAbstractTransfer($createProductAbstractWithMultiConcreteForm);
 
         $formData = $createProductAbstractWithMultiConcreteForm->getData();
-        $responseData = [
-            'form' => $this->renderView('@ProductMerchantPortalGui/Partials/create_product_abstract_with_multi_concrete_form.twig', [
-                'form' => $createProductAbstractWithMultiConcreteForm->createView(),
-                'superProductManagementAttributes' => $this->getSuperAttributes(),
-                'productAbstract' => $productAbstractTransfer,
-                'concreteProductsJson' => $concreteProductsJson,
-                'selectedAttributesJson' => $selectedAttributesJson,
-            ])->getContent(),
-            'action' => $this->getCreateUrl($formData, false),
+        $viewData = [
+            'form' => $createProductAbstractWithMultiConcreteForm->createView(),
+            'superProductManagementAttributes' => $this->getSuperAttributes(),
+            'productAbstract' => $productAbstractTransfer,
+            'concreteProductsJson' => $concreteProductsJson,
+            'selectedAttributesJson' => $selectedAttributesJson,
         ];
 
         if (!$request->isMethod(Request::METHOD_POST)) {
-            return new JsonResponse($responseData);
+            return new JsonResponse(
+                $this->createMultiConcreteResponse($viewData, $formData)
+            );
         }
 
-        $validationResponseTransfer = $this->getFactory()
+        $tableValidationResponseTransfer = $this->getFactory()
             ->createProductConcreteValidator()
             ->validateConcreteProducts($concreteProducts);
 
-        if (!$validationResponseTransfer->getIsSuccessOrFail()) {
-            return new JsonResponse(
-                $this->addErrorNotifications($responseData, $validationResponseTransfer)
-            );
+        if (!$tableValidationResponseTransfer->getIsSuccessOrFail()) {
+            $viewData['errors'] = $tableValidationResponseTransfer->getRowValidations();
+
+            $responseData = $this->createMultiConcreteResponse($viewData, $formData);
+            $responseData = $this->addErrorNotification($responseData, static::RESPONSE_MESSAGE_ERROR);
+
+            return new JsonResponse($responseData);
         }
 
         $concreteProductTransfers = $this->mapRequestDataToProductConcreteTransfer($concreteProducts);
@@ -267,28 +261,21 @@ class CreateProductAbstractController extends AbstractController
     }
 
     /**
-     * @param array $response
-     * @param \Generated\Shared\Transfer\ValidationResponseTransfer $validationResponseTransfer
+     * @param array $responseData
+     * @param string $errorMessage
      *
      * @return array
      */
-    protected function addErrorNotifications(
-        array $response,
-        ValidationResponseTransfer $validationResponseTransfer
-    ): array {
-        $notifications = [];
-
-        $validationErrorTransfers = $validationResponseTransfer->getValidationErrors();
-        foreach ($validationErrorTransfers as $validationErrorTransfer) {
-            $notifications[] = [
+    protected function addErrorNotification(array $responseData, string $errorMessage): array
+    {
+        $responseData[static::RESPONSE_KEY_NOTIFICATIONS] = [
+            [
                 static::RESPONSE_KEY_TYPE => static::RESPONSE_TYPE_ERROR,
-                static::RESPONSE_KEY_MESSAGE => $validationErrorTransfer->getMessage(),
-            ];
-        }
+                static::RESPONSE_KEY_MESSAGE => $errorMessage,
+            ],
+        ];
 
-        $response[static::RESPONSE_KEY_NOTIFICATIONS] = $notifications;
-
-        return $response;
+        return $responseData;
     }
 
     /**
@@ -341,5 +328,22 @@ class CreateProductAbstractController extends AbstractController
         return $this->getFactory()
             ->getProductFacade()
             ->addProduct($productAbstractTransfer, $concreteProductTransfers);
+    }
+
+    /**
+     * @param array $viewData
+     * @param array $formData
+     *
+     * @return array
+     */
+    protected function createMultiConcreteResponse(array $viewData, array $formData): array
+    {
+        return [
+            'form' => $this->renderView(
+                '@ProductMerchantPortalGui/Partials/create_product_abstract_with_multi_concrete_form.twig',
+                $viewData
+            )->getContent(),
+            'action' => $this->getCreateUrl($formData, false),
+        ];
     }
 }

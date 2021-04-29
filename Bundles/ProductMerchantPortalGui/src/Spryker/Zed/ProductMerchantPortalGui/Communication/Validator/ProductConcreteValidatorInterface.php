@@ -7,14 +7,14 @@
 
 namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Validator;
 
-use Generated\Shared\Transfer\ValidationResponseTransfer;
+use Generated\Shared\Transfer\TableValidationResponseTransfer;
 
 interface ProductConcreteValidatorInterface
 {
     /**
      * @param array $concreteProducts
      *
-     * @return \Generated\Shared\Transfer\ValidationResponseTransfer
+     * @return \Generated\Shared\Transfer\TableValidationResponseTransfer
      */
-    public function validateConcreteProducts(array $concreteProducts): ValidationResponseTransfer;
+    public function validateConcreteProducts(array $concreteProducts): TableValidationResponseTransfer;
 }

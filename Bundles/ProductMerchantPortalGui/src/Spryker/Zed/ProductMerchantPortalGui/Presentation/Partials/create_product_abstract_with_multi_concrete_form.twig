@@ -9,7 +9,8 @@
     {% set selectedAttributes = selectedAttributesJson | default('[]') %}
     {% set concreteProducts = concreteProductsJson | default('[]') %}
     {% set backButtonAttrs = '{
-        "name": "back"
+        "name": "back",
+        "value": true
     }' %}
 
     {% block createMultiConcreteProduct %}

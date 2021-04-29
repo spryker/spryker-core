@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Validator;
 
-use Generated\Shared\Transfer\ValidationErrorTransfer;
-use Generated\Shared\Transfer\ValidationResponseTransfer;
+use Generated\Shared\Transfer\RowValidationTransfer;
+use Generated\Shared\Transfer\TableValidationResponseTransfer;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Constraint\SkuRegexConstraint;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Constraint\UniqueAbstractSkuConstraint;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\ProductConcreteMapper;
@@ -16,6 +16,7 @@ use Spryker\Zed\ProductMerchantPortalGui\Dependency\External\ProductMerchantPort
 use Symfony\Component\Validator\Constraints\All;
 use Symfony\Component\Validator\Constraints\Collection;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\ConstraintViolationInterface;
 
 class ProductConcreteValidator implements ProductConcreteValidatorInterface
 {
@@ -35,33 +36,60 @@ class ProductConcreteValidator implements ProductConcreteValidatorInterface
     /**
      * @param array $concreteProducts
      *
-     * @return \Generated\Shared\Transfer\ValidationResponseTransfer
+     * @return \Generated\Shared\Transfer\TableValidationResponseTransfer
      */
-    public function validateConcreteProducts(array $concreteProducts): ValidationResponseTransfer
+    public function validateConcreteProducts(array $concreteProducts): TableValidationResponseTransfer
     {
         $constraintViolationList = $this->validationAdapter
             ->createValidator()
             ->validate($concreteProducts, $this->getProductConcreteConstraints());
 
-        $validationResponseTransfer = (new ValidationResponseTransfer())
-            ->setIsSuccess(false);
+        $tableValidationResponseTransfer = (new TableValidationResponseTransfer())
+            ->setIsSuccess($constraintViolationList->count() === 0 && count($concreteProducts) > 0);
 
-        if ($constraintViolationList->count() === 0) {
-            return $validationResponseTransfer->setIsSuccess(true);
+        $rowValidationTransfers = [];
+
+        foreach ($concreteProducts as $index => $concreteProduct) {
+            $rowValidationTransfer = new RowValidationTransfer();
+            $rowValidationTransfer->setFields([
+                ProductConcreteMapper::FIELD_NAME => $concreteProduct[ProductConcreteMapper::FIELD_NAME],
+                ProductConcreteMapper::FIELD_SKU => $concreteProduct[ProductConcreteMapper::FIELD_SKU],
+            ]);
+            $rowValidationTransfers[$index] = $rowValidationTransfer;
         }
 
         /** @var \Symfony\Component\Validator\ConstraintViolationInterface $constraintViolation */
         foreach ($constraintViolationList as $constraintViolation) {
-            $validationErrorTransfer = (new ValidationErrorTransfer())
-                ->setMessage((string)$constraintViolation->getMessage())
-                ->setPropertyPath($constraintViolation->getPropertyPath())
-                ->setInvalidValue($constraintViolation->getInvalidValue())
-                ->setRoot((object)$constraintViolation->getRoot());
+            [$rowNumber, $attributeName] = $this->extractRowNumberAndAttributeName($constraintViolation);
 
-            $validationResponseTransfer->addValidationError($validationErrorTransfer);
+            /** @var \Generated\Shared\Transfer\RowValidationTransfer $rowValidationTransfer */
+            $rowValidationTransfer = $rowValidationTransfers[$rowNumber];
+            $errors = $rowValidationTransfer->getErrors();
+            $errors[$attributeName] = $constraintViolation->getMessage();
+
+            $rowValidationTransfer->setErrors($errors);
         }
 
-        return $validationResponseTransfer;
+        return $tableValidationResponseTransfer;
+    }
+
+    /**
+     * @param \Symfony\Component\Validator\ConstraintViolationInterface $constraintViolation
+     *
+     * @return array
+     */
+    protected function extractRowNumberAndAttributeName(ConstraintViolationInterface $constraintViolation): array
+    {
+        $propertyPath = $constraintViolation->getPropertyPath();
+        preg_match_all('/(?<=\[).+?(?=\])/', $propertyPath, $matches);
+        $matches = $matches[0];
+        $rowNumber = (int)$matches[0];
+        $attributeName = $matches[1];
+
+        return [
+            $rowNumber,
+            $attributeName,
+        ];
     }
 
     /**
