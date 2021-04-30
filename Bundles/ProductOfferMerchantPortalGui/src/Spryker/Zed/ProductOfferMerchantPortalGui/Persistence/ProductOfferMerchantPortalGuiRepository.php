@@ -115,12 +115,9 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
     {
         $productConcreteQuery = $this->getFactory()->getProductConcretePropelQuery();
 
-        /** @var \Generated\Shared\Transfer\LocaleTransfer $localeTransfer */
-        $localeTransfer = $productTableCriteriaTransfer->requireLocale()->getLocale();
-        /** @var int $idLocale */
-        $idLocale = $localeTransfer->requireIdLocale()->getIdLocale();
-        /** @var int $idMerchant */
-        $idMerchant = $productTableCriteriaTransfer->requireIdMerchant()->getIdMerchant();
+        $localeTransfer = $productTableCriteriaTransfer->getLocaleOrFail();
+        $idLocale = $localeTransfer->getIdLocaleOrFail();
+        $idMerchant = $productTableCriteriaTransfer->getIdMerchantOrFail();
 
         $productConcreteQuery = $this->addLocalizedAttributesToProductTableQuery($productConcreteQuery, $idLocale);
         $productConcreteQuery->leftJoinSpyProductValidity()
@@ -408,14 +405,13 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
             return $productConcreteQuery;
         }
 
-        /** @var int $merchantUserId */
-        $merchantUserId = $productTableCriteriaTransfer->requireIdMerchant()->getIdMerchant();
+        $idMerchant = $productTableCriteriaTransfer->getIdMerchantOrFail();
 
         $productConcreteQuery->where(
             sprintf(
                 '%s (%s)',
                 $productConcreteHasOffers ? 'EXISTS ' : 'NOT EXISTS ',
-                $this->createProductOffersSubquery($merchantUserId)
+                $this->createProductOffersSubquery($idMerchant)
             )
         );
 
