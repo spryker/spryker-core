@@ -139,6 +139,7 @@
     <transfer name="WishlistItemCriteria">
         <property name="sku" type="string"/>
         <property name="idWishlistItem" type="int"/>
+        <property name="fkWishlist" type="int"/>
     </transfer>
 
 </transfers>
