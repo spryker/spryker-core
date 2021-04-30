@@ -194,7 +194,7 @@ class CreateProductAbstractController extends AbstractController
             ->validateConcreteProducts($concreteProducts);
 
         if (!$tableValidationResponseTransfer->getIsSuccessOrFail()) {
-            $viewData['errors'] = $tableValidationResponseTransfer->getRowValidations();
+            $viewData['errors'] = $tableValidationResponseTransfer->toArray()['row_validations'];
 
             $responseData = $this->createMultiConcreteResponse($viewData, $formData);
             $responseData = $this->addErrorNotification($responseData, static::RESPONSE_MESSAGE_ERROR);
