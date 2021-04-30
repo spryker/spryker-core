@@ -11,6 +11,10 @@
         <column name="is_active" default="true" type="BOOLEAN"/>
         <column name="approval_status" type="VARCHAR" size="64" required="true"/>
 
+        <index name="spy_product_offer-concrete_sku">
+            <index-column name="concrete_sku"/>
+        </index>
+
         <unique name="spy_product_offer-product_offer_reference">
             <unique-column name="product_offer_reference"/>
         </unique>

@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\PriceProductVolume\PriceExtractor\VolumePriceExtractor;
 
+use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Client\PriceProductVolume\Dependency\Service\PriceProductVolumeToUtilEncodingServiceInterface;
 use Spryker\Client\PriceProductVolume\PriceExtractor\PriceProductReader\PriceProductReaderInterface;
@@ -76,13 +77,53 @@ class VolumePriceExtractor implements VolumePriceExtractorInterface
         $extractedPrices = [];
 
         foreach ($priceProductTransfers as $priceProductTransfer) {
-            $extractedPrices = array_merge(
-                $extractedPrices,
-                $this->extractPriceProductVolumes($priceProductTransfer)
-            );
+            $extractedPrices[] = $this->extractVolumePrices($priceProductTransfer);
         }
 
-        return $extractedPrices;
+        return array_merge([], ...$extractedPrices);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function extractVolumePrices(PriceProductTransfer $priceProductTransfer): array
+    {
+        $priceProductTransfers = [];
+
+        $priceDataByPriceType = $priceProductTransfer->getMoneyValue()->getPriceDataByPriceType();
+
+        if (!$priceDataByPriceType) {
+            return $this->extractPriceProductVolumes($priceProductTransfer);
+        }
+
+        foreach ($priceDataByPriceType as $priceType => $priceData) {
+            $priceProductTransferCopy = $this->copyPriceProductTransfer($priceProductTransfer, $priceType, $priceData);
+            $priceProductTransfers[] = $this->extractPriceProductVolumes($priceProductTransferCopy);
+        }
+
+        return array_merge([], ...$priceProductTransfers);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     * @param string $priceType
+     * @param string|null $priceData
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    protected function copyPriceProductTransfer(PriceProductTransfer $priceProductTransfer, string $priceType, ?string $priceData): PriceProductTransfer
+    {
+        $moneyValueTransfer = (new MoneyValueTransfer())
+            ->fromArray($priceProductTransfer->getMoneyValue()->toArray())
+            ->setPriceData($priceData);
+
+        $priceProductTransfer = (clone $priceProductTransfer)
+            ->setMoneyValue($moneyValueTransfer)
+            ->setPriceTypeName($priceType);
+
+        return $priceProductTransfer;
     }
 
     /**

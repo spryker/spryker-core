@@ -31,6 +31,7 @@
         <property name="netAmount" type="int"/>
         <property name="currency" type="Currency"/>
         <property name="fkStore" type="int"/>
+        <property name="priceDataByPriceType" type="array" singular="priceDataByPriceType"/>
     </transfer>
 
     <transfer name="PriceProductFilter">

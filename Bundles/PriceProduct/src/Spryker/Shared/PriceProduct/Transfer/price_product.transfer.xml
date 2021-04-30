@@ -95,7 +95,8 @@
         <property name="priceMode" type="string"/>
         <property name="quantity" type="int"/>
         <property name="sumPrice" type="int"/>
-        <property name="priceData" type="string"/>
+        <property name="priceData" type="string" deprecated="Use priceDataByPriceType instead."/>
+        <property name="priceDataByPriceType" type="array" singular="priceDataByPriceType"/>
         <property name="priceDimension" type="PriceProductDimension"/>
     </transfer>
 
