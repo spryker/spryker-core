@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Validator;
 
+use ArrayObject;
 use Generated\Shared\Transfer\RowValidationTransfer;
 use Generated\Shared\Transfer\TableValidationResponseTransfer;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Constraint\SkuRegexConstraint;
@@ -70,7 +71,7 @@ class ProductConcreteValidator implements ProductConcreteValidatorInterface
             $rowValidationTransfer->setErrors($errors);
         }
 
-        $tableValidationResponseTransfer->setRowValidations($rowValidationTransfers);
+        $tableValidationResponseTransfer->setRowValidations(new ArrayObject($rowValidationTransfers));
 
         return $tableValidationResponseTransfer;
     }
