@@ -23,7 +23,7 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGIN_RESOURCE_ROUTES = 'PLUGIN_RESOURCE_ROUTES';
     public const PLUGIN_RESOURCE_RELATIONSHIP = 'PLUGIN_RESOURCE_RELATIONSHIP';
     public const PLUGIN_VALIDATE_HTTP_REQUEST = 'PLUGIN_VALIDATE_HTTP_REQUEST';
-    public const PLUGIN_FORMATTED_CONTROLLER_BEFORE_ACTION_TERMINATE = 'PLUGIN_FORMATTED_CONTROLLER_BEFORE_ACTION_TERMINATE';
+    public const PLUGIN_FORMATTED_CONTROLLER_BEFORE_ACTION = 'PLUGIN_FORMATTED_CONTROLLER_BEFORE_ACTION';
     public const PLUGIN_VALIDATE_REST_REQUEST = 'PLUGIN_VALIDATE_REST_REQUEST';
     public const PLUGINS_VALIDATE_REST_USER = 'PLUGIN_VALIDATE_REST_USER';
     public const PLUGIN_REST_REQUEST_VALIDATOR = 'PLUGIN_REST_REQUEST_VALIDATOR';
@@ -145,7 +145,7 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addFormattedControllerBeforeActionTerminatePlugins(Container $container): Container
     {
-        $container->set(static::PLUGIN_FORMATTED_CONTROLLER_BEFORE_ACTION_TERMINATE, function (Container $container) {
+        $container->set(static::PLUGIN_FORMATTED_CONTROLLER_BEFORE_ACTION, function (Container $container) {
             return $this->getFormattedControllerBeforeActionTerminatePlugins();
         });
 
@@ -350,7 +350,7 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * Plugins that called before processing {@link \Spryker\Glue\Kernel\Controller\FormattedAbstractController}.
      *
-     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\FormattedControllerBeforeActionTerminatePluginInterface[]
+     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\FormattedControllerBeforeActionPluginInterface[]
      */
     protected function getFormattedControllerBeforeActionTerminatePlugins(): array
     {

@@ -23,8 +23,8 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilder;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\Language\LanguageNegotiation;
 use Spryker\Glue\GlueApplication\Rest\Language\LanguageNegotiationInterface;
-use Spryker\Glue\GlueApplication\Rest\Request\FormattedControllerBeforeActionTerminate;
-use Spryker\Glue\GlueApplication\Rest\Request\FormattedControllerBeforeActionTerminateInterface;
+use Spryker\Glue\GlueApplication\Rest\Request\FormattedControllerBeforeAction;
+use Spryker\Glue\GlueApplication\Rest\Request\FormattedControllerBeforeActionInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\HeadersHttpRequestValidator;
 use Spryker\Glue\GlueApplication\Rest\Request\HeadersHttpRequestValidatorInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\HttpRequestValidator;
@@ -99,7 +99,7 @@ class GlueApplicationFactory extends AbstractFactory
             $this->createRestControllerCallbacks(),
             $this->getConfig(),
             $this->createUserProvider(),
-            $this->createFormattedControllerBeforeActionTerminate()
+            $this->createFormattedControllerBeforeAction()
         );
     }
 
@@ -251,11 +251,11 @@ class GlueApplicationFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\GlueApplication\Rest\Request\FormattedControllerBeforeActionTerminateInterface
+     * @return \Spryker\Glue\GlueApplication\Rest\Request\FormattedControllerBeforeActionInterface
      */
-    public function createFormattedControllerBeforeActionTerminate(): FormattedControllerBeforeActionTerminateInterface
+    public function createFormattedControllerBeforeAction(): FormattedControllerBeforeActionInterface
     {
-        return new FormattedControllerBeforeActionTerminate($this->getValidateFormattedControllerBeforeActionHttpRequestsPlugins());
+        return new FormattedControllerBeforeAction($this->getFormattedControllerBeforeActionPlugins());
     }
 
     /**
@@ -439,7 +439,7 @@ class GlueApplicationFactory extends AbstractFactory
     }
 
     /**
-     * @return array
+     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface[]
      */
     public function getResourceRoutePlugins(): array
     {
@@ -463,11 +463,11 @@ class GlueApplicationFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\FormattedControllerBeforeActionTerminatePluginInterface[]
+     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\FormattedControllerBeforeActionPluginInterface[]
      */
-    public function getValidateFormattedControllerBeforeActionHttpRequestsPlugins(): array
+    public function getFormattedControllerBeforeActionPlugins(): array
     {
-        return $this->getProvidedDependency(GlueApplicationDependencyProvider::PLUGIN_FORMATTED_CONTROLLER_BEFORE_ACTION_TERMINATE);
+        return $this->getProvidedDependency(GlueApplicationDependencyProvider::PLUGIN_FORMATTED_CONTROLLER_BEFORE_ACTION);
     }
 
     /**

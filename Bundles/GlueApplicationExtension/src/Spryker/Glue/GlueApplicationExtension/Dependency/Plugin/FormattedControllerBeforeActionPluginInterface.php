@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * Implementations are used in {@link \Spryker\Glue\GlueApplication\GlueApplicationDependencyProvider::getFormattedControllerBeforeActionTerminatePlugins()} for processing some actions before executing controllers that extend {@link \Spryker\Glue\Kernel\Controller\FormattedAbstractController}.
  */
-interface FormattedControllerBeforeActionTerminatePluginInterface
+interface FormattedControllerBeforeActionPluginInterface
 {
     /**
      * @api

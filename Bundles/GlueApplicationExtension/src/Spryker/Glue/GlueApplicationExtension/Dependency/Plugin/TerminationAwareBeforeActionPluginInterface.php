@@ -12,13 +12,4 @@ namespace Spryker\Glue\GlueApplicationExtension\Dependency\Plugin;
  */
 interface TerminationAwareBeforeActionPluginInterface
 {
-    /**
-     * Specification:
-     * - Describes should the controller before action plugin process be stopped in case of failure.
-     *
-     * @api
-     *
-     * @return bool
-     */
-    public function terminateOnFailure(): bool;
 }

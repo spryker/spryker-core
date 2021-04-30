@@ -14,7 +14,7 @@ use Spryker\Glue\GlueApplication\GlueApplicationConfig;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Glue\GlueApplication\Rest\Request\FormattedControllerBeforeActionTerminateInterface;
+use Spryker\Glue\GlueApplication\Rest\Request\FormattedControllerBeforeActionInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\HttpRequestValidatorInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\RequestFormatterInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\RestRequestValidatorInterface;
@@ -83,9 +83,9 @@ class ControllerFilter implements ControllerFilterInterface
     protected $userProvider;
 
     /**
-     * @var \Spryker\Glue\GlueApplication\Rest\Request\FormattedControllerBeforeActionTerminateInterface
+     * @var \Spryker\Glue\GlueApplication\Rest\Request\FormattedControllerBeforeActionInterface
      */
-    protected $formattedControllerBeforeActionTerminate;
+    protected $formattedControllerBeforeAction;
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\RequestFormatterInterface $requestFormatter
@@ -98,7 +98,7 @@ class ControllerFilter implements ControllerFilterInterface
      * @param \Spryker\Glue\GlueApplication\Rest\ControllerCallbacksInterface $controllerCallbacks
      * @param \Spryker\Glue\GlueApplication\GlueApplicationConfig $applicationConfig
      * @param \Spryker\Glue\GlueApplication\Rest\User\UserProviderInterface $userProvider
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\FormattedControllerBeforeActionTerminateInterface $formattedControllerBeforeActionTerminate
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\FormattedControllerBeforeActionInterface $formattedControllerBeforeAction
      */
     public function __construct(
         RequestFormatterInterface $requestFormatter,
@@ -111,7 +111,7 @@ class ControllerFilter implements ControllerFilterInterface
         ControllerCallbacksInterface $controllerCallbacks,
         GlueApplicationConfig $applicationConfig,
         UserProviderInterface $userProvider,
-        FormattedControllerBeforeActionTerminateInterface $formattedControllerBeforeActionTerminate
+        FormattedControllerBeforeActionInterface $formattedControllerBeforeAction
     ) {
         $this->requestFormatter = $requestFormatter;
         $this->responseFormatter = $responseFormatter;
@@ -123,7 +123,7 @@ class ControllerFilter implements ControllerFilterInterface
         $this->controllerCallbacks = $controllerCallbacks;
         $this->applicationConfig = $applicationConfig;
         $this->userProvider = $userProvider;
-        $this->formattedControllerBeforeActionTerminate = $formattedControllerBeforeActionTerminate;
+        $this->formattedControllerBeforeAction = $formattedControllerBeforeAction;
     }
 
     /**
@@ -142,7 +142,7 @@ class ControllerFilter implements ControllerFilterInterface
             }
 
             if ($controller instanceof FormattedAbstractController) {
-                $restErrorMessageTransfer = $this->formattedControllerBeforeActionTerminate->beforeAction($httpRequest);
+                $restErrorMessageTransfer = $this->formattedControllerBeforeAction->beforeAction($httpRequest);
                 if ($restErrorMessageTransfer) {
                     return new Response($restErrorMessageTransfer->getDetail(), $restErrorMessageTransfer->getStatus());
                 }
