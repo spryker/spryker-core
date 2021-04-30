@@ -132,7 +132,7 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
             ->addAsColumn(LocalizedAttributesTransfer::NAME, SpyProductLocalizedAttributesTableMap::COL_NAME)
             ->addAsColumn(ProductConcreteTransfer::STORES, sprintf('(%s)', $this->createProductStoresSubquery()))
             ->addAsColumn(ProductImageTransfer::EXTERNAL_URL_SMALL, sprintf('(%s)', $this->createProductImagesSubquery($idLocale)))
-            ->addAsColumn(ProductConcreteTransfer::NUMBER_OF_OFFERS, sprintf('(%s)', $this->getProductOffersSubquery($idMerchant, true)))
+            ->addAsColumn(ProductConcreteTransfer::NUMBER_OF_OFFERS, sprintf('(%s)', $this->createProductOffersCountSubquery($idMerchant)))
             ->addAsColumn(ProductConcreteTransfer::VALID_FROM, SpyProductValidityTableMap::COL_VALID_FROM)
             ->addAsColumn(ProductConcreteTransfer::VALID_TO, SpyProductValidityTableMap::COL_VALID_TO)
             ->where(sprintf('(%s) IS NOT NULL', $this->createProductStoresSubquery()))
@@ -205,18 +205,28 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
 
     /**
      * @param int $idMerchant
-     * @param bool $withCount
      *
      * @return string
      */
-    protected function getProductOffersSubquery(int $idMerchant, bool $withCount = false): string
+    protected function createProductOffersCountSubquery(int $idMerchant): string
     {
         $productOffersSubquery = $this->createProductOffersBaseSubquery($idMerchant);
-        if ($withCount) {
-            $productOffersSubquery->addAsColumn('offers_count', 'COUNT(*)');
-        } else {
-            $productOffersSubquery->addSelfSelectColumns();
-        }
+        $productOffersSubquery->addAsColumn('offers_count', 'COUNT(*)');
+
+        $params = [];
+
+        return $productOffersSubquery->createSelectSql($params);
+    }
+
+    /**
+     * @param int $idMerchant
+     *
+     * @return string
+     */
+    protected function createProductOffersSubquery(int $idMerchant): string
+    {
+        $productOffersSubquery = $this->createProductOffersBaseSubquery($idMerchant);
+        $productOffersSubquery->addSelfSelectColumns();
 
         $params = [];
 
@@ -405,7 +415,7 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
             sprintf(
                 '%s (%s)',
                 $productConcreteHasOffers ? 'EXISTS ' : 'NOT EXISTS ',
-                $this->getProductOffersSubquery($merchantUserId, false)
+                $this->createProductOffersSubquery($merchantUserId)
             )
         );
 
