@@ -1,0 +1,23 @@
+{# @var locale.localeName \Generated\Shared\Transfer\LocaleTransfer #}
+
+<div class="col-md-6">
+    {{ form_widget(categoryForm) }}
+</div>
+<div class="col-md-12">
+    <hr />
+    <p><strong>{{ 'Translations' | trans }}</strong></p>
+
+    {% for localizedAttributes in categoryForm.localized_attributes %}
+        {% set localeName = localizedAttributes.vars.value.locale.localeName %}
+        {% set isCollapsed = (currentLocale != localeName) %}
+        {% embed '@Gui/Partials/localized-ibox.twig' with {
+            localeName: localeName,
+            collapsed: isCollapsed,
+            id: 'localizedAttributes-ibox-' ~ localeName,
+        } %}
+            {% block content %}
+                {{ form_widget(localizedAttributes) }}
+            {% endblock %}
+        {% endembed %}
+    {% endfor %}
+</div>

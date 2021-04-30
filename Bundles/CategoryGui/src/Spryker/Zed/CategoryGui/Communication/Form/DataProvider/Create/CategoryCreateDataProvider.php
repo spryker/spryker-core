@@ -7,22 +7,16 @@
 
 namespace Spryker\Zed\CategoryGui\Communication\Form\DataProvider\Create;
 
-use Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
+use Spryker\Zed\CategoryGui\Communication\Expander\CategoryExpanderInterface;
 use Spryker\Zed\CategoryGui\Communication\Finder\CategoryFinderInterface;
 use Spryker\Zed\CategoryGui\Communication\Form\CategoryType;
-use Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToLocaleFacadeInterface;
 use Spryker\Zed\CategoryGui\Persistence\CategoryGuiRepositoryInterface;
 
 class CategoryCreateDataProvider
 {
-    /**
-     * @var \Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToLocaleFacadeInterface
-     */
-    protected $localeFacade;
-
     /**
      * @var \Spryker\Zed\CategoryGui\Persistence\CategoryGuiRepositoryInterface
      */
@@ -34,18 +28,23 @@ class CategoryCreateDataProvider
     protected $categoryFinder;
 
     /**
-     * @param \Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToLocaleFacadeInterface $localeFacade
+     * @var \Spryker\Zed\CategoryGui\Communication\Expander\CategoryExpanderInterface
+     */
+    protected $categoryExpander;
+
+    /**
      * @param \Spryker\Zed\CategoryGui\Persistence\CategoryGuiRepositoryInterface $categoryGuiRepository
      * @param \Spryker\Zed\CategoryGui\Communication\Finder\CategoryFinderInterface $categoryFinder
+     * @param \Spryker\Zed\CategoryGui\Communication\Expander\CategoryExpanderInterface $categoryExpander
      */
     public function __construct(
-        CategoryGuiToLocaleFacadeInterface $localeFacade,
         CategoryGuiRepositoryInterface $categoryGuiRepository,
-        CategoryFinderInterface $categoryFinder
+        CategoryFinderInterface $categoryFinder,
+        CategoryExpanderInterface $categoryExpander
     ) {
-        $this->localeFacade = $localeFacade;
         $this->categoryGuiRepository = $categoryGuiRepository;
         $this->categoryFinder = $categoryFinder;
+        $this->categoryExpander = $categoryExpander;
     }
 
     /**
@@ -72,13 +71,7 @@ class CategoryCreateDataProvider
             );
         }
 
-        foreach ($this->localeFacade->getLocaleCollection() as $localTransfer) {
-            $categoryTransfer->addLocalizedAttributes(
-                (new CategoryLocalizedAttributesTransfer())->setLocale($localTransfer)
-            );
-        }
-
-        return $categoryTransfer;
+        return $this->categoryExpander->expandCategoryWithLocalizedAttributes($categoryTransfer);
     }
 
     /**

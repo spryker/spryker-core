@@ -9,6 +9,8 @@ namespace Spryker\Zed\CategoryGui\Communication;
 
 use Generated\Shared\Transfer\CategoryTransfer;
 use Spryker\Zed\CategoryGui\CategoryGuiDependencyProvider;
+use Spryker\Zed\CategoryGui\Communication\Expander\CategoryExpander;
+use Spryker\Zed\CategoryGui\Communication\Expander\CategoryExpanderInterface;
 use Spryker\Zed\CategoryGui\Communication\Finder\CategoryFinder;
 use Spryker\Zed\CategoryGui\Communication\Finder\CategoryFinderInterface;
 use Spryker\Zed\CategoryGui\Communication\Finder\CategoryStoreWithStateFinder;
@@ -90,9 +92,9 @@ class CategoryGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createCategoryCreateDataProvider(): CategoryCreateDataProvider
     {
         return new CategoryCreateDataProvider(
-            $this->getLocaleFacade(),
             $this->getRepository(),
-            $this->createCategoryFinder()
+            $this->createCategoryFinder(),
+            $this->createCategoryExpander()
         );
     }
 
@@ -242,8 +244,8 @@ class CategoryGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createRootCategoryCreateDataProvider(): RootCategoryCreateDataProvider
     {
         return new RootCategoryCreateDataProvider(
-            $this->getLocaleFacade(),
-            $this->getRepository()
+            $this->getRepository(),
+            $this->createCategoryExpander()
         );
     }
 
@@ -315,8 +317,17 @@ class CategoryGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new CategoryFinder(
             $this->getCategoryFacade(),
-            $this->getLocaleFacade()
+            $this->getLocaleFacade(),
+            $this->createCategoryExpander()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\CategoryGui\Communication\Expander\CategoryExpanderInterface
+     */
+    public function createCategoryExpander(): CategoryExpanderInterface
+    {
+        return new CategoryExpander($this->getLocaleFacade());
     }
 
     /**

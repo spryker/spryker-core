@@ -29,7 +29,7 @@ class CategoryLocalizedAttributeNameUniqueConstraintValidator extends Constraint
         }
 
         $categoryTransfer = $this->context->getRoot()->getData();
-        if ($this->isCategoryNameValid($categoryTransfer, $value, $constraint)) {
+        if ($this->isCategoryNameValid($categoryTransfer, (string)$value, $constraint)) {
             return;
         }
 

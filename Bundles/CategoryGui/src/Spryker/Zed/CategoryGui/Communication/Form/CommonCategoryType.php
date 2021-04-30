@@ -78,13 +78,13 @@ abstract class CommonCategoryType extends AbstractType
     {
         $this
             ->addCategoryKeyField($builder)
+            ->addStoreRelationForm($builder, $options)
+            ->addTemplateField($builder, $options)
             ->addIsActiveField($builder)
             ->addIsInMenuField($builder)
             ->addIsSearchableField($builder)
-            ->addTemplateField($builder, $options)
             ->addFormPlugins($builder)
-            ->addLocalizedAttributesForm($builder)
-            ->addStoreRelationForm($builder, $options);
+            ->addLocalizedAttributesForm($builder);
     }
 
     /**
