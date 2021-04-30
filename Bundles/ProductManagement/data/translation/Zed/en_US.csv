@@ -86,7 +86,7 @@ Availability,Availability
 "Please enter at least an SKU and a Name of the product in every locale in the General section","Please enter at least an SKU and a Name of the product in every locale in the General section"
 "The product [%s] was added successfully.","The product [%s] was added successfully."
 Images,Images
-"Add Product Volume Price","Add Product Volume Price"
+"Add Volume Price","Add Volume Price"
 "Is bundle","Is bundle"
 "View Concrete Product","View Concrete Product"
 "Edit Concrete Product","Edit Concrete Product"

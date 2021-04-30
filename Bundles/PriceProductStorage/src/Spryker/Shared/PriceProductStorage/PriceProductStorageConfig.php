@@ -17,6 +17,11 @@ class PriceProductStorageConfig extends AbstractSharedConfig
     public const PRICE_DATA = 'priceData';
 
     /**
+     * @uses \Spryker\Shared\PriceProduct\PriceProductConfig::PRICE_DATA_BY_PRICE_TYPE
+     */
+    public const PRICE_DATA_BY_PRICE_TYPE = 'priceDataByPriceType';
+
+    /**
      * @see \Spryker\Shared\Price\PriceConfig::PRICE_MODE_NET
      */
     public const PRICE_NET_MODE = 'NET_MODE';
