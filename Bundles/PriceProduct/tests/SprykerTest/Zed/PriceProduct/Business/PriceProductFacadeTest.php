@@ -59,6 +59,18 @@ class PriceProductFacadeTest extends Unit
 
     protected const FAKE_CURRENCY = 'FAKE_CURRENCY';
 
+    protected const PRICE_TYPE_ORIGINAL = 'ORIGINAL';
+
+    /**
+     * @uses \Spryker\Shared\PriceProduct\PriceProductConfig::PRICE_DATA
+     */
+    protected const PRICE_DATA = 'priceData';
+
+    /**
+     * @uses \Spryker\Shared\PriceProduct\PriceProductConfig::PRICE_DATA_BY_PRICE_TYPE
+     */
+    protected const PRICE_DATA_BY_PRICE_TYPE = 'priceDataByPriceType';
+
     /**
      * @var \SprykerTest\Zed\PriceProduct\PriceProductBusinessTester
      */
@@ -437,35 +449,44 @@ class PriceProductFacadeTest extends Unit
     {
         // Assign
         $priceProductFacade = $this->getPriceProductFacade();
+        $defaultPriceTypeName = $priceProductFacade->getDefaultPriceTypeName();
         $expectedResult = [
             'dummy currency 1' => [
                 'GROSS_MODE' => [
-                    'dummy price type 1' => 100,
-                    'dummy price type 2' => 1100,
+                    $defaultPriceTypeName => 100,
+                    static::PRICE_TYPE_ORIGINAL => 1100,
                 ],
                 'NET_MODE' => [
-                    'dummy price type 1' => 300,
-                    'dummy price type 2' => 1300,
+                    $defaultPriceTypeName => 300,
+                    static::PRICE_TYPE_ORIGINAL => 1300,
                 ],
                 'priceData' => null,
+                'priceDataByPriceType' => [
+                    $defaultPriceTypeName => null,
+                    static::PRICE_TYPE_ORIGINAL => null,
+                ],
             ],
             'dummy currency 2' => [
                 'GROSS_MODE' => [
-                    'dummy price type 1' => 200,
-                    'dummy price type 2' => 1200,
+                    $defaultPriceTypeName => 200,
+                    static::PRICE_TYPE_ORIGINAL => 1200,
                 ],
                 'NET_MODE' => [
-                    'dummy price type 1' => 400,
-                    'dummy price type 2' => 1400,
+                    $defaultPriceTypeName => 400,
+                    static::PRICE_TYPE_ORIGINAL => 1400,
                 ],
                 'priceData' => null,
+                'priceDataByPriceType' => [
+                    $defaultPriceTypeName => null,
+                    static::PRICE_TYPE_ORIGINAL => null,
+                ],
             ],
         ];
         $priceProductCollection = [];
-        $priceProductCollection[] = $this->createPriceProduct('dummy currency 1', 'dummy price type 1', 100, 300);
-        $priceProductCollection[] = $this->createPriceProduct('dummy currency 1', 'dummy price type 2', 1100, 1300);
-        $priceProductCollection[] = $this->createPriceProduct('dummy currency 2', 'dummy price type 1', 200, 400);
-        $priceProductCollection[] = $this->createPriceProduct('dummy currency 2', 'dummy price type 2', 1200, 1400);
+        $priceProductCollection[] = $this->createPriceProduct('dummy currency 1', $defaultPriceTypeName, 100, 300);
+        $priceProductCollection[] = $this->createPriceProduct('dummy currency 1', static::PRICE_TYPE_ORIGINAL, 1100, 1300);
+        $priceProductCollection[] = $this->createPriceProduct('dummy currency 2', $defaultPriceTypeName, 200, 400);
+        $priceProductCollection[] = $this->createPriceProduct('dummy currency 2', static::PRICE_TYPE_ORIGINAL, 1200, 1400);
 
         // Act
         $actualResult = $priceProductFacade->groupPriceProductCollection($priceProductCollection);
@@ -481,21 +502,48 @@ class PriceProductFacadeTest extends Unit
     {
         // Assign
         $priceProductFacade = $this->getPriceProductFacade();
+        $defaultPriceTypeName = $priceProductFacade->getDefaultPriceTypeName();
 
         $expectedPriceData = 'dummy price data';
 
-        $priceProductWithPriceData = $this->createPriceProduct('dummy currency 1', 'dummy price type 1', 100, 300);
+        $priceProductWithPriceData = $this->createPriceProduct('dummy currency 1', $defaultPriceTypeName, 100, 300);
         $priceProductWithPriceData->getMoneyValue()->setPriceData($expectedPriceData);
 
         $priceProductCollection = [];
         $priceProductCollection[] = $priceProductWithPriceData;
-        $priceProductCollection[] = $this->createPriceProduct('dummy currency 1', 'dummy price type 2', 1100, 1300);
+        $priceProductCollection[] = $this->createPriceProduct('dummy currency 1', static::PRICE_TYPE_ORIGINAL, 1100, 1300);
 
         // Act
         $actualResult = $priceProductFacade->groupPriceProductCollection($priceProductCollection);
 
         // Assert
         $this->assertSame($expectedPriceData, $actualResult['dummy currency 1']['priceData']);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGroupPriceProductCollectionVolumePriceDataOfDefaultPriceTypeShouldBeSameAsInPriceData(): void
+    {
+        // Assign
+        $priceProductFacade = $this->getPriceProductFacade();
+        $defaultPriceTypeName = $priceProductFacade->getDefaultPriceTypeName();
+
+        $expectedPriceData = 'dummy price data';
+
+        $priceProductWithPriceData = $this->createPriceProduct(static::FAKE_CURRENCY, $defaultPriceTypeName, 100, 300);
+        $priceProductWithPriceData->getMoneyValue()->setPriceData($expectedPriceData);
+
+        $priceProductCollection = [];
+        $priceProductCollection[] = $priceProductWithPriceData;
+        $priceProductCollection[] = $this->createPriceProduct(static::FAKE_CURRENCY, static::PRICE_TYPE_ORIGINAL, 1100, 1300);
+
+        // Act
+        $actualResult = $priceProductFacade->groupPriceProductCollection($priceProductCollection);
+
+        // Assert
+        $this->assertSame($expectedPriceData, $actualResult[static::FAKE_CURRENCY][static::PRICE_DATA_BY_PRICE_TYPE][$defaultPriceTypeName]);
+        $this->assertSame($expectedPriceData, $actualResult[static::FAKE_CURRENCY][static::PRICE_DATA]);
     }
 
     /**
