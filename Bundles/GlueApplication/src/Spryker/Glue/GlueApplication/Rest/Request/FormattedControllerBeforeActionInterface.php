@@ -10,7 +10,7 @@ namespace Spryker\Glue\GlueApplication\Rest\Request;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Symfony\Component\HttpFoundation\Request;
 
-interface FormattedControllerBeforeActionTerminateInterface
+interface FormattedControllerBeforeActionInterface
 {
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
