@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
 import { ToJson } from '@spryker/utils';
 import { ProductAttribute } from '../product-attributes-selector/types';
-import { ConcreteProductPreview } from '../concrete-products-preview/types';
+import { ConcreteProductPreview, ConcreteProductPreviewErrors } from '../concrete-products-preview/types';
 
 @Component({
     selector: 'mp-create-multi-concrete-product',
@@ -15,6 +15,7 @@ export class CreateMultiConcreteProductComponent {
     @Input() @ToJson() attributes: ProductAttribute[];
     @Input() @ToJson() selectedAttributes?: ProductAttribute[];
     @Input() @ToJson() generatedProducts?: ConcreteProductPreview[];
+    @Input() @ToJson() errors?: ConcreteProductPreviewErrors[];
     @Input() productsName: string;
     @Input() attributesName: string;
 }
