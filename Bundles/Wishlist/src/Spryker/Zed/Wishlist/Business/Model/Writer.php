@@ -327,7 +327,7 @@ class Writer implements WriterInterface
         $wishlistItemTransfer = $this->executeWishlistPreAddItemPlugins($wishlistItemTransfer);
         $createdWishlistItemTransfer = $this->wishlistEntityManager->addItem($wishlistItemTransfer);
 
-        $wishlistItemTransfer->setIdWishlistItem($createdWishlistItemTransfer->getIdWishlistItem());
+        $wishlistItemTransfer->setIdWishlistItem($createdWishlistItemTransfer->getIdWishlistItemOrFail());
 
         // This part for expanding created wishlist item.
         $wishlistItemCriteriaTransfer = (new WishlistItemCriteriaTransfer())
