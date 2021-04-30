@@ -70,6 +70,8 @@ class ProductConcreteValidator implements ProductConcreteValidatorInterface
             $rowValidationTransfer->setErrors($errors);
         }
 
+        $tableValidationResponseTransfer->setRowValidations($rowValidationTransfers);
+
         return $tableValidationResponseTransfer;
     }
 
