@@ -132,8 +132,8 @@ interface TouchFacadeInterface
 
     /**
      * Specification:
-     * - Check if touch is enabled.
-     * - Gets value from config.
+     * - Checks if touch is enabled.
+     * - Gets the value from config.
      *
      * @api
      *

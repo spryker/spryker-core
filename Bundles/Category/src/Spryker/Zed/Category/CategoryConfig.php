@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Category;
 
 use Spryker\Shared\Category\CategoryConfig as SharedCategoryConfig;
+use Spryker\Shared\Category\CategoryConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CategoryConfig extends AbstractBundleConfig
@@ -30,7 +31,7 @@ class CategoryConfig extends AbstractBundleConfig
 
     protected const REDIRECT_URL_CATEGORY_GUI = '/category-gui/list';
 
-    protected const CATEGORY_READ_CHUNK_SIZE = 10000;
+    protected const DEFAULT_CATEGORY_READ_CHUNK = 10000;
 
     /**
      * Specification:
@@ -42,7 +43,7 @@ class CategoryConfig extends AbstractBundleConfig
      */
     public function getCategoryReadChunkSize(): int
     {
-        return static::CATEGORY_READ_CHUNK_SIZE;
+        return $this->get(CategoryConstants::CATEGORY_READ_CHUNK, static::DEFAULT_CATEGORY_READ_CHUNK);
     }
 
     /**
