@@ -19,7 +19,6 @@ import { ConcreteProductPreview, ConcreteProductPreviewErrors } from './types';
 import { ProductAttribute, ProductAttributeValue } from '../product-attributes-selector/types';
 import { ConcreteProductSkuGeneratorFactoryService } from '../../services/concrete-product-sku-generator-factory.service';
 import { ConcreteProductNameGeneratorFactoryService } from '../../services/concrete-product-name-generator-factory.service';
-import has = Reflect.has;
 
 @Component({
     selector: 'mp-concrete-products-preview',
