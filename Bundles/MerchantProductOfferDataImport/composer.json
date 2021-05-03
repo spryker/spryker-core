@@ -1,47 +1,47 @@
 {
-  "name": "spryker/merchant-product-offer-data-import",
-  "type": "library",
-  "description": "MerchantProductOfferDataImport module",
-  "license": "MIT",
-  "require": {
-    "php": ">=7.3",
-    "spryker/data-import": "^1.0.0",
-    "spryker/kernel": "^3.33.0",
-    "spryker/merchant": "^3.0.0",
-    "spryker/merchant-product-offer": "^0.6.0 || ^0.7.0",
-    "spryker/product": "^6.0.0",
-    "spryker/product-offer": "^0.4.0 || ^0.5.0 || ^0.6.0",
-    "spryker/propel-orm": "^1.0.0",
-    "spryker/store": "^1.0.0"
-  },
-  "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/propel": "*",
-    "spryker/testify": "*"
-  },
-  "autoload": {
-    "psr-4": {
-      "Spryker\\": "src/Spryker/",
-      "SprykerTest\\Zed\\MerchantProductOfferDataImport\\Helper\\": "tests/SprykerTest/Zed/MerchantProductOfferDataImport/_support/Helper/"
+    "name": "spryker/merchant-product-offer-data-import",
+    "type": "library",
+    "description": "MerchantProductOfferDataImport module",
+    "license": "MIT",
+    "require": {
+        "php": ">=7.3",
+        "spryker/data-import": "^1.0.0",
+        "spryker/kernel": "^3.33.0",
+        "spryker/merchant": "^3.0.0",
+        "spryker/merchant-product-offer": "^0.6.0 || ^0.7.0",
+        "spryker/product": "^6.0.0",
+        "spryker/product-offer": "^0.4.0 || ^0.5.0 || ^0.6.0",
+        "spryker/propel-orm": "^1.0.0",
+        "spryker/store": "^1.0.0"
+    },
+    "require-dev": {
+        "spryker/code-sniffer": "*",
+        "spryker/propel": "*",
+        "spryker/testify": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Spryker\\": "src/Spryker/",
+            "SprykerTest\\Zed\\MerchantProductOfferDataImport\\Helper\\": "tests/SprykerTest/Zed/MerchantProductOfferDataImport/_support/Helper/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "SprykerTest\\": "tests/SprykerTest/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
     }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "SprykerTest\\": "tests/SprykerTest/"
-    }
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "scripts": {
-    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
-    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "1.0.x-dev"
-    }
-  },
-  "config": {
-    "sort-packages": true
-  }
 }
