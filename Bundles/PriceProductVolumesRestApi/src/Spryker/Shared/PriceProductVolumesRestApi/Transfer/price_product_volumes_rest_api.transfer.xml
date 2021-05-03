@@ -5,6 +5,7 @@
 
     <transfer name="RestProductPriceAttributes">
         <property name="volumePrices" type="RestProductPriceVolumesAttributes[]" singular="volumePrice"/>
+        <property name="priceTypeName" type="string"/>
     </transfer>
 
     <transfer name="RestProductPriceVolumesAttributes">
@@ -15,15 +16,18 @@
 
     <transfer name="CurrentProductPrice">
         <property name="priceData" type="string"/>
+        <property name="priceDataByPriceType" type="array" singular="priceDataByPriceType"/>
     </transfer>
 
     <transfer name="PriceProduct">
         <property name="moneyValue" type="MoneyValue"/>
         <property name="volumeQuantity" type="int"/>
+        <property name="priceTypeName" type="string"/>
     </transfer>
 
     <transfer name="MoneyValue">
         <property name="priceData" type="string"/>
+        <property name="priceDataByPriceType" type="array" singular="priceDataByPriceType"/>
     </transfer>
 
 </transfers>

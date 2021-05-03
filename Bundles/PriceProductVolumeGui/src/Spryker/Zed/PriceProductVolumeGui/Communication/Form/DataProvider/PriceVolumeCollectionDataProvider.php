@@ -110,6 +110,7 @@ class PriceVolumeCollectionDataProvider
      * @param string $storeName
      * @param string $currencyCode
      * @param array $priceDimension
+     * @param string|null $priceType
      *
      * @throws \Spryker\Zed\PriceProductVolumeGui\Communication\Exception\PriceProductNotFoundException
      *
@@ -120,9 +121,10 @@ class PriceVolumeCollectionDataProvider
         ?int $idProductConcrete,
         string $storeName,
         string $currencyCode,
-        array $priceDimension
+        array $priceDimension,
+        ?string $priceType
     ): PriceProductTransfer {
-        $priceProductCriteriaTransfer = $this->createPriceProductCriteriaTransfer($storeName, $currencyCode, $priceDimension);
+        $priceProductCriteriaTransfer = $this->createPriceProductCriteriaTransfer($storeName, $currencyCode, $priceDimension, $priceType);
         $priceProductTransfers = [];
 
         if ($idProductConcrete !== null) {
@@ -219,11 +221,16 @@ class PriceVolumeCollectionDataProvider
      * @param string $storeName
      * @param string $currencyCode
      * @param array $priceDimension
+     * @param string|null $priceType
      *
      * @return \Generated\Shared\Transfer\PriceProductCriteriaTransfer
      */
-    protected function createPriceProductCriteriaTransfer(string $storeName, string $currencyCode, array $priceDimension): PriceProductCriteriaTransfer
-    {
+    protected function createPriceProductCriteriaTransfer(
+        string $storeName,
+        string $currencyCode,
+        array $priceDimension,
+        ?string $priceType
+    ): PriceProductCriteriaTransfer {
         $idCurrency = $this->getIdCurrencyByCode($currencyCode);
         $idStore = $this->getIdStoreByName($storeName);
 
@@ -232,7 +239,7 @@ class PriceVolumeCollectionDataProvider
         $priceProductCriteriaTransfer = (new PriceProductCriteriaTransfer())
             ->setIdCurrency($idCurrency)
             ->setIdStore($idStore)
-            ->setPriceType($this->config->getPriceTypeDefaultName())
+            ->setPriceType($priceType ?? $this->config->getPriceTypeDefaultName())
             ->setPriceDimension($priceProductDimensionTransfer);
 
         return $priceProductCriteriaTransfer;

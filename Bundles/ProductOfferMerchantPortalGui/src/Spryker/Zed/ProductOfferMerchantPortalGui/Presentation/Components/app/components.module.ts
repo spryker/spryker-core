@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CustomElementModule, WebComponentDefs } from '@spryker/web-components';
+import { WebComponentsModule } from '@spryker/web-components';
 import { OffersListComponent } from './offers-list/offers-list.component';
 import { OffersListModule } from './offers-list/offers-list.module';
 import { ProductOfferComponent } from './product-offer/product-offer.component';
@@ -15,6 +15,16 @@ import { DateRangePickerModule, DateRangePickerComponent } from '@spryker/date-p
 
 @NgModule({
     imports: [
+        WebComponentsModule.withComponents([
+            OffersListComponent,
+            ProductOfferComponent,
+            ButtonLinkComponent,
+            EditOfferComponent,
+            ChipsComponent,
+            CardComponent,
+            DateRangePickerComponent,
+            OfferPricesTableComponent,
+        ]),
         ProductOfferModule,
         OffersListModule,
         ButtonLinkModule,
@@ -25,15 +35,4 @@ import { DateRangePickerModule, DateRangePickerComponent } from '@spryker/date-p
         OfferPricesTableModule,
     ],
 })
-export class ComponentsModule extends CustomElementModule {
-    protected components: WebComponentDefs = [
-        OffersListComponent,
-        ProductOfferComponent,
-        ButtonLinkComponent,
-        EditOfferComponent,
-        ChipsComponent,
-        CardComponent,
-        DateRangePickerComponent,
-        OfferPricesTableComponent,
-    ];
-}
+export class ComponentsModule {}

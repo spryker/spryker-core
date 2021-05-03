@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { LocaleModule, LocaleSwitcherComponent } from '@spryker/locale';
 import { NotificationComponent, NotificationModule } from '@spryker/notification';
-import { CustomElementModule, WebComponentDefs } from '@spryker/web-components';
+import { WebComponentsModule } from '@spryker/web-components';
 import { ButtonComponent, ButtonModule } from '@spryker/button';
 import { FormItemComponent, FormItemModule } from '@spryker/form-item';
 import { InputComponent, InputModule } from '@spryker/input';
@@ -26,9 +26,34 @@ import { MerchantLayoutMainComponent } from './merchant-layout-main/merchant-lay
 import { MerchantLayoutMainModule } from './merchant-layout-main/merchant-layout-main.module';
 import { FormComponent } from './form/form.component';
 import { FormModule } from './form/form.module';
+import { RootComponent } from './app.component';
 
 @NgModule({
     imports: [
+        WebComponentsModule.withComponents([
+            {
+                component: RootComponent,
+                isRoot: true,
+            },
+            LayoutCenteredComponent,
+            LayoutMainComponent,
+            MerchantLayoutCenteredComponent,
+            MerchantLayoutMainComponent,
+            HeaderComponent,
+            HeaderMenuComponent,
+            NotificationComponent,
+            LocaleSwitcherComponent,
+            FormComponent,
+            FormItemComponent,
+            InputComponent,
+            InputPasswordComponent,
+            ButtonComponent,
+            TextareaComponent,
+            SelectComponent,
+            ToggleComponent,
+            CheckboxComponent,
+            UserMenuLinkComponent,
+        ]),
         LayoutCenteredModule,
         MerchantLayoutCenteredModule,
         MerchantLayoutMainModule,
@@ -47,39 +72,6 @@ import { FormModule } from './form/form.module';
         ToggleModule,
         CheckboxModule,
     ],
-    providers: [],
+    declarations: [RootComponent],
 })
-export class ComponentsModule extends CustomElementModule {
-    protected components: WebComponentDefs = [
-        {
-            component: LayoutCenteredComponent,
-            isRoot: true,
-        },
-        {
-            component: LayoutMainComponent,
-            isRoot: true,
-        },
-        {
-            component: MerchantLayoutCenteredComponent,
-            isRoot: true,
-        },
-        {
-            component: MerchantLayoutMainComponent,
-            isRoot: true,
-        },
-        HeaderComponent,
-        HeaderMenuComponent,
-        NotificationComponent,
-        LocaleSwitcherComponent,
-        FormComponent,
-        FormItemComponent,
-        InputComponent,
-        InputPasswordComponent,
-        ButtonComponent,
-        TextareaComponent,
-        SelectComponent,
-        ToggleComponent,
-        CheckboxComponent,
-        UserMenuLinkComponent,
-    ];
-}
+export class ComponentsModule {}

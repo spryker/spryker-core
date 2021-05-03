@@ -1,15 +1,16 @@
 import { NgModule } from '@angular/core';
-import { CustomElementModule, WebComponentDefs } from '@spryker/web-components';
+import { WebComponentsModule } from '@spryker/web-components';
 import { TabComponent, TabsComponent, TabsModule } from '@spryker/tabs';
 import { TreeSelectComponent, TreeSelectModule } from '@spryker/tree-select';
 import { IconPlusModule } from '@spryker/icon/icons';
 import { IconGermanyModule, IconUnitedStatesModule, IconDeleteModule, IconNoDataModule } from '../icons';
-import { CardModule, CardComponent } from '@spryker/card';
-import { CollapsibleModule, CollapsibleComponent } from '@spryker/collapsible';
-import { ChipsComponent, ChipsModule } from '@spryker/chips';
 import { IconModule, IconComponent } from '@spryker/icon';
 import { RadioModule, RadioComponent, RadioGroupComponent } from '@spryker/radio';
 import { ButtonActionComponent, ButtonActionModule } from '@spryker/button.action';
+import { CardModule, CardComponent } from '@spryker/card';
+import { ChipsModule, ChipsComponent } from '@spryker/chips';
+import { DateRangePickerModule, DateRangePickerComponent } from '@spryker/date-picker';
+import { CollapsibleModule, CollapsibleComponent } from '@spryker/collapsible';
 
 import { ProductListComponent } from './product-list/product-list.component';
 import { ProductListModule } from './product-list/product-list.module';
@@ -25,33 +26,66 @@ import { EditAbstractProductVariantsComponent } from './edit-abstract-product-va
 import { EditAbstractProductVariantsModule } from './edit-abstract-product-variants/edit-abstract-product-variants.module';
 import { BulkEditProductVariantsComponent } from './bulk-edit-product-variants/bulk-edit-product-variants.component';
 import { BulkEditProductVariantsModule } from './bulk-edit-product-variants/bulk-edit-product-variants.module';
-import { CreateAbstractProductModule } from './create-abstract-product/create-abstract-product.module';
+import { EditConcreteProductPricesComponent } from './edit-concrete-product-prices/edit-concrete-product-prices.component';
+import { EditConcreteProductPricesModule } from './edit-concrete-product-prices/edit-concrete-product-prices.module';
+import { EditConcreteProductAttributesComponent } from './edit-concrete-product-attributes/edit-concrete-product-attributes.component';
+import { EditConcreteProductAttributesModule } from './edit-concrete-product-attributes/edit-concrete-product-attributes.module';
+import { EditConcreteProductComponent } from './edit-concrete-product/edit-concrete-product.component';
+import { EditConcreteProductModule } from './edit-concrete-product/edit-concrete-product.module';
 import { CreateAbstractProductComponent } from './create-abstract-product/create-abstract-product.component';
-import { CreateSingleConcreteProductModule } from './create-single-concrete-product/create-single-concrete-product.module';
+import { CreateAbstractProductModule } from './create-abstract-product/create-abstract-product.module';
 import { CreateSingleConcreteProductComponent } from './create-single-concrete-product/create-single-concrete-product.component';
-import { AutogenerateInputModule } from './autogenerate-input/autogenerate-input.module';
+import { CreateSingleConcreteProductModule } from './create-single-concrete-product/create-single-concrete-product.module';
 import { AutogenerateInputComponent } from './autogenerate-input/autogenerate-input.component';
-import { ConcreteProductsPreviewModule } from './concrete-products-preview/concrete-products-preview.module';
+import { AutogenerateInputModule } from './autogenerate-input/autogenerate-input.module';
 import { ConcreteProductsPreviewComponent } from './concrete-products-preview/concrete-products-preview.component';
-import { ProductAttributesSelectorModule } from './product-attributes-selector/product-attributes-selector.module';
+import { ConcreteProductsPreviewModule } from './concrete-products-preview/concrete-products-preview.module';
 import { ProductAttributesSelectorComponent } from './product-attributes-selector/product-attributes-selector.component';
-import { CreateMultiConcreteProductModule } from './create-multi-concrete-product/create-multi-concrete-product.module';
+import { ProductAttributesSelectorModule } from './product-attributes-selector/product-attributes-selector.module';
 import { CreateMultiConcreteProductComponent } from './create-multi-concrete-product/create-multi-concrete-product.component';
-import { ConcreteProductGeneratorDataModule } from './concrete-product-generator-data/concrete-product-generator-data.module';
+import { CreateMultiConcreteProductModule } from './create-multi-concrete-product/create-multi-concrete-product.module';
 import { ConcreteProductGeneratorDataComponent } from './concrete-product-generator-data/concrete-product-generator-data.component';
+import { ConcreteProductGeneratorDataModule } from './concrete-product-generator-data/concrete-product-generator-data.module';
 
 @NgModule({
     imports: [
-        ProductListModule,
-        EditAbstractProductModule,
+        WebComponentsModule.withComponents([
+            DateRangePickerComponent,
+            TabComponent,
+            TabsComponent,
+            CardComponent,
+            IconComponent,
+            TreeSelectComponent,
+            CollapsibleComponent,
+            ChipsComponent,
+            RadioComponent,
+            RadioGroupComponent,
+            ImageSetsComponent,
+            ButtonActionComponent,
+            EditAbstractProductAttributesComponent,
+            EditAbstractProductPricesComponent,
+            EditConcreteProductPricesComponent,
+            EditConcreteProductAttributesComponent,
+            EditConcreteProductComponent,
+            ProductListComponent,
+            EditAbstractProductComponent,
+            BulkEditProductVariantsComponent,
+            EditAbstractProductVariantsComponent,
+            CreateAbstractProductComponent,
+            CreateSingleConcreteProductComponent,
+            AutogenerateInputComponent,
+            ConcreteProductsPreviewComponent,
+            ProductAttributesSelectorComponent,
+            CreateMultiConcreteProductComponent,
+            ConcreteProductGeneratorDataComponent,
+        ]),
+        DateRangePickerModule,
         TabsModule,
         CardModule,
         IconModule,
         TreeSelectModule,
         CollapsibleModule,
         ChipsModule,
-        EditAbstractProductAttributesModule,
-        EditAbstractProductPricesModule,
         IconGermanyModule,
         IconUnitedStatesModule,
         IconDeleteModule,
@@ -59,9 +93,16 @@ import { ConcreteProductGeneratorDataComponent } from './concrete-product-genera
         IconPlusModule,
         RadioModule,
         ImageSetsModule,
+        ButtonActionModule,
+        EditAbstractProductAttributesModule,
+        EditAbstractProductPricesModule,
+        EditConcreteProductPricesModule,
+        EditConcreteProductAttributesModule,
+        EditConcreteProductModule,
+        ProductListModule,
+        EditAbstractProductModule,
         BulkEditProductVariantsModule,
         EditAbstractProductVariantsModule,
-        ButtonActionModule,
         CreateAbstractProductModule,
         CreateSingleConcreteProductModule,
         AutogenerateInputModule,
@@ -71,31 +112,4 @@ import { ConcreteProductGeneratorDataComponent } from './concrete-product-genera
         ConcreteProductGeneratorDataModule,
     ],
 })
-export class ComponentsModule extends CustomElementModule {
-    protected components: WebComponentDefs = [
-        ProductListComponent,
-        EditAbstractProductComponent,
-        TabComponent,
-        TabsComponent,
-        CardComponent,
-        IconComponent,
-        TreeSelectComponent,
-        CollapsibleComponent,
-        ChipsComponent,
-        EditAbstractProductAttributesComponent,
-        EditAbstractProductPricesComponent,
-        RadioComponent,
-        RadioGroupComponent,
-        ImageSetsComponent,
-        BulkEditProductVariantsComponent,
-        EditAbstractProductVariantsComponent,
-        ButtonActionComponent,
-        CreateAbstractProductComponent,
-        CreateSingleConcreteProductComponent,
-        AutogenerateInputComponent,
-        ConcreteProductsPreviewComponent,
-        ProductAttributesSelectorComponent,
-        CreateMultiConcreteProductComponent,
-        ConcreteProductGeneratorDataComponent,
-    ];
-}
+export class ComponentsModule {}

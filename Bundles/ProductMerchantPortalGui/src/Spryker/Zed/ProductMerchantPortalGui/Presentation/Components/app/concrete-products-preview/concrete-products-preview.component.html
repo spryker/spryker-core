@@ -43,17 +43,25 @@
                             </span>
                         </div>
                         <div class="mp-concrete-products-preview__table-row-sku">
-                            <spy-input [value]="product.sku" (valueChange)="skuChange($event, i)" #skuInputRef>
-                            </spy-input>
+                            <spy-form-item
+                                no-spaces="true"
+                                no-label="true"
+                                [error]="errors?.length && errors[i] ? errors[i]?.errors?.sku : ''"
+                            >
+                                <spy-input [value]="product.sku" (valueChange)="skuChange($event, i)" #skuInputRef>
+                                </spy-input>
+                            </spy-form-item>
                         </div>
                         <div class="mp-concrete-products-preview__table-row-name">
-                            <spy-input
-                                [value]="product.name"
-                                (valueChange)="nameChange($event, i)"
-                                #nameInputRef
-                                class="mp-concrete-products-preview__table-row-name-input"
+                            <spy-form-item
+                                no-spaces="true"
+                                no-label="true"
+                                [error]="errors?.length && errors[i] ? errors[i]?.errors?.name : ''"
+                                class="mp-concrete-products-preview__table-row-name-form-item"
                             >
-                            </spy-input>
+                                <spy-input [value]="product.name" (valueChange)="nameChange($event, i)" #nameInputRef>
+                                </spy-input>
+                            </spy-form-item>
                             <spy-button
                                 variant="link"
                                 class="mp-concrete-products-preview__table-row-button"

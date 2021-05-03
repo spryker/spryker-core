@@ -5,13 +5,27 @@
 
     {% set attributesName = 'selectedAttributes' %}
     {% set productsName = 'concreteProducts' %}
-    {% set attributes = superProductManagementAttributes | json_encode %}
+    {% set attributes = superProductManagementAttributes %}
     {% set selectedAttributes = selectedAttributesJson | default('[]') %}
     {% set concreteProducts = concreteProductsJson | default('[]') %}
     {% set backButtonAttrs = '{
         "name": "back",
         "value": true
     }' %}
+    {% set parsedErrors = {} %}
+
+    {% if errors is defined %}
+        {% for error in errors %}
+            {% set key = loop.index0 %}
+            {% set errorObj = {
+                (key): {
+                    fields: error.fields,
+                    errors: error.errors,
+                },
+            } %}
+            {% set parsedErrors = parsedErrors | merge(errorObj) %}
+        {% endfor %}
+    {% endif %}
 
     {% block createMultiConcreteProduct %}
         <web-mp-concrete-product-generator-data
@@ -20,11 +34,13 @@
             abstract-name="{{ productAbstract.name }}">
             <web-mp-create-multi-concrete-product
                 cloak
-                attributes="{{ attributes }}"
+                attributes="{{ attributes | json_encode }}"
                 attributes-name="{{ attributesName }}"
                 products-name="{{ productsName }}"
                 selected-attributes="{{ selectedAttributes }}"
-                generated-products="{{ concreteProducts }}">
+                generated-products="{{ concreteProducts }}"
+                errors="{{ parsedErrors | json_encode }}"
+            >
                 {{ form_start(form, { attr: { excludeFormTag: true } }) }}
                     {% block title %}
                         <span title>{{ 'Create an Abstract Product with multiple Concrete Products' | trans }}</span>

@@ -11,3 +11,14 @@ interface ConcreteProductPreviewSuperAttribute {
     name: string;
     attribute: ProductAttributeValue;
 }
+
+export interface ConcreteProductPreviewErrors {
+    fields?: {
+        sku: string;
+        name: string;
+    };
+    errors?: {
+        sku: string;
+        name: string;
+    };
+}
