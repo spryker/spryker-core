@@ -187,24 +187,24 @@ export class ConcreteProductsPreviewComponent implements OnInit, OnChanges {
     }
 
     hasSkuError(): boolean {
-        let hasError = false
+        let hasError = false;
         this.errors.forEach((error) => {
             if (error.errors?.sku) {
-                hasError = true
+                hasError = true;
             }
-        })
+        });
 
-        return hasError
+        return hasError;
     }
 
     hasNameError(): boolean {
-        let hasError = false
+        let hasError = false;
         this.errors.forEach((error) => {
             if (error.errors?.name) {
-                hasError = true
+                hasError = true;
             }
-        })
+        });
 
-        return hasError
+        return hasError;
     }
 }
