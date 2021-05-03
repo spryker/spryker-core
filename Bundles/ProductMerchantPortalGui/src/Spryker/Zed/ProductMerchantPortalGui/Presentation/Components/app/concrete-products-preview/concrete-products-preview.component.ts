@@ -19,6 +19,7 @@ import { ConcreteProductPreview, ConcreteProductPreviewErrors } from './types';
 import { ProductAttribute, ProductAttributeValue } from '../product-attributes-selector/types';
 import { ConcreteProductSkuGeneratorFactoryService } from '../../services/concrete-product-sku-generator-factory.service';
 import { ConcreteProductNameGeneratorFactoryService } from '../../services/concrete-product-name-generator-factory.service';
+import has = Reflect.has;
 
 @Component({
     selector: 'mp-concrete-products-preview',
@@ -62,11 +63,11 @@ export class ConcreteProductsPreviewComponent implements OnInit, OnChanges {
         }
 
         this.initialGeneratedProducts.some((generatedProduct) => {
-            if (!generatedProduct.sku.length) {
+            if (!generatedProduct.sku.length || this.hasSkuError()) {
                 this.isAutoGenerateSkuCheckbox = false;
             }
 
-            if (!generatedProduct.name.length) {
+            if (!generatedProduct.name.length || this.hasNameError()) {
                 this.isAutoGenerateNameCheckbox = false;
             }
         });
@@ -184,5 +185,27 @@ export class ConcreteProductsPreviewComponent implements OnInit, OnChanges {
     delete(index: number): void {
         this.generatedProducts = [...this.generatedProducts.filter((product, productIndex) => index !== productIndex)];
         this.generatedProductsChange.emit(this.generatedProducts);
+    }
+
+    hasSkuError(): boolean {
+        let hasError = false
+        this.errors.forEach((error) => {
+            if (error.errors?.sku) {
+                hasError = true
+            }
+        })
+
+        return hasError
+    }
+
+    hasNameError(): boolean {
+        let hasError = false
+        this.errors.forEach((error) => {
+            if (error.errors?.name) {
+                hasError = true
+            }
+        })
+
+        return hasError
     }
 }

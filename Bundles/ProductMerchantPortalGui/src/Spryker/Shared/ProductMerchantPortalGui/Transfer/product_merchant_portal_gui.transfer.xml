@@ -230,7 +230,7 @@
 
     <transfer name="TableValidationResponse">
         <property name="isSuccess" type="bool"/>
-        <property name="RowValidations" type="RowValidation[]" singular="rowValidation"/>
+        <property name="rowValidations" type="RowValidation[]" singular="rowValidation"/>
     </transfer>
 
     <transfer name="RowValidation">
