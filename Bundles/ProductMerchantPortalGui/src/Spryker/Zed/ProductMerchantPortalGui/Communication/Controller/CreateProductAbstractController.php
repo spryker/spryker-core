@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Controller;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\TableValidationResponseTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\CreateProductAbstractForm;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\CreateProductAbstractWithSingleConcreteForm;
@@ -194,7 +195,7 @@ class CreateProductAbstractController extends AbstractController
             ->validateConcreteProducts($concreteProducts);
 
         if (!$tableValidationResponseTransfer->getIsSuccessOrFail()) {
-            $viewData['errors'] = $tableValidationResponseTransfer->toArray()['row_validations'];
+            $viewData['errors'] = $this->extractErrors($tableValidationResponseTransfer);
 
             $responseData = $this->createMultiConcreteResponse($viewData, $formData);
             $responseData = $this->addErrorNotification($responseData, static::RESPONSE_MESSAGE_ERROR);
@@ -345,5 +346,21 @@ class CreateProductAbstractController extends AbstractController
             )->getContent(),
             'action' => $this->getCreateUrl($formData, false),
         ];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\TableValidationResponseTransfer $tableValidationResponseTransfer
+     *
+     * @return array
+     */
+    protected function extractErrors(TableValidationResponseTransfer $tableValidationResponseTransfer): array
+    {
+        $errors = [];
+        /** @var \Generated\Shared\Transfer\RowValidationTransfer $rowValidationTransfer */
+        foreach ($tableValidationResponseTransfer->getRowValidations() as $index => $rowValidationTransfer) {
+            $errors[$index] = $rowValidationTransfer->toArray();
+        }
+
+        return $errors;
     }
 }

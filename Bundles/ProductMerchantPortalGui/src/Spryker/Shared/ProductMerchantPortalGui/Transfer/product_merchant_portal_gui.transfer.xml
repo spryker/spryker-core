@@ -234,8 +234,8 @@
     </transfer>
 
     <transfer name="RowValidation">
-        <property name="fields" type="array"/>
-        <property name="errors" type="array"/>
+        <property name="fields" type="array" singular="field"/>
+        <property name="errors" type="array" singular="error"/>
     </transfer>
 
     <transfer name="PriceProductCriteria">
