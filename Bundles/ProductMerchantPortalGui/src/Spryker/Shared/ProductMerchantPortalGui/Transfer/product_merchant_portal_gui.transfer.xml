@@ -322,4 +322,10 @@
         <property name="reservationQuantity" type="decimal"/>
     </transfer>
 
+    <transfer name="ValidationResponse">
+    </transfer>
+
+    <transfer name="ValidationError">
+    </transfer>
+
 </transfers>
