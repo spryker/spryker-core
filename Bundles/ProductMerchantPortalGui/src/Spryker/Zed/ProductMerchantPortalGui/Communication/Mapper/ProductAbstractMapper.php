@@ -10,14 +10,22 @@ namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\LocaleDataProviderInterface;
-use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\CreateProductAbstractWithMultiConcreteForm;
-use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\CreateProductAbstractWithSingleConcreteForm;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToLocaleFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantUserFacadeInterface;
 use Symfony\Component\Form\FormInterface;
 
 class ProductAbstractMapper implements ProductAbstractMapperInterface
 {
+    /**
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\CreateProductAbstractWithSingleConcreteForm::FIELD_NAME
+     */
+    protected const FIELD_NAME = 'name';
+
+    /**
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\CreateProductAbstractWithSingleConcreteForm::FIELD_SKU
+     */
+    protected const FIELD_SKU = 'sku';
+
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantUserFacadeInterface
      */
@@ -49,26 +57,27 @@ class ProductAbstractMapper implements ProductAbstractMapperInterface
     }
 
     /**
-     * @param \Symfony\Component\Form\FormInterface $createProductAbstractWithMultiConcreteForm
+     * @param mixed[] $formData
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
     public function mapFormDataToProductAbstractTransfer(
-        FormInterface $createProductAbstractWithMultiConcreteForm
+        array $formData,
+        ProductAbstractTransfer $productAbstractTransfer
     ): ProductAbstractTransfer {
-        $formData = $createProductAbstractWithMultiConcreteForm->getData();
         $merchantUserTransfer = $this->merchantUserFacade->getCurrentMerchantUser();
         $localeTransfers = $this->localeFacade->getLocaleCollection();
 
-        $productAbstractTransfer = (new ProductAbstractTransfer())
-            ->setSku($formData[CreateProductAbstractWithMultiConcreteForm::FIELD_SKU])
-            ->setName($formData[CreateProductAbstractWithMultiConcreteForm::FIELD_NAME])
+        $productAbstractTransfer
+            ->setSku($formData[static::FIELD_SKU])
+            ->setName($formData[static::FIELD_NAME])
             ->setIdMerchant($merchantUserTransfer->getIdMerchantOrFail());
 
         $defaultStoreDefaultLocale = $this->localeDataProvider->findDefaultStoreDefaultLocale();
         foreach ($localeTransfers as $localeTransfer) {
             $productAbstractLocalizedName = $localeTransfer->getLocaleNameOrFail() === $defaultStoreDefaultLocale
-                ? $formData[CreateProductAbstractWithSingleConcreteForm::FIELD_NAME]
+                ? $formData[static::FIELD_NAME]
                 : '';
             $productAbstractTransfer->addLocalizedAttributes(
                 (new LocalizedAttributesTransfer())

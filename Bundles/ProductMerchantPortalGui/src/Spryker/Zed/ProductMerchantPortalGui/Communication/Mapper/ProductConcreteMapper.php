@@ -19,13 +19,12 @@ use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortal
 
 class ProductConcreteMapper implements ProductConcreteMapperInterface
 {
-    public const FIELD_NAME = 'name';
-    public const FIELD_SKU = 'sku';
-    public const FIELD_ATTRIBUTE = 'attribute';
-    public const FIELD_SUPER_ATTRIBUTES = 'superAttributes';
-    public const FIELD_KEY = 'key';
-    public const FIELD_VALUE = 'value';
-    public const FIELD_TITLE = 'title';
+    protected const FIELD_NAME = 'name';
+    protected const FIELD_SKU = 'sku';
+    protected const FIELD_ATTRIBUTE = 'attribute';
+    protected const FIELD_SUPER_ATTRIBUTES = 'superAttributes';
+    protected const FIELD_KEY = 'key';
+    protected const FIELD_VALUE = 'value';
 
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToLocaleFacadeInterface
@@ -58,16 +57,16 @@ class ProductConcreteMapper implements ProductConcreteMapperInterface
     }
 
     /**
-     * @param array $concreteProducts
+     * @param mixed[] $concreteProducts
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
-    public function mapRequestDataToProductConcreteTransfer(array $concreteProducts): array
+    public function mapRequestDataToProductConcreteTransfers(array $concreteProducts): array
     {
         $localeTransfers = $this->localeFacade->getLocaleCollection();
         $defaultStoreDefaultLocale = $this->localeDataProvider->findDefaultStoreDefaultLocale();
 
-        $concreteProductTransfers = [];
+        $productConcreteTransfers = [];
         foreach ($concreteProducts as $concreteProduct) {
             $attributes = $this->reformatSuperAttributes($concreteProduct);
 
@@ -97,20 +96,25 @@ class ProductConcreteMapper implements ProductConcreteMapperInterface
                 );
             }
 
-            $concreteProductTransfers[] = $concreteProductTransfer;
+            $productConcreteTransfers[] = $concreteProductTransfer;
         }
 
-        return $concreteProductTransfers;
+        return $productConcreteTransfers;
     }
 
     /**
-     * @param array $concreteProduct
+     * @param mixed[] $concreteProduct
      *
      * @return string[]
      */
     protected function reformatSuperAttributes(array $concreteProduct): array
     {
         $attributes = [];
+
+        if (!isset($concreteProduct[static::FIELD_SUPER_ATTRIBUTES])) {
+            return $attributes;
+        }
+
         foreach ($concreteProduct[static::FIELD_SUPER_ATTRIBUTES] as $superAttribute) {
             $attributeKey = $superAttribute[static::FIELD_VALUE];
             $attributeValue = $superAttribute[static::FIELD_ATTRIBUTE][static::FIELD_VALUE];
@@ -123,7 +127,7 @@ class ProductConcreteMapper implements ProductConcreteMapperInterface
     /**
      * @phpstan-return ArrayObject<int, \Generated\Shared\Transfer\ProductManagementAttributeTransfer>
      *
-     * @param array $attributes
+     * @param mixed[] $attributes
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
      */
@@ -142,7 +146,7 @@ class ProductConcreteMapper implements ProductConcreteMapperInterface
      * @param string[] $attributes
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return array
+     * @return string[]
      */
     protected function extractLocalizedAttributes(
         array $productManagementAttributeTransfers,
@@ -163,8 +167,8 @@ class ProductConcreteMapper implements ProductConcreteMapperInterface
             }
 
             foreach ($productManagementAttributeValueTransfer->getLocalizedValues() as $attributeValueTranslationTransfer) {
-                if ($attributeValueTranslationTransfer->getLocaleName() === $localeTransfer->getLocaleName()) {
-                    $localizedAttributes[$attributeKey] = $attributeValueTranslationTransfer->getTranslation();
+                if ($attributeValueTranslationTransfer->getLocaleNameOrFail() === $localeTransfer->getLocaleNameOrFail()) {
+                    $localizedAttributes[$attributeKey] = $attributeValueTranslationTransfer->getTranslationOrFail();
                 }
             }
         }

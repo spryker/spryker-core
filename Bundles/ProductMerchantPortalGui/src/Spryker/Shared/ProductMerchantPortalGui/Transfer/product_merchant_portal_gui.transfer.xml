@@ -64,7 +64,7 @@
         <property name="categoryNames" type="string[]" singular="categoryName"/>
         <property name="storeNames" type="string[]" singular="storeName"/>
         <property name="categoryIds" type="int[]" singular="idCategory"/>
-        <property name="utes" type="array" singular="attribute"/>
+        <property name="attributes" type="array" singular="attribute"/>
         <property name="localizedAttributes" type="LocalizedAttributes[]" singular="localizedAttributes"/>
         <property name="imageSets" type="ProductImageSet[]" singular="imageSet"/>
         <property name="storeRelation" type="StoreRelation"/>
@@ -228,6 +228,22 @@
         <property name="columnErrors" type="array" singular="columnError" associative="true" description="Key is column ID."/>
     </transfer>
 
+    <transfer name="PriceProductCriteria">
+        <property name="priceProductStoreIds" type="int[]" singular="idPriceProductStore"/>
+    </transfer>
+
+    <transfer name="ValidationResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="validationErrors" type="ValidationError[]" singular="validationError"/>
+    </transfer>
+
+    <transfer name="ValidationError">
+        <property name="message" type="string"/>
+        <property name="root" type="object"/>
+        <property name="propertyPath" type="string"/>
+        <property name="invalidValue" type="string"/>
+    </transfer>
+
     <transfer name="TableValidationResponse">
         <property name="isSuccess" type="bool"/>
         <property name="rowValidations" type="RowValidation[]" singular="rowValidation"/>
@@ -237,11 +253,6 @@
         <property name="fields" type="array" singular="field"/>
         <property name="errors" type="array" singular="error"/>
     </transfer>
-
-    <transfer name="PriceProductCriteria">
-        <property name="priceProductStoreIds" type="int[]" singular="idPriceProductStore"/>
-    </transfer>
-
 
     <transfer name="PriceProductDimension">
         <property name="idPriceProductDefault" type="int"/>
@@ -296,6 +307,7 @@
     <transfer name="ProductManagementAttribute">
         <property name="isSuper" type="bool"/>
         <property name="key" type="string"/>
+        <property name="values" type="ProductManagementAttributeValue[]" singular="value"/>
     </transfer>
 
     <transfer name="ProductManagementAttributeFilter">
@@ -303,6 +315,13 @@
     </transfer>
 
     <transfer name="ProductManagementAttributeValue">
+        <property name="value" type="string"/>
+        <property name="localizedValues" type="ProductManagementAttributeValueTranslation[]" singular="localizedValue"/>
+    </transfer>
+
+    <transfer name="ProductManagementAttributeValueTranslation">
+        <property name="localeName" type="string"/>
+        <property name="translation" type="string"/>
     </transfer>
 
     <transfer name="Merchant">
@@ -322,10 +341,5 @@
         <property name="reservationQuantity" type="decimal"/>
     </transfer>
 
-    <transfer name="ValidationResponse">
-    </transfer>
-
-    <transfer name="ValidationError">
-    </transfer>
 
 </transfers>

@@ -24,6 +24,8 @@ use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Constraint\ProductCo
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\CreateProductAbstractForm;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\CreateProductAbstractWithMultiConcreteForm;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\CreateProductAbstractWithSingleConcreteForm;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\DataProvider\CreateProductAbstractWithSingleConcreteFormDataProvider;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\DataProvider\CreateProductAbstractWithSingleConcreteFormDataProviderInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\DataProvider\ProductAbstractFormDataProvider;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\DataProvider\ProductAbstractFormDataProviderInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\DataProvider\ProductConcreteEditFormDataProvider;
@@ -35,6 +37,8 @@ use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Transformer\PricePro
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Transformer\ProductConcreteEditFormDataTransformer;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Transformer\QuantityTransformer;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Transformer\StockTransformer;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Generator\CreateProductUrlGenerator;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Generator\CreateProductUrlGeneratorInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\CategoryFilterOptionsProvider;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\CategoryFilterOptionsProviderInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ConfigurationBuilderProvider\PriceProductGuiTableConfigurationBuilderProvider;
@@ -202,6 +206,14 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
             $this->getProductCategoryFacade(),
             $this->getConfig()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\DataProvider\CreateProductAbstractWithSingleConcreteFormDataProviderInterface
+     */
+    public function createCreateProductAbstractWithSingleConcreteFormDataProvider(): CreateProductAbstractWithSingleConcreteFormDataProviderInterface
+    {
+        return new CreateProductAbstractWithSingleConcreteFormDataProvider();
     }
 
     /**
@@ -498,10 +510,9 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
     public function createCreateProductAbstractWithSingleConcreteFormSubmitter(): CreateProductAbstractWithSingleConcreteFormSubmitterInterface
     {
         return new CreateProductAbstractWithSingleConcreteFormSubmitter(
-            $this->getMerchantUserFacade(),
-            $this->getLocaleFacade(),
-            $this->getProductFacade(),
-            $this->createLocaleDataProvider()
+            $this->createProductAbstractMapper(),
+            $this->createProductConcreteMapper(),
+            $this->getProductFacade()
         );
     }
 
@@ -513,6 +524,14 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
         return new ProductConcreteValidator(
             $this->getValidationAdapter()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\Generator\CreateProductUrlGeneratorInterface
+     */
+    public function createCreateProductUrlGenerator(): CreateProductUrlGeneratorInterface
+    {
+        return new CreateProductUrlGenerator();
     }
 
     /**

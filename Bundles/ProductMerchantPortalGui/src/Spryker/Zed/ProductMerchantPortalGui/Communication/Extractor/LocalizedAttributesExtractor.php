@@ -77,8 +77,9 @@ class LocalizedAttributesExtractor implements LocalizedAttributesExtractorInterf
 
         $superAttributes = [];
         foreach ($productManagementAttributeTransfers as $productManagementAttributeTransfer) {
-            $attributeKey = $productManagementAttributeTransfer->getKey();
-            if ($productManagementAttributeTransfer->getIsSuper() && isset($attributes[$attributeKey])) {
+            $attributeKey = $productManagementAttributeTransfer->getKeyOrFail();
+
+            if ($productManagementAttributeTransfer->getIsSuperOrFail() && isset($attributes[$attributeKey])) {
                 $superAttributes[$attributeKey] = $attributes[$attributeKey];
             }
         }

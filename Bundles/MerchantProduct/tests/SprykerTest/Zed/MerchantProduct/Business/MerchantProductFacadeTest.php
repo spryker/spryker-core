@@ -621,7 +621,7 @@ class MerchantProductFacadeTest extends Unit
         // Act
         $createdMerchantProductTransfer = $this->tester->getFacade()->create($merchantProductTransfer);
         $merchantProductTransferFromDb = $this->tester->findMerchantProduct($merchantProductCriteriaTransfer->addMerchantProductAbstractId(
-            $createdMerchantProductTransfer->getIdMerchantProductAbstract()
+            $createdMerchantProductTransfer->getIdMerchantProductAbstractOrFail()
         ));
 
         // Assert

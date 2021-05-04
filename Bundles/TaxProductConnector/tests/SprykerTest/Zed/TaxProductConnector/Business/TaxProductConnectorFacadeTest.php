@@ -109,13 +109,13 @@ class TaxProductConnectorFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testAddTaxSetWhenTaxSetDoesNotExistShouldDoNothing(): void
+    public function testMapTaxSetWhenTaxSetDoesNotExistShouldReturnProductAbstractWithoutIdTaxSet(): void
     {
         $productAbstractTransfer = new ProductAbstractTransfer();
         $productAbstractTransfer->setIdProductAbstract(-1);
 
         $taxProductConnectorFacade = $this->createTaxProductConnectorFacade();
-        $taxProductConnectorFacade->mapTaxSet($productAbstractTransfer);
+        $productAbstractTransfer = $taxProductConnectorFacade->mapTaxSet($productAbstractTransfer);
 
         $this->assertNull($productAbstractTransfer->getIdTaxSet());
     }

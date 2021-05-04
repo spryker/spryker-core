@@ -7,27 +7,43 @@
 
 namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Submitter;
 
-use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
-use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\LocaleDataProviderInterface;
-use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\CreateProductAbstractWithSingleConcreteForm;
-use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToLocaleFacadeInterface;
-use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantUserFacadeInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\ProductAbstractMapperInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\ProductConcreteMapperInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductFacadeInterface;
 use Symfony\Component\Form\FormInterface;
 
 class CreateProductAbstractWithSingleConcreteFormSubmitter implements CreateProductAbstractWithSingleConcreteFormSubmitterInterface
 {
     /**
-     * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantUserFacadeInterface
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\ProductConcreteMapper::FIELD_NAME
      */
-    protected $merchantUserFacade;
+    protected const FIELD_NAME = 'name';
 
     /**
-     * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToLocaleFacadeInterface
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\ProductConcreteMapper::FIELD_SKU
      */
-    protected $localeFacade;
+    protected const FIELD_SKU = 'sku';
+
+    /**
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\CreateProductAbstractWithSingleConcreteForm::FIELD_CONCRETE_NAME
+     */
+    protected const FIELD_CONCRETE_NAME = 'concreteName';
+
+    /**
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\CreateProductAbstractWithSingleConcreteForm::FIELD_CONCRETE_SKU
+     */
+    protected const FIELD_CONCRETE_SKU = 'concreteSku';
+
+    /**
+     * @var \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\ProductAbstractMapperInterface
+     */
+    protected $productAbstractMapper;
+
+    /**
+     * @var \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\ProductConcreteMapperInterface
+     */
+    protected $productConcreteMapper;
 
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductFacadeInterface
@@ -35,26 +51,18 @@ class CreateProductAbstractWithSingleConcreteFormSubmitter implements CreateProd
     protected $productFacade;
 
     /**
-     * @var \Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\LocaleDataProviderInterface
-     */
-    protected $localeDataProvider;
-
-    /**
-     * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade
-     * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToLocaleFacadeInterface $localeFacade
+     * @param \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\ProductAbstractMapperInterface $productAbstractMapper
+     * @param \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\ProductConcreteMapperInterface $productConcreteMapper
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductFacadeInterface $productFacade
-     * @param \Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\LocaleDataProviderInterface $localeDataProvider
      */
     public function __construct(
-        ProductMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade,
-        ProductMerchantPortalGuiToLocaleFacadeInterface $localeFacade,
-        ProductMerchantPortalGuiToProductFacadeInterface $productFacade,
-        LocaleDataProviderInterface $localeDataProvider
+        ProductAbstractMapperInterface $productAbstractMapper,
+        ProductConcreteMapperInterface $productConcreteMapper,
+        ProductMerchantPortalGuiToProductFacadeInterface $productFacade
     ) {
-        $this->merchantUserFacade = $merchantUserFacade;
-        $this->localeFacade = $localeFacade;
+        $this->productAbstractMapper = $productAbstractMapper;
+        $this->productConcreteMapper = $productConcreteMapper;
         $this->productFacade = $productFacade;
-        $this->localeDataProvider = $localeDataProvider;
     }
 
     /**
@@ -65,39 +73,21 @@ class CreateProductAbstractWithSingleConcreteFormSubmitter implements CreateProd
     public function executeFormSubmission(FormInterface $createProductAbstractWithSingleConcreteForm): int
     {
         $formData = $createProductAbstractWithSingleConcreteForm->getData();
-        $merchantUserTransfer = $this->merchantUserFacade->getCurrentMerchantUser();
-        $localeTransfers = $this->localeFacade->getLocaleCollection();
 
-        $productAbstractTransfer = (new ProductAbstractTransfer())
-            ->setSku($formData[CreateProductAbstractWithSingleConcreteForm::FIELD_SKU])
-            ->setName($formData[CreateProductAbstractWithSingleConcreteForm::FIELD_NAME])
-            ->setIdMerchant($merchantUserTransfer->getIdMerchantOrFail());
-
-        $productConcreteTransfer = (new ProductConcreteTransfer())
-            ->setName($formData[CreateProductAbstractWithSingleConcreteForm::FIELD_CONCRETE_NAME])
-            ->setSku($formData[CreateProductAbstractWithSingleConcreteForm::FIELD_CONCRETE_SKU])
-            ->setIsActive(false);
-
-        $defaultStoreDefaultLocale = $this->localeDataProvider->findDefaultStoreDefaultLocale();
-        foreach ($localeTransfers as $localeTransfer) {
-            $productAbstractLocalizedName = $localeTransfer->getLocaleNameOrFail() === $defaultStoreDefaultLocale
-                ? $formData[CreateProductAbstractWithSingleConcreteForm::FIELD_NAME]
-                : '';
-            $productConcreteLocalizedName = $localeTransfer->getLocaleNameOrFail() === $defaultStoreDefaultLocale
-                ? $formData[CreateProductAbstractWithSingleConcreteForm::FIELD_CONCRETE_NAME]
-                : '';
-            $productAbstractTransfer->addLocalizedAttributes(
-                (new LocalizedAttributesTransfer())
-                    ->setLocale($localeTransfer)
-                    ->setName($productAbstractLocalizedName)
+        $productAbstractTransfer = $this->productAbstractMapper
+            ->mapFormDataToProductAbstractTransfer(
+                $formData,
+                new ProductAbstractTransfer()
             );
-            $productConcreteTransfer->addLocalizedAttributes(
-                (new LocalizedAttributesTransfer())
-                    ->setLocale($localeTransfer)
-                    ->setName($productConcreteLocalizedName)
-            );
-        }
 
-        return $this->productFacade->addProduct($productAbstractTransfer, [$productConcreteTransfer]);
+        $productConcreteTransfers = $this->productConcreteMapper
+            ->mapRequestDataToProductConcreteTransfers([
+                [
+                    static::FIELD_SKU => $formData[static::FIELD_CONCRETE_SKU],
+                    static::FIELD_NAME => $formData[static::FIELD_CONCRETE_NAME],
+                ],
+            ]);
+
+        return $this->productFacade->addProduct($productAbstractTransfer, $productConcreteTransfers);
     }
 }

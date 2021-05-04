@@ -29,7 +29,7 @@ class SuperAttributesDataProvider implements SuperAttributesDataProviderInterfac
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     public function getSuperAttributes(): array
     {
@@ -38,7 +38,7 @@ class SuperAttributesDataProvider implements SuperAttributesDataProviderInterfac
 
         $superProductManagementAttributes = [];
         foreach ($productManagementAttributeTransfers as $productManagementAttributeTransfer) {
-            if (!$productManagementAttributeTransfer->getIsSuper()) {
+            if (!$productManagementAttributeTransfer->getIsSuperOrFail()) {
                 continue;
             }
 
