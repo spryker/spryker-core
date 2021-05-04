@@ -1,57 +1,57 @@
 {
-  "name": "spryker/price-product-storage",
-  "type": "library",
-  "description": "PriceProductStorage module",
-  "license": "proprietary",
-  "require": {
-    "php": ">=7.3",
-    "spryker/event-behavior": "^1.1.0",
-    "spryker/kernel": "^3.30.0",
-    "spryker/log": "^3.0.0",
-    "spryker/price-product": "^2.15.0 || ^4.24.0",
-    "spryker/price-product-storage-extension": "^1.2.0",
-    "spryker/product": "^5.5.0 || ^6.0.0",
-    "spryker/propel-orm": "^1.5.0",
-    "spryker/quick-order-extension": "^1.1.0",
-    "spryker/storage": "^3.4.0",
-    "spryker/store": "^1.7.0",
-    "spryker/synchronization": "^0.2.0 || ^1.0.0",
-    "spryker/synchronization-behavior": "^1.0.0",
-    "spryker/synchronization-extension": "^1.0.0"
-  },
-  "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/event": "*",
-    "spryker/product-storage": "*",
-    "spryker/propel": "*",
-    "spryker/testify": "*"
-  },
-  "suggest": {
-    "spryker/event": "If you want to use Event plugins, minimum required version: 2.1.0",
-    "spryker/product-storage": "If you want to use ProductStorage plugins, minimum required version: 0.1.0"
-  },
-  "autoload": {
-    "psr-4": {
-      "Spryker\\": "src/Spryker/"
+    "name": "spryker/price-product-storage",
+    "type": "library",
+    "description": "PriceProductStorage module",
+    "license": "proprietary",
+    "require": {
+        "php": ">=7.3",
+        "spryker/event-behavior": "^1.1.0",
+        "spryker/kernel": "^3.30.0",
+        "spryker/log": "^3.0.0",
+        "spryker/price-product": "^2.15.0 || ^4.24.0",
+        "spryker/price-product-storage-extension": "^1.2.0",
+        "spryker/product": "^5.5.0 || ^6.0.0",
+        "spryker/propel-orm": "^1.5.0",
+        "spryker/quick-order-extension": "^1.1.0",
+        "spryker/storage": "^3.4.0",
+        "spryker/store": "^1.7.0",
+        "spryker/synchronization": "^0.2.0 || ^1.0.0",
+        "spryker/synchronization-behavior": "^1.0.0",
+        "spryker/synchronization-extension": "^1.0.0"
+    },
+    "require-dev": {
+        "spryker/code-sniffer": "*",
+        "spryker/event": "*",
+        "spryker/product-storage": "*",
+        "spryker/propel": "*",
+        "spryker/testify": "*"
+    },
+    "suggest": {
+        "spryker/event": "If you want to use Event plugins, minimum required version: 2.1.0",
+        "spryker/product-storage": "If you want to use ProductStorage plugins, minimum required version: 0.1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Spryker\\": "src/Spryker/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "SprykerTest\\": "tests/SprykerTest/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "4.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
     }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "SprykerTest\\": "tests/SprykerTest/"
-    }
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "scripts": {
-    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
-    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "4.0.x-dev"
-    }
-  },
-  "config": {
-    "sort-packages": true
-  }
 }

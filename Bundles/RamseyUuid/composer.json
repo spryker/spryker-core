@@ -1,21 +1,21 @@
 {
-  "name": "spryker/ramsey-uuid",
-  "type": "library",
-  "description": "RamseyUuid module",
-  "license": "proprietary",
-  "require": {
-    "php": ">=7.3",
-    "ramsey/uuid": "^4.0.1"
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "scripts": {},
-  "extra": {
-    "branch-alias": {
-      "dev-master": "2.0.x-dev"
+    "name": "spryker/ramsey-uuid",
+    "type": "library",
+    "description": "RamseyUuid module",
+    "license": "proprietary",
+    "require": {
+        "php": ">=7.3",
+        "ramsey/uuid": "^4.0.1"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {},
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
     }
-  },
-  "config": {
-    "sort-packages": true
-  }
 }

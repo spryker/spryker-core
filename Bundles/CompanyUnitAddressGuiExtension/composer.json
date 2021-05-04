@@ -1,38 +1,38 @@
 {
-  "name": "spryker/company-unit-address-gui-extension",
-  "type": "library",
-  "description": "CompanyUnitAddressGuiExtension module",
-  "license": "proprietary",
-  "require": {
-    "php": ">=7.3"
-  },
-  "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/gui": "^3.13.0",
-    "spryker/symfony": "^3.0.0"
-  },
-  "suggest": {
-    "spryker/company-unit-address": "To get full functionality of the current module",
-    "spryker/gui": "If you want to use CompanyUnitAddressGuiExtension module plugin interfaces which used Gui transfer object.",
-    "spryker/symfony": "If you want to provide plugins to CompanyUnitAddressGui module"
-  },
-  "autoload": {
-    "psr-4": {
-      "Spryker\\": "src/Spryker/"
+    "name": "spryker/company-unit-address-gui-extension",
+    "type": "library",
+    "description": "CompanyUnitAddressGuiExtension module",
+    "license": "proprietary",
+    "require": {
+        "php": ">=7.3"
+    },
+    "require-dev": {
+        "spryker/code-sniffer": "*",
+        "spryker/gui": "^3.13.0",
+        "spryker/symfony": "^3.0.0"
+    },
+    "suggest": {
+        "spryker/company-unit-address": "To get full functionality of the current module",
+        "spryker/gui": "If you want to use CompanyUnitAddressGuiExtension module plugin interfaces which used Gui transfer object.",
+        "spryker/symfony": "If you want to provide plugins to CompanyUnitAddressGui module"
+    },
+    "autoload": {
+        "psr-4": {
+            "Spryker\\": "src/Spryker/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
     }
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "scripts": {
-    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
-    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "1.0.x-dev"
-    }
-  },
-  "config": {
-    "sort-packages": true
-  }
 }
