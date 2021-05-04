@@ -34,9 +34,17 @@ class MerchantProductOfferGuiRepository extends AbstractRepository implements Me
         $queryJoinTransfer = (new QueryJoinTransfer())->setRelation('SpyMerchant')
             ->setJoinType(Criteria::LEFT_JOIN);
 
-        if ($merchantProductOfferCriteriaTransfer->getMerchantReference()) {
+        if ($merchantProductOfferCriteriaTransfer->getIdMerchant()) {
             $queryJoinTransfer->setJoinType(Criteria::INNER_JOIN)
-                ->setCondition(sprintf('%s = \'%s\'', SpyProductOfferTableMap::COL_MERCHANT_REFERENCE, $merchantProductOfferCriteriaTransfer->getMerchantReference()));
+                ->setCondition(
+                    sprintf(
+                        '%s = %s AND %s = \'%s\'',
+                        SpyProductOfferTableMap::COL_MERCHANT_REFERENCE,
+                        SpyMerchantTableMap::COL_MERCHANT_REFERENCE,
+                        SpyMerchantTableMap::COL_ID_MERCHANT,
+                        $merchantProductOfferCriteriaTransfer->getIdMerchant()
+                    )
+                );
         }
 
         $queryCriteriaTransfer->addJoin($queryJoinTransfer)

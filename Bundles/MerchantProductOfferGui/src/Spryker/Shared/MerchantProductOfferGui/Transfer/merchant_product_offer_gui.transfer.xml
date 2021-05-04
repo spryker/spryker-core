@@ -19,7 +19,7 @@
     </transfer>
 
     <transfer name="MerchantProductOfferCriteria">
-        <property name="merchantReference" type="string"/>
+        <property name="idMerchant" type="int"/>
     </transfer>
 
     <transfer name="QueryJoin">
