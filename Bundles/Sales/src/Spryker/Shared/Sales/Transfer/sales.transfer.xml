@@ -1,7 +1,5 @@
 <?xml version="1.0"?>
-<transfers xmlns="spryker:transfer-01"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="Order">
         <property name="idSalesOrder" type="int"/>
@@ -13,7 +11,7 @@
         <property name="billingAddress" type="Address"/>
         <property name="shippingAddress" type="Address" deprecated="Use item level shipping addresses (item.shipment.shippingAddress) instead."/>
         <property name="customer" type="Customer"/>
-        <property name="items" type="Item[]"  singular="item"/>
+        <property name="items" type="Item[]" singular="item"/>
         <property name="createdAt" type="string"/>
         <property name="isTest" type="string"/>
         <property name="expenses" type="Expense[]" singular="expense"/>
@@ -78,7 +76,7 @@
 
     <transfer name="OrderListRequest">
         <property name="customerReference" type="string"/>
-        <property name="orderReferences" type="string[]"  singular="orderReference"/>
+        <property name="orderReferences" type="string[]" singular="orderReference"/>
         <property name="filter" type="Filter"/>
     </transfer>
 
@@ -398,7 +396,7 @@
     <transfer name="OrderCancelResponse">
         <property name="order" type="Order"/>
         <property name="isSuccessful" type="bool"/>
-        <property name="messages" type="Message[]"  singular="message"/>
+        <property name="messages" type="Message[]" singular="message"/>
     </transfer>
 
     <transfer name="Message">

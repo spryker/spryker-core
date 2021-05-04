@@ -1,7 +1,5 @@
 <?xml version="1.0"?>
-<database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd"
-          namespace="Orm\Zed\CategoryStorage\Persistence"
-          package="src.Orm.Zed.CategoryStorage.Persistence">
+<database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\CategoryStorage\Persistence" package="src.Orm.Zed.CategoryStorage.Persistence">
 
     <table name="spy_category_tree_storage" identifierQuoting="true">
         <column name="id_category_tree_storage" type="BIGINT" autoIncrement="true" primaryKey="true"/>

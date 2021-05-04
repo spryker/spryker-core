@@ -31,7 +31,7 @@
         <behavior name="timestampable"/>
     </table>
 
-    <table name="spy_file_localized_attributes" idMethod="native" allowPkInsert="true" >
+    <table name="spy_file_localized_attributes" idMethod="native" allowPkInsert="true">
         <column name="id_file_localized_attributes" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_file" required="true" type="INTEGER"/>
         <column name="fk_locale" required="true" type="INTEGER"/>
