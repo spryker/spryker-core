@@ -15,7 +15,6 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
 {
-    public const REPLACE_4_WITH_2_SPACES = '/^(  +?)\\1(?=[^ ])/m';
     public const KEY_REQUIRE = 'require';
     public const KEY_REQUIRE_DEV = 'require-dev';
 
