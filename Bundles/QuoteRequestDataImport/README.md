@@ -1,5 +1,5 @@
 # QuoteRequestDataImport Module
-[![Build Status](https://travis-ci.org/spryker/quote-request-data-import.svg)](https://travis-ci.org/spryker/quote-request-data-import)
+[![Latest Stable Version](https://poser.pugx.org/spryker/quote-request-data-import/v/stable.svg)](https://packagist.org/packages/spryker/quote-request-data-import)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 DataImport for Quote Requests.

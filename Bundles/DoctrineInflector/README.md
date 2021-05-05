@@ -1,5 +1,5 @@
 # DoctrineInflector Module
-[![Build Status](https://travis-ci.org/spryker/doctrine-inflector.svg)](https://travis-ci.org/spryker/doctrine-inflector)
+[![Latest Stable Version](https://poser.pugx.org/spryker/doctrine-inflector/v/stable.svg)](https://packagist.org/packages/spryker/doctrine-inflector)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 DoctrineInflector module is a 3rd party connector module for "doctrine/inflector" vendor library.

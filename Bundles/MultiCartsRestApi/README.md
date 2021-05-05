@@ -1,5 +1,5 @@
 # MultiCartsRestApi Module
-[![Build Status](https://travis-ci.org/spryker/multi-carts-rest-api.svg)](https://travis-ci.org/spryker/multi-carts-rest-api)
+[![Latest Stable Version](https://poser.pugx.org/spryker/multi-carts-rest-api/v/stable.svg)](https://packagist.org/packages/spryker/multi-carts-rest-api)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 MultiCartsRestApi module provides API endpoints to create carts and retrieve list of carts
