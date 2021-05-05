@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Expander;
 
-use \ArrayObject;
+use ArrayObject;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeFilterTransfer;

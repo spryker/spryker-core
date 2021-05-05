@@ -539,7 +539,7 @@
         "spryker/product-discontinued-storage": "*",
         "spryker/product-discount-connector": "*",
         "spryker/product-extension": "*",
-    "spryker/product-group": "*",
+        "spryker/product-group": "*",
         "spryker/product-group-collector": "*",
         "spryker/product-group-storage": "*",
         "spryker/product-image": "*",
