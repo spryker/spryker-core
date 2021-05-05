@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CustomElementModule, WebComponentDefs } from '@spryker/web-components';
+import { WebComponentsModule } from '@spryker/web-components';
 import { ButtonActionComponent, ButtonActionModule } from '@spryker/button.action';
 import { CardComponent, CardModule } from '@spryker/card';
 
@@ -9,14 +9,17 @@ import { ChangePasswordOverlayModule } from './change-password-overlay/change-pa
 import { ChangePasswordOverlayComponent } from './change-password-overlay/change-password-overlay.component';
 
 @NgModule({
-    imports: [MyAccountModule, ChangePasswordOverlayModule, ButtonActionModule, CardModule],
-    providers: [],
+    imports: [
+        WebComponentsModule.withComponents([
+            MyAccountComponent,
+            ChangePasswordOverlayComponent,
+            ButtonActionComponent,
+            CardComponent,
+        ]),
+        MyAccountModule,
+        ChangePasswordOverlayModule,
+        ButtonActionModule,
+        CardModule,
+    ],
 })
-export class ComponentsModule extends CustomElementModule {
-    protected components: WebComponentDefs = [
-        MyAccountComponent,
-        ChangePasswordOverlayComponent,
-        ButtonActionComponent,
-        CardComponent,
-    ];
-}
+export class ComponentsModule {}

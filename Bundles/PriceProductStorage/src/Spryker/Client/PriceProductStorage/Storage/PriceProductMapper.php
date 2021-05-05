@@ -91,11 +91,34 @@ class PriceProductMapper implements PriceProductMapperInterface
      */
     protected function setPriceData(PriceProductTransfer $priceProductTransfer, array $prices): PriceProductTransfer
     {
-        if (isset($prices[PriceProductStorageConfig::PRICE_DATA])) {
-            $priceProductTransfer->getMoneyValue()->setPriceData($prices[PriceProductStorageConfig::PRICE_DATA]);
+        $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
+
+        $priceData = $this->resolvePriceData($priceProductTransfer, $prices);
+        if ($priceData !== null) {
+            $moneyValueTransfer->setPriceData($priceData);
+        }
+
+        if (isset($prices[PriceProductStorageConfig::PRICE_DATA_BY_PRICE_TYPE])) {
+            $moneyValueTransfer->setPriceDataByPriceType($prices[PriceProductStorageConfig::PRICE_DATA_BY_PRICE_TYPE]);
         }
 
         return $priceProductTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     * @param array $prices
+     *
+     * @return string|null
+     */
+    protected function resolvePriceData(PriceProductTransfer $priceProductTransfer, array $prices): ?string
+    {
+        $priceTypeName = $priceProductTransfer->getPriceTypeName();
+        if (isset($prices[PriceProductStorageConfig::PRICE_DATA_BY_PRICE_TYPE][$priceTypeName])) {
+            return $prices[PriceProductStorageConfig::PRICE_DATA_BY_PRICE_TYPE][$priceTypeName];
+        }
+
+        return $prices[PriceProductStorageConfig::PRICE_DATA] ?? null;
     }
 
     /**

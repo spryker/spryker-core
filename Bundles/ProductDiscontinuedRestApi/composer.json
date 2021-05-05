@@ -1,39 +1,39 @@
 {
-  "name": "spryker/product-discontinued-rest-api",
-  "type": "library",
-  "description": "ProductDiscontinuedRestApi module",
-  "license": "proprietary",
-  "require": {
-    "php": ">=7.3",
-    "spryker/kernel": "^3.30.0",
-    "spryker/product-discontinued-storage": "^1.0.0",
-    "spryker/products-rest-api-extension": "^1.0.0"
-  },
-  "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/glue-application": "*"
-  },
-  "suggest": {
-    "spryker/glue-application": "If you want to use RestRequestInterface.",
-    "spryker/products-rest-api": "If you want to use plugins with ProductsRestApi module."
-  },
-  "autoload": {
-    "psr-4": {
-      "Spryker\\": "src/Spryker/"
+    "name": "spryker/product-discontinued-rest-api",
+    "type": "library",
+    "description": "ProductDiscontinuedRestApi module",
+    "license": "proprietary",
+    "require": {
+        "php": ">=7.3",
+        "spryker/kernel": "^3.30.0",
+        "spryker/product-discontinued-storage": "^1.0.0",
+        "spryker/products-rest-api-extension": "^1.0.0"
+    },
+    "require-dev": {
+        "spryker/code-sniffer": "*",
+        "spryker/glue-application": "*"
+    },
+    "suggest": {
+        "spryker/glue-application": "If you want to use RestRequestInterface.",
+        "spryker/products-rest-api": "If you want to use plugins with ProductsRestApi module."
+    },
+    "autoload": {
+        "psr-4": {
+            "Spryker\\": "src/Spryker/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
     }
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "scripts": {
-    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/",
-    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/"
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "1.0.x-dev"
-    }
-  },
-  "config": {
-    "sort-packages": true
-  }
 }

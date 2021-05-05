@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CustomElementModule, WebComponentDefs } from '@spryker/web-components';
+import { WebComponentsModule } from '@spryker/web-components';
 import { TabComponent, TabsComponent, TabsModule } from '@spryker/tabs';
 import { TreeSelectComponent, TreeSelectModule } from '@spryker/tree-select';
 import { IconGermanyModule, IconUnitedStatesModule } from '../icons';
@@ -30,6 +30,25 @@ import { EditConcreteProductModule } from './edit-concrete-product/edit-concrete
 
 @NgModule({
     imports: [
+        WebComponentsModule.withComponents([
+            TabComponent,
+            TabsComponent,
+            CardComponent,
+            TreeSelectComponent,
+            CollapsibleComponent,
+            ChipsComponent,
+            DateRangePickerComponent,
+            ProductListComponent,
+            ImageSetsComponent,
+            EditAbstractProductAttributesComponent,
+            EditAbstractProductPricesComponent,
+            EditAbstractProductComponent,
+            BulkEditProductVariantsComponent,
+            EditAbstractProductVariantsComponent,
+            EditConcreteProductPricesComponent,
+            EditConcreteProductAttributesComponent,
+            EditConcreteProductComponent,
+        ]),
         TabsModule,
         CardModule,
         TreeSelectModule,
@@ -50,24 +69,4 @@ import { EditConcreteProductModule } from './edit-concrete-product/edit-concrete
         EditConcreteProductModule,
     ],
 })
-export class ComponentsModule extends CustomElementModule {
-    protected components: WebComponentDefs = [
-        TabComponent,
-        TabsComponent,
-        CardComponent,
-        TreeSelectComponent,
-        CollapsibleComponent,
-        ChipsComponent,
-        DateRangePickerComponent,
-        ProductListComponent,
-        ImageSetsComponent,
-        EditAbstractProductAttributesComponent,
-        EditAbstractProductPricesComponent,
-        EditAbstractProductComponent,
-        BulkEditProductVariantsComponent,
-        EditAbstractProductVariantsComponent,
-        EditConcreteProductPricesComponent,
-        EditConcreteProductAttributesComponent,
-        EditConcreteProductComponent,
-    ];
-}
+export class ComponentsModule {}

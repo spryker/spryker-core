@@ -68,6 +68,7 @@ class MerchantUserSecurityPlugin extends AbstractPlugin implements SecurityPlugi
             'logout' => [
                 'logout_path' => static::PATH_LOGOUT,
                 'target_url' => static::ROUTE_LOGIN,
+                'priority' => 65,
             ],
             'users' => function () {
                 return $this->getFactory()->createMerchantUserProvider();

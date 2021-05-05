@@ -17,8 +17,8 @@ suites:
         class_name: ProductSetPageSearchBusinessTester
         modules:
             enabled:
-            - Asserts
-            - \SprykerTest\Shared\Testify\Helper\Environment
+                - Asserts
+                - \SprykerTest\Shared\Testify\Helper\Environment
 
     Communication:
         path: Communication

@@ -1,11 +1,13 @@
 <?xml version="1.0"?>
-<ruleset name="Spryker PHPMD rule set"
-         xmlns="http://pmd.sf.net/ruleset/1.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://pmd.sf.net/ruleset/1.0.0
+<ruleset
+    name="Spryker PHPMD rule set"
+    xmlns="http://pmd.sf.net/ruleset/1.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://pmd.sf.net/ruleset/1.0.0
                      http://pmd.sf.net/ruleset_xml_schema.xsd"
-         xsi:noNamespaceSchemaLocation="
-                     http://pmd.sf.net/ruleset_xml_schema.xsd">
+    xsi:noNamespaceSchemaLocation="
+                     http://pmd.sf.net/ruleset_xml_schema.xsd"
+>
     <description>
         Spryker Php Mess Detector rule set
     </description>
@@ -28,11 +30,13 @@
         <exclude name="CouplingBetweenObjects"/>
     </rule>
 
-    <rule name="NumberOfChildren"
-          since="0.2"
-          message = "The {0} {1} has {2} children. Consider to rebalance this class hierarchy to keep number of children under {3}."
-          class="Spryker\Zed\Development\Business\PhpMd\Rules\Design\NumberOfChildren"
-          externalInfoUrl="http://phpmd.org/rules/design.html#numberofchildren">
+    <rule
+        name="NumberOfChildren"
+        since="0.2"
+        message="The {0} {1} has {2} children. Consider to rebalance this class hierarchy to keep number of children under {3}."
+        class="Spryker\Zed\Development\Business\PhpMd\Rules\Design\NumberOfChildren"
+        externalInfoUrl="http://phpmd.org/rules/design.html#numberofchildren"
+    >
         <description>
             <![CDATA[
 A class with an excessive number of children is an indicator for an unbalanced
@@ -45,11 +49,13 @@ class hierarchy. You should consider to refactor this class hierarchy.
         </properties>
     </rule>
 
-    <rule name="CouplingBetweenObjects"
-          since="1.1.0"
-          message="The class {0} has a coupling between objects value of {1}. Consider to reduce the number of dependencies under {2}."
-          class="Spryker\Zed\Development\Business\PhpMd\Rules\Design\CouplingBetweenObjects"
-          externalInfoUrl="http://phpmd.org/rules/design.html#couplingbetweenobjects">
+    <rule
+        name="CouplingBetweenObjects"
+        since="1.1.0"
+        message="The class {0} has a coupling between objects value of {1}. Consider to reduce the number of dependencies under {2}."
+        class="Spryker\Zed\Development\Business\PhpMd\Rules\Design\CouplingBetweenObjects"
+        externalInfoUrl="http://phpmd.org/rules/design.html#couplingbetweenobjects"
+    >
         <description>
             <![CDATA[
 A class with too many dependencies has negative impacts on several quality
@@ -69,11 +75,13 @@ maintainability and understandability
         <exclude name="ExcessivePublicCount"/>
     </rule>
 
-    <rule name="TooManyMethods"
-          since="0.1"
-          class="Spryker\Zed\Development\Business\PhpMd\Rules\Design\TooManyMethods"
-          message="The {0} {1} has {2} non-getter- and setter-methods. Consider refactoring {1} to keep number of methods under {3}."
-          externalInfoUrl="http://phpmd.org/rules/codesize.html#toomanymethods">
+    <rule
+        name="TooManyMethods"
+        since="0.1"
+        class="Spryker\Zed\Development\Business\PhpMd\Rules\Design\TooManyMethods"
+        message="The {0} {1} has {2} non-getter- and setter-methods. Consider refactoring {1} to keep number of methods under {3}."
+        externalInfoUrl="http://phpmd.org/rules/codesize.html#toomanymethods"
+    >
         <description>
             <![CDATA[
 A class with too many methods is probably a good suspect for refactoring, in
@@ -91,11 +99,13 @@ The default was changed from 10 to 25 in PHPMD 2.3.
         </properties>
     </rule>
 
-    <rule name="TooManyPublicMethods"
-          since="0.1"
-          class="Spryker\Zed\Development\Business\PhpMd\Rules\Design\TooManyPublicMethods"
-          message="The {0} {1} has {2} public methods. Consider refactoring {1} to keep number of public methods under {3}."
-          externalInfoUrl="http://phpmd.org/rules/codesize.html#toomanypublicmethods">
+    <rule
+        name="TooManyPublicMethods"
+        since="0.1"
+        class="Spryker\Zed\Development\Business\PhpMd\Rules\Design\TooManyPublicMethods"
+        message="The {0} {1} has {2} public methods. Consider refactoring {1} to keep number of public methods under {3}."
+        externalInfoUrl="http://phpmd.org/rules/codesize.html#toomanypublicmethods"
+    >
         <description>
             <![CDATA[
 A class with too many public methods is probably a good suspect for refactoring, in
@@ -124,11 +134,13 @@ By default it ignores methods starting with 'get' or 'set'.
         <exclude name="UnusedFormalParameter"/>
     </rule>
 
-    <rule name="ShortVariable"
-          since="0.2"
-          message="Avoid variables with short names like {0}. Configured minimum length is {1}."
-          class="Spryker\Zed\Development\Business\PhpMd\Rules\Naming\ShortVariable"
-          externalInfoUrl="http://phpmd.org/rules/naming.html#shortvariable">
+    <rule
+        name="ShortVariable"
+        since="0.2"
+        message="Avoid variables with short names like {0}. Configured minimum length is {1}."
+        class="Spryker\Zed\Development\Business\PhpMd\Rules\Naming\ShortVariable"
+        externalInfoUrl="http://phpmd.org/rules/naming.html#shortvariable"
+    >
         <description>
             Detects when a field, local, or parameter has a very short name.
         </description>
@@ -152,11 +164,13 @@ class Something {
         </example>
     </rule>
 
-    <rule name="CamelCaseMethodName"
-          since="0.2"
-          message = "The method {0} is not named in camelCase."
-          class="Spryker\Zed\Development\Business\PhpMd\Rules\Controversial\CamelCaseMethodName"
-          externalInfoUrl="#">
+    <rule
+        name="CamelCaseMethodName"
+        since="0.2"
+        message="The method {0} is not named in camelCase."
+        class="Spryker\Zed\Development\Business\PhpMd\Rules\Controversial\CamelCaseMethodName"
+        externalInfoUrl="#"
+    >
         <description>
             <![CDATA[
 It is considered best practice to use the camelCase notation to name methods.
@@ -164,12 +178,8 @@ It is considered best practice to use the camelCase notation to name methods.
         </description>
         <priority>1</priority>
         <properties>
-            <property name="allow-underscore"
-                      description="Allow an optional, single underscore at the beginning."
-                      value="false"/>
-            <property name="allow-underscore-test"
-                      description="Is it allowed to have underscores in test method names."
-                      value="false"/>
+            <property name="allow-underscore" description="Allow an optional, single underscore at the beginning." value="false"/>
+            <property name="allow-underscore-test" description="Is it allowed to have underscores in test method names." value="false"/>
         </properties>
         <example>
             <![CDATA[
