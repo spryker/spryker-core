@@ -1,5 +1,4 @@
-namespace: SearchElasticsearchGui
-actor: Tester
+namespace: SprykerTest
 paths:
     tests: tests/
     log: tests/_output/
@@ -11,5 +10,3 @@ settings:
     colors: true
     memory_limit: 1024M
     log: true
-coverage:
-    enabled: true
