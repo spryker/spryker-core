@@ -62,7 +62,7 @@ class StoreRelationDropdownDataProvider
 
         $storeNameMap = [];
         foreach ($storeTransferCollection as $storeTransfer) {
-            $storeNameMap[$storeTransfer->getIdStore()] = $storeTransfer->getName();
+            $storeNameMap[$storeTransfer->getIdStoreOrFail()] = $storeTransfer->getNameOrFail();
         }
 
         return $storeNameMap;

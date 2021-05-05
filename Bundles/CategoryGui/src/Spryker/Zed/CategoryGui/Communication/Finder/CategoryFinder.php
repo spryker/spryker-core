@@ -8,10 +8,10 @@
 namespace Spryker\Zed\CategoryGui\Communication\Finder;
 
 use Generated\Shared\Transfer\CategoryCriteriaTransfer;
-use Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
+use Spryker\Zed\CategoryGui\Communication\Expander\CategoryExpanderInterface;
 use Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToCategoryFacadeInterface;
 use Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToLocaleFacadeInterface;
 
@@ -30,15 +30,23 @@ class CategoryFinder implements CategoryFinderInterface
     protected $localeFacade;
 
     /**
+     * @var \Spryker\Zed\CategoryGui\Communication\Expander\CategoryExpanderInterface
+     */
+    protected $categoryExpander;
+
+    /**
      * @param \Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToCategoryFacadeInterface $categoryFacade
      * @param \Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToLocaleFacadeInterface $localeFacade
+     * @param \Spryker\Zed\CategoryGui\Communication\Expander\CategoryExpanderInterface $categoryExpander
      */
     public function __construct(
         CategoryGuiToCategoryFacadeInterface $categoryFacade,
-        CategoryGuiToLocaleFacadeInterface $localeFacade
+        CategoryGuiToLocaleFacadeInterface $localeFacade,
+        CategoryExpanderInterface $categoryExpander
     ) {
         $this->categoryFacade = $categoryFacade;
         $this->localeFacade = $localeFacade;
+        $this->categoryExpander = $categoryExpander;
     }
 
     /**
@@ -73,7 +81,7 @@ class CategoryFinder implements CategoryFinderInterface
             return null;
         }
 
-        return $this->addLocalizedAttributeTransfers($categoryTransfer);
+        return $this->categoryExpander->expandCategoryWithLocalizedAttributes($categoryTransfer);
     }
 
     /**
@@ -116,43 +124,6 @@ class CategoryFinder implements CategoryFinderInterface
         }
 
         return $nodeTransfers;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryTransfer
-     */
-    protected function addLocalizedAttributeTransfers(CategoryTransfer $categoryTransfer): CategoryTransfer
-    {
-        $categoryLocaleIds = $this->extractCategoryLocaleIds($categoryTransfer);
-
-        foreach ($this->localeFacade->getLocaleCollection() as $localeTransfer) {
-            if (in_array($localeTransfer->getIdLocale(), $categoryLocaleIds, true)) {
-                continue;
-            }
-
-            $categoryTransfer->addLocalizedAttributes(
-                (new CategoryLocalizedAttributesTransfer())->setLocale($localeTransfer)
-            );
-        }
-
-        return $categoryTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return int[]
-     */
-    protected function extractCategoryLocaleIds(CategoryTransfer $categoryTransfer): array
-    {
-        $categoryLocaleIds = [];
-        foreach ($categoryTransfer->getLocalizedAttributes() as $localizedAttribute) {
-            $categoryLocaleIds[] = $localizedAttribute->getLocaleOrFail()->getIdLocaleOrFail();
-        }
-
-        return $categoryLocaleIds;
     }
 
     /**

@@ -7,36 +7,35 @@
 
 namespace Spryker\Zed\CategoryGui\Communication\Form\DataProvider\Create;
 
-use Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
+use Spryker\Zed\CategoryGui\Communication\Expander\CategoryExpanderInterface;
 use Spryker\Zed\CategoryGui\Communication\Form\RootCategoryType;
-use Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToLocaleFacadeInterface;
 use Spryker\Zed\CategoryGui\Persistence\CategoryGuiRepositoryInterface;
 
 class RootCategoryCreateDataProvider
 {
-    /**
-     * @var \Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToLocaleFacadeInterface
-     */
-    protected $localeFacade;
-
     /**
      * @var \Spryker\Zed\CategoryGui\Persistence\CategoryGuiRepositoryInterface
      */
     protected $categoryGuiRepository;
 
     /**
-     * @param \Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToLocaleFacadeInterface $localeFacade
+     * @var \Spryker\Zed\CategoryGui\Communication\Expander\CategoryExpanderInterface
+     */
+    protected $categoryExpander;
+
+    /**
      * @param \Spryker\Zed\CategoryGui\Persistence\CategoryGuiRepositoryInterface $categoryGuiRepository
+     * @param \Spryker\Zed\CategoryGui\Communication\Expander\CategoryExpanderInterface $categoryExpander
      */
     public function __construct(
-        CategoryGuiToLocaleFacadeInterface $localeFacade,
-        CategoryGuiRepositoryInterface $categoryGuiRepository
+        CategoryGuiRepositoryInterface $categoryGuiRepository,
+        CategoryExpanderInterface $categoryExpander
     ) {
-        $this->localeFacade = $localeFacade;
         $this->categoryGuiRepository = $categoryGuiRepository;
+        $this->categoryExpander = $categoryExpander;
     }
 
     /**
@@ -57,13 +56,7 @@ class RootCategoryCreateDataProvider
                 ->setIsRoot(true)
         );
 
-        foreach ($this->localeFacade->getLocaleCollection() as $localTransfer) {
-            $categoryTransfer->addLocalizedAttributes(
-                (new CategoryLocalizedAttributesTransfer())->setLocale($localTransfer)
-            );
-        }
-
-        return $categoryTransfer;
+        return $this->categoryExpander->expandCategoryWithLocalizedAttributes($categoryTransfer);
     }
 
     /**

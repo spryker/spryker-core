@@ -29,7 +29,7 @@ class CategoryKeyUniqueConstraintValidator extends ConstraintValidator
         }
 
         $categoryTransfer = $this->context->getRoot()->getData();
-        if ($this->isCategoryKeyValid($categoryTransfer, $value, $constraint)) {
+        if ($this->isCategoryKeyValid($categoryTransfer, (string)$value, $constraint)) {
             return;
         }
 

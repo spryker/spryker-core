@@ -60,3 +60,4 @@ yes,Yes
 "CSRF token is not valid.","CSRF token is not valid."
 General,General
 Template,Template
+Settings,Settings

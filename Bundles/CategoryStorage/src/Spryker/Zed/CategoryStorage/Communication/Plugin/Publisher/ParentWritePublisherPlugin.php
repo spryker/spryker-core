@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CategoryStorage\Communication\Plugin\Publisher\Parent;
+namespace Spryker\Zed\CategoryStorage\Communication\Plugin\Publisher;
 
 use Spryker\Shared\CategoryStorage\CategoryStorageConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;

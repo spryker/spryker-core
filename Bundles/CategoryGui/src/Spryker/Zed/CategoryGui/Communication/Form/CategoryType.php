@@ -66,11 +66,17 @@ class CategoryType extends CommonCategoryType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        parent::buildForm($builder, $options);
-
         $this
+            ->addCategoryKeyField($builder)
             ->addParentNodeField($builder, $options[static::OPTION_PARENT_CATEGORY_NODE_CHOICES])
             ->addExtraParentsField($builder, $options[static::OPTION_PARENT_CATEGORY_NODE_CHOICES])
+            ->addStoreRelationForm($builder, $options)
+            ->addTemplateField($builder, $options)
+            ->addIsActiveField($builder)
+            ->addIsInMenuField($builder)
+            ->addIsSearchableField($builder)
+            ->addFormPlugins($builder)
+            ->addLocalizedAttributesForm($builder)
             ->addStoreRelationEventSubscriber($builder);
     }
 
