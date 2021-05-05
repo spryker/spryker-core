@@ -317,7 +317,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
         CategoryTransfer $categoryTransfer,
         CategoryCriteriaTransfer $categoryCriteriaTransfer
     ): array {
-        $categoryClosureTableQuery = $this->buildCategoryClosureTableByIdCategory(
+        $categoryClosureTableQuery = $this->buildCategoryClosureTableQueryByIdCategory(
             $categoryTransfer,
             $categoryCriteriaTransfer
         );
@@ -346,7 +346,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
         CategoryTransfer $categoryTransfer,
         CategoryCriteriaTransfer $categoryCriteriaTransfer
     ): array {
-        $categoryClosureTableQuery = $this->buildCategoryClosureTableByIdCategory(
+        $categoryClosureTableQuery = $this->buildCategoryClosureTableQueryByIdCategory(
             $categoryTransfer,
             $categoryCriteriaTransfer
         );
@@ -854,7 +854,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery
      */
-    protected function buildCategoryClosureTableByIdCategory(
+    protected function buildCategoryClosureTableQueryByIdCategory(
         CategoryTransfer $categoryTransfer,
         CategoryCriteriaTransfer $categoryCriteriaTransfer
     ): SpyCategoryClosureTableQuery {
@@ -877,27 +877,5 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
         }
 
         return $categoryClosureTableQuery;
-    }
-
-    /**
-     * @param \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery $categoryNodeQuery
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
-     */
-    protected function applyParentCategoryNodeFilter(SpyCategoryNodeQuery $categoryNodeQuery, CategoryTransfer $categoryTransfer): SpyCategoryNodeQuery
-    {
-        $parentCategoryNodeTransfer = $categoryTransfer->getParentCategoryNode();
-        if ($parentCategoryNodeTransfer === null) {
-            $categoryNodeQuery
-                ->filterByFkParentCategoryNode(null)
-                ->filterByIsRoot(true);
-
-            return $categoryNodeQuery;
-        }
-
-        $categoryNodeQuery->filterByFkParentCategoryNode($parentCategoryNodeTransfer->getIdCategoryNodeOrFail());
-
-        return $categoryNodeQuery;
     }
 }

@@ -8,7 +8,6 @@
 namespace Spryker\Zed\CategoryStorage\Communication\Plugin\Publisher\CategoryTree;
 
 use Spryker\Shared\CategoryStorage\CategoryStorageConstants;
-use Spryker\Zed\Category\Dependency\CategoryEvents;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface;
 
@@ -51,9 +50,9 @@ class CategoryTreeWriteForPublishingPublisherPlugin extends AbstractPlugin imple
             CategoryStorageConstants::CATEGORY_STORE_PUBLISH,
             CategoryStorageConstants::CATEGORY_STORE_UNPUBLISH,
             CategoryStorageConstants::CATEGORY_TREE_PUBLISH,
-            CategoryEvents::CATEGORY_AFTER_PUBLISH_CREATE,
-            CategoryEvents::CATEGORY_AFTER_PUBLISH_UPDATE,
-            CategoryEvents::CATEGORY_AFTER_PUBLISH_DELETE,
+            CategoryStorageConstants::CATEGORY_AFTER_PUBLISH_CREATE,
+            CategoryStorageConstants::CATEGORY_AFTER_PUBLISH_UPDATE,
+            CategoryStorageConstants::CATEGORY_AFTER_PUBLISH_DELETE,
         ];
     }
 }

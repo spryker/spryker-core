@@ -67,14 +67,7 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
     public function bulkCreateCategoryStoreRelationForStores(array $categoryIds, array $storeIds): void
     {
         $categoryIds = array_unique($categoryIds);
-
-        if ($storeIds) {
-            $this->getFactory()
-                ->createCategoryStoreQuery()
-                ->filterByFkCategory_in($categoryIds)
-                ->filterByFkStore_In($storeIds)
-                ->delete();
-        }
+        $this->bulkDeleteCategoryStoreRelations($categoryIds, $storeIds);
 
         $propelCollection = new ObjectCollection();
         $propelCollection->setModel(SpyCategoryStore::class);
@@ -486,5 +479,24 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
 
             $this->persist($categoryClosureTableEntity);
         }
+    }
+
+    /**
+     * @param int[] $categoryIds
+     * @param int[] $storeIds
+     *
+     * @return void
+     */
+    public function bulkDeleteCategoryStoreRelations(array $categoryIds, array $storeIds): void
+    {
+        if ($storeIds === []) {
+            return;
+        }
+
+        $this->getFactory()
+            ->createCategoryStoreQuery()
+            ->filterByFkCategory_in($categoryIds)
+            ->filterByFkStore_In($storeIds)
+            ->delete();
     }
 }

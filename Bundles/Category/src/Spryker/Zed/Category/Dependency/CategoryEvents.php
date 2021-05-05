@@ -17,8 +17,28 @@ interface CategoryEvents
     public const CATEGORY_AFTER_UPDATE = 'Category.after.update';
     public const CATEGORY_AFTER_DELETE = 'Category.after.delete';
 
+    /**
+     * Specification:
+     * - This event will be used after `Category` creation.
+     *
+     * @api
+     */
     public const CATEGORY_AFTER_PUBLISH_CREATE = 'Category.after.publish_create';
+
+    /**
+     * Specification:
+     * - This event will be used after `Category` updating.
+     *
+     * @api
+     */
     public const CATEGORY_AFTER_PUBLISH_UPDATE = 'Category.after.publish_update';
+
+    /**
+     * Specification:
+     * - This event will be used after `Category` deletion.
+     *
+     * @api
+     */
     public const CATEGORY_AFTER_PUBLISH_DELETE = 'Category.after.publish_delete';
 
     /**
