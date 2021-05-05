@@ -107,18 +107,23 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
      */
     protected function writeByProductOfferReferences(array $productOfferReferences): void
     {
-        $this->deleteIncorrectProductOfferStorages($productOfferReferences);
-
         $productOfferCriteriaTransfer = $this->productOfferCriteriaTransferProvider->createProductOfferCriteriaTransfer()
             ->setProductOfferReferences($productOfferReferences);
 
         $productOfferCollectionTransfer = $this->merchantProductOfferStorageRepository
             ->getProductOffers($productOfferCriteriaTransfer);
 
+        $savedProductOfferReferences = [];
+
         foreach ($productOfferCollectionTransfer->getProductOffers() as $productOfferTransfer) {
             $this->merchantProductOfferStorageEntityManager->saveProductOfferStorage($productOfferTransfer);
+            $savedProductOfferReferences[] = $productOfferTransfer->getProductOfferReference();
             $this->deleteProductOfferReferenceByStore($productOfferTransfer);
         }
+
+        $this->productOfferStorageDeleter->deleteCollectionByProductOfferReferences(
+            array_diff($productOfferReferences, $savedProductOfferReferences)
+        );
     }
 
     /**
@@ -169,28 +174,5 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
         }
 
         return $this->storeTransfers;
-    }
-
-    /**
-     * @param string[] $productOfferReferences
-     *
-     * @return void
-     */
-    protected function deleteIncorrectProductOfferStorages(array $productOfferReferences): void
-    {
-        $productOfferCriteriaTransfer = $this->productOfferCriteriaTransferProvider->createIncorrectProductOfferCriteriaTransfer();
-        $productOfferCriteriaTransfer->setProductOfferReferences($productOfferReferences);
-
-        $productOfferCollectionTransfer = $this->merchantProductOfferStorageRepository
-            ->getProductOffers($productOfferCriteriaTransfer);
-
-        $productOfferReferences = [];
-        foreach ($productOfferCollectionTransfer->getProductOffers() as $incorrectProductOfferTransfer) {
-            $productOfferReferences[] = $incorrectProductOfferTransfer->getProductOfferReference();
-        }
-
-        if ($productOfferReferences) {
-            $this->productOfferStorageDeleter->deleteCollectionByProductOfferReferences($productOfferReferences);
-        }
     }
 }

@@ -44,14 +44,4 @@ class MerchantProductOfferStorageToMerchantStorageClientBridge implements Mercha
     {
         return $this->merchantStorageClient->get($merchantCriteriaTransfer);
     }
-
-    /**
-     * @param string[] $merchantReferences
-     *
-     * @return \Generated\Shared\Transfer\MerchantStorageTransfer[]
-     */
-    public function getByMerchantReferences(array $merchantReferences): array
-    {
-        return $this->merchantStorageClient->getByMerchantReferences($merchantReferences);
-    }
 }

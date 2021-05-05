@@ -75,7 +75,10 @@ class MerchantStorageReader implements MerchantStorageReaderInterface
      */
     public function findOne(MerchantCriteriaTransfer $merchantCriteriaTransfer): ?MerchantStorageTransfer
     {
-        $merchantKey = $this->generateKey((string)$merchantCriteriaTransfer->getIdMerchantOrFail());
+        $merchantId = $this->getMerchantIdByMerchantReference($merchantCriteriaTransfer->getMerchantReference())
+            ?? $merchantCriteriaTransfer->getIdMerchantOrFail();
+
+        $merchantKey = $this->generateKey((string)$merchantId);
         $merchantData = $this->storageClient->get($merchantKey);
 
         if (!$merchantData) {
@@ -94,9 +97,31 @@ class MerchantStorageReader implements MerchantStorageReaderInterface
     {
         $merchantStorageTransfers = [];
 
+        $merchantIds = $merchantCriteriaTransfer->getMerchantIds();
+
+        if ($merchantCriteriaTransfer->getMerchantReferences()) {
+            $merchantIds += $this->getMerchantIdsByMerchantReferences($merchantCriteriaTransfer->getMerchantReferences());
+        }
+
+        if ($merchantIds) {
+            $merchantStorageTransfers = $this->getByMerchantIds(array_unique($merchantIds));
+        }
+
+        return $merchantStorageTransfers;
+    }
+
+    /**
+     * @param int[] $merchantIds
+     *
+     * @return \Generated\Shared\Transfer\MerchantStorageTransfer[]
+     */
+    protected function getByMerchantIds(array $merchantIds): array
+    {
+        $merchantStorageTransfers = [];
+
         $merchantKeys = array_map(function ($idMerchant) {
             return $this->generateKey((string)$idMerchant);
-        }, $merchantCriteriaTransfer->getMerchantIds());
+        }, $merchantIds);
 
         $merchantDataList = $this->storageClient->getMulti($merchantKeys);
 
@@ -162,6 +187,52 @@ class MerchantStorageReader implements MerchantStorageReaderInterface
         }
 
         return [];
+    }
+
+    /**
+     * @param array $merchantReferences
+     *
+     * @return int[]
+     */
+    protected function getMerchantIdsByMerchantReferences(array $merchantReferences): array
+    {
+        $merchantMapKeys = array_map(function ($merchantReference) {
+            return $this->generateKey(static::KEY_MERCHANT_REFERENCE . ':' . $merchantReference);
+        }, $merchantReferences);
+
+        $merchantDataMapIdList = $this->storageClient->getMulti($merchantMapKeys);
+
+        $merchantIds = [];
+
+        foreach ($merchantDataMapIdList as $merchantDataMapId) {
+            $merchantMapId = $this->utilEncodingService->decodeJson($merchantDataMapId, true);
+            if (isset($merchantMapId[static::KEY_ID_MERCHANT])) {
+                $merchantIds[] = $merchantMapId[static::KEY_ID_MERCHANT];
+            }
+        }
+
+        return $merchantIds;
+    }
+
+    /**
+     * @param string $getMerchantReference
+     *
+     * @return int|null
+     */
+    protected function getMerchantIdByMerchantReference(string $getMerchantReference): ?int
+    {
+        $merchantId = null;
+
+        if ($getMerchantReference) {
+            $merchantKey = $this->generateKey(static::KEY_MERCHANT_REFERENCE . ':' . $getMerchantReference);
+            $merchantDataMapId = $this->storageClient->get($merchantKey);
+
+            if (isset($merchantDataMapId[static::KEY_ID_MERCHANT])) {
+                $merchantId = $merchantDataMapId[static::KEY_ID_MERCHANT];
+            }
+        }
+
+        return $merchantId;
     }
 
     /**

@@ -47,28 +47,4 @@ interface MerchantStorageClientInterface
      * @return \Generated\Shared\Transfer\MerchantStorageTransfer[]
      */
     public function get(MerchantCriteriaTransfer $merchantCriteriaTransfer): array;
-
-    /**
-     * Specification:
-     * - Finds merchant data by merchantReference.
-     *
-     * @api
-     *
-     * @param string $merchantReference
-     *
-     * @return \Generated\Shared\Transfer\MerchantStorageTransfer|null
-     */
-    public function findOneByMerchantReference(string $merchantReference): ?MerchantStorageTransfer;
-
-    /**
-     * Specification:
-     * - Finds merchant data by merchantReferences.
-     *
-     * @api
-     *
-     * @param string[] $merchantReferences
-     *
-     * @return \Generated\Shared\Transfer\MerchantStorageTransfer[]
-     */
-    public function getByMerchantReferences(array $merchantReferences): array;
 }

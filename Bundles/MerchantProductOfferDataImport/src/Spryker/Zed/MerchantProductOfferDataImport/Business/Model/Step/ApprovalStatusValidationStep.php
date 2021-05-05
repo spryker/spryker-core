@@ -31,14 +31,11 @@ class ApprovalStatusValidationStep implements DataImportStepInterface
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        $approvalStatus = $dataSet[static::APPROVAL_STATUS];
-
-        if (!$approvalStatus) {
-            throw new InvalidDataException('"' . static::APPROVAL_STATUS . '" is required.');
-        }
-
-        if (!in_array($approvalStatus, static::ALLOWED_APPROVAL_STATUS_LIST)) {
-            throw new InvalidDataException('"' . static::APPROVAL_STATUS . '" should have one of the values: "' . implode(', ', static::ALLOWED_APPROVAL_STATUS_LIST) . '"');
+        if (
+            isset($dataSet[static::APPROVAL_STATUS]) &&
+            in_array($dataSet[static::APPROVAL_STATUS], static::ALLOWED_APPROVAL_STATUS_LIST) === false
+        ) {
+                throw new InvalidDataException('"' . static::APPROVAL_STATUS . '" should have one of the values: "' . implode(', ', static::ALLOWED_APPROVAL_STATUS_LIST) . '"');
         }
     }
 }

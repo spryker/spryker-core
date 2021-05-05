@@ -182,7 +182,6 @@ class ProductOfferStoragePublishListenerTest extends AbstractStoragePublishListe
 
         /** @var \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer */
         $productOfferTransfer = $productOfferCollectionTransfer->getProductOffers()[0];
-        $incorrectProductOfferTransfer = clone $productOfferTransfer;
 
         /** @var \Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStorageEntityManagerInterface|\PHPUnit\Framework\MockObject\MockObject $merchantProductOfferStorageEntityManager */
         $merchantProductOfferStorageEntityManager = $this->getMockBuilder(MerchantProductOfferStorageEntityManagerInterface::class)->getMock();
@@ -191,35 +190,29 @@ class ProductOfferStoragePublishListenerTest extends AbstractStoragePublishListe
             ->with($productOfferTransfer);
 
         $productOfferCriteriaTransfer = (new ProductOfferCriteriaTransfer())
-            ->setProductOfferReferences([$productOfferTransfer->getProductOfferReference()])
+            ->setProductOfferReferences([$productOfferTransfer->getProductOfferReference(), 'wrong_reference'])
             ->setIsActive(true)
             ->setIsActiveConcreteProduct(true)
             ->setIsActiveMerchant(true)
             ->addApprovalStatus(static::STATUS_APPROVED);
 
-        $incorrectProductOfferCriteriaTransfer = (new ProductOfferCriteriaTransfer())
-            ->setProductOfferReferences([$productOfferTransfer->getProductOfferReference()])
-            ->setIsActive(false)
-            ->setIsActiveMerchant(false);
-
         $productOfferCollectionTransfer = (new ProductOfferCollectionTransfer())->addProductOffer($productOfferTransfer);
-        $incorrectProductOfferCollectionTransfer = (new ProductOfferCollectionTransfer())->addProductOffer($incorrectProductOfferTransfer);
 
         /** @var \Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStorageRepositoryInterface|\PHPUnit\Framework\MockObject\MockObject $merchantProductOfferStorageRepository */
         $merchantProductOfferStorageRepository = $this->getMockBuilder(MerchantProductOfferStorageRepositoryInterface::class)->getMock();
-        $merchantProductOfferStorageRepository->expects($this->exactly(2))
+        $merchantProductOfferStorageRepository->expects($this->exactly(1))
             ->method('getProductOffers')
-            ->withConsecutive([$incorrectProductOfferCriteriaTransfer], [$productOfferCriteriaTransfer])
-            ->willReturnOnConsecutiveCalls($incorrectProductOfferCollectionTransfer, $productOfferCollectionTransfer);
+            ->with($productOfferCriteriaTransfer)
+            ->willReturn($productOfferCollectionTransfer);
 
         /** @var \Spryker\Zed\MerchantProductOfferStorage\Business\Deleter\ProductOfferStorageDeleterInterface|\PHPUnit\Framework\MockObject\MockObject $productOfferStorageDeleter */
         $productOfferStorageDeleter = $this->getMockBuilder(ProductOfferStorageDeleterInterface::class)->getMock();
         $productOfferStorageDeleter->expects($this->exactly(3))
             ->method('deleteCollectionByProductOfferReferences')
             ->withConsecutive(
-                [[$incorrectProductOfferTransfer->getProductOfferReference()]],
                 [[$productOfferTransfer->getProductOfferReference()], 'AT'],
-                [[$productOfferTransfer->getProductOfferReference()], 'US']
+                [[$productOfferTransfer->getProductOfferReference()], 'US'],
+                [[1 => 'wrong_reference'], null]
             );
 
         $productOfferStorageWriter = new ProductOfferStorageWriter(

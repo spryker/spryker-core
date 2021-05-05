@@ -11,6 +11,9 @@ use Generated\Shared\Transfer\ProductOfferCriteriaTransfer;
 
 class ProductOfferCriteriaTransferProvider implements ProductOfferCriteriaTransferProviderInterface
 {
+    /**
+     * @uses \Spryker\Shared\ProductOffer\ProductOfferConfig::STATUS_APPROVED
+     */
     protected const STATUS_APPROVED = 'approved';
 
     /**
@@ -23,15 +26,5 @@ class ProductOfferCriteriaTransferProvider implements ProductOfferCriteriaTransf
             ->setIsActiveMerchant(true)
             ->setIsActiveConcreteProduct(true)
             ->addApprovalStatus(static::STATUS_APPROVED);
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\ProductOfferCriteriaTransfer
-     */
-    public function createIncorrectProductOfferCriteriaTransfer(): ProductOfferCriteriaTransfer
-    {
-        return (new ProductOfferCriteriaTransfer())
-            ->setIsActive(false)
-            ->setIsActiveMerchant(false);
     }
 }

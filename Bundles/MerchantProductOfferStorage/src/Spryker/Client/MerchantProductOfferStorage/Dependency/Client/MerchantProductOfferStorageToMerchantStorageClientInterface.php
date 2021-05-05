@@ -25,11 +25,4 @@ interface MerchantProductOfferStorageToMerchantStorageClientInterface
      * @return \Generated\Shared\Transfer\MerchantStorageTransfer[]
      */
     public function get(MerchantCriteriaTransfer $merchantCriteriaTransfer): array;
-
-    /**
-     * @param string[] $merchantReferences
-     *
-     * @return \Generated\Shared\Transfer\MerchantStorageTransfer[]
-     */
-    public function getByMerchantReferences(array $merchantReferences): array;
 }

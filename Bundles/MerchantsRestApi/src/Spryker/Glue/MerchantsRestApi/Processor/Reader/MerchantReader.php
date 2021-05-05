@@ -80,7 +80,9 @@ class MerchantReader implements MerchantReaderInterface
      */
     public function getMerchantsResources(array $merchantReferences, string $localeName): array
     {
-        $merchantStorageTransfers = $this->merchantStorageClient->getByMerchantReferences($merchantReferences);
+        $merchantStorageTransfers = $this->merchantStorageClient->get(
+            (new MerchantCriteriaTransfer())->setMerchantReferences($merchantReferences)
+        );
 
         $translatedMerchantStorageTransfers = $this->merchantTranslator->translateMerchantStorageTransfers(
             $merchantStorageTransfers,
@@ -101,7 +103,9 @@ class MerchantReader implements MerchantReaderInterface
          * @var string $merchantReference
          */
         $merchantReference = $restRequest->getResource()->getId();
-        $merchantStorageTransfer = $this->merchantStorageClient->findOneByMerchantReference($merchantReference);
+        $merchantStorageTransfer = $this->merchantStorageClient->findOne(
+            (new MerchantCriteriaTransfer())->setMerchantReference($merchantReference)
+        );
 
         if (!$merchantStorageTransfer) {
             return $this->merchantRestResponseBuilder->createMerchantNotFoundErrorResponse();
