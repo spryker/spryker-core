@@ -1,49 +1,49 @@
 {
-  "name": "spryker/merchant-relationship-sales-order-threshold",
-  "type": "library",
-  "description": "MerchantRelationshipSalesOrderThreshold module",
-  "license": "proprietary",
-  "require": {
-    "php": ">=7.3",
-    "spryker/currency": "^3.0.0",
-    "spryker/glossary": "^3.1.0",
-    "spryker/kernel": "^3.30.0",
-    "spryker/merchant-relationship": "^1.0.0",
-    "spryker/sales-order-threshold": "^1.0.0",
-    "spryker/sales-order-threshold-extension": "^1.0.0",
-    "spryker/store": "^1.2.0"
-  },
-  "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/company": "*",
-    "spryker/company-business-unit": "*",
-    "spryker/merchant": "*",
-    "spryker/propel": "*",
-    "spryker/testify": "*"
-  },
-  "autoload": {
-    "psr-4": {
-      "Spryker\\": "src/Spryker/",
-      "SprykerTest\\Zed\\MerchantRelationshipSalesOrderThreshold\\Helper\\": "tests/SprykerTest/Zed/MerchantRelationshipSalesOrderThreshold/_support/Helper/"
+    "name": "spryker/merchant-relationship-sales-order-threshold",
+    "type": "library",
+    "description": "MerchantRelationshipSalesOrderThreshold module",
+    "license": "proprietary",
+    "require": {
+        "php": ">=7.3",
+        "spryker/currency": "^3.0.0",
+        "spryker/glossary": "^3.1.0",
+        "spryker/kernel": "^3.30.0",
+        "spryker/merchant-relationship": "^1.0.0",
+        "spryker/sales-order-threshold": "^1.0.0",
+        "spryker/sales-order-threshold-extension": "^1.0.0",
+        "spryker/store": "^1.2.0"
+    },
+    "require-dev": {
+        "spryker/code-sniffer": "*",
+        "spryker/company": "*",
+        "spryker/company-business-unit": "*",
+        "spryker/merchant": "*",
+        "spryker/propel": "*",
+        "spryker/testify": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Spryker\\": "src/Spryker/",
+            "SprykerTest\\Zed\\MerchantRelationshipSalesOrderThreshold\\Helper\\": "tests/SprykerTest/Zed/MerchantRelationshipSalesOrderThreshold/_support/Helper/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "SprykerTest\\": "tests/SprykerTest/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
     }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "SprykerTest\\": "tests/SprykerTest/"
-    }
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "scripts": {
-    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
-    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "1.0.x-dev"
-    }
-  },
-  "config": {
-    "sort-packages": true
-  }
 }

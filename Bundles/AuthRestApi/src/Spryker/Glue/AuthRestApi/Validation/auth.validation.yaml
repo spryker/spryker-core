@@ -1,12 +1,12 @@
 access-tokens:
-  post:
-    username:
-      - NotBlank
-      - Email
-    password:
-      - NotBlank
+    post:
+        username:
+            - NotBlank
+            - Email
+        password:
+            - NotBlank
 
 refresh-tokens:
-  post:
-    refreshToken:
-      - NotBlank
+    post:
+        refreshToken:
+            - NotBlank

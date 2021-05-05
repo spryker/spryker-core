@@ -1,39 +1,39 @@
 {
-  "name": "spryker/oms-discount-connector",
-  "type": "library",
-  "description": "OmsDiscountConnector module",
-  "license": "proprietary",
-  "require": {
-    "php": ">=7.3",
-    "spryker/discount": "^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^9.0.0",
-    "spryker/kernel": "^3.30.0"
-  },
-  "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/oms": "*",
-    "spryker/sales": "*"
-  },
-  "suggest": {
-    "spryker/oms": "If you want to use Oms command plugins.",
-    "spryker/sales": "If you want to use ReleaseUsedVoucherCodes plugin."
-  },
-  "autoload": {
-    "psr-4": {
-      "Spryker\\": "src/Spryker/"
+    "name": "spryker/oms-discount-connector",
+    "type": "library",
+    "description": "OmsDiscountConnector module",
+    "license": "proprietary",
+    "require": {
+        "php": ">=7.3",
+        "spryker/discount": "^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^9.0.0",
+        "spryker/kernel": "^3.30.0"
+    },
+    "require-dev": {
+        "spryker/code-sniffer": "*",
+        "spryker/oms": "*",
+        "spryker/sales": "*"
+    },
+    "suggest": {
+        "spryker/oms": "If you want to use Oms command plugins.",
+        "spryker/sales": "If you want to use ReleaseUsedVoucherCodes plugin."
+    },
+    "autoload": {
+        "psr-4": {
+            "Spryker\\": "src/Spryker/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "3.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
     }
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "scripts": {
-    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
-    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "3.0.x-dev"
-    }
-  },
-  "config": {
-    "sort-packages": true
-  }
 }
