@@ -141,7 +141,7 @@
 
     <transfer name="CategoryNodeUrlPathCriteria">
         <property name="idCategoryNode" type="int"/>
-        <property name="categoryNodeDescendantIds" singular="idCategoryNodeDescendant" type="int[]" />
+        <property name="categoryNodeDescendantIds" singular="idCategoryNodeDescendant" type="int[]"/>
         <property name="idLocale" type="int"/>
         <property name="excludeRootNode" type="bool"/>
         <property name="onlyParents" type="bool"/>
