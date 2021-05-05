@@ -151,7 +151,6 @@ class CreateProductAbstractWithSingleConcreteForm extends AbstractType
         $builder->add(static::FIELD_AUTOGENERATE_SKU, CheckboxType::class, [
             'required' => false,
             'label' => static::LABEL_AUTOGENERATE_SKU,
-//            'data' => false,
         ]);
 
         return $this;
@@ -167,7 +166,6 @@ class CreateProductAbstractWithSingleConcreteForm extends AbstractType
         $builder->add(static::FIELD_USE_ABSTRACT_PRODUCT_NAME, CheckboxType::class, [
             'required' => false,
             'label' => static::LABEL_USE_ABSTRACT_PRODUCT_NAME,
-//            'data' => false,
         ]);
 
         return $this;
