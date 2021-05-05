@@ -10,7 +10,6 @@ namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Controller;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\TableValidationResponseTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\CreateProductAbstractWithSingleConcreteForm;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -38,6 +37,25 @@ class CreateProductAbstractController extends AbstractController
     protected const REQUEST_PARAM_CONCRETE_PRODUCTS = 'concreteProducts';
     protected const REQUEST_PARAM_SELECTED_ATTRIBUTES = 'selectedAttributes';
 
+    /**
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\ProductConcreteMapper::FIELD_NAME
+     */
+    protected const FIELD_NAME = 'name';
+
+    /**
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\ProductConcreteMapper::FIELD_SKU
+     */
+    protected const FIELD_SKU = 'sku';
+
+    /**
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\CreateProductAbstractWithSingleConcreteForm::FIELD_CONCRETE_NAME
+     */
+    protected const FIELD_CONCRETE_NAME = 'concreteName';
+
+    /**
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\CreateProductAbstractWithSingleConcreteForm::FIELD_CONCRETE_SKU
+     */
+    protected const FIELD_CONCRETE_SKU = 'concreteSku';
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\CreateProductAbstractForm::FIELD_IS_SINGLE_CONCRETE
      */
@@ -123,9 +141,15 @@ class CreateProductAbstractController extends AbstractController
             return new JsonResponse($responseData);
         }
 
-        $this->getFactory()
-            ->createCreateProductAbstractWithSingleConcreteFormSubmitter()
-            ->executeFormSubmission($createProductAbstractWithSingleConcreteForm);
+        $productAbstractTransfer = $this->getProductAbstractTransfer($formData);
+        $concreteProductTransfers = $this->getProductConcreteTransfers([
+            [
+                static::FIELD_SKU => $formData[static::FIELD_CONCRETE_SKU],
+                static::FIELD_NAME => $formData[static::FIELD_CONCRETE_NAME],
+            ],
+        ]);
+
+        $this->addProduct($productAbstractTransfer, $concreteProductTransfers);
 
         return $this->getSuccessResponseAndCloseOverlay();
     }
@@ -158,12 +182,9 @@ class CreateProductAbstractController extends AbstractController
             ->createCreateProductAbstractWithMultiConcreteForm($request->query->all());
         $createProductAbstractWithMultiConcreteForm->handleRequest($request);
 
-        $productAbstractTransfer = $this->getFactory()
-            ->createProductAbstractMapper()
-            ->mapFormDataToProductAbstractTransfer(
-                $createProductAbstractWithMultiConcreteForm->getData(),
-                new ProductAbstractTransfer()
-            );
+        $productAbstractTransfer = $this->getProductAbstractTransfer(
+            $createProductAbstractWithMultiConcreteForm->getData()
+        );
 
         $formData = $createProductAbstractWithMultiConcreteForm->getData();
         $viewData = [
@@ -193,7 +214,7 @@ class CreateProductAbstractController extends AbstractController
             return new JsonResponse($responseData);
         }
 
-        $concreteProductTransfers = $this->mapRequestDataToProductConcreteTransfer($concreteProducts);
+        $concreteProductTransfers = $this->getProductConcreteTransfers($concreteProducts);
 
         $this->addProduct($productAbstractTransfer, $concreteProductTransfers);
 
@@ -254,15 +275,41 @@ class CreateProductAbstractController extends AbstractController
     }
 
     /**
+     * @param mixed[] $productAbstractData
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    protected function getProductAbstractTransfer(array $productAbstractData): ProductAbstractTransfer
+    {
+        $productAbstractTransfer = $this->getFactory()
+            ->createProductAbstractMapper()
+            ->mapFormDataToProductAbstractTransfer($productAbstractData, new ProductAbstractTransfer());
+        $productAbstractTransfer = $this->getFactory()
+            ->createProductAbstractLocalizedAttributesExpander()
+            ->expandLocalizedAttributes($productAbstractTransfer);
+        $productAbstractTransfer = $this->getFactory()
+            ->createProductAbstractMerchantIdExpander()
+            ->expandMerchantId($productAbstractTransfer);
+
+        return $productAbstractTransfer;
+    }
+
+    /**
      * @param array $concreteProducts
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
-    protected function mapRequestDataToProductConcreteTransfer(array $concreteProducts): array
+    protected function getProductConcreteTransfers(array $concreteProducts): array
     {
-        return $this->getFactory()
+        $productConcreteTransfers = [];
+        $productConcreteTransfers = $this->getFactory()
             ->createProductConcreteMapper()
-            ->mapRequestDataToProductConcreteTransfers($concreteProducts);
+            ->mapRequestDataToProductConcreteTransfers($concreteProducts, $productConcreteTransfers);
+        $productConcreteTransfers = $this->getFactory()
+            ->createProductConcreteLocalizedAttributesExpander()
+            ->expandLocalizedAttributes($productConcreteTransfers);
+
+        return $productConcreteTransfers;
     }
 
     /**

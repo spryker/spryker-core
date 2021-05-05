@@ -5,18 +5,14 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper;
+namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Expander;
 
-interface ProductConcreteMapperInterface
+interface ProductConcreteLocalizedAttributesExpanderInterface
 {
     /**
-     * @param mixed[] $concreteProducts
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
-    public function mapRequestDataToProductConcreteTransfers(
-        array $concreteProducts,
-        array $productConcreteTransfers
-    ): array;
+    public function expandLocalizedAttributes(array $productConcreteTransfers): array;
 }

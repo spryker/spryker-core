@@ -61,15 +61,13 @@ class CreateProductAbstractWithSingleConcreteFormDataProvider implements CreateP
         $abstractProductName = $request->get(static::REQUEST_PARAM_NAME);
         $abstractProductSku = $request->get(static::REQUEST_PARAM_SKU);
 
-        $isNotPost = !$request->isMethod(Request::METHOD_POST);
-
         return [
             static::FIELD_NAME => $abstractProductName,
             static::FIELD_SKU => $abstractProductSku,
             static::FIELD_CONCRETE_NAME => $abstractProductName,
             static::FIELD_CONCRETE_SKU => $abstractProductSku,
-            static::FIELD_USE_ABSTRACT_PRODUCT_NAME => $isNotPost,
-            static::FIELD_AUTOGENERATE_SKU => $isNotPost,
+            static::FIELD_AUTOGENERATE_SKU => true,
+            static::FIELD_USE_ABSTRACT_PRODUCT_NAME => true,
         ];
     }
 }
