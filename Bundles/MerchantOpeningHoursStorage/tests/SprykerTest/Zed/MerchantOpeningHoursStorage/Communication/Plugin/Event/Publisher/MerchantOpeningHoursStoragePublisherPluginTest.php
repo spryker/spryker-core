@@ -11,8 +11,8 @@ use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\EventEntityBuilder;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
-use Spryker\Zed\MerchantOpeningHours\Dependency\MerchantOpeningHoursEvents;
-use Spryker\Zed\MerchantOpeningHoursStorage\Communication\Plugin\Publisher\MerchantOpeningHoursStoragePublisherPlugin;
+use Spryker\Shared\MerchantOpeningHoursStorage\MerchantOpeningHoursStorageConfig;
+use Spryker\Zed\MerchantOpeningHoursStorage\Communication\Plugin\Publisher\MerchantOpeningHours\MerchantOpeningHoursStoragePublisherPlugin;
 use Spryker\Zed\MerchantOpeningHoursStorage\Dependency\Facade\MerchantOpeningHoursStorageToEventBehaviorFacadeBridge;
 use Spryker\Zed\MerchantOpeningHoursStorage\MerchantOpeningHoursStorageDependencyProvider;
 use Spryker\Zed\Testify\Locator\Business\Container as SprykerContainer;
@@ -79,11 +79,11 @@ class MerchantOpeningHoursStoragePublisherPluginTest extends Unit
         ];
 
         // Act
-        $merchantOpeningHoursStoragePublisher->handleBulk($eventTransfers, MerchantOpeningHoursEvents::MERCHANT_OPENING_HOURS_PUBLISH);
+        $merchantOpeningHoursStoragePublisher->handleBulk($eventTransfers, MerchantOpeningHoursStorageConfig::MERCHANT_OPENING_HOURS_PUBLISH);
 
         // Assert
         $this->assertNotNull(
-            $this->tester->findMerchantOpeningHoursByMerchantReference($merchantTransfer->getMerchantReference())
+            $this->tester->findMerchantOpeningHoursStorageTransferByMerchantReference($merchantTransfer->getMerchantReference())
         );
     }
 }

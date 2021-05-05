@@ -5,10 +5,10 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantOpeningHoursStorage\Communication\Plugin\Publisher;
+namespace Spryker\Zed\MerchantOpeningHoursStorage\Communication\Plugin\Publisher\MerchantOpeningHours;
 
+use Spryker\Shared\MerchantOpeningHoursStorage\MerchantOpeningHoursStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\MerchantOpeningHours\Dependency\MerchantOpeningHoursEvents;
 use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface;
 
 /**
@@ -16,10 +16,11 @@ use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface;
  * @method \Spryker\Zed\MerchantOpeningHoursStorage\MerchantOpeningHoursStorageConfig getConfig()
  * @method \Spryker\Zed\MerchantOpeningHoursStorage\Communication\MerchantOpeningHoursStorageCommunicationFactory getFactory()
  */
-class MerchantOpeningHoursStorageDateScheduleCreatePublisherPlugin extends AbstractPlugin implements PublisherPluginInterface
+class MerchantOpeningHoursWeekdayScheduleWritePublisherPlugin extends AbstractPlugin implements PublisherPluginInterface
 {
     /**
      * {@inheritDoc}
+     * - Writes merchant opening hours weekday schedule data to storage by provided merchant ids events
      *
      * @api
      *
@@ -31,7 +32,7 @@ class MerchantOpeningHoursStorageDateScheduleCreatePublisherPlugin extends Abstr
     public function handleBulk(array $eventEntityTransfers, $eventName): void
     {
         $this->getFacade()
-            ->writeMerchantOpenHoursStorageByMerchantOpeningHoursDateScheduleCreateEvents($eventEntityTransfers);
+            ->writeCollectionByMerchantOpeningHoursWeekdayScheduleEvents($eventEntityTransfers);
     }
 
     /**
@@ -44,7 +45,7 @@ class MerchantOpeningHoursStorageDateScheduleCreatePublisherPlugin extends Abstr
     public function getSubscribedEvents(): array
     {
         return [
-            MerchantOpeningHoursEvents::ENTITY_SPY_MERCHANT_OPENING_HOURS_DATE_SCHEDULE_CREATE,
+            MerchantOpeningHoursStorageConfig::ENTITY_SPY_MERCHANT_OPENING_HOURS_WEEKDAY_SCHEDULE_CREATE,
         ];
     }
 }

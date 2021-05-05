@@ -22,15 +22,15 @@ class MerchantOpeningHoursStorageFacade extends AbstractFacade implements Mercha
      *
      * @api
      *
-     * @param int[] $merchantIds
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
      *
      * @return void
      */
-    public function publish(array $merchantIds): void
+    public function writeCollectionByMerchantOpeningHoursWeekdayScheduleEvents(array $eventEntityTransfers): void
     {
         $this->getFactory()
             ->createMerchantOpeningHoursStoragePublisher()
-            ->publish($merchantIds);
+            ->writeCollectionByMerchantOpeningHoursWeekdayScheduleEvents($eventEntityTransfers);
     }
 
     /**
@@ -42,11 +42,11 @@ class MerchantOpeningHoursStorageFacade extends AbstractFacade implements Mercha
      *
      * @return void
      */
-    public function writeMerchantOpenHoursStorageByMerchantOpeningHoursWeekdayScheduleCreateEvents(array $eventEntityTransfers): void
+    public function writeCollectionByMerchantOpeningHoursDateScheduleEvents(array $eventEntityTransfers): void
     {
         $this->getFactory()
             ->createMerchantOpeningHoursStoragePublisher()
-            ->writeMerchantOpenHoursStorageByMerchantOpeningHoursWeekdayScheduleCreateEvents($eventEntityTransfers);
+            ->writeCollectionByMerchantOpeningHoursDateScheduleEvents($eventEntityTransfers);
     }
 
     /**
@@ -58,26 +58,10 @@ class MerchantOpeningHoursStorageFacade extends AbstractFacade implements Mercha
      *
      * @return void
      */
-    public function writeMerchantOpenHoursStorageByMerchantOpeningHoursDateScheduleCreateEvents(array $eventEntityTransfers): void
+    public function writeCollectionByMerchantOpeningHoursEvents(array $eventEntityTransfers): void
     {
         $this->getFactory()
             ->createMerchantOpeningHoursStoragePublisher()
-            ->writeMerchantOpenHoursStorageByMerchantOpeningHoursDateScheduleCreateEvents($eventEntityTransfers);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
-     *
-     * @return void
-     */
-    public function writeMerchantOpenHoursStorageByMerchantOpeningHoursPublishEvents(array $eventEntityTransfers): void
-    {
-        $this->getFactory()
-            ->createMerchantOpeningHoursStoragePublisher()
-            ->writeMerchantOpenHoursStorageByMerchantOpeningHoursPublishEvents($eventEntityTransfers);
+            ->writeCollectionByMerchantOpeningHoursEvents($eventEntityTransfers);
     }
 }

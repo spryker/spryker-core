@@ -22,5 +22,5 @@ interface MerchantOpeningHoursStorageToEventBehaviorFacadeInterface
      *
      * @return array
      */
-    public function getEventTransferForeignKeys(array $eventTransfers, $foreignKeyColumnName);
+    public function getEventTransferForeignKeys(array $eventTransfers, string $foreignKeyColumnName);
 }

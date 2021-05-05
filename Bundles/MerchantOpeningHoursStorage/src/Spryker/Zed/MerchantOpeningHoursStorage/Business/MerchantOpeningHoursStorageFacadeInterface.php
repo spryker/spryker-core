@@ -11,19 +11,7 @@ interface MerchantOpeningHoursStorageFacadeInterface
 {
     /**
      * Specification:
-     * - Publishes merchant opening hours changes to storage.
-     *
-     * @api
-     *
-     * @param int[] $merchantIds
-     *
-     * @return void
-     */
-    public function publish(array $merchantIds): void;
-
-    /**
-     * Specification:
-     * - Publishes merchant opening hours changes to storage on weekday schedule create.
+     * - Publishes changes to storage by merchant opening hours weekday schedule events.
      *
      * @api
      *
@@ -31,11 +19,11 @@ interface MerchantOpeningHoursStorageFacadeInterface
      *
      * @return void
      */
-    public function writeMerchantOpenHoursStorageByMerchantOpeningHoursWeekdayScheduleCreateEvents(array $eventEntityTransfers): void;
+    public function writeCollectionByMerchantOpeningHoursWeekdayScheduleEvents(array $eventEntityTransfers): void;
 
     /**
      * Specification:
-     * - Publishes merchant opening hours changes to storage on date schedule create.
+     * - Publishes changes to storage by merchant opening hours date schedule events.
      *
      * @api
      *
@@ -43,11 +31,11 @@ interface MerchantOpeningHoursStorageFacadeInterface
      *
      * @return void
      */
-    public function writeMerchantOpenHoursStorageByMerchantOpeningHoursDateScheduleCreateEvents(array $eventEntityTransfers): void;
+    public function writeCollectionByMerchantOpeningHoursDateScheduleEvents(array $eventEntityTransfers): void;
 
     /**
      * Specification:
-     * - Publishes merchant opening hours changes to storage on schedule publish.
+     * - Publishes merchant opening hours data to storage by merchant opening hours events.
      *
      * @api
      *
@@ -55,5 +43,5 @@ interface MerchantOpeningHoursStorageFacadeInterface
      *
      * @return void
      */
-    public function writeMerchantOpenHoursStorageByMerchantOpeningHoursPublishEvents(array $eventEntityTransfers): void;
+    public function writeCollectionByMerchantOpeningHoursEvents(array $eventEntityTransfers): void;
 }

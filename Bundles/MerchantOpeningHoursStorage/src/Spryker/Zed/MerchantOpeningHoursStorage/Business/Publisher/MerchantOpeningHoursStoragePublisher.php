@@ -91,7 +91,7 @@ class MerchantOpeningHoursStoragePublisher implements MerchantOpeningHoursStorag
      *
      * @return void
      */
-    public function writeMerchantOpenHoursStorageByMerchantOpeningHoursWeekdayScheduleCreateEvents(array $eventEntityTransfers): void
+    public function writeCollectionByMerchantOpeningHoursWeekdayScheduleEvents(array $eventEntityTransfers): void
     {
         $merchantIds = $this->eventBehaviorFacade->getEventTransferForeignKeys(
             $eventEntityTransfers,
@@ -106,7 +106,7 @@ class MerchantOpeningHoursStoragePublisher implements MerchantOpeningHoursStorag
      *
      * @return void
      */
-    public function writeMerchantOpenHoursStorageByMerchantOpeningHoursDateScheduleCreateEvents(array $eventEntityTransfers): void
+    public function writeCollectionByMerchantOpeningHoursDateScheduleEvents(array $eventEntityTransfers): void
     {
         $merchantIds = $this->eventBehaviorFacade->getEventTransferForeignKeys(
             $eventEntityTransfers,
@@ -121,7 +121,7 @@ class MerchantOpeningHoursStoragePublisher implements MerchantOpeningHoursStorag
      *
      * @return void
      */
-    public function writeMerchantOpenHoursStorageByMerchantOpeningHoursPublishEvents(array $eventEntityTransfers): void
+    public function writeCollectionByMerchantOpeningHoursEvents(array $eventEntityTransfers): void
     {
         $merchantIds = $this->eventBehaviorFacade->getEventTransferIds($eventEntityTransfers);
 

@@ -8,11 +8,11 @@
 namespace Spryker\Zed\MerchantOpeningHoursDataImport\Business\MerchantOpeningHours\Step;
 
 use Orm\Zed\MerchantOpeningHours\Persistence\SpyMerchantOpeningHoursDateScheduleQuery;
+use Spryker\Shared\MerchantOpeningHoursStorage\MerchantOpeningHoursStorageConfig;
 use Spryker\Zed\DataImport\Business\Exception\InvalidDataException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
-use Spryker\Zed\MerchantOpeningHours\Dependency\MerchantOpeningHoursEvents;
 use Spryker\Zed\MerchantOpeningHoursDataImport\Business\MerchantOpeningHours\DataSet\MerchantOpeningHoursDateScheduleDataSetInterface;
 
 class MerchantOpeningHoursDateScheduleWriterStep extends PublishAwareStep implements DataImportStepInterface
@@ -44,7 +44,7 @@ class MerchantOpeningHoursDateScheduleWriterStep extends PublishAwareStep implem
             $merchantOpeningHoursDateScheduleEntity->save();
 
             $this->addPublishEvents(
-                MerchantOpeningHoursEvents::MERCHANT_OPENING_HOURS_PUBLISH,
+                MerchantOpeningHoursStorageConfig::MERCHANT_OPENING_HOURS_PUBLISH,
                 $merchantOpeningHoursDateScheduleEntity->getFkMerchant()
             );
         }

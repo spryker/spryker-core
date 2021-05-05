@@ -5,10 +5,10 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantOpeningHoursStorage\Communication\Plugin\Publisher;
+namespace Spryker\Zed\MerchantOpeningHoursStorage\Communication\Plugin\Publisher\MerchantOpeningHours;
 
+use Spryker\Shared\MerchantOpeningHoursStorage\MerchantOpeningHoursStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\MerchantOpeningHours\Dependency\MerchantOpeningHoursEvents;
 use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface;
 
 /**
@@ -20,6 +20,7 @@ class MerchantOpeningHoursStoragePublisherPlugin extends AbstractPlugin implemen
 {
     /**
      * {@inheritDoc}
+     * - Writes merchant opening hours data to storage by provided merchant ids events
      *
      * @api
      *
@@ -31,7 +32,7 @@ class MerchantOpeningHoursStoragePublisherPlugin extends AbstractPlugin implemen
     public function handleBulk(array $eventEntityTransfers, $eventName): void
     {
         $this->getFacade()
-            ->writeMerchantOpenHoursStorageByMerchantOpeningHoursPublishEvents($eventEntityTransfers);
+            ->writeCollectionByMerchantOpeningHoursEvents($eventEntityTransfers);
     }
 
     /**
@@ -44,7 +45,7 @@ class MerchantOpeningHoursStoragePublisherPlugin extends AbstractPlugin implemen
     public function getSubscribedEvents(): array
     {
         return [
-            MerchantOpeningHoursEvents::MERCHANT_OPENING_HOURS_PUBLISH,
+            MerchantOpeningHoursStorageConfig::MERCHANT_OPENING_HOURS_PUBLISH,
         ];
     }
 }

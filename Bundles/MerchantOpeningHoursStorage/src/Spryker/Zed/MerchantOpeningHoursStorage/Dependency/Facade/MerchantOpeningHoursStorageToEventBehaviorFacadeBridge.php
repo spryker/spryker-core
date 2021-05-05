@@ -38,7 +38,7 @@ class MerchantOpeningHoursStorageToEventBehaviorFacadeBridge implements Merchant
      *
      * @return array
      */
-    public function getEventTransferForeignKeys(array $eventTransfers, $foreignKeyColumnName)
+    public function getEventTransferForeignKeys(array $eventTransfers, string $foreignKeyColumnName)
     {
         return $this->eventBehaviorFacade->getEventTransferForeignKeys($eventTransfers, $foreignKeyColumnName);
     }

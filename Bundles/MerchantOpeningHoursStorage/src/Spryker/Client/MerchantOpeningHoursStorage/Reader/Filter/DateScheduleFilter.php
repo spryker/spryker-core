@@ -9,7 +9,6 @@ namespace Spryker\Client\MerchantOpeningHoursStorage\Reader\Filter;
 
 use ArrayObject;
 use DateTime;
-use Exception;
 use Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer;
 
 class DateScheduleFilter implements DateScheduleFilterInterface
@@ -26,7 +25,7 @@ class DateScheduleFilter implements DateScheduleFilterInterface
         $merchantOpeningHoursStorageTransfer->setDateSchedule(new ArrayObject());
 
         foreach ($dateScheduleTransfers as $dateScheduleTransfer) {
-            if ($this->getIsDateCorrectAndInTheFuture($dateScheduleTransfer->getDate())) {
+            if ($this->isDateInTheFuture($dateScheduleTransfer->getDateOrFail())) {
                 $merchantOpeningHoursStorageTransfer->addDateSchedule($dateScheduleTransfer);
             }
         }
@@ -35,22 +34,18 @@ class DateScheduleFilter implements DateScheduleFilterInterface
     }
 
     /**
-     * @param string|null $date
+     * @param string $date
      *
      * @return bool
      */
-    protected function getIsDateCorrectAndInTheFuture(?string $date): bool
+    protected function isDateInTheFuture(string $date): bool
     {
         $result = true;
 
-        try {
-            $dateTime = new DateTime((string)$date);
-            $dateTimeNow = new DateTime();
+        $dateTime = new DateTime((string)$date);
+        $dateTimeNow = new DateTime();
 
-            if ($dateTimeNow >= $dateTime) {
-                $result = false;
-            }
-        } catch (Exception $exception) {
+        if ($dateTimeNow >= $dateTime) {
             $result = false;
         }
 
