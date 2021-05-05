@@ -142,7 +142,7 @@ class ProductTable extends AbstractProductTable
         $query = $this
             ->productQueryQueryContainer
             ->queryProductAbstract()
-            ->innerJoinSpyTaxSet()
+            ->leftJoinSpyTaxSet()
             ->leftJoinSpyProductAbstractLocalizedAttributes()
             ->addJoinCondition('SpyProductAbstractLocalizedAttributes', 'SpyProductAbstractLocalizedAttributes.fk_locale = ?', $this->localeTransfer->getIdLocale())
             ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME, static::COL_NAME)
