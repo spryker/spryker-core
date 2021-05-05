@@ -211,4 +211,28 @@ class CategoryStorageConstants
      * @api
      */
     public const CATEGORY_TREE_UNPUBLISH = 'Category.tree.unpublish';
+
+    /**
+     * Specification:
+     * - This event will be used after `Category` creation.
+     *
+     * @api
+     */
+    public const CATEGORY_AFTER_PUBLISH_CREATE = 'Category.after.publish_create';
+
+    /**
+     * Specification:
+     * - This event will be used after `Category` updating.
+     *
+     * @api
+     */
+    public const CATEGORY_AFTER_PUBLISH_UPDATE = 'Category.after.publish_update';
+
+    /**
+     * Specification:
+     * - This event will be used after `Category` deletion.
+     *
+     * @api
+     */
+    public const CATEGORY_AFTER_PUBLISH_DELETE = 'Category.after.publish_delete';
 }

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Category;
 
 use Spryker\Shared\Category\CategoryConfig as SharedCategoryConfig;
+use Spryker\Shared\Category\CategoryConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CategoryConfig extends AbstractBundleConfig
@@ -29,6 +30,21 @@ class CategoryConfig extends AbstractBundleConfig
     protected const REDIRECT_URL_DEFAULT = '/category/root';
 
     protected const REDIRECT_URL_CATEGORY_GUI = '/category-gui/list';
+
+    protected const DEFAULT_CATEGORY_READ_CHUNK = 10000;
+
+    /**
+     * Specification:
+     * - Returns the size of the batch retrieval.
+     *
+     * @api
+     *
+     * @return int
+     */
+    public function getCategoryReadChunkSize(): int
+    {
+        return $this->get(CategoryConstants::CATEGORY_READ_CHUNK, static::DEFAULT_CATEGORY_READ_CHUNK);
+    }
 
     /**
      * @api
@@ -54,5 +70,19 @@ class CategoryConfig extends AbstractBundleConfig
         }
 
         return static::REDIRECT_URL_DEFAULT;
+    }
+
+    /**
+     * Specification:
+     * - Enables propel events for `spy_category_closure_table` table.
+     * - Impacts category create/update operations.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isCategoryClosureTableEventsEnabled(): bool
+    {
+        return true;
     }
 }

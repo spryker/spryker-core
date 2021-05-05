@@ -19,12 +19,15 @@ use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\Join;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
+use Spryker\Zed\Propel\Persistence\BatchProcessor\ActiveRecordBatchProcessorTrait;
 
 /**
  * @method \Spryker\Zed\Category\Persistence\CategoryPersistenceFactory getFactory()
  */
 class CategoryEntityManager extends AbstractEntityManager implements CategoryEntityManagerInterface
 {
+    use ActiveRecordBatchProcessorTrait;
+
     /**
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
@@ -56,19 +59,30 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
     }
 
     /**
-     * @param int $idCategory
+     * @param int[] $categoryIds
      * @param int[] $storeIds
      *
      * @return void
      */
-    public function createCategoryStoreRelationForStores(int $idCategory, array $storeIds): void
+    public function bulkCreateCategoryStoreRelationForStores(array $categoryIds, array $storeIds): void
     {
-        foreach ($storeIds as $idStore) {
-            (new SpyCategoryStore())
-                ->setFkCategory($idCategory)
-                ->setFkStore($idStore)
-                ->save();
+        $categoryIds = array_unique($categoryIds);
+        $this->bulkDeleteCategoryStoreRelations($categoryIds, $storeIds);
+
+        $propelCollection = new ObjectCollection();
+        $propelCollection->setModel(SpyCategoryStore::class);
+
+        foreach ($categoryIds as $idCategory) {
+            foreach ($storeIds as $idStore) {
+                $categoryStoreEntity = (new SpyCategoryStore())
+                    ->setFkCategory($idCategory)
+                    ->setFkStore($idStore);
+
+                $propelCollection->append($categoryStoreEntity);
+            }
         }
+
+        $propelCollection->save();
     }
 
     /**
@@ -80,7 +94,8 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
     {
         $idCategoryNode = $nodeTransfer->getIdCategoryNodeOrFail();
 
-        $this->createCategoryClosureTable($idCategoryNode, $idCategoryNode);
+        $categoryClosureTableEntity = $this->createCategoryClosureTableEntity($idCategoryNode, $idCategoryNode);
+        $categoryClosureTableEntity->save();
     }
 
     /**
@@ -90,23 +105,31 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
      */
     public function createCategoryClosureTableNodes(NodeTransfer $nodeTransfer): void
     {
-        $idCategoryNode = $nodeTransfer->getIdCategoryNodeOrFail();
-        $idParentCategoryNode = $nodeTransfer->getFkParentCategoryNodeOrFail();
-
         $categoryClosureTableEntities = $this->getFactory()
             ->createCategoryClosureTableQuery()
-            ->filterByFkCategoryNodeDescendant($idParentCategoryNode)
+            ->filterByFkCategoryNodeDescendant($nodeTransfer->getFkParentCategoryNodeOrFail())
             ->find();
 
+        if (!$this->getFactory()->getConfig()->isCategoryClosureTableEventsEnabled()) {
+            $this->persistCategoryClosureTableNodes($nodeTransfer, $categoryClosureTableEntities);
+
+            return;
+        }
+
+        $idCategoryNode = $nodeTransfer->getIdCategoryNodeOrFail();
+
         foreach ($categoryClosureTableEntities as $categoryClosureTableEntity) {
-            $this->createCategoryClosureTable(
+            $categoryClosureTableEntity = $this->createCategoryClosureTableEntity(
                 $categoryClosureTableEntity->getFkCategoryNode(),
                 $idCategoryNode,
                 $categoryClosureTableEntity->getDepth() + 1
             );
+
+            $categoryClosureTableEntity->save();
         }
 
-        $this->createCategoryClosureTable($idCategoryNode, $idCategoryNode);
+        $categoryClosureTableEntity = $this->createCategoryClosureTableEntity($idCategoryNode, $idCategoryNode);
+        $categoryClosureTableEntity->save();
     }
 
     /**
@@ -126,9 +149,22 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
             ->filterByFkCategoryNodeDescendant($nodeTransfer->getFkParentCategoryNode())
             ->find();
 
-        foreach ($categoryClosureTableEntities as $categoryClosureTableEntity) {
-            $this->createCategoryClosureTableParentEntries($parentCategoryClosureTableEntities, $categoryClosureTableEntity);
+        if ($this->getFactory()->getConfig()->isCategoryClosureTableEventsEnabled()) {
+            foreach ($categoryClosureTableEntities as $categoryClosureTableEntity) {
+                $this->createCategoryClosureTableParentEntries($parentCategoryClosureTableEntities, $categoryClosureTableEntity);
+            }
+
+            return;
         }
+
+        foreach ($categoryClosureTableEntities as $categoryClosureTableEntity) {
+            $this->persistCategoryClosureTableParentEntries(
+                $parentCategoryClosureTableEntities,
+                $categoryClosureTableEntity
+            );
+        }
+
+        $this->commit();
     }
 
     /**
@@ -336,12 +372,12 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
     }
 
     /**
-     * @param int $idCategory
+     * @param int[] $categoryIds
      * @param int[] $storeIds
      *
      * @return void
      */
-    public function deleteCategoryStoreRelationForStores(int $idCategory, array $storeIds): void
+    public function bulkDeleteCategoryStoreRelationForStores(array $categoryIds, array $storeIds): void
     {
         if ($storeIds === []) {
             return;
@@ -349,7 +385,7 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
 
         $this->getFactory()
             ->createCategoryStoreQuery()
-            ->filterByFkCategory($idCategory)
+            ->filterByFkCategory_in($categoryIds)
             ->filterByFkStore_In($storeIds)
             ->find()
             ->delete();
@@ -367,11 +403,13 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
     ): void {
         foreach ($parentCategoryClosureTableEntities as $parentCategoryClosureTableEntity) {
             $depth = $categoryClosureTableEntity->getDepth() + $parentCategoryClosureTableEntity->getDepth() + 1;
-            $this->createCategoryClosureTable(
+            $categoryClosureTableEntity = $this->createCategoryClosureTableEntity(
                 $parentCategoryClosureTableEntity->getFkCategoryNode(),
                 $categoryClosureTableEntity->getFkCategoryNodeDescendant(),
                 $depth
             );
+
+            $categoryClosureTableEntity->save();
         }
     }
 
@@ -380,15 +418,85 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
      * @param int $idCategoryNodeDescendant
      * @param int $depth
      *
-     * @return void
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryClosureTable
      */
-    protected function createCategoryClosureTable(int $idCategoryNode, int $idCategoryNodeDescendant, int $depth = 0): void
-    {
-        $pathEntity = (new SpyCategoryClosureTable())
+    protected function createCategoryClosureTableEntity(
+        int $idCategoryNode,
+        int $idCategoryNodeDescendant,
+        int $depth = 0
+    ): SpyCategoryClosureTable {
+        return (new SpyCategoryClosureTable())
             ->setFkCategoryNode($idCategoryNode)
             ->setFkCategoryNodeDescendant($idCategoryNodeDescendant)
             ->setDepth($depth);
+    }
 
-        $pathEntity->save();
+    /**
+     * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryClosureTable[]|\Propel\Runtime\Collection\ObjectCollection $categoryClosureTableEntities
+     *
+     * @return void
+     */
+    protected function persistCategoryClosureTableNodes(
+        NodeTransfer $nodeTransfer,
+        ObjectCollection $categoryClosureTableEntities
+    ): void {
+        $idCategoryNode = $nodeTransfer->getIdCategoryNodeOrFail();
+
+        foreach ($categoryClosureTableEntities as $categoryClosureTableEntity) {
+            $categoryClosureTableEntity = $this->createCategoryClosureTableEntity(
+                $categoryClosureTableEntity->getFkCategoryNode(),
+                $idCategoryNode,
+                $categoryClosureTableEntity->getDepth() + 1
+            );
+
+            $this->persist($categoryClosureTableEntity);
+        }
+
+        $categoryClosureTableEntity = $this->createCategoryClosureTableEntity($idCategoryNode, $idCategoryNode);
+
+        $this->persist($categoryClosureTableEntity);
+        $this->commit();
+    }
+
+    /**
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryClosureTable[]|\Propel\Runtime\Collection\ObjectCollection $parentCategoryClosureTableEntities
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryClosureTable $categoryClosureTableEntity
+     *
+     * @return void
+     */
+    protected function persistCategoryClosureTableParentEntries(
+        ObjectCollection $parentCategoryClosureTableEntities,
+        SpyCategoryClosureTable $categoryClosureTableEntity
+    ): void {
+        foreach ($parentCategoryClosureTableEntities as $parentCategoryClosureTableEntity) {
+            $depth = $categoryClosureTableEntity->getDepth() + $parentCategoryClosureTableEntity->getDepth() + 1;
+            $categoryClosureTableEntity = $this->createCategoryClosureTableEntity(
+                $parentCategoryClosureTableEntity->getFkCategoryNode(),
+                $categoryClosureTableEntity->getFkCategoryNodeDescendant(),
+                $depth
+            );
+
+            $this->persist($categoryClosureTableEntity);
+        }
+    }
+
+    /**
+     * @param int[] $categoryIds
+     * @param int[] $storeIds
+     *
+     * @return void
+     */
+    public function bulkDeleteCategoryStoreRelations(array $categoryIds, array $storeIds): void
+    {
+        if ($storeIds === []) {
+            return;
+        }
+
+        $this->getFactory()
+            ->createCategoryStoreQuery()
+            ->filterByFkCategory_in($categoryIds)
+            ->filterByFkStore_In($storeIds)
+            ->delete();
     }
 }

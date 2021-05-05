@@ -80,13 +80,23 @@ class CategoryUpdater implements CategoryUpdaterInterface
         $this->categoryRelationshipUpdater->updateCategoryRelationships($categoryTransfer);
         $this->categoryEntityManager->updateCategory($categoryTransfer);
 
+        $this->triggerAfterUpdateEvents($categoryTransfer);
+        $this->executeCategoryUpdateAfterPlugins($categoryTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return void
+     */
+    protected function triggerAfterUpdateEvents(CategoryTransfer $categoryTransfer): void
+    {
         $this->eventFacade->trigger(CategoryEvents::CATEGORY_AFTER_UPDATE, $categoryTransfer);
+
         $this->eventFacade->trigger(
             CategoryEvents::CATEGORY_AFTER_PUBLISH_UPDATE,
             (new EventEntityTransfer())->setId($categoryTransfer->getIdCategory())
         );
-
-        $this->executeCategoryUpdateAfterPlugins($categoryTransfer);
     }
 
     /**
