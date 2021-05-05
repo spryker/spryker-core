@@ -22,7 +22,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DetailController extends AbstractController
 {
-    public const REQUEST_PARAM_ID_MERCHANT_SALES_ORDER = 'id-merchant-sales-order';
+    protected const REQUEST_PARAM_ID_MERCHANT_SALES_ORDER = 'id-merchant-sales-order';
 
     protected const ROUTE_REDIRECT = '/merchant-sales-order-merchant-user-gui/detail';
 

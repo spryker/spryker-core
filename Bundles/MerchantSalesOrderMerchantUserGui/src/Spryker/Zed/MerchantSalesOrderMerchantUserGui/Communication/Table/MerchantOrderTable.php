@@ -25,6 +25,10 @@ use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Service\MerchantSal
 
 class MerchantOrderTable extends AbstractTable
 {
+    /**
+     * @uses \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Controller\DetailController::REQUEST_PARAM_ID_MERCHANT_SALES_ORDER
+     */
+    protected const REQUEST_PARAM_ID_MERCHANT_SALES_ORDER = 'id-merchant-sales-order';
     protected const COL_FULL_CUSTOMER_NAME = 'fullCustomerName';
     protected const COL_ITEM_COUNT = 'itemCount';
     protected const COL_ORDER_STATE = 'orderState';
@@ -258,7 +262,7 @@ class MerchantOrderTable extends AbstractTable
         $buttons[] = $this->generateViewButton(
             Url::generate(
                 static::ROUTE_REDIRECT,
-                [DetailController::REQUEST_PARAM_ID_MERCHANT_SALES_ORDER => $item[SpyMerchantSalesOrderTableMap::COL_ID_MERCHANT_SALES_ORDER]]
+                [static::REQUEST_PARAM_ID_MERCHANT_SALES_ORDER => $item[SpyMerchantSalesOrderTableMap::COL_ID_MERCHANT_SALES_ORDER]]
             ),
             'View'
         );
