@@ -1,5 +1,5 @@
 # PriceProductOffer Module
-[![Build Status](https://travis-ci.org/spryker/price-product-offer.svg)](https://travis-ci.org/spryker/price-product-offer)
+[![Latest Stable Version](https://poser.pugx.org/spryker/price-product-offer/v/stable.svg)](https://packagist.org/packages/spryker/price-product-offer)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 PriceProductOffer provides product offer price related functionality,price type, store relation and currency/price mode.

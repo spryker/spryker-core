@@ -1,5 +1,5 @@
 # TranslatorExtension Module
-[![Build Status](https://travis-ci.org/spryker/translator-extension.svg)](https://travis-ci.org/spryker/translator-extension)
+[![Latest Stable Version](https://poser.pugx.org/spryker/translator-extension/v/stable.svg)](https://packagist.org/packages/spryker/translator-extension)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 TranslatorExtension module provides plugin interfaces used by Translator module.

@@ -1,5 +1,5 @@
 # JsonSchema Module
-[![Build Status](https://travis-ci.org/spryker/json-schema.svg)](https://travis-ci.org/spryker/json-schema)
+[![Latest Stable Version](https://poser.pugx.org/spryker/json-schema/v/stable.svg)](https://packagist.org/packages/spryker/json-schema)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 JsonSchema module is a 3rd party connector module for "justinrainbow/json-schema" vendor library.
