@@ -28,4 +28,3 @@ suites:
                 - \SprykerTest\Shared\Sales\Helper\SalesHelper
                 - \SprykerTest\Zed\Merchant\Helper\MerchantHelper
                 - \SprykerTest\Zed\MerchantSalesOrder\Helper\MerchantSalesHelper
-

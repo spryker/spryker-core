@@ -1,5 +1,5 @@
 # CommentSalesConnector Module
-[![Build Status](https://travis-ci.org/spryker/comment-sales-connector.svg)](https://travis-ci.org/spryker/comment-sales-connector)
+[![Latest Stable Version](https://poser.pugx.org/spryker/comment-sales-connector/v/stable.svg)](https://packagist.org/packages/spryker/comment-sales-connector)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 Provides Comment functionality for Sales module.

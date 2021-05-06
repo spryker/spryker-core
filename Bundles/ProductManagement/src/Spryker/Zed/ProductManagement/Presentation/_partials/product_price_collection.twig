@@ -5,6 +5,7 @@
 {% set priceModeBoth = 'BOTH' %}
 
 {% set priceModeCollection = moneyValueFormViewCollection.vars.priceTable | first | first %}
+{% set priceTypeNames = moneyValueFormViewCollection.vars.priceTypes | first | keys %}
 
 {% set hasPriceFieldsError = false %}
 {% if moneyValueFormViewCollection.parent.vars.errors|length %}
@@ -61,9 +62,16 @@
                 {% endif %}
 
                 <td style="background-color:#F5F5F6; text-align: center; vertical-align: middle; font-weight:bold">
-                    {{ currencies[currencyIsoCode].symbol }}
+                    <div>{{ currencies[currencyIsoCode].symbol }}</div>
 
-                    {{ include('@ProductManagement/_partials/product_volume_price_action_button.twig', {moneyValueFormViewCollection: moneyValueFormViewCollection}) }}
+                    {% for priceTypeName in priceTypeNames %}
+                        <div style="padding-top: 5px;">
+                            {% include '@ProductManagement/_partials/product_volume_price_action_button.twig' with {
+                                moneyValueFormViewCollection: moneyValueFormViewCollection,
+                                priceType: priceTypeName,
+                            } %}
+                        </div>
+                    {% endfor %}
 
                 </td>
 

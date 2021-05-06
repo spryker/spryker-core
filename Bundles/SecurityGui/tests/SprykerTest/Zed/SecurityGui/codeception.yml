@@ -53,7 +53,7 @@ suites:
                 - \SprykerTest\Shared\User\Helper\UserDataHelper
                 - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
                 - \SprykerTest\Zed\Form\Helper\FormHelper:
-                    formPlugins:
-                        - \Spryker\Zed\Validator\Communication\Plugin\Form\ValidatorFormPlugin
-                        - \Spryker\Zed\Http\Communication\Plugin\Form\HttpFoundationFormPlugin
+                      formPlugins:
+                          - \Spryker\Zed\Validator\Communication\Plugin\Form\ValidatorFormPlugin
+                          - \Spryker\Zed\Http\Communication\Plugin\Form\HttpFoundationFormPlugin
                 - \SprykerTest\Zed\Validator\Helper\ValidatorHelper

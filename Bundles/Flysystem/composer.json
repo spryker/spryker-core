@@ -1,47 +1,47 @@
 {
-  "name": "spryker/flysystem",
-  "type": "library",
-  "description": "Flysystem module",
-  "license": "proprietary",
-  "require": {
-    "league/flysystem": "^1.0",
-    "php": ">=7.3",
-    "spryker/file-system": "^1.0.0",
-    "spryker/kernel": "^3.30.0"
-  },
-  "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/flysystem-local-file-system": "*",
-    "spryker/propel": "*",
-    "spryker/testify": "*"
-  },
-  "suggest": {
-    "spryker/flysystem-aws3v3-file-system": "For handling AWS3v3 filesystem.",
-    "spryker/flysystem-ftp-file-system": "For handling FTP filesystem.",
-    "spryker/flysystem-local-file-system": "For handling local files."
-  },
-  "autoload": {
-    "psr-4": {
-      "Spryker\\": "src/Spryker/"
+    "name": "spryker/flysystem",
+    "type": "library",
+    "description": "Flysystem module",
+    "license": "proprietary",
+    "require": {
+        "league/flysystem": "^1.0",
+        "php": ">=7.3",
+        "spryker/file-system": "^1.0.0",
+        "spryker/kernel": "^3.30.0"
+    },
+    "require-dev": {
+        "spryker/code-sniffer": "*",
+        "spryker/flysystem-local-file-system": "*",
+        "spryker/propel": "*",
+        "spryker/testify": "*"
+    },
+    "suggest": {
+        "spryker/flysystem-aws3v3-file-system": "For handling AWS3v3 filesystem.",
+        "spryker/flysystem-ftp-file-system": "For handling FTP filesystem.",
+        "spryker/flysystem-local-file-system": "For handling local files."
+    },
+    "autoload": {
+        "psr-4": {
+            "Spryker\\": "src/Spryker/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "SprykerTest\\": "tests/SprykerTest/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
     }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "SprykerTest\\": "tests/SprykerTest/"
-    }
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "scripts": {
-    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
-    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "1.0.x-dev"
-    }
-  },
-  "config": {
-    "sort-packages": true
-  }
 }

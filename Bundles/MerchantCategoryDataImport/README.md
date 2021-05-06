@@ -1,5 +1,5 @@
 # MerchantCategoryDataImport Module
-[![Build Status](https://travis-ci.org/spryker/merchant-category-data-import.svg)](https://travis-ci.org/spryker/merchant-category-data-import)
+[![Latest Stable Version](https://poser.pugx.org/spryker/merchant-category-data-import/v/stable.svg)](https://packagist.org/packages/spryker/merchant-category-data-import)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 This module imports relations between categories and merchants from .csv file.

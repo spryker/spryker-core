@@ -1,12 +1,10 @@
 <?xml version="1.0"?>
-<database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd"
-          namespace="Orm\Zed\MerchantProfile\Persistence"
-          package="src.Orm.Zed.MerchantProfile.Persistence">
+<database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\MerchantProfile\Persistence" package="src.Orm.Zed.MerchantProfile.Persistence">
 
     <table name="spy_merchant_profile" identifierQuoting="true">
         <column name="id_merchant_profile" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="contact_person_role" size="255" type="VARCHAR"/>
-        <column name="contact_person_title"  type="ENUM" valueSet="Mr, Mrs, Dr, Ms"/>
+        <column name="contact_person_title" type="ENUM" valueSet="Mr, Mrs, Dr, Ms"/>
         <column name="contact_person_first_name" size="255" type="VARCHAR"/>
         <column name="contact_person_last_name" size="255" type="VARCHAR"/>
         <column name="contact_person_phone" size="255" type="VARCHAR"/>

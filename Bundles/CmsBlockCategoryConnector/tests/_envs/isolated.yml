@@ -1,13 +1,13 @@
 modules:
-  config:
-    \SprykerTest\Shared\Testify\Helper\Environment:
-      mode: 'isolated'
+    config:
+        \SprykerTest\Shared\Testify\Helper\Environment:
+            mode: 'isolated'
 
-    \Config\Module\ConfigInit:
-      enabled: true
+        \Config\Module\ConfigInit:
+            enabled: true
 
-    \Transfer\Module\TransferGenerate:
-      enabled: true
+        \Transfer\Module\TransferGenerate:
+            enabled: true
 
-    \Propel\Module\PropelInstall:
-      enabled: true
+        \Propel\Module\PropelInstall:
+            enabled: true

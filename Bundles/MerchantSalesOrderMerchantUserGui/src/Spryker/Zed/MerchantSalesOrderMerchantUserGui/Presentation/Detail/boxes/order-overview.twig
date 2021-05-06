@@ -25,7 +25,7 @@
 
                     {% for orderItemOption in orderItem.productOptions %}
                         <div class="col-sm-10"><p>+ <span class="label">{{ 'Option' | trans }}</span> {{ orderItemOption.value }}</p></div>
-                        <div class="col-sm-2">{{ orderItemOption.sumPrice | money(true, order.currencyIsoCode) }}</div>
+                        <div class="col-sm-2">{{ orderItemOption.sumPrice | money(true, merchantOrder.order.currencyIsoCode) }}</div>
                     {% endfor %}
                 {% endfor %}
             </div>

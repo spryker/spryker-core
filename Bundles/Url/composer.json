@@ -1,53 +1,53 @@
 {
-  "name": "spryker/url",
-  "type": "library",
-  "description": "Url module",
-  "license": "proprietary",
-  "require": {
-    "php": ">=7.3",
-    "spryker/kernel": "^3.30.0",
-    "spryker/key-builder": "^1.0.0",
-    "spryker/locale": "^3.0.0",
-    "spryker/propel-orm": "^1.0.0",
-    "spryker/storage": "^3.0.0",
-    "spryker/symfony": "^3.0.0",
-    "spryker/touch": "^3.0.0 || ^4.0.0"
-  },
-  "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/propel": "*",
-    "spryker/silex": "*",
-    "spryker/testify": "*",
-    "spryker/twig": "*",
-    "spryker/util-text": "*"
-  },
-  "suggest": {
-    "spryker/silex": "Required by url Twig component.",
-    "spryker/twig": "Required because of the url component."
-  },
-  "autoload": {
-    "psr-4": {
-      "Spryker\\": "src/Spryker/",
-      "SprykerTest\\Shared\\Url\\Helper\\": "tests/SprykerTest/Shared/Url/_support/Helper/"
+    "name": "spryker/url",
+    "type": "library",
+    "description": "Url module",
+    "license": "proprietary",
+    "require": {
+        "php": ">=7.3",
+        "spryker/kernel": "^3.30.0",
+        "spryker/key-builder": "^1.0.0",
+        "spryker/locale": "^3.0.0",
+        "spryker/propel-orm": "^1.0.0",
+        "spryker/storage": "^3.0.0",
+        "spryker/symfony": "^3.0.0",
+        "spryker/touch": "^3.0.0 || ^4.0.0"
+    },
+    "require-dev": {
+        "spryker/code-sniffer": "*",
+        "spryker/propel": "*",
+        "spryker/silex": "*",
+        "spryker/testify": "*",
+        "spryker/twig": "*",
+        "spryker/util-text": "*"
+    },
+    "suggest": {
+        "spryker/silex": "Required by url Twig component.",
+        "spryker/twig": "Required because of the url component."
+    },
+    "autoload": {
+        "psr-4": {
+            "Spryker\\": "src/Spryker/",
+            "SprykerTest\\Shared\\Url\\Helper\\": "tests/SprykerTest/Shared/Url/_support/Helper/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "SprykerTest\\": "tests/SprykerTest/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "3.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
     }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "SprykerTest\\": "tests/SprykerTest/"
-    }
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "scripts": {
-    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
-    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "3.0.x-dev"
-    }
-  },
-  "config": {
-    "sort-packages": true
-  }
 }

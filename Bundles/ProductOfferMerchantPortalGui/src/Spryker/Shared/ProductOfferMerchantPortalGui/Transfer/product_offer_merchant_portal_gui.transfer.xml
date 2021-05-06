@@ -1,7 +1,5 @@
 <?xml version="1.0"?>
-<transfers xmlns="spryker:transfer-01"
-           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="GuiTableColumnConfiguration">
         <property name="id" type="string"/>
@@ -314,8 +312,8 @@
         <property name="store" type="string"/>
         <property name="currency" type="string"/>
         <property name="prices" type="float[]" singular="price" associative="true"/>
-        <property name="idPriceProductOffer"  type="int"/>
-        <property name="productOffer"  type="ProductOffer"/>
+        <property name="idPriceProductOffer" type="int"/>
+        <property name="productOffer" type="ProductOffer"/>
         <property name="priceProductOfferIds" type="array" singular="priceProductOfferId"/>
         <property name="typePriceProductOfferIds" type="string"/>
     </transfer>
@@ -325,8 +323,8 @@
     </transfer>
 
     <transfer name="PriceProductOffer">
-        <property name="idPriceProductOffer"  type="int"/>
-        <property name="productOffer"  type="ProductOffer"/>
+        <property name="idPriceProductOffer" type="int"/>
+        <property name="productOffer" type="ProductOffer"/>
     </transfer>
 
     <transfer name="PriceProductOfferCriteria">

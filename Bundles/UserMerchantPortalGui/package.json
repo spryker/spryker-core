@@ -11,8 +11,7 @@
         "@spryker/card": "^0.2.0-next.4",
         "@spryker/headline": "^0.2.0-next.1",
         "@spryker/utils": "^0.2.0-next.16",
-        "@spryker/web-components": "^0.2.1-next.5",
-        "rxjs": "^6.5.4",
-        "tslib": "^1.10.0"
+        "@spryker/web-components": "^0.2.1-next.8",
+        "rxjs": "^6.5.4"
     }
 }

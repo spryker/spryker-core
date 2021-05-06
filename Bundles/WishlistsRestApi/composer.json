@@ -1,54 +1,54 @@
 {
-  "name": "spryker/wishlists-rest-api",
-  "type": "library",
-  "description": "WishlistsRestApi module",
-  "license": "proprietary",
-  "require": {
-    "php": ">=7.3",
-    "spryker/glue-application": "^1.8.0",
-    "spryker/glue-application-extension": "^1.0.0",
-    "spryker/kernel": "^3.30.0",
-    "spryker/propel-orm": "^1.0.0",
-    "spryker/symfony": "^3.0.0",
-    "spryker/uuid-behavior": "^1.0.0",
-    "spryker/wishlist": "^6.5.0 || ^8.1.0",
-    "spryker/wishlists-rest-api-extension": "^1.0.0",
-    "spryker/zed-request": "^3.0.0"
-  },
-  "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/customer": "*",
-    "spryker/product": "*",
-    "spryker/propel": "*",
-    "spryker/testify": "*"
-  },
-  "suggest": {
-    "spryker/auth-rest-api": "If you want to authorize and authenticate customers via access tokens.",
-    "spryker/rest-request-validator": "If you want to use rest request validation.",
-    "spryker/uuid": "If you want to generate UUIDs for existing entities."
-  },
-  "autoload": {
-    "psr-4": {
-      "Spryker\\": "src/Spryker/"
+    "name": "spryker/wishlists-rest-api",
+    "type": "library",
+    "description": "WishlistsRestApi module",
+    "license": "proprietary",
+    "require": {
+        "php": ">=7.3",
+        "spryker/glue-application": "^1.8.0",
+        "spryker/glue-application-extension": "^1.0.0",
+        "spryker/kernel": "^3.30.0",
+        "spryker/propel-orm": "^1.0.0",
+        "spryker/symfony": "^3.0.0",
+        "spryker/uuid-behavior": "^1.0.0",
+        "spryker/wishlist": "^6.5.0 || ^8.1.0",
+        "spryker/wishlists-rest-api-extension": "^1.0.0",
+        "spryker/zed-request": "^3.0.0"
+    },
+    "require-dev": {
+        "spryker/code-sniffer": "*",
+        "spryker/customer": "*",
+        "spryker/product": "*",
+        "spryker/propel": "*",
+        "spryker/testify": "*"
+    },
+    "suggest": {
+        "spryker/auth-rest-api": "If you want to authorize and authenticate customers via access tokens.",
+        "spryker/rest-request-validator": "If you want to use rest request validation.",
+        "spryker/uuid": "If you want to generate UUIDs for existing entities."
+    },
+    "autoload": {
+        "psr-4": {
+            "Spryker\\": "src/Spryker/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "SprykerTest\\": "tests/SprykerTest/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
     }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "SprykerTest\\": "tests/SprykerTest/"
-    }
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "scripts": {
-    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
-    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "1.0.x-dev"
-    }
-  },
-  "config": {
-    "sort-packages": true
-  }
 }

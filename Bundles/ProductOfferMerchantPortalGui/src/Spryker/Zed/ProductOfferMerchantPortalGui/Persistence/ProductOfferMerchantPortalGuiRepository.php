@@ -115,12 +115,9 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
     {
         $productConcreteQuery = $this->getFactory()->getProductConcretePropelQuery();
 
-        /** @var \Generated\Shared\Transfer\LocaleTransfer $localeTransfer */
-        $localeTransfer = $productTableCriteriaTransfer->requireLocale()->getLocale();
-        /** @var int $idLocale */
-        $idLocale = $localeTransfer->requireIdLocale()->getIdLocale();
-        /** @var string $merchantReference */
-        $merchantReference = $productTableCriteriaTransfer->requireMerchantReference()->getMerchantReference();
+        $localeTransfer = $productTableCriteriaTransfer->getLocaleOrFail();
+        $idLocale = $localeTransfer->getIdLocaleOrFail();
+        $idMerchant = $productTableCriteriaTransfer->getIdMerchantOrFail();
 
         $productConcreteQuery = $this->addLocalizedAttributesToProductTableQuery($productConcreteQuery, $idLocale);
         $productConcreteQuery->leftJoinSpyProductValidity()
@@ -210,8 +207,39 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
      */
     protected function createProductOffersCountSubquery(string $merchantReference): string
     {
-        $productOffersSubquery = $this->getFactory()->getProductOfferPropelQuery()
-            ->addAsColumn('offers_count', 'COUNT(*)')
+        $productOffersSubquery = $this->createProductOffersBaseSubquery($idMerchant);
+        $productOffersSubquery->addAsColumn('offers_count', 'COUNT(*)');
+
+        $params = [];
+
+        return $productOffersSubquery->createSelectSql($params);
+    }
+
+    /**
+     * @param int $idMerchant
+     *
+     * @return string
+     */
+    protected function createProductOffersSubquery(int $idMerchant): string
+    {
+        $productOffersSubquery = $this->createProductOffersBaseSubquery($idMerchant);
+        $productOffersSubquery->addSelfSelectColumns();
+
+        $params = [];
+
+        return $productOffersSubquery->createSelectSql($params);
+    }
+
+    /**
+     * @param int $idMerchant
+     *
+     * @return \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery
+     */
+    protected function createProductOffersBaseSubquery(int $idMerchant): SpyProductOfferQuery
+    {
+        $productOffersSubquery = $this->getFactory()->getProductOfferPropelQuery();
+
+        return $productOffersSubquery
             ->where(sprintf(
                 '%s = %s AND %s = \'%s\'',
                 SpyProductOfferTableMap::COL_CONCRETE_SKU,
@@ -219,10 +247,6 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
                 SpyProductOfferTableMap::COL_MERCHANT_REFERENCE,
                 $merchantReference
             ));
-
-        $params = [];
-
-        return $productOffersSubquery->createSelectSql($params);
     }
 
     /**

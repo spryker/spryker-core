@@ -25,6 +25,7 @@ class PriceVolumeController extends AbstractController
     protected const REQUEST_PARAM_STORE_NAME = 'store-name';
     protected const REQUEST_PARAM_CURRENCY_CODE = 'currency-code';
     protected const REQUEST_PARAM_PRICE_DIMENSION = 'price-dimension';
+    protected const REQUEST_PARAM_PRICE_TYPE = 'price-type';
     protected const REQUEST_PARAM_SAVE_AND_EXIT = 'save_and_exit';
     protected const REQUEST_PARAM_SKU = 'sku';
 
@@ -153,7 +154,8 @@ class PriceVolumeController extends AbstractController
             $request->get(static::REQUEST_PARAM_ID_PRODUCT_CONCRETE),
             $request->get(static::REQUEST_PARAM_STORE_NAME),
             $request->get(static::REQUEST_PARAM_CURRENCY_CODE),
-            $request->get(static::REQUEST_PARAM_PRICE_DIMENSION, [])
+            $request->get(static::REQUEST_PARAM_PRICE_DIMENSION, []),
+            $request->get(static::REQUEST_PARAM_PRICE_TYPE)
         );
 
         return $priceProductTransfer;
@@ -172,6 +174,7 @@ class PriceVolumeController extends AbstractController
             static::REQUEST_PARAM_STORE_NAME => $request->get(static::REQUEST_PARAM_STORE_NAME),
             static::REQUEST_PARAM_CURRENCY_CODE => $request->get(static::REQUEST_PARAM_CURRENCY_CODE),
             static::REQUEST_PARAM_PRICE_DIMENSION => $request->get(static::REQUEST_PARAM_PRICE_DIMENSION, []),
+            static::REQUEST_PARAM_PRICE_TYPE => $request->get(static::REQUEST_PARAM_PRICE_TYPE),
         ];
 
         return $this->generateUrl(static::PRICE_PRODUCT_VOLUME_EDIT_URL, $query);

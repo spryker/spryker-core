@@ -1,56 +1,56 @@
 {
-  "name": "spryker/discount-promotion",
-  "type": "library",
-  "description": "DiscountPromotion module",
-  "license": "proprietary",
-  "require": {
-    "php": ">=7.3",
-    "spryker/availability": "^9.0.0",
-    "spryker/cart-extension": "^1.5.0 || ^2.1.0 || ^4.0.0",
-    "spryker/discount": "^7.2.4 || ^9.0.0",
-    "spryker/discount-extension": "^1.1.0",
-    "spryker/kernel": "^3.30.0",
-    "spryker/persistent-cart-extension": "^1.0.0",
-    "spryker/product": "^5.0.0 || ^6.0.0",
-    "spryker/symfony": "^3.0.0",
-    "spryker/transfer": "^3.18.0"
-  },
-  "require-dev": {
-    "spryker/calculation": "*",
-    "spryker/cart": "*",
-    "spryker/code-sniffer": "*",
-    "spryker/propel": "*",
-    "spryker/stock": "*",
-    "spryker/store": "*",
-    "spryker/testify": "*"
-  },
-  "suggest": {
-    "spryker/calculation": "Used by plugin to reset promotional items.",
-    "spryker/cart": "Used by plugin to add promotional item identifier to group key."
-  },
-  "autoload": {
-    "psr-4": {
-      "Spryker\\": "src/Spryker/",
-      "SprykerTest\\Shared\\DiscountPromotion\\Helper\\": "tests/SprykerTest/Shared/DiscountPromotion/_support/Helper/"
+    "name": "spryker/discount-promotion",
+    "type": "library",
+    "description": "DiscountPromotion module",
+    "license": "proprietary",
+    "require": {
+        "php": ">=7.3",
+        "spryker/availability": "^9.0.0",
+        "spryker/cart-extension": "^1.5.0 || ^2.1.0 || ^4.0.0",
+        "spryker/discount": "^7.2.4 || ^9.0.0",
+        "spryker/discount-extension": "^1.1.0",
+        "spryker/kernel": "^3.30.0",
+        "spryker/persistent-cart-extension": "^1.0.0",
+        "spryker/product": "^5.0.0 || ^6.0.0",
+        "spryker/symfony": "^3.0.0",
+        "spryker/transfer": "^3.18.0"
+    },
+    "require-dev": {
+        "spryker/calculation": "*",
+        "spryker/cart": "*",
+        "spryker/code-sniffer": "*",
+        "spryker/propel": "*",
+        "spryker/stock": "*",
+        "spryker/store": "*",
+        "spryker/testify": "*"
+    },
+    "suggest": {
+        "spryker/calculation": "Used by plugin to reset promotional items.",
+        "spryker/cart": "Used by plugin to add promotional item identifier to group key."
+    },
+    "autoload": {
+        "psr-4": {
+            "Spryker\\": "src/Spryker/",
+            "SprykerTest\\Shared\\DiscountPromotion\\Helper\\": "tests/SprykerTest/Shared/DiscountPromotion/_support/Helper/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "SprykerTest\\": "tests/SprykerTest/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "4.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
     }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "SprykerTest\\": "tests/SprykerTest/"
-    }
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "scripts": {
-    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
-    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "4.0.x-dev"
-    }
-  },
-  "config": {
-    "sort-packages": true
-  }
 }

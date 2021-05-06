@@ -1,37 +1,37 @@
 {
-  "name": "spryker/product-list-gui-extension",
-  "type": "library",
-  "description": "ProductListGuiExtension module",
-  "license": "proprietary",
-  "require": {
-    "php": ">=7.3"
-  },
-  "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/gui": "*",
-    "spryker/symfony": "*"
-  },
-  "suggest": {
-    "spryker/gui": "If you want to use ProductListGui plugins. Minimum required version: ^1.0.0",
-    "spryker/symfony": "Required to use form in plugin"
-  },
-  "autoload": {
-    "psr-4": {
-      "Spryker\\": "src/Spryker/"
+    "name": "spryker/product-list-gui-extension",
+    "type": "library",
+    "description": "ProductListGuiExtension module",
+    "license": "proprietary",
+    "require": {
+        "php": ">=7.3"
+    },
+    "require-dev": {
+        "spryker/code-sniffer": "*",
+        "spryker/gui": "*",
+        "spryker/symfony": "*"
+    },
+    "suggest": {
+        "spryker/gui": "If you want to use ProductListGui plugins. Minimum required version: ^1.0.0",
+        "spryker/symfony": "Required to use form in plugin"
+    },
+    "autoload": {
+        "psr-4": {
+            "Spryker\\": "src/Spryker/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
     }
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "scripts": {
-    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
-    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "1.0.x-dev"
-    }
-  },
-  "config": {
-    "sort-packages": true
-  }
 }

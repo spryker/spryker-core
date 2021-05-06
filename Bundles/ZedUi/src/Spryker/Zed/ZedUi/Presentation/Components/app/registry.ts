@@ -1,7 +1,7 @@
 import { Type } from '@angular/core';
 import { CustomElementModule } from '@spryker/web-components';
 
-export type ComponentsNgModule = Type<CustomElementModule>;
+export type ComponentsNgModule = Type<CustomElementModule> | Type<any>;
 
 export type NgModuleReceiver = (ngModule: ComponentsNgModule) => void;
 

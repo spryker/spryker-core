@@ -1,21 +1,21 @@
 endpoint:
-  post:
-    stringField:
-    - NotBlank
-    - Regex:
-        pattern: '/\w{8}/'
-  patch:
-    booleanField:
-    - IsTrue
+    post:
+        stringField:
+            - NotBlank
+            - Regex:
+                  pattern: '/\w{8}/'
+    patch:
+        booleanField:
+            - IsTrue
 
 endpoint_two:
-  put:
-    choiceField:
-    - Choice:
-        choices:
-        - chOne
-        - chTwo
-        - chThree
-        - chFour
-        - chFive
-        - chSix
+    put:
+        choiceField:
+            - Choice:
+                  choices:
+                      - chOne
+                      - chTwo
+                      - chThree
+                      - chFour
+                      - chFive
+                      - chSix

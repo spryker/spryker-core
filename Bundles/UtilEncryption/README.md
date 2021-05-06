@@ -1,5 +1,5 @@
 # UtilEncryption Module
-[![Build Status](https://travis-ci.org/spryker/util-encryption.svg)](https://travis-ci.org/spryker/util-encryption)
+[![Latest Stable Version](https://poser.pugx.org/spryker/util-encryption/v/stable.svg)](https://packagist.org/packages/spryker/util-encryption)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 Provides encrypt/decrypt data functionality.

@@ -1,23 +1,23 @@
 namespace: SprykerTest\Client\CmsSlotBlockCategoryConnector
 
 paths:
-  tests: .
-  data: ../../../_data
-  support: _support
-  log: ../../../_output
+    tests: .
+    data: ../../../_data
+    support: _support
+    log: ../../../_output
 
 coverage:
-  enabled: true
-  remote: false
-  whitelist: { include: ['../../../../src/*'] }
+    enabled: true
+    remote: false
+    whitelist: { include: ['../../../../src/*'] }
 
 suites:
-  Client:
-    path: .
-    class_name: CmsSlotBlockCategoryConnectorClientTester
-    modules:
-      enabled:
-        - Asserts
-        - \SprykerTest\Shared\Testify\Helper\Environment
-        - \SprykerTest\Shared\Testify\Helper\LocatorHelper
-        - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+    Client:
+        path: .
+        class_name: CmsSlotBlockCategoryConnectorClientTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
