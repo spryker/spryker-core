@@ -117,7 +117,7 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
 
         $localeTransfer = $productTableCriteriaTransfer->getLocaleOrFail();
         $idLocale = $localeTransfer->getIdLocaleOrFail();
-        $idMerchant = $productTableCriteriaTransfer->getIdMerchantOrFail();
+        $merchantReference = $productTableCriteriaTransfer->getMerchantReferenceOrFail();
 
         $productConcreteQuery = $this->addLocalizedAttributesToProductTableQuery($productConcreteQuery, $idLocale);
         $productConcreteQuery->leftJoinSpyProductValidity()
@@ -207,7 +207,7 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
      */
     protected function createProductOffersCountSubquery(string $merchantReference): string
     {
-        $productOffersSubquery = $this->createProductOffersBaseSubquery($idMerchant);
+        $productOffersSubquery = $this->createProductOffersBaseSubquery($merchantReference);
         $productOffersSubquery->addAsColumn('offers_count', 'COUNT(*)');
 
         $params = [];
@@ -216,26 +216,11 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
     }
 
     /**
-     * @param int $idMerchant
-     *
-     * @return string
-     */
-    protected function createProductOffersSubquery(int $idMerchant): string
-    {
-        $productOffersSubquery = $this->createProductOffersBaseSubquery($idMerchant);
-        $productOffersSubquery->addSelfSelectColumns();
-
-        $params = [];
-
-        return $productOffersSubquery->createSelectSql($params);
-    }
-
-    /**
-     * @param int $idMerchant
+     * @param string $merchantReference
      *
      * @return \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery
      */
-    protected function createProductOffersBaseSubquery(int $idMerchant): SpyProductOfferQuery
+    protected function createProductOffersBaseSubquery(string $merchantReference): SpyProductOfferQuery
     {
         $productOffersSubquery = $this->getFactory()->getProductOfferPropelQuery();
 
