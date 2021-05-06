@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\PriceProductOfferStorage\Plugin\PriceProductOfferStorage;
+namespace Spryker\Client\PriceProductOfferStorage\Plugin\PriceProductStorage;
 
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\PriceProductStorageExtension\Dependency\Plugin\PriceProductStoragePriceDimensionPluginInterface;

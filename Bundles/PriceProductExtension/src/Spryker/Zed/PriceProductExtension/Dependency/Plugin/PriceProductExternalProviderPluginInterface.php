@@ -10,11 +10,7 @@ namespace Spryker\Zed\PriceProductExtension\Dependency\Plugin;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 
 /**
- * @deprecated Will be removed in the next major.
- *
- * Use ProductTableQueryCriteriaExpanderPluginInterface instead.
- *
- * @see \Spryker\Zed\ProductManagement\ProductManagementDependencyProvider::addProductTableQueryCriteriaExpanderPluginInterfaces().
+ * @deprecated Use {@link \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductTableQueryCriteriaExpanderPluginInterface} instead.
  */
 interface PriceProductExternalProviderPluginInterface
 {
