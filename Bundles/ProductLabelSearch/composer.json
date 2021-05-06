@@ -1,54 +1,54 @@
 {
-  "name": "spryker/product-label-search",
-  "type": "library",
-  "description": "ProductLabelSearch module",
-  "license": "proprietary",
-  "require": {
-    "php": ">=7.3",
-    "spryker/event-behavior": "^1.1.0",
-    "spryker/kernel": "^3.30.0",
-    "spryker/product-label": "^3.0.0",
-    "spryker/product-page-search": "^0.1.0 || ^1.0.0 || ^2.2.0 || ^3.0.0",
-    "spryker/product-page-search-extension": "^1.0.0",
-    "spryker/publisher-extension": "^1.0.0",
-    "spryker/util-sanitize": "^2.1.0"
-  },
-  "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/event": "*",
-    "spryker/product": "*",
-    "spryker/propel": "*",
-    "spryker/propel-orm": "*",
-    "spryker/store": "*",
-    "spryker/testify": "*"
-  },
-  "suggest": {
-    "spryker/event": "If you want to use Event plugins, minimum required version: 2.1.0",
-    "spryker/propel-orm": "If you want to use transaction functionality, minimum required version: 1.3.0",
-    "spryker/search": "If you want to use Search plugins, minimum required version: 7.0.0"
-  },
-  "autoload": {
-    "psr-4": {
-      "Spryker\\": "src/Spryker/"
+    "name": "spryker/product-label-search",
+    "type": "library",
+    "description": "ProductLabelSearch module",
+    "license": "proprietary",
+    "require": {
+        "php": ">=7.3",
+        "spryker/event-behavior": "^1.1.0",
+        "spryker/kernel": "^3.30.0",
+        "spryker/product-label": "^3.0.0",
+        "spryker/product-page-search": "^0.1.0 || ^1.0.0 || ^2.2.0 || ^3.0.0",
+        "spryker/product-page-search-extension": "^1.0.0",
+        "spryker/publisher-extension": "^1.0.0",
+        "spryker/util-sanitize": "^2.1.0"
+    },
+    "require-dev": {
+        "spryker/code-sniffer": "*",
+        "spryker/event": "*",
+        "spryker/product": "*",
+        "spryker/propel": "*",
+        "spryker/propel-orm": "*",
+        "spryker/store": "*",
+        "spryker/testify": "*"
+    },
+    "suggest": {
+        "spryker/event": "If you want to use Event plugins, minimum required version: 2.1.0",
+        "spryker/propel-orm": "If you want to use transaction functionality, minimum required version: 1.3.0",
+        "spryker/search": "If you want to use Search plugins, minimum required version: 7.0.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Spryker\\": "src/Spryker/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "SprykerTest\\": "tests/SprykerTest/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
     }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "SprykerTest\\": "tests/SprykerTest/"
-    }
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "scripts": {
-    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
-    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "2.0.x-dev"
-    }
-  },
-  "config": {
-    "sort-packages": true
-  }
 }

@@ -12,7 +12,6 @@ coverage:
     whitelist: { include: ['../../../../src/*'] }
 
 suites:
-
     Persistence:
         path: Persistence
         class_name: CategoryDataFeedPersistenceTester

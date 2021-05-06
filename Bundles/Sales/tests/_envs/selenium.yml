@@ -1,7 +1,7 @@
 modules:
-  enabled:
-    - WebDriver:
-        url: ''
-        browser: chrome
-        host: "10.10.0.1"
-        window_size: 1920x1080
+    enabled:
+        - WebDriver:
+              url: ''
+              browser: chrome
+              host: '10.10.0.1'
+              window_size: 1920x1080

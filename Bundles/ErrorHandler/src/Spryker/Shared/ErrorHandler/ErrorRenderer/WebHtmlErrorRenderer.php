@@ -58,6 +58,6 @@ class WebHtmlErrorRenderer implements ErrorRendererInterface
      */
     protected function getHtmlErrorPageContent($errorPage)
     {
-        return file_get_contents($errorPage);
+        return (string)file_get_contents($errorPage);
     }
 }

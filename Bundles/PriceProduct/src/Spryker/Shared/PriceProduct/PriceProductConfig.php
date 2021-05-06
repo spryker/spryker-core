@@ -42,6 +42,14 @@ class PriceProductConfig extends AbstractSharedConfig
     public const PRICE_DATA = 'priceData';
 
     /**
+     * Specification:
+     * - Price data by price type.
+     *
+     * @api
+     */
+    public const PRICE_DATA_BY_PRICE_TYPE = 'priceDataByPriceType';
+
+    /**
      * List of price modes
      */
     public const PRICE_MODES = [

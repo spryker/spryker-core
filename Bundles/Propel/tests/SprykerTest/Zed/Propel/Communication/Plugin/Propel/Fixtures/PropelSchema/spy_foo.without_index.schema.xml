@@ -7,5 +7,5 @@
             <unique-column name="fk_spy_bar"/>
             <unique-column name="project_column"/>
         </unique>
-    </table>s
+    </table>
 </database>

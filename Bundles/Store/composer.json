@@ -1,51 +1,51 @@
 {
-  "name": "spryker/store",
-  "type": "library",
-  "description": "Store module",
-  "license": "proprietary",
-  "require": {
-    "php": ">=7.3",
-    "spryker/application-extension": "^1.0.0",
-    "spryker/kernel": "^3.30.0",
-    "spryker/propel-orm": "^1.0.0",
-    "spryker/quote-extension": "^1.4.0",
-    "spryker/symfony": "^3.0.0"
-  },
-  "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/container": "*",
-    "spryker/propel": "*",
-    "spryker/quote": "*",
-    "spryker/testify": "*"
-  },
-  "suggest": {
-    "spryker/config": "If you want to use StoreApplicationPlugin",
-    "spryker/container": "If you want to use Twig Plugins",
-    "spryker/quote": "If you want to use StoreQuoteTransferExpander plugin, minimum required version: 1.2.0"
-  },
-  "autoload": {
-    "psr-4": {
-      "Spryker\\": "src/Spryker/",
-      "SprykerTest\\Shared\\Store\\Helper\\": "tests/SprykerTest/Shared/Store/_support/Helper/"
+    "name": "spryker/store",
+    "type": "library",
+    "description": "Store module",
+    "license": "proprietary",
+    "require": {
+        "php": ">=7.3",
+        "spryker/application-extension": "^1.0.0",
+        "spryker/kernel": "^3.30.0",
+        "spryker/propel-orm": "^1.0.0",
+        "spryker/quote-extension": "^1.4.0",
+        "spryker/symfony": "^3.0.0"
+    },
+    "require-dev": {
+        "spryker/code-sniffer": "*",
+        "spryker/container": "*",
+        "spryker/propel": "*",
+        "spryker/quote": "*",
+        "spryker/testify": "*"
+    },
+    "suggest": {
+        "spryker/config": "If you want to use StoreApplicationPlugin",
+        "spryker/container": "If you want to use Twig Plugins",
+        "spryker/quote": "If you want to use StoreQuoteTransferExpander plugin, minimum required version: 1.2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Spryker\\": "src/Spryker/",
+            "SprykerTest\\Shared\\Store\\Helper\\": "tests/SprykerTest/Shared/Store/_support/Helper/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "SprykerTest\\": "tests/SprykerTest/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
     }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "SprykerTest\\": "tests/SprykerTest/"
-    }
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "scripts": {
-    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
-    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "1.0.x-dev"
-    }
-  },
-  "config": {
-    "sort-packages": true
-  }
 }

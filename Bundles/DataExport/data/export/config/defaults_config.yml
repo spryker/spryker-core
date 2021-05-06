@@ -5,8 +5,8 @@ defaults:
     overwrite: true
     operation: export
     format:
-      type: csv
+        type: csv
     connection:
-      type: local
-      params:
-        export_root_dir: '{application_root_dir}/data/export'
+        type: local
+        params:
+            export_root_dir: '{application_root_dir}/data/export'

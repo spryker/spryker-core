@@ -262,7 +262,8 @@ interface PriceProductFacadeInterface
      * Specification:
      *  - Reads prices same as findPricesBySkuForCurrentStore, then groups by currency, price mode, price type for current store.
      *  - Delegates call to findPricesBySkuForCurrentStore and groups result after by currency, price mode and price type.
-     *  - Groups provided transfers `priceData` by currency only.
+     *  - Groups provided transfers `priceData` by currency only for BC reasons.
+     *  - Groups provided transfers `priceData` by currency and price type.
      *
      * For example:
      *   $result = [
@@ -271,7 +272,11 @@ interface PriceProductFacadeInterface
      *           'DEFAULT' => 1000,
      *           'ORIGINAL' => 2000,
      *        ],
-     *      'priceData' => '{"volume_prices":[{"quantity":"2","net_price":900,"gross_price":1000}]}',
+     *        'priceData' => '{"volume_prices":[{"quantity":"2","net_price":900,"gross_price":1000}]}',
+     *        'priceDataByPriceType' => [
+     *            'DEFAULT' => '{"volume_prices":[{"quantity":"2","net_price":900,"gross_price":1000}]}',
+     *            'ORIGINAL' => '{"volume_prices":[{"quantity":"2","net_price":700,"gross_price":850}]}'
+     *        ],
      *     ]
      *  ];
      *
@@ -289,7 +294,8 @@ interface PriceProductFacadeInterface
     /**
      * Specification:
      * - Groups provided transfers by currency, price mode and price type.
-     * - Groups provided transfers `priceData` by currency only.
+     * - Groups provided transfers `priceData` by currency only for BC reasons.
+     * - Groups provided transfers `priceData` by currency and price type.
      *
      * Example:
      *   $result = [
@@ -298,7 +304,11 @@ interface PriceProductFacadeInterface
      *           'DEFAULT' => 1000,
      *           'ORIGINAL' => 2000,
      *        ],
-     *      'priceData' => '{"volume_prices":[{"quantity":"2","net_price":900,"gross_price":1000}]}',
+     *        'priceData' => '{"volume_prices":[{"quantity":"2","net_price":900,"gross_price":1000}]}',
+     *        'priceDataByPriceType' => [
+     *            'DEFAULT' => '{"volume_prices":[{"quantity":"2","net_price":900,"gross_price":1000}]}',
+     *            'ORIGINAL' => '{"volume_prices":[{"quantity":"2","net_price":700,"gross_price":850}]}'
+     *        ],
      *     ]
      *  ];
      *

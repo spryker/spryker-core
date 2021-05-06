@@ -75,4 +75,13 @@ interface EventConstants
      * @api
      */
     public const EVENT_QUEUE_ERROR = 'event.error';
+
+    /**
+     * Specification:
+     * - Manages instance pooling during events processing.
+     * - Publish process consume less RAM when this configuration is disabled.
+     *
+     * @api
+     */
+    public const IS_INSTANCE_POOLING_ALLOWED = 'EVENT:IS_INSTANCE_POOLING_ALLOWED';
 }
