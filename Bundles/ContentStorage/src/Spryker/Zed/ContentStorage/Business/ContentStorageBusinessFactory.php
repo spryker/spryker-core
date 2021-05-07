@@ -29,7 +29,6 @@ class ContentStorageBusinessFactory extends AbstractBusinessFactory
         return new ContentStorageWriter(
             $this->getRepository(),
             $this->getEntityManager(),
-            $this->getLocaleFacade(),
             $this->getUtilEncoding(),
             $this->getStoreFacade()
         );

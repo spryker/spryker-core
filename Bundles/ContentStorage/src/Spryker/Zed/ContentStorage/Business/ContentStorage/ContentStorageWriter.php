@@ -35,11 +35,6 @@ class ContentStorageWriter implements ContentStorageWriterInterface
     protected $contentStorageEntityManager;
 
     /**
-     * @var \Spryker\Zed\ContentStorage\Dependency\Facade\ContentStorageToLocaleFacadeInterface
-     */
-    protected $localeFacade;
-
-    /**
      * @var \Spryker\Zed\ContentStorage\Dependency\Service\ContentStorageToUtilEncodingInterface
      */
     protected $utilEncodingService;
@@ -52,20 +47,17 @@ class ContentStorageWriter implements ContentStorageWriterInterface
     /**
      * @param \Spryker\Zed\ContentStorage\Persistence\ContentStorageRepositoryInterface $contentStorageRepository
      * @param \Spryker\Zed\ContentStorage\Persistence\ContentStorageEntityManagerInterface $contentStorageEntityManager
-     * @param \Spryker\Zed\ContentStorage\Dependency\Facade\ContentStorageToLocaleFacadeInterface $localeFacade
      * @param \Spryker\Zed\ContentStorage\Dependency\Service\ContentStorageToUtilEncodingInterface $utilEncodingService
      * @param \Spryker\Zed\ContentStorage\Dependency\Facade\ContentStorageToStoreFacadeInterface $storeFacade
      */
     public function __construct(
         ContentStorageRepositoryInterface $contentStorageRepository,
         ContentStorageEntityManagerInterface $contentStorageEntityManager,
-        ContentStorageToLocaleFacadeInterface $localeFacade,
         ContentStorageToUtilEncodingInterface $utilEncodingService,
         ContentStorageToStoreFacadeInterface $storeFacade
     ) {
         $this->contentStorageRepository = $contentStorageRepository;
         $this->contentStorageEntityManager = $contentStorageEntityManager;
-        $this->localeFacade = $localeFacade;
         $this->utilEncodingService = $utilEncodingService;
         $this->storeFacade = $storeFacade;
     }
@@ -140,7 +132,8 @@ class ContentStorageWriter implements ContentStorageWriterInterface
                 );
             }
 
-            $contentStorageTransfer->setFkContent($contentTransfer->getIdContent())
+            $contentStorageTransfer
+                ->setFkContent($contentTransfer->getIdContent())
                 ->setContentKey($contentTransfer->getKey())
                 ->setLocale($availableLocale)
                 ->setData($this->utilEncodingService->encodeJson([

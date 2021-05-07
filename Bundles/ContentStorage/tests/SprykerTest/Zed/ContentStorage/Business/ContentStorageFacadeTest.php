@@ -8,13 +8,18 @@
 namespace SprykerTest\Zed\ContentStorage\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\StoreBuilder;
 use Generated\Shared\Transfer\ContentTransfer;
 use Generated\Shared\Transfer\LocalizedContentTransfer;
 use Orm\Zed\ContentStorage\Persistence\SpyContentStorage;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Shared\ContentStorage\ContentStorageConfig;
+use Spryker\Shared\Testify\AbstractDataBuilder;
+use Spryker\Zed\ContentStorage\ContentStorageDependencyProvider;
+use Spryker\Zed\ContentStorage\Dependency\Facade\ContentStorageToStoreFacadeBridge;
 use Spryker\Zed\ContentStorage\Persistence\ContentStoragePersistenceFactory;
+use Spryker\Zed\Store\Business\StoreFacade;
 
 /**
  * Auto-generated group annotations
@@ -29,6 +34,18 @@ use Spryker\Zed\ContentStorage\Persistence\ContentStoragePersistenceFactory;
  */
 class ContentStorageFacadeTest extends Unit
 {
+    protected const CONTENT_STORAGE_DATA_KEY = 'data';
+    protected const CONTENT_STORAGE_LOCALE_KEY = 'locale';
+    protected const EN_LOCALE = 'en_US';
+    protected const FR_LOCALE = 'fr_FR';
+    protected const DE_LOCALE = 'de_DE';
+    protected const PL_LOCALE = 'pl_PL';
+    protected const DE_LOCALE_KEY = 'de';
+    protected const EN_LOCALE_NAME = 'en';
+    protected const FR_LOCALE_NAME = 'fr';
+    protected const PL_LOCALE_NAME = 'pl';
+    protected const EXPECTED_STORED_CONTENT_ITEMS = 4;
+
     /**
      * @var \SprykerTest\Zed\ContentStorage\ContentStorageBusinessTester
      */
@@ -46,6 +63,8 @@ class ContentStorageFacadeTest extends Unit
                 $container->getLocator()->rabbitMq()->client()->createQueueAdapter(),
             ];
         });
+
+        $this->tester->setDependency(ContentStorageDependencyProvider::FACADE_STORE, $this->createContentStorageToStoreFacadeBridgeMock());
     }
 
     /**
@@ -53,6 +72,7 @@ class ContentStorageFacadeTest extends Unit
      */
     public function testPublishStoresEntityData(): void
     {
+        // Arrange
         $data = [
             ContentTransfer::CONTENT_TERM_KEY => 'test-term',
             ContentTransfer::LOCALIZED_CONTENTS => [
@@ -63,29 +83,85 @@ class ContentStorageFacadeTest extends Unit
         ];
         $contentTransfer = $this->tester->haveContent($data);
 
+        // Act
         $this->tester->getFacade()->publish([$contentTransfer->getIdContent()]);
-        $contentStorageEntity = $this->getContentStorageEntity();
-        $storageData = [
+
+        // Assert
+        $contentData = json_encode([
             ContentTransfer::ID_CONTENT => $contentTransfer->getIdContent(),
             ContentStorageConfig::TERM_KEY => $data[ContentTransfer::CONTENT_TERM_KEY],
             ContentStorageConfig::CONTENT_KEY => json_decode(
                 $data[ContentTransfer::LOCALIZED_CONTENTS][0][LocalizedContentTransfer::PARAMETERS]
             ),
+        ]);
+
+        $contentStoreExpectedData = [
+            [
+                self::CONTENT_STORAGE_DATA_KEY => $contentData,
+                self::CONTENT_STORAGE_LOCALE_KEY => self::DE_LOCALE
+            ],
+            [
+                self::CONTENT_STORAGE_DATA_KEY => $contentData,
+                self::CONTENT_STORAGE_LOCALE_KEY => self::EN_LOCALE
+            ],
+            [
+                self::CONTENT_STORAGE_DATA_KEY => $contentData,
+                self::CONTENT_STORAGE_LOCALE_KEY => self::FR_LOCALE
+            ],
+            [
+                self::CONTENT_STORAGE_DATA_KEY => $contentData,
+                self::CONTENT_STORAGE_LOCALE_KEY => self::PL_LOCALE
+            ]
         ];
 
-        $this->assertEquals($storageData, $contentStorageEntity->getData());
+        $contentStorageDataList = $this->getContentStorageDataList();
+
+        $this->assertEquals($contentStoreExpectedData, $contentStorageDataList);
     }
 
     /**
-     * @return \Orm\Zed\ContentStorage\Persistence\SpyContentStorage
+     * @return array
      */
-    protected function getContentStorageEntity(): SpyContentStorage
+    protected function getContentStorageDataList(): array
     {
         $persistenceFactory = new ContentStoragePersistenceFactory();
-        $contentStorageEntity = $persistenceFactory->createContentStorageQuery()
+        $contentStorageDataList = $persistenceFactory->createContentStorageQuery()
             ->lastCreatedFirst()
-            ->findOne();
+            ->select([self::CONTENT_STORAGE_DATA_KEY, self::CONTENT_STORAGE_LOCALE_KEY])
+            ->limit(self::EXPECTED_STORED_CONTENT_ITEMS)
+            ->find()
+            ->toArray();
 
-        return $contentStorageEntity;
+        return $contentStorageDataList;
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ContentStorage\Dependency\Facade\ContentStorageToStoreFacadeBridge
+     */
+    protected function createContentStorageToStoreFacadeBridgeMock(): ContentStorageToStoreFacadeBridge
+    {
+        $contentStorageToStoreFacadeBridgeMock = $this->createPartialMock(ContentStorageToStoreFacadeBridge::class, ['getCurrentStore', 'getStoresWithSharedPersistence']);
+
+        $storeBuilder = new StoreBuilder([
+            'availableLocaleIsoCodes' => [
+                self::DE_LOCALE_KEY => self::DE_LOCALE,
+                self::EN_LOCALE_NAME => self::EN_LOCALE,
+                self::FR_LOCALE_NAME => self::FR_LOCALE
+            ],
+        ]);
+        $store = $storeBuilder->build();
+        $contentStorageToStoreFacadeBridgeMock->method('getCurrentStore')->willReturn($store);
+
+        $storeWithSharedPersistanceBuilder = new StoreBuilder([
+            'availableLocaleIsoCodes' => [
+                self::DE_LOCALE_KEY => self::DE_LOCALE,
+                self::EN_LOCALE_NAME => self::EN_LOCALE,
+                self::PL_LOCALE_NAME => self::PL_LOCALE
+            ],
+        ]);
+        $storeWithSharedPersistance = $storeWithSharedPersistanceBuilder->build();
+        $contentStorageToStoreFacadeBridgeMock->method('getStoresWithSharedPersistence')->willReturn([$storeWithSharedPersistance]);
+
+        return $contentStorageToStoreFacadeBridgeMock;
     }
 }
