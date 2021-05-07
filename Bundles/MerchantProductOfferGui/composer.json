@@ -37,11 +37,3 @@
         "sort-packages": true
     }
 }
-MerchantProductOffer
-MerchantProductOfferDataImport
-MerchantProductOfferGui
-MerchantProductOfferSearch
-MerchantProductOfferStorage
-PriceProductOffer
-PriceProductOfferStorage
-ProductOfferAvailabilityStorage
