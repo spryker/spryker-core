@@ -11,15 +11,12 @@ use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\StoreBuilder;
 use Generated\Shared\Transfer\ContentTransfer;
 use Generated\Shared\Transfer\LocalizedContentTransfer;
-use Orm\Zed\ContentStorage\Persistence\SpyContentStorage;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Shared\ContentStorage\ContentStorageConfig;
-use Spryker\Shared\Testify\AbstractDataBuilder;
 use Spryker\Zed\ContentStorage\ContentStorageDependencyProvider;
 use Spryker\Zed\ContentStorage\Dependency\Facade\ContentStorageToStoreFacadeBridge;
 use Spryker\Zed\ContentStorage\Persistence\ContentStoragePersistenceFactory;
-use Spryker\Zed\Store\Business\StoreFacade;
 
 /**
  * Auto-generated group annotations
@@ -98,20 +95,20 @@ class ContentStorageFacadeTest extends Unit
         $contentStoreExpectedData = [
             [
                 self::CONTENT_STORAGE_DATA_KEY => $contentData,
-                self::CONTENT_STORAGE_LOCALE_KEY => self::DE_LOCALE
+                self::CONTENT_STORAGE_LOCALE_KEY => self::DE_LOCALE,
             ],
             [
                 self::CONTENT_STORAGE_DATA_KEY => $contentData,
-                self::CONTENT_STORAGE_LOCALE_KEY => self::EN_LOCALE
+                self::CONTENT_STORAGE_LOCALE_KEY => self::EN_LOCALE,
             ],
             [
                 self::CONTENT_STORAGE_DATA_KEY => $contentData,
-                self::CONTENT_STORAGE_LOCALE_KEY => self::FR_LOCALE
+                self::CONTENT_STORAGE_LOCALE_KEY => self::FR_LOCALE,
             ],
             [
                 self::CONTENT_STORAGE_DATA_KEY => $contentData,
-                self::CONTENT_STORAGE_LOCALE_KEY => self::PL_LOCALE
-            ]
+                self::CONTENT_STORAGE_LOCALE_KEY => self::PL_LOCALE,
+            ],
         ];
 
         $contentStorageDataList = $this->getContentStorageDataList();
@@ -146,7 +143,7 @@ class ContentStorageFacadeTest extends Unit
             'availableLocaleIsoCodes' => [
                 self::DE_LOCALE_KEY => self::DE_LOCALE,
                 self::EN_LOCALE_NAME => self::EN_LOCALE,
-                self::FR_LOCALE_NAME => self::FR_LOCALE
+                self::FR_LOCALE_NAME => self::FR_LOCALE,
             ],
         ]);
         $store = $storeBuilder->build();
@@ -156,7 +153,7 @@ class ContentStorageFacadeTest extends Unit
             'availableLocaleIsoCodes' => [
                 self::DE_LOCALE_KEY => self::DE_LOCALE,
                 self::EN_LOCALE_NAME => self::EN_LOCALE,
-                self::PL_LOCALE_NAME => self::PL_LOCALE
+                self::PL_LOCALE_NAME => self::PL_LOCALE,
             ],
         ]);
         $storeWithSharedPersistance = $storeWithSharedPersistanceBuilder->build();

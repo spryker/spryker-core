@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ContentStorageTransfer;
 use Generated\Shared\Transfer\ContentTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Shared\ContentStorage\ContentStorageConfig;
-use Spryker\Zed\ContentStorage\Dependency\Facade\ContentStorageToLocaleFacadeInterface;
 use Spryker\Zed\ContentStorage\Dependency\Facade\ContentStorageToStoreFacadeInterface;
 use Spryker\Zed\ContentStorage\Dependency\Service\ContentStorageToUtilEncodingInterface;
 use Spryker\Zed\ContentStorage\Persistence\ContentStorageEntityManagerInterface;
