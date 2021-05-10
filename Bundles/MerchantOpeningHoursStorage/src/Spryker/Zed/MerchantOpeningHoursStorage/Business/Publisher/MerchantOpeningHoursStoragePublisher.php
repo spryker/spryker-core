@@ -80,7 +80,7 @@ class MerchantOpeningHoursStoragePublisher implements MerchantOpeningHoursStorag
                 );
                 $this->merchantOpeningHoursStorageEntityManager->saveMerchantOpenHoursStorage(
                     $merchantOpenHoursStorageTransfer,
-                    $merchantTransfer->getMerchantReference()
+                    $merchantTransfer->getIdMerchant()
                 );
             }
         }

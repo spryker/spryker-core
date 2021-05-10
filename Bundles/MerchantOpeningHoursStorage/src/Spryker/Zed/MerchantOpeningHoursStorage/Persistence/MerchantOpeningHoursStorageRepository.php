@@ -94,15 +94,7 @@ class MerchantOpeningHoursStorageRepository extends AbstractRepository implement
         MerchantOpeningHoursStorageCriteriaTransfer $merchantOpeningHoursStorageCriteriaTransfer
     ): SpyMerchantOpeningHoursStorageQuery {
         if ($merchantOpeningHoursStorageCriteriaTransfer->getMerchantIds()) {
-            $merchantOpeningHoursStoragePropelQuery->addJoin(
-                SpyMerchantOpeningHoursStorageTableMap::COL_MERCHANT_REFERENCE,
-                SpyMerchantTableMap::COL_MERCHANT_REFERENCE,
-                Criteria::INNER_JOIN
-            );
-            $merchantOpeningHoursStoragePropelQuery->where(
-                SpyMerchantTableMap::COL_ID_MERCHANT . ' IN ?',
-                $merchantOpeningHoursStorageCriteriaTransfer->getMerchantIds()
-            );
+            $merchantOpeningHoursStoragePropelQuery->filterByFkMerchant_In($merchantOpeningHoursStorageCriteriaTransfer->getMerchantIds());
         }
 
         return $merchantOpeningHoursStoragePropelQuery;

@@ -85,7 +85,7 @@ class MerchantOpeningHoursWeekdayScheduleWritePublisherPluginTest extends Unit
 
         // Assert
         $this->assertNotNull(
-            $this->tester->findMerchantOpeningHoursStorageTransferByMerchantReference($merchantTransfer->getMerchantReference())
+            $this->tester->findMerchantOpeningHoursByFkMerchant($merchantTransfer->getIdMerchant())
         );
     }
 }

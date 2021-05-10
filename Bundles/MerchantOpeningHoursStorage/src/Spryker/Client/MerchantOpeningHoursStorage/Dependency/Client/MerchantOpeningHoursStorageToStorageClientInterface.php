@@ -21,5 +21,5 @@ interface MerchantOpeningHoursStorageToStorageClientInterface
      *
      * @return array
      */
-    public function getMulti(array $keys);
+    public function getMulti(array $keys): array;
 }
