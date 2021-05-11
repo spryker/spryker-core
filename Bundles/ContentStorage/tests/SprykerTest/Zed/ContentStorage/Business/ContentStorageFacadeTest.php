@@ -113,7 +113,7 @@ class ContentStorageFacadeTest extends Unit
 
         $contentStorageDataList = $this->getContentStorageDataList();
 
-        $this->assertEquals($contentStoreExpectedData, $contentStorageDataList);
+        $this->assertEqualsCanonicalizing($contentStoreExpectedData, $contentStorageDataList);
     }
 
     /**
