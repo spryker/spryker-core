@@ -13,7 +13,8 @@
     },
     "require-dev": {
         "spryker/code-sniffer": "*",
-        "spryker/container": "*"
+        "spryker/container": "*",
+        "spryker/testify": "*"
     },
     "suggest": {
         "spryker/container": "If you want to use Twig plugins",

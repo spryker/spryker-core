@@ -54,11 +54,9 @@ class MerchantSearchDeleter implements MerchantSearchDeleterInterface
     public function deleteCollectionByMerchantEvents(array $eventTransfers): void
     {
         $merchantIds = $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
-
         if (!$merchantIds) {
             return;
         }
-
         $merchantCollectionTransfer = $this->merchantFacade->get(
             (new MerchantCriteriaTransfer())
                 ->setMerchantIds($merchantIds)

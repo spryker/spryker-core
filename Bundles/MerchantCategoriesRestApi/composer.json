@@ -11,7 +11,8 @@
         "spryker/merchants-rest-api-extension": "^0.1.0"
     },
     "require-dev": {
-        "spryker/code-sniffer": "*"
+        "spryker/code-sniffer": "*",
+        "spryker/testify": "*"
     },
     "autoload": {
         "psr-4": {

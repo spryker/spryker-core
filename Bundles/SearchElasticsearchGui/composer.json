@@ -13,7 +13,8 @@
     },
     "require-dev": {
         "spryker/code-sniffer": "*",
-        "spryker/elastica": "*"
+        "spryker/elastica": "*",
+        "spryker/testify": "*"
     },
     "suggest": {
         "spryker/elastica": "If you want to use Elastica plugin to build GUI."
