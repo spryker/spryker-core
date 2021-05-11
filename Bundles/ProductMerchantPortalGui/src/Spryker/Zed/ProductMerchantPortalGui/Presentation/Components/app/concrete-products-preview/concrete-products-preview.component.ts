@@ -186,9 +186,10 @@ export class ConcreteProductsPreviewComponent implements OnInit, OnChanges {
         this.generatedProductsChange.emit(this.generatedProducts);
     }
 
-    hasSkuError(): boolean {
+    private hasSkuError(): boolean {
         let hasError = false;
-        this.errors.forEach((error) => {
+
+        this.errors.some((error) => {
             if (error.errors?.sku) {
                 hasError = true;
             }
@@ -197,9 +198,10 @@ export class ConcreteProductsPreviewComponent implements OnInit, OnChanges {
         return hasError;
     }
 
-    hasNameError(): boolean {
+    private hasNameError(): boolean {
         let hasError = false;
-        this.errors.forEach((error) => {
+
+        this.errors.some((error) => {
             if (error.errors?.name) {
                 hasError = true;
             }
