@@ -1,4 +1,13 @@
-import { ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    Component,
+    HostBinding,
+    Input,
+    OnChanges,
+    SimpleChanges,
+    ViewEncapsulation
+} from '@angular/core';
+import { ToBoolean } from '@spryker/utils';
 
 @Component({
     selector: 'mp-autogenerate-input',
@@ -6,22 +15,22 @@ import { ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges, Vi
     styleUrls: ['./autogenerate-input.component.less'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
-    host: {
-        class: 'mp-autogenerate-input',
-        '[class.mp-autogenerate-input--half-width]': 'isFieldHasHalfWidth',
-    },
+    host: { class: 'mp-autogenerate-input' },
 })
 export class AutogenerateInputComponent implements OnChanges {
     @Input() name: string;
     @Input() value: string;
     @Input() originalValue: string;
     @Input() placeholder: string;
-    @Input() isAutogenerate: boolean;
+    @Input() @ToBoolean() isAutogenerate: boolean = true;
     @Input() error?: string;
     @Input() checkboxName?: string;
-    @Input() isFieldHasHalfWidth?: boolean;
+    @Input()
+    @HostBinding('class.mp-autogenerate-input--half-width')
+    @ToBoolean()
+    isFieldHasHalfWidth?: boolean = false;
 
-    defaultValue: string;
+    private defaultValue: string;
 
     ngOnChanges(changes: SimpleChanges): void {
         if ('value' in changes) {

@@ -41,12 +41,11 @@ export class ConcreteProductsPreviewComponent implements OnInit, OnChanges {
 
     isAutoGenerateSkuCheckbox = true;
     isAutoGenerateNameCheckbox = true;
-
     deleteIcon = IconDeleteModule.icon;
-    attributeValues: ProductAttributeValue[][] = [];
-    generatedAttributeValues: ProductAttributeValue[][] = [];
-    initialGeneratedProducts: ConcreteProductPreview[] = [];
 
+    private attributeValues: ProductAttributeValue[][] = [];
+    private generatedAttributeValues: ProductAttributeValue[][] = [];
+    private initialGeneratedProducts: ConcreteProductPreview[] = [];
     private concreteProductSkuGenerator = this.concreteProductSkuGeneratorFactory.create();
     private concreteProductNameGenerator = this.concreteProductNameGeneratorFactory.create();
 
@@ -92,7 +91,7 @@ export class ConcreteProductsPreviewComponent implements OnInit, OnChanges {
         }
     }
 
-    generateProductsArray(): void {
+    private generateProductsArray(): void {
         if (!this.attributes.length) {
             return;
         }
@@ -113,6 +112,7 @@ export class ConcreteProductsPreviewComponent implements OnInit, OnChanges {
 
         if (!this.attributeValues.length) {
             this.generatedProducts = [];
+            this.generatedProductsChange.emit(this.generatedProducts);
 
             return;
         }

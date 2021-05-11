@@ -51,8 +51,8 @@ describe('AutogenerateInputComponent', () => {
         expect(formItemElem).toBeTruthy();
     });
 
-    it('should render <spy-input> component', () => {
-        const inputElem = fixture.debugElement.query(By.css('spy-input'));
+    it('should render <spy-input> component in slot [control] of <spy-form-item>', () => {
+        const inputElem = fixture.debugElement.query(By.css('spy-form-item [control] spy-input'));
 
         expect(inputElem).toBeTruthy();
     });
@@ -78,7 +78,7 @@ describe('AutogenerateInputComponent', () => {
         expect(hiddenInputElem).toBeTruthy();
     });
 
-    it('should change <spy-input> `disabled` property if `checkedChange` event of the <spy-checkbox> component has been called', () => {
+    it('should disable <spy-input> when <spy-checkbox> is checked', () => {
         const checkboxElem = fixture.debugElement.query(By.css('spy-checkbox'));
         const inputElem = fixture.debugElement.query(By.css('spy-input'));
 
@@ -93,7 +93,7 @@ describe('AutogenerateInputComponent', () => {
         expect(inputElem.properties.disabled).toBe(true);
     });
 
-    it('should change <spy-input> value to initial `@Input(value)` if `checkedChange` event of the <spy-checkbox> component has been called', () => {
+    it('should change <spy-input> value to initial `@Input(value)` when <spy-checkbox> is checked', () => {
         const mockValue = 'Value';
         const mockNewValue = 'NewValue';
         const checkboxElem = fixture.debugElement.query(By.css('spy-checkbox'));

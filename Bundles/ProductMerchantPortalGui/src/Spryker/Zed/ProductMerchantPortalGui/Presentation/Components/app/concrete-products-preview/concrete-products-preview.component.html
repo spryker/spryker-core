@@ -37,9 +37,9 @@
                 <div *cdkVirtualFor="let product of generatedProducts; let i = index">
                     <div class="mp-concrete-products-preview__table-row">
                         <div class="mp-concrete-products-preview__table-row-attr">
-                            <span *ngFor="let superAttribute of product.superAttributes; let isLast = last">
+                            <span *ngFor="let superAttribute of product.superAttributes; let isLastAttribute = last">
                                 {{ superAttribute.attribute.name }}
-                                <span *ngIf="!isLast"> / </span>
+                                <span *ngIf="!isLastAttribute"> / </span>
                             </span>
                         </div>
                         <div class="mp-concrete-products-preview__table-row-sku">
@@ -48,7 +48,7 @@
                                 no-label="true"
                                 [error]="errors?.length && errors[i] ? errors[i]?.errors?.sku : ''"
                             >
-                                <spy-input [value]="product.sku" (valueChange)="skuChange($event, i)" #skuInputRef>
+                                <spy-input control [value]="product.sku" (valueChange)="skuChange($event, i)" #skuInputRef>
                                 </spy-input>
                             </spy-form-item>
                         </div>
@@ -59,7 +59,7 @@
                                 [error]="errors?.length && errors[i] ? errors[i]?.errors?.name : ''"
                                 class="mp-concrete-products-preview__table-row-name-form-item"
                             >
-                                <spy-input [value]="product.name" (valueChange)="nameChange($event, i)" #nameInputRef>
+                                <spy-input control [value]="product.name" (valueChange)="nameChange($event, i)" #nameInputRef>
                                 </spy-input>
                             </spy-form-item>
                             <spy-button
