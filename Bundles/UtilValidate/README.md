@@ -1,5 +1,5 @@
 # UtilValidate Module
-[![Build Status](https://travis-ci.org/spryker/util-validate.svg)](https://travis-ci.org/spryker/util-validate)
+[![Latest Stable Version](https://poser.pugx.org/spryker/util-validate/v/stable.svg)](https://packagist.org/packages/spryker/util-validate)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 UtilValidate provides low level input validation functionality.

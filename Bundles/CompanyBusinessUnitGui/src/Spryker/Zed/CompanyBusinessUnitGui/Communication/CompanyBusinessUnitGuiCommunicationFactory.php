@@ -14,6 +14,10 @@ use Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\CompanyUserBusinessUni
 use Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\DataProvider\CompanyBusinessUnitFormDataProvider;
 use Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\DataProvider\CompanyUserBusinessUnitFormDataProvider;
 use Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\DeleteCompanyBusinessUnitForm;
+use Spryker\Zed\CompanyBusinessUnitGui\Communication\Formatter\CompanyBusinessUnitGuiFormatter;
+use Spryker\Zed\CompanyBusinessUnitGui\Communication\Formatter\CompanyBusinessUnitGuiFormatterInterface;
+use Spryker\Zed\CompanyBusinessUnitGui\Communication\Generator\CompanyBusinessUnitNameGenerator;
+use Spryker\Zed\CompanyBusinessUnitGui\Communication\Generator\CompanyBusinessUnitNameGeneratorInterface;
 use Spryker\Zed\CompanyBusinessUnitGui\Communication\Table\CompanyBusinessUnitTable;
 use Spryker\Zed\CompanyBusinessUnitGui\CompanyBusinessUnitGuiDependencyProvider;
 use Spryker\Zed\CompanyBusinessUnitGui\Dependency\Facade\CompanyBusinessUnitGuiToCompanyBusinessUnitFacadeInterface;
@@ -84,7 +88,18 @@ class CompanyBusinessUnitGuiCommunicationFactory extends AbstractCommunicationFa
      */
     public function createCompanyUserBusinessUnitFormDataProvider(): CompanyUserBusinessUnitFormDataProvider
     {
-        return new CompanyUserBusinessUnitFormDataProvider($this->getCompanyBusinessUnitFacade());
+        return new CompanyUserBusinessUnitFormDataProvider(
+            $this->getCompanyBusinessUnitFacade(),
+            $this->createCompanyBusinessUnitNameGenerator()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyBusinessUnitGui\Communication\Formatter\CompanyBusinessUnitGuiFormatterInterface
+     */
+    public function createCompanyBusinessUnitGuiFormatter(): CompanyBusinessUnitGuiFormatterInterface
+    {
+        return new CompanyBusinessUnitGuiFormatter($this->createCompanyBusinessUnitNameGenerator());
     }
 
     /**
@@ -135,5 +150,13 @@ class CompanyBusinessUnitGuiCommunicationFactory extends AbstractCommunicationFa
     public function getCompanyBusinessUnitEditFormPlugins(): array
     {
         return $this->getProvidedDependency(CompanyBusinessUnitGuiDependencyProvider::COMPANY_BUSINESS_UNIT_EDIT_FORM_EXPANDER_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyBusinessUnitGui\Communication\Generator\CompanyBusinessUnitNameGeneratorInterface
+     */
+    public function createCompanyBusinessUnitNameGenerator(): CompanyBusinessUnitNameGeneratorInterface
+    {
+        return new CompanyBusinessUnitNameGenerator();
     }
 }

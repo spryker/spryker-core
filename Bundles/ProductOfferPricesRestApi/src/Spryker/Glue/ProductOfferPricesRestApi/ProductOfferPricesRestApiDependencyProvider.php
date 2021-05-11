@@ -25,6 +25,8 @@ class ProductOfferPricesRestApiDependencyProvider extends AbstractBundleDependen
     public const CLIENT_PRICE_PRODUCT = 'CLIENT_PRICE_PRODUCT';
     public const CLIENT_PRICE = 'CLIENT_PRICE';
 
+    public const PLUGINS_REST_PRODUCT_OFFER_PRICES_ATTRIBUTES_MAPPER = 'PLUGINS_REST_PRODUCT_OFFER_PRICES_ATTRIBUTES_MAPPER';
+
     /**
      * @param \Spryker\Glue\Kernel\Container $container
      *
@@ -37,6 +39,7 @@ class ProductOfferPricesRestApiDependencyProvider extends AbstractBundleDependen
         $container = $this->addMerchantProductOfferStorageClient($container);
         $container = $this->addProductStorageClient($container);
         $container = $this->addPriceProductClient($container);
+        $container = $this->addRestProductOfferPricesAttributesMapperPlugins($container);
 
         return $container;
     }
@@ -103,5 +106,27 @@ class ProductOfferPricesRestApiDependencyProvider extends AbstractBundleDependen
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addRestProductOfferPricesAttributesMapperPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_REST_PRODUCT_OFFER_PRICES_ATTRIBUTES_MAPPER, function () {
+            return $this->getRestProductOfferPricesAttributesMapperPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductOfferPricesRestApiExtension\Dependency\Plugin\RestProductOfferPricesAttributesMapperPluginInterface[]
+     */
+    protected function getRestProductOfferPricesAttributesMapperPlugins(): array
+    {
+        return [];
     }
 }

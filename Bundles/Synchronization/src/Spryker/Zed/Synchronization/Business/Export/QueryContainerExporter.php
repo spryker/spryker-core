@@ -15,6 +15,7 @@ use Spryker\Zed\Synchronization\Business\Iterator\SynchronizationDataQueryContai
 use Spryker\Zed\Synchronization\Business\Message\QueueMessageCreatorInterface;
 use Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToQueueClientInterface;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface;
+use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryExpanderStrategyPluginInterface;
 
 class QueryContainerExporter implements ExporterInterface
 {
@@ -38,6 +39,11 @@ class QueryContainerExporter implements ExporterInterface
     protected $synchronizationDataPlugins;
 
     /**
+     * @var \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryExpanderStrategyPluginInterface
+     */
+    protected $synchronizationDataQueryExpanderStrategyPlugin;
+
+    /**
      * @var int
      */
     protected $chunkSize;
@@ -45,15 +51,18 @@ class QueryContainerExporter implements ExporterInterface
     /**
      * @param \Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToQueueClientInterface $queueClient
      * @param \Spryker\Zed\Synchronization\Business\Message\QueueMessageCreatorInterface $synchronizationQueueMessageCreator
+     * @param \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryExpanderStrategyPluginInterface $synchronizationDataQueryExpanderStrategyPlugin
      * @param int $chunkSize
      */
     public function __construct(
         SynchronizationToQueueClientInterface $queueClient,
         QueueMessageCreatorInterface $synchronizationQueueMessageCreator,
+        SynchronizationDataQueryExpanderStrategyPluginInterface $synchronizationDataQueryExpanderStrategyPlugin,
         $chunkSize
     ) {
         $this->queueClient = $queueClient;
         $this->queueMessageCreator = $synchronizationQueueMessageCreator;
+        $this->synchronizationDataQueryExpanderStrategyPlugin = $synchronizationDataQueryExpanderStrategyPlugin;
         $this->chunkSize = $chunkSize ?? static::DEFAULT_CHUNK_SIZE;
     }
 
@@ -97,7 +106,7 @@ class QueryContainerExporter implements ExporterInterface
      */
     protected function createSynchronizationDataQueryContainerPluginIterator(array $ids, SynchronizationDataQueryContainerPluginInterface $plugin): Iterator
     {
-        return new SynchronizationDataQueryContainerPluginIterator($plugin, $this->chunkSize, $ids);
+        return new SynchronizationDataQueryContainerPluginIterator($plugin, $this->synchronizationDataQueryExpanderStrategyPlugin, $this->chunkSize, $ids);
     }
 
     /**

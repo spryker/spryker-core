@@ -1,9 +1,5 @@
 <?xml version="1.0"?>
-<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          name="zed"
-          xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd"
-          namespace="Orm\Zed\ProductOfferAvailabilityStorage\Persistence"
-          package="src.Orm.Zed.ProductOfferAvailabilityStorage.Persistence">
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\ProductOfferAvailabilityStorage\Persistence" package="src.Orm.Zed.ProductOfferAvailabilityStorage.Persistence">
 
     <table name="spy_product_offer_availability_storage" identifierQuoting="true">
         <column name="id_product_offer_availability_storage" type="integer" autoIncrement="true" primaryKey="true"/>

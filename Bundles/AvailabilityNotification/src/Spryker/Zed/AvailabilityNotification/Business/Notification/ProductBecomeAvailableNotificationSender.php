@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\AvailabilityNotification\Business\Notification;
 
+use Generated\Shared\Transfer\AvailabilityNotificationCriteriaTransfer;
 use Generated\Shared\Transfer\AvailabilityNotificationDataTransfer;
 use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionMailDataTransfer;
 use Generated\Shared\Transfer\MailTransfer;
@@ -73,10 +74,12 @@ class ProductBecomeAvailableNotificationSender implements ProductBecomeAvailable
     public function send(AvailabilityNotificationDataTransfer $availabilityNotificationDataTransfer): void
     {
         $availabilityNotificationSubscriptions = $this->availabilityNotificationRepository
-            ->findBySkuAndStore(
-                $availabilityNotificationDataTransfer->getSku(),
-                $availabilityNotificationDataTransfer->getStore()->getIdStore()
-            );
+            ->getAvailabilityNotifications(
+                (new AvailabilityNotificationCriteriaTransfer())
+                ->addStoreName($availabilityNotificationDataTransfer->getStore()->getName())
+                ->addSku($availabilityNotificationDataTransfer->getSku())
+            )
+            ->getAvailabilityNotificationSubscriptions();
 
         foreach ($availabilityNotificationSubscriptions as $availabilityNotificationSubscription) {
             $productConcreteTransfer = $this->productFacade->getProductConcrete($availabilityNotificationSubscription->getSku());

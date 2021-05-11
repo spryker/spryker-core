@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 class HttpConfig extends AbstractSharedConfig
 {
     protected const HTTP_FRAGMENT_PATH = '/_fragment';
-    protected const REQUEST_TRUSTED_HEADER_SET = Request::HEADER_X_FORWARDED_ALL;
+    protected const REQUEST_TRUSTED_HEADER_SET = Request::HEADER_X_FORWARDED_FOR | Request::HEADER_X_FORWARDED_HOST | Request::HEADER_X_FORWARDED_PORT | Request::HEADER_X_FORWARDED_PROTO;
 
     /**
      * @api

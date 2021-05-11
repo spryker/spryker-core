@@ -186,9 +186,11 @@ class StorageInstanceBuilder
         $config['port'] = Config::get(SearchConstants::ELASTICA_PARAMETER__PORT);
         $config['host'] = Config::get(SearchConstants::ELASTICA_PARAMETER__HOST);
 
-        if (Config::hasValue(SearchConstants::ELASTICA_PARAMETER__AUTH_HEADER)) {
+        $authHeader = (string)Config::get(SearchConstants::ELASTICA_PARAMETER__AUTH_HEADER, '');
+
+        if ($authHeader !== '') {
             $config['headers'] = [
-                'Authorization' => 'Basic ' . Config::get(SearchConstants::ELASTICA_PARAMETER__AUTH_HEADER),
+                'Authorization' => 'Basic ' . $authHeader,
             ];
         }
 

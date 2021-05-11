@@ -20,25 +20,32 @@ use Spryker\Zed\SearchElasticsearch\Business\SourceIdentifier\SourceIdentifier;
  * @group SourceIdentifier
  * @group SourceIdentifierTest
  * Add your own group annotations below this line
+ *
+ * @property \SprykerTest\Zed\SearchElasticsearch\SearchElasticsearchZedTester $tester
  */
 class SourceIdentifierTest extends Unit
 {
     /**
      * @dataProvider sourceIdentifierTranslationDataProvider
      *
+     * @param string[] $supportedSourceIdentifiers
      * @param string|null $expectedIndexName
+     * @param string $indexPrefix
      * @param string $sourceIdentifier
-     * @param array $supportedSourceIdentifiers
      *
      * @return void
      */
-    public function testCanTranslateSourceIdentifierToValidIndexName(
+    public function testCanTranslateSourceIdentifierToValidIndexNameWithoutDefinedPrefix(
+        array $supportedSourceIdentifiers,
         ?string $expectedIndexName,
-        string $sourceIdentifier,
-        array $supportedSourceIdentifiers
+        string $indexPrefix,
+        string $sourceIdentifier
     ): void {
+        $this->tester->mockConfigMethod('getSupportedSourceIdentifiers', $supportedSourceIdentifiers);
+        $this->tester->mockConfigMethod('getIndexPrefix', $indexPrefix);
+
         // Arrange
-        $sourceIdentifierModel = new SourceIdentifier($supportedSourceIdentifiers);
+        $sourceIdentifierModel = new SourceIdentifier($this->tester->getModuleConfig());
 
         // Act
         $resolvedIndexName = $sourceIdentifierModel->translateToIndexName($sourceIdentifier);
@@ -53,28 +60,56 @@ class SourceIdentifierTest extends Unit
     public function sourceIdentifierTranslationDataProvider(): array
     {
         return [
-            'no store prefix' => [
-                $this->buildIndexName('foo'),
+            'no store prefix one' => [
+                ['foo', 'bar'],
+                $this->buildIndexName('foo', '', $this->getCurrentStore()),
+                '',
                 'foo',
-                ['foo', 'bar'],
             ],
-            'current store prefix' => [
-                $this->buildIndexName('foo'),
-                'de_foo',
+            'no store prefix two' => [
                 ['foo', 'bar'],
+                 $this->buildIndexName('foo', 'test', $this->getCurrentStore()),
+                'test',
+                'foo',
+            ],
+            'current store prefix one' => [
+                ['foo', 'bar'],
+                $this->buildIndexName('de_foo'),
+                '',
+                'de_foo',
+            ],
+            'current store prefix two' => [
+                ['foo', 'bar'],
+                $this->buildIndexName('de_foo', 'test'),
+                'test',
+                'de_foo',
             ],
         ];
     }
 
     /**
      * @param string $sourceIdentifier
+     * @param string $indexPrefix
+     * @param string|null $currentStore
      *
      * @return string
      */
-    protected function buildIndexName(string $sourceIdentifier): string
+    protected function buildIndexName(string $sourceIdentifier, string $indexPrefix = '', ?string $currentStore = null): string
     {
-        return mb_strtolower(
-            sprintf('%s_%s', APPLICATION_STORE, $sourceIdentifier)
-        );
+        $indexParameters = [
+            $indexPrefix,
+            $currentStore,
+            $sourceIdentifier,
+        ];
+
+        return mb_strtolower(implode('_', array_filter($indexParameters)));
+    }
+
+    /**
+     * @return string
+     */
+    protected function getCurrentStore(): string
+    {
+        return APPLICATION_STORE;
     }
 }

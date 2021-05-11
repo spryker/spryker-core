@@ -7,25 +7,15 @@
 
 namespace Spryker\Zed\ProductCategoryFilterGui\Dependency\Facade;
 
-use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\CategoryCriteriaTransfer;
+use Generated\Shared\Transfer\CategoryTransfer;
 
 interface ProductCategoryFilterGuiToCategoryFacadeInterface
 {
     /**
-     * @param int $idCategory
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer $categoryCriteriaTransfer
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\CategoryTransfer|null
      */
-    public function getTreeNodeChildrenByIdCategoryAndLocale($idCategory, LocaleTransfer $localeTransfer);
-
-    /**
-     * @param int $idCategory
-     *
-     * @throws \Spryker\Zed\Category\Business\Exception\MissingCategoryException
-     * @throws \Spryker\Zed\Category\Business\Exception\MissingCategoryNodeException
-     *
-     * @return \Generated\Shared\Transfer\CategoryTransfer
-     */
-    public function read($idCategory);
+    public function findCategory(CategoryCriteriaTransfer $categoryCriteriaTransfer): ?CategoryTransfer;
 }

@@ -9,6 +9,8 @@ namespace Spryker\Zed\Propel\Business;
 
 use Generated\Shared\Transfer\HealthCheckServiceResponseTransfer;
 use Generated\Shared\Transfer\SchemaValidationTransfer;
+use PDOException;
+use Propel\Runtime\Connection\Exception\ConnectionException;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -283,5 +285,23 @@ class PropelFacade extends AbstractFacade implements PropelFacadeInterface
     public function executeDatabaseHealthCheck(): HealthCheckServiceResponseTransfer
     {
         return $this->getFactory()->createPropelHealthChecker()->executeHealthCheck();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string $tableName
+     *
+     * @return bool
+     */
+    public function tableExists(string $tableName): bool
+    {
+        try {
+            return $this->getFactory()->createPropelDatabaseAdapterCollection()->getAdapter()->tableExists($tableName);
+        } catch (ConnectionException | PDOException $exception) {
+            return false;
+        }
     }
 }

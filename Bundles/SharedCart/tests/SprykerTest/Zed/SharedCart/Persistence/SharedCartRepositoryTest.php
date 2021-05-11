@@ -8,8 +8,11 @@
 namespace SprykerTest\Zed\SharedCart\Persistence;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\SharedCart\SharedCartConfig;
+use Spryker\Zed\SharedCart\Communication\Plugin\ReadSharedCartPermissionPlugin;
 use Spryker\Zed\SharedCart\Persistence\SharedCartRepository;
 
 /**
@@ -30,6 +33,45 @@ class SharedCartRepositoryTest extends Unit
      * @var \SprykerTest\Zed\SharedCart\SharedCartPersistenceTester
      */
     protected $tester;
+
+    /**
+     * @return void
+     */
+    public function testFindPermissionsByIdCompanyUser(): void
+    {
+        // Arrange
+        $customerTransfer = $this->tester->haveCustomer();
+        $quoteTransfer = $this->tester->havePersistentQuote([
+            QuoteTransfer::CUSTOMER => $customerTransfer,
+        ]);
+        $companyTransfer = $this->tester->haveCompany();
+        $companyBusinessUnitTransfer = $this->tester->haveCompanyBusinessUnit([
+            CompanyBusinessUnitTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
+        ]);
+        $companyUserTransfer = $this->tester->haveCompanyUser([
+            CompanyUserTransfer::FK_CUSTOMER => $customerTransfer->getIdCustomer(),
+            CompanyUserTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
+            CompanyUserTransfer::CUSTOMER => $customerTransfer,
+            CompanyUserTransfer::FK_COMPANY_BUSINESS_UNIT => $companyBusinessUnitTransfer->getIdCompanyBusinessUnit(),
+        ]);
+        $quotePermissionGroupTransfer = $this->tester->haveQuotePermissionGroup(ReadSharedCartPermissionPlugin::KEY, [
+            ReadSharedCartPermissionPlugin::KEY,
+        ]);
+
+        $this->tester->haveQuoteCompanyUser($companyUserTransfer, $quoteTransfer, $quotePermissionGroupTransfer);
+
+        $sharedCartRepository = new SharedCartRepository();
+
+        // Act
+        $permissionCollectionTransfer = $sharedCartRepository->findPermissionsByIdCompanyUser($companyUserTransfer->getIdCompanyUser());
+
+        // Assert
+        foreach ($permissionCollectionTransfer->getPermissions() as $permissionTransfer) {
+            $configuration = $permissionTransfer->getConfiguration();
+
+            $this->assertContains($quoteTransfer->getIdQuote(), $configuration[SharedCartConfig::PERMISSION_CONFIG_ID_QUOTE_COLLECTION]);
+        }
+    }
 
     /**
      * @return void
@@ -61,7 +103,10 @@ class SharedCartRepositoryTest extends Unit
         foreach ($customerPermissions as $permission) {
             $permissionKeys[] = $permission->getKey();
             $configuration = $permission->getConfiguration();
-            $quoteIds = $configuration[SharedCartConfig::PERMISSION_CONFIG_ID_QUOTE_COLLECTION] ?? [];
+            $quoteIds = array_map(
+                'intval',
+                $configuration[SharedCartConfig::PERMISSION_CONFIG_ID_QUOTE_COLLECTION] ?? []
+            );
 
             $this->assertNotEmpty($quoteIds);
             $this->assertContains($quoteTransfer1->getIdQuote(), $quoteIds);

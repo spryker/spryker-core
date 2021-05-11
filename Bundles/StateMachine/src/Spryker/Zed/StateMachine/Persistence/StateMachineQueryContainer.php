@@ -137,7 +137,6 @@ class StateMachineQueryContainer extends AbstractQueryContainer implements State
     ) {
         return $this->getFactory()
             ->createStateMachineItemStateQuery()
-            ->innerJoinStateHistory()
             ->useProcessQuery()
               ->filterByStateMachineName($stateMachineName)
               ->filterByName($processName)

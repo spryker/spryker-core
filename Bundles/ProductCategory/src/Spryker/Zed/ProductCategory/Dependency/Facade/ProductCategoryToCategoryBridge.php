@@ -29,7 +29,7 @@ class ProductCategoryToCategoryBridge implements ProductCategoryToCategoryInterf
      *
      * @return void
      */
-    public function touchCategoryActive($idCategory)
+    public function touchCategoryActive(int $idCategory): void
     {
         $this->categoryFacade->touchCategoryActive($idCategory);
     }

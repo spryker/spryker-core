@@ -28,11 +28,13 @@ use SprykerTest\Shared\Twig\Stub\CacheStub;
 class TwigFilesystemLoaderYvesTest extends Unit
 {
     public const PATH_TO_PROJECT = __DIR__ . '/Fixtures/src/ProjectNamespace/Yves/Bundle/Theme/default';
+    public const PATH_TO_PROJECT_CUSTOM_THEME = __DIR__ . '/Fixtures/src/ProjectNamespace/Yves/Bundle/Theme/custom';
     public const PATH_TO_CORE = __DIR__ . '/Fixtures/vendor/spryker/bundle/src/CoreNamespace/Yves/Bundle/Theme/default';
     public const PATH_TO_CORE_NON_SPLIT = __DIR__ . '/Fixtures/vendor/spryker/spryker/Bundles/*/src/CoreNamespace/Yves/Bundle/Theme/default';
     public const PATH_TO_CORE_3RD_PARTY = __DIR__ . '/Fixtures/vendor/spryker/3rd-party/src/CoreNamespace/Yves/Bundle/Theme/default';
 
     public const CONTENT_PROJECT_FILE = 'project yves file' . PHP_EOL;
+    public const CONTENT_PROJECT_CUSTOM_THEME_FILE = 'project custom theme yves file' . PHP_EOL;
     public const CONTENT_CORE_FILE = 'core yves file' . PHP_EOL;
     public const CONTENT_CORE_NON_SPLIT_FILE = 'core yves non split file' . PHP_EOL;
     public const CONTENT_CORE_3RD_PARTY_FILE = 'core yves 3rd party file' . PHP_EOL;
@@ -45,6 +47,26 @@ class TwigFilesystemLoaderYvesTest extends Unit
         $filesystemLoader = $this->getFilesystemLoader(static::PATH_TO_PROJECT);
 
         $this->assertSame(static::CONTENT_PROJECT_FILE, $filesystemLoader->getSource('@Bundle/Controller/index.twig'));
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetSourceReturnsContentFromProjectDefaultTheme(): void
+    {
+        $filesystemLoader = $this->getFilesystemLoader(static::PATH_TO_PROJECT);
+
+        $this->assertSame(static::CONTENT_PROJECT_FILE, $filesystemLoader->getSource('@ProjectNamespace:Bundle:default/Controller/index.twig'));
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetSourceReturnsContentFromProjectCustomTheme(): void
+    {
+        $filesystemLoader = $this->getFilesystemLoader(static::PATH_TO_PROJECT_CUSTOM_THEME);
+
+        $this->assertSame(static::CONTENT_PROJECT_CUSTOM_THEME_FILE, $filesystemLoader->getSource('@ProjectNamespace:Bundle:custom/Controller/index.twig'));
     }
 
     /**

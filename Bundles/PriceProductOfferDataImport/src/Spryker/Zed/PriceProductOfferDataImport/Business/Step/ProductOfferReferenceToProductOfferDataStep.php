@@ -16,6 +16,10 @@ use Spryker\Zed\PriceProductOfferDataImport\Business\DataSet\PriceProductOfferDa
 
 class ProductOfferReferenceToProductOfferDataStep implements DataImportStepInterface
 {
+    protected const PRODUCT_OFFER_REFERENCE = PriceProductOfferDataSetInterface::PRODUCT_OFFER_REFERENCE;
+    protected const CONCRETE_SKU = PriceProductOfferDataSetInterface::CONCRETE_SKU;
+    protected const FK_PRODUCT_OFFER = PriceProductOfferDataSetInterface::FK_PRODUCT_OFFER;
+
     /**
      * @var array
      */
@@ -30,7 +34,7 @@ class ProductOfferReferenceToProductOfferDataStep implements DataImportStepInter
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        $productOfferReferenceKey = $dataSet[PriceProductOfferDataSetInterface::PRODUCT_OFFER_REFERENCE];
+        $productOfferReferenceKey = $dataSet[static::PRODUCT_OFFER_REFERENCE];
 
         if (!isset($this->productOfferDataCache[$productOfferReferenceKey])) {
             $productOfferQuery = SpyProductOfferQuery::create();
@@ -44,7 +48,7 @@ class ProductOfferReferenceToProductOfferDataStep implements DataImportStepInter
             $this->productOfferDataCache[$productOfferReferenceKey] = $productOfferEntity;
         }
 
-        $dataSet[PriceProductOfferDataSetInterface::FK_PRODUCT_OFFER] = $this->productOfferDataCache[$productOfferReferenceKey][SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER];
-        $dataSet[PriceProductOfferDataSetInterface::CONCRETE_SKU] = $this->productOfferDataCache[$productOfferReferenceKey][SpyProductOfferTableMap::COL_CONCRETE_SKU];
+        $dataSet[static::FK_PRODUCT_OFFER] = $this->productOfferDataCache[$productOfferReferenceKey][SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER];
+        $dataSet[static::CONCRETE_SKU] = $this->productOfferDataCache[$productOfferReferenceKey][SpyProductOfferTableMap::COL_CONCRETE_SKU];
     }
 }

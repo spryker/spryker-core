@@ -22,6 +22,8 @@ interface MerchantProfileEntityManagerInterface
     /**
      * @param \Generated\Shared\Transfer\MerchantProfileTransfer $merchantProfileTransfer
      *
+     * @throws \Spryker\Zed\MerchantProfile\Persistence\Exception\MerchantProfileNotFoundException
+     *
      * @return \Generated\Shared\Transfer\MerchantProfileTransfer
      */
     public function update(MerchantProfileTransfer $merchantProfileTransfer): MerchantProfileTransfer;

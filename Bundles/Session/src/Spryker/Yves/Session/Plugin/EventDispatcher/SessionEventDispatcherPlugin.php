@@ -14,7 +14,7 @@ use Spryker\Yves\Kernel\AbstractPlugin;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
-use Symfony\Component\HttpKernel\Event\ResponseEvent;
+use Symfony\Component\HttpKernel\Event\TerminateEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
@@ -29,7 +29,6 @@ class SessionEventDispatcherPlugin extends AbstractPlugin implements EventDispat
 
     protected const EVENT_PRIORITY_EARLY_KERNEL_REQUEST = 128;
     protected const EVENT_PRIORITY_KERNEL_REQUEST = 192;
-    protected const EVENT_PRIORITY_KERNEL_RESPONSE = -128;
 
     /**
      * {@inheritDoc}
@@ -47,7 +46,7 @@ class SessionEventDispatcherPlugin extends AbstractPlugin implements EventDispat
     public function extend(EventDispatcherInterface $eventDispatcher, ContainerInterface $container): EventDispatcherInterface
     {
         $eventDispatcher = $this->addEarlyKernelRequestEventListener($eventDispatcher, $container);
-        $eventDispatcher = $this->addKernelResponseEventListener($eventDispatcher, $container);
+        $eventDispatcher = $this->addKernelTerminateEventListener($eventDispatcher);
 
         if ($this->isSessionTestEnabled($container)) {
             $eventDispatcher = $this->addKernelRequestEventListener($eventDispatcher, $container);
@@ -103,15 +102,13 @@ class SessionEventDispatcherPlugin extends AbstractPlugin implements EventDispat
 
     /**
      * @param \Spryker\Shared\EventDispatcher\EventDispatcherInterface $eventDispatcher
-     * @param \Spryker\Service\Container\ContainerInterface $container
      *
      * @return \Spryker\Shared\EventDispatcher\EventDispatcherInterface
      */
-    protected function addKernelResponseEventListener(
-        EventDispatcherInterface $eventDispatcher,
-        ContainerInterface $container
+    protected function addKernelTerminateEventListener(
+        EventDispatcherInterface $eventDispatcher
     ): EventDispatcherInterface {
-        $eventDispatcher->addListener(KernelEvents::RESPONSE, function (ResponseEvent $event) {
+        $eventDispatcher->addListener(KernelEvents::TERMINATE, function (TerminateEvent $event) {
             if (!$event->isMasterRequest() || !$event->getRequest()->hasSession()) {
                 return;
             }
@@ -124,7 +121,7 @@ class SessionEventDispatcherPlugin extends AbstractPlugin implements EventDispat
                     $event->getResponse()->headers->setCookie($this->createSessionCookie($session->getName(), $session->getId(), session_get_cookie_params()));
                 }
             }
-        }, static::EVENT_PRIORITY_KERNEL_RESPONSE);
+        });
 
         return $eventDispatcher;
     }

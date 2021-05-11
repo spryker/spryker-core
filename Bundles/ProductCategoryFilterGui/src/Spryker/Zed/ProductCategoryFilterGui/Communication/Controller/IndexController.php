@@ -22,7 +22,7 @@ class IndexController extends AbstractController
     {
         $rootCategoriesTable = $this
             ->getFactory()
-            ->createCategoryRootNodeTable($this->getCurrentLocale()->getIdLocale());
+            ->createCategoryRootNodeTable($this->getCurrentLocale()->getIdLocaleOrFail());
 
         return $this->viewResponse([
             'RootCategoriesTable' => $rootCategoriesTable->render(),
@@ -36,7 +36,7 @@ class IndexController extends AbstractController
     {
         $productTable = $this
             ->getFactory()
-            ->createCategoryRootNodeTable($this->getCurrentLocale()->getIdLocale());
+            ->createCategoryRootNodeTable($this->getCurrentLocale()->getIdLocaleOrFail());
 
         return $this->jsonResponse(
             $productTable->fetchData()

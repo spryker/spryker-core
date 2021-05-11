@@ -51,7 +51,12 @@ class CategoryPageEventResourceQueryContainerPlugin extends AbstractPlugin imple
             $query->clear();
         }
 
-        return $query->orderBy($this->getIdColumnName());
+        $idColumnName = $this->getIdColumnName();
+        if (!$idColumnName) {
+            return $query;
+        }
+
+        return $query->orderBy($idColumnName);
     }
 
     /**

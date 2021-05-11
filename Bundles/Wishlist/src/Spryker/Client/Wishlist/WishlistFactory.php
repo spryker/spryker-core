@@ -62,7 +62,9 @@ class WishlistFactory extends AbstractFactory
     {
         return new CartHandler(
             $cartClient,
-            $wishlistClient
+            $wishlistClient,
+            $this->getWishlistPostMoveToCartCollectionExpanderPlugins(),
+            $this->getWishlistCollectionToRemoveExpanderPlugins()
         );
     }
 
@@ -80,5 +82,21 @@ class WishlistFactory extends AbstractFactory
     protected function getPriceProductClient()
     {
         return $this->getProvidedDependency(WishlistDependencyProvider::CLIENT_PRICE_PRODUCT);
+    }
+
+    /**
+     * @return \Spryker\Client\WishlistExtension\Dependency\Plugin\WishlistPostMoveToCartCollectionExpanderPluginInterface[]
+     */
+    protected function getWishlistPostMoveToCartCollectionExpanderPlugins()
+    {
+        return $this->getProvidedDependency(WishlistDependencyProvider::PLUGINS_WISHLIST_POST_MOVE_TO_CART_COLLECTION_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Client\WishlistExtension\Dependency\Plugin\WishlistCollectionToRemoveExpanderPluginInterface[]
+     */
+    protected function getWishlistCollectionToRemoveExpanderPlugins()
+    {
+        return $this->getProvidedDependency(WishlistDependencyProvider::PLUGINS_WISHLIST_COLLECTION_TO_REMOVE_EXPANDER);
     }
 }

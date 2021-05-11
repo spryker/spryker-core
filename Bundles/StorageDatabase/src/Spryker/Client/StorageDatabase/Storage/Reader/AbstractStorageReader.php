@@ -7,8 +7,8 @@
 
 namespace Spryker\Client\StorageDatabase\Storage\Reader;
 
-use PDOStatement;
 use Propel\Runtime\Connection\ConnectionInterface;
+use Propel\Runtime\Connection\StatementInterface;
 use Spryker\Client\StorageDatabase\Connection\ConnectionProviderInterface;
 use Spryker\Client\StorageDatabase\Exception\StatementNotPreparedException;
 use Spryker\Client\StorageDatabase\StorageTableNameResolver\StorageTableNameResolverInterface;
@@ -53,7 +53,7 @@ abstract class AbstractStorageReader implements StorageReaderInterface
     }
 
     /**
-     * @param array $resourceKeys
+     * @param string[] $resourceKeys
      *
      * @return array
      */
@@ -70,9 +70,9 @@ abstract class AbstractStorageReader implements StorageReaderInterface
      *
      * @throws \Spryker\Client\StorageDatabase\Exception\StatementNotPreparedException
      *
-     * @return \PDOStatement
+     * @return \Propel\Runtime\Connection\StatementInterface
      */
-    protected function createPreparedStatement(string $sqlString): PDOStatement
+    protected function createPreparedStatement(string $sqlString): StatementInterface
     {
         $statement = $this->getConnection()->prepare($sqlString);
 
@@ -84,11 +84,11 @@ abstract class AbstractStorageReader implements StorageReaderInterface
     }
 
     /**
-     * @param \PDOStatement $statement
+     * @param \Propel\Runtime\Connection\StatementInterface $statement
      *
      * @return string
      */
-    protected function fetchSingleResult(PDOStatement $statement): string
+    protected function fetchSingleResult(StatementInterface $statement): string
     {
         $result = $statement->fetch();
 
@@ -96,12 +96,12 @@ abstract class AbstractStorageReader implements StorageReaderInterface
     }
 
     /**
-     * @param \PDOStatement $statement
+     * @param \Propel\Runtime\Connection\StatementInterface $statement
      * @param string[] $resourceKeys
      *
      * @return array
      */
-    protected function fetchMultiResults(PDOStatement $statement, array $resourceKeys): array
+    protected function fetchMultiResults(StatementInterface $statement, array $resourceKeys): array
     {
         $results = $statement->fetchAll();
         $formattedResults = [];
@@ -135,14 +135,14 @@ abstract class AbstractStorageReader implements StorageReaderInterface
     /**
      * @param string $resourceKey
      *
-     * @return \PDOStatement
+     * @return \Propel\Runtime\Connection\StatementInterface
      */
-    abstract protected function createSingleSelectStatementForResourceKey(string $resourceKey): PDOStatement;
+    abstract protected function createSingleSelectStatementForResourceKey(string $resourceKey): StatementInterface;
 
     /**
-     * @param array $resourceKeys
+     * @param string[] $resourceKeys
      *
-     * @return \PDOStatement
+     * @return \Propel\Runtime\Connection\StatementInterface
      */
-    abstract protected function createMultiSelectStatementForResourceKeys(array $resourceKeys): PDOStatement;
+    abstract protected function createMultiSelectStatementForResourceKeys(array $resourceKeys): StatementInterface;
 }

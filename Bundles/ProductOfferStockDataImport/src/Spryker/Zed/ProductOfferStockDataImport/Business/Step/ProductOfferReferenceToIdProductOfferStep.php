@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductOfferStockDataImport\Business\Step;
 
-use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductOfferCriteriaTransfer;
 use Spryker\Zed\DataImport\Business\Exception\DataKeyNotFoundInDataSetException;
 use Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
@@ -17,6 +17,8 @@ use Spryker\Zed\ProductOfferStockDataImport\Dependency\Facade\ProductOfferStockD
 
 class ProductOfferReferenceToIdProductOfferStep implements DataImportStepInterface
 {
+    protected const PRODUCT_OFFER_REFERENCE = ProductOfferStockDataSetInterface::PRODUCT_OFFER_REFERENCE;
+
     /**
      * @var \Spryker\Zed\ProductOfferStockDataImport\Dependency\Facade\ProductOfferStockDataImportToProductOfferFacadeInterface
      */
@@ -40,20 +42,20 @@ class ProductOfferReferenceToIdProductOfferStep implements DataImportStepInterfa
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        $productOfferReference = $dataSet[ProductOfferStockDataSetInterface::PRODUCT_OFFER_REFERENCE];
+        $productOfferReference = $dataSet[static::PRODUCT_OFFER_REFERENCE];
 
         if (!$productOfferReference) {
             throw new DataKeyNotFoundInDataSetException(sprintf(
                 '"%s" key must be in the data set. Given: "%s"',
-                ProductOfferStockDataSetInterface::PRODUCT_OFFER_REFERENCE,
+                static::PRODUCT_OFFER_REFERENCE,
                 implode(', ', array_keys($dataSet->getArrayCopy()))
             ));
         }
 
-        $productOfferCriteriaFilterTransfer = (new ProductOfferCriteriaFilterTransfer())
+        $productOfferCriteriaTransfer = (new ProductOfferCriteriaTransfer())
             ->setProductOfferReference($productOfferReference);
 
-        $productOfferTransfer = $this->productOfferFacade->findOne($productOfferCriteriaFilterTransfer);
+        $productOfferTransfer = $this->productOfferFacade->findOne($productOfferCriteriaTransfer);
 
         if ($productOfferTransfer === null) {
             throw new EntityNotFoundException(sprintf('Product offer not found for product offer reference %s', $productOfferReference));

@@ -12,6 +12,8 @@ use Generated\Shared\Transfer\StateMachineItemTransfer;
 interface MerchantOmsRepositoryInterface
 {
     /**
+     * @phpstan-param mixed[] $stateIds
+     *
      * @param array $stateIds
      *
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]

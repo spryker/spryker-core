@@ -17,6 +17,8 @@ use Spryker\Zed\MerchantProductDataImport\Business\MerchantProduct\DataSet\Merch
 
 class MerchantReferenceToIdMerchantStep implements DataImportStepInterface
 {
+    protected const MERCHANT_REFERENCE = MerchantProductDataSetInterface::MERCHANT_REFERENCE;
+
     /**
      * @var int[]
      */
@@ -31,10 +33,10 @@ class MerchantReferenceToIdMerchantStep implements DataImportStepInterface
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        $merchantReference = $dataSet[MerchantProductDataSetInterface::MERCHANT_REFERENCE];
+        $merchantReference = $dataSet[static::MERCHANT_REFERENCE];
 
         if (!$merchantReference) {
-            throw new InvalidDataException(sprintf('"%s" is required.', MerchantProductDataSetInterface::MERCHANT_REFERENCE));
+            throw new InvalidDataException(sprintf('"%s" is required.', static::MERCHANT_REFERENCE));
         }
 
         $dataSet[MerchantProductDataSetInterface::FK_MERCHANT] = $this->getIdMerchant($merchantReference);

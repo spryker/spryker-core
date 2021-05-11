@@ -1120,7 +1120,10 @@ class ProductImageFacadeTest extends Unit
             ->addProductImageId($productImageSetTransfer->getProductImages()->offsetGet(0)->getIdProductImage());
 
         //Act
-        $productConcreteIds = $this->productImageFacade->getProductConcreteIds($productImageFilterTransfer);
+        $productConcreteIds = array_map(
+            'intval',
+            $this->productImageFacade->getProductConcreteIds($productImageFilterTransfer)
+        );
 
         //Assert
         $this->assertCount(1, $productConcreteIds);
@@ -1161,7 +1164,10 @@ class ProductImageFacadeTest extends Unit
             ->addProductImageSetId($productImageSetTransfer->getIdProductImageSet());
 
         //Act
-        $productConcreteIds = $this->productImageFacade->getProductConcreteIds($productImageFilterTransfer);
+        $productConcreteIds = array_map(
+            'intval',
+            $this->productImageFacade->getProductConcreteIds($productImageFilterTransfer)
+        );
 
         //Assert
         $this->assertCount(1, $productConcreteIds);

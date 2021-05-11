@@ -1,2 +1,2 @@
-merchant_key,merchant_state_machine_name,merchant_oms_process_name
-merchant-profile-data-import-test-key,Merchant,MerchantTestStateMachine
+merchant_reference,merchant_state_machine_name,merchant_oms_process_name
+merchant-profile-data-import-test-reference,Merchant,MerchantTestStateMachine

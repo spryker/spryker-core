@@ -1,10 +1,5 @@
 <?xml version="1.0"?>
-<database xmlns="spryker:schema-01"
-    name="zed"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd"
-    namespace="Namespace"
-    package="Package">
+<database xmlns="spryker:schema-01" name="zed" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Namespace" package="Package">
 
     <table name="spy_foo" idMethod="native">
         <column name="attribute_value_change" type="LONGVARCHAR"/>

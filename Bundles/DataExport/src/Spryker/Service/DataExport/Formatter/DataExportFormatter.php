@@ -57,7 +57,7 @@ class DataExportFormatter implements DataExportFormatterInterface
             return $dataExportFormatterPlugin->format($dataExportBatchTransfer, $dataExportConfigurationTransfer);
         }
 
-        if ($dataExportConfigurationTransfer->getFormat()->getType() === static::DEFAULT_FORMAT_TYPE) {
+        if ($dataExportConfigurationTransfer->getFormatOrFail()->getType() === static::DEFAULT_FORMAT_TYPE) {
             return $this->dataExportCsvFormatter->formatBatch($dataExportBatchTransfer, $dataExportConfigurationTransfer);
         }
 
@@ -79,7 +79,7 @@ class DataExportFormatter implements DataExportFormatterInterface
             return $dataExportFormatterPlugin->getExtension($dataExportConfigurationTransfer);
         }
 
-        if ($dataExportConfigurationTransfer->getFormat()->getType() === static::DEFAULT_FORMAT_TYPE) {
+        if ($dataExportConfigurationTransfer->getFormatOrFail()->getType() === static::DEFAULT_FORMAT_TYPE) {
             return $this->dataExportCsvFormatter->getFormatExtension($dataExportConfigurationTransfer);
         }
 
@@ -94,7 +94,7 @@ class DataExportFormatter implements DataExportFormatterInterface
     protected function createFormatterNotFoundResponse(DataExportConfigurationTransfer $dataExportConfigurationTransfer): DataExportFormatResponseTransfer
     {
         $messageTransfer = (new MessageTransfer())->setValue(
-            sprintf(static::MESSAGE_FORMATTER_PLUGIN_NOT_FOUND, $dataExportConfigurationTransfer->getFormat()->getType())
+            sprintf(static::MESSAGE_FORMATTER_PLUGIN_NOT_FOUND, $dataExportConfigurationTransfer->getFormatOrFail()->getType())
         );
 
         return (new DataExportFormatResponseTransfer())

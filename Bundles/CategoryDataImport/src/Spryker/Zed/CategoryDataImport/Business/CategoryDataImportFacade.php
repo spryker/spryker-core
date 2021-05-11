@@ -31,4 +31,18 @@ class CategoryDataImportFacade extends AbstractFacade implements CategoryDataImp
     {
         return $this->getFactory()->createCategoryImporter()->import($dataImporterConfigurationTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
+     *
+     * @return \Generated\Shared\Transfer\DataImporterReportTransfer
+     */
+    public function importCategoryStore(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
+    {
+        return $this->getFactory()->getCategoryStoreImporter()->import($dataImporterConfigurationTransfer);
+    }
 }

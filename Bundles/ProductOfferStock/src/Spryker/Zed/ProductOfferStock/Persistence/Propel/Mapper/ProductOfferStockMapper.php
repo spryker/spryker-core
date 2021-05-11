@@ -65,9 +65,18 @@ class ProductOfferStockMapper
         ProductOfferStockTransfer $productOfferStockTransfer,
         SpyProductOfferStock $productOfferStockEntity
     ): SpyProductOfferStock {
+        /** @var int $idProductOffer */
+        $idProductOffer = $productOfferStockTransfer->getIdProductOffer();
+
+        /** @var \Generated\Shared\Transfer\StockTransfer $stockTransfer */
+        $stockTransfer = $productOfferStockTransfer->getStock();
+
+        /** @var int $idStock */
+        $idStock = $stockTransfer->getIdStock();
+
         $productOfferStockEntity->fromArray($productOfferStockTransfer->toArray(false));
-        $productOfferStockEntity->setFkProductOffer($productOfferStockTransfer->getIdProductOffer());
-        $productOfferStockEntity->setFkStock($productOfferStockTransfer->getStock()->getIdStock());
+        $productOfferStockEntity->setFkProductOffer($idProductOffer);
+        $productOfferStockEntity->setFkStock($idStock);
 
         return $productOfferStockEntity;
     }

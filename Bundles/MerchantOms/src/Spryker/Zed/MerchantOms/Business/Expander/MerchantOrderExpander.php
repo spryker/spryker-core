@@ -42,8 +42,11 @@ class MerchantOrderExpander implements MerchantOrderExpanderInterface
      */
     public function expandMerchantOrderWithMerchantOmsData(MerchantOrderTransfer $merchantOrderTransfer): MerchantOrderTransfer
     {
+        /** @var int[] $stateMachineItemStateIds */
+        $stateMachineItemStateIds = $this->getStateMachineItemStateIds($merchantOrderTransfer);
+
         $stateMachineItemTransfers = $this->merchantOmsRepository->getStateMachineItemsByStateIds(
-            $this->getStateMachineItemStateIds($merchantOrderTransfer)
+            $stateMachineItemStateIds
         );
 
         $manualEvents = $this->stateMachineFacade->getManualEventsForStateMachineItems($stateMachineItemTransfers);
@@ -69,6 +72,8 @@ class MerchantOrderExpander implements MerchantOrderExpanderInterface
     }
 
     /**
+     * @phpstan-return array<array-key, int|null>
+     *
      * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
      *
      * @return int[]
@@ -90,7 +95,9 @@ class MerchantOrderExpander implements MerchantOrderExpanderInterface
      */
     protected function getUniqueItemStates(array $stateMachineItemTransfers): array
     {
+        /** @var mixed[] $stateItems */
         $stateItems = [];
+
         foreach ($stateMachineItemTransfers as $stateMachineItemTransfer) {
             $stateItems[] = $stateMachineItemTransfer->getStateName();
         }

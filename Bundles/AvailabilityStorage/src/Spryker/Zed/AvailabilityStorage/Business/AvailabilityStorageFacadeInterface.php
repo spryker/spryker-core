@@ -36,4 +36,31 @@ interface AvailabilityStorageFacadeInterface
      * @return void
      */
     public function unpublish(array $availabilityIds);
+
+    /**
+     * Specification:
+     * - Queries all availability storage entities with provided product abstract ids.
+     * - Stores data as JSON encoded to storage table.
+     * - Sends a copy of data to queue based on module config.
+     *
+     * @api
+     *
+     * @param int[] $productAbstractIds
+     *
+     * @return void
+     */
+    public function publishByProductAbstractIds(array $productAbstractIds): void;
+
+    /**
+     * Specification:
+     * - Finds and deletes availability storage entities based on provided product abstract ids.
+     * - Sends delete message to queue based on module config.
+     *
+     * @api
+     *
+     * @param int[] $productAbstractIds
+     *
+     * @return void
+     */
+    public function unpublishByProductAbstractIds(array $productAbstractIds): void;
 }

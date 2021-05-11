@@ -104,6 +104,35 @@ abstract class AbstractApplicationHelper extends Framework
     }
 
     /**
+     * @param string $page
+     *
+     * @return void
+     */
+    public function amOnPage($page): void
+    {
+        if ($this->client === null) {
+            $this->getClient();
+        }
+
+        $this->_loadPage('GET', $page);
+    }
+
+    /**
+     * @param string $uri
+     * @param array $params
+     *
+     * @return void
+     */
+    public function sendAjaxPostRequest($uri, $params = []): void
+    {
+        if ($this->client === null) {
+            $this->getClient();
+        }
+
+        parent::sendAjaxPostRequest($uri, $params);
+    }
+
+    /**
      * @return \Symfony\Component\HttpKernel\HttpKernelInterface
      */
     public function getKernel(): HttpKernelInterface

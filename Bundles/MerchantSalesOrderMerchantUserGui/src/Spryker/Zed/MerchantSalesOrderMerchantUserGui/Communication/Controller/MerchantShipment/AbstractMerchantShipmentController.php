@@ -69,8 +69,9 @@ abstract class AbstractMerchantShipmentController extends AbstractController
         if (!$merchantOrderTransfer) {
             return null;
         }
-
+        /** @var int[] $merchantOrderItemIds */
         $merchantOrderItemIds = $this->extractMerchantOrderItemIds($merchantOrderTransfer->getMerchantOrderItems());
+
         $merchantOrderItemsStateHistory = $this->getFactory()
             ->getMerchantOmsFacade()
             ->getMerchantOrderItemsStateHistory($merchantOrderItemIds);
@@ -177,6 +178,8 @@ abstract class AbstractMerchantShipmentController extends AbstractController
 
     /**
      * @phpstan-param \ArrayObject<int,\Generated\Shared\Transfer\MerchantOrderItemTransfer> $merchantOrderItems
+     *
+     * @phpstan-return array<int, int|null>
      *
      * @param \ArrayObject|\Generated\Shared\Transfer\MerchantOrderItemTransfer[] $merchantOrderItems
      *

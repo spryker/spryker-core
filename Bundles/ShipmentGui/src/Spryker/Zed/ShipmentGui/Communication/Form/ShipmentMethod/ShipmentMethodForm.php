@@ -15,6 +15,10 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
+/**
+ * @method \Spryker\Zed\ShipmentGui\Communication\ShipmentGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ShipmentGui\ShipmentGuiConfig getConfig()
+ */
 class ShipmentMethodForm extends ViewShipmentMethodForm
 {
     public const FIELD_NAME_FIELD = 'name';

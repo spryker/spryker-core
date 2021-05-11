@@ -45,7 +45,7 @@ class ProductCategoryAssignCest
         $i->checkOption($availableProductCheckboxSelector);
         $i->seeInField(
             ProductCategoryAssignPage::SELECTED_PRODUCTS_CSV_FIELD_SELECTOR,
-            $idAbstractProduct
+            (string)$idAbstractProduct
         );
         $i->click(ProductCategoryAssignPage::FORM_SUBMIT_SELECTOR);
         $i->waitForElement(ProductCategoryAssignPage::SUCCESS_MESSAGE_SELECTOR);
@@ -80,7 +80,7 @@ class ProductCategoryAssignCest
         $i->uncheckOption($assignedProductCheckboxSelector);
         $i->seeInField(
             ProductCategoryAssignPage::DESELECTED_PRODUCTS_CSV_FIELD_SELECTOR,
-            $idAbstractProduct
+            (string)$idAbstractProduct
         );
         $i->click(ProductCategoryAssignPage::FORM_SUBMIT_SELECTOR);
         $i->waitForElement(ProductCategoryAssignPage::SUCCESS_MESSAGE_SELECTOR);

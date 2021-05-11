@@ -58,6 +58,9 @@ class CustomerConfig extends AbstractBundleConfig
     }
 
     /**
+     * Specification:
+     * - Provides a registration confirmation token url.
+     *
      * @api
      *
      * @param string $token
@@ -66,7 +69,9 @@ class CustomerConfig extends AbstractBundleConfig
      */
     public function getRegisterConfirmTokenUrl($token)
     {
-        return $this->getHostYves() . '/register/confirm?token=' . $token;
+        $fallback = $this->getHostYves() . '/register/confirm?token=%s';
+
+        return sprintf($this->get(CustomerConstants::REGISTRATION_CONFIRMATION_TOKEN_URL, $fallback), $token);
     }
 
     /**

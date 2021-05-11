@@ -25,7 +25,7 @@ class FilterSuggestionController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $searchTerm = $request->query->get(self::PARAM_TERM);
+        $searchTerm = $request->query->get(static::PARAM_TERM) ?? '';
         $suggestions = $this
             ->getFactory()
             ->getProductSearchFacade()

@@ -20,6 +20,14 @@ interface CategoryEvents
 
     /**
      * Specification:
+     * - This events will be used for Category publish
+     *
+     * @api
+     */
+    public const ENTITY_CATEGORY_PUBLISH = 'Entity.spy_category.publish';
+
+    /**
+     * Specification:
      * - This events will be used for spy_category entity creation
      *
      * @api

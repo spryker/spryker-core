@@ -167,7 +167,10 @@ class ProductAlternativeFacadeTest extends Unit
         $this->tester->haveProductAlternative($productConcreteTransferWithAlternative, $alternativeProductConcreteTransfer->getSku());
 
         // Act
-        $productAbstractIds = $this->tester->getFacade()->findProductAbstractIdsWhichConcreteHasAlternative();
+        $productAbstractIds = array_map(
+            'intval',
+            $this->tester->getFacade()->findProductAbstractIdsWhichConcreteHasAlternative()
+        );
 
         // Assert
         $this->assertContains($productConcreteTransferWithAlternative->getFkProductAbstract(), $productAbstractIds);

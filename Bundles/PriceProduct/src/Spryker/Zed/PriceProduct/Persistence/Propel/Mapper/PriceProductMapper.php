@@ -82,12 +82,13 @@ class PriceProductMapper
      */
     protected function hasSeveralConcretesInSameAbstract(SpyPriceProductStore $priceProductStoreEntity): bool
     {
-        $abstractProductEntity = $priceProductStoreEntity->getPriceProduct()
-            ->getSpyProductAbstract();
-
-        if (!$abstractProductEntity) {
+        if (!$priceProductStoreEntity->getPriceProduct()->getSpyProductAbstract()) {
             return false;
         }
+
+        /** @var \Orm\Zed\Product\Persistence\SpyProductAbstract $abstractProductEntity */
+        $abstractProductEntity = $priceProductStoreEntity->getPriceProduct()
+            ->getSpyProductAbstract();
 
         return $abstractProductEntity
             ->getSpyProducts()
@@ -108,9 +109,10 @@ class PriceProductMapper
         PriceProductTransfer $priceProductTransfer,
         array $allowedProductSkus
     ): array {
-        $concreateProductEntities = $priceProductStoreEntity->getPriceProduct()
-            ->getSpyProductAbstract()
-            ->getSpyProducts();
+        /** @var \Orm\Zed\Product\Persistence\SpyProductAbstract $abstractProductEntity */
+        $abstractProductEntity = $priceProductStoreEntity->getPriceProduct()
+            ->getSpyProductAbstract();
+        $concreateProductEntities = $abstractProductEntity->getSpyProducts();
 
         foreach ($concreateProductEntities as $concreateProductEntitity) {
             // Added due to propel entity cache system
@@ -134,6 +136,7 @@ class PriceProductMapper
     protected function createPriceTypeTransfer(SpyPriceProduct $priceProductEntity): PriceTypeTransfer
     {
         return (new PriceTypeTransfer())
+            ->setIdPriceType($priceProductEntity->getPriceType()->getIdPriceType())
             ->setName($priceProductEntity->getPriceType()->getName())
             ->setPriceModeConfiguration($priceProductEntity->getPriceType()->getPriceModeConfiguration());
     }
@@ -198,7 +201,9 @@ class PriceProductMapper
         PriceProductDimensionTransfer $priceProductDimensionTransfer,
         array $priceProductStoreEntityData
     ): PriceProductTransfer {
-        $sku = $priceProductEntity->getProduct() ? $priceProductEntity->getProduct()->getSku() : $priceProductStoreEntityData['product_sku'];
+        /** @var \Orm\Zed\Product\Persistence\SpyProduct $productEntity */
+        $productEntity = $priceProductEntity->getProduct();
+        $sku = $priceProductEntity->getProduct() ? $productEntity->getSku() : $priceProductStoreEntityData['product_sku'];
 
         return $priceProductTransfer
             ->fromArray($priceProductStoreEntityData, true)
@@ -209,6 +214,7 @@ class PriceProductMapper
             ->setPriceTypeName($priceTypeTransfer->getName())
             ->setMoneyValue($moneyValueTransfer)
             ->setPriceDimension($priceProductDimensionTransfer)
-            ->setIsMergeable(true);
+            ->setIsMergeable(true)
+            ->setFkPriceType($priceTypeTransfer->getIdPriceType());
     }
 }

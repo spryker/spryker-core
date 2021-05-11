@@ -1,7 +1,5 @@
 <?xml version="1.0"?>
-<database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd"
-          namespace="Orm\Zed\SalesOrderThreshold\Persistence"
-          package="src.Orm.Zed.SalesOrderThreshold.Persistence">
+<database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\SalesOrderThreshold\Persistence" package="src.Orm.Zed.SalesOrderThreshold.Persistence">
 
     <table name="spy_sales_order_threshold" idMethod="native" allowPkInsert="true" identifierQuoting="true">
         <column name="id_sales_order_threshold" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
@@ -16,8 +14,7 @@
 
         <id-method-parameter value="id_sales_order_threshold_pk_seq"/>
 
-        <foreign-key name="spy_sales_order_threshold-fk_sales_order_threshold_type"
-                     foreignTable="spy_sales_order_threshold_type" phpName="SalesOrderThresholdType">
+        <foreign-key name="spy_sales_order_threshold-fk_sales_order_threshold_type" foreignTable="spy_sales_order_threshold_type" phpName="SalesOrderThresholdType">
             <reference local="fk_sales_order_threshold_type" foreign="id_sales_order_threshold_type"/>
         </foreign-key>
 

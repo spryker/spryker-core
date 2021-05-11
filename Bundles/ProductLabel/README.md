@@ -1,5 +1,5 @@
 # ProductLabel Module
-[![Build Status](https://travis-ci.org/spryker/product-label.svg)](https://travis-ci.org/spryker/product-label)
+[![Latest Stable Version](https://poser.pugx.org/spryker/product-label/v/stable.svg)](https://packagist.org/packages/spryker/product-label)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 ProductLabel allows to add labels to abstract products. These labels can be collected and exported for rendering in Yves. ProductLabel provides basic CRUD operations to handle product labels. Also provides Yves and Client implementation to read and prepare labels for rendering on the frontend.

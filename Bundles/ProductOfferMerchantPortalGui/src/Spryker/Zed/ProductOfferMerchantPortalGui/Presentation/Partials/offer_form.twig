@@ -10,7 +10,7 @@
 {% set images = [] %}
 
 {% for imageSet in product.imageSets %}
-    {% if imageSet.locale.localeName == app.locale %}
+    {% if imageSet.locale and imageSet.locale.localeName == app.locale %}
         {% set images = imageSet.productImages | reduce((accumulator, image) => (
                 accumulator | merge([{
                 src: image.externalUrlSmall,

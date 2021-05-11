@@ -35,6 +35,6 @@ class CategoryTreeStorageUnpublishListener extends AbstractPlugin implements Eve
     {
         $this->preventTransaction();
 
-        $this->getFacade()->unpublishCategoryTree();
+        $this->getFacade()->deleteCategoryTreeStorageCollection();
     }
 }

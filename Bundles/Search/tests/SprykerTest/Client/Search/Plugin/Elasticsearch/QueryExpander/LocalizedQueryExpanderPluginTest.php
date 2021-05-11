@@ -9,7 +9,7 @@ namespace SprykerTest\Client\Search\Plugin\Elasticsearch\QueryExpander;
 
 use Elastica\Query;
 use Elastica\Query\BoolQuery;
-use Elastica\Query\Match;
+use Elastica\Query\MatchQuery;
 use Generated\Shared\Search\PageIndexMap;
 use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\LocalizedQueryExpanderPlugin;
 
@@ -62,8 +62,7 @@ class LocalizedQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
     {
         $expectedQuery = (new Query())
             ->setQuery((new BoolQuery())
-                ->addMust((new Match())
-                    ->setField(PageIndexMap::LOCALE, 'ab_CD')));
+            ->addMust($this->getMatchQuery()->setField(PageIndexMap::LOCALE, 'ab_CD')));
 
         return [$expectedQuery];
     }
@@ -85,5 +84,19 @@ class LocalizedQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
         $queryExpander->setFactory($this->getSearchFactory());
 
         return $queryExpander;
+    }
+
+    /**
+     * For compatibility with PHP 8.
+     *
+     * @return \Elastica\Query\MatchQuery|\Elastica\Query\Match
+     */
+    public function getMatchQuery()
+    {
+        $matchQueryClassName = class_exists(MatchQuery::class)
+            ? MatchQuery::class
+            : '\Elastica\Query\Match';
+
+        return new $matchQueryClassName();
     }
 }

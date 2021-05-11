@@ -28,7 +28,10 @@ class SinglePriceProductFilterMinStrategy implements SinglePriceProductFilterStr
                 continue;
             }
 
-            if ($this->isMinGreaterThan($priceProductFilterTransfer->getPriceMode(), $priceProductTransfer, $minPriceProductTransfer)) {
+            /** @var string $priceMode */
+            $priceMode = $priceProductFilterTransfer->requirePriceMode()->getPriceMode();
+
+            if ($this->isMinGreaterThan($priceMode, $priceProductTransfer, $minPriceProductTransfer)) {
                 $minPriceProductTransfer = $priceProductTransfer;
             }
         }
@@ -45,23 +48,38 @@ class SinglePriceProductFilterMinStrategy implements SinglePriceProductFilterStr
      */
     protected function isMinGreaterThan(string $priceMode, PriceProductTransfer $priceProductTransfer, ?PriceProductTransfer $minPriceProductTransfer = null)
     {
+        /** @var \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer */
+        $moneyValueTransfer = $priceProductTransfer->requireMoneyValue()->getMoneyValue();
+
         if ($priceMode === PriceProductConfig::PRICE_GROSS_MODE) {
-            if ($priceProductTransfer->getMoneyValue()->getGrossAmount() === null) {
+            if ($moneyValueTransfer->getGrossAmount() === null) {
                 return false;
             }
 
-            if (!$minPriceProductTransfer || $minPriceProductTransfer->getMoneyValue()->getGrossAmount() > $priceProductTransfer->getMoneyValue()->getGrossAmount()) {
+            if (!$minPriceProductTransfer) {
+                return true;
+            }
+
+            /** @var \Generated\Shared\Transfer\MoneyValueTransfer $minPriceProductMoneyValueTransfer */
+            $minPriceProductMoneyValueTransfer = $minPriceProductTransfer->requireMoneyValue()->getMoneyValue();
+            if ($minPriceProductMoneyValueTransfer->getGrossAmount() > $moneyValueTransfer->getGrossAmount()) {
                 return true;
             }
 
             return false;
         }
 
-        if ($priceProductTransfer->getMoneyValue()->getNetAmount() === null) {
+        if ($moneyValueTransfer->getNetAmount() === null) {
             return false;
         }
 
-        if (!$minPriceProductTransfer || $minPriceProductTransfer->getMoneyValue()->getNetAmount() > $priceProductTransfer->getMoneyValue()->getNetAmount()) {
+        if (!$minPriceProductTransfer) {
+            return true;
+        }
+
+        /** @var \Generated\Shared\Transfer\MoneyValueTransfer $minPriceProductMoneyValueTransfer */
+        $minPriceProductMoneyValueTransfer = $minPriceProductTransfer->requireMoneyValue()->getMoneyValue();
+        if ($minPriceProductMoneyValueTransfer->getNetAmount() > $moneyValueTransfer->getNetAmount()) {
             return true;
         }
 

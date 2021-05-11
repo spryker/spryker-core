@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\CategoryPageSearch\Business\CategoryPageSearchBusinessFactory getFactory()
+ * @method \Spryker\Zed\CategoryPageSearch\Persistence\CategoryPageSearchEntityManagerInterface getEntityManager()
  */
 class CategoryPageSearchFacade extends AbstractFacade implements CategoryPageSearchFacadeInterface
 {
@@ -25,7 +26,7 @@ class CategoryPageSearchFacade extends AbstractFacade implements CategoryPageSea
      */
     public function publish(array $categoryNodeIds)
     {
-        $this->getFactory()->createCategoryNodeSearch()->publish($categoryNodeIds);
+        $this->getFactory()->createCategoryNodePageSearchWriter()->writeCategoryNodePageSearchCollection($categoryNodeIds);
     }
 
     /**
@@ -39,6 +40,38 @@ class CategoryPageSearchFacade extends AbstractFacade implements CategoryPageSea
      */
     public function unpublish(array $categoryNodeIds)
     {
-        $this->getFactory()->createCategoryNodeSearch()->unpublish($categoryNodeIds);
+        $this->getFactory()->createCategoryNodePageSearchDeleter()->deleteCategoryNodePageSearchCollection($categoryNodeIds);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeCategoryNodePageSearchCollectionByCategoryStoreEvents(array $eventEntityTransfers): void
+    {
+        $this->getFactory()
+            ->createCategoryNodePageSearchWriter()
+            ->writeCategoryNodePageSearchCollectionByCategoryStoreEvents($eventEntityTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeCategoryNodePageSearchCollectionByCategoryStorePublishEvents(array $eventEntityTransfers): void
+    {
+        $this->getFactory()
+            ->createCategoryNodePageSearchWriter()
+            ->writeCategoryNodePageSearchCollectionByCategoryStorePublishEvents($eventEntityTransfers);
     }
 }

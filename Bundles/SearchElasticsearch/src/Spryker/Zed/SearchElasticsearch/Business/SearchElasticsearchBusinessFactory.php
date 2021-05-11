@@ -123,7 +123,7 @@ class SearchElasticsearchBusinessFactory extends AbstractBusinessFactory
     public function createSourceIdentifier(): SourceIdentifierInterface
     {
         return new SourceIdentifier(
-            $this->getConfig()->getSupportedSourceIdentifiers()
+            $this->getConfig()
         );
     }
 

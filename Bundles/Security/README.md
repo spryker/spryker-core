@@ -1,5 +1,5 @@
 # Security Module
-[![Build Status](https://travis-ci.org/spryker/security.svg)](https://travis-ci.org/spryker/security)
+[![Latest Stable Version](https://poser.pugx.org/spryker/security/v/stable.svg)](https://packagist.org/packages/spryker/security)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 Module provides a SecurityApplicationPlugin, which can be used to secure resources.

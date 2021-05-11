@@ -26,4 +26,3 @@ suites:
                 - \SprykerTest\Zed\Locale\Helper\LocaleDataHelper
                 - \SprykerTest\Zed\Touch\Helper\TouchAssertionHelper
                 - \SprykerTest\Zed\CmsBlock\Helper\CmsBlockDataHelper
-

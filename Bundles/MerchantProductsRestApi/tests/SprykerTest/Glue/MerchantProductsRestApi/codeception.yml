@@ -13,11 +13,11 @@ coverage:
 
 suites:
     Communication:
-     path: Communication
-     class_name: MerchantProductsRestApiCommunicationTester
-     modules:
-         enabled:
-             - Asserts
-             - \SprykerTest\Shared\Testify\Helper\Environment
-             - \SprykerTest\Shared\Testify\Helper\ConfigHelper
-             - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+        path: Communication
+        class_name: MerchantProductsRestApiCommunicationTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper

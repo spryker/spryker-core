@@ -1,63 +1,51 @@
 {
-  "name": "spryker/category",
-  "type": "library",
-  "description": "Category module",
-  "license": "proprietary",
-  "require": {
-    "php": ">=7.3",
-    "spryker/category-extension": "^1.0.0",
-    "spryker/event": "^1.0.0 || ^2.0.0",
-    "spryker/graph": "^3.0.0",
-    "spryker/gui": "^3.0.0",
-    "spryker/kernel": "^3.30.0",
-    "spryker/key-builder": "^1.0.0",
-    "spryker/locale": "^3.0.0",
-    "spryker/propel-orm": "^1.0.0",
-    "spryker/storage": "^3.0.0",
-    "spryker/symfony": "^3.0.0",
-    "spryker/touch": "^3.0.0 || ^4.0.0",
-    "spryker/url": "^3.5.0",
-    "spryker/util-text": "^1.1.0"
-  },
-  "require-dev": {
-    "spryker/application": "*",
-    "spryker/code-sniffer": "*",
-    "spryker/config": "*",
-    "spryker/container": "*",
-    "spryker/event-dispatcher": "*",
-    "spryker/form": "*",
-    "spryker/propel": "*",
-    "spryker/router": "*",
-    "spryker/silex": "*",
-    "spryker/testify": "*",
-    "spryker/twig": "*",
-    "spryker/validator": "*",
-    "spryker/zed-navigation": "*"
-  },
-  "autoload": {
-    "psr-4": {
-      "Spryker\\": "src/Spryker/",
-      "SprykerTest\\Zed\\Category\\Helper\\": "tests/SprykerTest/Zed/Category/_support/Helper/",
-      "SprykerTest\\Zed\\Category\\PageObject\\": "tests/SprykerTest/Zed/Category/_support/PageObject/"
+    "name": "spryker/category",
+    "type": "library",
+    "description": "Category module",
+    "license": "proprietary",
+    "require": {
+        "php": ">=7.3",
+        "spryker/category-extension": "^1.1.0",
+        "spryker/event": "^2.3.0",
+        "spryker/kernel": "^3.30.0",
+        "spryker/locale": "^3.0.0",
+        "spryker/propel-orm": "^1.0.0",
+        "spryker/store": "^1.0.0",
+        "spryker/touch": "^4.0.0",
+        "spryker/transfer": "^3.25.0",
+        "spryker/url": "^3.5.0"
+    },
+    "require-dev": {
+        "spryker/code-sniffer": "*",
+        "spryker/container": "*",
+        "spryker/propel": "*",
+        "spryker/silex": "*",
+        "spryker/testify": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Spryker\\": "src/Spryker/",
+            "SprykerTest\\Zed\\Category\\Helper\\": "tests/SprykerTest/Zed/Category/_support/Helper/",
+            "SprykerTest\\Zed\\Category\\PageObject\\": "tests/SprykerTest/Zed/Category/_support/PageObject/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "SprykerTest\\": "tests/SprykerTest/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "5.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
     }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "SprykerTest\\": "tests/SprykerTest/"
-    }
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "scripts": {
-    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
-    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "4.0.x-dev"
-    }
-  },
-  "config": {
-    "sort-packages": true
-  }
 }

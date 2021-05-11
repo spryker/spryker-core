@@ -1,4 +1,6 @@
 parameters:
     checkMissingIterableValueType: false
+    excludePaths:
+        - %rootDir%/../../../vendor/spryker/spryker/Bundles/MerchantSearch/src/Spryker/Client/MerchantSearch/Plugin/Elasticsearch/Query/MerchantSearchQueryPlugin.php
     ignoreErrors:
         - '#Call to an undefined method Generated\\(\w*)\\Ide\\AutoCompletion#'

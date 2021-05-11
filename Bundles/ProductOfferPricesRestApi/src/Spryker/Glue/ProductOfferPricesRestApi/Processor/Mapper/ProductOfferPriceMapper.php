@@ -16,6 +16,19 @@ use Spryker\Glue\ProductOfferPricesRestApi\ProductOfferPricesRestApiConfig;
 class ProductOfferPriceMapper implements ProductOfferPriceMapperInterface
 {
     /**
+     * @var \Spryker\Glue\ProductOfferPricesRestApiExtension\Dependency\Plugin\RestProductOfferPricesAttributesMapperPluginInterface[]
+     */
+    protected $restProductOfferPricesAttributesMapperPlugins;
+
+    /**
+     * @param \Spryker\Glue\ProductOfferPricesRestApiExtension\Dependency\Plugin\RestProductOfferPricesAttributesMapperPluginInterface[] $restProductOfferPricesAttributesMapperPlugins
+     */
+    public function __construct(array $restProductOfferPricesAttributesMapperPlugins)
+    {
+        $this->restProductOfferPricesAttributesMapperPlugins = $restProductOfferPricesAttributesMapperPlugins;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\CurrentProductPriceTransfer $currentProductPriceTransfer
      * @param \Generated\Shared\Transfer\RestProductOfferPricesAttributesTransfer $restProductOfferPricesAttributesTransfer
      *
@@ -27,15 +40,20 @@ class ProductOfferPriceMapper implements ProductOfferPriceMapperInterface
     ): RestProductOfferPricesAttributesTransfer {
         $restProductOfferPricesAttributesTransfer->setPrice($currentProductPriceTransfer->getPrice());
         $restCurrencyTransfer = (new RestCurrencyTransfer())
-            ->fromArray($currentProductPriceTransfer->getCurrency()->toArray(), true);
+            ->fromArray($currentProductPriceTransfer->getCurrencyOrFail()->toArray(), true);
         foreach ($currentProductPriceTransfer->getPrices() as $priceType => $amount) {
             $restProductOfferPriceAttributesTransfer = $this->createRestProductOfferPriceAttributesTransfer(
                 $priceType,
                 $amount,
-                $currentProductPriceTransfer->getPriceMode(),
+                $currentProductPriceTransfer->getPriceModeOrFail(),
                 $restCurrencyTransfer
             );
             $restProductOfferPricesAttributesTransfer->addPrice($restProductOfferPriceAttributesTransfer);
+
+            $restProductOfferPricesAttributesTransfer = $this->executeRestProductOfferPricesAttributesMapperPlugins(
+                $currentProductPriceTransfer,
+                $restProductOfferPricesAttributesTransfer
+            );
         }
 
         return $restProductOfferPricesAttributesTransfer;
@@ -71,5 +89,25 @@ class ProductOfferPriceMapper implements ProductOfferPriceMapperInterface
         }
 
         return $restProductOfferPriceAttributesTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CurrentProductPriceTransfer $currentProductPriceTransfer
+     * @param \Generated\Shared\Transfer\RestProductOfferPricesAttributesTransfer $restProductOfferPricesAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestProductOfferPricesAttributesTransfer
+     */
+    public function executeRestProductOfferPricesAttributesMapperPlugins(
+        CurrentProductPriceTransfer $currentProductPriceTransfer,
+        RestProductOfferPricesAttributesTransfer $restProductOfferPricesAttributesTransfer
+    ): RestProductOfferPricesAttributesTransfer {
+        foreach ($this->restProductOfferPricesAttributesMapperPlugins as $restProductOfferPricesAttributesMapperPlugin) {
+            $restProductOfferPricesAttributesTransfer = $restProductOfferPricesAttributesMapperPlugin->map(
+                $currentProductPriceTransfer,
+                $restProductOfferPricesAttributesTransfer
+            );
+        }
+
+        return $restProductOfferPricesAttributesTransfer;
     }
 }

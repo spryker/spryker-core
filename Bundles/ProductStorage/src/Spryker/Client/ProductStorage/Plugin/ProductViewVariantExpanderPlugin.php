@@ -13,6 +13,8 @@ use Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductConcreteView
 use Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductViewExpanderPluginInterface;
 
 /**
+ * @deprecated Use {@link \Spryker\Client\ProductStorage\Plugin\ProductVariantProductViewExpanderPlugin} instead.
+ *
  * @method \Spryker\Client\ProductStorage\ProductStorageFactory getFactory()
  */
 class ProductViewVariantExpanderPlugin extends AbstractPlugin implements ProductViewExpanderPluginInterface, ProductConcreteViewExpanderExcluderPluginInterface

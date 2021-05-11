@@ -32,15 +32,23 @@ class ReturnValidator implements ReturnValidatorInterface
     protected $salesReturnConfig;
 
     /**
+     * @var \Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnCreateRequestValidatorPluginInterface[]
+     */
+    protected $returnRequestValidatorPlugins;
+
+    /**
      * @param \Spryker\Zed\SalesReturn\Dependency\Facade\SalesReturnToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\SalesReturn\SalesReturnConfig $salesReturnConfig
+     * @param \Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnCreateRequestValidatorPluginInterface[] $returnRequestValidatorPlugins
      */
     public function __construct(
         SalesReturnToStoreFacadeInterface $storeFacade,
-        SalesReturnConfig $salesReturnConfig
+        SalesReturnConfig $salesReturnConfig,
+        array $returnRequestValidatorPlugins
     ) {
         $this->storeFacade = $storeFacade;
         $this->salesReturnConfig = $salesReturnConfig;
+        $this->returnRequestValidatorPlugins = $returnRequestValidatorPlugins;
     }
 
     /**
@@ -67,6 +75,12 @@ class ReturnValidator implements ReturnValidatorInterface
 
         if (!$this->storeFacade->findStoreByName($returnCreateRequestTransfer->getStore())) {
             return $this->createErrorReturnResponse(static::GLOSSARY_KEY_CREATE_RETURN_STORE_ERROR);
+        }
+
+        $returnResponseTransfer = $this->executeReturnRequestValidatorPlugins($returnCreateRequestTransfer);
+
+        if (!$returnResponseTransfer->getIsSuccessful()) {
+            return $returnResponseTransfer;
         }
 
         return (new ReturnResponseTransfer())
@@ -120,5 +134,25 @@ class ReturnValidator implements ReturnValidatorInterface
         return (new ReturnResponseTransfer())
             ->setIsSuccessful(false)
             ->addMessage($messageTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ReturnCreateRequestTransfer $returnCreateRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ReturnResponseTransfer
+     */
+    protected function executeReturnRequestValidatorPlugins(
+        ReturnCreateRequestTransfer $returnCreateRequestTransfer
+    ): ReturnResponseTransfer {
+        foreach ($this->returnRequestValidatorPlugins as $requestValidatorPlugin) {
+            $returnResponseTransfer = $requestValidatorPlugin->validate($returnCreateRequestTransfer);
+
+            if (!$returnResponseTransfer->getIsSuccessful()) {
+                return $returnResponseTransfer;
+            }
+        }
+
+        return (new ReturnResponseTransfer())
+            ->setIsSuccessful(true);
     }
 }

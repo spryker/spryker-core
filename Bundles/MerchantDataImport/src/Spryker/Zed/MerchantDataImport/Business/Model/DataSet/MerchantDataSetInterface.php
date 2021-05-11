@@ -9,12 +9,11 @@ namespace Spryker\Zed\MerchantDataImport\Business\Model\DataSet;
 
 interface MerchantDataSetInterface
 {
-    public const MERCHANT_KEY = 'merchant_key';
+    public const MERCHANT_REFERENCE = 'merchant_reference';
     public const NAME = 'merchant_name';
     public const REGISTRATION_NUMBER = 'registration_number';
     public const STATUS = 'status';
     public const EMAIL = 'email';
-    public const MERCHANT_REFERENCE = 'merchant_reference';
     public const IS_ACTIVE = 'is_active';
     public const URL = 'url';
 }

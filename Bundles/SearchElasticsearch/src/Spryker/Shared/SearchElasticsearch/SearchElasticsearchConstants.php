@@ -78,4 +78,12 @@ interface SearchElasticsearchConstants
      * @api
      */
     public const DIRECTORY_PERMISSION = 'SEARCH_ELASTICSEARCH:DIRECTORY_PERMISSION';
+
+    /**
+     * Specification:
+     * - Defines prefix for ElasticSearch indexes.
+     *
+     * @api
+     */
+    public const INDEX_PREFIX = 'SEARCH_ELASTICSEARCH:INDEX_PREFIX';
 }

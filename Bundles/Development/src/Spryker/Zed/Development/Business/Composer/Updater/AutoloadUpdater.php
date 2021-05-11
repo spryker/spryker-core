@@ -215,7 +215,11 @@ class AutoloadUpdater implements UpdaterInterface
      */
     protected function getNonEmptyDirectoriesWithHelpers($directory)
     {
-        $files = (new Finder())->files()->in($directory)->name('/Helper.php$/');
+        $files = (new Finder())->files()->in($directory)
+            ->exclude('_generated')
+            ->name('*.php$')
+            ->notName('/Tester.php$/');
+
         $directories = [];
         foreach ($files as $file) {
             $directoryName = dirname(str_replace('//', '/', $file));

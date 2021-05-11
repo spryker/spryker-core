@@ -1,0 +1,21 @@
+parameters:
+    ignoreErrors:
+        -
+            message: "#^Call to an undefined method Generated\\\\Service\\\\Ide\\\\AutoCompletion\\|Spryker\\\\Shared\\\\Kernel\\\\LocatorLocatorInterface\\:\\:utilDataReader\\(\\)\\.$#"
+            count: 1
+            path: %rootDir%/../../../vendor/spryker/spryker/Bundles/DataExport/src/Spryker/Service/DataExport/DataExportDependencyProvider.php
+
+        -
+            message: "#^Call to an undefined method Generated\\\\Zed\\\\Ide\\\\AutoCompletion\\|Spryker\\\\Shared\\\\Kernel\\\\LocatorLocatorInterface\\:\\:dataExport\\(\\)\\.$#"
+            count: 1
+            path: %rootDir%/../../../vendor/spryker/spryker/Bundles/DataExport/src/Spryker/Zed/DataExport/DataExportDependencyProvider.php
+
+        -
+            message: "#^Call to an undefined method Generated\\\\Zed\\\\Ide\\\\AutoCompletion\\|Spryker\\\\Shared\\\\Kernel\\\\LocatorLocatorInterface\\:\\:gracefulRunner\\(\\)\\.$#"
+            count: 1
+            path: %rootDir%/../../../vendor/spryker/spryker/Bundles/DataExport/src/Spryker/Zed/DataExport/DataExportDependencyProvider.php
+
+        -
+            message: "#^Method Spryker\\\\Service\\\\DataExport\\\\Merger\\\\DataExportConfigurationMerger\\:\\:mergeDataExportConfigurationTransfers\\(\\) should return Generated\\\\Shared\\\\Transfer\\\\DataExportConfigurationTransfer but returns Generated\\\\Shared\\\\Transfer\\\\DataExportConfigurationTransfer\\|null\\.$#"
+            count: 1
+            path: %rootDir%/../../../vendor/spryker/spryker/Bundles/DataExport/src/Spryker/Service/DataExport/Merger/DataExportConfigurationMerger.php

@@ -7,12 +7,16 @@
 
 namespace Spryker\Zed\DataExport\Business\Exporter;
 
+use Exception;
 use Generated\Shared\Transfer\DataExportConfigurationsTransfer;
 use Generated\Shared\Transfer\DataExportConfigurationTransfer;
 use Generated\Shared\Transfer\DataExportReportTransfer;
+use Generator;
 use Spryker\Service\DataExport\DataExportServiceInterface;
 use Spryker\Zed\DataExport\Business\Exception\DataExporterNotFoundException;
 use Spryker\Zed\DataExport\DataExportConfig;
+use Spryker\Zed\DataExport\Dependency\Facade\DataExportToGracefulRunnerFacadeInterface;
+use Throwable;
 
 class DataExportExecutor
 {
@@ -35,17 +39,25 @@ class DataExportExecutor
     protected $dataExportConfig;
 
     /**
+     * @var \Spryker\Zed\DataExport\Dependency\Facade\DataExportToGracefulRunnerFacadeInterface
+     */
+    protected $gracefulRunnerFacade;
+
+    /**
      * @param \Spryker\Zed\DataExportExtension\Dependency\Plugin\DataEntityExporterPluginInterface[] $dataEntityExporterPlugins
      * @param \Spryker\Service\DataExport\DataExportServiceInterface $dataExportService
      * @param \Spryker\Zed\DataExport\DataExportConfig $dataExportConfig
+     * @param \Spryker\Zed\DataExport\Dependency\Facade\DataExportToGracefulRunnerFacadeInterface $gracefulRunnerFacade
      */
     public function __construct(
         array $dataEntityExporterPlugins,
         DataExportServiceInterface $dataExportService,
-        DataExportConfig $dataExportConfig
+        DataExportConfig $dataExportConfig,
+        DataExportToGracefulRunnerFacadeInterface $gracefulRunnerFacade
     ) {
         $this->dataExportService = $dataExportService;
         $this->dataExportConfig = $dataExportConfig;
+        $this->gracefulRunnerFacade = $gracefulRunnerFacade;
 
         foreach ($dataEntityExporterPlugins as $dataEntityExporterPlugin) {
             $this->dataEntityExporterPlugins[$dataEntityExporterPlugin::getDataEntity()] = $dataEntityExporterPlugin;
@@ -59,22 +71,47 @@ class DataExportExecutor
      */
     public function exportDataEntities(DataExportConfigurationsTransfer $dataExportConfigurationsTransfer): array
     {
-        $dataExportResultTransfers = [];
-
         $dataExportDefaultsConfigurationsTransfer = $this->getDataExportDefaultsConfiguration();
         $dataExportDefaultsConfigurationTransfer = $this->dataExportService->mergeDataExportConfigurationTransfers(
             $dataExportConfigurationsTransfer->getDefaults() ?? new DataExportConfigurationTransfer(),
-            $dataExportDefaultsConfigurationsTransfer->getDefaults()
+            $dataExportDefaultsConfigurationsTransfer->getDefaultsOrFail()
         );
 
-        foreach ($dataExportConfigurationsTransfer->getActions() as $dataExportConfigurationTransfer) {
-            $dataExportConfigurationTransfer = $this->dataExportService->mergeDataExportConfigurationTransfers(
-                $dataExportConfigurationTransfer,
-                clone $dataExportDefaultsConfigurationTransfer
-            );
-            $dataExportConfigurationTransfer = $this->addDataExportConfigurationActionHooks($dataExportConfigurationTransfer);
+        $dataExportGenerator = $this->createDataExportGenerator($dataExportConfigurationsTransfer, $dataExportDefaultsConfigurationTransfer);
 
-            $dataExportResultTransfers[] = $this->runExport($dataExportConfigurationTransfer);
+        $this->gracefulRunnerFacade->run($dataExportGenerator, Exception::class);
+
+        return $dataExportGenerator->getReturn();
+    }
+
+    /**
+     * This method is turned into a `\Generator` by using the `yield` operator. Every iteration of it will be fully
+     * completed until a signal was received.
+     *
+     * @param \Generated\Shared\Transfer\DataExportConfigurationsTransfer $dataExportConfigurationsTransfer
+     * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportDefaultsConfigurationTransfer
+     *
+     * @return \Generator
+     */
+    protected function createDataExportGenerator(
+        DataExportConfigurationsTransfer $dataExportConfigurationsTransfer,
+        DataExportConfigurationTransfer $dataExportDefaultsConfigurationTransfer
+    ): Generator {
+        $dataExportResultTransfers = [];
+
+        try {
+            foreach ($dataExportConfigurationsTransfer->getActions() as $dataExportConfigurationTransfer) {
+                yield;
+
+                $dataExportConfigurationTransfer = $this->dataExportService->mergeDataExportConfigurationTransfers(
+                    $dataExportConfigurationTransfer,
+                    clone $dataExportDefaultsConfigurationTransfer
+                );
+                $dataExportConfigurationTransfer = $this->addDataExportConfigurationActionHooks($dataExportConfigurationTransfer);
+
+                $dataExportResultTransfers[] = $this->runExport($dataExportConfigurationTransfer);
+            }
+        } catch (Throwable $throwable) {
         }
 
         return $dataExportResultTransfers;

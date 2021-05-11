@@ -27,7 +27,7 @@ class ProductPageSearchToCategoryBridge implements ProductPageSearchToCategoryIn
      *
      * @return \Generated\Shared\Transfer\NodeTransfer[]
      */
-    public function getAllNodesByIdCategory($idCategory)
+    public function getAllNodesByIdCategory(int $idCategory): array
     {
         return $this->categoryFacade->getAllNodesByIdCategory($idCategory);
     }

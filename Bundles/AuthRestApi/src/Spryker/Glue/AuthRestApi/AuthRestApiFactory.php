@@ -19,6 +19,8 @@ use Spryker\Glue\AuthRestApi\Processor\AccessTokens\AccessTokenValidatorInterfac
 use Spryker\Glue\AuthRestApi\Processor\AccessTokens\OauthAccessTokenRestRequestValidator;
 use Spryker\Glue\AuthRestApi\Processor\AccessTokens\OauthAccessTokenValidator;
 use Spryker\Glue\AuthRestApi\Processor\AccessTokens\OauthAccessTokenValidatorInterface;
+use Spryker\Glue\AuthRestApi\Processor\AccessTokens\OauthToken;
+use Spryker\Glue\AuthRestApi\Processor\AccessTokens\OauthTokenInterface;
 use Spryker\Glue\AuthRestApi\Processor\AccessTokens\SimultaneousAuthenticationRestRequestValidator;
 use Spryker\Glue\AuthRestApi\Processor\AccessTokens\SimultaneousAuthenticationRestRequestValidatorInterface;
 use Spryker\Glue\AuthRestApi\Processor\RefreshTokens\RefreshTokensReader;
@@ -115,6 +117,14 @@ class AuthRestApiFactory extends AbstractFactory
             $this->getUtilEncodingService(),
             $this->getRestUserExpanderPlugins()
         );
+    }
+
+    /**
+     * @return \Spryker\Glue\AuthRestApi\Processor\AccessTokens\OauthTokenInterface
+     */
+    public function createOauthToken(): OauthTokenInterface
+    {
+        return new OauthToken($this->getClient());
     }
 
     /**

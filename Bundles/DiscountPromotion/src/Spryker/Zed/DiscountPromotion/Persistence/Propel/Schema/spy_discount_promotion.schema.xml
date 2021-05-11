@@ -4,7 +4,7 @@
     <table name="spy_discount_promotion">
         <column name="id_discount_promotion" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_discount" type="INTEGER" required="true"/>
-        <column name="abstract_sku" type="VARCHAR" size="255"  required="true"/>
+        <column name="abstract_sku" type="VARCHAR" size="255" required="true"/>
         <column name="quantity" type="INTEGER" required="true"/>
 
         <foreign-key name="spy_discount_promotion-fk_discount" foreignTable="spy_discount" phpName="Discount" refPhpName="DiscountPromotion">

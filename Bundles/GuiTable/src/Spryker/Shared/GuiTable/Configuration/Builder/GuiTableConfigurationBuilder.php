@@ -107,6 +107,11 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     protected $dataSourceUrl;
 
     /**
+     * @var string[][]
+     */
+    protected $dataSourceInlineData;
+
+    /**
      * @var int
      */
     protected $defaultPageSize;
@@ -135,6 +140,11 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
      * @var \Generated\Shared\Transfer\GuiTableEditableConfigurationTransfer|null
      */
     protected $editableConfiguration;
+
+    /**
+     * @var bool
+     */
+    protected $isPaginationEnabled;
 
     /**
      * @api
@@ -491,12 +501,14 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
      * @param string $id
      * @param string $title
      * @param string $url
+     * @param string|null $type
      *
      * @return $this
      */
-    public function addBatchActionUrl(string $id, string $title, string $url)
+    public function addBatchActionUrl(string $id, string $title, string $url, ?string $type = null)
     {
-        $this->addBatchAction($id, $title, static::ACTION_TYPE_URL, ['url' => $url]);
+        $type = $type ?? static::ACTION_TYPE_URL;
+        $this->addBatchAction($id, $title, $type, ['url' => $url]);
 
         return $this;
     }
@@ -627,6 +639,20 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     /**
      * @api
      *
+     * @param string[][] $data
+     *
+     * @return $this
+     */
+    public function setDataSourceInlineData(array $data)
+    {
+        $this->dataSourceInlineData = $data;
+
+        return $this;
+    }
+
+    /**
+     * @api
+     *
      * @param int $defaultPageSize
      *
      * @return $this
@@ -711,6 +737,20 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     /**
      * @api
      *
+     * @param bool $isPaginationEnabled
+     *
+     * @return $this
+     */
+    public function setIsPaginationEnabled(bool $isPaginationEnabled)
+    {
+        $this->isPaginationEnabled = $isPaginationEnabled;
+
+        return $this;
+    }
+
+    /**
+     * @api
+     *
      * @throws \Spryker\Shared\GuiTable\Exception\InvalidConfigurationException
      *
      * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
@@ -727,18 +767,13 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
         $guiTableConfigurationTransfer = $this->setFilters($guiTableConfigurationTransfer);
         $guiTableConfigurationTransfer = $this->setRowActions($guiTableConfigurationTransfer);
         $guiTableConfigurationTransfer = $this->setBatchActions($guiTableConfigurationTransfer);
+        $guiTableConfigurationTransfer = $this->setDataSource($guiTableConfigurationTransfer);
 
         if ($this->title) {
             $guiTableConfigurationTransfer->setTitle(
                 (new GuiTableTitleConfigurationTransfer())
                     ->setIsEnabled(true)
                     ->setTitle($this->title)
-            );
-        }
-
-        if ($this->dataSourceUrl) {
-            $guiTableConfigurationTransfer->setDataSource(
-                (new GuiTableDataSourceConfigurationTransfer())->setUrl($this->dataSourceUrl)
             );
         }
 
@@ -769,6 +804,12 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
 
         if ($this->editableConfiguration) {
             $guiTableConfigurationTransfer->setEditable($this->editableConfiguration);
+        }
+
+        if ($this->isPaginationEnabled !== null) {
+            $guiTableConfigurationTransfer->setPagination(
+                (new GuiTablePaginationConfigurationTransfer())->setIsEnabled($this->isPaginationEnabled)
+            );
         }
 
         return $guiTableConfigurationTransfer;
@@ -1098,6 +1139,29 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
                 ->setAvailableActionsPath($this->availableBatchActionsPath)
                 ->setNoActionsMessage($this->noBatchActionsMessage);
         }
+
+        return $guiTableConfigurationTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
+     *
+     * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
+     */
+    protected function setDataSource(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): GuiTableConfigurationTransfer
+    {
+        $guiTableDataSourceConfigurationTransfer = new GuiTableDataSourceConfigurationTransfer();
+
+        if ($this->dataSourceUrl) {
+            $guiTableDataSourceConfigurationTransfer->setUrl($this->dataSourceUrl);
+        }
+
+        if ($this->dataSourceInlineData) {
+            $guiTableDataSourceConfigurationTransfer->setData($this->dataSourceInlineData)
+                ->setType(GuiTableConfigurationBuilderInterface::DATA_SOURCE_TYPE_INLINE);
+        }
+
+        $guiTableConfigurationTransfer->setDataSource($guiTableDataSourceConfigurationTransfer);
 
         return $guiTableConfigurationTransfer;
     }

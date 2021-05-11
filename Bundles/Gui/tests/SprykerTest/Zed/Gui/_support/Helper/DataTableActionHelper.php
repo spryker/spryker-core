@@ -80,7 +80,7 @@ class DataTableActionHelper extends Module
         );
 
         $elementInList = sprintf(
-            '(//tr[@role="row"]//button[contains(., "%s")])[%s]/following::ul[1]//a[contains(., "%s")]',
+            '(//table[@data-qa="data-table"]//button[contains(., "%s")])[%s]/following::ul[1]//a[contains(., "%s")]',
             $buttonName,
             $rowPosition,
             $linkName
@@ -112,10 +112,10 @@ class DataTableActionHelper extends Module
     {
         $driver = $this->getDriver();
 
-        $selector = sprintf('(//tr[@role="row"]//a[contains(., "%1$s")] | //button[contains(., "%1$s")])[%2$d]', $name, $rowPosition);
+        $selector = sprintf('(//table[@data-qa="data-table"]//a[contains(., "%1$s")] | //button[contains(., "%1$s")])[%2$d]', $name, $rowPosition);
 
         if ($gridId) {
-            $selector = sprintf('(//div[@id="%3$s"]//tr[@role="row"]//a[contains(., "%1$s")] | //button[contains(., "%1$s")])[%2$d]', $name, $rowPosition, $gridId);
+            $selector = sprintf('(//div[@id="%3$s"]//table[@data-qa="data-table"]//a[contains(., "%1$s")] | //button[contains(., "%1$s")])[%2$d]', $name, $rowPosition, $gridId);
         }
 
         if (method_exists($driver, 'waitForElementVisible')) {

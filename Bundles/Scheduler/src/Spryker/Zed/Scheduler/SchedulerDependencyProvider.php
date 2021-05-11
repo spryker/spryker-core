@@ -9,12 +9,14 @@ namespace Spryker\Zed\Scheduler;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Scheduler\Dependency\Facade\SchedulerToGracefulRunnerFacadeBridge;
 
 /**
  * @method \Spryker\Zed\Scheduler\SchedulerConfig getConfig()
  */
 class SchedulerDependencyProvider extends AbstractBundleDependencyProvider
 {
+    public const FACADE_GRACEFUL_RUNNER = 'FACADE_GRACEFUL_RUNNER';
     public const PLUGINS_SCHEDULE_READER = 'PLUGINS_SCHEDULE_READER';
     public const PLUGINS_SCHEDULER_ADAPTER = 'PLUGINS_SCHEDULER_ADAPTER';
 
@@ -28,6 +30,7 @@ class SchedulerDependencyProvider extends AbstractBundleDependencyProvider
         $container = parent::provideBusinessLayerDependencies($container);
         $container = $this->addScheduleReaderPlugins($container);
         $container = $this->addSchedulerAdapterPlugins($container);
+        $container = $this->addGracefulRunnerFacade($container);
 
         return $container;
     }
@@ -74,5 +77,21 @@ class SchedulerDependencyProvider extends AbstractBundleDependencyProvider
     protected function getSchedulerAdapterPlugins(): array
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addGracefulRunnerFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_GRACEFUL_RUNNER, function (Container $container) {
+            return new SchedulerToGracefulRunnerFacadeBridge(
+                $container->getLocator()->gracefulRunner()->facade()
+            );
+        });
+
+        return $container;
     }
 }

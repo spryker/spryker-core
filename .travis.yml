@@ -2,31 +2,31 @@ language: php
 dist: bionic
 
 git:
-  depth: 3
+    depth: 3
 
 php:
-  - 7.3
+    - 7.3
 
 cache:
-  directories:
-    - $HOME/.composer/cache
+    directories:
+        - $HOME/.composer/cache
 
 env:
-  global:
-    - APPLICATION_ENV=development
-    - APPLICATION_STORE=DE
+    global:
+        - APPLICATION_ENV=development
+        - APPLICATION_STORE=DE
 
 before_install:
-  - phpenv config-rm xdebug.ini
+    - phpenv config-rm xdebug.ini
 
 install:
-  - composer install --no-interaction --prefer-dist --optimize-autoloader
-  - npm ci
+    - composer install --no-interaction --prefer-dist --optimize-autoloader
+    - npm ci
 
 script:
-  - vendor/bin/phpcs Bundles --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml -p
-  - npm run formatter
-  - npm run mp:tslint
+    - php -d memory_limit=1300M vendor/bin/phpcs Bundles --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml -p
+    - npm run formatter
+    - npm run mp:tslint
 
 notifications:
-  email: false
+    email: false

@@ -36,7 +36,7 @@ require('datatables.net-buttons');
 require('datatables.net-buttons-bs');
 require('datatables.net-responsive');
 require('datatables.net-select');
-require('nestable');
+require('@spryker/nestable');
 require('select2');
 require('codemirror');
 require('summernote');

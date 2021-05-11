@@ -416,4 +416,22 @@ interface ProductStorageClientInterface
         array $productConcreteIds,
         string $localeName
     ): array;
+
+    /**
+     * Specification:
+     * - Expands the product view with an attribute map and a product variant map.
+     * - Marks the product variants with an only one possible value as the selected ones.
+     * - Expands the product view with product concrete ID using the values of `selectedAttributes`.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer
+     */
+    public function expandProductViewWithProductVariant(
+        ProductViewTransfer $productViewTransfer,
+        string $localeName
+    ): ProductViewTransfer;
 }

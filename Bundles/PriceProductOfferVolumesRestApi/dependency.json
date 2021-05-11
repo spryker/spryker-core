@@ -1,0 +1,6 @@
+{
+    "include": {
+        "spryker/price-product-offer-volume": "PriceProductOfferVolumesRestApi depends on PriceProductOfferVolume functionality.",
+        "spryker/transfer": "Provides transfer objects definition with `::get*OrFail()` functionality."
+    }
+}

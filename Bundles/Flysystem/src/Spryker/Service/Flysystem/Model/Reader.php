@@ -203,7 +203,7 @@ class Reader implements ReaderInterface
             $results = [];
             foreach ($resourceCollection as $resource) {
                 $resourceTransfer = new FlysystemResourceTransfer();
-                $resourceTransfer->fromArray($resource);
+                $resourceTransfer->fromArray($resource, true);
 
                 $isFile = $this->isFile($resourceTransfer->getType());
                 $resourceTransfer->setIsFile($isFile);

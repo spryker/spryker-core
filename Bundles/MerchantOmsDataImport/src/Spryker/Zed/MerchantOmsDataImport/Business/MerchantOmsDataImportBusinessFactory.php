@@ -39,9 +39,12 @@ class MerchantOmsDataImportBusinessFactory extends DataImportBusinessFactory
      */
     public function getMerchantOmsProcessDataImporter(): DataImporterInterface
     {
+        /** @var \Spryker\Zed\DataImport\Business\Model\DataImporter $dataImporter */
         $dataImporter = $this->getCsvDataImporterFromConfig($this->getConfig()->getMerchantOmsProcessDataImporterConfiguration());
 
+        /** @var \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBroker $dataSetStepBroker */
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
+
         $dataSetStepBroker
             ->addStep($this->createStateMachineProcessWriterStep())
             ->addStep($this->createMerchantWriterStep());

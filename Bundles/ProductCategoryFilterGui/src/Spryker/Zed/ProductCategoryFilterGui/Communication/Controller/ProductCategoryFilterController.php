@@ -33,7 +33,7 @@ class ProductCategoryFilterController extends AbstractController
         $idCategory = $this->castId($request->query->get(self::PARAM_ID_CATEGORY_NODE));
         $localeTransfer = $this->getCurrentLocale();
 
-        $category = $this->getCategory($idCategory, $localeTransfer->getIdLocale());
+        $category = $this->getCategory($idCategory, $localeTransfer->getIdLocaleOrFail());
 
         $productCategoryFilterDataProvider = $this->getFactory()
             ->createProductCategoryFilterDataProvider();
@@ -60,7 +60,7 @@ class ProductCategoryFilterController extends AbstractController
 
         if ($productCategoryFilterForm->isSubmitted() && $productCategoryFilterForm->isValid()) {
             $productCategoryFilterTransfer = $productCategoryFilterFormatter->generateTransferFromJson(
-                $savedProductCategoryFilters->getIdProductCategoryFilter(),
+                $savedProductCategoryFilters->getIdProductCategoryFilterOrFail(),
                 $idCategory,
                 $productCategoryFilterForm->getData()[ProductCategoryFilterForm::FIELD_FILTERS]
             );
@@ -133,7 +133,7 @@ class ProductCategoryFilterController extends AbstractController
         $idCategory = $this->castId($request->query->get(self::PARAM_ID_CATEGORY_NODE));
 
         $localeTransfer = $this->getCurrentLocale();
-        $category = $this->getCategory($idCategory, $localeTransfer->getIdLocale());
+        $category = $this->getCategory($idCategory, $localeTransfer->getIdLocaleOrFail());
 
         $this->getFactory()
             ->getProductCategoryFilterFacade()
@@ -164,11 +164,15 @@ class ProductCategoryFilterController extends AbstractController
      */
     protected function getCategory($idCategory, $idLocale)
     {
+        $category = new CategoryTransfer();
         $mainCategory = $this->getQueryContainer()
             ->queryCategoryByIdAndLocale($idCategory, $idLocale)
             ->findOne();
 
-        $category = new CategoryTransfer();
+        if ($mainCategory === null) {
+            return $category;
+        }
+
         $category->setIdCategory($mainCategory->getFkCategory());
         $category->setName($mainCategory->getName());
 

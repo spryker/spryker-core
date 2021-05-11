@@ -22,6 +22,7 @@ use Spryker\Glue\GlueApplication\Rest\Response\ResponseHeadersInterface;
 use Spryker\Glue\GlueApplication\Rest\User\RestUserValidatorInterface;
 use Spryker\Glue\GlueApplication\Rest\User\UserProviderInterface;
 use Spryker\Glue\Kernel\Controller\AbstractController;
+use Spryker\Glue\Kernel\Controller\FormattedAbstractController;
 use Spryker\Shared\Log\LoggerTrait;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -131,6 +132,10 @@ class ControllerFilter implements ControllerFilterInterface
                 return new Response($restErrorMessageTransfer->getDetail(), $restErrorMessageTransfer->getStatus());
             }
 
+            if ($controller instanceof FormattedAbstractController) {
+                return $controller->$action($httpRequest);
+            }
+
             $restRequest = $this->requestFormatter->formatRequest($httpRequest);
             $restErrorCollectionTransfer = $this->validateRequest($controller, $httpRequest, $restRequest);
             $restResponse = $this->getRestResponse($restRequest, $restErrorCollectionTransfer, $controller, $action);
@@ -237,10 +242,6 @@ class ControllerFilter implements ControllerFilterInterface
      */
     protected function logException(Exception $exception): void
     {
-        if (!$this->getLogger()) {
-            return;
-        }
-
         $this->getLogger()->error($exception->getMessage(), ['trace' => $exception->getTraceAsString()]);
     }
 

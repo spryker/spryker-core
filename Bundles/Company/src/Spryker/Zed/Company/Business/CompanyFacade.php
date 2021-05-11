@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Company\Business;
 
 use Generated\Shared\Transfer\CompanyCollectionTransfer;
+use Generated\Shared\Transfer\CompanyCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyResponseTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -115,5 +116,19 @@ class CompanyFacade extends AbstractFacade implements CompanyFacadeInterface
     public function findCompanyByUuid(CompanyTransfer $companyTransfer): CompanyResponseTransfer
     {
         return $this->getFactory()->createCompanyReader()->findCompanyByUuid($companyTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyCriteriaFilterTransfer $companyCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyCollectionTransfer
+     */
+    public function getCompanyCollection(CompanyCriteriaFilterTransfer $companyCriteriaFilterTransfer): CompanyCollectionTransfer
+    {
+        return $this->getRepository()->getCompanyCollection($companyCriteriaFilterTransfer);
     }
 }

@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\Synchronization\Business\Iterator;
 
+use Generated\Shared\Transfer\SynchronizationDataQueryExpanderStrategyConfigurationTransfer;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface;
+use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryExpanderStrategyPluginInterface;
 
 class SynchronizationDataQueryContainerPluginIterator extends AbstractSynchronizationDataPluginIterator
 {
@@ -17,19 +19,30 @@ class SynchronizationDataQueryContainerPluginIterator extends AbstractSynchroniz
     protected $plugin;
 
     /**
+     * @var \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryExpanderStrategyPluginInterface
+     */
+    protected $synchronizationDataQueryExpanderStrategyPlugin;
+
+    /**
      * @var int[]
      */
     protected $filterIds;
 
     /**
      * @param \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface $plugin
+     * @param \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryExpanderStrategyPluginInterface $synchronizationDataQueryExpanderStrategyPlugin
      * @param int $chunkSize
      * @param int[] $ids
      */
-    public function __construct(SynchronizationDataQueryContainerPluginInterface $plugin, int $chunkSize, array $ids = [])
-    {
+    public function __construct(
+        SynchronizationDataQueryContainerPluginInterface $plugin,
+        SynchronizationDataQueryExpanderStrategyPluginInterface $synchronizationDataQueryExpanderStrategyPlugin,
+        int $chunkSize,
+        array $ids = []
+    ) {
         parent::__construct($plugin, $chunkSize);
 
+        $this->synchronizationDataQueryExpanderStrategyPlugin = $synchronizationDataQueryExpanderStrategyPlugin;
         $this->filterIds = $ids;
     }
 
@@ -38,10 +51,18 @@ class SynchronizationDataQueryContainerPluginIterator extends AbstractSynchroniz
      */
     protected function updateCurrent(): void
     {
-        $this->current = $this->plugin->queryData($this->filterIds)
-            ->offset($this->offset)
-            ->limit($this->chunkSize)
-            ->find()
-            ->getData();
+        $synchronizationDataQueryExpanderStrategyConfigurationTransfer = new SynchronizationDataQueryExpanderStrategyConfigurationTransfer();
+        $synchronizationDataQueryExpanderStrategyConfigurationTransfer
+            ->setOffset($this->offset)
+            ->setChunkSize($this->chunkSize);
+
+        $query = $this->plugin->queryData($this->filterIds);
+
+        $query = $this->synchronizationDataQueryExpanderStrategyPlugin->expandQuery(
+            $query,
+            $synchronizationDataQueryExpanderStrategyConfigurationTransfer
+        );
+
+        $this->current = $query->find()->getData();
     }
 }

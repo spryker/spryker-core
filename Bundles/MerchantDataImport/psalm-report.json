@@ -69,7 +69,7 @@
             "type": "PossiblyUndefinedMethod",
             "message": "Method Spryker\\Zed\\DataImport\\Business\\Model\\DataSet\\DataSetStepBrokerInterface::addStep does not exist",
             "file_name": "vendor/spryker/spryker/Bundles/MerchantDataImport/src/Spryker/Zed/MerchantDataImport/Business/MerchantDataImportBusinessFactory.php",
-            "snippet": "        $dataSetStepBroker->addStep($this->createMerchantKeyToIdMerchantStep())",
+            "snippet": "        $dataSetStepBroker->addStep($this->createMerchantReferenceToIdMerchantStep())",
             "selected_text": "addStep",
             "error_level": 3,
             "shortcode": 108

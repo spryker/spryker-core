@@ -27,6 +27,8 @@ interface GuiTableConfigurationBuilderInterface
     public const ACTION_TYPE_HTML_OVERLAY = 'html-overlay';
     public const ACTION_TYPE_URL = 'url';
 
+    public const DATA_SOURCE_TYPE_INLINE = 'inline';
+
     /**
      * @api
      *
@@ -217,17 +219,18 @@ interface GuiTableConfigurationBuilderInterface
     );
 
     /**
-     * Adds a new batch action with type url for rows.
+     * Adds a new batch action for rows. If $type is not set url type is used as default.
      *
      * @api
      *
      * @param string $id
      * @param string $title
      * @param string $url
+     * @param string|null $type
      *
      * @return $this
      */
-    public function addBatchActionUrl(string $id, string $title, string $url);
+    public function addBatchActionUrl(string $id, string $title, string $url, ?string $type = null);
 
     /**
      * Sets an action ID which will be triggered when clicking on a row.
@@ -309,6 +312,17 @@ interface GuiTableConfigurationBuilderInterface
     public function setDataSourceUrl(string $url);
 
     /**
+     * Sets inline data.
+     *
+     * @api
+     *
+     * @param string[][] $data
+     *
+     * @return $this
+     */
+    public function setDataSourceInlineData(array $data);
+
+    /**
      * Sets a number if rows which will be displayed by default.
      *
      * @api
@@ -360,11 +374,24 @@ interface GuiTableConfigurationBuilderInterface
     public function setIsItemSelectionEnabled(bool $isItemSelectionEnabled);
 
     /**
+     * Sets table title.
+     *
      * @param string $title
      *
      * @return $this
      */
     public function setTableTitle(string $title);
+
+    /**
+     * Sets if pagination is enabled.
+     *
+     * @api
+     *
+     * @param bool $isPaginationEnabled
+     *
+     * @return $this
+     */
+    public function setIsPaginationEnabled(bool $isPaginationEnabled);
 
     /**
      * @api

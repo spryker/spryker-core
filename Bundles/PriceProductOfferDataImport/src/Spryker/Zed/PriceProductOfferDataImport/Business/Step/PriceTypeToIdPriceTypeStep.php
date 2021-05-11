@@ -15,6 +15,8 @@ use Spryker\Zed\PriceProductOfferDataImport\Business\DataSet\PriceProductOfferDa
 
 class PriceTypeToIdPriceTypeStep implements DataImportStepInterface
 {
+    protected const PRICE_TYPE = PriceProductOfferDataSetInterface::PRICE_TYPE;
+
     /**
      * @var array
      */
@@ -27,7 +29,7 @@ class PriceTypeToIdPriceTypeStep implements DataImportStepInterface
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        $priceTypeName = $dataSet[PriceProductOfferDataSetInterface::PRICE_TYPE];
+        $priceTypeName = $dataSet[static::PRICE_TYPE];
 
         if (!isset($this->idPriceTypeCache[$priceTypeName])) {
             $priceTypeEntity = SpyPriceTypeQuery::create()

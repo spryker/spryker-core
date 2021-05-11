@@ -173,7 +173,7 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
      *
      * @api
      *
-     * @deprecated Use {@link \Spryker\Zed\Category\Persistence\CategoryQueryContainer::queryResourceUrlByCategoryNodeAndLocaleId()} instead.
+     * @deprecated Will be removed with next major release.
      *
      * @param int $idCategoryNode
      * @param int $idLocale
