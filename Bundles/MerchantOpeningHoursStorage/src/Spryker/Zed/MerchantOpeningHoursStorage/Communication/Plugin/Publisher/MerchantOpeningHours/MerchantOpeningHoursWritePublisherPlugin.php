@@ -16,7 +16,7 @@ use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface;
  * @method \Spryker\Zed\MerchantOpeningHoursStorage\MerchantOpeningHoursStorageConfig getConfig()
  * @method \Spryker\Zed\MerchantOpeningHoursStorage\Communication\MerchantOpeningHoursStorageCommunicationFactory getFactory()
  */
-class MerchantOpeningHoursStoragePublisherPlugin extends AbstractPlugin implements PublisherPluginInterface
+class MerchantOpeningHoursWritePublisherPlugin extends AbstractPlugin implements PublisherPluginInterface
 {
     /**
      * {@inheritDoc}

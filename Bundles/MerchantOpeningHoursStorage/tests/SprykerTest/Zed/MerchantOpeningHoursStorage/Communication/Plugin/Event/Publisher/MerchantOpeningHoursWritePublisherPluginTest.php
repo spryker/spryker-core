@@ -12,7 +12,7 @@ use Generated\Shared\DataBuilder\EventEntityBuilder;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Shared\MerchantOpeningHoursStorage\MerchantOpeningHoursStorageConfig;
-use Spryker\Zed\MerchantOpeningHoursStorage\Communication\Plugin\Publisher\MerchantOpeningHours\MerchantOpeningHoursStoragePublisherPlugin;
+use Spryker\Zed\MerchantOpeningHoursStorage\Communication\Plugin\Publisher\MerchantOpeningHours\MerchantOpeningHoursWritePublisherPlugin;
 use Spryker\Zed\MerchantOpeningHoursStorage\Dependency\Facade\MerchantOpeningHoursStorageToEventBehaviorFacadeBridge;
 use Spryker\Zed\MerchantOpeningHoursStorage\MerchantOpeningHoursStorageDependencyProvider;
 use Spryker\Zed\Testify\Locator\Business\Container as SprykerContainer;
@@ -27,10 +27,10 @@ use Spryker\Zed\Testify\Locator\Business\Container as SprykerContainer;
  * @group Plugin
  * @group Event
  * @group Listener
- * @group MerchantOpeningHoursStoragePublisherPluginTest
+ * @group MerchantOpeningHoursWritePublisherPluginTest
  * Add your own group annotations below this line
  */
-class MerchantOpeningHoursStoragePublisherPluginTest extends Unit
+class MerchantOpeningHoursWritePublisherPluginTest extends Unit
 {
     /**
      * @var \SprykerTest\Zed\MerchantOpeningHoursStorage\MerchantOpeningHoursStorageCommunicationTester
@@ -70,7 +70,7 @@ class MerchantOpeningHoursStoragePublisherPluginTest extends Unit
         // Arrange
         $merchantTransfer = $this->tester->haveMerchant();
         $this->tester->createMerchantOpeningHoursDateSchedule($merchantTransfer);
-        $merchantOpeningHoursStoragePublisher = new MerchantOpeningHoursStoragePublisherPlugin();
+        $merchantOpeningHoursStoragePublisher = new MerchantOpeningHoursWritePublisherPlugin();
         $merchantOpeningHoursStoragePublisher->setFacade($this->tester->getFacade());
         $eventTransfers = [
             (new EventEntityBuilder())
