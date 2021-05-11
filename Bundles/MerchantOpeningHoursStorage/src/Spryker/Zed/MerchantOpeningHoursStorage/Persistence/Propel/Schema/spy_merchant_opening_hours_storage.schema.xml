@@ -10,20 +10,15 @@
         <column name="fk_merchant" type="integer" required="true"/>
         <column name="data" type="LONGVARCHAR" required="false"/>
         <column name="key" type="VARCHAR" size="1024" required="true"/>
-
         <id-method-parameter value="id_merchant_opening_hours_storage_pk_seq"/>
-
         <index name="spy_merchant_opening_hours_storage-fk_merchant">
             <index-column name="fk_merchant"/>
         </index>
-
         <behavior name="synchronization">
             <parameter name="resource" value="merchant_opening_hours"/>
             <parameter name="key_suffix_column" value="fk_merchant"/>
             <parameter name="queue_group" value="sync.storage.merchant_opening_hours"/>
         </behavior>
-
         <behavior name="timestampable"/>
     </table>
-
 </database>
