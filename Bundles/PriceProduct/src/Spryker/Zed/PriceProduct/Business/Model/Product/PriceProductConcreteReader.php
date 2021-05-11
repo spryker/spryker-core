@@ -300,7 +300,7 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
     }
 
     /**
-     * @deprecated  Will be removed without replacement.
+     * @deprecated Will be removed without replacement.
      *
      * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      * @param string[] $skus

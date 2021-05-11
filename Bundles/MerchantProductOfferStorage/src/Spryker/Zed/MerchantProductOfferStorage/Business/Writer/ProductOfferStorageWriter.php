@@ -117,12 +117,12 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
 
         foreach ($productOfferCollectionTransfer->getProductOffers() as $productOfferTransfer) {
             $this->merchantProductOfferStorageEntityManager->saveProductOfferStorage($productOfferTransfer);
-            $sellableProductOfferReferences [] = $productOfferTransfer->getProductOfferReference();
+            $sellableProductOfferReferences[] = $productOfferTransfer->getProductOfferReference();
             $this->deleteProductOfferReferenceByStore($productOfferTransfer);
         }
 
         $this->productOfferStorageDeleter->deleteCollectionByProductOfferReferences(
-            array_diff($productOfferReferences, $sellableProductOfferReferences )
+            array_diff($productOfferReferences, $sellableProductOfferReferences)
         );
     }
 
