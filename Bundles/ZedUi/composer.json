@@ -13,13 +13,12 @@
     },
     "require-dev": {
         "spryker/code-sniffer": "*",
-        "spryker/container": "*",
-        "spryker/testify": "*"
+        "spryker/container": "*"
     },
     "suggest": {
         "spryker/container": "If you want to use Twig plugins",
-        "spryker/zed-navigation": "If you want to use the navigation.",
-        "spryker/ui-components": "If you want to use Spryker web components in HTML."
+        "spryker/ui-components": "If you want to use Spryker web components in HTML.",
+        "spryker/zed-navigation": "If you want to use the navigation."
     },
     "autoload": {
         "psr-4": {

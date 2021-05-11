@@ -303,6 +303,7 @@ class DevelopmentConfig extends AbstractBundleConfig
             'Codeception\\' => 'spryker/testify',
             'CodeItNow\\BarcodeBundle' => 'spryker/code-it-now',
             'Doctrine\\Common\\Inflector' => 'spryker/doctrine-inflector',
+            'Doctrine\\Inflector\\InflectorFactory' => 'spryker/doctrine-inflector',
             'DMS\\PHPUnitExtensions\\' => 'spryker/testify',
             'Egulias\\EmailValidator\\' => 'spryker/egulias',
             'Elastica\\' => 'spryker/elastica',

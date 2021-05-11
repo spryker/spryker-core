@@ -260,6 +260,19 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
         if ($criteriaFilterTransfer->getCompanyBusinessUnitIds()) {
             $companyBusinessUnitQuery->filterByIdCompanyBusinessUnit_In($criteriaFilterTransfer->getCompanyBusinessUnitIds());
         }
+
+        if ($criteriaFilterTransfer->getName()) {
+            $companyBusinessUnitQuery->filterByName(sprintf('%%%s%%', $criteriaFilterTransfer->getName()), Criteria::LIKE);
+            $companyBusinessUnitQuery->setIgnoreCase(true);
+        }
+
+        if ($criteriaFilterTransfer->getIdCompany()) {
+            $companyBusinessUnitQuery->filterByFkCompany($criteriaFilterTransfer->getIdCompany());
+        }
+
+        if ($criteriaFilterTransfer->getFilter() && $criteriaFilterTransfer->getFilter()->getLimit()) {
+            $companyBusinessUnitQuery->limit($criteriaFilterTransfer->getFilter()->getLimit());
+        }
     }
 
     /**
