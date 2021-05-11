@@ -41,7 +41,6 @@ class GraphPluginTest extends Unit
         $this->expectException(GraphNotInitializedException::class);
 
         $graphPlugin = new GraphPlugin();
-        $this->assertInstanceOf(GraphPlugin::class, $graphPlugin->addNode(self::NODE_A));
     }
 
     /**
