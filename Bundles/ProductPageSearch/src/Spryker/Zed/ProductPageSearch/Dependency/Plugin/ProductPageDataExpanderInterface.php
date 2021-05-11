@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\ProductPageSearch\Dependency\Plugin;
 
-use Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductPageSearchDataMapperPluginInterface;
+use Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductPageDataExpanderPluginInterface;
 
 /**
- * @deprecated Use {@link \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductPageSearchDataMapperPluginInterface} instead.
+ * @deprecated Use {@link \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductPageDataExpanderPluginInterface} instead.
  */
-interface ProductPageDataExpanderInterface extends ProductPageSearchDataMapperPluginInterface
+interface ProductPageDataExpanderInterface extends ProductPageDataExpanderPluginInterface
 {
 }

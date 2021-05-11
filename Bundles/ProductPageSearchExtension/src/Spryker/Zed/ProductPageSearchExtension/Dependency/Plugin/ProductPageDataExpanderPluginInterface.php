@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\ProductPageSearchTransfer;
 /**
  * Provides extension capabilities for "ProductPageSearchTransfer" expanding.
  */
-interface ProductPageSearchDataMapperPluginInterface
+interface ProductPageDataExpanderPluginInterface
 {
     /**
      * Specification:

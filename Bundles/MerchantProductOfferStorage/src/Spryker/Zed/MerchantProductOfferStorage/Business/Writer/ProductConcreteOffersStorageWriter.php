@@ -133,7 +133,7 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
 
         $productConcreteSkus = array_unique($productConcreteSkus);
 
-        $productOfferCriteriaTransfer = $this->productOfferCriteriaTransferProvider->createProductOfferCriteriaTransfer()
+        $productOfferCriteriaTransfer = $this->productOfferCriteriaTransferProvider->createSellableProductOfferCriteriaTransfer()
             ->setConcreteSkus($productConcreteSkus);
         $productOfferCollectionTransfer = $this->merchantProductOfferStorageRepository->getProductOffers($productOfferCriteriaTransfer);
 

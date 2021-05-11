@@ -138,58 +138,6 @@ class MerchantStorageReader implements MerchantStorageReaderInterface
     }
 
     /**
-     * @param string $merchantReference
-     *
-     * @return \Generated\Shared\Transfer\MerchantStorageTransfer|null
-     */
-    public function findOneByMerchantReference(string $merchantReference): ?MerchantStorageTransfer
-    {
-        $merchantKey = $this->generateKey(static::KEY_MERCHANT_REFERENCE . ':' . $merchantReference);
-        $merchantDataMapId = $this->storageClient->get($merchantKey);
-
-        if (!isset($merchantDataMapId[static::KEY_ID_MERCHANT])) {
-            return null;
-        }
-
-        $merchantCriteriaTransfer = new MerchantCriteriaTransfer();
-
-        $merchantCriteriaTransfer->setIdMerchant($merchantDataMapId[static::KEY_ID_MERCHANT]);
-
-        return $this->findOne($merchantCriteriaTransfer);
-    }
-
-    /**
-     * @param string[] $merchantReferences
-     *
-     * @return \Generated\Shared\Transfer\MerchantStorageTransfer[]
-     */
-    public function getByMerchantReferences(array $merchantReferences): array
-    {
-        $merchantMapKeys = array_map(function ($merchantReference) {
-            return $this->generateKey(static::KEY_MERCHANT_REFERENCE . ':' . $merchantReference);
-        }, $merchantReferences);
-
-        $merchantDataMapIdList = $this->storageClient->getMulti($merchantMapKeys);
-
-        $merchantIds = [];
-
-        foreach ($merchantDataMapIdList as $merchantDataMapId) {
-            $merchantMapId = $this->utilEncodingService->decodeJson($merchantDataMapId, true);
-            if (isset($merchantMapId[static::KEY_ID_MERCHANT])) {
-                $merchantIds[] = $merchantMapId[static::KEY_ID_MERCHANT];
-            }
-        }
-
-        if ($merchantIds) {
-            $merchantCriteriaTransfer = (new MerchantCriteriaTransfer())->setMerchantIds($merchantIds);
-
-            return $this->get($merchantCriteriaTransfer);
-        }
-
-        return [];
-    }
-
-    /**
      * @param array $merchantReferences
      *
      * @return int[]

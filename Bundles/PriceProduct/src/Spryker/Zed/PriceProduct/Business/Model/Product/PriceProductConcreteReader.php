@@ -300,7 +300,7 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
     }
 
     /**
-     * @deprecated Use {@link \Spryker\Zed\ProductManagement\ProductManagementDependencyProvider::addProductTableQueryCriteriaExpanderPluginInterfaces()} instead.
+     * @deprecated  Will be removed without replacement.
      *
      * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      * @param string[] $skus

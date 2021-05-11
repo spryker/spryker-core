@@ -14,5 +14,5 @@ interface ProductOfferCriteriaTransferProviderInterface
     /**
      * @return \Generated\Shared\Transfer\ProductOfferCriteriaTransfer
      */
-    public function createProductOfferCriteriaTransfer(): ProductOfferCriteriaTransfer;
+    public function createSellableProductOfferCriteriaTransfer(): ProductOfferCriteriaTransfer;
 }

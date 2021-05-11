@@ -8,8 +8,6 @@
 namespace Spryker\Zed\MerchantProductOfferGui\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\MerchantProductOfferGui\Communication\Expander\MerchantListDataExpander;
-use Spryker\Zed\MerchantProductOfferGui\Communication\Expander\MerchantListDataExpanderInterface;
 use Spryker\Zed\MerchantProductOfferGui\Communication\Expander\MerchantProductOfferTableExpander;
 use Spryker\Zed\MerchantProductOfferGui\Communication\Expander\MerchantProductOfferTableExpanderInterface;
 use Spryker\Zed\MerchantProductOfferGui\Communication\Reader\MerchantProductOfferReader;
@@ -66,13 +64,5 @@ class MerchantProductOfferGuiCommunicationFactory extends AbstractCommunicationF
     public function getMerchantFacade(): MerchantProductOfferGuiToMerchantFacadeInterface
     {
         return $this->getProvidedDependency(MerchantProductOfferGuiDependencyProvider::FACADE_MERCHANT);
-    }
-
-    /**
-     * @return \Spryker\Zed\MerchantProductOfferGui\Communication\Expander\MerchantListDataExpanderInterface
-     */
-    public function createMerchantListDataExpander(): MerchantListDataExpanderInterface
-    {
-        return new MerchantListDataExpander($this->getMerchantFacade());
     }
 }

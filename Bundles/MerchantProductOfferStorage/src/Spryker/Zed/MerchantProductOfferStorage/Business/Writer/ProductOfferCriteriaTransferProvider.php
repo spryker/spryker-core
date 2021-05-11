@@ -19,7 +19,7 @@ class ProductOfferCriteriaTransferProvider implements ProductOfferCriteriaTransf
     /**
      * @return \Generated\Shared\Transfer\ProductOfferCriteriaTransfer
      */
-    public function createProductOfferCriteriaTransfer(): ProductOfferCriteriaTransfer
+    public function createSellableProductOfferCriteriaTransfer(): ProductOfferCriteriaTransfer
     {
         return (new ProductOfferCriteriaTransfer())
             ->setIsActive(true)

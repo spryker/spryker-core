@@ -25,18 +25,4 @@ interface MerchantStorageReaderInterface
      * @return \Generated\Shared\Transfer\MerchantStorageTransfer[]
      */
     public function get(MerchantCriteriaTransfer $merchantCriteriaTransfer): array;
-
-    /**
-     * @param string $merchantReference
-     *
-     * @return \Generated\Shared\Transfer\MerchantStorageTransfer|null
-     */
-    public function findOneByMerchantReference(string $merchantReference): ?MerchantStorageTransfer;
-
-    /**
-     * @param string[] $merchantReferences
-     *
-     * @return \Generated\Shared\Transfer\MerchantStorageTransfer[]
-     */
-    public function getByMerchantReferences(array $merchantReferences): array;
 }
