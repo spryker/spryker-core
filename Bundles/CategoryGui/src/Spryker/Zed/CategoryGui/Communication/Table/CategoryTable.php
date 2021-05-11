@@ -182,7 +182,7 @@ class CategoryTable extends AbstractTable
             static::COL_SEARCHABLE => $this->yesNoOutput((bool)$categoryEntity->getIsSearchable()),
             static::COL_TEMPLATE => $categoryEntity->getVirtualColumn(static::COL_TEMPLATE),
             static::COL_STORE_RELATION => $this->getStoreNames($categoryEntity->getIdCategory(), $categoryStoreNamesGroupedByIdCategory),
-            static::COL_ACTIONS => $this->generateActionsButton($categoryEntity, $categoryStoreNamesGroupedByIdCategory),
+            static::COL_ACTIONS => $this->generateActionsButton($categoryEntity),
         ];
     }
 
@@ -202,20 +202,15 @@ class CategoryTable extends AbstractTable
 
     /**
      * @param \Orm\Zed\Category\Persistence\SpyCategory $item
-     * @param string[][] $categoryStoreNamesGroupedByIdCategory
      *
      * @return string
      */
-    protected function generateActionsButton(SpyCategory $item, array $categoryStoreNamesGroupedByIdCategory): string
+    protected function generateActionsButton(SpyCategory $item): string
     {
         $buttonGroupItems = [];
 
         $buttonGroupItems[] = $this->generateEditCategoryButtonGroupItem($item);
-
-        if (!$this->hasAssignedStores($item, $categoryStoreNamesGroupedByIdCategory)) {
-            $buttonGroupItems[] = $this->generateCategoryRemoveButtonGroupItem($item);
-        }
-
+        $buttonGroupItems[] = $this->generateCategoryRemoveButtonGroupItem($item);
         $buttonGroupItems[] = $this->generateAddCategoryToNodeButtonGroupItem($item);
         $buttonGroupItems[] = $this->generateCategoryResortButtonGroupItem($item);
         $buttonGroupItems[] = $this->generateAssignProductsButtonGroupItem($item);
@@ -343,16 +338,5 @@ class CategoryTable extends AbstractTable
         }
 
         return $categoryIds;
-    }
-
-    /**
-     * @param \Orm\Zed\Category\Persistence\SpyCategory $item
-     * @param string[][] $categoryStoreNamesGroupedByIdCategory
-     *
-     * @return bool
-     */
-    protected function hasAssignedStores(SpyCategory $item, array $categoryStoreNamesGroupedByIdCategory): bool
-    {
-        return (isset($categoryStoreNamesGroupedByIdCategory[$item->getIdCategory()]));
     }
 }

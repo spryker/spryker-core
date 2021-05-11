@@ -7,15 +7,12 @@
 
 namespace Spryker\Zed\CategoryGui\Communication\Controller;
 
-use ArrayObject;
 use Generated\Shared\Transfer\CategoryNodeUrlCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryResponseTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
-use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\NodeCollectionTransfer;
 use Spryker\Zed\CategoryGui\Communication\Form\DeleteType;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -32,8 +29,6 @@ class DeleteController extends CategoryAbstractController
     protected const ROUTE_CATEGORY_LIST = '/category-gui/list';
     protected const ROUTE_DELETE_CATEGORY = '/category-gui/delete';
 
-    protected const ERROR_MESSAGE_STORE_RELATION_NOT_REMOVABLE = 'Category with store relation cannot be removed.';
-
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -47,11 +42,6 @@ class DeleteController extends CategoryAbstractController
         $categoryTransfer = $categoryFinder->findCategoryByIdCategoryAndLocale($idCategory, $this->getCurrentLocale());
         if ($categoryTransfer === null) {
             return $this->redirectResponse(static::ROUTE_CATEGORY_LIST);
-        }
-
-        $storeRelationTransfer = $categoryTransfer->getStoreRelation();
-        if ($storeRelationTransfer !== null && $storeRelationTransfer->getStores()->count()) {
-            return $this->handleCategoryWithStoreRelationError();
         }
 
         $form = $this->getFactory()->createCategoryDeleteForm($idCategory);
@@ -125,17 +115,6 @@ class DeleteController extends CategoryAbstractController
         }
 
         return $categoryNodeCollectionTransfer->getNodes()->offsetGet(0)->getChildrenNodes() ?? new NodeCollectionTransfer();
-    }
-
-    /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    protected function handleCategoryWithStoreRelationError(): RedirectResponse
-    {
-        $errorMessageTransfer = (new MessageTransfer())->setValue(static::ERROR_MESSAGE_STORE_RELATION_NOT_REMOVABLE);
-        $this->addErrorMessages(new ArrayObject([$errorMessageTransfer]));
-
-        return $this->redirectResponse(static::ROUTE_CATEGORY_LIST);
     }
 
     /**

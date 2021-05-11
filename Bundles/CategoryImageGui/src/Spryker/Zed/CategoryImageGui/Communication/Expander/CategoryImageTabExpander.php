@@ -12,6 +12,8 @@ use Generated\Shared\Transfer\TabsViewTransfer;
 
 class CategoryImageTabExpander implements CategoryImageTabExpanderInterface
 {
+    protected const TAB_TITLE = 'Images';
+
     /**
      * @param \Generated\Shared\Transfer\TabsViewTransfer $tabsViewTransfer
      *
@@ -20,7 +22,7 @@ class CategoryImageTabExpander implements CategoryImageTabExpanderInterface
     public function expandWithImageTab(TabsViewTransfer $tabsViewTransfer): TabsViewTransfer
     {
         $tabItemTransfer = (new TabItemTransfer())->setName('image')
-            ->setTitle('Image')
+            ->setTitle(static::TAB_TITLE)
             ->setTemplate('@CategoryImageGui/_partials/image-tab.twig');
 
         $tabsViewTransfer->addTab($tabItemTransfer);
