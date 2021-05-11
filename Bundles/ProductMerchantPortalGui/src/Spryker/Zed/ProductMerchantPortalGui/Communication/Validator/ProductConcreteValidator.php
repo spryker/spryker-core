@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\RowValidationTransfer;
 use Generated\Shared\Transfer\TableValidationResponseTransfer;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Constraint\SkuRegexConstraint;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Constraint\UniqueAbstractSkuConstraint;
-use Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\ProductConcreteMapper;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\External\ProductMerchantPortalGuiToValidationAdapterInterface;
 use Symfony\Component\Validator\Constraints\All;
 use Symfony\Component\Validator\Constraints\Collection;
@@ -21,6 +20,36 @@ use Symfony\Component\Validator\ConstraintViolationInterface;
 
 class ProductConcreteValidator implements ProductConcreteValidatorInterface
 {
+    /**
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\ProductConcreteMapper::FIELD_NAME
+     */
+    protected const FIELD_NAME = 'name';
+
+    /**
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\ProductConcreteMapper::FIELD_SKU
+     */
+    protected const FIELD_SKU = 'sku';
+
+    /**
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\ProductConcreteMapper::FIELD_ATTRIBUTE
+     */
+    protected const FIELD_ATTRIBUTE = 'attribute';
+
+    /**
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\ProductConcreteMapper::FIELD_SUPER_ATTRIBUTES
+     */
+    protected const FIELD_SUPER_ATTRIBUTES = 'superAttributes';
+
+    /**
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\ProductConcreteMapper::FIELD_KEY
+     */
+    protected const FIELD_KEY = 'key';
+
+    /**
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\ProductConcreteMapper::FIELD_VALUE
+     */
+    protected const FIELD_VALUE = 'value';
+
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\External\ProductMerchantPortalGuiToValidationAdapterInterface
      */
@@ -35,7 +64,7 @@ class ProductConcreteValidator implements ProductConcreteValidatorInterface
     }
 
     /**
-     * @param array $concreteProducts
+     * @param mixed[] $concreteProducts
      *
      * @return \Generated\Shared\Transfer\TableValidationResponseTransfer
      */
@@ -53,8 +82,8 @@ class ProductConcreteValidator implements ProductConcreteValidatorInterface
         foreach ($concreteProducts as $index => $concreteProduct) {
             $rowValidationTransfer = new RowValidationTransfer();
             $rowValidationTransfer->setFields([
-                ProductConcreteMapper::FIELD_NAME => $concreteProduct[ProductConcreteMapper::FIELD_NAME],
-                ProductConcreteMapper::FIELD_SKU => $concreteProduct[ProductConcreteMapper::FIELD_SKU],
+                static::FIELD_NAME => $concreteProduct[static::FIELD_NAME],
+                static::FIELD_SKU => $concreteProduct[static::FIELD_SKU],
             ]);
             $rowValidationTransfers[$index] = $rowValidationTransfer;
         }
@@ -103,15 +132,15 @@ class ProductConcreteValidator implements ProductConcreteValidatorInterface
         return [new All([
             new Collection(
                 [
-                    ProductConcreteMapper::FIELD_NAME => [
+                    static::FIELD_NAME => [
                         new NotBlank(),
                     ],
-                    ProductConcreteMapper::FIELD_SKU => [
+                    static::FIELD_SKU => [
                         new NotBlank(),
                         new SkuRegexConstraint(),
                         new UniqueAbstractSkuConstraint(),
                     ],
-                    ProductConcreteMapper::FIELD_SUPER_ATTRIBUTES => [
+                    static::FIELD_SUPER_ATTRIBUTES => [
                         new All($this->getSuperAttributeConstraints()),
                     ],
                 ]
@@ -126,19 +155,19 @@ class ProductConcreteValidator implements ProductConcreteValidatorInterface
     {
         return [new Collection(
             [
-                ProductConcreteMapper::FIELD_NAME => [
+                static::FIELD_NAME => [
                     new NotBlank(),
                 ],
-                ProductConcreteMapper::FIELD_VALUE => [
+                static::FIELD_VALUE => [
                     new NotBlank(),
                 ],
-                ProductConcreteMapper::FIELD_ATTRIBUTE => [
+                static::FIELD_ATTRIBUTE => [
                     new Collection(
                         [
-                            ProductConcreteMapper::FIELD_NAME => [
+                            static::FIELD_NAME => [
                                 new NotBlank(),
                             ],
-                            ProductConcreteMapper::FIELD_VALUE => [
+                            static::FIELD_VALUE => [
                                 new NotBlank(),
                             ],
                         ]

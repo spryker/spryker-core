@@ -30,4 +30,3 @@ suites:
                 - \SprykerTest\Shared\CompanyUser\Helper\CompanyUserHelper
                 - \SprykerTest\Zed\CompanyUserInvitation\Helper\CompanyUserInvitationHelper
                 - \SprykerTest\Zed\Permission\Helper\PermissionHelper
-

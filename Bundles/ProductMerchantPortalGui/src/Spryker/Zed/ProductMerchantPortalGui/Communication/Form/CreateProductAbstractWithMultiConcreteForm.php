@@ -21,9 +21,8 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class CreateProductAbstractWithMultiConcreteForm extends AbstractType
 {
-    public const FIELD_NAME = 'name';
-    public const FIELD_SKU = 'sku';
-    public const FIELD_CONCRETE_PRODUCTS = 'concreteProducts';
+    protected const FIELD_NAME = 'name';
+    protected const FIELD_SKU = 'sku';
 
     /**
      * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder

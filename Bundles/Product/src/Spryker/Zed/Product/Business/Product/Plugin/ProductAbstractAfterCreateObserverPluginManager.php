@@ -18,7 +18,7 @@ class ProductAbstractAfterCreateObserverPluginManager implements ProductAbstract
     protected $afterCreateCollection;
 
     /**
-     * @var array|\Spryker\Zed\ProductExtension\Dependency\Plugin\ProductAbstractPostCreatePluginInterface[]
+     * @var \Spryker\Zed\ProductExtension\Dependency\Plugin\ProductAbstractPostCreatePluginInterface[]
      */
     protected $productAbstractPostCreatePlugins;
 

@@ -1,9 +1,5 @@
 <?xml version="1.0"?>
-<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd" name="zed"
-          namespace="Orm\Zed\Comment\Persistence"
-          package="src.Orm.Zed.Comment.Persistence"
->
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd" name="zed" namespace="Orm\Zed\Comment\Persistence" package="src.Orm.Zed.Comment.Persistence">
 
     <table name="spy_comment_thread" idMethod="native" allowPkInsert="true">
         <column name="id_comment_thread" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>

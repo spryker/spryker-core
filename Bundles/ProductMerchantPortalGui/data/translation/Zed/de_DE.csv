@@ -12,6 +12,7 @@ Name,Name
 "Name & Description","Name & Beschreibung"
 Offline,Offline
 Online,Online
+"Product successfully created!","Artikel erfolgreich hinzugefügt."
 "Please resolve all errors.","Bitte alle Fehler beheben."
 Price,Preis
 Products,Produkte
@@ -84,3 +85,8 @@ Values,Values
 "Same Name as Abstract Product","Same Name as Abstract Product"
 "Super attribute value","Super attribute value"
 "Name default","Name default"
+"Invalid value provided. Please use only alphanumeric characters and . - _","Die SKU enthält ein ungültiges Zeichen. Bitte nutzen sie nur alphanummerische Zeichen und . - _"
+"Concrete Product SKU already exists","Concrete Product SKU existiert schon"
+"SKU Prefix already exists","SKU Präfix existiert schon"
+"Abstract product has 1 concrete product","Abstraktes Produkt hat 1 konkretes Produkt"
+"Abstract product has multiple concrete products","Abstraktes Produkt hat mehrere konkrete Produkte"

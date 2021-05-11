@@ -21,7 +21,7 @@ class PriceProductAbstractPostCreatePlugin extends AbstractPlugin implements Pro
 {
     /**
      * {@inheritDoc}
-     * - Create new product price entities if they doesn't exists by abstract product id and price type.
+     * - Creates new product price entities by abstract product id and price type if they don't exist.
      *
      * @api
      *

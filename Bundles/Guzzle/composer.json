@@ -1,21 +1,21 @@
 {
-  "name": "spryker/guzzle",
-  "type": "library",
-  "description": "Guzzle module",
-  "license": "proprietary",
-  "require": {
-    "guzzlehttp/guzzle": "^6.3.0 || ^7.0.0",
-    "php": ">=7.3"
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "scripts": {},
-  "extra": {
-    "branch-alias": {
-      "dev-master": "2.0.x-dev"
+    "name": "spryker/guzzle",
+    "type": "library",
+    "description": "Guzzle module",
+    "license": "proprietary",
+    "require": {
+        "guzzlehttp/guzzle": "^6.3.0 || ^7.0.0",
+        "php": ">=7.3"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {},
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
     }
-  },
-  "config": {
-    "sort-packages": true
-  }
 }

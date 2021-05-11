@@ -12,19 +12,9 @@
         "name": "back",
         "value": true
     }' %}
-    {% set parsedErrors = {} %}
 
-    {% if errors is defined %}
-        {% for error in errors %}
-            {% set key = loop.index0 %}
-            {% set errorObj = {
-                (key): {
-                    fields: error.fields,
-                    errors: error.errors,
-                },
-            } %}
-            {% set parsedErrors = parsedErrors | merge(errorObj) %}
-        {% endfor %}
+    {% if errors is not defined %}
+        {% set errors = {} %}
     {% endif %}
 
     {% block createMultiConcreteProduct %}
@@ -39,7 +29,7 @@
                 products-name="{{ productsName }}"
                 selected-attributes="{{ selectedAttributes }}"
                 generated-products="{{ concreteProducts }}"
-                errors="{{ parsedErrors | json_encode }}"
+                errors="{{ errors | json_encode }}"
             >
                 {{ form_start(form, { attr: { excludeFormTag: true } }) }}
                     {% block title %}

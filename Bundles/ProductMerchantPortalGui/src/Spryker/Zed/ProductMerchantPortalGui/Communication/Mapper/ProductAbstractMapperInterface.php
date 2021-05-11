@@ -8,16 +8,17 @@
 namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
-use Symfony\Component\Form\FormInterface;
 
 interface ProductAbstractMapperInterface
 {
     /**
-     * @param \Symfony\Component\Form\FormInterface $createProductAbstractWithMultiConcreteForm
+     * @param mixed[] $formData
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
     public function mapFormDataToProductAbstractTransfer(
-        FormInterface $createProductAbstractWithMultiConcreteForm
+        array $formData,
+        ProductAbstractTransfer $productAbstractTransfer
     ): ProductAbstractTransfer;
 }

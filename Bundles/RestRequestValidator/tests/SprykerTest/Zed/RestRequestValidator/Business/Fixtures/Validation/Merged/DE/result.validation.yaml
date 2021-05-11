@@ -1,56 +1,56 @@
 endpoint:
-  post:
-    emailField:
-    stringField:
-    - NotBlank
-    - Regex:
-        pattern: '/\w{7}/'
-    integerField:
-    - Regex:
-        pattern: '/\d(15)/'
-  patch:
-    booleanField:
-    - IsTrue
-  get:
-    dateField:
-    - Date
+    post:
+        emailField:
+        stringField:
+            - NotBlank
+            - Regex:
+                  pattern: '/\w{7}/'
+        integerField:
+            - Regex:
+                  pattern: '/\d(15)/'
+    patch:
+        booleanField:
+            - IsTrue
+    get:
+        dateField:
+            - Date
 
 endpoint_two:
-  put:
-    choiceField:
-    - Choice:
-        choices:
-        - chOne
-        - chTwo
-        - chThree
-        - chFour
-        - chFive
-        - chSix
+    put:
+        choiceField:
+            - Choice:
+                  choices:
+                      - chOne
+                      - chTwo
+                      - chThree
+                      - chFour
+                      - chFive
+                      - chSix
 
 endpoint_three:
-  post:
-    emailField:
-    - Email
-    stringField:
-    - Regex:
-        pattern: '/\w*/'
-    integerField:
-    - Regex:
-        pattern: '/\d{6}/'
-    floatField:
-    - Regex:
-        pattern: '/\d*/'
-    nestedField:
-      - Collection:
-          fields:
-            test:
-              - Regex:
-                  pattern: '/\d{15}/'
-            test_email:
-              - Email
-  patch:
-    booleanField:
-    - IsFalse
-  get:
-    dateField:
-    - Date
+    post:
+        emailField:
+            - Email
+        stringField:
+            - Regex:
+                  pattern: '/\w*/'
+        integerField:
+            - Regex:
+                  pattern: '/\d{6}/'
+        floatField:
+            - Regex:
+                  pattern: '/\d*/'
+        nestedField:
+            - Collection:
+                  fields:
+                      test:
+                          - Regex:
+                                pattern: '/\d{15}/'
+                      test_email:
+                          - Email
+    patch:
+        booleanField:
+            - IsFalse
+    get:
+        dateField:
+            - Date
