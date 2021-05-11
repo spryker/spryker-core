@@ -59,34 +59,6 @@ class MerchantOpeningHoursStoragePublisher implements MerchantOpeningHoursStorag
     }
 
     /**
-     * @param int[] $merchantIds
-     *
-     * @return void
-     */
-    public function publish(array $merchantIds): void
-    {
-        $merchantCollectionTransfer = $this->getMerchants($merchantIds);
-
-        foreach ($merchantCollectionTransfer->getMerchants() as $merchantTransfer) {
-            $weekdayScheduleTransfers = $this->merchantOpeningHoursStorageRepository
-                ->getMerchantOpeningHoursWeekdayScheduleByFkMerchant($merchantTransfer->getIdMerchant());
-            $dateScheduleTransfers = $this->merchantOpeningHoursStorageRepository
-                ->getMerchantOpeningHoursDateScheduleByFkMerchant($merchantTransfer->getIdMerchant());
-
-            if ($weekdayScheduleTransfers->count() > 0 || $dateScheduleTransfers->count() > 0) {
-                $merchantOpenHoursStorageTransfer = $this->createMerchantOpeningHoursStorageTransfer(
-                    $weekdayScheduleTransfers,
-                    $dateScheduleTransfers
-                );
-                $this->merchantOpeningHoursStorageEntityManager->saveMerchantOpenHoursStorage(
-                    $merchantOpenHoursStorageTransfer,
-                    $merchantTransfer->getIdMerchant()
-                );
-            }
-        }
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
      *
      * @return void
@@ -126,6 +98,34 @@ class MerchantOpeningHoursStoragePublisher implements MerchantOpeningHoursStorag
         $merchantIds = $this->eventBehaviorFacade->getEventTransferIds($eventEntityTransfers);
 
         $this->publish($merchantIds);
+    }
+
+    /**
+     * @param int[] $merchantIds
+     *
+     * @return void
+     */
+    protected function publish(array $merchantIds): void
+    {
+        $merchantCollectionTransfer = $this->getMerchants($merchantIds);
+
+        foreach ($merchantCollectionTransfer->getMerchants() as $merchantTransfer) {
+            $weekdayScheduleTransfers = $this->merchantOpeningHoursStorageRepository
+                ->getMerchantOpeningHoursWeekdayScheduleByFkMerchant($merchantTransfer->getIdMerchant());
+            $dateScheduleTransfers = $this->merchantOpeningHoursStorageRepository
+                ->getMerchantOpeningHoursDateScheduleByFkMerchant($merchantTransfer->getIdMerchant());
+
+            if ($weekdayScheduleTransfers->count() > 0 || $dateScheduleTransfers->count() > 0) {
+                $merchantOpenHoursStorageTransfer = $this->createMerchantOpeningHoursStorageTransfer(
+                    $weekdayScheduleTransfers,
+                    $dateScheduleTransfers
+                );
+                $this->merchantOpeningHoursStorageEntityManager->saveMerchantOpenHoursStorage(
+                    $merchantOpenHoursStorageTransfer,
+                    $merchantTransfer->getIdMerchant()
+                );
+            }
+        }
     }
 
     /**
