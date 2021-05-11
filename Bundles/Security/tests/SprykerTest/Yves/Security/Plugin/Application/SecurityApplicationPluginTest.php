@@ -113,9 +113,6 @@ class SecurityApplicationPluginTest extends Unit
         $httpKernelBrowser->request('get', '/');
         $this->assertSame('userAUTHENTICATED', $httpKernelBrowser->getResponse()->getContent());
 
-        $this->expectException(AccessDeniedHttpException::class);
-        $httpKernelBrowser->request('get', '/admin');
-
         $httpKernelBrowser->request('get', '/logout');
         $this->assertSame(302, $httpKernelBrowser->getResponse()->getStatusCode());
         $this->assertSame('http://localhost/', $httpKernelBrowser->getResponse()->getTargetUrl());
@@ -142,6 +139,22 @@ class SecurityApplicationPluginTest extends Unit
     /**
      * @return void
      */
+    public function testFormAuthenticationThrowsExceptionOnRestrictedAction(): void
+    {
+        // Arrange
+        $this->addFormAuthentication();
+        $httpKernelBrowser = $this->tester->getHttpKernelBrowser();
+
+        // Assert
+        $this->expectException(AccessDeniedHttpException::class);
+
+        // Act
+        $httpKernelBrowser->request('get', '/admin');
+    }
+
+    /**
+     * @return void
+     */
     public function testHttpAuthentication(): void
     {
         $this->addHttpAuthentication();
@@ -155,9 +168,6 @@ class SecurityApplicationPluginTest extends Unit
         $httpKernelBrowser->request('get', '/', [], [], ['PHP_AUTH_USER' => 'user', 'PHP_AUTH_PW' => 'foo']);
         $this->assertSame('userAUTHENTICATED', $httpKernelBrowser->getResponse()->getContent());
 
-        $this->expectException(AccessDeniedHttpException::class);
-        $httpKernelBrowser->request('get', '/admin');
-
         $httpKernelBrowser->restart();
 
         $httpKernelBrowser->request('get', '/');
@@ -168,6 +178,23 @@ class SecurityApplicationPluginTest extends Unit
         $this->assertSame('adminAUTHENTICATEDADMIN', $httpKernelBrowser->getResponse()->getContent());
         $httpKernelBrowser->request('get', '/admin');
         $this->assertSame('admin', $httpKernelBrowser->getResponse()->getContent());
+    }
+
+    /**
+     * @return void
+     */
+    public function testHttpAuthenticationThrowsExceptionOnRestrictedAction(): void
+    {
+        // Arrange
+        $this->addHttpAuthentication();
+
+        $httpKernelBrowser = $this->tester->getHttpKernelBrowser();
+
+        // Assert
+        $this->expectException(AccessDeniedHttpException::class);
+
+        // Act
+        $httpKernelBrowser->request('get', '/admin');
     }
 
     /**
