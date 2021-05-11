@@ -27,7 +27,7 @@ class MerchantOpeningHoursStorageToStorageClientBridge implements MerchantOpenin
      *
      * @return mixed
      */
-    public function get(string $key)
+    public function get($key)
     {
         return $this->storageClient->get($key);
     }
@@ -37,7 +37,7 @@ class MerchantOpeningHoursStorageToStorageClientBridge implements MerchantOpenin
      *
      * @return array
      */
-    public function getMulti(array $keys): array
+    public function getMulti(array $keys)
     {
         return $this->storageClient->getMulti($keys);
     }

@@ -7,8 +7,6 @@
 
 namespace Spryker\Client\MerchantOpeningHoursStorage\Dependency\Service;
 
-use Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface;
-
 interface MerchantOpeningHoursStorageToSynchronizationServiceInterface
 {
     /**
@@ -16,5 +14,5 @@ interface MerchantOpeningHoursStorageToSynchronizationServiceInterface
      *
      * @return \Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface
      */
-    public function getStorageKeyBuilder(string $resourceName): SynchronizationKeyGeneratorPluginInterface;
+    public function getStorageKeyBuilder($resourceName);
 }

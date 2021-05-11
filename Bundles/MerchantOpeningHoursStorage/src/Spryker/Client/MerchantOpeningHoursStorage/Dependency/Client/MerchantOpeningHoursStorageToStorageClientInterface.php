@@ -14,12 +14,12 @@ interface MerchantOpeningHoursStorageToStorageClientInterface
      *
      * @return mixed
      */
-    public function get(string $key);
+    public function get($key);
 
     /**
      * @param string[] $keys
      *
      * @return array
      */
-    public function getMulti(array $keys): array;
+    public function getMulti(array $keys);
 }
