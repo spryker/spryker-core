@@ -1,63 +1,63 @@
 {
-  "name": "spryker/shopping-list",
-  "type": "library",
-  "description": "ShoppingList module",
-  "license": "proprietary",
-  "require": {
-    "php": ">=7.3",
-    "spryker/cart": "^5.1.0 || ^7.0.0",
-    "spryker/company-business-unit": "^1.0.0 || ^2.0.0",
-    "spryker/company-business-unit-extension": "^1.1.0",
-    "spryker/company-user": "^1.0.0 || ^2.0.0",
-    "spryker/company-user-extension": "^1.1.0",
-    "spryker/customer": "^7.0.0",
-    "spryker/event": "^1.0.0 || ^2.0.0",
-    "spryker/kernel": "^3.30.0",
-    "spryker/messenger": "^3.0.0",
-    "spryker/permission": "^1.1.0",
-    "spryker/permission-extension": "^1.1.0",
-    "spryker/persistent-cart": "^0.1.0 || ^1.0.0 || ^3.0.0",
-    "spryker/price-product": "^1.0.0 || ^2.0.0 || ^4.0.0",
-    "spryker/product": "^6.6.0",
-    "spryker/propel-orm": "^1.0.0",
-    "spryker/shopping-list-extension": "^1.4.0",
-    "spryker/zed-request": "^3.6.0"
-  },
-  "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/company": "*",
-    "spryker/installer": "*",
-    "spryker/propel": "*",
-    "spryker/quote": "*",
-    "spryker/stock": "*",
-    "spryker/testify": "*"
-  },
-  "suggest": {
-    "spryker/installer": "If ShoppingListPermissionsInstallerPlugin is to be used, minimum version is 4.0.04"
-  },
-  "autoload": {
-    "psr-4": {
-      "Spryker\\": "src/Spryker/",
-      "SprykerTest\\Shared\\ShoppingList\\Helper\\": "tests/SprykerTest/Shared/ShoppingList/_support/Helper/"
+    "name": "spryker/shopping-list",
+    "type": "library",
+    "description": "ShoppingList module",
+    "license": "proprietary",
+    "require": {
+        "php": ">=7.3",
+        "spryker/cart": "^5.1.0 || ^7.0.0",
+        "spryker/company-business-unit": "^1.0.0 || ^2.0.0",
+        "spryker/company-business-unit-extension": "^1.1.0",
+        "spryker/company-user": "^1.0.0 || ^2.0.0",
+        "spryker/company-user-extension": "^1.1.0",
+        "spryker/customer": "^7.0.0",
+        "spryker/event": "^1.0.0 || ^2.0.0",
+        "spryker/kernel": "^3.30.0",
+        "spryker/messenger": "^3.0.0",
+        "spryker/permission": "^1.1.0",
+        "spryker/permission-extension": "^1.1.0",
+        "spryker/persistent-cart": "^0.1.0 || ^1.0.0 || ^3.0.0",
+        "spryker/price-product": "^1.0.0 || ^2.0.0 || ^4.0.0",
+        "spryker/product": "^6.6.0",
+        "spryker/propel-orm": "^1.0.0",
+        "spryker/shopping-list-extension": "^1.4.0",
+        "spryker/zed-request": "^3.6.0"
+    },
+    "require-dev": {
+        "spryker/code-sniffer": "*",
+        "spryker/company": "*",
+        "spryker/installer": "*",
+        "spryker/propel": "*",
+        "spryker/quote": "*",
+        "spryker/stock": "*",
+        "spryker/testify": "*"
+    },
+    "suggest": {
+        "spryker/installer": "If ShoppingListPermissionsInstallerPlugin is to be used, minimum version is 4.0.04"
+    },
+    "autoload": {
+        "psr-4": {
+            "Spryker\\": "src/Spryker/",
+            "SprykerTest\\Shared\\ShoppingList\\Helper\\": "tests/SprykerTest/Shared/ShoppingList/_support/Helper/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "SprykerTest\\": "tests/SprykerTest/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "4.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
     }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "SprykerTest\\": "tests/SprykerTest/"
-    }
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "scripts": {
-    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
-    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "4.0.x-dev"
-    }
-  },
-  "config": {
-    "sort-packages": true
-  }
 }

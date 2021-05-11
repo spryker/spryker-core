@@ -12,7 +12,7 @@ coverage:
     whitelist: { include: ['../../../../src/*'] }
 
 suites:
-  Communication:
+    Communication:
         path: Communication
         class_name: EventDispatcherCommunicationTester
         modules:

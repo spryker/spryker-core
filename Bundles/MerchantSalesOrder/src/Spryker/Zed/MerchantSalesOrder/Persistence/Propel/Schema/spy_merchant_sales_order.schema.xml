@@ -1,9 +1,5 @@
 <?xml version="1.0"?>
-<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          name="zed"
-          xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd"
-          namespace="Orm\Zed\MerchantSalesOrder\Persistence" package="src.Orm.Zed.MerchantSalesOrder.Persistence"
->
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\MerchantSalesOrder\Persistence" package="src.Orm.Zed.MerchantSalesOrder.Persistence">
 
     <table name="spy_merchant_sales_order">
         <column name="id_merchant_sales_order" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>

@@ -1,9 +1,5 @@
 <?xml version="1.0"?>
-<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd" name="zed"
-          namespace="Orm\Zed\QuoteApproval\Persistence"
-          package="src.Orm.Zed.QuoteApproval.Persistence"
->
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd" name="zed" namespace="Orm\Zed\QuoteApproval\Persistence" package="src.Orm.Zed.QuoteApproval.Persistence">
 
     <table name="spy_quote_approval" idMethod="native" allowPkInsert="true">
         <column name="id_quote_approval" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>

@@ -1,53 +1,53 @@
 {
-  "name": "spryker/auth-rest-api",
-  "type": "library",
-  "description": "AuthRestApi module",
-  "license": "proprietary",
-  "require": {
-    "php": ">=7.3",
-    "spryker/auth-rest-api-extension": "^1.1.0",
-    "spryker/glue-application": "^1.30.0",
-    "spryker/glue-application-extension": "^1.4.0",
-    "spryker/kernel": "^3.58.0",
-    "spryker/oauth": "^1.9.0 || ^2.0.0",
-    "spryker/symfony": "^3.0.0",
-    "spryker/util-encoding": "^2.0.0",
-    "spryker/zed-request": "^3.0.0"
-  },
-  "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/customer": "*",
-    "spryker/oauth-customer-connector": "*",
-    "spryker/propel": "*",
-    "spryker/testify": "*"
-  },
-  "suggest": {
-    "spryker/oauth-customer-connector": "If you want to authorize customers via Oauth module.",
-    "spryker/rest-request-validator": "If you want to use rest request validation."
-  },
-  "autoload": {
-    "psr-4": {
-      "Spryker\\": "src/Spryker/",
-      "SprykerTest\\Glue\\AuthRestApi\\Helper\\": "tests/SprykerTest/Glue/AuthRestApi/_support/Helper/"
+    "name": "spryker/auth-rest-api",
+    "type": "library",
+    "description": "AuthRestApi module",
+    "license": "proprietary",
+    "require": {
+        "php": ">=7.3",
+        "spryker/auth-rest-api-extension": "^1.1.0",
+        "spryker/glue-application": "^1.30.0",
+        "spryker/glue-application-extension": "^1.4.0",
+        "spryker/kernel": "^3.58.0",
+        "spryker/oauth": "^1.9.0 || ^2.0.0",
+        "spryker/symfony": "^3.0.0",
+        "spryker/util-encoding": "^2.0.0",
+        "spryker/zed-request": "^3.0.0"
+    },
+    "require-dev": {
+        "spryker/code-sniffer": "*",
+        "spryker/customer": "*",
+        "spryker/oauth-customer-connector": "*",
+        "spryker/propel": "*",
+        "spryker/testify": "*"
+    },
+    "suggest": {
+        "spryker/oauth-customer-connector": "If you want to authorize customers via Oauth module.",
+        "spryker/rest-request-validator": "If you want to use rest request validation."
+    },
+    "autoload": {
+        "psr-4": {
+            "Spryker\\": "src/Spryker/",
+            "SprykerTest\\Glue\\AuthRestApi\\Helper\\": "tests/SprykerTest/Glue/AuthRestApi/_support/Helper/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "SprykerTest\\": "tests/SprykerTest/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
     }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "SprykerTest\\": "tests/SprykerTest/"
-    }
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "scripts": {
-    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
-    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "2.0.x-dev"
-    }
-  },
-  "config": {
-    "sort-packages": true
-  }
 }

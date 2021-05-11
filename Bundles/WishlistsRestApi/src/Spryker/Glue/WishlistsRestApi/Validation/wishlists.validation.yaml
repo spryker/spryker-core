@@ -1,15 +1,15 @@
 wishlists:
-  post:
-    name:
-      - NotBlank
-      - Length:
-          max: 255
-  patch:
-    name:
-      - NotBlank
-      - Length:
-          max: 255
+    post:
+        name:
+            - NotBlank
+            - Length:
+                  max: 255
+    patch:
+        name:
+            - NotBlank
+            - Length:
+                  max: 255
 wishlist-items:
-  post:
-    sku:
-      - NotBlank
+    post:
+        sku:
+            - NotBlank

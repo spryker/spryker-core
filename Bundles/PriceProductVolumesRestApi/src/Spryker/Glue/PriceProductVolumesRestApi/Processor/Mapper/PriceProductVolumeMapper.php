@@ -49,7 +49,8 @@ class PriceProductVolumeMapper implements PriceProductVolumeMapperInterface
         $productPriceTransfers = $this->priceProductVolumeClient->extractProductPricesForProductAbstract([$priceProductTransfer]);
         $restProductPriceVolumesAttributesTransfers = $this->mapProductPriceTransfersToRestProductPriceVolumesAttributesTransfers(
             $productPriceTransfers,
-            []
+            [],
+            $restProductPriceAttributesTransfer->getPriceTypeName()
         );
 
         return $restProductPriceAttributesTransfer->setVolumePrices(new ArrayObject($restProductPriceVolumesAttributesTransfers));
@@ -62,7 +63,9 @@ class PriceProductVolumeMapper implements PriceProductVolumeMapperInterface
      */
     protected function createPriceProductTransfer(CurrentProductPriceTransfer $currentProductPriceTransfer): PriceProductTransfer
     {
-        $moneyValueTransfer = (new MoneyValueTransfer())->setPriceData($currentProductPriceTransfer->getPriceDataOrFail());
+        $moneyValueTransfer = (new MoneyValueTransfer())
+            ->setPriceData($currentProductPriceTransfer->getPriceDataOrFail())
+            ->setPriceDataByPriceType($currentProductPriceTransfer->getPriceDataByPriceType());
 
         return (new PriceProductTransfer())->setMoneyValue($moneyValueTransfer);
     }
@@ -70,18 +73,22 @@ class PriceProductVolumeMapper implements PriceProductVolumeMapperInterface
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      * @param \Generated\Shared\Transfer\RestProductPriceVolumesAttributesTransfer[] $restProductPriceVolumesAttributesTransfers
+     * @param string|null $priceTypeName
      *
      * @return \Generated\Shared\Transfer\RestProductPriceVolumesAttributesTransfer[]
      */
     protected function mapProductPriceTransfersToRestProductPriceVolumesAttributesTransfers(
         array $priceProductTransfers,
-        array $restProductPriceVolumesAttributesTransfers
+        array $restProductPriceVolumesAttributesTransfers,
+        ?string $priceTypeName
     ): array {
         foreach ($priceProductTransfers as $priceProductTransfer) {
-            $restProductPriceVolumesAttributesTransfers[] = $this->mapPriceProductTransferToRestProductPriceVolumesAttributesTransfer(
-                $priceProductTransfer,
-                new RestProductPriceVolumesAttributesTransfer()
-            );
+            if ($priceProductTransfer->getPriceTypeName() === null || $priceProductTransfer->getPriceTypeName() === $priceTypeName) {
+                $restProductPriceVolumesAttributesTransfers[] = $this->mapPriceProductTransferToRestProductPriceVolumesAttributesTransfer(
+                    $priceProductTransfer,
+                    new RestProductPriceVolumesAttributesTransfer()
+                );
+            }
         }
 
         return $restProductPriceVolumesAttributesTransfers;

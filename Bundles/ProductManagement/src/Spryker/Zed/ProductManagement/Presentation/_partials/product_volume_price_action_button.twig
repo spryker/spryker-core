@@ -1,15 +1,17 @@
 {% set volumePrices = moneyValueFormViewCollection.vars.volumePrices | default([]) %}
+{% set volumePriceType = volumePrices[storeName][currencyIsoCode][priceType] ?? null %}
 
-{% if volumePrices[storeName][currencyIsoCode] is defined %}
+{% if volumePriceType is not null %}
     {{ viewActionButton(
-        urldecode(url(volumePrices[storeName][currencyIsoCode]['url'], {
+        urldecode(url(volumePriceType['url'], {
             'id-product-abstract': idProductAbstract,
             'id-product-concrete': idProduct,
             'store-name': storeName,
             'currency-code': currencyIsoCode,
             'price-dimension': priceDimension,
             'sku': currentProduct.sku,
+            'price-type': priceType,
         })
     ),
-    volumePrices[storeName][currencyIsoCode]['title'] | trans) }}
+    volumePriceType['title'] | trans) }}
 {% endif %}

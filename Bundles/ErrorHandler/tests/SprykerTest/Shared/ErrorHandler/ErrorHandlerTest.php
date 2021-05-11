@@ -10,6 +10,7 @@ namespace SprykerTest\Shared\ErrorHandler;
 use Codeception\Test\Unit;
 use Exception;
 use Psr\Log\LoggerInterface;
+use Spryker\Service\UtilSanitize\UtilSanitizeService;
 use Spryker\Shared\ErrorHandler\ErrorHandler;
 use Spryker\Shared\ErrorHandler\ErrorLogger;
 use Spryker\Shared\ErrorHandler\ErrorLoggerInterface;
@@ -158,7 +159,7 @@ class ErrorHandlerTest extends Unit
 
         $errorHandlerMock = $this->getMockBuilder(ErrorHandler::class)
             ->setMethods($methods)
-            ->setConstructorArgs([$errorLogger, $errorRenderer])
+            ->setConstructorArgs([$errorLogger, $errorRenderer, new UtilSanitizeService()])
             ->getMock();
 
         return $errorHandlerMock;

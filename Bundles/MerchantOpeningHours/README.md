@@ -1,5 +1,5 @@
 # MerchantOpeningHours Module
-[![Build Status](https://travis-ci.org/spryker/merchant-opening-hours.svg)](https://travis-ci.org/spryker/merchant-opening-hours)
+[![Latest Stable Version](https://poser.pugx.org/spryker/merchant-opening-hours/v/stable.svg)](https://packagist.org/packages/spryker/merchant-opening-hours)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 MerchantOpeningHours module provides ability to configure a scheduling of opening hours for Merchant.

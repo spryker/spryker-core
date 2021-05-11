@@ -1,37 +1,37 @@
 {
-  "name": "spryker/company-business-unit-gui-extension",
-  "type": "library",
-  "description": "CompanyBusinessUnitGuiExtension module",
-  "license": "proprietary",
-  "require": {
-    "php": ">=7.3"
-  },
-  "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/symfony": "^3.0.0"
-  },
-  "suggest": {
-    "spryker/company-business-unit": "To get full functionality of the current module",
-    "spryker/gui": "If you need gui",
-    "spryker/symfony": "If you want to provide plugins to CompanyBusinessUnitGui module"
-  },
-  "autoload": {
-    "psr-4": {
-      "Spryker\\": "src/Spryker/"
+    "name": "spryker/company-business-unit-gui-extension",
+    "type": "library",
+    "description": "CompanyBusinessUnitGuiExtension module",
+    "license": "proprietary",
+    "require": {
+        "php": ">=7.3"
+    },
+    "require-dev": {
+        "spryker/code-sniffer": "*",
+        "spryker/symfony": "^3.0.0"
+    },
+    "suggest": {
+        "spryker/company-business-unit": "To get full functionality of the current module",
+        "spryker/gui": "If you need gui",
+        "spryker/symfony": "If you want to provide plugins to CompanyBusinessUnitGui module"
+    },
+    "autoload": {
+        "psr-4": {
+            "Spryker\\": "src/Spryker/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
     }
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "scripts": {
-    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
-    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "1.0.x-dev"
-    }
-  },
-  "config": {
-    "sort-packages": true
-  }
 }

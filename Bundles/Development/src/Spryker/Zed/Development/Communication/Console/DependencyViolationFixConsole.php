@@ -28,8 +28,6 @@ class DependencyViolationFixConsole extends AbstractCoreModuleAwareConsole
     protected const OPTION_DRY_RUN = 'dry-run';
     protected const OPTION_DRY_RUN_SHORT = 'd';
 
-    protected const REPLACE_4_WITH_2_SPACES = '/^(  +?)\\1(?=[^ ])/m';
-
     /**
      * @return void
      */
@@ -165,7 +163,7 @@ class DependencyViolationFixConsole extends AbstractCoreModuleAwareConsole
             $composerJsonArray['scripts'] = new stdClass();
         }
         $modifiedComposerJson = json_encode($composerJsonArray, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
-        $modifiedComposerJson = preg_replace(static::REPLACE_4_WITH_2_SPACES, '$1', $modifiedComposerJson) . PHP_EOL;
+        $modifiedComposerJson .= PHP_EOL;
 
         file_put_contents($composerJsonFile, $modifiedComposerJson);
     }
