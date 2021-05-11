@@ -68,16 +68,24 @@ class CompanyUserRoleFormDataProvider
      */
     protected function prepareCompanyRoleAttributeMap(CompanyUserTransfer $companyUserTransfer): array
     {
+        if (!$companyUserTransfer->getFkCompany()) {
+            return [[], []];
+        }
+
         $values = [];
         $attributes = [];
+        $companyRoleCriteriaFilterTransfer = (new CompanyRoleCriteriaFilterTransfer())
+            ->setIdCompany($companyUserTransfer->getFkCompany())
+            ->setWithoutExpanders(true);
+
         $companyRoleCollection = $this->companyRoleFacade->getCompanyRoleCollection(
-            (new CompanyRoleCriteriaFilterTransfer())
+            $companyRoleCriteriaFilterTransfer
         );
 
         foreach ($companyRoleCollection->getRoles() as $companyRoleTransfer) {
             $roleKey = $this->generateCompanyRoleName($companyRoleTransfer);
-
             $companyRoleAttributes = [static::OPTION_ATTRIBUTE_DATA => $companyRoleTransfer->getFkCompany()];
+
             if (
                 $companyRoleTransfer->getIsDefault()
                 && $companyUserTransfer->getCompanyRoleCollection() === null

@@ -10,11 +10,9 @@ namespace Spryker\Zed\CompanyUserGui\Communication\Form;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * @method \Spryker\Zed\CompanyUserGui\Communication\CompanyUserGuiCommunicationFactory getFactory()
@@ -42,7 +40,6 @@ class CompanyUserForm extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefined(static::OPTION_COMPANY_CHOICES);
         $resolver->setDefined(CompanyUserCustomerForm::OPTION_SALUTATION_CHOICES);
         $resolver->setDefined(CompanyUserCustomerForm::OPTION_GENDER_CHOICES);
         $resolver->setDefaults([
@@ -61,7 +58,6 @@ class CompanyUserForm extends AbstractType
         $this
             ->addIdCompanyUserField($builder)
             ->addCustomerSubForm($builder, $options)
-            ->addCompanyField($builder, $options[static::OPTION_COMPANY_CHOICES])
             ->executeCompanyUserExpanderFormPlugins($builder);
     }
 
@@ -95,26 +91,6 @@ class CompanyUserForm extends AbstractType
     protected function addIdCompanyUserField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_ID_COMPANY_USER, HiddenType::class);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $choices
-     *
-     * @return $this
-     */
-    protected function addCompanyField(FormBuilderInterface $builder, array $choices)
-    {
-        $builder->add(static::FIELD_FK_COMPANY, ChoiceType::class, [
-            'label' => 'Company',
-            'placeholder' => 'Company name',
-            'choices' => $choices,
-            'constraints' => [
-                new NotBlank(),
-            ],
-        ]);
 
         return $this;
     }
