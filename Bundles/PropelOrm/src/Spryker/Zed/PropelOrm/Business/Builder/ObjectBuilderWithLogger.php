@@ -78,7 +78,7 @@ class ObjectBuilderWithLogger extends PropelObjectBuilder
         }
 
         // When this is true we will not check for value equality as we need to be able to set a value for this field
-        // to it's initial value and have the column marked as modified. This is relevant for update cases when
+        // to its initial value and have the column marked as modified. This is relevant for update cases when
         // we create an instance of an entity manually.
         // @see \Spryker\Zed\Kernel\Persistence\EntityManager\TransferToEntityMapper::mapEntity()
         \$hasDefaultValue = $hasDefaultValue;
