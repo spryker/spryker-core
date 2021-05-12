@@ -1,6 +1,7 @@
 import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { InvokeModule } from '@spryker/utils';
 import { By } from '@angular/platform-browser';
 import { ConcreteProductsPreviewComponent } from './concrete-products-preview.component';
 import { ConcreteProductSkuGeneratorFactoryService } from '../../services/concrete-product-sku-generator-factory.service';
@@ -120,7 +121,7 @@ describe('ConcreteProductsPreviewComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [ScrollingModule],
+            imports: [ScrollingModule, InvokeModule],
             declarations: [ConcreteProductsPreviewComponent, TestComponent],
             schemas: [NO_ERRORS_SCHEMA],
         })
@@ -248,8 +249,9 @@ describe('ConcreteProductsPreviewComponent', () => {
 
         it('should render <spy-input> component to the `.mp-concrete-products-preview__table-row-sku` element', fakeAsync(() => {
             component.attributes = mockAttributes;
-            fixture.autoDetectChanges();
-            tick(500);
+            fixture.detectChanges();
+            tick();
+            fixture.detectChanges();
 
             const skuInput = fixture.debugElement.query(
                 By.css('cdk-virtual-scroll-viewport .mp-concrete-products-preview__table-row-sku spy-input'),
@@ -260,8 +262,9 @@ describe('ConcreteProductsPreviewComponent', () => {
 
         it('should render <spy-input> component to the `.mp-concrete-products-preview__table-row-name` element', fakeAsync(() => {
             component.attributes = mockAttributes;
-            fixture.autoDetectChanges();
-            tick(500);
+            fixture.detectChanges();
+            tick();
+            fixture.detectChanges();
 
             const skuInput = fixture.debugElement.query(
                 By.css('cdk-virtual-scroll-viewport .mp-concrete-products-preview__table-row-name spy-input'),
@@ -272,8 +275,9 @@ describe('ConcreteProductsPreviewComponent', () => {
 
         it('should render <spy-button> with <spy-input> components to the `.mp-concrete-products-preview__table-row-name` element', fakeAsync(() => {
             component.attributes = mockAttributes;
-            fixture.autoDetectChanges();
-            tick(500);
+            fixture.detectChanges();
+            tick();
+            fixture.detectChanges();
 
             const removeButton = fixture.debugElement.query(
                 By.css('cdk-virtual-scroll-viewport .mp-concrete-products-preview__table-row-name spy-button'),
@@ -288,7 +292,7 @@ describe('ConcreteProductsPreviewComponent', () => {
     });
 
     describe('Host functionality', () => {
-        it('should render <input type="hidden"> element if `@Input(name) exists`', () => {
+        it('should render hidden <input> element with serialized generated products if `@Input(name)` exists', () => {
             component.attributes = mockAttributes;
             component.name = mockName;
             fixture.detectChanges();
@@ -301,32 +305,33 @@ describe('ConcreteProductsPreviewComponent', () => {
         });
 
         it('should render attribute names of generated products', fakeAsync(() => {
-            const mockAttrNames = {
+            const expectedAttrNames = {
                 firstRow: 'name11  /  name21',
                 secondRow: 'name12  /  name21',
             };
 
             component.attributes = mockAttributes;
-            fixture.autoDetectChanges();
-            tick(500);
+            fixture.detectChanges();
+            tick();
+            fixture.detectChanges();
 
             const attrNames = fixture.debugElement.queryAll(
                 By.css('cdk-virtual-scroll-viewport .mp-concrete-products-preview__table-row-attr'),
             );
 
-            expect(attrNames[0].nativeElement.textContent.trim()).toBe(mockAttrNames.firstRow);
-            expect(attrNames[1].nativeElement.textContent.trim()).toBe(mockAttrNames.secondRow);
+            expect(attrNames[0].nativeElement.textContent.trim()).toBe(expectedAttrNames.firstRow);
+            expect(attrNames[1].nativeElement.textContent.trim()).toBe(expectedAttrNames.secondRow);
         }));
 
         it('`Autogenerate SKUs` checkbox should set generated value to inputs', fakeAsync(() => {
-            const mockSkuValues = {
+            const expectedSkuValues = {
                 firstRow: 'mockId-0',
                 secondRow: 'mockId-1',
             };
 
             component.attributes = mockAttributes;
             fixture.autoDetectChanges();
-            tick(500);
+            tick();
 
             const headerCheckboxes = fixture.debugElement.queryAll(
                 By.css('.mp-concrete-products-preview__header-checkboxes spy-checkbox'),
@@ -339,10 +344,10 @@ describe('ConcreteProductsPreviewComponent', () => {
                 ConcreteProductSkuGeneratorFactoryService,
             ) as any) as MockGeneratorFactory;
 
-            expect(skuInputs[0].properties.value).toBe(mockSkuValues.firstRow);
-            expect(skuGeneratorFactory.generator.generate).toHaveBeenCalledWith(mockSkuValues.firstRow);
-            expect(skuGeneratorFactory.generator.generate).not.toHaveBeenCalledWith(mockSkuValues.secondRow);
-            expect(skuInputs[1].properties.value).toBe(mockSkuValues.secondRow);
+            expect(skuInputs[0].properties.value).toBe(expectedSkuValues.firstRow);
+            expect(skuGeneratorFactory.generator.generate).toHaveBeenCalledWith(expectedSkuValues.firstRow);
+            expect(skuGeneratorFactory.generator.generate).not.toHaveBeenCalledWith(expectedSkuValues.secondRow);
+            expect(skuInputs[1].properties.value).toBe(expectedSkuValues.secondRow);
 
             headerCheckboxes[0].triggerEventHandler('checkedChange', false);
             fixture.detectChanges();
@@ -356,14 +361,14 @@ describe('ConcreteProductsPreviewComponent', () => {
         }));
 
         it('`Same Name as Abstract Product` checkbox should set generated value to inputs', fakeAsync(() => {
-            const mockNameValues = {
+            const expectedNameValues = {
                 firstRow: 'mockId-0',
                 secondRow: 'mockId-1',
             };
 
             component.attributes = mockAttributes;
             fixture.autoDetectChanges();
-            tick(500);
+            tick();
 
             const headerCheckboxes = fixture.debugElement.queryAll(
                 By.css('.mp-concrete-products-preview__header-checkboxes spy-checkbox'),
@@ -376,10 +381,10 @@ describe('ConcreteProductsPreviewComponent', () => {
                 ConcreteProductNameGeneratorFactoryService,
             ) as any) as MockGeneratorFactory;
 
-            expect(nameInputs[0].properties.value).toBe(mockNameValues.firstRow);
-            expect(nameGeneratorFactory.generator.generate).toHaveBeenCalledWith(mockNameValues.firstRow);
-            expect(nameGeneratorFactory.generator.generate).not.toHaveBeenCalledWith(mockNameValues.secondRow);
-            expect(nameInputs[1].properties.value).toBe(mockNameValues.secondRow);
+            expect(nameInputs[0].properties.value).toBe(expectedNameValues.firstRow);
+            expect(nameGeneratorFactory.generator.generate).toHaveBeenCalledWith(expectedNameValues.firstRow);
+            expect(nameGeneratorFactory.generator.generate).not.toHaveBeenCalledWith(expectedNameValues.secondRow);
+            expect(nameInputs[1].properties.value).toBe(expectedNameValues.secondRow);
 
             headerCheckboxes[1].triggerEventHandler('checkedChange', false);
             fixture.detectChanges();

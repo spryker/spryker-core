@@ -7,6 +7,7 @@ import { InputModule } from '@spryker/input';
 import { IconModule } from '@spryker/icon';
 import { ButtonModule } from '@spryker/button';
 import { FormItemModule } from '@spryker/form-item';
+import { InvokeModule } from '@spryker/utils';
 import { ConcreteProductsPreviewComponent } from './concrete-products-preview.component';
 
 @NgModule({
@@ -19,6 +20,7 @@ import { ConcreteProductsPreviewComponent } from './concrete-products-preview.co
         IconModule,
         ButtonModule,
         FormItemModule,
+        InvokeModule,
     ],
     declarations: [ConcreteProductsPreviewComponent],
     exports: [ConcreteProductsPreviewComponent],

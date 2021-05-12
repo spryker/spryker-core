@@ -28,7 +28,7 @@
 
         {% block form %}
             {% form_theme form '@ZedUi/Form/form-webcomponent-layout.twig' %}
-            
+
             {{ form_errors(form) }}
             {{ form_start(form, {attr: {novalidate: ''}}) }}
                 {% block formContent %}
@@ -47,7 +47,7 @@
 {% endblock %}
 
 {% block footerJs %}
-    <script src="{{ assetsPath('js/mp/spy/security-merchant-portal-gui-es2015.js') }}" type="module"></script>
+    <script src="{{ assetsPath('js/mp/spy/security-merchant-portal-gui.js') }}" type="module"></script>
     <script src="{{ assetsPath('js/mp/spy/security-merchant-portal-gui-es5.js') }}" nomodule defer></script>
     {{ parent() }}
 {% endblock %}

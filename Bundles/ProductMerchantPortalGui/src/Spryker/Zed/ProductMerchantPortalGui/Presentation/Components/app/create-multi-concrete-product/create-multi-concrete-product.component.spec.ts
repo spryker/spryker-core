@@ -2,12 +2,116 @@ import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { CreateMultiConcreteProductComponent } from './create-multi-concrete-product.component';
+import { ProductAttributesSelectorModule } from '../product-attributes-selector/product-attributes-selector.module';
+
+const mockAttributesName = 'attributesName';
+const mockProductsName = 'productsName';
+const mockAttributes = [
+    {
+        name: 'name1',
+        value: 'value1',
+        attributes: [
+            {
+                name: 'name11',
+                value: 'value11',
+            },
+            {
+                name: 'name12',
+                value: 'value12',
+            },
+        ],
+    },
+    {
+        name: 'name2',
+        value: 'value2',
+        attributes: [
+            {
+                name: 'name21',
+                value: 'value21',
+            },
+        ],
+    },
+];
+const mockSelectedAttributes = [
+    {
+        name: 'name1',
+        value: 'value1',
+        attributes: [
+            {
+                name: 'name11',
+                value: 'value11',
+            },
+        ],
+    },
+];
+const mockGeneratedProducts = [
+    {
+        name: '',
+        sku: '',
+        superAttributes: [
+            {
+                name: 'name1',
+                value: 'value1',
+                attribute: {
+                    name: 'name11',
+                    value: 'value11',
+                },
+            },
+            {
+                name: 'name2',
+                value: 'value2',
+                attribute: {
+                    name: 'name21',
+                    value: 'value21',
+                },
+            },
+        ],
+    },
+    {
+        name: '',
+        sku: '',
+        superAttributes: [
+            {
+                name: 'name1',
+                value: 'value1',
+                attribute: {
+                    name: 'name12',
+                    value: 'value12',
+                },
+            },
+            {
+                name: 'name2',
+                value: 'value2',
+                attribute: {
+                    name: 'name21',
+                    value: 'value21',
+                },
+            },
+        ],
+    },
+];
+const mockGeneratedProductErrors = [
+    {
+        fields: {
+            name: "",
+            sku: "123",
+        },
+        errors: {
+            name: "This value should not be blank.",
+            sku: "SKU Prefix already exists",
+        }
+    },
+    {},
+]
 
 @Component({
     selector: `spy-test`,
     template: `
         <mp-create-multi-concrete-product
             [attributes]="attributes"
+            [selectedAttributes]="selectedAttributes"
+            [generatedProducts]="generatedProducts"
+            [generatedProductErrors]="generatedProductErrors"
             [attributesName]="attributesName"
             [productsName]="productsName"
         >
@@ -32,6 +136,9 @@ import { CreateMultiConcreteProductComponent } from './create-multi-concrete-pro
 })
 class TestComponent {
     attributes: any;
+    selectedAttributes: any;
+    generatedProducts: any;
+    generatedProductErrors: any;
     productsName: string;
     attributesName: string;
 }
@@ -42,6 +149,7 @@ describe('CreateMultiConcreteProductComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
+            imports: [ProductAttributesSelectorModule],
             declarations: [CreateMultiConcreteProductComponent, TestComponent],
             schemas: [NO_ERRORS_SCHEMA],
         }).compileComponents();
@@ -58,7 +166,7 @@ describe('CreateMultiConcreteProductComponent', () => {
         expect(headlineElem).toBeTruthy();
     });
 
-    it('should render default projected title to the `.mp-create-multi-concrete-product__header` element', () => {
+    it('should render projected title to the `.mp-create-multi-concrete-product__header` element', () => {
         const projectedTitle = fixture.debugElement.query(
             By.css('.mp-create-multi-concrete-product__header .projected-title'),
         );
@@ -66,7 +174,7 @@ describe('CreateMultiConcreteProductComponent', () => {
         expect(projectedTitle.nativeElement.textContent).toBe('Name');
     });
 
-    it('should render default projected action to the `.mp-create-multi-concrete-product__header` element', () => {
+    it('should render projected action to the `.mp-create-multi-concrete-product__header` element', () => {
         const projectedAction = fixture.debugElement.query(
             By.css('.mp-create-multi-concrete-product__header .projected-action'),
         );
@@ -79,6 +187,18 @@ describe('CreateMultiConcreteProductComponent', () => {
             const productAttributesSelector = fixture.debugElement.query(
                 By.css('.mp-create-multi-concrete-product__content mp-product-attributes-selector'),
             );
+
+            expect(productAttributesSelector).toBeTruthy();
+        });
+
+        it('should bound `@Input(attributesName)` to the input `name` of <mp-product-attributes-selector> component', () => {
+            component.attributesName = mockAttributesName;
+            fixture.detectChanges();
+
+            const productAttributesSelector = fixture.debugElement.query(
+                By.css('.mp-create-multi-concrete-product__content mp-product-attributes-selector'),
+            );
+            console.log(productAttributesSelector);
 
             expect(productAttributesSelector).toBeTruthy();
         });

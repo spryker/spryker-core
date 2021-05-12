@@ -24,21 +24,21 @@
         {% block body %}{% endblock %}
 
         {% block polyfillsJs %}
-            <script src="{{ assetsPath('js/mp/runtime-es2015.js') }}" type="module"></script>
+            <script src="{{ assetsPath('js/mp/runtime.js') }}" type="module"></script>
             <script src="{{ assetsPath('js/mp/runtime-es5.js') }}" nomodule defer></script>
-            <script src="{{ assetsPath('js/mp/polyfills-es2015.js') }}" type="module"></script>
+            <script src="{{ assetsPath('js/mp/polyfills.js') }}" type="module"></script>
             <script src="{{ assetsPath('js/mp/polyfills-es5.js') }}" nomodule defer></script>
         {% endblock %}
 
         {% block globalJs %}
-            <script src="{{ assetsPath('js/mp/vendor-es2015.js') }}" type="module"></script>
+            <script src="{{ assetsPath('js/mp/vendor.js') }}" type="module"></script>
             <script src="{{ assetsPath('js/mp/vendor-es5.js') }}" nomodule defer></script>
-            <script src="{{ assetsPath('js/mp/main-es2015.js') }}" type="module"></script>
+            <script src="{{ assetsPath('js/mp/main.js') }}" type="module"></script>
             <script src="{{ assetsPath('js/mp/main-es5.js') }}" nomodule defer></script>
         {% endblock %}
 
         {% block layoutJs %}
-            <script src="{{ assetsPath('js/mp/spy/zed-ui-es2015.js') }}" type="module"></script>
+            <script src="{{ assetsPath('js/mp/spy/zed-ui.js') }}" type="module"></script>
             <script src="{{ assetsPath('js/mp/spy/zed-ui-es5.js') }}" nomodule defer></script>
         {% endblock %}
 

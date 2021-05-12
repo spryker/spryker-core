@@ -29,14 +29,14 @@ export class ProductAttributesSelectorComponent implements OnChanges, OnInit {
     @Output() selectedAttributesChange = new EventEmitter<ProductAttribute[]>();
 
     deleteIcon = IconDeleteModule.icon;
-    attributesObject: Record<string, ProductAttribute> = {};
     superAttributeOptions: AttributeOptions[] = [];
     attributeOptions: AttributeOptions[][] = [];
+    private attributesObject: Record<string, ProductAttribute> = {};
 
     constructor(private cdr: ChangeDetectorRef) {}
 
     ngOnInit(): void {
-        if (!this.selectedAttributes.length) {
+        if (!this.selectedAttributes?.length) {
             this.create();
         }
     }
@@ -52,8 +52,8 @@ export class ProductAttributesSelectorComponent implements OnChanges, OnInit {
         }
     }
 
-    generateAttributesObject(): void {
-        this.attributesObject = this.attributes.reduce((accum, attribute) => {
+    private generateAttributesObject(): void {
+        this.attributesObject = this.attributes?.reduce((accum, attribute) => {
             return {
                 ...accum,
                 [attribute.value]: attribute,
@@ -61,8 +61,8 @@ export class ProductAttributesSelectorComponent implements OnChanges, OnInit {
         }, {});
     }
 
-    initAttributeOptions(): void {
-        this.attributeOptions = this.selectedAttributes.map((attrs) => {
+    private initAttributeOptions(): void {
+        this.attributeOptions = this.selectedAttributes?.map((attrs) => {
             return this.attributesObject[attrs.value]?.attributes.map((attr) => {
                 return {
                     title: attr.name,
@@ -72,14 +72,22 @@ export class ProductAttributesSelectorComponent implements OnChanges, OnInit {
         });
     }
 
-    remapSuperAttributes(): void {
-        this.superAttributeOptions = this.attributes.map((attr) => {
+    private remapSuperAttributes(): void {
+        this.superAttributeOptions = this.attributes?.map((attr) => {
             return {
                 title: attr.name,
                 value: attr.value,
                 isDisabled: attr.isDisabled,
             };
         });
+    }
+
+    private disableSelectedAttributes(): void {
+        this.attributes = this.attributes.map((attr) => ({
+            ...attr,
+            isDisabled: this.selectedAttributes.some((selectedAttr) => selectedAttr?.value === attr?.value),
+        }));
+        this.remapSuperAttributes();
     }
 
     getAttributes(index: number, attributeOptions: AttributeOptions[][]): AttributeOptions[] {
@@ -118,14 +126,6 @@ export class ProductAttributesSelectorComponent implements OnChanges, OnInit {
         );
         this.selectedAttributesChange.emit(this.selectedAttributes);
         this.cdr.markForCheck();
-    }
-
-    disableSelectedAttributes(): void {
-        this.attributes = this.attributes.map((attr) => ({
-            ...attr,
-            isDisabled: this.selectedAttributes.some((selectedAttr) => selectedAttr?.value === attr?.value),
-        }));
-        this.remapSuperAttributes();
     }
 
     create(): void {

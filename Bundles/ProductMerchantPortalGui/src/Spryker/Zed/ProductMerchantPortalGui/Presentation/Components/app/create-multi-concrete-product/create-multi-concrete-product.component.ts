@@ -15,7 +15,7 @@ export class CreateMultiConcreteProductComponent {
     @Input() @ToJson() attributes: ProductAttribute[];
     @Input() @ToJson() selectedAttributes?: ProductAttribute[];
     @Input() @ToJson() generatedProducts?: ConcreteProductPreview[];
-    @Input() @ToJson() errors?: ConcreteProductPreviewErrors[];
+    @Input() @ToJson() generatedProductErrors?: ConcreteProductPreviewErrors[];
     @Input() productsName: string;
     @Input() attributesName: string;
 }

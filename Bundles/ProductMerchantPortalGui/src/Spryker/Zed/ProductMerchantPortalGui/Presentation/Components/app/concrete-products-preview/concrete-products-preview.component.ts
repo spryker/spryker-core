@@ -133,6 +133,30 @@ export class ConcreteProductsPreviewComponent implements OnInit, OnChanges {
         });
     }
 
+    private hasSkuError(): boolean {
+        let hasError = false;
+
+        this.errors.some((error) => {
+            if (error.errors?.sku) {
+                hasError = true;
+            }
+        });
+
+        return hasError;
+    }
+
+    private hasNameError(): boolean {
+        let hasError = false;
+
+        this.errors.some((error) => {
+            if (error.errors?.name) {
+                hasError = true;
+            }
+        });
+
+        return hasError;
+    }
+
     generateSku(checked: boolean): void {
         let generatedSku = this.concreteProductSkuGenerator.generate();
 
@@ -186,27 +210,19 @@ export class ConcreteProductsPreviewComponent implements OnInit, OnChanges {
         this.generatedProductsChange.emit(this.generatedProducts);
     }
 
-    private hasSkuError(): boolean {
-        let hasError = false;
+    getSkuErrors(index: number, errors: ConcreteProductPreviewErrors[]): string {
+        if (errors?.length && errors[index]) {
+            return errors[index]?.errors?.sku;
+        }
 
-        this.errors.some((error) => {
-            if (error.errors?.sku) {
-                hasError = true;
-            }
-        });
-
-        return hasError;
+        return '';
     }
 
-    private hasNameError(): boolean {
-        let hasError = false;
+    getNameErrors(index: number, errors: ConcreteProductPreviewErrors[]): string {
+        if (errors?.length && errors[index]) {
+            return errors[index]?.errors?.name;
+        }
 
-        this.errors.some((error) => {
-            if (error.errors?.name) {
-                hasError = true;
-            }
-        });
-
-        return hasError;
+        return '';
     }
 }

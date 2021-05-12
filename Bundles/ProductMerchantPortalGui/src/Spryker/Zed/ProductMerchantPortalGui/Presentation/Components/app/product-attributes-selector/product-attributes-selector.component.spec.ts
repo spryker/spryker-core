@@ -154,7 +154,7 @@ describe('ProductAttributesSelectorComponent', () => {
     });
 
     describe('Host functionality', () => {
-        it('should render <input type="hidden"> element if `@Input(name) exists`', () => {
+        it('should render hidden <input> element with serialized selected attributes if `@Input(name)` exists', () => {
             component.attributes = mockAttributes;
             component.selectedAttributes = mockSelectedAttributes;
             component.name = mockName;
@@ -200,16 +200,20 @@ describe('ProductAttributesSelectorComponent', () => {
             const buttonDeleteElems = fixture.debugElement.queryAll(
                 By.css('.mp-product-attributes-selector__content-row-button'),
             );
-            const hiddenInput = fixture.debugElement.query(By.css('input[type=hidden]'));
-
-            expect(hiddenInput.properties.value.replace(/\s/g, '')).toBe(
-                JSON.stringify([...mockSelectedAttributes, {}]),
+            const selectElems = fixture.debugElement.queryAll(
+                By.css('.mp-product-attributes-selector__content-row-name spy-select'),
             );
+
+            expect(selectElems.length).toBe(2);
 
             buttonDeleteElems[0].triggerEventHandler('click', 0);
             fixture.detectChanges();
 
-            expect(hiddenInput.properties.value.replace(/\s/g, '')).toBe(JSON.stringify([{}]));
+            const updatedSelectElems = fixture.debugElement.queryAll(
+                By.css('.mp-product-attributes-selector__content-row-name spy-select'),
+            );
+
+            expect(updatedSelectElems.length).toBe(1);
         });
 
         it('should update selected attributes by `Super attribute` select change', () => {

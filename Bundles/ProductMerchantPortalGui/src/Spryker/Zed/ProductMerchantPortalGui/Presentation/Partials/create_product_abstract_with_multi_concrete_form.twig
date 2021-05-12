@@ -29,7 +29,7 @@
                 products-name="{{ productsName }}"
                 selected-attributes="{{ selectedAttributes }}"
                 generated-products="{{ concreteProducts }}"
-                errors="{{ errors | json_encode }}"
+                generated-product-errors="{{ errors | json_encode }}"
             >
                 {{ form_start(form, { attr: { excludeFormTag: true } }) }}
                     {% block title %}

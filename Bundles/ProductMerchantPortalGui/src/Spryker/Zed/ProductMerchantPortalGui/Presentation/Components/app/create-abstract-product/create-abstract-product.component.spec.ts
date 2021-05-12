@@ -37,7 +37,7 @@ describe('CreateAbstractProductComponent', () => {
         expect(headlineElem).toBeTruthy();
     });
 
-    it('should render default projected title to the `.mp-create-abstract-product__header` element', () => {
+    it('should render projected title to the `.mp-create-abstract-product__header` element', () => {
         const projectedTitle = fixture.debugElement.query(
             By.css('.mp-create-abstract-product__header .projected-title'),
         );
@@ -45,7 +45,7 @@ describe('CreateAbstractProductComponent', () => {
         expect(projectedTitle.nativeElement.textContent).toBe('Name');
     });
 
-    it('should render default projected action to the `.mp-create-abstract-product__header` element', () => {
+    it('should render projected action to the `.mp-create-abstract-product__header` element', () => {
         const projectedAction = fixture.debugElement.query(
             By.css('.mp-create-abstract-product__header .projected-action'),
         );
@@ -53,7 +53,7 @@ describe('CreateAbstractProductComponent', () => {
         expect(projectedAction.nativeElement.textContent).toBe('Button');
     });
 
-    it('should render default projected content to the `.mp-create-abstract-product__content` element', () => {
+    it('should render projected content to the `.mp-create-abstract-product__content` element', () => {
         const projectedContent = fixture.debugElement.query(
             By.css('.mp-create-abstract-product__content .projected-content'),
         );
