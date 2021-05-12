@@ -12,7 +12,6 @@ coverage:
     whitelist: { include: ['../../../../src/*'] }
 
 suites:
-
     Communication:
         path: Communication
         class_name: AvailabilityGuiCommunicationTester
@@ -59,11 +58,11 @@ suites:
                 - \SprykerTest\Shared\Config\Helper\ConfigInit
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
                 - WebDriver:
-                    url: ''
-                    browser: chrome
-                    window_size: 1920x1080
-                    host: 0.0.0.0
-                    restart: false
+                      url: ''
+                      browser: chrome
+                      window_size: 1920x1080
+                      host: 0.0.0.0
+                      restart: false
                 - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
                 - \SprykerTest\Shared\Application\Helper\ZedHelper
                 - \SprykerTest\Zed\ZedNavigation\Helper\BreadcrumbHelper

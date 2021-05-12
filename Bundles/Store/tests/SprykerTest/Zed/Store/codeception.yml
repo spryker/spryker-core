@@ -8,7 +8,7 @@ paths:
 coverage:
     enabled: true
     remote: false
-    whitelist: { include: [ '../../../../src/*' ] }
+    whitelist: { include: ['../../../../src/*'] }
 
 suites:
     Business:

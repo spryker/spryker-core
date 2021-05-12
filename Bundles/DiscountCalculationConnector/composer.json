@@ -1,38 +1,38 @@
 {
-  "name": "spryker/discount-calculation-connector",
-  "type": "library",
-  "description": "DiscountCalculationConnector module",
-  "license": "proprietary",
-  "require": {
-    "php": ">=7.3",
-    "spryker/calculation-extension": "^1.0.0",
-    "spryker/discount": "^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^9.0.0",
-    "spryker/kernel": "^3.30.0"
-  },
-  "require-dev": {
-    "spryker/calculation": "*",
-    "spryker/code-sniffer": "*"
-  },
-  "suggest": {
-    "spryker/calculation": "If you want to use Calculation plugins."
-  },
-  "autoload": {
-    "psr-4": {
-      "Spryker\\": "src/Spryker/"
+    "name": "spryker/discount-calculation-connector",
+    "type": "library",
+    "description": "DiscountCalculationConnector module",
+    "license": "proprietary",
+    "require": {
+        "php": ">=7.3",
+        "spryker/calculation-extension": "^1.0.0",
+        "spryker/discount": "^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^9.0.0",
+        "spryker/kernel": "^3.30.0"
+    },
+    "require-dev": {
+        "spryker/calculation": "*",
+        "spryker/code-sniffer": "*"
+    },
+    "suggest": {
+        "spryker/calculation": "If you want to use Calculation plugins."
+    },
+    "autoload": {
+        "psr-4": {
+            "Spryker\\": "src/Spryker/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "5.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
     }
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "scripts": {
-    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
-    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "5.0.x-dev"
-    }
-  },
-  "config": {
-    "sort-packages": true
-  }
 }

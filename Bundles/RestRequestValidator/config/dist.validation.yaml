@@ -1,14 +1,14 @@
 access-tokens:
-  post:
-    username:
-      - NotBlank
-      - Email
-      - Regex:
-        pattern: '/^\w+/'
-    password:
-      - NotBlank
+    post:
+        username:
+            - NotBlank
+            - Email
+            - Regex:
+              pattern: '/^\w+/'
+        password:
+            - NotBlank
 
 refresh-tokens:
-  post:
-    refresh_token:
-      - NotBlank
+    post:
+        refresh_token:
+            - NotBlank

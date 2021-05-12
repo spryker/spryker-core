@@ -34,11 +34,11 @@ class WishlistEntityManager extends AbstractEntityManager implements WishlistEnt
             ->mapWishlistItemTransferToWishlistItemEntity($wishlistItemTransfer, new SpyWishlistItem());
 
         $wishlistItemQuery = $this->getFactory()->createWishlistItemQuery();
-        $WishlistItemCriteriaTransfer = (new WishlistItemCriteriaTransfer())
+        $wishlistItemCriteriaTransfer = (new WishlistItemCriteriaTransfer())
             ->fromArray($wishlistItemTransfer->modifiedToArray(), true);
 
         $wishlistItemQuery->filterByArray(
-            $WishlistItemCriteriaTransfer->modifiedToArrayNotRecursiveCamelCased()
+            $wishlistItemCriteriaTransfer->modifiedToArrayNotRecursiveCamelCased()
         );
 
         $existedWishlistItemEntity = $wishlistItemQuery->findOne();

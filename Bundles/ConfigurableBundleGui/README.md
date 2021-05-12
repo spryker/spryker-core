@@ -1,5 +1,5 @@
 # ConfigurableBundleGui Module
-[![Build Status](https://travis-ci.org/spryker/configurable-bundle-gui.svg)](https://travis-ci.org/spryker/configurable-bundle-gui)
+[![Latest Stable Version](https://poser.pugx.org/spryker/configurable-bundle-gui/v/stable.svg)](https://packagist.org/packages/spryker/configurable-bundle-gui)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 Allows to manage Configurable Bundles in Zed.

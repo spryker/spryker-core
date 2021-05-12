@@ -29,10 +29,10 @@ suites:
         class_name: GlossaryStorageFacadeTester
         modules:
             enabled:
-            - Asserts
-            - \SprykerTest\Shared\Testify\Helper\Environment
-            - \SprykerTest\Shared\Testify\Helper\ConfigHelper
-            - \SprykerTest\Shared\Testify\Helper\LocatorHelper
-            - \SprykerTest\Shared\Propel\Helper\ConnectionHelper
-            - \SprykerTest\Shared\Testify\Helper\DependencyHelper
-            - \SprykerTest\Shared\Glossary\Helper\TranslationHelper
+                - Asserts
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+                - \SprykerTest\Shared\Propel\Helper\ConnectionHelper
+                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+                - \SprykerTest\Shared\Glossary\Helper\TranslationHelper
