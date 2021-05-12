@@ -1,8 +1,5 @@
 <?xml version="1.0"?>
-<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed"
-          xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd"
-          namespace="Orm\Zed\StockAddress\Persistence"
-          package="src.Orm.Zed.StockAddress.Persistence">
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\StockAddress\Persistence" package="src.Orm.Zed.StockAddress.Persistence">
 
     <table name="spy_stock_address" idMethod="native">
         <column name="id_stock_address" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>

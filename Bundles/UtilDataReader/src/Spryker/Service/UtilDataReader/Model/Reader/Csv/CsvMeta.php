@@ -103,8 +103,14 @@ class CsvMeta implements CsvMetaInterface
             $this->csvFile->fseek(0);
 
             $lines = 0;
+            $string = '';
             while (!$this->csvFile->eof()) {
-                $lines += substr_count($this->csvFile->fread(8192), $this->lineSeparator);
+                $string = $this->csvFile->fread(8192);
+                $lines += substr_count($string, $this->lineSeparator);
+            }
+
+            if ($string && substr($string, -1) !== "\n") {
+                $lines++;
             }
 
             $this->total = $lines;

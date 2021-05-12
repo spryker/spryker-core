@@ -1,54 +1,54 @@
 {
-  "name": "spryker/cart",
-  "type": "library",
-  "description": "Cart module",
-  "license": "proprietary",
-  "require": {
-    "php": ">=7.3",
-    "spryker/calculation": "^4.9.0",
-    "spryker/cart-extension": "^1.11.0 || ^2.7.0 || ^4.3.0",
-    "spryker/kernel": "^3.30.0",
-    "spryker/messenger": "^3.1.0",
-    "spryker/quote": "^2.10.0",
-    "spryker/zed-request": "^3.6.0"
-  },
-  "require-dev": {
-    "spryker/application": "*",
-    "spryker/code-sniffer": "*",
-    "spryker/customer": "*",
-    "spryker/price-cart-connector": "*",
-    "spryker/price-product": "*",
-    "spryker/price-product-volume": "*",
-    "spryker/product": "*",
-    "spryker/propel": "*",
-    "spryker/testify": "*"
-  },
-  "suggest": {
-    "spryker/customer": "If you want to use Customer plugins, minimum required version: 7.4.0.",
-    "spryker/persistent-cart": "If you want to use persistent cart"
-  },
-  "autoload": {
-    "psr-4": {
-      "Spryker\\": "src/Spryker/"
+    "name": "spryker/cart",
+    "type": "library",
+    "description": "Cart module",
+    "license": "proprietary",
+    "require": {
+        "php": ">=7.3",
+        "spryker/calculation": "^4.9.0",
+        "spryker/cart-extension": "^1.11.0 || ^2.7.0 || ^4.3.0",
+        "spryker/kernel": "^3.30.0",
+        "spryker/messenger": "^3.1.0",
+        "spryker/quote": "^2.10.0",
+        "spryker/zed-request": "^3.6.0"
+    },
+    "require-dev": {
+        "spryker/application": "*",
+        "spryker/code-sniffer": "*",
+        "spryker/customer": "*",
+        "spryker/price-cart-connector": "*",
+        "spryker/price-product": "*",
+        "spryker/price-product-volume": "*",
+        "spryker/product": "*",
+        "spryker/propel": "*",
+        "spryker/testify": "*"
+    },
+    "suggest": {
+        "spryker/customer": "If you want to use Customer plugins, minimum required version: 7.4.0.",
+        "spryker/persistent-cart": "If you want to use persistent cart"
+    },
+    "autoload": {
+        "psr-4": {
+            "Spryker\\": "src/Spryker/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "SprykerTest\\": "tests/SprykerTest/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "7.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
     }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "SprykerTest\\": "tests/SprykerTest/"
-    }
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "scripts": {
-    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
-    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "7.0.x-dev"
-    }
-  },
-  "config": {
-    "sort-packages": true
-  }
 }

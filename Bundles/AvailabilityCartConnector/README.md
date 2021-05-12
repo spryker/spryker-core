@@ -1,5 +1,5 @@
 # AvailabilityCartConnector Module
-[![Build Status](https://travis-ci.org/spryker/availability-cart-connector.svg)](https://travis-ci.org/spryker/availability-cart-connector)
+[![Latest Stable Version](https://poser.pugx.org/spryker/availability-cart-connector/v/stable.svg)](https://packagist.org/packages/spryker/availability-cart-connector)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 AvailabilityCartConnector provides plugins that check availability for the cart items when the cart is modified.

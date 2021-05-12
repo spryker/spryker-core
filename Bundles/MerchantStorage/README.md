@@ -1,5 +1,5 @@
 # MerchantStorage Module
-[![Build Status](https://travis-ci.org/spryker/merchant-storage.svg)](https://travis-ci.org/spryker/merchant-storage)
+[![Latest Stable Version](https://poser.pugx.org/spryker/merchant-storage/v/stable.svg)](https://packagist.org/packages/spryker/merchant-storage)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 Manages storage for merchant entities.

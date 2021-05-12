@@ -111,7 +111,7 @@ class PriceGrouper implements PriceGrouperInterface
             !isset($prices[$currencyIsoCode][SharedPriceProductConfig::PRICE_DATA])
             || $priceMoneyValueTransfer->getPriceData() !== null
         ) {
-            $prices[$currencyIsoCode][SharedPriceProductConfig::PRICE_DATA] = $priceMoneyValueTransfer->getPriceData();
+            $prices = $this->setPriceData($prices, $priceProductTransfer);
         }
 
         if ($priceMoneyValueTransfer->getGrossAmount() !== null) {
@@ -121,6 +121,33 @@ class PriceGrouper implements PriceGrouperInterface
         if ($priceMoneyValueTransfer->getNetAmount() !== null) {
             $prices[$currencyIsoCode][$this->priceProductMapper->getNetPriceModeIdentifier()][$priceType] = $priceMoneyValueTransfer->getNetAmount();
         }
+
+        return $prices;
+    }
+
+    /**
+     * @param array $prices
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return array
+     */
+    protected function setPriceData(array $prices, PriceProductTransfer $priceProductTransfer): array
+    {
+        /** @var \Generated\Shared\Transfer\MoneyValueTransfer $priceMoneyValueTransfer */
+        $priceMoneyValueTransfer = $priceProductTransfer->requireMoneyValue()->getMoneyValue();
+
+        /** @var \Generated\Shared\Transfer\PriceTypeTransfer $priceTypeTransfer */
+        $priceTypeTransfer = $priceProductTransfer->requirePriceType()->getPriceType();
+        $priceType = $priceTypeTransfer->getName();
+
+        /** @var \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer */
+        $currencyTransfer = $priceMoneyValueTransfer->requireCurrency()->getCurrency();
+        $currencyIsoCode = $currencyTransfer->getCode();
+
+        if ($priceType === $this->config->getPriceTypeDefaultName()) {
+            $prices[$currencyIsoCode][SharedPriceProductConfig::PRICE_DATA] = $priceMoneyValueTransfer->getPriceData();
+        }
+        $prices[$currencyIsoCode][SharedPriceProductConfig::PRICE_DATA_BY_PRICE_TYPE][$priceType] = $priceMoneyValueTransfer->getPriceData();
 
         return $prices;
     }

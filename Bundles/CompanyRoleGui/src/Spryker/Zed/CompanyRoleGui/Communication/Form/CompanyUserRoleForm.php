@@ -7,13 +7,13 @@
 
 namespace Spryker\Zed\CompanyRoleGui\Communication\Form;
 
-use Closure;
 use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
-use Generated\Shared\Transfer\CompanyRoleTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
+use Spryker\Zed\CompanyRoleGui\Communication\Form\FormType\CompanyRoleChoiceType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
-use Symfony\Component\Form\CallbackTransformer;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
@@ -27,6 +27,10 @@ class CompanyUserRoleForm extends AbstractType
     public const OPTION_VALUES_ROLES_CHOICES = 'company_role_choices';
     public const OPTION_ATTRIBUTES_ROLES_CHOICES = 'company_role_attributes';
 
+    /**
+     * @uses \Spryker\Zed\CompanyUserGui\Communication\Form\CompanyUserForm
+     */
+    protected const FIELD_FK_COMPANY = 'fk_company';
     protected const FIELD_COMPANY_ROLE_COLLECTION = 'company_role_collection';
 
     protected const TEMPLATE_PATH = '@CompanyRoleGui/CompanyUser/company_role.twig';
@@ -40,6 +44,8 @@ class CompanyUserRoleForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addCompanyRoleCollectionField($builder, $options);
+
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, [$this, 'companyRolesSearchPreSubmitHandler']);
     }
 
     /**
@@ -64,6 +70,46 @@ class CompanyUserRoleForm extends AbstractType
     }
 
     /**
+     * @return string
+     */
+    public function getBlockPrefix(): string
+    {
+        return 'company-user';
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormEvent $formEvent
+     *
+     * @return void
+     */
+    public function companyRolesSearchPreSubmitHandler(FormEvent $formEvent): void
+    {
+        $data = $formEvent->getData();
+        $form = $formEvent->getForm();
+
+        if (
+            !isset($data[static::FIELD_COMPANY_ROLE_COLLECTION]) ||
+            !isset($data[static::FIELD_FK_COMPANY]) ||
+            !$form->has(static::FIELD_COMPANY_ROLE_COLLECTION)
+        ) {
+            return;
+        }
+
+        $companyUserTransfer = (new CompanyUserTransfer())
+            ->setFkCompany($data[static::FIELD_FK_COMPANY]);
+
+        $options = $this->getFactory()
+            ->createCompanyUserRoleFormDataProvider()
+            ->getOptions($companyUserTransfer);
+
+        $form->add(
+            static::FIELD_COMPANY_ROLE_COLLECTION,
+            CompanyRoleChoiceType::class,
+            $this->getCompanyRoleFieldParameters($options)
+        );
+    }
+
+    /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
@@ -71,7 +117,23 @@ class CompanyUserRoleForm extends AbstractType
      */
     protected function addCompanyRoleCollectionField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FIELD_COMPANY_ROLE_COLLECTION, ChoiceType::class, [
+        $builder->add(
+            static::FIELD_COMPANY_ROLE_COLLECTION,
+            CompanyRoleChoiceType::class,
+            $this->getCompanyRoleFieldParameters($options)
+        );
+
+        return $this;
+    }
+
+    /**
+     * @param array $options
+     *
+     * @return array
+     */
+    protected function getCompanyRoleFieldParameters(array $options): array
+    {
+        return [
             'choices' => $options[static::OPTION_VALUES_ROLES_CHOICES],
             'choice_attr' => $options[static::OPTION_ATTRIBUTES_ROLES_CHOICES],
             'constraints' => $this->createCompanyRoleCollectionConstraints(),
@@ -82,17 +144,7 @@ class CompanyUserRoleForm extends AbstractType
             'attr' => [
                 'template_path' => $this->getTemplatePath(),
             ],
-        ]);
-
-        $callbackTransformer = new CallbackTransformer(
-            $this->getInputDataCallbackRoleCollectionTransformer(),
-            $this->getOutputDataCallbackRoleCollectionTransformer()
-        );
-
-        $builder->get(static::FIELD_COMPANY_ROLE_COLLECTION)
-            ->addModelTransformer($callbackTransformer);
-
-        return $this;
+        ];
     }
 
     /**
@@ -111,42 +163,5 @@ class CompanyUserRoleForm extends AbstractType
         ]);
 
         return $companyRoleCollectionConstraints;
-    }
-
-    /**
-     * @return \Closure
-     */
-    protected function getInputDataCallbackRoleCollectionTransformer(): Closure
-    {
-        return function ($roleCollection = []): array {
-            $roles = [];
-
-            if (!empty($roleCollection[CompanyRoleCollectionTransfer::ROLES])) {
-                foreach ($roleCollection[CompanyRoleCollectionTransfer::ROLES] as $role) {
-                    $roles[] = $role[CompanyRoleTransfer::ID_COMPANY_ROLE];
-                }
-            }
-
-            return $roles;
-        };
-    }
-
-    /**
-     * @return \Closure
-     */
-    protected function getOutputDataCallbackRoleCollectionTransformer(): Closure
-    {
-        return function ($roleCollectionSubmitted = []): CompanyRoleCollectionTransfer {
-            $companyRoleCollectionTransfer = new CompanyRoleCollectionTransfer();
-
-            foreach ($roleCollectionSubmitted as $role) {
-                $companyRoleTransfer = (new CompanyRoleTransfer())
-                    ->setIdCompanyRole($role);
-
-                $companyRoleCollectionTransfer->addRole($companyRoleTransfer);
-            }
-
-            return $companyRoleCollectionTransfer;
-        };
     }
 }

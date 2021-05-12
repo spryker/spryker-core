@@ -13,21 +13,21 @@ coverage:
 
 suites:
     Communication:
-     path: Communication
-     class_name: MerchantProfileDataImportCommunicationTester
-     modules:
-         enabled:
-             - Asserts
-             - \SprykerTest\Shared\Testify\Helper\Environment
-             - \SprykerTest\Shared\Propel\Helper\TransactionHelper
-             - \SprykerTest\Shared\Testify\Helper\LocatorHelper
-             - \SprykerTest\Shared\Testify\Helper\PropelTableRelationSanitizer
-             - \SprykerTest\Shared\Testify\Helper\TableRelationsCleanupHelper
-             - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
-             - \SprykerTest\Zed\Merchant\Helper\MerchantHelper
-             - \SprykerTest\Zed\MerchantProfile\Helper\MerchantProfileHelper
-             - \SprykerTest\Zed\MerchantDataImport\Helper\MerchantDataImportHelper
-             - \SprykerTest\Zed\MerchantProfileDataImport\Helper\MerchantProfileAddressDataImportHelper
-             - \SprykerTest\Zed\Testify\Helper\Business\BusinessHelper
-             - \SprykerTest\Zed\Testify\Helper\Business\DependencyProviderHelper
-             - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+        path: Communication
+        class_name: MerchantProfileDataImportCommunicationTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+                - \SprykerTest\Shared\Testify\Helper\PropelTableRelationSanitizer
+                - \SprykerTest\Shared\Testify\Helper\TableRelationsCleanupHelper
+                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+                - \SprykerTest\Zed\Merchant\Helper\MerchantHelper
+                - \SprykerTest\Zed\MerchantProfile\Helper\MerchantProfileHelper
+                - \SprykerTest\Zed\MerchantDataImport\Helper\MerchantDataImportHelper
+                - \SprykerTest\Zed\MerchantProfileDataImport\Helper\MerchantProfileAddressDataImportHelper
+                - \SprykerTest\Zed\Testify\Helper\Business\BusinessHelper
+                - \SprykerTest\Zed\Testify\Helper\Business\DependencyProviderHelper
+                - \SprykerTest\Shared\Testify\Helper\ConfigHelper

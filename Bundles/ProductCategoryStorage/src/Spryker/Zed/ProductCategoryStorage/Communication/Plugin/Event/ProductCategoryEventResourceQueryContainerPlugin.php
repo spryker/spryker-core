@@ -51,7 +51,7 @@ class ProductCategoryEventResourceQueryContainerPlugin extends AbstractPlugin im
             $query->clear();
         }
 
-        return $query;
+        return $query->distinct();
     }
 
     /**

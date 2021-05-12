@@ -1,65 +1,65 @@
 {
-  "name": "spryker/cms",
-  "type": "library",
-  "description": "Cms module",
-  "license": "proprietary",
-  "require": {
-    "php": ">=7.3",
-    "spryker/category": "^3.0.0 || ^4.0.0 || ^5.0.0",
-    "spryker/cms-extension": "^1.1.0",
-    "spryker/glossary": "^3.1.0",
-    "spryker/gui": "^3.33.0",
-    "spryker/kernel": "^3.30.0",
-    "spryker/locale": "^3.0.0",
-    "spryker/propel-orm": "^1.0.0",
-    "spryker/store": "^1.0.0",
-    "spryker/symfony": "^3.0.0",
-    "spryker/touch": "^3.0.0 || ^4.0.0",
-    "spryker/url": "^3.5.0",
-    "spryker/util-encoding": "^2.0.0",
-    "spryker/util-text": "^1.1.0",
-    "spryker/zed-request": "^3.0.0"
-  },
-  "require-dev": {
-    "spryker/application": "*",
-    "spryker/code-sniffer": "*",
-    "spryker/container": "*",
-    "spryker/event-dispatcher": "*",
-    "spryker/form": "*",
-    "spryker/propel": "*",
-    "spryker/router": "*",
-    "spryker/testify": "*",
-    "spryker/twig": "*",
-    "spryker/validator": "*",
-    "spryker/zed-navigation": "*"
-  },
-  "suggest": {
-    "spryker/cms-block": "If you want to have separate content blocks on your pages."
-  },
-  "autoload": {
-    "psr-4": {
-      "Spryker\\": "src/Spryker/",
-      "SprykerTest\\Zed\\Cms\\Helper\\": "tests/SprykerTest/Zed/Cms/_support/Helper/",
-      "SprykerTest\\Zed\\Cms\\PageObject\\": "tests/SprykerTest/Zed/Cms/_support/PageObject/"
+    "name": "spryker/cms",
+    "type": "library",
+    "description": "Cms module",
+    "license": "proprietary",
+    "require": {
+        "php": ">=7.3",
+        "spryker/category": "^3.0.0 || ^4.0.0 || ^5.0.0",
+        "spryker/cms-extension": "^1.1.0",
+        "spryker/glossary": "^3.1.0",
+        "spryker/gui": "^3.33.0",
+        "spryker/kernel": "^3.30.0",
+        "spryker/locale": "^3.0.0",
+        "spryker/propel-orm": "^1.0.0",
+        "spryker/store": "^1.0.0",
+        "spryker/symfony": "^3.0.0",
+        "spryker/touch": "^3.0.0 || ^4.0.0",
+        "spryker/url": "^3.5.0",
+        "spryker/util-encoding": "^2.0.0",
+        "spryker/util-text": "^1.1.0",
+        "spryker/zed-request": "^3.0.0"
+    },
+    "require-dev": {
+        "spryker/application": "*",
+        "spryker/code-sniffer": "*",
+        "spryker/container": "*",
+        "spryker/event-dispatcher": "*",
+        "spryker/form": "*",
+        "spryker/propel": "*",
+        "spryker/router": "*",
+        "spryker/testify": "*",
+        "spryker/twig": "*",
+        "spryker/validator": "*",
+        "spryker/zed-navigation": "*"
+    },
+    "suggest": {
+        "spryker/cms-block": "If you want to have separate content blocks on your pages."
+    },
+    "autoload": {
+        "psr-4": {
+            "Spryker\\": "src/Spryker/",
+            "SprykerTest\\Zed\\Cms\\Helper\\": "tests/SprykerTest/Zed/Cms/_support/Helper/",
+            "SprykerTest\\Zed\\Cms\\PageObject\\": "tests/SprykerTest/Zed/Cms/_support/PageObject/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "SprykerTest\\": "tests/SprykerTest/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "7.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
     }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "SprykerTest\\": "tests/SprykerTest/"
-    }
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "scripts": {
-    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
-    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "7.0.x-dev"
-    }
-  },
-  "config": {
-    "sort-packages": true
-  }
 }

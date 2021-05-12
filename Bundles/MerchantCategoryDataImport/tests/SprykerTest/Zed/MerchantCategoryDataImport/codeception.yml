@@ -17,13 +17,13 @@ suites:
         class_name: MerchantCategoryDataImportCommunicationTester
         modules:
             enabled:
-                 - Asserts
-                 - \SprykerTest\Shared\Testify\Helper\Environment
-                 - \SprykerTest\Shared\Testify\Helper\ConfigHelper
-                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
-                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
-                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
-                 - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
-                 - \SprykerTest\Zed\Merchant\Helper\MerchantHelper
-                 - \SprykerTest\Zed\Category\Helper\CategoryDataHelper
-                 - \SprykerTest\Shared\Testify\Helper\TableRelationsCleanupHelper
+                - Asserts
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+                - \SprykerTest\Zed\Merchant\Helper\MerchantHelper
+                - \SprykerTest\Zed\Category\Helper\CategoryDataHelper
+                - \SprykerTest\Shared\Testify\Helper\TableRelationsCleanupHelper

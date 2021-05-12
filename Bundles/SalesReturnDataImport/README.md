@@ -1,5 +1,5 @@
 # SalesReturnDataImport Module
-[![Build Status](https://travis-ci.org/spryker/sales-return-data-import.svg)](https://travis-ci.org/spryker/sales-return-data-import)
+[![Latest Stable Version](https://poser.pugx.org/spryker/sales-return-data-import/v/stable.svg)](https://packagist.org/packages/spryker/sales-return-data-import)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 DataImport for SalesReturns.

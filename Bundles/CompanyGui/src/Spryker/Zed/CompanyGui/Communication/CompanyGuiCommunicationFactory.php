@@ -11,9 +11,13 @@ use Orm\Zed\Company\Persistence\SpyCompanyQuery;
 use Spryker\Zed\CompanyGui\Communication\Form\ActivateCompanyForm;
 use Spryker\Zed\CompanyGui\Communication\Form\ApproveCompanyForm;
 use Spryker\Zed\CompanyGui\Communication\Form\CompanyForm;
+use Spryker\Zed\CompanyGui\Communication\Form\CompanyUserCompanyForm;
 use Spryker\Zed\CompanyGui\Communication\Form\DataProvider\CompanyFormDataProvider;
+use Spryker\Zed\CompanyGui\Communication\Form\DataProvider\CompanyUserCompanyFormDataProvider;
 use Spryker\Zed\CompanyGui\Communication\Form\DeactivateCompanyForm;
 use Spryker\Zed\CompanyGui\Communication\Form\DenyCompanyForm;
+use Spryker\Zed\CompanyGui\Communication\Formatter\CompanyGuiFormatter;
+use Spryker\Zed\CompanyGui\Communication\Formatter\CompanyGuiFormatterInterface;
 use Spryker\Zed\CompanyGui\Communication\Table\CompanyTable;
 use Spryker\Zed\CompanyGui\Communication\Table\PluginExecutor\CompanyTablePluginExecutor;
 use Spryker\Zed\CompanyGui\Communication\Table\PluginExecutor\CompanyTablePluginExecutorInterface;
@@ -21,7 +25,11 @@ use Spryker\Zed\CompanyGui\CompanyGuiDependencyProvider;
 use Spryker\Zed\CompanyGui\Dependency\Facade\CompanyGuiToCompanyFacadeInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormTypeInterface;
 
+/**
+ * @method \Spryker\Zed\CompanyGui\CompanyGuiConfig getConfig()
+ */
 class CompanyGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
@@ -67,6 +75,30 @@ class CompanyGuiCommunicationFactory extends AbstractCommunicationFactory
         return new CompanyFormDataProvider(
             $this->getCompanyFacade()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyGui\Communication\Formatter\CompanyGuiFormatterInterface
+     */
+    public function createCompanyGuiFormatter(): CompanyGuiFormatterInterface
+    {
+        return new CompanyGuiFormatter();
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyGui\Communication\Form\DataProvider\CompanyUserCompanyFormDataProvider
+     */
+    public function createCompanyUserCompanyFormDataProvider(): CompanyUserCompanyFormDataProvider
+    {
+        return new CompanyUserCompanyFormDataProvider($this->getCompanyFacade());
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormTypeInterface
+     */
+    public function createCompanyUserCompanyForm(): FormTypeInterface
+    {
+        return new CompanyUserCompanyForm();
     }
 
     /**
