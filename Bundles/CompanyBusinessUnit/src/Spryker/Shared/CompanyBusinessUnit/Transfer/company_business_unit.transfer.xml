@@ -40,6 +40,7 @@
     <transfer name="CompanyBusinessUnitCriteriaFilter">
         <property name="idCompany" type="int"/>
         <property name="idCompanyUser" type="int"/>
+        <property name="name" type="string"/>
         <property name="filter" type="Filter"/>
         <property name="pagination" type="Pagination"/>
         <property name="companyBusinessUnitIds" type="array" singular="companyBusinessUnitIds"/>
