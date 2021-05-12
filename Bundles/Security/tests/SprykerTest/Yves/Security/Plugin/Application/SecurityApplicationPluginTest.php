@@ -125,7 +125,7 @@ class SecurityApplicationPluginTest extends Unit
         $this->assertSame('http://localhost/login', $httpKernelBrowser->getResponse()->getTargetUrl());
 
         $httpKernelBrowser->request('post', '/login_check', ['_username' => 'admin', '_password' => 'foo']);
-        $this->assertSame('', $container->get('security.last_error')($httpKernelBrowser->getRequest()));
+        $this->assertSame(null, $container->get('security.last_error')($httpKernelBrowser->getRequest()));
         $httpKernelBrowser->getRequest()->getSession()->save();
         $this->assertSame(302, $httpKernelBrowser->getResponse()->getStatusCode());
         $this->assertSame('http://localhost/admin', $httpKernelBrowser->getResponse()->getTargetUrl());
@@ -145,7 +145,6 @@ class SecurityApplicationPluginTest extends Unit
         $this->addFormAuthentication();
         $httpKernelBrowser = $this->tester->getHttpKernelBrowser();
         $httpKernelBrowser->request('post', '/login_check', ['_username' => 'user', '_password' => 'foo']);
-        $httpKernelBrowser->getRequest()->getSession()->save();
 
         // Assert
         $this->expectException(AccessDeniedHttpException::class);
@@ -687,7 +686,7 @@ class SecurityApplicationPluginTest extends Unit
         });
 
         $this->tester->addRoute('admin', '/admin', function () {
-            return 'admin';
+            return new Response('admin');
         });
     }
 
