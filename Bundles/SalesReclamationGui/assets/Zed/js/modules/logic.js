@@ -9,7 +9,7 @@ function getSelectedItems(idOrderItem) {
         return selectedItems;
     }
 
-    $('.item-check').each(function() {
+    $('.item-check').each(function () {
         if ($(this).prop('checked') === true) {
             selectedItems.push($(this).val());
         }
@@ -26,7 +26,7 @@ function createTriggerUrl(idOrder, idReclamation, eventName) {
     var parameters = {
         event: eventName,
         'id-sales-order': idOrder,
-        redirect: '/sales-reclamation-gui/detail?id-reclamation=' + idReclamation
+        redirect: '/sales-reclamation-gui/detail?id-reclamation=' + idReclamation,
     };
 
     parameters.items = getSelectedItems();
@@ -45,7 +45,7 @@ function isSpecificItemsSelected(parameters) {
 }
 
 function expandParametersWithClaimedOrderItems(parameters) {
-    $('.item-check').each(function() {
+    $('.item-check').each(function () {
         parameters.items.push($(this).val());
     });
 
@@ -60,7 +60,7 @@ function createTriggerItemUrl(idOrder, idOrderItem, idReclamation, eventName) {
     var parameters = {
         event: eventName,
         'id-sales-order-item': idOrderItem,
-        redirect: '/sales-reclamation-gui/detail?id-reclamation=' + idReclamation
+        redirect: '/sales-reclamation-gui/detail?id-reclamation=' + idReclamation,
     };
 
     parameters.items = getSelectedItems();
@@ -71,12 +71,10 @@ function createTriggerItemUrl(idOrder, idOrderItem, idReclamation, eventName) {
 }
 
 function disableTrigger($item) {
-    $item
-        .prop('disabled', true)
-        .addClass('disabled');
+    $item.prop('disabled', true).addClass('disabled');
 }
 
-$(document).ready(function() {
+$(document).ready(function () {
     $('.trigger-event').click(function (e) {
         e.preventDefault();
 
@@ -84,14 +82,14 @@ $(document).ready(function() {
 
         var $form = $(this).closest('form');
         var formAction = $form.attr('action');
-        var finalUrl = formAction + '&' + $.param({items: getSelectedItems()});
+        var finalUrl = formAction + '&' + $.param({ items: getSelectedItems() });
 
         $form.attr('action', finalUrl);
 
         $(this).parents('form').first().submit();
     });
 
-    $('.item-check').click(function() {
+    $('.item-check').click(function () {
         var countChecked = $(".item-check[type='checkbox']:checked").length;
         var totalCheckboxItems = $('.item-check').length;
 
@@ -106,14 +104,14 @@ $(document).ready(function() {
         return true;
     });
 
-    $('#check-all-orders').click(function() {
+    $('#check-all-orders').click(function () {
         if ($(this).prop('checked') === true) {
             var checked = true;
         } else {
             var checked = false;
         }
 
-        $('.item-check').each(function() {
+        $('.item-check').each(function () {
             $(this).prop('checked', checked);
         });
     });

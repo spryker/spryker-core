@@ -27,7 +27,7 @@ use Spryker\Zed\MerchantDataImport\Communication\Plugin\MerchantStoreDataImportP
  */
 class MerchantStoreDataImportPluginTest extends Unit
 {
-    protected const MERCHANT_KEY = 'kudu-merchant-test';
+    protected const MERCHANT_REFERENCE = 'kudu-merchant-test';
 
     /**
      * @var \SprykerTest\Zed\MerchantDataImport\MerchantDataImportCommunicationTester
@@ -41,9 +41,9 @@ class MerchantStoreDataImportPluginTest extends Unit
     {
         // Arrange
         $this->tester->ensureMerchantStoreTableIsEmpty();
-        $this->tester->deleteMerchantByKey(static::MERCHANT_KEY);
+        $this->tester->deleteMerchantByReference(static::MERCHANT_REFERENCE);
 
-        $merchantTransfer = $this->tester->haveMerchant([MerchantTransfer::MERCHANT_KEY => static::MERCHANT_KEY]);
+        $merchantTransfer = $this->tester->haveMerchant([MerchantTransfer::MERCHANT_REFERENCE => static::MERCHANT_REFERENCE]);
 
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
         $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/merchant_store.csv');

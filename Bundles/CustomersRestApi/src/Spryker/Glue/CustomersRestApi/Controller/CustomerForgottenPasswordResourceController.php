@@ -27,7 +27,8 @@ class CustomerForgottenPasswordResourceController extends AbstractController
      *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
-     *              "204": "No content."
+     *              "204": "No content.",
+     *              "422": "Unprocessable entity."
      *          },
      *          "isEmptyResponse": true
      *     }

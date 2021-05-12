@@ -1,28 +1,28 @@
 namespace: SprykerTest\Service\PriceProductOfferVolume
 
 paths:
-  tests: .
-  data: ../../../_data
-  support: _support
-  log: ../../../_output
+    tests: .
+    data: ../../../_data
+    support: _support
+    log: ../../../_output
 
 coverage:
-  enabled: true
-  remote: false
-  whitelist: { include: ['../../../../src/*'] }
+    enabled: true
+    remote: false
+    whitelist: { include: ['../../../../src/*'] }
 
 suites:
-  Service:
-    path: .
-    class_name: PriceProductOfferVolumeServiceTester
-    modules:
-      enabled:
-        - Asserts
-        - \SprykerTest\Shared\Testify\Helper\Environment
-        - \SprykerTest\Shared\Testify\Helper\ConfigHelper
-        - \SprykerTest\Client\Testify\Helper\ClientHelper
-        - \SprykerTest\Shared\Testify\Helper\LocatorHelper
-        - \SprykerTest\Shared\Testify\Helper\DependencyHelper
-        - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
-        - \SprykerTest\Shared\Propel\Helper\TransactionHelper
-        - \SprykerTest\Shared\PriceProduct\Helper\PriceProductDataHelper
+    Service:
+        path: .
+        class_name: PriceProductOfferVolumeServiceTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+                - \SprykerTest\Client\Testify\Helper\ClientHelper
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+                - \SprykerTest\Shared\PriceProduct\Helper\PriceProductDataHelper

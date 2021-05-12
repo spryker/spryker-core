@@ -3,20 +3,20 @@
         <div class="mp-edit-offer__heading-col">
             <ng-content select="[title]"></ng-content>
         </div>
-        
+
         <div class="mp-edit-offer__heading-col">
             <ng-content select="[action]"></ng-content>
         </div>
     </div>
-    
+
     <div class="mp-edit-offer__base">
         <div class="mp-edit-offer__base-col" *ngIf="images?.length">
             <mp-image-slider [images]="images"></mp-image-slider>
         </div>
-        
+
         <div class="mp-edit-offer__base-col mp-edit-offer__base-col--content">
             <ng-content select="[product-status]"></ng-content>
-    
+
             <h4 class="mp-edit-offer__title">{{ product?.name }}</h4>
             <span class="mp-edit-offer__sku">{{ product?.sku }}</span>
             <div class="mp-edit-offer__dates">
@@ -24,7 +24,7 @@
                     <span class="mp-edit-offer__dates-title">{{ product?.validFromTitle }}</span>
                     <span class="mp-edit-offer__dates-value">{{ validFrom }}</span>
                 </span>
-        
+
                 <span class="mp-edit-offer__dates-col">
                     <span class="mp-edit-offer__dates-title">{{ product?.validToTitle }}</span>
                     <span class="mp-edit-offer__dates-value">{{ validTo }}</span>
@@ -32,14 +32,10 @@
             </div>
         </div>
     </div>
-    
+
     <spy-collapsible [spyTitle]="productDetailsTitle">
         <ng-content select="[product-details]"></ng-content>
     </spy-collapsible>
 </div>
 
 <ng-content></ng-content>
-
-
-
-

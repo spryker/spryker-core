@@ -34,7 +34,7 @@ class FileFinder implements FinderInterface
     {
         $directories = $this->pathBuilder->buildPaths($module);
         $directories = array_filter($directories, function (string $directory) {
-            return glob($directory);
+            return glob($directory, GLOB_NOSORT);
         });
 
         if (count($directories) === 0) {

@@ -27,6 +27,11 @@ class StorageFactory extends AbstractFactory
     public const DEFAULT_REDIS_DATABASE = 0;
 
     /**
+     * @uses \Spryker\Shared\StorageRedis\StorageRedisConstants::STORAGE_REDIS_SCHEME.
+     */
+    protected const STORAGE_REDIS_SCHEME = 'STORAGE_REDIS:STORAGE_REDIS_SCHEME';
+
+    /**
      * @var \Spryker\Client\Storage\Redis\ServiceInterface|\Spryker\Client\StorageExtension\Dependency\Plugin\StoragePluginInterface
      */
     protected static $storageService;
@@ -168,7 +173,7 @@ class StorageFactory extends AbstractFactory
         }
 
         $config = [
-            'protocol' => Config::get(StorageConstants::STORAGE_REDIS_PROTOCOL),
+            'scheme' => Config::get(static::STORAGE_REDIS_SCHEME, false) ?: Config::get(StorageConstants::STORAGE_REDIS_PROTOCOL),
             'port' => Config::get(StorageConstants::STORAGE_REDIS_PORT),
             'host' => Config::get(StorageConstants::STORAGE_REDIS_HOST),
             'database' => Config::get(StorageConstants::STORAGE_REDIS_DATABASE, static::DEFAULT_REDIS_DATABASE),

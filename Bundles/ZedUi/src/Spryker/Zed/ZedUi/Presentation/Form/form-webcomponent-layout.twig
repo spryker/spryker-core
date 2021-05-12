@@ -116,8 +116,13 @@ For more information on this topic, see
     {%- else -%}
         <web-spy-input control type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %} cloak></web-spy-input>
     {%- endif -%}
-
 {%- endblock form_widget_simple -%}
+
+{%- block password_widget -%}
+    {# Attribute "required" is on the level of form_row #}
+    {%- set required = false -%}
+    <web-spy-input-password control {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}></web-spy-input-password>
+{%- endblock password_widget -%}
 
 {%- block button_row -%}
     {%- set row_attr = row_attr | default([]) -%}

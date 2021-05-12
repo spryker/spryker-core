@@ -1,0 +1,3 @@
+category_key,included_store_names,excluded_store_names
+parent-test-category,"DE,AT",
+child-test-category,,"AT"

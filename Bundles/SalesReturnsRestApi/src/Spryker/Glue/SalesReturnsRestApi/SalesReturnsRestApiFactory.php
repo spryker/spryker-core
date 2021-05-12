@@ -82,7 +82,8 @@ class SalesReturnsRestApiFactory extends AbstractFactory
     {
         return new RestReturnResponseBuilder(
             $this->getResourceBuilder(),
-            $this->createReturnResourceMapper()
+            $this->createReturnResourceMapper(),
+            $this->getConfig()
         );
     }
 

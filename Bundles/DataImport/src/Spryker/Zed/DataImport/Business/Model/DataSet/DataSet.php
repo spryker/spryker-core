@@ -10,8 +10,21 @@ namespace Spryker\Zed\DataImport\Business\Model\DataSet;
 use ArrayObject;
 use Spryker\Zed\DataImport\Business\Exception\DataKeyNotFoundInDataSetException;
 
-class DataSet extends ArrayObject implements DataSetInterface
+class DataSet implements DataSetInterface
 {
+    /**
+     * @var \ArrayObject
+     */
+    protected $dataSet;
+
+    /**
+     * @param array $data
+     */
+    public function __construct(array $data = [])
+    {
+        $this->dataSet = new ArrayObject($data);
+    }
+
     /**
      * @param string|int $index
      *
@@ -25,7 +38,7 @@ class DataSet extends ArrayObject implements DataSetInterface
             throw new DataKeyNotFoundInDataSetException(sprintf('The key "%s" was not found in data set. Available keys: "%s"', $index, implode(', ', array_keys($this->getArrayCopy()))));
         }
 
-        return parent::offsetGet($index);
+        return $this->dataSet->offsetGet($index);
     }
 
     /**
@@ -41,6 +54,79 @@ class DataSet extends ArrayObject implements DataSetInterface
             throw new DataKeyNotFoundInDataSetException(sprintf('The key "%s" was not found in data set. Available keys: "%s"', $index, implode(', ', array_keys($this->getArrayCopy()))));
         }
 
-        parent::offsetUnset($index);
+        $this->dataSet->offsetUnset($index);
+    }
+
+    /**
+     * @return \ArrayIterator|\Traversable
+     */
+    public function getIterator()
+    {
+        return $this->dataSet->getIterator();
+    }
+
+    /**
+     * @param mixed $offset
+     *
+     * @return bool
+     */
+    public function offsetExists($offset)
+    {
+        return $this->dataSet->offsetExists($offset);
+    }
+
+    /**
+     * @param mixed $offset
+     * @param mixed $value
+     *
+     * @return void
+     */
+    public function offsetSet($offset, $value)
+    {
+        $this->dataSet->offsetSet($offset, $value);
+    }
+
+    /**
+     * @return string|null
+     */
+    public function serialize()
+    {
+        return $this->dataSet->serialize();
+    }
+
+    /**
+     * @param string $serialized
+     *
+     * @return void
+     */
+    public function unserialize($serialized)
+    {
+        $this->dataSet->unserialize($serialized);
+    }
+
+    /**
+     * @return int
+     */
+    public function count()
+    {
+        return $this->dataSet->count();
+    }
+
+    /**
+     * @param array $input
+     *
+     * @return array
+     */
+    public function exchangeArray($input)
+    {
+        return $this->dataSet->exchangeArray($input);
+    }
+
+    /**
+     * @return array
+     */
+    public function getArrayCopy()
+    {
+        return $this->dataSet->getArrayCopy();
     }
 }

@@ -14,7 +14,7 @@ describe('DashboardStatsComponent', () => {
                 <div class="default-content"></div>
                 <div title class="title-content"></div>
             </mp-dashboard-stats>
-    `,
+        `,
     })
     class TestComponent {}
 

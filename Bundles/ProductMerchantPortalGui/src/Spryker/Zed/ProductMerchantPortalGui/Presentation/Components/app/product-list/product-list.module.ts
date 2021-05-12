@@ -6,17 +6,8 @@ import { ProductListComponent } from './product-list.component';
 import { ProductListTableModule } from '../product-list-table/product-list-table.module';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        ProductListTableModule,
-        HeadlineModule,
-    ],
-    declarations: [
-        ProductListComponent,
-    ],
-    exports: [
-        ProductListComponent,
-    ],
+    imports: [CommonModule, ProductListTableModule, HeadlineModule],
+    declarations: [ProductListComponent],
+    exports: [ProductListComponent],
 })
-export class ProductListModule {
-}
+export class ProductListModule {}

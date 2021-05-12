@@ -1,8 +1,9 @@
 <?xml version="1.0"?>
 <statemachine
-        xmlns="spryker:state-machine-01"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="spryker:state-machine-01 http://static.spryker.com/state-machine-01.xsd">
+    xmlns="spryker:state-machine-01"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="spryker:state-machine-01 http://static.spryker.com/state-machine-01.xsd"
+>
 
     <process name="TestProcess" main="true">
         <subprocesses>
@@ -33,7 +34,7 @@
         </states>
 
         <transitions>
-            <transition >
+            <transition>
                 <source>new</source>
                 <target>invoice created</target>
                 <event>create invoice</event>
@@ -178,7 +179,7 @@
             <event name="waiting for payment" onEnter="true"/>
             <event name="payment not received" timeout="1hour"/>
             <event name="payment received" manual="true"/>
-            <event name="ready for return"  onEnter="true"/>
+            <event name="ready for return" onEnter="true"/>
             <event name="item not returned" timeout="14days"/>
             <event name="Enter Sub-process 1" manual="true"/>
             <event name="Leave Sub-process 1" manual="true"/>

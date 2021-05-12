@@ -11,5 +11,4 @@ import { FormComponent } from './form.component';
     declarations: [FormComponent],
     exports: [FormComponent],
 })
-export class FormModule {
-}
+export class FormModule {}

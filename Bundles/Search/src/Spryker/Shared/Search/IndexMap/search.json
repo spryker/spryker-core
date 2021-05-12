@@ -1,165 +1,153 @@
 {
-  "settings": {
-    "index": {
-      "number_of_shards": 1,
-      "number_of_replicas": 1
+    "settings": {
+        "index": {
+            "number_of_shards": 1,
+            "number_of_replicas": 1
+        },
+        "analysis": {
+            "analyzer": {
+                "lowercase_keyword_analyzer": {
+                    "tokenizer": "keyword",
+                    "filter": ["lowercase"]
+                },
+                "suggestion_analyzer": {
+                    "tokenizer": "standard",
+                    "filter": ["lowercase"]
+                }
+            },
+            "normalizer": {
+                "lowercase_normalizer": {
+                    "type": "custom",
+                    "char_filter": [],
+                    "filter": ["lowercase"]
+                }
+            }
+        }
     },
-    "analysis": {
-      "analyzer": {
-        "lowercase_keyword_analyzer": {
-          "tokenizer": "keyword",
-          "filter": [
-            "lowercase"
-          ]
-        },
-        "suggestion_analyzer": {
-          "tokenizer": "standard",
-          "filter": [
-            "lowercase"
-          ]
+    "mappings": {
+        "page": {
+            "dynamic_templates": [
+                {
+                    "search-result-data": {
+                        "mapping": {
+                            "index": "false"
+                        },
+                        "path_match": "search-result-data.*"
+                    }
+                },
+                {
+                    "string_sort": {
+                        "mapping": {
+                            "analyzer": "lowercase_keyword_analyzer",
+                            "type": "keyword"
+                        },
+                        "path_match": "string-sort.*"
+                    }
+                },
+                {
+                    "integer_sort": {
+                        "mapping": {
+                            "type": "integer"
+                        },
+                        "path_match": "integer-sort.*"
+                    }
+                }
+            ],
+            "properties": {
+                "search-result-data": {
+                    "type": "object",
+                    "include_in_all": false,
+                    "properties": {}
+                },
+                "type": {
+                    "type": "keyword",
+                    "include_in_all": false
+                },
+                "store": {
+                    "type": "keyword",
+                    "include_in_all": false
+                },
+                "is-active": {
+                    "type": "boolean",
+                    "include_in_all": false
+                },
+                "active-from": {
+                    "type": "date",
+                    "include_in_all": false
+                },
+                "active-to": {
+                    "type": "date",
+                    "include_in_all": false
+                },
+                "locale": {
+                    "type": "keyword",
+                    "include_in_all": false
+                },
+                "full-text": {
+                    "type": "text",
+                    "include_in_all": false
+                },
+                "full-text-boosted": {
+                    "type": "text",
+                    "include_in_all": false
+                },
+                "string-facet": {
+                    "type": "nested",
+                    "include_in_all": false,
+                    "properties": {
+                        "facet-name": {
+                            "type": "keyword"
+                        },
+                        "facet-value": {
+                            "type": "keyword"
+                        }
+                    }
+                },
+                "integer-facet": {
+                    "type": "nested",
+                    "include_in_all": false,
+                    "properties": {
+                        "facet-name": {
+                            "type": "keyword"
+                        },
+                        "facet-value": {
+                            "type": "integer"
+                        }
+                    }
+                },
+                "completion-terms": {
+                    "type": "keyword",
+                    "include_in_all": false,
+                    "normalizer": "lowercase_normalizer"
+                },
+                "suggestion-terms": {
+                    "type": "text",
+                    "include_in_all": false,
+                    "analyzer": "suggestion_analyzer"
+                },
+                "string-sort": {
+                    "type": "object",
+                    "include_in_all": false,
+                    "properties": {}
+                },
+                "integer-sort": {
+                    "type": "object",
+                    "include_in_all": false,
+                    "properties": {}
+                },
+                "category": {
+                    "type": "object",
+                    "include_in_all": false,
+                    "properties": {
+                        "direct-parents": {
+                            "type": "integer"
+                        },
+                        "all-parents": {
+                            "type": "integer"
+                        }
+                    }
+                }
+            }
         }
-      },
-      "normalizer": {
-        "lowercase_normalizer": {
-          "type": "custom",
-          "char_filter": [],
-          "filter": [
-            "lowercase"
-          ]
-        }
-      }
     }
-  },
-  "mappings": {
-    "page": {
-      "dynamic_templates": [
-        {
-          "search-result-data": {
-            "mapping": {
-              "index": "false"
-            },
-            "path_match": "search-result-data.*"
-          }
-        },
-        {
-          "string_sort": {
-            "mapping": {
-              "analyzer": "lowercase_keyword_analyzer",
-              "type": "keyword"
-            },
-            "path_match": "string-sort.*"
-          }
-        },
-        {
-          "integer_sort": {
-            "mapping": {
-              "type": "integer"
-            },
-            "path_match": "integer-sort.*"
-          }
-        }
-      ],
-      "properties": {
-        "search-result-data": {
-          "type": "object",
-          "include_in_all": false,
-          "properties": {
-
-          }
-        },
-        "type": {
-          "type": "keyword",
-          "include_in_all": false
-        },
-        "store": {
-          "type": "keyword",
-          "include_in_all": false
-        },
-        "is-active": {
-          "type": "boolean",
-          "include_in_all": false
-        },
-        "active-from": {
-          "type": "date",
-          "include_in_all": false
-        },
-        "active-to": {
-          "type": "date",
-          "include_in_all": false
-        },
-        "locale": {
-          "type": "keyword",
-          "include_in_all": false
-        },
-        "full-text": {
-          "type": "text",
-          "include_in_all": false
-        },
-        "full-text-boosted": {
-          "type": "text",
-          "include_in_all": false
-        },
-        "string-facet": {
-          "type": "nested",
-          "include_in_all": false,
-          "properties": {
-            "facet-name": {
-              "type": "keyword"
-            },
-            "facet-value": {
-              "type": "keyword"
-            }
-          }
-        },
-        "integer-facet": {
-          "type": "nested",
-          "include_in_all": false,
-          "properties": {
-            "facet-name": {
-              "type": "keyword"
-            },
-            "facet-value": {
-              "type": "integer"
-            }
-          }
-        },
-        "completion-terms": {
-          "type": "keyword",
-          "include_in_all": false,
-          "normalizer": "lowercase_normalizer"
-        },
-        "suggestion-terms": {
-          "type": "text",
-          "include_in_all": false,
-          "analyzer": "suggestion_analyzer"
-        },
-        "string-sort": {
-          "type": "object",
-          "include_in_all": false,
-          "properties": {
-
-          }
-        },
-        "integer-sort": {
-          "type": "object",
-          "include_in_all": false,
-          "properties": {
-
-          }
-        },
-        "category": {
-          "type": "object",
-          "include_in_all": false,
-          "properties": {
-            "direct-parents": {
-              "type": "integer"
-            },
-            "all-parents": {
-              "type": "integer"
-            }
-          }
-        }
-      }
-    }
-  }
 }

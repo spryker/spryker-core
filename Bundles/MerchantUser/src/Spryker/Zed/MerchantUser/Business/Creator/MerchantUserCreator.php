@@ -92,7 +92,7 @@ class MerchantUserCreator implements MerchantUserCreatorInterface
 
         $merchantUserResponseTransfer = new MerchantUserResponseTransfer();
 
-        $userTransfer = $this->persistUserByMerchantUser($merchantUserTransfer->getUser());
+        $userTransfer = $this->persistUserByMerchantUser($merchantUserTransfer->getUserOrFail());
         $merchantUserTransfer->setIdUser($userTransfer->getIdUser())->setUser($userTransfer);
         $multipleMerchantCheckResponse = $this->checkForMultipleMerchant(
             $merchantUserTransfer,

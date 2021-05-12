@@ -14,6 +14,9 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 interface ProductStorageQueryContainerInterface extends QueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int[] $productAbstractIds
@@ -26,6 +29,9 @@ interface ProductStorageQueryContainerInterface extends QueryContainerInterface
      * Specification:
      * - Returns a a query for the table `spy_product_abstract` filtered by product abstract ids.
      *
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int[] $productAbstractIds
@@ -35,6 +41,9 @@ interface ProductStorageQueryContainerInterface extends QueryContainerInterface
     public function queryProductAbstractByProductAbstractIds(array $productAbstractIds): SpyProductAbstractQuery;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $productIds
@@ -56,6 +65,9 @@ interface ProductStorageQueryContainerInterface extends QueryContainerInterface
     public function queryProductConcreteByProductIds(array $productIds): SpyProductQuery;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int[] $productAbstractIds
@@ -65,6 +77,9 @@ interface ProductStorageQueryContainerInterface extends QueryContainerInterface
     public function queryProductAbstractStorageByIds(array $productAbstractIds);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $productIds
@@ -74,6 +89,9 @@ interface ProductStorageQueryContainerInterface extends QueryContainerInterface
     public function queryProductConcreteStorageByIds(array $productIds);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param bool $isSuper
@@ -83,6 +101,9 @@ interface ProductStorageQueryContainerInterface extends QueryContainerInterface
     public function queryProductAttributeKey($isSuper = true);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProductAbstract
@@ -93,6 +114,9 @@ interface ProductStorageQueryContainerInterface extends QueryContainerInterface
     public function queryConcreteProduct($idProductAbstract, $idLocale);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int[] $productAbstractIds
@@ -103,6 +127,9 @@ interface ProductStorageQueryContainerInterface extends QueryContainerInterface
     public function queryConcreteProductBulk(array $productAbstractIds, array $localeIds);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $attributeKeys
@@ -112,6 +139,9 @@ interface ProductStorageQueryContainerInterface extends QueryContainerInterface
     public function queryProductAttributeKeyByKey(array $attributeKeys);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int[] $productAbstractIds

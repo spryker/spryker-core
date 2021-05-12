@@ -5,8 +5,7 @@
 
 'use strict';
 
-$(document).ready(function() {
-
+$(document).ready(function () {
     var $fromDate = $('.js-from-date');
     var $toDate = $('.js-to-date');
 
@@ -16,9 +15,9 @@ $(document).ready(function() {
         numberOfMonths: 3,
         maxDate: $toDate.val(),
         defaultData: 0,
-        onClose: function(selectedDate) {
+        onClose: function (selectedDate) {
             $toDate.datepicker('option', 'minDate', selectedDate);
-        }
+        },
     });
 
     $toDate.datepicker({
@@ -27,9 +26,8 @@ $(document).ready(function() {
         changeMonth: true,
         numberOfMonths: 3,
         minDate: $fromDate.val(),
-        onClose: function(selectedDate) {
+        onClose: function (selectedDate) {
             $fromDate.datepicker('option', 'maxDate', selectedDate);
-        }
+        },
     });
-
 });

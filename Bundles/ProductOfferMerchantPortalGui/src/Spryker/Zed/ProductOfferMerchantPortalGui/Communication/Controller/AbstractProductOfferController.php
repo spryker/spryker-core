@@ -7,11 +7,14 @@
 
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller;
 
+use Generated\Shared\Transfer\GuiTableEditableInitialDataTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\PriceProductOfferTableViewTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\RawProductAttributesTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ProductOfferMerchantPortalGuiCommunicationFactory getFactory()
@@ -19,6 +22,11 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
  */
 class AbstractProductOfferController extends AbstractController
 {
+    protected const DEFAULT_INITIAL_DATA = [
+        GuiTableEditableInitialDataTransfer::DATA => [],
+        GuiTableEditableInitialDataTransfer::ERRORS => [],
+    ];
+
     /**
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
@@ -71,5 +79,57 @@ class AbstractProductOfferController extends AbstractController
         }
 
         return [];
+    }
+
+    /**
+     * @phpstan-return array<mixed>
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param string $formName
+     *
+     * @return array
+     */
+    protected function getDefaultInitialData(Request $request, string $formName): array
+    {
+        $requestTableData = $request->get($formName);
+
+        if (!$requestTableData) {
+            return static::DEFAULT_INITIAL_DATA;
+        }
+
+        $requestTableData = $this->getFactory()->getUtilEncodingService()->decodeJson(
+            $requestTableData[PriceProductOfferTableViewTransfer::PRICES],
+            true
+        );
+
+        if (!$requestTableData) {
+            return static::DEFAULT_INITIAL_DATA;
+        }
+
+        $defaultInitialData = static::DEFAULT_INITIAL_DATA;
+        $defaultInitialData[GuiTableEditableInitialDataTransfer::DATA] = $requestTableData;
+
+        return $defaultInitialData;
+    }
+
+    /**
+     * @phpstan-param array<string, mixed> $responseData
+     *
+     * @phpstan-return array<string, mixed>
+     *
+     * @param array $responseData
+     *
+     * @return array
+     */
+    protected function addValidationNotifications(array $responseData): array
+    {
+        $responseData['notifications'] = [
+            [
+                'type' => 'error',
+                'message' => 'To save an Offer please resolve all errors.',
+            ],
+        ];
+
+        return $responseData;
     }
 }

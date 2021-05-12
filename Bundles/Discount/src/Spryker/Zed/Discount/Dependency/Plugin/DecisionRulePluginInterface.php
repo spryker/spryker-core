@@ -15,7 +15,6 @@ interface DecisionRulePluginInterface
 {
     /**
      * Specification:
-     *
      * - Makes decision on given Quote or Item transfer.
      * - Uses Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface to compare item value with ClauseTransfer.
      * - Returns false when not matching.
@@ -35,7 +34,8 @@ interface DecisionRulePluginInterface
     );
 
     /**
-     * Name of field as used in query string
+     * Specification:
+     * - Name of field as used in query string
      *
      * @api
      *
@@ -44,7 +44,8 @@ interface DecisionRulePluginInterface
     public function getFieldName();
 
     /**
-     * Data types used by this field. (string, integer, list)
+     * Specification:
+     * - Data types used by this field. (string, integer, list)
      *
      * @api
      *

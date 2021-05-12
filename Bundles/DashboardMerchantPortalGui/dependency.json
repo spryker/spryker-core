@@ -1,5 +1,5 @@
 {
-  "include": {
-    "spryker/zed-ui": "If you want to use Zed Ui layout templates."
-  }
+    "include": {
+        "spryker/zed-ui": "If you want to use Zed Ui layout templates."
+    }
 }

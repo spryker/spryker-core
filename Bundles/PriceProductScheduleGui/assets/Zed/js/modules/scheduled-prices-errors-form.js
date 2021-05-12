@@ -5,6 +5,6 @@
 
 'use strict';
 
-$(document).ready(function() {
+$(document).ready(function () {
     $('#scheduled-prices-errors-form').DataTable();
 });

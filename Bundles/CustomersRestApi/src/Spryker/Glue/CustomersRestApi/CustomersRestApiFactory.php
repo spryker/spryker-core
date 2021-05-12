@@ -9,6 +9,8 @@ namespace Spryker\Glue\CustomersRestApi;
 
 use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface;
 use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToSessionClientInterface;
+use Spryker\Glue\CustomersRestApi\Processor\Activator\CustomerActivator;
+use Spryker\Glue\CustomersRestApi\Processor\Activator\CustomerActivatorInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Address\AddressReader;
 use Spryker\Glue\CustomersRestApi\Processor\Address\AddressReaderInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Address\AddressWriter;
@@ -47,6 +49,9 @@ use Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiValidator;
 use Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiValidatorInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
 
+/**
+ * @method \Spryker\Glue\CustomersRestApi\CustomersRestApiConfig getConfig()
+ */
 class CustomersRestApiFactory extends AbstractFactory
 {
     /**
@@ -231,7 +236,7 @@ class CustomersRestApiFactory extends AbstractFactory
      */
     public function createCustomerRestResponseBuilder(): CustomerRestResponseBuilderInterface
     {
-        return new CustomerRestResponseBuilder($this->getResourceBuilder());
+        return new CustomerRestResponseBuilder($this->getResourceBuilder(), $this->getConfig());
     }
 
     /**
@@ -274,5 +279,16 @@ class CustomersRestApiFactory extends AbstractFactory
     public function getCustomerPostCreatePlugins(): array
     {
         return $this->getProvidedDependency(CustomersRestApiDependencyProvider::PLUGINS_CUSTOMER_POST_CREATE);
+    }
+
+    /**
+     * @return \Spryker\Glue\CustomersRestApi\Processor\Activator\CustomerActivatorInterface
+     */
+    public function createCustomerActivator(): CustomerActivatorInterface
+    {
+        return new CustomerActivator(
+            $this->getCustomerClient(),
+            $this->createCustomerRestResponseBuilder()
+        );
     }
 }

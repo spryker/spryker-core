@@ -55,7 +55,7 @@ var SlotBlocks = function (options) {
     this.loadBlocksTable = function (element, api, type, indexes) {
         var templateTableApi = $('#template-list-table').dataTable().api();
 
-        if (templateTableApi.rows( { selected: true } ).count() === 0) {
+        if (templateTableApi.rows({ selected: true }).count() === 0) {
             return;
         }
 
@@ -64,7 +64,7 @@ var SlotBlocks = function (options) {
             return;
         }
 
-        var idCmsSlotTemplate = templateTableApi.rows( { selected: true } ).data()[0][0];
+        var idCmsSlotTemplate = templateTableApi.rows({ selected: true }).data()[0][0];
         var idCmsSlot = api.row(indexes[0]).data()[0];
         var paramsCollection = {};
         paramsCollection[_self.paramIdCmsSlotTemplate] = idCmsSlotTemplate;
@@ -79,7 +79,7 @@ var SlotBlocks = function (options) {
             _self.blocksChoice.init();
             _self.slotBlocksForm.init();
             _self.blocksTable.loadBlocksTable(params, idCmsSlotTemplate, idCmsSlot);
-            _self.blocksTable.resetHandlerCallback = function() {
+            _self.blocksTable.resetHandlerCallback = function () {
                 _self.loadBlocksTable(element, api, type, indexes);
             };
         });
@@ -94,11 +94,11 @@ var SlotBlocks = function (options) {
     };
 
     this.isCmsSlotBlockContentProvider = function (api, indexes) {
-        return api.row(indexes[0])
+        return api
+            .row(indexes[0])
             .nodes()
             .to$()
-            .find("[" + _self.contentProviderAttribute + "='" + _self.cmsSlotBlockContentProvider + "']")
-            .length;
+            .find('[' + _self.contentProviderAttribute + "='" + _self.cmsSlotBlockContentProvider + "']").length;
     };
 };
 

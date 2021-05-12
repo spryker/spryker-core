@@ -9,7 +9,7 @@ namespace Spryker\Client\MerchantSearch\Plugin\Elasticsearch\Query;
 
 use Elastica\Query;
 use Elastica\Query\BoolQuery;
-use Elastica\Query\Match;
+use Elastica\Query\MatchQuery;
 use Generated\Shared\Search\MerchantIndexMap;
 use Generated\Shared\Transfer\SearchContextTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
@@ -117,8 +117,7 @@ class MerchantSearchQueryPlugin extends AbstractPlugin implements QueryInterface
      */
     protected function setTypeFilter(BoolQuery $boolQuery): BoolQuery
     {
-        $typeFilter = new Match();
-        $typeFilter->setField(MerchantIndexMap::TYPE, MerchantSearchConfig::MERCHANT_RESOURCE_NAME);
+        $typeFilter = $this->getMatchQuery()->setField(MerchantIndexMap::TYPE, MerchantSearchConfig::MERCHANT_RESOURCE_NAME);
 
         return $boolQuery->addMust($typeFilter);
     }
@@ -140,5 +139,19 @@ class MerchantSearchQueryPlugin extends AbstractPlugin implements QueryInterface
     protected function hasSearchContext(): bool
     {
         return (bool)$this->searchContextTransfer;
+    }
+
+    /**
+     * For compatibility with PHP 8.
+     *
+     * @return \Elastica\Query\MatchQuery|\Elastica\Query\Match
+     */
+    protected function getMatchQuery()
+    {
+        $matchQueryClassName = class_exists(MatchQuery::class)
+            ? MatchQuery::class
+            : '\Elastica\Query\Match';
+
+        return new $matchQueryClassName();
     }
 }

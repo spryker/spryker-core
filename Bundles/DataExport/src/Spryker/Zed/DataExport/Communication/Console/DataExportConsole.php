@@ -54,7 +54,8 @@ class DataExportConsole extends Console
         }
 
         $exportConfigurationsPath = $this->getConfig()
-                ->getExportConfigurationsPath() . DIRECTORY_SEPARATOR . $input->getOption(static::OPTION_CONFIG);
+                ->getExportConfigurationsPath() . DIRECTORY_SEPARATOR . $this->getConfigOption($input);
+
         $exportConfigurations = $this->getFactory()
             ->getDataExportService()
             ->parseConfiguration($exportConfigurationsPath);
@@ -62,6 +63,19 @@ class DataExportConsole extends Console
         $dataExportReportTransfers = $this->getFacade()->exportDataEntities($exportConfigurations);
 
         return $this->printDataExportReport($output, $dataExportReportTransfers);
+    }
+
+    /**
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     *
+     * @return string
+     */
+    protected function getConfigOption(InputInterface $input): string
+    {
+        /** @var string $configOption */
+        $configOption = $input->getOption(static::OPTION_CONFIG);
+
+        return $configOption;
     }
 
     /**

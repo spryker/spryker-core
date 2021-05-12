@@ -17,6 +17,8 @@ use Spryker\Zed\PriceProductOfferDataImport\Business\DataSet\PriceProductOfferDa
 
 class ProductOfferToIdProductStep implements DataImportStepInterface
 {
+    protected const CONCRETE_SKU = PriceProductOfferDataSetInterface::CONCRETE_SKU;
+
     /**
      * @var int[]
      */
@@ -31,14 +33,14 @@ class ProductOfferToIdProductStep implements DataImportStepInterface
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        if (empty($dataSet[PriceProductOfferDataSetInterface::CONCRETE_SKU])) {
+        if (empty($dataSet[static::CONCRETE_SKU])) {
             throw new DataKeyNotFoundInDataSetException(sprintf(
                 '"%s" must be in the data set. Given: "%s"',
-                PriceProductOfferDataSetInterface::CONCRETE_SKU,
+                static::CONCRETE_SKU,
                 implode(', ', array_keys($dataSet->getArrayCopy()))
             ));
         }
-        $dataSet[PriceProductOfferDataSetInterface::ID_PRODUCT_CONCRETE] = $this->resolveIdProductByConcreteSku($dataSet[PriceProductOfferDataSetInterface::CONCRETE_SKU]);
+        $dataSet[PriceProductOfferDataSetInterface::ID_PRODUCT_CONCRETE] = $this->resolveIdProductByConcreteSku($dataSet[static::CONCRETE_SKU]);
     }
 
     /**

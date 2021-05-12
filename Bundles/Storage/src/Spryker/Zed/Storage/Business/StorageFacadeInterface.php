@@ -12,6 +12,9 @@ use Generated\Shared\Transfer\HealthCheckServiceResponseTransfer;
 interface StorageFacadeInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $key
@@ -21,6 +24,9 @@ interface StorageFacadeInterface
     public function get($key);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return int
@@ -28,6 +34,9 @@ interface StorageFacadeInterface
     public function getTotalCount();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return array
@@ -35,6 +44,9 @@ interface StorageFacadeInterface
     public function getTimestamps();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return int
@@ -42,6 +54,9 @@ interface StorageFacadeInterface
     public function deleteAll();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $keys

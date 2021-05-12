@@ -13,6 +13,9 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 interface ProductCategoryQueryContainerInterface extends QueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
@@ -20,6 +23,9 @@ interface ProductCategoryQueryContainerInterface extends QueryContainerInterface
     public function queryProductCategoryMappings();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idCategory
@@ -29,6 +35,9 @@ interface ProductCategoryQueryContainerInterface extends QueryContainerInterface
     public function queryProductCategoryMappingsByCategoryId($idCategory);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idCategory
@@ -39,6 +48,9 @@ interface ProductCategoryQueryContainerInterface extends QueryContainerInterface
     public function queryProductCategoryMappingByIds($idCategory, $idProductAbstract);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProductAbstract
@@ -48,6 +60,9 @@ interface ProductCategoryQueryContainerInterface extends QueryContainerInterface
     public function queryLocalizedProductCategoryMappingByIdProduct($idProductAbstract);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idCategory
@@ -58,6 +73,9 @@ interface ProductCategoryQueryContainerInterface extends QueryContainerInterface
     public function queryProductsByCategoryId($idCategory, LocaleTransfer $locale);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string|null $term
@@ -69,6 +87,9 @@ interface ProductCategoryQueryContainerInterface extends QueryContainerInterface
     public function queryProductsAbstractBySearchTermForAssignment($term, $idCategory, LocaleTransfer $locale);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string|null $term
@@ -79,6 +100,9 @@ interface ProductCategoryQueryContainerInterface extends QueryContainerInterface
     public function queryProductsAbstractBySearchTerm($term, LocaleTransfer $locale);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idCategoryNode
@@ -88,6 +112,9 @@ interface ProductCategoryQueryContainerInterface extends QueryContainerInterface
     public function queryProductCategoryChildrenMappingsByCategoryNodeId($idCategoryNode);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProductAbstract

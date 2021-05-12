@@ -10,20 +10,20 @@ function DependentSelectBox(options) {
 
     this.data = {};
 
-    this.init = function() {
+    this.init = function () {
         this.mapEvents();
     };
 
-    this.mapEvents = function() {
+    this.mapEvents = function () {
         var self = this;
 
-        this.$trigger.on('change', function() {
+        this.$trigger.on('change', function () {
             self.getData($(this));
             self.requestData();
         });
     };
 
-    this.getData = function(trigger) {
+    this.getData = function (trigger) {
         if (this.dataKey.length) {
             this.data[this.dataKey] = trigger.val();
 
@@ -33,21 +33,21 @@ function DependentSelectBox(options) {
         this.data = trigger.val();
     };
 
-    this.requestData = function() {
+    this.requestData = function () {
         var self = this;
 
         $.ajax({
             url: this.requestUrl,
             type: 'POST',
             data: this.data,
-            success: function(data) {
+            success: function (data) {
                 self.updateTargetSelectBox(data);
                 self.successCallback ? self.successCallback(data) : null;
-            }
+            },
         });
     };
 
-    this.updateTargetSelectBox = function(data) {
+    this.updateTargetSelectBox = function (data) {
         if (data.length === 0) {
             this.clearTargetSelectBox(true);
 
@@ -58,16 +58,24 @@ function DependentSelectBox(options) {
         this.fillTargetSelectBox(data);
     };
 
-    this.clearTargetSelectBox = function(isDisabled) {
+    this.clearTargetSelectBox = function (isDisabled) {
         this.$target.attr('disabled', isDisabled);
         this.$target.find('option:gt(0)').remove();
     };
 
-    this.fillTargetSelectBox = function(data) {
+    this.fillTargetSelectBox = function (data) {
         var self = this;
 
-        $.each(data[this.responseData.response], function(index, element) {
-            self.$target.append($('<option value="'+ element[self.responseData.value] +'">'+ element[self.responseData.text] +'</option>'));
+        $.each(data[this.responseData.response], function (index, element) {
+            self.$target.append(
+                $(
+                    '<option value="' +
+                        element[self.responseData.value] +
+                        '">' +
+                        element[self.responseData.text] +
+                        '</option>',
+                ),
+            );
         });
     };
 

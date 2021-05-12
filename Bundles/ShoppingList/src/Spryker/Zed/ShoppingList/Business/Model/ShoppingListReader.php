@@ -295,7 +295,6 @@ class ShoppingListReader implements ShoppingListReaderInterface
             $companyUserTransfer->getFkCompanyBusinessUnit(),
             ShoppingListConfig::PERMISSION_GROUP_FULL_ACCESS
         );
-        $companyBusinessUnitBlacklistedShoppingListIds = $this->shoppingListRepository->getBlacklistedShoppingListIdsByIdCompanyUser($companyUserTransfer->getIdCompanyUser());
         $companyBusinessUnitSharedShoppingListIds = array_diff($companyBusinessUnitSharedShoppingListIds, $companyBusinessUnitBlacklistedShoppingListIds);
 
         $companyUserPermissionCollectionTransfer = $this->addWritePermissionToPermissionCollectionTransfer(

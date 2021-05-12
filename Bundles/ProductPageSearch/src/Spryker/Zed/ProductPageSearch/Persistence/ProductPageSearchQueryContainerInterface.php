@@ -19,6 +19,9 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 interface ProductPageSearchQueryContainerInterface extends QueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int[] $productAbstractIds
@@ -28,6 +31,9 @@ interface ProductPageSearchQueryContainerInterface extends QueryContainerInterfa
     public function queryProductAbstractByIds(array $productAbstractIds);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int[] $productAbstractIds
@@ -37,6 +43,9 @@ interface ProductPageSearchQueryContainerInterface extends QueryContainerInterfa
     public function queryProductAbstractWithLocalizedAttributesByIds(array $productAbstractIds): SpyProductAbstractLocalizedAttributesQuery;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int[] $productAbstractIds
@@ -46,6 +55,9 @@ interface ProductPageSearchQueryContainerInterface extends QueryContainerInterfa
     public function queryProductAbstractSearchPageByIds(array $productAbstractIds);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $productIds
@@ -55,6 +67,9 @@ interface ProductPageSearchQueryContainerInterface extends QueryContainerInterfa
     public function queryProductAbstractIdsByProductIds(array $productIds);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $priceTypeIds
@@ -64,6 +79,9 @@ interface ProductPageSearchQueryContainerInterface extends QueryContainerInterfa
     public function queryAllProductAbstractIdsByPriceTypeIds(array $priceTypeIds);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $productImageSetToProductImageIds
@@ -73,6 +91,9 @@ interface ProductPageSearchQueryContainerInterface extends QueryContainerInterfa
     public function queryProductAbstractIdsByProductImageSetToProductImageIds(array $productImageSetToProductImageIds);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $productImageIds
@@ -82,6 +103,9 @@ interface ProductPageSearchQueryContainerInterface extends QueryContainerInterfa
     public function queryProductAbstractIdsByProductImageIds(array $productImageIds);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idNode
@@ -91,6 +115,9 @@ interface ProductPageSearchQueryContainerInterface extends QueryContainerInterfa
     public function queryAllCategoryIdsByNodeId($idNode);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $categoryIds
@@ -100,6 +127,9 @@ interface ProductPageSearchQueryContainerInterface extends QueryContainerInterfa
     public function queryProductAbstractIdsByCategoryIds(array $categoryIds);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
@@ -109,6 +139,9 @@ interface ProductPageSearchQueryContainerInterface extends QueryContainerInterfa
     public function queryCategoryAttributesByLocale(LocaleTransfer $localeTransfer);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $priceProductIds
@@ -118,6 +151,9 @@ interface ProductPageSearchQueryContainerInterface extends QueryContainerInterfa
     public function queryAllProductAbstractIdsByPriceProductIds(array $priceProductIds);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int[] $productAbstractIds
@@ -127,6 +163,9 @@ interface ProductPageSearchQueryContainerInterface extends QueryContainerInterfa
     public function queryAllProductImageSetsByProductAbstractIds(array $productAbstractIds);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int[] $productAbstractIds
@@ -136,6 +175,9 @@ interface ProductPageSearchQueryContainerInterface extends QueryContainerInterfa
     public function queryProductCategoriesByProductAbstractIds(array $productAbstractIds);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
@@ -143,6 +185,9 @@ interface ProductPageSearchQueryContainerInterface extends QueryContainerInterfa
     public function queryAllCategoriesWithAttributesAndOrderByDescendant();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idNode

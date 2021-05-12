@@ -14,7 +14,7 @@ use Elastica\Request;
 use Generated\Shared\Transfer\ElasticsearchSearchContextTransfer;
 use Generated\Shared\Transfer\SearchContextTransfer;
 use Spryker\Shared\ErrorHandler\ErrorLogger;
-use Spryker\Shared\SearchElasticsearch\Index\IndexNameResolverInterface;
+use Spryker\Zed\SearchElasticsearch\Business\SourceIdentifier\SourceIdentifierInterface;
 use Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig;
 
 class Index implements IndexInterface
@@ -25,9 +25,9 @@ class Index implements IndexInterface
     protected $elasticaClient;
 
     /**
-     * @var \Spryker\Shared\SearchElasticsearch\Index\IndexNameResolverInterface
+     * @var \Spryker\Zed\SearchElasticsearch\Business\SourceIdentifier\SourceIdentifierInterface
      */
-    protected $indexNameResolver;
+    protected $sourceIdentifier;
 
     /**
      * @var \Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig
@@ -36,16 +36,16 @@ class Index implements IndexInterface
 
     /**
      * @param \Elastica\Client $elasticaClient
-     * @param \Spryker\Shared\SearchElasticsearch\Index\IndexNameResolverInterface $indexNameResolver
+     * @param \Spryker\Zed\SearchElasticsearch\Business\SourceIdentifier\SourceIdentifierInterface $sourceIdentifier
      * @param \Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig $config
      */
     public function __construct(
         Client $elasticaClient,
-        IndexNameResolverInterface $indexNameResolver,
+        SourceIdentifierInterface $sourceIdentifier,
         SearchElasticsearchConfig $config
     ) {
         $this->elasticaClient = $elasticaClient;
-        $this->indexNameResolver = $indexNameResolver;
+        $this->sourceIdentifier = $sourceIdentifier;
         $this->config = $config;
     }
 
@@ -271,7 +271,7 @@ class Index implements IndexInterface
         $supportedSourceIdentifiers = $this->config->getSupportedSourceIdentifiers();
 
         $supportedIndexNames = array_map(function (string $sourceIdentifier) {
-            return $this->indexNameResolver->resolve($sourceIdentifier);
+            return $this->sourceIdentifier->translateToIndexName($sourceIdentifier);
         }, $supportedSourceIdentifiers);
 
         return array_intersect($supportedIndexNames, $this->elasticaClient->getCluster()->getIndexNames());

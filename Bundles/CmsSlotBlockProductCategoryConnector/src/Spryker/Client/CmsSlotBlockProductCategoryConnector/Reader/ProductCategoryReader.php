@@ -45,7 +45,8 @@ class ProductCategoryReader implements ProductCategoryReaderInterface
         $localeName = $this->localeClient->getCurrentLocale();
         $productAbstractCategoryStorageTransfer = $this->productCategoryStorageClient->findProductAbstractCategory(
             $idProductAbstract,
-            $localeName
+            $localeName,
+            APPLICATION_STORE
         );
 
         if (!$productAbstractCategoryStorageTransfer) {

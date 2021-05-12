@@ -19,6 +19,7 @@ use Spryker\Zed\DataImport\Business\Model\DataReader\DataReaderInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 use Spryker\Zed\DataImport\DataImportConfig;
 use Spryker\Zed\DataImport\Dependency\Client\DataImportToQueueClientInterface;
+use Spryker\Zed\DataImport\Dependency\Facade\DataImportToGracefulRunnerInterface;
 use Throwable;
 
 class QueueDataImporter extends DataImporterDataSetWriterAware implements QueueDataImporterInterface
@@ -45,14 +46,16 @@ class QueueDataImporter extends DataImporterDataSetWriterAware implements QueueD
      * @param \Spryker\Zed\DataImport\Business\Model\DataReader\DataReaderInterface $dataReader
      * @param \Spryker\Zed\DataImport\Dependency\Client\DataImportToQueueClientInterface $queueClient
      * @param \Spryker\Zed\DataImport\Business\DataImporter\Queue\QueueMessageHelperInterface $queueMessageHelper
+     * @param \Spryker\Zed\DataImport\Dependency\Facade\DataImportToGracefulRunnerInterface $gracefulRunnerFacade
      */
     public function __construct(
         string $importType,
         DataReaderInterface $dataReader,
         DataImportToQueueClientInterface $queueClient,
-        QueueMessageHelperInterface $queueMessageHelper
+        QueueMessageHelperInterface $queueMessageHelper,
+        DataImportToGracefulRunnerInterface $gracefulRunnerFacade
     ) {
-        parent::__construct($importType, $dataReader);
+        parent::__construct($importType, $dataReader, $gracefulRunnerFacade);
 
         $this->queueClient = $queueClient;
         $this->queueMessageHelper = $queueMessageHelper;

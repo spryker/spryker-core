@@ -5,7 +5,7 @@
 
 'use strict';
 
-$(document).ready(function() {
+$(document).ready(function () {
     /**
      * Register global event listeners
      */
@@ -98,12 +98,12 @@ $(document).ready(function() {
     /**
      * Init image set index
      */
-    $('.image-set').each(function(i, imageSet) {
+    $('.image-set').each(function (i, imageSet) {
         var imageSetIndex = $(imageSet).closest('[data-image-set-prototype]').find('.image-set').index(imageSet);
 
         $(imageSet).data('imageSetIndex', imageSetIndex);
     });
-    $('.image-set-container').each(function(i, imageSetContainer) {
+    $('.image-set-container').each(function (i, imageSetContainer) {
         var currentImageSetIndex = $(imageSetContainer).find('.image-set').length - 1;
 
         $(imageSetContainer).data('currentImageSetIndex', currentImageSetIndex);

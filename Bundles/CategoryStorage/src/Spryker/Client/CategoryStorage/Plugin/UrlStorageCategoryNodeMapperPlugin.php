@@ -7,14 +7,9 @@
 
 namespace Spryker\Client\CategoryStorage\Plugin;
 
-use Generated\Shared\Transfer\SynchronizationDataTransfer;
-use Generated\Shared\Transfer\UrlStorageResourceMapTransfer;
 use Generated\Shared\Transfer\UrlStorageTransfer;
-use Spryker\Client\CategoryStorage\CategoryStorageConfig;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\UrlStorage\Dependency\Plugin\UrlStorageResourceMapperPluginInterface;
-use Spryker\Shared\CategoryStorage\CategoryStorageConstants;
-use Spryker\Shared\Kernel\Store;
 
 /**
  * @method \Spryker\Client\CategoryStorage\CategoryStorageFactory getFactory()
@@ -22,6 +17,11 @@ use Spryker\Shared\Kernel\Store;
 class UrlStorageCategoryNodeMapperPlugin extends AbstractPlugin implements UrlStorageResourceMapperPluginInterface
 {
     /**
+     * {@inheritDoc}
+     * - Maps category node storage data to `UrlStorageResourceMapTransfer` if `UrlStorageTransfer.fkResourceCategorynode` is provided.
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\UrlStorageTransfer $urlStorageTransfer
      * @param array $options
      *
@@ -29,39 +29,8 @@ class UrlStorageCategoryNodeMapperPlugin extends AbstractPlugin implements UrlSt
      */
     public function map(UrlStorageTransfer $urlStorageTransfer, array $options = [])
     {
-        $urlStorageResourceMapTransfer = new UrlStorageResourceMapTransfer();
-        $idCategoryNode = $urlStorageTransfer->getFkResourceCategorynode();
-        if ($idCategoryNode) {
-            $resourceKey = $this->generateKey($idCategoryNode, $options['locale']);
-            $urlStorageResourceMapTransfer->setResourceKey($resourceKey);
-            $urlStorageResourceMapTransfer->setType(CategoryStorageConstants::CATEGORY_NODE_RESOURCE_NAME);
-        }
-
-        return $urlStorageResourceMapTransfer;
-    }
-
-    /**
-     * @param int $idCategoryNode
-     * @param string $locale
-     *
-     * @return string
-     */
-    protected function generateKey($idCategoryNode, $locale)
-    {
-        if (CategoryStorageConfig::isCollectorCompatibilityMode()) {
-            $collectorDataKey = sprintf(
-                '%s.%s.resource.categorynode.%s',
-                strtolower(Store::getInstance()->getStoreName()),
-                strtolower($locale),
-                $idCategoryNode
-            );
-
-            return $collectorDataKey;
-        }
-        $synchronizationDataTransfer = new SynchronizationDataTransfer();
-        $synchronizationDataTransfer->setLocale($locale);
-        $synchronizationDataTransfer->setReference($idCategoryNode);
-
-        return $this->getFactory()->getSynchronizationService()->getStorageKeyBuilder(CategoryStorageConstants::CATEGORY_NODE_RESOURCE_NAME)->generateKey($synchronizationDataTransfer);
+        return $this->getFactory()
+            ->createUrlStorageCategoryNodeMapper()
+            ->mapUrlStorageTransferToUrlStorageResourceMapTransfer($urlStorageTransfer, $options);
     }
 }

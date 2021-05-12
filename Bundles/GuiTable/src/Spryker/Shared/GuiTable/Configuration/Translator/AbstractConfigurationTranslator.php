@@ -31,6 +31,9 @@ abstract class AbstractConfigurationTranslator implements ConfigurationTranslato
         $guiTableConfigurationTransfer = $this->translateBatchActions($guiTableConfigurationTransfer);
         $guiTableConfigurationTransfer = $this->translateSearch($guiTableConfigurationTransfer);
         $guiTableConfigurationTransfer = $this->translateTitle($guiTableConfigurationTransfer);
+        $guiTableConfigurationTransfer = $this->translateEditableCreateConfiguration($guiTableConfigurationTransfer);
+        $guiTableConfigurationTransfer = $this->translateEditableUpdateConfiguration($guiTableConfigurationTransfer);
+        $guiTableConfigurationTransfer = $this->translateEditableColumns($guiTableConfigurationTransfer);
 
         return $guiTableConfigurationTransfer;
     }
@@ -256,6 +259,142 @@ abstract class AbstractConfigurationTranslator implements ConfigurationTranslato
         $guiTableConfigurationTransfer->setTitle($guiTableTitleConfigurationTransfer);
 
         return $guiTableConfigurationTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
+     *
+     * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
+     */
+    protected function translateEditableCreateConfiguration(
+        GuiTableConfigurationTransfer $guiTableConfigurationTransfer
+    ): GuiTableConfigurationTransfer {
+        $guiTableEditableConfigurationTransfer = $guiTableConfigurationTransfer->getEditable();
+
+        if (!$guiTableEditableConfigurationTransfer) {
+            return $guiTableConfigurationTransfer;
+        }
+
+        $guiTableEditableCreateConfigurationTransfer = $guiTableEditableConfigurationTransfer->getCreate();
+
+        if (!$guiTableEditableCreateConfigurationTransfer) {
+            return $guiTableConfigurationTransfer;
+        }
+
+        $guiTableEditableAddButtonTransfer = $guiTableEditableCreateConfigurationTransfer->getAddButton();
+
+        if ($guiTableEditableAddButtonTransfer) {
+            $title = $guiTableEditableAddButtonTransfer->getTitle();
+
+            if ($title) {
+                $guiTableEditableAddButtonTransfer->setTitle(
+                    $this->translate($title)
+                );
+
+                $guiTableEditableCreateConfigurationTransfer->setAddButton($guiTableEditableAddButtonTransfer);
+            }
+        }
+
+        $guiTableEditableCancelButtonTransfer = $guiTableEditableCreateConfigurationTransfer->getCancelButton();
+
+        if ($guiTableEditableCancelButtonTransfer) {
+            $title = $guiTableEditableCancelButtonTransfer->getTitle();
+
+            if ($title) {
+                $guiTableEditableCancelButtonTransfer->setTitle(
+                    $this->translate($title)
+                );
+
+                $guiTableEditableCreateConfigurationTransfer->setCancelButton($guiTableEditableCancelButtonTransfer);
+            }
+        }
+
+        $guiTableEditableConfigurationTransfer->setCreate($guiTableEditableCreateConfigurationTransfer);
+
+        return $guiTableConfigurationTransfer->setEditable($guiTableEditableConfigurationTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
+     *
+     * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
+     */
+    protected function translateEditableUpdateConfiguration(
+        GuiTableConfigurationTransfer $guiTableConfigurationTransfer
+    ): GuiTableConfigurationTransfer {
+        $guiTableEditableConfigurationTransfer = $guiTableConfigurationTransfer->getEditable();
+
+        if (!$guiTableEditableConfigurationTransfer) {
+            return $guiTableConfigurationTransfer;
+        }
+
+        $guiTableEditableUpdateConfigurationTransfer = $guiTableEditableConfigurationTransfer->getUpdate();
+
+        if (!$guiTableEditableUpdateConfigurationTransfer) {
+            return $guiTableConfigurationTransfer;
+        }
+
+        $guiTableEditableSaveButtonTransfer = $guiTableEditableUpdateConfigurationTransfer->getSaveButton();
+
+        if ($guiTableEditableSaveButtonTransfer) {
+            $title = $guiTableEditableSaveButtonTransfer->getTitle();
+
+            if ($title) {
+                $guiTableEditableSaveButtonTransfer->setTitle(
+                    $this->translate($title)
+                );
+
+                $guiTableEditableUpdateConfigurationTransfer->setSaveButton($guiTableEditableSaveButtonTransfer);
+            }
+        }
+
+        $guiTableEditableCancelButtonTransfer = $guiTableEditableUpdateConfigurationTransfer->getCancelButton();
+
+        if ($guiTableEditableCancelButtonTransfer) {
+            $title = $guiTableEditableCancelButtonTransfer->getTitle();
+
+            if ($title) {
+                $guiTableEditableCancelButtonTransfer->setTitle(
+                    $this->translate($title)
+                );
+
+                $guiTableEditableUpdateConfigurationTransfer->setCancelButton($guiTableEditableCancelButtonTransfer);
+            }
+        }
+
+        $guiTableEditableConfigurationTransfer->setUpdate($guiTableEditableUpdateConfigurationTransfer);
+
+        return $guiTableConfigurationTransfer->setEditable($guiTableEditableConfigurationTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
+     *
+     * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
+     */
+    protected function translateEditableColumns(
+        GuiTableConfigurationTransfer $guiTableConfigurationTransfer
+    ): GuiTableConfigurationTransfer {
+        $guiTableEditableConfigurationTransfer = $guiTableConfigurationTransfer->getEditable();
+
+        if (!$guiTableEditableConfigurationTransfer) {
+            return $guiTableConfigurationTransfer;
+        }
+
+        $guiTableColumnConfigurationTransfers = $guiTableEditableConfigurationTransfer->getColumns();
+
+        if ($guiTableColumnConfigurationTransfers->count() < 1) {
+            return $guiTableConfigurationTransfer;
+        }
+
+        $translatedGuiTableColumnConfigurationTransfers = new ArrayObject();
+        foreach ($guiTableColumnConfigurationTransfers as $guiTableColumnConfigurationTransfer) {
+            $translatedGuiTableColumnConfigurationTransfers[] = $this->translateColumn($guiTableColumnConfigurationTransfer);
+        }
+
+        $guiTableEditableConfigurationTransfer->setColumns($translatedGuiTableColumnConfigurationTransfers);
+
+        return $guiTableConfigurationTransfer->setEditable($guiTableEditableConfigurationTransfer);
     }
 
     /**

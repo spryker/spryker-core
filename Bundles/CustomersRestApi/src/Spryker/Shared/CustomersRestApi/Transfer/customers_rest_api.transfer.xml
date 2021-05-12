@@ -1,7 +1,5 @@
 <?xml version="1.0"?>
-<transfers xmlns="spryker:transfer-01"
-           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="RestCustomersAttributes">
         <property name="firstName" type="string" restRequestParameter="required"/>
@@ -59,6 +57,10 @@
         <property name="password" type="string" restRequestParameter="required"/>
         <property name="newPassword" type="string" restRequestParameter="required"/>
         <property name="confirmPassword" type="string" restRequestParameter="required"/>
+    </transfer>
+
+    <transfer name="RestCustomerConfirmationAttributes">
+        <property name="registrationKey" type="string" restRequestParameter="required"/>
     </transfer>
 
     <transfer name="Address">
@@ -152,6 +154,7 @@
         <property name="isDirty" type="bool"/>
         <property name="isGuest" type="bool"/>
         <property name="gender" type="string"/>
+        <property name="registrationKey" type="string"/>
     </transfer>
 
     <transfer name="CustomerResponse">

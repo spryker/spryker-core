@@ -112,4 +112,11 @@ interface RedisAdapterInterface
      * @return void
      */
     public function flushDb(): void;
+
+    /**
+     * @param string $key
+     *
+     * @return int
+     */
+    public function incr(string $key): int;
 }

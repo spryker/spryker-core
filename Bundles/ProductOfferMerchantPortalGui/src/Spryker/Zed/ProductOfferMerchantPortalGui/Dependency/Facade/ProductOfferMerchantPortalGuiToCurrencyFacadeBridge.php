@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\CurrencyTransfer;
+
 class ProductOfferMerchantPortalGuiToCurrencyFacadeBridge implements ProductOfferMerchantPortalGuiToCurrencyFacadeInterface
 {
     /**
@@ -28,5 +30,25 @@ class ProductOfferMerchantPortalGuiToCurrencyFacadeBridge implements ProductOffe
     public function getAllStoresWithCurrencies()
     {
         return $this->currencyFacade->getAllStoresWithCurrencies();
+    }
+
+    /**
+     * @param string $isoCode
+     *
+     * @return \Generated\Shared\Transfer\CurrencyTransfer|null
+     */
+    public function findCurrencyByIsoCode(string $isoCode): ?CurrencyTransfer
+    {
+        return $this->currencyFacade->findCurrencyByIsoCode($isoCode);
+    }
+
+    /**
+     * @param int $idCurrency
+     *
+     * @return \Generated\Shared\Transfer\CurrencyTransfer
+     */
+    public function getByIdCurrency($idCurrency)
+    {
+        return $this->currencyFacade->getByIdCurrency($idCurrency);
     }
 }

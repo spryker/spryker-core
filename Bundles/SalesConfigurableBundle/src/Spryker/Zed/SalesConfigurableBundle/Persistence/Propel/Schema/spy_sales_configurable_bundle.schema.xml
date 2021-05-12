@@ -1,9 +1,5 @@
 <?xml version="1.0"?>
-<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          name="zed"
-          xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd"
-          namespace="Orm\Zed\SalesConfigurableBundle\Persistence" package="src.Orm.Zed.SalesConfigurableBundle.Persistence"
->
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\SalesConfigurableBundle\Persistence" package="src.Orm.Zed.SalesConfigurableBundle.Persistence">
     <table name="spy_sales_order_configured_bundle">
         <column name="id_sales_order_configured_bundle" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="configurable_bundle_template_uuid" required="true" type="VARCHAR" size="255"/>

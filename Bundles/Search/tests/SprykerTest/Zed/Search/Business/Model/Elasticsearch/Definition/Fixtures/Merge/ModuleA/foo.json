@@ -1,21 +1,21 @@
 {
-  "settings": {
-    "index": {
-      "number_of_shards": 1,
-      "number_of_replicas": 4
-    }
-  },
-  "mappings": {
-    "page": {
-      "properties": {
-        "foo": {
-          "type": "integer"
-        },
-        "baz": {
-          "type": "string"
+    "settings": {
+        "index": {
+            "number_of_shards": 1,
+            "number_of_replicas": 4
         }
-      }
     },
-    "page2": {}
-  }
+    "mappings": {
+        "page": {
+            "properties": {
+                "foo": {
+                    "type": "integer"
+                },
+                "baz": {
+                    "type": "string"
+                }
+            }
+        },
+        "page2": {}
+    }
 }

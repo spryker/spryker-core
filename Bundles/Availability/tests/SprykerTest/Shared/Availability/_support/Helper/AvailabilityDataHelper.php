@@ -80,6 +80,14 @@ class AvailabilityDataHelper extends Module
     }
 
     /**
+     * @return void
+     */
+    public function ensureAvailabilityTableIsEmpty(): void
+    {
+        SpyAvailabilityQuery::create()->deleteAll();
+    }
+
+    /**
      * @return \Spryker\Zed\Availability\Business\AvailabilityFacadeInterface
      */
     private function getAvailabilityFacade(): AvailabilityFacadeInterface

@@ -8,13 +8,13 @@
 namespace Spryker\Zed\CategoryPageSearch\Communication;
 
 use Spryker\Zed\CategoryPageSearch\CategoryPageSearchDependencyProvider;
-use Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToStoreFacadeInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
  * @method \Spryker\Zed\CategoryPageSearch\Persistence\CategoryPageSearchQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\CategoryPageSearch\CategoryPageSearchConfig getConfig()
  * @method \Spryker\Zed\CategoryPageSearch\Business\CategoryPageSearchFacadeInterface getFacade()
+ * @method \Spryker\Zed\CategoryPageSearch\Persistence\CategoryPageSearchEntityManagerInterface getEntityManager()
  */
 class CategoryPageSearchCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -24,13 +24,5 @@ class CategoryPageSearchCommunicationFactory extends AbstractCommunicationFactor
     public function getEventBehaviorFacade()
     {
         return $this->getProvidedDependency(CategoryPageSearchDependencyProvider::FACADE_EVENT_BEHAVIOR);
-    }
-
-    /**
-     * @return \Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToStoreFacadeInterface
-     */
-    public function getStoreFacade(): CategoryPageSearchToStoreFacadeInterface
-    {
-        return $this->getProvidedDependency(CategoryPageSearchDependencyProvider::FACADE_STORE);
     }
 }

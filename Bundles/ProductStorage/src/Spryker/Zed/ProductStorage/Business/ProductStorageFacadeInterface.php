@@ -10,6 +10,9 @@ namespace Spryker\Zed\ProductStorage\Business;
 interface ProductStorageFacadeInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int[] $productAbstractIds
@@ -19,6 +22,9 @@ interface ProductStorageFacadeInterface
     public function publishAbstractProducts(array $productAbstractIds);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int[] $productAbstractIds
@@ -28,6 +34,9 @@ interface ProductStorageFacadeInterface
     public function unpublishProductAbstracts(array $productAbstractIds);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $productIds
@@ -37,6 +46,9 @@ interface ProductStorageFacadeInterface
     public function publishConcreteProducts(array $productIds);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $productIds

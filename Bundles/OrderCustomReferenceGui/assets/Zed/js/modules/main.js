@@ -10,8 +10,8 @@ $(document).ready(function () {
     var $target = $('.js-toggle-target');
     var triggerSelector = '.js-toggle-trigger';
 
-    $wrapper.on('click', triggerSelector, function() {
-        $target.each(function() {
+    $wrapper.on('click', triggerSelector, function () {
+        $target.each(function () {
             $(this).toggleClass('hide');
         });
     });

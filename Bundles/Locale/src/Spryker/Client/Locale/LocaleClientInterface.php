@@ -10,6 +10,9 @@ namespace Spryker\Client\Locale;
 interface LocaleClientInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return string

@@ -47,7 +47,7 @@ class CreateMerchantTest extends Unit
         // Assert
         $this->assertSame($this->tester->createMerchantConfig()->getDefaultMerchantStatus(), $merchantResponseTransfer->getMerchant()->getStatus());
         $this->assertNotNull($merchantResponseTransfer->getMerchant()->getIdMerchant());
-        $this->assertNotNull($merchantResponseTransfer->getMerchant()->getMerchantKey());
+        $this->assertNotNull($merchantResponseTransfer->getMerchant()->getMerchantReference());
     }
 
     /**

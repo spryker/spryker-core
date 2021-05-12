@@ -12,7 +12,7 @@ use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
 use Spryker\Zed\MerchantRelationshipDataImport\Business\Model\MerchantRelationshipWriterStep;
 use Spryker\Zed\MerchantRelationshipDataImport\Business\Model\Step\CompanyBusinessUnitAssigneeKeysToIdCompanyBusinessUnitCollectionStep;
 use Spryker\Zed\MerchantRelationshipDataImport\Business\Model\Step\CompanyBusinessUnitOwnerKeyToIdCompanyBusinessUnitStep;
-use Spryker\Zed\MerchantRelationshipDataImport\Business\Model\Step\MerchantKeyToIdMerchantStep;
+use Spryker\Zed\MerchantRelationshipDataImport\Business\Model\Step\MerchantReferenceToIdMerchantStep;
 
 /**
  * @method \Spryker\Zed\MerchantRelationshipDataImport\MerchantRelationshipDataImportConfig getConfig()
@@ -30,7 +30,7 @@ class MerchantRelationshipDataImportBusinessFactory extends DataImportBusinessFa
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
         $dataSetStepBroker
-            ->addStep($this->createMerchantKeyToIdMerchant())
+            ->addStep($this->createMerchantReferenceToIdMerchant())
             ->addStep($this->createCompanyBusinessUnitKeyToIdCompanyBusinessUnitOwnerStep())
             ->addStep($this->createCompanyBusinessUnitAssigneeKeysToIdCompanyBusinessUnitAssigneeCollectionStep())
             ->addStep(new MerchantRelationshipWriterStep());
@@ -43,9 +43,9 @@ class MerchantRelationshipDataImportBusinessFactory extends DataImportBusinessFa
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
      */
-    protected function createMerchantKeyToIdMerchant(): DataImportStepInterface
+    protected function createMerchantReferenceToIdMerchant(): DataImportStepInterface
     {
-        return new MerchantKeyToIdMerchantStep();
+        return new MerchantReferenceToIdMerchantStep();
     }
 
     /**

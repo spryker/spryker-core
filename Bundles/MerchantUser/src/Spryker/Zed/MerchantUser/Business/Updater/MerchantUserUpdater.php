@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\MerchantUserCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantUserResponseTransfer;
 use Generated\Shared\Transfer\MerchantUserTransfer;
 use Generated\Shared\Transfer\UserCriteriaTransfer;
+use Generated\Shared\Transfer\UserPasswordResetRequestTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserPasswordResetFacadeInterface;
@@ -77,7 +78,7 @@ class MerchantUserUpdater implements MerchantUserUpdaterInterface
             return $merchantUserResponseTransfer->setIsSuccessful(false);
         }
 
-        $userTransfer = $this->userFacade->updateUser($merchantUserTransfer->getUser());
+        $userTransfer = $this->userFacade->updateUser($merchantUserTransfer->getUserOrFail());
 
         $this->resetUserPassword($originalUserTransfer, $userTransfer);
 
@@ -94,7 +95,7 @@ class MerchantUserUpdater implements MerchantUserUpdaterInterface
         $merchantUserTransfers = $this->merchantUserRepository->find($merchantUserCriteriaTransfer);
 
         foreach ($merchantUserTransfers as $merchantUserTransfer) {
-            $this->userFacade->deactivateUser($merchantUserTransfer->getIdUser());
+            $this->userFacade->deactivateUser($merchantUserTransfer->getIdUserOrFail());
         }
     }
 
@@ -110,7 +111,8 @@ class MerchantUserUpdater implements MerchantUserUpdaterInterface
             $updatedUserTransfer->getStatus() === static::USER_STATUS_ACTIVE
             && $originalUserTransfer->getStatus() !== $updatedUserTransfer->getStatus()
         ) {
-            $this->userPasswordResetFacade->requestPasswordReset($updatedUserTransfer->getUsername());
+            $email = $updatedUserTransfer->getUsernameOrFail();
+            $this->userPasswordResetFacade->requestPasswordReset((new UserPasswordResetRequestTransfer())->setEmail($email));
         }
     }
 }

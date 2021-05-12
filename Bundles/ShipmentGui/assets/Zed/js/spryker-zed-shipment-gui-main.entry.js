@@ -7,10 +7,10 @@
 
 var init = require('./modules/main');
 
-$(document).ready(function() {
+$(document).ready(function () {
     init(
         '#shipment_group_form_shipment_shippingAddress_idCustomerAddress',
         '#shipment_group_form_shipment_shippingAddress',
-        '#shipment_group_form_shipment_requestedDeliveryDate'
+        '#shipment_group_form_shipment_requestedDeliveryDate',
     );
 });

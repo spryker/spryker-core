@@ -8,6 +8,8 @@
 namespace Spryker\Zed\MerchantProfile\Business\MerchantProfile;
 
 use Generated\Shared\Transfer\MerchantProfileTransfer;
+use Generated\Shared\Transfer\MerchantResponseTransfer;
+use Generated\Shared\Transfer\MerchantTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\MerchantProfile\Business\MerchantProfileAddress\MerchantProfileAddressWriterInterface;
 use Spryker\Zed\MerchantProfile\Business\MerchantProfileGlossary\MerchantProfileGlossaryWriterInterface;
@@ -76,6 +78,33 @@ class MerchantProfileWriter implements MerchantProfileWriterInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantResponseTransfer
+     */
+    public function postUpdateMerchant(MerchantTransfer $merchantTransfer): MerchantResponseTransfer
+    {
+        $merchantProfileTransfer = $merchantTransfer->getMerchantProfile();
+        $merchantResponseTransfer = (new MerchantResponseTransfer())->setIsSuccess(true);
+
+        if (!$merchantProfileTransfer) {
+            return $merchantResponseTransfer->setMerchant($merchantTransfer);
+        }
+
+        $merchantProfileTransfer->setFkMerchant($merchantTransfer->getIdMerchant());
+
+        if (!$merchantProfileTransfer->getIdMerchantProfile()) {
+            $merchantProfileTransfer = $this->create($merchantProfileTransfer);
+
+            return $merchantResponseTransfer->setMerchant($merchantTransfer->setMerchantProfile($merchantProfileTransfer));
+        }
+
+        $merchantProfileTransfer = $this->update($merchantProfileTransfer);
+
+        return $merchantResponseTransfer->setMerchant($merchantTransfer->setMerchantProfile($merchantProfileTransfer));
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\MerchantProfileTransfer $merchantProfileTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantProfileTransfer
@@ -111,11 +140,15 @@ class MerchantProfileWriter implements MerchantProfileWriterInterface
     protected function saveMerchantProfileAddress(
         MerchantProfileTransfer $merchantProfileTransfer
     ): MerchantProfileTransfer {
-        $merchantProfileAddressCollectionTransfer = $this->merchantProfileAddressWriter->saveMerchantProfileAddressCollection(
+        if (empty($merchantProfileTransfer->getAddressCollection())) {
+            return $merchantProfileTransfer;
+        }
+
+        $merchantProfileAddressTransfers = $this->merchantProfileAddressWriter->saveMerchantProfileAddresses(
             $merchantProfileTransfer->getAddressCollection(),
-            $merchantProfileTransfer->getIdMerchantProfile()
+            $merchantProfileTransfer->getIdMerchantProfileOrFail()
         );
-        $merchantProfileTransfer->setAddressCollection($merchantProfileAddressCollectionTransfer);
+        $merchantProfileTransfer->setAddressCollection($merchantProfileAddressTransfers);
 
         return $merchantProfileTransfer;
     }

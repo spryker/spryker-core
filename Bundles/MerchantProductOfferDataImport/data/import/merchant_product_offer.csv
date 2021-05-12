@@ -1,1 +1,1 @@
-product_offer_reference,concrete_sku,merchant_key,merchant_sku,is_active,approval_status
+product_offer_reference,concrete_sku,merchant_reference,merchant_sku,is_active,approval_status

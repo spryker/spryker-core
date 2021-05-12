@@ -10,8 +10,7 @@ namespace Spryker\Zed\ProductConfiguration\Business\Counter;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartItemQuantityTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
-use Spryker\Service\ProductConfiguration\ProductConfigurationServiceInterface;
+use Spryker\Zed\ProductConfiguration\Business\Counter\Comparator\ItemComparatorInterface;
 
 class ProductConfigurationItemQuantityCounter implements ProductConfigurationItemQuantityCounterInterface
 {
@@ -23,16 +22,16 @@ class ProductConfigurationItemQuantityCounter implements ProductConfigurationIte
     protected const OPERATION_REMOVE = 'remove';
 
     /**
-     * @var \Spryker\Service\ProductConfiguration\ProductConfigurationServiceInterface
+     * @var \Spryker\Zed\ProductConfiguration\Business\Counter\Comparator\ItemComparatorInterface
      */
-    protected $productConfigurationService;
+    protected $itemComparator;
 
     /**
-     * @param \Spryker\Service\ProductConfiguration\ProductConfigurationServiceInterface $productConfigurationService
+     * @param \Spryker\Zed\ProductConfiguration\Business\Counter\Comparator\ItemComparatorInterface $itemComparator
      */
-    public function __construct(ProductConfigurationServiceInterface $productConfigurationService)
+    public function __construct(ItemComparatorInterface $itemComparator)
     {
-        $this->productConfigurationService = $productConfigurationService;
+        $this->itemComparator = $itemComparator;
     }
 
     /**
@@ -50,13 +49,13 @@ class ProductConfigurationItemQuantityCounter implements ProductConfigurationIte
         $cartChangeItemsTransfer = $cartChangeTransfer->getItems();
 
         foreach ($quoteItems as $quoteItemTransfer) {
-            if ($this->isSameItem($quoteItemTransfer, $itemTransfer)) {
+            if ($this->itemComparator->isSameItem($quoteItemTransfer, $itemTransfer)) {
                 $currentItemQuantity += $quoteItemTransfer->getQuantity();
             }
         }
 
         foreach ($cartChangeItemsTransfer as $cartChangeItemTransfer) {
-            if ($this->isSameProductConfigurationItem($cartChangeItemTransfer, $itemTransfer)) {
+            if ($this->itemComparator->isSameItem($cartChangeItemTransfer, $itemTransfer)) {
                 $currentItemQuantity = $this->changeItemQuantityAccordingToOperation(
                     $currentItemQuantity,
                     $cartChangeItemTransfer->getQuantity(),
@@ -66,56 +65,6 @@ class ProductConfigurationItemQuantityCounter implements ProductConfigurationIte
         }
 
         return (new CartItemQuantityTransfer())->setQuantity($currentItemQuantity);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemInCartTransfer
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return bool
-     */
-    protected function isSameItem(
-        ItemTransfer $itemInCartTransfer,
-        ItemTransfer $itemTransfer
-    ): bool {
-        return $itemInCartTransfer->getSku() === $itemTransfer->getSku()
-            && $this->isSameProductConfigurationItem($itemInCartTransfer, $itemTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemInCartTransfer
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return bool
-     */
-    protected function isSameProductConfigurationItem(ItemTransfer $itemInCartTransfer, ItemTransfer $itemTransfer): bool
-    {
-        $itemInCartProductConfigurationInstanceTransfer = $itemInCartTransfer->getProductConfigurationInstance();
-        $itemProductConfigurationInstanceTransfer = $itemTransfer->getProductConfigurationInstance();
-
-        return ($itemInCartProductConfigurationInstanceTransfer === null && $itemProductConfigurationInstanceTransfer === null)
-            || $this->isProductConfigurationInstanceHashEquals(
-                $itemInCartProductConfigurationInstanceTransfer,
-                $itemProductConfigurationInstanceTransfer
-            );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer|null $itemInCartProductConfigurationInstanceTransfer
-     * @param \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer|null $itemProductConfigurationInstanceTransfer
-     *
-     * @return bool
-     */
-    protected function isProductConfigurationInstanceHashEquals(
-        ?ProductConfigurationInstanceTransfer $itemInCartProductConfigurationInstanceTransfer,
-        ?ProductConfigurationInstanceTransfer $itemProductConfigurationInstanceTransfer
-    ): bool {
-        if ($itemInCartProductConfigurationInstanceTransfer === null || $itemProductConfigurationInstanceTransfer === null) {
-            return false;
-        }
-
-        return $this->productConfigurationService->getProductConfigurationInstanceHash($itemInCartProductConfigurationInstanceTransfer)
-            === $this->productConfigurationService->getProductConfigurationInstanceHash($itemProductConfigurationInstanceTransfer);
     }
 
     /**

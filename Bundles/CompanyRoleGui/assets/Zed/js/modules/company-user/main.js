@@ -7,7 +7,6 @@
 
 const parentField = require('./parent-field');
 
-window.onload = function() {
+window.onload = function () {
     parentField.initialize();
 };
-

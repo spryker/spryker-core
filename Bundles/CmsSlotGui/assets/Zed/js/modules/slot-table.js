@@ -31,11 +31,11 @@ var SlotTable = function (options) {
 
             _self.slotTable.DataTable({
                 ajax: {
-                    cache: false
+                    cache: false,
                 },
                 autoWidth: false,
                 language: dataTable.defaultConfiguration.language,
-                drawCallback: function() {
+                drawCallback: function () {
                     _self.activationHandler();
                 },
             });
@@ -63,7 +63,7 @@ var SlotTable = function (options) {
                 url: $that.closest('form')[0].action,
                 type: 'POST',
                 data: $that.closest('form').serialize(),
-                success: function(response) {
+                success: function (response) {
                     if (response.success) {
                         _self.slotTable.DataTable().ajax.reload(null, false);
 
@@ -75,18 +75,18 @@ var SlotTable = function (options) {
                         title: 'Error',
                         text: response.message,
                         html: true,
-                        type: 'error'
+                        type: 'error',
                     });
                 },
-                error: function(response) {
+                error: function (response) {
                     $that.data('processing', false);
                     window.sweetAlert({
                         title: 'Error',
                         text: response.status + ' ' + response.statusText,
                         html: true,
-                        type: 'error'
+                        type: 'error',
                     });
-                }
+                },
             });
 
             return false;
@@ -108,7 +108,7 @@ var SlotTable = function (options) {
         }
 
         _self.slotTable.closest('.wrapper > .row').show();
-    }
+    };
 };
 
 module.exports = SlotTable;

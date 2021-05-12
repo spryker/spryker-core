@@ -10,7 +10,7 @@ namespace Spryker\Client\CustomerAccessPermission;
 interface CustomerAccessPermissionClientInterface
 {
     /**
-     * Specification
+     * Specification:
      * - Returns customer secured pattern with applied customer access rules on it.
      *
      * @api

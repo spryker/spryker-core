@@ -15,6 +15,9 @@ use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockTemplateQuery;
 interface CmsBlockQueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idCmsBlock
@@ -24,6 +27,9 @@ interface CmsBlockQueryContainerInterface
     public function queryCmsBlockById(int $idCmsBlock): SpyCmsBlockQuery;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idCmsBlock
@@ -33,6 +39,9 @@ interface CmsBlockQueryContainerInterface
     public function queryCmsBlockByIdWithTemplateWithGlossary(int $idCmsBlock): SpyCmsBlockQuery;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idCmsBlock
@@ -42,6 +51,9 @@ interface CmsBlockQueryContainerInterface
     public function queryCmsBlockByIdWithTemplateWithGlossaryWithStoreRelation(int $idCmsBlock): SpyCmsBlockQuery;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $name
@@ -51,6 +63,9 @@ interface CmsBlockQueryContainerInterface
     public function queryCmsBlockByName(string $name): SpyCmsBlockQuery;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery
@@ -58,6 +73,9 @@ interface CmsBlockQueryContainerInterface
     public function queryCmsBlockWithTemplate(): SpyCmsBlockQuery;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idCmsBlock
@@ -67,6 +85,9 @@ interface CmsBlockQueryContainerInterface
     public function queryCmsBlockGlossaryKeyMappingByIdCmsBlock(int $idCmsBlock): SpyCmsBlockGlossaryKeyMappingQuery;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockTemplateQuery
@@ -74,6 +95,9 @@ interface CmsBlockQueryContainerInterface
     public function queryTemplates(): SpyCmsBlockTemplateQuery;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $path
@@ -83,6 +107,9 @@ interface CmsBlockQueryContainerInterface
     public function queryTemplateByPath(string $path): SpyCmsBlockTemplateQuery;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idCmsBlockTemplate
@@ -92,6 +119,9 @@ interface CmsBlockQueryContainerInterface
     public function queryTemplateById(int $idCmsBlockTemplate): SpyCmsBlockTemplateQuery;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $placeholders
@@ -105,6 +135,9 @@ interface CmsBlockQueryContainerInterface
     ): SpyCmsBlockGlossaryKeyMappingQuery;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idGlossaryKeyMapping
@@ -114,6 +147,9 @@ interface CmsBlockQueryContainerInterface
     public function queryGlossaryKeyMappingById(int $idGlossaryKeyMapping): SpyCmsBlockGlossaryKeyMappingQuery;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idCmsBlock
@@ -124,6 +160,9 @@ interface CmsBlockQueryContainerInterface
     public function queryCmsBlockStoreByFkCmsBlockAndFkStores(int $idCmsBlock, array $idStores): SpyCmsBlockStoreQuery;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idCmsBlock
@@ -133,6 +172,9 @@ interface CmsBlockQueryContainerInterface
     public function queryCmsBlockWithStoreRelationByFkCmsBlock(int $idCmsBlock): SpyCmsBlockQuery;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idCmsBlock

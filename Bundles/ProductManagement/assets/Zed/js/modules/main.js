@@ -7,8 +7,7 @@
 
 require('../../sass/main.scss');
 
-$(document).ready(function() {
-
+$(document).ready(function () {
     /**
      * @param data
      * @param params
@@ -25,8 +24,8 @@ $(document).ready(function() {
         return {
             results: data.values,
             pagination: {
-                more: (params.page * 30) < data.total || 0
-            }
+                more: params.page * 30 < data.total || 0,
+            },
         };
     }
 
@@ -34,7 +33,7 @@ $(document).ready(function() {
      * @param $select
      * @param term
      */
-    function select2_search ($select, term) {
+    function select2_search($select, term) {
         $select.select2('open');
 
         // Get the search box within the dropdown or the selection
@@ -129,12 +128,12 @@ $(document).ready(function() {
     /**
      * Init image set index
      */
-    $('.image-set').each(function(i, imageSet) {
+    $('.image-set').each(function (i, imageSet) {
         var imageSetIndex = $(imageSet).closest('[data-image-set-prototype]').find('.image-set').index(imageSet);
 
         $(imageSet).data('imageSetIndex', imageSetIndex);
     });
-    $('.image-set-container').each(function(i, imageSetContainer) {
+    $('.image-set-container').each(function (i, imageSetContainer) {
         var currentImageSetIndex = $(imageSetContainer).find('.image-set').length - 1;
 
         $(imageSetContainer).data('currentImageSetIndex', currentImageSetIndex);
@@ -149,12 +148,10 @@ $(document).ready(function() {
         .on('click', '.remove-image-set', deleteImageSet)
         .on('click', '.remove-image-collection', deleteImageCollection);
 
-    $('.spryker-form-select2combobox:not([class=".tags"]):not([class=".ajax"])').select2({
-
-    });
+    $('.spryker-form-select2combobox:not([class=".tags"]):not([class=".ajax"])').select2({});
 
     $('.spryker-form-select2combobox.tags:not([class=".ajax"])').select2({
-        tags: true
+        tags: true,
     });
 
     $('.spryker-form-select2combobox.ajax:not([class=".tags"])').select2({
@@ -170,14 +167,14 @@ $(document).ready(function() {
                     q: params.term,
                     page: params.page,
                     id: this.attr('id_attribute'),
-                    locale_code: this.attr('locale_code')
+                    locale_code: this.attr('locale_code'),
                 };
 
                 return p;
             },
-            processResults: processAjaxResult
+            processResults: processAjaxResult,
         },
-        minimumInputLength: 1
+        minimumInputLength: 1,
     });
 
     $('.spryker-form-select2combobox.ajax.tags').select2({
@@ -193,21 +190,19 @@ $(document).ready(function() {
                     q: params.term,
                     page: params.page,
                     id: this.attr('id_attribute'),
-                    locale_code: this.attr('locale_code')
+                    locale_code: this.attr('locale_code'),
                 };
 
                 return p;
             },
-            processResults: processAjaxResult
+            processResults: processAjaxResult,
         },
-        minimumInputLength: 1
+        minimumInputLength: 1,
     });
 
-    $('.attribute_metadata_checkbox').each(function() {
+    $('.attribute_metadata_checkbox').each(function () {
         var $checkbox = $(this);
-        var $input = $checkbox
-            .parents('.attribute_metadata_row')
-            .find('.attribute_metadata_value');
+        var $input = $checkbox.parents('.attribute_metadata_row').find('.attribute_metadata_value');
 
         if (!$checkbox.prop('checked') && !$checkbox.prop('disabled')) {
             $input.prop('readonly', !$checkbox.prop('checked'));
@@ -220,11 +215,9 @@ $(document).ready(function() {
 
     $('.attribute_metadata_checkbox')
         .off('click')
-        .on('click', function() {
+        .on('click', function () {
             var $checkbox = $(this);
-            var $input = $checkbox
-                .parents('.attribute_metadata_row')
-                .find('.attribute_metadata_value');
+            var $input = $checkbox.parents('.attribute_metadata_row').find('.attribute_metadata_value');
 
             $input.prop('readonly', !$checkbox.prop('checked'));
 
@@ -233,7 +226,7 @@ $(document).ready(function() {
 
                 if ($checkbox.prop('checked')) {
                     //fixes focus issues
-                    setTimeout(function() {
+                    setTimeout(function () {
                         $input.select2('focus');
                     }, 0);
                 }
@@ -242,58 +235,59 @@ $(document).ready(function() {
             }
         });
 
-
-    $('.kv_attribute_autocomplete').each(function(key, value) {
+    $('.kv_attribute_autocomplete').each(function (key, value) {
         var input = $(value);
         var id = input.attr('id_attribute') || null;
         var locale_code = input.attr('locale_code') || null;
 
         input.autocomplete({
             minLength: 0,
-            source: function(request, response) {
+            source: function (request, response) {
                 $.ajax({
                     url: '/product-management/attribute/suggest/',
-                    dataType: "json",
+                    dataType: 'json',
                     data: {
                         q: request.term,
                         id: id,
-                        locale_code: locale_code
+                        locale_code: locale_code,
                     },
-                    success: function(data) {
-                        response($.map(data.values, function (item) {
-                            return {
-                                label: item.text,
-                                value: item.id
-                            };
-                        }));
-                    }
+                    success: function (data) {
+                        response(
+                            $.map(data.values, function (item) {
+                                return {
+                                    label: item.text,
+                                    value: item.id,
+                                };
+                            }),
+                        );
+                    },
                 });
             },
-            select: function(event, ui) {
+            select: function (event, ui) {
                 var input = $(this);
                 input.val(ui.item.label);
                 input.attr('data-value', ui.item.value);
 
                 return false;
             },
-            focus: function(event, ui) {
+            focus: function (event, ui) {
                 var input = $(this);
                 input.val(ui.item.label);
                 input.attr('data-value', ui.item.value);
 
                 return false;
-            }
+            },
         });
     });
 
-    $(".kv_autocomplete_form").submit(function(e) {
+    $('.kv_autocomplete_form').submit(function (e) {
         var form = $(this);
-        $('.kv_attribute_autocomplete').each(function(key, value) {
+        $('.kv_attribute_autocomplete').each(function (key, value) {
             var $input = $(this);
             var hidden = $input.next();
             var inputValue = $input.attr('data-value');
             var name = hidden.attr('name');
-                hidden.val(inputValue);
+            hidden.val(inputValue);
         });
     });
 });

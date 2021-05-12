@@ -109,6 +109,10 @@ class {{ className }} extends {{ abstractClass }}
                         /** @var \Spryker\Shared\Kernel\Transfer\TransferInterface $transferObject */
                         $value = (new $type())->fromArray($value, $ignoreMissingProperty);
                     }
+
+                    if ($this->isPropertyStrict($normalizedPropertyName)) {
+                        $this->assertInstanceOfTransfer($normalizedPropertyName, $value);
+                    }
                     $this->$normalizedPropertyName = $value;
                     $this->modifiedProperties[$normalizedPropertyName] = true;
 

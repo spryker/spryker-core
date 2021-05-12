@@ -16,6 +16,9 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 interface ProductCustomerPermissionQueryContainerInterface extends QueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idCustomer
@@ -25,6 +28,9 @@ interface ProductCustomerPermissionQueryContainerInterface extends QueryContaine
     public function queryProductCustomerPermissionByCustomer(int $idCustomer): SpyProductCustomerPermissionQuery;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idCustomer

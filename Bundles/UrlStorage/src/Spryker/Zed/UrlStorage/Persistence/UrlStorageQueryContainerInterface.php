@@ -12,6 +12,9 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 interface UrlStorageQueryContainerInterface extends QueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $urlIds
@@ -21,6 +24,9 @@ interface UrlStorageQueryContainerInterface extends QueryContainerInterface
     public function queryUrls(array $urlIds);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $urlIds
@@ -30,6 +36,9 @@ interface UrlStorageQueryContainerInterface extends QueryContainerInterface
     public function queryUrlStorageByIds(array $urlIds);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $resourceType
@@ -40,6 +49,9 @@ interface UrlStorageQueryContainerInterface extends QueryContainerInterface
     public function queryUrlsByResourceTypeAndIds($resourceType, array $resourceIds);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int[] $redirectIds
@@ -49,6 +61,9 @@ interface UrlStorageQueryContainerInterface extends QueryContainerInterface
     public function queryRedirects(array $redirectIds);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int[] $redirectIds

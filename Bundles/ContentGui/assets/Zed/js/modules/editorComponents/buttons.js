@@ -5,11 +5,7 @@
 
 'use strict';
 
-var ContentItemDropdownButton = function (
-    buttonTitle,
-    dropdownList,
-    dropdownCallback
-) {
+var ContentItemDropdownButton = function (buttonTitle, dropdownList, dropdownCallback) {
     return function (context) {
         var ui = $.summernote.ui;
 
@@ -17,17 +13,17 @@ var ContentItemDropdownButton = function (
             ui.button({
                 contents: buttonTitle + ' <i class="fa fa-caret-down" aria-hidden="true"></i>',
                 data: {
-                    toggle: 'dropdown'
-                }
+                    toggle: 'dropdown',
+                },
             }),
             ui.dropdown({
                 contents: dropdownList,
-                click: dropdownCallback(context)
-            })
+                click: dropdownCallback(context),
+            }),
         ]);
 
         return button.render();
-    }
+    };
 };
 
 var PopoverButton = function (buttonContent, buttonCallback) {
@@ -37,14 +33,14 @@ var PopoverButton = function (buttonContent, buttonCallback) {
         var button = ui.button({
             contents: buttonContent.icon + ' ' + buttonContent.title,
             tooltip: buttonContent.title,
-            click: buttonCallback(context)
+            click: buttonCallback(context),
         });
 
         return button.render();
-    }
+    };
 };
 
 module.exports = {
     ContentItemDropdownButton: ContentItemDropdownButton,
-    PopoverButton: PopoverButton
+    PopoverButton: PopoverButton,
 };

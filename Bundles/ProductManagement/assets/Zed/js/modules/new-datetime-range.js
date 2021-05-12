@@ -5,22 +5,21 @@
 
 'use strict';
 
-$(document).ready(function() {
-
+$(document).ready(function () {
     function getGtmDateTimeString(datetext) {
         var d = new Date();
         d = new Date(d.valueOf() + d.getTimezoneOffset() * 60000);
 
         var h = d.getHours();
-        h = (h < 10) ? ("0" + h) : h ;
+        h = h < 10 ? '0' + h : h;
 
         var m = d.getMinutes();
-        m = (m < 10) ? ("0" + m) : m ;
+        m = m < 10 ? '0' + m : m;
 
         var s = d.getSeconds();
-        s = (s < 10) ? ("0" + s) : s ;
+        s = s < 10 ? '0' + s : s;
 
-        return datetext + " " + h + ":" + m + ":" + s;
+        return datetext + ' ' + h + ':' + m + ':' + s;
     }
 
     var $fromDateTime = $('.js-from-datetime');
@@ -31,9 +30,9 @@ $(document).ready(function() {
         changeMonth: true,
         numberOfMonths: 3,
         defaultData: 0,
-        onSelect: function(datetext){
+        onSelect: function (datetext) {
             $fromDateTime.val(getGtmDateTimeString(datetext));
-        }
+        },
     });
 
     $toDateTime.datepicker({
@@ -41,8 +40,8 @@ $(document).ready(function() {
         dateFormat: 'yy-mm-dd',
         changeMonth: true,
         numberOfMonths: 3,
-        onSelect: function(datetext){
+        onSelect: function (datetext) {
             $toDateTime.val(getGtmDateTimeString(datetext));
-        }
+        },
     });
 });

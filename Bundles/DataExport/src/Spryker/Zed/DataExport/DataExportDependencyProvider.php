@@ -8,6 +8,7 @@
 namespace Spryker\Zed\DataExport;
 
 use Spryker\Service\DataExport\DataExportServiceInterface;
+use Spryker\Zed\DataExport\Dependency\Facade\DataExportToGracefulRunnerFacadeBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -16,6 +17,7 @@ use Spryker\Zed\Kernel\Container;
  */
 class DataExportDependencyProvider extends AbstractBundleDependencyProvider
 {
+    public const FACADE_GRACEFUL_RUNNER = 'FACADE_GRACEFUL_RUNNER';
     public const SERVICE_DATA_EXPORT = 'SERVICE_DATA_EXPORT';
 
     public const DATA_ENTITY_EXPORTER_PLUGINS = 'DATA_ENTITY_EXPORTER_PLUGINS';
@@ -30,6 +32,7 @@ class DataExportDependencyProvider extends AbstractBundleDependencyProvider
         $container = parent::provideBusinessLayerDependencies($container);
         $container = $this->addDataExportService($container);
         $container = $this->addDataEntityExporterPlugins($container);
+        $container = $this->addGracefulRunnerFacade($container);
 
         return $container;
     }
@@ -81,5 +84,21 @@ class DataExportDependencyProvider extends AbstractBundleDependencyProvider
     protected function getDataEntityExporterPlugins(): array
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addGracefulRunnerFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_GRACEFUL_RUNNER, function (Container $container) {
+            return new DataExportToGracefulRunnerFacadeBridge(
+                $container->getLocator()->gracefulRunner()->facade()
+            );
+        });
+
+        return $container;
     }
 }

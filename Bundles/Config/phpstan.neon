@@ -1,7 +1,9 @@
 parameters:
     checkGenericClassInNonGenericObjectType: false
     checkMissingIterableValueType: false
+    reportUnmatchedIgnoredErrors: false
     dynamicConstantNames:
         - APPLICATION_CODE_BUCKET
     ignoreErrors:
         - '#Unsafe usage of new static\(\)#'
+        - '#Parameter \#1 \$currentLocale of static method .+Environment::initializeLocale\(\) expects string, string|false given.#'

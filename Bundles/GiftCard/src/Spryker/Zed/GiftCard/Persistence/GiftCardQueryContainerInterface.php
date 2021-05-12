@@ -10,6 +10,9 @@ namespace Spryker\Zed\GiftCard\Persistence;
 interface GiftCardQueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\GiftCard\Persistence\SpyGiftCardQuery
@@ -17,6 +20,9 @@ interface GiftCardQueryContainerInterface
     public function queryGiftCards();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idGiftCard
@@ -26,6 +32,9 @@ interface GiftCardQueryContainerInterface
     public function queryGiftCardById($idGiftCard);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $abstractSku
@@ -35,6 +44,9 @@ interface GiftCardQueryContainerInterface
     public function queryGiftCardConfigurationByProductAbstractSku($abstractSku);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $concreteSku
@@ -44,6 +56,9 @@ interface GiftCardQueryContainerInterface
     public function queryGiftCardConfigurationByProductSku($concreteSku);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $code
@@ -53,6 +68,9 @@ interface GiftCardQueryContainerInterface
     public function queryGiftCardByCode($code);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string[] $codes
@@ -62,6 +80,9 @@ interface GiftCardQueryContainerInterface
     public function queryGiftCardByCodes(array $codes);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $code
@@ -71,6 +92,9 @@ interface GiftCardQueryContainerInterface
     public function queryPaymentGiftCardsForCode($code);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idSalesPayment
@@ -80,6 +104,9 @@ interface GiftCardQueryContainerInterface
     public function queryPaymentGiftCardsForIdSalesPayment($idSalesPayment);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idSalesOrder
@@ -89,6 +116,9 @@ interface GiftCardQueryContainerInterface
     public function queryPaymentGiftCardsForIdSalesOrder($idSalesOrder);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idSalesOrderItem

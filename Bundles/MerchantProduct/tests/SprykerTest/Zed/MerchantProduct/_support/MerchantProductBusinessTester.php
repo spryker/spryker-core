@@ -8,7 +8,9 @@
 namespace SprykerTest\Zed\MerchantProduct;
 
 use Codeception\Actor;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery;
+use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 
 /**
  * @method void wantToTest($text)
@@ -44,5 +46,23 @@ class MerchantProductBusinessTester extends Actor
     protected function getMerchantProductAbstractPropelQuery(): SpyMerchantProductAbstractQuery
     {
         return SpyMerchantProductAbstractQuery::create();
+    }
+
+    /**
+     * @param int $productAbstractId
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer|null
+     */
+    public function findProductAbstractById(int $productAbstractId): ?ProductAbstractTransfer
+    {
+        $productAbstractEntity = SpyProductAbstractQuery::create()->findOneByIdProductAbstract($productAbstractId);
+
+        if (!$productAbstractEntity) {
+            return null;
+        }
+
+        $productAbstractTransfer = (new ProductAbstractTransfer())->fromArray($productAbstractEntity->toArray(), true);
+
+        return $productAbstractTransfer;
     }
 }

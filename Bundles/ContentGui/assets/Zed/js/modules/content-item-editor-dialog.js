@@ -7,15 +7,15 @@
 
 var dataTable = require('ZedGuiModules/libs/data-table');
 
-var ContentItemDialog = function(
+var ContentItemDialog = function (
     dialogTitle,
     dialogContentUrl,
     insertButtonTitle,
     widgetHtmlTemplate,
-    maxWidgetNumber
+    maxWidgetNumber,
 ) {
     $.extend($.summernote.plugins, {
-        'contentItemDialog': function (context) {
+        contentItemDialog: function (context) {
             this.context = context;
             this.$body = $(document.body);
             this.editor = context.layoutInfo.editor;
@@ -26,28 +26,31 @@ var ContentItemDialog = function(
             this.history = context.modules.editor.history;
             this.contentCache = {};
 
-            this.initialize = function() {
+            this.initialize = function () {
                 var $container = this.options.dialogsInBody ? this.$body : this.editor;
-                var loaderTemplate = '<div class="content-item-loader text-center">' +
+                var loaderTemplate =
+                    '<div class="content-item-loader text-center">' +
                     '<img src="/assets/img/cms-loader.gif" />' +
                     '</div>';
-                var bodyTemplate = '<div class="content-item-body">' +
-                    loaderTemplate +
-                    '<div class="content-ajax"></div>' +
-                    '</div>';
+                var bodyTemplate =
+                    '<div class="content-item-body">' + loaderTemplate + '<div class="content-ajax"></div>' + '</div>';
 
-                var footerTemplate = '<div class="content-item-footer">' +
+                var footerTemplate =
+                    '<div class="content-item-footer">' +
                     '<button class="btn btn-primary note-btn note-btn-primary add-content-item">' +
                     insertButtonTitle +
                     '</button>' +
                     '</div>';
 
-                this.$dialog = this.$ui.dialog({
-                    title: dialogTitle,
-                    fade: this.options.dialogsFade,
-                    body: bodyTemplate,
-                    footer: footerTemplate,
-                }).render().appendTo($container);
+                this.$dialog = this.$ui
+                    .dialog({
+                        title: dialogTitle,
+                        fade: this.options.dialogsFade,
+                        body: bodyTemplate,
+                        footer: footerTemplate,
+                    })
+                    .render()
+                    .appendTo($container);
 
                 this.mapEvents();
             };
@@ -79,7 +82,8 @@ var ContentItemDialog = function(
                 var chosenTemplateIdentifier = this.$dialog.find('.template-list input:checked').val();
                 var $chooseTemplateErrorSelector = this.$dialog.find('.content-errors .template');
                 var twigTemplate = this.$dialog.find('input[name=twigFunctionTemplate]').val();
-                var readyToInsert = chosenKey !== undefined && (!isTemplateListExists || isTemplateListExists && chosenTemplate);
+                var readyToInsert =
+                    chosenKey !== undefined && (!isTemplateListExists || (isTemplateListExists && chosenTemplate));
 
                 if (readyToInsert) {
                     if ($('span[data-twig-expression*="{{ content_"]').length > maxWidgetNumber) {
@@ -99,13 +103,13 @@ var ContentItemDialog = function(
                         chosenName,
                         chosenTemplate,
                         chosenTemplateIdentifier,
-                        widgetHtmlTemplate
+                        widgetHtmlTemplate,
                     );
                     this.addItemInEditor(elementForInsert);
                 }
 
                 if (!chosenKey) {
-                    this.showError($choseIdErrorSelector, $titleHeader)
+                    this.showError($choseIdErrorSelector, $titleHeader);
                 }
 
                 if (isTemplateListExists && !chosenTemplate) {
@@ -153,7 +157,11 @@ var ContentItemDialog = function(
                     return false;
                 }
 
-                return $nodeInnerItems.length <= 2 && $nodeInnerItems.eq(1).is('br') && $nodeInnerItems.children().length <= 1;
+                return (
+                    $nodeInnerItems.length <= 2 &&
+                    $nodeInnerItems.eq(1).is('br') &&
+                    $nodeInnerItems.children().length <= 1
+                );
             };
 
             this.isContentItemEmpty = function ($nodeItem) {
@@ -196,7 +204,7 @@ var ContentItemDialog = function(
                     $insertedNode.removeAttr('style');
                     $nextNode.remove();
                     self.history.stackOffset--;
-                    self.history.stack.splice(-1,1);
+                    self.history.stack.splice(-1, 1);
                     self.history.recordUndo();
                 }
             };
@@ -216,12 +224,12 @@ var ContentItemDialog = function(
                 contentName,
                 templateName,
                 templateIdentifier,
-                widgetHtmlTemplate
+                widgetHtmlTemplate,
             ) {
                 var twigExpression = twigTemplate.replace(/%\w+%/g, function (param) {
                     return {
                         '%KEY%': key,
-                        '%TEMPLATE%': templateIdentifier
+                        '%TEMPLATE%': templateIdentifier,
                     }[param];
                 });
 
@@ -247,15 +255,15 @@ var ContentItemDialog = function(
                     $.ajax({
                         type: 'GET',
                         url: url,
-                        dataType: "html",
+                        dataType: 'html',
                         context: this,
                         success: function (data) {
                             self.contentCache[url] = data;
-                            self.initContentHtml(data)
-                        }
+                            self.initContentHtml(data);
+                        },
                     });
                 } else {
-                    this.initContentHtml(this.contentCache[url])
+                    this.initContentHtml(this.contentCache[url]);
                 }
             };
 
@@ -265,9 +273,9 @@ var ContentItemDialog = function(
                 this.$dialog.find('.content-item-loader').hide();
                 this.$dialog.find('.content-item-body .content-ajax').append(data);
                 this.$dialog.find('table').DataTable({
-                    'ajax': dataAjaxUrl,
-                    'lengthChange': false,
-                    'language': dataTable.defaultConfiguration.language
+                    ajax: dataAjaxUrl,
+                    lengthChange: false,
+                    language: dataTable.defaultConfiguration.language,
                 });
             };
 
@@ -301,7 +309,7 @@ var ContentItemDialog = function(
                 this.getDialogContent(url);
                 this.$ui.showDialog(this.$dialog);
             };
-        }
+        },
     });
 };
 

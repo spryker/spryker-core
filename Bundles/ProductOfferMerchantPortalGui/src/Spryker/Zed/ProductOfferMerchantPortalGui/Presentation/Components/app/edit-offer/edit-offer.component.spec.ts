@@ -16,16 +16,12 @@ describe('EditOfferComponent', () => {
     @Component({
         selector: 'test-edit-offer',
         template: `
-            <mp-edit-offer
-                [productDetailsTitle]="productDetailsTitle"
-                [images]="images"
-                [product]="product"
-            >
-                <div title>${mockTitleContent}</div>      
-                <div action>${mockActionContent}</div>      
-                <div product-status>${mockProductStatusContent}</div>      
-                <div product-details>${mockProductDetailsContent}</div>      
-                <div>${mockDefaultContent}</div>      
+            <mp-edit-offer [productDetailsTitle]="productDetailsTitle" [images]="images" [product]="product">
+                <div title>${mockTitleContent}</div>
+                <div action>${mockActionContent}</div>
+                <div product-status>${mockProductStatusContent}</div>
+                <div product-details>${mockProductDetailsContent}</div>
+                <div>${mockDefaultContent}</div>
             </mp-edit-offer>
         `,
     })
@@ -54,25 +50,19 @@ describe('EditOfferComponent', () => {
     });
 
     it('should render slot [title] as the title of the drawer', () => {
-        const titleHolderElem = fixture.debugElement.query(
-            By.css('.mp-edit-offer__heading-col:first-child')
-        );
+        const titleHolderElem = fixture.debugElement.query(By.css('.mp-edit-offer__heading-col:first-child'));
 
         expect(titleHolderElem.nativeElement.textContent).toContain(mockTitleContent);
     });
 
     it('should render slot [action] in the last element with `mp-edit-offer__heading-col` className', () => {
-        const actionHolderElem = fixture.debugElement.query(
-            By.css('.mp-edit-offer__heading-col:last-child')
-        );
+        const actionHolderElem = fixture.debugElement.query(By.css('.mp-edit-offer__heading-col:last-child'));
 
         expect(actionHolderElem.nativeElement.textContent).toContain(mockActionContent);
     });
 
     it('should render slot [product-status] in the element with `mp-edit-offer__base-col--content` className', () => {
-        const productStatusHolderElem = fixture.debugElement.query(
-            By.css('.mp-edit-offer__base-col--content')
-        );
+        const productStatusHolderElem = fixture.debugElement.query(By.css('.mp-edit-offer__base-col--content'));
 
         expect(productStatusHolderElem.nativeElement.textContent).toContain(mockProductStatusContent);
     });
@@ -84,9 +74,7 @@ describe('EditOfferComponent', () => {
     });
 
     it('should render default slot after `.mp-edit-offer__information` element', () => {
-        const defaultSlotHolderElem = fixture.debugElement.query(
-            By.css('.mp-edit-offer__information + div')
-        );
+        const defaultSlotHolderElem = fixture.debugElement.query(By.css('.mp-edit-offer__information + div'));
 
         expect(defaultSlotHolderElem.nativeElement.textContent).toContain(mockDefaultContent);
     });
@@ -108,7 +96,7 @@ describe('EditOfferComponent', () => {
                 alt: 'mockImages',
             },
         ];
-        
+
         component.images = mockImages;
         fixture.detectChanges();
 
@@ -129,16 +117,16 @@ describe('EditOfferComponent', () => {
         const nameHolderElem = fixture.debugElement.query(By.css('.mp-edit-offer__title'));
         const skuHolderElem = fixture.debugElement.query(By.css('.mp-edit-offer__sku'));
         const validFromHolderElem = fixture.debugElement.query(
-            By.css('.mp-edit-offer__dates-col:first-child .mp-edit-offer__dates-value')
+            By.css('.mp-edit-offer__dates-col:first-child .mp-edit-offer__dates-value'),
         );
         const validToHolderElem = fixture.debugElement.query(
-            By.css('.mp-edit-offer__dates-col:last-child .mp-edit-offer__dates-value')
+            By.css('.mp-edit-offer__dates-col:last-child .mp-edit-offer__dates-value'),
         );
         const validFromTitleHolderElem = fixture.debugElement.query(
-            By.css('.mp-edit-offer__dates-col:first-child .mp-edit-offer__dates-title')
+            By.css('.mp-edit-offer__dates-col:first-child .mp-edit-offer__dates-title'),
         );
         const validToTitleHolderElem = fixture.debugElement.query(
-            By.css('.mp-edit-offer__dates-col:last-child .mp-edit-offer__dates-title')
+            By.css('.mp-edit-offer__dates-col:last-child .mp-edit-offer__dates-title'),
         );
 
         component.product = mockProduct;

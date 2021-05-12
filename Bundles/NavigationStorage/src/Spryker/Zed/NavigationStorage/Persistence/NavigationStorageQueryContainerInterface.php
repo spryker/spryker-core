@@ -13,6 +13,9 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 interface NavigationStorageQueryContainerInterface extends QueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $localeNames
@@ -22,6 +25,9 @@ interface NavigationStorageQueryContainerInterface extends QueryContainerInterfa
     public function queryLocalesWithLocaleNames(array $localeNames);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $navigationIds
@@ -31,6 +37,9 @@ interface NavigationStorageQueryContainerInterface extends QueryContainerInterfa
     public function queryNavigationStorageByNavigationIds(array $navigationIds);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $navigationNodeIds
@@ -40,6 +49,9 @@ interface NavigationStorageQueryContainerInterface extends QueryContainerInterfa
     public function queryNavigationIdsByNavigationNodeIds(array $navigationNodeIds);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $urlIds
@@ -49,6 +61,9 @@ interface NavigationStorageQueryContainerInterface extends QueryContainerInterfa
     public function queryNavigationIdsByUrlIds(array $urlIds);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int[] $navigationIds

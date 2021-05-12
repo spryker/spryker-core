@@ -10,6 +10,9 @@ namespace Spryker\Zed\ProductReviewGui\Persistence;
 interface ProductReviewGuiQueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idLocale

@@ -13,7 +13,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 interface ConsoleFacadeInterface
 {
     /**
-     * Specification
+     * Specification:
      * - Returns an array of console commands
      *
      * @api
@@ -23,7 +23,7 @@ interface ConsoleFacadeInterface
     public function getConsoleCommands();
 
     /**
-     * Specification
+     * Specification:
      * - Returns an array of event subscribers.
      *
      * @api
@@ -55,7 +55,7 @@ interface ConsoleFacadeInterface
     public function getServiceProviders();
 
     /**
-     * Specification
+     * Specification:
      * - Executes pre-run plugins which provided in ConsoleDependencyProvider.
      *
      * @api
@@ -68,7 +68,7 @@ interface ConsoleFacadeInterface
     public function preRun(InputInterface $input, OutputInterface $output);
 
     /**
-     * Specification
+     * Specification:
      * - Executes pos-run plugins which provided in ConsoleDependencyProvider.
      *
      * @api

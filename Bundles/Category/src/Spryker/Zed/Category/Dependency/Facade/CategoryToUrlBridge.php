@@ -51,26 +51,6 @@ class CategoryToUrlBridge implements CategoryToUrlInterface
     /**
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
-     * @return void
-     */
-    public function activateUrl(UrlTransfer $urlTransfer)
-    {
-        $this->urlFacade->activateUrl($urlTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
-     *
-     * @return void
-     */
-    public function deactivateUrl(UrlTransfer $urlTransfer)
-    {
-        $this->urlFacade->deactivateUrl($urlTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
-     *
      * @return bool
      */
     public function hasUrlCaseInsensitive(UrlTransfer $urlTransfer): bool

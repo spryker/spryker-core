@@ -18,6 +18,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 interface CmsCollectorFacadeInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery
@@ -41,6 +44,9 @@ interface CmsCollectorFacadeInterface
     );
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery

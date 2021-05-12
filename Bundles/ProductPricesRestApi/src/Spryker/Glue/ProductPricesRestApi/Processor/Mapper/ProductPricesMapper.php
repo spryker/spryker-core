@@ -7,10 +7,14 @@
 
 namespace Spryker\Glue\ProductPricesRestApi\Processor\Mapper;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CurrentProductPriceTransfer;
 use Generated\Shared\Transfer\RestCurrencyTransfer;
+use Generated\Shared\Transfer\RestPriceProductTransfer;
 use Generated\Shared\Transfer\RestProductPriceAttributesTransfer;
 use Generated\Shared\Transfer\RestProductPricesAttributesTransfer;
+use Generated\Shared\Transfer\RestWishlistItemsAttributesTransfer;
+use Generated\Shared\Transfer\WishlistItemTransfer;
 use Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToCurrencyClientInterface;
 use Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToPriceClientInterface;
 
@@ -88,6 +92,37 @@ class ProductPricesMapper implements ProductPricesMapperInterface
         }
 
         return $productPricesRestAttributesTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
+     * @param \Generated\Shared\Transfer\RestWishlistItemsAttributesTransfer $restWishlistItemsAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestWishlistItemsAttributesTransfer
+     */
+    public function mapWishlistItemTransferPricesToRestWishlistItemsAttributesTransfer(
+        WishlistItemTransfer $wishlistItemTransfer,
+        RestWishlistItemsAttributesTransfer $restWishlistItemsAttributesTransfer
+    ): RestWishlistItemsAttributesTransfer {
+        $restPriceProductTransfers = new ArrayObject();
+
+        foreach ($wishlistItemTransfer->getPrices() as $priceProductTransfer) {
+
+            /** @var \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer */
+            $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
+            $restPriceProductTransfer = (new RestPriceProductTransfer())
+                ->fromArray($moneyValueTransfer->toArray(), true);
+
+            if ($priceProductTransfer->getPriceType()) {
+                /** @var \Generated\Shared\Transfer\PriceTypeTransfer $priceTypeTransfer */
+                $priceTypeTransfer = $priceProductTransfer->getPriceType();
+                $restPriceProductTransfer->setPriceTypeName($priceTypeTransfer->getName());
+            }
+
+            $restPriceProductTransfers->append($restPriceProductTransfer);
+        }
+
+        return $restWishlistItemsAttributesTransfer->setPrices($restPriceProductTransfers);
     }
 
     /**

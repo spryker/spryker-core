@@ -31,6 +31,17 @@ class CustomerResourceController extends AbstractController
      *              "403": "Unauthorized request.",
      *              "404": "Customer not found."
      *          }
+     *     },
+     *     "getCollection": {
+     *          "summary": [
+     *              "Retrieves customers collection."
+     *          ],
+     *          "parameters": [{
+     *              "ref": "acceptLanguage"
+     *          }],
+     *          "responses": {
+     *              "403": "Unauthorized request."
+     *          }
      *     }
      * })
      *
@@ -85,7 +96,8 @@ class CustomerResourceController extends AbstractController
      *          "responses": {
      *              "400": "Failed to save customer.",
      *              "403": "Unauthorized request.",
-     *              "404": "Customer not found."
+     *              "404": "Customer not found.",
+     *              "422": "Customer with this email already exists."
      *          }
      *     }
      * })

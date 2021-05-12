@@ -51,6 +51,11 @@ class ProductPageSearchEventSubscriber extends AbstractPlugin implements EventSu
     protected const ENTITY_SPY_AVAILABILITY_UPDATE = 'Entity.spy_availability.update';
 
     /**
+     * @uses \Spryker\Zed\Category\Dependency\CategoryEvents::ENTITY_CATEGORY_PUBLISH
+     */
+    protected const ENTITY_CATEGORY_PUBLISH = 'Entity.spy_category.publish';
+
+    /**
      * @api
      *
      * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
@@ -136,6 +141,7 @@ class ProductPageSearchEventSubscriber extends AbstractPlugin implements EventSu
         $this->addProductPageCategoryCreateSearchListener($eventCollection);
         $this->addProductPageCategoryUpdateSearchListener($eventCollection);
         $this->addProductPageCategoryDeleteSearchListener($eventCollection);
+        $this->addProductPageCategoryPublishSearchListener($eventCollection);
         $this->addProductPageCategoryNodeCreateSearchListener($eventCollection);
         $this->addProductPageCategoryNodeUpdateSearchListener($eventCollection);
         $this->addProductPageCategoryNodeDeleteSearchListener($eventCollection);
@@ -179,6 +185,16 @@ class ProductPageSearchEventSubscriber extends AbstractPlugin implements EventSu
     protected function addProductPageCategoryCreateSearchListener(EventCollectionInterface $eventCollection)
     {
         $eventCollection->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_CREATE, new ProductPageCategorySearchListener(), 0, null, $this->getConfig()->getProductPageEventQueueName());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductPageCategoryPublishSearchListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(static::ENTITY_CATEGORY_PUBLISH, new ProductPageCategorySearchListener(), 0, null, $this->getConfig()->getProductPageEventQueueName());
     }
 
     /**

@@ -41,7 +41,7 @@ class CategoryTreeSynchronizationDataPlugin extends AbstractPlugin implements Sy
      */
     public function hasStore(): bool
     {
-        return false;
+        return true;
     }
 
     /**

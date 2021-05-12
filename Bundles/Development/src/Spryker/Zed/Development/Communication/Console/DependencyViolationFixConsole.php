@@ -28,8 +28,6 @@ class DependencyViolationFixConsole extends AbstractCoreModuleAwareConsole
     protected const OPTION_DRY_RUN = 'dry-run';
     protected const OPTION_DRY_RUN_SHORT = 'd';
 
-    protected const REPLACE_4_WITH_2_SPACES = '/^(  +?)\\1(?=[^ ])/m';
-
     /**
      * @return void
      */
@@ -96,21 +94,39 @@ class DependencyViolationFixConsole extends AbstractCoreModuleAwareConsole
         $composerJsonArray = $this->getComposerJsonAsArray($moduleTransfer);
 
         foreach ($this->getModuleDependencies($moduleTransfer) as $moduleDependencyTransfer) {
-            $composerNameToFix = $this->getFacade()->findComposerNameByModuleName($moduleDependencyTransfer->getModuleName());
+            $missingComposerName = $this->getMissingComposerName($moduleDependencyTransfer);
 
-            if ($composerNameToFix === null) {
+            if ($missingComposerName === null) {
                 $this->output->writeln(sprintf('Could not get a composer name for "%s"', $moduleDependencyTransfer->getModuleName()));
                 $this->output->writeln(sprintf('Please check the module <fg=yellow>%s.%s</> manually.', $moduleTransfer->getOrganization()->getName(), $moduleTransfer->getName()));
 
                 continue;
             }
 
-            $composerJsonArray = $this->fixDependencyViolations($moduleDependencyTransfer, $composerJsonArray, $composerNameToFix);
+            $composerJsonArray = $this->fixDependencyViolations($moduleDependencyTransfer, $composerJsonArray, $missingComposerName);
         }
 
         $this->output->writeln(sprintf('Fixed dependencies in <fg=yellow>%s.%s</>', $moduleTransfer->getOrganization()->getName(), $moduleTransfer->getName()));
 
         $this->saveComposerJsonArray($moduleTransfer, $composerJsonArray);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ModuleDependencyTransfer $moduleDependencyTransfer
+     *
+     * @return string|null
+     */
+    protected function getMissingComposerName(ModuleDependencyTransfer $moduleDependencyTransfer): ?string
+    {
+        if ($moduleDependencyTransfer->getComposerName() !== null) {
+            return $moduleDependencyTransfer->getComposerName();
+        }
+
+        if ($moduleDependencyTransfer->getModuleName() !== null) {
+            return $this->getFacade()->findComposerNameByModuleName($moduleDependencyTransfer->getModuleName());
+        }
+
+        return null;
     }
 
     /**
@@ -147,7 +163,7 @@ class DependencyViolationFixConsole extends AbstractCoreModuleAwareConsole
             $composerJsonArray['scripts'] = new stdClass();
         }
         $modifiedComposerJson = json_encode($composerJsonArray, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
-        $modifiedComposerJson = preg_replace(static::REPLACE_4_WITH_2_SPACES, '$1', $modifiedComposerJson) . PHP_EOL;
+        $modifiedComposerJson .= PHP_EOL;
 
         file_put_contents($composerJsonFile, $modifiedComposerJson);
     }

@@ -12,7 +12,7 @@ interface MerchantProductOfferDataSetInterface
     public const STORE_NAME = 'store_name';
     public const PRODUCT_OFFER_REFERENCE = 'product_offer_reference';
     public const CONCRETE_SKU = 'concrete_sku';
-    public const MERCHANT_KEY = 'merchant_key';
+    public const MERCHANT_REFERENCE = 'merchant_reference';
     public const MERCHANT_SKU = 'merchant_sku';
     public const IS_ACTIVE = 'is_active';
     public const APPROVAL_STATUS = 'approval_status';

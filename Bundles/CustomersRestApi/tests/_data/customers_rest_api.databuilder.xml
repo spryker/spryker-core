@@ -5,6 +5,15 @@
     xsi:schemaLocation="spryker:databuilder-01 http://static.spryker.com/databuilder-01.xsd"
 >
 
+    <transfer name="RestCustomersAttributes">
+        <property name="email" dataBuilderRule="unique()->email"/>
+        <property name="firstName" dataBuilderRule="firstName"/>
+        <property name="lastName" dataBuilderRule="lastName"/>
+        <property name="gender" dataBuilderRule="randomElement(['Male', 'Female'])"/>
+        <property name="dateOfBirth" dataBuilderRule="date('Y-m-d', '-20 years')"/>
+        <property name="salutation" dataBuilderRule="randomElement(['Mr', 'Mrs'])"/>
+    </transfer>
+
     <transfer name="Quote">
     </transfer>
 

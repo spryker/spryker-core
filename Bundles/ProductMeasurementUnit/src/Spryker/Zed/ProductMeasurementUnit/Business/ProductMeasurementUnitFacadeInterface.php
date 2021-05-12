@@ -114,6 +114,7 @@ interface ProductMeasurementUnitFacadeInterface
     public function getProductMeasurementSalesUnitTransfer(int $idProductMeasurementSalesUnit): ProductMeasurementSalesUnitTransfer;
 
     /**
+     * Specification:
      * - Retrieves a collection of product measurement unit entities.
      *
      * @api
@@ -214,7 +215,7 @@ interface ProductMeasurementUnitFacadeInterface
     public function findFilteredProductMeasurementUnitTransfers(FilterTransfer $filterTransfer): array;
 
     /**
-     * Specification
+     * Specification:
      * - Retrieves product measurement sales units according to provided offset and limit.
      *
      * @api

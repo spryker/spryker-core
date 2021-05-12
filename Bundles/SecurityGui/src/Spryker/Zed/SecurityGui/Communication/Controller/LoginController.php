@@ -27,11 +27,30 @@ class LoginController extends AbstractController
             return $this->redirectResponse($this->getFactory()->getConfig()->getUrlHome());
         }
 
+        $loginForm = $this->getFactory()
+            ->createLoginForm()
+            ->handleRequest($request)
+            ->createView();
+
+        $oauthAuthenticationLinkTransfers = $this->executeAuthenticationLinkPlugins();
+
         return $this->viewResponse([
-            'form' => $this->getFactory()
-                ->createLoginForm()
-                ->handleRequest($request)
-                ->createView(),
+            'form' => $loginForm,
+            'authenticationLinkCollection' => $oauthAuthenticationLinkTransfers,
         ]);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\OauthAuthenticationLinkTransfer[]
+     */
+    protected function executeAuthenticationLinkPlugins(): array
+    {
+        $oauthAuthenticationLinkTransfers = [];
+
+        foreach ($this->getFactory()->getAuthenticationLinkPlugins() as $authenticationLinkPlugin) {
+            $oauthAuthenticationLinkTransfers[] = $authenticationLinkPlugin->getAuthenticationLink();
+        }
+
+        return $oauthAuthenticationLinkTransfers;
     }
 }

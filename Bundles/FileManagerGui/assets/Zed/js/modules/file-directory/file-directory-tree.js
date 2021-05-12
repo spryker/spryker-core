@@ -23,10 +23,10 @@ var config = {
     fileDirectoryNodeFormUrlPrefix: '/file-manager-gui/node/',
     fileDirectoryTreeHierarchyUpdateUrl: '/file-manager-gui/directories-tree/update-hierarchy',
     fileDirectoryTreeNodeTypes: {
-        'default': {
-            'icon': 'fa fa-folder'
-        }
-    }
+        default: {
+            icon: 'fa fa-folder',
+        },
+    },
 };
 
 /**
@@ -50,48 +50,64 @@ function initialize() {
 function initJsTree() {
     $('#file-directory-files-list').load('/file-manager-gui/files');
 
-    $('#file-directory-tree').jstree({
-        'core': {
-            'check_callback': function (op, node, par, pos, more) {
-                // disable drop on root level
-                if (more && more.dnd && (op === 'move_node' || op === 'copy_node')) {
-                    return !!more.ref.data.idFileDirectoryNode;
-                }
+    $('#file-directory-tree')
+        .jstree({
+            core: {
+                check_callback: function (op, node, par, pos, more) {
+                    // disable drop on root level
+                    if (more && more.dnd && (op === 'move_node' || op === 'copy_node')) {
+                        return !!more.ref.data.idFileDirectoryNode;
+                    }
 
-                return true;
+                    return true;
+                },
+            },
+            plugins: ['wholerow', 'dnd', 'search'],
+            types: config.fileDirectoryTreeNodeTypes,
+            dnd: {
+                is_draggable: function (items) {
+                    var idFileDirectoryNode = items[0].data.idFileDirectoryNode;
+                    return !!idFileDirectoryNode;
+                },
+            },
+        })
+        .on('changed.jstree', function (e, data) {
+            var $filesList = $('#file-directory-files-list'),
+                $filesTable = $filesList.find('table').first(),
+                $deleteDirectoryButton = $('#delete-directory-link'),
+                $deleteDirectoryConfirmationButton = $('#delete-directory-confirmation-button');
+
+            $('#add-file-link').attr(
+                'href',
+                '/file-manager-gui/add-file?file-directory-id=' + data.node.data.idFileDirectoryNode,
+            );
+
+            if (typeof data.node.data.idFileDirectoryNode === 'undefined') {
+                $deleteDirectoryButton.removeAttr('href');
+                $deleteDirectoryButton.removeAttr('data-id-parent');
+                $deleteDirectoryButton.attr('disabled', true);
+                $filesList.hide();
+                return;
             }
-        },
-        'plugins': ['wholerow', 'dnd', 'search'],
-        'types': config.fileDirectoryTreeNodeTypes,
-        'dnd': {
-            'is_draggable': function (items) {
-                var idFileDirectoryNode = items[0].data.idFileDirectoryNode;
-                return !!idFileDirectoryNode;
-            }
-        }
-    }).on("changed.jstree", function (e, data) {
-        var $filesList = $('#file-directory-files-list'),
-            $filesTable = $filesList.find('table').first(),
-            $deleteDirectoryButton = $('#delete-directory-link'),
-            $deleteDirectoryConfirmationButton = $('#delete-directory-confirmation-button');
 
-        $('#add-file-link').attr('href', '/file-manager-gui/add-file?file-directory-id=' + data.node.data.idFileDirectoryNode);
-
-        if (typeof data.node.data.idFileDirectoryNode === 'undefined') {
-            $deleteDirectoryButton.removeAttr('href');
-            $deleteDirectoryButton.removeAttr('data-id-parent');
-            $deleteDirectoryButton.attr('disabled', true);
-            $filesList.hide()
-            return;
-        }
-
-        $filesList.show();
-        $filesTable.DataTable().ajax.url('/file-manager-gui/files/table?file-directory-id=' + data.node.data.idFileDirectoryNode).load();
-        $deleteDirectoryButton.removeAttr('disabled');
-        $deleteDirectoryConfirmationButton.closest('form').attr('action', '/file-manager-gui/delete-directory?id-directory=' + data.node.data.idFileDirectoryNode);
-        $deleteDirectoryButton.attr('href', '/file-manager-gui/delete-directory?id-directory=' + data.node.data.idFileDirectoryNode);
-        $deleteDirectoryButton.attr('data-id-parent', data.node.data.idParentFileDirectoryNode);
-    });
+            $filesList.show();
+            $filesTable
+                .DataTable()
+                .ajax.url('/file-manager-gui/files/table?file-directory-id=' + data.node.data.idFileDirectoryNode)
+                .load();
+            $deleteDirectoryButton.removeAttr('disabled');
+            $deleteDirectoryConfirmationButton
+                .closest('form')
+                .attr(
+                    'action',
+                    '/file-manager-gui/delete-directory?id-directory=' + data.node.data.idFileDirectoryNode,
+                );
+            $deleteDirectoryButton.attr(
+                'href',
+                '/file-manager-gui/delete-directory?id-directory=' + data.node.data.idFileDirectoryNode,
+            );
+            $deleteDirectoryButton.attr('data-id-parent', data.node.data.idParentFileDirectoryNode);
+        });
 
     $treeProgressBar.removeClass('hidden');
 }
@@ -125,10 +141,10 @@ function onTreeSaveOrderClick() {
     var params = {
         'file-directory-tree': {
             'file-directory': {
-                'id_file_directory': jstreeData[0].data.idFileDirectory
+                id_file_directory: jstreeData[0].data.idFileDirectory,
             },
-            'nodes': getFileDirectoryNodesRecursively(jstreeData[0])
-        }
+            nodes: getFileDirectoryNodesRecursively(jstreeData[0]),
+        },
     };
 
     $.post(config.fileDirectoryTreeHierarchyUpdateUrl, params, function (response) {
@@ -137,9 +153,9 @@ function onTreeSaveOrderClick() {
         }
 
         window.sweetAlert({
-            title: response.success ? "Success" : "Error",
+            title: response.success ? 'Success' : 'Error',
             text: response.message,
-            type: response.success ? "success" : "error"
+            type: response.success ? 'success' : 'error',
         });
 
         $treeOrderSaveBtn.attr('disabled', 'disabled');
@@ -151,11 +167,10 @@ function onTreeSaveOrderClick() {
 function reinitializeTree($tree) {
     var $tree = $('#file-directory-tree');
 
-    $tree.jstree("destroy").empty();
+    $tree.jstree('destroy').empty();
 
     $tree.each(function () {
         for (var i = this.attributes.length - 1; i >= 0; i--) {
-
             if (this.attributes[i].name !== 'id') {
                 $(this).removeAttr(this.attributes[i].name);
             }
@@ -164,13 +179,12 @@ function reinitializeTree($tree) {
 
     $.ajax({
         url: '/file-manager-gui/directories-tree/tree',
-        type: "GET",
+        type: 'GET',
         success: function (response) {
             $tree.html(response);
             initJsTree();
         },
-        error: function (jqXHR, textStatus, errorThrown) {
-        }
+        error: function (jqXHR, textStatus, errorThrown) {},
     });
 }
 
@@ -184,11 +198,11 @@ function getFileDirectoryNodesRecursively(jstreeNode) {
 
     $.each(jstreeNode.children, function (i, childNode) {
         var fileDirectoryNode = {
-            'file_directory': {
-                'id_file_directory': childNode.data.idFileDirectoryNode,
-                'position': (i + 1)
+            file_directory: {
+                id_file_directory: childNode.data.idFileDirectoryNode,
+                position: i + 1,
             },
-            'children': getFileDirectoryNodesRecursively(childNode)
+            children: getFileDirectoryNodesRecursively(childNode),
         };
 
         nodes.push(fileDirectoryNode);
@@ -197,10 +211,9 @@ function getFileDirectoryNodesRecursively(jstreeNode) {
     return nodes;
 }
 
-
 /**
  * Open public methods
  */
 module.exports = {
-    initialize: initialize
+    initialize: initialize,
 };

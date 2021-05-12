@@ -1,0 +1,30 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 25,
+            "line_to": 25,
+            "type": "PossiblyNullOperand",
+            "message": "Cannot concatenate with a possibly null null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/SecurityBlocker/src/Spryker/Client/SecurityBlocker/Storage/KeyBuilder/SecurityBlockerStorageKeyBuilder.php",
+            "snippet": "        . $securityCheckAuthContextTransfer->getIp()",
+            "selected_text": "$securityCheckAuthContextTransfer->getIp()",
+            "error_level": 1,
+            "shortcode": 80
+        },
+        {
+            "severity": "info",
+            "line_from": 27,
+            "line_to": 27,
+            "type": "PossiblyNullOperand",
+            "message": "Cannot concatenate with a possibly null null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/SecurityBlocker/src/Spryker/Client/SecurityBlocker/Storage/KeyBuilder/SecurityBlockerStorageKeyBuilder.php",
+            "snippet": "        . $securityCheckAuthContextTransfer->getAccount();",
+            "selected_text": "$securityCheckAuthContextTransfer->getAccount()",
+            "error_level": 1,
+            "shortcode": 80
+        }
+    ],
+    "deprecation": []
+}

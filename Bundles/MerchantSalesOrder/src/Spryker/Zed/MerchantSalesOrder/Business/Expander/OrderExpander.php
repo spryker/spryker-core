@@ -10,21 +10,21 @@ namespace Spryker\Zed\MerchantSalesOrder\Business\Expander;
 use Generated\Shared\Transfer\MerchantOrderCollectionTransfer;
 use Generated\Shared\Transfer\MerchantOrderCriteriaTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Spryker\Zed\MerchantSalesOrder\Persistence\MerchantSalesOrderRepositoryInterface;
+use Spryker\Zed\MerchantSalesOrder\Business\Reader\MerchantSalesOrderReaderInterface;
 
 class OrderExpander implements OrderExpanderInterface
 {
     /**
-     * @var \Spryker\Zed\MerchantSalesOrder\Persistence\MerchantSalesOrderRepositoryInterface
+     * @var \Spryker\Zed\MerchantSalesOrder\Business\Reader\MerchantSalesOrderReaderInterface
      */
-    protected $merchantSalesOrderRepository;
+    protected $merchantSalesOrderReader;
 
     /**
-     * @param \Spryker\Zed\MerchantSalesOrder\Persistence\MerchantSalesOrderRepositoryInterface $merchantSalesOrderRepository
+     * @param \Spryker\Zed\MerchantSalesOrder\Business\Reader\MerchantSalesOrderReaderInterface $merchantSalesOrderReader
      */
-    public function __construct(MerchantSalesOrderRepositoryInterface $merchantSalesOrderRepository)
+    public function __construct(MerchantSalesOrderReaderInterface $merchantSalesOrderReader)
     {
-        $this->merchantSalesOrderRepository = $merchantSalesOrderRepository;
+        $this->merchantSalesOrderReader = $merchantSalesOrderReader;
     }
 
     /**
@@ -38,7 +38,7 @@ class OrderExpander implements OrderExpanderInterface
             ->setWithItems(true)
             ->setIdOrder($orderTransfer->getIdSalesOrder());
 
-        $merchantOrderCollectionTransfer = $this->merchantSalesOrderRepository->getMerchantOrderCollection(
+        $merchantOrderCollectionTransfer = $this->merchantSalesOrderReader->getMerchantOrderCollection(
             $merchantOrderCriteriaTransfer
         );
 
@@ -54,6 +54,7 @@ class OrderExpander implements OrderExpanderInterface
      */
     public function expandOrderWithMerchantReferences(OrderTransfer $orderTransfer): OrderTransfer
     {
+        /** @var string[] $merchantReferences */
         $merchantReferences = $this->getMerchantReferences($orderTransfer);
 
         return $orderTransfer->setMerchantReferences($merchantReferences);
@@ -75,9 +76,12 @@ class OrderExpander implements OrderExpanderInterface
             if (!isset($groupedByItemIdMerchantOrderTransfers[$itemTransfer->getIdSalesOrderItem()])) {
                 continue;
             }
+            /** @var int $idSalesOrderItem */
+            $idSalesOrderItem = $itemTransfer->getIdSalesOrderItem();
 
             /** @var \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer */
-            $merchantOrderTransfer = $groupedByItemIdMerchantOrderTransfers[$itemTransfer->getIdSalesOrderItem()];
+            $merchantOrderTransfer = $groupedByItemIdMerchantOrderTransfers[$idSalesOrderItem];
+
             $itemTransfer->setMerchantOrderReference($merchantOrderTransfer->getMerchantOrderReference());
         }
 
@@ -103,6 +107,8 @@ class OrderExpander implements OrderExpanderInterface
     }
 
     /**
+     * @phpstan-return array<int, string|null>
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return string[]
@@ -112,14 +118,17 @@ class OrderExpander implements OrderExpanderInterface
         $merchantReferences = [];
 
         foreach ($orderTransfer->getItems() as $itemTransfer) {
+            /** @var string $merchantReference */
+            $merchantReference = $itemTransfer->getMerchantReference();
+
             if (
-                !$itemTransfer->getMerchantReference()
-                || isset($merchantReferences[$itemTransfer->getMerchantReference()])
+                !$merchantReference
+                || isset($merchantReferences[$merchantReference])
             ) {
                 continue;
             }
 
-            $merchantReferences[$itemTransfer->getMerchantReference()] = $itemTransfer->getMerchantReference();
+            $merchantReferences[$merchantReference] = $merchantReference;
         }
 
         return array_values($merchantReferences);

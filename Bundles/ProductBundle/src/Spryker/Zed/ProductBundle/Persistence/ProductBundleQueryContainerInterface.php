@@ -12,6 +12,9 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 interface ProductBundleQueryContainerInterface extends QueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProductConcrete
@@ -21,6 +24,9 @@ interface ProductBundleQueryContainerInterface extends QueryContainerInterface
     public function queryBundleProduct($idProductConcrete);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $sku
@@ -30,6 +36,9 @@ interface ProductBundleQueryContainerInterface extends QueryContainerInterface
     public function queryBundleProductBySku($sku);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $sku
@@ -39,6 +48,9 @@ interface ProductBundleQueryContainerInterface extends QueryContainerInterface
     public function queryBundledProductBySku($sku);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProduct
@@ -48,6 +60,9 @@ interface ProductBundleQueryContainerInterface extends QueryContainerInterface
     public function queryBundledProductByIdProduct($idProduct);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProductBundle
@@ -57,6 +72,9 @@ interface ProductBundleQueryContainerInterface extends QueryContainerInterface
     public function queryBundleByIdProductBundle($idProductBundle);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProductConcrete

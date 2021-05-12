@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductOfferStockDataImport\Business\Step;
 
 use Orm\Zed\ProductOfferStock\Persistence\Base\SpyProductOfferStockQuery;
+use Orm\Zed\ProductOfferStock\Persistence\SpyProductOfferStock;
 use Spryker\Zed\DataImport\Business\Exception\InvalidDataException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
@@ -17,11 +18,16 @@ use Spryker\Zed\ProductOfferStockDataImport\Business\DataSet\ProductOfferStockDa
 
 class ProductOfferStockWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
+    protected const FK_STOCK = ProductOfferStockDataSetInterface::FK_STOCK;
+    protected const FK_PRODUCT_OFFER = ProductOfferStockDataSetInterface::FK_PRODUCT_OFFER;
+    protected const QUANTITY = ProductOfferStockDataSetInterface::QUANTITY;
+    protected const IS_NEVER_OUT_OF_STOCK = ProductOfferStockDataSetInterface::IS_NEVER_OUT_OF_STOCK;
+
     protected const REQUIRED_DATA_SET_KEYS = [
-        ProductOfferStockDataSetInterface::FK_STOCK,
-        ProductOfferStockDataSetInterface::FK_PRODUCT_OFFER,
-        ProductOfferStockDataSetInterface::QUANTITY,
-        ProductOfferStockDataSetInterface::IS_NEVER_OUT_OF_STOCK,
+        self::FK_STOCK,
+        self::FK_PRODUCT_OFFER,
+        self::QUANTITY,
+        self::IS_NEVER_OUT_OF_STOCK,
     ];
 
     /**
@@ -33,14 +39,11 @@ class ProductOfferStockWriterStep extends PublishAwareStep implements DataImport
     {
         $this->validateDataSet($dataSet);
 
-        $productOfferStockEntity = SpyProductOfferStockQuery::create()
-            ->filterByFkProductOffer($dataSet[ProductOfferStockDataSetInterface::FK_PRODUCT_OFFER])
-            ->filterByFkStock($dataSet[ProductOfferStockDataSetInterface::FK_STOCK])
-            ->findOneOrCreate();
+        $productOfferStockEntity = $this->findOrCreateProductOfferStock($dataSet);
 
         $productOfferStockEntity
-            ->setQuantity($dataSet[ProductOfferStockDataSetInterface::QUANTITY])
-            ->setIsNeverOutOfStock($dataSet[ProductOfferStockDataSetInterface::IS_NEVER_OUT_OF_STOCK])
+            ->setQuantity($dataSet[static::QUANTITY])
+            ->setIsNeverOutOfStock($dataSet[static::IS_NEVER_OUT_OF_STOCK])
             ->save();
 
         $this->addPublishEvents(
@@ -63,5 +66,21 @@ class ProductOfferStockWriterStep extends PublishAwareStep implements DataImport
                 throw new InvalidDataException(sprintf('"%s" is required.', $requiredDataSetKey));
             }
         }
+    }
+
+    /**
+     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
+     *
+     * @return \Orm\Zed\ProductOfferStock\Persistence\SpyProductOfferStock
+     */
+    protected function findOrCreateProductOfferStock(DataSetInterface $dataSet): SpyProductOfferStock
+    {
+        /** @var \Orm\Zed\ProductOfferStock\Persistence\SpyProductOfferStock|null $productOfferStockEntity */
+        $productOfferStockEntity = SpyProductOfferStockQuery::create()
+            ->filterByFkProductOffer($dataSet[static::FK_PRODUCT_OFFER])
+            ->filterByFkStock($dataSet[static::FK_STOCK])
+            ->findOneOrCreate();
+
+        return $productOfferStockEntity;
     }
 }

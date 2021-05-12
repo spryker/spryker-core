@@ -8,42 +8,44 @@
 var inputFileRemoveFile = {
     removeBtnClasses: 'btn btn-sm btn-outline safe-submit btn-remove btn-remove-file js-remove-file',
     removeBtnInner: '<i class="fa fa-times"></i> Remove file',
-    
+
     init: function () {
         this.$inputs = $('[type="file"]');
         this.mapEvents();
     },
-    
+
     mapEvents: function () {
         var self = this;
-        
-        this.$inputs.on('change', function() {
-            if(!$(this).next().length && !$(this).next().hasClass(self.removeBtnClasses)) {
+
+        this.$inputs.on('change', function () {
+            if (!$(this).next().length && !$(this).next().hasClass(self.removeBtnClasses)) {
                 var $btn = self.createBtn();
                 $(this).after($btn);
             }
         });
     },
-    
-    createBtn: function() {
+
+    createBtn: function () {
         var $btn = $('<span>');
-        
-        $btn
-            .addClass(this.removeBtnClasses)
+
+        $btn.addClass(this.removeBtnClasses)
             .append(this.removeBtnInner)
-            .on('click', $.proxy(function(e) {
-                this.removeFile($(e.currentTarget));
-            }, this));
-        
+            .on(
+                'click',
+                $.proxy(function (e) {
+                    this.removeFile($(e.currentTarget));
+                }, this),
+            );
+
         return $btn;
     },
-    
-    removeFile: function($clickedBtn) {
+
+    removeFile: function ($clickedBtn) {
         $clickedBtn.prev().val('');
         $clickedBtn.remove();
-    }
+    },
 };
 
-$(document).ready(function() {
+$(document).ready(function () {
     inputFileRemoveFile.init();
 });

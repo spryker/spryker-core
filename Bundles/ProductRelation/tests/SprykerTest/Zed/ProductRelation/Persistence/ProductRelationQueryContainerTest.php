@@ -112,7 +112,10 @@ class ProductRelationQueryContainerTest extends Unit
 
         // Assert
         $this->assertCount(3, $result);
-        $resultProductRelationIds = array_column($result, SpyProductRelationTableMap::COL_ID_PRODUCT_RELATION);
+        $resultProductRelationIds = array_map(
+            'intval',
+            array_column($result, SpyProductRelationTableMap::COL_ID_PRODUCT_RELATION)
+        );
         $this->assertContains($productRelationTransfer11->getIdProductRelation(), $resultProductRelationIds);
         $this->assertContains($productRelationTransfer12->getIdProductRelation(), $resultProductRelationIds);
         $this->assertContains($productRelationTransfer21->getIdProductRelation(), $resultProductRelationIds);

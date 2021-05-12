@@ -8,7 +8,7 @@
 var availableItemTable = require('./available-item-table');
 var assignedItemTable = require('./assigned-item-table');
 
-$(document).ready(function() {
+$(document).ready(function () {
     availableItemTable.initialize();
     assignedItemTable.initialize();
 });

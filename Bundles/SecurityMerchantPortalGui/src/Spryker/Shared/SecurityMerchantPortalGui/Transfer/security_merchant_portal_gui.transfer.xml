@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
-<transfers xmlns="spryker:transfer-01"
-           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="MerchantUserCriteria">
         <property name="withUser" type="bool"/>
         <property name="username" type="string"/>
+        <property name="status" type="string"/>
+        <property name="merchantStatus" type="string"/>
     </transfer>
 
     <transfer name="MerchantUser">
@@ -19,6 +19,11 @@
 
     <transfer name="Message">
         <property name="value" type="string"/>
+    </transfer>
+
+    <transfer name="UserPasswordResetRequest">
+        <property name="resetPasswordPath" type="string"/>
+        <property name="email" type="string"/>
     </transfer>
 
 </transfers>

@@ -27,7 +27,7 @@ interface StoreFacadeInterface
     public function getCurrentStore();
 
     /**
-     * Specification
+     * Specification:
      *  - Reads all active stores and returns list of transfers
      *
      * @api
@@ -37,7 +37,7 @@ interface StoreFacadeInterface
     public function getAllStores();
 
     /**
-     * Specification
+     * Specification:
      *  - Read store by primary id from database
      *
      * @api
@@ -98,7 +98,7 @@ interface StoreFacadeInterface
     public function getCountries();
 
     /**
-     * Specification
+     * Specification:
      * - Validates store transfer in quote
      * - Returns QuoteValidationResponseTransfer.isSuccessful=false if QuoteTransfer.Store does not exist
      * - Returns QuoteValidationResponseTransfer.isSuccessful=false if QuoteTransfer.Store does not have a name

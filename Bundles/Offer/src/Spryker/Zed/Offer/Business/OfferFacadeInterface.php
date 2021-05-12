@@ -105,6 +105,7 @@ interface OfferFacadeInterface
     public function hydrateOfferWithSavingAmount(OfferTransfer $offerTransfer): OfferTransfer;
 
     /**
+     * Specification:
      * - Uses quote offer fee to recalculate a quote grant total
      * - The offer fee is added to a current quote grand total
      *

@@ -11,14 +11,15 @@ use ArrayObject;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\WishlistCollectionTransfer;
 use Generated\Shared\Transfer\WishlistFilterTransfer;
+use Generated\Shared\Transfer\WishlistItemCriteriaTransfer;
 use Generated\Shared\Transfer\WishlistItemMetaTransfer;
+use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistOverviewMetaTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
 use Generated\Shared\Transfer\WishlistOverviewResponseTransfer;
 use Generated\Shared\Transfer\WishlistPaginationTransfer;
 use Generated\Shared\Transfer\WishlistResponseTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
-use Orm\Zed\Product\Persistence\SpyProduct;
 use Propel\Runtime\Util\PropelModelPager;
 use Spryker\Zed\Wishlist\Business\Exception\MissingWishlistException;
 use Spryker\Zed\Wishlist\Business\Transfer\WishlistTransferMapperInterface;
@@ -51,21 +52,45 @@ class Reader implements ReaderInterface
     protected $wishlistRepository;
 
     /**
+     * @var \Spryker\Zed\WishlistExtension\Dependency\Plugin\WishlistReloadItemsPluginInterface[]
+     */
+    protected $wishlistReloadItemsPlugins;
+
+    /**
+     * @var array|\Spryker\Zed\WishlistExtension\Dependency\Plugin\WishlistItemsValidatorPluginInterface[]
+     */
+    protected $wishlistItemsValidatorPlugins;
+
+    /**
+     * @var \Spryker\Zed\WishlistExtension\Dependency\Plugin\WishlistItemExpanderPluginInterface[]
+     */
+    protected $wishlistItemExpanderPlugins;
+
+    /**
      * @param \Spryker\Zed\Wishlist\Persistence\WishlistQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Wishlist\Dependency\QueryContainer\WishlistToProductInterface $productQueryContainer
      * @param \Spryker\Zed\Wishlist\Business\Transfer\WishlistTransferMapperInterface $transferMapper
      * @param \Spryker\Zed\Wishlist\Persistence\WishlistRepositoryInterface $wishlistRepository
+     * @param \Spryker\Zed\WishlistExtension\Dependency\Plugin\WishlistReloadItemsPluginInterface[] $wishlistReloadItemsPlugins
+     * @param \Spryker\Zed\WishlistExtension\Dependency\Plugin\WishlistItemsValidatorPluginInterface[] $wishlistItemsValidatorPlugins
+     * @param \Spryker\Zed\WishlistExtension\Dependency\Plugin\WishlistItemExpanderPluginInterface[] $wishlistItemExpanderPlugins
      */
     public function __construct(
         WishlistQueryContainerInterface $queryContainer,
         WishlistToProductInterface $productQueryContainer,
         WishlistTransferMapperInterface $transferMapper,
-        WishlistRepositoryInterface $wishlistRepository
+        WishlistRepositoryInterface $wishlistRepository,
+        array $wishlistReloadItemsPlugins = [],
+        array $wishlistItemsValidatorPlugins = [],
+        array $wishlistItemExpanderPlugins = []
     ) {
         $this->queryContainer = $queryContainer;
         $this->productQueryContainer = $productQueryContainer;
         $this->transferMapper = $transferMapper;
         $this->wishlistRepository = $wishlistRepository;
+        $this->wishlistReloadItemsPlugins = $wishlistReloadItemsPlugins;
+        $this->wishlistItemsValidatorPlugins = $wishlistItemsValidatorPlugins;
+        $this->wishlistItemExpanderPlugins = $wishlistItemExpanderPlugins;
     }
 
     /**
@@ -109,6 +134,7 @@ class Reader implements ReaderInterface
         }
 
         $wishlistTransfer = $this->transferMapper->convertWishlist($wishlistEntity);
+        $wishlistTransfer->fromArray($wishlistOverviewRequestTransfer->getWishlist()->modifiedToArray());
         $wishlistOverviewRequestTransfer->setWishlist($wishlistTransfer);
 
         $itemPaginationModel = $this->getWishlistOverviewPaginationModel($wishlistOverviewRequestTransfer);
@@ -118,14 +144,45 @@ class Reader implements ReaderInterface
         $wishlistItems = $this->transferMapper->convertWishlistItemCollection($wishlistItemCollection);
 
         $wishlistItems = $this->expandProductId($wishlistItems);
+        $wishlistTransfer->setWishlistItems(new ArrayObject($wishlistItems));
+
+        $wishlistTransfer = $this->reloadWishlistItems($wishlistTransfer);
+        $this->validateWishlistItems($wishlistTransfer, $wishlistOverviewResponseTransfer);
+
+        $wishlistOverviewMetaTransfer = $this->createWishlistOverviewMeta($wishlistOverviewRequestTransfer);
+
+        $wishlistOverviewMetaTransfer->setWishlistItemMetaCollection(
+            $this->transferMapper->mapWishlistItemTransfersToWishlistItemMetaTransfers(
+                $wishlistTransfer->getWishlistItems(),
+                $wishlistOverviewMetaTransfer->getWishlistItemMetaCollection()
+            )
+        );
 
         $wishlistOverviewResponseTransfer
             ->setWishlist($wishlistTransfer)
             ->setPagination($wishlistPaginationTransfer)
-            ->setItems(new ArrayObject($wishlistItems))
-            ->setMeta($this->createWishlistOverviewMeta($wishlistOverviewRequestTransfer));
+            ->setItems($wishlistTransfer->getWishlistItems())
+            ->setMeta($wishlistOverviewMetaTransfer);
 
         return $wishlistOverviewResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistItemCriteriaTransfer $wishlistItemCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemTransfer|null
+     */
+    public function findWishlistItem(WishlistItemCriteriaTransfer $wishlistItemCriteriaTransfer): ?WishlistItemTransfer
+    {
+        $wishlistItemTransfer = $this->wishlistRepository->findWishlistItem($wishlistItemCriteriaTransfer);
+
+        if (!$wishlistItemTransfer) {
+            return null;
+        }
+
+        $wishlistItemTransfer = $this->executeWishlistItemExpanderPlugins($wishlistItemTransfer);
+
+        return $wishlistItemTransfer;
     }
 
     /**
@@ -181,6 +238,8 @@ class Reader implements ReaderInterface
     }
 
     /**
+     * @phpstan-param \Propel\Runtime\Util\PropelModelPager<mixed> $itemPaginationModel
+     *
      * @param \Generated\Shared\Transfer\WishlistPaginationTransfer $paginationTransfer
      * @param \Propel\Runtime\Util\PropelModelPager $itemPaginationModel
      *
@@ -189,7 +248,7 @@ class Reader implements ReaderInterface
     protected function updatePaginationTransfer(WishlistPaginationTransfer $paginationTransfer, PropelModelPager $itemPaginationModel)
     {
         $pagesTotal = ceil($itemPaginationModel->getNbResults() / $itemPaginationModel->getMaxPerPage());
-        $paginationTransfer->setPagesTotal($pagesTotal);
+        $paginationTransfer->setPagesTotal((int)$pagesTotal);
         $paginationTransfer->setItemsTotal($itemPaginationModel->getNbResults());
         $paginationTransfer->setItemsPerPage($itemPaginationModel->getMaxPerPage());
 
@@ -198,7 +257,7 @@ class Reader implements ReaderInterface
         }
 
         if ($paginationTransfer->getPage() > $pagesTotal) {
-            $paginationTransfer->setPage($pagesTotal);
+            $paginationTransfer->setPage((int)$pagesTotal);
         }
 
         return $paginationTransfer;
@@ -248,6 +307,8 @@ class Reader implements ReaderInterface
     }
 
     /**
+     * @phpstan-return \ArrayObject<int, \Generated\Shared\Transfer\WishlistItemMetaTransfer>
+     *
      * @param int $idWishlist
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\WishlistItemMetaTransfer[]
@@ -261,27 +322,14 @@ class Reader implements ReaderInterface
         $wishlistItemMetaTransfers = new ArrayObject();
         foreach ($wishlistItemEntities as $wishlistItemEntity) {
             $productEntity = $wishlistItemEntity->getSpyProduct();
-            $wishlistItemMetaTransfer = $this->convertProductEntityToWishlistItemMetaTransfer($productEntity);
+            $wishlistItemMetaTransfer = new WishlistItemMetaTransfer();
+            $wishlistItemMetaTransfer->fromArray($wishlistItemEntity->toArray(), true);
+            $wishlistItemMetaTransfer = $this->transferMapper
+                ->mapProductEntityToWishlistItemMetaTransfer($productEntity, $wishlistItemMetaTransfer);
             $wishlistItemMetaTransfers->append($wishlistItemMetaTransfer);
         }
 
         return $wishlistItemMetaTransfers;
-    }
-
-    /**
-     * @param \Orm\Zed\Product\Persistence\SpyProduct $productEntity
-     *
-     * @return \Generated\Shared\Transfer\WishlistItemMetaTransfer
-     */
-    protected function convertProductEntityToWishlistItemMetaTransfer(SpyProduct $productEntity)
-    {
-        $wishlistItemMetaTransfer = new WishlistItemMetaTransfer();
-        $wishlistItemMetaTransfer
-            ->setIdProductAbstract($productEntity->getFkProductAbstract())
-            ->setIdProduct($productEntity->getIdProduct())
-            ->setSku($productEntity->getSku());
-
-        return $wishlistItemMetaTransfer;
     }
 
     /**
@@ -320,6 +368,8 @@ class Reader implements ReaderInterface
     }
 
     /**
+     * @phpstan-return array<int, string>
+     *
      * @param \Generated\Shared\Transfer\WishlistItemTransfer[] $itemCollection
      *
      * @return array
@@ -430,6 +480,14 @@ class Reader implements ReaderInterface
                 ->addError(static::ERROR_MESSAGE_WISHLIST_NOT_FOUND);
         }
 
+        $wishlistItemTransfers = [];
+
+        foreach ($wishlistTransfer->getWishlistItems() as $wishlistItemTransfer) {
+            $wishlistItemTransfers[] = $this->executeWishlistItemExpanderPlugins($wishlistItemTransfer);
+        }
+
+        $wishlistTransfer->setWishlistItems(new ArrayObject($wishlistItemTransfers));
+
         return (new WishlistResponseTransfer())
             ->setWishlist($wishlistTransfer)
             ->setIsSuccess(true);
@@ -480,5 +538,62 @@ class Reader implements ReaderInterface
     protected function getCollectionByCustomerReference(string $customerReference): WishlistCollectionTransfer
     {
         return $this->wishlistRepository->getByCustomerReference($customerReference);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistTransfer
+     */
+    protected function reloadWishlistItems(WishlistTransfer $wishlistTransfer): WishlistTransfer
+    {
+        foreach ($this->wishlistReloadItemsPlugins as $wishlistReloadItemsPlugin) {
+            if ($wishlistReloadItemsPlugin->isApplicable($wishlistTransfer)) {
+                $wishlistTransfer = $wishlistReloadItemsPlugin->reloadItems($wishlistTransfer);
+            }
+        }
+
+        return $wishlistTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
+     * @param \Generated\Shared\Transfer\WishlistOverviewResponseTransfer $wishlistOverviewResponseTransfer
+     *
+     * @return void
+     */
+    protected function validateWishlistItems(
+        WishlistTransfer $wishlistTransfer,
+        WishlistOverviewResponseTransfer $wishlistOverviewResponseTransfer
+    ): void {
+        foreach ($this->wishlistItemsValidatorPlugins as $wishlistItemsValidatorPlugin) {
+            if (!$wishlistItemsValidatorPlugin->isApplicable($wishlistTransfer)) {
+                continue;
+            }
+
+            $validationResponseTransfer = $wishlistItemsValidatorPlugin->validateItems($wishlistTransfer);
+
+            if ($validationResponseTransfer->getIsSuccess()) {
+                continue;
+            }
+
+            foreach ($validationResponseTransfer->getErrorMessages() as $messageTransfer) {
+                $wishlistOverviewResponseTransfer->addError($messageTransfer);
+            }
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemTransfer
+     */
+    protected function executeWishlistItemExpanderPlugins(WishlistItemTransfer $wishlistItemTransfer): WishlistItemTransfer
+    {
+        foreach ($this->wishlistItemExpanderPlugins as $wishlistItemExpanderPlugin) {
+            $wishlistItemTransfer = $wishlistItemExpanderPlugin->expand($wishlistItemTransfer);
+        }
+
+        return $wishlistItemTransfer;
     }
 }

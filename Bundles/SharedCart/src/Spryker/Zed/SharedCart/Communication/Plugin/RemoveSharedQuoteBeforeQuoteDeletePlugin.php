@@ -20,8 +20,6 @@ class RemoveSharedQuoteBeforeQuoteDeletePlugin extends AbstractPlugin implements
 {
     /**
      * {@inheritDoc}
-     * Specification:
-     * - Removes shared links before quote delete
      *
      * @api
      *

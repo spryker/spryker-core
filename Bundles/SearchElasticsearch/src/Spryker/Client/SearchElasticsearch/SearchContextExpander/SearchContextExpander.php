@@ -9,17 +9,17 @@ namespace Spryker\Client\SearchElasticsearch\SearchContextExpander;
 
 use Generated\Shared\Transfer\ElasticsearchSearchContextTransfer;
 use Generated\Shared\Transfer\SearchContextTransfer;
-use Spryker\Shared\SearchElasticsearch\Index\IndexNameResolverInterface;
+use Spryker\Client\SearchElasticsearch\Index\IndexNameResolver\IndexNameResolverInterface;
 
 class SearchContextExpander implements SearchContextExpanderInterface
 {
     /**
-     * @var \Spryker\Shared\SearchElasticsearch\Index\IndexNameResolverInterface
+     * @var \Spryker\Client\SearchElasticsearch\Index\IndexNameResolver\IndexNameResolverInterface
      */
     protected $indexNameResolver;
 
     /**
-     * @param \Spryker\Shared\SearchElasticsearch\Index\IndexNameResolverInterface $indexNameResolver
+     * @param \Spryker\Client\SearchElasticsearch\Index\IndexNameResolver\IndexNameResolverInterface $indexNameResolver
      */
     public function __construct(IndexNameResolverInterface $indexNameResolver)
     {

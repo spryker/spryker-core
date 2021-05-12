@@ -59,7 +59,7 @@ interface SessionConstants
     public const YVES_SSL_ENABLED = 'SESSION:YVES_SSL_ENABLED';
 
     /**
-     * @deprecated Use {@link \Spryker\Shared\SessionRedis\SessionRedisConstants::YVES_SESSION_REDIS_PROTOCOL} instead.
+     * @deprecated Use {@link \Spryker\Shared\SessionRedis\SessionRedisConstants::YVES_SESSION_REDIS_SCHEME} instead.
      */
     public const YVES_SESSION_REDIS_PROTOCOL = 'SESSION:YVES_SESSION_REDIS_PROTOCOL';
 
@@ -129,7 +129,7 @@ interface SessionConstants
     public const ZED_SESSION_TIME_TO_LIVE = 'SESSION:ZED_SESSION_TIME_TO_LIVE';
 
     /**
-     * @deprecated Use {@link \Spryker\Shared\SessionRedis\SessionRedisConstants::ZED_SESSION_REDIS_PROTOCOL} instead.
+     * @deprecated Use {@link \Spryker\Shared\SessionRedis\SessionRedisConstants::ZED_SESSION_REDIS_SCHEME} instead.
      */
     public const ZED_SESSION_REDIS_PROTOCOL = 'SESSION:ZED_SESSION_REDIS_PROTOCOL';
 

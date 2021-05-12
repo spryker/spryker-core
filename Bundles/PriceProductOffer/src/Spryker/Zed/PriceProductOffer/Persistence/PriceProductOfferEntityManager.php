@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\PriceProductOffer\Persistence;
 
+use Generated\Shared\Transfer\PriceProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Orm\Zed\PriceProductOffer\Persistence\SpyPriceProductOffer;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
@@ -45,10 +46,10 @@ class PriceProductOfferEntityManager extends AbstractEntityManager implements Pr
      */
     public function updatePriceProductOfferRelation(PriceProductTransfer $priceProductTransfer): PriceProductTransfer
     {
-        $idPriceProductOffer = $priceProductTransfer->requirePriceDimension()
-            ->getPriceDimension()
-            ->requireIdProductOffer()
-            ->getIdPriceProductOffer();
+        /** @var \Generated\Shared\Transfer\PriceProductDimensionTransfer $priceDimensionTransfer */
+        $priceDimensionTransfer = $priceProductTransfer->requirePriceDimension()->getPriceDimension();
+        /** @var int $idPriceProductOffer */
+        $idPriceProductOffer = $priceDimensionTransfer->requireIdPriceProductOffer()->getIdPriceProductOffer();
 
         $priceProductOfferEntity = $this->getFactory()
             ->getPriceProductOfferPropelQuery()
@@ -71,5 +72,19 @@ class PriceProductOfferEntityManager extends AbstractEntityManager implements Pr
             $priceProductOfferEntity,
             $priceProductTransfer
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer
+     *
+     * @return void
+     */
+    public function delete(PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer): void
+    {
+        $this->getFactory()
+            ->getPriceProductOfferPropelQuery()
+            ->filterByIdPriceProductOffer_In($priceProductOfferCriteriaTransfer->getPriceProductOfferIds())
+            ->find()
+            ->delete();
     }
 }

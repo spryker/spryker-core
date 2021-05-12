@@ -10,6 +10,9 @@ namespace Spryker\Zed\GiftCardBalance\Persistence;
 interface GiftCardBalanceQueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\GiftCardBalance\Persistence\SpyGiftCardBalanceLogQuery
@@ -17,6 +20,9 @@ interface GiftCardBalanceQueryContainerInterface
     public function queryGiftCardBalanceLog();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $giftCardCode

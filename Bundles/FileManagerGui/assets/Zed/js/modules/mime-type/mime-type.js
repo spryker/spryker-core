@@ -12,13 +12,9 @@ var mimeType = {
     updateStorage: function (idMimeType, isAllowed) {
         let index = this.getStorageElementIndexByIdMimeType(idMimeType);
 
-        index === -1 ?
-            this.storage.push({idMimeType, isAllowed}) :
-            this.storage[index].isAllowed = isAllowed;
+        index === -1 ? this.storage.push({ idMimeType, isAllowed }) : (this.storage[index].isAllowed = isAllowed);
 
-        this.$storageInput.val(
-            JSON.stringify(this.storage)
-        );
+        this.$storageInput.val(JSON.stringify(this.storage));
     },
 
     getStorageElementIndexByIdMimeType: function (idMimeType) {
@@ -26,9 +22,7 @@ var mimeType = {
             return object.idMimeType === idMimeType;
         });
 
-        return filtered.length === 1 ?
-            this.storage.indexOf(filtered[0]) :
-            -1;
+        return filtered.length === 1 ? this.storage.indexOf(filtered[0]) : -1;
     },
 
     syncWithStorage: function ($tableBody) {
@@ -54,9 +48,6 @@ $(document).ready(function () {
     });
 
     $dataTableBody.on('change', 'input.mime_type_is_allowed', function () {
-        mimeType.updateStorage(
-            $(this).attr('data-id'),
-            $(this).is(':checked')
-        );
+        mimeType.updateStorage($(this).attr('data-id'), $(this).is(':checked'));
     });
 });

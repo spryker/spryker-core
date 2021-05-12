@@ -36,14 +36,19 @@ abstract class AbstractLocatorLocator implements LocatorLocatorInterface
         return self::$instance;
     }
 
-    final private function __construct()
+    /**
+     * Should be private, because this class uses `Singleton` pattern.
+     */
+    private function __construct()
     {
     }
 
     /**
+     * Should be private, because this class uses `Singleton` pattern.
+     *
      * @return void
      */
-    final private function __clone()
+    private function __clone()
     {
     }
 

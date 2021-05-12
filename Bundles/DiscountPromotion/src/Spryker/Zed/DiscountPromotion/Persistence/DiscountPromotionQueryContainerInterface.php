@@ -14,6 +14,9 @@ namespace Spryker\Zed\DiscountPromotion\Persistence;
 interface DiscountPromotionQueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idDiscount
@@ -23,6 +26,9 @@ interface DiscountPromotionQueryContainerInterface
     public function queryDiscountPromotionByIdDiscount($idDiscount);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idDiscountPromotion

@@ -28,10 +28,10 @@ function initialize() {
         $(destinationTabLabelSelector).text(),
         destinationTabLabelSelector,
         'js-abstract-products-to-de-assign-ids-csv-field',
-        onRemove
+        onRemove,
     );
 
-    tableHandler.getInitialCheckboxCheckedState = function() {
+    tableHandler.getInitialCheckboxCheckedState = function () {
         return RelatedProductTable.CHECKBOX_CHECKED_STATE_CHECKED;
     };
 
@@ -57,5 +57,5 @@ function onRemove() {
 }
 
 module.exports = {
-    initialize: initialize
+    initialize: initialize,
 };

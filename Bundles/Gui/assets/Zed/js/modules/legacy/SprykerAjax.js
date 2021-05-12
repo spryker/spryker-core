@@ -1,13 +1,13 @@
 /**
- * Copyright (c) 2016-present Spryker Systems GmbH. All rights reserved. 
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file. 
+ * Copyright (c) 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 'use strict';
 
 var SprykerAjaxCallbacks = require('./SprykerAjaxCallbacks');
 
-module.exports = new function() {
+module.exports = new (function () {
     var self = this;
 
     /** if ajax url is null, the action will be in the same page */
@@ -19,7 +19,7 @@ module.exports = new function() {
      * @param newUrl
      * @returns {SprykerAjax}
      */
-    self.setUrl = function(newUrl){
+    self.setUrl = function (newUrl) {
         self.url = newUrl;
         return self;
     };
@@ -28,20 +28,19 @@ module.exports = new function() {
      * @param newDataType
      * @returns {SprykerAjax}
      */
-    self.setDataType = function(newDataType){
+    self.setDataType = function (newDataType) {
         self.dataType = newDataType;
         return self;
     };
 
-    self.ajaxSubmit = function(options, callbackFunction, parameters, isGet) {
-        var callType = (!!isGet) ? 'get' : 'post';
+    self.ajaxSubmit = function (options, callbackFunction, parameters, isGet) {
+        var callType = !!isGet ? 'get' : 'post';
         return $.ajax({
             url: this.url,
             type: callType,
             dataType: this.dataType,
-            data: options
-        })
-        .done(function(response){
+            data: options,
+        }).done(function (response) {
             if (typeof callbackFunction === 'function') {
                 return callbackFunction(response, parameters);
             } else if (typeof callbackFunction === 'string') {
@@ -53,10 +52,10 @@ module.exports = new function() {
     };
 
     /* change active  */
-    self.changeActiveStatus = function(elementId) {
+    self.changeActiveStatus = function (elementId) {
         var options = {
-            id: elementId
+            id: elementId,
         };
         self.ajaxSubmit(options, 'changeStatusMarkInGrid');
     };
-};
+})();

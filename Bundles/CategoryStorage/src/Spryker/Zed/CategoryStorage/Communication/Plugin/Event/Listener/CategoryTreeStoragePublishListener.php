@@ -35,6 +35,6 @@ class CategoryTreeStoragePublishListener extends AbstractPlugin implements Event
     {
         $this->preventTransaction();
 
-        $this->getFacade()->publishCategoryTree();
+        $this->getFacade()->writeCategoryTreeStorageCollection();
     }
 }

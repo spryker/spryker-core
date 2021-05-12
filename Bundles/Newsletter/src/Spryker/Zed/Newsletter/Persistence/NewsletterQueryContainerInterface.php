@@ -12,6 +12,9 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 interface NewsletterQueryContainerInterface extends QueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $email
@@ -22,6 +25,9 @@ interface NewsletterQueryContainerInterface extends QueryContainerInterface
     public function querySubscriptionByEmailAndNewsletterTypeName($email, $newsletterTypeName);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $subscriberKey
@@ -32,6 +38,9 @@ interface NewsletterQueryContainerInterface extends QueryContainerInterface
     public function querySubscriptionBySubscriberKeyAndNewsletterTypeName($subscriberKey, $newsletterTypeName);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idCustomer
@@ -42,6 +51,9 @@ interface NewsletterQueryContainerInterface extends QueryContainerInterface
     public function querySubscriptionByIdCustomerAndNewsletterTypeName($idCustomer, $newsletterTypeName);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idCustomer
@@ -51,6 +63,9 @@ interface NewsletterQueryContainerInterface extends QueryContainerInterface
     public function querySubscriberByIdCustomer($idCustomer);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $email
@@ -60,6 +75,9 @@ interface NewsletterQueryContainerInterface extends QueryContainerInterface
     public function querySubscriberByEmail($email);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\Newsletter\Persistence\SpyNewsletterSubscriberQuery
@@ -67,6 +85,9 @@ interface NewsletterQueryContainerInterface extends QueryContainerInterface
     public function querySubscriber();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\Newsletter\Persistence\SpyNewsletterSubscriptionQuery
@@ -74,6 +95,9 @@ interface NewsletterQueryContainerInterface extends QueryContainerInterface
     public function querySubscription();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\Newsletter\Persistence\SpyNewsletterTypeQuery

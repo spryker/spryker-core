@@ -23,6 +23,8 @@ class ProductOfferMerchantPortalGuiToTranslatorFacadeBridge implements ProductOf
     }
 
     /**
+     * @phpstan-param array<mixed> $parameters
+     *
      * @param string $id
      * @param array $parameters
      * @param string|null $domain
@@ -30,7 +32,7 @@ class ProductOfferMerchantPortalGuiToTranslatorFacadeBridge implements ProductOf
      *
      * @return string
      */
-    public function trans($id, array $parameters = [], $domain = null, $locale = null): string
+    public function trans(string $id, array $parameters = [], ?string $domain = null, ?string $locale = null): string
     {
         return $this->translatorFacade->trans($id, $parameters, $domain, $locale);
     }

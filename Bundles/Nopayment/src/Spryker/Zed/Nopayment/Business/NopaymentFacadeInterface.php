@@ -14,6 +14,9 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 interface NopaymentFacadeInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
@@ -23,6 +26,9 @@ interface NopaymentFacadeInterface
     public function setAsPaid(array $orderItems);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem

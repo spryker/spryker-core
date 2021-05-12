@@ -100,6 +100,9 @@ interface SynchronizationFacadeInterface
     public function processStorageMessages(array $queueMessageTransfers): array;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @deprecated Use {@link executeResolvedPluginsBySourcesWithIds()} instead.
@@ -111,6 +114,9 @@ interface SynchronizationFacadeInterface
     public function executeResolvedPluginsBySources(array $resources);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string[] $resources

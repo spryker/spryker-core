@@ -24,4 +24,11 @@ interface PriceProductOfferRepositoryInterface
      * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
      */
     public function getProductOfferPrices(PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer): ArrayObject;
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer
+     *
+     * @return int
+     */
+    public function count(PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer): int;
 }

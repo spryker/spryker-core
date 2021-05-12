@@ -12,6 +12,9 @@ use Generated\Shared\Transfer\ApiDataTransfer;
 interface ApiValidatorPluginInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return string
@@ -19,6 +22,9 @@ interface ApiValidatorPluginInterface
     public function getResourceName();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer

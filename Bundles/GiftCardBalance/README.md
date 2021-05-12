@@ -1,5 +1,5 @@
 # GiftCardBalance Module
-[![Build Status](https://travis-ci.org/spryker/gift-card-balance.svg)](https://travis-ci.org/spryker/gift-card-balance)
+[![Latest Stable Version](https://poser.pugx.org/spryker/gift-card-balance/v/stable.svg)](https://packagist.org/packages/spryker/gift-card-balance)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 ## Installation

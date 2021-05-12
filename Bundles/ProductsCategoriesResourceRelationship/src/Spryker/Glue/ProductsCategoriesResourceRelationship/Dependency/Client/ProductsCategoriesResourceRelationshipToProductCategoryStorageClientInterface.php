@@ -7,21 +7,29 @@
 
 namespace Spryker\Glue\ProductsCategoriesResourceRelationship\Dependency\Client;
 
+use Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer;
+
 interface ProductsCategoriesResourceRelationshipToProductCategoryStorageClientInterface
 {
     /**
      * @param int $idProductAbstract
-     * @param string $locale
+     * @param string $localeName
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer|null
      */
-    public function findProductAbstractCategory($idProductAbstract, $locale);
+    public function findProductAbstractCategory(
+        int $idProductAbstract,
+        string $localeName,
+        string $storeName
+    ): ?ProductAbstractCategoryStorageTransfer;
 
     /**
      * @param int[] $productAbstractIds
      * @param string $localeName
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer[]
      */
-    public function findBulkProductAbstractCategory(array $productAbstractIds, string $localeName): array;
+    public function findBulkProductAbstractCategory(array $productAbstractIds, string $localeName, string $storeName): array;
 }

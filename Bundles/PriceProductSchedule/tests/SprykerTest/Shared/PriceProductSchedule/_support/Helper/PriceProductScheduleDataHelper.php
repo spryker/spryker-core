@@ -67,7 +67,9 @@ class PriceProductScheduleDataHelper extends Module
         $spyPriceProductScheduleListEntity->fromArray($priceProductScheduleListTransfer->modifiedToArray());
         $spyPriceProductScheduleListEntity->save();
 
-        $priceProductScheduleListTransfer->setIdPriceProductScheduleList($spyPriceProductScheduleListEntity->getIdPriceProductScheduleList());
+        $priceProductScheduleListTransfer->setIdPriceProductScheduleList(
+            (int)$spyPriceProductScheduleListEntity->getIdPriceProductScheduleList()
+        );
 
         return $priceProductScheduleListTransfer;
     }

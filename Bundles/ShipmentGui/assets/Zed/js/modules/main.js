@@ -5,21 +5,23 @@
 
 'use strict';
 
-module.exports = function(trigger, target, inputDate) {
-    $(inputDate).datepicker({
-        dateFormat: 'yy-mm-dd',
-        changeMonth: true,
-        numberOfMonths: 3,
-        minDate: 0,
-        defaultData: 0
-    }).keyup(function(event) {
-        var backspaceButton = 8;
-        var deleteButton = 46;
-        
-        if(event.keyCode === backspaceButton || event.keyCode === deleteButton) {
-            $.datepicker._clearDate(this);
-        }
-    });
+module.exports = function (trigger, target, inputDate) {
+    $(inputDate)
+        .datepicker({
+            dateFormat: 'yy-mm-dd',
+            changeMonth: true,
+            numberOfMonths: 3,
+            minDate: 0,
+            defaultData: 0,
+        })
+        .keyup(function (event) {
+            var backspaceButton = 8;
+            var deleteButton = 46;
+
+            if (event.keyCode === backspaceButton || event.keyCode === deleteButton) {
+                $.datepicker._clearDate(this);
+            }
+        });
 
     function toggleForm() {
         var selectedOptionValue = $(trigger).val();
@@ -37,7 +39,7 @@ module.exports = function(trigger, target, inputDate) {
         var selectedOptionValue = $(trigger).val();
         var $requiredFields = $(target).find('select[required], input[required]');
 
-        $requiredFields.each(function() {
+        $requiredFields.each(function () {
             $(this).attr('disabled', !!selectedOptionValue);
         });
     }

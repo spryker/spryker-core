@@ -10,6 +10,9 @@ namespace Spryker\Glue\GlueApplicationExtension\Dependency\Plugin;
 interface ResourceRouteCollectionInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $actionName
@@ -21,6 +24,9 @@ interface ResourceRouteCollectionInterface
     public function addGet(string $actionName, bool $isProtected = true, array $context = []);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $actionName
@@ -32,6 +38,9 @@ interface ResourceRouteCollectionInterface
     public function addPost(string $actionName, bool $isProtected = true, array $context = []);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $actionName
@@ -43,6 +52,9 @@ interface ResourceRouteCollectionInterface
     public function addDelete(string $actionName, bool $isProtected = true, array $context = []);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $actionName
@@ -54,6 +66,9 @@ interface ResourceRouteCollectionInterface
     public function addPatch(string $actionName, bool $isProtected = true, array $context = []);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $method
@@ -63,6 +78,9 @@ interface ResourceRouteCollectionInterface
     public function has(string $method): bool;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $method
@@ -72,6 +90,9 @@ interface ResourceRouteCollectionInterface
     public function get(string $method): array;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return array

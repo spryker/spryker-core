@@ -21,7 +21,7 @@ class RemoveInactiveItemsPreReloadPlugin extends AbstractPlugin implements PreRe
     /**
      * {@inheritDoc}
      * Specification:
-     *   - This plugin is execute before reloading cart items, with this plugin you can modify quote before reloading it.
+     * - This plugin is execute before reloading cart items, with this plugin you can modify quote before reloading it.
      *
      * @api
      *

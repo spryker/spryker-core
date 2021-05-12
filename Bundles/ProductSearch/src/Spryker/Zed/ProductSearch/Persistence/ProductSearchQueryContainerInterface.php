@@ -13,6 +13,9 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 interface ProductSearchQueryContainerInterface extends QueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $productIds
@@ -23,6 +26,9 @@ interface ProductSearchQueryContainerInterface extends QueryContainerInterface
     public function queryExportableProductsByLocale(array $productIds, LocaleTransfer $locale);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProduct
@@ -33,6 +39,9 @@ interface ProductSearchQueryContainerInterface extends QueryContainerInterface
     public function queryByProductAndLocale($idProduct, $idLocale);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeMapQuery
@@ -40,6 +49,9 @@ interface ProductSearchQueryContainerInterface extends QueryContainerInterface
     public function queryProductSearchAttributeMap();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $fkProductAttributeKey
@@ -49,6 +61,9 @@ interface ProductSearchQueryContainerInterface extends QueryContainerInterface
     public function queryProductSearchAttributeMapByFkProductAttributeKey($fkProductAttributeKey);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
@@ -56,6 +71,9 @@ interface ProductSearchQueryContainerInterface extends QueryContainerInterface
     public function querySearchPreferencesTable();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeQuery
@@ -63,6 +81,9 @@ interface ProductSearchQueryContainerInterface extends QueryContainerInterface
     public function queryFilterPreferencesTable();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
@@ -70,6 +91,9 @@ interface ProductSearchQueryContainerInterface extends QueryContainerInterface
     public function queryProductAttributeKey();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeQuery
@@ -77,6 +101,9 @@ interface ProductSearchQueryContainerInterface extends QueryContainerInterface
     public function queryProductSearchAttribute();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
@@ -84,6 +111,9 @@ interface ProductSearchQueryContainerInterface extends QueryContainerInterface
     public function queryUnusedProductAttributeKeys();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
@@ -91,6 +121,9 @@ interface ProductSearchQueryContainerInterface extends QueryContainerInterface
     public function queryAllProductAttributeKeys();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param bool $synced
@@ -100,6 +133,9 @@ interface ProductSearchQueryContainerInterface extends QueryContainerInterface
     public function queryProductSearchAttributeBySynced($synced);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeArchiveQuery
@@ -107,6 +143,9 @@ interface ProductSearchQueryContainerInterface extends QueryContainerInterface
     public function queryProductSearchAttributeArchive();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param bool $synced
@@ -116,6 +155,9 @@ interface ProductSearchQueryContainerInterface extends QueryContainerInterface
     public function queryProductSearchAttributeMapBySynced($synced);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeMapArchiveQuery
@@ -123,6 +165,9 @@ interface ProductSearchQueryContainerInterface extends QueryContainerInterface
     public function queryProductSearchAttributeMapArchive();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $attributeNames
@@ -132,6 +177,9 @@ interface ProductSearchQueryContainerInterface extends QueryContainerInterface
     public function queryProductAbstractByAttributeName(array $attributeNames);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchQuery

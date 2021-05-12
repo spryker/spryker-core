@@ -10,6 +10,9 @@ namespace Spryker\Zed\ProductGroup\Persistence;
 interface ProductGroupQueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProductGroup
@@ -19,6 +22,9 @@ interface ProductGroupQueryContainerInterface
     public function queryProductGroupById($idProductGroup);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\ProductGroup\Persistence\SpyProductAbstractGroupQuery
@@ -26,6 +32,9 @@ interface ProductGroupQueryContainerInterface
     public function queryAllProductAbstractGroups();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\ProductGroup\Persistence\SpyProductGroupQuery
@@ -33,6 +42,9 @@ interface ProductGroupQueryContainerInterface
     public function queryAllProductGroups();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProductGroup
@@ -42,6 +54,9 @@ interface ProductGroupQueryContainerInterface
     public function queryProductAbstractGroupsById($idProductGroup);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProductAbstract

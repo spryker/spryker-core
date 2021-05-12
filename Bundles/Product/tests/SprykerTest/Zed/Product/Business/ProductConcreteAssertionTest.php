@@ -109,12 +109,12 @@ class ProductConcreteAssertionTest extends Unit
             ->disableOriginalConstructor()->getMock();
 
         $query
-            ->expects($this->at(1))
+            ->expects($this->once())
             ->method('count')
             ->willReturn(0);
 
         $query
-            ->expects($this->at(0))
+            ->expects($this->once())
             ->method('filterByIdProduct')
             ->with(self::ID_PRODUCT_CONCRETE, Criteria::NOT_EQUAL)
             ->willReturn($query);
@@ -145,12 +145,12 @@ class ProductConcreteAssertionTest extends Unit
             ->disableOriginalConstructor()->getMock();
 
         $query
-            ->expects($this->at(1))
+            ->expects($this->once())
             ->method('count')
             ->willReturn(1);
 
         $query
-            ->expects($this->at(0))
+            ->expects($this->once())
             ->method('filterByIdProduct')
             ->with(self::ID_PRODUCT_CONCRETE, Criteria::NOT_EQUAL)
             ->willReturn($query);
@@ -175,12 +175,12 @@ class ProductConcreteAssertionTest extends Unit
             ->disableOriginalConstructor()->getMock();
 
         $query
-            ->expects($this->at(1))
+            ->expects($this->once())
             ->method('count')
             ->willReturn(1);
 
         $query
-            ->expects($this->at(0))
+            ->expects($this->once())
             ->method('filterByIdProduct')
             ->with(self::ID_PRODUCT_CONCRETE)
             ->willReturn($query);
@@ -210,12 +210,12 @@ class ProductConcreteAssertionTest extends Unit
             ->disableOriginalConstructor()->getMock();
 
         $query
-            ->expects($this->at(1))
+            ->expects($this->once())
             ->method('count')
             ->willReturn(0);
 
         $query
-            ->expects($this->at(0))
+            ->expects($this->once())
             ->method('filterByIdProduct')
             ->with(self::ID_PRODUCT_CONCRETE)
             ->willReturn($query);

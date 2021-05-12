@@ -12,6 +12,9 @@ use Spryker\Zed\Event\Dependency\EventCollectionInterface;
 interface EventSubscriberInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection

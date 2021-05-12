@@ -6,52 +6,52 @@ import { MerchantLayoutMainComponent } from './merchant-layout-main.component';
 import { LayoutMainComponent } from '../layout-main/layout-main.component';
 
 describe('MerchantLayoutMainComponent', () => {
-  let component: TestComponent;
-  let fixture: ComponentFixture<TestComponent>;
+    let component: TestComponent;
+    let fixture: ComponentFixture<TestComponent>;
 
-  @Component({
-    selector: 'test-component',
-    template: `
-      <mp-merchant-layout-main [navigationConfig]="navigationConfig">
-        <div name="header">Header Slot</div>
-        Main Slot
-      </mp-merchant-layout-main>
-    `,
-  })
-  class TestComponent {
-    navigationConfig: any;
-  }
-
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [TestComponent, MerchantLayoutMainComponent],
-      schemas: [NO_ERRORS_SCHEMA],
+    @Component({
+        selector: 'test-component',
+        template: `
+            <mp-merchant-layout-main [navigationConfig]="navigationConfig">
+                <div name="header">Header Slot</div>
+                Main Slot
+            </mp-merchant-layout-main>
+        `,
     })
-    .compileComponents();
-  }));
+    class TestComponent {
+        navigationConfig: any;
+    }
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(TestComponent);
-    component = fixture.componentInstance;
-  });
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            declarations: [TestComponent, MerchantLayoutMainComponent],
+            schemas: [NO_ERRORS_SCHEMA],
+        }).compileComponents();
+    }));
 
-  it('should create component', () => {
-    expect(component).toBeTruthy();
-  });
+    beforeEach(() => {
+        fixture = TestBed.createComponent(TestComponent);
+        component = fixture.componentInstance;
+    });
 
-  it('should render <mp-layout-main>', () => {
-    const centeredLayoutElem = fixture.debugElement.query(By.css('mp-layout-main'));
+    it('should create component', () => {
+        expect(component).toBeTruthy();
+    });
 
-    expect(centeredLayoutElem).toBeTruthy();
-  });
+    it('should render <mp-layout-main>', () => {
+        const centeredLayoutElem = fixture.debugElement.query(By.css('mp-layout-main'));
 
-  it('should bound navigationConfig to `mp-layout-main`', () => {
-    const demoData = '[{"title":"Dashboard","url":"\\/dashboard","icon":"fa fa-area-chart","isActive":false,"subItems":[]}]';
-    const layoutMain = fixture.debugElement.query(By.css('mp-layout-main'));
+        expect(centeredLayoutElem).toBeTruthy();
+    });
 
-    component.navigationConfig = demoData;
-    fixture.detectChanges();
+    it('should bound navigationConfig to `mp-layout-main`', () => {
+        const demoData =
+            '[{"title":"Dashboard","url":"\\/dashboard","icon":"fa fa-area-chart","isActive":false,"subItems":[]}]';
+        const layoutMain = fixture.debugElement.query(By.css('mp-layout-main'));
 
-    expect(layoutMain.properties.navigationConfig).toBe(demoData);
-  });
+        component.navigationConfig = demoData;
+        fixture.detectChanges();
+
+        expect(layoutMain.properties.navigationConfig).toBe(demoData);
+    });
 });

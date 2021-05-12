@@ -14,6 +14,9 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 interface AvailabilityStorageQueryContainerInterface extends QueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $abstractProductIds
@@ -23,6 +26,9 @@ interface AvailabilityStorageQueryContainerInterface extends QueryContainerInter
     public function queryAvailabilityStorageByProductAbstractIds(array $abstractProductIds);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $availabilityAbstractIds
@@ -35,6 +41,9 @@ interface AvailabilityStorageQueryContainerInterface extends QueryContainerInter
      * Specification:
      * - Returns a a query for the table `spy_availability_abstract` filtered by availability abstract ids.
      *
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $availabilityAbstractIds
@@ -44,6 +53,9 @@ interface AvailabilityStorageQueryContainerInterface extends QueryContainerInter
     public function queryAvailabilityByAvailabilityAbstractIds(array $availabilityAbstractIds): SpyAvailabilityAbstractQuery;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $availabilityAbstractIds
@@ -53,6 +65,9 @@ interface AvailabilityStorageQueryContainerInterface extends QueryContainerInter
     public function queryAvailabilityAbstractWithRelationsByIds(array $availabilityAbstractIds);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $abstractProductSkus
@@ -62,6 +77,9 @@ interface AvailabilityStorageQueryContainerInterface extends QueryContainerInter
     public function queryAvailabilityAbstractByAbstractProductSkus(array $abstractProductSkus);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $abstractProductIds
@@ -71,6 +89,9 @@ interface AvailabilityStorageQueryContainerInterface extends QueryContainerInter
     public function queryProductAbstractWithProductByAbstractProductIds(array $abstractProductIds);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int[] $abstractProductIds

@@ -5,10 +5,10 @@
 
 'use strict';
 
-$(document).ready(function() {
+$(document).ready(function () {
     var productReviewTable = $('#product-review-table').DataTable();
 
-    $('#product-review-table tbody').on('click', 'tr', function(e) {
+    $('#product-review-table tbody').on('click', 'tr', function (e) {
         var arrow = $(e.target);
         if (!arrow.is('i.fa-chevron-down') && !arrow.is('i.fa-chevron-up')) {
             return;
@@ -27,5 +27,4 @@ $(document).ready(function() {
 
         arrow.toggleClass('fa-chevron-up').toggleClass('fa-chevron-down');
     });
-
 });

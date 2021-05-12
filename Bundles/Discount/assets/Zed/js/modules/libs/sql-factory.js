@@ -12,7 +12,7 @@ module.exports = function (inputElementId, targetElementId, disableValidation) {
         ajaxUrl: inputElement.data('url'),
         label: inputElement.data('label'),
         targetElement: targetElementId,
-        disableValidation: disableValidation || false
+        disableValidation: disableValidation || false,
     };
 
     return new SprykerQueryBuilder(options);

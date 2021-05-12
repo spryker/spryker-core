@@ -10,19 +10,19 @@ function ReasonMessageToggler(options) {
 
     this.$select = $(this.selectSelector);
 
-    this.init = function() {
+    this.init = function () {
         this.mapEvents();
     };
 
-    this.mapEvents = function() {
+    this.mapEvents = function () {
         var self = this;
 
-        this.$select.on('change', function() {
+        this.$select.on('change', function () {
             self.toggleMessageBlock($(this));
         });
     };
 
-    this.toggleMessageBlock = function($select) {
+    this.toggleMessageBlock = function ($select) {
         var targetClassName = $select.data('target');
         var $target = $('.' + targetClassName);
         var isToggleValueSelected = this.toggleValue === $select.val();

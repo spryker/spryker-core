@@ -13,6 +13,9 @@ namespace Spryker\Zed\ProductReview\Persistence;
 interface ProductReviewQueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProductReview
@@ -22,6 +25,9 @@ interface ProductReviewQueryContainerInterface
     public function queryProductReviewById($idProductReview);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\ProductReview\Persistence\SpyProductReviewQuery

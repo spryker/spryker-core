@@ -11,6 +11,8 @@ use Spryker\Service\ProductConfiguration\ProductConfigurationServiceInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductConfiguration\Business\Checker\ProductConfigurationChecker;
 use Spryker\Zed\ProductConfiguration\Business\Checker\ProductConfigurationCheckerInterface;
+use Spryker\Zed\ProductConfiguration\Business\Counter\Comparator\ItemComparator;
+use Spryker\Zed\ProductConfiguration\Business\Counter\Comparator\ItemComparatorInterface;
 use Spryker\Zed\ProductConfiguration\Business\Counter\ProductConfigurationCartItemQuantityCounter;
 use Spryker\Zed\ProductConfiguration\Business\Counter\ProductConfigurationCartItemQuantityCounterInterface;
 use Spryker\Zed\ProductConfiguration\Business\Counter\ProductConfigurationItemQuantityCounter;
@@ -56,7 +58,9 @@ class ProductConfigurationBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductConfigurationCartItemQuantityCounter(): ProductConfigurationCartItemQuantityCounterInterface
     {
-        return new ProductConfigurationCartItemQuantityCounter($this->getProductConfigurationService());
+        return new ProductConfigurationCartItemQuantityCounter(
+            $this->createItemComparator(),
+        );
     }
 
     /**
@@ -64,7 +68,9 @@ class ProductConfigurationBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductConfigurationItemQuantityCounter(): ProductConfigurationItemQuantityCounterInterface
     {
-        return new ProductConfigurationItemQuantityCounter($this->getProductConfigurationService());
+        return new ProductConfigurationItemQuantityCounter(
+            $this->createItemComparator(),
+        );
     }
 
     /**
@@ -73,5 +79,16 @@ class ProductConfigurationBusinessFactory extends AbstractBusinessFactory
     public function getProductConfigurationService(): ProductConfigurationServiceInterface
     {
         return $this->getProvidedDependency(ProductConfigurationDependencyProvider::SERVICE_PRODUCT_CONFIGURATION);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductConfiguration\Business\Counter\Comparator\ItemComparatorInterface
+     */
+    public function createItemComparator(): ItemComparatorInterface
+    {
+        return new ItemComparator(
+            $this->getProductConfigurationService(),
+            $this->getConfig()
+        );
     }
 }

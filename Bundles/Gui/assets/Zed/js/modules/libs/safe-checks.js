@@ -1,20 +1,18 @@
 'use strict';
 
 var safeSubmitSelector = '.safe-submit';
-var safeDatetimeSelector = '.safe-datetime[type=date], .safe-datetime[type=datetime], .safe-datetime[type=datetime-local]';
+var safeDatetimeSelector =
+    '.safe-datetime[type=date], .safe-datetime[type=datetime], .safe-datetime[type=datetime-local]';
 
 /* Prevent .save-submit items to be pressed twice */
-function addSafeSubmitCheck() { 
+function addSafeSubmitCheck() {
     $('body').on('click', safeSubmitSelector, function () {
         var $item = $(this);
         var $forms = $item.parents('form');
         var isValid = true;
 
         function disableTrigger() {
-            $item
-                .prop('disabled', true)
-                .addClass('disabled')
-                .off('click');
+            $item.prop('disabled', true).addClass('disabled').off('click');
         }
 
         if ($forms.length > 0) {
@@ -30,7 +28,7 @@ function addSafeSubmitCheck() {
 }
 
 /* Prevent .save-datetime inputs to show native datepickers */
-function addSafeDatetimeCheck() { 
+function addSafeDatetimeCheck() {
     $('body').on('click', safeDatetimeSelector, function (e) {
         function disableNativeWindow() {
             e.preventDefault();
@@ -44,5 +42,5 @@ function addSafeDatetimeCheck() {
 
 module.exports = {
     addSafeSubmitCheck: addSafeSubmitCheck,
-    addSafeDatetimeCheck: addSafeDatetimeCheck
-}
+    addSafeDatetimeCheck: addSafeDatetimeCheck,
+};

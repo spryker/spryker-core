@@ -8,5 +8,4 @@ import { HeaderComponent } from './header.component';
     declarations: [HeaderComponent],
     exports: [HeaderComponent],
 })
-export class HeaderModule {
-}
+export class HeaderModule {}

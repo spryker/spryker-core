@@ -13,7 +13,7 @@ describe('DashboardStatsComponent', () => {
             <mp-dashboard [title]="title">
                 <div class="default-content"></div>
             </mp-dashboard>
-    `,
+        `,
     })
     class TestComponent {
         title?: string;

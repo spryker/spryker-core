@@ -27,7 +27,7 @@ function initialize(listSelector, buttonSelector) {
  */
 function initializeDragAndDrop() {
     $list.nestable({
-        maxDepth: 1
+        maxDepth: 1,
     });
 }
 
@@ -35,14 +35,14 @@ function initializeDragAndDrop() {
  * @return {void}
  */
 function initializeSaveButton() {
-    $button.on('click', function() {
+    $button.on('click', function () {
         sendListData();
         disableSaveButton(true);
     });
 
     disableSaveButton();
 
-    $list.on('change', function() {
+    $list.on('change', function () {
         enableSaveButton();
     });
 }
@@ -90,24 +90,21 @@ function hideButtonLoader() {
 function sendListData() {
     var listData = readCurrentListOrder();
 
-    var promise = $.post(
-        '/product-label-gui/re-sort/save',
-        {
-            'sort-order-data': listData
-        }
-    );
+    var promise = $.post('/product-label-gui/re-sort/save', {
+        'sort-order-data': listData,
+    });
 
-    promise.done(function(response) {
+    promise.done(function (response) {
         window.sweetAlert({
-            title: response.success ? "Success" : "Error",
+            title: response.success ? 'Success' : 'Error',
             text: response.message,
-            type: response.success ? "success" : "error"
+            type: response.success ? 'success' : 'error',
         });
     });
 
-    promise.always(function() {
+    promise.always(function () {
         disableSaveButton();
-    })
+    });
 }
 
 /**
@@ -117,10 +114,10 @@ function readCurrentListOrder() {
     var listData = $list.nestable('serialize');
     var productLabelPositions = {};
 
-    $.each(listData, function(index, item) {
+    $.each(listData, function (index, item) {
         productLabelPositions[item.idProductLabel] = {
-            'idProductLabel': item.idProductLabel,
-            'position': (index + 1)
+            idProductLabel: item.idProductLabel,
+            position: index + 1,
         };
     });
 
@@ -128,5 +125,5 @@ function readCurrentListOrder() {
 }
 
 module.exports = {
-    initialize: initialize
+    initialize: initialize,
 };

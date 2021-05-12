@@ -46,9 +46,11 @@ class MerchantOrderTotalsCreator implements MerchantOrderTotalsCreatorInterface
         MerchantOrderTransfer $merchantOrderTransfer
     ): TotalsTransfer {
         $totalsTransfer = $this->calculateTotals($merchantOrderTransfer);
+        /** @var int $idMerchantOrder */
+        $idMerchantOrder = $merchantOrderTransfer->getIdMerchantOrder();
 
         return $this->merchantSalesOrderEntityManager
-            ->createMerchantOrderTotals($merchantOrderTransfer->getIdMerchantOrder(), $totalsTransfer);
+            ->createMerchantOrderTotals($idMerchantOrder, $totalsTransfer);
     }
 
     /**
@@ -59,11 +61,14 @@ class MerchantOrderTotalsCreator implements MerchantOrderTotalsCreatorInterface
     protected function calculateTotals(
         MerchantOrderTransfer $merchantOrderTransfer
     ): TotalsTransfer {
+        /** @var \Generated\Shared\Transfer\OrderTransfer $orderTransfer */
+        $orderTransfer = $merchantOrderTransfer->getOrder();
+
         $calculationOrderTransfer = (new OrderTransfer())
             ->setPriceMode($merchantOrderTransfer->getPriceMode())
             ->setExpenses($merchantOrderTransfer->getExpenses())
-            ->setStore($merchantOrderTransfer->getOrder()->getStore())
-            ->setCurrency($merchantOrderTransfer->getOrder()->getCurrency())
+            ->setStore($orderTransfer->getStore())
+            ->setCurrency($orderTransfer->getCurrency())
             ->setTotals(new TotalsTransfer());
 
         $calculationOrderTransfer = $this->expandOrderWithMerchantOrderItems(
@@ -72,8 +77,10 @@ class MerchantOrderTotalsCreator implements MerchantOrderTotalsCreatorInterface
         );
 
         $calculationOrderTransfer = $this->calculationFacade->recalculateOrder($calculationOrderTransfer);
+        /** @var \Generated\Shared\Transfer\TotalsTransfer $totals */
+        $totals = $calculationOrderTransfer->getTotals();
 
-        return $calculationOrderTransfer->getTotals();
+        return $totals;
     }
 
     /**
@@ -87,7 +94,10 @@ class MerchantOrderTotalsCreator implements MerchantOrderTotalsCreatorInterface
         MerchantOrderTransfer $merchantOrderTransfer
     ): OrderTransfer {
         foreach ($merchantOrderTransfer->getMerchantOrderItems() as $merchantOrderItemTransfer) {
-            $calculationOrderTransfer->addItem($merchantOrderItemTransfer->getOrderItem());
+            /** @var \Generated\Shared\Transfer\ItemTransfer $orderItemTransfer */
+            $orderItemTransfer = $merchantOrderItemTransfer->getOrderItem();
+
+            $calculationOrderTransfer->addItem($orderItemTransfer);
         }
 
         return $calculationOrderTransfer;

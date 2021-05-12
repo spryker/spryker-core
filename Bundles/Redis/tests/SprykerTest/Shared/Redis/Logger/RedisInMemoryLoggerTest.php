@@ -110,7 +110,7 @@ class RedisInMemoryLoggerTest extends Unit
     {
         return sprintf(
             '%s://%s:%d/%s',
-            $protocol ?? RedisClientTester::DEFAULT_REDIS_PROTOCOL,
+            $protocol ?? RedisClientTester::DEFAULT_REDIS_SCHEME,
             $host ?? RedisClientTester::DEFAULT_REDIS_HOST,
             $port ?? RedisClientTester::DEFAULT_REDIS_PORT,
             $database ?? RedisClientTester::DEFAULT_REDIS_DATABASE

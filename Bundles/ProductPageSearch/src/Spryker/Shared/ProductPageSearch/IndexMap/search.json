@@ -1,8 +1,7 @@
 {
-  "mappings": {
-    "page": {
-      "properties": {
-      }
+    "mappings": {
+        "page": {
+            "properties": {}
+        }
     }
-  }
 }

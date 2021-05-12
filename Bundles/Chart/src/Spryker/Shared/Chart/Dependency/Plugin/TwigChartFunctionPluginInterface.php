@@ -10,6 +10,9 @@ namespace Spryker\Shared\Chart\Dependency\Plugin;
 interface TwigChartFunctionPluginInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Twig\TwigFunction[]

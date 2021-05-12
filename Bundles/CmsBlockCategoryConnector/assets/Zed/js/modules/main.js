@@ -5,7 +5,7 @@
 
 'use strict';
 
-$(document).ready( function () {
+$(document).ready(function () {
     var onCategoryTemplateSelectChange = function ($item) {
         var idCategoryTemplate = $item.val();
 
@@ -18,7 +18,7 @@ $(document).ready( function () {
             return;
         }
 
-        var nameCategoryTemplate = $item.find('option[value='+ idCategoryTemplate +']').html();
+        var nameCategoryTemplate = $item.find('option[value=' + idCategoryTemplate + ']').html();
 
         $("select[id^='category_id_cms_blocks_']").each(function (key, item) {
             var assignedCmsBlocks = $(item).data('assigned-cms-blocks');
@@ -33,7 +33,7 @@ $(document).ready( function () {
             }
 
             if (assignedCmsBlocks) {
-                $.each(assignedCmsBlocks, function( index, value ) {
+                $.each(assignedCmsBlocks, function (index, value) {
                     const option = $(item).find('option[value=' + value + ']');
                     $(item).append(option);
                 });
@@ -41,7 +41,7 @@ $(document).ready( function () {
 
             $(item).trigger('change.select2');
 
-            $(item).on('select2:select', function(e){
+            $(item).on('select2:select', function (e) {
                 $(this).append($(e.params.data.element));
                 $(this).trigger('change.select2');
             });
@@ -50,10 +50,9 @@ $(document).ready( function () {
 
     var $categoryTemplateSelect = $('[name=category\\[fk_category_template\\]]');
 
-    $categoryTemplateSelect.on('change', function() {
+    $categoryTemplateSelect.on('change', function () {
         onCategoryTemplateSelectChange($(this));
     });
 
     onCategoryTemplateSelectChange($categoryTemplateSelect);
-
 });

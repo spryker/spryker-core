@@ -10,6 +10,9 @@ namespace Spryker\Yves\StepEngine\Dependency\Plugin\Form;
 interface SubFormPluginInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Spryker\Yves\StepEngine\Dependency\Form\SubFormInterface
@@ -17,6 +20,9 @@ interface SubFormPluginInterface
     public function createSubForm();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface

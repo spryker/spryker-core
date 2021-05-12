@@ -10,6 +10,8 @@ namespace Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade;
 interface ProductOfferMerchantPortalGuiToTranslatorFacadeInterface
 {
     /**
+     * @phpstan-param array<mixed> $parameters
+     *
      * @param string $id
      * @param array $parameters
      * @param string|null $domain
@@ -17,5 +19,5 @@ interface ProductOfferMerchantPortalGuiToTranslatorFacadeInterface
      *
      * @return string
      */
-    public function trans($id, array $parameters = [], $domain = null, $locale = null): string;
+    public function trans(string $id, array $parameters = [], ?string $domain = null, ?string $locale = null): string;
 }

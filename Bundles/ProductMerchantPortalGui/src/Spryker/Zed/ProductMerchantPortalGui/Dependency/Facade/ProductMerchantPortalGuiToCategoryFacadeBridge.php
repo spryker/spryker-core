@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\CategoryCollectionTransfer;
+use Generated\Shared\Transfer\CategoryCriteriaTransfer;
+use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 
 class ProductMerchantPortalGuiToCategoryFacadeBridge implements ProductMerchantPortalGuiToCategoryFacadeInterface
@@ -25,15 +28,22 @@ class ProductMerchantPortalGuiToCategoryFacadeBridge implements ProductMerchantP
     }
 
     /**
-     * {@inheritDoc}
+     * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer $categoryCriteriaTransfer
      *
-     * @param int $idCategory
+     * @return \Generated\Shared\Transfer\CategoryTransfer|null
+     */
+    public function findCategory(CategoryCriteriaTransfer $categoryCriteriaTransfer): ?CategoryTransfer
+    {
+        return $this->categoryFacade->findCategory($categoryCriteriaTransfer);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return mixed[]
+     * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
      */
-    public function getTreeNodeChildrenByIdCategoryAndLocale($idCategory, LocaleTransfer $localeTransfer)
+    public function getAllCategoryCollection(LocaleTransfer $localeTransfer): CategoryCollectionTransfer
     {
-        return $this->categoryFacade->getTreeNodeChildrenByIdCategoryAndLocale($idCategory, $localeTransfer);
+        return $this->categoryFacade->getAllCategoryCollection($localeTransfer);
     }
 }

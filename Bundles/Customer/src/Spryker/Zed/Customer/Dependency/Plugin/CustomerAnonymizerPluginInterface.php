@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\CustomerTransfer;
 interface CustomerAnonymizerPluginInterface
 {
     /**
-     * Specification
+     * Specification:
      *  - process anonymization on related to customer subject
      *
      * @api

@@ -21,7 +21,7 @@ class GiftCardShipmentGroupSanitizerPlugin extends AbstractPlugin implements Shi
     /**
      * {@inheritDoc}
      * Specification:
-     *  - Sanitize shipment group collection.
+     * - Sanitize shipment group collection.
      *
      * @api
      *

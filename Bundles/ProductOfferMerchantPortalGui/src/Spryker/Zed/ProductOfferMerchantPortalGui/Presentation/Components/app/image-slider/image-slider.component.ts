@@ -12,7 +12,7 @@ export interface Image {
     templateUrl: './image-slider.component.html',
     styleUrls: ['./image-slider.component.less'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
 })
 export class ImageSliderComponent implements OnChanges {
     @Input() @ToJson() images: Image[];

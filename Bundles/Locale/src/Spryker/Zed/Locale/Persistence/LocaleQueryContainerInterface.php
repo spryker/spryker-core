@@ -12,6 +12,9 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 interface LocaleQueryContainerInterface extends QueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $localeName
@@ -21,6 +24,9 @@ interface LocaleQueryContainerInterface extends QueryContainerInterface
     public function queryLocaleByName($localeName);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\Locale\Persistence\SpyLocaleQuery

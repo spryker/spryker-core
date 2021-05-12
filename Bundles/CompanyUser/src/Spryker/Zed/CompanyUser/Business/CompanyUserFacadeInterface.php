@@ -247,7 +247,7 @@ interface CompanyUserFacadeInterface
     public function findActiveCompanyUserByUuid(CompanyUserTransfer $companyUserTransfer): ?CompanyUserTransfer;
 
     /**
-     * Specification
+     * Specification:
      *  - Retrieves active company users collection by company user ids.
      *  - Checks activity flag in related company and company user.
      *  - Checks whether related company is approved.
@@ -262,7 +262,7 @@ interface CompanyUserFacadeInterface
     public function findActiveCompanyUsersByIds(array $companyUserIds): array;
 
     /**
-     * Specification
+     * Specification:
      *  - Retrieves active company user ids by company ids.
      *  - Checks activity flag in company user.
      *  - Checks whether related customer is not anonymized.

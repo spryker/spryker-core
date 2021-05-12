@@ -10,7 +10,7 @@ var BlocksTable = require('./blocks-table');
 var BlocksChoice = require('./blocks-choice');
 var SlotBlocksForm = require('./slot-blocks-form');
 
-$(document).ready(function() {
+$(document).ready(function () {
     var blocksChoiceFormSelector = '[name=block-choice]';
     var cmsSlotBlocksSelector = '.js-cms-slot-blocks';
 
@@ -57,7 +57,7 @@ $(document).ready(function() {
         contentProviderAttribute: 'data-content-provider',
     });
 
-    global.CmsSlotGui_SlotTable.dataTableInitCallback = function() {
+    global.CmsSlotGui_SlotTable.dataTableInitCallback = function () {
         slotBlocks.init();
     };
 });

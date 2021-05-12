@@ -3,7 +3,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-@import "./query-builder.scss";
+@import './query-builder.scss';
 
 .load-cart-rules {
     height: 32px;
@@ -62,7 +62,7 @@ table.dataTable.gui-table-data {
         }
     }
 
-    .error-tab{
+    .error-tab {
         color: red !important;
         border-color: red !important;
         border-bottom: none !important;
@@ -71,7 +71,7 @@ table.dataTable.gui-table-data {
         border-color: red !important;
         border-bottom: none;
     }
-    .active .error-tab  {
+    .active .error-tab {
         color: #fff !important;
     }
 }
@@ -100,7 +100,6 @@ table.dataTable.gui-table-data {
         display: inline;
 
         > label {
-
             input {
                 margin-right: 5px;
             }

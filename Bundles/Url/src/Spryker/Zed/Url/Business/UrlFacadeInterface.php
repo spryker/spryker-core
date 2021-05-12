@@ -35,6 +35,9 @@ interface UrlFacadeInterface
     public function createUrl($urlTransfer, ?LocaleTransfer $localeTransfer = null, $resourceType = null, $idResource = null);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @deprecated Use UrlFacade::findUrlCaseInsensitive() instead, since URLs should be case insensitive.
@@ -63,6 +66,9 @@ interface UrlFacadeInterface
     public function findUrlCaseInsensitive(UrlTransfer $urlTransfer): ?UrlTransfer;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @deprecated Use UrlFacade::hasUrlCaseInsensitive() instead, since URLs should be case insensitive.
@@ -91,6 +97,9 @@ interface UrlFacadeInterface
     public function hasUrlCaseInsensitive(UrlTransfer $urlTransfer): bool;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @deprecated Use UrlFacade::hasUrlOrRedirectedUrlCaseInsensitive() instead, since URLs should be case insensitive.
@@ -149,7 +158,7 @@ interface UrlFacadeInterface
     public function deleteUrl(UrlTransfer $urlTransfer);
 
     /**
-     * Secification:
+     * Specification:
      * - Touches active "url" entry.
      *
      * @api
@@ -280,6 +289,9 @@ interface UrlFacadeInterface
     public function validateUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @deprecated Use UrlFacade::createUrl() instead.
@@ -296,6 +308,9 @@ interface UrlFacadeInterface
     public function createUrlForCurrentLocale($url, $resourceType, $idResource);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @deprecated Use UrlFacade::createUrl() or UrlFacade::updateUrl() instead.
@@ -307,6 +322,9 @@ interface UrlFacadeInterface
     public function saveUrl(UrlTransfer $urlTransfer);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @deprecated Use UrlFacade::hasUrl() instead.
@@ -318,6 +336,9 @@ interface UrlFacadeInterface
     public function hasUrlId($idUrl);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @deprecated Use UrlFacade::findUrl() instead.
@@ -331,6 +352,9 @@ interface UrlFacadeInterface
     public function getUrlByPath($urlString);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @deprecated Use UrlFacade::findUrl() instead.
@@ -347,6 +371,9 @@ interface UrlFacadeInterface
      * Specification:
      * - check if a ResourceUrl by CategoryNode and Locale exist
      *
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @deprecated Will be removed with next major release. Category bundle handles logic internally.
@@ -359,6 +386,9 @@ interface UrlFacadeInterface
     public function hasResourceUrlByCategoryNodeIdAndLocale($idCategoryNode, LocaleTransfer $locale);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @deprecated Will be removed with next major release. Category bundle handles logic internally.
@@ -371,6 +401,9 @@ interface UrlFacadeInterface
     public function getResourceUrlByCategoryNodeIdAndLocale($idCategoryNode, LocaleTransfer $locale);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @deprecated Will be removed with next major release. Category bundle handles logic internally.
@@ -382,6 +415,9 @@ interface UrlFacadeInterface
     public function getResourceUrlCollectionByCategoryNodeId($idCategoryNode);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @deprecated Use UrlFacade::activateUrl() instead.
@@ -393,6 +429,9 @@ interface UrlFacadeInterface
     public function touchUrlActive($idUrl);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @deprecated Use UrlFacade::deactivateUrl() instead.
@@ -404,6 +443,9 @@ interface UrlFacadeInterface
     public function touchUrlDeleted($idUrl);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @deprecated Use UrlFacade::createUrlRedirect() instead.
@@ -420,6 +462,9 @@ interface UrlFacadeInterface
     public function createRedirect($toUrl, $status = Response::HTTP_SEE_OTHER);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @deprecated Use UrlFacade::createUrlRedirect() instead.
@@ -432,6 +477,9 @@ interface UrlFacadeInterface
     public function createRedirectAndTouch($toUrl, $status = Response::HTTP_SEE_OTHER);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @deprecated Use UrlFacade::createUrlRedirect() instead.
@@ -448,6 +496,9 @@ interface UrlFacadeInterface
     public function createRedirectUrl($url, LocaleTransfer $locale, $idUrlRedirect);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @deprecated Use UrlFacade::createUrlRedirect() or UrlFacade::updateUrlRedirect() instead.
@@ -461,6 +512,9 @@ interface UrlFacadeInterface
     public function saveRedirectUrlAndTouch($url, LocaleTransfer $locale, $idUrlRedirect);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @deprecated Use UrlFacade::createUrlRedirect() or UrlFacade::updateUrlRedirect() instead.
@@ -472,6 +526,9 @@ interface UrlFacadeInterface
     public function saveRedirect(RedirectTransfer $redirect);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @deprecated Use UrlFacade::activateUrlRedirect() instead.
@@ -483,6 +540,9 @@ interface UrlFacadeInterface
     public function touchRedirectActive(RedirectTransfer $redirect);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @deprecated Use UrlFacade::createUrl() or UrlFacade::updateUrl() instead.
@@ -494,6 +554,9 @@ interface UrlFacadeInterface
     public function saveUrlAndTouch(UrlTransfer $urlTransfer);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @deprecated Use UrlFacade::createUrlRedirect() or UrlFacade::updateUrlRedirect() instead.
@@ -505,6 +568,9 @@ interface UrlFacadeInterface
     public function saveRedirectAndTouch(RedirectTransfer $redirect);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @deprecated This method will be removed with next major release because of invalid dependency direction. Use ProductFacade::getProductUrl() instead.

@@ -10,7 +10,7 @@ return [
             'is_root' => true,
             'node_order' => 0,
             'store' => 'DE',
-            'spy_category' =>
+            'category' =>
                 [
                     'id_category' => 1,
                     'fk_category_template' => 1,
@@ -19,17 +19,17 @@ return [
                     'is_clickable' => true,
                     'is_in_menu' => true,
                     'is_searchable' => false,
-                    'spy_category_template' =>
+                    'category_template' =>
                         [
                             'id_category_template' => 1,
                             'name' => 'Catalog (default)',
                             'template_path' => '@CatalogPage/views/catalog/catalog.twig',
-                            'spy_categories' =>
+                            'categories' =>
                                 [
                                     0 => '*RECURSION*',
                                 ],
                         ],
-                    'spy_category_attributes' =>
+                    'localized_attributes' =>
                         [
                             0 =>
                                 [
@@ -41,29 +41,17 @@ return [
                                     'meta_keywords' => 'Deutsche Version des Demoshop',
                                     'meta_title' => 'Demoshop',
                                     'name' => 'Demoshop',
+                                    'url' => '/de',
                                     'created_at' => '2019-11-01 11:18:19.720947',
                                     'updated_at' => '2019-11-01 11:18:19.720947',
-                                    'spy_category' => '*RECURSION*',
+                                    'locale' => [
+                                        'locale_name' => 'de_DE',
+                                    ],
                                 ],
                         ],
-                    'spy_category_nodes' =>
+                    'category_nodes' =>
                         [
                             0 => '*RECURSION*',
-                        ],
-                ],
-            'spy_urls' =>
-                [
-                    0 =>
-                        [
-                            'id_url' => 2,
-                            'fk_locale' => 46,
-                            'fk_resource_categorynode' => 1,
-                            'fk_resource_page' => null,
-                            'fk_resource_product_abstract' => null,
-                            'fk_resource_product_set' => null,
-                            'fk_resource_redirect' => null,
-                            'url' => '/de',
-                            'spy_category_node' => '*RECURSION*',
                         ],
                 ],
         ],
@@ -98,6 +86,7 @@ return [
                     0 => 'Demoshop',
                 ],
         ],
+        'DE',
         'de_DE',
     ],
 ];

@@ -16,6 +16,9 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 interface SalesQueryContainerInterface extends QueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idSalesOrder
@@ -25,6 +28,9 @@ interface SalesQueryContainerInterface extends QueryContainerInterface
     public function querySalesOrderById($idSalesOrder);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
@@ -32,6 +38,9 @@ interface SalesQueryContainerInterface extends QueryContainerInterface
     public function querySalesOrder();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idOrder
@@ -41,6 +50,9 @@ interface SalesQueryContainerInterface extends QueryContainerInterface
     public function querySalesOrderItemsByIdSalesOrder($idOrder);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idOrder
@@ -50,6 +62,9 @@ interface SalesQueryContainerInterface extends QueryContainerInterface
     public function querySalesOrderItemsWithState($idOrder);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
@@ -57,6 +72,9 @@ interface SalesQueryContainerInterface extends QueryContainerInterface
     public function querySalesOrderItem();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesExpenseQuery
@@ -64,6 +82,9 @@ interface SalesQueryContainerInterface extends QueryContainerInterface
     public function querySalesExpense();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $orderId
@@ -73,6 +94,9 @@ interface SalesQueryContainerInterface extends QueryContainerInterface
     public function querySalesExpensesByOrderId($orderId);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idSalesOrderAddress
@@ -82,6 +106,9 @@ interface SalesQueryContainerInterface extends QueryContainerInterface
     public function querySalesOrderAddressById($idSalesOrderAddress);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idCustomer
@@ -92,6 +119,9 @@ interface SalesQueryContainerInterface extends QueryContainerInterface
     public function querySalesOrdersByCustomerId($idCustomer, ?Criteria $criteria = null);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @deprecated Use {@link querySalesOrderDetailsWithoutShippingAddress()} instead.
@@ -103,6 +133,9 @@ interface SalesQueryContainerInterface extends QueryContainerInterface
     public function querySalesOrderDetails($idSalesOrder);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idSalesOrder
@@ -112,6 +145,9 @@ interface SalesQueryContainerInterface extends QueryContainerInterface
     public function querySalesOrderDetailsWithoutShippingAddress($idSalesOrder): SpySalesOrderQuery;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idSalesOrder
@@ -121,6 +157,9 @@ interface SalesQueryContainerInterface extends QueryContainerInterface
     public function queryCommentsByIdSalesOrder($idSalesOrder);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idCustomer
@@ -145,6 +184,9 @@ interface SalesQueryContainerInterface extends QueryContainerInterface
     public function fillOrderItemsWithLatestStates(ObjectCollection $salesOrderItems);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @deprecated Use {@link fillOrderItemsWithLatestStates()} instead.
@@ -156,6 +198,9 @@ interface SalesQueryContainerInterface extends QueryContainerInterface
     public function queryOrderItemsStateHistoriesOrderedByNewestState(ObjectCollection $salesOrderItems);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @deprecated Will be removed with the next major
@@ -168,6 +213,9 @@ interface SalesQueryContainerInterface extends QueryContainerInterface
     public function queryOmsOrderItemStateHistoryByOrderItemIdAndOmsStateIdDesc($idSalesOrderItem, $idOmsOrderItemState);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idSalesOrder

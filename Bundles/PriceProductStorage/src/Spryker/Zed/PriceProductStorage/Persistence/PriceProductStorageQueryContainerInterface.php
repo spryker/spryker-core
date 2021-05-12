@@ -13,6 +13,9 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 interface PriceProductStorageQueryContainerInterface extends QueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int[] $productAbstractIds
@@ -22,6 +25,9 @@ interface PriceProductStorageQueryContainerInterface extends QueryContainerInter
     public function queryProductAbstractSkuByIds(array $productAbstractIds);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int[] $productAbstractIds
@@ -31,6 +37,9 @@ interface PriceProductStorageQueryContainerInterface extends QueryContainerInter
     public function queryPriceAbstractStorageByPriceAbstractIds(array $productAbstractIds);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $priceTypeIds
@@ -40,6 +49,9 @@ interface PriceProductStorageQueryContainerInterface extends QueryContainerInter
     public function queryAllProductAbstractIdsByPriceTypeIds(array $priceTypeIds);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $priceTypeIds
@@ -49,6 +61,9 @@ interface PriceProductStorageQueryContainerInterface extends QueryContainerInter
     public function queryAllProductIdsByPriceTypeIds(array $priceTypeIds);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $priceProductIds
@@ -58,6 +73,9 @@ interface PriceProductStorageQueryContainerInterface extends QueryContainerInter
     public function queryAllProductIdsByPriceProductIds(array $priceProductIds);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $priceProductIds
@@ -67,6 +85,9 @@ interface PriceProductStorageQueryContainerInterface extends QueryContainerInter
     public function queryAllProductAbstractIdsByPriceProductIds(array $priceProductIds);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int[] $productConcreteIds
@@ -76,6 +97,9 @@ interface PriceProductStorageQueryContainerInterface extends QueryContainerInter
     public function queryProductAbstractIdsByProductConcreteIds(array $productConcreteIds);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int[] $productConcreteIds
@@ -85,6 +109,9 @@ interface PriceProductStorageQueryContainerInterface extends QueryContainerInter
     public function queryPriceConcreteStorageByProductIds(array $productConcreteIds);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int[] $priceProductStoreIds
@@ -94,6 +121,9 @@ interface PriceProductStorageQueryContainerInterface extends QueryContainerInter
     public function queryProductAbstractIdsByPriceProductStoreIds(array $priceProductStoreIds): SpyPriceProductQuery;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int[] $priceProductStoreIds

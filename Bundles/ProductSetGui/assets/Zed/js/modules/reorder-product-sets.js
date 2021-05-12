@@ -5,17 +5,17 @@
 
 'use strict';
 
-$(document).ready(function() {
+$(document).ready(function () {
     var $productSetWeightsField = $('#reorder_product_sets_form_product_set_weights');
     var productSetWeights = getProductSetWeights();
 
-    $('#product-set-reorder-table').DataTable().on('draw', function(event, settings) {
-        $('.product_set_weight')
-            .off('change')
-            .on('change', onProductSetWeightChange);
+    $('#product-set-reorder-table')
+        .DataTable()
+        .on('draw', function (event, settings) {
+            $('.product_set_weight').off('change').on('change', onProductSetWeightChange);
 
-        setProductSetWeightFieldsOnTableDraw(settings);
-    });
+            setProductSetWeightFieldsOnTableDraw(settings);
+        });
 
     /**
      * @returns {Object}

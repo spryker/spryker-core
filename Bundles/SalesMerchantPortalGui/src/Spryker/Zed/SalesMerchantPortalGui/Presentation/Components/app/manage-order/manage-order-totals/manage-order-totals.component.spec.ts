@@ -41,14 +41,10 @@ describe('ManageOrderTotalsComponent', () => {
 
         orderTotalElems.forEach((orderTotalElem, i) => {
             const orderTotalTitleElem = fixture.debugElement.query(
-                By.css(
-                    `.mp-manage-order-totals__item:nth-child(${i + 1}) .mp-manage-order-totals__col:first-child`
-                )
+                By.css(`.mp-manage-order-totals__item:nth-child(${i + 1}) .mp-manage-order-totals__col:first-child`),
             );
             const orderValueTitleElem = fixture.debugElement.query(
-                By.css(
-                    `.mp-manage-order-totals__item:nth-child(${i + 1}) .mp-manage-order-totals__col:last-child`
-                )
+                By.css(`.mp-manage-order-totals__item:nth-child(${i + 1}) .mp-manage-order-totals__col:last-child`),
             );
 
             expect(orderTotalTitleElem.nativeElement.textContent).toBe(mockoOderTotals[i].title);
@@ -68,7 +64,9 @@ describe('ManageOrderTotalsComponent', () => {
         component.orderTotals = mockoOderTotals;
         fixture.detectChanges();
 
-        const orderTotalElems = fixture.debugElement.query(By.css('.mp-manage-order-totals__item.mp-manage-order-totals__item--title'));
+        const orderTotalElems = fixture.debugElement.query(
+            By.css('.mp-manage-order-totals__item.mp-manage-order-totals__item--title'),
+        );
 
         expect(orderTotalElems).toBeTruthy();
     });

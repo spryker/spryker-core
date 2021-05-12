@@ -13,43 +13,14 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 interface CategoryPageSearchQueryContainerInterface extends QueryContainerInterface
 {
     /**
+     * Specification:
+     * - Creates category node query.
+     * - Finds all category node entities sorted by node order.
+     * - Filters query on the `fk_category` column.
+     *
      * @api
      *
-     * @param array $localeNames
-     *
-     * @return \Orm\Zed\Locale\Persistence\SpyLocaleQuery
-     */
-    public function queryLocalesWithLocaleNames(array $localeNames);
-
-    /**
-     * @api
-     *
-     * @param array $categoryNodeIds
-     * @param int $idLocale
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
-     */
-    public function queryCategoryNodeTree(array $categoryNodeIds, $idLocale);
-
-    /**
-     * @api
-     *
-     * @param int[] $categoryNodeIds
-     * @param int $idLocale
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
-     */
-    public function queryWholeCategoryNodeTree(array $categoryNodeIds, int $idLocale): SpyCategoryNodeQuery;
-
-    /**
-     * @api
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
-     */
-    public function queryCategoryRoot();
-
-    /**
-     * @api
+     * @deprecated Will be removed with next major release.
      *
      * @param int[] $categoryIds
      *
@@ -58,6 +29,10 @@ interface CategoryPageSearchQueryContainerInterface extends QueryContainerInterf
     public function queryCategoryNodeIdsByCategoryIds(array $categoryIds);
 
     /**
+     * Specification:
+     * - Creates category node page query.
+     * - Filters query on the `fk_category_node` column.
+     *
      * @api
      *
      * @param int[] $categoryNodeIds
@@ -67,6 +42,11 @@ interface CategoryPageSearchQueryContainerInterface extends QueryContainerInterf
     public function queryCategoryNodePageSearchByIds(array $categoryNodeIds);
 
     /**
+     * Specification:
+     * - Creates category node query.
+     * - Finds all category node entities sorted by node order.
+     * - Filters query on the `fk_category_template` column.
+     *
      * @api
      *
      * @param int[] $categoryTemplateIds
@@ -76,6 +56,11 @@ interface CategoryPageSearchQueryContainerInterface extends QueryContainerInterf
     public function queryCategoryNodeIdsByTemplateIds(array $categoryTemplateIds);
 
     /**
+     * Specification:
+     * - Creates category node query.
+     * - Finds all category node entities sorted by node order.
+     * - Filters query on the `id_category_node` column.
+     *
      * @api
      *
      * @param int[] $ids

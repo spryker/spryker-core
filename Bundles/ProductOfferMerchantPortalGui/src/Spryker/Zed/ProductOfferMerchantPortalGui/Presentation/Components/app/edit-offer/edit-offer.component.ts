@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation, OnChanges, SimpleChanges } from '@angular/core';
-import { Image } from '../image-slider/image-slider.component'
+import { Image } from '../image-slider/image-slider.component';
 import { ToJson } from '@spryker/utils';
 
 export interface ProductDetails {

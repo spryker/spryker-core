@@ -7,11 +7,13 @@
 
 namespace Spryker\Zed\CategoryDataImport;
 
+use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Spryker\Zed\DataImport\DataImportConfig;
 
 class CategoryDataImportConfig extends DataImportConfig
 {
     public const IMPORT_TYPE_CATEGORY = 'category';
+    public const IMPORT_TYPE_CATEGORY_STORE = 'category-store';
 
     /**
      * @api
@@ -23,6 +25,21 @@ class CategoryDataImportConfig extends DataImportConfig
         $moduleDataImportDirectory = $this->getModuleRoot() . 'data' . DIRECTORY_SEPARATOR . 'import' . DIRECTORY_SEPARATOR;
 
         return $this->buildImporterConfiguration($moduleDataImportDirectory . 'category.csv', static::IMPORT_TYPE_CATEGORY);
+    }
+
+    /**
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
+     */
+    public function getCategoryStoreImporterConfiguration(): DataImporterConfigurationTransfer
+    {
+        $moduleDataImportDirectory = $this->getModuleRoot() . 'data' . DIRECTORY_SEPARATOR . 'import' . DIRECTORY_SEPARATOR;
+
+        return $this->buildImporterConfiguration(
+            $moduleDataImportDirectory . 'category_store.csv',
+            static::IMPORT_TYPE_CATEGORY_STORE
+        );
     }
 
     /**

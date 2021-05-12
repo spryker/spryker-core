@@ -7,6 +7,6 @@
 
 var fileDirectoryTree = require('./file-directory-tree');
 
-$(document).ready(function() {
+$(document).ready(function () {
     fileDirectoryTree.initialize();
 });

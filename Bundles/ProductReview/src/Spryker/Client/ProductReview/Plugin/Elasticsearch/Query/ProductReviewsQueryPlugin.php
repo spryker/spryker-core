@@ -11,7 +11,7 @@ use Elastica\Index;
 use Elastica\Query;
 use Elastica\Query\AbstractQuery;
 use Elastica\Query\BoolQuery;
-use Elastica\Query\Match;
+use Elastica\Query\MatchQuery;
 use Elastica\Query\Type;
 use Generated\Shared\Search\ProductReviewIndexMap;
 use Generated\Shared\Transfer\ProductReviewSearchRequestTransfer;
@@ -131,8 +131,8 @@ class ProductReviewsQueryPlugin extends AbstractPlugin implements QueryInterface
     {
         $this->productReviewSearchRequestTransfer->requireIdProductAbstract();
 
-        $productReviewsFilter = new Match();
-        $productReviewsFilter->setField(ProductReviewIndexMap::ID_PRODUCT_ABSTRACT, $this->productReviewSearchRequestTransfer->getIdProductAbstract());
+        $productReviewsFilter = $this->getMatchQuery()
+            ->setField(ProductReviewIndexMap::ID_PRODUCT_ABSTRACT, $this->productReviewSearchRequestTransfer->getIdProductAbstract());
         $query->addFilter($productReviewsFilter);
 
         return $query;
@@ -185,5 +185,19 @@ class ProductReviewsQueryPlugin extends AbstractPlugin implements QueryInterface
     protected function supportsMappingTypes(): bool
     {
         return method_exists(Index::class, 'getType');
+    }
+
+    /**
+     * For compatibility with PHP 8.
+     *
+     * @return \Elastica\Query\MatchQuery|\Elastica\Query\Match
+     */
+    protected function getMatchQuery()
+    {
+        $matchQueryClassName = class_exists(MatchQuery::class)
+            ? MatchQuery::class
+            : '\Elastica\Query\Match';
+
+        return new $matchQueryClassName();
     }
 }

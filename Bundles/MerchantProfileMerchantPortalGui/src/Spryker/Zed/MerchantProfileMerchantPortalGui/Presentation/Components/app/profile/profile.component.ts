@@ -1,8 +1,4 @@
-import {
-    Component,
-    ViewEncapsulation,
-    ChangeDetectionStrategy,
-} from '@angular/core';
+import { Component, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
     selector: 'mp-profile',

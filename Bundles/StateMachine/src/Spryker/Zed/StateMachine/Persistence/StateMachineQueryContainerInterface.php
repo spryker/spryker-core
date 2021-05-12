@@ -14,6 +14,9 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 interface StateMachineQueryContainerInterface extends QueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idState
@@ -23,6 +26,9 @@ interface StateMachineQueryContainerInterface extends QueryContainerInterface
     public function queryStateByIdState($idState);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
@@ -32,6 +38,9 @@ interface StateMachineQueryContainerInterface extends QueryContainerInterface
     public function queryItemsWithExistingHistory(StateMachineItemTransfer $stateMachineItemTransfer);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \DateTime $expirationDate
@@ -42,6 +51,9 @@ interface StateMachineQueryContainerInterface extends QueryContainerInterface
     public function queryItemsWithExpiredTimeout(DateTime $expirationDate, $stateMachineName);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $identifier
@@ -52,6 +64,9 @@ interface StateMachineQueryContainerInterface extends QueryContainerInterface
     public function queryItemHistoryByStateItemIdentifier($identifier, $idStateMachineProcess);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $stateMachineName
@@ -62,6 +77,9 @@ interface StateMachineQueryContainerInterface extends QueryContainerInterface
     public function queryProcessByStateMachineAndProcessName($stateMachineName, $processName);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $stateMachineName
@@ -77,6 +95,9 @@ interface StateMachineQueryContainerInterface extends QueryContainerInterface
     );
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $stateMachineName
@@ -94,6 +115,9 @@ interface StateMachineQueryContainerInterface extends QueryContainerInterface
     );
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProcess
@@ -104,6 +128,9 @@ interface StateMachineQueryContainerInterface extends QueryContainerInterface
     public function queryItemStateByIdProcessAndStateName($idProcess, $stateName);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @deprecated Not used, will be removed in the next major release.
@@ -116,6 +143,9 @@ interface StateMachineQueryContainerInterface extends QueryContainerInterface
     public function queryLockedItemsByIdentifierAndExpirationDate($identifier, DateTime $expirationDate);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \DateTime $expirationDate
@@ -125,6 +155,9 @@ interface StateMachineQueryContainerInterface extends QueryContainerInterface
     public function queryLockedItemsByExpirationDate(DateTime $expirationDate);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $identifier
@@ -134,6 +167,9 @@ interface StateMachineQueryContainerInterface extends QueryContainerInterface
     public function queryLockItemsByIdentifier($identifier);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $processName
@@ -143,6 +179,9 @@ interface StateMachineQueryContainerInterface extends QueryContainerInterface
     public function queryProcessByProcessName($processName);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $identifier
@@ -153,6 +192,9 @@ interface StateMachineQueryContainerInterface extends QueryContainerInterface
     public function queryEventTimeoutByIdentifierAndFkProcess($identifier, $fkProcess);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer

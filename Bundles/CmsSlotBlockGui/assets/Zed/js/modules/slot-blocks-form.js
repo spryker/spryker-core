@@ -18,7 +18,9 @@ var SlotBlocksForm = function (options) {
     this.slotBlockFormItemClass = '';
     this.slotBlockFormItemIdPrefix = '';
     this.slotBlockFormWrapperId = '';
-    this.resolveIsUnsavedCallback = function (state) { return state; };
+    this.resolveIsUnsavedCallback = function (state) {
+        return state;
+    };
 
     $.extend(this, options);
 
@@ -54,15 +56,15 @@ var SlotBlocksForm = function (options) {
             $(_self.slotBlockFormWrapperId).prepend($formItem);
 
             if (prevCmsBlockId > 0) {
-                $formItem.insertAfter(
-                    $(_self.slotBlockFormItemIdPrefix + prevCmsBlockId)
-                );
+                $formItem.insertAfter($(_self.slotBlockFormItemIdPrefix + prevCmsBlockId));
             }
 
             prevCmsBlockId = item[0];
         });
 
-        $(_self.slotBlockFormItemIdPrefix + prevCmsBlockId).nextAll().remove();
+        $(_self.slotBlockFormItemIdPrefix + prevCmsBlockId)
+            .nextAll()
+            .remove();
         _self.initFormItems();
         if (!isChanged) {
             _self.formInitialState = _self.form.serialize();
@@ -76,29 +78,32 @@ var SlotBlocksForm = function (options) {
         var url = $(this).attr('action');
         var formSerialize = $(this).serialize();
 
-        $.post(url, formSerialize).done(function(response) {
-            if (!_self.isStateChanged) {
-                return;
-            }
-            window.sweetAlert({
-                title: 'Success',
-                html: true,
-                type: 'success'
+        $.post(url, formSerialize)
+            .done(function (response) {
+                if (!_self.isStateChanged) {
+                    return;
+                }
+                window.sweetAlert({
+                    title: 'Success',
+                    html: true,
+                    type: 'success',
+                });
+                $(_self.slotBlockFormWrapperId).html(response);
+                _self.initFormItems();
+                _self.formInitialState = _self.form.serialize();
+                $(document).trigger('savedBlocksForm');
+                _self.setStateChanged();
+            })
+            .fail(function () {
+                window.sweetAlert({
+                    title: 'Error',
+                    html: true,
+                    type: 'error',
+                });
+            })
+            .always(function () {
+                _self.activateButton();
             });
-            $(_self.slotBlockFormWrapperId).html(response);
-            _self.initFormItems();
-            _self.formInitialState = _self.form.serialize();
-            $(document).trigger('savedBlocksForm');
-            _self.setStateChanged();
-        }).fail(function() {
-            window.sweetAlert({
-                title: 'Error',
-                html: true,
-                type: 'error'
-            });
-        }).always(function() {
-            _self.activateButton();
-        });
     };
 
     this.activateButton = function () {
@@ -107,11 +112,14 @@ var SlotBlocksForm = function (options) {
     };
 
     this.createNewFormElement = function (idCmsSlotTemplate, idCmsSlot, idCmsBlock) {
-        var formTemplate = '<div class="js-cms-slot-block-form-item" ' +
-            'id="js-cms-slot-block-form-item-' + idCmsBlock + '">' +
+        var formTemplate =
+            '<div class="js-cms-slot-block-form-item" ' +
+            'id="js-cms-slot-block-form-item-' +
+            idCmsBlock +
+            '">' +
             _self.formTemplate +
             '</div>';
-        var formItem = formTemplate.replace(/__name__/g,  _self.formItemsCount);
+        var formItem = formTemplate.replace(/__name__/g, _self.formItemsCount);
         formItem = $($.parseHTML(formItem));
         formItem.find('input[name*=\\[idSlotTemplate\\]]').val(idCmsSlotTemplate);
         formItem.find('input[name*=\\[idSlot\\]]').val(idCmsSlot);
@@ -121,7 +129,7 @@ var SlotBlocksForm = function (options) {
     };
 
     this.initFormItems = function () {
-        _self.form.find('select').each(function(index, element) {
+        _self.form.find('select').each(function (index, element) {
             var select2InitOptions = {};
             var selectElement = $(element);
 
@@ -133,7 +141,7 @@ var SlotBlocksForm = function (options) {
                         delay: 500,
                         cache: true,
                     },
-                    minimumInputLength: 3
+                    minimumInputLength: 3,
                 };
             }
             selectElement.select2(select2InitOptions);
@@ -153,7 +161,7 @@ var SlotBlocksForm = function (options) {
     };
 
     this.toggleEnablementFromBlocksTable = function (cmsSlotBlockFormItem) {
-        $('input[data-disable]', cmsSlotBlockFormItem).each(function(index) {
+        $('input[data-disable]', cmsSlotBlockFormItem).each(function (index) {
             _self.toggleEnablement($(this));
         });
     };
@@ -166,8 +174,9 @@ var SlotBlocksForm = function (options) {
         var inputs = radioInput.data('inputs');
         var disabled = radioInput.data('disable');
 
-        $.each(inputs, function(index, value) {
-            radioInput.closest(_self.slotBlockFormItemClass)
+        $.each(inputs, function (index, value) {
+            radioInput
+                .closest(_self.slotBlockFormItemClass)
                 .find("select[name*='" + value + "']")
                 .prop('disabled', disabled);
         });

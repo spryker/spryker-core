@@ -25,6 +25,7 @@ suites:
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
                 - \SprykerTest\Shared\User\Helper\UserDataHelper
                 - \SprykerTest\Zed\Testify\Helper\BusinessHelper
+                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
 
     Communication:
         path: Communication
@@ -47,16 +48,18 @@ suites:
                 - \SprykerTest\Service\Container\Helper\ContainerHelper
                 - \SprykerTest\Zed\Validator\Helper\ValidatorHelper
                 - \SprykerTest\Zed\Form\Helper\FormHelper:
-                    formPlugins:
-                        - \Spryker\Zed\Validator\Communication\Plugin\Form\ValidatorFormPlugin
-                        - \Spryker\Zed\Http\Communication\Plugin\Form\HttpFoundationFormPlugin
+                      formPlugins:
+                          - \Spryker\Zed\Validator\Communication\Plugin\Form\ValidatorFormPlugin
+                          - \Spryker\Zed\Http\Communication\Plugin\Form\HttpFoundationFormPlugin
                 - \SprykerTest\Zed\EventDispatcher\Helper\EventDispatcherHelper
                 - \SprykerTest\Zed\Twig\Helper\TwigHelper:
-                    twigPlugins:
-                        - \Spryker\Zed\Translator\Communication\Plugin\Twig\TranslatorTwigPlugin
-                        - \Spryker\Zed\ZedNavigation\Communication\Plugin\Twig\ZedNavigationTwigPlugin
+                      twigPlugins:
+                          - \Spryker\Zed\Translator\Communication\Plugin\Twig\TranslatorTwigPlugin
+                          - \Spryker\Zed\ZedNavigation\Communication\Plugin\Twig\ZedNavigationTwigPlugin
                 - \SprykerTest\Zed\Gui\Helper\GuiTwigPluginHelper
                 - \SprykerTest\Zed\Router\Helper\RouterHelper
                 - \SprykerTest\Zed\Application\Helper\ApplicationHelper
                 - \SprykerTest\Service\Container\Helper\ContainerHelper
                 - \SprykerTest\Zed\Security\Helper\SecurityHelper
+                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+                - \SprykerTest\Shared\User\Helper\UserDataHelper

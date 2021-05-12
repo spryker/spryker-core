@@ -184,7 +184,7 @@ interface NavigationFacadeInterface
     public function detachUrlFromNavigationNodes(UrlTransfer $urlTransfer);
 
     /**
-     * Specification
+     * Specification:
      * - Finds navigation entity in database filtered by data provided in criteria transfer.
      * - Returns navigation transfer if found, NULL otherwise.
      *
@@ -197,7 +197,7 @@ interface NavigationFacadeInterface
     public function findNavigationByCriteria(NavigationCriteriaTransfer $navigationCriteriaTransfer): ?NavigationTransfer;
 
     /**
-     * Specification
+     * Specification:
      * - Finds all navigation entities in database.
      *
      * @api

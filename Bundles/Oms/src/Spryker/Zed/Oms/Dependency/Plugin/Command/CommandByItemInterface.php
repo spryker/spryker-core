@@ -16,7 +16,8 @@ use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 interface CommandByItemInterface extends CommandInterface
 {
     /**
-     * Execute per order item basis
+     * Specification:
+     * - Execute per order item basis
      *
      * @api
      *

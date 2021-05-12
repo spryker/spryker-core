@@ -13,6 +13,9 @@ namespace Spryker\Zed\NavigationGui\Persistence;
 interface NavigationGuiQueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\Navigation\Persistence\SpyNavigationQuery
@@ -20,6 +23,9 @@ interface NavigationGuiQueryContainerInterface
     public function queryNavigation();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $searchText
@@ -30,6 +36,9 @@ interface NavigationGuiQueryContainerInterface
     public function queryCmsPageUrlSuggestions($searchText, $idLocale);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $searchText

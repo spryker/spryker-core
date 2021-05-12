@@ -13,6 +13,9 @@ use Generated\Shared\Transfer\OfferTransfer;
 interface OfferDoUpdatePluginInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer

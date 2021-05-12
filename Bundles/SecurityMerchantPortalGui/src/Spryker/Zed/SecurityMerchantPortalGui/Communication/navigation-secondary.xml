@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<config>
+    <logout>
+        <label>Logout</label>
+        <title>Logout</title>
+        <bundle>security-merchant-portal-gui</bundle>
+        <controller>logout</controller>
+        <action>index</action>
+        <type>danger</type>
+    </logout>
+</config>

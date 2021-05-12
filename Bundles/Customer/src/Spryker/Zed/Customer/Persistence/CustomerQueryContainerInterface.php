@@ -12,6 +12,9 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 interface CustomerQueryContainerInterface extends QueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $email
@@ -21,6 +24,9 @@ interface CustomerQueryContainerInterface extends QueryContainerInterface
     public function queryCustomerByEmail($email);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $email
@@ -31,6 +37,9 @@ interface CustomerQueryContainerInterface extends QueryContainerInterface
     public function queryCustomerByEmailApartFromIdCustomer($email, $exceptIdCustomer);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $id
@@ -40,6 +49,9 @@ interface CustomerQueryContainerInterface extends QueryContainerInterface
     public function queryCustomerById($id);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $customerReference
@@ -49,6 +61,9 @@ interface CustomerQueryContainerInterface extends QueryContainerInterface
     public function queryCustomerByReference($customerReference);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $token
@@ -58,6 +73,9 @@ interface CustomerQueryContainerInterface extends QueryContainerInterface
     public function queryCustomerByRegistrationKey($token);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $token
@@ -67,6 +85,9 @@ interface CustomerQueryContainerInterface extends QueryContainerInterface
     public function queryCustomerByRestorePasswordKey($token);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idAddress
@@ -79,6 +100,9 @@ interface CustomerQueryContainerInterface extends QueryContainerInterface
     public function queryAddressForCustomer($idAddress, $email);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idAddress
@@ -90,6 +114,9 @@ interface CustomerQueryContainerInterface extends QueryContainerInterface
     public function queryAddress($idAddress);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $email
@@ -99,6 +126,9 @@ interface CustomerQueryContainerInterface extends QueryContainerInterface
     public function queryAddressesForCustomer($email);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\Customer\Persistence\SpyCustomerAddressQuery
@@ -106,6 +136,9 @@ interface CustomerQueryContainerInterface extends QueryContainerInterface
     public function queryAddresses();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery
@@ -113,6 +146,9 @@ interface CustomerQueryContainerInterface extends QueryContainerInterface
     public function queryCustomers();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idCustomer

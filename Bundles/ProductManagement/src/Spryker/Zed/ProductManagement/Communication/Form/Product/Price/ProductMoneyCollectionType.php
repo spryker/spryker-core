@@ -182,20 +182,27 @@ class ProductMoneyCollectionType extends AbstractCollectionType
         $moneyValueTransfer = $this->extractMoneyValueTransfer($moneyValueFormView);
         $utilEncodingService = $this->getFactory()->getUtilEncoding();
         $priceData = $utilEncodingService->decodeJson($moneyValueTransfer->getPriceData());
+        $priceProductTransfer = $this->extractPriceProductTransfer($productMoneyTypeFormView);
 
         if ($this->isVolumePriceNotApplicable($productMoneyTypeFormView)) {
             return $volumePrices;
         }
 
+        $priceTypeName = $priceProductTransfer->getPriceType()->getName();
+
         if (!empty($priceData) && isset($priceData->volume_prices)) {
-            $volumePrices[$storeName][$currencyIsoCode] = $this
-                ->buildVolumePriceData(static::PRICE_PRODUCT_VOLUME_EDIT_URL, 'Edit Product Volume Price');
+            $volumePrices[$storeName][$currencyIsoCode][$priceTypeName] = $this->buildVolumePriceData(
+                static::PRICE_PRODUCT_VOLUME_EDIT_URL,
+                sprintf('Edit Volume Price: %s', $priceTypeName)
+            );
 
             return $volumePrices;
         }
 
-        $volumePrices[$storeName][$currencyIsoCode] = $this
-            ->buildVolumePriceData(static::PRICE_PRODUCT_VOLUME_ADD_URL, 'Add Product Volume Price');
+        $volumePrices[$storeName][$currencyIsoCode][$priceTypeName] = $this->buildVolumePriceData(
+            static::PRICE_PRODUCT_VOLUME_ADD_URL,
+            sprintf('Add Volume Price: %s', $priceTypeName)
+        );
 
         return $volumePrices;
     }
@@ -214,10 +221,6 @@ class ProductMoneyCollectionType extends AbstractCollectionType
             !$priceProductTransfer->getIdPriceProduct()
             || (!$moneyValueTransfer->getGrossAmount() && !$moneyValueTransfer->getNetAmount())
         ) {
-            return true;
-        }
-
-        if ($priceProductTransfer->getPriceTypeName() !== $this->getFactory()->getConfig()->getPriceTypeDefault()) {
             return true;
         }
 

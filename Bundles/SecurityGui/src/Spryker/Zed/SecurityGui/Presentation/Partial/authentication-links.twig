@@ -1,0 +1,20 @@
+{# @var authenticationLinkCollection \Generated\Shared\Transfer\OauthAuthenticationLinkTransfer[] #}
+{# @var authenticationLink \Generated\Shared\Transfer\OauthAuthenticationLinkTransfer #}
+
+ {% if authenticationLinkCollection is defined %}
+
+     {% for authenticationLink in authenticationLinkCollection %}
+
+         {% if authenticationLink.template is not empty %}
+             {% include authenticationLink.template ignore missing with {'authenticationLink': authenticationLink} only %}
+         {% else %}
+             <div class="form-group">
+                 <a href="{{ authenticationLink.href }}" target="{{ authenticationLink.target | escape('html_attr') }}">
+                     <button class="btn btn-success btn-block btn" type="button">
+                         {{ authenticationLink.text | escape | trans }}
+                     </button>
+                 </a>
+             </div>
+         {% endif %}
+     {% endfor %}
+ {% endif %}

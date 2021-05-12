@@ -1,5 +1,6 @@
 parameters:
     checkMissingIterableValueType: false
+    reportUnmatchedIgnoredErrors: false
     ignoreErrors:
         - '#PHPDoc tag @param for parameter \$keysOrArgs with type array is not subtype of native type array<int, mixed>#'
         - '#Result of \|\| is always false.#'

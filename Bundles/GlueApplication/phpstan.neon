@@ -1,2 +1,9 @@
 parameters:
     checkMissingIterableValueType: false
+    reportUnmatchedIgnoredErrors: false
+    excludePaths:
+        - %rootDir%/../../../vendor/spryker/spryker/Bundles/GlueApplication/src/Spryker/Glue/GlueApplication/GlueApplicationFactory.php
+        - %rootDir%/../../../vendor/spryker/spryker/Bundles/GlueApplication/src/Spryker/Glue/GlueApplication/Rest/Language/LanguageNegotiation.php
+    ignoreErrors:
+        - '#Strict comparison using === between int<1, max> and 0 will always evaluate to false.#'
+        - '#Method .+ResponsePagination::calculateTotalPages\(\) should return int but returns float.#'

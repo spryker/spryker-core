@@ -10,7 +10,6 @@ namespace Spryker\Zed\CategoryGui\Communication\Table;
 use Orm\Zed\Category\Persistence\SpyCategory;
 use Orm\Zed\Category\Persistence\SpyCategoryQuery;
 use Spryker\Service\UtilText\Model\Url\Url;
-use Spryker\Shared\Category\CategoryConstants;
 use Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToLocaleFacadeInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
@@ -28,6 +27,10 @@ class CategoryTable extends AbstractTable
     public const COL_ACTIONS = 'actions';
     public const IDENTIFIER = 'category_data_table';
     public const COL_ID_CATEGORY_NODE = 'id_category_node';
+
+    protected const REQUEST_PARAM_ID_CATEGORY = 'id-category';
+    protected const REQUEST_PARAM_ID_NODE = 'id-node';
+    protected const REQUEST_PARAM_ID_PARENT_NODE = 'id-parent-node';
 
     /**
      * @var \Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToLocaleFacadeInterface
@@ -200,7 +203,7 @@ class CategoryTable extends AbstractTable
     {
         return $this->generateViewButton(
             Url::generate('/product-category/assign', [
-                CategoryConstants::PARAM_ID_CATEGORY => $item->getIdCategory(),
+                static::REQUEST_PARAM_ID_CATEGORY => $item->getIdCategory(),
             ]),
             'Assign products'
         );
@@ -215,7 +218,7 @@ class CategoryTable extends AbstractTable
     {
         return $this->generateEditButton(
             Url::generate('/category/edit', [
-                CategoryConstants::PARAM_ID_CATEGORY => $item->getIdCategory(),
+                static::REQUEST_PARAM_ID_CATEGORY => $item->getIdCategory(),
             ]),
             'Edit'
         );
@@ -230,7 +233,7 @@ class CategoryTable extends AbstractTable
     {
         return $this->generateViewButton(
             Url::generate('/category/view', [
-                CategoryConstants::PARAM_ID_CATEGORY => $item->getIdCategory(),
+                static::REQUEST_PARAM_ID_CATEGORY => $item->getIdCategory(),
             ]),
             'View'
         );
@@ -245,7 +248,7 @@ class CategoryTable extends AbstractTable
     {
         return $this->generateRemoveButton(
             Url::generate('/category/delete', [
-                CategoryConstants::PARAM_ID_CATEGORY => $item->getIdCategory(),
+                static::REQUEST_PARAM_ID_CATEGORY => $item->getIdCategory(),
             ]),
             'Delete'
         );
@@ -262,7 +265,7 @@ class CategoryTable extends AbstractTable
             Url::generate(
                 '/category/re-sort',
                 [
-                    CategoryConstants::PARAM_ID_NODE => $item->getVirtualColumn(static::COL_ID_CATEGORY_NODE),
+                    static::REQUEST_PARAM_ID_NODE => $item->getVirtualColumn(static::COL_ID_CATEGORY_NODE),
                 ]
             ),
             'Re-sort child categories'
@@ -280,7 +283,7 @@ class CategoryTable extends AbstractTable
             Url::generate(
                 '/category/create',
                 [
-                    CategoryConstants::PARAM_ID_PARENT_NODE => $item->getVirtualColumn(static::COL_ID_CATEGORY_NODE),
+                    static::REQUEST_PARAM_ID_PARENT_NODE => $item->getVirtualColumn(static::COL_ID_CATEGORY_NODE),
                 ]
             ),
             'Add category to this node'

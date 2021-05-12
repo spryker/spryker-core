@@ -12,6 +12,9 @@ use Generated\Shared\Transfer\ItemTransfer;
 interface GiftCardAttributePluginInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer

@@ -10,6 +10,9 @@ namespace Spryker\Zed\Tax\Dependency\Plugin;
 interface TaxChangePluginInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idTaxRate
@@ -19,6 +22,9 @@ interface TaxChangePluginInterface
     public function handleTaxRateChange($idTaxRate);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idTaxSet

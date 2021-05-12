@@ -29,10 +29,10 @@ function initialize() {
         $(destinationTabLabelSelector).text(),
         destinationTabLabelSelector,
         fieldToBeDeassignedItemIds,
-        onRemove
+        onRemove,
     );
 
-    tableHandler.getInitialCheckboxCheckedState = function() {
+    tableHandler.getInitialCheckboxCheckedState = function () {
         return ItemTable.CHECKBOX_CHECKED_STATE_CHECKED;
     };
 
@@ -58,5 +58,5 @@ function onRemove() {
 }
 
 module.exports = {
-    initialize: initialize
+    initialize: initialize,
 };

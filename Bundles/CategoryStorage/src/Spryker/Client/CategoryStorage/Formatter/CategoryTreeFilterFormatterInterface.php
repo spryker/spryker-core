@@ -13,8 +13,10 @@ interface CategoryTreeFilterFormatterInterface
 {
     /**
      * @param array $docCountAggregation
+     * @param string $localeName
+     * @param string $storeName
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\CategoryNodeSearchResultTransfer[]
+     * @return \Generated\Shared\Transfer\CategoryNodeSearchResultTransfer[]|\ArrayObject
      */
-    public function formatCategoryTreeFilter(array $docCountAggregation): ArrayObject;
+    public function formatCategoryTreeFilter(array $docCountAggregation, string $localeName, string $storeName): ArrayObject;
 }

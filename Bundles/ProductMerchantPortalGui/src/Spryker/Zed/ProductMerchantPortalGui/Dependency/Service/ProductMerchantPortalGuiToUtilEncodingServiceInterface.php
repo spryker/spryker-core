@@ -10,6 +10,17 @@ namespace Spryker\Zed\ProductMerchantPortalGui\Dependency\Service;
 interface ProductMerchantPortalGuiToUtilEncodingServiceInterface
 {
     /**
+     * @phpstan-param array<mixed> $value
+     *
+     * @param array $value
+     * @param int|null $options
+     * @param int|null $depth
+     *
+     * @return string|null
+     */
+    public function encodeJson($value, $options = null, $depth = null);
+
+    /**
      * @param string $jsonValue
      * @param bool $assoc
      * @param int|null $depth

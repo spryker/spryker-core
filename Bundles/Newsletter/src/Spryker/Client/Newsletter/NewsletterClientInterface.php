@@ -13,6 +13,9 @@ use Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer;
 interface NewsletterClientInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
@@ -22,6 +25,9 @@ interface NewsletterClientInterface
     public function subscribeWithSingleOptIn(NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
@@ -31,6 +37,9 @@ interface NewsletterClientInterface
     public function subscribeWithDoubleOptIn(NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\NewsletterSubscriberTransfer $newsletterSubscriber
@@ -40,6 +49,9 @@ interface NewsletterClientInterface
     public function approveDoubleOptInSubscriber(NewsletterSubscriberTransfer $newsletterSubscriber);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
@@ -49,6 +61,9 @@ interface NewsletterClientInterface
     public function unsubscribe(NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterUnsubscriptionRequest

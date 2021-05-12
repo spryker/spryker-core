@@ -12,6 +12,7 @@ use Orm\Zed\SalesReclamation\Persistence\SpySalesReclamationQuery;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+use Spryker\Zed\SalesReclamationGui\Communication\Form\CloseReclamationForm;
 use Spryker\Zed\SalesReclamationGui\Dependency\Service\SalesReclamationGuiToUtilDateTimeServiceInterface;
 
 class ReclamationTable extends AbstractTable
@@ -183,14 +184,15 @@ class ReclamationTable extends AbstractTable
      */
     protected function createCloseAction(int $idReclamation): string
     {
-        return $this->generateViewButton(
+        return $this->generateFormButton(
             Url::generate(static::URL_RECLAMATION_CLOSE, [
                 static::PARAM_ID_RECLAMATION => $idReclamation,
             ]),
             'Close',
+            CloseReclamationForm::class,
             [
-                'class' => 'btn-remove',
-                'icon' => 'fa-close',
+                static::BUTTON_CLASS => 'btn-remove',
+                static::BUTTON_ICON => 'fa-close',
             ]
         );
     }

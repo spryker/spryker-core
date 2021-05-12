@@ -7,12 +7,16 @@
 
 namespace Spryker\Zed\Scheduler\Business\Command;
 
+use Exception;
 use Generated\Shared\Transfer\SchedulerFilterTransfer;
 use Generated\Shared\Transfer\SchedulerResponseCollectionTransfer;
 use Generated\Shared\Transfer\SchedulerResponseTransfer;
 use Generated\Shared\Transfer\SchedulerScheduleTransfer;
+use Generator;
 use Spryker\Zed\Scheduler\Business\Command\Filter\SchedulerFilterInterface;
+use Spryker\Zed\Scheduler\Dependency\Facade\SchedulerToGracefulRunnerFacadeInterface;
 use Spryker\Zed\SchedulerExtension\Dependency\Plugin\SchedulerAdapterPluginInterface;
+use Throwable;
 
 abstract class AbstractSchedulerCommand implements SchedulerCommandInterface
 {
@@ -27,15 +31,23 @@ abstract class AbstractSchedulerCommand implements SchedulerCommandInterface
     protected $schedulerFilter;
 
     /**
+     * @var \Spryker\Zed\Scheduler\Dependency\Facade\SchedulerToGracefulRunnerFacadeInterface
+     */
+    protected $gracefulFacade;
+
+    /**
      * @param \Spryker\Zed\SchedulerExtension\Dependency\Plugin\ScheduleReaderPluginInterface[] $schedulerReaderPlugins
      * @param \Spryker\Zed\Scheduler\Business\Command\Filter\SchedulerFilterInterface $schedulerFilter
+     * @param \Spryker\Zed\Scheduler\Dependency\Facade\SchedulerToGracefulRunnerFacadeInterface $gracefulFacade
      */
     public function __construct(
         array $schedulerReaderPlugins,
-        SchedulerFilterInterface $schedulerFilter
+        SchedulerFilterInterface $schedulerFilter,
+        SchedulerToGracefulRunnerFacadeInterface $gracefulFacade
     ) {
         $this->schedulerReaderPlugins = $schedulerReaderPlugins;
         $this->schedulerFilter = $schedulerFilter;
+        $this->gracefulFacade = $gracefulFacade;
     }
 
     /**
@@ -45,14 +57,34 @@ abstract class AbstractSchedulerCommand implements SchedulerCommandInterface
      */
     public function execute(SchedulerFilterTransfer $filterTransfer): SchedulerResponseCollectionTransfer
     {
+        $schedulerGenerator = $this->createSchedulerGenerator($filterTransfer);
+
+        $this->gracefulFacade->run($schedulerGenerator, Exception::class);
+
+        return $schedulerGenerator->getReturn();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SchedulerFilterTransfer $filterTransfer
+     *
+     * @return \Generator
+     */
+    protected function createSchedulerGenerator(
+        SchedulerFilterTransfer $filterTransfer
+    ): Generator {
         $responseCollectionTransfer = $this->createSchedulerResponseCollectionTransfer();
         $schedulerAdapters = $this->schedulerFilter->getFilteredSchedulerAdapters($filterTransfer);
 
-        foreach ($schedulerAdapters as $idScheduler => $schedulerAdapterPlugin) {
-            $scheduleTransfer = $this->executeScheduleReaderPlugins($idScheduler, $filterTransfer);
-            $responseTransfer = $this->executeCommand($schedulerAdapterPlugin, $scheduleTransfer);
+        try {
+            foreach ($schedulerAdapters as $idScheduler => $schedulerAdapterPlugin) {
+                yield;
 
-            $responseCollectionTransfer->addResponse($responseTransfer);
+                $scheduleTransfer = $this->executeScheduleReaderPlugins($idScheduler, $filterTransfer);
+                $responseTransfer = $this->executeCommand($schedulerAdapterPlugin, $scheduleTransfer);
+
+                $responseCollectionTransfer->addResponse($responseTransfer);
+            }
+        } catch (Throwable $throwable) {
         }
 
         return $responseCollectionTransfer;

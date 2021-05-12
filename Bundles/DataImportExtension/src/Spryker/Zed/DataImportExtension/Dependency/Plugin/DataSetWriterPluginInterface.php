@@ -15,6 +15,9 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 interface DataSetWriterPluginInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
@@ -24,6 +27,9 @@ interface DataSetWriterPluginInterface
     public function write(DataSetInterface $dataSet);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return void

@@ -13,6 +13,9 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 interface CmsBlockCategoryStorageQueryContainerInterface extends QueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $categoryIds
@@ -22,6 +25,9 @@ interface CmsBlockCategoryStorageQueryContainerInterface extends QueryContainerI
     public function queryCmsBlockCategoryStorageByIds(array $categoryIds);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $categoryIds
@@ -31,6 +37,9 @@ interface CmsBlockCategoryStorageQueryContainerInterface extends QueryContainerI
     public function queryCmsBlockCategories(array $categoryIds);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @deprecated Use {@link \Spryker\Zed\CmsBlockCategoryStorage\Persistence\CmsBlockCategoryStorageQueryContainerInterface::queryCmsBlockCategoriesByCmsCategoryIds()} instead.
@@ -54,6 +63,9 @@ interface CmsBlockCategoryStorageQueryContainerInterface extends QueryContainerI
     public function queryCmsBlockCategoriesByCmsCategoryIds(array $cmsBlockCategoriesIds): SpyCmsBlockCategoryConnectorQuery;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $idPositions

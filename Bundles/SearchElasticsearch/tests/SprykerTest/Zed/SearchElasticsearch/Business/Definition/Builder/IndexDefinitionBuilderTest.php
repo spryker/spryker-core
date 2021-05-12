@@ -9,7 +9,6 @@ namespace SprykerTest\Zed\SearchElasticsearch\Business\Definition\Builder;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\IndexDefinitionTransfer;
-use Spryker\Shared\SearchElasticsearch\Index\IndexNameResolverInterface;
 use Spryker\Zed\SearchElasticsearch\Business\Definition\Builder\IndexDefinitionBuilder;
 use Spryker\Zed\SearchElasticsearch\Business\Definition\Loader\IndexDefinitionLoaderInterface;
 use Spryker\Zed\SearchElasticsearch\Business\Definition\Merger\IndexDefinitionMergerInterface;
@@ -45,8 +44,7 @@ class IndexDefinitionBuilderTest extends Unit
 
         $indexDefinitionBuilder = new IndexDefinitionBuilder(
             $indexDefinitionLoader,
-            $this->createIndexDefinitionMergerMock(),
-            $this->createIndexNameResolverMock()
+            $this->createIndexDefinitionMergerMock()
         );
 
         $result = $indexDefinitionBuilder->build();
@@ -71,8 +69,7 @@ class IndexDefinitionBuilderTest extends Unit
 
         $indexDefinitionBuilder = new IndexDefinitionBuilder(
             $indexDefinitionLoader,
-            $this->createIndexDefinitionMergerMock(),
-            $this->createIndexNameResolverMock()
+            $this->createIndexDefinitionMergerMock()
         );
 
         $result = $indexDefinitionBuilder->build();
@@ -128,16 +125,5 @@ class IndexDefinitionBuilderTest extends Unit
     protected function createIndexDefinitionMergerMock(): IndexDefinitionMergerInterface
     {
         return $this->createMock(IndexDefinitionMergerInterface::class);
-    }
-
-    /**
-     * @return \Spryker\Shared\SearchElasticsearch\Index\IndexNameResolverInterface|\PHPUnit\Framework\MockObject\MockObject
-     */
-    protected function createIndexNameResolverMock(): IndexNameResolverInterface
-    {
-        $indexNameResolverMock = $this->createMock(IndexNameResolverInterface::class);
-        $indexNameResolverMock->method('resolve')->will($this->returnArgument(0));
-
-        return $indexNameResolverMock;
     }
 }

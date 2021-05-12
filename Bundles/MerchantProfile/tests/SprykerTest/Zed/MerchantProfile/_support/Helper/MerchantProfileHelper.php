@@ -10,11 +10,9 @@ namespace SprykerTest\Zed\MerchantProfile\Helper;
 use ArrayObject;
 use Codeception\Module;
 use Generated\Shared\DataBuilder\MerchantProfileAddressBuilder;
-use Generated\Shared\DataBuilder\MerchantProfileAddressCollectionBuilder;
 use Generated\Shared\DataBuilder\MerchantProfileBuilder;
 use Generated\Shared\DataBuilder\MerchantProfileGlossaryAttributeValuesBuilder;
 use Generated\Shared\DataBuilder\MerchantProfileLocalizedGlossaryAttributesBuilder;
-use Generated\Shared\Transfer\MerchantProfileAddressCollectionTransfer;
 use Generated\Shared\Transfer\MerchantProfileLocalizedGlossaryAttributesTransfer;
 use Generated\Shared\Transfer\MerchantProfileTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
@@ -37,7 +35,7 @@ class MerchantProfileHelper extends Module
         $merchantProfileTransfer->setFkMerchant($merchantTransfer->getIdMerchant());
 
         $merchantProfileTransfer = $this->addMerchantProfileLocalizedGlossaryAttributes($merchantProfileTransfer);
-        $merchantProfileTransfer->setAddressCollection($this->creatMerchantProfileAddressCollectionTransfer());
+        $merchantProfileTransfer->setAddressCollection($this->createMerchantProfileAddressTransfers());
 
         return $this->getLocator()
             ->merchantProfile()
@@ -100,14 +98,15 @@ class MerchantProfileHelper extends Module
     }
 
     /**
-     * @return \Generated\Shared\Transfer\MerchantProfileAddressCollectionTransfer
+     * @return \ArrayObject|\Generated\Shared\Transfer\MerchantProfileAddressTransfer[]
      */
-    protected function creatMerchantProfileAddressCollectionTransfer(): MerchantProfileAddressCollectionTransfer
+    protected function createMerchantProfileAddressTransfers(): ArrayObject
     {
         $merchantProfileAddressTransfer = (new MerchantProfileAddressBuilder())->build();
-        $merchantProfileAddressCollectionTransfer = (new MerchantProfileAddressCollectionBuilder())->build();
-        $merchantProfileAddressCollectionTransfer->addAddress($merchantProfileAddressTransfer);
 
-        return $merchantProfileAddressCollectionTransfer;
+        $merchantProfileAddressTransfers = new ArrayObject();
+        $merchantProfileAddressTransfers->append($merchantProfileAddressTransfer);
+
+        return $merchantProfileAddressTransfers;
     }
 }

@@ -13,6 +13,9 @@ use Symfony\Component\HttpFoundation\Request;
 interface StepHandlerPluginInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Symfony\Component\HttpFoundation\Request $request

@@ -23,6 +23,20 @@ class ProductOfferMerchantPortalGuiToUtilEncodingServiceBridge implements Produc
     }
 
     /**
+     * @phpstan-param array<mixed> $value
+     *
+     * @param array $value
+     * @param int|null $options
+     * @param int|null $depth
+     *
+     * @return string|null
+     */
+    public function encodeJson($value, $options = null, $depth = null)
+    {
+        return $this->utilEncodingService->encodeJson($value, $options, $depth);
+    }
+
+    /**
      * @param string $jsonValue
      * @param bool $assoc
      * @param int|null $depth

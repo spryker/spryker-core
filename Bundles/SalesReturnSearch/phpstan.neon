@@ -1,2 +1,4 @@
 parameters:
     checkMissingIterableValueType: false
+    excludePaths:
+        - %rootDir%/../../../vendor/spryker/spryker/Bundles/SalesReturnSearch/src/Spryker/Client/SalesReturnSearch/Plugin/Elasticsearch/Query/ReturnReasonSearchQueryPlugin.php

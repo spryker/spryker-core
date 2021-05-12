@@ -12,6 +12,9 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 interface ApiQueryContainerInterface extends QueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $data
@@ -21,6 +24,9 @@ interface ApiQueryContainerInterface extends QueryContainerInterface
     public function createApiCollection(array $data);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array|\Spryker\Shared\Kernel\Transfer\AbstractTransfer $data

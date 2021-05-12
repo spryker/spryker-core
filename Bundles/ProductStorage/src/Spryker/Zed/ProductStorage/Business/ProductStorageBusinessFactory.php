@@ -9,6 +9,8 @@ namespace Spryker\Zed\ProductStorage\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductStorage\Business\Attribute\AttributeMap;
+use Spryker\Zed\ProductStorage\Business\Filter\SingleValueSuperAttributeFilter;
+use Spryker\Zed\ProductStorage\Business\Filter\SingleValueSuperAttributeFilterInterface;
 use Spryker\Zed\ProductStorage\Business\Storage\ProductAbstractStorageWriter;
 use Spryker\Zed\ProductStorage\Business\Storage\ProductConcreteStorageWriter;
 use Spryker\Zed\ProductStorage\Dependency\Facade\ProductStorageToStoreFacadeInterface;
@@ -48,13 +50,23 @@ class ProductStorageBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\ProductStorage\Business\Filter\SingleValueSuperAttributeFilterInterface
+     */
+    public function createSingleValueSuperAttributeFilter(): SingleValueSuperAttributeFilterInterface
+    {
+        return new SingleValueSuperAttributeFilter();
+    }
+
+    /**
      * @return \Spryker\Zed\ProductStorage\Business\Attribute\AttributeMapInterface
      */
     protected function createAttributeMap()
     {
         return new AttributeMap(
             $this->getProductFacade(),
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
+            $this->getConfig(),
+            $this->createSingleValueSuperAttributeFilter()
         );
     }
 

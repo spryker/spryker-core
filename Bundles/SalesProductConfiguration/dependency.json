@@ -1,5 +1,6 @@
 {
-  "include": {
-    "spryker/product-configuration": "ProductConfiguration provides base functionality."
-  }
+    "include": {
+        "spryker/product-configuration": "ProductConfiguration provides base functionality.",
+        "spryker/transfer": "Provides transfer objects definition with `::get*OrFail()` functionality."
+    }
 }

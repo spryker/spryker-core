@@ -12,7 +12,7 @@ use Spryker\Shared\Kernel\Transfer\TransferInterface;
 interface EventHandlerInterface extends EventBaseHandlerInterface
 {
     /**
-     * Specification
+     * Specification:
      *  - Listeners needs to implement this interface to execute the codes for each
      *  event.
      *

@@ -60,6 +60,9 @@ class ProductOfferReader implements ProductOfferReaderInterface
         }
 
         $defaultMerchantProductOfferReference = $this->getDefaultProductOfferReference($productOfferStorageTransfer);
+        if (!$defaultMerchantProductOfferReference) {
+            return $this->productOfferRestResponseBuilder->createProductOfferNotFoundErrorResponse();
+        }
 
         return $this->productOfferRestResponseBuilder->createProductOfferRestResponse(
             $productOfferStorageTransfer,

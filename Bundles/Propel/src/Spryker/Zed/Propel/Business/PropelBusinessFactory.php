@@ -376,8 +376,9 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     {
         $adapterCollection = new AdapterCollection($this->getConfig()->getCurrentDatabaseEngine());
 
-        $adapterCollection->addAdapter($this->createAdapterFactory()->createMySqlAdapter());
-        $adapterCollection->addAdapter($this->createAdapterFactory()->createPostgreSqlAdapter());
+        $adapterFactory = $this->createAdapterFactory();
+        $adapterCollection->addAdapter($adapterFactory->createMySqlAdapter());
+        $adapterCollection->addAdapter($adapterFactory->createPostgreSqlAdapter());
 
         return $adapterCollection;
     }

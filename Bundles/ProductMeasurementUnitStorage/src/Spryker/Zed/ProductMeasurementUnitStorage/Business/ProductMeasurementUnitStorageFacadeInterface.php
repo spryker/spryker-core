@@ -36,6 +36,9 @@ interface ProductMeasurementUnitStorageFacadeInterface
     public function publishProductConcreteMeasurementUnit(array $productIds): void;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
@@ -43,6 +46,9 @@ interface ProductMeasurementUnitStorageFacadeInterface
     public function findAllProductMeasurementUnitTransfers(): array;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int[] $productMeasurementUnitIds
@@ -52,6 +58,9 @@ interface ProductMeasurementUnitStorageFacadeInterface
     public function findProductMeasurementUnitTransfers(array $productMeasurementUnitIds): array;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
@@ -59,6 +68,9 @@ interface ProductMeasurementUnitStorageFacadeInterface
     public function getSalesUnits(): array;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int[] $salesUnitIds
@@ -68,6 +80,9 @@ interface ProductMeasurementUnitStorageFacadeInterface
     public function getSalesUnitsByIds(array $salesUnitIds): array;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
@@ -77,6 +92,9 @@ interface ProductMeasurementUnitStorageFacadeInterface
     public function findFilteredProductMeasurementUnitTransfers(FilterTransfer $filterTransfer): array;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer

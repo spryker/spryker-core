@@ -13,6 +13,9 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 interface ProductCategoryFilterStorageQueryContainerInterface extends QueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $idCategories
@@ -22,6 +25,9 @@ interface ProductCategoryFilterStorageQueryContainerInterface extends QueryConta
     public function queryProductCategoryFilterStorageByFkCategories(array $idCategories);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $categoryIds
@@ -31,6 +37,9 @@ interface ProductCategoryFilterStorageQueryContainerInterface extends QueryConta
     public function queryProductCategoryByIdCategories(array $categoryIds);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int[] $productCategoryFilterIds

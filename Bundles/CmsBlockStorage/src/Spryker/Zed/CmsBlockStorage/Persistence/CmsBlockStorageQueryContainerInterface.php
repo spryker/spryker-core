@@ -14,6 +14,9 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 interface CmsBlockStorageQueryContainerInterface extends QueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $cmsBlockIds
@@ -23,6 +26,9 @@ interface CmsBlockStorageQueryContainerInterface extends QueryContainerInterface
     public function queryCmsBlockStorageEntities(array $cmsBlockIds): SpyCmsBlockStorageQuery;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int[] $cmsBlockIds
@@ -32,6 +38,9 @@ interface CmsBlockStorageQueryContainerInterface extends QueryContainerInterface
     public function queryCmsBlockByIds(array $cmsBlockIds): SpyCmsBlockQuery;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $cmsBlockIds

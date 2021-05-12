@@ -1,6 +1,6 @@
 var ContentItemEditorPopover = function () {
     $.extend($.summernote.plugins, {
-        'contentItemPopover': function (context) {
+        contentItemPopover: function (context) {
             this.context = context;
             this.ui = $.summernote.ui;
             this.note = context.layoutInfo.note;
@@ -10,24 +10,29 @@ var ContentItemEditorPopover = function () {
             this.isPopoverVisible = false;
 
             this.events = {
-                'summernote.keyup summernote.mouseup summernote.change': function() {
-                    this.$clickedNode = $(this.context.invoke('editor.createRange').sc).parents('.js-content-item-editor');
+                'summernote.keyup summernote.mouseup summernote.change': function () {
+                    this.$clickedNode = $(this.context.invoke('editor.createRange').sc).parents(
+                        '.js-content-item-editor',
+                    );
                     this.showPopover();
                 }.bind(this),
-                'summernote.disable summernote.dialog.shown summernote.codeview.toggled': function() {
+                'summernote.disable summernote.dialog.shown summernote.codeview.toggled': function () {
                     this.hidePopover();
                 }.bind(this),
                 'summernote.scroll': function (event) {
                     if (this.isPopoverVisible) {
                         this.scrollHandler(event);
                     }
-                }.bind(this)
+                }.bind(this),
             };
 
-            this.initialize = function() {
-                this.$contentItemPopover = this.ui.popover({
-                    className: 'note-link-popover'
-                }).render().appendTo(context.options.container);
+            this.initialize = function () {
+                this.$contentItemPopover = this.ui
+                    .popover({
+                        className: 'note-link-popover',
+                    })
+                    .render()
+                    .appendTo(context.options.container);
 
                 var $content = this.$contentItemPopover.find('.popover-content,.note-popover-content');
 
@@ -52,11 +57,11 @@ var ContentItemEditorPopover = function () {
                 this.$contentItemPopover.css({
                     display: 'block',
                     left: itemPosition.left,
-                    top: itemPosition.top
+                    top: itemPosition.top,
                 });
             };
 
-            this.hidePopover = function() {
+            this.hidePopover = function () {
                 this.$contentItemPopover.hide();
                 this.isPopoverVisible = false;
             };
@@ -76,7 +81,7 @@ var ContentItemEditorPopover = function () {
             };
 
             this.putCarretInTheBegining = function (clickedContentItemEditor) {
-                var itemParentNode = this.$range.createFromNode(clickedContentItemEditor.parentNode)
+                var itemParentNode = this.$range.createFromNode(clickedContentItemEditor.parentNode);
 
                 itemParentNode.collapse(true);
                 itemParentNode.select();
@@ -89,7 +94,7 @@ var ContentItemEditorPopover = function () {
 
                 return {
                     left: position.left,
-                    top: position.top + height
+                    top: position.top + height,
                 };
             };
 
@@ -123,10 +128,10 @@ var ContentItemEditorPopover = function () {
                 });
             };
 
-            this.getClickedNode = function() {
+            this.getClickedNode = function () {
                 return this.$clickedNode;
             };
-        }
+        },
     });
 };
 

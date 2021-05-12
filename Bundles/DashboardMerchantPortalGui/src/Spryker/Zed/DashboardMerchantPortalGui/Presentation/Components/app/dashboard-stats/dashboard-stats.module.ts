@@ -10,5 +10,4 @@ import { DashboardStatsBlockComponent } from './dashboard-stats-block/dashboard-
     declarations: [DashboardStatsComponent, DashboardStatsBlockComponent],
     exports: [DashboardStatsComponent, DashboardStatsBlockComponent],
 })
-export class DashboardStatsModule {
-}
+export class DashboardStatsModule {}

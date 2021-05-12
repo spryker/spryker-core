@@ -12,6 +12,9 @@ use Orm\Zed\ProductValidity\Persistence\SpyProductValidityQuery;
 interface ProductValidityQueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\ProductValidity\Persistence\SpyProductValidityQuery
@@ -19,6 +22,9 @@ interface ProductValidityQueryContainerInterface
     public function queryProductValidity(): SpyProductValidityQuery;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProductConcrete
@@ -28,6 +34,9 @@ interface ProductValidityQueryContainerInterface
     public function queryProductValidityByIdProductConcrete(int $idProductConcrete): SpyProductValidityQuery;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\ProductValidity\Persistence\SpyProductValidityQuery
@@ -35,6 +44,9 @@ interface ProductValidityQueryContainerInterface
     public function queryProductsBecomingValid(): SpyProductValidityQuery;
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\ProductValidity\Persistence\SpyProductValidityQuery

@@ -13,6 +13,9 @@ use Generated\Shared\Transfer\QuoteTransfer;
 interface CheckoutPluginInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

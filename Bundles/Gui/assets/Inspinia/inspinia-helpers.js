@@ -1,12 +1,12 @@
 /**
- * Copyright (c) 2016-present Spryker Systems GmbH. All rights reserved. 
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file. 
+ * Copyright (c) 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 'use strict';
 
 function removeStyleAttribute(elementId) {
-    setTimeout(function() {
+    setTimeout(function () {
         $(elementId).removeAttr('style');
     }, 500);
 }
@@ -17,55 +17,56 @@ function sideMenuFadeIn() {
 
 module.exports = {
     // Full height of sidebar
-    fix_height: function() {
-        var heightWithoutNavbar = $("body > #wrapper").height() - 61;
-        $(".sidebard-panel").css("min-height", heightWithoutNavbar + "px");
+    fix_height: function () {
+        var heightWithoutNavbar = $('body > #wrapper').height() - 61;
+        $('.sidebard-panel').css('min-height', heightWithoutNavbar + 'px');
 
         var navbarHeigh = $('nav.navbar-default').height();
         var wrapperHeigh = $('#page-wrapper').height();
 
         if (navbarHeigh > wrapperHeigh) {
-            $('#page-wrapper').css("min-height", navbarHeigh + "px");
+            $('#page-wrapper').css('min-height', navbarHeigh + 'px');
         }
 
         if (navbarHeigh < wrapperHeigh) {
-            $('#page-wrapper').css("min-height", $(window).height() + "px");
+            $('#page-wrapper').css('min-height', $(window).height() + 'px');
         }
 
         if ($('body').hasClass('fixed-nav')) {
-            $('#page-wrapper').css("min-height", $(window).height() - 60 + "px");
+            $('#page-wrapper').css('min-height', $(window).height() - 60 + 'px');
         }
     },
 
-    fixBodyClassByResolution: function() {
+    fixBodyClassByResolution: function () {
         if ($(document).width() < 769) {
-            $('body').addClass('body-small')
+            $('body').addClass('body-small');
         } else {
-            $('body').removeClass('body-small')
+            $('body').removeClass('body-small');
         }
     },
 
     // check if browser support HTML5 local storage
-    localStorageSupport: function() {
-        return (('localStorage' in window) && window['localStorage'] !== null)
+    localStorageSupport: function () {
+        return 'localStorage' in window && window['localStorage'] !== null;
     },
 
     // For demo purpose - animation css script
-    animationHover: function(element, animation) {
+    animationHover: function (element, animation) {
         element = $(element);
         element.hover(
-            function() {
+            function () {
                 element.addClass('animated ' + animation);
             },
-            function() {
+            function () {
                 //wait for animation to finish before removing classes
-                window.setTimeout(function() {
+                window.setTimeout(function () {
                     element.removeClass('animated ' + animation);
                 }, 2000);
-            });
+            },
+        );
     },
 
-    SmoothlyMenu: function() {
+    SmoothlyMenu: function () {
         if (!$('body').hasClass('mini-navbar') || $('body').hasClass('body-small')) {
             // Hide menu in order to smoothly turn on when maximize menu
             $('#side-menu').hide();
@@ -82,18 +83,18 @@ module.exports = {
     },
 
     // Dragable panels
-    WinMove: function() {
-        var element = "[class*=col]";
-        var handle = ".ibox-title";
-        var connect = "[class*=col]";
+    WinMove: function () {
+        var element = '[class*=col]';
+        var handle = '.ibox-title';
+        var connect = '[class*=col]';
         $(element)
             .sortable({
                 handle: handle,
                 connectWith: connect,
                 tolerance: 'pointer',
                 forcePlaceholderSize: true,
-                opacity: 0.8
+                opacity: 0.8,
             })
             .disableSelection();
-    }
+    },
 };

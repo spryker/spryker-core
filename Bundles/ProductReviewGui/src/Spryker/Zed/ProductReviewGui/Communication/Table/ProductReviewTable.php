@@ -13,6 +13,7 @@ use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\ProductReviewGui\Communication\Form\DeleteProductReviewForm;
+use Spryker\Zed\ProductReviewGui\Communication\Form\StatusProductReviewForm;
 use Spryker\Zed\ProductReviewGui\Dependency\Service\ProductReviewGuiToUtilDateTimeInterface;
 use Spryker\Zed\ProductReviewGui\Dependency\Service\ProductReviewGuiToUtilSanitizeInterface;
 use Spryker\Zed\ProductReviewGui\Persistence\ProductReviewGuiQueryContainerInterface;
@@ -208,62 +209,61 @@ class ProductReviewTable extends AbstractTable
      *
      * @return string
      */
-    protected function generateStatusChangeButton(SpyProductReview $productReviewEntity)
+    protected function generateStatusChangeButton(SpyProductReview $productReviewEntity): string
     {
-        $buttonGroupItems = [];
+        $buttons = [];
         switch ($productReviewEntity->getStatus()) {
             case ProductReviewTableConstants::COL_PRODUCT_REVIEW_STATUS_REJECTED:
-                $buttonGroupItems[] = $this->generateApproveButtonGroupItem($productReviewEntity);
+                $buttons[] = $this->generateApproveButton($productReviewEntity);
 
                 break;
             case ProductReviewTableConstants::COL_PRODUCT_REVIEW_STATUS_APPROVED:
-                $buttonGroupItems[] = $this->generateRejectButtonGroupItem($productReviewEntity);
+                $buttons[] = $this->generateRejectButton($productReviewEntity);
 
                 break;
             case ProductReviewTableConstants::COL_PRODUCT_REVIEW_STATUS_PENDING:
             default:
-                $buttonGroupItems[] = $this->generateApproveButtonGroupItem($productReviewEntity);
-                $buttonGroupItems[] = $this->generateRejectButtonGroupItem($productReviewEntity);
+                $buttons[] = $this->generateApproveButton($productReviewEntity);
+                $buttons[] = $this->generateRejectButton($productReviewEntity);
 
                 break;
         }
 
-        return $this->generateButtonGroup(
-            $buttonGroupItems,
-            'Change status',
-            [
-                'icon' => '',
-            ]
-        );
+        return implode(' ', $buttons);
     }
 
     /**
      * @param \Orm\Zed\ProductReview\Persistence\SpyProductReview $productReviewEntity
      *
-     * @return array
+     * @return string
      */
-    protected function generateApproveButtonGroupItem(SpyProductReview $productReviewEntity)
+    protected function generateApproveButton(SpyProductReview $productReviewEntity): string
     {
-        return $this->createButtonGroupItem(
-            'Approve',
+        return $this->generateFormButton(
             Url::generate('/product-review-gui/update/approve', [
                 ProductReviewTableConstants::PARAM_ID => $productReviewEntity->getIdProductReview(),
-            ])
+            ]),
+            'Approve',
+            StatusProductReviewForm::class
         );
     }
 
     /**
      * @param \Orm\Zed\ProductReview\Persistence\SpyProductReview $productReviewEntity
      *
-     * @return array
+     * @return string
      */
-    protected function generateRejectButtonGroupItem(SpyProductReview $productReviewEntity)
+    protected function generateRejectButton(SpyProductReview $productReviewEntity): string
     {
-        return $this->createButtonGroupItem(
-            'Reject',
+        return $this->generateFormButton(
             Url::generate('/product-review-gui/update/reject', [
                 ProductReviewTableConstants::PARAM_ID => $productReviewEntity->getIdProductReview(),
-            ])
+            ]),
+            'Reject',
+            StatusProductReviewForm::class,
+            [
+                static::BUTTON_CLASS => 'btn-warning',
+            ]
         );
     }
 
@@ -302,8 +302,8 @@ class ProductReviewTable extends AbstractTable
             Url::generate('/customer/view', [
                 'id-customer' => $productReviewEntity->getVirtualColumn(ProductReviewTableConstants::COL_PRODUCT_REVIEW_GUI_ID_CUSTOMER),
             ]),
-            $productReviewEntity->getVirtualColumn(ProductReviewTableConstants::COL_PRODUCT_REVIEW_GUI_FIRST_NAME),
-            $productReviewEntity->getVirtualColumn(ProductReviewTableConstants::COL_PRODUCT_REVIEW_GUI_LAST_NAME)
+            $this->utilSanitizeService->escapeHtml($productReviewEntity->getVirtualColumn(ProductReviewTableConstants::COL_PRODUCT_REVIEW_GUI_FIRST_NAME)),
+            $this->utilSanitizeService->escapeHtml($productReviewEntity->getVirtualColumn(ProductReviewTableConstants::COL_PRODUCT_REVIEW_GUI_LAST_NAME))
         );
     }
 
@@ -319,7 +319,7 @@ class ProductReviewTable extends AbstractTable
             Url::generate('/product-management/view', [
                 'id-product-abstract' => $productReviewEntity->getFkProductAbstract(),
             ]),
-            $productReviewEntity->getVirtualColumn(ProductReviewTableConstants::COL_PRODUCT_NAME)
+            $this->utilSanitizeService->escapeHtml($productReviewEntity->getVirtualColumn(ProductReviewTableConstants::COL_PRODUCT_NAME))
         );
     }
 

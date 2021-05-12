@@ -10,6 +10,9 @@ namespace Spryker\Zed\User\Persistence;
 interface UserQueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $username
@@ -19,6 +22,9 @@ interface UserQueryContainerInterface
     public function queryUserByUsername($username);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $id
@@ -28,6 +34,9 @@ interface UserQueryContainerInterface
     public function queryUserById($id);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\User\Persistence\SpyUserQuery
@@ -35,6 +44,9 @@ interface UserQueryContainerInterface
     public function queryUsers();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\User\Persistence\SpyUserQuery

@@ -13,6 +13,9 @@ use Generated\Shared\Transfer\ApiRequestTransfer;
 interface ApiResourcePluginInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return string
@@ -20,6 +23,9 @@ interface ApiResourcePluginInterface
     public function getResourceName();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
@@ -29,6 +35,9 @@ interface ApiResourcePluginInterface
     public function add(ApiDataTransfer $apiDataTransfer);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $id
@@ -38,6 +47,9 @@ interface ApiResourcePluginInterface
     public function get($id);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $id
@@ -48,6 +60,9 @@ interface ApiResourcePluginInterface
     public function update($id, ApiDataTransfer $apiDataTransfer);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $id
@@ -57,6 +72,9 @@ interface ApiResourcePluginInterface
     public function remove($id);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer

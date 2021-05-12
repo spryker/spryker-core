@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\ContentNavigationTypeTransfer;
 interface ContentNavigationClientInterface
 {
     /**
-     * Specification
+     * Specification:
      * - Fetches Navigation by ID.
      * - Executes the term for the navigation, resulting in the navigation.
      *

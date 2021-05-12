@@ -15,6 +15,9 @@ use Generated\Shared\Transfer\FilterTransfer;
 interface CategoryImageStorageFacadeInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $categoryIds
@@ -24,6 +27,9 @@ interface CategoryImageStorageFacadeInterface
     public function publishCategoryImages(array $categoryIds);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $categoryIds

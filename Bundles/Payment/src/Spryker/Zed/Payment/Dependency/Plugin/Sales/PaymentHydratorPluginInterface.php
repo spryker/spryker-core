@@ -13,6 +13,9 @@ use Generated\Shared\Transfer\PaymentTransfer;
 interface PaymentHydratorPluginInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer

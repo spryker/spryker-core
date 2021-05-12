@@ -10,6 +10,9 @@ namespace Spryker\Zed\MessengerExtension\Dependency\Plugin;
 interface TranslationPluginInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $keyName
@@ -19,6 +22,9 @@ interface TranslationPluginInterface
     public function hasKey($keyName);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $keyName

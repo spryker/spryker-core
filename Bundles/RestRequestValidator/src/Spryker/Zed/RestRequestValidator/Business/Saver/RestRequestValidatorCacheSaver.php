@@ -67,7 +67,7 @@ class RestRequestValidatorCacheSaver implements RestRequestValidatorCacheSaverIn
      */
     public function saveCacheForCodeBucket(array $validatorConfig, string $codeBucket): void
     {
-        $outdatedConfigFiles = glob($this->getCodeBucketCacheFilePath($codeBucket));
+        $outdatedConfigFiles = glob($this->getCodeBucketCacheFilePath($codeBucket), GLOB_NOSORT);
 
         if (!empty($outdatedConfigFiles)) {
             $this->filesystem->remove($outdatedConfigFiles);

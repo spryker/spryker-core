@@ -22,7 +22,7 @@ interface PriceProductStoragePriceDimensionPluginInterface
     public function findProductConcretePrices(int $idProductConcrete): array;
 
     /**
-     * * Specification:
+     * Specification:
      *  - Returns prices data from Storage for abstract product.
      *
      * @api

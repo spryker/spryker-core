@@ -12,6 +12,9 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 interface ShipmentQueryContainerInterface extends QueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentCarrierQuery
@@ -19,6 +22,9 @@ interface ShipmentQueryContainerInterface extends QueryContainerInterface
     public function queryCarriers();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
@@ -26,6 +32,9 @@ interface ShipmentQueryContainerInterface extends QueryContainerInterface
     public function queryMethods();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @deprecated Use {@link \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface::getActiveShipmentMethods()} instead.
@@ -35,6 +44,9 @@ interface ShipmentQueryContainerInterface extends QueryContainerInterface
     public function queryActiveMethods();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @deprecated Use {@link \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface::findTaxSetByShipmentMethodAndCountryIso2Code()} instead.
@@ -47,6 +59,9 @@ interface ShipmentQueryContainerInterface extends QueryContainerInterface
     public function queryTaxSetByIdShipmentMethodAndCountryIso2Code($idShipmentMethod, $countryIso2Code);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @deprecated Use {@link \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface::findShipmentTransfersByOrder()} instead.
@@ -58,6 +73,9 @@ interface ShipmentQueryContainerInterface extends QueryContainerInterface
     public function querySalesShipmentByIdSalesOrder($idSalesOrder);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @deprecated Will be removed without replacement.
@@ -70,6 +88,9 @@ interface ShipmentQueryContainerInterface extends QueryContainerInterface
     public function queryUniqueCarrierName($carrierName, $idCarrier = null);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
@@ -77,6 +98,9 @@ interface ShipmentQueryContainerInterface extends QueryContainerInterface
     public function queryMethodsWithMethodPricesAndCarrier();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idShipmentMethod
@@ -86,6 +110,9 @@ interface ShipmentQueryContainerInterface extends QueryContainerInterface
     public function queryMethodWithMethodPricesAndCarrierById($idShipmentMethod);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idShipmentMethod
@@ -95,6 +122,9 @@ interface ShipmentQueryContainerInterface extends QueryContainerInterface
     public function queryActiveMethodsWithMethodPricesAndCarrierById($idShipmentMethod);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodPriceQuery
@@ -102,6 +132,9 @@ interface ShipmentQueryContainerInterface extends QueryContainerInterface
     public function queryMethodPrices();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idShipmentMethod
@@ -111,6 +144,9 @@ interface ShipmentQueryContainerInterface extends QueryContainerInterface
     public function queryMethodPricesByIdShipmentMethod($idShipmentMethod);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idShipmentMethod

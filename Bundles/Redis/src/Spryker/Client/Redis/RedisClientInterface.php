@@ -242,4 +242,18 @@ interface RedisClientInterface
      * @return void
      */
     public function setupConnection(string $connectionKey, RedisConfigurationTransfer $configurationTransfer): void;
+
+    /**
+     * Specification:
+     * - Increments the number stored at key by one.
+     * - @see https://redis.io/commands/incr.
+     *
+     * @api
+     *
+     * @param string $connectionKey
+     * @param string $key
+     *
+     * @return int
+     */
+    public function incr(string $connectionKey, string $key): int;
 }

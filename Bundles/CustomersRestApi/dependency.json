@@ -1,5 +1,5 @@
 {
-  "include": {
-    "spryker/session": "Session provides backwards compatibility."
-  }
+    "include": {
+        "spryker/session": "Session provides backwards compatibility."
+    }
 }

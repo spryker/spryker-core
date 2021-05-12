@@ -15,6 +15,9 @@ use Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery;
 interface GlossaryStorageQueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $glossaryKeyIds
@@ -24,6 +27,9 @@ interface GlossaryStorageQueryContainerInterface
     public function queryGlossaryStorageByGlossaryIds(array $glossaryKeyIds);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $glossaryKeyIds
@@ -33,6 +39,9 @@ interface GlossaryStorageQueryContainerInterface
     public function queryGlossaryTranslation(array $glossaryKeyIds);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int[] $glossaryKeysIds

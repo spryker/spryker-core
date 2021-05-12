@@ -9,6 +9,7 @@ namespace Spryker\Zed\AvailabilityNotification\Business\Subscription;
 
 use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer;
 use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer;
+use Spryker\Shared\AvailabilityNotification\AvailabilityNotificationConfig;
 use Spryker\Zed\AvailabilityNotification\Business\Notification\AvailabilityNotificationUnsubscriptionSenderInterface;
 use Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationEntityManagerInterface;
 
@@ -121,6 +122,6 @@ class AvailabilityNotificationUnsubscriber implements AvailabilityNotificationUn
     {
         return (new AvailabilityNotificationSubscriptionResponseTransfer())
             ->setIsSuccess(false)
-            ->setErrorMessage('Subscription doesn\'t exist');
+            ->setErrorMessage(AvailabilityNotificationConfig::MESSAGE_SUBSCRIPTION_DOES_NOT_EXIST);
     }
 }

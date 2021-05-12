@@ -7,28 +7,34 @@
 
 namespace Spryker\Glue\CategoriesRestApi\Dependency\Client;
 
+use ArrayObject;
+use Generated\Shared\Transfer\CategoryNodeStorageTransfer;
+
 interface CategoriesRestApiToCategoryStorageClientInterface
 {
     /**
-     * @param string $locale
+     * @param string $localeName
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[]|\ArrayObject
      */
-    public function getCategories($locale);
+    public function getCategories(string $localeName, string $storeName): ArrayObject;
 
     /**
      * @param int $idCategoryNode
      * @param string $localeName
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer
      */
-    public function getCategoryNodeById($idCategoryNode, $localeName);
+    public function getCategoryNodeById(int $idCategoryNode, string $localeName, string $storeName): CategoryNodeStorageTransfer;
 
     /**
      * @param int[] $categoryNodeIds
      * @param string $localeName
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[]
      */
-    public function getCategoryNodeByIds(array $categoryNodeIds, string $localeName): array;
+    public function getCategoryNodeByIds(array $categoryNodeIds, string $localeName, string $storeName): array;
 }

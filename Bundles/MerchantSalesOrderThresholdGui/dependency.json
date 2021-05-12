@@ -1,5 +1,5 @@
 {
-  "include": {
-    "spryker/sales-order-threshold-gui": "Provides a controller action."
-  }
+    "include": {
+        "spryker/sales-order-threshold-gui": "Provides a controller action."
+    }
 }

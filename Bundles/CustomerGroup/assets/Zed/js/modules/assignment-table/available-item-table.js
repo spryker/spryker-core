@@ -29,7 +29,7 @@ function initialize() {
         $(destinationTabLabelSelector).text(),
         destinationTabLabelSelector,
         fieldToBeAssignedItemIds,
-        onRemove
+        onRemove,
     );
 
     $(buttonSelectAllSelector).on('click', tableHandler.selectAll);
@@ -54,5 +54,5 @@ function onRemove() {
 }
 
 module.exports = {
-    initialize: initialize
+    initialize: initialize,
 };

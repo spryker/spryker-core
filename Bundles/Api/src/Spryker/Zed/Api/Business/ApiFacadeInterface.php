@@ -14,6 +14,9 @@ use Symfony\Component\Routing\RouterInterface;
 interface ApiFacadeInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
@@ -23,6 +26,9 @@ interface ApiFacadeInterface
     public function dispatch(ApiRequestTransfer $apiRequestTransfer);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $resourceName

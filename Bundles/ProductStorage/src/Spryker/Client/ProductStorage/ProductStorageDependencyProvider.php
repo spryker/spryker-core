@@ -14,6 +14,7 @@ use Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToStorageClien
 use Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToStoreClientBridge;
 use Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToSynchronizationServiceBridge;
 use Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToUtilEncodingServiceBridge;
+use Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToUtilSanitizeServiceBridge;
 use Spryker\Shared\Kernel\Store;
 
 /**
@@ -26,6 +27,7 @@ class ProductStorageDependencyProvider extends AbstractDependencyProvider
     public const CLIENT_STORE = 'CLIENT_STORE';
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+    public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
     public const STORE = 'STORE';
     public const PLUGIN_PRODUCT_VIEW_EXPANDERS = 'PLUGIN_STORAGE_PRODUCT_EXPANDERS';
     public const PLUGINS_PRODUCT_ABSTRACT_RESTRICTION = 'PLUGINS_PRODUCT_ABSTRACT_RESTRICTION';
@@ -54,6 +56,7 @@ class ProductStorageDependencyProvider extends AbstractDependencyProvider
         $container = $this->addProductAbstractRestrictionFilterPlugins($container);
         $container = $this->addProductConcreteRestrictionFilterPlugins($container);
         $container = $this->addStoreClient($container);
+        $container = $this->addUtilSanitizeService($container);
 
         return $container;
     }
@@ -112,6 +115,22 @@ class ProductStorageDependencyProvider extends AbstractDependencyProvider
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new ProductStorageToUtilEncodingServiceBridge(
                 $container->getLocator()->utilEncoding()->service()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addUtilSanitizeService(Container $container): Container
+    {
+        $container->set(static::SERVICE_UTIL_SANITIZE, function (Container $container) {
+            return new ProductStorageToUtilSanitizeServiceBridge(
+                $container->getLocator()->utilSanitize()->service()
             );
         });
 

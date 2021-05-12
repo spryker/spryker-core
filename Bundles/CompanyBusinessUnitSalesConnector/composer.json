@@ -1,50 +1,50 @@
 {
-  "name": "spryker/company-business-unit-sales-connector",
-  "type": "library",
-  "description": "CompanyBusinessUnitSalesConnector module",
-  "license": "proprietary",
-  "require": {
-    "php": ">=7.3",
-    "spryker/company-business-unit": "^2.0.0",
-    "spryker/kernel": "^3.33.0",
-    "spryker/permission-extension": "^1.0.0",
-    "spryker/sales": "^11.0.0",
-    "spryker/sales-extension": "^1.7.0",
-    "spryker/uuid-behavior": "^1.0.0"
-  },
-  "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/company": "*",
-    "spryker/company-role": "*",
-    "spryker/company-user": "*",
-    "spryker/customer": "*",
-    "spryker/oms": "*",
-    "spryker/permission": "*",
-    "spryker/propel": "*",
-    "spryker/testify": "*"
-  },
-  "autoload": {
-    "psr-4": {
-      "Spryker\\": "src/Spryker/"
+    "name": "spryker/company-business-unit-sales-connector",
+    "type": "library",
+    "description": "CompanyBusinessUnitSalesConnector module",
+    "license": "proprietary",
+    "require": {
+        "php": ">=7.3",
+        "spryker/company-business-unit": "^2.0.0",
+        "spryker/kernel": "^3.33.0",
+        "spryker/permission-extension": "^1.0.0",
+        "spryker/sales": "^11.0.0",
+        "spryker/sales-extension": "^1.7.0",
+        "spryker/uuid-behavior": "^1.0.0"
+    },
+    "require-dev": {
+        "spryker/code-sniffer": "*",
+        "spryker/company": "*",
+        "spryker/company-role": "*",
+        "spryker/company-user": "*",
+        "spryker/customer": "*",
+        "spryker/oms": "*",
+        "spryker/permission": "*",
+        "spryker/propel": "*",
+        "spryker/testify": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Spryker\\": "src/Spryker/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "SprykerTest\\": "tests/SprykerTest/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
     }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "SprykerTest\\": "tests/SprykerTest/"
-    }
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "scripts": {
-    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
-    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "1.0.x-dev"
-    }
-  },
-  "config": {
-    "sort-packages": true
-  }
 }

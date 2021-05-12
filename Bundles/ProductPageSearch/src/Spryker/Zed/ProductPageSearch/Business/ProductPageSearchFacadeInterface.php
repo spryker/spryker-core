@@ -98,7 +98,7 @@ interface ProductPageSearchFacadeInterface
     public function unpublishProductConcretePageSearches(array $productAbstractStoreMap): void;
 
     /**
-     * Specification
+     * Specification:
      * - Finds product concrete page search entities by given concrete product ids.
      * - Returns array of ProductConcretePageSearchTransfer objects.
      *

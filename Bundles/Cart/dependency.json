@@ -1,5 +1,5 @@
 {
-  "include": {
-    "spryker/cart-extension": "Interfaces it depends on"
-  }
+    "include": {
+        "spryker/cart-extension": "Interfaces it depends on"
+    }
 }

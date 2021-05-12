@@ -10,6 +10,9 @@ namespace Spryker\Zed\Payment\Dependency\Plugin\Checkout;
 interface CheckoutPluginCollectionInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginInterface $plugin
@@ -21,6 +24,9 @@ interface CheckoutPluginCollectionInterface
     public function add(CheckoutPluginInterface $plugin, $provider, $type);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $provider
@@ -31,6 +37,9 @@ interface CheckoutPluginCollectionInterface
     public function get($provider, $type);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $provider

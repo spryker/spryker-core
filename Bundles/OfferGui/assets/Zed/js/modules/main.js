@@ -7,18 +7,16 @@
 
 require('../../scss/main.scss');
 
-$(document).ready( function () {
-
+$(document).ready(function () {
     var contactDate = $('#edit_offer_contactDate');
 
     contactDate.datepicker({
         dateFormat: 'yy-mm-dd',
         changeMonth: true,
-        numberOfMonths: 3
+        numberOfMonths: 3,
     });
 
-    $('form[name="edit_offer"] input').on('keyup keypress', function(e) {
+    $('form[name="edit_offer"] input').on('keyup keypress', function (e) {
         return e.which !== 13;
     });
-
 });

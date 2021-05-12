@@ -12,6 +12,9 @@ use Generated\Shared\Transfer\HealthCheckServiceResponseTransfer;
 interface SessionFacadeInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $sessionId
@@ -21,6 +24,9 @@ interface SessionFacadeInterface
     public function removeYvesSessionLockFor($sessionId);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $sessionId

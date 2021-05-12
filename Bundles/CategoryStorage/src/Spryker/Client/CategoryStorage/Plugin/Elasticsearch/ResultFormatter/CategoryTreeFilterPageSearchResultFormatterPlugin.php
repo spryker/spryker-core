@@ -40,6 +40,10 @@ class CategoryTreeFilterPageSearchResultFormatterPlugin extends AbstractElastics
         $name = $this->getFactory()->getConfig()->getCategoryFacetAggregationName();
         $docCountAggregation = $searchResult->getAggregations()[$name] ?? [];
 
-        return $this->getClient()->formatCategoryTreeFilter($docCountAggregation);
+        return $this->getClient()->formatCategoryTreeFilter(
+            $docCountAggregation,
+            $this->getFactory()->getLocaleClient()->getCurrentLocale(),
+            APPLICATION_STORE
+        );
     }
 }

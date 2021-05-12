@@ -7,7 +7,7 @@
 
 require('../../scss/main.scss');
 
-var shippingAddressToggle = function() {
+var shippingAddressToggle = function () {
     if ($('input[name="addresses[shippingAddress][id_customer_address]"]:last').is(':checked')) {
         $('#manualOrderShippingAddress .__toggler-target').show();
     } else {
@@ -15,7 +15,7 @@ var shippingAddressToggle = function() {
     }
 };
 
-var billingAddressToggle = function() {
+var billingAddressToggle = function () {
     if ($('input[name="addresses[billingAddress][id_customer_address]"]:last').is(':checked')) {
         $('#manualOrderBillingAddress .__toggler-target').show();
     } else {
@@ -23,7 +23,7 @@ var billingAddressToggle = function() {
     }
 };
 
-var billingAddressSelectionToggle = function() {
+var billingAddressSelectionToggle = function () {
     if ($('#addresses_billingSameAsShipping').is(':checked')) {
         $('#manualOrderBillingAddress .__toggler-target-selection').hide();
     } else {
@@ -31,10 +31,10 @@ var billingAddressSelectionToggle = function() {
     }
 };
 
-$(document).ready( function () {
+$(document).ready(function () {
     var productCount = 3;
 
-    $('#add-another-product').click(function() {
+    $('#add-another-product').click(function () {
         var productList = $('#product-fields-list');
 
         var skuWidget = productList.attr('data-prototype-sku');
@@ -63,8 +63,7 @@ $(document).ready( function () {
     billingAddressSelectionToggle();
     $('#addresses_billingSameAsShipping').click(billingAddressSelectionToggle);
 
-
-    $('form.ManualOrderEntryForm input').on('keyup keypress', function(e) {
+    $('form.ManualOrderEntryForm input').on('keyup keypress', function (e) {
         if (e.which === 13) {
             var btn = $('form.ManualOrderEntryForm input.submitBtn');
             if (btn.length) {
@@ -72,14 +71,15 @@ $(document).ready( function () {
             } else {
                 $('form.ManualOrderEntryForm input.nextStepBtn').click();
             }
-
         }
     });
 
-    $('form.ManualOrderEntryForm input.previousStepBtn').click(function(){
-        $(this).parent('form').find(':input').each(function(index, element){
-            $(element).removeAttr('required');
-        });
+    $('form.ManualOrderEntryForm input.previousStepBtn').click(function () {
+        $(this)
+            .parent('form')
+            .find(':input')
+            .each(function (index, element) {
+                $(element).removeAttr('required');
+            });
     });
-
 });

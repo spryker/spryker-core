@@ -12,7 +12,7 @@ function PriceProductScheduleCreate(options) {
 
     var self = this;
 
-    this.init = function() {
+    this.init = function () {
         this.initActiveFromDatepicker();
         this.initActiveToDatepicker();
         this.hideTimezoneMessage();
@@ -20,19 +20,19 @@ function PriceProductScheduleCreate(options) {
         this.preventDoubleSubmission();
     };
 
-    this.initActiveFromDatepicker = function() {
+    this.initActiveFromDatepicker = function () {
         this.$activeFrom.click(function (event) {
             event.preventDefault();
         });
         this.$activeFrom.datepicker({
-            altFormat: "yy-mm-dd",
+            altFormat: 'yy-mm-dd',
             dateFormat: 'yy-mm-dd',
             changeMonth: true,
             defaultData: 0,
         });
     };
 
-    this.initActiveToDatepicker = function() {
+    this.initActiveToDatepicker = function () {
         this.$activeTo.click(function (event) {
             event.preventDefault();
         });
@@ -43,24 +43,24 @@ function PriceProductScheduleCreate(options) {
         });
     };
 
-    this.toggleVisibility = function(display) {
+    this.toggleVisibility = function (display) {
         this.$activeFromTimezoneText.toggle(display);
         this.$activeToTimezoneText.toggle(display);
     };
 
-    this.hideTimezoneMessage = function() {
+    this.hideTimezoneMessage = function () {
         if (!this.$store.val()) {
             this.toggleVisibility(false);
         }
     };
 
-    this.fillTimezoneMessage = function(data) {
-        this.$timezone.each(function(index, element) {
+    this.fillTimezoneMessage = function (data) {
+        this.$timezone.each(function (index, element) {
             $(element).text(data.store.timezone);
         });
     };
 
-    this.successCallback = function(data) {
+    this.successCallback = function (data) {
         if (!data.store) {
             self.toggleVisibility(false);
 
@@ -77,14 +77,14 @@ function PriceProductScheduleCreate(options) {
         });
     };
 
-    this.initDependentSelectBox = function() {
+    this.initDependentSelectBox = function () {
         new DependentSelectBox({
             $trigger: this.$store,
             $target: this.$currency,
             requestUrl: this.requestUrl,
             dataKey: this.dataKey,
             responseData: this.currencies,
-            successCallback: this.successCallback
+            successCallback: this.successCallback,
         });
     };
 

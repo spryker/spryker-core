@@ -8,6 +8,7 @@
 namespace Spryker\Shared\GuiTable\Configuration\Expander;
 
 use Generated\Shared\Transfer\GuiTableBatchActionsConfigurationTransfer;
+use Generated\Shared\Transfer\GuiTableColumnConfiguratorConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableDataSourceConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableFiltersConfigurationTransfer;
@@ -49,6 +50,7 @@ class ConfigurationDefaultValuesExpander implements ConfigurationDefaultValuesEx
         $guiTableConfigurationTransfer = $this->setDefaultFilters($guiTableConfigurationTransfer);
         $guiTableConfigurationTransfer = $this->setDefaultItemSelection($guiTableConfigurationTransfer);
         $guiTableConfigurationTransfer = $this->setDefaultSyncStateUrl($guiTableConfigurationTransfer);
+        $guiTableConfigurationTransfer = $this->setDefaultColumnConfigurator($guiTableConfigurationTransfer);
 
         return $guiTableConfigurationTransfer;
     }
@@ -84,7 +86,7 @@ class ConfigurationDefaultValuesExpander implements ConfigurationDefaultValuesEx
 
         if ($guiTableRowActionsConfigurationTransfer->getIsEnabled() === null) {
             $guiTableRowActionsConfigurationTransfer->setIsEnabled(
-                in_array('rowActions', $this->guiTableConfig->getDefaultEnabledFeatures())
+                in_array(GuiTableConfigurationTransfer::ROW_ACTIONS, $this->guiTableConfig->getDefaultEnabledFeatures())
             );
         }
 
@@ -105,7 +107,7 @@ class ConfigurationDefaultValuesExpander implements ConfigurationDefaultValuesEx
 
         if ($guiTableBatchActionsConfigurationTransfer->getIsEnabled() === null) {
             $guiTableBatchActionsConfigurationTransfer->setIsEnabled(
-                in_array('batchActions', $this->guiTableConfig->getDefaultEnabledFeatures())
+                in_array(GuiTableConfigurationTransfer::BATCH_ACTIONS, $this->guiTableConfig->getDefaultEnabledFeatures())
             );
         }
 
@@ -130,7 +132,7 @@ class ConfigurationDefaultValuesExpander implements ConfigurationDefaultValuesEx
 
         if ($guiTablePaginationConfigurationTransfer->getIsEnabled() === null) {
             $guiTablePaginationConfigurationTransfer->setIsEnabled(
-                in_array('pagination', $this->guiTableConfig->getDefaultEnabledFeatures())
+                in_array(GuiTableConfigurationTransfer::PAGINATION, $this->guiTableConfig->getDefaultEnabledFeatures())
             );
         }
 
@@ -151,7 +153,7 @@ class ConfigurationDefaultValuesExpander implements ConfigurationDefaultValuesEx
 
         if ($guiTableSearchConfigurationTransfer->getIsEnabled() === null) {
             $guiTableSearchConfigurationTransfer->setIsEnabled(
-                in_array('search', $this->guiTableConfig->getDefaultEnabledFeatures())
+                in_array(GuiTableConfigurationTransfer::SEARCH, $this->guiTableConfig->getDefaultEnabledFeatures())
             );
         }
 
@@ -176,7 +178,7 @@ class ConfigurationDefaultValuesExpander implements ConfigurationDefaultValuesEx
 
         if ($guiTableFiltersConfigurationTransfer->getIsEnabled() === null) {
             $guiTableFiltersConfigurationTransfer->setIsEnabled(
-                in_array('filters', $this->guiTableConfig->getDefaultEnabledFeatures())
+                in_array(GuiTableConfigurationTransfer::FILTERS, $this->guiTableConfig->getDefaultEnabledFeatures())
             );
         }
 
@@ -197,7 +199,7 @@ class ConfigurationDefaultValuesExpander implements ConfigurationDefaultValuesEx
 
         if ($guiTableItemSelectionConfigurationTransfer->getIsEnabled() === null) {
             $guiTableItemSelectionConfigurationTransfer->setIsEnabled(
-                in_array('itemSelection', $this->guiTableConfig->getDefaultEnabledFeatures())
+                in_array(GuiTableConfigurationTransfer::ITEM_SELECTION, $this->guiTableConfig->getDefaultEnabledFeatures())
             );
         }
 
@@ -218,11 +220,32 @@ class ConfigurationDefaultValuesExpander implements ConfigurationDefaultValuesEx
 
         if ($guiTableSyncStateUrlConfigurationTransfer->getIsEnabled() === null) {
             $guiTableSyncStateUrlConfigurationTransfer->setIsEnabled(
-                in_array('syncStateUrl', $this->guiTableConfig->getDefaultEnabledFeatures())
+                in_array(GuiTableConfigurationTransfer::SYNC_STATE_URL, $this->guiTableConfig->getDefaultEnabledFeatures())
             );
         }
 
         $guiTableConfigurationTransfer->setSyncStateUrl($guiTableSyncStateUrlConfigurationTransfer);
+
+        return $guiTableConfigurationTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
+     *
+     * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
+     */
+    protected function setDefaultColumnConfigurator(
+        GuiTableConfigurationTransfer $guiTableConfigurationTransfer
+    ): GuiTableConfigurationTransfer {
+        $guiTableColumnConfiguratorConfigurationTransfer = $guiTableConfigurationTransfer->getColumnConfigurator() ?? new GuiTableColumnConfiguratorConfigurationTransfer();
+
+        if ($guiTableColumnConfiguratorConfigurationTransfer->getEnabled() === null) {
+            $guiTableColumnConfiguratorConfigurationTransfer->setEnabled(
+                in_array(GuiTableConfigurationTransfer::COLUMN_CONFIGURATOR, $this->guiTableConfig->getDefaultEnabledFeatures())
+            );
+        }
+
+        $guiTableConfigurationTransfer->setColumnConfigurator($guiTableColumnConfiguratorConfigurationTransfer);
 
         return $guiTableConfigurationTransfer;
     }

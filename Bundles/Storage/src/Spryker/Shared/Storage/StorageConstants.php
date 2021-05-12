@@ -15,7 +15,7 @@ interface StorageConstants
     public const STORAGE_KV_SOURCE = 'STORAGE_KV_SOURCE';
 
     /**
-     * @deprecated Use {@link \Spryker\Shared\StorageRedis\StorageRedisConstants::STORAGE_REDIS_PROTOCOL} instead.
+     * @deprecated Use {@link \Spryker\Shared\StorageRedis\StorageRedisConstants::STORAGE_REDIS_SCHEME} instead.
      */
     public const STORAGE_REDIS_PROTOCOL = 'YVES_STORAGE_REDIS_PROTOCOL';
 

@@ -12,6 +12,9 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 interface CountryQueryContainerInterface extends QueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\Country\Persistence\SpyCountryQuery
@@ -19,6 +22,9 @@ interface CountryQueryContainerInterface extends QueryContainerInterface
     public function queryCountries();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $iso2Code
@@ -28,6 +34,9 @@ interface CountryQueryContainerInterface extends QueryContainerInterface
     public function queryCountryByIso2Code($iso2Code);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $iso3Code
@@ -37,6 +46,9 @@ interface CountryQueryContainerInterface extends QueryContainerInterface
     public function queryCountryByIso3Code($iso3Code);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\Country\Persistence\SpyRegionQuery
@@ -44,6 +56,9 @@ interface CountryQueryContainerInterface extends QueryContainerInterface
     public function queryRegions();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $isoCode

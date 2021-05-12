@@ -10,6 +10,9 @@ namespace Spryker\Zed\Assertion\Business;
 interface AssertionFacadeInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param mixed $value
@@ -22,6 +25,9 @@ interface AssertionFacadeInterface
     public function assertNumeric($value, $message = null);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param mixed $value
@@ -34,6 +40,9 @@ interface AssertionFacadeInterface
     public function assertNumericNotZero($value, $message = null);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param mixed $value
@@ -46,6 +55,9 @@ interface AssertionFacadeInterface
     public function assertString($value, $message = null);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param mixed $value
@@ -58,6 +70,9 @@ interface AssertionFacadeInterface
     public function assertAlpha($value, $message = null);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param mixed $value

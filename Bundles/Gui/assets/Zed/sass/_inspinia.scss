@@ -4,25 +4,24 @@
  */
 
 .select2 {
-  width: 100% !important;
+    width: 100% !important;
 }
 
 .sweet-alert {
-  font-family: 'Lato', Helvetica, Arial, sans-serif;
+    font-family: 'Lato', Helvetica, Arial, sans-serif;
 }
 
 .note-editor.note-frame {
-  border: 1px solid $gray-lighter;
+    border: 1px solid $gray-lighter;
 }
 
 .ui-state-highlight,
 .ui-widget-content .ui-state-highlight,
 .ui-widget-header .ui-state-highlight {
-  border: 1px solid #dad55e;
-  background: #fffa90;
-  color: #777620;
+    border: 1px solid #dad55e;
+    background: #fffa90;
+    color: #777620;
 }
-
 
 .ui-state-active,
 .ui-widget-content .ui-state-active,
@@ -30,8 +29,8 @@
 a.ui-button:active,
 .ui-button:active,
 .ui-button.ui-state-active:hover {
-  border: 1px solid #003eff;
-  background: #007fff;
-  font-weight: normal;
-  color: #fff;
+    border: 1px solid #003eff;
+    background: #007fff;
+    font-weight: normal;
+    color: #fff;
 }

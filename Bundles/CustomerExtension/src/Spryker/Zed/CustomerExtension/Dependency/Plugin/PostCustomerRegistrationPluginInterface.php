@@ -12,7 +12,8 @@ use Generated\Shared\Transfer\CustomerTransfer;
 interface PostCustomerRegistrationPluginInterface
 {
     /**
-     * This plugin allows to execute additional actions after customer registration.
+     * Specification:
+     * - Allows to execute additional actions after customer registration.
      *
      * @api
      *

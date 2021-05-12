@@ -7,11 +7,13 @@
 
 require('../../scss/main.scss');
 
-var thresholdStrategyToggle = function(thresholdGroup) {
-    var strategyKey = $('input[name="merchant-relationship-threshold[' + thresholdGroup + 'Threshold][strategy]"]:checked').val();
+var thresholdStrategyToggle = function (thresholdGroup) {
+    var strategyKey = $(
+        'input[name="merchant-relationship-threshold[' + thresholdGroup + 'Threshold][strategy]"]:checked',
+    ).val();
 
     $('.threshold-key-' + strategyKey).removeClass('hidden');
-    $('.threshold_group_' + thresholdGroup + ':not(.threshold-key-'+ strategyKey +')').addClass('hidden');
+    $('.threshold_group_' + thresholdGroup + ':not(.threshold-key-' + strategyKey + ')').addClass('hidden');
 };
 
 $(document).ready(function () {
@@ -26,25 +28,34 @@ $(document).ready(function () {
         thresholdStrategyToggle('hard');
     });
 
-    $('input[name="merchant-relationship-threshold[softThreshold][strategy]"]').click(function() {
+    $('input[name="merchant-relationship-threshold[softThreshold][strategy]"]').click(function () {
         thresholdStrategyToggle('soft');
     });
 
     if ($('input[name="merchant-relationship-threshold[hardThreshold][strategy]"][value!=""]').length === 1) {
-        $('input[name="merchant-relationship-threshold[hardThreshold][strategy]"]').parents('.form-group').addClass('hidden');
+        $('input[name="merchant-relationship-threshold[hardThreshold][strategy]"]')
+            .parents('.form-group')
+            .addClass('hidden');
     }
 
     if ($('input[name="merchant-relationship-threshold[hardThreshold][strategy]"][value!=""]').length === 1) {
-        $('input[name="merchant-relationship-threshold[hardMaximumThreshold][strategy]"]').parents('.form-group').addClass('hidden');
+        $('input[name="merchant-relationship-threshold[hardMaximumThreshold][strategy]"]')
+            .parents('.form-group')
+            .addClass('hidden');
     }
 
     if ($('input[name="merchant-relationship-threshold[softThreshold][strategy]"][value!=""]').length === 1) {
-        $('input[name="merchant-relationship-threshold[softThreshold][strategy]"]').parents('.form-group').addClass('hidden');
+        $('input[name="merchant-relationship-threshold[softThreshold][strategy]"]')
+            .parents('.form-group')
+            .addClass('hidden');
     }
 
-    $('#merchant-relationship-threshold_storeCurrency').change(function() {
+    $('#merchant-relationship-threshold_storeCurrency').change(function () {
         var idMerchantRelationship = $('#merchant-relationship-threshold_idMerchantRelationship').val();
-        window.location.href = '/merchant-relationship-sales-order-threshold-gui/edit?id-merchant-relationship=' + idMerchantRelationship
-            + '&store_currency='+$(this).val();
-    })
+        window.location.href =
+            '/merchant-relationship-sales-order-threshold-gui/edit?id-merchant-relationship=' +
+            idMerchantRelationship +
+            '&store_currency=' +
+            $(this).val();
+    });
 });

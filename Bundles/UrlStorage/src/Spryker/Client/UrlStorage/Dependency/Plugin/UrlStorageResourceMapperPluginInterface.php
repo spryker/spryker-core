@@ -12,6 +12,9 @@ use Generated\Shared\Transfer\UrlStorageTransfer;
 interface UrlStorageResourceMapperPluginInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\UrlStorageTransfer $urlStorageTransfer

@@ -98,16 +98,19 @@ class ProductUrlGeneratorTest extends Unit
         ->disableOriginalConstructor()->getMock();
 
         $this->productAbstractNameGenerator
-        ->expects($this->at(0))
+        ->expects($this->exactly(2))
         ->method('getLocalizedProductAbstractName')
-        ->with($this->productAbstractTransfer, $this->locales['de_DE'])
-        ->willReturn(self::PRODUCT_NAME['de_DE']);
-
-        $this->productAbstractNameGenerator
-        ->expects($this->at(1))
-        ->method('getLocalizedProductAbstractName')
-        ->with($this->productAbstractTransfer, $this->locales['en_US'])
-        ->willReturn(self::PRODUCT_NAME['en_US']);
+        ->withConsecutive(
+            [
+                $this->productAbstractTransfer,
+                $this->locales['de_DE'],
+            ],
+            [
+                $this->productAbstractTransfer,
+                $this->locales['en_US'],
+            ],
+        )
+        ->willReturn(self::PRODUCT_NAME['de_DE'], self::PRODUCT_NAME['en_US']);
     }
 
     /**
@@ -173,16 +176,10 @@ class ProductUrlGeneratorTest extends Unit
         );
 
         $this->utilTextService
-        ->expects($this->at(0))
+        ->expects($this->exactly(2))
         ->method('generateSlug')
-        ->with(self::PRODUCT_NAME['de_DE'])
-        ->willReturn('product-name-dede');
-
-        $this->utilTextService
-        ->expects($this->at(1))
-        ->method('generateSlug')
-        ->with(self::PRODUCT_NAME['en_US'])
-        ->willReturn('product-name-enus');
+        ->withConsecutive([self::PRODUCT_NAME['de_DE']], [self::PRODUCT_NAME['en_US']])
+        ->willReturnOnConsecutiveCalls('product-name-dede', 'product-name-enus');
 
         $urlGenerator = new ProductUrlGenerator($this->productAbstractNameGenerator, $this->localeFacade, $this->utilTextService);
         $productUrl = $urlGenerator->generateProductUrl($this->productAbstractTransfer);

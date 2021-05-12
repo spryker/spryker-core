@@ -13,6 +13,9 @@ use Generated\Shared\Transfer\RefundTransfer;
 interface RefundCalculatorPluginInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\RefundTransfer $refundTransfer

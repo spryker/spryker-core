@@ -1,55 +1,56 @@
 {
-  "name": "spryker/cms-block-gui",
-  "type": "library",
-  "description": "CmsBlockGui module",
-  "license": "proprietary",
-  "require": {
-    "php": ">=7.3",
-    "spryker/cms-block": "^2.0.0 || ^3.0.0",
-    "spryker/cms-block-gui-extension": "^1.0.0",
-    "spryker/gui": "^3.33.0",
-    "spryker/kernel": "^3.52.0",
-    "spryker/locale": "^3.0.0",
-    "spryker/propel-orm": "^1.0.0",
-    "spryker/symfony": "^3.0.0",
-    "spryker/twig": "^3.0.0",
-    "spryker/util-text": "^1.1.0"
-  },
-  "require-dev": {
-    "spryker/application": "*",
-    "spryker/code-sniffer": "*",
-    "spryker/container": "*",
-    "spryker/event-dispatcher": "*",
-    "spryker/form": "*",
-    "spryker/propel": "*",
-    "spryker/router": "*",
-    "spryker/store": "*",
-    "spryker/testify": "*",
-    "spryker/validator": "*",
-    "spryker/zed-navigation": "*"
-  },
-  "autoload": {
-    "psr-4": {
-      "Spryker\\": "src/Spryker/"
+    "name": "spryker/cms-block-gui",
+    "type": "library",
+    "description": "CmsBlockGui module",
+    "license": "proprietary",
+    "require": {
+        "php": ">=7.3",
+        "spryker/cms-block": "^2.0.0 || ^3.0.0",
+        "spryker/cms-block-gui-extension": "^1.0.0",
+        "spryker/gui": "^3.33.0",
+        "spryker/kernel": "^3.52.0",
+        "spryker/locale": "^3.0.0",
+        "spryker/propel-orm": "^1.0.0",
+        "spryker/symfony": "^3.0.0",
+        "spryker/twig": "^3.0.0",
+        "spryker/util-text": "^1.1.0"
+    },
+    "require-dev": {
+        "spryker/application": "*",
+        "spryker/code-sniffer": "*",
+        "spryker/container": "*",
+        "spryker/event-dispatcher": "*",
+        "spryker/form": "*",
+        "spryker/propel": "*",
+        "spryker/router": "*",
+        "spryker/store": "*",
+        "spryker/testify": "*",
+        "spryker/validator": "*",
+        "spryker/zed-navigation": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Spryker\\": "src/Spryker/",
+            "SprykerTest\\Zed\\CmsBlockGui\\PageObject\\": "tests/SprykerTest/Zed/CmsBlockGui/_support/PageObject/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "SprykerTest\\": "tests/SprykerTest/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
     }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "SprykerTest\\": "tests/SprykerTest/"
-    }
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "scripts": {
-    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
-    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "2.0.x-dev"
-    }
-  },
-  "config": {
-    "sort-packages": true
-  }
 }

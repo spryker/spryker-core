@@ -12,7 +12,8 @@ use Generated\Shared\Transfer\StateMachineItemTransfer;
 interface StateMachineHandlerInterface
 {
     /**
-     * List of command plugins for this state machine for all processes. Array key is identifier in SM XML file.
+     * Specification:
+     * - List of command plugins for this state machine for all processes. Array key is identifier in SM XML file.
      *
      * [
      *   'Command/Plugin' => new Command(),
@@ -26,7 +27,8 @@ interface StateMachineHandlerInterface
     public function getCommandPlugins();
 
     /**
-     * List of condition plugins for this state machine for all processes. Array key is identifier in SM XML file.
+     * Specification:
+     * - List of condition plugins for this state machine for all processes. Array key is identifier in SM XML file.
      *
      *  [
      *   'Condition/Plugin' => new Condition(),
@@ -40,7 +42,8 @@ interface StateMachineHandlerInterface
     public function getConditionPlugins();
 
     /**
-     * Name of state machine used by this handler.
+     * Specification:
+     * - Name of state machine used by this handler.
      *
      * @api
      *
@@ -49,7 +52,8 @@ interface StateMachineHandlerInterface
     public function getStateMachineName();
 
     /**
-     * List of active processes used for this state machine.
+     * Specification:
+     * - List of active processes used for this state machine.
      *
      * [
      *   'ProcessName',
@@ -63,7 +67,8 @@ interface StateMachineHandlerInterface
     public function getActiveProcesses();
 
     /**
-     * Provide initial state name for item when state machine initialized. Using process name.
+     * Specification:
+     * - Provide initial state name for item when state machine initialized. Using process name.
      *
      * @api
      *
@@ -74,8 +79,9 @@ interface StateMachineHandlerInterface
     public function getInitialStateForProcess($processName);
 
     /**
-     * This method is called when state of item was changed, client can create custom logic for example update it's related table with new stateId and processId.
-     * StateMachineItemTransfer:identifier is id of entity from client.
+     * Specification:
+     * - This method is called when state of item was changed, client can create custom logic for example update it's related table with new stateId and processId.
+     * - StateMachineItemTransfer:identifier is id of entity from client.
      *
      * @api
      *
@@ -86,7 +92,8 @@ interface StateMachineHandlerInterface
     public function itemStateUpdated(StateMachineItemTransfer $stateMachineItemTransfer);
 
     /**
-     * This method should return all list of StateMachineItemTransfer, with (identifier, IdStateMachineProcess, IdItemState)
+     * Specification:
+     * - This method should return all list of StateMachineItemTransfer, with (identifier, IdStateMachineProcess, IdItemState)
      *
      * @api
      *

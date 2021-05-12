@@ -10,6 +10,9 @@ namespace Spryker\Zed\Installer\Dependency\Plugin;
 interface InstallerPluginInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return void

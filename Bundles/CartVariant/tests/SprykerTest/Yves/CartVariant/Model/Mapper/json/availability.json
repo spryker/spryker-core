@@ -1,7 +1,7 @@
 {
-  "isAbstractProductAvailable": true,
-  "concreteProductAvailableItems": {
-    "170_28516206": true,
-    "170_28549472": true
-  }
+    "isAbstractProductAvailable": true,
+    "concreteProductAvailableItems": {
+        "170_28516206": true,
+        "170_28549472": true
+    }
 }

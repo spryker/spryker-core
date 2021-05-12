@@ -19,7 +19,7 @@ td {
         tr {
             &:first-child {
                 .js-reorder-product-abstract {
-                    &[data-direction="up"] {
+                    &[data-direction='up'] {
                         display: none;
                     }
                 }
@@ -27,7 +27,7 @@ td {
 
             &:last-child {
                 .js-reorder-product-abstract {
-                    &[data-direction="down"] {
+                    &[data-direction='down'] {
                         display: none;
                     }
                 }

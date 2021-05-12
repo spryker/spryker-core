@@ -51,7 +51,8 @@
     }
 }
 
-.has-original, .has-diff {
+.has-original,
+.has-diff {
     td {
         padding: 5px;
     }
@@ -74,7 +75,7 @@ select.key-list {
         line-height: 20px;
         display: block;
         padding-top: 3px;
-        margin-bottom:5px;
+        margin-bottom: 5px;
 
         &:hover {
             background: #dfdfdf;

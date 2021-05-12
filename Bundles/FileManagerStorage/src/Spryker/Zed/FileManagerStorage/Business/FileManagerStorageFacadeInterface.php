@@ -10,7 +10,7 @@ namespace Spryker\Zed\FileManagerStorage\Business;
 interface FileManagerStorageFacadeInterface
 {
     /**
-     * Specification
+     * Specification:
      * - Publishes files with given ids
      *
      * @api
@@ -22,7 +22,7 @@ interface FileManagerStorageFacadeInterface
     public function publishFile(array $fileIds);
 
     /**
-     * Specification
+     * Specification:
      * - Unpiblishes files with given ids
      *
      * @api

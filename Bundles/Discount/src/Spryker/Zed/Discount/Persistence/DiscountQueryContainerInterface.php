@@ -15,6 +15,9 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 interface DiscountQueryContainerInterface extends QueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $code
@@ -24,6 +27,9 @@ interface DiscountQueryContainerInterface extends QueryContainerInterface
     public function queryVoucher($code);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscountQuery
@@ -31,6 +37,9 @@ interface DiscountQueryContainerInterface extends QueryContainerInterface
     public function queryActiveAndRunningDiscounts();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolQuery
@@ -38,6 +47,9 @@ interface DiscountQueryContainerInterface extends QueryContainerInterface
     public function queryVoucherPool();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscountQuery
@@ -45,6 +57,9 @@ interface DiscountQueryContainerInterface extends QueryContainerInterface
     public function queryDiscount();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucherQuery
@@ -52,6 +67,9 @@ interface DiscountQueryContainerInterface extends QueryContainerInterface
     public function queryDiscountVoucher();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolQuery
@@ -59,6 +77,9 @@ interface DiscountQueryContainerInterface extends QueryContainerInterface
     public function queryDiscountVoucherPool();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idStore
@@ -69,6 +90,9 @@ interface DiscountQueryContainerInterface extends QueryContainerInterface
     public function queryDiscountsBySpecifiedVouchersForStore($idStore, array $voucherCodes = []);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param array $codes
@@ -78,6 +102,9 @@ interface DiscountQueryContainerInterface extends QueryContainerInterface
     public function queryVoucherPoolByVoucherCodes(array $codes);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idVoucherCode
@@ -87,6 +114,9 @@ interface DiscountQueryContainerInterface extends QueryContainerInterface
     public function queryVoucherCodeByIdVoucherCode($idVoucherCode);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idVoucherPool
@@ -96,6 +126,9 @@ interface DiscountQueryContainerInterface extends QueryContainerInterface
     public function queryVouchersByIdVoucherPool($idVoucherPool);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idVoucher
@@ -105,6 +138,9 @@ interface DiscountQueryContainerInterface extends QueryContainerInterface
     public function queryVoucherByIdVoucher($idVoucher);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $discountName
@@ -114,6 +150,9 @@ interface DiscountQueryContainerInterface extends QueryContainerInterface
     public function queryDiscountName($discountName);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesDiscountQuery
@@ -121,6 +160,9 @@ interface DiscountQueryContainerInterface extends QueryContainerInterface
     public function querySalesDiscount();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idStore
@@ -130,6 +172,9 @@ interface DiscountQueryContainerInterface extends QueryContainerInterface
     public function queryActiveCartRulesForStore($idStore);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idDiscountAmount
@@ -139,6 +184,9 @@ interface DiscountQueryContainerInterface extends QueryContainerInterface
     public function queryDiscountAmountById($idDiscountAmount);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idDiscount
@@ -149,6 +197,9 @@ interface DiscountQueryContainerInterface extends QueryContainerInterface
     public function queryDiscountStoreByFkDiscountAndFkStores($idDiscount, array $idStores);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idDiscount
@@ -158,6 +209,9 @@ interface DiscountQueryContainerInterface extends QueryContainerInterface
     public function queryDiscountStoreWithStoresByFkDiscount($idDiscount);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idDiscount

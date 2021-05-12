@@ -16,8 +16,6 @@ use Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductViewExpander
  */
 class ProductViewMerchantProductExpanderPlugin extends AbstractPlugin implements ProductViewExpanderPluginInterface
 {
-    protected const SELECTED_ATTRIBUTE_MERCHANT_REFERENCE = 'merchant_reference';
-
     /**
      * {@inheritDoc}
      * - Expands ProductView transfer object with merchant reference.
@@ -37,24 +35,6 @@ class ProductViewMerchantProductExpanderPlugin extends AbstractPlugin implements
         array $productData,
         $localeName
     ): ProductViewTransfer {
-        $productSelectedAttributes = $productViewTransfer->getSelectedAttributes();
-
-        if (!isset($productSelectedAttributes[static::SELECTED_ATTRIBUTE_MERCHANT_REFERENCE])) {
-            return $productViewTransfer;
-        }
-
-        $merchantProductStorageTransfer = $this->getFactory()
-            ->createMerchantProductStorageReader()
-            ->findOne($productViewTransfer->getIdProductAbstract());
-
-        if (!$merchantProductStorageTransfer) {
-            return $productViewTransfer;
-        }
-
-        if ($merchantProductStorageTransfer->getMerchantReference() !== $productSelectedAttributes[static::SELECTED_ATTRIBUTE_MERCHANT_REFERENCE]) {
-            return $productViewTransfer;
-        }
-
-        return $productViewTransfer->setMerchantReference($merchantProductStorageTransfer->getMerchantReference());
+        return $this->getFactory()->createProductViewMerchantProductExpander()->expandProductViewTransfer($productViewTransfer);
     }
 }

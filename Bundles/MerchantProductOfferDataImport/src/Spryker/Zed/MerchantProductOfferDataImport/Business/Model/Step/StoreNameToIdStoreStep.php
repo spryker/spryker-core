@@ -16,6 +16,8 @@ use Spryker\Zed\MerchantProductOfferDataImport\Business\Model\DataSet\MerchantPr
 
 class StoreNameToIdStoreStep implements DataImportStepInterface
 {
+    protected const STORE_NAME = MerchantProductOfferDataSetInterface::STORE_NAME;
+
     /**
      * @var array
      */
@@ -28,7 +30,7 @@ class StoreNameToIdStoreStep implements DataImportStepInterface
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        $storeName = $dataSet[MerchantProductOfferDataSetInterface::STORE_NAME];
+        $storeName = $dataSet[static::STORE_NAME];
 
         if (!isset($this->idStoreCache[$storeName])) {
             $this->addIdStoreToCache($storeName);

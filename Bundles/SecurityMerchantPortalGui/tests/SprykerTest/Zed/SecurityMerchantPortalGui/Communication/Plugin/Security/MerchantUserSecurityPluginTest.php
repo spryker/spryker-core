@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\SecurityMerchantPortalGui\Communication\Plugin\Security;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\SecurityMerchantPortalGui\Communication\Plugin\Security\MerchantUserSecurityPlugin;
 use Symfony\Component\HttpFoundation\Response;
@@ -37,6 +38,16 @@ class MerchantUserSecurityPluginTest extends Unit
     protected const SERVICE_SECURITY_TOKEN_STORAGE = 'security.token_storage';
 
     /**
+     * @uses \Spryker\Zed\Merchant\MerchantConfig::STATUS_APPROVED
+     */
+    protected const MERCHANT_STATUS_APPROVED = 'approved';
+
+    /**
+     * @uses \Spryker\Zed\Merchant\MerchantConfig::STATUS_WAITING_FOR_APPROVAL
+     */
+    protected const MERCHANT_STATUS_WAITING_FOR_APPROVAL = 'waiting-for-approval';
+
+    /**
      * @var \SprykerTest\Zed\SecurityMerchantPortalGui\SecurityMerchantPortalGuiCommunicationTester
      */
     protected $tester;
@@ -62,7 +73,9 @@ class MerchantUserSecurityPluginTest extends Unit
         $userTransfer = $this->tester->haveUser([
             UserTransfer::PASSWORD => 'foo',
         ]);
-        $merchantTransfer = $this->tester->haveMerchant();
+        $merchantTransfer = $this->tester->haveMerchant([
+            MerchantTransfer::STATUS => static::MERCHANT_STATUS_APPROVED,
+        ]);
         $this->tester->haveMerchantUser($merchantTransfer, $userTransfer);
 
         $securityPlugin = new MerchantUserSecurityPlugin();
@@ -109,6 +122,10 @@ class MerchantUserSecurityPluginTest extends Unit
         $userTransfer = $this->tester->haveUser([
             UserTransfer::PASSWORD => 'foo',
         ]);
+        $merchantTransfer = $this->tester->haveMerchant([
+            MerchantTransfer::STATUS => static::MERCHANT_STATUS_APPROVED,
+        ]);
+        $this->tester->haveMerchantUser($merchantTransfer, $userTransfer);
 
         $securityPlugin = new MerchantUserSecurityPlugin();
         $securityPlugin->setFactory($this->tester->getFactory());
@@ -128,6 +145,98 @@ class MerchantUserSecurityPluginTest extends Unit
                 'security-merchant-portal-gui' => [
                     'username' => $userTransfer->getUsername(),
                     'password' => 'bar',
+                ],
+            ]
+        );
+
+        // Assert
+        $token = $container->get(static::SERVICE_SECURITY_TOKEN_STORAGE)->getToken();
+        $this->assertNull($token);
+    }
+
+    /**
+     * @return void
+     */
+    public function testNonActiveUserCanNotLogin(): void
+    {
+        // Arrange
+        $container = $this->tester->getContainer();
+
+        $userTransfer = $this->tester->haveUser([
+            UserTransfer::PASSWORD => 'foo',
+            UserTransfer::STATUS => 'blocked',
+        ]);
+        $merchantTransfer = $this->tester->haveMerchant([
+            MerchantTransfer::STATUS => static::MERCHANT_STATUS_APPROVED,
+        ]);
+        $this->tester->haveMerchantUser($merchantTransfer, $userTransfer);
+
+        $securityPlugin = new MerchantUserSecurityPlugin();
+        $securityPlugin->setFactory($this->tester->getFactory());
+        $this->tester->addSecurityPlugin($securityPlugin);
+
+        $this->tester->addRoute('test', '/ignorable', function () {
+            return new Response('test-text');
+        });
+
+        $token = $container->get(static::SERVICE_SECURITY_TOKEN_STORAGE)->getToken();
+        $this->assertNull($token);
+
+        $container->get(static::SERVICE_SESSION)->start();
+        $httpKernelBrowser = $this->tester->getHttpKernelBrowser();
+
+        // Act
+        $httpKernelBrowser->request('get', '/ignorable');
+        $httpKernelBrowser->request(
+            'post',
+            '/security-merchant-portal-gui/login_check',
+            [
+                'security-merchant-portal-gui' => [
+                    'username' => $userTransfer->getUsername(),
+                    'password' => 'foo',
+                ],
+            ]
+        );
+
+        // Assert
+        $token = $container->get(static::SERVICE_SECURITY_TOKEN_STORAGE)->getToken();
+        $this->assertNull($token);
+    }
+
+    /**
+     * @return void
+     */
+    public function testUserWithInactiveMerchantCanNotLogin(): void
+    {
+        // Arrange
+        $container = $this->tester->getContainer();
+
+        $userTransfer = $this->tester->haveUser([
+            UserTransfer::PASSWORD => 'foo',
+        ]);
+        $merchantTransfer = $this->tester->haveMerchant([
+            MerchantTransfer::STATUS => static::MERCHANT_STATUS_WAITING_FOR_APPROVAL,
+        ]);
+        $merchantUserTransfer = $this->tester->haveMerchantUser($merchantTransfer, $userTransfer);
+
+        $securityPlugin = new MerchantUserSecurityPlugin();
+        $securityPlugin->setFactory($this->tester->getFactory());
+        $this->tester->addSecurityPlugin($securityPlugin);
+
+        $token = $container->get(static::SERVICE_SECURITY_TOKEN_STORAGE)->getToken();
+        $this->assertNull($token);
+
+        $container->get(static::SERVICE_SESSION)->start();
+        $httpKernelBrowser = $this->tester->getHttpKernelBrowser();
+
+        // Act
+        $httpKernelBrowser->request(
+            'post',
+            '/security-merchant-portal-gui/login_check',
+            [
+                'security-merchant-portal-gui' => [
+                    'username' => $userTransfer->getUsername(),
+                    'password' => 'foo',
                 ],
             ]
         );

@@ -1,5 +1,5 @@
 {
-  "include": {
-    "spryker/gui": "Presentation Sales/list.twig depends on it"
-  }
+    "include": {
+        "spryker/gui": "Presentation Sales/list.twig depends on it"
+    }
 }

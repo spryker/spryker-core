@@ -23,6 +23,9 @@ use Generated\Shared\Transfer\WishlistTransfer;
 interface WishlistClientInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
@@ -32,6 +35,9 @@ interface WishlistClientInterface
     public function createWishlist(WishlistTransfer $wishlistTransfer);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
@@ -41,6 +47,9 @@ interface WishlistClientInterface
     public function validateAndCreateWishlist(WishlistTransfer $wishlistTransfer);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
@@ -50,6 +59,9 @@ interface WishlistClientInterface
     public function updateWishlist(WishlistTransfer $wishlistTransfer);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
@@ -59,6 +71,9 @@ interface WishlistClientInterface
     public function validateAndUpdateWishlist(WishlistTransfer $wishlistTransfer);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
@@ -68,6 +83,9 @@ interface WishlistClientInterface
     public function removeWishlist(WishlistTransfer $wishlistTransfer);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
@@ -77,6 +95,9 @@ interface WishlistClientInterface
     public function removeWishlistByName(WishlistTransfer $wishlistTransfer);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
@@ -86,6 +107,9 @@ interface WishlistClientInterface
     public function addItem(WishlistItemTransfer $wishlistItemTransfer);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
@@ -95,6 +119,9 @@ interface WishlistClientInterface
     public function removeItem(WishlistItemTransfer $wishlistItemTransfer);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\WishlistItemCollectionTransfer $wishlistItemTransferCollection
@@ -104,6 +131,9 @@ interface WishlistClientInterface
     public function removeItemCollection(WishlistItemCollectionTransfer $wishlistItemTransferCollection);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer $wishlistMoveToCartRequestCollectionTransfer
@@ -113,6 +143,9 @@ interface WishlistClientInterface
     public function moveCollectionToCart(WishlistMoveToCartRequestCollectionTransfer $wishlistMoveToCartRequestCollectionTransfer);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @deprecated Use WishlistClient::getWishlistByFilter() instead.
@@ -124,6 +157,9 @@ interface WishlistClientInterface
     public function getWishlist(WishlistTransfer $wishlistTransfer);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer
@@ -133,6 +169,9 @@ interface WishlistClientInterface
     public function getWishlistOverview(WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer
@@ -142,6 +181,9 @@ interface WishlistClientInterface
     public function getWishlistOverviewWithoutProductDetails(WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Generated\Shared\Transfer\WishlistCollectionTransfer

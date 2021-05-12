@@ -22,4 +22,18 @@ interface AvailabilityStorageInterface
      * @return void
      */
     public function unpublish(array $availabilityIds);
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return void
+     */
+    public function publishByProductAbstractIds(array $productAbstractIds): void;
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return void
+     */
+    public function unpublishByProductAbstractIds(array $productAbstractIds): void;
 }

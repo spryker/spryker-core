@@ -31,9 +31,8 @@ suites:
         path: Communication
         modules:
             enabled:
-            - Asserts
-            - \SprykerTest\Shared\Testify\Helper\Environment
-            - \SprykerTest\Shared\Testify\Helper\ConfigHelper
-            - \SprykerTest\Shared\Testify\Helper\LocatorHelper
-            - \SprykerTest\Shared\Testify\Helper\DependencyHelper
-
+                - Asserts
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+                - \SprykerTest\Shared\Testify\Helper\DependencyHelper

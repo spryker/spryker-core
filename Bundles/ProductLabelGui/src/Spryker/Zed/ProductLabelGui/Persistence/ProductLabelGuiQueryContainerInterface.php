@@ -10,6 +10,9 @@ namespace Spryker\Zed\ProductLabelGui\Persistence;
 interface ProductLabelGuiQueryContainerInterface
 {
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery
@@ -17,6 +20,9 @@ interface ProductLabelGuiQueryContainerInterface
     public function queryProductLabels();
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param string $name
@@ -26,6 +32,9 @@ interface ProductLabelGuiQueryContainerInterface
     public function queryProductLabelByName($name);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @param int $idProductLabel
@@ -35,6 +44,9 @@ interface ProductLabelGuiQueryContainerInterface
     public function queryProductLabelById($idProductLabel);
 
     /**
+     * Specification:
+     * - TODO: Add method specification.
+     *
      * @api
      *
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery

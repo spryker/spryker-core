@@ -46,8 +46,7 @@ class PriceProductOfferDataImportBusinessFactory extends DataImportBusinessFacto
         $dataSetStepBroker->addStep($this->createCurrencyToIdCurrencyStep());
         $dataSetStepBroker->addStep($this->createPreparePriceDataStep());
         $dataSetStepBroker->addStep($this->createPriceProductStoreWriterStep());
-
-        $dataSetStepBroker->addStep(new PriceProductOfferWriterStep());
+        $dataSetStepBroker->addStep($this->createPriceProductOfferWriterStep());
 
         $dataImporter->addDataSetStepBroker($dataSetStepBroker);
 
@@ -119,6 +118,14 @@ class PriceProductOfferDataImportBusinessFactory extends DataImportBusinessFacto
             $this->getPriceProductFacade(),
             $this->getUtilEncodingService()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
+     */
+    public function createPriceProductOfferWriterStep(): DataImportStepInterface
+    {
+        return new PriceProductOfferWriterStep();
     }
 
     /**
