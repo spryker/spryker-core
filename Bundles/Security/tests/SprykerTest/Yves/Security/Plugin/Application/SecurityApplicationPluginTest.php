@@ -144,6 +144,8 @@ class SecurityApplicationPluginTest extends Unit
         // Arrange
         $this->addFormAuthentication();
         $httpKernelBrowser = $this->tester->getHttpKernelBrowser();
+        $httpKernelBrowser->request('post', '/login_check', ['_username' => 'user', '_password' => 'foo']);
+        $httpKernelBrowser->getRequest()->getSession()->save();
 
         // Assert
         $this->expectException(AccessDeniedHttpException::class);
@@ -187,8 +189,8 @@ class SecurityApplicationPluginTest extends Unit
     {
         // Arrange
         $this->addHttpAuthentication();
-
         $httpKernelBrowser = $this->tester->getHttpKernelBrowser();
+        $httpKernelBrowser->request('get', '/', [], [], ['PHP_AUTH_USER' => 'user', 'PHP_AUTH_PW' => 'foo']);
 
         // Assert
         $this->expectException(AccessDeniedHttpException::class);

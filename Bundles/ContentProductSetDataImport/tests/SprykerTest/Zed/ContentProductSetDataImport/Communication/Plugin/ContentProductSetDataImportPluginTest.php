@@ -79,10 +79,11 @@ class ContentProductSetDataImportPluginTest extends Unit
             'import/content_product_set_wrong_key.csv'
         )->setThrowException(true);
 
-        // Act
-        $dataImporterReportTransfer = (new ContentProductSetDataImportPlugin())->import($dataImportConfigurationTransfer);
-
+        // Assert
         $this->expectExceptionObject(new DataImportException(static::ERROR_MESSAGE_PRODUCT_SET_WRONG_KEY));
+
+        // Act
+        (new ContentProductSetDataImportPlugin())->import($dataImportConfigurationTransfer);
     }
 
     /**

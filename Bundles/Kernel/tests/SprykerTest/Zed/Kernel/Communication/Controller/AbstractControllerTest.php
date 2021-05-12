@@ -84,9 +84,9 @@ class AbstractControllerTest extends Unit
     public function getInvalidTestData(): array
     {
         return [
-            true,
-            'string',
-            [],
+            [true],
+            ['string'],
+            [[]],
         ];
     }
 }
