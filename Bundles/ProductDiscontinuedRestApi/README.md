@@ -1,5 +1,5 @@
 # ProductDiscontinuedRestApi Module
-[![Build Status](https://travis-ci.org/spryker/product-discontinued-rest-api.svg)](https://travis-ci.org/spryker/product-discontinued-rest-api)
+[![Latest Stable Version](https://poser.pugx.org/spryker/product-discontinued-rest-api/v/stable.svg)](https://packagist.org/packages/spryker/product-discontinued-rest-api)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 ProductDiscontinuedRestApi Module is a concrete product resource expander that populates a concrete product resource with product discontinued data.

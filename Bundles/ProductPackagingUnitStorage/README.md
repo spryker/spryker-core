@@ -1,5 +1,5 @@
 # ProductPackagingUnitStorage Module
-[![Build Status](https://travis-ci.org/spryker/product-packaging-unit-storage.svg)](https://travis-ci.org/spryker/product-packaging-unit-storage)
+[![Latest Stable Version](https://poser.pugx.org/spryker/product-packaging-unit-storage/v/stable.svg)](https://packagist.org/packages/spryker/product-packaging-unit-storage)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 ## Installation

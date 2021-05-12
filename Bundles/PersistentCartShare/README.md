@@ -1,5 +1,5 @@
 # PersistentCartShare Module
-[![Build Status](https://travis-ci.org/spryker/persistent-cart-share.svg)](https://travis-ci.org/spryker/persistent-cart-share)
+[![Latest Stable Version](https://poser.pugx.org/spryker/persistent-cart-share/v/stable.svg)](https://packagist.org/packages/spryker/persistent-cart-share)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 Provides persistence cart sharing functionality.

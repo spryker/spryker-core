@@ -1,5 +1,5 @@
 # CmsContentWidgetProductSearchConnector Module
-[![Build Status](https://travis-ci.org/spryker/cms-content-widget-product-search-connector.svg)](https://travis-ci.org/spryker/cms-content-widget-product-search-connector)
+[![Latest Stable Version](https://poser.pugx.org/spryker/cms-content-widget-product-search-connector/v/stable.svg)](https://packagist.org/packages/spryker/cms-content-widget-product-search-connector)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 CmsContentWidgetProductSearchConnector contains a plugin for CMS content widgets.

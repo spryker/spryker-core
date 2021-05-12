@@ -1,7 +1,6 @@
 # ProductConfigurationStorage Module
-[![Build Status](https://travis-ci.org/spryker/product-configuration-storage.svg)](https://travis-ci.org/spryker/product-configuration-storage)
+[![Latest Stable Version](https://poser.pugx.org/spryker/product-configuration-storage/v/stable.svg)](https://packagist.org/packages/spryker/product-configuration-storage)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
-
 
 ## Installation
 

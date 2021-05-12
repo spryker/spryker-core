@@ -1,5 +1,5 @@
 # CartNoteProductBundleConnector Module
-[![Build Status](https://travis-ci.org/spryker/cart-note-product-bundle-connector.svg)](https://travis-ci.org/spryker/cart-note-product-bundle-connector)
+[![Latest Stable Version](https://poser.pugx.org/spryker/cart-note-product-bundle-connector/v/stable.svg)](https://packagist.org/packages/spryker/cart-note-product-bundle-connector)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 This module provides functionality which bundle products with cart note.

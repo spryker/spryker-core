@@ -1,5 +1,5 @@
 # MerchantSalesReturnMerchantUserGui Module
-[![Build Status](https://travis-ci.org/spryker/merchant-sales-return-merchant-user-gui.svg)](https://travis-ci.org/spryker/merchant-sales-return-merchant-user-gui)
+[![Latest Stable Version](https://poser.pugx.org/spryker/merchant-sales-return-merchant-user-gui/v/stable.svg)](https://packagist.org/packages/spryker/merchant-sales-return-merchant-user-gui)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 MerchantSalesReturnMerchantUserGui provides Zed UI interface for merchant user sales return management.
