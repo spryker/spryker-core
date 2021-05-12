@@ -95,6 +95,7 @@ class SecurityApplicationPluginTest extends Unit
 
         $container = $this->tester->getContainer();
         $httpKernelBrowser = $this->tester->getHttpKernelBrowser();
+        $httpKernelBrowser->restart();
 
         $httpKernelBrowser->request('get', '/');
         $this->assertSame('ANONYMOUS', $httpKernelBrowser->getResponse()->getContent());
@@ -144,6 +145,7 @@ class SecurityApplicationPluginTest extends Unit
         // Arrange
         $this->addFormAuthentication();
         $httpKernelBrowser = $this->tester->getHttpKernelBrowser();
+        $httpKernelBrowser->restart();
         $httpKernelBrowser->request('post', '/login_check', ['_username' => 'user', '_password' => 'foo']);
 
         // Assert
@@ -159,8 +161,8 @@ class SecurityApplicationPluginTest extends Unit
     public function testHttpAuthentication(): void
     {
         $this->addHttpAuthentication();
-
         $httpKernelBrowser = $this->tester->getHttpKernelBrowser();
+        $httpKernelBrowser->restart();
 
         $httpKernelBrowser->request('get', '/');
         $this->assertSame(401, $httpKernelBrowser->getResponse()->getStatusCode());
@@ -189,6 +191,7 @@ class SecurityApplicationPluginTest extends Unit
         // Arrange
         $this->addHttpAuthentication();
         $httpKernelBrowser = $this->tester->getHttpKernelBrowser();
+        $httpKernelBrowser->restart();
         $httpKernelBrowser->request('get', '/', [], [], ['PHP_AUTH_USER' => 'user', 'PHP_AUTH_PW' => 'foo']);
 
         // Assert
