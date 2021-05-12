@@ -728,7 +728,7 @@ class SecurityApplicationPluginTest extends Unit
         });
 
         $this->tester->addRoute('admin', '/admin', function () {
-            return 'admin';
+            return new Response('admin');
         });
     }
 
