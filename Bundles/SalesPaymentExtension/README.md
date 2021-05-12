@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/sales-payment-extension.svg)](https://travis-ci.org/spryker/sales-payment-extension)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
-{{ADD DESCRIPTION HERE}}
+This module provides plugin interfaces for SalesPayment module functionality extending.
 
 ## Installation
 

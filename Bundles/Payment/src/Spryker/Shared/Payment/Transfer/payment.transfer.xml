@@ -32,13 +32,13 @@
         <property name="paymentMethod" type="string"/>
     </transfer>
 
-    <transfer name="SalesPaymentMethodType">
+    <transfer name="SalesPaymentMethodType" deprecated="Will be removed without replacement.">
         <property name="idSalesPaymentMethodType" type="int"/>
         <property name="paymentProvider" type="PaymentProvider"/>
         <property name="paymentMethod" type="PaymentMethod"/>
     </transfer>
 
-    <transfer name="SalesPaymentMethodTypeCollection">
+    <transfer name="SalesPaymentMethodTypeCollection" deprecated="Will be removed without replacement.">
         <property name="salesPaymentMethodTypes" singular="salesPaymentMethodType" type="SalesPaymentMethodType[]"/>
     </transfer>
 

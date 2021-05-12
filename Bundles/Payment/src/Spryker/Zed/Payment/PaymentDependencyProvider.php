@@ -18,14 +18,35 @@ use Spryker\Zed\Payment\Dependency\Plugin\Sales\PaymentHydratorPluginCollection;
  */
 class PaymentDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const CHECKOUT_PLUGINS = 'checkout plugins';
-    public const CHECKOUT_PRE_CHECK_PLUGINS = 'pre check';
-    public const CHECKOUT_ORDER_SAVER_PLUGINS = 'order saver';
-    public const CHECKOUT_POST_SAVE_PLUGINS = 'post save';
-    public const PAYMENT_METHOD_FILTER_PLUGINS = 'PAYMENT_METHOD_FILTER_PLUGINS';
-
     public const FACADE_STORE = 'FACADE_STORE';
 
+    public const PAYMENT_METHOD_FILTER_PLUGINS = 'PAYMENT_METHOD_FILTER_PLUGINS';
+
+    /**
+     * @deprecated Use {@link \Spryker\Zed\Checkout\CheckoutDependencyProvider::CHECKOUT_POST_HOOKS},
+     * {@link \Spryker\Zed\Checkout\CheckoutDependencyProvider::CHECKOUT_ORDER_SAVERS},
+     * {@link \Spryker\Zed\Checkout\CheckoutDependencyProvider::CHECKOUT_PRE_CONDITIONS} instead.
+     */
+    public const CHECKOUT_PLUGINS = 'checkout plugins';
+
+    /**
+     * @deprecated Use {@link \Spryker\Zed\Checkout\CheckoutDependencyProvider::CHECKOUT_PRE_CONDITIONS} instead.
+     */
+    public const CHECKOUT_PRE_CHECK_PLUGINS = 'pre check';
+
+    /**
+     * @deprecated Use {@link \Spryker\Zed\Checkout\CheckoutDependencyProvider::CHECKOUT_ORDER_SAVERS} instead.
+     */
+    public const CHECKOUT_ORDER_SAVER_PLUGINS = 'order saver';
+
+    /**
+     * @deprecated Use {@link \Spryker\Zed\Checkout\CheckoutDependencyProvider::CHECKOUT_POST_HOOKS} instead.
+     */
+    public const CHECKOUT_POST_SAVE_PLUGINS = 'post save';
+
+    /**
+     * @deprecated Use {@link \Spryker\Zed\SalesPayment\SalesPaymentDependencyProvider::SALES_PAYMENT_EXPANDER_PLUGINS} instead.
+     */
     public const PAYMENT_HYDRATION_PLUGINS = 'payment hydration plugins';
 
     /**
@@ -35,10 +56,11 @@ class PaymentDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
+        $container = $this->addStoreFacade($container);
+        $container = $this->addPaymentMethodFilterPlugins($container);
+
         $container = $this->addCheckoutPlugins($container);
         $container = $this->addPaymentHydrationPlugins($container);
-        $container = $this->addPaymentMethodFilterPlugins($container);
-        $container = $this->addStoreFacade($container);
 
         return $container;
     }
@@ -64,34 +86,6 @@ class PaymentDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addCheckoutPlugins(Container $container)
-    {
-        $container->set(static::CHECKOUT_PLUGINS, function (Container $container) {
-            return new CheckoutPluginCollection();
-        });
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addPaymentHydrationPlugins(Container $container)
-    {
-        $container->set(static::PAYMENT_HYDRATION_PLUGINS, function (Container $container) {
-            return $this->getPaymentHydrationPlugins();
-        });
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addPaymentMethodFilterPlugins(Container $container)
     {
         $container->set(static::PAYMENT_METHOD_FILTER_PLUGINS, function (Container $container) {
@@ -102,7 +96,7 @@ class PaymentDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\Payment\Dependency\Plugin\Payment\PaymentMethodFilterPluginInterface[]
+     * @return \Spryker\Zed\PaymentExtension\Dependency\Plugin\Payment\PaymentMethodFilterPluginInterface[]
      */
     protected function getPaymentMethodFilterPlugins()
     {
@@ -110,10 +104,44 @@ class PaymentDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCheckoutPlugins(Container $container)
+    {
+        $container->set(static::CHECKOUT_PLUGINS, function (Container $container) {
+            return new CheckoutPluginCollection();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addPaymentHydrationPlugins(Container $container)
+    {
+        $container->set(static::PAYMENT_HYDRATION_PLUGINS, function () {
+            return $this->getPaymentHydrationPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Zed\Payment\Dependency\Plugin\Sales\PaymentHydratorPluginCollectionInterface
      */
-    public function getPaymentHydrationPlugins()
+    protected function getPaymentHydrationPlugins()
     {
-         return new PaymentHydratorPluginCollection();
+        return new PaymentHydratorPluginCollection();
     }
 }

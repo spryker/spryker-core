@@ -44,7 +44,7 @@ class PaymentFacadeTest extends Unit
     protected $tester;
 
     /**
-     * @var \Spryker\Zed\Payment\Business\PaymentFacadeInterface
+     * @var \Spryker\Zed\Payment\Business\PaymentFacadeInterface|\Spryker\Zed\Kernel\Business\AbstractFacade
      */
     protected $paymentFacade;
 
@@ -489,7 +489,10 @@ class PaymentFacadeTest extends Unit
             ->getMock();
         $paymentMethodReaderMock->method('getAvailableMethods')->willReturn(
             (new PaymentMethodsTransfer())
-                ->addMethod((new PaymentMethodTransfer())->setMethodName('dummyPaymentInvoice'))
+                ->addMethod(
+                    (new PaymentMethodTransfer())->setMethodName('dummyPaymentInvoice')
+                    ->setPaymentMethodKey('dummyPaymentInvoice')
+                )
         );
 
         /** @var \Spryker\Zed\Payment\Business\PaymentBusinessFactory $paymentBusinessFactoryMock */

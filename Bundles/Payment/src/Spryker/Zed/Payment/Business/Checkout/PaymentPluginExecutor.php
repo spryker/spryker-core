@@ -14,6 +14,9 @@ use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginCollectionInter
 use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPreCheckPluginInterface;
 use Spryker\Zed\Payment\PaymentDependencyProvider;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class PaymentPluginExecutor implements PaymentPluginExecutorInterface
 {
     /**
@@ -143,8 +146,6 @@ class PaymentPluginExecutor implements PaymentPluginExecutorInterface
     }
 
     /**
-     * @deprecated Use {@link executePreConditionPluginsForPayments()} instead. Will be removed along with QuoteTransfer::getPayment().
-     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
@@ -194,8 +195,6 @@ class PaymentPluginExecutor implements PaymentPluginExecutorInterface
     }
 
     /**
-     * @deprecated Use {@link executePreCheckPluginPaymentPlugin()} instead.
-     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      * @param \Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPreCheckPluginInterface $plugin
@@ -211,21 +210,6 @@ class PaymentPluginExecutor implements PaymentPluginExecutorInterface
         $plugin->execute($quoteTransfer, $checkoutResponseTransfer);
 
         return $errorCount === $checkoutResponseTransfer->getErrors()->count();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
-     * @param \Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPreCheckPluginInterface $plugin
-     *
-     * @return void
-     */
-    protected function executePreCheckPluginPaymentPlugin(
-        QuoteTransfer $quoteTransfer,
-        CheckoutResponseTransfer $checkoutResponseTransfer,
-        CheckoutPreCheckPluginInterface $plugin
-    ) {
-        $plugin->execute($quoteTransfer, $checkoutResponseTransfer);
     }
 
     /**

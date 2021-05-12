@@ -59,13 +59,17 @@ class PaymentMethodFilter implements PaymentMethodFilterInterface
      */
     protected function hasMerchantItems(QuoteTransfer $quoteTransfer): bool
     {
+        $merchantItemsCount = 0;
+
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             if ($itemTransfer->getMerchantReference()) {
-                return true;
+                $merchantItemsCount++;
+
+                continue;
             }
         }
 
-        return false;
+        return $merchantItemsCount === $quoteTransfer->getItems()->count();
     }
 
     /**

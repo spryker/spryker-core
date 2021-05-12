@@ -13,6 +13,8 @@ use Spryker\Yves\Checkout\Dependency\Plugin\Form\SubFormFilterPluginInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
 
 /**
+ * @deprecated Will be removed without replacement. The logic is moved to {@link \SprykerShop\Yves\CheckoutPage\Form\Steps\PaymentForm}.
+ *
  * @method \Spryker\Yves\Payment\PaymentFactory getFactory()
  * @method \Spryker\Client\Payment\PaymentClientInterface getClient()
  */
@@ -37,7 +39,7 @@ class PaymentFormFilterPlugin extends AbstractPlugin implements SubFormFilterPlu
     /**
      * @param \Generated\Shared\Transfer\PaymentMethodsTransfer $paymentMethodsTransfer
      *
-     * @return array
+     * @return string[]
      */
     protected function collectPaymentMethodNames(PaymentMethodsTransfer $paymentMethodsTransfer)
     {

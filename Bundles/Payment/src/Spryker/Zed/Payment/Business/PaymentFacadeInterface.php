@@ -25,69 +25,6 @@ interface PaymentFacadeInterface
 {
     /**
      * Specification:
-     * - Creates sales payments
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
-     *
-     * @return void
-     */
-    public function savePaymentForCheckout(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse);
-
-    /**
-     * Specification:
-     * - Runs pre-check plugins
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
-     *
-     * @return bool
-     */
-    public function checkoutPreCheck(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer);
-
-    /**
-     * Specification:
-     * - Runs post-check plugins
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
-     *
-     * @return void
-     */
-    public function checkoutPostCheck(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer);
-
-    /**
-     * Specification:
-     *  - Returns payment method price to pay
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\SalesPaymentTransfer $salesPaymentTransfer
-     *
-     * @return int
-     */
-    public function getPaymentMethodPriceToPay(SalesPaymentTransfer $salesPaymentTransfer);
-
-    /**
-     * Specification:
-     *  - Populates order transfer with payment data
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return \Generated\Shared\Transfer\OrderTransfer
-     */
-    public function hydrateOrderPayments(OrderTransfer $orderTransfer);
-
-    /**
-     * Specification:
      * - Finds available payment methods
      * - Runs filter plugins
      *
@@ -230,4 +167,77 @@ interface PaymentFacadeInterface
      * @return \Generated\Shared\Transfer\PaymentMethodResponseTransfer
      */
     public function activatePaymentMethod(PaymentMethodTransfer $paymentMethodTransfer): PaymentMethodResponseTransfer;
+
+    /**
+     * Specification:
+     * - Runs pre-check plugins
+     *
+     * @api
+     *
+     * @deprecated Will be removed without replacement.
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return bool
+     */
+    public function checkoutPreCheck(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer);
+
+    /**
+     * Specification:
+     * - Runs post-check plugins
+     *
+     * @api
+     *
+     * @deprecated Will be removed without replacement.
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return void
+     */
+    public function checkoutPostCheck(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer);
+
+    /**
+     * Specification:
+     *  - Returns payment method price to pay
+     *
+     * @api
+     *
+     * @deprecated Use QuoteTransfer.payments or OrderTransfer.payments instead to get amount per payment method.
+     *
+     * @param \Generated\Shared\Transfer\SalesPaymentTransfer $salesPaymentTransfer
+     *
+     * @return int
+     */
+    public function getPaymentMethodPriceToPay(SalesPaymentTransfer $salesPaymentTransfer);
+
+    /**
+     * Specification:
+     *  - Populates order transfer with payment data
+     *
+     * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\SalesPayment\Business\SalesPaymentFacadeInterface::expandOrderWithPayments()} instead.
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function hydrateOrderPayments(OrderTransfer $orderTransfer);
+
+    /**
+     * Specification:
+     * - Creates sales payments
+     *
+     * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\SalesPayment\Business\SalesPaymentFacadeInterface::saveOrderPayments} instead.
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
+     *
+     * @return void
+     */
+    public function savePaymentForCheckout(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse);
 }
