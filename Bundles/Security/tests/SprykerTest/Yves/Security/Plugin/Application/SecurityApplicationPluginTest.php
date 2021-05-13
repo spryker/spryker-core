@@ -101,7 +101,7 @@ class SecurityApplicationPluginTest extends Unit
         $this->assertSame('ANONYMOUS', $httpKernelBrowser->getResponse()->getContent());
 
         $httpKernelBrowser->request('post', '/login_check', ['_username' => 'user', '_password' => 'bar']);
-        $this->assertStringContainsString('Bad credentials', $container->get('security.last_error')($httpKernelBrowser->getRequest()));
+        $this->$this->assertRegexp('/(Bad credentials|The presented password is invalid)/', $container->get('security.last_error')($httpKernelBrowser->getRequest()));
         // hack to re-close the session as the previous assertions re-opens it
         $httpKernelBrowser->getRequest()->getSession()->save();
 
@@ -126,7 +126,7 @@ class SecurityApplicationPluginTest extends Unit
         $this->assertSame('http://localhost/login', $httpKernelBrowser->getResponse()->getTargetUrl());
 
         $httpKernelBrowser->request('post', '/login_check', ['_username' => 'admin', '_password' => 'foo']);
-        $this->assertSame(null, $container->get('security.last_error')($httpKernelBrowser->getRequest()));
+        $this->assertNull($container->get('security.last_error')($httpKernelBrowser->getRequest()));
         $httpKernelBrowser->getRequest()->getSession()->save();
         $this->assertSame(302, $httpKernelBrowser->getResponse()->getStatusCode());
         $this->assertSame('http://localhost/admin', $httpKernelBrowser->getResponse()->getTargetUrl());
@@ -215,7 +215,7 @@ class SecurityApplicationPluginTest extends Unit
 
         $httpKernelBrowser->request('get', '/', [], [], ['HTTP_X_AUTH_TOKEN' => 'lili:not the secret']);
         $this->assertSame(403, $httpKernelBrowser->getResponse()->getStatusCode(), 'User not found');
-        $this->assertSame('{"message":"Username could not be found."}', $httpKernelBrowser->getResponse()->getContent());
+        $this->assertRegExp('/(Username could not be found|Invalid credentials)/', $httpKernelBrowser->getResponse()->getContent());
 
         $httpKernelBrowser->request('get', '/', [], [], ['HTTP_X_AUTH_TOKEN' => 'victoria:not the secret']);
         $this->assertSame(403, $httpKernelBrowser->getResponse()->getStatusCode(), 'Invalid credentials');
