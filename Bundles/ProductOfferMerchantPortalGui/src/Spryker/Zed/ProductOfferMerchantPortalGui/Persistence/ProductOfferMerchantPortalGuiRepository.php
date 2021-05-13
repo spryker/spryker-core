@@ -226,7 +226,7 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
 
         return $productOffersSubquery
             ->where(sprintf(
-                '%s = %s AND %s = %d',
+                '%s = %s AND %s = %s',
                 SpyProductOfferTableMap::COL_CONCRETE_SKU,
                 SpyProductTableMap::COL_SKU,
                 SpyProductOfferTableMap::COL_MERCHANT_REFERENCE,
