@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\QuoteCompanyUserTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupTransfer;
+use Generated\Shared\Transfer\ShareCartRequestTransfer;
 use Generated\Shared\Transfer\ShareDetailCollectionTransfer;
 use Generated\Shared\Transfer\ShareDetailCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ShareDetailTransfer;
@@ -120,6 +121,13 @@ interface SharedCartRepositoryInterface
      * @return \Generated\Shared\Transfer\ShareDetailTransfer|null
      */
     public function findShareDetailByIdQuoteAndIdCompanyUser(int $idQuote, int $idCompanyUser): ?ShareDetailTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShareDetailCollectionTransfer[]
+     */
+    public function getSharedCartDetails(ShareCartRequestTransfer $shareCartRequestTransfer): array;
 
     /**
      * @param int $idQuote

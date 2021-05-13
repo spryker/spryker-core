@@ -38,4 +38,3 @@ suites:
                 - \SprykerTest\Zed\CmsBlock\Helper\CmsBlockDataHelper
                 - \SprykerTest\Zed\CmsSlotBlock\Helper\CmsSlotBlockHelper
                 - \SprykerTest\Zed\CmsSlotBlockStorage\Helper\CmsSlotBlockStorageHelper
-

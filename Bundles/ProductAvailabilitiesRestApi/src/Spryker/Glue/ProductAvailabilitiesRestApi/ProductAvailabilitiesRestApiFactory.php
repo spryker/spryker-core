@@ -22,6 +22,8 @@ use Spryker\Glue\ProductAvailabilitiesRestApi\Processor\Mapper\AbstractProductAv
 use Spryker\Glue\ProductAvailabilitiesRestApi\Processor\Mapper\AbstractProductAvailabilitiesResourceMapperInterface;
 use Spryker\Glue\ProductAvailabilitiesRestApi\Processor\Mapper\ConcreteProductAvailabilitiesResourceMapper;
 use Spryker\Glue\ProductAvailabilitiesRestApi\Processor\Mapper\ConcreteProductAvailabilitiesResourceMapperInterface;
+use Spryker\Glue\ProductAvailabilitiesRestApi\Processor\Mapper\Wishlist\RestWishlistItemsMapper;
+use Spryker\Glue\ProductAvailabilitiesRestApi\Processor\Mapper\Wishlist\RestWishlistItemsMapperInterface;
 use Spryker\Glue\ProductAvailabilitiesRestApi\Processor\RestResponseBuilder\ProductAbstractAvailabilityRestResponseBuilder;
 use Spryker\Glue\ProductAvailabilitiesRestApi\Processor\RestResponseBuilder\ProductAbstractAvailabilityRestResponseBuilderInterface;
 use Spryker\Glue\ProductAvailabilitiesRestApi\Processor\RestResponseBuilder\ProductConcreteAvailabilityRestResponseBuilder;
@@ -105,6 +107,14 @@ class ProductAvailabilitiesRestApiFactory extends AbstractFactory
     public function createConcreteProductsAvailabilitiesResourceMapper(): ConcreteProductAvailabilitiesResourceMapperInterface
     {
         return new ConcreteProductAvailabilitiesResourceMapper();
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductAvailabilitiesRestApi\Processor\Mapper\Wishlist\RestWishlistItemsMapperInterface
+     */
+    public function createRestWishlistItemsMapper(): RestWishlistItemsMapperInterface
+    {
+        return new RestWishlistItemsMapper();
     }
 
     /**

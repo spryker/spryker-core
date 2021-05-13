@@ -9,10 +9,13 @@ namespace Spryker\Zed\Wishlist\Persistence;
 
 use Generated\Shared\Transfer\WishlistCollectionTransfer;
 use Generated\Shared\Transfer\WishlistFilterTransfer;
+use Generated\Shared\Transfer\WishlistItemCriteriaTransfer;
+use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 use Orm\Zed\Wishlist\Persistence\Map\SpyWishlistItemTableMap;
+use Orm\Zed\Wishlist\Persistence\Map\SpyWishlistTableMap;
+use Orm\Zed\Wishlist\Persistence\SpyWishlistItemQuery;
 use Orm\Zed\Wishlist\Persistence\SpyWishlistQuery;
-use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -27,11 +30,15 @@ class WishlistRepository extends AbstractRepository implements WishlistRepositor
      */
     public function getByCustomerReference(string $customerReference): WishlistCollectionTransfer
     {
-        $wishlistEntities = $this->getFactory()->createWishlistQuery()
+        /** @var \Orm\Zed\Wishlist\Persistence\SpyWishlistQuery $wishlistQuery */
+        $wishlistQuery = $this->getFactory()->createWishlistQuery()
             ->useSpyCustomerQuery()
                 ->filterByCustomerReference($customerReference)
-            ->endUse()
+            ->endUse();
+
+        $wishlistEntities = $wishlistQuery
             ->leftJoinWithSpyWishlistItem()
+                ->withColumn('count(*)', WishlistTransfer::NUMBER_OF_ITEMS)
             ->groupByIdWishlist()
             ->find();
 
@@ -50,16 +57,23 @@ class WishlistRepository extends AbstractRepository implements WishlistRepositor
      */
     public function findWishlistByFilter(WishlistFilterTransfer $wishlistFilterTransfer): ?WishlistTransfer
     {
+        $alias = uniqid('swi_');
+        $numberOfItemsQueryString = sprintf(
+            '(SELECT count(*) FROM %s %s WHERE %s=%s )',
+            SpyWishlistItemTableMap::TABLE_NAME,
+            $alias,
+            SpyWishlistTableMap::COL_ID_WISHLIST,
+            str_replace(
+                SpyWishlistItemTableMap::TABLE_NAME,
+                $alias,
+                SpyWishlistItemTableMap::COL_FK_WISHLIST
+            )
+        );
+
         $wishlistQuery = $this->getFactory()
             ->createWishlistQuery()
             ->leftJoinWithSpyWishlistItem()
-            ->useSpyWishlistItemQuery(null, Criteria::LEFT_JOIN)
-                ->withColumn(
-                    sprintf('COUNT(%s)', SpyWishlistItemTableMap::COL_ID_WISHLIST_ITEM),
-                    WishlistTransfer::NUMBER_OF_ITEMS
-                )
-            ->endUse()
-            ->groupByIdWishlist();
+                ->withColumn($numberOfItemsQueryString, WishlistTransfer::NUMBER_OF_ITEMS);
 
         $wishlistEntityCollection = $this->applyFilters($wishlistQuery, $wishlistFilterTransfer)
             ->find();
@@ -70,10 +84,39 @@ class WishlistRepository extends AbstractRepository implements WishlistRepositor
 
         return $this->getFactory()
             ->createWishlistMapper()
-            ->mapWishlistEntityToWishlistTransfer($wishlistEntityCollection->getFirst(), new WishlistTransfer());
+            ->mapWishlistEntityToWishlistTransferIncludingWishlistItems(
+                $wishlistEntityCollection->getFirst(),
+                new WishlistTransfer()
+            );
     }
 
     /**
+     * @param \Generated\Shared\Transfer\WishlistItemCriteriaTransfer $wishlistItemCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemTransfer|null
+     */
+    public function findWishlistItem(WishlistItemCriteriaTransfer $wishlistItemCriteriaTransfer): ?WishlistItemTransfer
+    {
+        $wishlistItemQuery = $this->getFactory()
+            ->createWishlistItemQuery();
+
+        $wishlistItemQuery = $this->applyWishlistItemFilters($wishlistItemCriteriaTransfer, $wishlistItemQuery);
+        $wishlistItemEntity = $wishlistItemQuery->findOne();
+
+        if (!$wishlistItemEntity) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createWishlistMapper()
+            ->mapWishlistItemEntityToWishlistItemTransfer($wishlistItemEntity, new WishlistItemTransfer());
+    }
+
+    /**
+     * @phpstan-param \Orm\Zed\Wishlist\Persistence\SpyWishlistQuery<mixed> $wishlistQuery
+     *
+     * @phpstan-return \Orm\Zed\Wishlist\Persistence\SpyWishlistQuery<mixed>
+     *
      * @param \Orm\Zed\Wishlist\Persistence\SpyWishlistQuery $wishlistQuery
      * @param \Generated\Shared\Transfer\WishlistFilterTransfer $wishlistFilterTransfer
      *
@@ -92,5 +135,28 @@ class WishlistRepository extends AbstractRepository implements WishlistRepositor
         }
 
         return $wishlistQuery;
+    }
+
+    /**
+     * @phpstan-param \Orm\Zed\Wishlist\Persistence\SpyWishlistItemQuery<mixed> $wishlistItemQuery
+     *
+     * @phpstan-return \Orm\Zed\Wishlist\Persistence\SpyWishlistItemQuery<mixed>
+     *
+     * @param \Generated\Shared\Transfer\WishlistItemCriteriaTransfer $wishlistItemCriteriaTransfer
+     * @param \Orm\Zed\Wishlist\Persistence\SpyWishlistItemQuery $wishlistItemQuery
+     *
+     * @return \Orm\Zed\Wishlist\Persistence\SpyWishlistItemQuery
+     */
+    protected function applyWishlistItemFilters(
+        WishlistItemCriteriaTransfer $wishlistItemCriteriaTransfer,
+        SpyWishlistItemQuery $wishlistItemQuery
+    ): SpyWishlistItemQuery {
+        if ($wishlistItemCriteriaTransfer->getIdWishlistItem()) {
+            /** @var int $idWishlistItem */
+            $idWishlistItem = $wishlistItemCriteriaTransfer->getIdWishlistItem();
+            $wishlistItemQuery->filterByIdWishlistItem($idWishlistItem);
+        }
+
+        return $wishlistItemQuery;
     }
 }

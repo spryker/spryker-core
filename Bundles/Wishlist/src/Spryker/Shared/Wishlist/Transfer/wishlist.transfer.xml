@@ -1,7 +1,5 @@
 <?xml version="1.0"?>
-<transfers xmlns="spryker:transfer-01"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="Wishlist">
         <property name="idWishlist" type="int"/>
@@ -138,6 +136,8 @@
 
     <transfer name="WishlistItemCriteria">
         <property name="sku" type="string"/>
+        <property name="idWishlistItem" type="int"/>
+        <property name="fkWishlist" type="int"/>
     </transfer>
 
 </transfers>

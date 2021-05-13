@@ -1,46 +1,46 @@
 {
-  "name": "spryker/merchant-relationship",
-  "type": "library",
-  "description": "MerchantRelationship module",
-  "license": "proprietary",
-  "require": {
-    "php": ">=7.3",
-    "spryker/company-business-unit": "^1.0.0 || ^2.0.0",
-    "spryker/company-user-extension": "^1.0.0",
-    "spryker/kernel": "^3.33.0",
-    "spryker/merchant": "^1.1.0 || ^2.0.0 || ^3.0.0",
-    "spryker/merchant-relationship-extension": "^1.1.0",
-    "spryker/propel-orm": "^1.0.0"
-  },
-  "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/company": "*",
-    "spryker/propel": "*",
-    "spryker/testify": "*"
-  },
-  "autoload": {
-    "psr-4": {
-      "Spryker\\": "src/Spryker/",
-      "SprykerTest\\Zed\\MerchantRelationship\\Helper\\": "tests/SprykerTest/Zed/MerchantRelationship/_support/Helper/"
+    "name": "spryker/merchant-relationship",
+    "type": "library",
+    "description": "MerchantRelationship module",
+    "license": "proprietary",
+    "require": {
+        "php": ">=7.3",
+        "spryker/company-business-unit": "^1.0.0 || ^2.0.0",
+        "spryker/company-user-extension": "^1.0.0",
+        "spryker/kernel": "^3.33.0",
+        "spryker/merchant": "^1.1.0 || ^2.0.0 || ^3.0.0",
+        "spryker/merchant-relationship-extension": "^1.1.0",
+        "spryker/propel-orm": "^1.0.0"
+    },
+    "require-dev": {
+        "spryker/code-sniffer": "*",
+        "spryker/company": "*",
+        "spryker/propel": "*",
+        "spryker/testify": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Spryker\\": "src/Spryker/",
+            "SprykerTest\\Zed\\MerchantRelationship\\Helper\\": "tests/SprykerTest/Zed/MerchantRelationship/_support/Helper/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "SprykerTest\\": "tests/SprykerTest/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
     }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "SprykerTest\\": "tests/SprykerTest/"
-    }
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "scripts": {
-    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
-    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "1.0.x-dev"
-    }
-  },
-  "config": {
-    "sort-packages": true
-  }
 }

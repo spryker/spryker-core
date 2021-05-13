@@ -78,7 +78,7 @@ class UserFormDataProvider
         $groupsTransfer = $this->groupPlugin->getAllGroups();
 
         foreach ($groupsTransfer->getGroups() as $groupTransfer) {
-            $groupCollection[$groupTransfer->getIdAclGroup()] = $this->formatGroupName($groupTransfer->getName());
+            $groupCollection[$groupTransfer->getIdAclGroup()] = $this->formatGroupName($groupTransfer->getNameOrFail());
         }
 
         return $groupCollection;
@@ -106,7 +106,7 @@ class UserFormDataProvider
         $groupChoices = $this->getGroupChoices();
 
         foreach ($userAclGroupsTransfer->getGroups() as $aclGroupTransfer) {
-            if (array_key_exists($aclGroupTransfer->getIdAclGroup(), $groupChoices)) {
+            if (array_key_exists($aclGroupTransfer->getIdAclGroupOrFail(), $groupChoices)) {
                 $formData[UserForm::FIELD_GROUP][] = $aclGroupTransfer->getIdAclGroup();
             }
         }

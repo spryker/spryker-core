@@ -20,6 +20,8 @@ use Generated\Shared\Transfer\PriceTypeTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Generated\Shared\Transfer\WishlistItemTransfer;
+use Generated\Shared\Transfer\WishlistTransfer;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery;
 use ReflectionClass;
 use Spryker\Shared\Price\PriceConfig;
@@ -56,6 +58,18 @@ class PriceProductFacadeTest extends Unit
     protected const COUNT_PRODUCT_WITH_PRICES = 5;
 
     protected const FAKE_CURRENCY = 'FAKE_CURRENCY';
+
+    protected const PRICE_TYPE_ORIGINAL = 'ORIGINAL';
+
+    /**
+     * @uses \Spryker\Shared\PriceProduct\PriceProductConfig::PRICE_DATA
+     */
+    protected const PRICE_DATA = 'priceData';
+
+    /**
+     * @uses \Spryker\Shared\PriceProduct\PriceProductConfig::PRICE_DATA_BY_PRICE_TYPE
+     */
+    protected const PRICE_DATA_BY_PRICE_TYPE = 'priceDataByPriceType';
 
     /**
      * @var \SprykerTest\Zed\PriceProduct\PriceProductBusinessTester
@@ -435,35 +449,44 @@ class PriceProductFacadeTest extends Unit
     {
         // Assign
         $priceProductFacade = $this->getPriceProductFacade();
+        $defaultPriceTypeName = $priceProductFacade->getDefaultPriceTypeName();
         $expectedResult = [
             'dummy currency 1' => [
                 'GROSS_MODE' => [
-                    'dummy price type 1' => 100,
-                    'dummy price type 2' => 1100,
+                    $defaultPriceTypeName => 100,
+                    static::PRICE_TYPE_ORIGINAL => 1100,
                 ],
                 'NET_MODE' => [
-                    'dummy price type 1' => 300,
-                    'dummy price type 2' => 1300,
+                    $defaultPriceTypeName => 300,
+                    static::PRICE_TYPE_ORIGINAL => 1300,
                 ],
                 'priceData' => null,
+                'priceDataByPriceType' => [
+                    $defaultPriceTypeName => null,
+                    static::PRICE_TYPE_ORIGINAL => null,
+                ],
             ],
             'dummy currency 2' => [
                 'GROSS_MODE' => [
-                    'dummy price type 1' => 200,
-                    'dummy price type 2' => 1200,
+                    $defaultPriceTypeName => 200,
+                    static::PRICE_TYPE_ORIGINAL => 1200,
                 ],
                 'NET_MODE' => [
-                    'dummy price type 1' => 400,
-                    'dummy price type 2' => 1400,
+                    $defaultPriceTypeName => 400,
+                    static::PRICE_TYPE_ORIGINAL => 1400,
                 ],
                 'priceData' => null,
+                'priceDataByPriceType' => [
+                    $defaultPriceTypeName => null,
+                    static::PRICE_TYPE_ORIGINAL => null,
+                ],
             ],
         ];
         $priceProductCollection = [];
-        $priceProductCollection[] = $this->createPriceProduct('dummy currency 1', 'dummy price type 1', 100, 300);
-        $priceProductCollection[] = $this->createPriceProduct('dummy currency 1', 'dummy price type 2', 1100, 1300);
-        $priceProductCollection[] = $this->createPriceProduct('dummy currency 2', 'dummy price type 1', 200, 400);
-        $priceProductCollection[] = $this->createPriceProduct('dummy currency 2', 'dummy price type 2', 1200, 1400);
+        $priceProductCollection[] = $this->createPriceProduct('dummy currency 1', $defaultPriceTypeName, 100, 300);
+        $priceProductCollection[] = $this->createPriceProduct('dummy currency 1', static::PRICE_TYPE_ORIGINAL, 1100, 1300);
+        $priceProductCollection[] = $this->createPriceProduct('dummy currency 2', $defaultPriceTypeName, 200, 400);
+        $priceProductCollection[] = $this->createPriceProduct('dummy currency 2', static::PRICE_TYPE_ORIGINAL, 1200, 1400);
 
         // Act
         $actualResult = $priceProductFacade->groupPriceProductCollection($priceProductCollection);
@@ -479,21 +502,48 @@ class PriceProductFacadeTest extends Unit
     {
         // Assign
         $priceProductFacade = $this->getPriceProductFacade();
+        $defaultPriceTypeName = $priceProductFacade->getDefaultPriceTypeName();
 
         $expectedPriceData = 'dummy price data';
 
-        $priceProductWithPriceData = $this->createPriceProduct('dummy currency 1', 'dummy price type 1', 100, 300);
+        $priceProductWithPriceData = $this->createPriceProduct('dummy currency 1', $defaultPriceTypeName, 100, 300);
         $priceProductWithPriceData->getMoneyValue()->setPriceData($expectedPriceData);
 
         $priceProductCollection = [];
         $priceProductCollection[] = $priceProductWithPriceData;
-        $priceProductCollection[] = $this->createPriceProduct('dummy currency 1', 'dummy price type 2', 1100, 1300);
+        $priceProductCollection[] = $this->createPriceProduct('dummy currency 1', static::PRICE_TYPE_ORIGINAL, 1100, 1300);
 
         // Act
         $actualResult = $priceProductFacade->groupPriceProductCollection($priceProductCollection);
 
         // Assert
         $this->assertSame($expectedPriceData, $actualResult['dummy currency 1']['priceData']);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGroupPriceProductCollectionVolumePriceDataOfDefaultPriceTypeShouldBeSameAsInPriceData(): void
+    {
+        // Assign
+        $priceProductFacade = $this->getPriceProductFacade();
+        $defaultPriceTypeName = $priceProductFacade->getDefaultPriceTypeName();
+
+        $expectedPriceData = 'dummy price data';
+
+        $priceProductWithPriceData = $this->createPriceProduct(static::FAKE_CURRENCY, $defaultPriceTypeName, 100, 300);
+        $priceProductWithPriceData->getMoneyValue()->setPriceData($expectedPriceData);
+
+        $priceProductCollection = [];
+        $priceProductCollection[] = $priceProductWithPriceData;
+        $priceProductCollection[] = $this->createPriceProduct(static::FAKE_CURRENCY, static::PRICE_TYPE_ORIGINAL, 1100, 1300);
+
+        // Act
+        $actualResult = $priceProductFacade->groupPriceProductCollection($priceProductCollection);
+
+        // Assert
+        $this->assertSame($expectedPriceData, $actualResult[static::FAKE_CURRENCY][static::PRICE_DATA_BY_PRICE_TYPE][$defaultPriceTypeName]);
+        $this->assertSame($expectedPriceData, $actualResult[static::FAKE_CURRENCY][static::PRICE_DATA]);
     }
 
     /**
@@ -1305,6 +1355,48 @@ class PriceProductFacadeTest extends Unit
         $this->assertFalse($collectionValidationResponseTransfer->getIsSuccess());
         $this->assertSame('This field is missing.', $validationError->getMessage());
         $this->assertSame('[0][moneyValue][fkStore]', $validationError->getPropertyPath());
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandWishlistItemWithPrices(): void
+    {
+        // Arrange
+        $priceProductFacade = $this->getPriceProductFacade();
+
+        $priceTypeTransfer = new PriceTypeTransfer();
+        $priceTypeTransfer->setName($priceProductFacade->getDefaultPriceTypeName());
+
+        $productConcreteTransfer = $this->tester->haveProduct();
+        $priceProductTransfer = $this->createPriceProductTransfer(
+            $productConcreteTransfer,
+            $priceTypeTransfer,
+            10,
+            9,
+            self::EUR_ISO_CODE
+        );
+        $priceProductTransfer = $this->tester->havePriceProduct($priceProductTransfer->toArray());
+
+        $customer = $this->tester->haveCustomer();
+        $wishlistTransfer = $this->tester->haveWishlist([
+            WishlistTransfer::FK_CUSTOMER => $customer->getIdCustomer(),
+        ]);
+        $wishlistItem = [
+            WishlistItemTransfer::FK_CUSTOMER => $customer->getIdCustomer(),
+            WishlistItemTransfer::FK_WISHLIST => $wishlistTransfer->getIdWishlist(),
+            WishlistItemTransfer::SKU => $productConcreteTransfer->getSku(),
+        ];
+
+        $wishlistItemTransfer = $this->tester->haveItemInWishlist($wishlistItem);
+        $priceCountBefore = $wishlistItemTransfer->getPrices()->count();
+
+        // Act
+        $wishlistItemTransfer = $this->getPriceProductFacade()->expandWishlistItem($wishlistItemTransfer);
+
+        // Assert
+        $this->assertSame($priceCountBefore + 1, $wishlistItemTransfer->getPrices()->count());
+        $this->assertSame($priceProductTransfer->getSkuProduct(), $wishlistItemTransfer->getSku());
     }
 
     /**

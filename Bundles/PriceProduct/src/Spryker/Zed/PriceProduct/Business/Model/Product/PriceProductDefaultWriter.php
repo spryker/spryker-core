@@ -43,22 +43,31 @@ class PriceProductDefaultWriter implements PriceProductDefaultWriterInterface
      */
     public function persistPriceProductDefault(PriceProductTransfer $priceProductTransfer): SpyPriceProductDefaultEntityTransfer
     {
-        $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
-        $idPriceProductDefault = $priceProductTransfer->getPriceDimension()->getIdPriceProductDefault();
+        /** @var \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer */
+        $moneyValueTransfer = $priceProductTransfer->requireMoneyValue()->getMoneyValue();
+        /** @var \Generated\Shared\Transfer\PriceProductDimensionTransfer $priceDimensionTransfer */
+        $priceDimensionTransfer = $priceProductTransfer->requirePriceDimension()->getPriceDimension();
+        /** @var int $idPriceProductDefault */
+        $idPriceProductDefault = $priceDimensionTransfer->getIdPriceProductDefault();
+        /** @var int $idEntity */
+        $idEntity = $moneyValueTransfer->getIdEntity();
 
         $priceProductDefaultEntity = $this->priceProductRepository->findPriceProductDefaultByIdPriceProductStore(
-            $moneyValueTransfer->getIdEntity()
+            $idEntity
         );
 
         if ($priceProductDefaultEntity) {
             return $priceProductDefaultEntity;
         }
 
+        $idPriceProductDefault = $idPriceProductDefault ? (string)$idPriceProductDefault : null;
+        $idEntity = $idEntity ? (string)$idEntity : null;
+
         $priceProductDefaultEntity = (new SpyPriceProductDefaultEntityTransfer())
             ->setIdPriceProductDefault($idPriceProductDefault)
-            ->setFkPriceProductStore($moneyValueTransfer->getIdEntity());
+            ->setFkPriceProductStore($idEntity);
 
-         return $this->priceProductEntityManager
-             ->savePriceProductDefaultEntity($priceProductDefaultEntity);
+        return $this->priceProductEntityManager
+            ->savePriceProductDefaultEntity($priceProductDefaultEntity);
     }
 }

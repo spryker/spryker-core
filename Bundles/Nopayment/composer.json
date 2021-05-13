@@ -1,53 +1,53 @@
 {
-  "name": "spryker/nopayment",
-  "type": "library",
-  "description": "Nopayment module",
-  "license": "proprietary",
-  "require": {
-    "php": ">=7.3",
-    "spryker/checkout-extension": "^1.2.0",
-    "spryker/kernel": "^3.30.0",
-    "spryker/payment-extension": "^1.0.0",
-    "spryker/sales": "^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0 || ^10.0.0 || ^11.0.0"
-  },
-  "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/oms": "*",
-    "spryker/payment": "*",
-    "spryker/propel": "*",
-    "spryker/step-engine": "^3.1.0",
-    "spryker/symfony": "*",
-    "spryker/testify": "*"
-  },
-  "suggest": {
-    "spryker/oms": "If you want to use Oms command plugins.",
-    "spryker/payment": "If you want to use Payment command plugins.",
-    "spryker/step-engine": "If you want to use Step engine command plugins.",
-    "spryker/symfony": "If you want to use Step handler plugin."
-  },
-  "autoload": {
-    "psr-4": {
-      "Spryker\\": "src/Spryker/"
+    "name": "spryker/nopayment",
+    "type": "library",
+    "description": "Nopayment module",
+    "license": "proprietary",
+    "require": {
+        "php": ">=7.3",
+        "spryker/checkout-extension": "^1.2.0",
+        "spryker/kernel": "^3.30.0",
+        "spryker/payment-extension": "^1.0.0",
+        "spryker/sales": "^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0 || ^10.0.0 || ^11.0.0"
+    },
+    "require-dev": {
+        "spryker/code-sniffer": "*",
+        "spryker/oms": "*",
+        "spryker/payment": "*",
+        "spryker/propel": "*",
+        "spryker/step-engine": "^3.1.0",
+        "spryker/symfony": "*",
+        "spryker/testify": "*"
+    },
+    "suggest": {
+        "spryker/oms": "If you want to use Oms command plugins.",
+        "spryker/payment": "If you want to use Payment command plugins.",
+        "spryker/step-engine": "If you want to use Step engine command plugins.",
+        "spryker/symfony": "If you want to use Step handler plugin."
+    },
+    "autoload": {
+        "psr-4": {
+            "Spryker\\": "src/Spryker/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "SprykerTest\\": "tests/SprykerTest/",
+            "SprykerTest\\Zed\\Nopayment\\": "tests/SprykerTest/Zed/Nopayment/_support/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "4.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
     }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "SprykerTest\\": "tests/SprykerTest/",
-      "SprykerTest\\Zed\\Nopayment\\": "tests/SprykerTest/Zed/Nopayment/_support/"
-    }
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "scripts": {
-    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
-    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "4.0.x-dev"
-    }
-  },
-  "config": {
-    "sort-packages": true
-  }
 }

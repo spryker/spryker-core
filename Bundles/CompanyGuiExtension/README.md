@@ -1,5 +1,5 @@
 # CompanyGuiExtension Module
-[![Build Status](https://travis-ci.org/spryker/company-gui-extension.svg)](https://travis-ci.org/spryker/company-gui-extension)
+[![Latest Stable Version](https://poser.pugx.org/spryker/company-gui-extension/v/stable.svg)](https://packagist.org/packages/spryker/company-gui-extension)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 CompanyGuiExtension module provides interfaces of plugins to influence on module CompanyGui from other modules.

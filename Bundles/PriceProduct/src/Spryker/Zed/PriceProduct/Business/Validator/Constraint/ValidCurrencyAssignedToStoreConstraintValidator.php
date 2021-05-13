@@ -31,18 +31,28 @@ class ValidCurrencyAssignedToStoreConstraintValidator extends AbstractConstraint
         if (!$constraint instanceof ValidCurrencyAssignedToStoreConstraint) {
             throw new UnexpectedTypeException($constraint, ValidCurrencyAssignedToStoreConstraint::class);
         }
+        /** @var \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer */
         $moneyValueTransfer = $value->getMoneyValueOrFail();
 
         if (!$moneyValueTransfer->getFkStore() || !$moneyValueTransfer->getCurrency()) {
             return;
         }
 
-        $storeTransfer = $constraint->getStoreFacade()->getStoreById($moneyValueTransfer->getFkStore());
+        /** @var int $idStore */
+        $idStore = $moneyValueTransfer->requireFkStore()->getFkStore();
+        /** @var \Generated\Shared\Transfer\StoreTransfer $storeTransfer */
+        $storeTransfer = $constraint->getStoreFacade()->getStoreById($idStore);
+        /** @var string $storeName */
+        $storeName = $storeTransfer->getName();
+        /** @var \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer */
+        $currencyTransfer = $moneyValueTransfer->requireCurrency()->getCurrency();
+        /** @var string $currencyName */
+        $currencyName = $currencyTransfer->getName();
 
         if (!in_array($moneyValueTransfer->getCurrencyOrFail()->getCode(), $storeTransfer->getAvailableCurrencyIsoCodes(), true)) {
             $this->context->buildViolation($constraint->getMessage())
-                ->setParameter('{{ currency }}', $moneyValueTransfer->getCurrency()->getName())
-                ->setParameter('{{ store }}', $storeTransfer->getName())
+                ->setParameter('{{ currency }}', $currencyName)
+                ->setParameter('{{ store }}', $storeName)
                 ->addViolation();
         }
     }

@@ -150,19 +150,9 @@ class Operation implements OperationInterface
             return $quoteTransfer;
         }
 
-        $itemsTransfer = $cartChangeTransfer->getItems();
+        $cartChangeTransfer->setOperation(CartConfig::OPERATION_ADD);
 
-        foreach ($itemsTransfer as $currentItemTransfer) {
-            $itemsCollection = new ArrayObject([$currentItemTransfer]);
-            $currentCartChangeTransfer = new CartChangeTransfer();
-            $currentCartChangeTransfer->setQuote($quoteTransfer);
-            $currentCartChangeTransfer->setItems($itemsCollection);
-            $currentCartChangeTransfer->setOperation(CartConfig::OPERATION_ADD);
-
-            $quoteTransfer = $this->addToCart($currentCartChangeTransfer)->getQuoteTransfer();
-        }
-
-        return $quoteTransfer;
+        return $this->addToCart($cartChangeTransfer)->getQuoteTransfer();
     }
 
     /**

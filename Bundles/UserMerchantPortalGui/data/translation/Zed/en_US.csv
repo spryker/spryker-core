@@ -1,0 +1,21 @@
+"My Account","My Account"
+"First name","First name"
+"Last name","Last name"
+E-mail,E-mail
+Language,Language
+Save,Save
+"Change password","Change password"
+"Success! The Account is updated.","Success! The Account is updated."
+"Please resolve all errors.","Please resolve all errors."
+"This value should not be blank.","This value should not be blank."
+"This value is not a valid email address.","This value is not a valid email address."
+"A user with this email already exists.","A user with this email already exists."
+"Personal Details","Personal Details"
+"Email *","Email *"
+Password,Password
+"Current password","Current password"
+"New password","New password"
+"Repeat new password","Repeat new password"
+"The current password is invalid.","The current password is invalid."
+"The value needs to match the New Password input.","The value needs to match the New Password input."
+"Success! The Password is updated.","Success! The Password is updated."

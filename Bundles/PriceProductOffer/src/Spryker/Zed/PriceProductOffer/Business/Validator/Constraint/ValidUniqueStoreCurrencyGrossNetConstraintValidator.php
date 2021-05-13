@@ -38,11 +38,17 @@ class ValidUniqueStoreCurrencyGrossNetConstraintValidator extends AbstractConstr
         $priceProductTransfers = $value->getProductOfferOrFail()->getPrices();
 
         foreach ($priceProductTransfers as $priceProductTransfer) {
+            /** @var \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer */
             $moneyValueTransfer = $priceProductTransfer->getMoneyValueOrFail();
 
+            if (!$priceProductTransfer->getPriceDimension()) {
+                return;
+            }
+
+            /** @var \Generated\Shared\Transfer\PriceProductDimensionTransfer $priceDimensionTransfer */
+            $priceDimensionTransfer = $priceProductTransfer->getPriceDimension();
             if (
-                !$priceProductTransfer->getPriceDimension()
-                || !$priceProductTransfer->getPriceDimension()->getIdProductOffer()
+                !$priceDimensionTransfer->getIdProductOffer()
                 || !$moneyValueTransfer->getFkStore()
                 || !$moneyValueTransfer->getFkCurrency()
             ) {
@@ -50,16 +56,26 @@ class ValidUniqueStoreCurrencyGrossNetConstraintValidator extends AbstractConstr
             }
 
             $priceProductOfferCriteriaTransfer = new PriceProductOfferCriteriaTransfer();
-            $priceProductOfferCriteriaTransfer->setIdProductOffer($priceProductTransfer->getPriceDimension()->getIdProductOffer())
-                ->addIdCurrency($moneyValueTransfer->getFkCurrency())
-                ->addIdStore($moneyValueTransfer->getFkStore())
-                ->addIdPriceType($priceProductTransfer->getPriceType()->getIdPriceTypeOrFail());
+            /** @var int $idCurrency */
+            $idCurrency = $moneyValueTransfer->getFkCurrency();
+            /** @var int $idStore */
+            $idStore = $moneyValueTransfer->getFkStore();
+            /** @var \Generated\Shared\Transfer\PriceTypeTransfer $priceTypeTransfer */
+            $priceTypeTransfer = $priceProductTransfer->getPriceType();
+            /** @var int $idPriceType */
+            $idPriceType = $priceTypeTransfer->getIdPriceTypeOrFail();
+            $priceProductOfferCriteriaTransfer->setIdProductOffer($priceDimensionTransfer->getIdProductOffer())
+                ->addIdCurrency($idCurrency)
+                ->addIdStore($idStore)
+                ->addIdPriceType($idPriceType);
 
             $priceProductTransfers = $constraint->getPriceProductOfferRepository()->getProductOfferPrices($priceProductOfferCriteriaTransfer);
+            /** @var \Generated\Shared\Transfer\MoneyValueTransfer $priceProductMoneyValueTransfer */
+            $priceProductMoneyValueTransfer = $priceProductTransfers->offsetGet(0)->getMoneyValue();
             if (
                 $priceProductTransfers->count() > 1
                 || ($priceProductTransfers->count() === 1
-                    && $priceProductTransfers->offsetGet(0)->getMoneyValue()->getIdEntity() !== $priceProductTransfer->getMoneyValue()->getIdEntity())
+                    && $priceProductMoneyValueTransfer->getIdEntity() !== $moneyValueTransfer->getIdEntity())
             ) {
                 $this->context->addViolation($constraint->getMessage());
             }

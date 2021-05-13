@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\UserPasswordReset\Business;
 
+use Generated\Shared\Transfer\UserPasswordResetRequestTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -21,13 +22,13 @@ class UserPasswordResetFacade extends AbstractFacade implements UserPasswordRese
      *
      * @api
      *
-     * @param string $email
+     * @param \Generated\Shared\Transfer\UserPasswordResetRequestTransfer $userPasswordResetRequestTransfer
      *
      * @return bool
      */
-    public function requestPasswordReset(string $email): bool
+    public function requestPasswordReset(UserPasswordResetRequestTransfer $userPasswordResetRequestTransfer): bool
     {
-        return $this->getFactory()->createResetPassword()->requestPasswordReset($email);
+        return $this->getFactory()->createResetPassword()->requestPasswordReset($userPasswordResetRequestTransfer);
     }
 
     /**

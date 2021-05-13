@@ -76,6 +76,7 @@ class GlueAnnotationAnalyzer implements GlueAnnotationAnalyzerInterface
         if (!array_filter($parameters)) {
             return $pathAnnotationsTransfer;
         }
+
         $pathAnnotationsTransfer = $pathAnnotationsTransfer->fromArray(array_replace_recursive(...$parameters), true);
 
         return $pathAnnotationsTransfer;

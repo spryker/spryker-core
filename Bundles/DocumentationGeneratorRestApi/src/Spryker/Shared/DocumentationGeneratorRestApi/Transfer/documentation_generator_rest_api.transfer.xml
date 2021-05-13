@@ -1,7 +1,5 @@
 <?xml version="1.0"?>
-<transfers xmlns="spryker:transfer-01"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="PathMethodData">
         <property name="path" type="string"/>
@@ -14,6 +12,7 @@
         <property name="isEmptyResponse" type="bool"/>
         <property name="responseSchemas" singular="responseSchema" type="PathSchemaData[]"/>
         <property name="operationId" type="string"/>
+        <property name="deprecated" type="bool"/>
     </transfer>
 
     <transfer name="PathParameter">
@@ -87,6 +86,7 @@
         <property name="request" type="array" singular="request"/>
         <property name="security" type="array" singular="security"/>
         <property name="responses" type="array" singular="response"/>
+        <property name="deprecated" type="bool"/>
     </transfer>
 
     <transfer name="PathParameterComponent">
@@ -165,6 +165,7 @@
         <property name="isEmptyResponse" type="bool"/>
         <property name="responses" singular="response" type="array"/>
         <property name="isIdNullable" type="bool"/>
+        <property name="deprecated" type="bool"/>
     </transfer>
 
     <transfer name="RestErrorMessage">

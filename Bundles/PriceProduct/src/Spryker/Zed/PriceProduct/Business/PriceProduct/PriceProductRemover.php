@@ -71,10 +71,14 @@ class PriceProductRemover implements PriceProductRemoverInterface
             }
 
             if ($this->priceProductRepository->isPriceProductUsedForOtherCurrencyAndStore($priceProductTransfer) === false) {
-                $this->priceProductEntityManager->deletePriceProductById($priceProductTransfer->getIdPriceProduct());
+                /** @var int $idPriceProduct */
+                $idPriceProduct = $priceProductTransfer->requireIdPriceProduct()->getIdPriceProduct();
+                $this->priceProductEntityManager->deletePriceProductById($idPriceProduct);
             }
         });
 
-        $this->getLogger()->warning(sprintf('Price for product with id "%s" was deleted', $priceProductTransfer->getIdPriceProduct()));
+        /** @var \Psr\Log\LoggerInterface $logger */
+        $logger = $this->getLogger();
+        $logger->warning(sprintf('Price for product with id "%s" was deleted', $priceProductTransfer->getIdPriceProduct()));
     }
 }

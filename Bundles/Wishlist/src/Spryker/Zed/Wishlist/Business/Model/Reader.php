@@ -11,7 +11,9 @@ use ArrayObject;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\WishlistCollectionTransfer;
 use Generated\Shared\Transfer\WishlistFilterTransfer;
+use Generated\Shared\Transfer\WishlistItemCriteriaTransfer;
 use Generated\Shared\Transfer\WishlistItemMetaTransfer;
+use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistOverviewMetaTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
 use Generated\Shared\Transfer\WishlistOverviewResponseTransfer;
@@ -60,12 +62,18 @@ class Reader implements ReaderInterface
     protected $wishlistItemsValidatorPlugins;
 
     /**
+     * @var \Spryker\Zed\WishlistExtension\Dependency\Plugin\WishlistItemExpanderPluginInterface[]
+     */
+    protected $wishlistItemExpanderPlugins;
+
+    /**
      * @param \Spryker\Zed\Wishlist\Persistence\WishlistQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Wishlist\Dependency\QueryContainer\WishlistToProductInterface $productQueryContainer
      * @param \Spryker\Zed\Wishlist\Business\Transfer\WishlistTransferMapperInterface $transferMapper
      * @param \Spryker\Zed\Wishlist\Persistence\WishlistRepositoryInterface $wishlistRepository
      * @param \Spryker\Zed\WishlistExtension\Dependency\Plugin\WishlistReloadItemsPluginInterface[] $wishlistReloadItemsPlugins
      * @param \Spryker\Zed\WishlistExtension\Dependency\Plugin\WishlistItemsValidatorPluginInterface[] $wishlistItemsValidatorPlugins
+     * @param \Spryker\Zed\WishlistExtension\Dependency\Plugin\WishlistItemExpanderPluginInterface[] $wishlistItemExpanderPlugins
      */
     public function __construct(
         WishlistQueryContainerInterface $queryContainer,
@@ -73,7 +81,8 @@ class Reader implements ReaderInterface
         WishlistTransferMapperInterface $transferMapper,
         WishlistRepositoryInterface $wishlistRepository,
         array $wishlistReloadItemsPlugins = [],
-        array $wishlistItemsValidatorPlugins = []
+        array $wishlistItemsValidatorPlugins = [],
+        array $wishlistItemExpanderPlugins = []
     ) {
         $this->queryContainer = $queryContainer;
         $this->productQueryContainer = $productQueryContainer;
@@ -81,6 +90,7 @@ class Reader implements ReaderInterface
         $this->wishlistRepository = $wishlistRepository;
         $this->wishlistReloadItemsPlugins = $wishlistReloadItemsPlugins;
         $this->wishlistItemsValidatorPlugins = $wishlistItemsValidatorPlugins;
+        $this->wishlistItemExpanderPlugins = $wishlistItemExpanderPlugins;
     }
 
     /**
@@ -158,6 +168,24 @@ class Reader implements ReaderInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\WishlistItemCriteriaTransfer $wishlistItemCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemTransfer|null
+     */
+    public function findWishlistItem(WishlistItemCriteriaTransfer $wishlistItemCriteriaTransfer): ?WishlistItemTransfer
+    {
+        $wishlistItemTransfer = $this->wishlistRepository->findWishlistItem($wishlistItemCriteriaTransfer);
+
+        if (!$wishlistItemTransfer) {
+            return null;
+        }
+
+        $wishlistItemTransfer = $this->executeWishlistItemExpanderPlugins($wishlistItemTransfer);
+
+        return $wishlistItemTransfer;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer
      *
      * @return void
@@ -220,7 +248,7 @@ class Reader implements ReaderInterface
     protected function updatePaginationTransfer(WishlistPaginationTransfer $paginationTransfer, PropelModelPager $itemPaginationModel)
     {
         $pagesTotal = ceil($itemPaginationModel->getNbResults() / $itemPaginationModel->getMaxPerPage());
-        $paginationTransfer->setPagesTotal($pagesTotal);
+        $paginationTransfer->setPagesTotal((int)$pagesTotal);
         $paginationTransfer->setItemsTotal($itemPaginationModel->getNbResults());
         $paginationTransfer->setItemsPerPage($itemPaginationModel->getMaxPerPage());
 
@@ -229,7 +257,7 @@ class Reader implements ReaderInterface
         }
 
         if ($paginationTransfer->getPage() > $pagesTotal) {
-            $paginationTransfer->setPage($pagesTotal);
+            $paginationTransfer->setPage((int)$pagesTotal);
         }
 
         return $paginationTransfer;
@@ -452,6 +480,14 @@ class Reader implements ReaderInterface
                 ->addError(static::ERROR_MESSAGE_WISHLIST_NOT_FOUND);
         }
 
+        $wishlistItemTransfers = [];
+
+        foreach ($wishlistTransfer->getWishlistItems() as $wishlistItemTransfer) {
+            $wishlistItemTransfers[] = $this->executeWishlistItemExpanderPlugins($wishlistItemTransfer);
+        }
+
+        $wishlistTransfer->setWishlistItems(new ArrayObject($wishlistItemTransfers));
+
         return (new WishlistResponseTransfer())
             ->setWishlist($wishlistTransfer)
             ->setIsSuccess(true);
@@ -545,5 +581,19 @@ class Reader implements ReaderInterface
                 $wishlistOverviewResponseTransfer->addError($messageTransfer);
             }
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemTransfer
+     */
+    protected function executeWishlistItemExpanderPlugins(WishlistItemTransfer $wishlistItemTransfer): WishlistItemTransfer
+    {
+        foreach ($this->wishlistItemExpanderPlugins as $wishlistItemExpanderPlugin) {
+            $wishlistItemTransfer = $wishlistItemExpanderPlugin->expand($wishlistItemTransfer);
+        }
+
+        return $wishlistItemTransfer;
     }
 }

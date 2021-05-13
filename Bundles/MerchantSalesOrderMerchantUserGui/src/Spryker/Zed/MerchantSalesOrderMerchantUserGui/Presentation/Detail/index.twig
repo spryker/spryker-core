@@ -5,6 +5,11 @@
 {% block section_title page_title %}
 
 {% block action %}
+    {{ backActionButton('/merchant-sales-order-merchant-user-gui', 'Back to Orders' | trans) }}
+
+    {% include '@MerchantSalesReturnMerchantUserGui/_partials/create-return-link.twig' ignore missing with {
+        merchantOrder: merchantOrder,
+    } %}
 {% endblock %}
 
 {% block content %}

@@ -24,6 +24,7 @@ class WishlistDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_WISHLIST_RELOAD_ITEMS = 'PLUGINS_RELOAD_ITEMS';
     public const PLUGINS_WISHLIST_ITEMS_VALIDATOR = 'PLUGINS_WISHLIST_ITEMS_VALIDATOR';
     public const PLUGINS_WISHLIST_PRE_ADD_ITEM = 'PLUGINS_WISHLIST_PRE_ADD_ITEM';
+    public const PLUGINS_WISHLIST_ITEM_EXPANDER = 'PLUGINS_WISHLIST_ITEM_EXPANDER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -39,6 +40,7 @@ class WishlistDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addWishlistReloadItemPlugins($container);
         $container = $this->addWishlistItemsValidatorPlugins($container);
         $container = $this->addWishlistPreAddItemPlugins($container);
+        $container = $this->addWishlistItemExpanderPlugins($container);
 
         return $container;
     }
@@ -142,6 +144,20 @@ class WishlistDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addWishlistItemExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_WISHLIST_ITEM_EXPANDER, function () {
+            return $this->getWishlistItemExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
      * @return \Spryker\Zed\Wishlist\Dependency\Plugin\ItemExpanderPluginInterface[]
      */
     protected function getItemExpanderPlugins()
@@ -177,6 +193,14 @@ class WishlistDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\WishlistExtension\Dependency\Plugin\WishlistPreAddItemPluginInterface[]
      */
     protected function getWishlistPreAddItemPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\WishlistExtension\Dependency\Plugin\WishlistItemExpanderPluginInterface[]
+     */
+    protected function getWishlistItemExpanderPlugins(): array
     {
         return [];
     }

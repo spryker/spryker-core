@@ -1,7 +1,12 @@
 <?xml version="1.0"?>
-<database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd"
-          namespace="Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence"
-          package="src.Orm.Zed.PriceProductMerchantRelationshipStorage.Persistence">
+<database
+    xmlns="spryker:schema-01"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    name="zed"
+    xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd"
+    namespace="Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence"
+    package="src.Orm.Zed.PriceProductMerchantRelationshipStorage.Persistence"
+>
 
     <table name="spy_price_product_abstract_merchant_relationship_storage" identifierQuoting="true">
         <column name="id_price_product_abstract_merchant_relationship_storage" type="BIGINT" autoIncrement="true" primaryKey="true"/>

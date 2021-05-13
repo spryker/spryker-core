@@ -1,5 +1,5 @@
 # ContentFileGui Module
-[![Build Status](https://travis-ci.org/spryker/content-file-gui.svg)](https://travis-ci.org/spryker/content-file-gui)
+[![Latest Stable Version](https://poser.pugx.org/spryker/content-file-gui/v/stable.svg)](https://packagist.org/packages/spryker/content-file-gui)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 ContentFileGui provides plugins for basic operations for file.

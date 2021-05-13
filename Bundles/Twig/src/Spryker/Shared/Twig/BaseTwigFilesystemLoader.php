@@ -14,8 +14,11 @@ use Twig\Error\LoaderError;
 
 abstract class BaseTwigFilesystemLoader implements FilesystemLoaderInterface
 {
+    protected const COMPONENT_DEFINITION_INDEX_MODULE = 1;
+    protected const COMPONENT_DEFINITION_INDEX_THEME = 2;
+
     /**
-     * @var array
+     * @var string[]
      */
     protected $paths;
 
@@ -30,7 +33,7 @@ abstract class BaseTwigFilesystemLoader implements FilesystemLoaderInterface
     protected $templateNameExtractor;
 
     /**
-     * @param array $paths
+     * @param string[] $paths
      * @param \Spryker\Shared\Twig\Cache\CacheInterface $cache
      * @param \Spryker\Shared\Twig\TemplateNameExtractor\TemplateNameExtractorInterface $templateNameExtractor
      */
@@ -73,18 +76,23 @@ abstract class BaseTwigFilesystemLoader implements FilesystemLoaderInterface
     /**
      * @param string $moduleOrganization
      *
-     * @return array
+     * @return string[]
      */
-    protected function getPathsForBundle($moduleOrganization)
+    protected function getPathsForBundle($moduleOrganization): array
     {
         $paths = [];
 
         $organization = $this->extractOrganization($moduleOrganization);
         $module = $this->extractModule($moduleOrganization);
+        $theme = $this->extractTheme($moduleOrganization);
 
         foreach ($this->paths as $path) {
             $package = $module;
             $path = $this->getNamespacedPath($path, $organization);
+
+            if ($theme !== null) {
+                $path = $this->changeThemeInPath($path, $theme);
+            }
 
             if ($this->isPathInSplit($path)) {
                 $package = $this->filterBundleName($module);
@@ -104,6 +112,21 @@ abstract class BaseTwigFilesystemLoader implements FilesystemLoaderInterface
         }
 
         return $paths;
+    }
+
+    /**
+     * @param string $path
+     * @param string $theme
+     *
+     * @return string
+     */
+    protected function changeThemeInPath(string $path, string $theme): string
+    {
+        $themePart = '/Theme/';
+        $parts = explode($themePart, $path);
+        $parts[1] = $theme;
+
+        return implode($themePart, $parts);
     }
 
     /**
@@ -135,7 +158,23 @@ abstract class BaseTwigFilesystemLoader implements FilesystemLoaderInterface
 
         $organizationModule = explode(':', $organizationModule);
 
-        return array_pop($organizationModule);
+        return $organizationModule[static::COMPONENT_DEFINITION_INDEX_MODULE] ?? null;
+    }
+
+    /**
+     * @param string $organizationModule
+     *
+     * @return string|null
+     */
+    protected function extractTheme(string $organizationModule): ?string
+    {
+        if (strpos($organizationModule, ':') === false) {
+            return null;
+        }
+
+        $organizationModule = explode(':', $organizationModule);
+
+        return $organizationModule[static::COMPONENT_DEFINITION_INDEX_THEME] ?? null;
     }
 
     /**
