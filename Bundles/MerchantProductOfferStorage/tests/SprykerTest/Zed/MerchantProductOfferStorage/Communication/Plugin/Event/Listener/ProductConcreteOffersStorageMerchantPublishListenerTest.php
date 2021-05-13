@@ -69,7 +69,7 @@ class ProductConcreteOffersStorageMerchantPublishListenerTest extends AbstractSt
 
         $productOfferTransfer = $this->tester->haveProductOffer([
             ProductOfferTransfer::MERCHANT_REFERENCE => $merchantTransfer->getMerchantReference(),
-            ProductOfferTransfer::CONCRETE_SKU => $productTransfer->getSku()
+            ProductOfferTransfer::CONCRETE_SKU => $productTransfer->getSku(),
         ])->addStore($storeTransfer);
 
         $this->tester->haveProductOfferStore($productOfferTransfer, $storeTransfer);

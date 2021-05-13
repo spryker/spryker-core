@@ -26,8 +26,7 @@ use Spryker\Zed\Testify\Locator\Business\Container as SprykerContainer;
  * @group MerchantOpeningHoursStorage
  * @group Communication
  * @group Plugin
- * @group Event
- * @group Listener
+ * @group Publisher
  * @group MerchantOpeningHoursWeekdayScheduleWritePublisherPluginTest
  * Add your own group annotations below this line
  */
