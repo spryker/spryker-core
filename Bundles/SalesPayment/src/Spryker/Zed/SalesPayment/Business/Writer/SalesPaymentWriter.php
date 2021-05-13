@@ -39,8 +39,7 @@ class SalesPaymentWriter implements SalesPaymentWriterInterface
      */
     public function saveOrderPayments(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void
     {
-        /** @var int $idSalesOrder */
-        $idSalesOrder = $saveOrderTransfer->getIdSalesOrder();
+        $idSalesOrder = $saveOrderTransfer->getIdSalesOrderOrFail();
 
         $this->getTransactionHandler()->handleTransaction(function () use ($quoteTransfer, $idSalesOrder) {
             $this->executeSavePaymentMethodsTransaction($quoteTransfer, $idSalesOrder);

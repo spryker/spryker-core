@@ -50,9 +50,7 @@ class SalesOrderExpander implements SalesOrderExpanderInterface
             $orderTransfer->addPayment($paymentTransfer);
         }
 
-        /** @var \Generated\Shared\Transfer\TotalsTransfer $totalTransfer */
-        $totalTransfer = $orderTransfer->getTotals();
-        $totalTransfer->setPriceToPay(
+        $orderTransfer->getTotalsOrFail()->setPriceToPay(
             $this->calculatePriceToPay($orderTransfer)
         );
 
@@ -66,9 +64,7 @@ class SalesOrderExpander implements SalesOrderExpanderInterface
      */
     protected function calculatePriceToPay(OrderTransfer $orderTransfer): int
     {
-        /** @var \Generated\Shared\Transfer\TotalsTransfer $totalTransfer */
-        $totalTransfer = $orderTransfer->getTotals();
-        $priceToPay = $totalTransfer->getGrandTotal() ?? 0;
+        $priceToPay = $orderTransfer->getTotalsOrFail()->getGrandTotal() ?? 0;
 
         foreach ($orderTransfer->getPayments() as $paymentTransfer) {
             if (!$paymentTransfer->getIsLimitedAmount()) {
