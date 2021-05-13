@@ -36,7 +36,7 @@ class ProductCategoryReader implements ProductCategoryReaderInterface
     {
         $productNames = [];
         $productTransferCollection = $this->productCategoryManager
-            ->getAbstractProductTransferCollectionByCategory($categoryTransfer->getIdCategory(), $localeTransfer);
+            ->getAbstractProductTransferCollectionByCategory($categoryTransfer->getIdCategoryOrFail(), $localeTransfer);
 
         foreach ($productTransferCollection as $productTransfer) {
             $productNames[] = sprintf(

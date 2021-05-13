@@ -5,16 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CategoryGui\Communication\Handler;
+namespace Spryker\Zed\CategoryGui\Communication\Category;
 
 use Exception;
 use Generated\Shared\Transfer\CategoryResponseTransfer;
+use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToCategoryFacadeInterface;
 
-class CategoryDeleteFormHandler implements CategoryDeleteFormHandlerInterface
+class CategoryUpdater implements CategoryUpdaterInterface
 {
-    protected const SUCCESS_MESSAGE_CATEGORY_DELETED = 'The category was deleted successfully.';
+    protected const SUCCESS_MESSAGE_CATEGORY_UPDATED = 'The category was updated successfully.';
 
     /**
      * @var \Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToCategoryFacadeInterface
@@ -30,19 +31,20 @@ class CategoryDeleteFormHandler implements CategoryDeleteFormHandlerInterface
     }
 
     /**
-     * @param int $idCategory
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
      * @return \Generated\Shared\Transfer\CategoryResponseTransfer
      */
-    public function deleteCategory(int $idCategory): CategoryResponseTransfer
+    public function updateCategory(CategoryTransfer $categoryTransfer): CategoryResponseTransfer
     {
         $categoryResponseTransfer = (new CategoryResponseTransfer())
+            ->setCategory($categoryTransfer)
             ->setIsSuccessful(true);
 
         try {
-            $this->categoryFacade->delete($idCategory);
+            $this->categoryFacade->update($categoryTransfer);
             $categoryResponseTransfer
-                ->addMessage((new MessageTransfer())->setValue(static::SUCCESS_MESSAGE_CATEGORY_DELETED));
+                ->addMessage((new MessageTransfer())->setValue(static::SUCCESS_MESSAGE_CATEGORY_UPDATED));
         } catch (Exception $e) {
             $categoryResponseTransfer
                 ->addMessage((new MessageTransfer())->setValue($e->getMessage()))

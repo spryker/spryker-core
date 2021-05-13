@@ -222,7 +222,10 @@ interface ProductCategoryStorageFacadeInterface
 
     /**
      * Specification:
-     * - Extracts product abstract IDs $eventTransfers created by product category publishing events.
+     * - Extracts product abstract IDs from $eventTransfers created by product category publishing events.
+     * - Finds all product categories related to product abstract IDs.
+     * - Finds all product abstract localized attributes related to product abstract IDs.
+     * - Finds a collection of product abstract category storages related to product abstract IDs.
      * - Stores data as json encoded to storage table.
      * - Sends a copy of data to queue based on module config.
      *
@@ -236,7 +239,10 @@ interface ProductCategoryStorageFacadeInterface
 
     /**
      * Specification:
-     * - Extracts product abstract IDs $eventTransfers created by product category events.
+     * - Extracts product abstract IDs from $eventTransfers created by product category events.
+     * - Finds all product categories related to product abstract IDs.
+     * - Finds all product abstract localized attributes related to product abstract IDs.
+     * - Finds a collection of product abstract category storages related to product abstract IDs.
      * - Stores data as json encoded to storage table.
      * - Sends a copy of data to queue based on module config.
      *

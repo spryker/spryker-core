@@ -127,6 +127,7 @@ interface StoreFacadeInterface
     /**
      * Specification:
      * - Checks if multi store per Zed is enabled.
+     * - Gets the value from module configuration.
      *
      * @api
      *

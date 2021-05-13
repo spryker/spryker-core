@@ -33,6 +33,8 @@ class CategoryConfig extends AbstractBundleConfig
 
     protected const DEFAULT_CATEGORY_READ_CHUNK = 10000;
 
+    protected const DEFAULT_IS_CLOSURE_TABLE_EVENTS_ENABLED = true;
+
     /**
      * Specification:
      * - Returns the size of the batch retrieval.
@@ -74,7 +76,7 @@ class CategoryConfig extends AbstractBundleConfig
 
     /**
      * Specification:
-     * - Enables propel events for `spy_category_closure_table` table.
+     * - Enables Propel events for `spy_category_closure_table` table.
      * - Impacts category create/update operations.
      *
      * @api
@@ -83,6 +85,9 @@ class CategoryConfig extends AbstractBundleConfig
      */
     public function isCategoryClosureTableEventsEnabled(): bool
     {
-        return true;
+        return $this->get(
+            CategoryConstants::CATEGORY_IS_CLOSURE_TABLE_EVENTS_ENABLED,
+            static::DEFAULT_IS_CLOSURE_TABLE_EVENTS_ENABLED
+        );
     }
 }

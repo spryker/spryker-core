@@ -132,6 +132,7 @@ interface ProductCategoryFacadeInterface
     /**
      * Specification:
      * - Gets localized products abstract names by category.
+     * - `idCategory` must be set in the $categoryTransfer.
      *
      * @api
      *

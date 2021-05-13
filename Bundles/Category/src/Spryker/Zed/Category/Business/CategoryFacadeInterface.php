@@ -300,7 +300,7 @@ interface CategoryFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves URLs entities from Persistent.
+     * - Retrieves URL entities from Persistent.
      * - Filters by category node ids when provided.
      *
      * @api

@@ -58,7 +58,7 @@ class CreateController extends CategoryAbstractController
     protected function handleCategoryCreateForm(FormInterface $form): RedirectResponse
     {
         $categoryResponseTransfer = $this->getFactory()
-            ->createCategoryCreateFormHandler()
+            ->createCategoryCreator()
             ->createCategory($form->getData());
 
         if (!$categoryResponseTransfer->getIsSuccessful()) {

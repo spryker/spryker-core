@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CategoryGui\Communication\Handler;
+namespace Spryker\Zed\CategoryGui\Communication\Category;
 
 use Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToCategoryFacadeInterface;
 use Spryker\Zed\CategoryGui\Dependency\Service\CategoryGuiToUtilEncodingServiceInterface;
 
-class CategoryReSortHandler implements CategoryReSortHandlerInterface
+class CategoryNodeOrderUpdater implements CategoryNodeOrderUpdaterInterface
 {
     protected const KEY_ID = 'id';
 

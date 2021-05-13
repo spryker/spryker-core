@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CategoryGui\Communication\Handler;
+namespace Spryker\Zed\CategoryGui\Communication\Category;
 
-interface CategoryReSortHandlerInterface
+interface CategoryNodeOrderUpdaterInterface
 {
     /**
      * @param string $categoryNodesData

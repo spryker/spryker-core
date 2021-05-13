@@ -44,11 +44,6 @@ abstract class CommonCategoryType extends AbstractType
     protected const BLOCK_PREFIX = 'category';
 
     /**
-     * @var \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryFormPluginInterface[]
-     */
-    protected $formPlugins = [];
-
-    /**
      * @return string
      */
     public function getBlockPrefix(): string
@@ -85,16 +80,6 @@ abstract class CommonCategoryType extends AbstractType
             ->addIsSearchableField($builder)
             ->addFormPlugins($builder)
             ->addLocalizedAttributesForm($builder);
-    }
-
-    /**
-     * @param array $formPlugins
-     *
-     * @return void
-     */
-    public function setFormPlugins(array $formPlugins): void
-    {
-        $this->formPlugins = $formPlugins;
     }
 
     /**
@@ -220,8 +205,8 @@ abstract class CommonCategoryType extends AbstractType
      */
     protected function addFormPlugins(FormBuilderInterface $builder)
     {
-        foreach ($this->getFactory()->getCategoryFormPlugins() as $formPlugin) {
-            $formPlugin->buildForm($builder);
+        foreach ($this->getFactory()->getCategoryFormPlugins() as $categoryFormPlugin) {
+            $categoryFormPlugin->buildForm($builder);
         }
 
         return $this;

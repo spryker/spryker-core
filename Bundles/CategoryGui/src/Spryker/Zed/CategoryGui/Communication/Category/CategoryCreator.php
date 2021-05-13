@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CategoryGui\Communication\Handler;
+namespace Spryker\Zed\CategoryGui\Communication\Category;
 
 use Exception;
 use Generated\Shared\Transfer\CategoryResponseTransfer;
@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToCategoryFacadeInterface;
 
-class CategoryCreateFormHandler implements CategoryCreateFormHandlerInterface
+class CategoryCreator implements CategoryCreatorInterface
 {
     protected const SUCCESS_MESSAGE_CATEGORY_ADDED = 'The category was added successfully.';
 

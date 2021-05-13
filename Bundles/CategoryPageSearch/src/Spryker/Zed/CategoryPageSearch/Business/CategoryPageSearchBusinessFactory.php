@@ -14,6 +14,7 @@ use Spryker\Zed\CategoryPageSearch\Business\Deleter\CategoryAttribute\CategoryNo
 use Spryker\Zed\CategoryPageSearch\Business\Deleter\CategoryNodePageSearchDeleter;
 use Spryker\Zed\CategoryPageSearch\Business\Deleter\CategoryNodePageSearchDeleterInterface;
 use Spryker\Zed\CategoryPageSearch\Business\Deleter\CategoryTemplate\CategoryNodePageSearchByCategoryTemplateEventsDeleter;
+use Spryker\Zed\CategoryPageSearch\Business\Deleter\CategoryTemplate\CategoryNodePageSearchByCategoryTemplateEventsDeleterInterface;
 use Spryker\Zed\CategoryPageSearch\Business\Extractor\CategoryNodeExtractor;
 use Spryker\Zed\CategoryPageSearch\Business\Extractor\CategoryNodeExtractorInterface;
 use Spryker\Zed\CategoryPageSearch\Business\Mapper\CategoryNodePageSearchMapper;
@@ -180,9 +181,9 @@ class CategoryPageSearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CategoryPageSearch\Business\Deleter\CategoryTemplate\CategoryNodePageSearchByCategoryTemplateEventsDeleter
+     * @return \Spryker\Zed\CategoryPageSearch\Business\Deleter\CategoryTemplate\CategoryNodePageSearchByCategoryTemplateEventsDeleterInterface
      */
-    public function createCategoryNodePageSearchByCategoryTemplateEventsDeleter(): CategoryNodePageSearchByCategoryTemplateEventsDeleter
+    public function createCategoryNodePageSearchByCategoryTemplateEventsDeleter(): CategoryNodePageSearchByCategoryTemplateEventsDeleterInterface
     {
         return new CategoryNodePageSearchByCategoryTemplateEventsDeleter(
             $this->getEventBehaviorFacade(),
@@ -193,7 +194,7 @@ class CategoryPageSearchBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\CategoryPageSearch\Business\Extractor\CategoryNodeExtractorInterface
      */
-    protected function createCategoryNodeExtractor(): CategoryNodeExtractorInterface
+    public function createCategoryNodeExtractor(): CategoryNodeExtractorInterface
     {
         return new CategoryNodeExtractor();
     }

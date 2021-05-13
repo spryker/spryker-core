@@ -111,7 +111,7 @@ class EditController extends CategoryAbstractController
         }
 
         $categoryResponseTransfer = $this->getFactory()
-            ->createCategoryUpdateFormHandler()
+            ->createCategoryUpdater()
             ->updateCategory($form->getData());
 
         if ($categoryResponseTransfer->getIsSuccessful()) {

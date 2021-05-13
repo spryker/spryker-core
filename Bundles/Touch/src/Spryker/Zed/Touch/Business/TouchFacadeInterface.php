@@ -133,7 +133,7 @@ interface TouchFacadeInterface
     /**
      * Specification:
      * - Checks if touch is enabled.
-     * - Gets the value from config.
+     * - Gets the value from module configuration.
      *
      * @api
      *

@@ -19,4 +19,13 @@ interface CategoryConstants
      * @api
      */
     public const CATEGORY_READ_CHUNK = 'CATEGORY:CATEGORY_READ_CHUNK';
+
+    /**
+     * Specification:
+     * - Defines if Propel events for `spy_category_closure_table` table should be enabled.
+     * - Impacts category create/update operations.
+     *
+     * @api
+     */
+    public const CATEGORY_IS_CLOSURE_TABLE_EVENTS_ENABLED = 'CATEGORY:IS_CLOSURE_TABLE_EVENTS_ENABLED';
 }

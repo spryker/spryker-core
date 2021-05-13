@@ -21,7 +21,7 @@ class CategoryTreeDeletePublisherPlugin extends AbstractPlugin implements Publis
 {
     /**
      * {@inheritDoc}
-     * - Unpublishes category tree data by `CategoryTree` publish event.
+     * - Unpublishes category tree data by `CategoryTree` unpublish event.
      *
      * @api
      *

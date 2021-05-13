@@ -131,7 +131,7 @@ class DeleteController extends CategoryAbstractController
 
         $idCategory = $form->getData()[DeleteType::FIELD_FK_NODE_CATEGORY];
         $categoryResponseTransfer = $this->getFactory()
-            ->createCategoryDeleteFormHandler()
+            ->createCategoryDeleter()
             ->deleteCategory($idCategory);
 
         if ($categoryResponseTransfer->getIsSuccessful()) {

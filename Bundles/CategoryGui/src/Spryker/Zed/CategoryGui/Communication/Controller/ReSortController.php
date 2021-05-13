@@ -55,7 +55,7 @@ class ReSortController extends CategoryAbstractController
         }
 
         $this->getFactory()
-            ->createCategoryReSortHandler()
+            ->createCategoryNodeOrderUpdater()
             ->updateCategoryNodeOrder($request->request->get(static::REQUEST_PARAM_NODES));
 
         return $this->jsonResponse([

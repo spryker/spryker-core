@@ -9,6 +9,14 @@ namespace Spryker\Zed\CategoryGui\Communication;
 
 use Generated\Shared\Transfer\CategoryTransfer;
 use Spryker\Zed\CategoryGui\CategoryGuiDependencyProvider;
+use Spryker\Zed\CategoryGui\Communication\Category\CategoryCreator;
+use Spryker\Zed\CategoryGui\Communication\Category\CategoryCreatorInterface;
+use Spryker\Zed\CategoryGui\Communication\Category\CategoryDeleter;
+use Spryker\Zed\CategoryGui\Communication\Category\CategoryDeleterInterface;
+use Spryker\Zed\CategoryGui\Communication\Category\CategoryNodeOrderUpdater;
+use Spryker\Zed\CategoryGui\Communication\Category\CategoryNodeOrderUpdaterInterface;
+use Spryker\Zed\CategoryGui\Communication\Category\CategoryUpdater;
+use Spryker\Zed\CategoryGui\Communication\Category\CategoryUpdaterInterface;
 use Spryker\Zed\CategoryGui\Communication\Expander\CategoryExpander;
 use Spryker\Zed\CategoryGui\Communication\Expander\CategoryExpanderInterface;
 use Spryker\Zed\CategoryGui\Communication\Finder\CategoryFinder;
@@ -27,14 +35,6 @@ use Spryker\Zed\CategoryGui\Communication\Form\DeleteType;
 use Spryker\Zed\CategoryGui\Communication\Form\EventListener\CategoryStoreRelationFieldEventSubscriber;
 use Spryker\Zed\CategoryGui\Communication\Form\RootCategoryType;
 use Spryker\Zed\CategoryGui\Communication\Form\Transformer\CategoryExtraParentsTransformer;
-use Spryker\Zed\CategoryGui\Communication\Handler\CategoryCreateFormHandler;
-use Spryker\Zed\CategoryGui\Communication\Handler\CategoryCreateFormHandlerInterface;
-use Spryker\Zed\CategoryGui\Communication\Handler\CategoryDeleteFormHandler;
-use Spryker\Zed\CategoryGui\Communication\Handler\CategoryDeleteFormHandlerInterface;
-use Spryker\Zed\CategoryGui\Communication\Handler\CategoryReSortHandler;
-use Spryker\Zed\CategoryGui\Communication\Handler\CategoryReSortHandlerInterface;
-use Spryker\Zed\CategoryGui\Communication\Handler\CategoryUpdateFormHandler;
-use Spryker\Zed\CategoryGui\Communication\Handler\CategoryUpdateFormHandlerInterface;
 use Spryker\Zed\CategoryGui\Communication\Mapper\CategoryStoreWithStateMapper;
 use Spryker\Zed\CategoryGui\Communication\Mapper\CategoryStoreWithStateMapperInterface;
 use Spryker\Zed\CategoryGui\Communication\Table\CategoryTable;
@@ -176,41 +176,41 @@ class CategoryGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\CategoryGui\Communication\Handler\CategoryCreateFormHandlerInterface
+     * @return \Spryker\Zed\CategoryGui\Communication\Category\CategoryCreatorInterface
      */
-    public function createCategoryCreateFormHandler(): CategoryCreateFormHandlerInterface
+    public function createCategoryCreator(): CategoryCreatorInterface
     {
-        return new CategoryCreateFormHandler(
+        return new CategoryCreator(
             $this->getCategoryFacade()
         );
     }
 
     /**
-     * @return \Spryker\Zed\CategoryGui\Communication\Handler\CategoryUpdateFormHandlerInterface
+     * @return \Spryker\Zed\CategoryGui\Communication\Category\CategoryUpdaterInterface
      */
-    public function createCategoryUpdateFormHandler(): CategoryUpdateFormHandlerInterface
+    public function createCategoryUpdater(): CategoryUpdaterInterface
     {
-        return new CategoryUpdateFormHandler(
+        return new CategoryUpdater(
             $this->getCategoryFacade()
         );
     }
 
     /**
-     * @return \Spryker\Zed\CategoryGui\Communication\Handler\CategoryDeleteFormHandlerInterface
+     * @return \Spryker\Zed\CategoryGui\Communication\Category\CategoryDeleterInterface
      */
-    public function createCategoryDeleteFormHandler(): CategoryDeleteFormHandlerInterface
+    public function createCategoryDeleter(): CategoryDeleterInterface
     {
-        return new CategoryDeleteFormHandler(
+        return new CategoryDeleter(
             $this->getCategoryFacade()
         );
     }
 
     /**
-     * @return \Spryker\Zed\CategoryGui\Communication\Handler\CategoryReSortHandlerInterface
+     * @return \Spryker\Zed\CategoryGui\Communication\Category\CategoryNodeOrderUpdaterInterface
      */
-    public function createCategoryReSortHandler(): CategoryReSortHandlerInterface
+    public function createCategoryNodeOrderUpdater(): CategoryNodeOrderUpdaterInterface
     {
-        return new CategoryReSortHandler(
+        return new CategoryNodeOrderUpdater(
             $this->getCategoryFacade(),
             $this->getUtilEncodingService()
         );

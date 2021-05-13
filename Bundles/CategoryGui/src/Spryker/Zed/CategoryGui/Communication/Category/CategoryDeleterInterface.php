@@ -5,17 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CategoryGui\Communication\Handler;
+namespace Spryker\Zed\CategoryGui\Communication\Category;
 
 use Generated\Shared\Transfer\CategoryResponseTransfer;
-use Generated\Shared\Transfer\CategoryTransfer;
 
-interface CategoryCreateFormHandlerInterface
+interface CategoryDeleterInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     * @param int $idCategory
      *
      * @return \Generated\Shared\Transfer\CategoryResponseTransfer
      */
-    public function createCategory(CategoryTransfer $categoryTransfer): CategoryResponseTransfer;
+    public function deleteCategory(int $idCategory): CategoryResponseTransfer;
 }

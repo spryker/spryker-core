@@ -206,7 +206,7 @@ class CategoryStorageConstants
 
     /**
      * Specification:
-     * - This events will be used for `CategoryTree` publish.
+     * - This events will be used for `CategoryTree` unpublish.
      *
      * @api
      */

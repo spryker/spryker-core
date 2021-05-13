@@ -21,7 +21,7 @@ class CmsBlockSubformCategoryFormPlugin extends AbstractPlugin implements Catego
 {
     /**
      * {@inheritDoc}
-     * - Adds category form to the main form builder.
+     * - Adds cms block subform to the category form.
      *
      * @api
      *
