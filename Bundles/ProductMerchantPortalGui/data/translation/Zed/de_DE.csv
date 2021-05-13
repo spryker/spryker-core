@@ -36,7 +36,7 @@ Variants,Varianten
 Visibility,Sichtbarkeit
 "Success! The Price is deleted.","Der Preis wurde gelöscht."
 "Something went wrong, please try again.","Etwas ist schief gelaufen, bitte versuchen Sie es noch einmal."
-"Product prices saved successfully.","Product prices saved successfully."
+"Product prices saved successfully.","Produktpreise erfolgreich gespeichert."
 Net,Net
 Gross,Gross
 Delete,Löschen
@@ -69,22 +69,22 @@ Quantity,Menge
 "Variant is online","Variante ist online"
 "This means that the product does not appear online and noone can see it.","Dies bedeutet, dass das Produkt nicht online angezeigt wird und es niemand sehen kann."
 "This concrete product is not owned by this merchant.","Diese Variante gehört nicht diesem Händler."
-"Create Abstract Product","Create Abstract Product"
-English,English
-"The rest of the locales will be defined once the product has been created.","The rest of the locales will be defined once the product has been created."
-"Create an Abstract Product with 1 Concrete Product","Create an Abstract Product with 1 Concrete Product"
-"Autogenerate SKU","Autogenerate SKU"
-"Same as Abstract Product","Same as Abstract Product"
-"Concrete Products’ Preview","Concrete Products’ Preview"
-"Create an Abstract Product with multiple Concrete Products","Create an Abstract Product with multiple Concrete Products"
-"Super Attribute","Super Attribute"
+"Create Abstract Product","Abstraktes Produkt erstellen"
+English,Englisch
+"The rest of the locales will be defined once the product has been created.","Andere Locales werden definiert, sobald das Produkt erstellt wurde."
+"Create an Abstract Product with 1 Concrete Product","Ein abstraktes Produkt mit der einzigen Variante erstellen"
+"Create an Abstract Product with multiple Concrete Products","Ein abstraktes Produkt mit mehreren Varianten erstellen"
+"Autogenerate SKU","SKU automatisch generieren"
+"Same as Abstract Product","Vom abstrakten Produkt übernehmen"
+"Concrete Products’ Preview","Vorschau der Varianten"
+"Super Attribute","Super Attribut"
 Values,Values
-"No concretes created yet","No concretes created yet"
-"to be created","to be created"
-"Autogenerate SKUs","Autogenerate SKUs"
-"Same Name as Abstract Product","Same Name as Abstract Product"
-"Super attribute value","Super attribute value"
-"Name default","Name default"
+"No concretes created yet","Es wurden noch keine Varianten erstellt"
+"to be created","zu erstellen"
+"Autogenerate SKUs","SKU automatisch generieren"
+"Same Name as Abstract Product","Name vom abstrakten Produkt übernehmen"
+"Super attribute value","Super Attributwert"
+"Name default","Name Standard"
 "Invalid value provided. Please use only alphanumeric characters and . - _","Die SKU enthält ein ungültiges Zeichen. Bitte nutzen sie nur alphanummerische Zeichen und . - _"
 "Concrete Product SKU already exists","Concrete Product SKU existiert schon"
 "SKU Prefix already exists","SKU Präfix existiert schon"

@@ -22,13 +22,13 @@
     <div class="mp-concrete-products-preview__table">
         <div class="mp-concrete-products-preview__table-content">
             <div class="mp-concrete-products-preview__table-header mp-concrete-products-preview__table-row">
-                <div class="mp-concrete-products-preview__table-row-attr">
+                <div class="mp-concrete-products-preview__table-row-item mp-concrete-products-preview__table-row-attr">
                     <ng-content select="[col-attr-name]"></ng-content>
                 </div>
-                <div class="mp-concrete-products-preview__table-row-sku">
+                <div class="mp-concrete-products-preview__table-row-item mp-concrete-products-preview__table-row-sku">
                     <ng-content select="[col-sku-name]"></ng-content>
                 </div>
-                <div class="mp-concrete-products-preview__table-row-name">
+                <div class="mp-concrete-products-preview__table-row-item mp-concrete-products-preview__table-row-name">
                     <ng-content select="[col-name-name]"></ng-content>
                 </div>
             </div>
@@ -36,26 +36,26 @@
             <cdk-virtual-scroll-viewport itemSize="10" class="mp-concrete-products-preview__table-list">
                 <div *cdkVirtualFor="let product of generatedProducts; let i = index">
                     <div class="mp-concrete-products-preview__table-row">
-                        <div class="mp-concrete-products-preview__table-row-attr">
+                        <div class="mp-concrete-products-preview__table-row-item mp-concrete-products-preview__table-row-attr">
                             <span *ngFor="let superAttribute of product.superAttributes; let isLastAttribute = last">
                                 {{ superAttribute.attribute.name }}
                                 <span *ngIf="!isLastAttribute"> / </span>
                             </span>
                         </div>
-                        <div class="mp-concrete-products-preview__table-row-sku">
+                        <div class="mp-concrete-products-preview__table-row-item mp-concrete-products-preview__table-row-sku">
                             <spy-form-item
-                                no-spaces="true"
-                                no-label="true"
+                                noSpaces="true"
+                                noLabel="true"
                                 [error]="getSkuErrors | spyInvoke: i:errors"
                             >
                                 <spy-input control [value]="product.sku" (valueChange)="skuChange($event, i)" #skuInputRef>
                                 </spy-input>
                             </spy-form-item>
                         </div>
-                        <div class="mp-concrete-products-preview__table-row-name">
+                        <div class="mp-concrete-products-preview__table-row-item mp-concrete-products-preview__table-row-name">
                             <spy-form-item
-                                no-spaces="true"
-                                no-label="true"
+                                noSpaces="true"
+                                noLabel="true"
                                 [error]="getNameErrors | spyInvoke: i:errors"
                                 class="mp-concrete-products-preview__table-row-name-form-item"
                             >

@@ -24,8 +24,6 @@
         "@spryker/checkbox": "^0.2.0-next.1",
         "@spryker/chips": "^0.1.0-next.3",
         "@spryker/data-serializer": "^0.0.2-next.0",
-        "@spryker/datasource": "^0.1.0-next.1",
-        "@spryker/data-transformer": "^0.1.0-next.2",
         "@spryker/date-picker": "^0.2.0-next.2",
         "@spryker/drawer": "^0.2.0-next.9",
         "@spryker/dropdown": "^0.2.0-next.1",
