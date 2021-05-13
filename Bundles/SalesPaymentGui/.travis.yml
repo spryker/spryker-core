@@ -4,13 +4,6 @@ php:
     - 7.3
     - 7.4
 
-matrix:
-    fast_finish: true
-
-    include:
-        -   php: 7.3
-            env: PREFER_LOWEST=1
-
 env:
     global:
         - APPLICATION_ENV=development

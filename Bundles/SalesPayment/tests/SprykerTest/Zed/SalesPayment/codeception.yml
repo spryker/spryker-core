@@ -27,4 +27,3 @@ suites:
                 - \SprykerTest\Shared\SalesPayment\Helper\SalesPaymentDataHelper
                 - \SprykerTest\Zed\Oms\Helper\OmsHelper
                 - \SprykerTest\Zed\Testify\Helper\BusinessHelper
-
