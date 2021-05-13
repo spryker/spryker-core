@@ -44,7 +44,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "SprykerTest\\": "tests/SprykerTest/"
+            "SprykerTest\\": "tests/SprykerTest/",
+            "SprykerTest\\Zed\\GiftCard\\Helper\\": "tests/SprykerTest/Zed/GiftCard/_support/Helper/"
         }
     },
     "minimum-stability": "dev",
