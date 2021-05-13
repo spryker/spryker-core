@@ -23,9 +23,14 @@ class SalesPaymentEntityManager extends AbstractEntityManager implements SalesPa
      */
     public function createSalesPayment(SalesPaymentTransfer $salesPaymentTransfer): SalesPaymentTransfer
     {
+        /** @var string $paymentProvider */
+        $paymentProvider = $salesPaymentTransfer->getPaymentProvider();
+        /** @var string $paymentMethod */
+        $paymentMethod = $salesPaymentTransfer->getPaymentMethod();
+
         $idSalesPaymentMethodType = $this->getIdSalesPaymentMethodType(
-            $salesPaymentTransfer->getPaymentProvider(),
-            $salesPaymentTransfer->getPaymentMethod()
+            $paymentProvider,
+            $paymentMethod
         );
 
         $salesPaymentEntity = $this->getFactory()
