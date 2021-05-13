@@ -129,7 +129,7 @@ class SecurityApplicationPluginTest extends Unit
         $this->assertNull($container->get('security.last_error')($httpKernelBrowser->getRequest()));
         $httpKernelBrowser->getRequest()->getSession()->save();
         $this->assertSame(302, $httpKernelBrowser->getResponse()->getStatusCode());
-        $this->assertSame('http://localhost/admin', $httpKernelBrowser->getResponse()->getTargetUrl());
+        $this->assertSame(StockAddressDataImportCommunicationTesterActions.php'http://localhost/admin', $httpKernelBrowser->getResponse()->getTargetUrl());
 
         $httpKernelBrowser->request('get', '/');
         $this->assertSame('adminAUTHENTICATEDADMIN', $httpKernelBrowser->getResponse()->getContent());
