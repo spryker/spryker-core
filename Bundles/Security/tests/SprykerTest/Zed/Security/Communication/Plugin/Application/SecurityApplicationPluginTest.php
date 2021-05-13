@@ -146,7 +146,8 @@ class SecurityApplicationPluginTest extends Unit
         $this->assertSame('ANONYMOUS', $httpKernelBrowser->getResponse()->getContent());
 
         $httpKernelBrowser->request('post', static::HOMEPAGE_PATH . '/login_check', ['_username' => static::USER_NAME, '_password' => static::USER_INVALID_PASSWORD]);
-        $this->$this->assertRegexp('/(Bad credentials|The presented password is invalid)/', $container->get('security.last_error')($httpKernelBrowser->getRequest()));
+        $lastError = $container->get('security.last_error')($httpKernelBrowser->getRequest());
+        $this->assertRegexp('/(Bad credentials|The presented password is invalid)/', $lastError);
         // hack to re-close the session as the previous assertions re-opens it
         $httpKernelBrowser->getRequest()->getSession()->save();
 
