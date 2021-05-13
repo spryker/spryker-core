@@ -8,6 +8,8 @@
 namespace SprykerTest\Zed\MerchantProductOfferStorage\Communication\Plugin\Event\Listener;
 
 use Generated\Shared\Transfer\EventEntityTransfer;
+use Generated\Shared\Transfer\MerchantTransfer;
+use Generated\Shared\Transfer\ProductOfferTransfer;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Zed\MerchantProductOffer\Dependency\MerchantProductOfferEvents;
@@ -60,9 +62,20 @@ class ProductConcreteOffersStorageMerchantPublishListenerTest extends AbstractSt
     public function testProductConcreteOffersStorageMerchantPublishListenerSaveCollectionByProductSkusSuccessfully(): void
     {
         $expectedCount = 1;
-        $productOfferTransfer = $this->tester->createProductOffer($this->tester->getLocator()->store()->facade()->getCurrentStore());
+
+        $merchantTransfer = $this->tester->haveMerchant([MerchantTransfer::IS_ACTIVE => true]);
+        $storeTransfer = $this->tester->getLocator()->store()->facade()->getCurrentStore();
+        $productTransfer = $this->tester->haveProduct();
+
+        $productOfferTransfer = $this->tester->haveProductOffer([
+            ProductOfferTransfer::MERCHANT_REFERENCE => $merchantTransfer->getMerchantReference(),
+            ProductOfferTransfer::CONCRETE_SKU => $productTransfer->getSku()
+        ])->addStore($storeTransfer);
+
+        $this->tester->haveProductOfferStore($productOfferTransfer, $storeTransfer);
+
         $eventTransfers = [
-            (new EventEntityTransfer())->setId($productOfferTransfer->getMerchantReference()),
+            (new EventEntityTransfer())->setId($merchantTransfer->getIdMerchant()),
         ];
 
         $this->productConcreteOffersStorageMerchantPublishListener->handleBulk(

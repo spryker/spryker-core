@@ -5,14 +5,15 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\MerchantOpeningHoursStorage\Communication\Plugin\Event\Listener;
+namespace SprykerTest\Zed\MerchantOpeningHoursStorage\Communication\Plugin\Publisher;
 
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\EventEntityBuilder;
+use Orm\Zed\MerchantOpeningHours\Persistence\Map\SpyMerchantOpeningHoursDateScheduleTableMap;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Shared\MerchantOpeningHoursStorage\MerchantOpeningHoursStorageConfig;
-use Spryker\Zed\MerchantOpeningHoursStorage\Communication\Plugin\Publisher\MerchantOpeningHours\MerchantOpeningHoursWritePublisherPlugin;
+use Spryker\Zed\MerchantOpeningHoursStorage\Communication\Plugin\Publisher\MerchantOpeningHours\MerchantOpeningHoursDateScheduleWritePublisherPlugin;
 use Spryker\Zed\MerchantOpeningHoursStorage\Dependency\Facade\MerchantOpeningHoursStorageToEventBehaviorFacadeBridge;
 use Spryker\Zed\MerchantOpeningHoursStorage\MerchantOpeningHoursStorageDependencyProvider;
 use Spryker\Zed\Testify\Locator\Business\Container as SprykerContainer;
@@ -27,10 +28,10 @@ use Spryker\Zed\Testify\Locator\Business\Container as SprykerContainer;
  * @group Plugin
  * @group Event
  * @group Listener
- * @group MerchantOpeningHoursWritePublisherPluginTest
+ * @group MerchantOpeningHoursDateScheduleWritePublisherPluginTest
  * Add your own group annotations below this line
  */
-class MerchantOpeningHoursWritePublisherPluginTest extends Unit
+class MerchantOpeningHoursDateScheduleWritePublisherPluginTest extends Unit
 {
     /**
      * @var \SprykerTest\Zed\MerchantOpeningHoursStorage\MerchantOpeningHoursStorageCommunicationTester
@@ -65,21 +66,22 @@ class MerchantOpeningHoursWritePublisherPluginTest extends Unit
     /**
      * @return void
      */
-    public function testMerchantOpeningHoursStorageWeekdayScheduleCreatePublisherPluginStoresData(): void
+    public function testMerchantOpeningHoursDateScheduleWritePublisherPluginStoresData(): void
     {
         // Arrange
         $merchantTransfer = $this->tester->haveMerchant();
         $this->tester->createMerchantOpeningHoursDateSchedule($merchantTransfer);
-        $merchantOpeningHoursStoragePublisher = new MerchantOpeningHoursWritePublisherPlugin();
-        $merchantOpeningHoursStoragePublisher->setFacade($this->tester->getFacade());
+        $merchantOpeningHoursDateScheduleWritePublisherPlugin = new MerchantOpeningHoursDateScheduleWritePublisherPlugin();
+        $merchantOpeningHoursDateScheduleWritePublisherPlugin->setFacade($this->tester->getFacade());
+
         $eventTransfers = [
             (new EventEntityBuilder())
                 ->build()
-                ->setId($merchantTransfer->getIdMerchant()),
+                ->setForeignKeys([SpyMerchantOpeningHoursDateScheduleTableMap::COL_FK_MERCHANT => $merchantTransfer->getIdMerchant()]),
         ];
 
         // Act
-        $merchantOpeningHoursStoragePublisher->handleBulk($eventTransfers, MerchantOpeningHoursStorageConfig::MERCHANT_OPENING_HOURS_PUBLISH);
+        $merchantOpeningHoursDateScheduleWritePublisherPlugin->handleBulk($eventTransfers, MerchantOpeningHoursStorageConfig::ENTITY_SPY_MERCHANT_OPENING_HOURS_DATE_SCHEDULE_CREATE);
 
         // Assert
         $this->assertNotNull(

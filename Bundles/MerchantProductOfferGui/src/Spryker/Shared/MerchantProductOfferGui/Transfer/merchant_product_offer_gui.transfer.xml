@@ -31,8 +31,4 @@
         <property name="withColumns" type="array" singular="withColumn"/>
     </transfer>
 
-    <transfer name="MerchantCollection">
-        <property name="merchants" type="Merchant[]" singular="merchants"/>
-    </transfer>
-
 </transfers>

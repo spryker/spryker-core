@@ -20,7 +20,7 @@ class MerchantOpeningHoursWeekdayScheduleWritePublisherPlugin extends AbstractPl
 {
     /**
      * {@inheritDoc}
-     * - Writes merchant opening hours weekday schedule data to storage by provided merchant ids events
+     * - Publishes merchant opening hours data by MerchantOpeningHours weekday schedule create event.
      *
      * @api
      *
