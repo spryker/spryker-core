@@ -226,7 +226,7 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
 
         return $productOffersSubquery
             ->where(sprintf(
-                '%s = %s AND %s = \'%s\'',
+                '%s = %s AND %s = %d',
                 SpyProductOfferTableMap::COL_CONCRETE_SKU,
                 SpyProductTableMap::COL_SKU,
                 SpyProductOfferTableMap::COL_MERCHANT_REFERENCE,
@@ -883,7 +883,7 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
             ->leftJoinProductOfferStock()
             ->useSpyMerchantQuery()
                 ->filterByIdMerchant($idMerchant)
-                ->endUse()
+            ->endUse()
             ->addAsColumn(MerchantProductOfferCountsTransfer::TOTAL, 'COUNT(*)')
             ->addAsColumn(
                 MerchantProductOfferCountsTransfer::ACTIVE,

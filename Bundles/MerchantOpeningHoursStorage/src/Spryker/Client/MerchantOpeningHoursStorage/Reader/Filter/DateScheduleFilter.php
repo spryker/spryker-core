@@ -42,7 +42,7 @@ class DateScheduleFilter implements DateScheduleFilterInterface
     {
         $result = true;
 
-        $dateTime = new DateTime((string)$date);
+        $dateTime = new DateTime($date);
         $dateTimeNow = new DateTime();
 
         if ($dateTimeNow >= $dateTime) {

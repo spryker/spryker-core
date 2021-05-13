@@ -95,12 +95,13 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
      */
     public function writeCollectionByMerchantEvents(array $eventTransfers): void
     {
-        $merchantReferences = $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
+        $merchantIds = $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
 
-        if (!$merchantReferences) {
+        if (!$merchantIds) {
             return;
         }
-        $productSkus = $this->merchantProductOfferStorageRepository->getProductConcreteSkusByMerchantReferences($merchantReferences);
+
+        $productSkus = $this->merchantProductOfferStorageRepository->getProductConcreteSkusByMerchantIds($merchantIds);
 
         $this->writeCollectionByProductSkus($productSkus);
     }

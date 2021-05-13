@@ -38,7 +38,7 @@ class MerchantProductOfferGuiRepository extends AbstractRepository implements Me
             $queryJoinTransfer->setJoinType(Criteria::INNER_JOIN)
                 ->setCondition(
                     sprintf(
-                        '%s = %s AND %s = \'%s\'',
+                        '%s = %s AND %s = %d',
                         SpyProductOfferTableMap::COL_MERCHANT_REFERENCE,
                         SpyMerchantTableMap::COL_MERCHANT_REFERENCE,
                         SpyMerchantTableMap::COL_ID_MERCHANT,

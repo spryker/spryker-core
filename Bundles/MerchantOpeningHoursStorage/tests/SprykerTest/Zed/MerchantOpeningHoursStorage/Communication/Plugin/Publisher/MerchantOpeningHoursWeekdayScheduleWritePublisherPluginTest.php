@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\MerchantOpeningHoursStorage\Communication\Plugin\Event\Listener;
+namespace SprykerTest\Zed\MerchantOpeningHoursStorage\Communication\Plugin\Publisher;
 
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\EventEntityBuilder;
@@ -26,8 +26,7 @@ use Spryker\Zed\Testify\Locator\Business\Container as SprykerContainer;
  * @group MerchantOpeningHoursStorage
  * @group Communication
  * @group Plugin
- * @group Event
- * @group Listener
+ * @group Publisher
  * @group MerchantOpeningHoursWeekdayScheduleWritePublisherPluginTest
  * Add your own group annotations below this line
  */
@@ -66,7 +65,7 @@ class MerchantOpeningHoursWeekdayScheduleWritePublisherPluginTest extends Unit
     /**
      * @return void
      */
-    public function testMerchantOpeningHoursStorageDateScheduleCreatePublisherPluginStoresData(): void
+    public function testMerchantOpeningHoursWeekdayScheduleWritePublisherPluginStoresData(): void
     {
         // Arrange
         $merchantTransfer = $this->tester->haveMerchant();

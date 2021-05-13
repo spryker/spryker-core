@@ -20,7 +20,7 @@ class MerchantOpeningHoursWritePublisherPlugin extends AbstractPlugin implements
 {
     /**
      * {@inheritDoc}
-     * - Writes merchant opening hours data to storage by provided merchant ids events
+     * - Publishes merchant opening hours data by MerchantOpeningHours publish event.
      *
      * @api
      *
