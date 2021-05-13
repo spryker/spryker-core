@@ -67,7 +67,7 @@ class CmsSlotDataImportPluginTest extends Unit
      */
     public function testCmsSlotImportWithInvalidDataThrowsException(): void
     {
-        $this->expectException(DataImportException::class);
+        // Arrange
         $this->tester->hasCmsSlotTemplate([
             CmsSlotTemplateTransfer::PATH => static::CMS_SLOT_TEMPLATE_PATH,
             CmsSlotTemplateTransfer::NAME => static::CMS_SLOT_TEMPLATE_NAME,
@@ -82,9 +82,10 @@ class CmsSlotDataImportPluginTest extends Unit
             ->setReaderConfiguration($dataImporterReaderConfigurationTransfer)
             ->setThrowException(true);
 
-        $dataImporterReportTransfer = (new CmsSlotDataImportPlugin())->import($dataImportConfigurationTransfer);
+        //Assert
+        $this->expectException(DataImportException::class);
 
-        $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
-        $this->assertFalse($dataImporterReportTransfer->getIsSuccess());
+        // Act
+        (new CmsSlotDataImportPlugin())->import($dataImportConfigurationTransfer);
     }
 }

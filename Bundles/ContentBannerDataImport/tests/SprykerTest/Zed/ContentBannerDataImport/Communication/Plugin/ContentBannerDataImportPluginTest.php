@@ -60,7 +60,6 @@ class ContentBannerDataImportPluginTest extends Unit
      */
     public function testImportWithInvalidDefaultLocaleDataThrowsException(): void
     {
-        $this->expectException(DataImportException::class);
         // Arrange
         $this->tester->ensureDatabaseTableIsEmpty();
 
@@ -71,14 +70,11 @@ class ContentBannerDataImportPluginTest extends Unit
             ->setReaderConfiguration($dataImporterReaderConfigurationTransfer)
             ->setThrowException(true);
 
+        //Assert
+        $this->expectException(DataImportException::class);
+
         // Act
-        $dataImporterReportTransfer = (new ContentBannerDataImportPlugin())->import($dataImportConfigurationTransfer);
-
-        // Assert
-        $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
-        $this->assertFalse($dataImporterReportTransfer->getIsSuccess());
-
-        $this->tester->assertDatabaseTableContainsData();
+        (new ContentBannerDataImportPlugin())->import($dataImportConfigurationTransfer);
     }
 
     /**
@@ -86,7 +82,6 @@ class ContentBannerDataImportPluginTest extends Unit
      */
     public function testImportWithMissingPropertyThrowsException(): void
     {
-        $this->expectException(DataImportException::class);
         // Arrange
         $this->tester->ensureDatabaseTableIsEmpty();
 
@@ -97,14 +92,11 @@ class ContentBannerDataImportPluginTest extends Unit
             ->setReaderConfiguration($dataImporterReaderConfigurationTransfer)
             ->setThrowException(true);
 
-        // Act
-        $dataImporterReportTransfer = (new ContentBannerDataImportPlugin())->import($dataImportConfigurationTransfer);
-
         // Assert
-        $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
-        $this->assertFalse($dataImporterReportTransfer->getIsSuccess());
+        $this->expectException(DataImportException::class);
 
-        $this->tester->assertDatabaseTableContainsData();
+        // Act
+        (new ContentBannerDataImportPlugin())->import($dataImportConfigurationTransfer);
     }
 
     /**

@@ -262,21 +262,18 @@ class StockFacadeTest extends Unit
      */
     public function testCreateStockProductShouldThrowException(): void
     {
-        $this->expectException(StockProductAlreadyExistsException::class);
-        $this->expectExceptionMessage('Cannot duplicate entry: this stock type is already set for this product');
-
+        // Arrange
         $stockProductTransfer = (new StockProductTransfer())
             ->setStockType($this->stockEntity1->getName())
             ->setQuantity(static::STOCK_QUANTITY_1)
             ->setSku(static::CONCRETE_SKU);
 
-        $idStockProduct = $this->stockFacade->createStockProduct($stockProductTransfer);
+        // Assert
+        $this->expectException(StockProductAlreadyExistsException::class);
+        $this->expectExceptionMessage('Cannot duplicate entry: this stock type is already set for this product');
 
-        $stockProductEntity = SpyStockProductQuery::create()
-            ->filterByIdStockProduct($idStockProduct)
-            ->findOne();
-
-        $this->assertSame(static::STOCK_QUANTITY_1, $stockProductEntity->getQuantity());
+        // Act
+        $this->stockFacade->createStockProduct($stockProductTransfer);
     }
 
     /**
