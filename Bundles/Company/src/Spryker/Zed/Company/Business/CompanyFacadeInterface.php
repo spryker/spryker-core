@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Company\Business;
 
 use Generated\Shared\Transfer\CompanyCollectionTransfer;
+use Generated\Shared\Transfer\CompanyCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyResponseTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
 
@@ -101,4 +102,16 @@ interface CompanyFacadeInterface
      * @return \Generated\Shared\Transfer\CompanyResponseTransfer
      */
     public function findCompanyByUuid(CompanyTransfer $companyTransfer): CompanyResponseTransfer;
+
+    /**
+     * Specification:
+     * - Finds companies according to criteria from CompanyCriteriaFilterTransfer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyCriteriaFilterTransfer $companyCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyCollectionTransfer
+     */
+    public function getCompanyCollection(CompanyCriteriaFilterTransfer $companyCriteriaFilterTransfer): CompanyCollectionTransfer;
 }

@@ -1,5 +1,5 @@
 # QuoteRequestAgent Module
-[![Build Status](https://travis-ci.org/spryker/quote-request-agent.svg)](https://travis-ci.org/spryker/quote-request-agent)
+[![Latest Stable Version](https://poser.pugx.org/spryker/quote-request-agent/v/stable.svg)](https://packagist.org/packages/spryker/quote-request-agent)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 QuoteRequestAgent module provides ability for Agent Assist to check Quotes,

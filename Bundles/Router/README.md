@@ -1,5 +1,5 @@
 # Router Module
-[![Build Status](https://travis-ci.org/spryker/router.svg)](https://travis-ci.org/spryker/router)
+[![Latest Stable Version](https://poser.pugx.org/spryker/router/v/stable.svg)](https://packagist.org/packages/spryker/router)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 Router module handles application routing.

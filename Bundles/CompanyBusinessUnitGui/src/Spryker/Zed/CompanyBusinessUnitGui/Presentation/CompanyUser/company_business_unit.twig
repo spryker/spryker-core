@@ -1,4 +1,6 @@
-
-{{ form_widget(form, {'id':'company-user_fk_company_business_unit'}) }}
+{{ form_widget(form, {
+    'id': 'company-user_fk_company_business_unit',
+    'attr': {'data-url':  form.vars.url}
+}) }}
 
 <script src="{{ assetsPath('js/spryker-zed-company-user-business-unit-gui-main.js') }}"></script>

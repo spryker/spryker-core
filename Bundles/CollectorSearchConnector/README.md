@@ -1,5 +1,5 @@
 # CollectorSearchConnector Module
-[![Build Status](https://travis-ci.org/spryker/collector-search-connector.svg)](https://travis-ci.org/spryker/collector-search-connector)
+[![Latest Stable Version](https://poser.pugx.org/spryker/collector-search-connector/v/stable.svg)](https://packagist.org/packages/spryker/collector-search-connector)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 CollectorSearchConnector allows to browse through the stored Elasticsearch documents in Zed Administration Interface.
