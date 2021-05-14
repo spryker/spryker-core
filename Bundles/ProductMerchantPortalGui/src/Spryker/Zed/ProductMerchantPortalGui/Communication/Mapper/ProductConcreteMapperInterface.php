@@ -10,13 +10,13 @@ namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper;
 interface ProductConcreteMapperInterface
 {
     /**
-     * @param mixed[] $concreteProducts
+     * @param mixed[] $productConcreteData
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
-    public function mapRequestDataToProductConcreteTransfers(
-        array $concreteProducts,
+    public function mapProductConcreteDataToProductConcreteTransfers(
+        array $productConcreteData,
         array $productConcreteTransfers
     ): array;
 }

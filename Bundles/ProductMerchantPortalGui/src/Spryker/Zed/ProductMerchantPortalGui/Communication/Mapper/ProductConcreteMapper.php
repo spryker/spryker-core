@@ -18,21 +18,21 @@ class ProductConcreteMapper implements ProductConcreteMapperInterface
     protected const FIELD_VALUE = 'value';
 
     /**
-     * @param mixed[] $concreteProducts
+     * @param mixed[] $productConcreteData
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
-    public function mapRequestDataToProductConcreteTransfers(
-        array $concreteProducts,
+    public function mapProductConcreteDataToProductConcreteTransfers(
+        array $productConcreteData,
         array $productConcreteTransfers
     ): array {
-        foreach ($concreteProducts as $concreteProductData) {
-            $attributes = $this->reformatSuperAttributes($concreteProductData);
+        foreach ($productConcreteData as $productConcrete) {
+            $attributes = $this->reformatSuperAttributes($productConcrete);
 
             $concreteProductTransfer = (new ProductConcreteTransfer())
-                ->setSku($concreteProductData[static::FIELD_SKU])
-                ->setName($concreteProductData[static::FIELD_NAME])
+                ->setSku($productConcrete[static::FIELD_SKU])
+                ->setName($productConcrete[static::FIELD_NAME])
                 ->setIsActive(false)
                 ->setAttributes($attributes);
 
@@ -43,19 +43,19 @@ class ProductConcreteMapper implements ProductConcreteMapperInterface
     }
 
     /**
-     * @param mixed[] $concreteProductData
+     * @param mixed[] $productConcrete
      *
      * @return string[]
      */
-    protected function reformatSuperAttributes(array $concreteProductData): array
+    protected function reformatSuperAttributes(array $productConcrete): array
     {
         $attributes = [];
 
-        if (!isset($concreteProductData[static::FIELD_SUPER_ATTRIBUTES])) {
+        if (!isset($productConcrete[static::FIELD_SUPER_ATTRIBUTES])) {
             return $attributes;
         }
 
-        foreach ($concreteProductData[static::FIELD_SUPER_ATTRIBUTES] as $superAttribute) {
+        foreach ($productConcrete[static::FIELD_SUPER_ATTRIBUTES] as $superAttribute) {
             $attributeKey = $superAttribute[static::FIELD_VALUE];
             $attributeValue = $superAttribute[static::FIELD_ATTRIBUTE][static::FIELD_VALUE];
             $attributes[$attributeKey] = $attributeValue;

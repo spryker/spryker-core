@@ -9,12 +9,14 @@ namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Expander;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 
-interface ProductAbstractMerchantIdExpanderInterface
+interface MerchantDataExpanderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
-    public function expandMerchantId(ProductAbstractTransfer $productAbstractTransfer): ProductAbstractTransfer;
+    public function expandProductAbstractWithMerchantData(
+        ProductAbstractTransfer $productAbstractTransfer
+    ): ProductAbstractTransfer;
 }
