@@ -75,18 +75,15 @@ class ContentProductSetDataImportPluginTest extends Unit
     public function testImportProductSetDataWithWrongProductSetKeyFails(): void
     {
         // Arrange
-        $this->expectExceptionObject(new DataImportException(static::ERROR_MESSAGE_PRODUCT_SET_WRONG_KEY));
-
         $dataImportConfigurationTransfer = $this->createConfigurationTransfer(
             'import/content_product_set_wrong_key.csv'
         )->setThrowException(true);
 
-        // Act
-        $dataImporterReportTransfer = (new ContentProductSetDataImportPlugin())->import($dataImportConfigurationTransfer);
-
         // Assert
-        $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
-        $this->assertFalse($dataImporterReportTransfer->getIsSuccess());
+        $this->expectExceptionObject(new DataImportException(static::ERROR_MESSAGE_PRODUCT_SET_WRONG_KEY));
+
+        // Act
+        (new ContentProductSetDataImportPlugin())->import($dataImportConfigurationTransfer);
     }
 
     /**

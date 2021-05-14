@@ -149,7 +149,9 @@ class CreateProductAbstractController extends AbstractController
             ],
         ]);
 
-        $this->addProduct($productAbstractTransfer, $concreteProductTransfers);
+        $this->getFactory()
+            ->getProductFacade()
+            ->addProduct($productAbstractTransfer, $concreteProductTransfers);
 
         return $this->getSuccessResponseAndCloseOverlay();
     }
@@ -175,7 +177,7 @@ class CreateProductAbstractController extends AbstractController
         $concreteProductsJson = $request->request->get(static::REQUEST_PARAM_CONCRETE_PRODUCTS);
         $selectedAttributesJson = $request->request->get(static::REQUEST_PARAM_SELECTED_ATTRIBUTES);
 
-        $concreteProducts = $this->getFactory()
+        $productConcreteData = $this->getFactory()
             ->getUtilEncodingService()
             ->decodeJson($concreteProductsJson, true);
         $createProductAbstractWithMultiConcreteForm = $this->getFactory()
@@ -186,10 +188,14 @@ class CreateProductAbstractController extends AbstractController
             $createProductAbstractWithMultiConcreteForm->getData()
         );
 
+        $superAttributes = $this->getFactory()
+            ->createSuperAttributesDataProvider()
+            ->getSuperAttributes();
+
         $formData = $createProductAbstractWithMultiConcreteForm->getData();
         $viewData = [
             'form' => $createProductAbstractWithMultiConcreteForm->createView(),
-            'superProductManagementAttributes' => $this->getSuperAttributes(),
+            'superProductManagementAttributes' => $superAttributes,
             'productAbstract' => $productAbstractTransfer,
             'concreteProductsJson' => $concreteProductsJson,
             'selectedAttributesJson' => $selectedAttributesJson,
@@ -203,7 +209,7 @@ class CreateProductAbstractController extends AbstractController
 
         $tableValidationResponseTransfer = $this->getFactory()
             ->createProductConcreteValidator()
-            ->validateConcreteProducts($concreteProducts);
+            ->validateConcreteProducts($productConcreteData);
 
         if (!$tableValidationResponseTransfer->getIsSuccessOrFail()) {
             $viewData['errors'] = $this->extractErrors($tableValidationResponseTransfer);
@@ -214,21 +220,13 @@ class CreateProductAbstractController extends AbstractController
             return new JsonResponse($responseData);
         }
 
-        $concreteProductTransfers = $this->getProductConcreteTransfers($concreteProducts);
+        $concreteProductTransfers = $this->getProductConcreteTransfers($productConcreteData);
 
-        $this->addProduct($productAbstractTransfer, $concreteProductTransfers);
+        $this->getFactory()
+            ->getProductFacade()
+            ->addProduct($productAbstractTransfer, $concreteProductTransfers);
 
         return $this->getSuccessResponseAndCloseOverlay();
-    }
-
-    /**
-     * @return string[][]
-     */
-    protected function getSuperAttributes(): array
-    {
-        return $this->getFactory()
-            ->createSuperAttributesDataProvider()
-            ->getSuperAttributes();
     }
 
     /**
@@ -288,43 +286,28 @@ class CreateProductAbstractController extends AbstractController
             ->createProductAbstractLocalizedAttributesExpander()
             ->expandLocalizedAttributes($productAbstractTransfer);
         $productAbstractTransfer = $this->getFactory()
-            ->createProductAbstractMerchantIdExpander()
-            ->expandMerchantId($productAbstractTransfer);
+            ->createMerchantDataExpander()
+            ->expandProductAbstractWithMerchantData($productAbstractTransfer);
 
         return $productAbstractTransfer;
     }
 
     /**
-     * @param array $concreteProducts
+     * @param array $productConcreteData
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
-    protected function getProductConcreteTransfers(array $concreteProducts): array
+    protected function getProductConcreteTransfers(array $productConcreteData): array
     {
         $productConcreteTransfers = [];
         $productConcreteTransfers = $this->getFactory()
             ->createProductConcreteMapper()
-            ->mapRequestDataToProductConcreteTransfers($concreteProducts, $productConcreteTransfers);
+            ->mapProductConcreteDataToProductConcreteTransfers($productConcreteData, $productConcreteTransfers);
         $productConcreteTransfers = $this->getFactory()
             ->createProductConcreteLocalizedAttributesExpander()
             ->expandLocalizedAttributes($productConcreteTransfers);
 
         return $productConcreteTransfers;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     * @param array $concreteProductTransfers
-     *
-     * @return int
-     */
-    protected function addProduct(
-        ProductAbstractTransfer $productAbstractTransfer,
-        array $concreteProductTransfers
-    ): int {
-        return $this->getFactory()
-            ->getProductFacade()
-            ->addProduct($productAbstractTransfer, $concreteProductTransfers);
     }
 
     /**

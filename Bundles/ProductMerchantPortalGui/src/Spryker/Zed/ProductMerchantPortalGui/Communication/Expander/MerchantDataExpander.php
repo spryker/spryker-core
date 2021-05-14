@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Expander;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantUserFacadeInterface;
 
-class ProductAbstractMerchantIdExpander implements ProductAbstractMerchantIdExpanderInterface
+class MerchantDataExpander implements MerchantDataExpanderInterface
 {
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantUserFacadeInterface
@@ -30,7 +30,7 @@ class ProductAbstractMerchantIdExpander implements ProductAbstractMerchantIdExpa
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
-    public function expandMerchantId(ProductAbstractTransfer $productAbstractTransfer): ProductAbstractTransfer
+    public function expandProductAbstractWithMerchantData(ProductAbstractTransfer $productAbstractTransfer): ProductAbstractTransfer
     {
         $merchantUserTransfer = $this->merchantUserFacade->getCurrentMerchantUser();
 

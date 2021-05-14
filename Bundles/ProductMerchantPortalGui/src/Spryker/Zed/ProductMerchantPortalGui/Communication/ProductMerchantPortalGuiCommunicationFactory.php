@@ -18,10 +18,10 @@ use Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\LocaleDataPr
 use Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\LocaleDataProviderInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\SuperAttributesDataProvider;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\SuperAttributesDataProviderInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Expander\MerchantDataExpander;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Expander\MerchantDataExpanderInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Expander\ProductAbstractLocalizedAttributesExpander;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Expander\ProductAbstractLocalizedAttributesExpanderInterface;
-use Spryker\Zed\ProductMerchantPortalGui\Communication\Expander\ProductAbstractMerchantIdExpander;
-use Spryker\Zed\ProductMerchantPortalGui\Communication\Expander\ProductAbstractMerchantIdExpanderInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Expander\ProductConcreteLocalizedAttributesExpander;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Expander\ProductConcreteLocalizedAttributesExpanderInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Extractor\LocalizedAttributesExtractor;
@@ -364,11 +364,11 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
     }
 
     /**
-     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\Expander\ProductAbstractMerchantIdExpanderInterface
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\Expander\MerchantDataExpanderInterface
      */
-    public function createProductAbstractMerchantIdExpander(): ProductAbstractMerchantIdExpanderInterface
+    public function createMerchantDataExpander(): MerchantDataExpanderInterface
     {
-        return new ProductAbstractMerchantIdExpander(
+        return new MerchantDataExpander(
             $this->getMerchantUserFacade()
         );
     }
