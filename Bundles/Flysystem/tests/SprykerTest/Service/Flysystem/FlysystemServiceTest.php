@@ -139,8 +139,6 @@ class FlysystemServiceTest extends Unit
             static::FILE_SYSTEM_PRODUCT_IMAGE,
             'nonExistingFile.nil'
         );
-
-        $this->assertNull($contents);
     }
 
     /**

@@ -235,7 +235,7 @@ class CustomerAddressFacadeTest extends Unit
      */
     public function testDeleteCustomerWithDefaultAddresses(): void
     {
-        $this->expectException(AddressNotFoundException::class);
+        // Arrange
         $customerTransfer = $this->createCustomerWithAddress();
 
         $addresses = $customerTransfer->getAddresses()->getAddresses();
@@ -244,9 +244,11 @@ class CustomerAddressFacadeTest extends Unit
         $this->customerFacade->setDefaultBillingAddress($addressTransfer);
         $this->customerFacade->setDefaultShippingAddress($addressTransfer);
 
-        $isSuccess = $this->customerFacade->deleteCustomer($customerTransfer);
-        $this->assertTrue($isSuccess);
+        // Assert
+        $this->expectException(AddressNotFoundException::class);
 
+        // Act
+        $this->customerFacade->deleteCustomer($customerTransfer);
         $this->customerFacade->getAddress($addressTransfer);
     }
 
