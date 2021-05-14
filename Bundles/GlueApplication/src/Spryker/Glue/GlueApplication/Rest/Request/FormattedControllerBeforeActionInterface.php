@@ -5,17 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\AuthRestApi\Processor\AccessTokens;
+namespace Spryker\Glue\GlueApplication\Rest\Request;
 
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Symfony\Component\HttpFoundation\Request;
 
-interface AccessTokenValidatorInterface
+interface FormattedControllerBeforeActionInterface
 {
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Generated\Shared\Transfer\RestErrorMessageTransfer|null
      */
-    public function validate(Request $request): ?RestErrorMessageTransfer;
+    public function beforeAction(Request $request): ?RestErrorMessageTransfer;
 }

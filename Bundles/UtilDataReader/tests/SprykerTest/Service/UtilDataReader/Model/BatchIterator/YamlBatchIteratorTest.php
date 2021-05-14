@@ -32,10 +32,11 @@ class YamlBatchIteratorTest extends Unit
      */
     public function testThrowsExceptionIfFileNotValid(): void
     {
-        $this->expectException(ResourceNotFoundException::class);
         $yamlBatchIterator = $this->getYamlBatchIteratorWithInvalidFile();
 
-        $this->assertNotNull($yamlBatchIterator->current());
+        $this->expectException(ResourceNotFoundException::class);
+
+        $yamlBatchIterator->current();
     }
 
     /**
