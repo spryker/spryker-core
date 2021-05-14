@@ -234,6 +234,8 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -324,7 +326,7 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductExternalProviderPluginInterface[]
      */
-    public function getPriceProductExternalProviderPlugins(): array
+    protected function getPriceProductExternalProviderPlugins(): array
     {
         return [];
     }
