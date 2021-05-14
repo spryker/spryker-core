@@ -320,6 +320,8 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductExternalProviderPluginInterface[]
      */
     public function getPriceProductExternalProviderPlugins(): array
