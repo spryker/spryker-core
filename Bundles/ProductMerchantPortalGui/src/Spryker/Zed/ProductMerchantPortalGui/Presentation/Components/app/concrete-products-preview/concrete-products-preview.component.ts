@@ -98,15 +98,13 @@ export class ConcreteProductsPreviewComponent implements OnInit, OnChanges {
 
         this.attributeValues = this.attributes
             .map((item) =>
-                item.attributes?.map((attr) => (
-                    {
-                        name: item.name,
-                        value: item.value,
-                        attribute: {
-                            ...attr,
-                        },
-                    }
-                )),
+                item.attributes?.map((attr) => ({
+                    name: item.name,
+                    value: item.value,
+                    attribute: {
+                        ...attr,
+                    },
+                })),
             )
             .filter((item) => item?.length);
 
@@ -124,13 +122,14 @@ export class ConcreteProductsPreviewComponent implements OnInit, OnChanges {
             [[]],
         );
 
-        this.generatedProducts = this.generatedAttributeValues.map((attrs) => (
-            {
-                name: '',
-                sku: '',
-                superAttributes: [...attrs],
-            } as ConcreteProductPreview
-        ));
+        this.generatedProducts = this.generatedAttributeValues.map(
+            (attrs) =>
+                ({
+                    name: '',
+                    sku: '',
+                    superAttributes: [...attrs],
+                } as ConcreteProductPreview),
+        );
     }
 
     private hasSkuError(): boolean {
@@ -161,9 +160,6 @@ export class ConcreteProductsPreviewComponent implements OnInit, OnChanges {
         let generatedSku = this.concreteProductSkuGenerator.generate();
 
         this.skuInputRefs.forEach((item, index) => {
-            item.value = checked ? generatedSku : '';
-            item.disabled = checked;
-
             if (this.generatedProducts[index]) {
                 this.generatedProducts = [...this.generatedProducts];
                 this.generatedProducts[index].sku = checked ? generatedSku : '';
@@ -179,9 +175,6 @@ export class ConcreteProductsPreviewComponent implements OnInit, OnChanges {
         let generatedName = this.concreteProductNameGenerator.generate();
 
         this.nameInputRefs.forEach((item, index) => {
-            item.value = checked ? generatedName : '';
-            item.disabled = checked;
-
             if (this.generatedProducts[index]) {
                 this.generatedProducts = [...this.generatedProducts];
                 this.generatedProducts[index].name = checked ? generatedName : '';
@@ -210,19 +203,27 @@ export class ConcreteProductsPreviewComponent implements OnInit, OnChanges {
         this.generatedProductsChange.emit(this.generatedProducts);
     }
 
-    getSkuErrors(index: number, errors: ConcreteProductPreviewErrors[]): string {
-        if (errors?.length && errors[index]) {
+    getSkuErrors(
+        index: number,
+        errors: ConcreteProductPreviewErrors[],
+        isAutoGenerateSkuCheckbox: boolean,
+    ): string | boolean {
+        if (errors?.length && errors[index] && !isAutoGenerateSkuCheckbox) {
             return errors[index]?.errors?.sku;
         }
 
-        return '';
+        return false;
     }
 
-    getNameErrors(index: number, errors: ConcreteProductPreviewErrors[]): string {
-        if (errors?.length && errors[index]) {
+    getNameErrors(
+        index: number,
+        errors: ConcreteProductPreviewErrors[],
+        isAutoGenerateNameCheckbox: boolean,
+    ): string | boolean {
+        if (errors?.length && errors[index] && !isAutoGenerateNameCheckbox) {
             return errors[index]?.errors?.name;
         }
 
-        return '';
+        return false;
     }
 }

@@ -36,30 +36,48 @@
             <cdk-virtual-scroll-viewport itemSize="10" class="mp-concrete-products-preview__table-list">
                 <div *cdkVirtualFor="let product of generatedProducts; let i = index">
                     <div class="mp-concrete-products-preview__table-row">
-                        <div class="mp-concrete-products-preview__table-row-item mp-concrete-products-preview__table-row-attr">
+                        <div
+                            class="mp-concrete-products-preview__table-row-item mp-concrete-products-preview__table-row-attr"
+                        >
                             <span *ngFor="let superAttribute of product.superAttributes; let isLastAttribute = last">
                                 {{ superAttribute.attribute.name }}
                                 <span *ngIf="!isLastAttribute"> / </span>
                             </span>
                         </div>
-                        <div class="mp-concrete-products-preview__table-row-item mp-concrete-products-preview__table-row-sku">
+                        <div
+                            class="mp-concrete-products-preview__table-row-item mp-concrete-products-preview__table-row-sku"
+                        >
                             <spy-form-item
                                 noSpaces="true"
                                 noLabel="true"
-                                [error]="getSkuErrors | spyInvoke: i:errors"
+                                [error]="getSkuErrors | spyInvoke: i:errors:isAutoGenerateSkuCheckbox"
                             >
-                                <spy-input control [value]="product.sku" (valueChange)="skuChange($event, i)" #skuInputRef>
+                                <spy-input
+                                    control
+                                    [value]="product.sku"
+                                    [disabled]="isAutoGenerateSkuCheckbox"
+                                    (valueChange)="skuChange($event, i)"
+                                    #skuInputRef
+                                >
                                 </spy-input>
                             </spy-form-item>
                         </div>
-                        <div class="mp-concrete-products-preview__table-row-item mp-concrete-products-preview__table-row-name">
+                        <div
+                            class="mp-concrete-products-preview__table-row-item mp-concrete-products-preview__table-row-name"
+                        >
                             <spy-form-item
                                 noSpaces="true"
                                 noLabel="true"
-                                [error]="getNameErrors | spyInvoke: i:errors"
+                                [error]="getNameErrors | spyInvoke: i:errors:isAutoGenerateNameCheckbox"
                                 class="mp-concrete-products-preview__table-row-name-form-item"
                             >
-                                <spy-input control [value]="product.name" (valueChange)="nameChange($event, i)" #nameInputRef>
+                                <spy-input
+                                    control
+                                    [value]="product.name"
+                                    [disabled]="isAutoGenerateNameCheckbox"
+                                    (valueChange)="nameChange($event, i)"
+                                    #nameInputRef
+                                >
                                 </spy-input>
                             </spy-form-item>
                             <spy-button

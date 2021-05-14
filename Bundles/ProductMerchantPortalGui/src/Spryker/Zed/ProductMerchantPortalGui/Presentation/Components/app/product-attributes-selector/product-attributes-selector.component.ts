@@ -36,14 +36,14 @@ export class ProductAttributesSelectorComponent implements OnChanges, OnInit {
     constructor(private cdr: ChangeDetectorRef) {}
 
     ngOnInit(): void {
-        if (!this.selectedAttributes?.length) {
+        if (!this.selectedAttributes.length) {
             this.create();
         }
     }
 
     ngOnChanges(changes: SimpleChanges): void {
         if ('attributes' in changes) {
-            this.remapSuperAttributes();
+            this.disableSelectedAttributes();
             this.generateAttributesObject();
         }
 
@@ -53,7 +53,7 @@ export class ProductAttributesSelectorComponent implements OnChanges, OnInit {
     }
 
     private generateAttributesObject(): void {
-        this.attributesObject = this.attributes?.reduce((accum, attribute) => {
+        this.attributesObject = this.attributes.reduce((accum, attribute) => {
             return {
                 ...accum,
                 [attribute.value]: attribute,
@@ -62,24 +62,20 @@ export class ProductAttributesSelectorComponent implements OnChanges, OnInit {
     }
 
     private initAttributeOptions(): void {
-        this.attributeOptions = this.selectedAttributes?.map((attrs) => {
-            return this.attributesObject[attrs.value]?.attributes.map((attr) => (
-                {
-                    title: attr.name,
-                    value: attr.value,
-                }
-            ));
+        this.attributeOptions = this.selectedAttributes.map((attrs) => {
+            return this.attributesObject[attrs.value]?.attributes.map((attr) => ({
+                title: attr.name,
+                value: attr.value,
+            }));
         });
     }
 
     private remapSuperAttributes(): void {
-        this.superAttributeOptions = this.attributes?.map((attr) => (
-            {
-                title: attr.name,
-                value: attr.value,
-                isDisabled: attr.isDisabled,
-            }
-        ));
+        this.superAttributeOptions = this.attributes.map((attr) => ({
+            title: attr.name,
+            value: attr.value,
+            isDisabled: attr.isDisabled,
+        }));
     }
 
     private disableSelectedAttributes(): void {
@@ -105,12 +101,10 @@ export class ProductAttributesSelectorComponent implements OnChanges, OnInit {
 
         superAttribute.attributes = [];
         this.selectedAttributes = [...this.selectedAttributes];
-        this.attributeOptions[index] = this.attributesObject[value]?.attributes.map((attr) => (
-            {
-                title: attr.name,
-                value: attr.value,
-            }
-        ));
+        this.attributeOptions[index] = this.attributesObject[value]?.attributes.map((attr) => ({
+            title: attr.name,
+            value: attr.value,
+        }));
         this.selectedAttributes[index] = superAttribute;
         this.disableSelectedAttributes();
         this.selectedAttributesChange.emit(this.selectedAttributes);

@@ -25,6 +25,7 @@
                 <spy-select
                     [options]="getAttributes | spyInvoke: i:attributeOptions"
                     [value]="getSelectedAttributes | spyInvoke: i:selectedAttributes"
+                    [disabled]="!(getAttributes | spyInvoke: i:attributeOptions)"
                     (valueChange)="attributesChange($event, i, attribute)"
                     multiple
                     class="mp-product-attributes-selector__content-row-values-name-select"

@@ -81,6 +81,19 @@ const mockGeneratedProducts = [
         ],
     },
 ];
+const mockGeneratedProductErrors = [
+    {
+        fields: {
+            name: '',
+            sku: '123',
+        },
+        errors: {
+            name: 'This value should not be blank.',
+            sku: 'SKU Prefix already exists',
+        },
+    },
+    {},
+];
 
 class MockGenerator implements IdGenerator {
     index = 0;
@@ -99,7 +112,11 @@ class MockGeneratorFactory {
 @Component({
     selector: 'spy-test',
     template: `
-        <mp-concrete-products-preview [name]="name" [attributes]="attributes">
+        <mp-concrete-products-preview
+            [name]="name"
+            [attributes]="attributes"
+            [errors]="errors"
+        >
             <span total-text>to be created</span>
             <span auto-sku-text>Autogenerate SKUs</span>
             <span auto-name-text>Same Name as Abstract Product</span>
@@ -113,6 +130,7 @@ class MockGeneratorFactory {
 class TestComponent {
     name: string;
     attributes: any;
+    errors: any;
 }
 
 describe('ConcreteProductsPreviewComponent', () => {
@@ -395,6 +413,24 @@ describe('ConcreteProductsPreviewComponent', () => {
 
             expect(updatedNameInputs[0].properties.value).toBe('');
             expect(updatedNameInputs[1].properties.value).toBe('');
+        }));
+
+        it('should bound `@Input(errors)` to the input `error` of <spy-form-item> component', fakeAsync(() => {
+            component.attributes = mockAttributes;
+            component.errors = mockGeneratedProductErrors;
+            fixture.detectChanges();
+            tick();
+            fixture.detectChanges();
+
+            const skuFormItems = fixture.debugElement.queryAll(
+                By.css('.mp-concrete-products-preview__table-row-sku spy-form-item'),
+            );
+            const nameFormItems = fixture.debugElement.queryAll(
+                By.css('.mp-concrete-products-preview__table-row-name spy-form-item'),
+            );
+
+            expect(skuFormItems[0].properties.error).toBe(mockGeneratedProductErrors[0].errors.sku);
+            expect(nameFormItems[0].properties.error).toBe(mockGeneratedProductErrors[0].errors.name);
         }));
     });
 });

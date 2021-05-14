@@ -5,7 +5,7 @@ import {
     Input,
     OnChanges,
     SimpleChanges,
-    ViewEncapsulation
+    ViewEncapsulation,
 } from '@angular/core';
 import { ToBoolean } from '@spryker/utils';
 
@@ -22,13 +22,13 @@ export class AutogenerateInputComponent implements OnChanges {
     @Input() value: string;
     @Input() originalValue: string;
     @Input() placeholder: string;
-    @Input() @ToBoolean() isAutogenerate: boolean = true;
+    @Input() @ToBoolean() isAutogenerate = true;
     @Input() error?: string;
     @Input() checkboxName?: string;
     @Input()
     @HostBinding('class.mp-autogenerate-input--half-width')
     @ToBoolean()
-    isFieldHasHalfWidth?: boolean = false;
+    isFieldHasHalfWidth? = false;
 
     private defaultValue: string;
 
