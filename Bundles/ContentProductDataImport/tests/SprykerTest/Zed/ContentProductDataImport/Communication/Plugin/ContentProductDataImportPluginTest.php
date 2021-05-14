@@ -70,18 +70,15 @@ class ContentProductDataImportPluginTest extends Unit
      */
     public function testImportProductAbstractListsDataWrongSkus(): void
     {
-        $this->expectExceptionObject(new DataImportException(static::EXCEPTION_ERROR_MESSAGE));
-
         $dataImportConfigurationTransfer = $this->createConfigurationTransfer(
             'import/content_product_abstract_list_wrong_skus.csv'
         )->setThrowException(true);
 
-        // Act
-        $dataImporterReportTransfer = (new ContentProductAbstractListDataImportPlugin())->import($dataImportConfigurationTransfer);
-
         // Assert
-        $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
-        $this->assertFalse($dataImporterReportTransfer->getIsSuccess());
+        $this->expectExceptionObject(new DataImportException(static::EXCEPTION_ERROR_MESSAGE));
+
+        // Act
+        (new ContentProductAbstractListDataImportPlugin())->import($dataImportConfigurationTransfer);
     }
 
     /**
