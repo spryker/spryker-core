@@ -24,6 +24,7 @@ use Generated\Shared\Transfer\ProductOfferTransfer;
 use Generated\Shared\Transfer\ProductOfferValidityTransfer;
 use Generated\Shared\Transfer\ProductTableCriteriaTransfer;
 use Orm\Zed\Currency\Persistence\Map\SpyCurrencyTableMap;
+use Orm\Zed\Merchant\Persistence\Map\SpyMerchantTableMap;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductStoreTableMap;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductTableMap;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceTypeTableMap;
@@ -458,8 +459,8 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
         $idLocale = $localeTransfer->requireIdLocale()->getIdLocale();
 
         $productOfferQuery = $this->joinProductLocalizedAttributesToProductOfferQuery($productOfferQuery, $idLocale);
-        $productOfferQuery->joinWithSpyMerchant()
-            ->filterByMerchantReference($merchantReference)
+        $productOfferQuery->addJoin(SpyProductOfferTableMap::COL_MERCHANT_REFERENCE, SpyMerchantTableMap::COL_MERCHANT_REFERENCE, Criteria::INNER_JOIN)
+            ->addAnd($productOfferQuery->getNewCriterion(SpyMerchantTableMap::COL_MERCHANT_REFERENCE, $merchantReference, Criteria::EQUAL))
             ->leftJoinSpyProductOfferValidity()
             ->leftJoinProductOfferStock()
             ->useProductOfferStockQuery(null, Criteria::LEFT_JOIN)
@@ -877,13 +878,13 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
         $currentDateTime = (new DateTime())->format('Y-m-d H:i:s');
         $expiringOffersDateTime = (new DateTime(sprintf('+%s Days', $dashboardExpiringOffersLimit)))->format('Y-m-d H:i:s');
 
+        $productOfferPropelQuery = $this->getFactory()->getProductOfferPropelQuery();
         /** @var array $merchantProductOfferCounts */
-        $merchantProductOfferCounts = $this->getFactory()->getProductOfferPropelQuery()
+        $merchantProductOfferCounts = $productOfferPropelQuery
             ->leftJoinSpyProductOfferValidity()
             ->leftJoinProductOfferStock()
-            ->useSpyMerchantQuery()
-                ->filterByIdMerchant($idMerchant)
-            ->endUse()
+            ->addJoin(SpyProductOfferTableMap::COL_MERCHANT_REFERENCE, SpyMerchantTableMap::COL_MERCHANT_REFERENCE, Criteria::INNER_JOIN)
+            ->addAnd($productOfferPropelQuery->getNewCriterion(SpyMerchantTableMap::COL_ID_MERCHANT, $idMerchant, Criteria::EQUAL))
             ->addAsColumn(MerchantProductOfferCountsTransfer::TOTAL, 'COUNT(*)')
             ->addAsColumn(
                 MerchantProductOfferCountsTransfer::ACTIVE,
@@ -1051,10 +1052,9 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
         $priceProductStoreQuery
             ->useSpyPriceProductOfferQuery()
                 ->useSpyProductOfferQuery()
+                    ->addJoin(SpyProductOfferTableMap::COL_MERCHANT_REFERENCE, SpyMerchantTableMap::COL_MERCHANT_REFERENCE, Criteria::INNER_JOIN)
+                    ->addAnd($priceProductStoreQuery->getNewCriterion(SpyMerchantTableMap::COL_ID_MERCHANT, $productOfferPriceTableCriteriaTransfer->getIdMerchant(), Criteria::EQUAL))
                     ->filterByIdProductOffer($productOfferPriceTableCriteriaTransfer->getIdProductOffer())
-                    ->useSpyMerchantQuery()
-                        ->filterByIdMerchant($productOfferPriceTableCriteriaTransfer->getIdMerchant())
-                    ->endUse()
                 ->endUse()
             ->endUse();
 

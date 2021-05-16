@@ -12,8 +12,5 @@
             <index-column name="merchant_reference"/>
         </index>
 
-        <foreign-key name="spy_product_offer-merchant_reference" foreignTable="spy_merchant">
-            <reference local="merchant_reference" foreign="merchant_reference"/>
-        </foreign-key>
     </table>
 </database>

@@ -8,8 +8,10 @@
 namespace Spryker\Zed\MerchantProductOffer\Persistence;
 
 use Generated\Shared\Transfer\MerchantProductOfferCriteriaTransfer;
+use Orm\Zed\Merchant\Persistence\Map\SpyMerchantTableMap;
 use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
 use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -54,9 +56,11 @@ class MerchantProductOfferRepository extends AbstractRepository implements Merch
 
         if ($merchantProductOfferCriteriaTransfer->getMerchantReference()) {
             $productOfferQuery
-                ->useSpyMerchantQuery()
-                    ->filterByMerchantReference($merchantProductOfferCriteriaTransfer->getMerchantReference())
-                ->endUse();
+                ->addJoin(SpyProductOfferTableMap::COL_MERCHANT_REFERENCE, SpyMerchantTableMap::COL_MERCHANT_REFERENCE, Criteria::INNER_JOIN)
+                ->addAnd(
+                    $productOfferQuery->getNewCriterion(SpyMerchantTableMap::COL_MERCHANT_REFERENCE, $merchantProductOfferCriteriaTransfer->getMerchantReference(), Criteria::EQUAL)
+                )
+            ;
         }
 
         return $productOfferQuery;
