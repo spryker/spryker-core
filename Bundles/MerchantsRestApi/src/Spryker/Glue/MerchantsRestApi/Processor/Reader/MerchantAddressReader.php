@@ -7,7 +7,6 @@
 
 namespace Spryker\Glue\MerchantsRestApi\Processor\Reader;
 
-use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantStorageCriteriaTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -58,7 +57,7 @@ class MerchantAddressReader implements MerchantAddressReaderInterface
         $merchantReference = $merchantResource->getId();
 
         $merchantStorageTransfer = $this->merchantStorageClient->findOne(
-            (new MerchantCriteriaTransfer())->setMerchantReference($merchantReference)
+            (new MerchantStorageCriteriaTransfer())->addMerchantReference($merchantReference)
         );
 
         if (!$merchantStorageTransfer) {

@@ -48,10 +48,6 @@
         <property name="noteGlossaryKey" type="string"/>
     </transfer>
 
-    <transfer name="MerchantCriteria">
-        <property name="merchantReference" type="string"/>
-    </transfer>
-
     <transfer name="MerchantStorageCriteria">
         <property name="merchantReferences" type="string[]" singular="merchantReference"/>
     </transfer>

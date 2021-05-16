@@ -7,7 +7,6 @@
 
 namespace Spryker\Glue\MerchantsRestApi\Processor\Reader;
 
-use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantSearchCollectionTransfer;
 use Generated\Shared\Transfer\MerchantSearchRequestTransfer;
 use Generated\Shared\Transfer\MerchantStorageCriteriaTransfer;
@@ -105,7 +104,7 @@ class MerchantReader implements MerchantReaderInterface
          */
         $merchantReference = $restRequest->getResource()->getId();
         $merchantStorageTransfer = $this->merchantStorageClient->findOne(
-            (new MerchantCriteriaTransfer())->setMerchantReference($merchantReference)
+            (new MerchantStorageCriteriaTransfer())->addMerchantReference($merchantReference)
         );
 
         if (!$merchantStorageTransfer) {

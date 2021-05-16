@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\MerchantStorage\Storage;
 
-use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantStorageCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
@@ -70,14 +69,20 @@ class MerchantStorageReader implements MerchantStorageReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantCriteriaTransfer $merchantCriteriaTransfer
+     * @param \Generated\Shared\Transfer\MerchantStorageCriteriaTransfer $merchantStorageCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantStorageTransfer|null
      */
-    public function findOne(MerchantCriteriaTransfer $merchantCriteriaTransfer): ?MerchantStorageTransfer
+    public function findOne(MerchantStorageCriteriaTransfer $merchantStorageCriteriaTransfer): ?MerchantStorageTransfer
     {
-        $merchantId = $this->findMerchantIdByMerchantReference($merchantCriteriaTransfer->getMerchantReference())
-            ?? $merchantCriteriaTransfer->getIdMerchantOrFail();
+        $merchantReference = $this->getFirstElementOfArray($merchantStorageCriteriaTransfer->getMerchantReferences());
+        $merchantId = $this->getFirstElementOfArray($merchantStorageCriteriaTransfer->getMerchantIds());
+
+        if (!$merchantReference && !$merchantId) {
+            return null;
+        }
+
+        $merchantId = $this->findMerchantIdByMerchantReference($merchantReference) ?? $merchantId;
 
         $merchantKey = $this->generateKey((string)$merchantId);
         $merchantData = $this->storageClient->get($merchantKey);
@@ -164,16 +169,16 @@ class MerchantStorageReader implements MerchantStorageReaderInterface
     }
 
     /**
-     * @param string $getMerchantReference
+     * @param string $merchantReference
      *
      * @return int|null
      */
-    protected function findMerchantIdByMerchantReference(string $getMerchantReference): ?int
+    protected function findMerchantIdByMerchantReference(string $merchantReference): ?int
     {
         $merchantId = null;
 
-        if ($getMerchantReference) {
-            $merchantKey = $this->generateKey(static::KEY_MERCHANT_REFERENCE . ':' . $getMerchantReference);
+        if ($merchantReference) {
+            $merchantKey = $this->generateKey(static::KEY_MERCHANT_REFERENCE . ':' . $merchantReference);
             $merchantDataMapId = $this->storageClient->get($merchantKey);
 
             if (isset($merchantDataMapId[static::KEY_ID_MERCHANT])) {
@@ -198,5 +203,15 @@ class MerchantStorageReader implements MerchantStorageReaderInterface
         return $this->synchronizationService
             ->getStorageKeyBuilder(MerchantStorageConfig::MERCHANT_RESOURCE_NAME)
             ->generateKey($synchronizationDataTransfer);
+    }
+
+    /**
+     * @param array $array
+     *
+     * @return mixed
+     */
+    protected function getFirstElementOfArray(array $array)
+    {
+        return reset($array);
     }
 }

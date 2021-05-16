@@ -134,12 +134,6 @@
         <property name="idMerchant" type="int"/>
     </transfer>
 
-    <transfer name="MerchantCriteria">
-        <property name="idMerchant" type="int"/>
-        <property name="filter" type="Filter"/>
-        <property name="merchantReference" type="string"/>
-    </transfer>
-
     <transfer name="MerchantStorageCriteria">
         <property name="merchantIds" type="array" singular="merchantId"/>
         <property name="merchantReferences" type="string[]" singular="merchantReference"/>
