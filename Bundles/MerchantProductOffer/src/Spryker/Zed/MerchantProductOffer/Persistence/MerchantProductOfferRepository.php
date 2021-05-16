@@ -59,8 +59,7 @@ class MerchantProductOfferRepository extends AbstractRepository implements Merch
                 ->addJoin(SpyProductOfferTableMap::COL_MERCHANT_REFERENCE, SpyMerchantTableMap::COL_MERCHANT_REFERENCE, Criteria::INNER_JOIN)
                 ->addAnd(
                     $productOfferQuery->getNewCriterion(SpyMerchantTableMap::COL_MERCHANT_REFERENCE, $merchantProductOfferCriteriaTransfer->getMerchantReference(), Criteria::EQUAL)
-                )
-            ;
+                );
         }
 
         return $productOfferQuery;

@@ -35,7 +35,6 @@ class MerchantProductOfferGuiRepository extends AbstractRepository implements Me
             ->setJoinType(Criteria::LEFT_JOIN)
             ->setLeft([SpyProductOfferTableMap::COL_MERCHANT_REFERENCE])
             ->setRight([SpyMerchantTableMap::COL_MERCHANT_REFERENCE]);
-        ;
 
         if ($merchantProductOfferCriteriaTransfer->getIdMerchant()) {
             $queryJoinTransfer->setJoinType(Criteria::INNER_JOIN)
