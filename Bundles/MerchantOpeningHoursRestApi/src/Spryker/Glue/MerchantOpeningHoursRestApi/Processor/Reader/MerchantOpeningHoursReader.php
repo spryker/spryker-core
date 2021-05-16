@@ -8,6 +8,7 @@
 namespace Spryker\Glue\MerchantOpeningHoursRestApi\Processor\Reader;
 
 use Generated\Shared\Transfer\MerchantCriteriaTransfer;
+use Generated\Shared\Transfer\MerchantStorageCriteriaTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\MerchantOpeningHoursRestApi\Dependency\Client\MerchantOpeningHoursRestApiToMerchantOpeningHoursStorageClientInterface;
@@ -124,7 +125,7 @@ class MerchantOpeningHoursReader implements MerchantOpeningHoursReaderInterface
     protected function getMerchantIdsIndexedByReference(array $merchantReferences): array
     {
         $merchantStorageTransfers = $this->merchantStorageClient->get(
-            (new MerchantCriteriaTransfer())->setMerchantReferences($merchantReferences)
+            (new MerchantStorageCriteriaTransfer())->setMerchantReferences($merchantReferences)
         );
 
         $merchantIdsIndexedByReference = [];

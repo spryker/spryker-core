@@ -8,6 +8,7 @@
 namespace Spryker\Glue\MerchantOpeningHoursRestApi\Dependency\Client;
 
 use Generated\Shared\Transfer\MerchantCriteriaTransfer;
+use Generated\Shared\Transfer\MerchantStorageCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantStorageTransfer;
 
 class MerchantOpeningHoursRestApiToMerchantStorageClientBridge implements MerchantOpeningHoursRestApiToMerchantStorageClientInterface
@@ -36,12 +37,12 @@ class MerchantOpeningHoursRestApiToMerchantStorageClientBridge implements Mercha
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantCriteriaTransfer $merchantCriteriaTransfer
+     * @param \Generated\Shared\Transfer\MerchantStorageCriteriaTransfer $merchantStorageCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantStorageTransfer[]
      */
-    public function get(MerchantCriteriaTransfer $merchantCriteriaTransfer): array
+    public function get(MerchantStorageCriteriaTransfer $merchantStorageCriteriaTransfer): array
     {
-        return $this->merchantStorageClient->get($merchantCriteriaTransfer);
+        return $this->merchantStorageClient->get($merchantStorageCriteriaTransfer);
     }
 }

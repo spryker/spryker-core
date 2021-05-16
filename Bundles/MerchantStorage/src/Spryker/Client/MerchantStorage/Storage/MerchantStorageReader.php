@@ -8,6 +8,7 @@
 namespace Spryker\Client\MerchantStorage\Storage;
 
 use Generated\Shared\Transfer\MerchantCriteriaTransfer;
+use Generated\Shared\Transfer\MerchantStorageCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\MerchantStorage\Dependency\Client\MerchantStorageToStorageClientInterface;
@@ -89,18 +90,18 @@ class MerchantStorageReader implements MerchantStorageReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantCriteriaTransfer $merchantCriteriaTransfer
+     * @param \Generated\Shared\Transfer\MerchantStorageCriteriaTransfer $merchantStorageCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantStorageTransfer[]
      */
-    public function get(MerchantCriteriaTransfer $merchantCriteriaTransfer): array
+    public function get(MerchantStorageCriteriaTransfer $merchantStorageCriteriaTransfer): array
     {
         $merchantStorageTransfers = [];
 
-        $merchantIds = $merchantCriteriaTransfer->getMerchantIds();
+        $merchantIds = $merchantStorageCriteriaTransfer->getMerchantIds();
 
-        if ($merchantCriteriaTransfer->getMerchantReferences()) {
-            $merchantIds += $this->getMerchantIdsByMerchantReferences($merchantCriteriaTransfer->getMerchantReferences());
+        if ($merchantStorageCriteriaTransfer->getMerchantReferences()) {
+            $merchantIds += $this->getMerchantIdsByMerchantReferences($merchantStorageCriteriaTransfer->getMerchantReferences());
         }
 
         if ($merchantIds) {

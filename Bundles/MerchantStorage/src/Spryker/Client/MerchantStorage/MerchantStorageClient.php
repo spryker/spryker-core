@@ -8,6 +8,7 @@
 namespace Spryker\Client\MerchantStorage;
 
 use Generated\Shared\Transfer\MerchantCriteriaTransfer;
+use Generated\Shared\Transfer\MerchantStorageCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantStorageTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
@@ -53,14 +54,14 @@ class MerchantStorageClient extends AbstractClient implements MerchantStorageCli
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\MerchantCriteriaTransfer $merchantCriteriaTransfer
+     * @param \Generated\Shared\Transfer\MerchantStorageCriteriaTransfer $merchantStorageCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantStorageTransfer[]
      */
-    public function get(MerchantCriteriaTransfer $merchantCriteriaTransfer): array
+    public function get(MerchantStorageCriteriaTransfer $merchantStorageCriteriaTransfer): array
     {
         return $this->getFactory()
             ->createMerchantStorageReader()
-            ->get($merchantCriteriaTransfer);
+            ->get($merchantStorageCriteriaTransfer);
     }
 }

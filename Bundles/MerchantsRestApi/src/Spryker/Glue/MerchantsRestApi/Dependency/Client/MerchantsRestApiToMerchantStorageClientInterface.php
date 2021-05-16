@@ -8,16 +8,17 @@
 namespace Spryker\Glue\MerchantsRestApi\Dependency\Client;
 
 use Generated\Shared\Transfer\MerchantCriteriaTransfer;
+use Generated\Shared\Transfer\MerchantStorageCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantStorageTransfer;
 
 interface MerchantsRestApiToMerchantStorageClientInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\MerchantCriteriaTransfer $merchantCriteriaTransfer
+     * @param \Generated\Shared\Transfer\MerchantStorageCriteriaTransfer $merchantStorageCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantStorageTransfer[]
      */
-    public function get(MerchantCriteriaTransfer $merchantCriteriaTransfer): array;
+    public function get(MerchantStorageCriteriaTransfer $merchantStorageCriteriaTransfer): array;
 
     /**
      * @param \Generated\Shared\Transfer\MerchantCriteriaTransfer $merchantCriteriaTransfer
