@@ -24,6 +24,8 @@
         <property name="joinType" type="string"/>
         <property name="relation" type="string"/>
         <property name="condition" type="string"/>
+        <property name="right" type="array" singular="right"/>
+        <property name="left" type="array" singular="left"/>
     </transfer>
 
     <transfer name="QueryCriteria">
