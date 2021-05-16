@@ -114,8 +114,7 @@ class SalesProductConfigurationClientTest extends Unit
             'Expects product configuration `configuratorKey` property expanded with order item value.'
         );
 
-        $this->assertSame(
-            true,
+        $this->assertTrue(
             $productConfigurationInstance->getIsComplete(),
             'Expects product configuration `isComplete` property expanded with order item value.'
         );
