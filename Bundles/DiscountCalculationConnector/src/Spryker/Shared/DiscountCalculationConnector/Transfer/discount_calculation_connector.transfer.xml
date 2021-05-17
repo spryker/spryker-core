@@ -28,4 +28,7 @@
         <property name="cartRuleDiscounts" type="Discount[]" singular="cartRuleDiscount"/>
     </transfer>
 
+    <transfer name="Discount">
+    </transfer>
+
 </transfers>
