@@ -38,7 +38,7 @@ interface MerchantStorageClientInterface
 
     /**
      * Specification:
-     * - Finds merchant storage data by a merchant criteria.
+     * - Finds merchant storage data by criteria.
      *
      * @api
      *
