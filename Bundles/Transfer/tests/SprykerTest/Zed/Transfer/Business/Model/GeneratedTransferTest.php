@@ -179,7 +179,7 @@ class GeneratedTransferTest extends Unit
     {
         $generatedTransfer = new GeneratedTransfer();
         $generatedTransfer->setTestBool(true);
-        $this->assertSame(true, $generatedTransfer->getTestBool());
+        $this->assertTrue($generatedTransfer->getTestBool());
         $this->assertIsBool($generatedTransfer->getTestBool());
 
         $modified = $generatedTransfer->modifiedToArray();
@@ -358,7 +358,7 @@ class GeneratedTransferTest extends Unit
         $this->assertSame(['string a', 'string b'], $generatedTransfer->getTestStringArray());
         $this->assertSame(100, $generatedTransfer->getTestInt());
         $this->assertSame([100, 200], $generatedTransfer->getTestIntArray());
-        $this->assertSame(true, $generatedTransfer->getTestBool());
+        $this->assertTrue($generatedTransfer->getTestBool());
         $this->assertSame([true, false], $generatedTransfer->getTestBoolArray());
         $this->assertSame([true, false], $generatedTransfer->getTestBoolArray());
         $this->assertInstanceOf(GeneratedTransfer::class, $generatedTransfer->getTestTransfer());

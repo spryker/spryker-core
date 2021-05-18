@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
 use Spryker\Zed\CompanyRoleDataImport\Communication\Plugin\DataImport\CompanyUserRoleDataImportPlugin;
 use Spryker\Zed\CompanyRoleDataImport\CompanyRoleDataImportConfig;
+use Spryker\Zed\DataImport\Business\Exception\DataImportException;
 
 /**
  * Auto-generated group annotations
@@ -55,7 +56,7 @@ class CompanyUserRoleDataImportPluginTest extends AbstractCompanyRoleDataImportM
      */
     public function testImportCompanyUserRoleWithInvlaidCompanyUser(): void
     {
-        $this->expectException('Spryker\Zed\DataImport\Business\Exception\DataImportException');
+        // Arrange
         $this->tester->truncateCompanyToCompanyUserRoles();
         $this->tester->assertCompanyRoleToCompanyUserTableIsEmtpy();
 
@@ -66,12 +67,11 @@ class CompanyUserRoleDataImportPluginTest extends AbstractCompanyRoleDataImportM
             ->setReaderConfiguration($dataImporterReaderConfigurationTransfer)
             ->setThrowException(true);
 
-        $dataImporterReportTransfer = $this->getCompanyUserRoleDataImportPlugin()->import($dataImportConfigurationTransfer);
+        // Assert
+        $this->expectException(DataImportException::class);
 
-        $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
-        $this->assertFalse($dataImporterReportTransfer->getIsSuccess());
-
-        $this->tester->assertCompanyRoleToCompanyUserTableHasRecords();
+        // Act
+        $this->getCompanyUserRoleDataImportPlugin()->import($dataImportConfigurationTransfer);
     }
 
     /**
