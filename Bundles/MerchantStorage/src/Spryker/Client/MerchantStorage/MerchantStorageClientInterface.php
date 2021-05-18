@@ -26,7 +26,7 @@ interface MerchantStorageClientInterface
 
     /**
      * Specification:
-     * - Finds one merchant storage by a merchant criteria.
+     * - Finds one merchant storage by a merchant storage criteria.
      *
      * @api
      *
@@ -38,7 +38,7 @@ interface MerchantStorageClientInterface
 
     /**
      * Specification:
-     * - Finds merchant storage data by a merchant criteria.
+     * - Finds merchant storage data by a merchant storage criteria.
      *
      * @api
      *
