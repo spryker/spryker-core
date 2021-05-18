@@ -26,7 +26,7 @@ class PercentageType implements CalculatorTypeInterface
      */
     public function calculateDiscount(array $discountableItems, DiscountTransfer $discountTransfer)
     {
-        $this->resetDiscount();
+        $this->resetRoundingError();
 
         $value = $discountTransfer->requireAmount()->getAmount();
 
@@ -104,7 +104,7 @@ class PercentageType implements CalculatorTypeInterface
     /**
      * @return void
      */
-    protected function resetDiscount(): void
+    protected function resetRoundingError(): void
     {
         static::$roundingError = 0;
     }
