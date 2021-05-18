@@ -112,11 +112,7 @@ class MockGeneratorFactory {
 @Component({
     selector: 'spy-test',
     template: `
-        <mp-concrete-products-preview
-            [name]="name"
-            [attributes]="attributes"
-            [errors]="errors"
-        >
+        <mp-concrete-products-preview [name]="name" [attributes]="attributes" [errors]="errors">
             <span total-text>to be created</span>
             <span auto-sku-text>Autogenerate SKUs</span>
             <span auto-name-text>Same Name as Abstract Product</span>

@@ -223,6 +223,7 @@ describe('ProductAttributesSelectorComponent', () => {
                     name: 'name1',
                     value: mockValue,
                     attributes: [],
+                    isDisabled: false,
                 },
             ];
 
@@ -256,6 +257,7 @@ describe('ProductAttributesSelectorComponent', () => {
                     name: 'name1',
                     value: mockValue,
                     attributes: [mockValues],
+                    isDisabled: false,
                 },
             ];
 

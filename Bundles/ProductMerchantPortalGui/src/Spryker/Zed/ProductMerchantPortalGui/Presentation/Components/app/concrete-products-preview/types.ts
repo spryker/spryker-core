@@ -6,7 +6,7 @@ export interface ConcreteProductPreview {
     superAttributes: ConcreteProductPreviewSuperAttribute[];
 }
 
-interface ConcreteProductPreviewSuperAttribute {
+export interface ConcreteProductPreviewSuperAttribute {
     value: string;
     name: string;
     attribute: ProductAttributeValue;

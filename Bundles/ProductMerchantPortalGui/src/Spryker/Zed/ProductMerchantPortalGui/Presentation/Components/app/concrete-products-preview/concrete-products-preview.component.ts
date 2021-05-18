@@ -5,7 +5,6 @@ import {
     EventEmitter,
     Input,
     OnChanges,
-    OnInit,
     Output,
     QueryList,
     SimpleChanges,
@@ -15,8 +14,8 @@ import {
 import { ToJson } from '@spryker/utils';
 import { InputComponent } from '@spryker/input';
 import { IconDeleteModule } from '../../icons';
-import { ConcreteProductPreview, ConcreteProductPreviewErrors } from './types';
-import { ProductAttribute, ProductAttributeValue } from '../product-attributes-selector/types';
+import { ConcreteProductPreview, ConcreteProductPreviewErrors, ConcreteProductPreviewSuperAttribute } from './types';
+import { ProductAttribute } from '../product-attributes-selector/types';
 import { ConcreteProductSkuGeneratorFactoryService } from '../../services/concrete-product-sku-generator-factory.service';
 import { ConcreteProductNameGeneratorFactoryService } from '../../services/concrete-product-name-generator-factory.service';
 
@@ -29,7 +28,7 @@ import { ConcreteProductNameGeneratorFactoryService } from '../../services/concr
     providers: [ConcreteProductSkuGeneratorFactoryService, ConcreteProductNameGeneratorFactoryService],
     host: { class: 'mp-concrete-products-preview' },
 })
-export class ConcreteProductsPreviewComponent implements OnInit, OnChanges {
+export class ConcreteProductsPreviewComponent implements OnChanges {
     @Input() @ToJson() attributes: ProductAttribute[];
     @Input() @ToJson() generatedProducts: ConcreteProductPreview[];
     @Input() @ToJson() errors?: ConcreteProductPreviewErrors[];
@@ -43,8 +42,8 @@ export class ConcreteProductsPreviewComponent implements OnInit, OnChanges {
     isAutoGenerateNameCheckbox = true;
     deleteIcon = IconDeleteModule.icon;
 
-    private attributeValues: ProductAttributeValue[][] = [];
-    private generatedAttributeValues: ProductAttributeValue[][] = [];
+    private attributeValues: ConcreteProductPreviewSuperAttribute[][] = [];
+    private generatedAttributeValues: ConcreteProductPreviewSuperAttribute[][] = [];
     private initialGeneratedProducts: ConcreteProductPreview[] = [];
     private concreteProductSkuGenerator = this.concreteProductSkuGeneratorFactory.create();
     private concreteProductNameGenerator = this.concreteProductNameGeneratorFactory.create();
@@ -54,23 +53,6 @@ export class ConcreteProductsPreviewComponent implements OnInit, OnChanges {
         private concreteProductNameGeneratorFactory: ConcreteProductNameGeneratorFactoryService,
         private cdr: ChangeDetectorRef,
     ) {}
-
-    ngOnInit() {
-        if (!this.initialGeneratedProducts?.length) {
-            return;
-        }
-
-        this.initialGeneratedProducts.some((generatedProduct) => {
-            if (!generatedProduct.sku.length || this.hasSkuError()) {
-                this.isAutoGenerateSkuCheckbox = false;
-            }
-
-            if (!generatedProduct.name.length || this.hasNameError()) {
-                this.isAutoGenerateNameCheckbox = false;
-            }
-        });
-        this.generatedProducts = [...this.initialGeneratedProducts];
-    }
 
     ngOnChanges(changes: SimpleChanges) {
         if ('attributes' in changes) {
@@ -88,6 +70,25 @@ export class ConcreteProductsPreviewComponent implements OnInit, OnChanges {
 
                 this.cdr.markForCheck();
             });
+        }
+
+        if ('generatedProducts' in changes) {
+            this.initialGeneratedProducts = this.generatedProducts?.length ? [...this.generatedProducts] : [];
+
+            if (!this.initialGeneratedProducts?.length) {
+                return;
+            }
+
+            this.initialGeneratedProducts.some((generatedProduct) => {
+                if (!generatedProduct.sku.length || this.hasSkuError()) {
+                    this.isAutoGenerateSkuCheckbox = false;
+                }
+
+                if (!generatedProduct.name.length || this.hasNameError()) {
+                    this.isAutoGenerateNameCheckbox = false;
+                }
+            });
+            this.generatedProducts = [...this.initialGeneratedProducts];
         }
     }
 
@@ -122,14 +123,31 @@ export class ConcreteProductsPreviewComponent implements OnInit, OnChanges {
             [[]],
         );
 
-        this.generatedProducts = this.generatedAttributeValues.map(
-            (attrs) =>
-                ({
+        this.generatedProducts = this.generatedAttributeValues.map((attrs) => {
+            const existingGeneratedProduct = this.generatedProducts?.find((product) => {
+                if (product?.superAttributes.length !== attrs.length) {
+                    return false;
+                }
+
+                return product?.superAttributes.every((superAttr) => {
+                    /* tslint:disable:no-shadowed-variable */
+                    const attr = attrs.find((attr) => attr.value === superAttr.value);
+                    /* tslint:enable */
+
+                    return attr.attribute.value === superAttr.attribute.value;
+                });
+            });
+
+            if (existingGeneratedProduct) {
+                return existingGeneratedProduct;
+            } else {
+                return {
                     name: '',
                     sku: '',
                     superAttributes: [...attrs],
-                } as ConcreteProductPreview),
-        );
+                } as ConcreteProductPreview;
+            }
+        });
     }
 
     private hasSkuError(): boolean {
@@ -165,6 +183,11 @@ export class ConcreteProductsPreviewComponent implements OnInit, OnChanges {
                 this.generatedProducts[index].sku = checked ? generatedSku : '';
             }
 
+            if (this.errors?.length && this.errors[index]) {
+                this.errors = [...this.errors];
+                delete this.errors[index]?.errors?.sku;
+            }
+
             if (this.skuInputRefs.length - 1 !== index) {
                 generatedSku = this.concreteProductSkuGenerator.generate(generatedSku);
             }
@@ -178,6 +201,11 @@ export class ConcreteProductsPreviewComponent implements OnInit, OnChanges {
             if (this.generatedProducts[index]) {
                 this.generatedProducts = [...this.generatedProducts];
                 this.generatedProducts[index].name = checked ? generatedName : '';
+            }
+
+            if (this.errors?.length && this.errors[index]) {
+                this.errors = [...this.errors];
+                delete this.errors[index]?.errors?.name;
             }
 
             if (this.nameInputRefs.length - 1 !== index) {
@@ -203,27 +231,15 @@ export class ConcreteProductsPreviewComponent implements OnInit, OnChanges {
         this.generatedProductsChange.emit(this.generatedProducts);
     }
 
-    getSkuErrors(
-        index: number,
-        errors: ConcreteProductPreviewErrors[],
-        isAutoGenerateSkuCheckbox: boolean,
-    ): string | boolean {
-        if (errors?.length && errors[index] && !isAutoGenerateSkuCheckbox) {
+    getSkuErrors(index: number, errors: ConcreteProductPreviewErrors[]): string | undefined {
+        if (errors?.length && errors[index]) {
             return errors[index]?.errors?.sku;
         }
-
-        return false;
     }
 
-    getNameErrors(
-        index: number,
-        errors: ConcreteProductPreviewErrors[],
-        isAutoGenerateNameCheckbox: boolean,
-    ): string | boolean {
-        if (errors?.length && errors[index] && !isAutoGenerateNameCheckbox) {
+    getNameErrors(index: number, errors: ConcreteProductPreviewErrors[]): string | undefined {
+        if (errors?.length && errors[index]) {
             return errors[index]?.errors?.name;
         }
-
-        return false;
     }
 }
