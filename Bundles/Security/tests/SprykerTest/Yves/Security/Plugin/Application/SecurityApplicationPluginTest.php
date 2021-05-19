@@ -95,12 +95,14 @@ class SecurityApplicationPluginTest extends Unit
 
         $container = $this->tester->getContainer();
         $httpKernelBrowser = $this->tester->getHttpKernelBrowser();
+        $httpKernelBrowser->restart();
 
         $httpKernelBrowser->request('get', '/');
         $this->assertSame('ANONYMOUS', $httpKernelBrowser->getResponse()->getContent());
 
         $httpKernelBrowser->request('post', '/login_check', ['_username' => 'user', '_password' => 'bar']);
-        $this->assertStringContainsString('Bad credentials', $container->get('security.last_error')($httpKernelBrowser->getRequest()));
+        $lastError = $container->get('security.last_error')($httpKernelBrowser->getRequest());
+        $this->assertRegexp('/(Bad credentials|The presented password is invalid)/', $lastError);
         // hack to re-close the session as the previous assertions re-opens it
         $httpKernelBrowser->getRequest()->getSession()->save();
 
@@ -112,9 +114,6 @@ class SecurityApplicationPluginTest extends Unit
 
         $httpKernelBrowser->request('get', '/');
         $this->assertSame('userAUTHENTICATED', $httpKernelBrowser->getResponse()->getContent());
-
-        $this->expectException(AccessDeniedHttpException::class);
-        $httpKernelBrowser->request('get', '/admin');
 
         $httpKernelBrowser->request('get', '/logout');
         $this->assertSame(302, $httpKernelBrowser->getResponse()->getStatusCode());
@@ -128,7 +127,7 @@ class SecurityApplicationPluginTest extends Unit
         $this->assertSame('http://localhost/login', $httpKernelBrowser->getResponse()->getTargetUrl());
 
         $httpKernelBrowser->request('post', '/login_check', ['_username' => 'admin', '_password' => 'foo']);
-        $this->assertSame('', $container->get('security.last_error')($httpKernelBrowser->getRequest()));
+        $this->assertNull($container->get('security.last_error')($httpKernelBrowser->getRequest()));
         $httpKernelBrowser->getRequest()->getSession()->save();
         $this->assertSame(302, $httpKernelBrowser->getResponse()->getStatusCode());
         $this->assertSame('http://localhost/admin', $httpKernelBrowser->getResponse()->getTargetUrl());
@@ -142,11 +141,29 @@ class SecurityApplicationPluginTest extends Unit
     /**
      * @return void
      */
+    public function testFormAuthenticationThrowsExceptionOnRestrictedAction(): void
+    {
+        // Arrange
+        $this->addFormAuthentication();
+        $httpKernelBrowser = $this->tester->getHttpKernelBrowser();
+        $httpKernelBrowser->restart();
+        $httpKernelBrowser->request('post', '/login_check', ['_username' => 'user', '_password' => 'foo']);
+
+        // Assert
+        $this->expectException(AccessDeniedHttpException::class);
+
+        // Act
+        $httpKernelBrowser->request('get', '/admin');
+    }
+
+    /**
+     * @return void
+     */
     public function testHttpAuthentication(): void
     {
         $this->addHttpAuthentication();
-
         $httpKernelBrowser = $this->tester->getHttpKernelBrowser();
+        $httpKernelBrowser->restart();
 
         $httpKernelBrowser->request('get', '/');
         $this->assertSame(401, $httpKernelBrowser->getResponse()->getStatusCode());
@@ -154,9 +171,6 @@ class SecurityApplicationPluginTest extends Unit
 
         $httpKernelBrowser->request('get', '/', [], [], ['PHP_AUTH_USER' => 'user', 'PHP_AUTH_PW' => 'foo']);
         $this->assertSame('userAUTHENTICATED', $httpKernelBrowser->getResponse()->getContent());
-
-        $this->expectException(AccessDeniedHttpException::class);
-        $httpKernelBrowser->request('get', '/admin');
 
         $httpKernelBrowser->restart();
 
@@ -173,6 +187,24 @@ class SecurityApplicationPluginTest extends Unit
     /**
      * @return void
      */
+    public function testHttpAuthenticationThrowsExceptionOnRestrictedAction(): void
+    {
+        // Arrange
+        $this->addHttpAuthentication();
+        $httpKernelBrowser = $this->tester->getHttpKernelBrowser();
+        $httpKernelBrowser->restart();
+        $httpKernelBrowser->request('get', '/', [], [], ['PHP_AUTH_USER' => 'user', 'PHP_AUTH_PW' => 'foo']);
+
+        // Assert
+        $this->expectException(AccessDeniedHttpException::class);
+
+        // Act
+        $httpKernelBrowser->request('get', '/admin');
+    }
+
+    /**
+     * @return void
+     */
     public function testGuardAuthentication(): void
     {
         $this->addGuardAuthentication();
@@ -184,7 +216,7 @@ class SecurityApplicationPluginTest extends Unit
 
         $httpKernelBrowser->request('get', '/', [], [], ['HTTP_X_AUTH_TOKEN' => 'lili:not the secret']);
         $this->assertSame(403, $httpKernelBrowser->getResponse()->getStatusCode(), 'User not found');
-        $this->assertSame('{"message":"Username could not be found."}', $httpKernelBrowser->getResponse()->getContent());
+        $this->assertRegExp('/(Username could not be found|Invalid credentials)/', $httpKernelBrowser->getResponse()->getContent());
 
         $httpKernelBrowser->request('get', '/', [], [], ['HTTP_X_AUTH_TOKEN' => 'victoria:not the secret']);
         $this->assertSame(403, $httpKernelBrowser->getResponse()->getStatusCode(), 'Invalid credentials');
@@ -658,7 +690,7 @@ class SecurityApplicationPluginTest extends Unit
         });
 
         $this->tester->addRoute('admin', '/admin', function () {
-            return 'admin';
+            return new Response('admin');
         });
     }
 
@@ -700,7 +732,7 @@ class SecurityApplicationPluginTest extends Unit
         });
 
         $this->tester->addRoute('admin', '/admin', function () {
-            return 'admin';
+            return new Response('admin');
         });
     }
 
