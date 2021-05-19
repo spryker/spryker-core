@@ -25,6 +25,11 @@ class MerchantStorageWriter implements MerchantStorageWriterInterface
     protected const FK_CATEGORY_MERCHANT = 'spy_merchant_category.fk_merchant';
 
     /**
+     * @uses \Spryker\Zed\Merchant\MerchantConfig::STATUS_APPROVED
+     */
+    protected const MERCHANT_STATUS_APPROVED = 'approved';
+
+    /**
      * @var \Spryker\Zed\MerchantStorage\Dependency\Facade\MerchantStorageToEventBehaviorFacadeInterface
      */
     protected $eventBehaviorFacade;
@@ -116,7 +121,11 @@ class MerchantStorageWriter implements MerchantStorageWriterInterface
 
         foreach ($merchantCollectionTransfer->getMerchants() as $merchantTransfer) {
             foreach ($storeTransfers as $storeTransfer) {
-                if ($merchantTransfer->getIsActive() && $this->isMerchantAvailableInStore($merchantTransfer, $storeTransfer)) {
+                if (
+                    $merchantTransfer->getIsActive()
+                    && $this->isMerchantAvailableInStore($merchantTransfer, $storeTransfer)
+                    && $merchantTransfer->getStatus() === static::MERCHANT_STATUS_APPROVED
+                ) {
                     $this->merchantStorageEntityManager->saveMerchantStorage(
                         $this->mapMerchantTransferToStorageTransfer($merchantTransfer, new MerchantStorageTransfer()),
                         $storeTransfer
