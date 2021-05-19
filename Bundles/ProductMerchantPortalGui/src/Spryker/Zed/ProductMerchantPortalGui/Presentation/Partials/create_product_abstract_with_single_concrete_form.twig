@@ -35,7 +35,7 @@
                         value="{{ form.concreteSku.vars.value }}"
                         original-value="{{ form.sku.vars.value }}-1"
                         placeholder="{{ form.concreteSku.vars.attr.placeholder }}"
-                        {% if form.vars.value.autogenerateSku == true %}is-autogenerate="true"{% endif %}
+                        is-autogenerate="{{ form.vars.value.autogenerateSku | json_encode }}"
                         error="{% if form.concreteSku.vars.errors %}{{ form.concreteSku.vars.errors[0].message | default | trans }}{% endif %}"
                         checkbox-name="{{ form.autogenerateSku.vars.full_name }}"
                     >
@@ -55,7 +55,7 @@
                         value="{{ form.concreteName.vars.value }}"
                         original-value="{{ form.name.vars.value }}"
                         placeholder="{{ form.concreteName.vars.attr.placeholder }}"
-                        {% if form.vars.value.useAbstractProductName == true %}is-autogenerate="true"{% endif %}
+                        is-autogenerate="{{ form.vars.value.useAbstractProductName | json_encode }}"
                         error="{% if form.concreteName.vars.errors %}{{ form.concreteName.vars.errors[0].message | default | trans }}{% endif %}"
                         checkbox-name="{{ form.useAbstractProductName.vars.full_name }}"
                     >
