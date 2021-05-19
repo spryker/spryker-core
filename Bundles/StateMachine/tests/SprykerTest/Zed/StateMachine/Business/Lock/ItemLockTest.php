@@ -50,17 +50,17 @@ class ItemLockTest extends StateMachineMocks
      */
     public function testAcquireWhenPropelExceptionThrownShouldReThrowLockException(): void
     {
-        $this->expectException(LockException::class);
-
+        // Arrange
         $stateMachineLockEntityMock = $this->createStateMachineItemLockEntityMock();
         $stateMachineLockEntityMock->method('save')
             ->willThrowException(new PropelException());
-
         $itemLock = $this->createItemLock($stateMachineLockEntityMock);
 
-        $lockResult = $itemLock->acquire(sha1(1));
+        // Assert
+        $this->expectException(LockException::class);
 
-        $this->assertTrue($lockResult);
+        // Act
+        $itemLock->acquire(sha1(1));
     }
 
     /**

@@ -12,16 +12,16 @@ coverage:
     whitelist: { include: ['../../../../src/*'] }
 
 suites:
-   Communication:
-           path: Communication
-           class_name: ProductListDataImportCommunicationTester
-           modules:
-               enabled:
-                   - Asserts
-                   - \SprykerTest\Shared\Testify\Helper\Environment
-                   - \SprykerTest\Shared\Testify\Helper\ConfigHelper
-                   - \SprykerTest\Shared\Testify\Helper\LocatorHelper
-                   - \SprykerTest\Shared\Testify\Helper\DependencyHelper
-                   - \SprykerTest\Shared\Propel\Helper\TransactionHelper
-                   - \SprykerTest\Zed\ProductListDataImport\Helper\ProductListDataImportHelper
-                   - \SprykerTest\Shared\Testify\Helper\TableRelationsCleanupHelper
+    Communication:
+        path: Communication
+        class_name: ProductListDataImportCommunicationTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+                - \SprykerTest\Zed\ProductListDataImport\Helper\ProductListDataImportHelper
+                - \SprykerTest\Shared\Testify\Helper\TableRelationsCleanupHelper

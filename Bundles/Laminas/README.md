@@ -1,5 +1,5 @@
 # Laminas Module
-[![Build Status](https://travis-ci.org/spryker/laminas.svg)](https://travis-ci.org/spryker/laminas)
+[![Latest Stable Version](https://poser.pugx.org/spryker/laminas/v/stable.svg)](https://packagist.org/packages/spryker/laminas)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 Laminas is a container module for all Laminas dependencies. This module has a central role in managing Laminas dependencies and supports better decoupling between modules.

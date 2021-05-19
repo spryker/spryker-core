@@ -27,4 +27,3 @@ suites:
                 - \SprykerTest\Shared\Product\Helper\ProductDataHelper
                 - \SprykerTest\Shared\Sales\Helper\SalesHelper
                 - \SprykerTest\Shared\ProductConfiguration\Helper\ProductConfigurationHelper
-

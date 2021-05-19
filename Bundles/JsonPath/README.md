@@ -1,5 +1,5 @@
 # JsonPath Module
-[![Build Status](https://travis-ci.org/spryker/json-path.svg)](https://travis-ci.org/spryker/json-path)
+[![Latest Stable Version](https://poser.pugx.org/spryker/json-path/v/stable.svg)](https://packagist.org/packages/spryker/json-path)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 JsonPath module is a 3rd party connector module for "galbar/jsonpath" vendor library.

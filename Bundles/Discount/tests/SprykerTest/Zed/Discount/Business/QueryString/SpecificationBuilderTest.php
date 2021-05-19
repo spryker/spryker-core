@@ -362,8 +362,6 @@ class SpecificationBuilderTest extends Unit
      */
     public function testBuildDecisionRuleWhenIncompleteQueryStringGivenShouldThrowException(): void
     {
-        $this->expectException(QueryStringException::class);
-
         $createComparatorOperatorsMock = $this->createComparatorOperatorsMock();
         $createComparatorOperatorsMock->method('isExistingComparator')
             ->willReturnCallback(function (ClauseTransfer $clauseTransfer) {
@@ -376,9 +374,10 @@ class SpecificationBuilderTest extends Unit
 
         $specificationProviderMock = $this->createSpecificationProviderMock();
         $specificationBuilder = $this->createSpecificationBuilder($specificationProviderMock, $createComparatorOperatorsMock);
-        $compositeSpecification = $specificationBuilder->buildFromQueryString('(sku = ');
 
-        $this->assertInstanceOf(DecisionRuleSpecificationInterface::class, $compositeSpecification);
+        $this->expectException(QueryStringException::class);
+
+        $specificationBuilder->buildFromQueryString('(sku = ');
     }
 
     /**
@@ -386,14 +385,13 @@ class SpecificationBuilderTest extends Unit
      */
     public function testBuildDecisionRuleWhenEmptyQueryStringGivenShouldThrowException(): void
     {
-        $this->expectException(QueryStringException::class);
-
         $specificationProviderMock = $this->createSpecificationProviderMock();
 
         $specificationBuilder = $this->createSpecificationBuilder($specificationProviderMock);
-        $compositeSpecification = $specificationBuilder->buildFromQueryString('');
 
-        $this->assertInstanceOf(DecisionRuleSpecificationInterface::class, $compositeSpecification);
+        $this->expectException(QueryStringException::class);
+
+        $specificationBuilder->buildFromQueryString('');
     }
 
     /**

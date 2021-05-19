@@ -1,45 +1,45 @@
 {
-  "name": "spryker/catalog-price-product-connector",
-  "type": "library",
-  "description": "CatalogPriceProductConnector module",
-  "license": "proprietary",
-  "require": {
-    "php": ">=7.3",
-    "spryker/currency": "^3.2.0",
-    "spryker/kernel": "^3.30.0",
-    "spryker/price": "^5.0.0",
-    "spryker/price-product": "^2.0.0 || ^4.0.0",
-    "spryker/price-product-storage": "^2.0.0 || ^4.0.0"
-  },
-  "require-dev": {
-    "spryker/catalog": "*",
-    "spryker/code-sniffer": "*",
-    "spryker/elastica": "*",
-    "spryker/search": "*"
-  },
-  "suggest": {
-    "spryker/catalog": "If you want to use Catalog plugins, minimum required version: 5.2.0.",
-    "spryker/config": "If you want to use Config plugins.",
-    "spryker/elastica": "If you want to use Elastica plugins.",
-    "spryker/search": "If you want to use Search plugins."
-  },
-  "autoload": {
-    "psr-4": {
-      "Spryker\\": "src/Spryker/"
+    "name": "spryker/catalog-price-product-connector",
+    "type": "library",
+    "description": "CatalogPriceProductConnector module",
+    "license": "proprietary",
+    "require": {
+        "php": ">=7.3",
+        "spryker/currency": "^3.2.0",
+        "spryker/kernel": "^3.30.0",
+        "spryker/price": "^5.0.0",
+        "spryker/price-product": "^2.0.0 || ^4.0.0",
+        "spryker/price-product-storage": "^2.0.0 || ^4.0.0"
+    },
+    "require-dev": {
+        "spryker/catalog": "*",
+        "spryker/code-sniffer": "*",
+        "spryker/elastica": "*",
+        "spryker/search": "*"
+    },
+    "suggest": {
+        "spryker/catalog": "If you want to use Catalog plugins, minimum required version: 5.2.0.",
+        "spryker/config": "If you want to use Config plugins.",
+        "spryker/elastica": "If you want to use Elastica plugins.",
+        "spryker/search": "If you want to use Search plugins."
+    },
+    "autoload": {
+        "psr-4": {
+            "Spryker\\": "src/Spryker/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
     }
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "scripts": {
-    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
-    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "1.0.x-dev"
-    }
-  },
-  "config": {
-    "sort-packages": true
-  }
 }

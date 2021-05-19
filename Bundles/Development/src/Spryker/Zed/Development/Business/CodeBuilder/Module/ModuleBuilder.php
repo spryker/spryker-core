@@ -36,7 +36,6 @@ class ModuleBuilder
         '.coveralls.yml',
         '.gitattributes',
         '.gitignore',
-        '.travis.yml',
         'CHANGELOG.md',
         'codecept.yml' => 'codeception.yml',
         'composer.json',

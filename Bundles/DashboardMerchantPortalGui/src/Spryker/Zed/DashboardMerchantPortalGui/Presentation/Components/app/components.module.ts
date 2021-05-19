@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { ButtonLinkComponent, ButtonLinkModule } from '@spryker/button';
 import { ChipsComponent, ChipsModule } from '@spryker/chips';
-import { CustomElementModule, WebComponentDefs } from '@spryker/web-components';
+import { WebComponentsModule } from '@spryker/web-components';
 
 import { DashboardCardComponent } from './dashboard-card/dashboard-card.component';
 import { DashboardCardModule } from './dashboard-card/dashboard-card.module';
@@ -12,16 +12,21 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { DashboardModule } from './dashboard/dashboard.module';
 
 @NgModule({
-    imports: [ButtonLinkModule, ChipsModule, DashboardModule, DashboardCardModule, DashboardStatsModule],
+    imports: [
+        WebComponentsModule.withComponents([
+            DashboardComponent,
+            DashboardCardComponent,
+            DashboardStatsComponent,
+            DashboardStatsBlockComponent,
+            ButtonLinkComponent,
+            ChipsComponent,
+        ]),
+        ButtonLinkModule,
+        ChipsModule,
+        DashboardModule,
+        DashboardCardModule,
+        DashboardStatsModule,
+    ],
     providers: [],
 })
-export class ComponentsModule extends CustomElementModule {
-    protected components: WebComponentDefs = [
-        DashboardComponent,
-        DashboardCardComponent,
-        DashboardStatsComponent,
-        DashboardStatsBlockComponent,
-        ButtonLinkComponent,
-        ChipsComponent,
-    ];
-}
+export class ComponentsModule {}

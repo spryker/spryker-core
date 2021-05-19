@@ -86,7 +86,7 @@ Availability,Produkt-Verfügbarkeit
 "Please enter at least an SKU and a Name of the product in every locale in the General section","Geben Sie mindestens eine SKU und einen Namen des Produktes für jede Region (in jeder Sprache) im Abschnitt ""Allgemein"" an."
 "The product [%s] was added successfully.","Produkt [%s] wurde erfolgreich hinzugefügt."
 Images,Bilder
-"Add Product Volume Price","Staffelpreise hinzufügen"
+"Add Volume Price","Staffelpreise hinzufügen"
 "Is bundle","Ist ein Bündelprodukt"
 "View Concrete Product","Konkretes Produkt anzeigen"
 "Edit Concrete Product","Konkretes Produkt bearbeiten"

@@ -49,11 +49,6 @@ trait ActiveRecordBatchProcessorTrait
     protected $tableMapClasses = [];
 
     /**
-     * @var \Propel\Runtime\Connection\ConnectionInterface
-     */
-    protected $writeConnections;
-
-    /**
      * @var \Propel\Runtime\Adapter\AdapterInterface
      */
     protected $adapter;
@@ -93,6 +88,8 @@ trait ActiveRecordBatchProcessorTrait
         $this->insertEntities($this->entitiesToInsert);
         $this->updateEntities($this->entitiesToUpdate);
 
+        $this->clear();
+
         return true;
     }
 
@@ -103,6 +100,8 @@ trait ActiveRecordBatchProcessorTrait
     {
         $this->insertIdenticalEntities($this->entitiesToInsert);
         $this->updateEntities($this->entitiesToUpdate);
+
+        $this->clear();
 
         return true;
     }
@@ -129,7 +128,6 @@ trait ActiveRecordBatchProcessorTrait
     }
 
     /**
-     * This method will not trigger preSave, preInsert, postInsert and postSave.
      * All entities have to be identical in terms of modified columns.
      *
      * @phpstan-param array<string, array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>>
@@ -141,8 +139,12 @@ trait ActiveRecordBatchProcessorTrait
     protected function insertIdenticalEntities(array $entitiesToInsert): void
     {
         foreach ($entitiesToInsert as $entityClassName => $entities) {
-            $statement = $this->buildInsertStatementForIdenticalEntities($entityClassName, $entities);
-            $this->executeStatements([$statement], $entityClassName, 'insert identical');
+            $connection = $this->getWriteConnection($entityClassName);
+            $entities = $this->preSave($entities, $connection);
+            $entities = $this->preInsert($entities, $connection);
+            $statement = $this->buildInsertStatementIdentical($entityClassName, $entities);
+            $this->executeStatements([$statement], $entityClassName, 'insert');
+            $this->postInsert($entities, $connection);
         }
     }
 
@@ -270,8 +272,6 @@ trait ActiveRecordBatchProcessorTrait
                 $statement->execute();
             }
             $connection->commit();
-
-            $this->clear();
         } catch (Throwable $throwable) {
             $connection->rollBack();
 
@@ -286,12 +286,9 @@ trait ActiveRecordBatchProcessorTrait
      */
     protected function getWriteConnection(string $entityClassName): ConnectionInterface
     {
-        if (!isset($this->writeConnections[$entityClassName])) {
-            $tableMapClass = $this->getTableMapClass($entityClassName);
-            $this->writeConnections[$entityClassName] = Propel::getServiceContainer()->getWriteConnection($tableMapClass::DATABASE_NAME);
-        }
+        $tableMapClass = $this->getTableMapClass($entityClassName);
 
-        return $this->writeConnections[$entityClassName];
+        return Propel::getServiceContainer()->getWriteConnection($tableMapClass::DATABASE_NAME);
     }
 
     /**
@@ -312,11 +309,6 @@ trait ActiveRecordBatchProcessorTrait
     protected function buildInsertStatements(string $entityClassName, array $entities): array
     {
         $tableMapClass = $this->getTableMapClass($entityClassName);
-        $columnMapCollection = $tableMapClass->getColumns();
-        $adapter = $this->getAdapter();
-        $requiresPrimaryKeyValue = ($adapter instanceof PgsqlAdapter);
-
-        $tableMapClassName = $entityClassName::TABLE_MAP;
 
         $connection = $this->getWriteConnection($entityClassName);
         $statements = [];
@@ -325,11 +317,11 @@ trait ActiveRecordBatchProcessorTrait
             $keyIndex = 0;
             $entity = $this->updateDateTimes($entity);
             $valuesForInsert = $this->prepareValuesForInsert(
-                $columnMapCollection,
+                $tableMapClass->getColumns(),
                 $tableMapClass,
-                $tableMapClassName,
+                $entityClassName::TABLE_MAP,
                 $entity,
-                $requiresPrimaryKeyValue
+                $this->requiresPrimaryKeyValue()
             );
 
             $columnNamesForInsertWithPdoPlaceholder = array_map(function (array $columnDetails) use (&$keyIndex, $tableMapClass) {
@@ -362,14 +354,67 @@ trait ActiveRecordBatchProcessorTrait
      *
      * @return \Propel\Runtime\Connection\StatementInterface
      */
+    protected function buildInsertStatementIdentical(string $entityClassName, array $entities): StatementInterface
+    {
+        $tableMapClass = $this->getTableMapClass($entityClassName);
+        $requiresPrimaryKeyValue = $this->requiresPrimaryKeyValue();
+
+        $connection = $this->getWriteConnection($entityClassName);
+        $keyIndex = 0;
+        $valuesForBind = [];
+        $entitiesQueryParams = [];
+        $entityQueryParams = [];
+
+        foreach ($entities as $entity) {
+            $entity = $this->updateDateTimes($entity);
+            $valuesForInsert = $this->prepareValuesForInsert(
+                $tableMapClass->getColumns(),
+                $tableMapClass,
+                $entityClassName::TABLE_MAP,
+                $entity,
+                $requiresPrimaryKeyValue
+            );
+
+            foreach ($valuesForInsert as $columnDetails) {
+                if ($requiresPrimaryKeyValue && $columnDetails['columnMap']->isPrimaryKey() && $tableMapClass->getPrimaryKeyMethodInfo() !== null) {
+                    $entityQueryParams[] = sprintf('(SELECT nextval(\'%s\'))', $tableMapClass->getPrimaryKeyMethodInfo());
+
+                    continue;
+                }
+
+                $queryParamKey = sprintf(':p%d', $keyIndex++);
+                $valuesForBind[$queryParamKey] = $columnDetails;
+                $entityQueryParams[] = $queryParamKey;
+            }
+
+            $entitiesQueryParams[] = sprintf('(%s)', implode(', ', $entityQueryParams));
+            $entityQueryParams = [];
+        }
+
+        $sql = sprintf(
+            'INSERT INTO %s (%s) VALUES %s;',
+            $tableMapClass->getName(),
+            implode(', ', array_keys($valuesForInsert)),
+            implode(', ', $entitiesQueryParams)
+        );
+
+        $statement = $this->prepareStatement($sql, $connection);
+        $statement = $this->bindInsertValuesIdentical($statement, $valuesForBind);
+
+        return $statement;
+    }
+
+    /**
+     * @deprecated Use {@link buildInsertStatementIdentical()} instead.
+     *
+     * @param string $entityClassName
+     * @param array $entities
+     *
+     * @return \Propel\Runtime\Connection\StatementInterface
+     */
     protected function buildInsertStatementForIdenticalEntities(string $entityClassName, array $entities): StatementInterface
     {
         $tableMapClass = $this->getTableMapClass($entityClassName);
-        $columnMapCollection = $tableMapClass->getColumns();
-        $adapter = $this->getAdapter();
-        $requiresPrimaryKeyValue = ($adapter instanceof PgsqlAdapter);
-
-        $tableMapClassName = $entityClassName::TABLE_MAP;
 
         $connection = $this->getWriteConnection($entityClassName);
         $statements = [];
@@ -378,11 +423,11 @@ trait ActiveRecordBatchProcessorTrait
             $keyIndex = 0;
             $entity = $this->updateDateTimes($entity);
             $valuesForInsert = $this->prepareValuesForInsert(
-                $columnMapCollection,
+                $tableMapClass->getColumns(),
                 $tableMapClass,
-                $tableMapClassName,
+                $entityClassName::TABLE_MAP,
                 $entity,
-                $requiresPrimaryKeyValue
+                $this->requiresPrimaryKeyValue()
             );
 
             $columnNamesForInsertWithPdoPlaceholder = array_map(function (array $columnDetails) use (&$keyIndex, $tableMapClass) {
@@ -493,6 +538,21 @@ trait ActiveRecordBatchProcessorTrait
     }
 
     /**
+     * @param \Propel\Runtime\Connection\StatementInterface $statement
+     * @param array $valuesForBind
+     *
+     * @return \Propel\Runtime\Connection\StatementInterface
+     */
+    protected function bindInsertValuesIdentical(StatementInterface $statement, array $valuesForBind): StatementInterface
+    {
+        foreach ($valuesForBind as $queryParam => $value) {
+            $statement->bindValue($queryParam, $value['value'], $value['type']);
+        }
+
+        return $statement;
+    }
+
+    /**
      * @param \Propel\Runtime\Map\ColumnMap $columnMap
      * @param array $entityData
      * @param string|null $defaultValue
@@ -522,8 +582,6 @@ trait ActiveRecordBatchProcessorTrait
     protected function buildUpdateStatements(string $entityClassName, array $entities): array
     {
         $tableMapClass = $this->getTableMapClass($entityClassName);
-        $columnMapCollection = $tableMapClass->getColumns();
-        $tableMapClassName = $entityClassName::TABLE_MAP;
 
         $connection = $this->getWriteConnection($entityClassName);
         $statements = [];
@@ -533,9 +591,9 @@ trait ActiveRecordBatchProcessorTrait
             $entity = $this->updateDateTimes($entity);
 
             [$valuesForUpdate, $idColumnValuesAndTypes] = $this->prepareValuesForUpdate(
-                $columnMapCollection,
+                $tableMapClass->getColumns(),
                 $tableMapClass,
-                $tableMapClassName,
+                $entityClassName::TABLE_MAP,
                 $entity
             );
 
@@ -718,5 +776,13 @@ trait ActiveRecordBatchProcessorTrait
         }
 
         return $value;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function requiresPrimaryKeyValue(): bool
+    {
+        return ($this->getAdapter() instanceof PgsqlAdapter);
     }
 }

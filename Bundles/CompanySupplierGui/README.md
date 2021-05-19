@@ -1,5 +1,5 @@
 # CompanySupplierGui Module
-[![Build Status](https://travis-ci.org/spryker/company-supplier-gui.svg)](https://travis-ci.org/spryker/company-supplier-gui)
+[![Latest Stable Version](https://poser.pugx.org/spryker/company-supplier-gui/v/stable.svg)](https://packagist.org/packages/spryker/company-supplier-gui)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 CompanySupplierGui provides user interface to interact with CompanySuppliers functionality.

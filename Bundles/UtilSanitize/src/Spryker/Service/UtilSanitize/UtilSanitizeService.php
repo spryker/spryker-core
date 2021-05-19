@@ -62,4 +62,20 @@ class UtilSanitizeService extends AbstractService implements UtilSanitizeService
             ->createArrayFilter()
             ->filterOutBlankValuesRecursively($array);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string $value
+     *
+     * @return string
+     */
+    public function sanitizeString(string $value): string
+    {
+        return $this->getFactory()
+            ->createStringSanitizer()
+            ->sanitize($value);
+    }
 }

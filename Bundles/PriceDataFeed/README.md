@@ -1,5 +1,5 @@
 # PriceDataFeed Module
-[![Build Status](https://travis-ci.org/spryker/price-data-feed.svg)](https://travis-ci.org/spryker/price-data-feed)
+[![Latest Stable Version](https://poser.pugx.org/spryker/price-data-feed/v/stable.svg)](https://packagist.org/packages/spryker/price-data-feed)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 DataFeed helps to query abstract products and product related information for exporting or processing. PriceDataFeed enriches the feed with extra information such as price types and prices.

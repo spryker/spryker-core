@@ -1,7 +1,5 @@
 <?xml version="1.0"?>
-<database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd"
-          namespace="Orm\Zed\MerchantRelationship\Persistence"
-          package="src.Orm.Zed.MerchantRelationship.Persistence">
+<database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\MerchantRelationship\Persistence" package="src.Orm.Zed.MerchantRelationship.Persistence">
 
     <table name="spy_merchant_relationship">
         <column name="id_merchant_relationship" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
@@ -48,7 +46,7 @@
             <reference local="fk_merchant_relationship" foreign="id_merchant_relationship"/>
         </foreign-key>
 
-        <foreign-key name="spy_merchant_rel_to_company_bu-fk_company_bu" foreignTable="spy_company_business_unit"  onDelete="CASCADE" phpName="CompanyBusinessUnit">
+        <foreign-key name="spy_merchant_rel_to_company_bu-fk_company_bu" foreignTable="spy_company_business_unit" onDelete="CASCADE" phpName="CompanyBusinessUnit">
             <reference local="fk_company_business_unit" foreign="id_company_business_unit"/>
         </foreign-key>
 

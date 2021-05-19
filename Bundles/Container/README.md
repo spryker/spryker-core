@@ -1,5 +1,5 @@
 # Container Module
-[![Build Status](https://travis-ci.org/spryker/container.svg)](https://travis-ci.org/spryker/container)
+[![Latest Stable Version](https://poser.pugx.org/spryker/container/v/stable.svg)](https://packagist.org/packages/spryker/container)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 Container module includes new service container class that is used instead of Pimple container in `spryker/kernel` module.
