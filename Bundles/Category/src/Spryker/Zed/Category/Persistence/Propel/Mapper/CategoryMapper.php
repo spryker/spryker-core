@@ -73,7 +73,7 @@ class CategoryMapper implements CategoryMapperInterface
     {
         $categoryTransfer = $this->mapCategory($spyCategory, $categoryTransfer);
         $categoryTransfer = $this->mapParentCategoryNodes($spyCategory, $categoryTransfer);
-        $categoryTransfer = $this->mapLocalizedAttributes($spyCategory, $categoryTransfer);
+        $categoryTransfer = $this->mapLocalizedAttributes($spyCategory->getAttributes(), $categoryTransfer);
         $categoryTransfer->setCategoryTemplate($this->mapCategoryTemplateEntityToCategoryTemplateTransfer(
             $spyCategory->getCategoryTemplate(),
             new CategoryTemplateTransfer()
@@ -139,7 +139,7 @@ class CategoryMapper implements CategoryMapperInterface
         $categoryEntity = $nodeEntity->getCategory();
 
         $categoryTransfer = $this->mapCategory($categoryEntity, new CategoryTransfer());
-        $categoryTransfer = $this->mapLocalizedAttributes($categoryEntity, $categoryTransfer, $nodeEntity->getSpyUrls());
+        $categoryTransfer = $this->mapLocalizedAttributes($categoryEntity->getAttributesJoinLocale(), $categoryTransfer, $nodeEntity->getSpyUrls());
         $storeRelationTransfer = $this->categoryStoreRelationMapper->mapCategoryStoreEntitiesToStoreRelationTransfer(
             $categoryEntity->getSpyCategoryStores(),
             (new StoreRelationTransfer())->setIdEntity($categoryEntity->getIdCategory())
@@ -167,7 +167,7 @@ class CategoryMapper implements CategoryMapperInterface
     ): CategoryCollectionTransfer {
         foreach ($categoryEntities as $categoryEntity) {
             $categoryTransfer = $this->mapCategory($categoryEntity, new CategoryTransfer());
-            $categoryTransfer = $this->mapLocalizedAttributes($categoryEntity, $categoryTransfer);
+            $categoryTransfer = $this->mapLocalizedAttributes($categoryEntity->getAttributes(), $categoryTransfer);
 
             foreach ($categoryTransfer->getLocalizedAttributes() as $localizedAttribute) {
                 $categoryTransfer->fromArray($localizedAttribute->toArray(), true);
@@ -232,18 +232,18 @@ class CategoryMapper implements CategoryMapperInterface
     }
 
     /**
-     * @param \Orm\Zed\Category\Persistence\SpyCategory $categoryEntity
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryAttribute[]|\Propel\Runtime\Collection\ObjectCollection $attributeCollection
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      * @param \Orm\Zed\Url\Persistence\SpyUrl[]|\Propel\Runtime\Collection\ObjectCollection|null $urlEntities
      *
      * @return \Generated\Shared\Transfer\CategoryTransfer
      */
     protected function mapLocalizedAttributes(
-        SpyCategory $categoryEntity,
+        ObjectCollection $attributeCollection,
         CategoryTransfer $categoryTransfer,
         ?ObjectCollection $urlEntities = null
     ): CategoryTransfer {
-        foreach ($categoryEntity->getAttributes() as $attribute) {
+        foreach ($attributeCollection as $attribute) {
             $localeTransfer = new LocaleTransfer();
             $localeTransfer->fromArray($attribute->getLocale()->toArray(), true);
 
