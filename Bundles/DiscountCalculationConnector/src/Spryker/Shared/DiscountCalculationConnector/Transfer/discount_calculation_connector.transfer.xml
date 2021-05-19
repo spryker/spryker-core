@@ -23,11 +23,6 @@
     <transfer name="Quote">
     </transfer>
 
-    <transfer name="Order">
-        <property name="voucherDiscounts" type="Discount[]" singular="voucherDiscount"/>
-        <property name="cartRuleDiscounts" type="Discount[]" singular="cartRuleDiscount"/>
-    </transfer>
-
     <transfer name="Discount">
     </transfer>
 
