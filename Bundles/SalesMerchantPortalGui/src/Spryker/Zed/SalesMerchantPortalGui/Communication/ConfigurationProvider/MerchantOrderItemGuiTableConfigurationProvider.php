@@ -24,6 +24,7 @@ class MerchantOrderItemGuiTableConfigurationProvider implements MerchantOrderIte
     public const COL_KEY_QUANTITY = 'quantity';
     public const COL_KEY_STATE = 'state';
     public const COL_KEY_ACTION_IDS = 'actionIds';
+    public const COL_KEY_ROW_IDS = 'rowIds';
 
     /**
      * @uses \Spryker\Zed\SalesMerchantPortalGui\Communication\Controller\ItemListController::tableDataAction()
@@ -166,7 +167,7 @@ class MerchantOrderItemGuiTableConfigurationProvider implements MerchantOrderIte
         }
 
         $guiTableConfigurationBuilder->setRowActionRowIdPath(MerchantOrderItemTransfer::ID_MERCHANT_ORDER_ITEM)
-            ->setAvailableRowActionsPath(static::COL_KEY_ACTION_IDS);
+            ->setAvailableRowActionsPath(static::COL_KEY_ROW_IDS);
 
         return $guiTableConfigurationBuilder;
     }
@@ -194,7 +195,7 @@ class MerchantOrderItemGuiTableConfigurationProvider implements MerchantOrderIte
         }
 
         $guiTableConfigurationBuilder->setBatchActionRowIdPath(MerchantOrderItemTransfer::ID_MERCHANT_ORDER_ITEM)
-            ->setAvailableBatchActionsPath(static::COL_KEY_ACTION_IDS)
+            ->setAvailableBatchActionsPath(static::COL_KEY_ROW_IDS)
             ->setNoBatchActionsMessage('There are no applicable actions for the selected items.');
 
         return $guiTableConfigurationBuilder;
