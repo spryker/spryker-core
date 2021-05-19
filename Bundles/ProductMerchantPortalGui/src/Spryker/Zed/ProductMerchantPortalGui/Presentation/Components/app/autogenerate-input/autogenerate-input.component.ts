@@ -18,10 +18,10 @@ import { ToBoolean } from '@spryker/utils';
     host: { class: 'mp-autogenerate-input' },
 })
 export class AutogenerateInputComponent implements OnChanges {
-    @Input() name: string;
-    @Input() value: string;
-    @Input() originalValue: string;
-    @Input() placeholder: string;
+    @Input() name = '';
+    @Input() value = '';
+    @Input() originalValue = '';
+    @Input() placeholder = '';
     @Input() @ToBoolean() isAutogenerate = true;
     @Input() error?: string;
     @Input() checkboxName?: string;

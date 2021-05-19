@@ -10,7 +10,7 @@ import {
     SimpleChanges,
     ViewEncapsulation,
 } from '@angular/core';
-import { AttributeOptions, ProductAttribute } from './types';
+import { AttributeOptions, ProductAttribute } from '../../services/types';
 import { IconDeleteModule } from '../../icons';
 import { ToJson } from '@spryker/utils';
 
@@ -23,8 +23,8 @@ import { ToJson } from '@spryker/utils';
     host: { class: 'mp-product-attributes-selector' },
 })
 export class ProductAttributesSelectorComponent implements OnChanges, OnInit {
-    @Input() @ToJson() attributes: ProductAttribute[];
-    @Input() @ToJson() selectedAttributes: ProductAttribute[];
+    @Input() @ToJson() attributes: ProductAttribute[] = [];
+    @Input() @ToJson() selectedAttributes: ProductAttribute[] = [];
     @Input() name?: string;
     @Output() selectedAttributesChange = new EventEmitter<ProductAttribute[]>();
 

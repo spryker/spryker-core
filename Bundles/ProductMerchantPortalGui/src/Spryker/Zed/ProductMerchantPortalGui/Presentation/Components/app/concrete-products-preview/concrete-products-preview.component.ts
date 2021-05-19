@@ -14,8 +14,12 @@ import {
 import { ToJson } from '@spryker/utils';
 import { InputComponent } from '@spryker/input';
 import { IconDeleteModule } from '../../icons';
-import { ConcreteProductPreview, ConcreteProductPreviewErrors, ConcreteProductPreviewSuperAttribute } from './types';
-import { ProductAttribute } from '../product-attributes-selector/types';
+import {
+    ConcreteProductPreview,
+    ConcreteProductPreviewErrors,
+    ConcreteProductPreviewSuperAttribute,
+    ProductAttribute,
+} from '../../services/types';
 import { ConcreteProductSkuGeneratorFactoryService } from '../../services/concrete-product-sku-generator-factory.service';
 import { ConcreteProductNameGeneratorFactoryService } from '../../services/concrete-product-name-generator-factory.service';
 
@@ -29,8 +33,8 @@ import { ConcreteProductNameGeneratorFactoryService } from '../../services/concr
     host: { class: 'mp-concrete-products-preview' },
 })
 export class ConcreteProductsPreviewComponent implements OnChanges {
-    @Input() @ToJson() attributes: ProductAttribute[];
-    @Input() @ToJson() generatedProducts: ConcreteProductPreview[];
+    @Input() @ToJson() attributes: ProductAttribute[] = [];
+    @Input() @ToJson() generatedProducts: ConcreteProductPreview[] = [];
     @Input() @ToJson() errors?: ConcreteProductPreviewErrors[];
     @Input() name?: string;
     @Output() generatedProductsChange = new EventEmitter<ConcreteProductPreview[]>();

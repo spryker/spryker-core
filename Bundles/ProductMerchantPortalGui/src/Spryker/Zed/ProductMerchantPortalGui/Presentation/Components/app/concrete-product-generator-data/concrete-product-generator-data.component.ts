@@ -5,10 +5,10 @@ import {
     ConcreteProductSkuGeneratorProviderToken,
     ConcreteProductSkuGeneratorToken,
 } from '../../services/tokens';
+import { ConcreteProductGeneratorData } from '../../services/types';
 import { ConcreteProductGeneratorDataService } from '../../services/concrete-product-generator-data.service';
 import { ConcreteProductSkuGeneratorService } from '../../services/concrete-product-sku-generator.service';
 import { ConcreteProductNameGeneratorService } from '../../services/concrete-product-name-generator.service';
-import { ConcreteProductGeneratorData } from '../../services/types';
 
 @Component({
     selector: 'mp-concrete-product-generator-data',
@@ -38,8 +38,8 @@ import { ConcreteProductGeneratorData } from '../../services/types';
     ],
 })
 export class ConcreteProductGeneratorDataComponent implements ConcreteProductGeneratorData {
-    @Input() abstractSku: string;
-    @Input() abstractName: string;
+    @Input() abstractSku = '';
+    @Input() abstractName = '';
 
     getAbstractName(): string {
         return this.abstractName;
