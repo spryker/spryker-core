@@ -115,7 +115,7 @@ class PriceManagerTest extends Unit
 
         $modifiedItemIterator->next();
         $this->assertSame(2000, $modifiedItemIterator->current()->getOriginUnitGrossPrice());
-        $this->assertSame(null, $modifiedItemIterator->current()->getSourceUnitGrossPrice());
+        $this->assertNull($modifiedItemIterator->current()->getSourceUnitGrossPrice());
         $this->assertSame(2000, $modifiedItemIterator->current()->getUnitGrossPrice());
 
         $modifiedItemIterator->next();

@@ -52,7 +52,7 @@ class VaultFacadeTest extends Unit
         $isSuccessful = $vaultFacade->store(static::TEST_DATA_TYPE, static::TEST_DATA_KEY, static::TEST_DATA);
 
         //Assert
-        $this->assertSame(true, $isSuccessful);
+        $this->assertTrue($isSuccessful);
 
         $vaultDepositsCount = SpyVaultDepositQuery::create()
             ->filterByDataType(static::TEST_DATA_TYPE)
