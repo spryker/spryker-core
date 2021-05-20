@@ -317,6 +317,10 @@ class StockRepository extends AbstractRepository implements StockRepositoryInter
             $stockQuery->filterByIsActive(true);
         }
 
+        if ($stockCriteriaFilterTransfer->getStockNames() !== []) {
+            $stockQuery->filterByName_In($stockCriteriaFilterTransfer->getStockNames());
+        }
+
         if ($stockCriteriaFilterTransfer->getStoreNames()) {
             $stockQuery->useStockStoreQuery(null, Criteria::LEFT_JOIN)
                 ->useStoreQuery(null, Criteria::LEFT_JOIN)

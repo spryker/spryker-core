@@ -7,23 +7,11 @@
 
 namespace Spryker\Zed\Product\Dependency\Plugin;
 
-use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Spryker\Zed\ProductExtension\Dependency\Plugin\ProductConcreteCreatePluginInterface as ExtensionProductConcreteCreatePluginInterface;
 
-interface ProductConcretePluginCreateInterface
+/**
+ * @deprecated Use {@link \Spryker\Zed\ProductExtension\Dependency\Plugin\ProductConcreteCreatePluginInterface} instead.
+ */
+interface ProductConcretePluginCreateInterface extends ExtensionProductConcreteCreatePluginInterface
 {
-    /**
-     * Specification:
-     * - Executed on "before" and/or on "after" event when a concrete product is created.
-     * - Can be used to persist additional concrete product related information.
-     * - The ID of the concrete product is available only if the plugin is executed on "after" event.
-     *
-     * @api
-     *
-     * @see \Spryker\Zed\Product\ProductDependencyProvider
-     *
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
-    public function create(ProductConcreteTransfer $productConcreteTransfer);
 }

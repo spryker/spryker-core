@@ -32,6 +32,7 @@
         <property name="idStock" type="int"/>
         <property name="isActive" type="bool"/>
         <property name="storeNames" type="string[]" singular="storeName"/>
+        <property name="stockNames" type="string[]" singular="stockName"/>
     </transfer>
 
     <transfer name="StockResponse">
