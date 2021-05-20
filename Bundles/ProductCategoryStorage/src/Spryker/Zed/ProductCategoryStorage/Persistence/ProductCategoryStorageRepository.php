@@ -13,6 +13,7 @@ use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryClosureTableTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryTableMap;
+use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
 use Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap;
 use Orm\Zed\ProductCategory\Persistence\Map\SpyProductCategoryTableMap;
 use Orm\Zed\ProductCategoryStorage\Persistence\Map\SpyProductAbstractCategoryStorageTableMap;
@@ -30,6 +31,9 @@ class ProductCategoryStorageRepository extends AbstractRepository implements Pro
 {
     protected const COL_FK_CATEGORY = 'fk_category';
 
+    protected const COL_BOOSTED_DEPTH = 'boostedDepth';
+    protected const DEPTH_TO_BOOST = 0;
+
     /**
      * @module Url
      * @module Store
@@ -41,7 +45,6 @@ class ProductCategoryStorageRepository extends AbstractRepository implements Pro
     {
         $categoryNodeQuery = $this->getFactory()
             ->getCategoryNodePropelQuery()
-            ->orderBy(SpyCategoryNodeTableMap::COL_NODE_ORDER, Criteria::DESC)
             ->addJoin(
                 SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE,
                 SpyUrlTableMap::COL_FK_RESOURCE_CATEGORYNODE,
@@ -49,10 +52,11 @@ class ProductCategoryStorageRepository extends AbstractRepository implements Pro
             )
             ->where(SpyUrlTableMap::COL_FK_LOCALE . ' = ' . SpyCategoryAttributeTableMap::COL_FK_LOCALE);
 
+        $categoryNodeQuery = $this->addOrderByDepthDescendantToCategoryNodeQuery($categoryNodeQuery);
+
         $categoryNodeQuery
             ->useClosureTableQuery()
                 ->orderByFkCategoryNodeDescendant(Criteria::DESC)
-                ->orderByDepth(Criteria::DESC)
                 ->filterByDepth(null, Criteria::NOT_EQUAL)
             ->endUse()
             ->useCategoryQuery()
@@ -65,6 +69,8 @@ class ProductCategoryStorageRepository extends AbstractRepository implements Pro
             ->endUse();
 
         $categoryNodeQuery->filterByIsRoot(false);
+
+        $categoryNodeQuery->orderBy(SpyCategoryNodeTableMap::COL_NODE_ORDER, Criteria::DESC);
 
         $categoryNodeQuery
             ->withColumn(SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE, CategoryNodeAggregationTransfer::ID_CATEGORY_NODE)
@@ -266,5 +272,28 @@ class ProductCategoryStorageRepository extends AbstractRepository implements Pro
             ->setOrderBy($orderByColumnName)
             ->setOffset($offset)
             ->setLimit($limit);
+    }
+
+    /**
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery $categoryNodeQuery
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
+     */
+    protected function addOrderByDepthDescendantToCategoryNodeQuery(SpyCategoryNodeQuery $categoryNodeQuery): SpyCategoryNodeQuery
+    {
+        $depthToBoostClause = sprintf(
+            '(CASE WHEN %s = %s THEN 1 ELSE 0 END)',
+            SpyCategoryClosureTableTableMap::COL_DEPTH,
+            static::DEPTH_TO_BOOST
+        );
+
+        $categoryNodeQuery
+            ->withColumn($depthToBoostClause, static::COL_BOOSTED_DEPTH)
+            ->orderBy(static::COL_BOOSTED_DEPTH, Criteria::DESC)
+            ->useClosureTableQuery()
+                ->orderByDepth(Criteria::DESC)
+            ->endUse();
+
+        return $categoryNodeQuery;
     }
 }
