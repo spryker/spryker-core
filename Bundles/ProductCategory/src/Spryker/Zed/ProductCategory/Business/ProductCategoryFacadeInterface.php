@@ -132,8 +132,8 @@ interface ProductCategoryFacadeInterface
     /**
      * Specification:
      * - Gets localized products abstract names by category.
-     * - Requires CategoryTransfer.idCategory to be set.
-     * - Expects LocaleTransfer.idLocale to be set.
+     * - Requires `CategoryTransfer.idCategory` to be set.
+     * - Expects `LocaleTransfer.idLocale` to be set.
      *
      * @api
      *
