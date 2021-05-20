@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\NodeCollectionTransfer;
 use Spryker\Zed\CategoryGui\Communication\Form\DeleteType;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -29,6 +30,8 @@ class DeleteController extends CategoryAbstractController
     protected const ROUTE_CATEGORY_LIST = '/category-gui/list';
     protected const ROUTE_DELETE_CATEGORY = '/category-gui/delete';
 
+    protected const ERROR_MESSAGE_ROOT_CATEGORY_IS_NOT_REMOVABLE = 'The root category cannot be deleted.';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -42,6 +45,10 @@ class DeleteController extends CategoryAbstractController
         $categoryTransfer = $categoryFinder->findCategoryByIdCategoryAndLocale($idCategory, $this->getCurrentLocale());
         if ($categoryTransfer === null) {
             return $this->redirectResponse(static::ROUTE_CATEGORY_LIST);
+        }
+
+        if ($categoryTransfer->getCategoryNodeOrFail()->getIsRoot()) {
+            return $this->handleRootCategoryError();
         }
 
         $form = $this->getFactory()->createCategoryDeleteForm($idCategory);
@@ -115,6 +122,16 @@ class DeleteController extends CategoryAbstractController
         }
 
         return $categoryNodeCollectionTransfer->getNodes()->offsetGet(0)->getChildrenNodes() ?? new NodeCollectionTransfer();
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function handleRootCategoryError(): RedirectResponse
+    {
+        $this->addErrorMessage(static::ERROR_MESSAGE_ROOT_CATEGORY_IS_NOT_REMOVABLE);
+
+        return $this->redirectResponse(static::ROUTE_CATEGORY_LIST);
     }
 
     /**

@@ -31,6 +31,7 @@ class CategoryTable extends AbstractTable
     public const IDENTIFIER = 'category_data_table';
     public const COL_ID_CATEGORY_NODE = 'id_category_node';
 
+    protected const COL_IS_ROOT = 'is_root';
     protected const REQUEST_PARAM_ID_CATEGORY = 'id-category';
     protected const REQUEST_PARAM_ID_NODE = 'id-node';
     protected const REQUEST_PARAM_ID_PARENT_NODE = 'id-parent-node';
@@ -160,7 +161,8 @@ class CategoryTable extends AbstractTable
             ->withColumn('attr.name', static::COL_NAME)
             ->withColumn('tpl.name', static::COL_TEMPLATE)
             ->withColumn('parent_attr.name', static::COL_PARENT)
-            ->withColumn('node.id_category_node', static::COL_ID_CATEGORY_NODE);
+            ->withColumn('node.id_category_node', static::COL_ID_CATEGORY_NODE)
+            ->withColumn('node.is_root', static::COL_IS_ROOT);
 
         return $query;
     }
@@ -210,7 +212,11 @@ class CategoryTable extends AbstractTable
         $buttonGroupItems = [];
 
         $buttonGroupItems[] = $this->generateEditCategoryButtonGroupItem($item);
-        $buttonGroupItems[] = $this->generateCategoryRemoveButtonGroupItem($item);
+
+        if (!$this->isRootCategory($item)) {
+            $buttonGroupItems[] = $this->generateCategoryRemoveButtonGroupItem($item);
+        }
+
         $buttonGroupItems[] = $this->generateAddCategoryToNodeButtonGroupItem($item);
         $buttonGroupItems[] = $this->generateCategoryResortButtonGroupItem($item);
         $buttonGroupItems[] = $this->generateAssignProductsButtonGroupItem($item);
@@ -299,6 +305,16 @@ class CategoryTable extends AbstractTable
             ]),
             true
         );
+    }
+
+    /**
+     * @param \Orm\Zed\Category\Persistence\SpyCategory $categoryEntity
+     *
+     * @return bool
+     */
+    protected function isRootCategory(SpyCategory $categoryEntity): bool
+    {
+        return (bool)$categoryEntity->getVirtualColumn(static::COL_IS_ROOT);
     }
 
     /**

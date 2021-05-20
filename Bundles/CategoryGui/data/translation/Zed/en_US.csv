@@ -61,5 +61,6 @@ yes,Yes
 General,General
 Template,Template
 Settings,Settings
+"The root category cannot be deleted.","The root category cannot be deleted."
 "Main category will be moved to","Main category will be moved to"
 "Extra parent will be moved to","Extra parent will be moved to"
