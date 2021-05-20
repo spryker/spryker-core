@@ -92,7 +92,7 @@ class MerchantOrderItemTableDataMapper
                 ->fromArray($merchantOrderItemTableRowDataArray, true)
                 ->setOrderItem($itemTransfer);
 
-            $merchantOrderItemTransfer->setIdMerchantOrderItem((int) $merchantOrderItemTransfer->getIdMerchantOrderItem());
+            $merchantOrderItemTransfer->setIdMerchantOrderItem((int)$merchantOrderItemTransfer->getIdMerchantOrderItem());
 
             $merchantOrderItemTransfers[] = $merchantOrderItemTransfer;
         }
