@@ -34,11 +34,6 @@ class SalesConfig extends AbstractBundleConfig
     }
 
     /**
-     * Specification:
-     * - Returns a map of the payment methods and state machine's processes names.
-     *
-     * @api
-     *
      * @example The format of returned array is:
      * [
      *    'PAYMENT_METHOD_1' => 'StateMachineProcess_1',
