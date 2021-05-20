@@ -84,32 +84,32 @@ describe('ProductAttributesSelectorComponent', () => {
     });
 
     describe('Slots and components', () => {
-        it('should render default `col-attr-name` slot to the `.mp-product-attributes-selector__header` element', () => {
-            const colAttrName = fixture.debugElement.query(
+        it('should `col-attr-name` slot to the `.mp-product-attributes-selector__header` element', () => {
+            const colAttrNameSlot = fixture.debugElement.query(
                 By.css('.mp-product-attributes-selector__header [col-attr-name]'),
             );
 
-            expect(colAttrName.nativeElement.textContent).toBe('Super Attribute');
+            expect(colAttrNameSlot).toBeTruthy();
         });
 
-        it('should render default `col-attr-values-name` slot to the `.mp-product-attributes-selector__header` element', () => {
-            const colAttrValuesName = fixture.debugElement.query(
+        it('should `col-attr-values-name` slot to the `.mp-product-attributes-selector__header` element', () => {
+            const colAttrValuesNameSlot = fixture.debugElement.query(
                 By.css('.mp-product-attributes-selector__header [col-attr-values-name]'),
             );
 
-            expect(colAttrValuesName.nativeElement.textContent).toBe('Values');
+            expect(colAttrValuesNameSlot).toBeTruthy();
         });
 
-        it('should render default `btn-attr-add-name` slot to the `.mp-product-attributes-selector__button-add` element', () => {
+        it('should `btn-attr-add-name` slot to the `.mp-product-attributes-selector__button-add` element', () => {
             component.attributes = mockAttributes;
             component.selectedAttributes = [];
             fixture.detectChanges();
 
-            const btnAttrAddName = fixture.debugElement.query(
+            const btnAttrAddNameSlot = fixture.debugElement.query(
                 By.css('.mp-product-attributes-selector__button-add [btn-attr-add-name]'),
             );
 
-            expect(btnAttrAddName.nativeElement.textContent).toBe('Add');
+            expect(btnAttrAddNameSlot).toBeTruthy();
         });
 
         it('should render <spy-select> component to the `.mp-product-attributes-selector__content-row-name` element', () => {
@@ -164,7 +164,7 @@ describe('ProductAttributesSelectorComponent', () => {
 
             expect(hiddenInput).toBeTruthy();
             expect(hiddenInput.properties.name).toBe(mockName);
-            expect(hiddenInput.properties.value.replace(/\s/g, '')).toBe(JSON.stringify([...mockSelectedAttributes]));
+            expect(JSON.parse(hiddenInput.properties.value)).toEqual([...mockSelectedAttributes]);
         });
 
         it('should add a new attribute row by `Add` button click', () => {
@@ -217,11 +217,11 @@ describe('ProductAttributesSelectorComponent', () => {
         });
 
         it('should update selected attributes by `Super attribute` select change', () => {
-            const mockValue = 'value1';
-            const mockSelectedSuperAttribute = [
+            const expectedValue = 'value1';
+            const expectedSelectedSuperAttribute = [
                 {
                     name: 'name1',
-                    value: mockValue,
+                    value: expectedValue,
                     attributes: [],
                     isDisabled: false,
                 },
@@ -237,26 +237,26 @@ describe('ProductAttributesSelectorComponent', () => {
             );
             const hiddenInput = fixture.debugElement.query(By.css('input[type=hidden]'));
 
-            expect(hiddenInput.properties.value.replace(/\s/g, '')).toBe(JSON.stringify([{}]));
+            expect(JSON.parse(hiddenInput.properties.value)).toEqual([{}]);
 
-            selectElem.triggerEventHandler('valueChange', mockValue);
+            selectElem.triggerEventHandler('valueChange', expectedValue);
             fixture.detectChanges();
 
-            expect(hiddenInput.properties.value.replace(/\s/g, '')).toBe(JSON.stringify(mockSelectedSuperAttribute));
-            expect(component.changeEvent).toHaveBeenCalledWith(mockSelectedSuperAttribute);
+            expect(JSON.parse(hiddenInput.properties.value)).toEqual(expectedSelectedSuperAttribute);
+            expect(component.changeEvent).toHaveBeenCalledWith(expectedSelectedSuperAttribute);
         });
 
         it('should update selected attributes by `Values` select change', () => {
-            const mockValue = 'value1';
-            const mockValues = {
+            const expectedValue = 'value1';
+            const expectedValues = {
                 name: 'name11',
                 value: 'value11',
             };
-            const mockSelectedSuperAttribute = [
+            const expectedSelectedSuperAttribute = [
                 {
                     name: 'name1',
-                    value: mockValue,
-                    attributes: [mockValues],
+                    value: expectedValue,
+                    attributes: [expectedValues],
                     isDisabled: false,
                 },
             ];
@@ -271,18 +271,18 @@ describe('ProductAttributesSelectorComponent', () => {
             );
             const hiddenInput = fixture.debugElement.query(By.css('input[type=hidden]'));
 
-            attrSelectElem.triggerEventHandler('valueChange', mockValue);
+            attrSelectElem.triggerEventHandler('valueChange', expectedValue);
             fixture.detectChanges();
 
             const attrValuesSelectElem = fixture.debugElement.query(
                 By.css('.mp-product-attributes-selector__content-row-values-name spy-select'),
             );
 
-            attrValuesSelectElem.triggerEventHandler('valueChange', [mockValues.value]);
+            attrValuesSelectElem.triggerEventHandler('valueChange', [expectedValues.value]);
             fixture.detectChanges();
 
-            expect(hiddenInput.properties.value.replace(/\s/g, '')).toBe(JSON.stringify(mockSelectedSuperAttribute));
-            expect(component.changeEvent).toHaveBeenCalledWith(mockSelectedSuperAttribute);
+            expect(JSON.parse(hiddenInput.properties.value)).toEqual(expectedSelectedSuperAttribute);
+            expect(component.changeEvent).toHaveBeenCalledWith(expectedSelectedSuperAttribute);
         });
     });
 });

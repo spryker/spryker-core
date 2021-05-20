@@ -7,9 +7,9 @@ import { CreateSingleConcreteProductComponent } from './create-single-concrete-p
     selector: 'spy-test',
     template: `
         <mp-create-single-concrete-product>
-            <span title class="projected-title">Name</span>
-            <span action class="projected-action">Button</span>
-            <div class="projected-content">Content</div>
+            <span title>Name</span>
+            <span action>Button</span>
+            <div class="content">Content</div>
         </mp-create-single-concrete-product>
     `,
 })
@@ -37,27 +37,21 @@ describe('CreateSingleConcreteProductComponent', () => {
         expect(headlineElem).toBeTruthy();
     });
 
-    it('should render default projected title to the `.mp-create-single-concrete-product__header` element', () => {
-        const projectedTitle = fixture.debugElement.query(
-            By.css('.mp-create-single-concrete-product__header .projected-title'),
-        );
+    it('should render `title` slot to the `.mp-create-single-concrete-product__header` element', () => {
+        const titleSlot = fixture.debugElement.query(By.css('.mp-create-single-concrete-product__header [title]'));
 
-        expect(projectedTitle.nativeElement.textContent).toBe('Name');
+        expect(titleSlot).toBeTruthy();
     });
 
-    it('should render default projected action to the `.mp-create-single-concrete-product__header` element', () => {
-        const projectedAction = fixture.debugElement.query(
-            By.css('.mp-create-single-concrete-product__header .projected-action'),
-        );
+    it('should render `action` slot to the `.mp-create-single-concrete-product__header` element', () => {
+        const actionSlot = fixture.debugElement.query(By.css('.mp-create-single-concrete-product__header [action]'));
 
-        expect(projectedAction.nativeElement.textContent).toBe('Button');
+        expect(actionSlot).toBeTruthy();
     });
 
-    it('should render default projected content to the `.mp-create-single-concrete-product__content` element', () => {
-        const projectedContent = fixture.debugElement.query(
-            By.css('.mp-create-single-concrete-product__content .projected-content'),
-        );
+    it('should render default slot to the `.mp-create-single-concrete-product__content` element', () => {
+        const contentSlot = fixture.debugElement.query(By.css('.mp-create-single-concrete-product__content .content'));
 
-        expect(projectedContent.nativeElement.textContent).toBe('Content');
+        expect(contentSlot).toBeTruthy();
     });
 });

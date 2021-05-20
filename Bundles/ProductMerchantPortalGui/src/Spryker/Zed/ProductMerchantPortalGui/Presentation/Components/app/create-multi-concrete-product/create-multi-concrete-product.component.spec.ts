@@ -107,8 +107,8 @@ const mockGeneratedProductErrors = [
     selector: `spy-test`,
     template: `
         <mp-create-multi-concrete-product>
-            <span title class="projected-title">Name</span>
-            <span action class="projected-action">Button</span>
+            <span title>Name</span>
+            <span action>Button</span>
 
             <span selector-col-attr-name>Super Attribute</span>
             <span selector-col-attr-values-name>Values</span>
@@ -173,20 +173,16 @@ describe('CreateMultiConcreteProductComponent', () => {
             expect(headlineElem).toBeTruthy();
         });
 
-        it('should render projected title to the `.mp-create-multi-concrete-product__header` element', () => {
-            const projectedTitle = fixture.debugElement.query(
-                By.css('.mp-create-multi-concrete-product__header .projected-title'),
-            );
+        it('should render `title` slot to the `.mp-create-multi-concrete-product__header` element', () => {
+            const titleSlot = fixture.debugElement.query(By.css('.mp-create-multi-concrete-product__header [title]'));
 
-            expect(projectedTitle.nativeElement.textContent).toBe('Name');
+            expect(titleSlot).toBeTruthy();
         });
 
-        it('should render projected action to the `.mp-create-multi-concrete-product__header` element', () => {
-            const projectedAction = fixture.debugElement.query(
-                By.css('.mp-create-multi-concrete-product__header .projected-action'),
-            );
+        it('should render `action` slot to the `.mp-create-multi-concrete-product__header` element', () => {
+            const actionSlot = fixture.debugElement.query(By.css('.mp-create-multi-concrete-product__header [action]'));
 
-            expect(projectedAction.nativeElement.textContent).toBe('Button');
+            expect(actionSlot).toBeTruthy();
         });
 
         describe('<mp-product-attributes-selector> component', () => {
@@ -198,37 +194,37 @@ describe('CreateMultiConcreteProductComponent', () => {
                 expect(productAttributesSelector).toBeTruthy();
             });
 
-            it('should render default `selector-col-attr-name` slot', () => {
-                const selectorColAttrName = fixture.debugElement.query(
+            it('should render `selector-col-attr-name` slot', () => {
+                const selectorColAttrNameSlot = fixture.debugElement.query(
                     By.css('mp-product-attributes-selector [selector-col-attr-name]'),
                 );
 
-                expect(selectorColAttrName.nativeElement.textContent).toBe('Super Attribute');
+                expect(selectorColAttrNameSlot).toBeTruthy();
             });
 
-            it('should render default `selector-col-attr-values-name` slot', () => {
-                const selectorColAttrValuesName = fixture.debugElement.query(
+            it('should render `selector-col-attr-values-name` slot', () => {
+                const selectorColAttrValuesNameSlot = fixture.debugElement.query(
                     By.css('mp-product-attributes-selector [selector-col-attr-values-name]'),
                 );
 
-                expect(selectorColAttrValuesName.nativeElement.textContent).toBe('Values');
+                expect(selectorColAttrValuesNameSlot).toBeTruthy();
             });
 
-            it('should render default `selector-btn-attr-add-name` slot', () => {
-                const selectorBtnAttrAddName = fixture.debugElement.query(
+            it('should render `selector-btn-attr-add-name` slot', () => {
+                const selectorBtnAttrAddNameSlot = fixture.debugElement.query(
                     By.css('mp-product-attributes-selector [selector-btn-attr-add-name]'),
                 );
 
-                expect(selectorBtnAttrAddName.nativeElement.textContent).toBe('Add');
+                expect(selectorBtnAttrAddNameSlot).toBeTruthy();
             });
         });
 
-        it('should render default `preview-text` slot to the `.mp-create-multi-concrete-product__preview-title` element', () => {
-            const previewText = fixture.debugElement.query(
+        it('should render `preview-text` slot to the `.mp-create-multi-concrete-product__preview-title` element', () => {
+            const previewTextSlot = fixture.debugElement.query(
                 By.css('.mp-create-multi-concrete-product__preview-title [preview-text]'),
             );
 
-            expect(previewText.nativeElement.textContent).toBe('Concrete Products’ Preview');
+            expect(previewTextSlot).toBeTruthy();
         });
 
         describe('<mp-concrete-products-preview> component', () => {
@@ -240,68 +236,68 @@ describe('CreateMultiConcreteProductComponent', () => {
                 expect(concreteProductsPreview).toBeTruthy();
             });
 
-            it('should render default `preview-total-text` slot', () => {
-                const previewTotalText = fixture.debugElement.query(
+            it('should render `preview-total-text` slot', () => {
+                const previewTotalTextSlot = fixture.debugElement.query(
                     By.css('mp-concrete-products-preview [preview-total-text]'),
                 );
 
-                expect(previewTotalText.nativeElement.textContent).toBe('to be created');
+                expect(previewTotalTextSlot).toBeTruthy();
             });
 
-            it('should render default `preview-auto-sku-text` slot', () => {
-                const previewAutoSkuText = fixture.debugElement.query(
+            it('should render `preview-auto-sku-text` slot', () => {
+                const previewAutoSkuTextSlot = fixture.debugElement.query(
                     By.css('mp-concrete-products-preview [preview-auto-sku-text]'),
                 );
 
-                expect(previewAutoSkuText.nativeElement.textContent).toBe('Autogenerate SKUs');
+                expect(previewAutoSkuTextSlot).toBeTruthy();
             });
 
-            it('should render default `preview-auto-name-text` slot', () => {
-                const previewAutoNameText = fixture.debugElement.query(
+            it('should render `preview-auto-name-text` slot', () => {
+                const previewAutoNameTextSlot = fixture.debugElement.query(
                     By.css('mp-concrete-products-preview [preview-auto-name-text]'),
                 );
 
-                expect(previewAutoNameText.nativeElement.textContent).toBe('Same Name as Abstract Product');
+                expect(previewAutoNameTextSlot).toBeTruthy();
             });
 
-            it('should render default `preview-auto-name-text` slot', () => {
-                const previewAutoNameText = fixture.debugElement.query(
+            it('should render `preview-auto-name-text` slot', () => {
+                const previewAutoNameTextSlot = fixture.debugElement.query(
                     By.css('mp-concrete-products-preview [preview-auto-name-text]'),
                 );
 
-                expect(previewAutoNameText.nativeElement.textContent).toBe('Same Name as Abstract Product');
+                expect(previewAutoNameTextSlot).toBeTruthy();
             });
 
-            it('should render default `preview-col-attr-name` slot', () => {
-                const previewColAttrName = fixture.debugElement.query(
+            it('should render `preview-col-attr-name` slot', () => {
+                const previewColAttrNameSlot = fixture.debugElement.query(
                     By.css('mp-concrete-products-preview [preview-col-attr-name]'),
                 );
 
-                expect(previewColAttrName.nativeElement.textContent).toBe('Super attribute value');
+                expect(previewColAttrNameSlot).toBeTruthy();
             });
 
-            it('should render default `preview-col-sku-name` slot', () => {
-                const previewColSkuName = fixture.debugElement.query(
+            it('should render `preview-col-sku-name` slot', () => {
+                const previewColSkuNameSlot = fixture.debugElement.query(
                     By.css('mp-concrete-products-preview [preview-col-sku-name]'),
                 );
 
-                expect(previewColSkuName.nativeElement.textContent).toBe('SKU');
+                expect(previewColSkuNameSlot).toBeTruthy();
             });
 
-            it('should render default `preview-col-name-name` slot', () => {
-                const previewColNameName = fixture.debugElement.query(
+            it('should render `preview-col-name-name` slot', () => {
+                const previewColNameNameSlot = fixture.debugElement.query(
                     By.css('mp-concrete-products-preview [preview-col-name-name]'),
                 );
 
-                expect(previewColNameName.nativeElement.textContent).toBe('Name default');
+                expect(previewColNameNameSlot).toBeTruthy();
             });
 
-            it('should render default `preview-no-data-text` slot', () => {
-                const previewNoDataText = fixture.debugElement.query(
+            it('should render `preview-no-data-text` slot', () => {
+                const previewNoDataTextSlot = fixture.debugElement.query(
                     By.css('mp-concrete-products-preview [preview-no-data-text]'),
                 );
 
-                expect(previewNoDataText.nativeElement.textContent).toBe('No concretes created yet');
+                expect(previewNoDataTextSlot).toBeTruthy();
             });
         });
     });

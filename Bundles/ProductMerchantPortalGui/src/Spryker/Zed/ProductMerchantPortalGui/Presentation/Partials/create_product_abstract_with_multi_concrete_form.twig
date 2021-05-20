@@ -8,14 +8,11 @@
     {% set attributes = superProductManagementAttributes %}
     {% set selectedAttributes = selectedAttributesJson | default('[]') %}
     {% set concreteProducts = concreteProductsJson | default('[]') %}
+    {% set errors = errors ?? {} %}
     {% set backButtonAttrs = '{
         "name": "back",
         "value": true
     }' %}
-
-    {% if errors is not defined %}
-        {% set errors = {} %}
-    {% endif %}
 
     {% block createMultiConcreteProduct %}
         <web-mp-concrete-product-generator-data

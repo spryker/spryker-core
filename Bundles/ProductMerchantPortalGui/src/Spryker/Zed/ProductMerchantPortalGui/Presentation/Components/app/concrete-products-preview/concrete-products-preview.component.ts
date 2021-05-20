@@ -121,9 +121,7 @@ export class ConcreteProductsPreviewComponent implements OnChanges {
         }
 
         this.generatedAttributeValues = this.attributeValues.reduce(
-            (accum, values) => {
-                return accum.flatMap((currentValue) => values.map((value) => [...currentValue, value]));
-            },
+            (accum, values) => accum.flatMap((currentValue) => values.map((value) => [...currentValue, value])),
             [[]],
         );
 
@@ -155,27 +153,11 @@ export class ConcreteProductsPreviewComponent implements OnChanges {
     }
 
     private hasSkuError(): boolean {
-        let hasError = false;
-
-        this.errors.some((error) => {
-            if (error.errors?.sku) {
-                hasError = true;
-            }
-        });
-
-        return hasError;
+        return this.errors.some((error) => error.errors?.sku);
     }
 
     private hasNameError(): boolean {
-        let hasError = false;
-
-        this.errors.some((error) => {
-            if (error.errors?.name) {
-                hasError = true;
-            }
-        });
-
-        return hasError;
+        return this.errors.some((error) => error.errors?.name);
     }
 
     generateSku(checked: boolean): void {

@@ -74,8 +74,6 @@ import { ConcreteProductGeneratorDataModule } from './concrete-product-generator
             CreateAbstractProductComponent,
             CreateSingleConcreteProductComponent,
             AutogenerateInputComponent,
-            ConcreteProductsPreviewComponent,
-            ProductAttributesSelectorComponent,
             CreateMultiConcreteProductComponent,
             ConcreteProductGeneratorDataComponent,
         ]),

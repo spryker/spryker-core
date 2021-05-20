@@ -53,21 +53,22 @@ export class ProductAttributesSelectorComponent implements OnChanges, OnInit {
     }
 
     private generateAttributesObject(): void {
-        this.attributesObject = this.attributes.reduce((accum, attribute) => {
-            return {
+        this.attributesObject = this.attributes.reduce(
+            (accum, attribute) => ({
                 ...accum,
                 [attribute.value]: attribute,
-            };
-        }, {});
+            }),
+            {},
+        );
     }
 
     private initAttributeOptions(): void {
-        this.attributeOptions = this.selectedAttributes.map((attrs) => {
-            return this.attributesObject[attrs.value]?.attributes.map((attr) => ({
+        this.attributeOptions = this.selectedAttributes.map((attrs) =>
+            this.attributesObject[attrs.value]?.attributes.map((attr) => ({
                 title: attr.name,
                 value: attr.value,
-            }));
-        });
+            })),
+        );
     }
 
     private remapSuperAttributes(): void {
