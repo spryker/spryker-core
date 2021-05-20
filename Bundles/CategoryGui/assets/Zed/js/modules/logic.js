@@ -7,8 +7,9 @@
 
 window.serializedList = {};
 
-var categoryHelper = require('./helpers.js');
+var categoryRequestHelper = require('./request-helper.js');
 var STORE_SELECTOR_ID = '#category_store_relation_id_stores';
+var STORE_FORM_NAME = 'category';
 var STORE_SELECTOR_LOADER_CLASS_NAME = '.relation-selector-loader';
 var STORE_SELECTOR_ACTION_URL_ATTRIBUTE = 'action-url';
 var STORE_SELECTOR_ACTION_EVENT_ATTRIBUTE = 'action-event';
@@ -26,8 +27,7 @@ var SELECTOR_SAVE_CATEGORIES_ORDER = '.save-categories-order';
 var handleStoreSelector = function () {
     var storeSelector = $(STORE_SELECTOR_ID);
     var storeSelectorActionFieldName = storeSelector.attr(STORE_SELECTOR_ACTION_FIELD_ATTRIBUTE);
-    var createCategoryFormName = storeSelector.closest('form')[0].name;
-    var parentCategorySelector = $("[name='" + createCategoryFormName + '[' + storeSelectorActionFieldName + "]']");
+    var parentCategorySelector = $("[name='" + STORE_FORM_NAME + '[' + storeSelectorActionFieldName + "]']");
 
     var parentCategoryData = parentCategorySelector.select2('data');
     if (!parentCategoryData) {
@@ -78,7 +78,7 @@ var handleStoreSelector = function () {
 };
 
 $(document).ready(function () {
-    var triggeredFirstEvent = false;
+    var isFirstEventTriggered = false;
 
     var selectorRootNodeTable = $(SELECTOR_ROOT_NODE_TABLE);
     var selectorCategoryNodeTree = $(SELECTOR_CATEGORY_NODE_TREE);
@@ -102,14 +102,14 @@ $(document).ready(function () {
     selectorCategoryGuiTableDataCategory.dataTable({
         bFilter: false,
         createdRow: function (row, data, index) {
-            if (triggeredFirstEvent !== false) {
+            if (isFirstEventTriggered !== false) {
                 return;
             }
 
             categoryHelper.showLoaderBar();
             var idCategoryNode = data[0];
             SprykerAjax.getCategoryTreeByIdCategoryNode(idCategoryNode);
-            triggeredFirstEvent = true;
+            isFirstEventTriggered = true;
         },
     });
 

@@ -5,5 +5,5 @@
 
 'use strict';
 
-require('./legacy/logic');
+require('./logic');
 require('../../sass/main.scss');

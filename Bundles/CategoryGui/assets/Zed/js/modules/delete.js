@@ -11,7 +11,7 @@ var SELECTOR_SUBMIT_DELETE = '#submit_delete';
 $(document).ready(function () {
     var confirmCheckboxElement = $(SELECTOR_DELETE_CONFIRM);
 
-    confirmCheckboxElement.off('click').on('click', function () {
+    confirmCheckboxElement.on('click', function () {
         var checkboxIsChecked = confirmCheckboxElement.prop('checked');
 
         var submitDeleteElement = $(SELECTOR_SUBMIT_DELETE);

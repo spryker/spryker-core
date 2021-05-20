@@ -34,15 +34,15 @@
             <button
                 id="submit_delete"
                 class="btn btn-primary safe-submit"
-                disabled="disabled"
+                disabled
             >
                 {{ 'Delete' | trans }}
             </button>
             <label for="delete_confirm">
-                <input type="checkbox" id="delete_confirm"/>
+                <input type="checkbox" id="delete_confirm">
                 {{ 'Yes, I am sure' | trans }}
             </label>
-            <br/><br/>
+            <br><br>
 
             <div class="row">
                 {% macro tree(nodes) %}
@@ -78,12 +78,17 @@
 
                 <div class="col-md-4">
                     <b>{{ 'Sub-Trees to be moved' | trans }}</b>
-                    <br />
+                    <br>
                     {% if parentCategory is not empty and childNodes is defined and childNodes.nodes | length > 0 %}
-                        <br />
+                        <br>
                         <p>
-                            {{ (category.categoryNode.isMain ? 'Main' : 'Extra parent') | trans }}
-                            {{ 'category will be moved to' | trans }} <em>{{ parentCategory.localizedAttributes[0].name }}</em>
+                            {% set categoryTypeMessage = 'Extra parent will be moved to' %}
+
+                            {% if category.categoryNode.isMain %}
+                                {% set categoryTypeMessage = 'Main category will be moved to' %}
+                            {% endif %}
+
+                            {{ categoryTypeMessage | trans }} <em>{{ parentCategory.localizedAttributes[0].name }}</em>
                         </p>
                         <ol class="dd-list">
                             <li class="dd-item">
@@ -98,7 +103,7 @@
 
                 <div class="col-md-4">
                     <b>{{ 'Urls to be deleted' | trans }}</b>
-                    <br />
+                    <br>
                     <ul class="nodes">
                         {% for url in urls %}
                             <li>{{ url.url }}</li>
@@ -133,7 +138,7 @@
 
 {% block head_css %}
     {{ parent() }}
-    <link rel="stylesheet" href="{{ assetsPath('css/spryker-zed-category-gui-main.css') }}" />
+    <link rel="stylesheet" href="{{ assetsPath('css/spryker-zed-category-gui-main.css') }}">
 {% endblock %}
 
 {% block footer_js %}

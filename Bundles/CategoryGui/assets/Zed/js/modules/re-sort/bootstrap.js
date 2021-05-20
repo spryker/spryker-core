@@ -5,7 +5,7 @@
 
 'use strict';
 
-var writer = require('./writer');
+var saver = require('./saver');
 var progressBar = require('../shared/progress-bar');
 
 var SELECTOR_CATEGORY_LIST = '#category-list';
@@ -24,6 +24,6 @@ jQuery(document).ready(function () {
     });
 
     jQuery(SELECTOR_SAVE_BUTTON).on('click', function () {
-        writer.save(window.serializedList, progressBar);
+        saver.save(window.serializedList, progressBar);
     });
 });

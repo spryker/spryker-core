@@ -54,6 +54,8 @@ class CategoryFormPlugin extends AbstractPlugin implements CategoryFormPluginInt
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\CmsBlockCategoryConnector\Communication\Plugin\Category\CmsBlockCategoryCategoryRelationPlugin::update()} instead.
+     *
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
      * @return void

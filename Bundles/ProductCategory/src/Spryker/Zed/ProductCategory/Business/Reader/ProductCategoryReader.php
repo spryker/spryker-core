@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductCategory\Business\Reader;
 
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Spryker\Zed\ProductCategory\Business\Manager\ProductCategoryManagerInterface;
 
 class ProductCategoryReader implements ProductCategoryReaderInterface
@@ -39,13 +40,23 @@ class ProductCategoryReader implements ProductCategoryReaderInterface
             ->getAbstractProductTransferCollectionByCategory($categoryTransfer->getIdCategoryOrFail(), $localeTransfer);
 
         foreach ($productTransferCollection as $productTransfer) {
-            $productNames[] = sprintf(
-                '%s (%s)',
-                $productTransfer->getLocalizedAttributes()[0]->getName(),
-                $productTransfer->getSku()
-            );
+            $productNames[] = $this->buildProductName($productTransfer);
         }
 
         return $productNames;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return string
+     */
+    protected function buildProductName(ProductAbstractTransfer $productAbstractTransfer): string
+    {
+        return sprintf(
+            '%s (%s)',
+            $productAbstractTransfer->getLocalizedAttributes()[0]->getName(),
+            $productAbstractTransfer->getSku()
+        );
     }
 }
