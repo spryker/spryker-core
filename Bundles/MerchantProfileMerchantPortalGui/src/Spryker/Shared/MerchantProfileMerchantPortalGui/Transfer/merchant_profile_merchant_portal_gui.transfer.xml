@@ -46,6 +46,8 @@
         <property name="city" type="string"/>
         <property name="zipCode" type="string"/>
         <property name="email" type="string"/>
+        <property name="latitude" type="string"/>
+        <property name="longitude" type="string"/>
         <property name="fkMerchantProfile" type="int"/>
     </transfer>
 
