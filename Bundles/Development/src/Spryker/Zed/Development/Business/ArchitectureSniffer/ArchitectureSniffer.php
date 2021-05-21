@@ -24,6 +24,9 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
     protected const SOURCE_FOLDER_NAME = 'src';
     protected const OPTION_MODULE = 'module';
     protected const OPTION_IGNORE_ERRORS = 'ignoreErrors';
+    protected const OPTION_OVERWRITE = 'update-baseline';
+    protected const OPTION_VERBOSE = 'verbose';
+    protected const ARCHITECTURE_BASELINE_JSON = 'architecture-baseline.json';
 
     /**
      * @var string
@@ -94,11 +97,11 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
 
     /**
      * @param string $directory
-     * @param array $options
+     * @param string[] $options
      *
-     * @return array
+     * @return array[]
      */
-    public function run($directory, array $options = [])
+    public function run($directory, array $options = []): array
     {
         $options = $this->configurationBuilder->getConfiguration($directory, $options);
 
@@ -124,7 +127,71 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
         $results = $this->getResultsWithoutIgnoredErrors($results, $options);
         $fileViolations = $this->formatResult($results);
 
-        return $fileViolations;
+        return $this->runAnalyzer($fileViolations, $directory, $options);
+    }
+
+    /**
+     * @param array[] $fileViolations
+     * @param string $directory
+     * @param string[] $options
+     *
+     * @return array[]
+     */
+    protected function runAnalyzer(array $fileViolations, $directory, array $options): array
+    {
+        $reportPath = $directory . '../' . static::ARCHITECTURE_BASELINE_JSON;
+
+        $reportFileExists = file_exists($reportPath);
+
+        $result = $this->formatViolations($fileViolations);
+
+        $reportResult = $reportFileExists ? $this->getReportResult($reportPath) : [];
+
+        if ($options[static::OPTION_OVERWRITE] || !$reportFileExists) {
+            $this->saveBaseline($result, $reportPath);
+        }
+
+        if (!$result) {
+            $result = $reportResult;
+        }
+
+        return $this->sortViolations($result, $reportResult);
+    }
+
+    /**
+     * @param array[] $result
+     * @param string $reportPath
+     *
+     * @return void
+     */
+    protected function saveBaseline(array $result, $reportPath): void
+    {
+        $content = json_encode($result, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) . PHP_EOL;
+        file_put_contents($reportPath, $content);
+    }
+
+    /**
+     * @param array[] $result
+     * @param array[] $reportResult
+     *
+     * @return array[]
+     */
+    protected function sortViolations(array $result, array $reportResult): array
+    {
+        $sortedViolations = [
+            'visible' => [],
+            'ignored' => [],
+        ];
+
+        foreach ($result as $key => $violations) {
+            if (array_search($violations['description'], array_column($reportResult, 'description')) !== false) {
+                $sortedViolations['ignored'][] = $result[$key];
+            } else {
+                $sortedViolations['visible'][] = $result[$key];
+            }
+        }
+
+        return $sortedViolations;
     }
 
     /**
@@ -161,6 +228,7 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
 
         $process = $this->getProcess($command);
         $process->run();
+
         if (substr($process->getOutput(), 0, 5) !== '<?xml') {
             throw new Exception('Sniffer run was not successful: ' . $process->getExitCodeText());
         }
@@ -168,6 +236,49 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
         $output = $process->getOutput();
 
         return $output;
+    }
+
+    /**
+     * @param array[] $array
+     *
+     * @return array[]
+     */
+    protected function formatViolations(array $array): array
+    {
+        $result = [];
+
+        foreach ($array as $file => $violations) {
+            foreach ($violations as $violation) {
+                $result[] = [
+                    'fileName' => $file,
+                    'description' => $violation['_'],
+                    'rule' => $violation['rule'],
+                    'ruleset' => $violation['ruleset'],
+                    'priority' => $violation['priority'],
+                ];
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param string $path
+     *
+     * @return array[]
+     */
+    protected function getReportResult(string $path): array
+    {
+        $content = file_get_contents($path);
+
+        $result = json_decode($content, true);
+        if (!isset($result)) {
+            trigger_error('Invalid JSON file: ' . $path);
+
+            return [];
+        }
+
+        return $result;
     }
 
     /**
