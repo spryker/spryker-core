@@ -43,7 +43,7 @@ class AbstractStoragePublishListenerTest extends Unit
         ProductOfferTransfer $productOfferTransfer
     ): MerchantProductOfferStorageToEventBehaviorFacadeInterface {
         $eventBehaviorFacade = $this->getMockBuilder(MerchantProductOfferStorageToEventBehaviorFacadeInterface::class)->getMock();
-        $eventBehaviorFacade->method('getEventTransfersAdditionalValues')->willReturn([$productOfferTransfer->getProductOfferReference()]);
+        $eventBehaviorFacade->method('getEventTransfersAdditionalValues')->willReturn([$productOfferTransfer->getProductOfferReference(), 'wrong_reference']);
 
         return $eventBehaviorFacade;
     }

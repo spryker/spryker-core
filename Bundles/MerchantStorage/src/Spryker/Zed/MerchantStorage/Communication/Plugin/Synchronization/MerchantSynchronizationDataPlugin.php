@@ -8,7 +8,7 @@
 namespace Spryker\Zed\MerchantStorage\Communication\Plugin\Synchronization;
 
 use Generated\Shared\Transfer\FilterTransfer;
-use Generated\Shared\Transfer\MerchantCriteriaTransfer;
+use Generated\Shared\Transfer\MerchantStorageCriteriaTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Shared\MerchantStorage\MerchantStorageConfig;
@@ -67,7 +67,7 @@ class MerchantSynchronizationDataPlugin extends AbstractPlugin implements Synchr
     {
         $merchantStorageEntities = $this->getRepository()
             ->getFilteredMerchantStorageEntityTransfers(
-                (new MerchantCriteriaTransfer())
+                (new MerchantStorageCriteriaTransfer())
                     ->setFilter($this->createFilterTransfer($offset, $limit))
                     ->setMerchantIds($ids)
             );

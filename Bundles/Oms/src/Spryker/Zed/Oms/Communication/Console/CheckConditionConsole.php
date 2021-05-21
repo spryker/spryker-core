@@ -39,8 +39,8 @@ class CheckConditionConsole extends Console
         $this
             ->setName(static::COMMAND_NAME)
             ->setDescription(static::COMMAND_DESCRIPTION)
-            ->addOption(static::OPTION_STORE_NAME, static::OPTION_STORE_NAME_SHORT, InputOption::VALUE_REQUIRED, 'Defines the store name for which order item timeouts should be checked.')
-            ->addOption(static::OPTION_LIMIT, static::OPTION_LIMIT_SHORT, InputOption::VALUE_REQUIRED, 'Defines the amount of orders for which the order item timeouts should be checked.')
+            ->addOption(static::OPTION_STORE_NAME, static::OPTION_STORE_NAME_SHORT, InputOption::VALUE_REQUIRED, 'Defines the store name for which order item conditions should be checked.')
+            ->addOption(static::OPTION_LIMIT, static::OPTION_LIMIT_SHORT, InputOption::VALUE_REQUIRED, 'Defines the amount of orders for which the order item conditions should be checked.')
             ->addOption(static::OPTION_PROCESSOR_ID, static::OPTION_PROCESSOR_ID_SHORT, InputOption::VALUE_OPTIONAL, 'Defines coma-separated list of the processor identifiers in a multi-thread OMS setup.');
 
         parent::configure();

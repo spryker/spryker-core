@@ -34,6 +34,7 @@ class MerchantOpeningHoursStorageDependencyProvider extends AbstractBundleDepend
         $container = parent::provideBusinessLayerDependencies($container);
 
         $container = $this->addMerchantFacade($container);
+        $container = $this->addEventBehaviorFacade($container);
 
         return $container;
     }
@@ -46,7 +47,6 @@ class MerchantOpeningHoursStorageDependencyProvider extends AbstractBundleDepend
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
         $container = parent::provideCommunicationLayerDependencies($container);
-        $container = $this->addEventBehaviorFacade($container);
         $container = $this->addMerchantFacade($container);
 
         return $container;
