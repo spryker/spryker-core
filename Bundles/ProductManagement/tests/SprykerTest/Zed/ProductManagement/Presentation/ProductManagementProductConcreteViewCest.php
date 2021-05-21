@@ -33,7 +33,7 @@ class ProductManagementProductConcreteViewCest
 
         $i->amOnPage(ProductManagementProductListPage::URL);
         $i->clickDataTableViewButton();
-        $i->clickDataTableViewButton(0, 'product-variant-table_wrapper');
+        $i->clickDataTableViewButton(1, 'product-variant-table_wrapper');
 
         $i->seeBreadcrumbNavigation('Catalog / Products / View Concrete Product');
     }
