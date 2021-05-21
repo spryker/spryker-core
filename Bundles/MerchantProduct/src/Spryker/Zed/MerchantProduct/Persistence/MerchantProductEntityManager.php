@@ -27,7 +27,7 @@ class MerchantProductEntityManager extends AbstractEntityManager implements Merc
 
         $merchantProductMapper = $this->getFactory()->createMerchantProductMapper();
 
-        $merchantProductEntity = $merchantProductMapper->mapMerchantProductTransferToMerchantProductEntity(
+        $merchantProductEntity = $merchantProductMapper->mapMerchantProductTransferToMerchantProductAbstractEntity(
             $merchantProductTransfer,
             new SpyMerchantProductAbstract()
         );

@@ -38,19 +38,19 @@ class MerchantProductMapper
 
     /**
      * @param \Generated\Shared\Transfer\MerchantProductTransfer $merchantProductTransfer
-     * @param \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstract $merchantProductEntity
+     * @param \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstract $merchantProductAbstractEntity
      *
      * @return \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstract
      */
-    public function mapMerchantProductTransferToMerchantProductEntity(
+    public function mapMerchantProductTransferToMerchantProductAbstractEntity(
         MerchantProductTransfer $merchantProductTransfer,
-        SpyMerchantProductAbstract $merchantProductEntity
+        SpyMerchantProductAbstract $merchantProductAbstractEntity
     ): SpyMerchantProductAbstract {
-        $merchantProductEntity->fromArray($merchantProductTransfer->toArray());
-        $merchantProductEntity->setFkMerchant($merchantProductTransfer->getIdMerchantOrFail());
-        $merchantProductEntity->setFkProductAbstract($merchantProductTransfer->getIdProductAbstractOrFail());
+        $merchantProductAbstractEntity->fromArray($merchantProductTransfer->toArray());
+        $merchantProductAbstractEntity->setFkMerchant($merchantProductTransfer->getIdMerchantOrFail());
+        $merchantProductAbstractEntity->setFkProductAbstract($merchantProductTransfer->getIdProductAbstractOrFail());
 
-        return $merchantProductEntity;
+        return $merchantProductAbstractEntity;
     }
 
     /**
