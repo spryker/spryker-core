@@ -10,7 +10,7 @@ import {
     SimpleChanges,
     ViewEncapsulation,
 } from '@angular/core';
-import { AttributeOptions, ProductAttribute } from './types';
+import { AttributeOptions, ProductAttribute } from '../../services/types';
 import { IconDeleteModule } from '../../icons';
 import { ToJson } from '@spryker/utils';
 
@@ -23,8 +23,8 @@ import { ToJson } from '@spryker/utils';
     host: { class: 'mp-product-attributes-selector' },
 })
 export class ProductAttributesSelectorComponent implements OnChanges, OnInit {
-    @Input() @ToJson() attributes: ProductAttribute[];
-    @Input() @ToJson() selectedAttributes: ProductAttribute[];
+    @Input() @ToJson() attributes: ProductAttribute[] = [];
+    @Input() @ToJson() selectedAttributes: ProductAttribute[] = [];
     @Input() name?: string;
     @Output() selectedAttributesChange = new EventEmitter<ProductAttribute[]>();
 
@@ -36,14 +36,14 @@ export class ProductAttributesSelectorComponent implements OnChanges, OnInit {
     constructor(private cdr: ChangeDetectorRef) {}
 
     ngOnInit(): void {
-        if (!this.selectedAttributes?.length) {
+        if (!this.selectedAttributes.length) {
             this.create();
         }
     }
 
     ngOnChanges(changes: SimpleChanges): void {
         if ('attributes' in changes) {
-            this.remapSuperAttributes();
+            this.disableSelectedAttributes();
             this.generateAttributesObject();
         }
 
@@ -53,33 +53,30 @@ export class ProductAttributesSelectorComponent implements OnChanges, OnInit {
     }
 
     private generateAttributesObject(): void {
-        this.attributesObject = this.attributes?.reduce((accum, attribute) => {
-            return {
+        this.attributesObject = this.attributes.reduce(
+            (accum, attribute) => ({
                 ...accum,
                 [attribute.value]: attribute,
-            };
-        }, {});
+            }),
+            {},
+        );
     }
 
     private initAttributeOptions(): void {
-        this.attributeOptions = this.selectedAttributes?.map((attrs) => {
-            return this.attributesObject[attrs.value]?.attributes.map((attr) => (
-                {
-                    title: attr.name,
-                    value: attr.value,
-                }
-            ));
-        });
+        this.attributeOptions = this.selectedAttributes.map((attrs) =>
+            this.attributesObject[attrs.value]?.attributes.map((attr) => ({
+                title: attr.name,
+                value: attr.value,
+            })),
+        );
     }
 
     private remapSuperAttributes(): void {
-        this.superAttributeOptions = this.attributes?.map((attr) => (
-            {
-                title: attr.name,
-                value: attr.value,
-                isDisabled: attr.isDisabled,
-            }
-        ));
+        this.superAttributeOptions = this.attributes.map((attr) => ({
+            title: attr.name,
+            value: attr.value,
+            isDisabled: attr.isDisabled,
+        }));
     }
 
     private disableSelectedAttributes(): void {
@@ -105,12 +102,10 @@ export class ProductAttributesSelectorComponent implements OnChanges, OnInit {
 
         superAttribute.attributes = [];
         this.selectedAttributes = [...this.selectedAttributes];
-        this.attributeOptions[index] = this.attributesObject[value]?.attributes.map((attr) => (
-            {
-                title: attr.name,
-                value: attr.value,
-            }
-        ));
+        this.attributeOptions[index] = this.attributesObject[value]?.attributes.map((attr) => ({
+            title: attr.name,
+            value: attr.value,
+        }));
         this.selectedAttributes[index] = superAttribute;
         this.disableSelectedAttributes();
         this.selectedAttributesChange.emit(this.selectedAttributes);

@@ -18,21 +18,19 @@
     background-color: @gray-lighter;
     border-radius: @product-attributes-selector-border-radius;
     padding: @product-attributes-selector-padding;
-
-    &__container {
-        min-width: @product-attributes-selector-content-min-width;
-    }
+    min-width: @product-attributes-selector-content-min-width;
 
     &__header {
         display: flex;
         margin-bottom: @product-attributes-selector-header-margin-bottom;
 
         &-name {
-            flex-basis: @product-attributes-selector-name-width;
+            width: @product-attributes-selector-name-width;
+            flex-shrink: 0;
         }
 
         &-values-name {
-            flex-basis: @product-attributes-selector-value-width;
+            width: @product-attributes-selector-value-width;
         }
     }
 
@@ -50,12 +48,13 @@
         margin-bottom: @product-attributes-selector-row-margin-bottom;
 
         &-name {
-            flex-basis: @product-attributes-selector-name-width;
+            width: @product-attributes-selector-name-width;
+            flex-shrink: 0;
             padding: @product-attributes-selector-col-padding;
         }
 
         &-values-name {
-            flex-basis: @product-attributes-selector-value-width;
+            width: @product-attributes-selector-value-width;
             padding: @product-attributes-selector-col-padding;
             display: flex;
             align-items: center;

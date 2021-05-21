@@ -1,6 +1,6 @@
 @import '~@spryker/styles/src/lib/themes/default/variables/index.less';
 
-@concrete-products-preview-class: 'mp-concrete-products-preview';
+@concrete-products-preview-class: mp-concrete-products-preview;
 @concrete-products-preview-main-border-radius: 10px;
 @concrete-products-preview-header-border-radius: 4px;
 @concrete-products-preview-header-padding: 12px 15px;
@@ -11,7 +11,7 @@
 @concrete-products-preview-table-list-height: 400px;
 @concrete-products-preview-table-row-padding: 15px 0 15px 10px;
 @concrete-products-preview-table-row-item-padding: 0 10px;
-@concrete-products-preview-table-row-attr-padding: 11px 0;
+@concrete-products-preview-table-row-attr-padding: 11px 0 11px 10px;
 @concrete-products-preview-table-row-margin-bottom: 5px;
 @concrete-products-preview-table-row-attr-width: 30%;
 @concrete-products-preview-table-row-sku-width: 25%;
@@ -66,10 +66,10 @@
     &__table {
         background-color: @gray-lighter;
         border-radius: @concrete-products-preview-main-border-radius;
-        padding: @concrete-products-preview-table-padding;
         overflow: auto;
 
         &-content {
+            padding: @concrete-products-preview-table-padding;
             min-width: @concrete-products-preview-table-min-width;
         }
 
@@ -125,17 +125,6 @@
             &-delete-icon {
                 font-size: @concrete-products-preview-table-row-delete-icon-font-size;
             }
-        }
-    }
-
-    .@{form-item-prefix-cls} {
-        margin: 0;
-
-        &-label > label {
-            display: block;
-            padding-bottom: 0;
-            margin-bottom: 0;
-            line-height: unset;
         }
     }
 }

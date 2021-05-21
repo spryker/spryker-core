@@ -81,6 +81,19 @@ const mockGeneratedProducts = [
         ],
     },
 ];
+const mockGeneratedProductErrors = [
+    {
+        fields: {
+            name: '',
+            sku: '123',
+        },
+        errors: {
+            name: 'This value should not be blank.',
+            sku: 'SKU Prefix already exists',
+        },
+    },
+    {},
+];
 
 class MockGenerator implements IdGenerator {
     index = 0;
@@ -99,7 +112,7 @@ class MockGeneratorFactory {
 @Component({
     selector: 'spy-test',
     template: `
-        <mp-concrete-products-preview [name]="name" [attributes]="attributes">
+        <mp-concrete-products-preview [name]="name" [attributes]="attributes" [errors]="errors">
             <span total-text>to be created</span>
             <span auto-sku-text>Autogenerate SKUs</span>
             <span auto-name-text>Same Name as Abstract Product</span>
@@ -113,6 +126,7 @@ class MockGeneratorFactory {
 class TestComponent {
     name: string;
     attributes: any;
+    errors: any;
 }
 
 describe('ConcreteProductsPreviewComponent', () => {
@@ -148,94 +162,95 @@ describe('ConcreteProductsPreviewComponent', () => {
     });
 
     describe('Slots and components', () => {
-        it('should render `noData` element with default `no-data-text` slot if `@Input(attributes)` not exists', () => {
+        it('should render `noData` element with `no-data-text` slot if `@Input(attributes)` not exists', () => {
             component.attributes = [];
             fixture.detectChanges();
 
             const noDataElement = fixture.debugElement.query(By.css('.mp-concrete-products-preview__no-data'));
 
-            const noDataText = fixture.debugElement.query(
+            const noDataTextSlot = fixture.debugElement.query(
                 By.css('.mp-concrete-products-preview__no-data [no-data-text]'),
             );
 
             expect(noDataElement).toBeTruthy();
-            expect(noDataText.nativeElement.textContent).toBe('No concretes created yet');
+            expect(noDataTextSlot).toBeTruthy();
         });
 
-        it('should render <spy-chips> component with default `total-text` slot to the `.mp-concrete-products-preview__header` element', () => {
+        it('should render <spy-chips> component with `total-text` slot to the `.mp-concrete-products-preview__header` element', () => {
             component.attributes = mockAttributes;
             fixture.detectChanges();
 
             const headerChips = fixture.debugElement.query(By.css('.mp-concrete-products-preview__header spy-chips'));
-            const headerChipsTotalText = fixture.debugElement.query(
+            const totalTextSlot = fixture.debugElement.query(
                 By.css('.mp-concrete-products-preview__header spy-chips [total-text]'),
             );
 
+            expect(headerChips).toBeTruthy();
             expect(headerChips.nativeElement.textContent).toContain('2 to be created');
-            expect(headerChipsTotalText.nativeElement.textContent).toBe('to be created');
+            expect(totalTextSlot).toBeTruthy();
         });
 
-        it('should render <spy-checkbox> component with default `auto-sku-text` slot to the `.mp-concrete-products-preview__header-checkboxes` element', () => {
+        it('should render <spy-checkbox> component with `auto-sku-text` slot to the `.mp-concrete-products-preview__header-checkboxes` element', () => {
             component.attributes = mockAttributes;
             fixture.detectChanges();
 
-            const headerCheckbox = fixture.debugElement.query(
+            const headerCheckboxSku = fixture.debugElement.query(
                 By.css('.mp-concrete-products-preview__header-checkboxes spy-checkbox'),
             );
-            const headerCheckboxSkuText = fixture.debugElement.query(
+            const autoSkuTextSlot = fixture.debugElement.query(
                 By.css('.mp-concrete-products-preview__header spy-checkbox [auto-sku-text]'),
             );
 
-            expect(headerCheckbox).toBeTruthy();
-            expect(headerCheckboxSkuText.nativeElement.textContent).toBe('Autogenerate SKUs');
+            expect(headerCheckboxSku).toBeTruthy();
+            expect(autoSkuTextSlot).toBeTruthy();
         });
 
-        it('should render <spy-checkbox> component with default `auto-name-text` slot to the `.mp-concrete-products-preview__header-checkboxes` element', () => {
+        it('should render <spy-checkbox> component with `auto-name-text` slot to the `.mp-concrete-products-preview__header-checkboxes` element', () => {
             component.attributes = mockAttributes;
             fixture.detectChanges();
 
-            const headerCheckbox = fixture.debugElement.query(
+            const headerCheckboxName = fixture.debugElement.query(
                 By.css('.mp-concrete-products-preview__header-checkboxes spy-checkbox'),
             );
-            const headerCheckboxNameText = fixture.debugElement.query(
+            const autoNameTextSlot = fixture.debugElement.query(
                 By.css('.mp-concrete-products-preview__header spy-checkbox [auto-name-text]'),
             );
 
-            expect(headerCheckbox).toBeTruthy();
-            expect(headerCheckboxNameText.nativeElement.textContent).toBe('Same Name as Abstract Product');
+            expect(headerCheckboxName).toBeTruthy();
+            expect(autoNameTextSlot).toBeTruthy();
         });
 
-        it('should render default `col-attr-name` slot to the `.mp-concrete-products-preview__table-header` element', () => {
+        it('should render `col-attr-name` slot to the `.mp-concrete-products-preview__table-header` element', () => {
             component.attributes = mockAttributes;
             fixture.detectChanges();
 
-            const tableHeaderAttrName = fixture.debugElement.query(
+            const colAttrNameSlot = fixture.debugElement.query(
                 By.css('.mp-concrete-products-preview__table-header [col-attr-name]'),
             );
 
-            expect(tableHeaderAttrName.nativeElement.textContent).toBe('Super attribute value');
+            expect(colAttrNameSlot).toBeTruthy();
         });
 
-        it('should render default `col-sku-name` slot to the `.mp-concrete-products-preview__table-header` element', () => {
+        it('should render `col-sku-name` slot to the `.mp-concrete-products-preview__table-header` element', () => {
             component.attributes = mockAttributes;
             fixture.detectChanges();
 
-            const tableHeaderSkuName = fixture.debugElement.query(
+            const colSkuNameSlot = fixture.debugElement.query(
                 By.css('.mp-concrete-products-preview__table-header [col-sku-name]'),
             );
 
-            expect(tableHeaderSkuName.nativeElement.textContent).toBe('SKU');
+            expect(colSkuNameSlot).toBeTruthy();
         });
 
-        it('should render default `col-name-name` slot to the `.mp-concrete-products-preview__table-header` element', () => {
+        it('should render `col-name-name` slot to the `.mp-concrete-products-preview__table-header` element', () => {
             component.attributes = mockAttributes;
             fixture.detectChanges();
 
-            const tableHeaderNameDefault = fixture.debugElement.query(
+            const colNameSlot = fixture.debugElement.query(
                 By.css('.mp-concrete-products-preview__table-header [col-name-name]'),
             );
 
-            expect(tableHeaderNameDefault.nativeElement.textContent).toBe('Name default');
+            expect(colNameSlot).toBeTruthy();
         });
 
         it('should render <cdk-virtual-scroll-viewport> component', () => {
@@ -301,7 +316,7 @@ describe('ConcreteProductsPreviewComponent', () => {
 
             expect(hiddenInput).toBeTruthy();
             expect(hiddenInput.properties.name).toBe(mockName);
-            expect(hiddenInput.properties.value.replace(/\s/g, '')).toBe(JSON.stringify(mockGeneratedProducts));
+            expect(JSON.parse(hiddenInput.properties.value)).toEqual(mockGeneratedProducts);
         });
 
         it('should render attribute names of generated products', fakeAsync(() => {
@@ -395,6 +410,24 @@ describe('ConcreteProductsPreviewComponent', () => {
 
             expect(updatedNameInputs[0].properties.value).toBe('');
             expect(updatedNameInputs[1].properties.value).toBe('');
+        }));
+
+        it('should bound `@Input(errors)` to the input `error` of <spy-form-item> component', fakeAsync(() => {
+            component.attributes = mockAttributes;
+            component.errors = mockGeneratedProductErrors;
+            fixture.detectChanges();
+            tick();
+            fixture.detectChanges();
+
+            const skuFormItems = fixture.debugElement.queryAll(
+                By.css('.mp-concrete-products-preview__table-row-sku spy-form-item'),
+            );
+            const nameFormItems = fixture.debugElement.queryAll(
+                By.css('.mp-concrete-products-preview__table-row-name spy-form-item'),
+            );
+
+            expect(skuFormItems[0].properties.error).toBe(mockGeneratedProductErrors[0].errors.sku);
+            expect(nameFormItems[0].properties.error).toBe(mockGeneratedProductErrors[0].errors.name);
         }));
     });
 });

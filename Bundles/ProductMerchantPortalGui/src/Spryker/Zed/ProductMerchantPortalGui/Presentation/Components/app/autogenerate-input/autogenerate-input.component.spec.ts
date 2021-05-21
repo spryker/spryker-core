@@ -113,7 +113,7 @@ describe('AutogenerateInputComponent', () => {
     });
 
     describe('@Inputs', () => {
-        it('should bound `@Input(name)` to the input `name` of <spy-input> component', () => {
+        it('should bound `@Input(name)` to the `name` input of <spy-input> component', () => {
             const mockName = 'Name';
             const inputElem = fixture.debugElement.query(By.css('spy-input'));
 
@@ -123,7 +123,7 @@ describe('AutogenerateInputComponent', () => {
             expect(inputElem.properties.name).toBe(mockName);
         });
 
-        it('should bound `@Input(value)` to the input `value` of <spy-input> component', () => {
+        it('should bound `@Input(value)` to the `value` input of <spy-input> component', () => {
             const mockValue = 'Value';
             const inputElem = fixture.debugElement.query(By.css('spy-input'));
 
@@ -133,7 +133,7 @@ describe('AutogenerateInputComponent', () => {
             expect(inputElem.properties.value).toBe(mockValue);
         });
 
-        it('should bound `@Input(placeholder)` to the input `placeholder` of <spy-input> component', () => {
+        it('should bound `@Input(placeholder)` to the `placeholder` input of <spy-input> component', () => {
             const mockPlaceholder = 'Placeholder';
             const inputElem = fixture.debugElement.query(By.css('spy-input'));
 
@@ -143,7 +143,7 @@ describe('AutogenerateInputComponent', () => {
             expect(inputElem.properties.placeholder).toBe(mockPlaceholder);
         });
 
-        it('should bound `@Input(isAutogenerate)` to the input `disabled` of <spy-input> component', () => {
+        it('should bound `@Input(isAutogenerate)` to the `disabled` input of <spy-input> component', () => {
             const inputElem = fixture.debugElement.query(By.css('spy-input'));
 
             component.isAutogenerate = true;
@@ -152,7 +152,7 @@ describe('AutogenerateInputComponent', () => {
             expect(inputElem.properties.disabled).toBe(true);
         });
 
-        it('should bound `@Input(isAutogenerate)` to the input `checked` of <spy-checkbox> component', () => {
+        it('should bound `@Input(isAutogenerate)` to the `checked` input of <spy-checkbox> component', () => {
             const checkboxElem = fixture.debugElement.query(By.css('spy-checkbox'));
 
             component.isAutogenerate = true;
@@ -161,7 +161,7 @@ describe('AutogenerateInputComponent', () => {
             expect(checkboxElem.properties.checked).toBe(true);
         });
 
-        it('should bound `@Input(checkboxName)` to the input `name` of <spy-checkbox> component', () => {
+        it('should bound `@Input(checkboxName)` to the `name` input of <spy-checkbox> component', () => {
             const mockCheckboxName = 'checkboxName';
             const checkboxElem = fixture.debugElement.query(By.css('spy-checkbox'));
 
@@ -171,7 +171,7 @@ describe('AutogenerateInputComponent', () => {
             expect(checkboxElem.properties.name).toBe(mockCheckboxName);
         });
 
-        it('should bound `@Input(error)` to the input `error` of <spy-form-item> component', () => {
+        it('should bound `@Input(error)` to the `error` input of <spy-form-item> component', () => {
             const mockError = 'Error';
             const formItemElem = fixture.debugElement.query(By.css('spy-form-item'));
 

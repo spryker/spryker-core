@@ -8,13 +8,7 @@ export class ConcreteProductSkuGeneratorService implements IdGenerator {
 
     generate(prevId?: string): string {
         const abstractSku = this.concreteProductGeneratorData.getAbstractSku();
-        let id: number;
-
-        if (!prevId) {
-            id = 1;
-        } else {
-            id = Number(prevId.split('-')[1]) + 1;
-        }
+        const id = prevId ? Number(prevId.split('-')[1]) + 1 : 1;
 
         return `${abstractSku}-${id}`;
     }
