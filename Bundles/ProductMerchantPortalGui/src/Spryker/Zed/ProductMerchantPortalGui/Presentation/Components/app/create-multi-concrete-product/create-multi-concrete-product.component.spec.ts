@@ -410,6 +410,8 @@ describe('CreateMultiConcreteProductComponent', () => {
                 By.css('.mp-create-multi-concrete-product__content mp-concrete-products-preview'),
             );
 
+            expect(concreteProductsPreview.componentInstance.attributes).toBe(undefined);
+
             productAttributesSelector.triggerEventHandler('selectedAttributesChange', mockSelectedAttributes);
             fixture.detectChanges();
 
