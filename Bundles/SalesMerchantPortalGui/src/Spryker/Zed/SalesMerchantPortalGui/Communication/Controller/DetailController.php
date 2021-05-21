@@ -112,7 +112,7 @@ class DetailController extends AbstractSalesMerchantPortalGuiController
         /** @var \Generated\Shared\Transfer\OrderTransfer $orderTransfer */
         $orderTransfer = $merchantOrderTransfer->requireOrder()->getOrder();
         /** @var string $customerReference */
-        $customerReference = $orderTransfer->requireCustomerReference()->getCustomerReference();
+        $customerReference = $orderTransfer->getCustomerReference();
 
         $customerMerchantOrderNumber = $this->getFactory()
             ->getMerchantSalesOrderFacade()

@@ -116,10 +116,10 @@ class ProductOfferAvailabilityStorageWriter implements ProductOfferAvailabilityS
      *
      * @return void
      */
-    public function writeProductOfferAvailabilityStorageForRequests(array $productOfferAvailabilityRequestTransfers): void
+    protected function writeProductOfferAvailabilityStorageForRequests(array $productOfferAvailabilityRequestTransfers): void
     {
         foreach ($productOfferAvailabilityRequestTransfers as $productOfferAvailabilityRequestTransfer) {
-            $productOfferAvailabilityTransfer = $this->productOfferAvailabilityFacade->findProductConcreteAvailabilityForRequest($productOfferAvailabilityRequestTransfer);
+            $productOfferAvailabilityTransfer = $this->productOfferAvailabilityFacade->findProductConcreteAvailability($productOfferAvailabilityRequestTransfer);
             $productOfferAvailabilityStorageEntity = $this->productOfferAvailabilityStorageRepository->findProductOfferAvailabilityStorageByProductOfferReferenceAndStoreName(
                 $productOfferAvailabilityRequestTransfer->getProductOfferReference(),
                 $productOfferAvailabilityRequestTransfer->getStore()->getName()

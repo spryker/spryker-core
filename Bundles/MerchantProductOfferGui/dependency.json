@@ -1,0 +1,5 @@
+{
+    "include": {
+        "spryker/merchant-product-offer": "Added for forward compatibility."
+    }
+}
