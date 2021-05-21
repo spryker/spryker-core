@@ -270,7 +270,7 @@ class PriceProductServiceTest extends Unit
         $result = $this->getPriceProductService()->resolveProductPriceByPriceProductCriteria($priceProductTransfers, $priceProductCriteriaTransfer);
 
         // Assert
-        $this->assertSame(null, $result);
+        $this->assertNull($result);
     }
 
     /**
