@@ -84,7 +84,7 @@ describe('ProductAttributesSelectorComponent', () => {
     });
 
     describe('Slots and components', () => {
-        it('should `col-attr-name` slot to the `.mp-product-attributes-selector__header` element', () => {
+        it('should render `col-attr-name` slot to the `.mp-product-attributes-selector__header` element', () => {
             const colAttrNameSlot = fixture.debugElement.query(
                 By.css('.mp-product-attributes-selector__header [col-attr-name]'),
             );
@@ -92,7 +92,7 @@ describe('ProductAttributesSelectorComponent', () => {
             expect(colAttrNameSlot).toBeTruthy();
         });
 
-        it('should `col-attr-values-name` slot to the `.mp-product-attributes-selector__header` element', () => {
+        it('should render `col-attr-values-name` slot to the `.mp-product-attributes-selector__header` element', () => {
             const colAttrValuesNameSlot = fixture.debugElement.query(
                 By.css('.mp-product-attributes-selector__header [col-attr-values-name]'),
             );
@@ -100,7 +100,7 @@ describe('ProductAttributesSelectorComponent', () => {
             expect(colAttrValuesNameSlot).toBeTruthy();
         });
 
-        it('should `btn-attr-add-name` slot to the `.mp-product-attributes-selector__button-add` element', () => {
+        it('should render `btn-attr-add-name` slot to the `.mp-product-attributes-selector__button-add` element', () => {
             component.attributes = mockAttributes;
             component.selectedAttributes = [];
             fixture.detectChanges();

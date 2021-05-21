@@ -150,6 +150,8 @@ export class ConcreteProductsPreviewComponent implements OnChanges {
                 } as ConcreteProductPreview;
             }
         });
+
+        this.generatedProductsChange.emit(this.generatedProducts);
     }
 
     private hasSkuError(): boolean {
@@ -218,14 +220,10 @@ export class ConcreteProductsPreviewComponent implements OnChanges {
     }
 
     getSkuErrors(index: number, errors: ConcreteProductPreviewErrors[]): string | undefined {
-        if (errors?.length && errors[index]) {
-            return errors[index]?.errors?.sku;
-        }
+        return errors?.[index]?.errors?.sku;
     }
 
     getNameErrors(index: number, errors: ConcreteProductPreviewErrors[]): string | undefined {
-        if (errors?.length && errors[index]) {
-            return errors[index]?.errors?.name;
-        }
+        return errors?.[index]?.errors?.name;
     }
 }
