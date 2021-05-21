@@ -164,7 +164,7 @@ describe('ProductAttributesSelectorComponent', () => {
 
             expect(hiddenInput).toBeTruthy();
             expect(hiddenInput.properties.name).toBe(mockName);
-            expect(JSON.parse(hiddenInput.properties.value)).toEqual([...mockSelectedAttributes]);
+            expect(JSON.parse(hiddenInput.properties.value)).toEqual(mockSelectedAttributes);
         });
 
         it('should add a new attribute row by `Add` button click', () => {

@@ -38,10 +38,6 @@ import { CreateSingleConcreteProductComponent } from './create-single-concrete-p
 import { CreateSingleConcreteProductModule } from './create-single-concrete-product/create-single-concrete-product.module';
 import { AutogenerateInputComponent } from './autogenerate-input/autogenerate-input.component';
 import { AutogenerateInputModule } from './autogenerate-input/autogenerate-input.module';
-import { ConcreteProductsPreviewComponent } from './concrete-products-preview/concrete-products-preview.component';
-import { ConcreteProductsPreviewModule } from './concrete-products-preview/concrete-products-preview.module';
-import { ProductAttributesSelectorComponent } from './product-attributes-selector/product-attributes-selector.component';
-import { ProductAttributesSelectorModule } from './product-attributes-selector/product-attributes-selector.module';
 import { CreateMultiConcreteProductComponent } from './create-multi-concrete-product/create-multi-concrete-product.component';
 import { CreateMultiConcreteProductModule } from './create-multi-concrete-product/create-multi-concrete-product.module';
 import { ConcreteProductGeneratorDataComponent } from './concrete-product-generator-data/concrete-product-generator-data.component';
@@ -104,8 +100,6 @@ import { ConcreteProductGeneratorDataModule } from './concrete-product-generator
         CreateAbstractProductModule,
         CreateSingleConcreteProductModule,
         AutogenerateInputModule,
-        ConcreteProductsPreviewModule,
-        ProductAttributesSelectorModule,
         CreateMultiConcreteProductModule,
         ConcreteProductGeneratorDataModule,
     ],
