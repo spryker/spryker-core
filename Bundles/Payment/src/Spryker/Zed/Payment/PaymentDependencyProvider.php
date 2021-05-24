@@ -86,7 +86,7 @@ class PaymentDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addPaymentMethodFilterPlugins(Container $container)
+    protected function addPaymentMethodFilterPlugins(Container $container): Container
     {
         $container->set(static::PAYMENT_METHOD_FILTER_PLUGINS, function (Container $container) {
             return $this->getPaymentMethodFilterPlugins();
@@ -96,9 +96,9 @@ class PaymentDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\PaymentExtension\Dependency\Plugin\Payment\PaymentMethodFilterPluginInterface[]
+     * @return \Spryker\Zed\PaymentExtension\Dependency\Plugin\PaymentMethodFilterPluginInterface[]
      */
-    protected function getPaymentMethodFilterPlugins()
+    protected function getPaymentMethodFilterPlugins(): array
     {
         return [];
     }
