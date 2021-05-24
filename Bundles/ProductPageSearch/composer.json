@@ -17,7 +17,7 @@
         "spryker/product": "^6.16.0",
         "spryker/product-category": "^4.5.0",
         "spryker/product-image": "^3.8.0",
-        "spryker/product-page-search-extension": "^1.3.0",
+        "spryker/product-page-search-extension": "^1.4.0",
         "spryker/product-search": "^5.8.0",
         "spryker/propel-orm": "^1.5.0",
         "spryker/search": "^7.0.0 || ^8.0.0",

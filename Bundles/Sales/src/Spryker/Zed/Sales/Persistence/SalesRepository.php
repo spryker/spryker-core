@@ -29,6 +29,10 @@ use Spryker\Zed\Sales\Persistence\Propel\QueryBuilder\OrderSearchFilterFieldQuer
 class SalesRepository extends AbstractRepository implements SalesRepositoryInterface
 {
     protected const ID_SALES_ORDER = 'id_sales_order';
+    protected const SORT_KEYS_MAP = [
+        'createdAt' => SpySalesOrderTableMap::COL_CREATED_AT,
+        'updatedAt' => SpySalesOrderTableMap::COL_UPDATED_AT,
+    ];
 
     /**
      * @param string $customerReference
@@ -301,6 +305,12 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
     protected function applyFilterToQuery(SpySalesOrderQuery $orderListQuery, ?FilterTransfer $filterTransfer): SpySalesOrderQuery
     {
         if ($filterTransfer) {
+            if ($filterTransfer->getOrderBy() && isset(static::SORT_KEYS_MAP[$filterTransfer->getOrderBy()])) {
+                $filterTransfer->setOrderBy(
+                    isset(static::SORT_KEYS_MAP[$filterTransfer->getOrderBy()]) ? static::SORT_KEYS_MAP[$filterTransfer->getOrderBy()] : null
+                );
+            }
+
             $orderListQuery->mergeWith(
                 (new PropelFilterCriteria($filterTransfer))->toCriteria()
             );

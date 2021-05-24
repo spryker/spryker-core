@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\MerchantStorage\Persistence;
 
-use Generated\Shared\Transfer\MerchantCriteriaTransfer;
+use Generated\Shared\Transfer\MerchantStorageCriteriaTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Formatter\ObjectFormatter;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -18,23 +18,23 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class MerchantStorageRepository extends AbstractRepository implements MerchantStorageRepositoryInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\MerchantCriteriaTransfer $merchantCriteriaTransfer
+     * @param \Generated\Shared\Transfer\MerchantStorageCriteriaTransfer $merchantStorageCriteriaTransfer
      *
      * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\MerchantStorage\Persistence\SpyMerchantStorage[]
      */
     public function getFilteredMerchantStorageEntityTransfers(
-        MerchantCriteriaTransfer $merchantCriteriaTransfer
+        MerchantStorageCriteriaTransfer $merchantStorageCriteriaTransfer
     ): ObjectCollection {
         $merchantStorageQuery = $this->getFactory()->createMerchantStorageQuery();
 
-        if ($merchantCriteriaTransfer->getMerchantIds()) {
-            $merchantStorageQuery->filterByIdMerchant_In($merchantCriteriaTransfer->getMerchantIds());
+        if ($merchantStorageCriteriaTransfer->getMerchantIds()) {
+            $merchantStorageQuery->filterByIdMerchant_In($merchantStorageCriteriaTransfer->getMerchantIds());
         }
 
-        if ($merchantCriteriaTransfer->getFilter()) {
+        if ($merchantStorageCriteriaTransfer->getFilter()) {
             $merchantStorageQuery = $this->buildQueryFromCriteria(
                 $merchantStorageQuery,
-                $merchantCriteriaTransfer->getFilter()
+                $merchantStorageCriteriaTransfer->getFilter()
             )->setFormatter(ObjectFormatter::class);
         }
 

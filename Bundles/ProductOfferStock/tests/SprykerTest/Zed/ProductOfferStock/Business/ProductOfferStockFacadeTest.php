@@ -152,19 +152,17 @@ class ProductOfferStockFacadeTest extends Unit
         // Arrange
         $notExistingProductOfferReference = 'not-existing-product-offer-reference';
 
-        $this->expectException(ProductOfferNotFoundException::class);
-
         $storeTransfer = $this->tester->haveStore();
         $productOfferStockRequestTransfer = (new ProductOfferStockRequestTransfer())
             ->setProductOfferReference($notExistingProductOfferReference)
             ->setStore($storeTransfer);
 
+        // Assert
+        $this->expectException(ProductOfferNotFoundException::class);
+
         // Act
         $productOfferStockTransfer = $this->tester->getFacade()
             ->getProductOfferStockResult($productOfferStockRequestTransfer);
-
-        // Assert
-        $this->assertNull($productOfferStockTransfer);
     }
 
     /**
@@ -207,18 +205,17 @@ class ProductOfferStockFacadeTest extends Unit
     public function testGetProductOfferStocksReturnsNullIfProductOfferNotExists(): void
     {
         // Arrange
-        $this->expectException(ProductOfferNotFoundException::class);
         $storeTransfer = $this->tester->haveStore();
         $productOfferStockRequestTransfer = (new ProductOfferStockRequestTransfer())
             ->setProductOfferReference('not-existing-product-offer-reference')
             ->setStore($storeTransfer);
 
+        // Assert
+        $this->expectException(ProductOfferNotFoundException::class);
+
         // Act
         $productOfferStockTransfers = $this->tester->getFacade()
             ->getProductOfferStocks($productOfferStockRequestTransfer);
-
-        // Assert
-        $this->assertNull($productOfferStockTransfers);
     }
 
     /**

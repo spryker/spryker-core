@@ -18,8 +18,8 @@
     </transfer>
 
     <transfer name="ProductOfferCriteria">
-        <property name="merchantIds" type="int[]" singular="idMerchant"/>
         <property name="productOfferReference" type="string"/>
+        <property name="productOfferReferences" type="string[]" singular="productOfferReference"/>
     </transfer>
 
     <transfer name="PriceProductStoreCriteria">
