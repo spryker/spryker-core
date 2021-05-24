@@ -14,6 +14,7 @@ use Laminas\Filter\FilterChain;
 use Laminas\Filter\StringToLower;
 use Laminas\Filter\Word\CamelCaseToDash;
 use Laminas\Filter\Word\UnderscoreToCamelCase;
+use Spryker\Shared\Sales\SalesConstants;
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -314,7 +315,7 @@ class CodeArchitectureSnifferConsole extends Console
 
     /**
      * @param \Symfony\Component\Console\Output\OutputInterface $output
-     * @param array[] $violations
+     * @param array $violations
      *
      * @return int
      */
@@ -324,16 +325,20 @@ class CodeArchitectureSnifferConsole extends Console
             $count = 0;
 
             foreach ($violationsArray as $violation) {
-                $output->writeln(($type === 'visible' ? '<error> ' . trim($violation['description']) . '<error> ' : ' - ' . trim($violation['description'])), OutputInterface::VERBOSITY_VERBOSE);
-                $output->writeln(' ' . $violation['ruleset'] . ' > ' . $violation['rule'], OutputInterface::VERBOSITY_VERBOSE);
+                if ($type === SalesConstants::NAME_VISIBLE_VIOLATIONS) {
+                    $output->writeln('<error> ' . trim($violation[SalesConstants::VIOLATION_FIELD_NAME_DESCRIPTION]) . '<error> ', OutputInterface::VERBOSITY_VERBOSE);
+                } else {
+                    $output->writeln(' - ' . trim($violation[SalesConstants::VIOLATION_FIELD_NAME_DESCRIPTION]), OutputInterface::VERBOSITY_VERBOSE);
+                }
 
+                $output->writeln(' ' . $violation[SalesConstants::VIOLATION_FIELD_NAME_RULESET] . ' > ' . $violation[SalesConstants::VIOLATION_FIELD_NAME_RULE], OutputInterface::VERBOSITY_VERBOSE);
                 $count++;
             }
 
-            $this->displayViolationsCountMessage($output, $count, ($type === 'ignored'));
+            $this->displayViolationsCountMessage($output, $count, ($type === SalesConstants::NAME_IGNORED_VIOLATIONS));
         }
 
-        return count($violations['visible']);
+        return count($violations[SalesConstants::NAME_VISIBLE_VIOLATIONS]);
     }
 
     /**

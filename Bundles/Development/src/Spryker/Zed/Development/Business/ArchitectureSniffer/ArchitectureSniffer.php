@@ -11,6 +11,7 @@ use Exception;
 use Laminas\Config\Reader\ReaderInterface;
 use PHPMD\RuleSetFactory;
 use PHPMD\TextUI\CommandLineOptions;
+use Spryker\Shared\Sales\SalesConstants;
 use Spryker\Zed\Development\Business\SnifferConfiguration\Builder\SnifferConfigurationBuilderInterface;
 use Spryker\Zed\Development\DevelopmentConfig;
 use Symfony\Component\Process\Process;
@@ -99,7 +100,7 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
      * @param string $directory
      * @param string[] $options
      *
-     * @return array[]
+     * @return array
      */
     public function run($directory, array $options = []): array
     {
@@ -131,20 +132,17 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
     }
 
     /**
-     * @param array[] $fileViolations
+     * @param array $fileViolations
      * @param string $directory
      * @param string[] $options
      *
-     * @return array[]
+     * @return array
      */
     protected function runAnalyzer(array $fileViolations, $directory, array $options): array
     {
         $reportPath = $directory . '../' . static::ARCHITECTURE_BASELINE_JSON;
-
         $reportFileExists = file_exists($reportPath);
-
         $result = $this->formatViolations($fileViolations);
-
         $reportResult = $reportFileExists ? $this->getReportResult($reportPath) : [];
 
         if ($options[static::OPTION_OVERWRITE] || !$reportFileExists) {
@@ -159,7 +157,7 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
     }
 
     /**
-     * @param array[] $result
+     * @param array $result
      * @param string $reportPath
      *
      * @return void
@@ -171,23 +169,23 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
     }
 
     /**
-     * @param array[] $result
-     * @param array[] $reportResult
+     * @param array $result
+     * @param array $reportResult
      *
-     * @return array[]
+     * @return array
      */
     protected function sortViolations(array $result, array $reportResult): array
     {
         $sortedViolations = [
-            'visible' => [],
-            'ignored' => [],
+            SalesConstants::NAME_VISIBLE_VIOLATIONS => [],
+            SalesConstants::NAME_IGNORED_VIOLATIONS => [],
         ];
 
         foreach ($result as $key => $violations) {
-            if (array_search($violations['description'], array_column($reportResult, 'description')) !== false) {
-                $sortedViolations['ignored'][] = $result[$key];
+            if (array_search($violations[SalesConstants::VIOLATION_FIELD_NAME_DESCRIPTION], array_column($reportResult, SalesConstants::VIOLATION_FIELD_NAME_DESCRIPTION)) !== false) {
+                $sortedViolations[SalesConstants::NAME_IGNORED_VIOLATIONS][] = $result[$key];
             } else {
-                $sortedViolations['visible'][] = $result[$key];
+                $sortedViolations[SalesConstants::NAME_VISIBLE_VIOLATIONS][] = $result[$key];
             }
         }
 
@@ -239,9 +237,9 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
     }
 
     /**
-     * @param array[] $array
+     * @param array $array
      *
-     * @return array[]
+     * @return array
      */
     protected function formatViolations(array $array): array
     {
@@ -250,11 +248,11 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
         foreach ($array as $file => $violations) {
             foreach ($violations as $violation) {
                 $result[] = [
-                    'fileName' => $file,
-                    'description' => $violation['_'],
-                    'rule' => $violation['rule'],
-                    'ruleset' => $violation['ruleset'],
-                    'priority' => $violation['priority'],
+                    SalesConstants::VIOLATION_FIELD_NAME_FILENAME => $file,
+                    SalesConstants::VIOLATION_FIELD_NAME_DESCRIPTION => $violation['_'],
+                    SalesConstants::VIOLATION_FIELD_NAME_RULE => $violation['rule'],
+                    SalesConstants::VIOLATION_FIELD_NAME_RULESET => $violation['ruleset'],
+                    SalesConstants::VIOLATION_FIELD_NAME_PRIORITY => $violation['priority'],
                 ];
             }
         }
@@ -265,14 +263,14 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
     /**
      * @param string $path
      *
-     * @return array[]
+     * @return array
      */
     protected function getReportResult(string $path): array
     {
         $content = file_get_contents($path);
 
         $result = json_decode($content, true);
-        if (!isset($result)) {
+        if ($result === null) {
             trigger_error('Invalid JSON file: ' . $path);
 
             return [];
