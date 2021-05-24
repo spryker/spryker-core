@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\AvailabilityCartConnector\Communication\Plugin;
+namespace Spryker\Zed\AvailabilityCartConnector\Communication\Plugin\Cart;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Spryker\Zed\CartExtension\Dependency\Plugin\CartPreCheckPluginInterface;
@@ -23,8 +23,6 @@ class CheckAvailabilityPlugin extends AbstractPlugin implements CartPreCheckPlug
      *  - In case `ItemTransfer.amount` was defined, item availability check will be ignored.
      *
      * @api
-     *
-     * @deprecated Use {@link \Spryker\Zed\AvailabilityCartConnector\Communication\Plugin\Cart\CheckAvailabilityPlugin} instead.
      *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
