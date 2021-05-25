@@ -19,8 +19,15 @@ interface SalesConstants
      * Specification:
      * - Mapping payment methods to statemachine
      * - Shared config: don't change its name: PAYMENT_METHOD_STATEMACHINE_MAPPING
+     * - Returns a map of the payment methods and state machine's processes names.
      *
      * @api
+     *
+     * @example The format of returned array is:
+     * [
+     *    'PAYMENT_METHOD_1' => 'StateMachineProcess_1',
+     *    'PAYMENT_METHOD_2' => 'StateMachineProcess_2',
+     * ]
      */
     public const PAYMENT_METHOD_STATEMACHINE_MAPPING = 'PAYMENT_METHOD_STATEMACHINE_MAPPING';
 }

@@ -136,4 +136,7 @@
         <property name="idSalesOrder" type="int"/>
     </transfer>
 
+    <transfer name="SaveOrder">
+    </transfer>
+
 </transfers>

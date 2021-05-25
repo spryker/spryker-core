@@ -7,21 +7,11 @@
 
 namespace Spryker\Zed\Payment\Dependency\Plugin\Payment;
 
-use Generated\Shared\Transfer\PaymentMethodsTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\PaymentExtension\Dependency\Plugin\PaymentMethodFilterPluginInterface as PaymentExtensionMethodFilterPluginInterface;
 
-interface PaymentMethodFilterPluginInterface
+/**
+ * @deprecated Use {@link \Spryker\Zed\PaymentExtension\Dependency\Plugin\PaymentMethodFilterPluginInterface} instead.
+ */
+interface PaymentMethodFilterPluginInterface extends PaymentExtensionMethodFilterPluginInterface
 {
-    /**
-     * Specification:
-     * - Returns filtered by set of plugins array object of payments
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\PaymentMethodsTransfer $paymentMethodsTransfer
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\PaymentMethodsTransfer
-     */
-    public function filterPaymentMethods(PaymentMethodsTransfer $paymentMethodsTransfer, QuoteTransfer $quoteTransfer);
 }
