@@ -383,7 +383,7 @@ class CodeArchitectureSnifferConsole extends Console
             return;
         }
 
-        $output->writeln($count . ($isIgnored ? ' ignored' : '') . ' violations found');
+        $output->writeln($count . ($isIgnored ? ' ' . SalesConstants::NAME_IGNORED_VIOLATIONS : '') . ' violations found');
     }
 
     /**
