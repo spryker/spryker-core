@@ -10,6 +10,9 @@ namespace Spryker\Zed\Payment\Business\Checkout;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 interface PaymentPluginExecutorInterface
 {
     /**

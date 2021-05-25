@@ -6,13 +6,13 @@
     "require": {
         "php": ">=7.3",
         "spryker/kernel": "^3.30.0",
+        "spryker/payment-extension": "^1.0.0",
         "spryker/step-engine": "^3.1.0",
         "spryker/symfony": "^3.0.0"
     },
     "require-dev": {
         "spryker/code-sniffer": "*",
         "spryker/oms": "*",
-        "spryker/payment": "*",
         "spryker/propel": "*",
         "spryker/sales": "*",
         "spryker/testify": "*"

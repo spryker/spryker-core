@@ -13,6 +13,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginInterface;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\GiftCard\Communication\Plugin\Checkout\GiftCardCheckoutDoSaveOrderPlugin} instead.
+ *
  * @method \Spryker\Zed\GiftCard\Business\GiftCardFacadeInterface getFacade()
  * @method \Spryker\Zed\GiftCard\Communication\GiftCardCommunicationFactory getFactory()
  * @method \Spryker\Zed\GiftCard\GiftCardConfig getConfig()
@@ -32,8 +34,6 @@ class GiftCardOrderSaverPlugin extends AbstractPlugin implements CheckoutPluginI
      */
     public function execute(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
-         $this
-            ->getFacade()
-            ->saveGiftCardPayments($quoteTransfer, $checkoutResponseTransfer);
+        $this->getFacade()->saveGiftCardPayments($quoteTransfer, $checkoutResponseTransfer);
     }
 }
