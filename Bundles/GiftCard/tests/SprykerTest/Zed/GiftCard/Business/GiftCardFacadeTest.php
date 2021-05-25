@@ -14,13 +14,23 @@ use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\DataBuilder\ShipmentGroupBuilder;
 use Generated\Shared\DataBuilder\ShipmentMethodBuilder;
 use Generated\Shared\DataBuilder\ShipmentMethodsBuilder;
+use Generated\Shared\Transfer\GiftCardAbstractProductConfigurationTransfer;
 use Generated\Shared\Transfer\GiftCardMetadataTransfer;
+use Generated\Shared\Transfer\GiftCardTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\PaymentTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SalesPaymentTransfer;
+use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Zed\GiftCard\Business\GiftCardBusinessFactory;
 use Spryker\Zed\GiftCard\Business\GiftCardFacadeInterface;
+use Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardPaymentSaverPluginInterface;
 use Spryker\Zed\GiftCard\GiftCardConfig;
+use Spryker\Zed\GiftCard\GiftCardDependencyProvider;
+use SprykerTest\Zed\Sales\Helper\BusinessHelper;
 
 /**
  * Auto-generated group annotations
@@ -35,6 +45,8 @@ use Spryker\Zed\GiftCard\GiftCardConfig;
  */
 class GiftCardFacadeTest extends Test
 {
+    protected const TEST_GIFT_CARD_CODE = 'testCode';
+
     /**
      * @var \SprykerTest\Zed\GiftCard\GiftCardBusinessTester
      */
@@ -73,12 +85,17 @@ class GiftCardFacadeTest extends Test
      */
     public function testCreateShouldPersistGiftCard(): void
     {
+        // Arrange
+        /** @var \Generated\Shared\Transfer\GiftCardTransfer $giftCardTransfer */
         $giftCardTransfer = (new GiftCardBuilder([
             'attributes' => [],
             'idGiftCard' => null,
         ]))->build();
+
+        // Act
         $this->getFacade()->create($giftCardTransfer);
 
+        // Assert
         $this->assertNotNull($giftCardTransfer->getIdGiftCard());
 
         $createdGiftCardTransfer = $this->getFacade()->findById($giftCardTransfer->getIdGiftCard());
@@ -207,6 +224,182 @@ class GiftCardFacadeTest extends Test
     }
 
     /**
+     * @return void
+     */
+    public function testSaveOrderGiftCardsShouldCreatePaymentGiftCardEntity(): void
+    {
+        // Arrange
+        $idSalesPayment = $this->createSalesPaymentEntity();
+
+        $anotherPaymentTransfer = new PaymentTransfer();
+        $giftCardTransfer = new GiftCardTransfer();
+        $giftCardTransfer->setCode(static::TEST_GIFT_CARD_CODE);
+        $giftCardPaymentTransfer = (new PaymentTransfer())
+            ->setPaymentProvider(GiftCardConfig::PROVIDER_NAME)
+            ->setGiftCard($giftCardTransfer)
+            ->setAmount(100)
+            ->setIdSalesPayment($idSalesPayment);
+
+        $quoteTransfer = (new QuoteTransfer())
+            ->addPayment($anotherPaymentTransfer)
+            ->addPayment($giftCardPaymentTransfer);
+
+        // Act
+        $this->getFacade()->saveOrderGiftCards($quoteTransfer, new SaveOrderTransfer());
+
+        // Assert
+        $this->tester->assertPaymentGiftCardExistBySalesPaymentId($idSalesPayment, 1);
+        $this->tester->assertPaymentGiftCardExistBySalesPaymentIdAndCode($idSalesPayment, static::TEST_GIFT_CARD_CODE);
+    }
+
+    /**
+     * @return void
+     */
+    public function testSaveOrderGiftCardsShouldCreateSalesOrderItemGiftCardEntities(): void
+    {
+        // Arrange
+        $this->tester->configureTestStateMachine([BusinessHelper::DEFAULT_OMS_PROCESS_NAME]);
+        $saveOrderTransfer = $this->tester->haveOrder([], BusinessHelper::DEFAULT_OMS_PROCESS_NAME);
+        $oneSalesOrderItemEntity = $this->tester->createSalesOrderItemForOrder(
+            $saveOrderTransfer->getIdSalesOrder(),
+            ['name' => 'item 1']
+        );
+        $twoSalesOrderItemEntity = $this->tester->createSalesOrderItemForOrder(
+            $saveOrderTransfer->getIdSalesOrder(),
+            ['name' => 'item 2']
+        );
+
+        $oneGiftCardItemTransfer = new ItemTransfer();
+        $oneGiftCardItemTransfer->setIdSalesOrderItem($oneSalesOrderItemEntity->getIdSalesOrderItem());
+        $oneGiftCardItemTransfer->setGiftCardMetadata(new GiftCardMetadataTransfer());
+        $oneGiftCardItemTransfer->getGiftCardMetadata()
+            ->setIsGiftCard(true)
+            ->setAbstractConfiguration(new GiftCardAbstractProductConfigurationTransfer());
+        $twoGiftCardItemTransfer = new ItemTransfer();
+        $twoGiftCardItemTransfer->setIdSalesOrderItem($twoSalesOrderItemEntity->getIdSalesOrderItem());
+        $twoGiftCardItemTransfer->setGiftCardMetadata(new GiftCardMetadataTransfer());
+        $twoGiftCardItemTransfer->getGiftCardMetadata()
+            ->setIsGiftCard(true)
+            ->setAbstractConfiguration(new GiftCardAbstractProductConfigurationTransfer());
+
+        $quoteTransfer = new QuoteTransfer();
+        $quoteTransfer->addItem($oneGiftCardItemTransfer);
+        $quoteTransfer->addItem($twoGiftCardItemTransfer);
+        $quoteTransfer->addItem(new ItemTransfer());
+
+        // Act
+        $this->getFacade()->saveOrderGiftCards($quoteTransfer, new SaveOrderTransfer());
+
+        // Assert
+        $this->tester->assertSalesOrderItemGiftCardExistBySalesPaymentId($saveOrderTransfer->getIdSalesOrder(), 2);
+    }
+
+    /**
+     * @return void
+     */
+    public function testSaveOrderGiftCardsWithZeroGiftCardAmountShouldNotCreatePaymentGiftCardEntity(): void
+    {
+        // Arrange
+        $idSalesPayment = $this->createSalesPaymentEntity();
+
+        $anotherPaymentTransfer = new PaymentTransfer();
+        $giftCardTransfer = new GiftCardTransfer();
+        $giftCardTransfer->setCode(static::TEST_GIFT_CARD_CODE);
+        $giftCardPaymentTransfer = (new PaymentTransfer())
+            ->setPaymentProvider(GiftCardConfig::PROVIDER_NAME)
+            ->setGiftCard($giftCardTransfer)
+            ->setAmount(0)
+            ->setIdSalesPayment($idSalesPayment);
+
+        $quoteTransfer = (new QuoteTransfer())
+            ->addPayment($anotherPaymentTransfer)
+            ->addPayment($giftCardPaymentTransfer);
+
+        // Act
+        $this->getFacade()->saveOrderGiftCards($quoteTransfer, new SaveOrderTransfer());
+
+        // Assert
+        $this->tester->assertPaymentGiftCardExistBySalesPaymentId($idSalesPayment, 0);
+    }
+
+    /**
+     * @return void
+     */
+    public function testSaveOrderGiftCardsWithoutGiftCardShouldNotCreatePaymentGiftCardEntity(): void
+    {
+        // Arrange
+        $idSalesPayment = $this->createSalesPaymentEntity();
+
+        $anotherPaymentTransfer = new PaymentTransfer();
+        $giftCardPaymentTransfer = (new PaymentTransfer())
+            ->setPaymentProvider(GiftCardConfig::PROVIDER_NAME)
+            ->setAmount(0)
+            ->setIdSalesPayment($idSalesPayment);
+
+        $quoteTransfer = (new QuoteTransfer())
+            ->addPayment($anotherPaymentTransfer)
+            ->addPayment($giftCardPaymentTransfer);
+
+        // Act
+        $this->getFacade()->saveOrderGiftCards($quoteTransfer, new SaveOrderTransfer());
+
+        // Assert
+        $this->tester->assertPaymentGiftCardExistBySalesPaymentId($idSalesPayment, 0);
+    }
+
+    /**
+     * @return void
+     */
+    public function testSaveOrderGiftCardsExecutePluginStack(): void
+    {
+        // Arrange
+        $anotherPaymentTransfer = new PaymentTransfer();
+        $giftCardTransfer = new GiftCardTransfer();
+        $giftCardTransfer->setCode(static::TEST_GIFT_CARD_CODE);
+        $giftCardPaymentTransfer = (new PaymentTransfer())
+            ->setPaymentProvider(GiftCardConfig::PROVIDER_NAME)
+            ->setGiftCard($giftCardTransfer)
+            ->setAmount(100)
+            ->setIdSalesPayment($this->createSalesPaymentEntity());
+
+        $quoteTransfer = (new QuoteTransfer())
+            ->addPayment($anotherPaymentTransfer)
+            ->addPayment($giftCardPaymentTransfer);
+
+        $giftCardPaymentSaverPluginMock = $this->getMockBuilder(GiftCardPaymentSaverPluginInterface::class)
+            ->getMock();
+        $giftCardPaymentSaverPluginMock->expects($this->once())
+            ->method('savePayment');
+
+        $this->tester->setDependency(
+            GiftCardDependencyProvider::GIFT_CARD_PAYMENT_SAVER_PLUGINS,
+            [
+                $giftCardPaymentSaverPluginMock,
+            ]
+        );
+
+        // Act
+        $this->getFacade()->saveOrderGiftCards($quoteTransfer, new SaveOrderTransfer());
+    }
+
+    /**
+     * @return int
+     */
+    protected function createSalesPaymentEntity(): int
+    {
+        $this->tester->configureTestStateMachine([BusinessHelper::DEFAULT_OMS_PROCESS_NAME]);
+        $salesOrderTransfer = $this->tester->haveOrder([], BusinessHelper::DEFAULT_OMS_PROCESS_NAME);
+        $salesPaymentTransfer = (new SalesPaymentTransfer())
+            ->setPaymentProvider('Test provider')
+            ->setPaymentMethod('Test method')
+            ->setAmount(100)
+            ->setFkSalesOrder($salesOrderTransfer->getIdSalesOrder());
+        $salesPaymentEntity = $this->tester->haveSalesPaymentEntity($salesPaymentTransfer);
+
+        return $salesPaymentEntity->getIdSalesPayment();
+    }
+
+    /**
      * @return array
      */
     protected function getDataWithOnlyGiftCardItems(): array
@@ -272,14 +465,17 @@ class GiftCardFacadeTest extends Test
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\GiftCard\Business\GiftCardFacadeInterface
+     * @return \Spryker\Zed\GiftCard\Business\GiftCardFacadeInterface
      */
     protected function getFacadeWithMockedConfig(): GiftCardFacadeInterface
     {
+        /** @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\GiftCard\GiftCardConfig $configMock */
         $configMock = $this->createGiftCardConfigMock();
+        /** @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\GiftCard\Business\GiftCardBusinessFactory $businessFactoryMock */
         $businessFactoryMock = $this->createGiftCardBusinessFactoryMock();
         $businessFactoryMock->setConfig($configMock);
 
+        /** @var \Spryker\Zed\GiftCard\Business\GiftCardFacadeInterface|\Spryker\Zed\Kernel\Business\AbstractFacade $facade */
         $facade = $this->tester->getFacade();
         $facade->setFactory($businessFactoryMock);
 

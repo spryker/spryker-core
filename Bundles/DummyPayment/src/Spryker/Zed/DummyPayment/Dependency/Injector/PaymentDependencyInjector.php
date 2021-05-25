@@ -16,6 +16,9 @@ use Spryker\Zed\Kernel\Dependency\Injector\AbstractDependencyInjector;
 use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginCollection;
 use Spryker\Zed\Payment\PaymentDependencyProvider;
 
+/**
+ * @deprecated Use {@link \Spryker\Zed\Payment\PaymentDependencyProvider} instead.
+ */
 class PaymentDependencyInjector extends AbstractDependencyInjector
 {
     /**

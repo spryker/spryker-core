@@ -8,6 +8,9 @@
 namespace SprykerTest\Zed\DummyPayment;
 
 use Codeception\Actor;
+use Generated\Shared\Transfer\PaymentTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Shared\DummyPayment\DummyPaymentConfig;
 
 /**
  * @method void wantToTest($text)
@@ -26,4 +29,17 @@ use Codeception\Actor;
 class DummyPaymentCommunicationTester extends Actor
 {
     use _generated\DummyPaymentCommunicationTesterActions;
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function createQuoteTransfer(): QuoteTransfer
+    {
+        $paymentTransfer = new PaymentTransfer();
+        $paymentTransfer->setPaymentProvider(DummyPaymentConfig::PROVIDER_NAME);
+        $quoteTransfer = new QuoteTransfer();
+        $quoteTransfer->setPayment($paymentTransfer);
+
+        return $quoteTransfer;
+    }
 }

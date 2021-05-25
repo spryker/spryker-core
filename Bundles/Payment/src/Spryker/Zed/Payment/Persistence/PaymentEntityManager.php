@@ -8,7 +8,10 @@
 namespace Spryker\Zed\Payment\Persistence;
 
 use Generated\Shared\Transfer\PaymentMethodTransfer;
+use Generated\Shared\Transfer\PaymentProviderTransfer;
+use Orm\Zed\Payment\Persistence\SpyPaymentMethod;
 use Orm\Zed\Payment\Persistence\SpyPaymentMethodStore;
+use Orm\Zed\Payment\Persistence\SpyPaymentProvider;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -86,5 +89,41 @@ class PaymentEntityManager extends AbstractEntityManager implements PaymentEntit
             ->filterByFkPaymentMethod($idPaymentMethod)
             ->filterByFkStore_In($idStores)
             ->delete();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PaymentProviderTransfer $paymentProviderTransfer
+     *
+     * @return \Generated\Shared\Transfer\PaymentProviderTransfer
+     */
+    public function createPaymentProvider(PaymentProviderTransfer $paymentProviderTransfer): PaymentProviderTransfer
+    {
+        $paymentProviderEntity = $this->getFactory()
+            ->createPaymentProviderMapper()
+            ->mapPaymentProviderTransferToPaymentProviderEntity($paymentProviderTransfer, (new SpyPaymentProvider()));
+
+        $paymentProviderEntity->save();
+
+        return $this->getFactory()
+            ->createPaymentProviderMapper()
+            ->mapPaymentProviderEntityToPaymentProviderTransfer($paymentProviderEntity, (new PaymentProviderTransfer()));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PaymentMethodTransfer $paymentMethodTransfer
+     *
+     * @return \Generated\Shared\Transfer\PaymentMethodTransfer
+     */
+    public function createPaymentMethod(PaymentMethodTransfer $paymentMethodTransfer): PaymentMethodTransfer
+    {
+        $paymentMethodEntity = $this->getFactory()
+            ->createPaymentMapper()
+            ->mapPaymentMethodTransferToPaymentMethodEntity($paymentMethodTransfer, (new SpyPaymentMethod()));
+
+        $paymentMethodEntity->save();
+
+        return $this->getFactory()
+            ->createPaymentMapper()
+            ->mapPaymentMethodEntityToPaymentMethodTransfer($paymentMethodEntity, (new PaymentMethodTransfer()));
     }
 }
