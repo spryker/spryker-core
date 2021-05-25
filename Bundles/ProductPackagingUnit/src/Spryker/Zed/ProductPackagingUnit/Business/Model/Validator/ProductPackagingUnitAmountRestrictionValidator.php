@@ -304,8 +304,8 @@ class ProductPackagingUnitAmountRestrictionValidator implements ProductPackaging
             ->setValue($message)
             ->setParameters([
                 '%sku%' => $sku,
-                '%restrictionValue%' => round($restrictionValue->toString(), 2),
-                '%actualValue%' => round($actualValue->toString(), 2),
+                '%restrictionValue%' => $restrictionValue->truncate(2)->toString(),
+                '%actualValue%' => $actualValue->truncate(2)->toString(),
             ]);
     }
 
