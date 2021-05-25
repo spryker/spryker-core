@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\Payment\Dependency\Plugin\Checkout;
 
+/**
+ * @deprecated Use {@link \Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutDoSaveOrderInterface} instead.
+ */
 interface CheckoutSaveOrderPluginInterface extends CheckoutPluginInterface
 {
 }
