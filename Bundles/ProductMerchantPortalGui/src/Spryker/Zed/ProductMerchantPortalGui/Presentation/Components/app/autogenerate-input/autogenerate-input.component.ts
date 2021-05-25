@@ -39,8 +39,7 @@ export class AutogenerateInputComponent implements OnChanges {
     }
 
     onCheckboxChange(checked: boolean): void {
-        if (checked) {
-            this.value = this.defaultValue?.length ? this.defaultValue : this.originalValue;
-        }
+        this.value = !checked ? '' : this.defaultValue?.length ? this.defaultValue : this.originalValue;
+        this.error = '';
     }
 }
