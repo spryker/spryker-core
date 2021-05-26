@@ -25,8 +25,8 @@ class CategoryGuiToStoreFacadeBridge implements CategoryGuiToStoreFacadeInterfac
     /**
      * @return \Generated\Shared\Transfer\StoreTransfer[]
      */
-    public function getAllStores()
+    public function getStoresAvailableForCurrentPersistence(): array
     {
-        return $this->storeFacade->getAllStores();
+        return $this->storeFacade->getStoresAvailableForCurrentPersistence();
     }
 }
