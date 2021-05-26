@@ -23,18 +23,18 @@ class StoreGuiToStoreFacadeBridge implements StoreGuiToStoreFacadeInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\StoreTransfer[]
-     */
-    public function getAllStores()
-    {
-        return $this->storeFacade->getAllStores();
-    }
-
-    /**
      * @return bool
      */
     public function isMultiStorePerZedEnabled(): bool
     {
         return $this->storeFacade->isMultiStorePerZedEnabled();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     */
+    public function getStoresAvailableForCurrentPersistence(): array
+    {
+        return $this->storeFacade->getStoresAvailableForCurrentPersistence();
     }
 }

@@ -165,4 +165,18 @@ class StoreFacade extends AbstractFacade implements StoreFacadeInterface
             ->getConfig()
             ->isMultiStorePerZedEnabled();
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     */
+    public function getStoresAvailableForCurrentPersistence(): array
+    {
+        return $this->getFactory()
+            ->createStoreReader()
+            ->getStoresAvailableForCurrentPersistence();
+    }
 }

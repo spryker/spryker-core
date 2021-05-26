@@ -58,7 +58,7 @@ class StoreRelationDropdownDataProvider
      */
     protected function getStoreNamesIndexedByIdStore(): array
     {
-        $storeTransferCollection = $this->storeFacade->getAllStores();
+        $storeTransferCollection = $this->storeFacade->getStoresAvailableForCurrentPersistence();
 
         $storeNameMap = [];
         foreach ($storeTransferCollection as $storeTransfer) {

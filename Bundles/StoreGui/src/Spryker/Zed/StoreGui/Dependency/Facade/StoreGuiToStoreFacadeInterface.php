@@ -10,12 +10,12 @@ namespace Spryker\Zed\StoreGui\Dependency\Facade;
 interface StoreGuiToStoreFacadeInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\StoreTransfer[]
-     */
-    public function getAllStores();
-
-    /**
      * @return bool
      */
     public function isMultiStorePerZedEnabled(): bool;
+
+    /**
+     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     */
+    public function getStoresAvailableForCurrentPersistence(): array;
 }

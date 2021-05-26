@@ -64,4 +64,9 @@ interface StoreReaderInterface
      * @return \Generated\Shared\Transfer\StoreTransfer[]
      */
     public function getStoreTransfersByStoreNames(array $storeNames): array;
+
+    /**
+     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     */
+    public function getStoresAvailableForCurrentPersistence(): array;
 }
