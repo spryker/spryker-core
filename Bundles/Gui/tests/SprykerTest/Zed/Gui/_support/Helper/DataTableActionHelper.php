@@ -102,30 +102,6 @@ class DataTableActionHelper extends Module
     }
 
     /**
-     * @param string $columnName
-     * @param string $sortOrder
-     * @param string|null $gridId
-     *
-     * @return void
-     */
-    public function clickSortingButton(string $columnName, string $sortOrder = 'desc', ?string $gridId = null): void
-    {
-        $driver = $this->getDriver();
-
-        $selector = sprintf('//table[@data-qa="data-table"]//th[contains(@class, "column-%1$s") and contains(@class, "sorting_%2$s")]', $columnName, $sortOrder);
-
-        if ($gridId) {
-            $selector = sprintf('//div[@id="%3$s"]//table[@data-qa="data-table"]//th[contains(@class, "column-%1$s") and contains(@class, "sorting_%2$s")]', $columnName, $sortOrder, $gridId);
-        }
-
-        if (method_exists($driver, 'waitForElementVisible')) {
-            $driver->waitForElementVisible($selector);
-        }
-
-        $driver->click($selector);
-    }
-
-    /**
      * @param string $name
      * @param int $rowPosition
      * @param string|null $gridId
