@@ -14,6 +14,8 @@ use Generated\Shared\Transfer\ProductConcreteAvailabilityCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SellableProductsBatchRequestTransfer;
+use Generated\Shared\Transfer\SellableProductsBatchResponseTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Spryker\DecimalObject\Decimal;
@@ -26,6 +28,23 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInterface
 {
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SellableProductsBatchRequestTransfer $sellableProductsBatchRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\SellableProductsBatchResponseTransfer
+     */
+    public function areProductsSellableForStore(
+        SellableProductsBatchRequestTransfer $sellableProductsBatchRequestTransfer
+    ): SellableProductsBatchResponseTransfer {
+        return $this->getFactory()
+            ->createSellableModel()
+            ->areProductsSellableForStore($sellableProductsBatchRequestTransfer);
+    }
+
     /**
      * {@inheritDoc}
      *

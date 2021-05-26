@@ -38,6 +38,17 @@ interface AvailabilityRepositoryInterface
     ): array;
 
     /**
+     * @param string[] $concreteSkus
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer[]
+     */
+    public function findProductConcreteAvailabilityBySkuAndStoreBatch(
+        array $concreteSkus,
+        StoreTransfer $storeTransfer
+    ): array;
+
+    /**
      * @param string $concreteSku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *

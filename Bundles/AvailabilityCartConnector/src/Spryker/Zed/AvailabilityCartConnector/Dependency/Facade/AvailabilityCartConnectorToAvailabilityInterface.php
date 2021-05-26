@@ -9,6 +9,8 @@ namespace Spryker\Zed\AvailabilityCartConnector\Dependency\Facade;
 
 use Generated\Shared\Transfer\ProductAvailabilityCriteriaTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
+use Generated\Shared\Transfer\SellableProductsBatchRequestTransfer;
+use Generated\Shared\Transfer\SellableProductsBatchResponseTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\DecimalObject\Decimal;
 
@@ -26,6 +28,15 @@ interface AvailabilityCartConnectorToAvailabilityInterface
         StoreTransfer $storeTransfer,
         ?ProductAvailabilityCriteriaTransfer $productAvailabilityCriteriaTransfer = null
     ): ?ProductConcreteAvailabilityTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\SellableProductsBatchRequestTransfer $sellableProductsBatchRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\SellableProductsBatchResponseTransfer
+     */
+    public function areProductsSellableForStore(
+        SellableProductsBatchRequestTransfer $sellableProductsBatchRequestTransfer
+    ): SellableProductsBatchResponseTransfer;
 
     /**
      * @param string $sku

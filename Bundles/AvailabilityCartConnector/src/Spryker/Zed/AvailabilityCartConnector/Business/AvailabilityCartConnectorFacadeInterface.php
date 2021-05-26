@@ -27,5 +27,20 @@ interface AvailabilityCartConnectorFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
+    public function checkCartAvailabilityBatch(CartChangeTransfer $cartChangeTransfer);
+
+    /**
+     * Specification:
+     *  - Executes `CartItemQuantityCounterStrategyPluginInterface` plugins.
+     *  - Checks if items in CartChangeTransfer are sellable.
+     *  - In case `ItemTransfer.amount` was defined, item availability check will be ignored.
+     *  - Returns transfer with error message and isSuccess flag set to false when some of items are not available.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
+     */
     public function checkCartAvailability(CartChangeTransfer $cartChangeTransfer);
 }

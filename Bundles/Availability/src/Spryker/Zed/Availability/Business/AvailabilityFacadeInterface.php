@@ -14,12 +14,30 @@ use Generated\Shared\Transfer\ProductConcreteAvailabilityCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SellableProductsBatchRequestTransfer;
+use Generated\Shared\Transfer\SellableProductsBatchResponseTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Spryker\DecimalObject\Decimal;
 
 interface AvailabilityFacadeInterface
 {
+    /**
+     * Specification:
+     *  - Checks if product is never out of stock for given store.
+     *  - Checks if product has stock in stock table.
+     *  - Checks if have placed orders where items have state machine state flagged as reserved.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SellableProductsBatchRequestTransfer $sellableProductsBatchRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\SellableProductsBatchResponseTransfer
+     */
+    public function areProductsSellableForStore(
+        SellableProductsBatchRequestTransfer $sellableProductsBatchRequestTransfer
+    ): SellableProductsBatchResponseTransfer;
+
     /**
      * Specification:
      *  - Checks if product is never out of stock for given store.

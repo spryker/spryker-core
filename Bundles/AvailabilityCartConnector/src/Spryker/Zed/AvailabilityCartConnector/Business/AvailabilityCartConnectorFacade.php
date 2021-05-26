@@ -24,6 +24,22 @@ class AvailabilityCartConnectorFacade extends AbstractFacade implements Availabi
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
+    public function checkCartAvailabilityBatch(CartChangeTransfer $cartChangeTransfer)
+    {
+        return $this->getFactory()
+            ->createCartCheckAvailability()
+            ->checkCartAvailability($cartChangeTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
+     */
     public function checkCartAvailability(CartChangeTransfer $cartChangeTransfer)
     {
         return $this->getFactory()
