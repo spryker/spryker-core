@@ -16,6 +16,8 @@ use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
+ * @link https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security
+ *
  * @method \Spryker\Glue\Http\HttpConfig getConfig()
  */
 class StrictTransportSecurityHeaderEventDispatcherPlugin extends AbstractPlugin implements EventDispatcherPluginInterface
