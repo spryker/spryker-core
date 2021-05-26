@@ -16,6 +16,7 @@ use Generated\Shared\Transfer\GiftCardTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\PaymentMethodsTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 
 interface GiftCardFacadeInterface
@@ -111,10 +112,12 @@ interface GiftCardFacadeInterface
     public function precheckSalesOrderGiftCards(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse);
 
     /**
-     * Specification:
-     * - Creates gift card payments
-     *
      * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\GiftCard\Business\GiftCardFacadeInterface::saveOrderGiftCards()} instead.
+     *
+     * Specification:
+     * - Creates gift card payments.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
@@ -122,6 +125,21 @@ interface GiftCardFacadeInterface
      * @return void
      */
     public function saveGiftCardPayments(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse);
+
+    /**
+     * Specification:
+     * - Persists gift card's data from order items into DB table spy_sales_order_item_gift_card.
+     * - Saves gift card payments from the quote into DB table spy_payment_gift_card.
+     * - Executes GiftCardPaymentSaverPluginInterface plugin stack.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     *
+     * @return void
+     */
+    public function saveOrderGiftCards(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void;
 
     /**
      * Specification:
@@ -152,9 +170,11 @@ interface GiftCardFacadeInterface
 
     /**
      * Specification:
-     * - Persists gift cards from quote
+     * - Persists gift card's items from quote.
      *
      * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\GiftCard\Business\GiftCardFacadeInterface::saveOrderGiftCards()} instead.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
@@ -196,6 +216,10 @@ interface GiftCardFacadeInterface
      *
      * @api
      *
+     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\ShipmentMethodTransfer> $shipmentMethods
+     *
+     * @phpstan-return array<int, \Generated\Shared\Transfer\ShipmentMethodTransfer>
+     *
      * @deprecated Use {@link \Spryker\Zed\GiftCard\Business\GiftCardFacadeInterface::filterShipmentGroupMethods()} instead.
      *
      * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentMethodTransfer[] $shipmentMethods
@@ -210,6 +234,8 @@ interface GiftCardFacadeInterface
      * - Filters non-available for gift cards shipment methods for each shipment group.
      *
      * @api
+     *
+     * @phpstan-return \ArrayObject<int, \Generated\Shared\Transfer\ShipmentMethodTransfer>
      *
      * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
      *

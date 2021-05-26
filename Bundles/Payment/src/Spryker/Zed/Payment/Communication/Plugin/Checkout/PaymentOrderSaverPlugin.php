@@ -12,9 +12,14 @@ use Generated\Shared\Transfer\SaveOrderTransfer;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutDoSaveOrderInterface;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\SalesPayment\Communication\Plugin\Checkout\SalesPaymentCheckoutDoSaveOrderPlugin}
+ * and {@link \Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutDoSaveOrderInterface} instead.
+ *
  * Requires Checkout ^4.0.0
  *
  * @method \Spryker\Zed\Payment\Business\PaymentFacadeInterface getFacade()
+ * @method \Spryker\Zed\Payment\Persistence\PaymentQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Payment\PaymentConfig getConfig()
  */
 class PaymentOrderSaverPlugin extends AbstractPaymentOrderPlugin implements CheckoutDoSaveOrderInterface
 {

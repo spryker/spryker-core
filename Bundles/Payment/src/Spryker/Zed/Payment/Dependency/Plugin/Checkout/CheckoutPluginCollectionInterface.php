@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\Payment\Dependency\Plugin\Checkout;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 interface CheckoutPluginCollectionInterface
 {
     /**
