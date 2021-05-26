@@ -32,6 +32,7 @@ class ProductManagementProductConcreteViewCest
         $i->registerMoneyCollectionFormTypePlugin();
 
         $i->amOnPage(ProductManagementProductListPage::URL);
+        $i->clickSortingButton('id_product_abstract', 'asc');
         $i->clickDataTableViewButton();
         $i->clickDataTableViewButton(1, 'product-variant-table_wrapper');
 
