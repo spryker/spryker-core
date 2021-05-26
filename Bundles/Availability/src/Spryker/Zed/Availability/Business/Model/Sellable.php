@@ -157,17 +157,29 @@ class Sellable implements SellableInterface
         $sellableProductResponseItemTransfers = [];
         /** @var \Generated\Shared\Transfer\StoreTransfer $storeTransfer */
         $storeTransfer = $sellableProductConcretesBatchRequestTransfer->getStore();
-        $concreteSkus = array_column($sellableProductConcretesBatchRequestTransfer->getSellableProductRequestItems()->getArrayCopy(), 'sku');
+            $sellableProductConcretesBatchRequestArray = $sellableProductConcretesBatchRequestTransfer->getSellableProductRequestItems()->getArrayCopy();
+        $concreteSkus = [];
+
+        foreach ($sellableProductConcretesBatchRequestTransfer->getSellableProductRequestItems() as $sellableProductRequestItem) {
+            /** @var string $sku */
+            $sku = $sellableProductRequestItem->getSku();
+            $concreteSkus[] = $sku;
+        }
+
         $productConcreteAvailabilityTransfers = $this->availabilityRepository
-            ->findProductConcreteAvailabilityBySkuAndStoreBatch($concreteSkus, $storeTransfer);
+        ->findProductConcreteAvailabilityBySkuAndStoreBatch($concreteSkus, $storeTransfer);
         $productConcreteAvailabilityTransfersSkuMap = $this->getProductConcreteAvailabilityTransfersSkuMap($productConcreteAvailabilityTransfers);
 
         foreach ($sellableProductConcretesBatchRequestTransfer->getSellableProductRequestItems() as $sellableProductRequestItemTransfer) {
             $concreteSku = $sellableProductRequestItemTransfer->getSkuOrFail();
-            $productConcreteAvailabilityTransfer = $productConcreteAvailabilityTransfersSkuMap[$concreteSku];
-            if (!empty($productConcreteAvailabilityTransfer)) {
+            $productConcreteAvailabilityTransfersExistForSku = array_key_exists($concreteSku, $productConcreteAvailabilityTransfersSkuMap);
+            $productConcreteAvailabilityTransfer = null;
+            if (!$productConcreteAvailabilityTransfersExistForSku) {
                 $productConcreteAvailabilityTransfer = $this->availabilityHandler
                     ->updateProductConcreteAvailabilityBySku($concreteSku, $storeTransfer);
+            }
+            if ($productConcreteAvailabilityTransfersExistForSku) {
+                $productConcreteAvailabilityTransfer = $productConcreteAvailabilityTransfersSkuMap[$concreteSku];
             }
             $sellableProductResponseItemTransfers[] = $this->getSellableProductResponseItemTransfer(
                 $sellableProductRequestItemTransfer,
@@ -188,7 +200,7 @@ class Sellable implements SellableInterface
         return array_reduce(
             $productConcreteAvailabilityTransfers,
             function (
-                array $resultMap,
+                array $resuSellableltMap,
                 ProductConcreteAvailabilityTransfer $productConcreteAvailabilityTransfer
             ): array {
                 $resultMap[$productConcreteAvailabilityTransfer->getSku()] = $productConcreteAvailabilityTransfer;

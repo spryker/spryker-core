@@ -28,7 +28,7 @@ class AvailabilityCartConnectorFacade extends AbstractFacade implements Availabi
     {
         return $this->getFactory()
             ->createCartCheckAvailability()
-            ->checkCartAvailability($cartChangeTransfer);
+            ->checkCartAvailabilityBatch($cartChangeTransfer);
     }
 
     /**

@@ -30,6 +30,6 @@ class CheckAvailabilityPlugin extends AbstractPlugin implements CartPreCheckPlug
      */
     public function check(CartChangeTransfer $cartChangeTransfer)
     {
-        return $this->getFacade()->checkCartAvailability($cartChangeTransfer);
+        return $this->getFacade()->checkCartAvailabilityBatch($cartChangeTransfer);
     }
 }
