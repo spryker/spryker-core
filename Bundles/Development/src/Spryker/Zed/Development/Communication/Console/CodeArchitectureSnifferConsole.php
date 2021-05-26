@@ -14,7 +14,7 @@ use Laminas\Filter\FilterChain;
 use Laminas\Filter\StringToLower;
 use Laminas\Filter\Word\CamelCaseToDash;
 use Laminas\Filter\Word\UnderscoreToCamelCase;
-use Spryker\Shared\Sales\SalesConstants;
+use Spryker\Shared\Development\DevelopmentConfig;
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -325,20 +325,20 @@ class CodeArchitectureSnifferConsole extends Console
             $count = 0;
 
             foreach ($violationsArray as $violation) {
-                if ($type === SalesConstants::NAME_VISIBLE_VIOLATIONS) {
-                    $output->writeln('<error> ' . trim($violation[SalesConstants::VIOLATION_FIELD_NAME_DESCRIPTION]) . '<error> ', OutputInterface::VERBOSITY_VERBOSE);
+                if ($type === DevelopmentConfig::NAME_VISIBLE_VIOLATIONS) {
+                    $output->writeln('<error> ' . trim($violation[DevelopmentConfig::VIOLATION_FIELD_NAME_DESCRIPTION]) . '<error> ', OutputInterface::VERBOSITY_VERBOSE);
                 } else {
-                    $output->writeln(' - ' . trim($violation[SalesConstants::VIOLATION_FIELD_NAME_DESCRIPTION]), OutputInterface::VERBOSITY_VERBOSE);
+                    $output->writeln(' - ' . trim($violation[DevelopmentConfig::VIOLATION_FIELD_NAME_DESCRIPTION]), OutputInterface::VERBOSITY_VERBOSE);
                 }
 
-                $output->writeln(' ' . $violation[SalesConstants::VIOLATION_FIELD_NAME_RULESET] . ' > ' . $violation[SalesConstants::VIOLATION_FIELD_NAME_RULE], OutputInterface::VERBOSITY_VERBOSE);
+                $output->writeln(' ' . $violation[DevelopmentConfig::VIOLATION_FIELD_NAME_RULESET] . ' > ' . $violation[DevelopmentConfig::VIOLATION_FIELD_NAME_RULE], OutputInterface::VERBOSITY_VERBOSE);
                 $count++;
             }
 
-            $this->displayViolationsCountMessage($output, $count, ($type === SalesConstants::NAME_IGNORED_VIOLATIONS));
+            $this->displayViolationsCountMessage($output, $count, ($type === DevelopmentConfig::NAME_IGNORED_VIOLATIONS));
         }
 
-        return count($violations[SalesConstants::NAME_VISIBLE_VIOLATIONS]);
+        return count($violations[DevelopmentConfig::NAME_VISIBLE_VIOLATIONS]);
     }
 
     /**
@@ -383,7 +383,7 @@ class CodeArchitectureSnifferConsole extends Console
             return;
         }
 
-        $output->writeln($count . ($isIgnored ? ' ' . SalesConstants::NAME_IGNORED_VIOLATIONS : '') . ' violations found');
+        $output->writeln($count . ($isIgnored ? ' ' . DevelopmentConfig::NAME_IGNORED_VIOLATIONS : '') . ' violations found');
     }
 
     /**

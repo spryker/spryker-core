@@ -11,7 +11,7 @@ use Exception;
 use Laminas\Config\Reader\ReaderInterface;
 use PHPMD\RuleSetFactory;
 use PHPMD\TextUI\CommandLineOptions;
-use Spryker\Shared\Sales\SalesConstants;
+use Spryker\Shared\Development\DevelopmentConfig as SharedDevelopmentConfig;
 use Spryker\Zed\Development\Business\SnifferConfiguration\Builder\SnifferConfigurationBuilderInterface;
 use Spryker\Zed\Development\DevelopmentConfig;
 use Symfony\Component\Process\Process;
@@ -177,15 +177,15 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
     protected function sortViolations(array $result, array $reportResult): array
     {
         $sortedViolations = [
-            SalesConstants::NAME_VISIBLE_VIOLATIONS => [],
-            SalesConstants::NAME_IGNORED_VIOLATIONS => [],
+            SharedDevelopmentConfig::NAME_VISIBLE_VIOLATIONS => [],
+            SharedDevelopmentConfig::NAME_IGNORED_VIOLATIONS => [],
         ];
 
         foreach ($result as $key => $violations) {
-            if (array_search($violations[SalesConstants::VIOLATION_FIELD_NAME_DESCRIPTION], array_column($reportResult, SalesConstants::VIOLATION_FIELD_NAME_DESCRIPTION)) !== false) {
-                $sortedViolations[SalesConstants::NAME_IGNORED_VIOLATIONS][] = $result[$key];
+            if (array_search($violations[SharedDevelopmentConfig::VIOLATION_FIELD_NAME_DESCRIPTION], array_column($reportResult, SharedDevelopmentConfig::VIOLATION_FIELD_NAME_DESCRIPTION)) !== false) {
+                $sortedViolations[SharedDevelopmentConfig::NAME_IGNORED_VIOLATIONS][] = $result[$key];
             } else {
-                $sortedViolations[SalesConstants::NAME_VISIBLE_VIOLATIONS][] = $result[$key];
+                $sortedViolations[SharedDevelopmentConfig::NAME_VISIBLE_VIOLATIONS][] = $result[$key];
             }
         }
 
@@ -248,11 +248,11 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
         foreach ($array as $file => $violations) {
             foreach ($violations as $violation) {
                 $result[] = [
-                    SalesConstants::VIOLATION_FIELD_NAME_FILENAME => $file,
-                    SalesConstants::VIOLATION_FIELD_NAME_DESCRIPTION => $violation['_'],
-                    SalesConstants::VIOLATION_FIELD_NAME_RULE => $violation['rule'],
-                    SalesConstants::VIOLATION_FIELD_NAME_RULESET => $violation['ruleset'],
-                    SalesConstants::VIOLATION_FIELD_NAME_PRIORITY => $violation['priority'],
+                    SharedDevelopmentConfig::VIOLATION_FIELD_NAME_FILENAME => $file,
+                    SharedDevelopmentConfig::VIOLATION_FIELD_NAME_DESCRIPTION => $violation['_'],
+                    SharedDevelopmentConfig::VIOLATION_FIELD_NAME_RULE => $violation['rule'],
+                    SharedDevelopmentConfig::VIOLATION_FIELD_NAME_RULESET => $violation['ruleset'],
+                    SharedDevelopmentConfig::VIOLATION_FIELD_NAME_PRIORITY => $violation['priority'],
                 ];
             }
         }

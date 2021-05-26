@@ -14,13 +14,6 @@ interface SalesConstants
 {
     public const NAME_ORDER_REFERENCE = 'OrderReference';
     public const ENVIRONMENT_PREFIX = 'ENVIRONMENT_PREFIX';
-    public const NAME_VISIBLE_VIOLATIONS = 'visible';
-    public const NAME_IGNORED_VIOLATIONS = 'ignored';
-    public const VIOLATION_FIELD_NAME_DESCRIPTION = 'description';
-    public const VIOLATION_FIELD_NAME_RULESET = 'ruleset';
-    public const VIOLATION_FIELD_NAME_RULE = 'rule';
-    public const VIOLATION_FIELD_NAME_PRIORITY = 'priority';
-    public const VIOLATION_FIELD_NAME_FILENAME = 'fileName';
 
     /**
      * Specification:
