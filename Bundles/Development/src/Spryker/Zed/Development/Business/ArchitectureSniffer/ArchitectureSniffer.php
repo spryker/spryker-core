@@ -24,16 +24,11 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
     protected const SOURCE_FOLDER_NAME = 'src';
     protected const OPTION_MODULE = 'module';
     protected const OPTION_IGNORE_ERRORS = 'ignoreErrors';
-    protected const OPTION_OVERWRITE = 'update-baseline';
     protected const OPTION_VERBOSE = 'verbose';
     protected const ARCHITECTURE_BASELINE_JSON = 'architecture-baseline.json';
-    protected const NAME_VISIBLE_VIOLATIONS = 'visible';
-    protected const NAME_IGNORED_VIOLATIONS = 'ignored';
-    protected const VIOLATION_FIELD_NAME_DESCRIPTION = 'description';
-    protected const VIOLATION_FIELD_NAME_RULESET = 'ruleset';
-    protected const VIOLATION_FIELD_NAME_RULE = 'rule';
     protected const VIOLATION_FIELD_NAME_PRIORITY = 'priority';
     protected const VIOLATION_FIELD_NAME_FILENAME = 'fileName';
+    protected const VENDOR_FOLDER_NAME = 'vendor';
 
     /**
      * @var string
@@ -151,7 +146,7 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
         $result = $this->formatViolations($fileViolations);
         $reportResult = $reportFileExists ? $this->getReportResult($reportPath) : [];
 
-        if ($options[static::OPTION_OVERWRITE] || !$reportFileExists) {
+        if ($options[DevelopmentConfig::OPTION_UPDATE] || !$reportFileExists) {
             $this->saveBaseline($result, $reportPath);
         }
 
@@ -171,6 +166,11 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
     protected function saveBaseline(array $result, $reportPath): void
     {
         $content = json_encode($result, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) . PHP_EOL;
+
+        if ($content === false) {
+            throw new \RuntimeException('Error encoding:' . json_last_error());
+        }
+
         file_put_contents($reportPath, $content);
     }
 
@@ -188,7 +188,7 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
         ];
 
         foreach ($result as $key => $violations) {
-            if (array_search($violations[static::VIOLATION_FIELD_NAME_DESCRIPTION], array_column($reportResult, static::VIOLATION_FIELD_NAME_DESCRIPTION)) !== false) {
+            if (array_search($violations[DevelopmentConfig::VIOLATION_FIELD_NAME_DESCRIPTION], array_column($reportResult, DevelopmentConfig::VIOLATION_FIELD_NAME_DESCRIPTION)) !== false) {
                 $sortedViolations[static::NAME_IGNORED_VIOLATIONS][] = $result[$key];
             } else {
                 $sortedViolations[static::NAME_VISIBLE_VIOLATIONS][] = $result[$key];
@@ -254,10 +254,10 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
         foreach ($array as $file => $violations) {
             foreach ($violations as $violation) {
                 $result[] = [
-                    static::VIOLATION_FIELD_NAME_FILENAME => $file,
-                    static::VIOLATION_FIELD_NAME_DESCRIPTION => $violation['_'],
-                    static::VIOLATION_FIELD_NAME_RULE => $violation['rule'],
-                    static::VIOLATION_FIELD_NAME_RULESET => $violation['ruleset'],
+                    static::VIOLATION_FIELD_NAME_FILENAME => $this->normalizeProjectPath($file),
+                    DevelopmentConfig::VIOLATION_FIELD_NAME_DESCRIPTION => $violation['_'],
+                    DevelopmentConfig::VIOLATION_FIELD_NAME_RULE => $violation['rule'],
+                    DevelopmentConfig::VIOLATION_FIELD_NAME_RULESET => $violation['ruleset'],
                     static::VIOLATION_FIELD_NAME_PRIORITY => $violation['priority'],
                 ];
             }
@@ -269,15 +269,30 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
     /**
      * @param string $path
      *
+     * @return string
+     */
+    protected function normalizeProjectPath(string $path): string
+    {
+        return substr($path, strpos($path, static::VENDOR_FOLDER_NAME));
+    }
+
+    /**
+     * @param string $path
+     *
      * @return array
      */
     protected function getReportResult(string $path): array
     {
         $content = file_get_contents($path);
+        if ($content === false) {
+            throw new \RuntimeException('Invalid content: ' . $path);
+
+            return [];
+        }
 
         $result = json_decode($content, true);
         if ($result === null) {
-            trigger_error('Invalid JSON file: ' . $path);
+            throw new \RuntimeException('Invalid JSON file: ' . $path);
 
             return [];
         }

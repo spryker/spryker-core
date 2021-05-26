@@ -16,6 +16,13 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class DevelopmentConfig extends AbstractBundleConfig
 {
     public const BUNDLE_PLACEHOLDER = '[BUNDLE]';
+    public const NAME_VISIBLE_VIOLATIONS = 'visible';
+    public const NAME_IGNORED_VIOLATIONS = 'ignored';
+    public const VIOLATION_FIELD_NAME_DESCRIPTION = 'description';
+    public const VIOLATION_FIELD_NAME_RULESET = 'ruleset';
+    public const VIOLATION_FIELD_NAME_RULE = 'rule';
+    public const OPTION_UPDATE = 'update-baseline';
+
     protected const PHPSTAN_CONFIG_FILENAME = 'phpstan.neon';
 
     protected const NAMESPACE_SPRYKER = 'Spryker';

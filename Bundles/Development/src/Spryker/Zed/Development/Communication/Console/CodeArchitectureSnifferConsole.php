@@ -14,6 +14,7 @@ use Laminas\Filter\FilterChain;
 use Laminas\Filter\StringToLower;
 use Laminas\Filter\Word\CamelCaseToDash;
 use Laminas\Filter\Word\UnderscoreToCamelCase;
+use Spryker\Zed\Development\DevelopmentConfig;
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -34,16 +35,10 @@ class CodeArchitectureSnifferConsole extends Console
     protected const ARGUMENT_SUB_PATH = 'path';
     protected const OPTION_VERBOSE = 'verbose';
     protected const APPLICATION_LAYERS = ['Zed', 'Client', 'Yves', 'Service', 'Shared'];
-    protected const OPTION_OVERWRITE = 'update-baseline';
 
     protected const NAMESPACE_SPRYKER_SHOP = 'SprykerShop';
     protected const NAMESPACE_SPRYKER = 'Spryker';
     protected const SOURCE_FOLDER_NAME = 'src';
-    protected const NAME_VISIBLE_VIOLATIONS = 'visible';
-    protected const NAME_IGNORED_VIOLATIONS = 'ignored';
-    protected const VIOLATION_FIELD_NAME_DESCRIPTION = 'description';
-    protected const VIOLATION_FIELD_NAME_RULESET = 'ruleset';
-    protected const VIOLATION_FIELD_NAME_RULE = 'rule';
 
     /**
      * @return void
@@ -61,7 +56,7 @@ class CodeArchitectureSnifferConsole extends Console
         $this->addOption(static::OPTION_PRIORITY, 'p', InputOption::VALUE_OPTIONAL, 'Priority [1 (highest), 2 (medium), 3 (experimental)], defaults to 2.');
         $this->addOption(static::OPTION_STRICT, 's', InputOption::VALUE_NONE, 'Also report those nodes with a @SuppressWarnings annotation');
         $this->addOption(static::OPTION_DRY_RUN, 'd', InputOption::VALUE_NONE, 'Dry-Run the command, display it only');
-        $this->addOption(static::OPTION_OVERWRITE, 'u', InputOption::VALUE_NONE, 'Update baseline');
+        $this->addOption(DevelopmentConfig::OPTION_UPDATE, 'u', InputOption::VALUE_NONE, 'Update baseline');
 
         $this->addArgument(static::ARGUMENT_SUB_PATH, InputArgument::OPTIONAL, 'Optional path or sub path element');
     }
@@ -333,20 +328,20 @@ class CodeArchitectureSnifferConsole extends Console
             $count = 0;
 
             foreach ($violationsArray as $violation) {
-                if ($type === static::NAME_VISIBLE_VIOLATIONS) {
-                    $output->writeln('<error> ' . trim($violation[static::VIOLATION_FIELD_NAME_DESCRIPTION]) . '<error> ', OutputInterface::VERBOSITY_VERBOSE);
+                if ($type === DevelopmentConfig::NAME_VISIBLE_VIOLATIONS) {
+                    $output->writeln('<error> ' . trim($violation[DevelopmentConfig::VIOLATION_FIELD_NAME_DESCRIPTION]) . '<error> ', OutputInterface::VERBOSITY_VERBOSE);
                 } else {
-                    $output->writeln(' - ' . trim($violation[static::VIOLATION_FIELD_NAME_DESCRIPTION]), OutputInterface::VERBOSITY_VERBOSE);
+                    $output->writeln(' - ' . trim($violation[DevelopmentConfig::VIOLATION_FIELD_NAME_DESCRIPTION]), OutputInterface::VERBOSITY_VERBOSE);
                 }
 
-                $output->writeln(' ' . $violation[static::VIOLATION_FIELD_NAME_RULESET] . ' > ' . $violation[static::VIOLATION_FIELD_NAME_RULE], OutputInterface::VERBOSITY_VERBOSE);
+                $output->writeln(' ' . $violation[DevelopmentConfig::VIOLATION_FIELD_NAME_RULESET] . ' > ' . $violation[DevelopmentConfig::VIOLATION_FIELD_NAME_RULE], OutputInterface::VERBOSITY_VERBOSE);
                 $count++;
             }
 
-            $this->displayViolationsCountMessage($output, $count, ($type === static::NAME_IGNORED_VIOLATIONS));
+            $this->displayViolationsCountMessage($output, $count, ($type === DevelopmentConfig::NAME_IGNORED_VIOLATIONS));
         }
 
-            return count($violations[static::NAME_VISIBLE_VIOLATIONS]);
+            return count($violations[DevelopmentConfig::NAME_VISIBLE_VIOLATIONS]);
     }
 
     /**
@@ -391,7 +386,7 @@ class CodeArchitectureSnifferConsole extends Console
             return;
         }
 
-        $output->writeln($count . ($isIgnored ? ' ' . static::NAME_IGNORED_VIOLATIONS : '') . ' violations found');
+        $output->writeln($count . ($isIgnored ? ' ' . DevelopmentConfig::NAME_IGNORED_VIOLATIONS : '') . ' violations found');
     }
 
     /**
