@@ -22,7 +22,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
  */
 class StrictTransportSecurityHeaderEventDispatcherPlugin extends AbstractPlugin implements EventDispatcherPluginInterface
 {
-    protected const HEADER_STRICT_SECURITY_TRANSPORT = 'Strict-Transport-Security';
+    protected const HEADER_STS = 'Strict-Transport-Security';
     protected const HEADER_STS_MAX_AGE = 'max_age';
     protected const HEADER_STS_INCLUDE_SUBDOMAINS = 'include_sub_domains';
     protected const HEADER_STS_PRELOAD = 'preload';
@@ -60,7 +60,7 @@ class StrictTransportSecurityHeaderEventDispatcherPlugin extends AbstractPlugin 
     {
         $headerBody = $this->buildHeaderBody($this->getConfig()->getStrictTransportSecurityConfig());
         if ($headerBody !== '') {
-            $response->headers->set(static::HEADER_STRICT_SECURITY_TRANSPORT, $headerBody);
+            $response->headers->set(static::HEADER_STS, $headerBody);
         }
 
         return $response;
