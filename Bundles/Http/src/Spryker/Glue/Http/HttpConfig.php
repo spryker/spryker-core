@@ -73,7 +73,7 @@ class HttpConfig extends AbstractBundleConfig
      *
      * @return bool
      */
-    public function isHstsEnabled(): bool
+    public function isStrictTransportSecurityEnabled(): bool
     {
         return $this->get(HttpConstants::GLUE_HTTP_STRICT_TRANSPORT_SECURITY_ENABLED, false);
     }

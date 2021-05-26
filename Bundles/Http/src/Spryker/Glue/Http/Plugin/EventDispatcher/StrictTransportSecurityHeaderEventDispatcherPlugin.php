@@ -39,7 +39,7 @@ class StrictTransportSecurityHeaderEventDispatcherPlugin extends AbstractPlugin 
     public function extend(EventDispatcherInterface $eventDispatcher, ContainerInterface $container): EventDispatcherInterface
     {
         $eventDispatcher->addListener(KernelEvents::RESPONSE, function (ResponseEvent $event): void {
-            if (!$event->isMasterRequest() || !$this->getConfig()->isHstsEnabled()) {
+            if (!$event->isMasterRequest() || !$this->getConfig()->isStrictTransportSecurityEnabled()) {
                 return;
             }
 
@@ -65,24 +65,24 @@ class StrictTransportSecurityHeaderEventDispatcherPlugin extends AbstractPlugin 
     }
 
     /**
-     * @phpstan-param array<string, mixed> $hstsConfig
+     * @phpstan-param array<string, mixed> $strictTransportSecurityConfig
      *
-     * @param string[] $hstsConfig
+     * @param string[] $strictTransportSecurityConfig
      *
      * @return string
      */
-    protected function buildHeaderBody(array $hstsConfig): string
+    protected function buildHeaderBody(array $strictTransportSecurityConfig): string
     {
         $headerParts = [];
-        if (!empty($hstsConfig[static::HEADER_STS_MAX_AGE])) {
-            $headerParts[] = sprintf('max-age=%s', $hstsConfig[static::HEADER_STS_MAX_AGE]);
+        if (!empty($strictTransportSecurityConfig[static::HEADER_STS_MAX_AGE])) {
+            $headerParts[] = sprintf('max-age=%s', $strictTransportSecurityConfig[static::HEADER_STS_MAX_AGE]);
         }
 
-        if (!empty($hstsConfig[static::HEADER_STS_INCLUDE_SUBDOMAINS])) {
+        if (!empty($strictTransportSecurityConfig[static::HEADER_STS_INCLUDE_SUBDOMAINS])) {
             $headerParts[] = 'includeSubDomains';
         }
 
-        if (!empty($hstsConfig[static::HEADER_STS_PRELOAD])) {
+        if (!empty($strictTransportSecurityConfig[static::HEADER_STS_PRELOAD])) {
             $headerParts[] = 'preload';
         }
 
