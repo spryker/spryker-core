@@ -85,7 +85,7 @@ class HttpConfig extends AbstractBundleConfig
      *
      * @return array
      */
-    public function getHstsConfig(): array
+    public function getStrictTransportSecurityConfig(): array
     {
         return $this->get(HttpConstants::GLUE_HTTP_STRICT_TRANSPORT_SECURITY_CONFIG, []);
     }

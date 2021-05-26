@@ -18,12 +18,12 @@ use Symfony\Component\HttpKernel\KernelEvents;
 /**
  * @method \Spryker\Glue\Http\HttpConfig getConfig()
  */
-class HSTSHeaderEventDispatcher extends AbstractPlugin implements EventDispatcherPluginInterface
+class StrictTransportSecurityHeaderEventDispatcherPlugin extends AbstractPlugin implements EventDispatcherPluginInterface
 {
-    protected const HEADER_HSTS = 'Strict-Transport-Security';
-    protected const HSTS_CONFIG_MAX_AGE = 'max_age';
-    protected const HSTS_CONFIG_INCLUDE_SUBDOMAINS = 'include_sub_domains';
-    protected const HSTS_CONFIG_PRELOAD = 'preload';
+    protected const HEADER_STRICT_SECURITY_TRANSPORT = 'Strict-Transport-Security';
+    protected const HEADER_STS_MAX_AGE = 'max_age';
+    protected const HEADER_STS_INCLUDE_SUBDOMAINS = 'include_sub_domains';
+    protected const HEADER_STS_PRELOAD = 'preload';
 
     /**
      * {@inheritDoc}
@@ -43,7 +43,7 @@ class HSTSHeaderEventDispatcher extends AbstractPlugin implements EventDispatche
                 return;
             }
 
-            $event->setResponse($this->setHSTSHeader($event->getResponse()));
+            $event->setResponse($this->setStrictTransportSecurityHeader($event->getResponse()));
         });
 
         return $eventDispatcher;
@@ -54,11 +54,11 @@ class HSTSHeaderEventDispatcher extends AbstractPlugin implements EventDispatche
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    protected function setHSTSHeader(Response $response): Response
+    protected function setStrictTransportSecurityHeader(Response $response): Response
     {
-        $headerBody = $this->buildHeaderBody($this->getConfig()->getHstsConfig());
+        $headerBody = $this->buildHeaderBody($this->getConfig()->getStrictTransportSecurityConfig());
         if ($headerBody !== '') {
-            $response->headers->set(static::HEADER_HSTS, $headerBody);
+            $response->headers->set(static::HEADER_STRICT_SECURITY_TRANSPORT, $headerBody);
         }
 
         return $response;
@@ -74,15 +74,15 @@ class HSTSHeaderEventDispatcher extends AbstractPlugin implements EventDispatche
     protected function buildHeaderBody(array $hstsConfig): string
     {
         $headerParts = [];
-        if (!empty($hstsConfig[static::HSTS_CONFIG_MAX_AGE])) {
-            $headerParts[] = sprintf('max-age=%s', $hstsConfig[static::HSTS_CONFIG_MAX_AGE]);
+        if (!empty($hstsConfig[static::HEADER_STS_MAX_AGE])) {
+            $headerParts[] = sprintf('max-age=%s', $hstsConfig[static::HEADER_STS_MAX_AGE]);
         }
 
-        if (!empty($hstsConfig[static::HSTS_CONFIG_INCLUDE_SUBDOMAINS])) {
+        if (!empty($hstsConfig[static::HEADER_STS_INCLUDE_SUBDOMAINS])) {
             $headerParts[] = 'includeSubDomains';
         }
 
-        if (!empty($hstsConfig[static::HSTS_CONFIG_PRELOAD])) {
+        if (!empty($hstsConfig[static::HEADER_STS_PRELOAD])) {
             $headerParts[] = 'preload';
         }
 
