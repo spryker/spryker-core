@@ -325,7 +325,7 @@ class CodeArchitectureSnifferConsole extends Console
      */
     protected function displayViolationsWithBaseline(OutputInterface $output, array $violations): int
     {
-        if (empty($violations)) {
+        if (!$violations) {
             return 0;
         }
 
