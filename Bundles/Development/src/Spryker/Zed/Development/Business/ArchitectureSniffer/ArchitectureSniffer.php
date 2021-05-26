@@ -11,6 +11,7 @@ use Exception;
 use Laminas\Config\Reader\ReaderInterface;
 use PHPMD\RuleSetFactory;
 use PHPMD\TextUI\CommandLineOptions;
+use RuntimeException;
 use Spryker\Zed\Development\Business\SnifferConfiguration\Builder\SnifferConfigurationBuilderInterface;
 use Spryker\Zed\Development\DevelopmentConfig;
 use Symfony\Component\Process\Process;
@@ -161,6 +162,8 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
      * @param array $result
      * @param string $reportPath
      *
+     * @throws \RuntimeException
+     *
      * @return void
      */
     protected function saveBaseline(array $result, $reportPath): void
@@ -168,7 +171,7 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
         $content = json_encode($result, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) . PHP_EOL;
 
         if ($content === false) {
-            throw new \RuntimeException('Error encoding:' . json_last_error());
+            throw new RuntimeException('Error encoding:' . json_last_error());
         }
 
         file_put_contents($reportPath, $content);
@@ -183,15 +186,15 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
     protected function sortViolations(array $result, array $reportResult): array
     {
         $sortedViolations = [
-            static::NAME_VISIBLE_VIOLATIONS => [],
-            static::NAME_IGNORED_VIOLATIONS => [],
+            DevelopmentConfig::NAME_VISIBLE_VIOLATIONS => [],
+            DevelopmentConfig::NAME_IGNORED_VIOLATIONS => [],
         ];
 
         foreach ($result as $key => $violations) {
             if (array_search($violations[DevelopmentConfig::VIOLATION_FIELD_NAME_DESCRIPTION], array_column($reportResult, DevelopmentConfig::VIOLATION_FIELD_NAME_DESCRIPTION)) !== false) {
-                $sortedViolations[static::NAME_IGNORED_VIOLATIONS][] = $result[$key];
+                $sortedViolations[DevelopmentConfig::NAME_IGNORED_VIOLATIONS][] = $result[$key];
             } else {
-                $sortedViolations[static::NAME_VISIBLE_VIOLATIONS][] = $result[$key];
+                $sortedViolations[DevelopmentConfig::NAME_VISIBLE_VIOLATIONS][] = $result[$key];
             }
         }
 
@@ -279,20 +282,22 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
     /**
      * @param string $path
      *
+     * @throws \RuntimeException
+     *
      * @return array
      */
     protected function getReportResult(string $path): array
     {
         $content = file_get_contents($path);
         if ($content === false) {
-            throw new \RuntimeException('Invalid content: ' . $path);
+            throw new RuntimeException('Invalid content: ' . $path);
 
             return [];
         }
 
         $result = json_decode($content, true);
         if ($result === null) {
-            throw new \RuntimeException('Invalid JSON file: ' . $path);
+            throw new RuntimeException('Invalid JSON file: ' . $path);
 
             return [];
         }
