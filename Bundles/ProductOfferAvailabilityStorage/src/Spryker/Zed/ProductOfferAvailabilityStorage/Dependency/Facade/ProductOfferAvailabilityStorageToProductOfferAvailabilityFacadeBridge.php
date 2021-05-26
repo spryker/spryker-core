@@ -30,9 +30,9 @@ class ProductOfferAvailabilityStorageToProductOfferAvailabilityFacadeBridge impl
      *
      * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null
      */
-    public function findProductConcreteAvailabilityForRequest(
+    public function findProductConcreteAvailability(
         ProductOfferAvailabilityRequestTransfer $productOfferAvailabilityRequestTransfer
     ): ?ProductConcreteAvailabilityTransfer {
-        return $this->productOfferAvailabilityFacade->findProductConcreteAvailabilityForRequest($productOfferAvailabilityRequestTransfer);
+        return $this->productOfferAvailabilityFacade->findProductConcreteAvailability($productOfferAvailabilityRequestTransfer);
     }
 }

@@ -1,46 +1,46 @@
 {
-  "name": "spryker/transfer",
-  "type": "library",
-  "description": "Transfer module",
-  "license": "proprietary",
-  "require": {
-    "php": ">=7.3",
-    "spryker/decimal-object": "^1.0.0",
-    "spryker/kernel": "^3.59.0",
-    "spryker/laminas": "^1.0.0",
-    "spryker/log": "^3.0.0",
-    "spryker/propel": "^3.21.0",
-    "spryker/symfony": "^3.0.0",
-    "spryker/twig": "^3.0.0",
-    "spryker/util-glob": "^1.0.0"
-  },
-  "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
-  },
-  "autoload": {
-    "psr-4": {
-      "Spryker\\": "src/Spryker/",
-      "SprykerTest\\Shared\\Transfer\\Helper\\": "tests/SprykerTest/Shared/Transfer/_support/Helper/"
+    "name": "spryker/transfer",
+    "type": "library",
+    "description": "Transfer module",
+    "license": "proprietary",
+    "require": {
+        "php": ">=7.3",
+        "spryker/decimal-object": "^1.0.0",
+        "spryker/kernel": "^3.59.0",
+        "spryker/laminas": "^1.0.0",
+        "spryker/log": "^3.0.0",
+        "spryker/propel": "^3.21.0",
+        "spryker/symfony": "^3.0.0",
+        "spryker/twig": "^3.0.0",
+        "spryker/util-glob": "^1.0.0"
+    },
+    "require-dev": {
+        "spryker/code-sniffer": "*",
+        "spryker/testify": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Spryker\\": "src/Spryker/",
+            "SprykerTest\\Shared\\Transfer\\Helper\\": "tests/SprykerTest/Shared/Transfer/_support/Helper/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "SprykerTest\\": "tests/SprykerTest/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "3.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
     }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "SprykerTest\\": "tests/SprykerTest/"
-    }
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "scripts": {
-    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
-    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "3.0.x-dev"
-    }
-  },
-  "config": {
-    "sort-packages": true
-  }
 }

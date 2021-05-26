@@ -13,13 +13,13 @@ coverage:
 
 suites:
     Business:
-     path: Business
-     class_name: GuiTableBusinessTester
-     modules:
-         enabled:
-             - Asserts
-             - \SprykerTest\Shared\Testify\Helper\Environment
-             - \SprykerTest\Shared\Testify\Helper\ConfigHelper
-             - \SprykerTest\Shared\Testify\Helper\LocatorHelper
-             - \SprykerTest\Shared\Propel\Helper\TransactionHelper
-             - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+        path: Business
+        class_name: GuiTableBusinessTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper

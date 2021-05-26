@@ -1,41 +1,41 @@
 {
-  "name": "spryker/sales-order-threshold-gui",
-  "type": "library",
-  "description": "SalesOrderThresholdGui module",
-  "license": "proprietary",
-  "require": {
-    "php": ">=7.3",
-    "spryker/currency": "^3.1.0",
-    "spryker/gui": "^3.1.0",
-    "spryker/kernel": "^3.30.0",
-    "spryker/locale": "^3.0.0",
-    "spryker/money": "^2.1.0",
-    "spryker/sales-order-threshold": "^1.3.0",
-    "spryker/sales-order-threshold-gui-extension": "^1.1.0",
-    "spryker/store": "^1.2.0",
-    "spryker/symfony": "^3.1.0",
-    "spryker/tax": "^5.0.0"
-  },
-  "require-dev": {
-    "spryker/code-sniffer": "*"
-  },
-  "autoload": {
-    "psr-4": {
-      "Spryker\\": "src/Spryker/"
+    "name": "spryker/sales-order-threshold-gui",
+    "type": "library",
+    "description": "SalesOrderThresholdGui module",
+    "license": "proprietary",
+    "require": {
+        "php": ">=7.3",
+        "spryker/currency": "^3.1.0",
+        "spryker/gui": "^3.1.0",
+        "spryker/kernel": "^3.30.0",
+        "spryker/locale": "^3.0.0",
+        "spryker/money": "^2.1.0",
+        "spryker/sales-order-threshold": "^1.3.0",
+        "spryker/sales-order-threshold-gui-extension": "^1.1.0",
+        "spryker/store": "^1.2.0",
+        "spryker/symfony": "^3.1.0",
+        "spryker/tax": "^5.0.0"
+    },
+    "require-dev": {
+        "spryker/code-sniffer": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Spryker\\": "src/Spryker/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
     }
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "scripts": {
-    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
-    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "1.0.x-dev"
-    }
-  },
-  "config": {
-    "sort-packages": true
-  }
 }

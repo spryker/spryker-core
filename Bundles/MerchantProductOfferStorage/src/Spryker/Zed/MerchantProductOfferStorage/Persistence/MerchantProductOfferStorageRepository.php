@@ -32,9 +32,8 @@ class MerchantProductOfferStorageRepository extends AbstractRepository implement
     {
         $productOfferPropelQuery = $this->getFactory()->getProductOfferPropelQuery();
         $productOfferPropelQuery
-            ->useSpyMerchantQuery()
-                ->filterByIdMerchant_In($merchantIds)
-            ->endUse();
+            ->addJoin(SpyProductOfferTableMap::COL_MERCHANT_REFERENCE, SpyMerchantTableMap::COL_MERCHANT_REFERENCE, Criteria::INNER_JOIN)
+            ->addAnd($productOfferPropelQuery->getNewCriterion(SpyMerchantTableMap::COL_ID_MERCHANT, $merchantIds, Criteria::IN));
 
         return $productOfferPropelQuery
             ->select(SpyProductOfferTableMap::COL_CONCRETE_SKU)
@@ -56,7 +55,6 @@ class MerchantProductOfferStorageRepository extends AbstractRepository implement
         $productOfferCollectionTransfer = new ProductOfferCollectionTransfer();
         $productOfferPropelQuery = $this->getFactory()
             ->getProductOfferPropelQuery()
-            ->joinWithSpyMerchant()
             ->joinWithSpyProductOfferStore()
             ->useSpyProductOfferStoreQuery()
                 ->joinWithSpyStore()
@@ -106,7 +104,8 @@ class MerchantProductOfferStorageRepository extends AbstractRepository implement
         }
 
         if ($productOfferCriteriaTransfer->getIsActiveMerchant() !== null) {
-            $productOfferQuery->where(SpyMerchantTableMap::COL_IS_ACTIVE . ' = ?', $productOfferCriteriaTransfer->getIsActiveMerchant());
+            $productOfferQuery->addJoin(SpyProductOfferTableMap::COL_MERCHANT_REFERENCE, SpyMerchantTableMap::COL_MERCHANT_REFERENCE, Criteria::INNER_JOIN)
+                ->addAnd(SpyMerchantTableMap::COL_IS_ACTIVE, $productOfferCriteriaTransfer->getIsActiveMerchant());
         }
 
         if ($productOfferCriteriaTransfer->getIsActiveConcreteProduct() !== null) {

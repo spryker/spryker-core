@@ -29,4 +29,12 @@ class ProductMerchantPortalGuiToLocaleFacadeBridge implements ProductMerchantPor
     {
         return $this->localeFacade->getCurrentLocale();
     }
+
+    /**
+     * @return string[]
+     */
+    public function getAvailableLocales()
+    {
+        return $this->localeFacade->getAvailableLocales();
+    }
 }

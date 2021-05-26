@@ -146,7 +146,8 @@ class SecurityApplicationPluginTest extends Unit
         $this->assertSame('ANONYMOUS', $httpKernelBrowser->getResponse()->getContent());
 
         $httpKernelBrowser->request('post', static::HOMEPAGE_PATH . '/login_check', ['_username' => static::USER_NAME, '_password' => static::USER_INVALID_PASSWORD]);
-        $this->assertStringContainsString('Bad credentials', $container->get(static::SERVICE_SECURITY_LAST_ERROR)($httpKernelBrowser->getRequest()));
+        $lastError = $container->get('security.last_error')($httpKernelBrowser->getRequest());
+        $this->assertRegexp('/(Bad credentials|The presented password is invalid)/', $lastError);
         // hack to re-close the session as the previous assertions re-opens it
         $httpKernelBrowser->getRequest()->getSession()->save();
 
@@ -192,7 +193,7 @@ class SecurityApplicationPluginTest extends Unit
 
         $httpKernelBrowser->request('get', static::HOMEPAGE_PATH, [], [], ['HTTP_X_AUTH_TOKEN' => sprintf('%s:%s', 'customer', static::USER_INVALID_PASSWORD)]);
         $this->assertSame(403, $httpKernelBrowser->getResponse()->getStatusCode(), 'User not found');
-        $this->assertSame('{"message":"Username could not be found."}', $httpKernelBrowser->getResponse()->getContent());
+        $this->assertRegExp('/(Username could not be found|Invalid credentials)/', $httpKernelBrowser->getResponse()->getContent());
 
         $httpKernelBrowser->request('get', static::HOMEPAGE_PATH, [], [], ['HTTP_X_AUTH_TOKEN' => sprintf('%s:%s', static::USER_NAME, static::USER_INVALID_PASSWORD)]);
         $this->assertSame(403, $httpKernelBrowser->getResponse()->getStatusCode(), 'Invalid credentials');

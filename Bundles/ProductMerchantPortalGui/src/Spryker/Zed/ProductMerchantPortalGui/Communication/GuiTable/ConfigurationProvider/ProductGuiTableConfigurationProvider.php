@@ -28,6 +28,8 @@ class ProductGuiTableConfigurationProvider implements ProductGuiTableConfigurati
 
     protected const SEARCH_PLACEHOLDER = 'Search';
 
+    protected const TITLE_ROW_ACTION_UPDATE_PRODUCT = 'Manage Product';
+
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\ProductsConcreteController::tableDataAction()
      */
@@ -37,6 +39,13 @@ class ProductGuiTableConfigurationProvider implements ProductGuiTableConfigurati
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\ProductsConcreteController::bulkEditAction()
      */
     protected const BULK_EDIT_URL = '/product-merchant-portal-gui/products-concrete/bulk-edit?product-ids=${rowIds}';
+
+    /**
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\UpdateProductConcreteController::indexAction()
+     */
+    protected const ROW_EDIT_URL = '/product-merchant-portal-gui/update-product-concrete?product-id=${row.%s}';
+
+    protected const ROW_EDIT_ID = 'update-product';
 
     /**
      * @var \Spryker\Shared\GuiTable\GuiTableFactoryInterface
@@ -80,6 +89,7 @@ class ProductGuiTableConfigurationProvider implements ProductGuiTableConfigurati
         $guiTableConfigurationBuilder = $this->addColumns($guiTableConfigurationBuilder);
         $guiTableConfigurationBuilder = $this->addFilters($guiTableConfigurationBuilder);
         $guiTableConfigurationBuilder = $this->addBatchActions($guiTableConfigurationBuilder);
+        $guiTableConfigurationBuilder = $this->addRowActions($guiTableConfigurationBuilder);
 
         $dataSourceUrl = sprintf(
             '%s?%s=%s',
@@ -156,6 +166,25 @@ class ProductGuiTableConfigurationProvider implements ProductGuiTableConfigurati
         );
 
         $guiTableConfigurationBuilder->setBatchActionRowIdPath(ProductConcreteTransfer::ID_PRODUCT_CONCRETE);
+
+        return $guiTableConfigurationBuilder;
+    }
+
+    /**
+     * @param \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder
+     *
+     * @return \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface
+     */
+    protected function addRowActions(GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder): GuiTableConfigurationBuilderInterface
+    {
+        $guiTableConfigurationBuilder->addRowActionOpenFormOverlay(
+            static::ROW_EDIT_ID,
+            static::TITLE_ROW_ACTION_UPDATE_PRODUCT,
+            sprintf(
+                static::ROW_EDIT_URL,
+                ProductConcreteTransfer::ID_PRODUCT_CONCRETE
+            )
+        )->setRowClickAction(static::ROW_EDIT_ID);
 
         return $guiTableConfigurationBuilder;
     }

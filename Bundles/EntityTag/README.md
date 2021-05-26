@@ -1,5 +1,5 @@
 # EntityTag Module
-[![Build Status](https://travis-ci.org/spryker/entity-tag.svg)](https://travis-ci.org/spryker/entity-tag)
+[![Latest Stable Version](https://poser.pugx.org/spryker/entity-tag/v/stable.svg)](https://packagist.org/packages/spryker/entity-tag)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 Adds possibility to generate and store hash for an entity in KV storage.

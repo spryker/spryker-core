@@ -1,21 +1,21 @@
 {
-  "name": "spryker/elastica",
-  "type": "library",
-  "description": "Elastica module",
-  "license": "proprietary",
-  "require": {
-    "php": ">=7.3",
-    "ruflin/elastica": "^7.0.0"
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "scripts": {},
-  "extra": {
-    "branch-alias": {
-      "dev-master": "6.0.x-dev"
+    "name": "spryker/elastica",
+    "type": "library",
+    "description": "Elastica module",
+    "license": "proprietary",
+    "require": {
+        "php": ">=7.3",
+        "ruflin/elastica": "^7.0.0"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {},
+    "extra": {
+        "branch-alias": {
+            "dev-master": "6.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
     }
-  },
-  "config": {
-    "sort-packages": true
-  }
 }

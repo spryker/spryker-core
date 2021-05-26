@@ -14,7 +14,7 @@ use Spryker\Client\MerchantProductOfferStorage\Dependency\Client\MerchantProduct
 use Spryker\Client\MerchantProductOfferStorage\Dependency\Client\MerchantProductOfferStorageToStoreClientBridge;
 use Spryker\Client\MerchantProductOfferStorage\Dependency\Service\MerchantProductOfferStorageToSynchronizationServiceBridge;
 use Spryker\Client\MerchantProductOfferStorage\Dependency\Service\MerchantProductOfferStorageToUtilEncodingServiceBridge;
-use Spryker\Client\MerchantProductOfferStorage\Exception\ProductOfferStorageCollectionSorterPluginException;
+use Spryker\Client\MerchantProductOfferStorage\Plugin\MerchantProductOfferStorage\DefaultProductOfferStorageCollectionSorterPlugin;
 use Spryker\Client\MerchantProductOfferStorageExtension\Dependency\Plugin\ProductOfferStorageCollectionSorterPluginInterface;
 
 class MerchantProductOfferStorageDependencyProvider extends AbstractDependencyProvider
@@ -108,20 +108,11 @@ class MerchantProductOfferStorageDependencyProvider extends AbstractDependencyPr
     }
 
     /**
-     * @throws \Spryker\Client\MerchantProductOfferStorage\Exception\ProductOfferStorageCollectionSorterPluginException
-     *
      * @return \Spryker\Client\MerchantProductOfferStorageExtension\Dependency\Plugin\ProductOfferStorageCollectionSorterPluginInterface
      */
     protected function createProductOfferStorageCollectionSorterPlugin(): ProductOfferStorageCollectionSorterPluginInterface
     {
-        throw new ProductOfferStorageCollectionSorterPluginException(
-            sprintf(
-                'Missing instance of %s! You need to configure ProductOfferStorageCollectionSorterPlugin ' .
-                'in your own MerchantProductOfferStorageDependencyProvider::createProductOfferStorageCollectionSorterPlugin() ' .
-                'to be able to get default offer reference.',
-                ProductOfferStorageCollectionSorterPluginInterface::class
-            )
-        );
+        return new DefaultProductOfferStorageCollectionSorterPlugin();
     }
 
     /**

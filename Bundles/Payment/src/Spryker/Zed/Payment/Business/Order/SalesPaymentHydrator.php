@@ -14,6 +14,9 @@ use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Payment\Dependency\Plugin\Sales\PaymentHydratorPluginCollectionInterface;
 use Spryker\Zed\Payment\Persistence\PaymentQueryContainerInterface;
 
+/**
+ * @deprecated The functionality moved to SalesPayment module.
+ */
 class SalesPaymentHydrator implements SalesPaymentHydratorInterface
 {
     /**

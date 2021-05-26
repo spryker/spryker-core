@@ -12,6 +12,9 @@ use Spryker\Zed\CompanyGui\Dependency\Facade\CompanyGuiToCompanyFacadeBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\CompanyGui\CompanyGuiConfig getConfig()
+ */
 class CompanyGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PROPEL_COMPANY_QUERY = 'PROPEL_COMPANY_QUERY';

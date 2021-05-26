@@ -9,10 +9,13 @@ namespace Spryker\Zed\Payment\Dependency\Plugin\Checkout;
 
 use Spryker\Zed\Payment\Exception\CheckoutPluginNotFoundException;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class CheckoutPluginCollection implements CheckoutPluginCollectionInterface
 {
     /**
-     * @var array
+     * @var \Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginInterface[][]
      */
     protected $plugins = [];
 

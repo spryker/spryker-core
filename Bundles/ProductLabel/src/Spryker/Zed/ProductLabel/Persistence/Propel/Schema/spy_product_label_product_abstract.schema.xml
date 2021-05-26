@@ -1,36 +1,17 @@
 <?xml version="1.0"?>
-<database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        name="zed"
-        namespace="Orm\Zed\ProductLabel\Persistence"
-        package="src.Orm.Zed.ProductLabel.Persistence"
-        xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd"
->
+<database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" namespace="Orm\Zed\ProductLabel\Persistence" package="src.Orm.Zed.ProductLabel.Persistence" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd">
     <table name="spy_product_label_product_abstract" identifierQuoting="true">
-        <column
-                name="id_product_label_product_abstract"
-                type="INTEGER"
-                required="true"
-                primaryKey="true"
-                autoIncrement="true"
-        />
+        <column name="id_product_label_product_abstract" type="INTEGER" required="true" primaryKey="true" autoIncrement="true"/>
         <column name="fk_product_label" type="INTEGER" required="true"/>
         <column name="fk_product_abstract" type="INTEGER" required="true"/>
 
         <id-method-parameter value="spy_product_label_product_abstract_pk_seq"/>
 
-        <foreign-key
-                foreignTable="spy_product_label"
-                phpName="SpyProductLabel"
-                refPhpName="SpyProductLabelProductAbstract"
-        >
+        <foreign-key foreignTable="spy_product_label" phpName="SpyProductLabel" refPhpName="SpyProductLabelProductAbstract">
             <reference local="fk_product_label" foreign="id_product_label"/>
         </foreign-key>
 
-        <foreign-key
-                foreignTable="spy_product_abstract"
-                phpName="SpyProductAbstract"
-                refPhpName="SpyProductLabelProductAbstract"
-        >
+        <foreign-key foreignTable="spy_product_abstract" phpName="SpyProductAbstract" refPhpName="SpyProductLabelProductAbstract">
             <reference local="fk_product_abstract" foreign="id_product_abstract"/>
         </foreign-key>
 

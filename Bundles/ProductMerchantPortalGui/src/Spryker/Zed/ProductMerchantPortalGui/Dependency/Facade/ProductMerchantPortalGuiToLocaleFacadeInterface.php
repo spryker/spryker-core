@@ -13,4 +13,9 @@ interface ProductMerchantPortalGuiToLocaleFacadeInterface
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function getCurrentLocale();
+
+    /**
+     * @return string[]
+     */
+    public function getAvailableLocales();
 }

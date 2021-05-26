@@ -1,7 +1,5 @@
 <?xml version="1.0"?>
-<transfers xmlns="spryker:transfer-01"
-           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="Merchant">
         <property name="idMerchant" type="int"/>
@@ -27,8 +25,6 @@
         <property name="dataPrivacyGlossaryKey" type="string"/>
         <property name="fkMerchant" type="int"/>
         <property name="merchantName" type="string"/>
-        <property name="latitude" type="string"/>
-        <property name="longitude" type="string"/>
         <property name="faxNumber" type="string"/>
         <property name="merchantReference" type="string"/>
         <property name="merchantProfileLocalizedGlossaryAttributes" type="MerchantProfileLocalizedGlossaryAttributes[]" singular="merchantProfileLocalizedGlossaryAttribute"/>
@@ -36,7 +32,7 @@
     </transfer>
 
     <transfer name="MerchantProfileCollection">
-        <property name="merchantProfiles" type="MerchantProfile[]"  singular="merchantProfile"/>
+        <property name="merchantProfiles" type="MerchantProfile[]" singular="merchantProfile"/>
     </transfer>
 
     <transfer name="MerchantProfileLocalizedGlossaryAttributes">
@@ -82,6 +78,8 @@
         <property name="city" type="string"/>
         <property name="zipCode" type="string"/>
         <property name="email" type="string"/>
+        <property name="latitude" type="string"/>
+        <property name="longitude" type="string"/>
         <property name="fkMerchantProfile" type="int"/>
     </transfer>
 

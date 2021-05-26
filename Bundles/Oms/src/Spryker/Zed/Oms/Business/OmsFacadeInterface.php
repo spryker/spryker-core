@@ -78,7 +78,7 @@ interface OmsFacadeInterface
 
     /**
      * Specification:
-     *  - Triggers even for given order items, data is used as additional payload which is passed to commands.
+     *  - Triggers event for given order items, data is used as additional payload which is passed to commands.
      *  - Locks state machine trigger from concurrent access
      *  - Logs state machine transitions
      *  - Executes state machine for each order item following their definitions
@@ -102,7 +102,7 @@ interface OmsFacadeInterface
 
     /**
      * Specification:
-     *  - Triggers even for given order items, data is used as additional payload which is passed to commands.
+     *  - Triggers event for given order items, data is used as additional payload which is passed to commands.
      *  - Locks state machine trigger from concurrent access
      *  - Initialises correct state machine, sets initial state
      *  - Logs state machine transitions
@@ -126,7 +126,7 @@ interface OmsFacadeInterface
 
     /**
      * Specification:
-     *  - Triggers even for given order item, data is used as additional payload which is passed to commands.
+     *  - Triggers event for given order item, data is used as additional payload which is passed to commands.
      *  - Locks state machine trigger from concurrent access
      *  - Logs state machine transitions
      *  - Executes state machine for each order item following their definitions
@@ -356,7 +356,7 @@ interface OmsFacadeInterface
 
     /**
      * Specification:
-     *  - Triggers even for given order items, data is used as additional payload which is passed to commands.
+     *  - Triggers event for given order items, data is used as additional payload which is passed to commands.
      *  - Locks state machine trigger from concurrent access
      *  - Logs state machine transitions
      *  - Executes state machine for each order item following their definitions
@@ -381,7 +381,7 @@ interface OmsFacadeInterface
 
     /**
      * Specification:
-     *  - Triggers even for given order item, data is used as additional payload which is passed to commands.
+     *  - Triggers event for given order item, data is used as additional payload which is passed to commands.
      *  - Locks state machine trigger from concurrent access
      *  - Logs state machine transitions
      *  - Executes state machine for each order item following their definitions
@@ -405,7 +405,7 @@ interface OmsFacadeInterface
 
     /**
      * Specification:
-     *  - Triggers even for given order item, data is used as additional payload which is passed to commands.
+     *  - Triggers event for given order item, data is used as additional payload which is passed to commands.
      *  - Locks state machine trigger from concurrent access
      *  - Logs state machine transitions
      *  - Executes state machine for each order item following their definitions
