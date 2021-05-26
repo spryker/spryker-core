@@ -11,7 +11,6 @@ use Exception;
 use Laminas\Config\Reader\ReaderInterface;
 use PHPMD\RuleSetFactory;
 use PHPMD\TextUI\CommandLineOptions;
-use Spryker\Shared\Development\DevelopmentConfig as SharedDevelopmentConfig;
 use Spryker\Zed\Development\Business\SnifferConfiguration\Builder\SnifferConfigurationBuilderInterface;
 use Spryker\Zed\Development\DevelopmentConfig;
 use Symfony\Component\Process\Process;
@@ -28,6 +27,13 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
     protected const OPTION_OVERWRITE = 'update-baseline';
     protected const OPTION_VERBOSE = 'verbose';
     protected const ARCHITECTURE_BASELINE_JSON = 'architecture-baseline.json';
+    protected const NAME_VISIBLE_VIOLATIONS = 'visible';
+    protected const NAME_IGNORED_VIOLATIONS = 'ignored';
+    protected const VIOLATION_FIELD_NAME_DESCRIPTION = 'description';
+    protected const VIOLATION_FIELD_NAME_RULESET = 'ruleset';
+    protected const VIOLATION_FIELD_NAME_RULE = 'rule';
+    protected const VIOLATION_FIELD_NAME_PRIORITY = 'priority';
+    protected const VIOLATION_FIELD_NAME_FILENAME = 'fileName';
 
     /**
      * @var string
@@ -140,7 +146,7 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
      */
     protected function runAnalyzer(array $fileViolations, $directory, array $options): array
     {
-        $reportPath = $directory . '../' . static::ARCHITECTURE_BASELINE_JSON;
+        $reportPath = dirname($directory) . DIRECTORY_SEPARATOR . static::ARCHITECTURE_BASELINE_JSON;
         $reportFileExists = file_exists($reportPath);
         $result = $this->formatViolations($fileViolations);
         $reportResult = $reportFileExists ? $this->getReportResult($reportPath) : [];
@@ -177,15 +183,15 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
     protected function sortViolations(array $result, array $reportResult): array
     {
         $sortedViolations = [
-            SharedDevelopmentConfig::NAME_VISIBLE_VIOLATIONS => [],
-            SharedDevelopmentConfig::NAME_IGNORED_VIOLATIONS => [],
+            static::NAME_VISIBLE_VIOLATIONS => [],
+            static::NAME_IGNORED_VIOLATIONS => [],
         ];
 
         foreach ($result as $key => $violations) {
-            if (array_search($violations[SharedDevelopmentConfig::VIOLATION_FIELD_NAME_DESCRIPTION], array_column($reportResult, SharedDevelopmentConfig::VIOLATION_FIELD_NAME_DESCRIPTION)) !== false) {
-                $sortedViolations[SharedDevelopmentConfig::NAME_IGNORED_VIOLATIONS][] = $result[$key];
+            if (array_search($violations[static::VIOLATION_FIELD_NAME_DESCRIPTION], array_column($reportResult, static::VIOLATION_FIELD_NAME_DESCRIPTION)) !== false) {
+                $sortedViolations[static::NAME_IGNORED_VIOLATIONS][] = $result[$key];
             } else {
-                $sortedViolations[SharedDevelopmentConfig::NAME_VISIBLE_VIOLATIONS][] = $result[$key];
+                $sortedViolations[static::NAME_VISIBLE_VIOLATIONS][] = $result[$key];
             }
         }
 
@@ -248,11 +254,11 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
         foreach ($array as $file => $violations) {
             foreach ($violations as $violation) {
                 $result[] = [
-                    SharedDevelopmentConfig::VIOLATION_FIELD_NAME_FILENAME => $file,
-                    SharedDevelopmentConfig::VIOLATION_FIELD_NAME_DESCRIPTION => $violation['_'],
-                    SharedDevelopmentConfig::VIOLATION_FIELD_NAME_RULE => $violation['rule'],
-                    SharedDevelopmentConfig::VIOLATION_FIELD_NAME_RULESET => $violation['ruleset'],
-                    SharedDevelopmentConfig::VIOLATION_FIELD_NAME_PRIORITY => $violation['priority'],
+                    static::VIOLATION_FIELD_NAME_FILENAME => $file,
+                    static::VIOLATION_FIELD_NAME_DESCRIPTION => $violation['_'],
+                    static::VIOLATION_FIELD_NAME_RULE => $violation['rule'],
+                    static::VIOLATION_FIELD_NAME_RULESET => $violation['ruleset'],
+                    static::VIOLATION_FIELD_NAME_PRIORITY => $violation['priority'],
                 ];
             }
         }
