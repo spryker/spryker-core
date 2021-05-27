@@ -7,9 +7,9 @@
 
 namespace Spryker\Shared\Event;
 
-use Spryker\Shared\Kernel\AbstractBundleConfig;
+use Spryker\Shared\Kernel\AbstractSharedConfig;
 
-class EventConfig extends AbstractBundleConfig
+class EventConfig extends AbstractSharedConfig
 {
     /**
      * Specification:

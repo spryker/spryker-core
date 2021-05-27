@@ -17,7 +17,9 @@ suites:
         class_name: StorageBusinessTester
         modules:
             enabled:
-                - Asserts
+                - \SprykerTest\Client\Storage\Helper\StorageHelper
+                - \SprykerTest\Client\Testify\Helper\DependencyProviderHelper
+                - \SprykerTest\Client\Testify\Helper\ClientHelper
                 - \SprykerTest\Shared\Testify\Helper\Environment
                 - \SprykerTest\Shared\Testify\Helper\ConfigHelper
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper

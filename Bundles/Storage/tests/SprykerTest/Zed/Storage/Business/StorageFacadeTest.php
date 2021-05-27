@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\Storage\Business;
 
 use Codeception\Test\Unit;
+use SprykerTest\Client\Storage\Helper\StorageHelperTrait;
 
 /**
  * Auto-generated group annotations
@@ -22,6 +23,8 @@ use Codeception\Test\Unit;
  */
 class StorageFacadeTest extends Unit
 {
+    use StorageHelperTrait;
+
     /**
      * @var \SprykerTest\Zed\Storage\StorageBusinessTester
      */
@@ -32,6 +35,7 @@ class StorageFacadeTest extends Unit
      */
     public function testGetTotalCount(): void
     {
+        $this->getStorageHelper()->getStorageClient()->set('random-key', 'value');
         $this->assertGreaterThan(0, $this->getStorageFacade()->getTotalCount());
     }
 
