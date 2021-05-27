@@ -17,4 +17,9 @@ interface ProductReviewSearchReaderInterface
      * @return array
      */
     public function findProductReviews(ProductReviewSearchRequestTransfer $productReviewSearchRequestTransfer): array;
+
+    /**
+     * @return array
+     */
+    public function findButchProductReviews(): array;
 }

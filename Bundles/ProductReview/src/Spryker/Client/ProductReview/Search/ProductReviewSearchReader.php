@@ -56,4 +56,15 @@ class ProductReviewSearchReader implements ProductReviewSearchReaderInterface
             $productReviewSearchRequestTransfer->getRequestParams()
         );
     }
+
+    /**
+     * @return array
+     */
+    public function findButchProductReviews(): array
+    {
+        return $this->searchClient->search(
+            $this->searchQueryPlugin,
+            $this->searchResultFormatterPlugins
+        );
+    }
 }
