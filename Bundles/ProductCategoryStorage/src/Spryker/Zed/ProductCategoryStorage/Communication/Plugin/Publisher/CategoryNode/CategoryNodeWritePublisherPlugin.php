@@ -30,7 +30,7 @@ class CategoryNodeWritePublisherPlugin extends AbstractPlugin implements Publish
      *
      * @return void
      */
-    public function handleBulk(array $eventEntityTransfers, $eventName): void
+    public function handleBulk(array $eventEntityTransfers, $eventName)
     {
         $this->getFacade()->writeCollectionByCategoryNodeEvents($eventEntityTransfers);
     }

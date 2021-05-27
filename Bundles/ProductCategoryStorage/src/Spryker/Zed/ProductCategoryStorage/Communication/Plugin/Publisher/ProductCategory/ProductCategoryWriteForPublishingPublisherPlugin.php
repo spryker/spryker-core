@@ -30,7 +30,7 @@ class ProductCategoryWriteForPublishingPublisherPlugin extends AbstractPlugin im
      *
      * @return void
      */
-    public function handleBulk(array $eventEntityTransfers, $eventName): void
+    public function handleBulk(array $eventEntityTransfers, $eventName)
     {
         $this->getFacade()->writeCollectionByProductCategoryPublishingEvents($eventEntityTransfers);
     }

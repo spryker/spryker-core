@@ -30,7 +30,7 @@ class CategoryTemplateDeletePublisherPlugin extends AbstractPlugin implements Pu
      *
      * @return void
      */
-    public function handleBulk(array $eventEntityTransfers, $eventName): void
+    public function handleBulk(array $eventEntityTransfers, $eventName)
     {
         $this->getFacade()->deleteCategoryNodePageSearchCollectionByCategoryTemplateEvents($eventEntityTransfers);
     }

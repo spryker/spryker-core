@@ -30,7 +30,7 @@ class CategoryDeletePublisherPlugin extends AbstractPlugin implements PublisherP
      *
      * @return void
      */
-    public function handleBulk(array $eventEntityTransfers, $eventName): void
+    public function handleBulk(array $eventEntityTransfers, $eventName)
     {
         $this->getFacade()->deleteCategoryNodePageSearchCollectionByCategoryEvents($eventEntityTransfers);
     }

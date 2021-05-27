@@ -30,7 +30,7 @@ class CategoryUrlWritePublisherPlugin extends AbstractPlugin implements Publishe
      *
      * @return void
      */
-    public function handleBulk(array $eventEntityTransfers, $eventName): void
+    public function handleBulk(array $eventEntityTransfers, $eventName)
     {
         $this->getFacade()->writeCollectionByCategoryUrlEvents($eventEntityTransfers);
     }

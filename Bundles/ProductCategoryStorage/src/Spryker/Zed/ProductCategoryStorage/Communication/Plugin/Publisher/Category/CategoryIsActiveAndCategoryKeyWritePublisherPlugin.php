@@ -31,7 +31,7 @@ class CategoryIsActiveAndCategoryKeyWritePublisherPlugin extends AbstractPlugin 
      *
      * @return void
      */
-    public function handleBulk(array $eventEntityTransfers, $eventName): void
+    public function handleBulk(array $eventEntityTransfers, $eventName)
     {
         $this->getFacade()->writeCollectionByCategoryIsActiveAndCategoryKeyEvents($eventEntityTransfers);
     }
