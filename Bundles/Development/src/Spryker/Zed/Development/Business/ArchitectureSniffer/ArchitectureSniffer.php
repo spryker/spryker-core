@@ -21,6 +21,12 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
     public const OPTION_PRIORITY = 'priority';
     public const OPTION_STRICT = 'strict';
     public const OPTION_DRY_RUN = 'dry-run';
+    public const NAME_VISIBLE_VIOLATIONS = 'visible';
+    public const NAME_IGNORED_VIOLATIONS = 'ignored';
+    public const VIOLATION_FIELD_NAME_DESCRIPTION = 'description';
+    public const VIOLATION_FIELD_NAME_RULESET = 'ruleset';
+    public const VIOLATION_FIELD_NAME_RULE = 'rule';
+    public const OPTION_UPDATE = 'update-baseline';
 
     protected const SOURCE_FOLDER_NAME = 'src';
     protected const OPTION_MODULE = 'module';
@@ -29,7 +35,6 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
     protected const ARCHITECTURE_BASELINE_JSON = 'architecture-baseline.json';
     protected const VIOLATION_FIELD_NAME_PRIORITY = 'priority';
     protected const VIOLATION_FIELD_NAME_FILENAME = 'fileName';
-    protected const VENDOR_FOLDER_NAME = 'vendor';
 
     /**
      * @var string
@@ -147,7 +152,7 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
         $result = $this->formatViolations($fileViolations);
         $reportResult = $reportFileExists ? $this->getReportResult($reportPath) : [];
 
-        if ($options[DevelopmentConfig::OPTION_UPDATE] || !$reportFileExists) {
+        if ($options[static::OPTION_UPDATE] || !$reportFileExists) {
             $this->saveBaseline($result, $reportPath);
         }
 
@@ -186,15 +191,15 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
     protected function sortViolations(array $result, array $reportResult): array
     {
         $sortedViolations = [
-            DevelopmentConfig::NAME_VISIBLE_VIOLATIONS => [],
-            DevelopmentConfig::NAME_IGNORED_VIOLATIONS => [],
+            static::NAME_VISIBLE_VIOLATIONS => [],
+            static::NAME_IGNORED_VIOLATIONS => [],
         ];
 
         foreach ($result as $key => $violations) {
-            if (array_search($violations[DevelopmentConfig::VIOLATION_FIELD_NAME_DESCRIPTION], array_column($reportResult, DevelopmentConfig::VIOLATION_FIELD_NAME_DESCRIPTION)) !== false) {
-                $sortedViolations[DevelopmentConfig::NAME_IGNORED_VIOLATIONS][] = $result[$key];
+            if (array_search($violations[static::VIOLATION_FIELD_NAME_DESCRIPTION], array_column($reportResult, static::VIOLATION_FIELD_NAME_DESCRIPTION)) !== false) {
+                $sortedViolations[static::NAME_IGNORED_VIOLATIONS][] = $result[$key];
             } else {
-                $sortedViolations[DevelopmentConfig::NAME_VISIBLE_VIOLATIONS][] = $result[$key];
+                $sortedViolations[static::NAME_VISIBLE_VIOLATIONS][] = $result[$key];
             }
         }
 
@@ -258,9 +263,9 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
             foreach ($violations as $violation) {
                 $result[] = [
                     static::VIOLATION_FIELD_NAME_FILENAME => $this->normalizeProjectPath($file),
-                    DevelopmentConfig::VIOLATION_FIELD_NAME_DESCRIPTION => $violation['_'],
-                    DevelopmentConfig::VIOLATION_FIELD_NAME_RULE => $violation['rule'],
-                    DevelopmentConfig::VIOLATION_FIELD_NAME_RULESET => $violation['ruleset'],
+                    static::VIOLATION_FIELD_NAME_DESCRIPTION => $violation['_'],
+                    static::VIOLATION_FIELD_NAME_RULE => $violation['rule'],
+                    static::VIOLATION_FIELD_NAME_RULESET => $violation['ruleset'],
                     static::VIOLATION_FIELD_NAME_PRIORITY => $violation['priority'],
                 ];
             }
@@ -276,7 +281,7 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
      */
     protected function normalizeProjectPath(string $path): string
     {
-        return substr($path, strpos($path, static::VENDOR_FOLDER_NAME));
+        return str_replace(APPLICATION_ROOT_DIR, '', $path);
     }
 
     /**
