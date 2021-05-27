@@ -34,3 +34,4 @@ tooling.yml export-ignore
 .gitattributes export-ignore
 .gitignore export-ignore
 .github export-ignore
+architecture-baseline.json export-ignore

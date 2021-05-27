@@ -1,0 +1,23 @@
+[
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/CmsPageSearch/src/Spryker/Client/CmsPageSearch/Dependency/Client/CmsPageSearchToSearchBridgeInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'search' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/CmsPageSearch/src/Spryker/Client/CmsPageSearch/Dependency/Client/CmsPageSearchToSearchBridgeInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'expandQuery' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/CmsPageSearch/src/Spryker/Zed/CmsPageSearch/Dependency/Facade/CmsPageSearchToCmsInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'extractCmsVersionDataTransfer' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    }
+]
