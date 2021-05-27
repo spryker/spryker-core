@@ -43,7 +43,7 @@ interface AvailabilityRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer[]
      */
-    public function findProductConcreteAvailabilityBySkuAndStoreBatch(
+    public function findProductConcreteAvailabilityBySkusAndStore(
         array $concreteSkus,
         StoreTransfer $storeTransfer
     ): array;

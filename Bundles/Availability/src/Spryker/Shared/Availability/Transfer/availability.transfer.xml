@@ -21,7 +21,7 @@
 
     <transfer name="SellableProductsBatchRequest">
         <property name="store" type="Store"/>
-        <property name="sellableProductRequestItems" type="SellableProductRequestItem[]"/>
+        <property name="sellableProductRequestItems" type="SellableProductRequestItem[]" singular="sellableProductRequestItem"/>
     </transfer>
 
     <transfer name="SellableProductsBatchResponse">

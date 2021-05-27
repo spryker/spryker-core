@@ -69,8 +69,7 @@ class Sellable implements SellableInterface
     ): SellableProductsBatchResponseTransfer {
         $sellableProductConcretesBatchRequestTransfer = new SellableProductsBatchRequestTransfer();
         $sellableProductsBatchResponseTransfer = new SellableProductsBatchResponseTransfer();
-        /** @var \Generated\Shared\Transfer\StoreTransfer $storeTransfer */
-        $storeTransfer = $sellableProductsBatchRequestTransfer->getStore();
+        $storeTransfer = $sellableProductsBatchRequestTransfer->getStoreOrFail();
         $sellableProductConcretesBatchRequestTransfer->setStore($storeTransfer);
         $sellableProductConcreteResponseItemTransfers = [];
 
@@ -94,7 +93,10 @@ class Sellable implements SellableInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\SellableProductsBatchRequestTransfer $sellableProductConcretesBatchRequestTransfer
+     * @param \Generated\Shared\Transfer\SellableProductsBatchResponseTransfer $sellableProductsBatchResponseTransfer
      *
+     * @return \Generated\Shared\Transfer\SellableProductsBatchResponseTransfer
      */
     protected function processSellableProductRequestItemForProductConcrete(
         SellableProductsBatchRequestTransfer $sellableProductConcretesBatchRequestTransfer,
@@ -105,7 +107,7 @@ class Sellable implements SellableInterface
         }
         $sellableProductConcreteResponseItemTransfers = $this->processProductConcretesBatchRequest($sellableProductConcretesBatchRequestTransfer);
         if (count($sellableProductConcreteResponseItemTransfers)) {
-            $totalSesponseItems = new ArrayObject(
+            $sellableProductResponseItemTransfers = new ArrayObject(
                 array_merge(
                     $sellableProductsBatchResponseTransfer->getSellableProductResponseItems()->getArrayCopy(),
                     $sellableProductConcreteResponseItemTransfers
@@ -169,8 +171,7 @@ class Sellable implements SellableInterface
         ProductConcreteAvailabilityTransfer $productConcreteAvailabilityTransfer
     ): SellableProductResponseItemTransfer {
         $sellableProductResponseItemTransfer = new SellableProductResponseItemTransfer();
-        /** @var \Spryker\DecimalObject\Decimal $availableQuantity */
-        $availableQuantity = $sellableProductRequestItemTransfer->getQuantity() ? $sellableProductRequestItemTransfer->getQuantity() : new Decimal(0);
+        $availableQuantity = $sellableProductRequestItemTransfer->getQuantityOrFail() ?? new Decimal(0);
         $sellableProductResponseItemTransfer->setSku($sellableProductRequestItemTransfer->getSku());
         $sellableProductResponseItemTransfer->setAvailableQuantity($productConcreteAvailabilityTransfer->getAvailability());
         $sellableProductResponseItemTransfer->setIsSellable($this->isProductConcreteSellable(
@@ -182,6 +183,21 @@ class Sellable implements SellableInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\SellableProductsBatchRequestTransfer $sellableProductBatchRequestTransfer
+     *
+     * @return array
+     */
+    protected function getSkus($sellableProductBatchRequestTransfer): array
+    {
+        foreach ($sellableProductBatchRequestTransfer->getSellableProductRequestItems() as $sellableProductRequestItem) {
+            $sku = $sellableProductRequestItem->getSkuOrFail();
+            $concreteSkus[] = $sku;
+        }
+
+        return $concreteSkus;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\SellableProductsBatchRequestTransfer $sellableProductConcretesBatchRequestTransfer
      *
      * @return \Generated\Shared\Transfer\SellableProductResponseItemTransfer[]
@@ -190,19 +206,10 @@ class Sellable implements SellableInterface
         SellableProductsBatchRequestTransfer $sellableProductConcretesBatchRequestTransfer
     ): array {
         $sellableProductResponseItemTransfers = [];
-        /** @var \Generated\Shared\Transfer\StoreTransfer $storeTransfer */
-        $storeTransfer = $sellableProductConcretesBatchRequestTransfer->getStore();
-            $sellableProductConcretesBatchRequestArray = $sellableProductConcretesBatchRequestTransfer->getSellableProductRequestItems()->getArrayCopy();
-        $concreteSkus = [];
-
-        foreach ($sellableProductConcretesBatchRequestTransfer->getSellableProductRequestItems() as $sellableProductRequestItem) {
-            /** @var string $sku */
-            $sku = $sellableProductRequestItem->getSku();
-            $concreteSkus[] = $sku;
-        }
-
+        $storeTransfer = $sellableProductConcretesBatchRequestTransfer->getStoreOrFail();
+        $concreteSkus = $this->getSkus($sellableProductConcretesBatchRequestTransfer);
         $productConcreteAvailabilityTransfers = $this->availabilityRepository
-        ->findProductConcreteAvailabilityBySkuAndStoreBatch($concreteSkus, $storeTransfer);
+        ->findProductConcreteAvailabilityBySkusAndStore($concreteSkus, $storeTransfer);
         $productConcreteAvailabilityTransfersSkuMap = $this->getProductConcreteAvailabilityTransfersSkuMap($productConcreteAvailabilityTransfers);
 
         foreach ($sellableProductConcretesBatchRequestTransfer->getSellableProductRequestItems() as $sellableProductRequestItemTransfer) {
@@ -234,16 +241,22 @@ class Sellable implements SellableInterface
     {
         return array_reduce(
             $productConcreteAvailabilityTransfers,
-            function (
-                array $resuSellableltMap,
-                ProductConcreteAvailabilityTransfer $productConcreteAvailabilityTransfer
-            ): array {
-                $resultMap[$productConcreteAvailabilityTransfer->getSku()] = $productConcreteAvailabilityTransfer;
-
-                return $resultMap;
-            },
+            [$this, 'mapProductConcreteAvailabilityTransferBySku'],
             []
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer[] $ProductConcreteAvailabilityTransfersMap
+     * @param \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer $productConcreteAvailabilityTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer[]
+     */
+    protected function mapProductConcreteAvailabilityTransferBySku(
+        array $ProductConcreteAvailabilityTransfersMap,
+        ProductConcreteAvailabilityTransfer $productConcreteAvailabilityTransfer): array {
+
+        return $ProductConcreteAvailabilityTransfersMap[$productConcreteAvailabilityTransfer->getSkuOrFail()] = $productConcreteAvailabilityTransfer;
     }
 
     /**

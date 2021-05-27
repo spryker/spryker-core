@@ -101,7 +101,7 @@ class AvailabilityRepository extends AbstractRepository implements AvailabilityR
      *
      * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer[]
      */
-    public function findProductConcreteAvailabilityBySkuAndStoreBatch(
+    public function findProductConcreteAvailabilityBySkusAndStore(
         array $concreteSkus,
         StoreTransfer $storeTransfer
     ): array {
@@ -118,10 +118,9 @@ class AvailabilityRepository extends AbstractRepository implements AvailabilityR
         }
 
         $productConcreteAvailabilityTransfers = [];
+        $availabilityMapper = $this->getFactory()->createAvailabilityMapper();
         foreach ($availabilityEntities as $availabilityEntity) {
-            $productConcreteAvailabilityTransfers[] = $this->getFactory()
-                ->createAvailabilityMapper()
-                ->mapAvailabilityEntityToProductConcreteAvailabilityTransfer(
+            $productConcreteAvailabilityTransfers[] = $availabilityMapper->mapAvailabilityEntityToProductConcreteAvailabilityTransfer(
                     $availabilityEntity,
                     new ProductConcreteAvailabilityTransfer()
                 );
