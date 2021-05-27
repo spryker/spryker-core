@@ -65,7 +65,7 @@ class Sellable implements SellableInterface
      * @return \Generated\Shared\Transfer\SellableProductsBatchResponseTransfer
      */
     public function areProductsSellableForStore(
-        $sellableProductsBatchRequestTransfer
+        SellableProductsBatchRequestTransfer $sellableProductsBatchRequestTransfer
     ): SellableProductsBatchResponseTransfer {
         $sellableProductConcretesBatchRequestTransfer = new SellableProductsBatchRequestTransfer();
         $sellableProductsBatchResponseTransfer = new SellableProductsBatchResponseTransfer();
@@ -73,54 +73,89 @@ class Sellable implements SellableInterface
         $storeTransfer = $sellableProductsBatchRequestTransfer->getStore();
         $sellableProductConcretesBatchRequestTransfer->setStore($storeTransfer);
         $sellableProductConcreteResponseItemTransfers = [];
+
         foreach ($sellableProductsBatchRequestTransfer->getSellableProductRequestItems() as $sellableProductRequestItemTransfer) {
-            $processableByPlugin = false;
-            /** @var string $concreteSku */
-            $concreteSku = $sellableProductRequestItemTransfer->getSkuOrFail();
-            /** @var \Generated\Shared\Transfer\ProductAvailabilityCriteriaTransfer $productAvailabilityCriteriaTransfer */
-            $productAvailabilityCriteriaTransfer = $sellableProductRequestItemTransfer->getProductAvailabilityCriteria();
-            foreach ($this->availabilityStrategyPlugins as $availabilityStrategyPlugin) {
-                    $processableByPlugin = $availabilityStrategyPlugin->isApplicable(
-                        $concreteSku,
-                        $storeTransfer,
-                        $productAvailabilityCriteriaTransfer
-                    );
-                if (!$processableByPlugin) {
-                    continue;
-                }
-                /** @var \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer $customProductConcreteAvailability */
-                $customProductConcreteAvailability = $availabilityStrategyPlugin->findProductConcreteAvailabilityForStore(
-                    $concreteSku,
-                    $storeTransfer,
-                    $productAvailabilityCriteriaTransfer
-                );
-                /** @var \Generated\Shared\Transfer\SellableProductResponseItemTransfer $sellableProductResponseItemTransfer */
-                $sellableProductResponseItemTransfer = $this->getSellableProductResponseItemTransfer(
-                    $sellableProductRequestItemTransfer,
-                    $customProductConcreteAvailability
-                );
-                $sellableProductsBatchResponseTransfer->addSellableProductResponseItems($sellableProductResponseItemTransfer);
+            $sellableProductResponseItemTransfer = $this->processSellableProductRequestItemForCustomProducts(
+                $sellableProductRequestItemTransfer,
+                $storeTransfer
+            );
+            if(!$sellableProductResponseItemTransfer) {
+                $sellableProductConcretesBatchRequestTransfer->addSellableProductRequestItems($sellableProductRequestItemTransfer);
+                continue;
             }
 
-            if (!$processableByPlugin) {
-                $sellableProductConcretesBatchRequestTransfer->addSellableProductRequestItems($sellableProductRequestItemTransfer);
-            }
+            $sellableProductsBatchResponseTransfer->addSellableProductResponseItems($sellableProductResponseItemTransfer);
         }
 
+        return $this->processSellableProductRequestItemForProductConcrete(
+            $sellableProductConcretesBatchRequestTransfer,
+            $sellableProductsBatchResponseTransfer
+        );
+    }
+
+    /**
+     *
+     */
+    protected function processSellableProductRequestItemForProductConcrete(
+        SellableProductsBatchRequestTransfer $sellableProductConcretesBatchRequestTransfer,
+        SellableProductsBatchResponseTransfer $sellableProductsBatchResponseTransfer
+    ): SellableProductsBatchResponseTransfer {
         if (count($sellableProductConcretesBatchRequestTransfer->getSellableProductRequestItems())) {
-            $sellableProductConcreteResponseItemTransfers = $this->processProductConcretesBatchRequest($sellableProductConcretesBatchRequestTransfer);
-            if (count($sellableProductConcreteResponseItemTransfers)) {
-                $totalSesponseItems = new ArrayObject(
-                    array_merge(
-                        $sellableProductsBatchResponseTransfer->getSellableProductResponseItems()->getArrayCopy(),
-                        $sellableProductConcreteResponseItemTransfers
-                    )
-                );
-                $sellableProductsBatchResponseTransfer->setSellableProductResponseItems($totalSesponseItems);
-            }
+            return $sellableProductsBatchResponseTransfer;
+        }
+        $sellableProductConcreteResponseItemTransfers = $this->processProductConcretesBatchRequest($sellableProductConcretesBatchRequestTransfer);
+        if (count($sellableProductConcreteResponseItemTransfers)) {
+            $totalSesponseItems = new ArrayObject(
+                array_merge(
+                    $sellableProductsBatchResponseTransfer->getSellableProductResponseItems()->getArrayCopy(),
+                    $sellableProductConcreteResponseItemTransfers
+                )
+            );
+            $sellableProductsBatchResponseTransfer->setSellableProductResponseItems($totalSesponseItems);
         }
 
         return $sellableProductsBatchResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SellableProductRequestItemTransfer $sellableProductRequestItemTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\SellableProductResponseItemTransfer|null
+     */
+    protected function processSellableProductRequestItemForCustomProducts(
+        SellableProductRequestItemTransfer $sellableProductRequestItemTransfer,
+        StoreTransfer $storeTransfer
+    ): ?SellableProductResponseItemTransfer {
+        /** @var string $concreteSku */
+        $concreteSku = $sellableProductRequestItemTransfer->getSkuOrFail();
+
+        /** @var \Generated\Shared\Transfer\ProductAvailabilityCriteriaTransfer $productAvailabilityCriteriaTransfer */
+        $productAvailabilityCriteriaTransfer = $sellableProductRequestItemTransfer->getProductAvailabilityCriteria();
+        foreach ($this->availabilityStrategyPlugins as $availabilityStrategyPlugin) {
+            if (!$availabilityStrategyPlugin->isApplicable(
+                $concreteSku,
+                $storeTransfer,
+                $productAvailabilityCriteriaTransfer
+            )) {
+                continue;
+            }
+            /** @var \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer $customProductConcreteAvailability */
+            $customProductConcreteAvailability = $availabilityStrategyPlugin->findProductConcreteAvailabilityForStore(
+                $concreteSku,
+                $storeTransfer,
+                $productAvailabilityCriteriaTransfer
+            );
+            /** @var \Generated\Shared\Transfer\SellableProductResponseItemTransfer $sellableProductResponseItemTransfer */
+            $sellableProductResponseItemTransfer = $this->getSellableProductResponseItemTransfer(
+                $sellableProductRequestItemTransfer,
+                $customProductConcreteAvailability
+            );
+
+            return $sellableProductResponseItemTransfer;
+        }
+
+        return null;
     }
 
     /**
