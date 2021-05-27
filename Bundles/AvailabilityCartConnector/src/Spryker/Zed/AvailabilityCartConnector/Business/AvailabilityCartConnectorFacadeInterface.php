@@ -8,6 +8,7 @@
 namespace Spryker\Zed\AvailabilityCartConnector\Business;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 
 /**
  * @method \Spryker\Zed\AvailabilityCartConnector\Business\AvailabilityCartConnectorBusinessFactory getFactory()
@@ -18,7 +19,7 @@ interface AvailabilityCartConnectorFacadeInterface
      * Specification:
      *  - Executes `CartItemQuantityCounterStrategyPluginInterface` plugins.
      *  - Checks if items in CartChangeTransfer are sellable.
-     *  - In case `ItemTransfer.amount` was defined, item availability check will be ignored.
+     *  - In case `ItemTransfer.amount` is defined, item availability check will be ignored.
      *  - Returns transfer with error message and isSuccess flag set to false when some of items are not available.
      *
      * @api
@@ -27,7 +28,7 @@ interface AvailabilityCartConnectorFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
-    public function checkCartAvailabilityBatch(CartChangeTransfer $cartChangeTransfer);
+    public function checkCartAvailabilityBatch(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer;
 
     /**
      * Specification:

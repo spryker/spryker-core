@@ -8,6 +8,7 @@
 namespace Spryker\Zed\AvailabilityCartConnector\Business;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -24,7 +25,7 @@ class AvailabilityCartConnectorFacade extends AbstractFacade implements Availabi
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
-    public function checkCartAvailabilityBatch(CartChangeTransfer $cartChangeTransfer)
+    public function checkCartAvailabilityBatch(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
     {
         return $this->getFactory()
             ->createCartCheckAvailability()

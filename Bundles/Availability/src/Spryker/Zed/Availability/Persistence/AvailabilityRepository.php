@@ -117,13 +117,23 @@ class AvailabilityRepository extends AbstractRepository implements AvailabilityR
             return [];
         }
 
+        return $this->mapAvailabilityEntityToProductConcreteAvailabilityTransfers($availabilityEntities->getArrayCopy());
+    }
+
+    /**
+     * @param \Orm\Zed\Availability\Persistence\SpyAvailability[] $availabilityEntities
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer[]
+     */
+    protected function mapAvailabilityEntityToProductConcreteAvailabilityTransfers(array $availabilityEntities): array
+    {
         $productConcreteAvailabilityTransfers = [];
         $availabilityMapper = $this->getFactory()->createAvailabilityMapper();
         foreach ($availabilityEntities as $availabilityEntity) {
             $productConcreteAvailabilityTransfers[] = $availabilityMapper->mapAvailabilityEntityToProductConcreteAvailabilityTransfer(
-                    $availabilityEntity,
-                    new ProductConcreteAvailabilityTransfer()
-                );
+                $availabilityEntity,
+                new ProductConcreteAvailabilityTransfer()
+            );
         }
 
         return $productConcreteAvailabilityTransfers;
