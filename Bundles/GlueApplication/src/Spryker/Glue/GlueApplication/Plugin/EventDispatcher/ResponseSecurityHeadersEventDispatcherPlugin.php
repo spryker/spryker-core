@@ -19,7 +19,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
  *
  * @method \Spryker\Glue\GlueApplication\GlueApplicationConfig getConfig()
  */
-class HeadersSecurityEventDispatcherPlugin extends AbstractPlugin implements EventDispatcherPluginInterface
+class ResponseSecurityHeadersEventDispatcherPlugin extends AbstractPlugin implements EventDispatcherPluginInterface
 {
     /**
      * {@inheritDoc}
