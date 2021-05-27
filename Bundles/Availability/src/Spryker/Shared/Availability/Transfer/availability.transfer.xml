@@ -25,7 +25,7 @@
     </transfer>
 
     <transfer name="SellableProductsBatchResponse">
-        <property name="sellableProductResponseItems" type="SellableProductResponseItem[]"/>
+        <property name="sellableProductResponseItems" type="SellableProductResponseItem[]" singular="sellableProductRequestItem"/>
     </transfer>
 
     <transfer name="StorageAvailability">
