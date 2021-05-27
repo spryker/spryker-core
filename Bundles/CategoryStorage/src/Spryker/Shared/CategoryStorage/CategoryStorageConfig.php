@@ -7,10 +7,9 @@
 
 namespace Spryker\Shared\CategoryStorage;
 
-/**
- * Declares global environment configuration keys. Do not use it for other class constants.
- */
-class CategoryStorageConfig
+use Spryker\Shared\Kernel\AbstractBundleConfig;
+
+class CategoryStorageConfig extends AbstractBundleConfig
 {
     /**
      * Specification:
