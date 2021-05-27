@@ -127,7 +127,7 @@ class ProductReviewDependencyProvider extends AbstractDependencyProvider
     {
         return [
             new PaginatedProductReviewsQueryExpanderPlugin(),
-            new RatingAggregationQueryExpanderPlugin(), #TODO
+            new RatingAggregationQueryExpanderPlugin(),
             new SortByCreatedAtQueryExpanderPlugin(),
         ];
     }
