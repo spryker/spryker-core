@@ -7,7 +7,7 @@
 
 namespace Spryker\Shared\Category;
 
-use Spryker\Client\Kernel\AbstractBundleConfig;
+use Spryker\Shared\Kernel\AbstractBundleConfig;
 
 class CategoryConfig extends AbstractBundleConfig
 {
