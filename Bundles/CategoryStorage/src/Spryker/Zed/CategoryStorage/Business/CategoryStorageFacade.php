@@ -143,10 +143,10 @@ class CategoryStorageFacade extends AbstractFacade implements CategoryStorageFac
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function findCategoryNodeStorageSynchronizationDataTransfersByCategoryNodeIds(int $offset, int $limit, array $categoryNodeIds): array
+    public function getCategoryNodeStorageSynchronizationDataTransfersByCategoryNodeIds(int $offset, int $limit, array $categoryNodeIds): array
     {
         return $this->getRepository()
-            ->findCategoryNodeStorageSynchronizationDataTransfersByCategoryNodeIds($offset, $limit, $categoryNodeIds);
+            ->getCategoryNodeStorageSynchronizationDataTransfersByCategoryNodeIds($offset, $limit, $categoryNodeIds);
     }
 
     /**
@@ -160,10 +160,10 @@ class CategoryStorageFacade extends AbstractFacade implements CategoryStorageFac
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function findCategoryTreeStorageSynchronizationDataTransfersByCategoryTreeStorageIds(int $offset, int $limit, array $categoryTreeStorageIds): array
+    public function getCategoryTreeStorageSynchronizationDataTransfersByCategoryTreeStorageIds(int $offset, int $limit, array $categoryTreeStorageIds): array
     {
         return $this->getRepository()
-            ->findCategoryTreeStorageSynchronizationDataTransfersByCategoryTreeStorageIds($offset, $limit, $categoryTreeStorageIds);
+            ->getCategoryTreeStorageSynchronizationDataTransfersByCategoryTreeStorageIds($offset, $limit, $categoryTreeStorageIds);
     }
 
     /**

@@ -802,7 +802,7 @@ class ProductCategoryStorageFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindProductAbstractCategoryStorageSynchronizationDataTransfersByProductAbstractIdsWillReturnDataFilteredByIds(): void
+    public function testGetProductAbstractCategoryStorageSynchronizationDataTransfersByProductAbstractIdsWillReturnDataFilteredByIds(): void
     {
         // Arrange
         $productConcreteTransfer = $this->tester->haveFullProduct();
@@ -823,7 +823,7 @@ class ProductCategoryStorageFacadeTest extends Unit
 
         // Act
         $synchronizationDataTransfers = $this->tester->getFacade()
-            ->findProductAbstractCategoryStorageSynchronizationDataTransfersByProductAbstractIds(0, 100, [$idProductAbstract]);
+            ->getProductAbstractCategoryStorageSynchronizationDataTransfersByProductAbstractIds(0, 100, [$idProductAbstract]);
 
         // Assert
         $productAbstractIds = array_map(function (SynchronizationDataTransfer $synchronizationDataTransfer) {
@@ -836,7 +836,7 @@ class ProductCategoryStorageFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindProductAbstractCategoryStorageSynchronizationDataTransfersByProductAbstractIdsWillReturnDataByLimit(): void
+    public function testGetProductAbstractCategoryStorageSynchronizationDataTransfersByProductAbstractIdsWillReturnDataByLimit(): void
     {
         // Arrange
         $expectedCount = 1;
@@ -856,7 +856,7 @@ class ProductCategoryStorageFacadeTest extends Unit
 
         // Act
         $synchronizationDataTransfers = $this->tester->getFacade()
-            ->findProductAbstractCategoryStorageSynchronizationDataTransfersByProductAbstractIds(0, $expectedCount, []);
+            ->getProductAbstractCategoryStorageSynchronizationDataTransfersByProductAbstractIds(0, $expectedCount, []);
 
         // Assert
         $this->assertCount($expectedCount, $synchronizationDataTransfers, sprintf('Exactly %d product abstract categories should exist.', $expectedCount));

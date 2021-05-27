@@ -266,13 +266,13 @@ class ProductCategoryStorageFacade extends AbstractFacade implements ProductCate
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function findProductAbstractCategoryStorageSynchronizationDataTransfersByProductAbstractIds(
+    public function getProductAbstractCategoryStorageSynchronizationDataTransfersByProductAbstractIds(
         int $offset,
         int $limit,
         array $productAbstractIds
     ): array {
         return $this->getRepository()
-            ->findProductAbstractCategoryStorageSynchronizationDataTransfersByProductAbstractIds($offset, $limit, $productAbstractIds);
+            ->getProductAbstractCategoryStorageSynchronizationDataTransfersByProductAbstractIds($offset, $limit, $productAbstractIds);
     }
 
     /**

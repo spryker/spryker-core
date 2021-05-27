@@ -219,7 +219,7 @@ class ProductCategoryStorageRepository extends AbstractRepository implements Pro
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function findProductAbstractCategoryStorageSynchronizationDataTransfersByProductAbstractIds(
+    public function getProductAbstractCategoryStorageSynchronizationDataTransfersByProductAbstractIds(
         int $offset,
         int $limit,
         array $productAbstractIds

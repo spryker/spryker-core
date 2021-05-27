@@ -33,7 +33,7 @@ class CategoryNodeSynchronizationDataBulkRepositoryPlugin extends AbstractPlugin
      */
     public function getData(int $offset, int $limit, array $ids = []): array
     {
-        return $this->getFacade()->findCategoryNodeStorageSynchronizationDataTransfersByCategoryNodeIds($offset, $limit, $ids);
+        return $this->getFacade()->getCategoryNodeStorageSynchronizationDataTransfersByCategoryNodeIds($offset, $limit, $ids);
     }
 
     /**

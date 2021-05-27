@@ -345,7 +345,7 @@ class CategoryStorageFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindCategoryNodeStorageSynchronizationDataTransfersByCategoryNodeIdsWillReturnCategoryStorageDataFilteredByIds(): void
+    public function testGetCategoryNodeStorageSynchronizationDataTransfersByCategoryNodeIdsWillReturnCategoryStorageDataFilteredByIds(): void
     {
         // Arrange
         $categoryTransfer = $this->tester->haveLocalizedCategoryWithStoreRelation([], [StoreTransfer::NAME => static::STORE_NAME_DE]);
@@ -359,7 +359,7 @@ class CategoryStorageFacadeTest extends Unit
         // Act
         $synchronizationDataTransfers = $this->tester
             ->getFacade()
-            ->findCategoryNodeStorageSynchronizationDataTransfersByCategoryNodeIds(0, 100, [$categoryNodeId]);
+            ->getCategoryNodeStorageSynchronizationDataTransfersByCategoryNodeIds(0, 100, [$categoryNodeId]);
 
         // Assert
         $categoryNodeIds = array_map(function (SynchronizationDataTransfer $synchronizationDataTransfer) {
@@ -371,7 +371,7 @@ class CategoryStorageFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindCategoryNodeStorageSynchronizationDataTransfersByCategoryNodeIdsWillReturnCategoryStorageDataByLimit(): void
+    public function testGetCategoryNodeStorageSynchronizationDataTransfersByCategoryNodeIdsWillReturnCategoryStorageDataByLimit(): void
     {
         // Arrange
         $expectedCount = 1;
@@ -381,7 +381,7 @@ class CategoryStorageFacadeTest extends Unit
         }
 
         // Act
-        $synchronizationDataTransfers = $this->tester->getFacade()->findCategoryNodeStorageSynchronizationDataTransfersByCategoryNodeIds(0, $expectedCount, []);
+        $synchronizationDataTransfers = $this->tester->getFacade()->getCategoryNodeStorageSynchronizationDataTransfersByCategoryNodeIds(0, $expectedCount, []);
 
         // Assert
         $this->assertCount($expectedCount, $synchronizationDataTransfers, sprintf('Exactly %d category nodes should exist.', $expectedCount));
@@ -390,7 +390,7 @@ class CategoryStorageFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindCategoryTreeStorageSynchronizationDataTransfersByCategoryTreeStorageIdsWillReturnCategoryTreeStorageDataFilteredByIds(): void
+    public function testGetCategoryTreeStorageSynchronizationDataTransfersByCategoryTreeStorageIdsWillReturnCategoryTreeStorageDataFilteredByIds(): void
     {
         // Arrange
         $expectedCount = 1;
@@ -402,7 +402,7 @@ class CategoryStorageFacadeTest extends Unit
         $this->tester->haveCategoryTreeStorageEntityByLocalizedCategoryAndStoreName($categoryTransferUS, static::STORE_NAME_US);
 
         // Act
-        $synchronizationDataTransfers = $this->tester->getFacade()->findCategoryTreeStorageSynchronizationDataTransfersByCategoryTreeStorageIds(0, 100, [$categoryTreeStorageDE->getIdCategoryTreeStorage()]);
+        $synchronizationDataTransfers = $this->tester->getFacade()->getCategoryTreeStorageSynchronizationDataTransfersByCategoryTreeStorageIds(0, 100, [$categoryTreeStorageDE->getIdCategoryTreeStorage()]);
 
         // Assert
         $this->assertCount($expectedCount, $synchronizationDataTransfers, sprintf('Exactly %d category trees should be found.', $expectedCount));
@@ -411,7 +411,7 @@ class CategoryStorageFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindCategoryTreeStorageSynchronizationDataTransfersByCategoryTreeStorageIdsWillReturnCategoryTreeStorageDataByLimit(): void
+    public function testGetCategoryTreeStorageSynchronizationDataTransfersByCategoryTreeStorageIdsWillReturnCategoryTreeStorageDataByLimit(): void
     {
         // Arrange
         $expectedCount = 1;
@@ -422,7 +422,7 @@ class CategoryStorageFacadeTest extends Unit
         }
 
         // Act
-        $synchronizationDataTransfers = $this->tester->getFacade()->findCategoryTreeStorageSynchronizationDataTransfersByCategoryTreeStorageIds(0, $expectedCount, []);
+        $synchronizationDataTransfers = $this->tester->getFacade()->getCategoryTreeStorageSynchronizationDataTransfersByCategoryTreeStorageIds(0, $expectedCount, []);
 
         // Assert
         $this->assertCount($expectedCount, $synchronizationDataTransfers, sprintf('Exactly %d category trees should be found.', $expectedCount));

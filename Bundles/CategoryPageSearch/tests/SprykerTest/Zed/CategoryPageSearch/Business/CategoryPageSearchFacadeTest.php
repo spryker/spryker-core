@@ -245,7 +245,7 @@ class CategoryPageSearchFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindSynchronizationDataTransfersByCategoryNodeIdsWillReturnDataFilteredByIds(): void
+    public function testGetSynchronizationDataTransfersByCategoryNodeIdsWillReturnDataFilteredByIds(): void
     {
         // Arrange
         $categoryTransfer = $this->tester->haveLocalizedCategoryWithStoreRelation();
@@ -256,7 +256,7 @@ class CategoryPageSearchFacadeTest extends Unit
         ]);
 
         // Act
-        $synchronizationDataTransfers = $this->tester->getFacade()->findSynchronizationDataTransfersByCategoryNodeIds(0, 100, [$categoryNodeId]);
+        $synchronizationDataTransfers = $this->tester->getFacade()->getSynchronizationDataTransfersByCategoryNodeIds(0, 100, [$categoryNodeId]);
 
         // Assert
         $categoryNodeIds = array_map(function (SynchronizationDataTransfer $synchronizationDataTransfer) {
@@ -269,7 +269,7 @@ class CategoryPageSearchFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindSynchronizationDataTransfersByCategoryNodeIdsWillReturnDataByLimit(): void
+    public function testGetSynchronizationDataTransfersByCategoryNodeIdsWillReturnDataByLimit(): void
     {
         $expectedCount = 1;
         for ($i = 0; $i < 3; $i++) {
@@ -278,7 +278,7 @@ class CategoryPageSearchFacadeTest extends Unit
         }
 
         // Act
-        $synchronizationDataTransfers = $this->tester->getFacade()->findSynchronizationDataTransfersByCategoryNodeIds(0, $expectedCount, []);
+        $synchronizationDataTransfers = $this->tester->getFacade()->getSynchronizationDataTransfersByCategoryNodeIds(0, $expectedCount, []);
 
         // Assert
         $this->assertCount($expectedCount, $synchronizationDataTransfers, sprintf('Exactly %d category nodes should be found.', $expectedCount));
