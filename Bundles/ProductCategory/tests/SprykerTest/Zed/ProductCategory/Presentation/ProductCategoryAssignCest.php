@@ -82,9 +82,9 @@ class ProductCategoryAssignCest
             ProductCategoryAssignPage::DESELECTED_PRODUCTS_CSV_FIELD_SELECTOR,
             (string)$idAbstractProduct
         );
+
         $i->click(ProductCategoryAssignPage::FORM_SUBMIT_SELECTOR);
         $i->waitForElement(ProductCategoryAssignPage::SUCCESS_MESSAGE_SELECTOR);
-
     }
 
     /**
