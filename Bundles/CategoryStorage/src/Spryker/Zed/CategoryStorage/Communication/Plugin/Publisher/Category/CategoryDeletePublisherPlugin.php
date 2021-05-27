@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CategoryStorage\Communication\Plugin\Publisher\Category;
 
-use Spryker\Shared\CategoryStorage\CategoryStorageConstants;
+use Spryker\Shared\CategoryStorage\CategoryStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface;
 
@@ -45,7 +45,7 @@ class CategoryDeletePublisherPlugin extends AbstractPlugin implements PublisherP
     public function getSubscribedEvents(): array
     {
         return [
-            CategoryStorageConstants::ENTITY_SPY_CATEGORY_DELETE,
+            CategoryStorageConfig::ENTITY_SPY_CATEGORY_DELETE,
         ];
     }
 }

@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CategoryPageSearch\Communication\Plugin\Publisher\Category;
 
-use Spryker\Shared\CategoryPageSearch\CategoryPageSearchConstants;
+use Spryker\Shared\CategoryPageSearch\CategoryPageSearchConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface;
 
@@ -45,7 +45,7 @@ class CategoryDeletePublisherPlugin extends AbstractPlugin implements PublisherP
     public function getSubscribedEvents(): array
     {
         return [
-            CategoryPageSearchConstants::ENTITY_SPY_CATEGORY_DELETE,
+            CategoryPageSearchConfig::ENTITY_SPY_CATEGORY_DELETE,
         ];
     }
 }

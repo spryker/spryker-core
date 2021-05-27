@@ -10,6 +10,7 @@ namespace Spryker\Zed\CategoryPageSearch\Communication\Plugin\Publisher;
 use Generated\Shared\Transfer\CategoryNodeCriteriaTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
+use Spryker\Shared\CategoryPageSearch\CategoryPageSearchConfig;
 use Spryker\Shared\CategoryPageSearch\CategoryPageSearchConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherTriggerPluginInterface;
@@ -65,7 +66,7 @@ class CategoryPagePublisherTriggerPlugin extends AbstractPlugin implements Publi
      */
     public function getEventName(): string
     {
-        return CategoryPageSearchConstants::CATEGORY_NODE_PUBLISH;
+        return CategoryPageSearchConfig::CATEGORY_NODE_PUBLISH;
     }
 
     /**

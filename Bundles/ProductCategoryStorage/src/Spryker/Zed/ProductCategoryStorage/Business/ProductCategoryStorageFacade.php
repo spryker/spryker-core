@@ -284,9 +284,9 @@ class ProductCategoryStorageFacade extends AbstractFacade implements ProductCate
      *
      * @return \Generated\Shared\Transfer\ProductCategoryTransfer[]
      */
-    public function findProductCategoryTransfersByFilter(FilterTransfer $filterTransfer): array
+    public function getProductCategoryTransfersByFilter(FilterTransfer $filterTransfer): array
     {
         return $this->getRepository()
-            ->findProductCategoryTransfersByFilter($filterTransfer);
+            ->getProductCategoryTransfersByFilter($filterTransfer);
     }
 }

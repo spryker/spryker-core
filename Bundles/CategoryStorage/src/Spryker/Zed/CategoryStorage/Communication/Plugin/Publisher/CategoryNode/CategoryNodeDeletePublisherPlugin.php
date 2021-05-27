@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CategoryStorage\Communication\Plugin\Publisher\CategoryNode;
 
-use Spryker\Shared\CategoryStorage\CategoryStorageConstants;
+use Spryker\Shared\CategoryStorage\CategoryStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface;
 
@@ -46,8 +46,8 @@ class CategoryNodeDeletePublisherPlugin extends AbstractPlugin implements Publis
     public function getSubscribedEvents(): array
     {
         return [
-            CategoryStorageConstants::ENTITY_SPY_CATEGORY_NODE_DELETE,
-            CategoryStorageConstants::CATEGORY_NODE_UNPUBLISH,
+            CategoryStorageConfig::ENTITY_SPY_CATEGORY_NODE_DELETE,
+            CategoryStorageConfig::CATEGORY_NODE_UNPUBLISH,
         ];
     }
 }

@@ -36,7 +36,7 @@ class ProductCategoryPublisherTriggerPlugin extends AbstractPlugin implements Pu
     {
         $filterTransfer = $this->createFilterTransfer($offset, $limit);
 
-        return $this->getFacade()->findProductCategoryTransfersByFilter($filterTransfer);
+        return $this->getFacade()->getProductCategoryTransfersByFilter($filterTransfer);
     }
 
     /**

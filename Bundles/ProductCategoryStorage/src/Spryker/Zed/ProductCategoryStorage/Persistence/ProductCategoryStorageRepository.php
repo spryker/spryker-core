@@ -246,7 +246,7 @@ class ProductCategoryStorageRepository extends AbstractRepository implements Pro
      *
      * @return \Generated\Shared\Transfer\ProductCategoryTransfer[]
      */
-    public function findProductCategoryTransfersByFilter(FilterTransfer $filterTransfer): array
+    public function getProductCategoryTransfersByFilter(FilterTransfer $filterTransfer): array
     {
         $query = $this->getFactory()->getProductCategoryPropelQuery();
 

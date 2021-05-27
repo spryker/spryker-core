@@ -865,7 +865,7 @@ class ProductCategoryStorageFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindProductCategoryTransfersByFilterWillReturnProductCategoryData(): void
+    public function testGetProductCategoryTransfersByFilterWillReturnProductCategoryData(): void
     {
         // Arrange
         $expectedCount = 1;
@@ -880,7 +880,7 @@ class ProductCategoryStorageFacadeTest extends Unit
             ->setLimit($expectedCount);
 
         // Act
-        $productCategoryTransfers = $this->tester->getFacade()->findProductCategoryTransfersByFilter($filterTransfer);
+        $productCategoryTransfers = $this->tester->getFacade()->getProductCategoryTransfersByFilter($filterTransfer);
 
         // Assert
         $this->assertCount($expectedCount, $productCategoryTransfers, sprintf('Exactly %d product categories should exist.', $expectedCount));

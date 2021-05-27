@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CategoryPageSearch\Communication\Plugin\Publisher\CategoryAttribute;
 
-use Spryker\Shared\CategoryPageSearch\CategoryPageSearchConstants;
+use Spryker\Shared\CategoryPageSearch\CategoryPageSearchConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface;
 
@@ -45,8 +45,8 @@ class CategoryAttributeWritePublisherPlugin extends AbstractPlugin implements Pu
     public function getSubscribedEvents(): array
     {
         return [
-            CategoryPageSearchConstants::ENTITY_SPY_CATEGORY_ATTRIBUTE_CREATE,
-            CategoryPageSearchConstants::ENTITY_SPY_CATEGORY_ATTRIBUTE_UPDATE,
+            CategoryPageSearchConfig::ENTITY_SPY_CATEGORY_ATTRIBUTE_CREATE,
+            CategoryPageSearchConfig::ENTITY_SPY_CATEGORY_ATTRIBUTE_UPDATE,
         ];
     }
 }

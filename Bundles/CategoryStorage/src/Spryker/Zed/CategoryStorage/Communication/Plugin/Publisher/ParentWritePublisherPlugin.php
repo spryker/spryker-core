@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CategoryStorage\Communication\Plugin\Publisher;
 
-use Spryker\Shared\CategoryStorage\CategoryStorageConstants;
+use Spryker\Shared\CategoryStorage\CategoryStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface;
 
@@ -45,11 +45,11 @@ class ParentWritePublisherPlugin extends AbstractPlugin implements PublisherPlug
     public function getSubscribedEvents(): array
     {
         return [
-            CategoryStorageConstants::CATEGORY_NODE_PUBLISH,
-            CategoryStorageConstants::CATEGORY_NODE_UNPUBLISH,
-            CategoryStorageConstants::ENTITY_SPY_CATEGORY_NODE_CREATE,
-            CategoryStorageConstants::ENTITY_SPY_CATEGORY_NODE_UPDATE,
-            CategoryStorageConstants::ENTITY_SPY_CATEGORY_NODE_DELETE,
+            CategoryStorageConfig::CATEGORY_NODE_PUBLISH,
+            CategoryStorageConfig::CATEGORY_NODE_UNPUBLISH,
+            CategoryStorageConfig::ENTITY_SPY_CATEGORY_NODE_CREATE,
+            CategoryStorageConfig::ENTITY_SPY_CATEGORY_NODE_UPDATE,
+            CategoryStorageConfig::ENTITY_SPY_CATEGORY_NODE_DELETE,
         ];
     }
 }
