@@ -17,6 +17,8 @@
         "spryker/code-sniffer": "*",
         "spryker/event": "*",
         "spryker/propel": "*",
+        "spryker/ramsey-uuid": "*",
+        "spryker/synchronization": "*",
         "spryker/testify": "*"
     },
     "suggest": {
@@ -24,7 +26,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Spryker\\": "src/Spryker/"
+            "Spryker\\": "src/Spryker/",
+            "SprykerTest\\Client\\Queue\\Helper\\": "tests/SprykerTest/Client/Queue/_support/Helper/"
         }
     },
     "autoload-dev": {

@@ -44,7 +44,7 @@ class BundleProxy
     /**
      * @var bool|null
      */
-    protected $isInstanceCacheEnabled;
+    protected static $isInstanceCacheEnabled;
 
     /**
      * @var array
@@ -160,11 +160,11 @@ class BundleProxy
      */
     protected function isClassCacheEnabled(): bool
     {
-        if ($this->isInstanceCacheEnabled === null) {
-            $this->isInstanceCacheEnabled = $this->getSharedConfig()->isLocatorInstanceCacheEnabled();
+        if (static::$isInstanceCacheEnabled === null) {
+            static::$isInstanceCacheEnabled = $this->getSharedConfig()->isLocatorInstanceCacheEnabled();
         }
 
-        return $this->isInstanceCacheEnabled;
+        return static::$isInstanceCacheEnabled;
     }
 
     /**
